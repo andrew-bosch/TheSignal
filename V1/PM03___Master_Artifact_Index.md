@@ -1,96 +1,23 @@
 # PM03 — MASTER ARTIFACT INDEX
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.4  
+**Version:** 1.5  
 **Status:** 🔄 Updated — Active  
-**Last Updated:** 2026-05-15  
+**Last Updated:** 2026-05-16  
 **Supersedes:** THE_SIGNAL_P1___Master_Artifact_Index v1.1  
 **Sign-off status:** See Design Artifact Registry below for individual artifact status
 
 ---
 
-## 1. Narrative Language Convention
+## 1. Design Standards & Terminology
 
-All documentation uses in-world narrative terms. Each mechanical term is defined once on first use, then the narrative term is used exclusively throughout all artifacts.
-
-| Mechanical Term | In-World Term | First Defined In |
-|----------------|---------------|-----------------|
-| Board space | District | 01 §1 |
-| Game mat / full shared display | The Overview | 00 §8 |
-| Game board / district map (within The Overview) | New Meridian | 01 §1 |
-| Influence token | Presence token | 02a §1 |
-| Claim marker | Operational marker | 01 §1 |
-| Recipe box | Dispatch case | 06 §1 |
-| Popularity track | Public Standing track | 02b §1 |
-| Portrait score | Chorus Portrait | 02b §1 |
-| Proof token | Intelligence token | 02b §1 |
-| Modifier card | Working designation — in-world name pending (D04-07) | 04 §11 |
-| Counter card | Countermeasure card | 04 §14.2 |
-| Private action | Covert operation | 04 §1 |
-| Public action | Political act | 04 §1 |
-| Hidden objective | Classified directive | 05 §1 |
-| Operative card | Field operative dossier | 05 §1 |
-| World event card | Situation report | 01 §1 |
-
-| Round (game term) | Quarter (three months of real-world time) | 03 §1 |
-
-*ARBITER and The Table are never renamed — they are already in-world terms.*
-
-### Voice & Typography Convention
-
-Five distinct voices appear in design artifacts and player-facing materials. Each uses a fixed typographic treatment so voice is identifiable at a glance in both markdown source and rendered output.
-
-| Voice | When Used | Markdown Treatment | Visual Design Intent |
-|-------|-----------|--------------------|----------------------|
-| **The Narrator** | All "Narrative:" fields in design artifacts. Expository prose that describes the world as it is. Identity deliberately unresolvable — see note below. | Plain prose, no attribution, no special formatting | Precise, observational, neither warm nor cold. The reader cannot determine if this is a human chronicler or ARBITER in an expository mode. Both readings must remain valid. |
-| **Character quote** | Flavor in Narrative fields — operative, faction member, citizen, witness. Grounds a rule or world-fact in a specific human moment. | `> *"Quote."*` followed by `> — Role, Faction` on next line | Serif pull quote, attributed |
-| **ARBITER vocalized** | Spoken aloud at the table — resolution announcements, Translation script, Apex acknowledgment, Debrief. | `> *"Text."*` (blockquote, italic, no attribution) | ARBITER voice style — the register carries the speaker |
-| **ARBITER written** | Delivered on paper — notification slips, Chronicle entries, Accord confirmations, dispatch language. | Fenced code block | Monospace / typewriter / dispatch aesthetic |
-| **Faction voice** | Faction-specific documents, opening monologues, internal communications. Each faction has a distinct voice. | Per faction voice guide (Artifact 00 §12) | Differentiated by faction doctrine and emotional register |
-
-**The Narrator — design principle (locked, PM02 FD-05):**
-The Narrator's identity is deliberately never established. It has access to faction internals, Chorus analysis, ARBITER records, and The Table's proceedings — without explaining how. Its register is precise and observational: it notices the right detail, not the obvious one. It states things directly and lets implications stand without developing them. The test for any Narrator sentence: could this have been written by a human who knows too much, or by ARBITER in an expository mode? If both readings are valid, it is correct. If the sentence resolves the ambiguity in either direction, revise it. The Narrator's unresolvability is not a gap — it is the voice.
-
-**The Character Cast — design principle (locked, PM02 FD-05):**
-Character quotes are not generic "faction member" flavor. They build a cast — individuals with implied histories, roles, specific relationships to the events they are describing. Each faction has a differentiated pool of voices: the analyst who has been in the same lab for fifteen years; the field coordinator who grew up in the Sprawl and never left; the trader who learned to read rooms before she learned to read; the structural engineer who thinks in load-bearing walls; the liaison who chose the institution over everything else, and knows what that cost. Unnamed characters carry their world in their attribution line. Named operatives (Artifact 05) carry it in their dossier and their quotes. The reader should be able to hear the difference between a Ghost quote and a Guild quote without reading the attribution — the faction's doctrine should be present in how the person phrases what they saw. The cast is not limited to faction operatives or to New Meridian. Pre-Chorus residents carry knowledge no faction operative has. Voices from outside the city — foreign correspondents, remote academics, officials from other governments, people passing through — imply a world larger than The Table and older than the Chorus. Some characters are trying to win something. Some of them are just people who were there.
-
-**Rules:**
-- Narrator fields use no special formatting — plain prose. Never attribute them.
-- Character quotes always have attribution (role and faction, not personal name unless the character is a named operative).
-- ARBITER vocalized quotes never have attribution — the register identifies the speaker.
-- ARBITER written blocks are never italicized — monospace is the signal.
-- Faction voice is reserved for faction-authored documents and monologues — it does not appear in design artifact Narrative fields.
-- No two character quotes from the same faction should sound interchangeable. If they do, one is wrong.
-
-**Code block (fenced ```)** — Standard format for any content that functions as a map, schematic, or at-a-glance structural summary rather than prose. Use when: (1) content is a structured overview meant to be scanned, not read; (2) the visual distinction from surrounding prose is intentional and meaningful; (3) the content would become a designed diagram or infographic element in final layout. Do not use for prose explanations, rules text, or examples. Applied: Artifact 03 §6 Round Overview.
-
-*First applied: 00a §3–§10 Narrative fields. Propagates to Artifacts 07 (script pack), 10 (manuals), and all future artifacts.*
-
----
-
-### Information Design Principle — Terminology Sequencing
-
-No term, in-world concept, or named component may appear in an artifact without its narrative grounding having been established first — in a prior artifact or earlier in the same artifact. A reader moving through the artifact set in order should never encounter a term before the world has given it meaning. The mechanics that use a term are downstream of the fiction that defines it.
-
-This applies to: in-world component names, faction concepts, institutional terms, temporal conventions, and named game elements. Violations are not copy problems — they indicate missing narrative foundation.
-
-*Example: "quarter" as the deliberation period must be established in Artifact 00 before it appears in 00a or Artifact 03. The Narrative Language table below is the audit instrument — if a term appears there, verify its narrative grounding in Artifact 00 precedes its first mechanical use.*
-
-Locked as L86 in PM02.
+→ All design standards and conventions are maintained in PM04 §2: narrative language convention (mechanical → in-world term mapping), voice and typography, code block standard, terminology sequencing principle, and cross-artifact reference convention.
 
 ---
 
 ## 2. Cross-Artifact Reference Convention
 
-Standard reference format: **[Artifact ID].[Section].[Subsection]**
-
-Examples:
-- `Artifact 04 §8` — Section 8 of Artifact 04
-- `Artifact 03 §12.3` — Section 12, Subsection 3 of Artifact 03
-- `Artifact 02b §8–9` — Sections 8 through 9 of Artifact 02b
-- `PM02 §2b` — Section 2b of PM02
-
-Applies to all in-document references, cross-artifact design notes, PM02 blocking decisions, and punch list source citations. Section number changes are a non-material change — references should be audited and updated when an artifact is restructured. Full definition in PM01 §3.
+→ See PM04 §2 for the full cross-artifact reference convention. Summary: **[Artifact ID].[Section].[Subsection]** — example: `Artifact 04 §8`, `PM02 §2b`.
 
 ---
 
@@ -127,12 +54,13 @@ Applies to all in-document references, cross-artifact design notes, PM02 blockin
 
 | ID | Title | Version | Status | Summary |
 |----|-------|---------|--------|---------|
-| PM01 | Project Charter & Work Breakdown | 1.3 | 🔄 Active | Scope, deliverables, WBS, documentation standards, governance rules, reference convention |
-| PM02 | Decision Log & Validation Tracker | 1.4 | 🔄 Active | Locked decisions (L01–L84), open blocking decisions, playtest variables, validation targets, pending changes punch list, change log |
-| PM03 | Master Artifact Index (this document) | 1.5 | 🔄 Active | Artifact registry, narrative language convention, reference convention, standard template, retired artifacts |
-| PM04 | Glossary & Data Dictionary | 0.1 | ⬜ Placeholder | Single source of truth for all terminology. §1: In-World Data Dictionary. §2: Design Terminology (absorbs PM03 §1 language table, PM01 terminology). See PM02 PM04-01, PW-04. |
+| PM01 | Project Charter & Work Breakdown | 1.4 | 🔄 Active | Scope, deliverables, WBS (with production cost estimates), documentation standards, governance rules, reference convention. §§10–12: Playtest Readiness Checklist, Risk Register, Go/No-Go Framework for V2. |
+| PM02 | Decision Log & Validation Tracker | 1.5 | 🔄 Active | Locked decisions (L01–L96), open blocking decisions, playtest variables. §2b punch list archived — live version in PM05. Change log through session 10. |
+| PM03 | Master Artifact Index (this document) | 1.5 | 🔄 Active | Artifact registry, standard artifact template, dependency map, retired artifacts index (/Retired/). Design standards and conventions moved to PM04 §2. |
+| PM04 | Glossary & Data Dictionary | 0.2 | 🔄 Updated — Active | Single source of truth for all terminology and design conventions. §1: In-World Data Dictionary (pending population). §2: Design Terminology — narrative language table, voice & typography, code block standard, terminology sequencing, cross-artifact reference convention. Absorbs PM03 §1 and §2. |
 | PM04 | Future Phases — Parking Lot | — | ⬜ Not Started | Post-L1 design concepts, layer roadmap, electronic version considerations, ARBITER role redesign, L5 faction vision. Supersedes former PM03. |
-| PM (Audit) | Cross-Artifact Inconsistency Audit | 1.0 | 🔄 Active — For Review | 24 inconsistencies and open questions across all signed-off and draft artifacts. Organized by artifact. Items to migrate to PM02 punch list after Andy review. |
+| PM05 | Active Punch List | 1.0 | 🔄 Active | Living action queue of all pending changes across all artifacts, extracted from PM02 §2b. Includes Validation Target Dashboard (V01–V14, PC-01–PC-04, VE-01) and Playtest Data Collection Protocol. |
+| PM (Audit) | Cross-Artifact Inconsistency Audit | 1.0 | ✅ Retired — session 10 | All 24 items migrated to PM05 punch list. File deleted. |
 
 ### Visual Artifacts (Interactive HTML)
 
@@ -248,11 +176,11 @@ The following artifacts from the working design phase are superseded by the curr
 
 ---
 
-### Legacy Folder Archive — /Old
+### Legacy Folder Archive — /Retired
 
 Two generations of pre-V1 design documents are archived in `/TheSignal/Retired/`, organized into subfolders as of 2026-05-16. (Folder was `/Old/` prior to 2026-05-16 reorganization.) These files are read-only reference — content has been redistributed into the V1 artifact set. Do not edit.
 
-**`/Old/Electronic/`** — 20 files — Original electronic brainstorming suite (pre-code design phase). Document numbering: 00–20. Uses old faction names (Architect, Warden, Signal). Includes TypeScript game state schema, hardware specifications, network architecture, audio system, website architecture, and full game design documents.
+**`/Retired/Electronic/`** — 20 files — Original electronic brainstorming suite (pre-code design phase). Document numbering: 00–20. Uses old faction names (Architect, Warden, Signal). Includes TypeScript game state schema, hardware specifications, network architecture, audio system, website architecture, and full game design documents.
 
 | File | Contents |
 |------|----------|
@@ -277,7 +205,7 @@ Two generations of pre-V1 design documents are archived in `/TheSignal/Retired/`
 | old__19_PAPER_PROTOTYPE_CORE_DESIGN.md | Paper prototype design philosophy and core requirements |
 | old__20_ROUND_WALKTHROUGH_AND_PRODUCTION.md | Complete Round 4 walkthrough for 5-player paper prototype session |
 
-**`/Old/Paper/`** — 6 files + 1 zip — 1st generation Paper (pre-V1) design suite. Uses current V1 naming convention and current faction names. Early versions of V1 artifacts before the current baseline was established.
+**`/Retired/Paper/`** — 6 files + 1 zip — 1st generation Paper (pre-V1) design suite. Uses current V1 naming convention and current faction names. Early versions of V1 artifacts before the current baseline was established.
 
 | File | Contents |
 |------|----------|
@@ -289,8 +217,8 @@ Two generations of pre-V1 design documents are archived in `/TheSignal/Retired/`
 | old__04b___Action_Taxonomy_Design_Analysis.md | Artifact 04b — superseded by current V1/04b |
 | files.zip | Snapshot archive of V1 P1 artifacts as of 2026-05-15: PM01, PM02, PM03, 00, 01, 02a, 02b, 03, 04, 04b |
 
-**`/Old/backup.zip`** — Complete backup of the /Old folder prior to reorganization. Contains all 26 files from both the Electronic and Paper generations.
+**`/Retired/backup.zip`** — Complete backup of the /Retired folder prior to reorganization. Contains all 26 files from both the Electronic and Paper generations.
 
 ---
 
-*End of PM03 — Master Artifact Index v1.4*
+*End of PM03 — Master Artifact Index v1.5*

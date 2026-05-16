@@ -1,7 +1,7 @@
 # PM01 — Project Charter & Work Breakdown
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.3  
+**Version:** 1.4  
 **Status:** 🔄 Updated — Active  
 **Type:** Project Epic — all design artifacts are Features of this Epic
 
@@ -158,39 +158,40 @@ The following documents must exist and be signed off before physical production 
 
 Production does not begin until relevant design artifacts are signed off. Items are listed with their design dependency.
 
-| # | Component | In-World Name | Quantity | Source | Requires | Status |
-|---|-----------|---------------|----------|--------|---------|--------|
-| 2.01 | Printed hex map | New Meridian | 1 (A1 or A0) | Print shop | 01, V01, V08 | ⬜ |
-| 2.02 | Influence discs | Presence tokens | 15 per faction × 5 | Poker chips | 02a | ⬜ |
-| 2.03 | Large distinct pieces | Operational markers | 2 per faction × 5 | Distinct shape | 01 | ⬜ |
-| 2.04 | Small square chits | Structure tokens | 6 per faction × 5 | Card stock | 02a | ⬜ |
-| 2.05 | Resource chips | Asset tokens | 30 per type × 5 | Poker chips | 02a | ⬜ |
-| 2.06 | Faction chits + sticky notes | Intel notes | 4 per faction × 5 | Colored chits | 02b | ⬜ |
-| 2.07 | Neutral chips | Tension markers | 6 | Neutral chips | 02a | ⬜ |
-| 2.08 | Crown or star tokens | Control flags | 5 (1 per faction) + 1 permanent ARBITER flag for Chorus Node | See D-P-01 | 02a | ⬜ |
-| 2.08a | Fused single piece — ARBITER color | ARBITER Dominance Marker | 1 | Eight ARBITER-keyed presence tokens (white, TBD) stacked and fused, topped by ARBITER's dominance marker — same visual language as faction control flags but distinct: larger, differently keyed, or subtly off in a way that reads as *more*. All one inseparable piece. Placed at Chorus Node by ARBITER at setup. Never removed. | 00a R04, 01, 11, D-P-02 | ⬜ |
-| 2.09 | Ten-sided dice | — | 2 × d10 | Purchase | 03 | ⬜ |
-| 2.10 | Covert operation cards | — | Per 09 spec | Print + cut | 09 | ⬜ |
-| 2.11 | Political act cards | — | Per 09 spec | Print + cut | 09 | ⬜ |
-| 2.12 | Operative dossier cards | Field operative dossiers | Per 09 spec | Print + cut | 09 | ⬜ |
-| 2.13 | Modifier cards | Operational intelligence cards | Per 09 spec | Print + cut | 09 | ⬜ |
-| 2.14 | Counter cards | Countermeasure cards | Per 09 spec | Print + cut | 09 | ⬜ |
-| 2.15 | World event cards | Situation reports | Per 09 spec | Print + cut | 09 | ⬜ |
-| 2.16 | Objective cards | Classified directives | Per 09 spec | Print + cut | 09 | ⬜ |
-| 2.17 | Accord forms | Accord documents | 8 | Laminated dry-erase, 8cm × 8cm | 06 | ⬜ |
-| 2.18 | Pass cards | — | Per 09 spec | Print + cut | 09 | ⬜ |
-| 2.19 | Small boxes or envelopes | Dispatch cases | 1 per player | Purchase or make | 06 | ⬜ |
-| 2.20 | Laminated strips | Public Standing tracks | 1 per faction | Print + laminate | 02b, V02 | ⬜ |
-| 2.21 | Combined laminated strip | World Condition tracks | 1 | Print + laminate | 01, V04 | ⬜ |
-| 2.22 | Simple strip | Round tracker | 1 | Print + laminate | 03 | ⬜ |
-| 2.23 | Dry-erase grid behind screen | Chorus Portrait board | 1 | Print + laminate | 07 | ⬜ |
-| 2.24 | Laminated A4 mat | ARBITER resolution mat | 1 | Print + laminate | 07 | ⬜ |
-| 2.25 | Sealed index cards | Apex envelopes | 10 (2 operatives × 5 factions) | Prepare at setup | 05 | ⬜ |
-| 2.26 | Pre-printed cards | Table Record pad | 30 sheets | Print | 07 | ⬜ |
-| 2.27 | Adhesive notes | Intel note age tracker | 1 pad | Purchase | 02b | ⬜ |
-| 2.28 | Countdown device | Timer | 1 | Sand timer or phone | 03 | ⬜ |
-| 2.29 | Writing tools | — | Set | Purchase | — | ⬜ |
-| 2.30 | Laminated cards | Player quick reference cards | 1 per player | Print + laminate | V12–V18 | ⬜ |
+| # | Component | In-World Name | Quantity | Source | Requires | Status | Est. Cost |
+|---|-----------|---------------|----------|--------|---------|--------|-----------|
+| 2.01 | Printed hex map | New Meridian | 1 (A1 or A0) | Print shop | 01, V01, V08 | ⬜ | $5–20 |
+| 2.02 | Influence discs | Presence tokens | 15 per faction × 5 | Poker chips | 02a | ⬜ | $15–30 |
+| 2.03 | Large distinct pieces | Operational markers | 2 per faction × 5 | Distinct shape | 01 | ⬜ | $5–10 |
+| 2.04 | Small square chits | Structure tokens | 6 per faction × 5 | Card stock | 02a | ⬜ | $2–5 |
+| 2.05 | Resource chips | Asset tokens | 30 per type × 5 | Poker chips | 02a | ⬜ | $20–35 |
+| 2.06 | Faction chits + sticky notes | Intel notes | 4 per faction × 5 | Colored chits | 02b | ⬜ | $3–7 |
+| 2.07 | Neutral chips | Tension markers | 6 | Neutral chips | 02a | ⬜ | $1–3 |
+| 2.08 | Crown or star tokens | Control flags | 5 (1 per faction) + 1 permanent ARBITER flag for Chorus Node | See D-P-01 | 02a | ⬜ | $3–7 |
+| 2.08a | Fused single piece — ARBITER color | ARBITER Dominance Marker | 1 | Eight ARBITER-keyed presence tokens (white, TBD) stacked and fused, topped by ARBITER's dominance marker — same visual language as faction control flags but distinct: larger, differently keyed, or subtly off in a way that reads as *more*. All one inseparable piece. Placed at Chorus Node by ARBITER at setup. Never removed. | 00a R04, 01, 11, D-P-02 | ⬜ | $3–8 |
+| 2.09 | Ten-sided dice | — | 2 × d10 | Purchase | 03 | ⬜ | $2–5 |
+| 2.10 | Covert operation cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $8–20 |
+| 2.11 | Political act cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $5–15 |
+| 2.12 | Operative dossier cards | Field operative dossiers | Per 09 spec | Print + cut | 09 | ⬜ | $5–15 |
+| 2.13 | Modifier cards | Operational intelligence cards | Per 09 spec | Print + cut | 09 | ⬜ | $5–15 |
+| 2.14 | Counter cards | Countermeasure cards | Per 09 spec | Print + cut | 09 | ⬜ | $3–8 |
+| 2.15 | World event cards | Situation reports | Per 09 spec | Print + cut | 09 | ⬜ | $3–8 |
+| 2.16 | Objective cards | Classified directives | Per 09 spec | Print + cut | 09 | ⬜ | $2–5 |
+| 2.17 | Accord forms | Accord documents | 8 | Laminated dry-erase, 8cm × 8cm | 06 | ⬜ | $3–7 |
+| 2.18 | Pass cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $1–3 |
+| 2.19 | Small boxes or envelopes | Dispatch cases | 1 per player | Purchase or make | 06 | ⬜ | $3–10 |
+| 2.20 | Laminated strips | Public Standing tracks | 1 per faction | Print + laminate | 02b, V02 | ⬜ | $3–7 |
+| 2.21 | Combined laminated strip | World Condition tracks | 1 | Print + laminate | 01, V04 | ⬜ | $1–3 |
+| 2.22 | Simple strip | Round tracker | 1 | Print + laminate | 03 | ⬜ | $1–3 |
+| 2.23 | Dry-erase grid behind screen | Chorus Portrait board | 1 | Print + laminate | 07 | ⬜ | $2–5 |
+| 2.24 | Laminated A4 mat | ARBITER resolution mat | 1 | Print + laminate | 07 | ⬜ | $1–3 |
+| 2.25 | Sealed index cards | Apex envelopes | 10 (2 operatives × 5 factions) | Prepare at setup | 05 | ⬜ | $1–3 |
+| 2.26 | Pre-printed cards | Table Record pad | 30 sheets | Print | 07 | ⬜ | $2–5 |
+| 2.27 | Adhesive notes | Intel note age tracker | 1 pad | Purchase | 02b | ⬜ | $1–2 |
+| 2.28 | Countdown device | Timer | 1 | Sand timer or phone | 03 | ⬜ | $3–10 |
+| 2.29 | Writing tools | — | Set | Purchase | — | ⬜ | $5–10 |
+| 2.30 | Laminated cards | Player quick reference cards | 1 per player | Print + laminate | V12–V18 | ⬜ | $3–7 |
+| **Total** | | | | | | | **$100–230** |
 
 ### WBS 3 — Playtest Infrastructure
 
@@ -251,3 +252,113 @@ git add -A && git commit -m "session N — [primary decision or milestone]" && g
 ```
 
 Commit at the close of each design session. The commit message states the session's headline decision or milestone. Full decision rationale lives in PM02 — the commit is the pointer, not the record.
+
+---
+
+## 10. Playtest Readiness Checklist
+
+Binary go/no-go. Before any playtest session is scheduled, every item in the relevant categories must be ✅. Items can be waived for a simplified Session 1 configuration — note the waiver explicitly.
+
+### Category 1: Design Artifact Readiness
+
+| # | Item | S1 Required | Status |
+|---|------|-------------|--------|
+| 1.01 | Artifact 00 — Factions & World — signed off | Yes | ✅ |
+| 1.02 | Artifact 01 — Game Board — signed off | Yes | ✅ |
+| 1.03 | Artifact 02a — Resource Systems: Board State — signed off | Yes | ✅ |
+| 1.04 | Artifact 02b — Resource Systems: Tracking — signed off | Yes | ✅ |
+| 1.05 | Artifact 03 — Round Structure — signed off (currently pending re-sign-off) | Yes | ⬜ |
+| 1.06 | Artifact 04 — Action Card System — sufficient card set complete (S1 waiver: Common set only acceptable) | Yes (waivable) | ⬜ |
+| 1.07 | Artifact 05 — Operative & Apex System — Tier 1 operatives complete (Apex and higher tiers may be deferred) | S1 waivable | ⬜ |
+| 1.08 | Artifact 07 — ARBITER Toolkit — Resolution procedure complete and ARBITER guide readable | Yes | ⬜ |
+| 1.09 | Artifact 10 — Game Manuals — ARBITER guide and player guide sufficient for in-session reference | Yes | ⬜ |
+| 1.10 | PM05 punch list READY NOW items — no unresolved high-priority blocking items open | Yes | ⬜ |
+
+### Category 2: Physical Components
+
+| # | Item | S1 Required | Status |
+|---|------|-------------|--------|
+| 2.01 | Printed board (New Meridian hex map, A1 or A0) | Yes | ⬜ |
+| 2.02 | Presence tokens — at least 10 per faction × 5 factions (15 target) | Yes | ⬜ |
+| 2.03 | Operational markers — 2 per faction × 5 factions | Yes | ⬜ |
+| 2.04 | Structure tokens — at least 4 per faction × 5 factions (6 target) | Yes | ⬜ |
+| 2.05 | Resource chips — faction-specific, at least 20 per type (30 target) | Yes | ⬜ |
+| 2.06 | Dispatch cases — 1 per player × 6 (including ARBITER) | Yes | ⬜ |
+| 2.07 | Public Standing tracks — 1 per faction × 5 | Yes | ⬜ |
+| 2.08 | World Condition track — 1 | Yes | ⬜ |
+| 2.09 | Chorus Portrait board — 1, dry-erase or record-able | Yes | ⬜ |
+| 2.10 | 2 × d10 dice | Yes | ⬜ |
+| 2.11 | Timer (sand timer, phone, or dedicated countdown device) | Yes | ⬜ |
+| 2.12 | Covert operation cards — at least Common set C01–C15 per faction | Yes (waivable: Common only) | ⬜ |
+| 2.13 | Political act cards — at least P01–P10 common political acts | Yes (waivable: simplified set) | ⬜ |
+| 2.14 | Pass cards — 4 per faction × 5 | Yes | ⬜ |
+| 2.15 | Accord forms — minimum 8 | Yes | ⬜ |
+| 2.16 | Writing tools and writing surface at ARBITER station | Yes | ⬜ |
+
+### Category 3: ARBITER Preparation
+
+| # | Item | Status |
+|---|------|--------|
+| 3.01 | ARBITER player has read Artifact 07 in full at least once | ⬜ |
+| 3.02 | ARBITER player has read Artifact 03 (round structure) in full | ⬜ |
+| 3.03 | ARBITER player has run one dry-run of Resolution solo (Beat 3 and Beat 4) | ⬜ |
+| 3.04 | ARBITER player knows all four registers by name and can describe when each applies | ⬜ |
+| 3.05 | Translation rate table memorized or printed — Contested = 5:1, no presence = 4:1, Present = 3:1, Established = 2:1 (see 02a §8) | ⬜ |
+| 3.06 | ARBITER player has read PRIVATE___True_State.md (private design axioms) | ⬜ |
+
+### Category 4: Logistics
+
+| # | Item | Status |
+|---|------|--------|
+| 4.01 | Table space sufficient for The Overview plus 6 player stations | ⬜ |
+| 4.02 | Session duration blocked: 90–150 min play + 30 min setup/teardown | ⬜ |
+| 4.03 | Session Record sheet prepared (PM05 §3 format) | ⬜ |
+| 4.04 | Dedicated observer confirmed, or recording assignment distributed among players | ⬜ |
+
+---
+
+## 11. Risk Register
+
+| ID | Risk | Likelihood | Impact | Mitigation |
+|----|------|-----------|--------|------------|
+| R01 | Core loop is not engaging — factions lack interesting decisions each round | Medium | Critical | Early S1 test with experienced game players; post-session question on decision quality. Design fallback: expand Floor Act and Accord system if board play feels thin. |
+| R02 | ARBITER cognitive load too high — The ARBITER player cannot run Resolution + Chronicle + Portrait + notifications simultaneously at full table | Medium | High | Run ARBITER dry-session before S1. Simplify S1 by deferring Chronicle; focus on Resolution. ARBITER script pack (Artifact 07) reduces improvisation load. |
+| R03 | Ghost asymmetry unbalancing — Ghost's 4-operation rule produces outsized covert output | Medium | Medium | Track V02 in S1. Playtest variable PT-04-03. Design fallback: reduce Ghost to 3 operations if 4 proves dominant by Round 5. |
+| R04 | Physical production cost exceeds budget | Low | Medium | See WBS 2 cost estimates (§7 above) — total ~$100–230. Early sourcing of poker chips and print services gives accurate cost before committing. |
+| R05 | Incomplete card set blocks S1 — political acts or faction-specific cards not ready | High (current) | High | S1 may proceed with Common card set only (C01–C15) and simplified political acts (P01–P10). Accepted S1 scope reduction — note in session records. |
+| R06 | Player count limitation — unable to assemble 5 faction players + ARBITER for first session | Medium | Low | Recommended S1 configuration is 3 faction players + ARBITER (PM01 §2). 3-player configuration is validated by design. |
+| R07 | Chorus Portrait system doesn't produce meaningful Chronicle moments | Low | High | V12, V13, V14 track this. Monitor Portrait scoring calibration (PT-02-03). Design fallback: increase Portrait deltas (+3/+2/0/−2/−3) if Chronicle feels disconnected from table behavior. |
+| R08 | Rulebook insufficient — ARBITER cannot facilitate without frequent rule lookups | High (current) | Medium | Artifact 10 is incomplete. S1 mitigation: designer in the room as rules consultant. Hard requirement: ARBITER guide must support solo operation before S2. |
+
+---
+
+## 12. Go/No-Go Framework for V2 (Electronic Development)
+
+Criteria that must be met before paper prototype development concludes and electronic development begins. This is not a session-level evaluation — it applies to the paper prototype program as a whole after the structured playtest series completes.
+
+### Mandatory — all must be met before Go
+
+| # | Criterion | Notes |
+|---|-----------|-------|
+| G01 | All design artifacts (00–10) signed off | Not blocking V2 planning, but must be met before V2 development budget commitment |
+| G02 | At least 3 playtest sessions completed with structured feedback recorded (PM05 §3 format) | Minimum data set for Go/No-Go evaluation |
+| G03 | S1 (session runs in 90–150 min) met in ≥ 2 of 3 sessions | Core session length validated |
+| G04 | S2 (ARBITER facilitates without rules reference during resolution) met in ≥ 2 of 3 sessions | ARBITER cognitive load is manageable |
+| G05 | S4 (players want to play Session 2 before leaving) met in ≥ 2 of 3 sessions | Core engagement signal |
+| G06 | No critical loop failures: V03 (Incursion), V04 (Accords), V07 (Public Standing), V08 (Chorus Node) — at least 3 of 4 targets met across the session series | Core mechanics are working |
+| G07 | Faction asymmetry validated: at least 4 of 5 factions played; at least 2 clearly different strategies observed | Five-faction design is differentiated |
+
+### Supporting — strong evidence expected, not blocking
+
+| # | Criterion | Notes |
+|---|-----------|-------|
+| G08 | S6 (Chronicle resonates at session end) met in ≥ 2 sessions | Narrative system is functional |
+| G09 | V12 (Portrait affects final ranking) observed in ≥ 1 session | Dual-track victory system is meaningful |
+| G10 | PC-03 (ARBITER role desirable) met — ≥ 50% of players who ran ARBITER would do so again | ARBITER experience is sustainable |
+| G11 | No single faction wins more than 2 of 3 sessions with the same strategy | Faction balance is sufficient for first pass |
+
+### Decision owner
+
+Andy — this is a product and project decision, not a design decision. Can be made with designer confidence that the core is validated, regardless of remaining polish items.
+
+**What Go/No-Go is not:** a determination that the paper prototype is "finished." Paper prototype refinement continues in parallel with electronic development. Go/No-Go is a commitment to invest in the next layer, not a declaration that Layer 1 is complete. The criteria above define the minimum bar for confidence, not the maximum level of polish.

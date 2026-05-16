@@ -1,7 +1,7 @@
 # PM02 — Decision Log & Validation Tracker
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.4  
+**Version:** 1.5  
 **Status:** 🔄 Updated — Active
 
 ---
@@ -247,17 +247,13 @@ Decisions locked for the signed-off design but flagged for economic and mechanic
 
 ## Section 2b — Pending Changes Punch List
 
-This section is a living action queue of all changes that need to be incorporated into existing artifacts — including signed-off artifacts, in-progress artifacts, and the PM documents themselves. Items are removed when the change has been applied and verified. When this list is empty, the project's working documents are fully consistent with all design decisions made to date.
+→ **Active punch list is maintained in PM05 — Active Punch List.** PM05 is the live working document — it contains all pending change items organized by blocking category, the Validation Target Dashboard (V01–V14, PC-01–PC-04, VE-01), and the Playtest Data Collection Protocol.
 
-**How to use this list:**
-- Items marked 🔄 are pending incorporation
-- Items marked ✅ are complete — kept for audit trail
-- Each item references the source decision or discussion that generated it
-- "Non-material" items are discussion points and clarifications that don't alter mechanics but should be captured in the relevant artifact
+The tables below are an archived snapshot from session 10. PM05 supersedes this content.
 
 ---
 
-### READY NOW
+### READY NOW — archived snapshot (see PM05 §1 for current state)
 
 Items with no blocking dependencies and no unresolved decisions required. These can be executed in the current working session or the next one, independent of 00a sign-off or D02a-01 resolution.
 
@@ -577,6 +573,24 @@ Updated after each playtest session.
 | May 2026 | R05a added to 00a §3 — ARBITER processes resolution but does not determine outcomes | ARBITER facilitates 2d10 resolution, observes outcomes, applies Portrait scoring, sends private notifications, records in Chronicle. Outcome determination belongs to the 2d10 system and presence level. Closes §3 gap — no prior rule covered ARBITER's role during resolution. Flags for Artifact 07 (ARBITER guide): ARBITER-as-entity vs. ARBITER-player-as-game-engine must be held distinct. | 00a R05a, 07 |
 | May 2026 | §6 resource anchor rewritten — faction statements + token/reservoir layering | Faction quotes (doctrine on power), reservoir as New Meridian's potential (not ARBITER's), faction position at The Table as personal interface into The Overview, dispatch case commitment as power spent before outcome. | 00a §6 |
 | May 2026 | 00a §10 Narrative Consistency dismissed — R41–R45 retired or migrated | R41 and R44 already covered by §3 ARBITER Authority (R01, R07). R42 was an observation, not a rule. R43 (ARBITER observes continuously) migrated to Artifact 07 punch list (07-07). R45 (The Overview zone anchoring) migrated to §1 as a governing design principle. Section removed from document and Index updated. | 00a |
+| May 2026 | 00a v0.2 signed off — 41 rules complete (R01–R38 + R13a, R13b, R29a), §3–§9, Appendix A added | Governing Rules & Design Policy milestone. Appendix A: summary table of all 41 rules (ID, Rule, Mechanism). 18 character quotes distributed throughout. | 00a |
+| May 2026 | L85 locked — 00a Mechanics field = rule and design constraints only, not execution procedure | Separates what is constrained from how it's executed. Procedure (who does what, in what order) belongs in source artifacts (03, 07, 11). Applied retroactively to R01–R12. | 00a §1, all artifacts |
+| May 2026 | L86 locked — Terminology Sequencing — information design principle governing artifact order | No term may appear in an artifact before its narrative grounding is established in a prior artifact or earlier in the same artifact. Governs documentation architecture, not gameplay. Full principle in PM03 §1 (now PM04 §2). | PM04 §2, all artifacts |
+| May 2026 | L88 locked — Four-term terminology convention: ARBITER, The ARBITER Player, Faction, Faction Player | Governs all process documentation. ARBITER/Faction = intelligence-driven roles (human or AI). The ARBITER Player/Faction Player = physical execution functions (automation stand-ins in paper prototype). Full audit of 00a Mechanics fields required (00a-10). | 00a §1, 03, 07 |
+| May 2026 | L89 locked — Deployment markers moved not removed; Fringe ring is unconditional operational fallback | No card effect or mechanic may remove deployment markers from play — only move them. Fringe ring = unconditional operational baseline, representing the faction's reach beyond contested territory. R13a added to 00a §5. | 00a R13a, R15 |
+| May 2026 | L90 locked — Portrait values printed on card face, visually coded for ARBITER; no separate reference sheet | Visual coding must be parseable by ARBITER, opaque in purpose to faction players. Design deferred to D09-05. Reference sheet approach rejected: overhead compounds with card set size. | 00a R29a, 09 |
+| May 2026 | L91 locked — 00a R37 retired — influence level → difficulty table superseded by card-printed difficulty | Base difficulty is a designed property on each card, not a function of presence level. The Dominant/Established/Present/Contested → difficulty mapping does not reflect how any card in Artifact 04 works. | 00a R37, 04 |
+| May 2026 | L92 locked — Chorus Node Portrait benefit canonical: Established threshold, flat end-of-quarter additive | Artifact 01 had Dominant + ×1.25 per-action multiplier. Artifact 02a had Established + flat +1/−1 additive. 02a version adopted. No effect if Portrait at Ambiguous (zero). Not available during Contested. Closes 00a §11 A05 and A06. | 01, 02a, 00a R01 |
+| May 2026 | L93 locked — Chorus Node Translation rate scale adopted: Contested = 5:1, no presence = 4:1, Present = 3:1, Established = 2:1 | Replaces hardcoded 4:1 rate. Contested penalty is ARBITER's consequence for factions bringing conflict to the Node. Rate table canonical in 02a §8. 01 and 02a §10 benefits table updated. | 01, 02a §8, §10, 00a R05 |
+| May 2026 | L94 locked — The Network virtual structure block at University Perimeter counts as full structure block for all game purposes | Not income-only. Counts toward modifier draw threshold, ring modifier eligibility, and any future mechanic referencing structure blocks owned. Narratively: Network's established institutional footprint. | 02a §10, 03 |
+| May 2026 | L95 locked — Code block standard for schematic/overview content | Fenced code block (```) is the standard for any content that functions as a map, schematic, or at-a-glance structural summary. Applied: Artifact 03 §6 Round Overview. Full standard in PM04 §2. | PM04 §2, all artifacts |
+| May 2026 | L96 locked — Italic commentary convention for procedural sections | In procedural sections, explanatory/commentary text (why, context, edge case flags) is italicised and separated from action text by a CR. Action text is plain. Formalizes and extends the existing contextual callout practice. Scan-and-revise pass across all documents tracked as XA-18. | 03, 07, all procedural artifacts |
+| May 2026 | Subheader spacing standard established — blank line required between all bold/italic subheaders and following copy | Style standard confirmed session 9. Applied to Artifact 03 (54 bold + 2 italic subheaders corrected). Overnight batch (session 10) corrected 24 additional violations: 00a (1), 02a (10), 02b (0 — already compliant), 04 (13). | 00a, 02a, 04 |
+| May 2026 | Overnight agent batch — XA-01, XA-02, XA-03, 00a-06, 00a-07, 07-02, XA-17, 02a-09, 04b-02, PM01-01, partial XA-16 | Non-material cleanup and terminology propagation. Version numbers verified correct (XA-01); "Board space" terminology updated (XA-02); faction colors verified (XA-03); district name audit complete (00a-06); narrative grounding audit marked complete (00a-07); Beat 2 name propagated (07-02); Network virtual block updated (02a-09); PM04 reference updated (04b-02); bank→Reservoir applied to 7 locations (XA-16 partial). | Multiple |
+| 2026-05-16 | Project file structure reorganized — /Old → /Retired, /Session folder created, README.md added at root | /Old renamed to /Retired (preserves V1 layer designation); /Session/ created for session management files (save state, private axioms); README.md added. See PM01 §9 for full structure. | PM01 §9, PM03 §6 |
+| 2026-05-16 | Git repository initialized — remote: https://github.com/andrew-bosch/TheSignal (private) | Version control established. Session commit convention: `git add -A && git commit -m "session N — [headline]" && git push`. Initial commit: 52 files. Credentials stored at ~/Projects/credentials.env (not in repo). | PM01 §9 |
+| 2026-05-16 | PM document refactoring — PM04 populated (v0.2), PM05 created (v1.0), PM02 §2b → PM05, PM03 §1/§2 → PM04 | PM04 §2 now holds all design standards (narrative language, voice/typography, code block, terminology sequencing, cross-artifact reference). PM05 is the live punch list document with Validation Dashboard and Playtest Data Protocol. PM02 §2b and PM03 §1/§2 are now pointers. | PM01, PM02, PM03, PM04, PM05 |
+| 2026-05-16 | PM01 §§10–12 added — Playtest Readiness Checklist, Risk Register, Go/No-Go Framework for V2 | New PM best practice sections. Production cost estimates added to WBS 2. Readiness checklist gates playtest scheduling (4 categories, binary go/no-go). Risk register tracks 8 identified risks. Go/No-Go framework defines criteria for advancing to electronic development. | PM01 |
 
 ---
 
