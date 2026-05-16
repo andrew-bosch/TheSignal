@@ -217,3 +217,37 @@ See PM02 for full decision detail and canonical decision IDs. Items currently bl
 | D07-01 | ARBITER Resolution — track only vs. spendable resource | 07 |
 | D05-01 | Board Strength thresholds by player count | 05 |
 | D05-02 | Apex Emergency Response timing | 05 |
+
+---
+
+## 9. Project File Structure & Version Control
+
+### File Structure
+
+Root: `~/Projects/TheSignal/`
+
+| Folder / File | Purpose |
+|---------------|---------|
+| `V1/` | Active design layer — L1 Paper Prototype. All artifact editing happens here. "V1" is the layer designation (Layer 1 = physical layer); does not need renaming as the project evolves. |
+| `Session/` | Session management files — save state and private design axioms. Not part of the artifact set; not referenced by any artifact. |
+| `Retired/` | Read-only archive of superseded design generations. `Retired/Electronic/` — original electronic brainstorming suite (pre-code, old faction names). `Retired/Paper/` — 1st generation paper prototype artifacts. See PM03 §6 for file-level index. |
+| `README.md` | Project overview and folder navigation guide for new sessions or collaborators. |
+| `.gitignore` | Excludes zip archives, credentials files (`*.env`), and system files from version control. |
+
+Files outside the git repo (at `~/Projects/` level):
+
+| File | Purpose |
+|------|---------|
+| `credentials.env` | GitHub PAT and other project credentials. Never committed to any repository. |
+
+### Version Control
+
+The project uses git. Remote: `https://github.com/andrew-bosch/TheSignal` (private repository). Initialized session 10.
+
+**Session commit convention:**
+
+```
+git add -A && git commit -m "session N — [primary decision or milestone]" && git push
+```
+
+Commit at the close of each design session. The commit message states the session's headline decision or milestone. Full decision rationale lives in PM02 — the commit is the pointer, not the record.

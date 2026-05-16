@@ -14,8 +14,11 @@ THE SIGNAL is a negotiation and area-control tabletop game for 2–6 participant
 
 **All files:**
 - Artifact set: `~/Projects/TheSignal/V1/`
-- Private design axioms: `~/Projects/TheSignal/PRIVATE___True_State.md` — NOT in V1, does not appear in any artifact
-- Legacy documents: `~/Projects/TheSignal/Old/` — not yet reviewed (see PW-01)
+- Private design axioms: `~/Projects/TheSignal/Session/PRIVATE___True_State.md` — NOT in V1, does not appear in any artifact
+- Session save state: `~/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md` (this file)
+- Legacy documents: `~/Projects/TheSignal/Retired/` — Electronic/ and Paper/ subfolders; see PM03 §6 for index (PW-01)
+- Git repo: `https://github.com/andrew-bosch/TheSignal` (private) — credentials at `~/Projects/credentials.env`
+- Project README: `~/Projects/TheSignal/README.md`
 
 ---
 
@@ -132,16 +135,33 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - L96: Italic for commentary text in procedural sections; CR separation from action text
 - Floor Act: working name for always-available political act (1 native resource, outside deck) — D04-13
 
-**Overnight punch list work (session 10 agents):**
-Agents dispatched to process non-blocking, non-material punch list items. See PM02 §2b for updated statuses.
+**Overnight punch list work (session 10 agents) — COMPLETED:**
+- ✅ PM03-02: Code block formatting standard added to PM03 §1
+- ✅ XA-01: Version numbers verified correct (already at target)
+- ✅ XA-02: "Hex / board space" → "Board space" in PM03 §1 terminology table
+- ✅ XA-03: Faction colors verified in Artifact 11 §6; Ghost/Network flag added
+- ✅ XA-17: 24 subheader spacing violations corrected (1 in 00a, 10 in 02a, 0 in 02b, 13 in 04)
+- ✅ 07-02: Beat 2 "The Ground Shifts" section added to Artifact 07
+- ✅ 04b-02: "PM03" → "PM04" reference fixed in Artifact 04b §3.9
+- ✅ 02a-09: Network virtual block full equivalence language added to Artifact 02a §10
+- ✅ 00a-07: A08 marked complete in 00a §11
+- ✅ 00a-06: All 38 Narrative fields audited; no new district name errors
+- ✅ 03-07: All artifacts audited; "Effect Card" not present anywhere (already clean)
+- 🔄 XA-16 partial: "bank"→"Reservoir" applied (7 replacements: 02a/04/08/10); remaining scan pending
+- 🔄 PM01-01: 1 fix applied (01.md "Artifact 02"→"Artifact 02a"); cross-refs to incomplete artifacts deferred
+
+**Post-session file structure work (session 10):**
+- /Old → /Retired; /Session folder created; PRIVATE and Save State moved to /Session/
+- README.md created at ~/Projects/TheSignal/
+- Git initialized; initial commit (52 files); pushed to https://github.com/andrew-bosch/TheSignal
+- PM01 §9 added: Project File Structure & Version Control
+- PM03 §6 updated: /Old → /Retired path corrected
 
 **Active high-priority punch list items (still open):**
-- D03-R01, D03-R03: blocks Artifact 03 re-sign-off
-- 03-07: "Effect Card" → "Event Card" propagation to 01/02a/02b
-- 02a-09: Network virtual block equivalence update in 02a
-- XA-16: Systematic terminology scan (partial — "Reservoir" applied to 03; others pending)
-- XA-17: Subheader spacing — applied to 03; other artifacts pending
-- XA-18: Italic commentary — applied to 03; other artifacts pending
+- D03-R01, D03-R03: blocks Artifact 03 re-sign-off (requires Andy's call)
+- 03-06: L91 vs Artifact 03 difficulty table — decision required (requires Andy's call)
+- XA-16: Systematic terminology scan — partial; "Reservoir" done; round→quarter, mat→Overview, others pending
+- XA-18: Italic commentary convention — applied to 03; other artifacts pending
 - D09-05: Portrait visual coding system (Artifact 09) — BLOCKING 07-05
 - 00a-10: ARBITER/The ARBITER Player terminology audit of 00a Mechanics fields
 
