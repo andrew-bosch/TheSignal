@@ -1,0 +1,219 @@
+# PM01 — Project Charter & Work Breakdown
+## THE SIGNAL P1 — Paper Prototype
+
+**Version:** 1.3  
+**Status:** 🔄 Updated — Active  
+**Type:** Project Epic — all design artifacts are Features of this Epic
+
+---
+
+## 1. What We Are Building
+
+THE SIGNAL is a negotiation and area-control tabletop game for 2–6 participants (up to 5 faction players plus 1 ARBITER). Five factions compete for influence over a city called New Meridian while negotiating humanity's response to an extraterrestrial transmission called the Chorus. The game ends with a vote. What matters is everything that happened before it.
+
+The **L1 Paper Prototype** is the first playable version of the game. It uses only the Physical Layer (Layer 1) of the game's intended five-layer design. All game information is public. No digital technology is required. It is played with printed cards, physical tokens, and a human ARBITER.
+
+---
+
+## 2. The Problem This Prototype Solves
+
+Before any technology is developed — before hardware terminals, computer vision, projection, or AI narrative generation — we need to answer one question:
+
+**Is the core game good?**
+
+Specifically:
+- Does the core loop (covert operations + political acts + contested territory) produce interesting decisions every round?
+- Do the five factions feel meaningfully different in play?
+- Does ARBITER's role feel rewarding rather than administrative?
+- Does the session end with players wanting to play again?
+- Does the narrative system (Chorus Portrait, Chronicle, Chorus Question) produce genuine emotional resonance?
+
+These questions cannot be answered by design alone. They require observed play. The L1 Paper Prototype exists to produce that observation data before any expensive development commitments are made.
+
+### Assumption to Validate — Player Count
+The game is designed to accommodate **2–6 human participants**: up to 5 faction players plus 1 ARBITER. The following assumptions about player count must be validated in playtesting:
+
+| Assumption | Risk if False | Test Method |
+|-----------|--------------|-------------|
+| The game is playable with 2 faction players + ARBITER | Low player count may make the board feel empty; Incursion and negotiation may not emerge organically | Run a 2-faction session; measure engagement and contested district count |
+| The game is playable with a full table of 5 faction players + ARBITER | High player count may make Resolution too slow; ARBITER may be overwhelmed | Run a full-table session; measure Resolution time and ARBITER error rate |
+| ARBITER can be run by any participant, rotating between sessions | Some players may find the ARBITER role unappealing or too complex | Survey post-session willingness to ARBITER again |
+| The game is playable without a dedicated human ARBITER (automated fallback) | Some groups may not have a sixth willing participant | Design automated ARBITER fallback; test usability |
+| Playtest sequence — 2-player vs 5-player configurations should be tested in a defined order | Testing full table first may produce noise that obscures 2-player issues; testing 2-player first may not surface full-table bottlenecks | Recommended sequence: Session 1 at 3-player (baseline); Session 2 at full table (5 + ARBITER); Session 3 at 2-player. Adjust based on availability. |
+
+All five conditions are tracked in PM02 validation targets.
+
+---
+
+## 3. Approach & Strategy
+
+### Why Paper First
+Technology cannot rescue a game with broken mechanics. Building hardware, writing firmware, and training AI narrative before validating core gameplay would produce an expensive, unplayable product. The paper prototype isolates the game design variables from the technology variables — problems found at this stage cost hours to fix, not months.
+
+### Why Layer 1 First
+THE SIGNAL is designed with five information layers per district. Attempting to validate all five simultaneously would make it impossible to isolate which layer is causing any observed problem. Layer 1 — the physical layer, fully public, no hidden information — is the foundation every other layer builds on. If it is not compelling on its own, adding layers will not save it.
+
+### Why This Documentation Structure
+Each design document is a Feature of this Epic. Features must be independently useful (a reader can understand and act on them without reading every other document) but collectively complete (together they describe the entire game). The documentation is ordered so that each artifact builds only on concepts introduced in prior artifacts:
+
+- **Artifact 00** introduces the world, factions, and narrative context — the "why" of everything
+- **Artifact 01** introduces the board — the physical space where everything happens
+- **Artifact 02** introduces resources — what is generated and tracked on that board
+- **Artifacts 03–06** introduce what players and ARBITER do with those resources
+- **Artifacts 07–08** introduce the tools each party uses
+- **Artifacts 09–11** provide reference, specification, and production support
+
+No artifact refers to a concept not yet introduced. Visual artifacts (V01–V19) can only be finalized after the text artifacts that define their content.
+
+### Information Design Requirement
+Every component — every card, token, track, marker, and printed surface — must have defined information requirements before visual design begins. Each artifact specifies: what information is presented, who can see it, why it exists (purpose), and how it is conveyed (format and constraints). This ensures visual design serves the game rather than decorating it.
+
+### Document Change Governance
+
+**Non-material changes** (corrections, clarifications, formatting, cross-reference updates, terminology alignment, adding design notes that do not alter mechanics) may be made to signed-off artifacts without requiring re-sign-off. The version number increments at the minor level (e.g., 1.0 → 1.0.1). The change is logged in PM02 Section 4.
+
+**Material changes** (any change that alters a mechanical rule, adds or removes a phase or beat, changes a cost or effect, adds or removes a card or component, or changes a governing design principle) require the artifact status to be updated to 🔄 Pending Re-Sign-Off before the change is incorporated. The artifact must be reviewed and explicitly signed off before returning to ✅ status. Material changes are logged in PM02 Section 4 with a change description and rationale.
+
+**What counts as material:** If a player or ARBITER reading the artifact before and after the change would make a different decision at the table, the change is material.
+
+### Cross-Artifact Reference Convention
+
+When one artifact references specific content in another artifact, the standard reference format is:
+
+**[Artifact ID].[Section].[Subsection]**
+
+Examples:
+- `Artifact 04 §8` — refers to Section 8 of Artifact 04
+- `Artifact 03 §12.3` — refers to Section 12, Subsection 3 of Artifact 03
+- `Artifact 02b §8–9` — refers to Sections 8 through 9 of Artifact 02b
+- `PM02 §2b` — refers to Section 2b of PM02
+
+This convention applies to all in-document references, cross-artifact references in design notes, blocking decision descriptions in PM02, and punch list source citations. It provides a stable, unambiguous pointer to specific content without reproducing it. When an artifact is restructured and section numbers change, all references to that artifact should be audited and updated — this is a non-material change and does not require re-sign-off.
+
+---
+
+## 4. Deliverable
+
+A self-contained tabletop game kit that can be:
+- Assembled from printed and purchased components in under 2 hours
+- Set up and played by a group encountering it for the first time under ARBITER guidance
+- Used to run at least 3 structured playtest sessions with recorded feedback
+- Evaluated against defined success criteria to determine readiness for digital development
+
+---
+
+## 5. Success Criteria
+
+| # | Criterion | How Measured |
+|---|-----------|-------------|
+| S1 | A complete session (8 rounds) runs in 90–150 minutes | Clock |
+| S2 | ARBITER can facilitate without consulting rules during resolution | Error count per session |
+| S3 | All five factions feel meaningfully different in play | Players can describe opponent strategy unprompted |
+| S4 | Players want to play Session 2 before leaving | Post-session question |
+| S5 | At least one Accord is proposed per session | Count |
+| S6 | The Chronicle resonates at session end | Player agreement with ARBITER's account |
+| S7 | No single faction dominates economically by Round 4 | Resource counts at Round 4 end |
+
+---
+
+## 6. Out of Scope
+
+The following are explicitly excluded from the L1 Paper Prototype:
+
+- Digital terminals, ESP32 hardware, or any electronics
+- Computer vision or board projection
+- Layer 2–5 mechanics (social, informational, digital, subspace)
+- AI-generated narrative
+- Legacy or Covenant persistence between sessions
+- Website or between-session content
+- Full card library (366 cards) — prototype uses a minimum viable card set
+
+---
+
+## 7. Work Breakdown Structure
+
+### WBS 1 — Design Artifacts
+
+The following documents must exist and be signed off before physical production begins. They are ordered by dependency — each artifact may only reference concepts introduced in prior artifacts.
+
+| ID | Artifact | Problem It Solves | Blocking Playtest? | Status |
+|----|----------|------------------|--------------------|--------|
+| 00 | Factions & World | Without narrative context, no other artifact is meaningful. Defines who the factions are, what New Meridian is, what the Chorus is, and why The Table exists. | Yes — must be first | ✅ |
+| 01 | Game Board — New Meridian | Defines the physical space of play: district layout, rings, information displayed on each district, track positions, starting configuration, and board setup procedure. | Yes | ✅ |
+| 02a | Resource Systems: Board State | Defines presence, influence, structures, and resource generation — the systems whose entire state is always visible on the board. | Yes | ✅ |
+| 02b | Resource Systems: Tracking | Defines Chorus Portrait, Public Standing, and Intel Notes — the tracking systems that run alongside the board. | Yes | ✅ |
+| 03 | Round Structure & Gameplay | Defines the six-phase round, timing, initiative, the Apex trigger, and ARBITER conversion. Requires 00–02 to be meaningful. | Yes | 🔄 Pending re-sign-off (v1.5 — material changes: Beat 2 renamed, Step 6 rewritten, Declaration phase updated) |
+| 04 | Action Card System | Defines all covert operations, political acts, and faction-specific actions. Requires 00–03 for context. | Yes | 🔄 In progress — C01–C15 signed off; 12 blocking decisions open (see PM02 D04-01 through D04-12) |
+| 04b | Action Taxonomy & Design Analysis | Companion to 04. Taxonomy framework, coverage gap analysis, faction design recommendations. Not a playtest-blocking artifact — reference document. | No | ✅ Active reference |
+| 05 | Operative & Apex System | Defines all operatives, tier progression, Apex costs and effects, and the Founding Figure ceremony. Requires 00–04. | Yes | 🔄 |
+| 06 | Messaging System | Defines the dispatch case protocol, ARBITER private communications, and Accord forms. Requires 00–05. | Yes | ⬜ |
+| 07 | ARBITER Toolkit | Defines the Chorus Portrait board, Hidden Objective modes, Resolution track, Debrief reward system, resolution beats, narrative registers, Chronicle, and ARBITER script pack. Requires 00–06. | Yes | 🔄 |
+| 08 | Player Toolkit | Defines player components, faction reference cards, starting resources, and classified directives. Requires 00–06. | No | 🔄 |
+| 09 | Card Specifications | Defines all card content in table format for production. Requires 04–06 to be complete first. | Yes | ⬜ |
+| 10 | Game Manuals | Player guide, ARBITER guide, setup guide, and components list with shopping list. Requires all prior artifacts. | Yes | 🔄 |
+| 10a | Victory System | Defines all VP sources, Chorus Portrait conversion, scoring sequence, tiebreakers, and the vote mechanic. Integrated into Game Manuals but specified separately to ensure completeness. Requires 00–07. | Yes | ⬜ |
+| 11 | Visual Design System | Color palette, faction identity system, component visual standards. Required before final production files. | No | ⬜ |
+
+### WBS 2 — Physical Components
+
+Production does not begin until relevant design artifacts are signed off. Items are listed with their design dependency.
+
+| # | Component | In-World Name | Quantity | Source | Requires | Status |
+|---|-----------|---------------|----------|--------|---------|--------|
+| 2.01 | Printed hex map | New Meridian | 1 (A1 or A0) | Print shop | 01, V01, V08 | ⬜ |
+| 2.02 | Influence discs | Presence tokens | 15 per faction × 5 | Poker chips | 02a | ⬜ |
+| 2.03 | Large distinct pieces | Operational markers | 2 per faction × 5 | Distinct shape | 01 | ⬜ |
+| 2.04 | Small square chits | Structure tokens | 6 per faction × 5 | Card stock | 02a | ⬜ |
+| 2.05 | Resource chips | Asset tokens | 30 per type × 5 | Poker chips | 02a | ⬜ |
+| 2.06 | Faction chits + sticky notes | Intel notes | 4 per faction × 5 | Colored chits | 02b | ⬜ |
+| 2.07 | Neutral chips | Tension markers | 6 | Neutral chips | 02a | ⬜ |
+| 2.08 | Crown or star tokens | Control flags | 5 (1 per faction) + 1 permanent ARBITER flag for Chorus Node | See D-P-01 | 02a | ⬜ |
+| 2.08a | Fused single piece — ARBITER color | ARBITER Dominance Marker | 1 | Eight ARBITER-keyed presence tokens (white, TBD) stacked and fused, topped by ARBITER's dominance marker — same visual language as faction control flags but distinct: larger, differently keyed, or subtly off in a way that reads as *more*. All one inseparable piece. Placed at Chorus Node by ARBITER at setup. Never removed. | 00a R04, 01, 11, D-P-02 | ⬜ |
+| 2.09 | Ten-sided dice | — | 2 × d10 | Purchase | 03 | ⬜ |
+| 2.10 | Covert operation cards | — | Per 09 spec | Print + cut | 09 | ⬜ |
+| 2.11 | Political act cards | — | Per 09 spec | Print + cut | 09 | ⬜ |
+| 2.12 | Operative dossier cards | Field operative dossiers | Per 09 spec | Print + cut | 09 | ⬜ |
+| 2.13 | Modifier cards | Operational intelligence cards | Per 09 spec | Print + cut | 09 | ⬜ |
+| 2.14 | Counter cards | Countermeasure cards | Per 09 spec | Print + cut | 09 | ⬜ |
+| 2.15 | World event cards | Situation reports | Per 09 spec | Print + cut | 09 | ⬜ |
+| 2.16 | Objective cards | Classified directives | Per 09 spec | Print + cut | 09 | ⬜ |
+| 2.17 | Accord forms | Accord documents | 8 | Laminated dry-erase, 8cm × 8cm | 06 | ⬜ |
+| 2.18 | Pass cards | — | Per 09 spec | Print + cut | 09 | ⬜ |
+| 2.19 | Small boxes or envelopes | Dispatch cases | 1 per player | Purchase or make | 06 | ⬜ |
+| 2.20 | Laminated strips | Public Standing tracks | 1 per faction | Print + laminate | 02b, V02 | ⬜ |
+| 2.21 | Combined laminated strip | World Condition tracks | 1 | Print + laminate | 01, V04 | ⬜ |
+| 2.22 | Simple strip | Round tracker | 1 | Print + laminate | 03 | ⬜ |
+| 2.23 | Dry-erase grid behind screen | Chorus Portrait board | 1 | Print + laminate | 07 | ⬜ |
+| 2.24 | Laminated A4 mat | ARBITER resolution mat | 1 | Print + laminate | 07 | ⬜ |
+| 2.25 | Sealed index cards | Apex envelopes | 10 (2 operatives × 5 factions) | Prepare at setup | 05 | ⬜ |
+| 2.26 | Pre-printed cards | Table Record pad | 30 sheets | Print | 07 | ⬜ |
+| 2.27 | Adhesive notes | Intel note age tracker | 1 pad | Purchase | 02b | ⬜ |
+| 2.28 | Countdown device | Timer | 1 | Sand timer or phone | 03 | ⬜ |
+| 2.29 | Writing tools | — | Set | Purchase | — | ⬜ |
+| 2.30 | Laminated cards | Player quick reference cards | 1 per player | Print + laminate | V12–V18 | ⬜ |
+
+### WBS 3 — Playtest Infrastructure
+
+| # | Deliverable | Requires | Status |
+|---|-------------|---------|--------|
+| 3.01 | Session feedback form | PM02 validation targets | ⬜ |
+| 3.02 | Phase timing sheet | 03 | ⬜ |
+| 3.03 | Post-session debrief script | 10 | ⬜ |
+| 3.04 | Session 1 simplified configuration guide | 09, 10 | ⬜ |
+| 3.05 | Getting Started walkthrough | All design artifacts | ⬜ |
+
+---
+
+## 8. Open Decisions Requiring Sign-Off
+
+See PM02 for full decision detail and canonical decision IDs. Items currently blocking WBS 1 completion are listed below using PM02's per-artifact ID format. Decisions for signed-off artifacts (00–03) are locked — see PM02 Section 1 for the record.
+
+| PM02 ID | Decision | Blocking Artifact |
+|---------|---------|------------------|
+| D04-01 | Faction-specific political acts — The Guild, The Syndicate, The Directorate, The Network | 04 |
+| D04-02 | Faction-specific covert operations — The Guild, The Syndicate, The Directorate, The Network | 04 |
+| D06-01 | Dispatch case physical format | 06 |
+| D06-02 | Dispatch case submission protocol | 06 |
+| D07-01 | ARBITER Resolution — track only vs. spendable resource | 07 |
+| D05-01 | Board Strength thresholds by player count | 05 |
+| D05-02 | Apex Emergency Response timing | 05 |

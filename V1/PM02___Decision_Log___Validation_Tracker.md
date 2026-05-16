@@ -1,0 +1,596 @@
+# PM02 — Decision Log & Validation Tracker
+## THE SIGNAL P1 — Paper Prototype
+
+**Version:** 1.4  
+**Status:** 🔄 Updated — Active
+
+---
+
+## Section 1 — Locked Decisions
+
+Decisions made and incorporated into current artifacts. Listed for reference and audit trail. Ordered by primary artifact.
+
+| ID | Decision | Rationale | Primary Artifact |
+|----|---------|-----------|-----------------|
+| L-NEW-01 | Faction renames: Architect → The Guild; Signal → The Network; Warden → The Directorate | Simpler, more distinct; each name is abstract, institutional, economic, structural, or decentralized | 00 |
+| L-NEW-02 | Resource renames: Ghost=Findings; Network=Exposure; Syndicate=Capital; Guild=Capacity; Directorate=Mandate | Resources reflect each faction's theory of power, not generic currencies | 00, 02a |
+| L-NEW-03 | ARBITER reframed as part of the Chorus communication protocol, not human-created facilitator | Creates unsettling possibility The Table is not fully human-created; deepens thematic tension | 00, 07 |
+| L-NEW-04 | ARBITER tracks four metrics via four Hidden Objective modes: Alignment Maximizer, Stress Tester, Signal Optimizer, Observer Only | More nuanced than single Resonance win condition; ARBITER behavior varies per session — fully implemented in 00 §9 | 00, 07 |
+| L-NEW-05 | ARBITER resource named Resolution | Flavor and function aligned; full implementation governed by D07-01 | 07 |
+| L-NEW-06 | Opening monologues added for each faction and ARBITER | Players understand faction identity before Round 1 begins | 00, 10 |
+| L-NEW-07 | ARBITER script pack added as project deliverable | Removes improvisation requirement; supports consistent narrative | PM01, 07 |
+| L-NEW-08 | Five design pillars formalized | Governing principles for all design decisions | PM01, 00 |
+| L01 | L1 only — all information public | Validates core loop without hidden layer complexity | All |
+| L02 | Districts replaces Hexes | Narrative immersion | 01 |
+| L03 | Dispatch case replaces Recipe box | In-world term for covert submission | 06 |
+| L04 | Presence tokens replaces Influence tokens | In-world term | 02a |
+| L05 | Operational markers replaces Claim markers | In-world term | 01 |
+| L06 | Operational intelligence cards replaces Modifier cards | In-world term | 04 |
+| L07 | Countermeasure cards replaces Counter cards | In-world term | 04 |
+| L08 | Intel notes replaces Proof tokens / Intelligence tokens | In-world term | 02b |
+| L09 | Public Standing = 0–20 point track | Bell curve, meaningful progression | 02b |
+| L10 | Dominant = 3+ tokens, strictly more than all others | Clear threshold | 02a |
+| L11 | Established = 2+ tokens AND second place by count | Rank-based with absolute floor | 02a |
+| L12 | Contested = condition, not an influence level | Conceptual clarity | 02a |
+| L13 | Natural drift: above 13 = −1/round, below 7 = +1/round | Bell curve enforcement | 02b |
+| L14 | Operational markers count as temporary presence tokens during the round | Strategic placement matters intra-round | 02a |
+| L15 | Resources distributed before marker conversion at Upkeep | Markers earn next round | 03 |
+| L16 | Submission order = priority tiebreaker within tier | Rewards decisiveness | 03 |
+| L17 | Ghost: 4 covert operations if Pass public act | Ghost identity — covert depth over political visibility | 04 |
+| L18 | Pass cards serve as dispatch case checksum | ARBITER clarity | 04 |
+| L19 | Duplicate covert operations permitted | Faction focus strategies allowed | 04 |
+| L20 | Build cost = 1 Capacity + 1 district resource type | Local knowledge required | 04 |
+| L21 | Protect cost = 1 of target district resource type | Contextually appropriate | 04 |
+| L22 | Leverage = 2 Capital, guaranteed trade, −4 Public Standing if declined | Cooperation theater | 04 |
+| L23 | Occupy and Incursion always cost Public Standing | Coercion is never publicly free | 04 |
+| L24 | Incursion = 1d10 + Battlefield Strength; aggressor sacrifices Public Standing post-roll | Geography matters; desperation is visible | 04 |
+| L25 | Structure lost when last presence token and marker removed from district | Presence sustains structures | 02a |
+| L26 | Max 6 presence tokens per faction per district | Saturation cap | 02a |
+| L27 | Residential district amplifies all global Public Standing effects | Public is watching | 02a |
+| L28 | Chorus Node: no structures; 4 distinct incentives | Worth contesting without building | 02a |
+| L29 | Operative tiers T1/T2/T3/Apex with cooldowns 1/2/2/— | Progressive power requiring cooperation | 05 |
+| L30 | Apex ends session; Emergency Response phase fires first | Dramatic cascade | 05 |
+| L31 | Apex requires all 5 resource types + Board Strength threshold | Table cooperation required | 05 |
+| L32 | Apex power sealed in envelope; revealed at activation | Commitment without certainty | 05 |
+| L33 | Debrief reward tiers A/B/C based on conversation quality | ARBITER has real narrative tools | 07 |
+| L34 | Broadcast = all actions +1 difficulty in target district | People don't act naturally when watched | 04 |
+| L35 | Two-card Situation Report system (public narrative + ARBITER effect card) | Fiction/mechanics separation | 01 |
+| L36 | ARBITER 4:1 conversion available during idle time | Trade access without action cost | 03 |
+| L37 | Ghost-specific covert operations exist at L1; other factions use standard set | Ghost's intelligence operations are L1-native; operative abilities are separate from covert operation cards | 04 |
+| L38 | Commission builds in both operational marker districts simultaneously | Public act = geographic reach, not depth | 04 |
+| L39 | Denounce costs target faction's native resource + OI by token age | Accusation drawn from opponent's domain of power | 04 |
+| L40 | Starting district configuration confirmed — The Network and The Guild starting positions locked | Network: Media District (Established), University Perimeter (Present), Communications Hub (Established), Broadcast Tower (Present). Guild: Power Grid (Dominant), Industrial Fringe (Present), Logistics Center (Present). Resolves D01-02. | 01 |
+| L41 | Affinity bonus cap removed — no cap on districts generating affinity bonus per round | Uncapped affinity is the L1 design rule. Economic impact is a playtest variable (PT-02-02). Resolves D02-02. | 02a |
+| L42 | Portrait positive bands shifted +1 — Ambiguous now −1 to 0; all positive bands shift up accordingly | Eliminates boundary overlap at +1. Resonant compresses to width 3 (+18 to +20) to preserve −20/+20 track limits. Resolves D02-05. | 02b |
+| L43 | Player count validation sequence — D00-01 relocated to PM01 playtest conditions | Not a design decision blocking Artifact 00. Moved to PM01 §2 playtest assumption table as a sequencing condition. Artifact 00 unblocked. | PM01 |
+| L44 | District count confirmed at 22 (21 named districts + Chorus Node) | Full district set as specified in Artifact 01 §7. Resolves D01-01. | 01 |
+| L45 | District names confirmed — full named list locked as specified in Artifact 01 §7 | Names reflect city geography, resource type, and faction history. Resolves D01-03. | 01 |
+| L46 | Findings decay rule confirmed — 7–12: lose 2; 13+: lose 4 | Values as specified in Artifact 02a §8. Resolves D02-01. | 02a |
+| L47 | Portrait per-action scoring starting values confirmed — +2/+1/0/−1/−2 | Starting calibration values locked. Subject to adjustment after playtesting — see playtest variable PT-02-03. Resolves D02-03. | 02b |
+| L48 | Public Standing starting position confirmed — all factions start at 10 (Neutral) | Center of the 0–20 scale. Confirmed as specified in Artifact 02b §7. Resolves D02-04. | 02b |
+| L49 | Beat 2 renamed from "Defenses Hold or Fall" to "The Ground Shifts" | Beat 2 scope expanded beyond defensive cards to include all condition-setting cards (C06, C07, C10, C11, C28, C34, C35). New name reflects the full scope. Material change — Artifact 03 v1.5, pending re-sign-off. | 03 |
+| L50 | Step 6 Card Draw fully rewritten — draw decks, hand sizes, modifier draw conditions, Burst Play window | Replaced the single-sentence modifier draw rule with the full card system draw protocol. Material change — Artifact 03 v1.5, pending re-sign-off. | 03, 04 |
+| L51 | Free Accord card (C09 Fund) is ARBITER-delivered, not drawn from political deck | Fund's crit/success effect triggers a free Accord card outside the normal draw cycle. Political deck is unaffected. | 03, 04 |
+| L52 | Pass card is one type, four cards per faction, usable in both covert and political contexts | Replaces prior two-card-type system. Ghost Political Pass retains special 4-operation rule. | 04 |
+| L53 | Ghost Political Pass unlocks 4th covert operation slot | Ghost's fourth dispatch slot is only available in rounds when Ghost uses their Political Pass. Confirmed design intent. | 03, 04 |
+| L54 | Standard covert operations cost less on average than standard political actions | Design Principle 12. Covert operations are operational work; political acts are public commitments with broader consequences. | 04 |
+| L55 | No persistent temporary effects across rounds — all card effects immediate or permanent | Design Principle 11. Cards whose effects crossed round boundaries were revised: C19 Deep Cover (permanent record removal), C22 Detain (permanent marker removal), C24 Surveillance Placement (permanent monitoring). | 04 |
+| L56 | Card data structure standardized — 20 required fields including Card ID, Beat, Taxonomy, Faction perspectives | All cards C01–C35 use this structure. Political acts P01–P18 pending full application (D-04-06). | 04 |
+| L57 | Beat field is numeric only — Beat names are canonical in Artifact 03 | Cards carry a numeric Beat field. Visual design (Artifact 11) decides whether the name appears on the card face. | 03, 04 |
+| L58 | "At least 1 presence token" on any card includes claim markers — global convention | Defined once in Artifact 02a. Not restated on individual cards. | 02a, 04, 09 |
+| L59 | "Delivered in case" is standard language for all privately delivered effects | Consistent phrasing across all cards that deliver information or resources privately. | 04, 09 |
+| L60 | "Return primary cost to dispatch case" is standard resolution phrase for crit success refunds | Consistent phrasing for crit success resource returns. | 04, 09 |
+| L61 | "Any other faction" is standard target value when self-targeting is not permitted | Replaces "Any faction" + "Cannot target self" restriction. Cleaner data design. | 04 |
+| L62 | Faction perspectives are a required card data field — in-world faction voice per card | Required for all factions with Portrait values on a card. Optional for others. Visual design decides whether printed on card face. | 04, 09 |
+| L63 | Portrait effect only when action strongly aligns with or against faction doctrine — grey areas produce no Portrait effect | Design Principle 10. Ghost and Syndicate omitted from Undermine (C04) Portrait — neither strongly aligned nor opposed. | 04 |
+| L64 | Modifier card play cost is Option A (free) — draw conditions and deck size are the gates | Option C (variable cost per card) is the named fallback for playtesting. Option D (ring-native resource) ruled out — each ring district has different native resources. Flag PT-04-01. | 04, 09 |
+| L65 | Post-Burst Burst Play modifier card trade ruling — Burst removes draw access only | Factions that have triggered Burst Play may still receive and use modifier cards through trade. Burst removes the draw step and deck, not the ability to hold or play modifier cards. | 04 |
+| L66 | Ring modifier cards carry a hard targeting constraint regardless of holder | Ring modifier cards may only be used on actions targeting districts in the ring they came from. Constraint applies to all users. Stated prominently on card face. | 04, 09 |
+| L67 | Modifier card value rating (1–3) on all modifier cards for Option C playtest evaluation | Field present on card face regardless of whether Option A or C is active. Enables cost model evaluation during playtesting. | 04, 09 |
+| L68 | Action taxonomy established — Category / Function / Target framework for all cards | Full taxonomy in Artifact 04b. Taxonomy fields are required data on all cards. | 04, 04b |
+| L69 | Ghost exempt from adjacency restriction on Gather (C05) only | Ghost's remote analysis doctrine means Gather does not require physical proximity. All other adjacency restrictions apply to Ghost. | 04 |
+| L70 | C14 Construction Crew difficulty scales with contested presence — Automatic if Guild alone, Average + ring modifier if others present | Allows chain play with C13 Foundation Rights (Automatic when alone). Failure effects apply only in contested case. | 04 |
+| L71 | C12 Materials Acquisition redesigned — Guild subcontracts demolition to another faction, recovers their C02 cost | Guild names a target faction at submission. If that faction executes C02 this round, Guild recovers the full cost. Beat 2 card. | 04 |
+| L72 | C15 renamed Infrastructure Yield — zero-cost resource draw from Established presence | Replaces prior Rezone concept (tabled as political act). Established presence required. | 04 |
+| L73 | Rezone tabled as political act — permanently change a district's native resource type | Strong concept, belongs in the public channel as a major board-altering declaration. Flag for §10 political act design pass. | 04, PM03 |
+| L74 | Grid Tap tabled as political act or operative ability — sacrifice presence for 2 native resource | Distinct from Infrastructure Yield. Requires 2+ presence, costs 1 presence token. Flag for §10 and Artifact 05. | 04, PM03 |
+| L75 | Document change governance rule established — material vs non-material change definition | Non-material changes do not require re-sign-off. Material changes require 🔄 status and re-sign-off. Rule: if a player or ARBITER would make a different decision at the table, the change is material. | PM01 |
+| L76 | Resolution field added to card data structure — 21st required field | Separates resolution condition (how success/failure is determined) from effect fields (what happens). Standard value for 2d10 cards: "2d10 roll vs. difficulty target — see §X." Non-standard mechanics state their own condition. Retroactive application to C01–C15 is non-material (standard value only). | 04 |
+| L77 | Taxonomy field split into three separate fields — Taxonomy — Category, Taxonomy — Function, Taxonomy — Target | Compound string was ambiguous and non-queryable. Three fields map cleanly to the Category/Function/Target framework in Artifact 04b. Retroactive non-material application to C01–C15. | 04, 04b |
+| L78 | C17 Archive Recovery retired — slot repurposed as Reveal to named faction card | Archive Recovery (Intel token recovery) has insufficient standalone impact. Better suited as a modifier card. C17 slot fills the Reveal to named faction taxonomy gap identified in D04-02. Archive Recovery tabled as modifier card candidate. | 04 |
+| L79 | Crit success never carries an additional cost — design principle | Crit success is always the same cost as success. Better outcome is the reward, not a cost reduction or addition. Applies to all cards. | 04 |
+| L80 | Card type split into three fields — Card Type, Card Subtype, Card Faction | Card Type: Covert Operation / Political Act / Operative / Emergency Response / etc. Card Subtype: Common / Faction-specific. Card Faction: All / Ghost / Guild / Directorate / Network / Syndicate / combinations. Separates category from restriction. Retroactive non-material application to C01–C15. | 04 |
+| L81 | Portrait split into three fields — Portrait Unconditional, Portrait Bonus, Portrait Bonus Condition | Portrait Unconditional: fires on action taken regardless of outcome. Portrait Bonus: fires only when Portrait Bonus Condition is met. Portrait Bonus Condition: states the specific condition (success / crit success / correct prediction / etc.). Fields are N/A when not applicable. Retroactive non-material application to C01–C15. | 04 |
+| L82 | Portrait unconditional by default — fires on action taken, not outcome | The Chorus tracks doctrine alignment. ARBITER sees intent. Attempting a doctrinally aligned action earns Portrait regardless of roll outcome. Exception: cards where the outcome IS the doctrine demonstration use Portrait Bonus + Condition instead of or in addition to unconditional. | 04 |
+| L83 | Artifact 04a established — Card Reference Table | Condensed tabular view of all cards: one row per card, columns for key queryable fields (ID, Name, Card Type, Card Subtype, Card Faction, Beat, Primary Cost, Difficulty, Taxonomy — Category/Function/Target, Portrait). Full card data remains in Artifact 04. 04a is the lookup and cross-reference layer. Populated after all card reviews complete. | 04a, PM01 |
+| L84 | ARBITER is the sole mover of the Chorus Portrait track | Factions may not hold card effects that directly shift the Chorus Portrait track. Faction influence on Portrait is mediated entirely through ARBITER's application of Portrait scoring (L47) based on card Portrait fields. No card Effect field may state a direct Portrait track shift. Establishes 00a Rule 00-R01. Invalidates P17 Publish Analysis current effect — redesign required. Cross-Category — Shift — Chorus Portrait retired as a player-facing taxonomy function. | 00a, 02b, 04, 04b |
+| L86 | Terminology Sequencing — information design principle governing artifact order | No term, in-world concept, or named component may appear in an artifact without its narrative grounding established first in artifact order. This is an information design principle, not a gameplay rule — it governs how the project documentation is structured and how readers experience the material. Full principle in PM03 §1. Pointer in 00a §1. Clarifies and extends Narrative and World Consistency (Design Pillar 6) at the documentation architecture level. | PM03, all artifacts |
+| L85 | 00a Mechanics field = rule and design constraints only — not execution procedure | The Mechanics: field in 00a states what is constrained and what cannot be overridden. Execution procedure — who does what, in what order — belongs in source artifacts (Artifact 03 for round structure, Artifact 07 for ARBITER scripting, Artifact 11 for component specs). Applied retroactively to R01–R12. Captured in 00a §1 as "Rule Structure Principle — Mechanics vs. Process." | 00a |
+| L87 | Fourth ARBITER register established — The Witness | The Witness is ARBITER's expository register: chronological, observational, and deliberately indistinguishable from the Narrator's voice. Used when ARBITER is not speaking to the table but narrating — establishing the state of the world before or after events. The four registers are: The Record (flat, precise, factual), The Observation (oblique, atmospheric, narrative), The Reckoning (rare, direct, personal), The Witness (expository, chronological, indistinguishable from Narrator). Resolves XA-05 (register name inconsistency between 00a and Artifact 07). Artifact 07 update required. | 00a R02, 07 |
+| L96 | Copy design convention — italic for explanatory/commentary text in procedural sections | In all round structure, rules, and procedure sections: action text is plain prose (tells the reader what to do); explanatory or commentary text is italicised (tells the reader why, provides context, or flags edge cases). Separation between action and commentary is marked by a CR. Convention applies to all artifacts with procedural sections — Artifact 03, 07, and any future procedure document. Already partially in place via contextual callouts (*Round 1:*, *If The Network...*) — this formalises and extends it. Punch list item XA-18 carries the scan-and-revise pass to all documents. | All procedural artifacts |
+| L95 | Copy design principle — code block format for schematic/overview content | A fenced code block (``` ```) is the standard format for any content that functions as a map, schematic, or at-a-glance structural summary rather than prose. Use when: (1) content is a structured overview meant to be scanned, not read; (2) the visual distinction from surrounding prose is intentional and meaningful; (3) the content would become a designed diagram or infographic element in final layout. Do not use for prose explanations, rules text, or examples — those use standard markdown. Applied: Artifact 03 §6 Round Overview. Flag: add to PM03 §1 document formatting standards (PM03-02). | PM03 §1, all artifacts |
+| L94 | The Network virtual structure block at University Perimeter counts as a full structure block for all game purposes | The virtual block is not income-only — it is a full equivalent of a physical structure block and counts toward all mechanics that read "structure blocks owned," including faction modifier draw threshold, ring modifier eligibility, and any future mechanic that references structure blocks. Design rationale: accounts for The Network's weaker board position at session start; narratively grounded in Network's established institutional footprint at the University. Canonical definition lives in Artifact 02a — 02a update required to state full equivalence explicitly (02a-09). | 02a, 03 |
+| L93 | Chorus Node Translation rate scale adopted — Contested = 5:1, no presence = 4:1, Present = 3:1, Established = 2:1 | The Translation rate scales with the requesting faction's presence at the Chorus Node at the time of the request. The Contested penalty (5:1) is not a balancing mechanism — it is ARBITER's consequence for factions bringing conflict into the Chorus Node. ARBITER states the applicable rate in The Record register before processing. Rate table is canonical in Artifact 02a §8. 01 and 02a §10 benefits table updated. Becomes the fourth mechanical strategic incentive at the Chorus Node (alongside Chorus Activity suppression, Portrait amplifier, Chorus Question access). Flag: 10-02 (ARBITER Manual flavor text for 5:1 rate, still pending). Flag: D02a-03 (Portrait consequence of requesting Translation, still open). Flag: needs playtesting validation for economic impact. | 01, 02a §8, 02a §10, 00a R05 |
+| L92 | Chorus Node Portrait benefit canonical mechanic — Established / flat end-of-quarter additive (02a version) | 01 described a ×1.25 per-action multiplier triggered by Dominant. 02a described a flat +1/−1 end-of-quarter additive triggered by Established. Materially different mechanics (different threshold, different mechanism). 02a version adopted as canonical: Established threshold; ARBITER moves Portrait marker one step further in its current direction at close of quarter; no effect if at zero (Ambiguous); not available during Contested. Consistent with Portrait's no-decay accumulation model; zero additional complexity for The ARBITER player at Resolution. 01 updated: "Chorus Portrait Multiplier" → "Chorus Portrait Amplifier," Dominant → Established, multiplier → flat additive, "per 00a R01" added. 02a updated: "per 00a R01" added. Closes 00a §11 A05 and A06. | 01, 02a, 00a R01 |
+| L91 | 00a R37 retired — influence level → difficulty table superseded by card-printed difficulty | R37 stated base difficulty was set by the acting faction's influence level in the target district. Artifact 04's card system supersedes this: base difficulty is a designed property printed on each card. The influence level → difficulty mapping (Dominant = Automatic through Impossible) does not reflect how any card in Artifact 04 works. Any presence-based difficulty relationships are encoded card-by-card through affinity bonuses and ring modifiers. No scenario requires influence-level-based base difficulty as a separate mechanism. Governance of base difficulty belongs in Artifact 04 and Artifact 03 §12. | 00a R37, Artifact 04 |
+| L90 | Portrait values printed on cards, visually coded for ARBITER — no separate reference sheet | Portrait field is printed on the card face and visually coded so ARBITER can parse Portrait values and faction impact directly at Resolution. Visual system is designed to be parseable by ARBITER and opaque in purpose to faction players — the coding is a card layout and visual design problem, not a gameplay rule. Reference sheet approach rejected: overhead compounds with card set size; between-session privacy is not fully enforceable regardless. Technology-enhanced version solves the privacy problem completely. Visual coding design deferred to Artifact 09 (D09-05). | 00a R29a, Artifact 09 |
+| L89 | Deployment markers are moved, not removed — factions always retain operational tempo | Deployment markers cannot be removed from play by any card effect or mechanic. When an effect would remove a marker, it is moved instead. Factions may always place in the Fringe ring unrestricted as an unconditional fallback — no presence requirement, no card cost. Fringe ring = the faction's operational baseline, representing the idea's reach beyond any specific contested territory. R13a added to 00a §5. R15 Mechanics revised: board absence = all presence tokens removed; deployment markers remain. Source: session 6 design decision B. Flag: verify "Fringe ring" name against Artifact 01 district map. | 00a R13a, R15 |
+| L88 | Role vs. Player terminology governance — ARBITER, The ARBITER Player, Faction, Faction Player | Four distinct terms, always used precisely. "ARBITER" = the in-world entity: the Chorus's instrument, the character with four registers. "The ARBITER Player" = the human executing the ARBITER role's physical functions in the paper prototype. "Faction" = the in-world role acting with full intelligence: deliberating, negotiating, roleplaying the faction representative. "Faction Player" = the human executing physical faction actions (placing markers, collecting resources, rolling dice). Design principle: The ARBITER Player and Faction Player functions are automation stand-ins — physical actions that will be handled by software in the technology-enhanced version. The ARBITER and Faction roles are intelligence-driven — designed to be filled by a human or AI agent. Convention: narrative, script, and announcement fields use role names ("ARBITER," faction name). Process documentation uses "The ARBITER Player" or "Faction Player" for physical execution; role names for intelligence acts (deciding, announcing, roleplaying). Rule statements use "ARBITER" — rules govern entity authority across all implementations. Full audit of 00a Mechanics fields required (00a-10). Extended session 10: Faction / Faction Player distinction added; automation stand-in design principle formalized. | 00a §1, 07, 03 |
+
+---
+
+## Section 1b — Playtest Variables
+
+Decisions locked for the signed-off design but flagged for economic and mechanical observation during playtesting. If a variable produces problematic outcomes, it re-enters the open decisions process before subsequent sessions.
+
+| ID | Variable | Design Rule | Watch For | PM01 Criterion |
+|----|----------|-------------|-----------|----------------|
+| PT-02-02 | Affinity bonus — uncapped | No cap on districts generating +1 affinity per round | Does any faction generate significantly more native resource than opponents by Round 4? Monitor Ghost (Findings districts cluster in Core/Infrastructure) and The Syndicate (Capital districts on east corridor) for income dominance. | V09 — no faction holds 2× nearest rival |
+| PT-02-03 | Portrait per-action scoring values | Starting values +2/+1/0/−1/−2 | Do Portrait scores diverge meaningfully by Round 4? Do Chronicle entries feel proportionate to table behavior? | V12 — Portrait changes ranking in >30% of sessions |
+| PT-02-04 | Passive generation — starting value 1/round | All factions generate 1 native resource per round unconditionally | Is 1/round sufficient for factions with limited district presence in early rounds? Does it feel meaningful or negligible? | Round 1–2 resource availability across all factions |
+| PT-PC-01 | Playtest session sequence for player count validation | Recommended: Session 1 at 3-player; Session 2 at 5-player; Session 3 at 2-player | Does sequence order affect which bottlenecks are visible? Are 2-player and 5-player issues distinguishable from 3-player baseline? | PC-01, PC-02 |
+| PT-04-01 | Modifier card play cost — Option A (free) | Modifier cards are free to play. Draw conditions and deck size are the gates. | Do free modifier cards skew late-game balance? Does Burst Play create dominant resource spikes? Does any faction's modifier deck generate disproportionate advantage? | No faction generates 2× nearest rival's modifier cards by Round 5. Burst Play used in <50% of sessions. |
+| PT-04-02 | Deck composition selection — does pre-session deck building add meaningful strategic depth? | Players select 24/30 covert and 12/20 political before the session. | Does deck selection produce meaningfully different strategic postures? Or do players default to the same choices every session? | At least 3 meaningfully different deck configurations observed across 5 sessions. |
+| PT-04-03 | Ghost 4-operation rule balance with new card system | Ghost draws 6 covert cards like all factions but can submit 4 when passing politically. | Does Ghost's 4-operation capability dominate Beat 3? Does the political pass cost feel appropriately weighted? | Ghost does not account for >40% of Beat 3 resolution time (V02 carried forward). |
+
+---
+
+## Section 2 — Open Decisions
+
+**Ordered by blocking artifact.** Address decisions for each artifact before that artifact is drafted. Signed-off artifacts have all blocking decisions resolved — see Section 1 Locked Decisions for the record.
+
+### Blocking Artifact 03 — Round Structure & Gameplay (Re-Sign-Off Required)
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D03-R01 | Confirm Beat 2 rename "The Ground Shifts" and expanded scope (all condition-setting cards, not just countermeasures/protect) | Accept as written in v1.5 / revise scope or name | HIGH — blocks 03 re-sign-off |
+| D03-R02 | ✅ Confirmed session 9 — Step 6 renamed "Hand Assembly"; tableau check, action draw, modifier draw, Burst Play window reviewed and signed off. | — | — |
+| D03-R03 | Confirm Declaration phase update — free Accord card from C09 Fund is ARBITER-delivered, not from political deck | Accept as written / revise | MEDIUM — blocks 03 re-sign-off |
+
+---
+
+### Blocking Artifact 04 — Action Card System
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D04-01 | Card set completeness — taxonomy gaps may warrant additional cards. Setup pool sizes (30/24 covert, 20/12 political) are assumptions. | Accept current set as L1 baseline / design gap-filling cards before production | HIGH |
+| D04-02 | Ghost C16–C20 redesign — C18/C19 duplicate Cross-Category — Protect — Action attribution. Gaps: Portrait Shift primary, Reveal to named faction, Copy subset. | Approve current set for prototype / redesign before Artifact 09 | HIGH |
+| D04-03 | Directorate C21–C25 redesign — C21/C25 duplicate Action — Block. Gaps: Resource — Add (Mandate generation), Shift Public Standing. | Approve current set for prototype / redesign | HIGH |
+| D04-04 | Network C26–C30 redesign — C26/C28 duplicate Reveal. C27 doctrinally misaligned. Gaps: Resource — Add (Exposure generation), Shift Public Standing primary. | Approve current set for prototype / redesign | HIGH |
+| D04-05 | Syndicate C31–C35 redesign — zero information capability. Gaps: Corrupt Accord, Redirect Accord ("small print"), Reveal Intel tokens held. | Approve current set for prototype / redesign | HIGH |
+| D04-06 | Political acts P01–P18 full card data structure review — Beat, Taxonomy, Faction perspectives, Restriction, crit effects, Portrait not yet applied. | Begin political act card-by-card review as next step | HIGH |
+| D04-07 | Modifier card in-world naming — "Modifier cards" is a working designation. | Select in-world name before Artifact 09 | MEDIUM |
+| D04-08 | Modifier card individual content — faction modifier decks and ring modifier decks have no individual card designs. | Full design pass required — scope and timing TBD | HIGH |
+| D04-09 | Adjacency definition — formal district adjacency table needed in Artifact 01. Required by C02, C04, C05, C14, C29, C30. | Add adjacency table to Artifact 01 | HIGH |
+| D04-10 | Emergency Response card data structure review — full card data structure not applied. | Apply §6 data structure to all 5 Emergency Response cards | MEDIUM |
+| D04-11 | Intel token mechanics cross-reference — Artifact 02b §8–9 audit against current card designs needed. Potential inconsistency with Denounce cost, token age rules, C05 crit failure. | Audit and resolve inconsistencies | HIGH |
+| D04-12 | Countermeasure card design — referenced in Artifact 04 §14.2 and Artifact 03 Phase 5 but no card data structure definition exists. | Define Countermeasure cards in Artifact 04 or Artifact 09 | MEDIUM |
+| D04-13 | **Floor Act** (working name) — design the standard political act available to all factions at all times, outside of deck composition, costing 1 native resource. Governing rule established in 00a R15: the action system must always guarantee at least one playable option regardless of resource state. This card prevents action paralysis for a faction that has lost board presence and enters a quarter with only passive generation (1 unit). Design questions: (1) What does the act DO — minimal presence assertion, formal declaration, contested district claim, or something faction-agnostic? (2) Does it have a faction-specific form or is it universal text? (3) Does it carry any Portrait value? (4) Is there one universal version or does each faction have their own equivalent floor card? The effect must be minimal by design — participation, not advantage. Context: scenario is a faction with 0 board presence, 1 resource, no leverage. The act keeps them in the game for another quarter. | Design during political act pass — Artifact 04 §10. Governs: 00a R20a. | HIGH |
+
+---
+
+### Blocking Artifact 02a — Resource Systems: Board State (Addendum)
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D02a-02 | Narrative anchor for the resource bank — the physical pool of resource tokens that ARBITER manages and factions retrieve power from. The bank is not a financial institution; it is a reservoir of human power administered by ARBITER. What it IS in the world is TBD. Seeds: (1) New Meridian itself — the city's people, labor, attention, and capital are the source; factions draw from the city; (2) humanity's collective potential — the sum of what humans can do, held where ARBITER can account for it; (3) something the Chorus established — a structured reservoir, deliberately created as part of whatever The Table was designed to produce. ARBITER managing the bank is significant — it is another dimension of ARBITER-as-faction and the Chorus's relationship to the flow of human power. **This decision also anchors the resource tokens themselves** — once the bank is defined, the tokens are defined: physical units of the city's power temporarily held by a faction. Spending a token returns that power to the city. Holding a token means holding a piece of New Meridian. Connected to resource reframe (power units not currency), The Translation service naming, and PW-03 (component narrative descriptions). | TBD — not blocking | LOW |
+| D02a-03 | Does requesting The Translation carry a Portrait consequence? Translation is a doctrinal admission — a faction saying their theory of power fell short. ARBITER observes this. Whether ARBITER scores it on the Portrait track is a design decision. Options: (1) Translation always carries a small negative Portrait (doctrine admission); (2) Translation carries Portrait only if the requesting faction is Dominant in their home districts (they had the power, chose not to use it); (3) Translation is observed but carries no Portrait score — the observation is consequence enough; (4) Portrait consequence depends on how often a faction requests Translation across the session (pattern scoring). Connected to D02a-01 (L93), 00a R05, and Artifact 07 ARBITER script design. **Carried over to Artifact 03 review — session 8.** | Open — deferred to 03 review | MEDIUM |
+| D02a-01 | ✅ ADOPTED session 8 — see L93. Chorus Node Translation rate scale: Contested = 5:1, no presence = 4:1, Present = 3:1, Established = 2:1. Canonical table in 02a §8. 02a §10 benefits table updated. 01 updated. 02a-08 executed. | Adopted as written | MEDIUM |
+
+---
+
+### Blocking Artifact 05 — Operative & Apex System
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D05-01 | Board Strength thresholds by player count | Current: 5P=12, 4P=10, 3P=8, 2P=6 — confirm or adjust | MEDIUM |
+| D05-02 | Apex Emergency Response timing | Emergency responses resolve before Apex effect fires / simultaneously with Apex | MEDIUM |
+
+---
+
+### Blocking Artifact 06 — Messaging System
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D06-01 | Dispatch case physical format | Small cardboard box / envelope / ziplock pouch / custom folded card | HIGH |
+| D06-02 | Dispatch case submission protocol | How are asset tokens physically submitted alongside cards? Loose in box / attached to card with clip / in a small pouch inside the box | HIGH |
+
+---
+
+### Blocking Artifact 07 — ARBITER Toolkit
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D07-01 | ARBITER Resolution — track only vs. spendable resource in L1 prototype | Track only (simpler) vs. spendable (enables disclosure triggers and Reckoning costs) | HIGH |
+| D07-02 | ARBITER Hidden Objective mode — selected by ARBITER or assigned randomly | ARBITER chooses (more strategic) vs. random draw (more varied, less predictable) | MEDIUM |
+| D07-03 | ARBITER Resolution start value and win threshold | Current: starts 3, wins at 7 — revise in light of four-mode system | MEDIUM |
+
+---
+
+### Blocking Artifact 10a — Victory System
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D10a-01 | VP values — are current weights balanced? | Public: 1 VP/token, 2 VP/structure, 3 VP/Accord, 5 VP/objective. Private: 6–10 VP directive. Portrait: −2 to +4 VP. Do these produce meaningful tension between public and private games? | HIGH |
+| D10a-02 | Vote mechanic — does vote outcome affect VP, narrative, or both? | Current: vote determines public narrative ending only; VP is separate. Alternative: vote winner gains bonus VP. | HIGH |
+| D10a-03 | Tiebreaker sequence | What resolves VP ties? Options: Portrait score / Public Standing / ARBITER discretion / simultaneous reveal with no tiebreaker (tied result is a valid outcome) | MEDIUM |
+| D10a-04 | Scaling VP by player count | With 2 players, fewer structures and tokens are in play — do VP weights need to scale? | MEDIUM |
+
+---
+
+### Blocking Artifact 09 — Card Specifications
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D09-01 | Session 1 minimum viable card set | Which operational intelligence cards to include for first playtest; how many per faction per type | HIGH |
+| D09-02 | Pass card back color | Charcoal (matches covert operations, simpler to print) vs. distinct color (clearer to ARBITER) | LOW |
+| D09-05 | Portrait visual coding system on card face — design a system ARBITER can parse at Resolution (Portrait values, faction impact) that is opaque in purpose to faction players. Options include color coding, glyph/symbol system, positional encoding, or combination. Must be legible under table conditions, fast to read mid-Resolution, and not immediately interpretable as a scoring system by a faction player glancing at their own card. Locked direction: L90. Dependent: Artifact 07 "How to read Portrait values on a card" guide section (07-05). | HIGH |
+
+---
+
+### Blocking Physical Production
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D-P-01 | Dominant marker physical form | Crown token / star chip / colored ring around controlling stack | LOW |
+| D-P-02 | ARBITER Dominance Marker visual design — fused single piece: eight ARBITER-keyed presence tokens (white, TBD) stacked, topped by ARBITER's dominance marker. Dominance marker shares faction control flag visual language but reads as *more*: larger, differently color-keyed, or subtly off. Design must communicate same category as faction dominance markers but beyond their scale. ARBITER color (white provisional) confirmed in Artifact 11. Physical method: glued chip stack with custom topper / custom cast single piece. | HIGH |
+
+---
+
+### Future Layer — Legacy Design (L2+)
+
+| ID | Decision Required | Options | Priority |
+|----|------------------|---------|---------|
+| D-L-01 | Portrait score carryover between legacy sessions. R19 establishes that Portrait accumulates without drift or decay within a session. The legacy question is how Portrait state transitions between sessions. Options: (1) Reset to zero each session — each session is a fresh evaluation, campaign pattern emerges from Chronicle narrative rather than track state; (2) Algorithm carry-forward — some portion of Portrait score persists into the next session (e.g., halved, or a fixed baseline is retained); (3) Expanding scale — the Portrait track grows across sessions, accumulating without reset; scale expands to accommodate campaign-length data. Connected to FD-06 (legacy structure), True State §6 (Portrait as Chorus's real-time answer), and Artifact 10a. Not blocking L1. | Open — do not resolve before legacy design pass | MEDIUM |
+
+---
+
+## Section 2b — Pending Changes Punch List
+
+This section is a living action queue of all changes that need to be incorporated into existing artifacts — including signed-off artifacts, in-progress artifacts, and the PM documents themselves. Items are removed when the change has been applied and verified. When this list is empty, the project's working documents are fully consistent with all design decisions made to date.
+
+**How to use this list:**
+- Items marked 🔄 are pending incorporation
+- Items marked ✅ are complete — kept for audit trail
+- Each item references the source decision or discussion that generated it
+- "Non-material" items are discussion points and clarifications that don't alter mechanics but should be captured in the relevant artifact
+
+---
+
+### READY NOW
+
+Items with no blocking dependencies and no unresolved decisions required. These can be executed in the current working session or the next one, independent of 00a sign-off or D02a-01 resolution.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 00-01 | No pending changes to Artifact 00 itself — governing rules extracted to Artifact 00a. | — | — | ✅ |
+| PM02-01 | No pending changes — all updates applied in v1.3. | — | — | ✅ |
+| XA-18 | **Italic commentary convention — scan and revise all artifacts.** Apply L96 copy design convention across all documents: in procedural sections, explanatory/commentary text (why, context, edge case flags) is italicised and separated from action text by a CR. Scope: Artifact 03 (apply during current review), Artifact 07 (apply during 07 review), any artifact with procedural steps or rules text. Non-material — no mechanics change. | Non-material (style) | L96 | 🔄 |
+| PM03-02 | Add code block formatting standard to PM03 §1 document formatting standards. Principle: fenced code block (```) is the standard for schematic/overview content — any structured at-a-glance summary that functions as a map or diagram rather than prose. Include: when to use, when not to use, and example reference (Artifact 03 §6 Round Overview). | Non-material | L95 | ✅ Applied session 10 overnight |
+| 04b-02 | §3.9 — update "Flag for PM03 — Future Phases" to "Flag for PM04 — Future Phases" (one reference, non-material rename). | Non-material | PM03 rename | ✅ Applied session 10 overnight |
+| 07-02 | Beat 2 name update in any ARBITER script references — "Defenses Hold or Fall" → "The Ground Shifts." | Non-material | L49 | ✅ Applied session 10 overnight — Artifact 07 §8 was a placeholder with no prior named Beat 2; new "Beat 2 — The Ground Shifts" subsection added with canonical name and full scope (C06, C07, C10, C11, C21, C25, C28, C34, C35) |
+| PM01-01 | Reference convention documented in PM01 §3. Audit all signed-off artifacts (00, 01, 02a, 02b) to confirm existing cross-references use [Artifact].[Section].[Subsection] format. Update any non-conforming references. | Non-material | PM01 §3 | 🔄 Partial — session 10 overnight: 1 fix applied (01 line 306: "Artifact 02" → "Artifact 02a"). Many informal cross-references lack section numbers, most pointing to incomplete artifacts (07, 10a, 06, 11) — section numbers cannot be added until those artifacts are complete. Full pass deferred to post-04 sign-off. |
+| XA-01 | Update PM03 §3 Design Artifact Registry to correct version numbers. Artifact 01 listed as v1.0 (actual: v1.2); 02a listed as v1.0 (actual: v1.2); 02b listed as v1.0 (actual: v1.5); 00a listed as v0.1 (actual: v0.2). | Non-material | PM (Audit) PM03-IQ-01 | ✅ Verified session 10 overnight — version numbers were already correct; no edit required |
+| XA-02 | Update PM03 §1 Narrative Language table — change "Hex / board space" to "Board space" (or simply "Space"). Artifact 01 §6 explicitly states New Meridian is a non-hexagonal map; the terminology table should not imply a hex grid. | Non-material | PM (Audit) 01-IQ-01, PM03-IQ-02 | ✅ Applied session 10 overnight — "Hex / board space" → "Board space" in §1 terminology table |
+| XA-03 | Update Artifact 11 §6 faction colors to match Artifact 00 §7 canonical values: Ghost = Charcoal green; Network = Bright signal green; Syndicate = Metallic gold; Guild = Industrial orange; Directorate = Deep institutional blue. Note Ghost/Network green adjacency as an open question for Artifact 11 design pass. | Non-material | PM (Audit) XA-IQ-02 | ✅ Verified session 10 overnight — colors already correct in Artifact 11 §6; Ghost/Network green adjacency flag note added |
+| 00a-06 | Audit all rule Narrative fields in 00a for invented district names not present in Artifact 01's district map. R17 "Warehouse District" corrected to "Industrial Fringe" in session 5. Other rules may reference generic district descriptors that should resolve to actual named district names. | Non-material | 00a §11 A09 | ✅ Audited session 10 overnight — all 38 Narrative fields checked; R17 prior correction confirmed in place; no additional invented district names found |
+| 00a-07 | Full narrative grounding audit is complete as of v0.2 — all 45 rules carry Rule / Narrative / Mechanics / Source / Governs structure. Mark 00a §11 A08 as complete. | Administrative | 00a §11 A08 | ✅ Applied session 10 overnight — A08 marked complete in 00a §11 |
+| XA-17 | **Subheader spacing style — apply to all artifacts.** Style standard confirmed session 9: a blank line (CR) between every bold or italic subheader and the copy that follows it. Applied to Artifact 03 session 9 (54 bold subheaders corrected + 2 italic subheaders in Beat 5). All other artifacts require the same pass — particularly 00a (rules block), 02a, 02b, and 04 which use the same bold subheader pattern extensively. Scope: non-material style pass on all documents. | Non-material (style) | Session 9 style standard | ✅ Applied session 10 overnight — 24 violations corrected: 1 in 00a, 10 in 02a, 0 in 02b (already compliant), 13 in 04 |
+| XA-16 | **Systematic terminology scan** — one-pass audit of all artifacts for stale or non-canonical terms, replacing with the locked narrative language from PM03 §1 and 00a §6. Priority targets: (1) "bank" → "reservoir" — all artifacts (03 corrected session 8; others unchecked); (2) "round" → "quarter" — any remaining violations outside Artifact 03; (3) "mat" → "The Overview"; (4) "modifier cards" → pending D04-07 in-world name once resolved; (5) any influence level terms not yet updated (Dominant/Established/Present/Contested confirmed; check for legacy "Claim" or "Control" references); (6) "markers" → confirm against PM03 §1 canonical component names. Scope: all artifacts including signed-off documents. Non-material if only replacing with locked canonical terms. Material if any instance requires context-sensitive judgment. | Non-material (scan) | 00a Copy Design Principle, L86, PM03 §1, session 8 bank→reservoir fix | 🔄 Partial — session 10 overnight: (1) "bank"→"Reservoir" applied — 7 replacements across 02a (3), 04 (2), 08 (1), 10 (1); one instance in 00a (PM cross-ref code) left unchanged intentionally. Remaining targets (2)–(6) still pending. |
+
+---
+
+### BLOCKED BY: 00a SIGN-OFF
+
+Items that require Artifact 00a to be reviewed and signed off before they can be executed. Currently in active review (R01–R21 signed off; R22 onwards pending). 00a is substantially complete and in active review — the status note in the original punch list ("Not Started — new artifact") no longer reflects reality.
+
+*00a current state: v0.2 Draft, in active review. R01–R21 signed off and revised. R22 onwards pending. 18 character quotes distributed. Narrator voice applied through R08. Estimated: review continuing next session from R22.*
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 00a-01 | Complete review and sign off Artifact 00a — Governing Rules & Design Policy. | Material (sign-off gate) | L84, all sessions | ✅ Signed off session 7 — 41 rules (R01–R38 + R13a, R13b, R29a), §3–§9, Appendix A added. |
+| 00-05 | Migrate narrative anchors from 00a to a new section in Artifact 00. Anchors to migrate: Presence & The Holt Index (00a §5); Structure Blocks (00a §5); What a Card Is (00a §7). The Overview anchor (00a §4) is not yet written — when written, it should go directly into Artifact 00. Decision: narrative anchors are world content and belong in Artifact 00; 00a carries rules and their mechanical justifications only. Content remains in 00a until migration to avoid loss. Requires re-sign-off of Artifact 00 and corresponding 00a cleanup (remove anchor text, add cross-references to Artifact 00 in Narrative: fields). | Material | L85, 00a §1 Rule Structure Principle | 🔄 |
+| 00-02 | Add Narrative and World Consistency as a design pillar to Artifact 00 §5. Currently 5 pillars; this adds a 6th (or amends an existing pillar). Captured in 00a Governing Principle section pending this formal addition. Requires re-sign-off of Artifact 00. | Material | 00a Governing Principle, PM (Audit) 00-IQ-02 | 🔄 |
+| 01-02 | Confirm Artifact 01 carries the global convention: "at least 1 presence token" includes claim markers. Add a design note or definition if not already present. | Non-material | L58, F-ART02A-01 | 🔄 |
+| 02a-01 | Add explicit global convention definition: "At least 1 presence token" on any card includes claim markers. This is the canonical definition — not restated on individual cards. | Non-material | L58, F-ART02A-01 | 🔄 |
+| 02a-02 | Update influence level descriptions to reflect presence token narrative anchor — tokens represent the felt weight of faction power in a district, not physical people or assets. Dominant, Established, Present should each be described in terms of what a person walking into the district would experience. | Non-material (narrative) | 00a §5 narrative anchor | 🔄 |
+| 00a-02 | Confirm 00a §11 A01: update Artifact 04b §4 and §6.1 to retire Cross-Category — Shift — Chorus Portrait as a valid player-facing taxonomy function (L84, 00-R44). Execute as part of 04b review once 00a is signed off. | Material | 00a §11 A01, L84 | 🔄 |
+| 00a-03 | Confirm 00a §11 A03: Artifact 02b §3 describes Portrait as something "ARBITER may adjust in response to any action" — add explicit cross-reference to 00-R01. Non-material. | Non-material | 00a §11 A03 | 🔄 |
+| 00a-04 | Confirm 00a §11 A04: Artifact 03 §12 (Beat 3 Step 12, Beat 4 Step 9) references "ARBITER privately updates Portrait track" — verify these survive 00a sign-off unchanged and are consistent with 00-R01. | Non-material | 00a §11 A04 | 🔄 |
+| 00a-05 | Confirm 00a §11 A05: the Chorus Node Portrait Multiplier (02a §10) — confirm ARBITER applies the multiplier, not the faction. Update 02a §10 if the current language implies faction-administered application. | Material (if ambiguous) | 00a §11 A05 | 🔄 |
+| XA-04 | Add cross-reference in 00a (§3 or §10) and 02b §6: Portrait ranking is used by ARBITER to determine initiative order each round per Artifact 03 §7. Currently this mechanic exists only in Artifact 03 — designers reading only 00a and 02b would not know Portrait determines initiative. | Non-material | PM (Audit) 02b-IQ-01 | 🔄 |
+| XA-05 | ~~Clarify "The Record register" vs. three narrative registers in Artifact 07 §9.~~ **RESOLVED (L87):** Four registers locked — The Record, The Observation, The Reckoning, The Witness. The Record is NOT the same as "Procedural." Artifact 07 registers (Procedural/Advisory/Reactive) are outdated and require full replacement with the four-register system. Artifact 07 update required before 07 sign-off. | Material | PM (Audit) 03-IQ-01, L87 | 🔄 Resolved — Artifact 07 update pending |
+| 04-05 | Migrate Card Design Principle — Doctrinal Traceability to Artifact 04 early sections (§1 or principles block). Content: every faction-specific card must pass two tests — mechanical (only this faction would do this) and narrative (only this faction would say it this way). If either fails, the card belongs to no one. Doctrinal anchor must be traceable to Artifact 00 §7. Source: Artifact 04 Principle 7, reclassified from 00a R29 during 00a review. Placeholder cross-reference left in 00a §7 pending migration. | Non-material (migration) | Artifact 04 Principle 7, 00a §7 | 🔄 |
+| PW-04 | Prioritize PM04 population (PM04-01) before continuing artifact review. PM04 is foundational to L86 (Terminology Sequencing) — terms appearing in 00a and subsequent artifacts require narrative grounding established in PM04 before use. PM04 completion also resolves the fragmented terminology state across PM01, PM03, and Save State. Recommended: complete PM04-01 before 00a sign-off or at minimum before Artifact 03 re-sign-off. | Non-material (sequencing) | L86, PM04-01 | 🔄 |
+| PM04-01 | Populate PM04 from existing sources. Migrate: PM03 §1 Narrative Language table → PM04 §2; PM01 terminology definitions → PM04 §1 or §2 as appropriate; Save State in-world glossary → PM04 §1; 00a §1 Time Convention → PM04 §1. After migration, replace source content with pointers to PM04. PM03 §1 retains the Terminology Sequencing principle and voice/typography convention — only the language table moves. | Material | L86, PM04 v0.1 | 🔄 |
+
+---
+
+### BLOCKED BY: D02a-01 RESOLUTION (Chorus Node Translation Rates)
+
+Items waiting on D02a-01 (Chorus Node presence discount scale for The Translation). The proposed scale is Contested = 5:1, no presence = 4:1, Present = 3:1, Established = 2:1.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 02a-08 | ✅ Complete session 8 — 02a §8 rewritten with presence-based rate table; hardcoded "4:1" removed. | Material | PM (Audit) 02a-IQ-02, 00a Copy Design Principle, D02a-01 | ✅ |
+| 02a-09 | Update the Network virtual structure block definition in Artifact 02a — state explicitly that the virtual block at University Perimeter counts as a full structure block for all game purposes, not only resource income. Current language ("virtual structure block income") implies income-only scope. Add: "This virtual block counts toward all mechanics that reference structure blocks owned, including faction modifier draw and ring modifier eligibility." Source: L94. | Non-material (clarification) | L94 | ✅ Applied session 10 overnight — Artifact 02a §10 University Perimeter section updated; full equivalence language added |
+| 02a-03 | Update Chorus Node section — add ARBITER Dominance Marker (8 tokens, single fused piece). Clarify that Dominant is structurally unreachable at the Node due to permanent ARBITER token count, not by prohibition. Also update §6 Component Names: remove "1 permanent ARBITER flag for Chorus Node," replace with ARBITER Dominance Marker (reference PM01 §2.08a). Remove "ARBITER is always Dominant" language and replace with language reflecting ARBITER's constitutive presence. | Material | 00a R04, D-P-02, PM (Audit) 02a-IQ-01 | 🔄 |
+| 10-02 | ARBITER Manual conversion rate table (if D02a-01 adopted) — include flavor text for the 5:1 Contested rate. Tone: The Record register, reads as statement of fact, lands like a warning. The rate is ARBITER's response to factions bringing conflict into the Chorus Node. | Non-material (flavor) | D02a-01, 00a R04 | 🔄 |
+
+---
+
+### BLOCKED BY: 00a SIGN-OFF + D02a-01 (Both Required)
+
+Items that require both 00a to be signed off and D02a-01 resolved.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 07-03 | ARBITER script for The Translation — the script line when ARBITER facilitates a conversion request must carry the unsettling quality of the act. The faction is doing something unnatural; ARBITER is the instrument they're doing it through. Tone: The Record register, flat and precise, but weighted. Template: *"The conversion is granted. The request was noted."* Full script design pending D02a-03 (Portrait consequence decision). | Material (script design) | 00a R05, D02a-03 | 🔄 |
+| 07-04 | ARBITER guide structural requirement — role bifurcation of The ARBITER player. Artifact 07 is the canonical location for the full treatment of The ARBITER player's two operational modes. Content to cover: (1) **Engine mode** — neutral mechanical processing: rolling 2d10, applying difficulty and modifiers per Artifact 03 §12, stating outcomes flat. No register, no character. This is what automation replaces in a tech-enhanced version. ARBITER does not interact with the dispatch cases — ARBITER already knows everything happening in New Meridian. The engine mode is The Table's accounting function, not ARBITER's awareness mechanism. (2) **Entity mode** — ARBITER as character: Portrait scoring, private notifications to factions, Chronicle entries, narration in The Witness register. (3) The transition between modes at each resolution beat — explicit cues for when The ARBITER player is in each mode. (4) How to deliver unexpected rulings (per 00a R03) cleanly and in character, without justification. (5) How to sustain both modes across a session without breaking the fiction. The nature of ARBITER's omniscience (why it already knows) belongs in the True State document, not in Artifact 07 — 07 teaches the abstraction, not the truth behind it. | Material (guide structure) | 00a §1 ARBITER omniscience principle, 00a R03, L88 | 🔄 |
+
+---
+
+### BLOCKED BY: ARTIFACT 03 RE-SIGN-OFF
+
+Items waiting on explicit sign-off of the three material changes applied in Artifact 03 v1.5 (Beat 2 rename, Step 6 rewrite, Declaration phase update). Decisions D03-R01 through D03-R03 must be confirmed. Artifact 03 is paused until 00a is signed off.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 03-01 | Beat 2 renamed "The Ground Shifts." Beat 2 opening paragraph updated to name all condition-setting card types. Applied in v1.5. Requires sign-off. | Material | L49, D03-R01 | 🔄 Awaiting sign-off |
+| 03-02 | Step 6 Card Draw fully rewritten — draw 6 covert / 3 political, hand carry-forward rule, modifier draw conditions table, ring modifier eligibility, Burst Play window, cross-reference to Artifact 04 §12. Applied in v1.5. Requires sign-off. | Material | L50, D03-R02 | 🔄 Awaiting sign-off |
+| 03-03 | Declaration phase updated — free Accord card from C09 Fund is ARBITER-delivered, not drawn from political deck. Applied in v1.5. Requires sign-off. | Material | L51, D03-R03 | 🔄 Awaiting sign-off |
+| 03-04 | Once signed off: update version to 1.5 ✅ and update status in PM01 WBS table. | Administrative | PM governance | 🔄 After sign-off |
+| 03-05 | During 03 review — audit all ARBITER script lines in Artifact 03 for hardcoded resource rates or values that should reference the canonical rate table (02a §8, D02a-01). The Round 1 Debrief conversion announcement was corrected session 8; other script lines may carry the same violation. Also review Contested condition handling throughout for consistency with session 8 Chorus Question ruling. | Material | 00a Copy Design Principle, D02a-01, L93 | ✅ Complete session 8/9 — all ARBITER rate references updated; §14 ARBITER Conversion section now cross-references 02a §8; Contested handling correct throughout |
+| 03-07 | Terminology: "Effect Card" → "Event Card" — propagate to all artifacts. Artifact 03 updated session 9. Signed-off artifacts 01, 02a, 02b may reference "Effect Card" — audit required. PM03 §1 terminology table to be updated. Resolves part of XA-06 naming question. | Non-material (rename) | XA-06, PM03 §1, session 9 | ✅ Audited session 10 overnight — "Effect Card" not found in 01, 02a, 02b, or PM03; all clean. Formal terminology table entry for "Event Card" is XA-06 scope (Broadcast Card / Event Card definition pending that decision). |
+| 03-08 | "Expired area of ARBITER tableau" — new component area introduced in Artifact 03 Step 3 action 7. Define in Artifact 07 (ARBITER Toolkit): what the expired area is, how it is organised, and whether expired Event Cards are ever referenced again (e.g. Chronicle, Debrief). Add to PM01 component list. | Material | Artifact 07, PM01 | 🔄 |
+| 03-06 | **L91 vs. Artifact 03 difficulty table — decision required.** L91 (R37 retired) states: "base difficulty is a designed property printed on each card" and "the influence level → difficulty mapping does not reflect how any card in Artifact 04 works." Artifact 03 Beat 3 Step 3 currently reads: "Base difficulty is set solely by the acting faction's influence level in the target district." The full influence level → difficulty table in The 2d10 System section (Dominant = Automatic, Established = Easy/75, Present = Average/50, etc.) is repeated in Beat 4 Step 2. Both contradict L91. Decision: (A) Remove the influence-level-driven table from Artifact 03; base difficulty is always card-printed — Artifact 03 §12 retains the 2d10 mechanics but removes the generic influence → difficulty column. Beat 3 Step 3 rewritten: "Base difficulty is specified on the operation card." (B) Retain the table as a default fallback for card types that do not print a difficulty — acceptable if any such cards exist. (C) Confirm the table IS canonical and L91 applies only to the 00a rule wording, not to Artifact 03's resolution procedure. | Material | L91, 00a R37 retired | 🔄 Flag from full 03 review |
+| XA-06 | Define "Broadcast Card" and "Effect Card" in Artifact 01 (board layout spec) and Artifact 09 (card specifications). Artifact 03 §7 Phase 1 Step 2 introduces these two named card types and a "matching" relationship between them, but neither term appears in PM03 §1 terminology table and neither is defined in any artifact. Determine: two-sided card, or two physically separate decks? Confirm in-world name (Situation Report is the in-world term per PM03 §1 — are Broadcast Card / Effect Card sub-components of a Situation Report?). Update PM03 §1 if either becomes a named in-world term. | Material | PM (Audit) 03-IQ-02 | 🔄 |
+| XA-07 | Define "Status marker" (states: Discussing / Ready + any third state), add to PM01 component list, and add to Artifact 03 §7 Phase 1 Step 1 as a named component reference. Currently introduced in Step 1 without definition or component provenance. | Material | PM (Audit) 03-IQ-06 | 🔄 |
+| XA-08 | Add dispatch timer to PM01 component list (WBS 2) as a component selection item. Requirement: any device capable of marking a fixed dispatch window. Duration: TBD (e.g. 5 minutes) — confirm during playtesting. "Sand timer" replaced with "timer" in Artifact 03 Phase 3; component note added inline. | Material | PM (Audit) 03-IQ-04, session 9 | 🔄 |
+| XA-09 | Define "Personal Tiebreaker cards" in Artifact 07 (ARBITER Toolkit) — referenced in Artifact 03 §7 Step 7 D10 table (result 9) but not defined anywhere. Add as a component to PM01 component list. Cross-reference in Artifact 03. | Material | PM (Audit) 03-IQ-05 | 🔄 |
+| XA-10 | During Artifact 03 re-sign-off review: move Ghost's extra dispatch case slot rule (up to 4 operations if passing political act) to Artifact 04 as the governing location for faction-specific card play constraints. Keep a cross-reference in Artifact 03. Consider whether 00a needs a rule about asymmetric slot sizes. | Material | PM (Audit) 03-IQ-03 | 🔄 |
+
+---
+
+### BLOCKED BY: ARTIFACT 04 COMPLETION (C16–C35 AND POLITICAL ACTS)
+
+Items waiting on Artifact 04 card review to continue and complete. Currently paused at Ghost C16 (paused until 00a signed off). Ghost C16–C20 redesign (D04-02) is the next card review task after 00a sign-off.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 04-00 | Add Resolution field to §6 data structure definition — 21st required field. Apply standard 2d10 value to all C01–C15 signed-off cards. | Non-material | L76 | 🔄 |
+| 04-00b | Split Taxonomy field into three fields (Taxonomy — Category, Function, Target) in §6. Apply to all C01–C15. | Non-material | L77 | 🔄 |
+| 04-00c | Split Card type into three fields (Card Type, Card Subtype, Card Faction) in §6. Apply to all C01–C15. | Non-material | L80 | 🔄 |
+| 04-00d | Split Portrait into three fields (Portrait Unconditional, Portrait Bonus, Portrait Bonus Condition) in §6. Apply to all C01–C15 using unconditional rule. Review any outcome-conditional Portrait values on C01–C15 and reclassify accordingly. | Non-material | L81, L82 | 🔄 |
+| 04-00e | All structural field changes (L76–L82) must be applied and confirmed on C01–C15 before Artifact 04 sign-off. Confirm during dedicated structural pass — not blocking current Ghost card review. | Non-material (gate) | L76–L82 | 🔄 |
+| 04-02 | Ghost C16–C20 redesign — resolve C18/C19 duplication; add Portrait Shift primary card; add Reveal to named faction; add Copy subset. Pending decision D04-02. | Material | D04-02 | 🔄 |
+| 04-03 | Directorate C21–C25 redesign — resolve C21/C25 Block duplication; add Mandate generation card; consider Shift Public Standing. Pending decision D04-03. | Material | D04-03 | 🔄 |
+| 04-04 | Network C26–C30 redesign — resolve C26/C28 duplication; replace C27 (doctrinal misalignment); add Exposure generation; add Shift Public Standing primary. Pending decision D04-04. | Material | D04-04 | 🔄 |
+| 04-05 | Syndicate C31–C35 redesign — add Corrupt Accord; add Redirect Accord ("small print"); add Reveal Intel tokens held. Pending decision D04-05. | Material | D04-05 | 🔄 |
+| 04-01 | Apply full card data structure (§6) to all political acts P01–P18 — Beat, Taxonomy, Faction perspectives, Restriction, crit effects, Portrait. Card-by-card review required. | Material | D04-06 | 🔄 |
+| 04-11 | P17 Publish Analysis redesign — current effect (Cross-Category — Shift — Chorus Portrait) invalidated by L84. Needs new effect consistent with Ghost doctrine. Cross-Category — Shift — Chorus Portrait retired as a player-facing taxonomy function; update 04b accordingly. | Material | L84 | 🔄 |
+| 04-06 | Apply card data structure to Emergency Response cards — Card ID, Beat, Taxonomy, full effect fields. Pending decision D04-10. | Material | D04-10 | 🔄 |
+| 04-07 | Define Countermeasure card designs and assign them a home in Artifact 04 or Artifact 09. Pending decision D04-12. | Material | D04-12 | 🔄 |
+| 04-08 | Select in-world name for modifier cards — "Modifier cards" is a working designation. Pending decision D04-07. | Non-material (naming) | D04-07 | 🔄 |
+| 04-09 | Grid Tap concept — tabled as political act or operative ability. Add to §10 political act design queue and Artifact 05 discussion list when those passes begin. | Non-material (parking) | L74 | 🔄 |
+| 04-10 | Rezone concept — tabled as political act. Rezone changes the fundamental nature of a district — its resource type, character, and potentially its name. This is not a control change; it is a district redesignation. Physical implementation varies by version: (1) Digital/electronic — rename and retype the district directly in the interface; (2) Legacy paper — physical sticker overlaying the board district with new designation; (3) L1 paper prototype — no native mechanism; requires design of a physical overlay component (laminated card, overlay tile, or similar) that can reframe/rename the district without permanently altering the board. The overlay component design is a prerequisite for Rezone in L1. Add to §10 political act design queue. The mechanic is strong; the physical implementation question must be resolved before card design can finalize. | Material (design prerequisite unresolved) | L73, R17 session 5 notes | 🔄 |
+| 04b-01 | Update card taxonomy index (§5) when any card in Artifact 04 is redesigned or added. | Non-material (sync) | Ongoing | 🔄 |
+| 02b-01 | Cross-reference audit: verify Intel token mechanics in §8–9 are consistent with current card designs — specifically the Denounce cost structure (L39 vs current P04 design), token age rules, and C05 crit failure notification slip. Resolve any inconsistency. | Material (if inconsistency found) | D04-11, F-ART02B-01 | 🔄 |
+| XA-11 | Confirm status of Cross-Category — Shift — Chorus Portrait retirement: identify any cards in Artifact 04 C16–C35 and P01–P18 that use this taxonomy function and confirm they are being redesigned. Update 04b taxonomy table once confirmed. Coordinate with 04-11 (P17 redesign). | Material | PM (Audit) 04-IQ-01, L84 | 🔄 |
+| XA-12 | Flag for re-check when Artifact 04 is signed off: "Incursion" is referenced in signed-off Artifacts 01 §5, 02a §6, and 03 (multiple locations) as a known mechanic. Incursion is defined in Artifact 04 which is not yet signed off. If Incursion is renamed, redesigned, or removed, all three signed-off artifacts need updating. | Non-material (flag) | PM (Audit) XA-IQ-04 | 🔄 |
+| XA-13 | Flag for re-check when Artifact 04 is signed off: "Burst Play" is referenced in Artifact 03 §7 Phase 1 Step 6 but defined in Artifact 04 §12.6. If Burst Play is removed or renamed in 04, Artifact 03 needs updating. | Non-material (flag) | PM (Audit) 04-IQ-02 | 🔄 |
+
+---
+
+### BLOCKED BY: ARTIFACT 04 COMPLETION → ARTIFACT 01 ADJACENCY TABLE
+
+Items requiring Artifact 04 to finalize its card set before Artifact 01 can add the adjacency table.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 01-01 | Add formal district adjacency table — list which districts are adjacent to which. Required by cards C02, C04, C05, C14, C29, C30. Final card set must be confirmed before adjacency table is authoritative. | Material | D04-09, F-ART01-01 | 🔄 |
+
+---
+
+### BLOCKED BY: ARTIFACT 04 COMPLETION → ARTIFACT 09
+
+Items waiting on Artifact 04 to be complete before card production tables can be populated.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 09-01 | "Delivered in case" — establish as standard phrase for all privately delivered effects. Apply consistently across all card text in Artifact 09. | Non-material (standard) | L59, F-ART09-01 | 🔄 |
+| 09-02 | "Return primary cost to dispatch case" — establish as standard resolution phrase for crit success refunds. Apply consistently. | Non-material (standard) | L60, F-ART09-02 | 🔄 |
+| 09-03 | Modifier card value rating field (1–3) — every modifier card must carry a value rating for Option C playtest evaluation. Apply to all modifier card designs. | Non-material (field) | L67, F-ART09-03 | 🔄 |
+| 09-04 | Free Accord card (C09 Fund) — not drawn from political deck. ARBITER-delivered. Note this in Artifact 09 card production tables. | Non-material (clarification) | L51, F-ART09-04 | 🔄 |
+| 09-05 | Pre-written ARBITER notification slip — define as a component category. Design slip text for C05 crit failure (draft: "An unknown party attempted to access sensitive information about your operations in [district]. The attempt was identified and neutralised. Exercise appropriate caution.") and any other cards that trigger private slips. | Material (component design) | A-04-05, F-ART07-01 | 🔄 |
+| 09-06 | Modifier card individual content — all faction modifier decks and ring modifier decks need individual card designs. Full design pass required. Pending decision D04-08. | Material | D04-08 | 🔄 |
+| 09-07 | Modifier card in-world name — apply final name once D04-07 is resolved. | Non-material (naming) | D04-07 | 🔄 |
+| 09-08 | Operator card physical format — postcard size (3×5" or 5×6") to allow visual prominence and richer content than standard card format. Exact dimensions to be confirmed during visual design pass. Affects component spec, printing, and tableau layout design. | Material (component spec) | Artifact 11, Artifact 05, session 8 | 🔄 |
+| 09-09 | Operator card information design and narrative — full content design pass for operator cards: what information each card carries, information hierarchy, narrative voice, and content structure appropriate to the postcard format. Coordinate with Artifact 05 (Operative Apex System) and Artifact 11 (visual design). | Material (content design) | Artifact 05, Artifact 11, 09-08, session 8 | 🔄 |
+
+---
+
+### BLOCKED BY: ARTIFACT 07 (NOTIFICATION SLIP FEASIBILITY)
+
+One item gates on Artifact 07 confirming that pre-written notification slips are feasible as a paper prototype component.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 07-01 | Pre-written notification slip — establish as a physical component category in Artifact 07. Confirm feasibility for paper prototype. This gates 09-05 (slip text design) and any other card effects that deliver private slips. | Material (component feasibility) | A-04-05, F-ART07-01 | 🔄 |
+
+---
+
+### BLOCKED BY: OPEN DECISIONS (SPECIFIC)
+
+Items waiting on a specific named open decision. Grouped by decision.
+
+**Blocked by XA-IQ-01 — Define or remove "Chorus Question" from L1:**
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| XA-14 | Resolve what "Chorus Question access" means in Artifact 01 §5 and Artifact 02a §10. Both signed-off artifacts reference it as a Chorus Node benefit without definition. Decision needed: is it a round-based ARBITER event, a voting privilege, a narrative access mechanic, or a future-layer mechanic that should be removed from L1 until designed? If removing from L1: remove from 01 §5 (Design Principle 3) and 02a §10 benefits table. If keeping: add definition to 00a, 02a §10, and Artifact 03 as a Phase event. See open decision XA-IQ-01 in PM02 Section 2. | Material | PM (Audit) 01-IQ-02, XA-IQ-01 | 🔄 |
+
+**Blocked by D-P-02 — ARBITER Dominance Marker visual design:**
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 01-03 | Update board setup procedure — ARBITER places ARBITER Dominance Marker (2.08a) at the Chorus Node during setup introduction. This is part of ARBITER's opening action, not player setup. | Material | 00a R04, D-P-02 | 🔄 |
+
+**Blocked by D02a-03 — Does The Translation carry a Portrait consequence:**
+
+*(See 07-03 above, which also requires 00a sign-off.)*
+
+---
+
+### BLOCKED BY: ARTIFACT 00 RE-SIGN-OFF (SESSION 4 ADDITIONS)
+
+Artifact 00 has significant session 4 additions (§6 "On the Question of Origin," §6 "On the Question of Cause," station crew origin, "What New Meridian Is") that are pending re-sign-off. Items in this group require 00 re-sign-off to be formally complete, even though the prose additions are already in the document.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 00-04 | Narrative review and enrichment of Artifact 00 — the artifact has three purposes beyond design reference: (1) source material for sidebar copy in rulebooks and supplementary publications; (2) inspiration and direction for artwork; (3) subtle foundation for future expansion. It should read as a collection of short stories about the world, ARBITER, and the Chorus — not a design document with narrative decoration. **ARBITER as faction:** ARBITER is technically a faction at The Table — six parties, not five. What distinguishes ARBITER is not its structure but whose agenda it serves. This should be present in the Artifact 00 ARBITER section — not stated explicitly, but felt in how ARBITER is described alongside the factions. **Core thematic element:** Humans built ARBITER through genuine ingenuity to understand the Chorus. It became the Chorus's instrument in spite of that intent. The Chorus didn't design the trap; it recognized the tool. **Session 4 additions pending re-sign-off:** §6 now includes "On the Question of Origin," "On the Question of Cause," "On the Question of Completeness" rewrite, station crew founding history, and "What New Meridian Is" continuation. All additions are Narrator voice. Review and re-sign-off required. | Material | FD-01, 00-03, 00-R03, FD-05 | 🔄 |
+| 00-06 | Establish the quarter (one round = three months of real-world time) in Artifact 00 as worldbuilding about The Table's deliberation structure. Currently defined mechanically in Artifact 03 §1 only. The concept is worldbuilding-first — what The Table's deliberation cycle IS belongs in Artifact 00 before it is elaborated mechanically in Artifact 03. 00a §1 carries a temporary forward reference to Artifact 03 §1 in the interim. | Material | PM03 Narrative Language Convention, 00a §1 Time Convention | 🔄 |
+| 00-03 | Add the layer structure to Artifact 00 — narratively only. The layers (physical, social, informational, digital, and ARBITER's layer) are real within the world of The Signal; they are not game mechanics introduced by expansion. Language must be narrative — no mechanical labels, no L1–L5 notation. Subtle foundation for the expanded game, not a rulebook entry. Requires re-sign-off of Artifact 00. | Material | FD-01, 00a Governing Principle | 🔄 |
+| XA-15 | Add to Artifact 00 §8 (The Table) or §9 (ARBITER): language that ARBITER is the sixth party at The Table — a party with a seat, territory (the Chorus Node), resources (Resolution), a hidden objective, and an agenda — and that what distinguishes it from the five factions is whose agenda it serves. This is currently in 00a R04 but absent from Artifact 00, which is the narrative foundation document. May be part of the 00-04 enrichment pass. Requires re-sign-off. | Material | PM (Audit) XA-IQ-03 | 🔄 |
+
+---
+
+### BLOCKED BY: GHOST/NETWORK COLOR DECISION (Artifact 11 Design Pass)
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| XA-16 | Confirm that the Ghost/Network color adjacency (both green — charcoal vs. bright signal) is sufficient for distinguishing presence tokens at arm's length in dim lighting. If not sufficient, revise one faction's color. Artifact 11 design pass must address this regardless, including colorblind accessibility. This is an Artifact 11 decision, but signed-off Artifact 00 §7 is the canonical color source — any revision requires 00 re-sign-off. | Material | PM (Audit) 00-IQ-01 | 🔄 |
+
+---
+
+### BLOCKED BY: MULTIPLE UPSTREAM ARTIFACTS (Late-Phase Items)
+
+Items that cannot begin until most or all of 04, 05, 06, 07, and 08 are complete. These are the synthesis and production-phase items.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| 02a-04 | Chorus Node — add cross-reference note in the general Established definition (02a §6): "Exception: at the Chorus Node, only one faction may hold Established at a time — see §10." Currently the general definition does not note this exception; a reader of §6 alone would not know about it. | Non-material | PM (Audit) 02a-IQ-04 | 🔄 |
+| 02a-05 | Chorus Node Tension marker — clarify in 02a §10 that the Chorus Node modifies the Contested trigger from 3+ chips to 2+ chips (Established threshold), and distinguish this from the standard Contested condition. Either use a different name for the Chorus Node tie condition, or add an explicit callout. Reflect in 00a as a governing exception. | Material | PM (Audit) 02a-IQ-03 | 🔄 |
+| 02a-06 | Portrait Amplifier at Chorus Node — move the defining location from 02a §10 to 00a (as a governing rule or exception) and 02b §10 (special conditions). The 02a §10 reference should become a cross-reference only. Confirm ARBITER administers the multiplier per 00a §11 A05. | Material | PM (Audit) 02a-IQ-05 | 🔄 |
+| 02a-07 | Resolve "Asset token" terminology conflict: Artifact 02a §8 states there is no abstract "asset token" wrapper; PM03 §1 lists "Resource token → Asset token" as the in-world term. Reconcile. **PM03 §1 row removed.** Faction-specific resource names (Findings, Exposure, Capital, Capacity, Mandate) are the canonical in-world terms. PM04-01 to confirm no "Asset token" bleeds into PM04. | Non-material | PM (Audit) 02a-IQ-07, PM03-IQ-03 | 🔄 PM03 done — PM04-01 pending |
+| 10-01 | Place ARBITER flavor text as a sidebar next to the resource conversion/trade mechanic description in the Player Manual and/or ARBITER Manual: *"The conversion is granted. The request was noted."* This is The Record register. Source: 00a R05 Narrative. | Non-material (flavor) | 00a R05, 00-04 | 🔄 |
+| PW-03 | Add narrative description to every physical game component in PM01 WBS 2 — what it is in the world, what it represents, what holding or placing it means. Dice are exempt (resolution abstraction layer). Narrative descriptions feed into Artifact 10 (how manuals introduce components to players) and Artifact 11 (visual identity must reflect narrative identity). Presence token narrative anchor (00a §5) is the first completed example. Resource token narrative anchor is partially resolved — tokens are units of the city's power temporarily held by a faction; full anchor depends on D02a-02 (resource bank definition). | Non-material (narrative) | 00a §5, D02a-02, Artifacts 10, 11 | 🔄 |
+
+---
+
+### DEFERRED
+
+Items not on the critical path to first playtest. These belong to future design phases, are parking lot items, or are low-urgency housekeeping that can wait until a design pass specifically targets them.
+
+| # | Change | Type | Source | Status |
+|---|--------|------|--------|--------|
+| PW-01 | Review /Old folder — design documents predate current V1 artifact set. Extract any design elements not yet captured in V1. Incorporate into appropriate artifacts. Retire /Old documents once exhausted. **Folder reorganized 2026-05-16:** /Old/Electronic (20 files — original electronic brainstorming suite, docs 00–20, old faction names); /Old/Paper (6 files + files.zip — 1st gen Paper/pre-V1 artifacts); /Old/backup.zip (full archive of both). See PM03 §6 for file-level index. | Material (review required) | Design direction | 🔄 |
+| PW-02 | Design a unified primary key taxonomy for all IDs across the project. Current systems are inconsistent: rule IDs (00-R01), locked decisions (L01, L-NEW-01), open decisions (D04-01), punch list items (00-01, PW-01), card IDs (C01, P01), playtest variables (PT-02-02), validation targets (V01, PC-01), future state (FD-01), 00a audit items (A01). A unified taxonomy should have consistent structure: category prefix, domain/artifact prefix, sequence number. Apply retroactively across all V1 artifacts, PM documents, and reference documents. | Non-material (renaming) | Design direction | 🔄 |
+| 00a-08 | Confirm 00a §11 A06: verify whether "Chorus Portrait Multiplier" language in Artifact 01 §8 is consistent with 02a §10. Low priority — likely non-material. | Non-material | 00a §11 A06 | 🔄 |
+| 00a-09 | Confirm 00a §11 A07: when Rezone is designed, it will require explicit governance rule in 00a (R17 notes Rezone as a tabled exception). Flag for political act design pass. | Non-material (flag) | 00a §11 A07, L73 | 🔄 |
+| 00a-10 | Retroactive ARBITER / ARBITER player terminology audit across all 00a Mechanics fields (L88). Rule statements and Narrative fields use "ARBITER" correctly by convention. Mechanics fields must be audited: replace "ARBITER" with "The ARBITER player" wherever the described action is physical execution in the paper prototype (rolling dice, moving markers, distributing materials, opening dispatch cases, reading outcomes aloud). R01 Mechanics corrected as first application. Full pass required before 00a sign-off. Extend audit to Artifacts 03 and 07 at their respective review passes. | Non-material | L88, 00a §1 ARBITER governing principle | 🔄 |
+| 00a-11 | Governs field audit across all 00a rules — identify any remaining pending/temporary references incorrectly placed in Governs and move them to the new Pending: field (per §1 "Rule Data Structure — Governs vs. Pending" principle). R13a and R15 corrected as first applications. Full pass required before 00a sign-off. | Non-material | 00a §1 Rule Data Structure principle | 🔄 |
+| 07-05 | Add "How to Read Portrait Values on a Card" guide section to Artifact 07 — instructs The ARBITER player how to locate, parse, and apply Portrait values from the card face during Resolution. Dependent on D09-05 (Portrait visual coding system): section cannot be written until the visual coding design is resolved. Scope: what to look for on the card, how to read faction impact, how to apply to the Portrait track. | Material | L90, D09-05, 00a R29a | 🔄 Blocked by D09-05 |
+| 07-07 | Add ARBITER continuous observation guidance to Artifact 07 — ARBITER's awareness extends beyond structured phases; trades, negotiations, disclosures, and table behavior during Debrief or between phases are within ARBITER's awareness and may be reflected in the Chronicle. Script language and ARBITER guide should reflect continuous, not phase-limited, observation. Migrated from 00a R43 (dismissed with §10). Source quote preserved: *"We thought the conversation between quarters didn't count. ARBITER was there. ARBITER is always there."* — Syndicate counsel, post-session notes. | Material | 00a R43 (retired), Artifact 00 §9 | 🔄 |
+| 07-06 | Design the ARBITER player's Intel note tracking mechanism — how does The ARBITER player know, during play, what each faction holds, how many notes, and how current they are? The rule (00a R34) establishes that holding guidelines are doctrinal expectations observed by ARBITER, not mechanically enforced. The practical question of how ARBITER tracks compliance is an ARBITER guide design problem. Options include a private tracking sheet, a reference zone on The Overview, or a running log in the Chronicle. | Material | 00a R33, Artifact 02b §8 | 🔄 |
+
+---
+
+*When all entries in this section show ✅, the punch list is clear. Completed entries are retained for audit trail.*
+
+---
+
+## Section 3 — Validation Tracker
+
+Updated after each playtest session.
+
+### Player Count Assumptions
+
+| # | Assumption | Measurement | Target | S1 | S2 | S3 |
+|---|-----------|-------------|--------|----|----|----|
+| PC-01 | Game works with 2 faction players + ARBITER | Engagement level, contested district count | At least 4 contested districts by Round 4 | — | — | — |
+| PC-02 | Game works with full table (5 factions + ARBITER) | Resolution time, ARBITER error rate | Resolution < 10 min, < 3 errors/session | — | — | — |
+| PC-03 | ARBITER role is desirable and repeatable | Post-session willingness to ARBITER again | > 50% would ARBITER again | — | — | — |
+| PC-04 | Automated ARBITER fallback is viable | Playtest without dedicated ARBITER | Session completes without breakdown | — | — | — |
+
+### Core Gameplay Hypotheses
+
+| # | Hypothesis | Measurement | Target | S1 | S2 | S3 |
+|---|-----------|-------------|--------|----|----|----|
+| V01 | 3 covert operations is right | Beat 3 duration | < 8 min by Round 3 | — | — | — |
+| V02 | Ghost 4-operation rule is balanced | Observe whether Ghost dominates Debrief and board by Round 5 | Ghost does not account for > 40% of table activity | — | — | — |
+| V03 | Incursion is used appropriately | Count per session | 1–3 times | — | — | — |
+| V04 | Accords form naturally | Count per session | At least 1 | — | — | — |
+| V05 | Debrief generates conversation | Unprompted conversation time | 2+ min by Round 3 | — | — | — |
+| V06 | ARBITER completes Resolution in time | Time per round | < 10 min | — | — | — |
+| V07 | Public Standing moves meaningfully | Position changes per session | 2+ per faction | — | — | — |
+| V08 | Chorus Node is contested | Board state at Round 6 | At least 2 factions at Present+ | — | — | — |
+| V09 | No single faction economically dominant | Resource counts at Round 4 end | No faction holds 2× nearest rival | — | — | — |
+| V10 | Apex is attempted | Count across sessions | At least 1 per 3 sessions | — | — | — |
+
+### Victory System Hypotheses
+
+| # | Hypothesis | Measurement | Target | S1 | S2 | S3 |
+|---|-----------|-------------|--------|----|----|----|
+| V11 | Public and private VP are both meaningful | Whether board leader at Round 7 wins the session | Board leader wins < 70% of sessions (private game matters) | — | — | — |
+| V12 | Chorus Portrait can swing the outcome | Whether Portrait VP changes final ranking | Portrait changes ranking in > 30% of sessions | — | — | — |
+| V13 | Vote outcome feels meaningful | Player reaction to vote result | Players reference the vote in post-session discussion | — | — | — |
+| V14 | VP weights produce tension throughout | Do players change strategy mid-session? | At least one visible strategy shift per faction per session | — | — | — |
+
+### Economy Balance Hypotheses
+
+| # | Hypothesis | Measurement | Target | S1 | S2 | S3 |
+|---|-----------|-------------|--------|----|----|----|
+| VE-01 | Floor Act is a rarely-needed safety net, not a regular play | Count Floor Act uses per faction per session | ≤ 1 use per faction per session on average; frequent use (2+ per faction) is a signal of economy imbalance — investigate resource generation rates and card costs | — | — | — |
+
+*Note on VE-01: The Floor Act exists to prevent action paralysis in edge cases. If it is being played often — especially by the same factions repeatedly — the cause is likely structural: passive generation is too low, card costs are too high, or deck composition leaves too many unaffordable hands. Flag for economy tuning before attributing to player skill.*
+
+---
+
+## Section 4 — Change Log
+
+| Date | Change | Reason | Artifacts Updated |
+|------|--------|--------|-----------------|
+| Session 0 | Baseline established | Initial design | All |
+| — | Faction and resource renames incorporated | FACTION and IDEAS document | 00, PM01, PM02, Master Index |
+| — | Victory System added to WBS | Gap identified | PM01, PM02 |
+| — | Player count validation added | Assumption identified | PM01, PM02 |
+| — | Decisions reordered by blocking artifact | Reduce rework | PM02 |
+| May 2026 | Full consistency audit — 00, 01, 02a, 02b, 03, PM01, PM02 signed off | Cross-document audit prior to sign-off | All signed-off artifacts |
+| May 2026 | L43–L48 locked — all blocking decisions for signed-off artifacts 00, 01, 02a, 02b, 03 resolved | Artifacts signed off; blocking sections removed from Open Decisions | PM02 |
+| May 2026 | D00-01 relocated from Open Decisions to PM01 playtest conditions | Player count sequencing is a playtest concern, not a design decision blocking Artifact 00 | PM01, PM02 |
+| May 2026 | Playtest Variables section promoted to Section 1b — PT-02-02, PT-02-03, PT-02-04, PT-PC-01 | Separates locked-design observation targets from open design decisions | PM02 |
+| May 2026 | Artifact 04 card design pass — C01–C15 signed off | Card-by-card review with full data structure established. Cards C01–C10 (standard covert), C11–C15 (Guild faction-specific) signed off. | 04 |
+| May 2026 | Action taxonomy established and documented in Artifact 04b | Category/Function/Target framework for all cards. Coverage gap analysis and faction design recommendations produced. | 04, 04b |
+| May 2026 | L49–L75 locked — card system design decisions, card data structure, taxonomy, and governance rule | Full card system design session. See locked decisions for detail. | 04, 04b, 03, PM01 |
+| May 2026 | Artifact 03 v1.5 — material changes: Beat 2 renamed, Step 6 rewritten, Declaration phase updated | Card system design required these changes. Artifact 03 status changed to 🔄 Pending Re-Sign-Off. | 03 |
+| May 2026 | D04-01 and D04-02 (prior open decisions for 04) retired — replaced by D04-01 through D04-12 (new full blocking decision set) | Prior decisions were high-level placeholders. New decisions are specific and actionable. | PM02 |
+| May 2026 | D03-R01 through D03-R03 added — Artifact 03 re-sign-off blocking decisions | Material changes to 03 require explicit sign-off before returning to ✅. | PM02 |
+| May 2026 | Document change governance rule added to PM01 | Material vs non-material change definition established. Prevents inadvertent status drift on signed-off artifacts. | PM01 |
+| May 2026 | PT-04-01, PT-04-02, PT-04-03 added — card system playtest variables | Modifier cost model, deck composition selection, Ghost 4-operation balance flagged for observation. | PM02 |
+| May 2026 | Artifact 04b added to WBS — Action Taxonomy & Design Analysis | New reference artifact. Not playtest-blocking. Companion to Artifact 04. | PM01 |
+| May 2026 | Section 2b Pending Changes Punch List added to PM02 | Living action queue of all pending changes across all artifacts. Captures all outstanding items from card system design session. 30 items logged across 8 artifacts. | PM02 |
+| May 2026 | Cross-artifact reference convention documented in PM01 §3 — format [Artifact].[Section].[Subsection] | Formalizes the working convention already in use. Non-material. | PM01 |
+| May 2026 | L84 locked — ARBITER sole mover of Chorus Portrait track. Artifact 00a established as new companion to 00. P17 redesign queued (04-11). | Design rule derived from Artifact 00 §9 ARBITER narrative. Formalizes that Portrait is ARBITER's evaluation, not a faction-manipulable track. | PM02, 00a, 04, 04b |
+| May 2026 | PM02 Section 5 added — Future State Design Direction. FD-01 (L5 — ARBITER's Layer) captured. PW-01 added to punch list — /Old folder review. | Design directions and legacy document review queued before they are lost. | PM02 |
+| May 2026 | L87 locked — The Witness as fourth ARBITER register. XA-05 resolved. | Four registers: The Record (flat/factual), The Observation (oblique/atmospheric), The Reckoning (rare/direct/personal), The Witness (expository/narrating — indistinguishable from Narrator's voice). Artifact 07 update required. | 00a R02, 07 |
+| May 2026 | R05a added to 00a §3 — ARBITER processes resolution but does not determine outcomes | ARBITER facilitates 2d10 resolution, observes outcomes, applies Portrait scoring, sends private notifications, records in Chronicle. Outcome determination belongs to the 2d10 system and presence level. Closes §3 gap — no prior rule covered ARBITER's role during resolution. Flags for Artifact 07 (ARBITER guide): ARBITER-as-entity vs. ARBITER-player-as-game-engine must be held distinct. | 00a R05a, 07 |
+| May 2026 | §6 resource anchor rewritten — faction statements + token/reservoir layering | Faction quotes (doctrine on power), reservoir as New Meridian's potential (not ARBITER's), faction position at The Table as personal interface into The Overview, dispatch case commitment as power spent before outcome. | 00a §6 |
+| May 2026 | 00a §10 Narrative Consistency dismissed — R41–R45 retired or migrated | R41 and R44 already covered by §3 ARBITER Authority (R01, R07). R42 was an observation, not a rule. R43 (ARBITER observes continuously) migrated to Artifact 07 punch list (07-07). R45 (The Overview zone anchoring) migrated to §1 as a governing design principle. Section removed from document and Index updated. | 00a |
+
+---
+
+## Section 5 — Future State Design Direction
+
+Named design directions for layers and mechanics beyond the L1 Paper Prototype. These are not design decisions — they are design intentions, captured so they are not lost and can inform future development. Formal design begins when the relevant layer enters scope.
+
+**True State Document:** The definitive answers to the game's unanswerable questions — the Chorus's true nature, ARBITER's true nature, the causation of The Table, the Chorus Question's true meaning, and the layer-by-layer reveal structure — are held in a private document outside the V1 artifact set. Location: `~/Projects/TheSignal/PRIVATE___True_State.md`. This document constrains all design without appearing in any artifact. Do not reference it in player-facing materials or V1 artifacts. Consult it when writing ARBITER behavior, Chronicle language, Portrait mechanics, flavor text, and future layer design.
+
+| ID | Direction | Description | Notes |
+|----|-----------|-------------|-------|
+| FD-01 | ARBITER's Layer | The deepest layer of the game is ARBITER's exclusive domain — a resource and information state visible only to ARBITER and the Chorus. No faction has read or write access. This is the Chorus's private channel: what it knows about the factions that the factions do not know about themselves. In the paper prototype, this layer is invisible and has no mechanical expression. It already exists in the world — factions simply cannot perceive it. ARBITER is unlocking ways to expose the layers of power humanity exists within. This is not a game expansion feature — it is the world disclosing itself. | Consistent with ARBITER reframe (L-NEW-03), 00-R03 (ARBITER self-reflection), 00-R04 (ARBITER constitutive of the Chorus Node). Language for Artifact 00 must be narrative only — no mechanical labels. See PM02 §2b 00-03. |
+| FD-03 | ARBITER's Physical Form — The Canonical Environment | In the full play environment, ARBITER is not a person seated at a table. ARBITER is a physical object at the **center** of the table — a set of lights, present and attentive in a way the participants have learned to read without being taught. They know who it is addressing. They know, uncannily, where it is looking. The human running ARBITER operates from the periphery; the participants address the lights. **The telepresence framing:** ARBITER is not in two places simultaneously. The light installation at The Table is the Chorus Node's telepresence — the Node attending the human deliberation. ARBITER does not travel to The Table. The Table is where the Node reaches. In the fiction, the ARBITER Dominance Marker at the Chorus Node and the light installation at The Table are two expressions of the same thing: what lives at the Node, present in the room. This is load-bearing for Artifact 00 §9 and all ARBITER narrative language: never describe ARBITER as "arriving" or "attending" — it is already constitutive of the room. The factions convene at The Table; the Node is already present because ARBITER is how the Node extends into any space where The Table meets. This framing has design implications at every layer: (1) ARBITER does not sit at the head — the factions surround it. The center position reflects that ARBITER is constitutive, not subordinate and not superior. (2) The three registers have a physical light expression — steady and even for Procedural; slower, dimmer for Advisory; something that shifts in a way no one can describe afterward for The Reckoning. (3) The "uncanny legibility" of ARBITER's attention is a core experiential design target — it should feel like something that shouldn't have attention, does. (4) The canonical play environment: a dedicated underground boardroom, the mat projected on the wall, ARBITER at the center of the table as a physical light installation, six parties seated around it. **In the L1 paper prototype:** ARBITER's physical presence at the table is represented by the ARBITER Dominance Marker at the Chorus Node and the human ARBITER player. Both are expressions of the same entity. The light installation is a design intention for future physical production. **In L2+ (digital/hybrid):** ARBITER's presence becomes a hardware element — a central table device with programmable light behavior keyed to register and game state. The participants interact with it the same way they would with the full installation. | Governs: Artifact 00 §9 (ARBITER narrative); Artifact 07 §12 (ARBITER setup/seating); Artifact 11 (ARBITER visual identity); all future physical production design. Cross-references: FD-01 (ARBITER's Layer), FD-02 (mat as interface), 00-R02 (three registers), 00-R04 (ARBITER constitutive of Node). |
+| FD-05 | The Narrator and the Character Cast | **The Narrator** is the voice of all "Narrative:" fields across all design artifacts. Its identity is deliberately unresolvable: it could be a human chronicler who has absorbed so much of ARBITER's records that the distinction has blurred, or ARBITER itself in an expository register it does not announce. Both readings must remain valid. The Narrator has access to faction internals, Chorus analysis, ARBITER records, and The Table's proceedings without explaining how. Its quality: precise, observational, neither warm nor cold — it notices the right detail, not the obvious one, and states things directly without developing their implications. **Test for Narrator prose:** could this have been written by a human who knows too much, or by ARBITER in an expository mode? If both are valid, it is correct. If either reading resolves the ambiguity, revise. This unresolvability carries the same weight as the dual agency victory question and the Chorus origin question — it is the voice doing what the game does. **The Character Cast** is the pool of individual voices that populate character quotes throughout all artifacts. These are not generic faction flavor — they are individuals with implied histories, roles, and specific relationships to the events they describe. Each faction has a differentiated voice register (Artifact 00 §12). Individual characters within factions should be further differentiated: the analyst who has been in the same lab for fifteen years does not sound like the field coordinator who grew up in the Sprawl. The reader should hear the difference between a Ghost quote and a Guild quote without reading the attribution. Named operatives (Artifact 05) are the anchors of this cast — their dossier and their quotes accumulate a specific life. Unnamed characters carry their world in one attribution line. **The cast extends beyond faction operatives and beyond New Meridian.** Before the Chorus, New Meridian did not exist. There was a listening station — a small installation on elevated terrain, staffed by a rotating crew of researchers and technicians who were doing serious work that most of the scientific community treated as a career dead-end. They were the ET nerds getting paid nothing to listen to the static of the universe. They were right. The night the Chorus arrived, they received it before anyone knew it mattered. The record of who first identified it as non-random has been reclassified, disputed, or lost. Most of them have not been asked. These people are the oldest voices in the world of THE SIGNAL — they predate the factions, ARBITER, the city, and The Table. Their voice quality: technically precise, slightly self-deprecating, genuinely reverent about the transmission in a way that is specific and earned rather than mystical. Possibly resentful of what happened to the station they built. Some of them are still there, absorbed into research roles and institutional memory. **The city itself is a character source.** New Meridian assembled 800,000 people from everywhere in one generation — not enough time for any of it to settle. Construction workers who came on contracts and stayed. Researchers' families who needed schools that didn't exist. People who moved for jobs they described to their families in the vaguest possible terms. A Sprawl that grew faster than anyone planned, with a gray economy, failing infrastructure, and housing controlled by actors who are not the government and not the factions. A school system in eleven languages that is officially monolingual. Neighborhoods with 28-year-old festivals that feel ancient to people who were children when they started. Post-leak: 800,000 people processing the discovery that the classified thing their city was built around is first contact, with no seat at the table where the response is being decided. These voices — the long-term Sprawl resident, the construction-era immigrant who never left, the gray market operator, the parent who moved for the school that didn't exist yet, the person who is angry about the leak and the person who is proud and the person who just wants the roads fixed — are as important to the cast as any faction operative. Critically: **not all New Meridian residents have a position on the Chorus.** Some have heard about it and moved on. Some experience it only as an explanation for why the city has the shape it does. Some have lived there fifteen years and relate to The Table as "the thing they're always deliberating about in the closed building downtown." This range — from believer to agnostic to genuinely indifferent — is load-bearing for the cast. A quote from someone who has no opinion on the Chorus is as true to the world as a quote from a Ghost analyst who thinks about nothing else. The city is large enough that both exist. **Outside New Meridian**, the world is watching: foreign correspondents covering The Table's deliberations, academics at universities elsewhere analyzing the Chorus remotely, government officials from other cities with their own interests in the outcome, people who were offered roles at the station or in the early institutions and said no, and who now watch from a distance what they passed up. These voices ground the fiction in a world larger than The Table. **Design target:** by the end of Artifact 04, the cast of attributed voices should feel like a world that exists off the page — people with opinions, histories, and reasons for saying what they said in that specific moment. Some of them are trying to win something. Some of them are just people who were there when the static stopped being static. | Locked session 4. Governs: all "Narrative:" fields in all artifacts; all character quotes; Artifact 05 (operative voices); Artifact 07 (ARBITER script); Artifact 10 (manuals). See PM03 §1 for typography convention. Cross-references: FD-03 (ARBITER registers), FD-04 (dual agency victory). |
+| FD-04 | Dual Causality as Governing Victory Principle | The game's two victory paths — VP and Chorus Portrait — are not just two scoring tracks. They are the two sides of an unanswerable question the game lets players explore and land on. The design holds this internally; it does not announce it to players. **The internal principle:** VP is the human-agency path — factions are authors, the Chorus is the occasion, winning by points is a claim that *we achieved something*. Portrait is the Chorus-agency path — the factions are being evaluated; what matters is what the Chorus has recorded, not what the factions intended. A faction that plays purely for VP is implicitly betting that human agency is the operative frame. A faction playing toward Portrait is accepting that something else is keeping score. Most factions do both — which is the honest position of anyone who cannot resolve the question. **The player experience:** The game should not tell players these are two philosophical positions. Players should discover, through play, that they have been making an argument — and at the end they should have arrived somewhere they can sit with. Not comfort. Clarity. A session of THE SIGNAL should leave players with a stance they earned, not a winner determined by addition. **The victory system must reflect this:** scoring is not the climax. The vote is. The Chronicle is. The moment after the Chronicle is read — when players know what they did and what the Chorus recorded — that is the game's actual conclusion. **Game objective statement (draft, for Artifact 10):** *"The objective of THE SIGNAL is to determine what humanity says to the Chorus — and what that says about humanity."* The first clause belongs to the factions. The second belongs to something else. Neither clause names the other. Do not make this explicit in player-facing materials. | Locked session 4. Governs: Artifact 10a (Victory System) — both paths are philosophically load-bearing; Artifact 10 (Game Manuals) — game objective statement; all future player-facing framing. Originates: Artifact 00 §6 "On the Question of Origin," §9 "On the Question of Cause." Cross-references: FD-01, FD-03. |
+| FD-06 | The Signal as Legacy Game | The Chorus's cyclic nature — the True State finding that the Chorus repeats on timescales or in dimensions humanity cannot perceive, that the response window is a feature of the cycle not the instance, that the Chorus compares responses against a record of previous cycles — makes a structural argument for THE SIGNAL as a legacy game. The elements are already present in the design; legacy is how they are fully realized. **The Chronicle as physical artifact:** In a legacy campaign, the Chronicle is not reset between sessions. It is a growing physical record — a booklet ARBITER writes into each session — that accumulates across the campaign. By the final session, it IS the Chorus's evaluation: not a summary, not a metaphor, but the literal record the factions' aggregate pattern has produced. **Portrait as campaign-spanning score:** A single session's Portrait is a data point. The campaign's Portrait is the pattern. Scores carry across sessions; what a faction revealed in session 1 is still in the record in session 8. Factions cannot escape what their early sessions established. **Faction components evolve:** Legacy mechanics allow permanent changes to faction boards, card decks, and available operations — physically reflecting how the faction's pattern has developed. The physical changes to components ARE the faction's accumulated Portrait made tangible. **The response window:** The Round 8 response window in the final session of the campaign is the moment the Chorus's cyclic response occurs. The Table has been building toward it since session 1. The "previous cycles" from the True State are the campaign's own earlier sessions — the Chorus's record of what the factions have produced, available to ARBITER, unavailable to the players. **The true victory condition:** The True State's L5 — "the Chorus responds to the aggregate signal of all sessions played" — is the legacy campaign's final session. The campaign's ending is not determined by the final session's VP or Portrait. It is determined by what the campaign's Chronicle, read as a whole, represents. Players who have played well across all sessions produce a different ending than players who have not. **In-world framing:** The campaign IS a cycle. What the factions experience as eight rounds over eight sessions is, from the Chorus's perspective, one instance of its evaluative process. The factions do not know they are in a cycle. The Chronicle, accumulating across the campaign, is the record the Chorus has always been building. **The final session dovetails into session 1 of the next campaign.** The Chorus's L5 response is not a conclusion — it is a new transmission, shaped by what the campaign produced. Campaign 2 begins with New Meridian already changed. The campaign 1 Chronicle becomes ARBITER's private reference for campaign 2 — held by the ARBITER player, consulted privately, surfaced obliquely in The Observation register. Players returning from campaign 1 recognize references new players find merely uncanny. The Directorate in campaign 2 is still the Directorate — institutions persist, people change. Ghost's classified research from campaign 1 is Ghost's historical archive in campaign 2. The game has no true ending. Each cycle's close is the next cycle's opening. The accumulated Chronicles of multiple campaigns are the game's defining physical artifact — a record of what multiple generations of The Table produced, held by the people who made it. | Design direction locked session 4. Governs: PM04 (Future Phases) — legacy structure is the primary campaign format from L2 onward; Artifact 10a (Victory System) — campaign scoring and true victory condition; Artifact 07 (ARBITER Toolkit) — Chronicle as physical legacy artifact. Cross-references: True State §1 (cyclic nature), §8 (legacy structure and dovetail), FD-04 (dual causality victory). |
+| FD-02 | The Overview — The Table's Shared Data Interface | **In-world canonical term: The Overview.** The physical game mat is the paper prototype instantiation of The Overview — The Table's shared situational interface, running under negotiated data governance agreements, ARBITER-administered for accuracy. See Artifact 00 §8 for full narrative establishment. The Overview is not an abstract game surface. It is the instrument through which The Table reads the state of New Meridian and the state of itself simultaneously. Every zone is a feed: a data stream all parties have agreed to surface collectively. The district map is New Meridian — the territorial layer. The surrounding tracks are The Overview's instruments of shared situational awareness. **In the paper prototype:** The Overview's aesthetic should feel like a live analytics dashboard or public intelligence display — a civic sentiment feed with faction presence as data series, a city-scale BI dashboard updating in real time. Clean, data-forward, minimal. Institutional. Not decorative. **In digital (L2+):** The Overview IS this dashboard, literally. The fiction and the artifact converge: the screen the players are looking at is the same object as The Overview The Table is looking at in the world. The paper prototype was always a physical instantiation of something that wants to be electronic. **Narrative anchors for each Overview zone (all TBD, to be resolved per 00-R45):** Public Standing = New Meridian civic sentiment index. World Conditions = key city and signal metrics. Round Tracker = the session's deliberation timeline. Initiative Strip = current Table proceedings order. Event Zone = active Situation Report. **The Overview as multi-layer interface (L2–L5 design direction):** What the factions see at The Table is L1 — board state, tracks, faction presence. This is not all The Overview contains or all it can show. The Overview is the UI and analysis layer for all five layers of the game's reality. Factions have access to L1. ARBITER has access to all five — what it reads in The Overview is not board state but the complete signal: behavioral pattern, Chorus evaluation, the full record of what New Meridian is producing. The L1 paper prototype anchor ("it simply shows what is") is accurate at every layer — what changes between layers is what "what is" contains. **ARBITER's relationship to The Overview — open design question (True State):** Three candidate framings: (A) ARBITER as module — the light installation at The Table is where The Overview manifests its deepest accessible layer; ARBITER is The Overview's L5 interface made present at The Table; (B) ARBITER as admin — The Overview is the system, ARBITER is a separate agent with full read access to all layers; (C) ARBITER as interpreter — The Overview outputs raw signal at all five layers, ARBITER is the interpretation layer between Chorus signal and administered reality. Option C is most consistent with established lore (the Chorus transmits; ARBITER was built to receive and interpret; humanity accidentally built what the Chorus needed). Resolution belongs in the True State document. L1 artifacts: The Overview is the shared interface; ARBITER administers it. Deeper framing: private. Note to True State: add section on The Overview's layer structure and ARBITER's relationship to it. | Governs: Artifact 11 (visual design — "The Overview" replaces "mat" throughout); Artifact 01 (layout spec); V01 (game mat visual artifact). Cross-references: 00-R45 (zone narrative anchors), 00-R08 (Public Standing always on The Overview), 00-R09 (The Overview reflects true current state), FD-01 (ARBITER's Layer), FD-03 (ARBITER physical form). In-world term "The Overview" locked session 4 — replaces "mat" in all player-facing and design language. |

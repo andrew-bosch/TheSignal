@@ -1,0 +1,15 @@
+# Archives — handled by Retired folder; binary files add no git value
+*.zip
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor temp files
+*.swp
+*.swo
+*~
+
+# Python cache (grip renderer)
+__pycache__/
+*.pyc

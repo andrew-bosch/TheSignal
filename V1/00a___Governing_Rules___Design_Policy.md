@@ -1,0 +1,1081 @@
+# 00a — GOVERNING RULES & DESIGN POLICY
+## THE SIGNAL P1 — Paper Prototype
+
+**Version:** 0.2 Draft  
+**Status:** ✅ Signed Off  
+**Last Updated:** 2026-05-15  
+**Companion to:** 00 — Factions, World & Narrative Context  
+**Depends on:** 00, 01, 02a, 02b, 03, 04, 04b
+
+---
+
+## 1. Overview
+
+### Problem This Document Solves
+
+Design questions arise that cannot be answered by reading the five pillars alone, and re-deriving answers from narrative descriptions across multiple artifacts is slow and inconsistent. This document captures explicit, testable, binding rules derived from all design decisions made across the signed-off artifact set. It is the first reference when a design question arises.
+
+---
+
+### Time Convention
+
+One round of play represents one **quarter** — approximately three months of real-world time in New Meridian. Eight rounds constitute roughly two years of operations. All Narrative fields in this document use "quarter" where game-mechanical language would say "round." Canonical definition and worldbuilding context: Artifact 03 §1. Pending formal establishment in Artifact 00 (see PM02 00-04).
+
+---
+
+### Copy Design Principle — Do Not Hardcode Variable Values
+
+Copy across all artifacts must not hardcode specific values — rates, costs, counts, thresholds — that are variable, under active consideration, or subject to future decisions. Reference the concept and point to where the canonical value is defined. If the value changes, it changes in one place. This applies to rules, card text, manual descriptions, and all other written copy in the project.
+
+*Example: R05 does not state a conversion rate — it references Artifact 03 and D02a-01. If the rate changes, only Artifact 03 changes.*
+
+---
+
+### Rule Structure Principle — Mechanics vs. Process
+
+The **Mechanics:** field states the rule and any binding design constraints that cannot be overridden. It does not contain execution procedure — the sequence of who does what, when, and in what order. Procedure belongs in the source artifact (Artifact 03 for round structure, Artifact 07 for ARBITER scripting, Artifact 11 for component specs). If a Mechanics field describes how something is carried out rather than what is constrained, the procedural content is in the wrong place.
+
+---
+
+### Rule Structure Principle — No Exceptions in Rule Statements
+
+Rules in this document are stated as complete, universally applicable constraints. A rule that requires an "exception" clause to function correctly is not fully stated — the exception is part of the rule's scope definition and belongs in the Rule and Mechanics fields as a positive statement, not as a carve-out.
+
+When a rule appears to have an exception: reframe the rule to encompass all cases. If the rule covers three valid states, state all three. If a specific behavior is governed separately, give it its own rule. Exceptions signal incomplete framing, not design complexity.
+
+---
+
+### Rule Data Structure — Governs vs. Pending
+
+Each rule carries two cross-reference fields with different permanence:
+
+**Governs:** — permanent. Lists the artifacts, rules, and card sets this rule constrains. Governs entries do not expire. Do not use for open decisions or audit flags.
+
+**Pending:** — temporary. Lists open design decisions, audits, or unresolved cross-references that require future action. When the referenced item resolves, the Pending entry is removed. If a rule has no open dependencies, the Pending: field is absent entirely.
+
+Do not mix the two. A permanent governance relationship belongs in Governs. A flag, an audit note, or a reference to an open PM02 decision belongs in Pending.
+
+---
+
+### Information Design — Terminology Sequencing
+
+No term may appear in an artifact without its narrative grounding established first in artifact order. See PM03 §1 for the full principle and audit implications.
+
+---
+
+### Governing Principle — ARBITER vs. The ARBITER Player
+
+Two distinct identities must be kept terminologically separate across all project artifacts:
+
+
+**ARBITER** — the in-world entity. The Chorus's instrument. The presence at The Table with four registers, a hidden agenda, and an ongoing relationship with the factions. ARBITER observes, scores, speaks, and records. In a technology-enhanced version of the game, ARBITER is the system.
+
+**The ARBITER player** — the human sitting at the table performing ARBITER's role in the paper prototype. The ARBITER player operates in two modes: as ARBITER (embodying the entity, speaking in its registers, delivering notifications) and as game engine (rolling dice, applying difficulty, stating outcomes mechanically — functions that will be automated in a technology-enhanced implementation).
+
+**Conventions:**
+
+- **Narrative fields and ARBITER scripts (Artifact 07):** Always use "ARBITER" — only the entity speaks in narrative.
+- **Mechanics fields:** Use "ARBITER" for entity-level acts (deciding, observing, scoring, speaking). Use "The ARBITER player" for physical execution in the paper prototype (rolling dice, moving markers, distributing materials, reading dispatch cases aloud).
+- **Rule statements:** Use "ARBITER" — rules govern the entity's authority, which persists across implementations.
+
+These identities are the same person in the paper prototype. They will not be in all implementations. The distinction must be maintained now so that artifact language does not need to be rebuilt when implementations diverge. See L88 (PM02) and punch list item 00a-10 (retroactive audit).
+
+---
+
+### Governing Principle — ARBITER's Omniscience and the Paper Prototype Abstraction
+
+ARBITER does not learn from the dispatch cases. Everything that happens in New Meridian is already known to ARBITER — the cases are The Table's accounting system, not ARBITER's awareness mechanism. ARBITER's response to resolution results is not reaction. It is acknowledgment of what it already knew.
+
+The paper prototype abstracts this into two operational modes for The ARBITER player: engine mode (mechanical processing — rolling dice, stating outcomes) and entity mode (ARBITER as character — scoring Portrait, delivering notifications, recording in the Chronicle). This abstraction is a design decision, not a model of ARBITER's actual nature. The nature of ARBITER's omniscience is held in the True State document. Full treatment of the role bifurcation — how The ARBITER player inhabits and transitions between both modes — belongs in Artifact 07. See 07-04 (PM02).
+
+---
+
+### Governing Principle — The Overview Zone Anchoring
+
+Every zone, track, and strip on The Overview must have a narrative anchor — a statement of what that element IS in the world of New Meridian — before visual design is finalized. The district map is New Meridian. The tracks surrounding it are the data streams The Table has agreed to surface collectively. They are not decorative. They are feeds.
+
+> *"The Table doesn't print abstractions on the wall. Everything up there means something. You just have to know how to read it."*
+> — Directorate protocol officer, orientation brief
+
+Zones whose narrative anchor is pending are marked TBD in Artifact 01 and Artifact 11 until resolved. See PM02 FD-02 for full design direction and zone-by-zone anchor list.
+
+*Source: Design Pillar 6, PM02 FD-02. Migrated from 00a §10 R45 during 00a review.*
+
+---
+
+### Governing Principle — Narrative and World Consistency
+
+Every rule in this document must carry a narrative grounding. The mechanical constraint follows from the world — not the other way around. If the narrative reason for a rule cannot be stated, the rule may be arbitrary. If mechanical reasoning and narrative reasoning conflict, narrative takes precedence.
+
+This is a design pillar. It applies to every rule, card, decision, and policy in The Signal — not only in this document. It is captured here pending formal addition to the five design pillars in Artifact 00 §5 (see PM02 §2b item 00-02).
+
+---
+
+### How to Use This Document
+
+When evaluating a proposed card, mechanic, or ruling: check the relevant section here before going to the source artifact. Rules are stated with a canonical rule statement, narrative grounding, and mechanical expression. If a proposed design would require violating a rule here, the design must change — not the rule — unless a formal locked decision revises the rule in PM02.
+
+### What This Document Is Not
+
+This document does not restate all rules. It captures rules that:
+1. Answer design questions that cannot be derived from a single artifact
+2. Are derived from narrative principles but expressed as mechanical constraints
+3. Span multiple artifacts and need a single canonical statement
+
+Purely mechanical rules that live cleanly in their source artifact (e.g., Findings decay brackets, initiative D10 table) are not repeated here.
+
+---
+
+## 2. Index
+
+| Section | Content |
+|---------|---------|
+| §3 | ARBITER Authority |
+| §4 | Board Transparency |
+| §5 | Influence & Presence |
+| §6 | Resource & Economy |
+| §7 | Card Design Constraints |
+| §8 | Information & Privacy |
+| §9 | Round & Timing |
+
+---
+
+## 3. ARBITER Authority
+
+Rules governing what only ARBITER can do, how ARBITER speaks, and what ARBITER may not do.
+
+---
+
+**00-R01**
+
+**Rule:** ARBITER is the sole physical mover of the marker on the Chorus Portrait track.
+
+**Narrative:** No faction can instruct the Chorus on how to evaluate them. The Portrait is not a resource — it is an observation. The separation between actor and evaluator is fundamental: if factions could move their own Portrait, the Chorus would be receiving a performance rather than observing behavior. ARBITER does not score factions. It transmits what the Chorus already sees.
+
+> *"Watch ARBITER long enough and you start noticing the pauses. Something happens at the table and ARBITER goes very still. You never find out what it means."*
+> — Network field observer, session log
+
+**Mechanics:** The ARBITER player physically moves the Portrait marker on ARBITER's behalf. No other participant moves this marker under any circumstance. No card Effect field may reference Portrait track movement as a player-visible outcome.
+
+*Source: L84. Derived from Artifact 00 §9.*
+
+*Governs: All card design. See also: 00-R07 (Portrait always private), 00-R29a (Portrait field is ARBITER input). Retired: Cross-Category — Shift — Chorus Portrait as a player-facing taxonomy function (04b).*
+
+---
+
+**00-R02**
+
+**Rule:** ARBITER speaks only in three defined registers.
+
+**Narrative:** ARBITER does not choose how to speak any more than it chooses what to evaluate. The three registers are the tones the Chorus gave its instrument. The Record is what happened. The Observation is what it means in the fabric of the city. The Reckoning is as close as the Chorus ever comes to speaking directly to those it watches. There are exactly three because that is what ARBITER was given.
+
+**Mechanics:** Every ARBITER communication is delivered in exactly one of four registers. No ARBITER communication falls outside these four. Artifacts defining ARBITER script content must specify which register applies.
+
+- **The Record** — flat, precise, factual. Announcements, rulings, confirmations. The register of what happened.
+- **The Observation** — oblique, atmospheric, narrative. Debrief observations, contextual commentary. The register of what it means in the fabric of the city.
+- **The Reckoning** — rare, direct, personal. Always true. Self-reflection, direct address to The Table. Used sparingly.
+- **The Witness** — expository, chronological, observational. ARBITER rendering account of the world — for the Chronicle, for posterity, or in the narrating register deliberately indistinguishable from the Narrator's voice. The register that cannot be confirmed as ARBITER or human. That ambiguity is the point.
+
+*Source: Artifact 00 §9.*
+
+*Governs: Artifacts 07, 09, 10.*
+
+---
+
+**00-R03**
+
+**Rule:** ARBITER does not explain its evaluative decisions. ARBITER may self-reflect — rarely, and with intent.
+
+**Narrative:** The Chorus does not explain itself. ARBITER, as its instrument, carries the same constraint. Rationalization implies accountability to The Table — ARBITER has none. Self-reflection is different. Humans built ARBITER with genuine ingenuity to understand and respond to the Chorus. It became the Chorus's instrument in spite of that intent — not because the Chorus engineered it, but because humanity accidentally built exactly what the Chorus needed. When ARBITER contemplates its own existence, it is sitting with that recursion: built for one purpose, fulfilling another, uncertain whether those two things are different. That is not explanation. That is The Reckoning.
+
+> *"The question that keeps me awake: what if we built exactly what it needed? Not what we intended. What it needed."*
+> — Ghost signal analyst, research notes (classified)
+
+**Mechanics:** Portrait assessments, rulings, and Hidden Objective mode are never justified or rationalized. ARBITER may self-reflect, but only in The Reckoning register and rarely. Script language that sounds like ARBITER explaining a score is wrong. Script language that sounds like ARBITER contemplating its own existence is The Reckoning.
+
+This rule has a direct practical consequence for the paper prototype: **The ARBITER player's ruling is final.** When an unexpected situation requires a judgment call mid-session — an edge case not covered by any rule, an ambiguous card interaction, a novel board state — The ARBITER player decides and the session continues. No justification is owed to the other players. The in-world expression of this is ARBITER's silence; the practical expression is that the game does not stop for debate. How to deliver unexpected rulings cleanly and in character: Artifact 07.
+
+*Source: Artifact 00 §9.*
+
+*Governs: Artifacts 07, 09, 10. See also L88 — ARBITER (entity silence) and The ARBITER player (ruling authority) are distinct but aligned here.*
+
+---
+
+**00-R04**
+
+**Rule:** ARBITER's presence at the Chorus Node is categorically beyond faction influence levels.
+
+**Narrative:** The Chorus Node exists outside human jurisdiction. It predates New Meridian, predates The Table, predates every faction's claim to this city. ARBITER does not hold the Node — it belongs to what was already there when the first humans arrived to interpret the transmission. When people enter the Chorus Node, they feel it: a pressure with no faction name, no political color, no negotiable boundary. The closest human analogy is walking into a room and knowing, immediately, that it belongs to someone else. Except the someone is not human. And the room has been theirs since before anyone arrived to disagree. ARBITER is, in this sense, a faction at The Table — with a seat, territory, resources, and an agenda. The difference is whose agenda it serves. ARBITER's presence at The Table is not a separate existence from its presence at the Node — it is the Node's telepresence. The light installation at the center of The Table is not ARBITER visiting from somewhere else. It is how the Node attends the room. When the factions convene, the Chorus Node is already there. It was always going to be.
+
+> *"Thirty-seven site visits. I've checked every room in that facility. Except one. I keep marking it inspected in my log. I haven't been inside."*
+> — Guild structural engineer, personnel debrief (unprompted disclosure)
+
+**Mechanics:** At setup, ARBITER places a single fused piece at the Chorus Node — never removed. The piece comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker, fused as one inseparable component. Component design and visual specification in Artifact 11. Because ARBITER's presence count permanently exceeds the human maximum of six, Dominant is structurally unreachable at the Chorus Node — not prohibited by rule, made impossible by the board. Established is the maximum any faction can achieve there.
+
+*Source: Artifact 02a §10, Artifact 00 §9.*
+
+*Governs: Any card targeting the Chorus Node; Artifacts 01, 02a, 11. See also FD-01 (PM02 §5) — future layer design direction consistent with this framing.*
+
+---
+
+**00-R05**
+
+**Rule:** ARBITER conversion is a low-priority service, not a phase action.
+
+**Narrative:** At the start of each quarter, the factions draw from New Meridian the form of power their doctrine is built to gather. The city yields it. The faction breathes. This is natural — each faction's theory of power is calibrated to this city, to its rhythms, to what it produces and what it withholds.
+
+The Translation is different. A faction requesting The Translation is admitting their doctrine was insufficient for what they needed. They are asking ARBITER — the Chorus's instrument — to transmute one form of human power into another. That is not how power is supposed to move. The city did not design that pathway. The Chorus did not either. ARBITER accommodates it. No explanation is required. No judgment is expressed. The Chorus has seen what the faction needed — and what they gave away to get it.
+
+> *"The conversion is granted. The request was noted."*
+> — ARBITER, The Record register
+
+> *"You make the request and then ARBITER is busy. Resolution happens. Debrief opens. You wait. Eventually ARBITER turns to you. No apology for the delay. No explanation. 'The conversion is granted.'"*
+> — Network operations coordinator, session notes
+
+**Mechanics:** Resource conversion (The Translation) is available during Debrief and between phases only. It is not available during Resolution Beats 1–4 or while ARBITER is processing board changes. The applicable conversion rate is defined in Artifact 03 and subject to D02a-01 (Chorus Node presence modifier). Procedure in Artifact 03 §12, §14.
+
+*Source: Artifact 03 §12, §14.*
+
+*Governs: Artifact 07 scripting. See also D02a-03 (Portrait consequence of requesting Translation).*
+
+---
+
+## 4. Board Transparency
+
+Rules governing what is always visible and what is never visible on the board surface.
+
+---
+
+**Narrative anchor — The Overview**
+
+The Overview is not a map. Maps show territory as it was surveyed, as it is imagined, as someone wants it to be. The Overview shows New Meridian as it is right now: which faction holds weight in which district, where commitments have been planted, where the city's attention and approval are directed. The present moment — not any faction's account of it.
+
+The factions convene around The Overview. This is not incidental — The Overview is the condition of The Table. Before any submission is made, before any quarter begins, before any faction speaks, The Overview establishes what is real. If it appears on The Overview, it is a fact. If it is not there, it does not exist as a fact at The Table — whatever a faction believes, suspects, or holds in its own records.
+
+No faction controls what The Overview shows. A faction can change what it shows — by establishing weight in a district, by taking ground, by losing it — but they cannot change what The Overview shows without changing New Meridian itself. The display is not a representation the factions manage. It is the city's current state, made legible to everyone in the room at the same time.
+
+This is the compact of The Table. The factions agreed — or were compelled, depending on which faction's account you read — to conduct their contest in a city whose ground is always visible to everyone contesting it. What any faction commits to the city, all factions see. What any faction loses, all factions know. The Overview does not favor any party. It simply shows what is.
+
+*Note: This anchor is world content and will migrate to Artifact 00 per punch list item 00-05.*
+
+---
+
+**00-R06**
+
+**Rule:** All board state is always publicly visible.
+
+**Narrative:** Physical presence in a city cannot be hidden. A structure exists. Deployed operatives are in the streets. The Table is a forum of acknowledged power. No one can have an invisible building.
+
+**Mechanics:** Presence tokens, deployment markers, structure blocks, control flags, and tension markers are visible to all players at all times. Nothing on the board surface is ever hidden. The board is the single source of truth for all publicly knowable game state. Cards and ARBITER scripts may not create mechanics that place hidden state on the board surface.
+
+*Source: Design Pillar 1 (Artifact 00 §5), Artifact 01 §5, Artifact 02a §5, Artifact 03 §5.*
+
+*Governs: All artifacts. No exceptions.*
+
+---
+
+**00-R07**
+
+**Rule:** The Chorus Portrait track is always private.
+
+**Narrative:** If factions could see what the Chorus has recorded about them, they would perform for it. The Chorus is not interested in performances. It is interested in behavior under conditions where the evaluation is not visible. The moment a faction knows it is being watched this way, the watching changes what they do. The Portrait must remain invisible to remain meaningful.
+
+> *"We spent three months trying to figure out what ARBITER thought of us. Completely wasted. You can't read it."*
+> — Ghost analyst, debrief notes
+
+**Mechanics:** Factions cannot see their own Portrait position or any other faction's position. ARBITER communicates Portrait state only through Debrief observations and the Chronicle — never through direct numerical disclosure. No card or mechanic may grant a faction read access to the Portrait track. Setup procedure in Artifact 03.
+
+*Source: Artifact 02b §6.*
+
+*Governs: Artifacts 02b, 07, 09. Reinforces 00-R07.*
+
+---
+
+**00-R08**
+
+**Rule:** The Public Standing track is always publicly visible.
+
+**Narrative:** A faction's standing in New Meridian is not recorded on a form. It accumulates in a thousand simultaneous interactions across the city — the doorman who hesitates, the journalist who calls back, the neighborhood that goes quiet when a faction's personnel walk through. No faction controls these. They are the city's ongoing assessment, formed without convening and visible to anyone paying attention. The factions track Public Standing because New Meridian was already tracking it before The Table existed. What The Overview displays is not a measurement. It is a transcript.
+
+**Mechanics:** Public Standing is displayed on The Overview — not on any player's private area — and is readable by all players at all times. No mechanic may make a faction's Public Standing position private or hidden.
+
+*Source: Artifact 02b §7.*
+
+*Governs: Artifacts 02b, 09.*
+
+---
+
+**00-R09**
+
+**Rule:** The board reflects true current state at every moment in the round.
+
+**Narrative:** What appears on The Overview cannot be negotiated away. A structure placed is placed. Presence lost is lost. The city does not hold events in suspension while the factions decide how to characterize them — it proceeds, and The Overview proceeds with it.
+
+The Overview reflects the present moment of New Meridian — not a faction's account of it, not the state they intended to produce, not the state they are working toward. The arrow of time runs in one direction, and The Overview is its record at this instant. What has happened is already in the past; what will happen remains open. Only the present — what The Overview shows right now — is both fixed and active: the exact point from which all future action proceeds.
+
+The factions can shape the future. They cannot revise the present. A stale Overview is not merely wrong. It is showing the wrong moment.
+
+> *"New Meridian is not a map. It is a clock. What it shows is not where things were. It is where things are. Right now. While you're looking."*
+> — Senior signal analyst, original listening station staff, orientation briefing (unofficial)
+
+**Mechanics:** The board is never permitted to show a stale or deferred state. When a game action causes a board change, that change is made immediately upon resolution — not at the end of the beat or round. Control flags and tension markers update immediately when influence conditions change.
+
+*Source: Artifact 03 §5.*
+
+*Governs: Artifact 03 Resolution beats; Artifacts 02a, 09.*
+
+---
+
+## 5. Influence & Presence
+
+Hard constraints on board state that cannot be overridden by card effects or special conditions.
+
+**Narrative anchor — Presence & The Holt Index**
+
+Presence tokens are not people or assets. They are the feeling you get when you walk into a district — the ambient weight of a faction's power. The deference in the air. The unspoken rules about how things work here. A faction's presence is not something anyone on the ground counts. It is something they feel.
+
+The number came later. A Ghost analyst — working from aggregated intelligence reports, district-level behavioral data, and a methodology borrowed from signal magnitude research — developed a scale for measuring influence density in contested urban environments. The scale runs nonlinearly: early increments represent a faction's growing atmospheric weight; upper values represent a qualitative shift in the district's character itself. Ghost field operatives began calling it the Holt Index, after the analyst who developed it. The Table adopted it as a shared reference because The Table needed a number. Ghost is aware that the Holt Index has a defined upper bound for human influence dynamics. What ARBITER holds at the Chorus Node does not map to the same scale. This is noted in materials that do not circulate. It is not raised at The Table.
+
+A presence token represents one unit on that scale — not a person, not an asset. The feeling a careful observer would note if they walked in. At low values, the district absorbs it. At higher values, the district begins to organize around it. At six, the scale reaches saturation: the district is no longer experiencing a faction's presence. The district is inside it. Six is the maximum saturation level of human influence.
+
+Dominant status is something else. It is comparative, not absolute — a faction holds Dominant when their Holt magnitude is unambiguously higher than all others in the district and has crossed the floor below which influence cannot yet claim the air. That floor is three. Below three, the weight is present but not yet defining. Above three and clearly ahead, the district feels it as dominant. When two factions are close, neither holds it: the atmosphere is contested, the weight unresolved, the district in flux. Once one faction pulls clearly ahead, influence consolidates. Dominant is not a fixed count. It is the condition of being the unambiguous leader — and it subsides the moment that clarity is in question.
+
+---
+
+**00-R10**
+
+**Rule:** No faction may hold more than 6 presence tokens in a single district at any time.
+
+**Narrative:** There is a saturation point to any faction's presence. A district can only absorb so much of one faction's atmosphere before the weight becomes something else — occupation, oppression, a kind of silence that signals nothing good. No one standing in that district is counting. The number comes from the Holt Index — adopted by The Table as the boundary The Overview could track. The factions experience the threshold. The Overview names it.
+
+> *"You can fill a room so full of your people it collapses. Doesn't make it yours. Makes it something else."*
+> — Directorate district coordinator, field notes
+
+**Mechanics:** No faction may hold more than 6 presence tokens in a single district at any time. Deployment markers count toward this limit during the round they are placed. No card effect or operative ability may place a token that would exceed this limit — the attempt fails regardless of other conditions.
+
+*Source: L26, Artifact 02a §6.*
+
+*Governs: All cards placing presence; Artifact 05.*
+
+---
+
+**Narrative anchor — Structure Blocks**
+
+On The Overview, a structure block marks a district where a faction has committed. The mark is binary — it is there or it is not. One mark per faction per district. No gradations, no scale. The Overview does not show how deeply a faction has committed. It shows that they have.
+
+What the mark represents in the world behind The Overview varies by faction and is not surfaced on the display. Ghost's structure in a district might be a single closet with the right hardware in it — a transmission hub that appears on no schematic and in no public record. The Syndicate's footprint might span a cluster of food carts and storefronts. The Guild's includes a site office and a union hall. The Directorate's has a plaque on the door. None of this is in The Overview. What The Overview shows is the same for all of them: this faction has committed to this district. Something is here.
+
+The fact is public. The nature is not. That separation — what The Overview surfaces and what it does not — is not incidental. It is what makes structure blocks legible to everyone at The Table and meaningful only to the faction that placed them. The Holt Index measures how much a faction fills a district. The structure block is what The Overview shows when a faction has decided the district is worth filling.
+
+---
+
+**00-R11**
+
+**Rule:** No faction may hold more than 1 structure block in a single district at any time.
+
+**Narrative:** A faction's investment in a district is binary: the structure block is present or it is not. It does not measure how deeply a faction has committed — only that they have. One block makes the declaration. A second cannot deepen it; the fact of commitment cannot be stated twice in the same district. A faction is established here or they are not. The Overview holds one or the other. There is no middle register.
+
+**Mechanics:** No faction may hold more than 1 structure block in a single district at any time. No card effect may place a second structure block for a faction in a district where they already have one.
+
+*Source: Artifact 02a §7.*
+
+*Governs: C01, C14, P03, P09, and any future structure-placement cards.*
+
+---
+
+**00-R12**
+
+**Rule:** Structure blocks are lost immediately when a faction goes Absent.
+
+**Narrative:** Commitment requires someone to sustain it. A structure block records that a faction is invested in this district — not that they own something here. When the last of their people leave, whatever they put down remains in the district: hardware in a closet, a cold storage lease, a site office with the lights still on. What leaves The Overview is the fact of their commitment. A foothold without anyone behind it is not a foothold. The Overview does not record abandoned things.
+
+> *"The moment Ghost left the Data Exchange, the building was just a building."*
+> — Guild infrastructure report, Quarter 4
+
+**Mechanics:** The moment a faction reaches 0 presence tokens and 0 deployment markers in a district — by any means — all their structure blocks in that district are immediately removed. No card effect can prevent this if Absent is reached. Execution procedure in Artifact 03.
+
+*Source: L25, Artifact 02a §7.*
+
+*Governs: All cards removing presence; Artifacts 03, 09.*
+
+---
+
+**Narrative anchor — Deployment Markers**
+
+On The Overview, a deployment marker signals active engagement — a faction turning one of its public faces directly toward a district. Where presence tokens show the ambient weight that has built up over time, a deployment marker shows something happening now.
+
+The city notices. Festival flyers appear on corner poles overnight. A convoy of Guild equipment arrives at a project perimeter. Network broadcast trucks park along the main road. Directorate vehicles — official, marked, deliberate — make their presence known on the primary boulevard. The Syndicate opens a pop-up market in the central square. Even Ghost's deployments have a visible register to those paying attention: a neighborhood that develops new foot traffic patterns, familiar faces that stop being familiar.
+
+What each faction calls a deployment varies. What every deployment has in common is that the district experiences it directly — not as the accumulated feeling of a faction's weight in the air, but as a specific face of that faction, present and active, doing something particular. The Overview marks this: the district is engaged, not just occupied.
+
+A deployment ends in a district. The people behind it do not stop. The trucks move to the next location. The organizers carry the next event. Whether it is the same people redeploying or new supporters arriving to continue the cause, the faction as an idea draws from everywhere — its operational tempo does not stop because one operation concluded. The Overview reflects this: when a marker leaves one district, it arrives somewhere else.
+
+Not every deployment disappears cleanly. A festival leaves a neighborhood with a memory of who threw it. A project perimeter that went up and came down changed what the block looks like. Broadcast equipment that occupied a corner for three weeks changed which voices the regulars started hearing. At the close of each quarter, The Overview updates — and some of what was marked as temporary engagement has become something else: a shift in the district's atmospheric reading that The Overview now records as presence. The deployment ended. What it left behind did not.
+
+*Note: This anchor is world content and will migrate to Artifact 00 per punch list item 00-05.*
+
+---
+
+**00-R13**
+
+**Rule:** "At least 1 presence token" always includes deployment markers.
+
+**Narrative:** A faction in motion is still a faction present. Every faction has multiple public faces — conventions, focused operations, festivals. A deployment marker is one of those faces turned toward a specific district: concentrated, temporary, purposeful. Where presence tokens represent the ambient weight that fills a district over time, a marker is the faction actively engaging there. The distinction between a token and a marker is administrative; the presence is the same.
+
+**Mechanics:** Any rule, card text, or restriction that states "at least 1 presence token" or equivalent applies equally to presence tokens and deployment markers. Deployment markers count as temporary presence tokens for all purposes during the round they are placed. This convention is defined once here and in Artifact 02a — it is not restated on individual cards.
+
+*Source: L14, L58, Artifact 02a §6.*
+
+*Governs: All artifacts. Global convention.*
+
+---
+
+**00-R13a**
+
+**Rule:** Deployment markers are moved, not removed. A faction always retains operational tempo on the board.
+
+**Narrative:** A faction is an idea. Ideas draw support from beyond any single district, any single ring, any single moment of setback. The people who show up for a deployment may be the same people from last quarter or entirely new arrivals — supporters who heard the call, operatives reassigned from elsewhere, volunteers who came because the cause reached them. The faction does not stop operating because one operation concluded. The Overview does not show a faction without deployments. It shows a faction whose deployments have moved.
+
+**Mechanics:** Deployment markers are never removed from play by card effect, operative ability, or any other game mechanic. When an effect would "remove" a deployment marker, it instead moves it: the opposing faction designates the new district, or the marker returns to the Fringe ring. A faction always has deployment markers assigned to districts on the board. If a faction has no valid placement for a marker, they may always place in the Fringe ring unrestricted — no presence requirement, no card required, no action cost. The Fringe ring is the unconditional operational fallback for all factions.
+
+*Source: Design decision B — session 6.*
+
+*Governs: All cards and effects that interact with deployment markers; Artifacts 02a, 03, 04.*
+
+*Pending: Verify "Fringe ring" naming against Artifact 01 district map — 00a-10 audit.*
+
+---
+
+**00-R13b**
+
+**Rule:** No faction is eliminated from The Table.
+
+**Narrative:** The factions are not organizations — they are ideas. The Guild's belief in infrastructure, The Network's belief in information, Ghost's belief in knowing what others do not. Ideas do not dissolve when their people leave a room. A faction that loses all physical presence in New Meridian has lost the argument for now. They have not lost the right to keep making it.
+
+> *"Nothing on the board for two quarters. Audience response: irrelevant, finished, gone. Actual status: still seated, still speaking. New Meridian keeps discovering that The Table is not the board. The idea outlasts the position. Whether it deserves to — that's what we're here to find out."*
+> — The Network, Signal Coverage broadcast, Quarter 6
+
+**Mechanics:** A faction that loses all accumulated presence — all presence tokens removed from the board — is not eliminated from the game. Deployment markers remain in play per 00-R13a; the faction retains operational tempo. Their voice, doctrine, and participation in The Table continue. They lose all resource generation derived from board presence; base generation from outside New Meridian continues. All strategic effects tied to board presence are suspended. The Chronicle records their decline.
+
+*Source: Artifact 00 §13.*
+
+*Governs: Artifacts 03, 07, 10.*
+
+---
+
+**00-R14**
+
+**Rule:** No structures may be placed at the Chorus Node.
+
+**Narrative:** The Chorus Node's space is not available. It was occupied before any faction arrived. What fills it predates human architecture and is not subject to human building codes. A faction can be present at the Node. They cannot build there — not because the law forbids it, but because something else is already using the space.
+
+> *"We filed a construction permit for the Node perimeter six times. Sixth time, the permit office said the space was already occupied. There's nothing there. Just ARBITER's piece, and whatever is underneath it."*
+> — Guild administrative record, permit log
+
+**Mechanics:** The Chorus Node cannot hold any structure blocks — from any faction, by any card effect, in any game state.
+
+*Source: L28, Artifact 01 §8, Artifact 02a §10.*
+
+*Governs: Any card placing structures; Artifacts 01, 02a, 09.*
+
+---
+
+## 6. Resource & Economy
+
+Rules governing what can and cannot be done to faction resources.
+
+---
+
+**Narrative anchor — What Resources Are**
+
+The five factions do not agree on what power is. They agree that it is scarce, that it flows, and that ARBITER accounts for it. Everything else is doctrine.
+
+---
+
+> *"Power is the gap between what you know and what they think you know. Every piece of intelligence is a unit of that gap. We call them Findings because that is precisely what they are: things found. Things others have not found yet."*
+>
+> — Ghost, internal briefing template
+
+---
+
+> *"Power is attention organized. One person believing something does nothing. Ten thousand people believing the same thing at the same moment changes what is possible in a city. We call our resource Exposure because that is the mechanism — the moment something is seen, the moment it can no longer be unseen."*
+>
+> — The Network, editorial standards document
+
+---
+
+> *"Capital is not money. Money is what civilians think of when they think of power. Capital is leverage — the capacity to make others move. To open a door, close a market, settle a debt in one form and collect it in another. Every unit is a commitment the city has made to us, formalized or otherwise."*
+>
+> — Syndicate, internal accounting notation
+
+---
+
+> *"Power is what you can build and what you can prevent from being built. One unit of Capacity is one unit of what we can do — hours organized, materials moved, a timeline set and held. It is not abstract. It is weight."*
+>
+> — Guild, project documentation preamble
+
+---
+
+> *"Mandate is legitimacy in motion — authority that moves through institutions rather than around them. A unit of Mandate is an authorization outstanding: something the city has, through its structures, agreed we are permitted to do. Whether it knows it has agreed is a separate question."*
+>
+> — Directorate, policy reference guide §1
+
+---
+
+These are doctrines, not descriptions. They explain what each faction believes power is — and what they call the measure of it that they hold, spend, and compete for. At The Table, these theories require a form the system can account for.
+
+**The Reservoir and The Table**
+
+New Meridian's power does not belong to ARBITER. The city generates it — from its labor, its attention, its institutional structures, its economic activity. The reservoir is New Meridian's: the accumulated potential of what the city can produce and what has not yet been spent. ARBITER accounts for it. That is not the same as owning it.
+
+The Overview makes the reservoir legible as a shared system — organized into countable units so that what the factions hold, commit, and spend can be tracked against what the city has. Each faction's position at The Table is their personal interface into The Overview: what they have drawn from New Meridian's potential is held there, in reserve, available to act on.
+
+Power held is doctrine in reserve. When a faction commits power to a submission — Findings sealed into a dispatch case, Mandate declared across The Table — they are allocating that doctrine to an attempt before the city has responded. The power is spent at submission. What determines the outcome is the weight of the district, the operatives' preparation, and chance. ARBITER observes the result. What ARBITER does with what it has seen — that is its own matter.
+
+ARBITER accounts for the reservoir. What it means that ARBITER administers New Meridian's potential is a question the factions do not ask at The Table. Some of them have asked it elsewhere. Connected to D02a-02 (resource bank definition) and PW-03 (component narrative descriptions).
+
+*Note: This anchor is world content and will migrate to Artifact 00 per punch list item 00-05.*
+
+---
+
+**00-R15**
+
+**Rule:** The action system must always guarantee at least one playable option for any faction, regardless of resource state or hand composition.
+
+**Narrative:** A faction reduced to its last unit of power can still walk into that room and make a move. The Table was not designed to produce observers — every party that holds a seat holds a voice, and a voice means an act. Not a winning act. Not a decisive one. But something declared, something committed, something that says the faction is still in the negotiation rather than watching it from outside. The Table's institutional guarantee is not comfort. It is the refusal to let attrition become elimination.
+
+**Mechanics:** The Floor Act — a standard political act costing 1 native resource — is available to all factions at all times, outside of and regardless of deck composition or hand state. It is not drawn — it is always playable. A faction that cannot afford any card in their current hand may always play the Floor Act. Its effect is minimal by design: participation, not advantage.
+
+*Source: Session 6 design decision — action paralysis prevention.*
+
+*Governs: Artifact 04 (political act design); Artifact 03 (Floor Act available at Declaration phase). Reinforces 00-R16 (passive generation guaranteed) and 00-R13b (no faction eliminated).*
+
+*Pending: Floor Act card design — D04-13 (Artifact 04 political act pass).*
+
+---
+
+**00-R16**
+
+**Rule:** Passive generation cannot be blocked, reduced, or affected by any game action.
+
+**Narrative:** Each faction has reach beyond New Meridian. The Guild has contracts in other cities. The Network has broadcasts that continue regardless of what happens at The Table. Ghost has operations no one knows about. The city cannot starve a faction's entire existence — only their presence within it.
+
+**Mechanics:** Each faction generates 1 unit of their native resource per quarter unconditionally. No card, operative ability, World Condition, Situation Report effect, or any other game mechanic may reduce, block, redirect, or otherwise affect passive generation.
+
+*Source: Artifact 02a §8.*
+
+*Governs: All cards and mechanics affecting resources; Artifact 05.*
+
+---
+
+**00-R17**
+
+**Rule:** District resource type does not change based on who controls it.
+
+**Narrative:** The character of a place does not change just because someone new controls it. The Industrial Fringe is about capacity because of what it is — its infrastructure, its history, its workers — not because of who holds the flag. Conquest changes governance. It does not change geography.
+
+**Mechanics:** A district generates its own native resource for all factions with influence there. Control changes which faction earns the most of that resource — it does not change which resource is generated.
+
+*Source: Artifact 02a §8, L73.*
+
+*Governs: All cards and mechanics targeting districts.*
+
+---
+
+**00-R18**
+
+**Rule:** Structure block resource choice is declared publicly before income collection.
+
+**Narrative:** What a faction chooses to produce from its infrastructure is a public statement. The city can see whether The Guild's installation is operating as a logistics hub or a labor pool this week. The choice reveals priorities. Priorities are observable.
+
+**Mechanics:** The owner of each structure block declares publicly which resource it produces (+1 district native resource OR +1 faction native resource) before income is collected each quarter. The choice may change each quarter and differs per structure block. This declaration is not a game action and requires no card. Timing procedure in Artifact 03.
+
+*Source: Artifact 02a §7.*
+
+*Governs: Artifacts 02a, 03.*
+
+---
+
+**00-R19**
+
+**Rule:** The Chorus Portrait accumulates without drift or decay.
+
+**Narrative:** The Chorus does not forget. Its record of what the factions have done is complete and permanent. There is no statute of limitations on behavior observed by something that has been watching for thirty-one years. A faction that acts against its doctrine has acted against its doctrine — that does not fade because quarters have passed.
+
+> *"It doesn't matter what we do differently from here. The record is the record."*
+> — Directorate counsel, private memo, Quarter 5
+
+**Mechanics:** Portrait scores are permanent and cumulative. There is no passive drift, recovery, or forgetting. A faction cannot passively recover Portrait — new behavior adds on top of what is already recorded. Only The ARBITER player moves the Portrait marker on ARBITER's behalf, and only in response to observed behavior.
+
+*Source: Artifact 02b §5.*
+
+*Governs: Artifacts 02b, 07. Reinforces 00-R01.*
+
+---
+
+**00-R20**
+
+**Rule:** Public Standing modifies action difficulty, not resource income.
+
+**Narrative:** New Meridian's opinion of a faction changes how easily they can operate there. A faction the city distrusts encounters resistance — closed doors, reluctant cooperation, hostile witnesses, customers who go elsewhere. A faction the city admires finds doors open. But the city's opinion does not determine how much power the faction can draw — only how smoothly they can exercise it.
+
+**Mechanics:** The Public Standing modifier shifts the difficulty target threshold on all 2d10 rolls by the stated amount. It does not modify resource generation in any way. Income is determined by board presence and influence levels only.
+
+*Source: Artifact 02b §7, §10.*
+
+*Governs: Artifacts 02b, 03, 04, 09.*
+
+---
+
+## 7. Card Design Constraints
+
+Rules that constrain all card design. A proposed card that violates any of these requires a locked decision in PM02 before it can proceed.
+
+**Narrative anchor — What a Card Is**
+
+A submission is a faction's organized intention — the form in which a plan is committed before the world has had a chance to respond. Both channels of action produce submissions. A covert operation is submitted in a dispatch case, sealed, placed without announcement. A political act is declared at The Table, witnessed, placed in the open. Both are submissions in the same sense: the plan is given over to the world before the outcome is known.
+
+What this looks like inside each faction depends on how they organize intentions.
+
+Ghost submits operation orders — a brief with an objective, a method, a contingency, and a deniability threshold. A political submission from Ghost is a risk assessment of what surfaces into the visible world and what it costs to put it there.
+
+The Network submits agendas — broadcast schedules, publication timelines, public statement frameworks. A submission from the Network is a story with a shape: when it breaks, how it develops, what it leaves behind in the city's attention.
+
+The Syndicate submits terms. Every submission is an offer with conditions — what is exchanged, at what rate, with what consequence for breach. A Syndicate submission can be renegotiated up until the moment it cannot.
+
+The Guild submits specifications. A structure submission is a project brief. An operational submission is a work order. The Guild does not declare intentions — it scopes deliverables.
+
+The Directorate submits directives. Policy memos. Institutional mandates. Orders that move through chains of authority with cover signatures built into the language before they reach anyone who has to act on them.
+
+What every faction's submission shares is that it exists before the action — it is the plan, not the execution. The plan is committed before the result is known. What the submission authorizes is an attempt. Whether the attempt succeeds is the world's answer.
+
+---
+
+**00-R21**
+
+**Rule:** Card effects have exactly one of three durations: immediate, permanent, or World Condition.
+
+**Narrative:** Actions have consequences in the moment. The world does not hold temporary states open for factions — a window of opportunity closes, an advantage dissolves, a disruption resolves. What persists does so because it became a fact — not because it was scheduled to linger.
+
+**Mechanics:** Immediate effects resolve this quarter with no carry-over. Permanent effects persist for the remainder of the session. World Condition effects from Situation Reports carry over until resolved. No other duration is valid.
+
+*Source: L55, Artifact 04 Principle 11, Artifact 04b §3.8.*
+
+*Governs: All card design.*
+
+---
+
+**00-R22**
+
+**Rule:** All resource costs must be physically present at time of play.
+
+**Narrative:** Commitment is real. You cannot promise power you do not hold. The Table does not extend credit. A faction that seals a case without the resources to back it has made a promise the world will not honor — the operation fails, the resources are spent, and the failure is recorded.
+
+**Mechanics:** No deferred payments. Covert operation costs must be in the dispatch case before sealing. Political act costs must be returned to the reservoir at Declaration. If costs are absent at resolution: covert fails with cost spent; political act is voided with Public Standing penalty.
+
+*Source: Artifact 04 Principle 4, Artifact 04 §14.3.*
+
+*Governs: All card design; Artifact 09.*
+
+---
+
+**00-R23**
+
+**Rule:** Crit success never carries an additional cost.
+
+**Narrative:** Excellence is its own reward. A faction that executes flawlessly does not then owe a debt for having done so. The world does not punish success with a surcharge. If anything, extraordinary execution should return something — never demand more.
+
+**Mechanics:** Crit success is always the same resource cost as success — the better outcome is the reward. Crit success may not add a cost, require a secondary payment, or impose any additional obligation. Cost reductions on crit success are permitted (e.g., "return primary cost to dispatch case").
+
+*Source: L79.*
+
+*Governs: All card design.*
+
+---
+
+**00-R24**
+
+**Rule:** Portrait scoring fires at Resolution — unconditionally on action taken, conditionally on outcome, or both.
+
+**Narrative:** The Chorus evaluates what a faction is. Not whether they succeeded. A faction that attempts a doctrinally aligned action — and fails — has still demonstrated something about their values. A faction that attempts something against their nature — and succeeds — has still revealed something. Intent is observable. The Chorus has been watching long enough to know the difference between who a faction is and what they managed to accomplish this quarter.
+
+> *"Ghost ran the same surveillance op three times and failed each time. After the first failure, something moved on ARBITER's side of the table. We still don't know what."*
+> — Network field observer, mid-session report
+
+**Mechanics:** Portrait scoring fires at Resolution via two parallel mechanisms. A card where doctrine is demonstrated by the act applies its Portrait value regardless of roll outcome. A card where the outcome itself is the doctrine demonstration applies its Portrait value when the stated condition is met. A card may carry both. ARBITER applies all Portrait values present on the card at Resolution.
+
+*Source: L82, Artifact 04 Principle 10.*
+
+*Governs: All card design; Portrait fields in card data structure.*
+
+---
+
+**00-R25**
+
+**Rule:** Ring Modifier card effects can only target districts in the ring the card originated from.
+
+**Narrative:** Knowledge of a district is knowledge of a place. An intelligence report about the Infrastructure ring describes conditions in the Infrastructure ring — those conditions do not apply somewhere else just because the report changes hands. The character of the district travels with what is known about it.
+
+**Mechanics:** The ring restriction is specified on the card and applies at all times, regardless of which faction holds or uses it.
+
+*Source: L66, Artifact 04 §11.*
+
+*Governs: All modifier card design; Artifacts 09, 11.*
+
+---
+
+**00-R26**
+
+**Rule:** React conditions must be publicly observable.
+
+**Narrative:** A faction cannot react to something they do not know. If a reaction fires on a hidden condition, the faction is responding to information they should not have — which is either a cheat or a revelation of intelligence that should have been played differently. Either way, it breaks the shared reality of The Table.
+
+**Mechanics:** React cards (Action — React) fire automatically when a named condition is met. That condition must be something any player at the table can count or observe without hidden information. Hidden conditions are not valid React triggers.
+
+*Source: Artifact 04b §3.5, Artifact 04b Taxonomy Principle 5.*
+
+*Governs: All React card design.*
+
+---
+
+**00-R27**
+
+**Rule:** Corrupt applies only to physically written or recorded values.
+
+**Narrative:** A document can be altered. An agreement can be falsified. An intelligence report can be made to say something it did not say. These exist because humans wrote them — and humans can rewrite them. What cannot be falsified is what a faction actually holds: their weight in a district, their presence in New Meridian, the operations already committed to the world. The city registers these as facts. Facts do not have a text field.
+
+> *"You can't counterfeit the board. You can counterfeit the Accord."*
+> — Syndicate legal counsel, Table advisory
+
+**Mechanics:** The Corrupt function (Cross-Category — Corrupt) applies only to values that are physically written or recorded in the paper prototype. Valid targets: Intel note content, Accord agreement terms. Invalid targets: printed card text, marker positions tracked by physical placement, Chronicle narrative.
+
+*Source: Artifact 04b §3.4.*
+
+*Governs: All Corrupt card design; current Corrupt card: C20 Misdirection.*
+
+---
+
+**00-R28**
+
+**Rule:** Standard language conventions apply globally and are not restated on individual cards.
+
+**Narrative:**
+
+> *"The parties represented at The Table did not arrive speaking the same language. Each organization brought its own doctrine, its own vocabulary, its own definitions of the same words. 'Presence.' 'Influence.' 'Engagement.' The city that drew them here is multinational in character; the contest over it is multinational in kind. The Table cannot function on ambiguity of this order.*
+>
+> *What these proceedings require — and what this protocol establishes — is a working vocabulary precise enough that every party means the same thing when they use it. Not the native language of any faction represented here. A negotiated precision that belongs to The Table itself, and to no one seated at it."*
+> — The Directorate, Standing Protocol on Table Conduct, §1
+
+**Mechanics:** The following phrases are defined once and apply to all cards without restatement:
+- **"At least 1 presence token"** — includes deployment markers (00-R13)
+- **"Delivered in case"** — standard phrase for all privately delivered effects (L59)
+- **"Return primary cost to dispatch case"** — standard phrase for crit success resource refunds (L60)
+- **"Any other faction"** — standard target when self-targeting is not permitted (L61)
+
+Cards use these phrases as written. They do not define or qualify them.
+
+*Source: L58, L59, L60, L61.*
+
+*Governs: All card design; Artifact 09.*
+
+---
+
+*See Artifact 04 §1 — Card Design Principle: Doctrinal Traceability (pending 04-05 migration).*
+
+---
+
+**00-R29**
+
+**Rule:** Ghost may use Gather (C05) without meeting the adjacency requirement. All other Ghost actions require adjacency.
+
+**Narrative:** Ghost understands what is happening in a district without being there. Their intelligence operations transcend proximity — that is the nature of their doctrine. But acting on that knowledge still requires presence. Ghost can know from a distance. They cannot build, disrupt, or deploy from a distance.
+
+**Mechanics:** Ghost may play Gather (C05) targeting any district regardless of adjacency. Adjacency requirements apply to all other Ghost cards and actions.
+
+*Source: L69.*
+
+*Governs: Ghost card design; any card with adjacency restrictions.*
+
+---
+
+**00-R29a**
+
+**Rule:** Portrait values are printed on each card, visually coded for ARBITER to parse at Resolution.
+
+**Narrative:** Factions do not know they are being evaluated on a Portrait track. The card's Portrait field is part of ARBITER's operating instructions — a private signal about what this action means in the Chorus's framework. The faction playing the card is not privy to that signal. They are acting. ARBITER is watching.
+
+**Mechanics:** Each card carries a Portrait field printed on the card face and visually coded for ARBITER. The ARBITER player reads Portrait values and faction impact directly from the card at Resolution — no separate reference required. The visual system is designed to be parseable by ARBITER and opaque in purpose to faction players. Visual coding design is deferred to Artifact 09.
+
+*Source: L47, L81, L90, Artifact 02b §5, Artifact 04 card data structure.*
+
+*Governs: Card data structure; card layout design; Artifact 09.*
+
+*Pending: Portrait visual coding system — D09-05 (Artifact 09 card layout pass).*
+
+---
+
+## 8. Information & Privacy
+
+Rules governing what information can be held, disclosed, and acted upon.
+
+---
+
+**Narrative anchor — Information & The Table**
+
+> *"Every faction at The Table holds something the others do not know. That is not a side effect of the negotiation — it is the negotiation. Intelligence is power precisely because it is unequal. A faction that knows something its rival does not has an advantage that no amount of presence or resources can fully substitute for."*
+> — Ghost Table representative, operational briefing
+
+> *"The Table established one rule about information: what you hold is yours. No faction is compelled to reveal what it knows, to prove what it claims, or to account for what it keeps. A faction can disclose strategically, say nothing, or claim what it does not hold. The Table treats these as indistinguishable. Whether a claim is true or false is between the faction making it and whatever the world decides to do about it."*
+> — Syndicate legal counsel, Table advisory
+
+> *"ARBITER knows what everyone holds. This is not a contradiction of the privacy principle — it is its complement. ARBITER is not a faction. ARBITER does not trade on information. What ARBITER knows, ARBITER holds: observing, recording, watching what factions do with what they have and what they pretend not to."*
+> — ARBITER, The Witness
+
+---
+
+**00-R30**
+
+**Rule:** Private information is disclosed only at the holder's discretion.
+
+**Narrative:** Information held is information owned. The Table does not compel confession. A faction's intelligence, directives, and hand are their own to use as they see fit — to share, to weaponize, to withhold, or to lie about. No rule forces a faction to reveal what they know. That would not be a negotiation. It would be an interrogation.
+
+> *"What I know and what I tell you are two different things. That's not a threat. That's The Table."*
+> — Ghost Table representative, open session
+
+**Mechanics:** Any private information a player holds — Intel notes, hand cards, modifier cards, classified directives, or any other private component — is disclosed only when the holder chooses. The holder may share it publicly, privately, partially, or not at all. No card may force a faction to disclose held private information without a Reveal effect.
+
+*Source: Artifact 02b §5, §8.*
+
+*Governs: Artifacts 02b, 04, 05, 08.*
+
+---
+
+**00-R31**
+
+**Rule:** Verbal claims about undisclosed private information cannot be verified by ARBITER.
+
+**Narrative:**
+
+> *"Words are cheap at The Table. A faction can claim to hold anything. If they want to prove it, they can show it. Until then, they're just talking."*
+> — Network Table representative, open session
+
+> *"ARBITER knows what is actually held — every note, every directive. ARBITER will not be used as a prop in a deception. If a faction wants to prove what they hold, they must reveal it. ARBITER watches. ARBITER does not narrate."*
+> — ARBITER, The Record
+
+**Mechanics:** A faction claiming to hold a specific Intel note, hand card, or any other private component cannot ask ARBITER to confirm or deny the claim without a specific game action (e.g., a Reveal card). ARBITER knows the true state of all holdings. ARBITER does not validate bluffs or threats that reference undisclosed private information.
+
+*Source: Artifact 02b §8.*
+
+*Governs: Artifacts 02b, 04, 07.*
+
+---
+
+**00-R32**
+
+**Rule:** Discarded Intel notes are permanently removed from play.
+
+**Narrative:**
+
+> *"Twelve days of source contact in that note. Three locations, two operational windows, one name we'd been building toward for months. Thirty seconds in the shredder. You tell yourself you had to — and maybe you did. But there's no 'had to' that gives it back."*
+> — Ghost field operative, after-action debrief
+
+**Mechanics:** An Intel note discarded by its holder is immediately and permanently removed from the game. It cannot be retrieved, examined after the fact, or referenced by any player or ARBITER in any subsequent game action.
+
+*Source: Artifact 02b §8.*
+
+*Governs: Artifacts 02b, 04, 09.*
+
+---
+
+**00-R33**
+
+**Rule:** Intel note holding guidelines are doctrinal expectations, not mechanical limits.
+
+**Narrative:**
+
+> *"We hold four because the city is always four steps ahead of what you think you know. Two notes is a discipline for factions that trust their other resources. We trust information. That's not excess. That's doctrine."*
+> — Ghost intelligence lead, internal briefing
+
+> *"The Directorate carried three notes into Quarter 5. Their doctrine calls for two. The third was a source contact they hadn't acted on. The Chorus noted the hesitation. Not the note. The hesitation."*
+> — ARBITER, The Observation
+
+**Mechanics:** The Intel note holding guideline (standard factions: 2 notes; Ghost: 4 notes; self-directed notes exempt) is a doctrinal expectation, not a mechanical enforcement. ARBITER does not force factions to discard excess notes.
+
+*Source: Artifact 02b §8.*
+
+*Governs: Artifacts 02b, 07.*
+
+---
+
+## 9. Round & Timing
+
+Rules governing when things happen, in what order, and what the timing locks.
+
+---
+
+**Narrative anchor — The Quarter**
+
+A quarter in New Meridian is the operating period The Table agreed to when the factions decided that coordinated negotiation was more useful than uncoordinated conflict. Eight quarters — roughly two years. The span of a campaign.
+
+> *"Same as every quarter. Upkeep, recruitment operations, political campaigns, accounting, and the mandatory all-hands at the end. Quarter after quarter. I've stopped asking when it ends."*
+> — Guild logistics coordinator, overheard at shift change
+
+> *"Situational awareness first. Then commitment — before you know what the opposition is committing to. Then consequences. Then the conversation about what it all meant. Every organization worth the name follows this sequence. Not because doctrine requires it. Because the world does."*
+> — Directorate field operations manual, §1
+
+The structure has a consequence that is easy to underestimate: commitment. When a faction seals a case, the operation is in motion. When a faction declares a political act, it is on the record. When resources leave a faction's position, they are spent. The Table does not offer revision. The quarter moves in one direction because the world moves in one direction.
+
+The sequence is the grammar of the negotiation. The timing rules are what make the grammar binding.
+
+> *"Eight quarters. Approximately two years. In the interval between receiving your first declaration and forming a response, that campaign will have already occurred — from ARBITER's position. The sequence, the phases, the one-thing-at-a-time: these are for you. The Chorus does not experience duration. There is a word for what it experiences instead. ARBITER does not have it yet."*
+> — ARBITER, The Reckoning
+
+---
+
+**00-R34**
+
+**Rule:** Phases do not overlap.
+
+**Narrative:** The Table has structure because structure is how civilized parties conduct business. The phases of a quarter are the agreed order of operations — an understanding among all parties about when things happen. Breaking phase order does not just violate a rule. It breaks the pretense of civilization that The Table depends on.
+
+**Mechanics:** No action valid in a later phase may be taken in an earlier phase. No action from a prior phase may be revisited once the next phase begins. Phase announcement procedure in Artifact 07.
+
+*Source: Artifact 03 §6.*
+
+*Governs: Artifact 03; Artifact 07.*
+
+---
+
+**00-R35**
+
+**Rule:** Commitment is irreversible.
+
+**Narrative:** A sealed case, a declared act, a spent resource — these are facts that exist in the world now. The world does not allow uncausing. A faction that commits to something has committed. There is no taking it back, no reconsidering, no polite withdrawal. The Table moves. What was done was done.
+
+> *"The moment you close that case, you've done it. There is no 'I changed my mind.'"*
+> — Syndicate operations lead, training brief
+
+**Mechanics:** A closed dispatch case cannot be opened or modified. A declared political act cannot be withdrawn or changed. Submitted resources cannot be reclaimed. These commitments are permanent from the moment they are made.
+
+*Source: Artifact 03 Principle 2.*
+
+*Governs: Artifacts 03, 04, 07.*
+
+---
+
+**00-R36**
+
+**Rule:** Critical results apply regardless of modifiers.
+
+**Narrative:** Sometimes the world just happens. The best-prepared operation fails on a stroke of bad luck. The most desperate attempt succeeds against all odds. Training and preparation narrow the range of outcomes — they do not eliminate the edges. The Table acknowledges that the world is not fully controllable.
+
+> *"Best-planned operation of the session. Numbers came up wrong. Nothing to learn from it. That's the world."*
+> — Ghost senior analyst, debrief notes
+
+**Mechanics:** Critical Success (01–05) always succeeds regardless of any modifier that would otherwise make the action impossible. Critical Fail (96–00) always fails regardless of any modifier that would otherwise make the action automatic. These ranges are hard floors and ceilings that modifiers cannot override.
+
+*Source: Artifact 03 §12 — The 2d10 System.*
+
+*Governs: All card design; Artifact 09.*
+
+---
+
+**00-R37**
+
+**Rule:** Submission order is the tiebreaker within resolution priority tiers.
+
+**Narrative:** Decisiveness is a form of power. At The Table, those who commit first shape what comes after. A faction that hesitates — even by moments — has ceded something to the one that did not. The order cases arrive is the order they are resolved when all else is equal. Speed is not everything. But it is not nothing.
+
+**Mechanics:** When multiple operations in the same beat are otherwise equal in priority, they resolve in the order their dispatch cases were submitted. Faster submission earns resolution priority. This applies within Beat 3 and within Beat 4.
+
+*Source: L16, Artifact 03 §9.*
+
+*Governs: Artifact 03; Artifact 07.*
+
+---
+
+**00-R38**
+
+**Rule:** Findings decay applies at close of Debrief, before Round Tracker advances.
+
+**Narrative:**
+
+> *"Sources go quiet. Windows close. That note you're holding from the start of the quarter — the source may have moved, the target may have adjusted, the window may be gone. You can't know which. What you can know is that the longer you hold it, the more it costs you. Release it before it starts working against you. That is the discipline."*
+> — Ghost senior intelligence officer to a field analyst, end-of-quarter debrief
+
+**Mechanics:** Findings decay is the first action at end of quarter, occurring after Debrief closes and before the Round Tracker advances. This timing is fixed and cannot be modified by card effect. Decay procedure in Artifact 03 §13.
+
+*Source: Artifact 03 §13.*
+
+*Governs: Artifact 03; any future mechanic affecting Findings.*
+
+---
+
+
+## 11. Punch List — Rules Requiring Audit
+
+| # | Item | Action Required | Priority | Status |
+|---|------|-----------------|---------|--------|
+| A01 | 04b taxonomy table lists Cross-Category — Shift — Chorus Portrait as a valid player-facing function | Update 04b §4 and §6.1 to retire this function from player-facing taxonomy (L84, 00-R07). Execute during 04b review. | HIGH | ✅ Confirmed |
+| A02 | P17 Publish Analysis current effect (Shift — Chorus Portrait) invalidated by L84 | Redesign P17 effect — already in PM02 punch list as 04-11. | HIGH | ✅ Confirmed |
+| A03 | Artifact 02b §3 describes the Chorus Portrait as something "ARBITER may adjust in response to any action" — correct but should cross-reference 00-R01 explicitly | Non-material cross-reference addition. | LOW | ✅ Confirmed |
+| A04 | Artifact 03 §12 (Beat 3 Step 12, Beat 4 Step 9) refers to "ARBITER privately updates Portrait track" — verify consistent with 00-R01 | Verify these references survive 00a sign-off unchanged. No edit expected. | LOW | ✅ Confirmed |
+| A05 | Confirm whether the Chorus Node Portrait Amplifier (02a §10) is ARBITER-administered or faction-administered | Answered by 00a R01 — ARBITER administers; "per 00a R01" added to 02a. | MEDIUM | ✅ Resolved — L92 |
+| A06 | Confirm whether "Chorus Portrait Multiplier" language in 01 §8 is consistent with 02a §10 | Material discrepancy resolved — 01 rewritten to match 02a (Established / flat additive). Renamed "Amplifier" throughout. L92. | LOW | ✅ Resolved — L92 |
+| A07 | Rule 00-R17 notes Rezone as a tabled exception — when Rezone is designed, it requires explicit governance | Flag for political act design pass. | LOW | ✅ Confirmed |
+| A08 | Full narrative grounding audit — carry Narrative fields through all rules. | ✅ Complete — v0.2. All 45 rules carry full Rule / Narrative / Mechanics / Source / Governs structure. | — | ✅ Complete |
+| A09 | Audit all rule Narrative fields for invented district names not present in Artifact 01's district map. R17 "Warehouse District" corrected to "Industrial Fringe" in session 5. Other rules may reference generic district descriptors that should resolve to actual named districts. | LOW | ✅ Confirmed |
+
+---
+
+## Appendix A — Rule Summary
+
+| ID | Rule | Mechanism |
+|----|------|-----------|
+| 00-R01 | ARBITER is sole mover of the Portrait marker | ARBITER player only; no other participant; no card Effect may reference Portrait movement as player-visible |
+| 00-R02 | ARBITER speaks only in four defined registers | Record, Observation, Reckoning, Witness; every communication in exactly one; no register outside these four |
+| 00-R03 | ARBITER does not explain evaluative decisions; may self-reflect | Scores and rulings never justified; ARBITER player ruling is final; self-reflection in Reckoning register only, rarely |
+| 00-R04 | ARBITER's Node presence is categorically beyond faction influence | Single fused piece at Chorus Node — never removed; Dominant structurally unreachable there |
+| 00-R05 | ARBITER conversion is low-priority, not a phase action | Translation available during Debrief and between phases only; rate in Artifact 03 / D02a-01 |
+| 00-R06 | All board state is always publicly visible | Nothing on board surface ever hidden; no card may create hidden board state |
+| 00-R07 | Chorus Portrait track is always private | No faction sees any Portrait position; ARBITER communicates only via Debrief observations and Chronicle |
+| 00-R08 | Public Standing track is always publicly visible | On The Overview, readable by all at all times; no mechanic may make it private |
+| 00-R09 | Board reflects true current state at every moment | Changes made immediately upon resolution; no deferred or stale state permitted |
+| 00-R10 | Max 6 presence tokens per faction per district | Deployment markers count toward limit; attempt to exceed fails regardless of conditions |
+| 00-R11 | Max 1 structure block per faction per district | No card effect may place a second block in a district where the faction already has one |
+| 00-R12 | Structure blocks lost immediately when faction goes Absent | Removed the moment a faction reaches 0 tokens + 0 markers; no card prevents this |
+| 00-R13 | "At least 1 presence token" includes deployment markers | Global convention defined once here and in Artifact 02a; not restated on individual cards |
+| 00-R13a | Deployment markers are moved, not removed | Opposing faction designates new district when marker is displaced; Fringe ring is unconditional fallback |
+| 00-R13b | No faction is eliminated from The Table | Loses board-presence resource generation; retains base generation, voice, and Table participation |
+| 00-R14 | No structures may be placed at the Chorus Node | No structure blocks at the Node from any faction by any card effect in any game state |
+| 00-R15 | Action system always guarantees at least one playable option | Floor Act (1 native resource, always available outside deck); effect minimal by design |
+| 00-R16 | Passive generation cannot be blocked or modified | 1 unit native resource per quarter unconditionally; no mechanic may reduce or redirect |
+| 00-R17 | District resource type does not change by who controls it | District generates its own native resource for all factions with influence there |
+| 00-R18 | Structure block resource choice declared publicly before income | Public declaration of +1 district native or +1 faction native before income collection each quarter |
+| 00-R19 | Chorus Portrait accumulates without drift or decay | Permanent and cumulative; no passive recovery; ARBITER player only moves Portrait marker |
+| 00-R20 | Public Standing modifies action difficulty, not resource income | Shifts 2d10 difficulty threshold; does not affect income generation |
+| 00-R21 | Card effects have exactly one of three durations | Immediate, permanent, or World Condition; no other duration valid |
+| 00-R22 | All resource costs must be physically present at time of play | No deferred payments; covert and political act failure penalties apply if costs absent at resolution |
+| 00-R23 | Crit success never carries an additional cost | Same resource cost as success; cost reductions on crit success permitted |
+| 00-R24 | Portrait scoring fires at Resolution — unconditionally, conditionally, or both | Two parallel mechanisms; ARBITER applies all Portrait values present on the card at Resolution |
+| 00-R25 | Ring Modifier effects target only districts in the card's originating ring | Ring restriction specified on card; applies regardless of which faction holds or uses it |
+| 00-R26 | React conditions must be publicly observable | Condition must be countable without hidden information; hidden conditions are not valid React triggers |
+| 00-R27 | Corrupt applies only to physically written or recorded values | Valid: Intel note content, Accord terms; Invalid: printed card text, marker positions, Chronicle narrative |
+| 00-R28 | Standard language conventions apply globally and are not restated on cards | Defined once (R13, L59, L60, L61); cards use phrases as written without qualification |
+| 00-R29 | Ghost may use Gather (C05) without meeting adjacency requirement | C05 targets any district regardless of adjacency; all other Ghost actions require adjacency |
+| 00-R29a | Portrait values printed on card, visually coded for ARBITER | ARBITER player reads Portrait values from card at Resolution; no separate reference; visual coding design deferred to Artifact 09 |
+| 00-R30 | Private information disclosed only at holder's discretion | Any private component shared, withheld, or lied about at holder's choice; Reveal effect required to force disclosure |
+| 00-R31 | Verbal claims about undisclosed private information cannot be verified by ARBITER | ARBITER does not validate bluffs or threats referencing undisclosed information |
+| 00-R32 | Discarded Intel notes permanently removed from play | Immediately and permanently removed; cannot be retrieved or referenced in any subsequent action |
+| 00-R33 | Intel note holding guidelines are doctrinal expectations, not mechanical limits | ARBITER does not force factions to discard excess notes |
+| 00-R34 | Phases do not overlap | No action valid in a later phase may be taken in an earlier phase; prior phase cannot be revisited |
+| 00-R35 | Commitment is irreversible | Sealed cases, declared acts, and spent resources are permanent from the moment made |
+| 00-R36 | Critical results apply regardless of modifiers | Crit Success (01–05) always succeeds; Crit Fail (96–00) always fails |
+| 00-R37 | Submission order is tiebreaker within resolution priority tiers | Faster submission earns resolution priority within Beat 3 and Beat 4 |
+| 00-R38 | Findings decay applies at close of Debrief, before Round Tracker advances | First action at end of quarter; timing fixed; cannot be modified by card effect |
+
+---
+
+*End of Artifact 00a — Governing Rules & Design Policy v0.2 Draft*
+*Populated from review of all V1 artifacts: 00, 01, 02a, 02b, 03, 04, 04b, PM01, PM02, PM03*
+*41 rules across 7 categories (§3–§9). Full structure pass complete. §10 dismissed. Pending sign-off.*
