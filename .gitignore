@@ -1,3 +1,7 @@
+# Credentials — never commit
+credentials.env
+*.env
+
 # Archives — handled by Retired folder; binary files add no git value
 *.zip
 
