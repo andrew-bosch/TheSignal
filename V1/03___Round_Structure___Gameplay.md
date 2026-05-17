@@ -1,9 +1,9 @@
 # 03 — Round Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.5  
+**Version:** 1.6  
 
-**Status:** 🔄 Updated — Pending Re-Sign-Off (Beat 2 rename, Step 6 rewrite)  
+**Status:** 🔄 Updated — Pending Re-Sign-Off (Phase 6 restructure: Operation System §13, six-beat structure, Beat 0 grid staging, Beat 3/4 step restructure)  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -398,7 +398,7 @@ Phase ends.
 ## 12. Phase 6 — Resolution + Debrief
 
 
-- The ARBITER Player runs Resolution in five sequential beats.
+- The ARBITER Player runs Resolution in six sequential beats.
 - Faction Players receive outcomes and apply their own board updates.
 - All parties participate in Debrief.
 
@@ -413,20 +413,40 @@ A deployment marker is flipped to the Blocked face when a blocking condition res
 | Beat 3 | Covert operation outcome blocks conversion | The ARBITER Player |
 | Beat 4 | Political act outcome blocks conversion | The acting Faction Player |
 
-### Resolution — Five Beats
+### Resolution — Six Beats
 
 *ARBITER announces each beat before beginning it.*
 
 ---
 
+**Beat 0: Open Dispatch Cases**
+
+The ARBITER Player opens all received dispatch cases and builds the Resolution Grid.
+
+1. Take the Lane 1 dispatch case (first received).
+2. Place the Beat 2 card, if any, in the Beat 2 row of Lane 1.
+3. For each Beat 3 card encountered in order: place the card and its paired target slip in the next available Beat 3 row pair for Lane 1. Stack any attached modifier cards beneath the operation card in cascade — modifier cards peek out beneath the operation card, showing their values at a glance.
+4. Repeat steps 1–3 for each remaining lane in receipt order (Lane 2 through Lane 5).
+
+*If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order.*
+
+*Pass cards in Beat 3 slots are placed in the grid and advance the queue without action when reached in Beat 3.*
+
+*Full Resolution Grid design: Artifact 07 — ARBITER Toolkit.*
+
+---
+
 **Beat 1: Check Active Restrictions**
 
-ARBITER reads all currently active Situation Report effects aloud.
+The ARBITER Player reads all currently active Situation Report effects aloud.
 
 **Targeting restrictions** — effects that prevent operations in specific districts or rings:
 
-1. The ARBITER Player identifies any targeting restrictions on active Event Cards.
-2. The ARBITER Player marks the impacted districts or rings with the restriction indicator — see XA-21.
+1. The ARBITER Player identifies all targeting restrictions on active Event Cards.
+2. For each targeting restriction: scan the Beat 3 rows of the Resolution Grid. For each operation card targeting the restricted district or ring:
+   - Place the operation card and target slip in the acting faction's dispatch case.
+   - Place an Operation Failed resolution card in the dispatch case.
+   - Discard any modifier cards from the grid cell — removed from the game.
 
 **Conversion blocks** — effects that prevent deployment marker conversion in specific districts or rings:
 
@@ -439,23 +459,27 @@ ARBITER reads all currently active Situation Report effects aloud.
 
 **Beat 2: The Ground Shifts**
 
-The ARBITER Player opens all dispatch cases and populates the Resolution Grid: Beat 2 cards fill the Beat 2 row, Beat 3 cards and target slips fill Beat 3 rows in paired order, left to right by case receipt order. *Full Resolution Grid design: Artifact 07 — ARBITER Toolkit.*
-
 The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right.
 
 **For each Type A Countermeasure card (District Block):**
 
-1. The ARBITER Player identifies all operations in dispatch cases targeting the named district.
-2. The ARBITER Player places matched operation cards and target slips back into the originating dispatch case with an Operation Blocked resolution card.
+1. The ARBITER Player identifies all operation cards in the Beat 3 rows of the grid targeting the named district.
+2. For each matching operation:
+   - Place the operation card and target slip in the acting faction's dispatch case.
+   - Place an Operation Blocked resolution card in the dispatch case.
+   - Discard any modifier cards from the grid cell — removed from the game.
+   - Return any modifier tokens placed on the card to the pool.
 
    *Resources committed to blocked operations are not refunded — the attempt was made and met resistance.*
 
-3. The ARBITER Player discards all modifier cards attached to blocked operations.
-4. The ARBITER Player flips any deployment markers in the named district to the Blocked face.
+3. The ARBITER Player flips any deployment markers in the named district to the Blocked face.
 
 **For each Type B Countermeasure card (Faction Defense):**
 
-The ARBITER Player notes the −15 threshold modifier to be applied to all rolls against that faction's assets in Beat 3.
+1. The ARBITER Player identifies all operation cards in the Beat 3 rows targeting that faction's assets.
+2. The ARBITER Player places a −15 modifier token on each identified operation card in the grid.
+
+*Physical modifier token design: Artifact 07 — ARBITER Toolkit.*
 
 **For each Protect operation:**
 
@@ -463,137 +487,158 @@ The ARBITER Player notes the target and the defensive modifier to be applied in 
 
 ---
 
-**Beat 3: Operations Land or Don't**
+**Beat 3: Covert Operations Resolve**
 
-ARBITER resolves all covert operations from the Resolution Grid in round-robin order: all card-1 pairs resolve left to right across all lanes before any card-2 pair begins, then all card-2 pairs, and so on. The first submitter's first operation fires first; all other factions' first operations follow in case receipt order before anyone's second operation begins.
+Resolve all covert operations from the Resolution Grid in queue order: the first action for each faction fires in case receipt order, then the second action for each faction, repeating until the operation queue is empty.
 
-For each operation:
+*The grid is pre-cleaned by Beats 1 and 2 — every card reached is a valid, unblocked operation.*
 
-**Step 1 — Identify the operation. Check for Apex.**
+For each card in queue order:
 
-1. Read the operation card and target slip.
-2. Check for Apex submission.
+**Step 1 — Identify the operation.**
 
-   If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
-   If not Apex: continue to Step 2.
+1. Read the card in the current grid slot.
+2. If Pass: note the skip and advance to the next operation. No further steps apply to this slot.
+3. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
 
-**Step 2 — Check Active Restrictions.**
-
-1. Check the Beat 1 targeting restriction announcement — does it cover this district or ring?
-2. If restricted: the operation fails.
-
-   Return the operation card and target slip to the dispatch case with an Operation Failed resolution card. Proceed to the next operation.
-   If not restricted: continue to Step 3.
-
-**Step 3 — Determine base difficulty.**
+**Step 2 — Determine base difficulty.**
 
 Read the base difficulty printed on the operation card. Look up the corresponding threshold in the Operation System (§13).
 
-**Step 4 — Apply faction-wide Countermeasure modifier.**
+**Step 3 — Apply all modifiers.**
 
-1. Check if a Type B Countermeasure is active against the target faction.
-2. If active: reduce the target threshold by 15.
+Apply all active modifiers: Type B Countermeasure token on the card (if any), modifier cards in cascade under the operation card, Public Standing modifier, active Situation Report effects, and Protect/Defend operation modifiers.
 
-**Step 5 — Apply all other modifiers.**
+**Step 4 — Calculate and declare threshold.**
 
-Apply Public Standing modifier, Modifier card modifiers, active world effect modifiers, and Protect/defend modifiers.
+The ARBITER Player totals the base threshold plus all active modifier adjustments and announces the final target threshold aloud.
 
-**Step 6 — Roll d100.**
+*All parties know the threshold before the roll is made.*
+
+**Step 5 — Roll d100.**
 
 The ARBITER Player rolls d100, or nominates a Faction Player to roll and call the result aloud.
 
-**Step 7 — Determine outcome.**
+**Step 6 — Determine outcome.**
 
-1. Compare roll to modified target threshold.
+1. Compare roll to the declared threshold.
 2. Apply Critical Success/Fail rules.
 
-**Step 8 — Flip deployment marker if applicable.**
+**Step 7 — Apply results.**
 
-If this covert operation's outcome blocks the acting faction's deployment marker conversion in the target district, the ARBITER Player flips the relevant marker to the Blocked face.
+If this operation's outcome blocks the acting faction's deployment marker conversion: The ARBITER Player flips the relevant marker to the Blocked face.
 
-**Step 9 — Apply board changes for successes.**
+If the operation succeeded: The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Tension markers.
 
-If the operation succeeded:
+**Step 8 — Apply failure conditions.**
 
-The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Tension markers.
+If the operation failed: apply the failure conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies board changes (Public Standing shift), apply them.
 
-**Step 10 — Announce failures and discoveries.**
+The affected Faction Player applies their own board changes.
 
-- If failed: ARBITER announces publicly without naming the faction: *"An operation in [DISTRICT] did not succeed."*
-- If Discovery: ARBITER announces: *"An operation in [DISTRICT] was observed."*
+**Step 9 — Apply discovery conditions.**
 
-The affected Faction Player moves their own Public Standing marker.
+If the operation was discovered: apply the discovery conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies board changes (Public Standing shift), apply them.
 
-**Step 11 — Place resolution card in dispatch case.**
+The affected Faction Player applies their own board changes.
 
-The ARBITER Player places the appropriate Operation Resolution card in the acting faction's dispatch case: Succeeded / Failed / Blocked / Discovered.
+**Step 10 — Clean up the grid cell.**
 
-**Step 12 — Update Chorus Portrait track.**
+1. Place the operation card and target slip back in the acting faction's dispatch case.
+2. Place the appropriate Operation Resolution card in the dispatch case: Succeeded / Failed / Blocked / Discovered.
+3. Discard modifier cards from the grid cell — removed from the game.
+4. Return modifier tokens to the pool.
+
+*Modifier token pool location: TBD — Artifact 07.*
+
+**Step 11 — Update Chorus Portrait track.**
 
 The ARBITER Player privately updates the acting faction's Portrait marker on the hidden track.
 
-**Step 13 — Note for Chronicle (optional).**
+**Step 12 — Note for Chronicle (optional).**
 
 The ARBITER Player may write a brief note if this operation produced a moment worth preserving.
 
 *At ARBITER's discretion. Detail in Artifact 07 — ARBITER Toolkit.*
 
-**Step 14 — Repeat for all remaining operations.**
+**Step 13 — Repeat for all remaining operations.**
 
 ---
 
 
 **Beat 4: Political Acts Resolve**
 
-Political acts resolve publicly. The acting Faction Player performs all steps.
+*Political acts are declared publicly and resolve with full transparency.*
 
-For each political act in initiative order:
+**Build the public resolution grid:**
+
+1. The ARBITER Player checks all declared political acts for targeting restrictions from active Situation Report effects.
+   - For each restricted act: ARBITER announces publicly which restriction applies. The Faction Player retrieves their political act card. Resources paid are not refunded.
+2. The ARBITER Player collects all remaining declared political act cards, paired modifier cards, and target slips from each faction's tableau in initiative order.
+3. The ARBITER Player arranges them in a public resolution area in initiative order — cards, modifier cards in cascade, and target slips visible to all.
+
+*Full public resolution grid design: Artifact 07 — ARBITER Toolkit.*
+
+For each card in grid order:
 
 **Step 1 — Identify the political act. Check for Apex.**
 
-1. The acting Faction Player reads their declared card and confirms their target.
-2. Check for Apex.
-
-   If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
-   If not Apex: continue to Step 2.
+1. Read the political act card and target slip.
+2. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
 
 **Step 2 — Determine base difficulty.**
 
-The acting Faction Player reads the base difficulty from the political act card and looks up the corresponding threshold in the Operation System (§13).
+Read the base difficulty from the political act card. Look up the corresponding threshold in the Operation System (§13).
 
 **Step 3 — Apply all modifiers.**
 
-The acting Faction Player applies all relevant modifiers and announces the modified target threshold aloud.
+The acting Faction Player applies all active modifiers: modifier cards in cascade, Public Standing modifier, active Situation Report effects. Announces the modified threshold aloud.
 
-**Step 4 — Roll d100.**
+**Step 4 — Calculate and declare threshold.**
+
+The acting Faction Player totals the base threshold plus all active modifier adjustments and states the final target threshold aloud.
+
+**Step 5 — Roll d100.**
 
 The acting Faction Player rolls publicly and states the result aloud.
 
-**Step 5 — Determine outcome.**
+**Step 6 — Determine outcome.**
 
-The acting Faction Player compares roll to modified threshold. Critical Success and Critical Fail rules apply.
+1. Compare roll to the declared threshold.
+2. Apply Critical Success/Fail rules.
 
-**Step 6 — Flip deployment marker if applicable.**
+**Step 7 — Apply results.**
 
-If this political act's outcome blocks a deployment marker's conversion, the acting Faction Player flips the relevant marker to the Blocked face.
+If this political act's outcome blocks a deployment marker's conversion: The acting Faction Player flips the relevant marker to the Blocked face.
 
-**Step 7 — Apply board changes.**
+If the political act succeeded: The acting Faction Player makes all board changes — presence chips, structure blocks, Control flags, Tension markers.
 
-The acting Faction Player makes all board changes: presence chips, structure blocks, Control flags, Tension markers.
+**Step 8 — Apply failure conditions.**
 
-**Step 8 — Update Public Standing.**
+If the political act failed: apply the failure conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies board changes (Public Standing shift), apply them.
 
-The acting Faction Player moves their own Public Standing marker. Other affected Faction Players move their own markers.
+The affected Faction Player applies their own board changes.
 
-**Step 9 — Update Chorus Portrait track.**
+**Step 9 — Apply discovery conditions.**
+
+If the political act was discovered: apply the discovery conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies board changes, apply them.
+
+The affected Faction Player applies their own board changes.
+
+**Step 10 — Clean up the grid position.**
+
+1. The acting Faction Player retrieves their political act card per card rules (return to hand or discard per card text).
+2. Discard modifier cards — removed from the game.
+
+**Step 11 — Update Chorus Portrait track.**
 
 The ARBITER Player privately updates the acting faction's Portrait marker.
 
-**Step 10 — Note for Chronicle (optional).**
+**Step 12 — Note for Chronicle (optional).**
 
 The ARBITER Player may note a significant moment at their discretion.
 
-**Step 11 — Repeat for all remaining political acts.**
+**Step 13 — Repeat for all remaining political acts.**
 
 ---
 

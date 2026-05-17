@@ -141,7 +141,7 @@ Resolution beats are the ordered procedure ARBITER follows when opening dispatch
 
 ### The Resolution Grid
 
-The Resolution Grid is a physical staging tool used by the ARBITER Player to sort all dispatch case contents before Beat 2 processing begins. It ensures consistent resolution order and prevents card order from being disrupted by case handling.
+The Resolution Grid is a physical staging tool used by the ARBITER Player to sort all dispatch case contents during Beat 0. It ensures consistent resolution order and prevents card order from being disrupted by case handling. Once built, the grid persists through Beats 1 and 2 as invalid and blocked operations are removed. Beat 3 resolves from the cleaned grid.
 
 **Grid structure:**
 
@@ -155,19 +155,23 @@ The Resolution Grid is a physical staging tool used by the ARBITER Player to sor
 | Beat 3 target 2 | | | | | |
 | *(up to 4 pairs — Ghost)* | | | | | |
 
-*Beat 4 is not included. Political acts are declared publicly and resolve in initiative order.*
+*Beat 4 is not included in this grid. Political acts resolve via a separate public resolution grid in Beat 4.*
 
-**Populating the grid (opening action of Beat 2):**
+**Populating the grid (Beat 0):**
 
-1. Open all dispatch cases.
-2. Place each Beat 2 card in the Beat 2 row of its lane.
-3. Place each Beat 3 card and its paired target slip into the next available Beat 3 row pair for that lane, in the order encountered when opening the case.
+1. Take the Lane 1 dispatch case (first received).
+2. Place the Beat 2 card, if any, in the Beat 2 row of Lane 1.
+3. Place each Beat 3 card and its paired target slip in the next available Beat 3 row pair for Lane 1, in order encountered. Stack any attached modifier cards beneath the operation card — modifier cards peek out at the bottom to display their values at a glance.
+4. Repeat for each remaining lane in receipt order.
 
 *If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order. Faction Players cannot dictate Beat 3 operation sequence.*
 
+*Modifier card physical design must support cascade orientation: value printed prominently at both top and bottom edge. See XA-22.*
+
 **Resolution order:**
 
-- **Beat 2:** process left to right across all lanes. All Beat 2 cards resolve before Beat 3 begins.
+- **Beat 1:** targeting restriction scan — invalid operations removed from the grid.
+- **Beat 2:** process left to right across all lanes. Blocked operations removed; Type B modifier tokens placed.
 - **Beat 3:** process row-first — all card-1 pairs resolve left to right across all lanes before any card-2 pair begins; then all card-2 pairs, continuing until all rows are cleared.
 
 *Row-first resolution establishes a round-robin initiative order by case receipt: the first submitter's first operation fires first, but all other factions' first operations follow before anyone's second operation begins. Submission speed rewards getting your first operation in — not locking in your full sequence before others can act. (L102)*
