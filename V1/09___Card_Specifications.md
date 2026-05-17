@@ -181,7 +181,7 @@ Full card entries in 20-field format after Artifact 04 §11 sign-off.
 | Card Faction | Universal |
 | Beat | Phase 3 (Dispatch) or Phase 4 (Declaration) |
 | Primary Cost | None |
-| Effect | No operation submitted / no political act declared this round |
+| Effect | No operation submitted / no political act declared this quarter |
 | Portrait | None |
 | Flavor Text | *[TBD]* |
 
@@ -227,14 +227,14 @@ Format: 13-field operative data structure per Artifact 05 §6.
 
 *[TBD — Situation Report design is partially defined in Artifact 01 §[TBD]. Full card content for the world event deck belongs here.]*
 
-Situation Reports represent significant events at the city or global scale. One is revealed at each Debrief, applying a board state modifier for the following round.
+Situation Reports represent significant events at the city or global scale. One is revealed at each Debrief, applying a board state modifier for the following quarter.
 
 Design considerations:
 - Reports should be written as in-world news or intelligence summaries — the language of someone who does not know the factions are operating behind the scenes
 - The event effect should be mechanical (modifies resource generation, movement, costs, or VP) and should not require ARBITER to adjudicate intent
 - Reports should be re-shuffled once depleted — the world continues to generate events for as long as the session runs
 
-*[TBD — number of unique Situation Reports in L1 deck. Recommend: at minimum 16 (two per round) so the deck never runs dry in an 8-round session with no shuffled repeats.]*
+*[TBD — number of unique Situation Reports in L1 deck. Recommend: at minimum 16 (two per quarter) so the deck never runs dry in an 8-quarter session with no shuffled repeats.]*
 
 ---
 

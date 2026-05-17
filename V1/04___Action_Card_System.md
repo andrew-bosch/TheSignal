@@ -106,9 +106,9 @@ All card text must be consistent with the world, factions, and doctrines in Arti
 
 Every card carries sufficient information to resolve its effect without consulting the rulebook.
 
-**Principle 7 — Faction-specific cards have a doctrinal anchor.**
+**Principle 7 — Doctrinal Traceability.**
 
-Every faction-specific card must be traceable to the faction's doctrine in Artifact 00. A card is wrong if it could plausibly belong to a different faction.
+Every faction-specific card must pass two tests: **mechanical** (only this faction would do this — the effect is impossible for another faction's doctrine to justify) and **narrative** (only this faction would say it this way — the card text sounds like no other faction). If either test fails, the card belongs to no one. The doctrinal anchor must be traceable to Artifact 00 §7 (faction profiles and doctrine). A card is wrong if it could plausibly belong to a different faction. *Source: 00a R29.*
 
 **Principle 8 — Standard cards have an in-world narrative anchor.**
 

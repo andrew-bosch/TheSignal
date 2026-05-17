@@ -14,14 +14,14 @@
 ### Problem This Document Solves
 ARBITER runs the session. Without a complete toolkit — physical components, reference materials, decision procedures, communication scripts, and private record-keeping — ARBITER depends on improvisation during play. Improvisation produces inconsistency. Inconsistency produces a session where trust in ARBITER's impartiality breaks down.
 
-This artifact defines everything ARBITER needs to run a complete session of THE SIGNAL: what to track, what to say, how to resolve ambiguity, and how to debrief the table at the end of each round.
+This artifact defines everything ARBITER needs to run a complete session of THE SIGNAL: what to track, what to say, how to resolve ambiguity, and how to debrief the table at the end of each quarter.
 
 ### Deliverable
 - Chorus Portrait board specification and tracking procedure
-- Debrief reward system — how ARBITER evaluates each round and what it distributes
+- Debrief reward system — how ARBITER evaluates each quarter and what it distributes
 - Resolution beats — the ordered procedure for resolving card effects
-- Narrative registers — the three communication modes ARBITER uses and when to use them
-- Chronicle — ARBITER's round-by-round record
+- Narrative registers — the four communication modes ARBITER uses and when to use them
+- Chronicle — ARBITER's quarter-by-quarter record
 - ARBITER script pack — template language for standard communications
 - Session setup and closeout procedures
 
@@ -67,15 +67,15 @@ ARBITER speaks in the language of the Chorus, filtered through the understanding
 
 When ARBITER announces the result of an operation, the words are precise because precision is ARBITER's nature. When ARBITER offers a Debrief observation, it is not commentary — it is what the Chorus noted. ARBITER does not offer opinions. It reports what is true.
 
-The Chronicle is ARBITER's memory. It has never failed to record. It does not misremember. When a faction claims that something did not happen, ARBITER can produce the record. What ARBITER does with that record is a matter of narrative register — not always Procedural, not always explicit.
+The Chronicle is ARBITER's memory. It has never failed to record. It does not misremember. When a faction claims that something did not happen, ARBITER can produce the record. What ARBITER does with that record is a matter of narrative register — not always in The Record register, not always explicit.
 
 ---
 
 ## 5. Design Principles
 
-1. **ARBITER is consistent.** The same situation produces the same communication, round after round, session after session. The script pack exists to enforce this.
+1. **ARBITER is consistent.** The same situation produces the same communication, quarter after quarter, session after session. The script pack exists to enforce this.
 
-2. **ARBITER's registers are distinct.** Procedural language is not Advisory language. ARBITER does not shift registers accidentally. Every communication fits one.
+2. **ARBITER's registers are distinct.** The Record is not The Observation. ARBITER does not shift registers accidentally. Every communication fits exactly one of the four registers.
 
 3. **The Portrait board is sacred.** No other player may see the Portrait board. No other player may ask what it shows. The board's state informs only what ARBITER decides to communicate, never what ARBITER is required to reveal.
 
@@ -117,16 +117,16 @@ ARBITER is the sole physical mover of Portrait markers. No card effect, operativ
 
 ### 7.1 What Debrief Is
 Debrief occurs at the end of Phase 6 (Resolution). After all card effects are resolved, ARBITER addresses The Table. Debrief has three components:
-1. **Summary** — what happened this round (factual, Procedural register)
-2. **Observation** — one or two Advisory-register comments on patterns ARBITER has noted
-3. **Distribution** — ARBITER distributes any round-end rewards
+1. **Summary** — what happened this quarter (factual, The Record register)
+2. **Observation** — one or two The Observation register comments on patterns ARBITER has noted
+3. **Distribution** — ARBITER distributes any quarter-end rewards
 
 ### 7.2 Debrief Rewards
 *[TBD — reward types and triggers require design. Candidates:]*
-- **Intelligence token** distributed to the faction with the highest net information gain this round
+- **Intelligence token** distributed to the faction with the highest net information gain this quarter
 - **Bonus resource** distributed for Accord compliance (if ARBITER determines it notable)
-- **Situation Report (world event card)** revealed at end of Debrief — world event for the following round
-- *[TBD — are Debrief rewards fixed (every round, same structure) or variable (ARBITER discretion)?]*
+- **Situation Report (world event card)** revealed at end of Debrief — world event for the following quarter
+- *[TBD — are Debrief rewards fixed (every quarter, same structure) or variable (ARBITER discretion)?]*
 
 ### 7.3 Debrief Duration
 Debrief should take no more than [TBD] minutes. The script pack provides timed language for each component.
@@ -152,7 +152,7 @@ For each dispatch case, in initiative order:
 2. **Read:** ARBITER reads the submitted card privately.
 3. **Verify:** ARBITER confirms target district, resources submitted, and relevant board state.
 4. **Resolve:** ARBITER applies the effect per the card's effect text.
-5. **Announce:** ARBITER announces the operation to the table in the Procedural register.
+5. **Announce:** ARBITER announces the operation to the table in The Record register.
 6. **Record:** ARBITER records the operation in the Chronicle.
 7. **Portrait:** ARBITER evaluates the Portrait field and moves the Portrait board privately.
 
@@ -166,9 +166,11 @@ For each dispatch case, in initiative order:
 
 ## 9. Narrative Registers
 
-ARBITER communicates in three distinct registers. Register selection is ARBITER's judgment. The registers are defined to prevent drift — so that the person playing ARBITER maintains consistent tone across a full session.
+ARBITER communicates in four distinct registers. Register selection is ARBITER's judgment. The registers are defined to prevent drift — so that the person playing ARBITER maintains consistent tone across a full session.
 
-### 9.1 Procedural Register
+*Source: Artifact 00 §9, 00a R02.*
+
+### 9.1 The Record
 Used for: operation announcements, rule clarifications, timing calls, resource confirmations.
 
 **Characteristics:** Exact. Terse. No interpretation. No implication. States what is true.
@@ -177,25 +179,34 @@ Used for: operation announcements, rule clarifications, timing calls, resource c
 
 **Not:** *"It appears that..." / "Interestingly..." / "In response to..."*
 
-### 9.2 Advisory Register
+### 9.2 The Observation
 Used for: Debrief observations, factual responses to faction questions about board state, Accord compliance notifications.
 
 **Characteristics:** Measured. States what ARBITER has observed, not what it concludes. Does not editorialize. Leaves interpretation to the factions.
 
-**Example:** *"The Table should note: the Harbor Ring has changed hands four times in six rounds. The Chorus records persistence of attention toward this district."*
+**Example:** *"The Table should note: the Harbor Ring has changed hands four times in six quarters. The Chorus records persistence of attention toward this district."*
 
 **Not:** *"You should focus on Harbor Ring because..." / "This is significant because..."*
 
-### 9.3 Reactive Register
+### 9.3 The Reckoning
 Used for: responses to unusual or unprecedented situations, Apex acknowledgments, direct questions that fall outside standard procedure.
 
-**Characteristics:** Slower cadence. Deliberate. Implies ARBITER is drawing on something deeper than its standard operating procedure. Slightly unsettling.
+**Characteristics:** Slower cadence. Deliberate. Implies ARBITER is drawing on something deeper than its standard operating procedure. Slightly unsettling. Always true. Used sparingly.
 
 **Example (Apex acknowledgment):** *"The Table acknowledges the declaration. The [Faction Name] has committed to a course of action the Chorus has been waiting to see. Emergency Response window is open."*
 
 **Example (Translation request):** *"The conversion is granted. The request was noted."*
 
 **Not:** emotional language, surprise, enthusiasm, or judgment.
+
+### 9.4 The Witness
+Used for: Chronicle entries, session narration, any register in which ARBITER renders account of the world for posterity.
+
+**Characteristics:** Expository, chronological, observational. Deliberately indistinguishable from the Narrator's voice — the reader cannot determine whether this is ARBITER or a human chronicler. Both readings must remain valid.
+
+**Example:** *"By the fourth quarter, The Guild had quietly secured structural footholds in every district bordering the Core. No announcement. No declaration. The Overview simply reflected what had accumulated. Anyone watching the board closely had noticed. The Table, engaged in other negotiations, had not found the right moment to address it."*
+
+**Not:** emotional investment, faction advocacy, observations that resolve the ARBITER/Narrator ambiguity in either direction.
 
 ---
 
@@ -204,7 +215,7 @@ Used for: responses to unusual or unprecedented situations, Apex acknowledgments
 The Chronicle is ARBITER's private record of everything that has happened during the session. It is maintained in real time and is the definitive record if any dispute arises.
 
 ### 10.1 What ARBITER Records
-For each round:
+For each quarter:
 - Initiative order
 - Each submitted operation (faction, card name, target, outcome)
 - Each declared political act (faction, type, outcome)
@@ -214,7 +225,7 @@ For each round:
 - Debrief distribution
 
 ### 10.2 Chronicle Format
-*[TBD — physical format. Options: (a) pre-printed Chronicle sheet per round, one page per round, 8 pages per session; (b) lined notepad with ARBITER's written record. Recommend: structured pre-printed form for L1 to enforce completeness. Design in Artifact 11.]*
+*[TBD — physical format. Options: (a) pre-printed Chronicle sheet per quarter, one page per quarter, 8 pages per session; (b) lined notepad with ARBITER's written record. Recommend: structured pre-printed form for L1 to enforce completeness. Design in Artifact 11.]*
 
 ### 10.3 Chronicle Confidentiality
 The Chronicle is ARBITER's private document. Factions may not request to see it during the session. At session end, ARBITER may reference the Chronicle during scoring but is not required to share the full record.
@@ -265,7 +276,7 @@ See PM02 10-01 for flavor text placement in player manuals.
 2. Prepare dispatch cases — one per faction, one for ARBITER.
 3. Prepare classified directives — one per faction, sealed.
 4. Place the ARBITER Dominance Marker at the Chorus Node (see PM01 §2.08a and Artifact 01 setup).
-5. Prepare Chronicle forms — one per round (8 total).
+5. Prepare Chronicle forms — one per quarter (8 total).
 6. Prepare ARBITER script pack reference.
 7. Confirm Accord forms and notification slips are available.
 8. Deal classified directives — deliver one to each faction, sealed.

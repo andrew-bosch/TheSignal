@@ -19,7 +19,7 @@ Design questions arise that cannot be answered by reading the five pillars alone
 
 ### Time Convention
 
-One round of play represents one **quarter** — approximately three months of real-world time in New Meridian. Eight rounds constitute roughly two years of operations. All Narrative fields in this document use "quarter" where game-mechanical language would say "round." Canonical definition and worldbuilding context: Artifact 03 §1. Pending formal establishment in Artifact 00 (see PM02 00-04).
+One round of play represents one **quarter** — approximately three months of real-world time in New Meridian. Eight rounds constitute roughly two years of operations. All Narrative fields in this document use "quarter" where game-mechanical language would say "round." Canonical definition: PM04 §1 Temporal Conventions (migrated session 11). Worldbuilding context: Artifact 03 §1. Pending formal establishment in Artifact 00 (see PM02 00-04).
 
 ---
 
@@ -107,7 +107,7 @@ Zones whose narrative anchor is pending are marked TBD in Artifact 01 and Artifa
 
 Every rule in this document must carry a narrative grounding. The mechanical constraint follows from the world — not the other way around. If the narrative reason for a rule cannot be stated, the rule may be arbitrary. If mechanical reasoning and narrative reasoning conflict, narrative takes precedence.
 
-This is a design pillar. It applies to every rule, card, decision, and policy in The Signal — not only in this document. It is captured here pending formal addition to the five design pillars in Artifact 00 §5 (see PM02 §2b item 00-02).
+This is Design Pillar 6, formally added to Artifact 00 §5 (session 11). It applies to every rule, card, decision, and policy in The Signal — not only in this document.
 
 ---
 
@@ -165,7 +165,7 @@ Rules governing what only ARBITER can do, how ARBITER speaks, and what ARBITER m
 
 **00-R02**
 
-**Rule:** ARBITER speaks only in three defined registers.
+**Rule:** ARBITER speaks only in four defined registers.
 
 **Narrative:** ARBITER does not choose how to speak any more than it chooses what to evaluate. The three registers are the tones the Chorus gave its instrument. The Record is what happened. The Observation is what it means in the fabric of the city. The Reckoning is as close as the Chorus ever comes to speaking directly to those it watches. There are exactly three because that is what ARBITER was given.
 
@@ -332,13 +332,7 @@ Hard constraints on board state that cannot be overridden by card effects or spe
 
 **Narrative anchor — Presence & The Holt Index**
 
-Presence tokens are not people or assets. They are the feeling you get when you walk into a district — the ambient weight of a faction's power. The deference in the air. The unspoken rules about how things work here. A faction's presence is not something anyone on the ground counts. It is something they feel.
-
-The number came later. A Ghost analyst — working from aggregated intelligence reports, district-level behavioral data, and a methodology borrowed from signal magnitude research — developed a scale for measuring influence density in contested urban environments. The scale runs nonlinearly: early increments represent a faction's growing atmospheric weight; upper values represent a qualitative shift in the district's character itself. Ghost field operatives began calling it the Holt Index, after the analyst who developed it. The Table adopted it as a shared reference because The Table needed a number. Ghost is aware that the Holt Index has a defined upper bound for human influence dynamics. What ARBITER holds at the Chorus Node does not map to the same scale. This is noted in materials that do not circulate. It is not raised at The Table.
-
-A presence token represents one unit on that scale — not a person, not an asset. The feeling a careful observer would note if they walked in. At low values, the district absorbs it. At higher values, the district begins to organize around it. At six, the scale reaches saturation: the district is no longer experiencing a faction's presence. The district is inside it. Six is the maximum saturation level of human influence.
-
-Dominant status is something else. It is comparative, not absolute — a faction holds Dominant when their Holt magnitude is unambiguously higher than all others in the district and has crossed the floor below which influence cannot yet claim the air. That floor is three. Below three, the weight is present but not yet defining. Above three and clearly ahead, the district feels it as dominant. When two factions are close, neither holds it: the atmosphere is contested, the weight unresolved, the district in flux. Once one faction pulls clearly ahead, influence consolidates. Dominant is not a fixed count. It is the condition of being the unambiguous leader — and it subsides the moment that clarity is in question.
+*Migrated to Artifact 00 §14. See Artifact 00 §14 — Presence & The Holt Index for full narrative grounding.*
 
 ---
 
@@ -361,11 +355,7 @@ Dominant status is something else. It is comparative, not absolute — a faction
 
 **Narrative anchor — Structure Blocks**
 
-On The Overview, a structure block marks a district where a faction has committed. The mark is binary — it is there or it is not. One mark per faction per district. No gradations, no scale. The Overview does not show how deeply a faction has committed. It shows that they have.
-
-What the mark represents in the world behind The Overview varies by faction and is not surfaced on the display. Ghost's structure in a district might be a single closet with the right hardware in it — a transmission hub that appears on no schematic and in no public record. The Syndicate's footprint might span a cluster of food carts and storefronts. The Guild's includes a site office and a union hall. The Directorate's has a plaque on the door. None of this is in The Overview. What The Overview shows is the same for all of them: this faction has committed to this district. Something is here.
-
-The fact is public. The nature is not. That separation — what The Overview surfaces and what it does not — is not incidental. It is what makes structure blocks legible to everyone at The Table and meaningful only to the faction that placed them. The Holt Index measures how much a faction fills a district. The structure block is what The Overview shows when a faction has decided the district is worth filling.
+*Migrated to Artifact 00 §14. See Artifact 00 §14 — Structure Blocks for full narrative grounding.*
 
 ---
 
@@ -402,17 +392,7 @@ The fact is public. The nature is not. That separation — what The Overview sur
 
 **Narrative anchor — Deployment Markers**
 
-On The Overview, a deployment marker signals active engagement — a faction turning one of its public faces directly toward a district. Where presence tokens show the ambient weight that has built up over time, a deployment marker shows something happening now.
-
-The city notices. Festival flyers appear on corner poles overnight. A convoy of Guild equipment arrives at a project perimeter. Network broadcast trucks park along the main road. Directorate vehicles — official, marked, deliberate — make their presence known on the primary boulevard. The Syndicate opens a pop-up market in the central square. Even Ghost's deployments have a visible register to those paying attention: a neighborhood that develops new foot traffic patterns, familiar faces that stop being familiar.
-
-What each faction calls a deployment varies. What every deployment has in common is that the district experiences it directly — not as the accumulated feeling of a faction's weight in the air, but as a specific face of that faction, present and active, doing something particular. The Overview marks this: the district is engaged, not just occupied.
-
-A deployment ends in a district. The people behind it do not stop. The trucks move to the next location. The organizers carry the next event. Whether it is the same people redeploying or new supporters arriving to continue the cause, the faction as an idea draws from everywhere — its operational tempo does not stop because one operation concluded. The Overview reflects this: when a marker leaves one district, it arrives somewhere else.
-
-Not every deployment disappears cleanly. A festival leaves a neighborhood with a memory of who threw it. A project perimeter that went up and came down changed what the block looks like. Broadcast equipment that occupied a corner for three weeks changed which voices the regulars started hearing. At the close of each quarter, The Overview updates — and some of what was marked as temporary engagement has become something else: a shift in the district's atmospheric reading that The Overview now records as presence. The deployment ended. What it left behind did not.
-
-*Note: This anchor is world content and will migrate to Artifact 00 per punch list item 00-05.*
+*Migrated to Artifact 00 §14. See Artifact 00 §14 — Deployment Markers for full narrative grounding.*
 
 ---
 
@@ -633,21 +613,7 @@ Rules that constrain all card design. A proposed card that violates any of these
 
 **Narrative anchor — What a Card Is**
 
-A submission is a faction's organized intention — the form in which a plan is committed before the world has had a chance to respond. Both channels of action produce submissions. A covert operation is submitted in a dispatch case, sealed, placed without announcement. A political act is declared at The Table, witnessed, placed in the open. Both are submissions in the same sense: the plan is given over to the world before the outcome is known.
-
-What this looks like inside each faction depends on how they organize intentions.
-
-Ghost submits operation orders — a brief with an objective, a method, a contingency, and a deniability threshold. A political submission from Ghost is a risk assessment of what surfaces into the visible world and what it costs to put it there.
-
-The Network submits agendas — broadcast schedules, publication timelines, public statement frameworks. A submission from the Network is a story with a shape: when it breaks, how it develops, what it leaves behind in the city's attention.
-
-The Syndicate submits terms. Every submission is an offer with conditions — what is exchanged, at what rate, with what consequence for breach. A Syndicate submission can be renegotiated up until the moment it cannot.
-
-The Guild submits specifications. A structure submission is a project brief. An operational submission is a work order. The Guild does not declare intentions — it scopes deliverables.
-
-The Directorate submits directives. Policy memos. Institutional mandates. Orders that move through chains of authority with cover signatures built into the language before they reach anyone who has to act on them.
-
-What every faction's submission shares is that it exists before the action — it is the plan, not the execution. The plan is committed before the result is known. What the submission authorizes is an attempt. Whether the attempt succeeds is the world's answer.
+*Migrated to Artifact 00 §14. See Artifact 00 §14 — What a Card Is for full narrative grounding.*
 
 ---
 

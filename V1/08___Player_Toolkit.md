@@ -132,7 +132,7 @@ Before the session begins, each faction assembles their card decks:
 **Covert Operations Deck:**
 - All 10 Standard Covert Operations are available to every faction.
 - Each faction selects from their faction-specific Covert Operations (5 available, select [TBD]).
-- Combined deck size: [TBD] cards. Draw: [TBD] per round. *[Per Artifact 04 §[TBD].]*
+- Combined deck size: [TBD] cards. Draw: [TBD] per quarter. *[Per Artifact 04 §[TBD].]*
 
 **Political Acts Deck:**
 - All 8 Standard Political Acts are available to every faction.
@@ -143,7 +143,7 @@ Before the session begins, each faction assembles their card decks:
 Modifier cards are not part of either deck. They are drawn during play per rules defined in Artifact 04 §11.
 
 ### 8.3 Hand Size
-*[TBD — confirm with Artifact 04. Extrapolated: each faction draws [TBD] covert operation cards at the start of each round (Upkeep phase). Maximum hand size [TBD]. Excess cards are discarded or held per Artifact 04 rules.]*
+*[TBD — confirm with Artifact 04. Extrapolated: each faction draws [TBD] covert operation cards at the start of each quarter (Upkeep phase). Maximum hand size [TBD]. Excess cards are discarded or held per Artifact 04 rules.]*
 
 ### 8.4 Pass Cards
 Each faction has 4 Pass cards. They are held outside the deck and may be submitted at any time in place of an operation or political act. See Artifact 04 §12.
@@ -171,7 +171,7 @@ Sample directive categories (by faction, extrapolated):
 - **Ghost:** intelligence-based objectives (hold X intel tokens at session end; be the first to target [specific faction] with a Surveillance operation)
 - **Network:** exposure-based objectives (have presence in X districts at session end; maintain Public Standing above [threshold] for X consecutive rounds)
 - **Syndicate:** economic objectives (hold X Capital at session end; complete X Translations via ARBITER)
-- **Guild:** construction objectives (place X structures by round [Y]; hold Established status in [ring] at session end)
+- **Guild:** construction objectives (place X structures by quarter [Y]; hold Established status in [ring] at session end)
 - **Directorate:** institutional objectives (hold the most presence in [civic districts] at session end; have X Accords on record honored)
 
 ### 9.3 At Session End
@@ -223,7 +223,7 @@ Each faction has a faction reference card — a double-sided condensed reference
 ## 12. Special Conditions & Gameplay Impacts
 
 ### Faction Absence
-*[TBD — what happens if a faction player cannot complete a round (emergency, etc.)? Recommend: ARBITER controls the absent faction for the round, submitting Pass cards. Faction player resumes control next round.]*
+*[TBD — what happens if a faction player cannot complete a quarter (emergency, etc.)? Recommend: ARBITER controls the absent faction for the quarter, submitting Pass cards. Faction player resumes control next quarter.]*
 
 ### Two-Player Variant
 *[TBD — two-player rules, if any, belong in Artifact 10. Reference here if player toolkit components differ for two-player.]*

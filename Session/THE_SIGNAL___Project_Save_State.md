@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-16 (end of session 10) — supersedes session 7 save state
+### Generated: 2026-05-17 (end of session 14) — supersedes session 13 save state
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -44,10 +44,10 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 |----------|---------|--------|
 | 00 — Factions & World | 1.0 | 🔄 Signed Off — significant session 4 additions pending re-sign-off (as part of 00-04 enrichment pass): "On the Question of Cause," "On the Question of Completeness" rewrite, station crew origin, "What New Meridian Is," "What New Meridian Is" continuation, The Overview section in §8 |
 | 00a — Governing Rules & Design Policy | 0.2 | 🔄 Review complete sessions 5–7 — **pending A05/A06 decision only, then ready for sign-off.** 41 rules (R01–R38 + R13a, R13b, R29a). §10 dismissed. Appendix A (rule summary table) added. |
-| 01 — Game Board | 1.2 | ✅ Signed Off — "mat" → "The Overview" substitution needed on next review |
-| 02a — Resource Systems: Board State | 1.2 | ✅ Signed Off — "mat" → "The Overview" substitution needed; 4:1 rate update pending D02a-01 |
+| 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
+| 02a — Resource Systems: Board State | 1.3 | 🔄 Pending Re-Sign-Off — 02a-03 applied session 14: §6 Component Names updated, ARBITER Dominance Marker row added, DOMINANT bullet rewritten (structural impossibility, not prohibition), §10 Chorus Node constitutive presence language. PM01 §2.08 Control flag quantity corrected. Material change → re-sign-off required. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
-| 03 — Round Structure & Gameplay | 1.5 | 🔄 Pending Re-Sign-Off — conventions fully applied (L88, L96, XA-17); review in progress at Phase 2 with Andy |
+| 03 — Round Structure & Gameplay | 1.5 | 🔄 Full scan complete session 14 — D03-R01 ✅, D03-R02 ✅, D03-R03 pending Andy review; Phase 4-end scanned and verified; L99 verb-first headers applied throughout; XA-19 fix applied. Ready for sign-off after D03-R03. |
 | 04 — Action Card System | 0.9.6 | 🔄 In Progress — paused until 00a signed off |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
@@ -57,7 +57,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | PM01 | 1.3 | ✅ Active |
 | PM02 | 1.5 | ✅ Active — significant session 4 updates |
 | PM03 | 1.6 | ✅ Active — voice convention updated to 5 voices |
-| PM (Audit) | 1.0 | 🔄 Active |
+| PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
 ---
@@ -103,7 +103,32 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 
 ---
 
-## Active Work — Where We Are (Session 10)
+## Active Work — Where We Are (Session 14)
+
+**Session 11 summary (completed items — see PM05 for full status):**
+- XA-05: Four-register system applied to Artifact 07 §9, Artifact 00 §9, 00a R02 — **Artifacts 00 and 07 require re-sign-off (material)**
+- 00-05: Narrative anchors migrated to Artifact 00 §14; 00a §5/§7 replaced with cross-references — **Artifact 00 requires re-sign-off**
+- 00-02: Design Pillar 6 "Narrative and World Consistency" added to Artifact 00 §5 — **Artifact 00 requires re-sign-off**
+- 00a-02: Chorus Portrait retirement applied to 04b §4/§6.1 — **04b requires re-sign-off**
+- PM04-01/02: PM04 §1 fully populated (17 component terms, 5 faction resources, 4 influence levels, temporal conventions). PM04 now canonical in-world glossary.
+- XA-16 partial: round→quarter, mat→The Overview applied across 02a/02b/07/08/09/10
+- PM02-02: §2b archived snapshot collapsed
+
+**Session 12 summary:**
+- ~/CLAUDE.md updated to redirect any home-directory Claude Code session to ~/Projects/CLAUDE.md
+- **Creative Brief work** (`~/Projects/TheSignal/Creative/CREATIVE_BRIEF.md`): Major revision pass —
+  - Submission header moved to top of file, mandatory fill-in format
+  - Faction-color-as-object constraint added to "What This World Is Not"
+  - "Images Already In Use" section added (plumbing/pipe imagery, tilting floor line)
+  - "The Chorus Papers" established as proper noun throughout (replaced all instances of "the leak")
+  - Line 65 (brief): story of The Chorus Papers added
+  - Cascade effects paragraph added near row 307 ("Before and after" section)
+- **CANON_CANDIDATES.md created** (`~/Projects/TheSignal/Creative/CANON_CANDIDATES.md`): Running file of selected content from Gemini passes 1–4. 13 items selected (5 canon candidates, 8 flavor copy candidates).
+- **Gemini V3 and V4 evaluated**: V3 ("The Shack" — Dr. Alistair Vance, original station crew) is strongest character introduced. V4 ("The Fourth Register" — ARBITER at The Table) has best ARBITER writing. Both are canon candidates with minor edits required.
+- **Artifact 00**: Three reception language fixes (lines 138, 144, 184 — "received" not "transmitted"). `### The Chorus Papers` section added to §6 with cascade effects (four paragraphs: The Table's formation, mathematics attribution, vindication-without-understanding, Directorate fracture).
+- **PM04 §2**: Reception Language Convention added — canonical framing rule for how the Chorus is described.
+- **PM05**: XA-19 added (reception language scan, remaining artifacts); D-FT-01 added (faction hidden truths design question).
+- **Key design insight — D-FT-01**: The Network is the only faction that genuinely did not know about the Chorus until The Chorus Papers. The other four factions had prior involvement — their doctrines may be rationalizations of prior knowledge rather than independent positions. Each faction likely holds a hidden truth that shaped why they are at The Table. This is a major design territory. See PM05 DEFERRED D-FT-01.
 
 **Sessions 8–10 summary:**
 - D02a-01 resolved (L93) — Chorus Node Translation rate scale locked: Contested=5:1, no presence=4:1, Present=3:1, Established=2:1. 02a §8 updated.
@@ -115,12 +140,32 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - "Effect Card" renamed from "Event Card" (session 9, locked). Propagation to 01/02a/02b pending (punch list 03-07).
 - "Reservoir" confirmed as canonical capitalized in-world term for resource bank. Applied throughout Artifact 03.
 
-**Recommended next steps (session 11):**
-1. Resume Artifact 03 review with Andy — starting from Phase 2 (where we left off)
-2. Confirm D03-R01 (Beat 2 rename), D03-R03 (free Accord card) to unblock sign-off
-3. After 03 sign-off: resume Artifact 04 — Ghost C16–C20 redesign (D04-02)
+**Session 13 summary (2026-05-16):**
+- **03-06 resolved (L97):** Difficulty is a card property — influence-level table removed from Artifact 03 §12. Beat 3 Step 3 and Beat 4 Step 2 updated. 2d10 System table restructured.
+- **L98 locked:** "Threshold" is the canonical noun for the roll target. "Base Difficulty Threshold" is the canonical table header. Convention documented in PM04 §2.
+- **L99 locked:** Verb-first convention for procedural action headers. First applied in Artifact 03 §9.
+- **D03-R01 signed off:** Beat 2 "The Ground Shifts" confirmed.
+- **D03-R02 signed off:** Step 6 card draw confirmed. ARBITER announcement revised: "Assemble hands" → "Prepare operations." Step renamed "Operations Preparation."
+- **D03-R03:** Pending — Phase 4 Declaration Accord card text not yet reviewed.
+- **Phase 2 entry requirements:** Bullet list → Ring/Entry Requirement/Threshold Modifier table. Infrastructure penalty reframed as −25 threshold modifier (consistent with L97). Added to Beat 3 modifiers table.
+- **Phase 3 Dispatch:** Major structural rewrite — Open/Close Dispatch wrappers; verb-first steps; case contents removed to Artifact 06 (06-01 flagged in PM05 DEFERRED); "Who runs it" label removed from all phases; two-bullet role format established as convention.
+- **New feedback convention:** Draft prose/structural changes in chat for Andy's review before writing to file. Mechanical fixes write directly.
+- **06-01 added to PM05:** Dispatch case contents list to migrate to Artifact 06 during active development pass.
 
-**Sessions 5–10 locked decisions (L85–L96):**
+**Session 14 summary (overnight autonomous — 2026-05-17):**
+- **XA-19 complete:** Reception language corrected in 7 files (02b, 03, PM04, 00, PM02, CREATIVE_BRIEF ×2). Faction-framed "transmitting" instances intentionally retained per PM04 §2. Scope: Narrator voice only.
+- **02a-03 complete:** All four changes applied — §6 Component Names (Control flag updated, ARBITER Dominance Marker row added), §6 DOMINANT bullet (structural impossibility language), §9 Component Description (Control flag quantity corrected, ARBITER Dominance Marker row added), §10 Chorus Node (constitutive presence language). PM01 §2.08 Control flag quantity corrected. **Artifact 02a requires re-sign-off (material change, v1.2 → v1.3).**
+- **Artifact 03 Phase 4–end scan complete:** L99 verb-first headers applied (Beat 3 Steps 9, Beat 4 Steps 7/8, Apex Steps 1–5). XA-19 fix applied line 66. Current Phase 4 Declaration text for D03-R03 confirmed in place. All remaining phases verified clean.
+- **10-02 complete:** §7.6 Translation rate table updated — ARBITER Script column added; Contested rate script written in The Record register; None row updated to 4:1 (L93); design note added; TBD note removed.
+
+**Recommended next steps (session 15):**
+1. **D03-R03 sign-off** — Andy reviews Phase 4 Declaration free Accord card text (already written). Approval unblocks Artifact 03 full sign-off.
+2. **Artifact 03 sign-off** — after D03-R03 review.
+3. **Artifact 02a re-sign-off** — v1.3 material change.
+4. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes including Chorus Papers cascade), 07 (four-register system), 04b (Chorus Portrait retired).
+5. **D-FT-01** — faction hidden truths when ready.
+
+**Sessions 5–13 locked decisions (L85–L99):**
 - L85: Mechanics field = constraints only, no procedure
 - L86: Terminology Sequencing (PM03 §1)
 - L87: Fourth ARBITER register — The Witness (expository, chronological)
@@ -133,6 +178,9 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - L94: Network virtual structure block at University Perimeter = full structure block for all purposes
 - L95: Code block format for schematic/overview content (Artifact 03 §6 applied)
 - L96: Italic for commentary text in procedural sections; CR separation from action text
+- L97: Difficulty is a card property — influence-level table removed from Artifact 03 §12 (session 13)
+- L98: "Threshold" is canonical noun for roll target; "Base Difficulty Threshold" is canonical table header (session 13)
+- L99: Verb-first convention for procedural action headers (session 13)
 - Floor Act: working name for always-available political act (1 native resource, outside deck) — D04-13
 
 **Overnight punch list work (session 10 agents) — COMPLETED:**
@@ -158,16 +206,19 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - PM03 §6 updated: /Old → /Retired path corrected
 
 **Active high-priority punch list items (still open):**
-- D03-R01, D03-R03: blocks Artifact 03 re-sign-off (requires Andy's call)
-- 03-06: L91 vs Artifact 03 difficulty table — decision required (requires Andy's call)
+- D03-R03: Declaration phase free Accord card (ARBITER-delivered) — Phase 4 text already written; pending Andy review/sign-off; this is the only gate before Artifact 03 full sign-off
+- 02a re-sign-off: v1.3 material change (02a-03 complete session 14) — pending Andy review
+- XA-19: ✅ Complete session 14 — reception language corrected in all relevant Narrator-voice contexts
 - XA-16: Systematic terminology scan — partial; "Reservoir" done; round→quarter, mat→Overview, others pending
-- XA-18: Italic commentary convention — applied to 03; other artifacts pending
 - D09-05: Portrait visual coding system (Artifact 09) — BLOCKING 07-05
 - 00a-10: ARBITER/The ARBITER Player terminology audit of 00a Mechanics fields
+- 06-01: Dispatch case contents list — migrate to Artifact 06 during active development pass
 
 ---
 
 ## In-World Glossary (Key Terms)
+
+→ **Canonical glossary is maintained in PM04 §1 — In-World Data Dictionary.** PM04 is the primary source. The table below is a quick-reference snapshot for session handoff context only — not authoritative.
 
 | Game Term | In-World Term | Defined |
 |-----------|--------------|---------|
@@ -223,7 +274,6 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 
 | ID | Decision | Priority |
 |----|----------|---------|
-| D02a-01 | Chorus Node Translation rate scale | MEDIUM |
 | D02a-02 | Resource bank narrative anchor | LOW |
 | D02a-03 | Does The Translation carry a Portrait consequence? | MEDIUM |
 | D-P-02 | ARBITER Dominance Marker visual design | HIGH |
@@ -232,6 +282,7 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 | D09-05 | Portrait visual coding system — card layout design for ARBITER parsing (blocks 07-05) | HIGH |
 | D04-13 | Floor Act card design — effect, cost, and card text | MEDIUM |
 | A05/A06 | Chorus Node Portrait Multiplier canonical mechanic (01 vs 02a discrepancy) — resolve to unblock 00a sign-off | HIGH |
+| D-FT-01 | Faction hidden truths — why are these 5 factions at The Table? Network didn't know until The Chorus Papers; the other four had prior involvement. What does each faction know that it hasn't disclosed? May require private faction supplement analogous to PRIVATE___True_State.md. See PM05 DEFERRED. | HIGH |
 
 ---
 
@@ -251,7 +302,9 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - `PRIVATE___True_State.md` — private design axioms (root level, not in V1)
 - `PM02___Decision_Log___Validation_Tracker.md` — locked decisions (L01–L84+), FD-01 through FD-06, punch list, future state
 - `PM03___Master_Artifact_Index.md` — artifact registry, 5-voice convention, narrative language table
-- `00a___Governing_Rules___Design_Policy.md` — 45 rules, in active review (R09 next)
-- `00___Factions_World_Narrative_Context.md` — significantly expanded session 4, pending re-sign-off
-- `PM___Cross_Artifact_Inconsistency_Audit.md` — 24 inconsistency items
+- `PM04___Glossary___Data_Dictionary.md` — canonical in-world glossary (§1) and design terminology conventions (§2) including Reception Language Convention (session 12)
+- `00a___Governing_Rules___Design_Policy.md` — 45 rules, signed off session 7
+- `00___Factions_World_Narrative_Context.md` — expanded sessions 4/11/12; The Chorus Papers section added session 12; pending re-sign-off (material changes sessions 11–12)
+- `Creative/CREATIVE_BRIEF.md` — world-building brief for AI-generated content; version 4 as of session 12 (The Chorus Papers, cascade effects, header fixes)
+- `Creative/CANON_CANDIDATES.md` — curated shortlist of selected content from AI submissions; updated through Gemini pass 4
 - `THE_SIGNAL___Project_Save_State.md` — this file

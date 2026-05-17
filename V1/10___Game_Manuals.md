@@ -69,7 +69,7 @@ The goal is a manual that a player can read and feel, without being told to feel
 
 3. **Setup guide = reproducible starting state.** Any group following the setup guide produces an identical game state. No ambiguity, no interpretation required.
 
-4. **The components list is a shopping list.** Every item specifies quantity, size, color, and a practical sourcing note. A person with no prior game design knowledge can acquire the materials.
+4. **The components list is a shopping list.** Every item specifies quantity, size, color, and a practical sourcing note. A person with no prior game design knowledge can acquire The Overviewerials.
 
 ---
 
@@ -159,17 +159,17 @@ Standard The Translation procedure:
 
 Rate table reference:
 
-| Presence at Chorus Node | Rate |
-|------------------------|------|
-| Contested | 5:1 *(Contested rate note: "You bring conflict to this space. The rate reflects what the Chorus has observed.")* |
-| None | *[Per D02a-01 — currently 4:1 pending decision]* |
-| Present | 3:1 |
-| Established | 2:1 |
+| Presence at Chorus Node | Rate | ARBITER Script |
+|------------------------|------|----------------|
+| Contested | 5:1 | *"The Chorus Node is Contested. The rate is five to one. The request was noted."* |
+| None | 4:1 | *"The conversion is granted. The request was noted."* |
+| Present | 3:1 | *"The conversion is granted. The request was noted."* |
+| Established | 2:1 | *"The conversion is granted. The request was noted."* |
 
-*[TBD — D02a-01 decision required before this table is final.]*
+*The Contested rate is not a penalty administered by ARBITER — it is ARBITER's acknowledgment of what the Chorus has observed. The faction requesting conversion at a Contested Node has already made the relevant statement. The rate is the record.*
 
 ### 7.7 Debrief
-Structure and timing of Debrief. Script templates for round summary and Advisory observation.
+Structure and timing of Debrief. Script templates for quarter summary and Advisory observation.
 
 ### 7.8 The Chronicle
 What to record and when. Chronicle form reference.
@@ -234,7 +234,7 @@ For each faction (in any order):
 
 | Component | Quantity | Notes |
 |-----------|----------|-------|
-| New Meridian board (game mat) | 1 | Visual artifact V01; printable at [TBD] size |
+| New Meridian board (The Overview) | 1 | Visual artifact V01; printable at [TBD] size |
 | Public Standing track | 1 | V02 |
 | World Condition tracks | 1 set | V04 |
 | Round Phase reference | 1 per player | V12 (quick reference) |
@@ -257,7 +257,7 @@ For each faction (in any order):
 | ARBITER Dominance Marker (fused) | 1 | 8 fused presence tokens (white) + oversized dominance marker; single piece placed at Chorus Node at setup; never removed. PM01 §2.08a |
 | Chorus Portrait board | 1 | ARBITER private; visual design TBD (D-P-02) |
 | Dispatch case (recipe box) | 6 | 5 faction + 1 ARBITER |
-| Chronicle forms | 8+ | Pre-printed; one per round |
+| Chronicle forms | 8+ | Pre-printed; one per quarter |
 | Accord forms | [TBD] | Recommend 20 per session kit |
 | Notification slips | [TBD] | Recommend 40 per session kit |
 | Message slips (blank) | [TBD] | Faction-to-faction communication |
@@ -311,7 +311,7 @@ For each faction (in any order):
 
 ## 11. Examples & Exceptions
 
-*[TBD — include one worked example of a full round in the Player Guide: all six phases, with a concrete board state, showing one covert operation and one political act, ARBITER resolution, and Debrief.]*
+*[TBD — include one worked example of a full quarter in the Player Guide: all six phases, with a concrete board state, showing one covert operation and one political act, ARBITER resolution, and Debrief.]*
 
 ---
 

@@ -112,7 +112,7 @@ In the electronic version, ARBITER would have access to hand contents and could 
 | | React | Effect fires automatically when named condition is met | Condition must be publicly countable or observable | Presence token count, Structure block presence, Resource marker count, Public Standing position, Accord agreement existence, Action resolution outcome |
 | **Cross-Category** | | *Functions applicable across any category or target type* | | |
 | | Reveal | Hidden information disclosed to named recipients | Named faction(s) or whole table. Partial or full disclosure | Card hand contents, Dispatch case contents, Intel tokens held, Modifier cards held, Classified directives, Action attribution |
-| | Shift | Assessment marker moves in named direction | Positive or negative. Named track specified on card | Public Standing, Chorus Portrait |
+| | Shift | Assessment marker moves in named direction | Positive or negative. Named track specified on card | Public Standing only. ~~Chorus Portrait~~ retired as player-facing target (L84, 00a R01) — ARBITER sole mover. See §6.1. |
 | | Protect | Preserve the current state of a named target against a specified effect | Effect type named on card. Not constrained to adverse effects only | Any valid target in any category |
 | | Corrupt | Alter a recorded value on a named writable game element | Physically written or recorded values only | Intel token (faction name or round number), Accord agreement (any recorded term) |
 
@@ -175,7 +175,7 @@ In the electronic version, ARBITER would have access to hand contents and could 
 | P14 | Open Record Request | Cross-Category | Reveal | Written record |
 | P15 | Acquisition Offer | Board | Redirect | Presence |
 | P16 | Market Pressure | Action | Modify | Covert + Political act (cost) |
-| P17 | Publish Analysis | Cross-Category | Shift | Chorus Portrait |
+| P17 | Publish Analysis | Cross-Category | Shift | ~~Chorus Portrait~~ — **retired (L84)**. Effect invalidated. Redesign required; see 04-11 (PM05). |
 | P18 | Signal Review Request | Action | Modify | Covert operation (difficulty) |
 
 ---
@@ -206,7 +206,7 @@ The following combinations exist in the taxonomy but have no current card. These
 | Cross-Category | Reveal | Classified directives | Low | Very high impact — use carefully |
 | Cross-Category | Reveal | Modifier cards held | Medium | Disclose modifier card contents |
 | Cross-Category | Reveal | Named faction only | High | Targeted disclosure — Ghost intelligence delivery |
-| Cross-Category | Shift | Chorus Portrait (primary covert) | High | Portrait as primary covert effect — Ghost doctrine |
+| Cross-Category | Shift | ~~Chorus Portrait (primary covert)~~ | — | **Retired (L84, 00a R01).** ARBITER is sole mover of Portrait — not valid player-facing taxonomy. P17 Publish Analysis requires redesign (see 04-11, PM05). Ghost doctrine gap: new primary covert effect needed. |
 | Cross-Category | Shift | Public Standing (primary covert) | High | Standing as primary covert effect — Network doctrine |
 | Cross-Category | Corrupt | Intel token | High | Falsify Intel token content |
 | Cross-Category | Corrupt | Accord agreement | High | Alter Accord terms — Syndicate doctrine |

@@ -71,13 +71,13 @@ The visual language of the game should reflect this: grounded, functional, sligh
 
 ### The Mat as Live Data Interface
 
-The game mat is not a game board. It is a **shared data interface** — the instrument through which The Table reads the state of New Meridian and its own deliberation simultaneously. Every zone on the mat is a feed: a data stream all parties have agreed to surface collectively.
+The Overview is not a game board. It is a **shared data interface** — the instrument through which The Table reads the state of New Meridian and its own deliberation simultaneously. Every zone on The Overview is a feed: a data stream all parties have agreed to surface collectively.
 
-The mat's aesthetic direction follows from this: **it should look like a live analytics dashboard or public intelligence display**. Think a civic sentiment feed with faction presence as data series. Think a city-scale BI dashboard updating in real time — engagement metrics, key indicators, territorial overlays. Clean, data-forward, minimal. Not decorative.
+The Overview's aesthetic direction follows from this: **it should look like a live analytics dashboard or public intelligence display**. Think a civic sentiment feed with faction presence as data series. Think a city-scale BI dashboard updating in real time — engagement metrics, key indicators, territorial overlays. Clean, data-forward, minimal. Not decorative.
 
 In the paper prototype, this aesthetic is achieved through visual design choices: typography, track design, data-visualization-style indicators rather than decorative borders, faction colors functioning as data series rather than heraldry.
 
-In the digital version (L2+), the mat becomes literally the screen The Table is looking at. The faction presence tokens animate as they are placed. The Public Standing track updates as a live feed. The Chorus Activity track pulses. The fiction and the artifact are the same object — the paper prototype was always a physical instantiation of something that wants to be electronic.
+In the digital version (L2+), The Overview becomes literally the screen The Table is looking at. The faction presence tokens animate as they are placed. The Public Standing track updates as a live feed. The Chorus Activity track pulses. The fiction and the artifact are the same object — the paper prototype was always a physical instantiation of something that wants to be electronic.
 
 This design direction is locked. See PM02 FD-02. It governs all mat visual design decisions from L1 forward.
 
