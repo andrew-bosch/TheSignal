@@ -4,11 +4,48 @@ A legacy tabletop board game for 5 players + ARBITER. Factions negotiate humanit
 
 ---
 
+## Quick Navigation
+
+**[→ Full Artifact Index with status](V1/README.md)**
+
+### Design Artifacts
+
+- [00 — Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md)
+- [00a — Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md)
+- [01 — Game Board: New Meridian](V1/01___Game_Board_New_Meridian.md)
+- [02a — Resource Systems: Board State](V1/02a___Resource_Systems_Board_State.md)
+- [02b — Resource Systems: Tracking](V1/02b___Resource_Systems_Tracking.md)
+- [03 — Round Structure & Gameplay](V1/03___Round_Structure___Gameplay.md)
+- [04 — Action Card System](V1/04___Action_Card_System.md)
+- [04b — Action Taxonomy & Design Analysis](V1/04b___Action_Taxonomy_Design_Analysis.md)
+- [05 — Operative & Apex System](V1/05___Operative_Apex_System.md)
+- [06 — Messaging System](V1/06___Messaging_System.md)
+- [07 — ARBITER Toolkit](V1/07___ARBITER_Toolkit.md)
+- [08 — Player Toolkit](V1/08___Player_Toolkit.md)
+- [09 — Card Specifications](V1/09___Card_Specifications.md)
+- [10 — Game Manuals](V1/10___Game_Manuals.md)
+- [10a — Victory System](V1/10a___Victory_System.md)
+- [11 — Visual Design System](V1/11___Visual_Design_System.md)
+
+### Project Management
+
+- [PM01 — Project Charter & Work Breakdown](V1/PM01___Project_Charter___Work_Breakdown.md)
+- [PM02 — Decision Log & Validation Tracker](V1/PM02___Decision_Log___Validation_Tracker.md)
+- [PM03 — Master Artifact Index](V1/PM03___Master_Artifact_Index.md)
+- [PM04 — Glossary & Data Dictionary](V1/PM04___Glossary___Data_Dictionary.md)
+- [PM05 — Active Punch List](V1/PM05___Active_Punch_List.md)
+
+### Session
+
+- [Project Save State](Session/THE_SIGNAL___Project_Save_State.md)
+
+---
+
 ## Project Status
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)
 **Active design layer:** `/V1`
-**Design milestone:** Artifact 03 pending re-sign-off; Artifact 04 in progress
+**Design milestone:** Artifact 03 Phase 6 review in progress (session 17)
 
 ---
 
