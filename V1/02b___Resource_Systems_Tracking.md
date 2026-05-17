@@ -61,7 +61,7 @@ Public Standing and the Chorus Portrait are two completely different kinds of ev
 
 **Public Standing** is what New Meridian thinks. It is the cumulative signal produced by social media, opinion polls, public commentary, art, music, graffiti, and the thousand small ways a city forms its collective impression of the organizations operating within it. It is volatile and reactive. Public memory is short — standing drifts back toward neutral when nothing dramatic is happening. The city watches, forms impressions, and forgets.
 
-**The Chorus Portrait** is what the Chorus observes. It is permanent, cumulative, and indifferent to performance or appearance. The Chorus has been transmitting for thirty-one years. It does not jump to conclusions and it does not forget. One action is enough to begin forming a pattern — the Chorus extrapolates trajectory from minimal data. Humans, it has found, are predictable. The Portrait is not a score. It is a record.
+**The Chorus Portrait** is what the Chorus observes. It is permanent, cumulative, and indifferent to performance or appearance. Humanity has been receiving the Chorus for thirty-one years. It does not jump to conclusions and it does not forget. One action is enough to begin forming a pattern — the Chorus extrapolates trajectory from minimal data. Humans, it has found, are predictable. The Portrait is not a score. It is a record.
 
 The two systems are symmetrical in physical form — both use an identical track format with a position marker — but asymmetrical in visibility and memory. Public Standing is displayed openly on the board. The Chorus Portrait is hidden in ARBITER's tableau. Same ruler. Different observer. One forgets. The other does not.
 
@@ -93,7 +93,7 @@ The Chorus Portrait track shows ARBITER's current cumulative assessment of each 
 
 The track is private — kept in ARBITER's tableau, facing away from players. Factions cannot see their own Portrait position. ARBITER communicates Portrait state through Debrief observations, never through direct disclosure.
 
-ARBITER may adjust a faction's Portrait marker in response to any action taken or observed — including formal game actions, Debrief negotiations, trades, and table behavior beyond the structured phases of play. The Chorus observes everything that happens at The Table.
+ARBITER may adjust a faction's Portrait marker in response to any action taken or observed — including formal game actions, Debrief negotiations, trades, and table behavior beyond the structured phases of play (per 00a R01). The Chorus observes everything that happens at The Table.
 
 How scores are assigned and when bonuses apply is specified in Artifact 07 — ARBITER Toolkit and Artifact 10a — Victory System respectively.
 
@@ -119,7 +119,7 @@ Starting position: 0, upper boundary of Ambiguous. Any scored action immediately
 
 ### Physical Format
 
-One hidden track strip per faction. Identical in format to the Public Standing track — same scale markings, same band label style — but kept private in ARBITER's tableau. A clip or bead marker in faction color shows current position. ARBITER moves the marker after each round's Resolution.
+One hidden track strip per faction. Identical in format to the Public Standing track — same scale markings, same band label style — but kept private in ARBITER's tableau. A clip or bead marker in faction color shows current position. ARBITER moves the marker after each quarter's Resolution.
 
 The physical solution for keeping the Portrait track private is specified in Artifact 07 — ARBITER Toolkit.
 
@@ -128,6 +128,8 @@ ARBITER may keep optional session notes alongside the track to support Chronicle
 ### What Portrait State Produces
 
 Portrait state at session end determines the tone of each faction's Chronicle entry and contributes to final scoring, specified in Artifact 07 — ARBITER Toolkit and Artifact 10a — Victory System respectively.
+
+Portrait ranking also determines ARBITER's initiative order assignment at the start of each quarter — see Artifact 03 §7 Phase 1 for the full procedure. Factions cannot infer their Portrait position from the initiative sequence they are assigned (Artifact 03 §7 Phase 1 Step 1 D10 decouples the visible order from the hidden Portrait rankings).
 
 ---
 
@@ -163,13 +165,13 @@ Modifiers cannot change Automatic into a required roll or Impossible into a poss
 
 ### Natural Drift
 
-| Position | Drift per round |
+| Position | Drift per quarter |
 |----------|----------------|
 | Above 13 | −1 |
 | 7 to 13 | No drift |
 | Below 7 | +1 |
 
-Applied at round end after all other standing changes. Timing specified in Artifact 03 — Round Structure.
+Applied at quarter end after all other standing changes. Timing specified in Artifact 03 — Round Structure.
 
 ### Physical Format
 
@@ -191,9 +193,9 @@ A clip or bead in faction color marks current position. Players move their own P
 An intel note is a small piece of paper created by ARBITER when a faction successfully gathers intelligence. ARBITER writes two things on each note at creation:
 
 - **Faction:** which faction the intelligence concerns
-- **Round:** the round in which it was gathered
+- **Round:** the quarter in which it was gathered
 
-Players calculate age: current round minus round acquired.
+Players calculate age: current quarter minus quarter acquired.
 
 | Age | Status |
 |-----|--------|
@@ -250,7 +252,7 @@ Occurs primarily during Debrief. Rules defined in Artifact 03 — Round Structur
 | Portrait position marker | 1 per faction (5 total) | Clip or bead in faction color |
 | Public Standing track | 1 per faction (5 total) | Laminated strip. Scale 0–20, five named bands with target modifier labels. Displayed on board or player tableau. |
 | Public Standing marker | 1 per faction (5 total) | Clip or bead in faction color |
-| Intel notes | Variable — created during play | Small pieces of paper. Written by ARBITER at creation. Contains faction name and round acquired only. Blank paper cut to consistent size is sufficient. |
+| Intel notes | Variable — created during play | Small pieces of paper. Written by ARBITER at creation. Contains faction name and quarter acquired only. Blank paper cut to consistent size is sufficient. |
 
 ---
 
@@ -296,7 +298,7 @@ Two evaluations. Same faction. Different observers. Both true.
 *Round 4 Debrief. The Network holds an intel note naming The Syndicate (Round 2 — stale). The Directorate asks directly whether The Network has anything on The Syndicate.*
 
 The Network has three options:
-- Show the note to The Directorate privately — they see faction and round
+- Show the note to The Directorate privately — they see faction and quarter
 - Show the note to the whole table — everyone sees it
 - Deny holding anything relevant — a verbal bluff ARBITER observes
 

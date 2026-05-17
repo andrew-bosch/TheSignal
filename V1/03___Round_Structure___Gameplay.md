@@ -63,7 +63,7 @@ This framing gives the game's events appropriate weight:
 - A structure block is not a completed building but an established operational presence — a secured facility, a contracted team, a functioning node. Three months is enough time to establish a foothold; not enough to build a headquarters.
 - Influence growth represents sustained organizational investment over a quarter — relationships cultivated, presence consolidated, community engagement maintained.
 - A Situation Report represents a significant event at the city or global scale — something meaningful enough to shape a quarter of operations, not a daily news cycle.
-- The Chorus has been transmitting for thirty-one years — approximately 124 quarters. The Table's two-year deliberation may be, from the Chorus's perspective, a remarkably compressed response time. Whether the Chorus considers the transmission complete is a question treated fully in Artifact 00. What is relevant to round structure: each quarter carries weight proportional to what it follows. The Table is not working on a human schedule.
+- Humanity has been receiving the Chorus for thirty-one years — approximately 124 quarters. The Table's two-year deliberation may be, from the Chorus's perspective, a remarkably compressed response time. Whether the Chorus considers the transmission complete is a question treated fully in Artifact 00. What is relevant to round structure: each quarter carries weight proportional to what it follows. The Table is not working on a human schedule.
 
 The round's internal structure mirrors how organizations operate under pressure: situational awareness first (Upkeep), then positioning (Placement), then committing to action before knowing what others will do (Dispatch and Declaration), then consequences arriving simultaneously (Resolution), then the conversation about what it all meant (Debrief).
 
@@ -113,7 +113,9 @@ Phases do not overlap. ARBITER announces the start of each phase.
 
 ## 7. Phase 1 — Upkeep
 
-**Who runs it:** ARBITER announces each step. Faction Players perform their own updates.
+
+- ARBITER announces each step.
+- Faction Players perform their own updates.
 
 ### Step 1 — Status Marker Reset
 
@@ -198,9 +200,9 @@ Other Faction Players observe and may challenge calculations. ARBITER resolves d
 *If The Network has any presence at University Perimeter:*
 The Network Faction Player declares whether Exposure or the district native resource will be collected from the virtual structure block.
 
-### Step 6 — Hand Assembly
+### Step 6 — Operations Preparation
 
-ARBITER announces: *"Assemble hands."*
+ARBITER announces: *"Prepare operations."*
 
 *Purpose: ensure all elements needed for Declaration and beyond are assembled and in their correct positions on the tableau. Faction Players complete this step simultaneously before Dispatch opens.*
 
@@ -268,7 +270,9 @@ After completing all draws, before Dispatch opens, a faction may trigger Burst P
 
 ## 8. Phase 2 — Placement
 
-**Who runs it:** Faction Players place their own markers. ARBITER enforces entry requirements.
+
+- Faction Players place their own markers.
+- ARBITER enforces entry requirements.
 
 ARBITER announces: *"Placement is open."*
 
@@ -281,10 +285,13 @@ ARBITER announces: *"Placement is open."*
    *A deployment marker counts as 1 temporary presence chip immediately upon placement.*
 
 2. Before placing in each district, verify entry requirements:
-   - Sprawl district: no restriction
-   - Infrastructure district without adjacent inner-ring Established or Dominant presence: Challenging difficulty on all operations targeting that district this round
-   - Core district: requires Established or Dominant in an adjacent Infrastructure district — permanent chips or temporary presence from first marker this phase
-   - Chorus Node: requires Established or Dominant in an adjacent Core district — permanent chips or temporary presence from first marker this phase; standard entry rules do not apply here
+
+| Ring | Entry Requirement | Threshold Modifier |
+|------|-------------------|--------------------|
+| Sprawl | None | None |
+| Infrastructure | None | −25 to all operations targeting this district if no adjacent Core district holds Established or Dominant |
+| Core | Established or Dominant in an adjacent Infrastructure district (permanent chips or temporary presence from first marker this phase) | None |
+| Chorus Node | Established or Dominant in an adjacent Core district (permanent chips or temporary presence from first marker this phase) | See Artifact 02a §10 — standard entry rules do not apply |
 
 3. After each placement, if influence levels change: the placing Faction Player updates the relevant Control flag or Tension marker immediately.
 
@@ -294,52 +301,54 @@ ARBITER announces: *"Placement is open."*
 
 ## 9. Phase 3 — Dispatch
 
-**Who runs it:** Faction Players assemble and transmit their own dispatch cases. The ARBITER Player receives and queues them.
+- *Faction Players assemble, seal and transmit their own dispatch cases.* 
+- *The ARBITER Player keeps watch on the Dispatch Timer, announces status, and queues cases in the order they are received.*
 
-ARBITER announces: *"Dispatch is open."* The timer starts.
+**1. Open Dispatch**
+- ARBITER announces: *"Dispatch is open."*
+- The ARBITER Player starts the dispatch timer.
 
-**Message assembly:**
+**2. Assemble cases**
 
-1. Each Faction Player privately assembles their dispatch case.
+ - Faction Players load operations, resources, target slips, and Pass cards into their cases.
 
-   *No talking during assembly.*
+  *Assembly should be handled privately and silently.*
 
-**Dispatch case contents:**
+*Full dispatch case design, physical format, and component contents: Artifact 06 — Messaging System.*
 
-- Up to 3 covert operation cards (standard factions) or up to 4 (Ghost, if passing their political act this round)
-- Modifier cards to be played alongside operations (attached to the relevant operation card)
-- Resource tokens covering all operation costs
-- One target slip per operation naming the target district
-- A Pass card in any unused slot — confirms intentional empty slot to The ARBITER Player
+**3. Seal cases**
 
-*Full dispatch case design, physical format, and internal component use: Artifact 06 — Messaging System.*
+ - Faction Players close their cases. 
 
-**Transmission:**
+*No additions or changes permitted after sealing cases.*
 
-1. The Faction Player seals their dispatch case and places it in The ARBITER Player's receive queue.
+**4. Transmit cases**
 
-   *No additions or changes permitted after sealing.*
+ - Faction Players place their sealed cases in the ARBITER Player's receive queue. 
+ - The ARBITER Player logs each case received, preserving transmission sequence.
 
-2. The ARBITER Player logs each case as it arrives, preserving transmission sequence.
+*Transmission order is the tiebreaker within priority tiers during Beat 3.*
 
-   *This sequence is the tiebreaker within priority tiers during Beat 3 Resolution.*
+**5. Close Dispatch (When timer ends)**
+- The ARBITER Player announces: *"Timer."*
 
-**Window close:**
+  *No new additions to any case — sealed or open.*
 
-- Faction Players who have not transmitted may still seal and send after the timer expires — no additions permitted, but may transmit what is inside.
-- Cases not received when The ARBITER Player begins processing are treated as all Pass.
+- The ARBITER Player counts: *"Five. Four. Three. Two. One."*
 
-**Ghost's 4-operation rule:**
+  *Faction Players who have not transmitted may seal and transmit during the countdown.*
 
-Ghost may transmit up to 4 covert operations only if they pass their political act in Phase 4.
+- The ARBITER Player announces: *"Dispatch closed."* 
 
-*If Ghost transmits 4 and then declares a political act, the 4th operation is returned unopened.*
+  *Any case not received is treated as if all actions submitted are Pass. -*
 
 ---
 
 ## 10. Phase 4 — Declaration
 
-**Who runs it:** Faction Players declare in initiative order. The ARBITER Player records.
+
+- Faction Players declare in initiative order.
+- The ARBITER Player records.
 
 ARBITER announces: *"Declaration is open."*
 
@@ -370,7 +379,11 @@ Ghost places their Pass card.
 
 ## 11. Phase 5 — Countermeasures
 
-**Who runs it:** Faction Players play their own Countermeasure cards and hand them to The ARBITER Player. No initiative constraint.
+
+- Faction Players play their own Countermeasure cards and deliver them to The ARBITER Player.
+- The ARBITER Player holds Countermeasures for application during Resolution.
+
+*No initiative constraint.*
 
 ARBITER announces: *"Countermeasures are open."*
 
@@ -444,7 +457,7 @@ The ARBITER Player processes all condition-setting cards received in the dispatc
 
 **For each Type B Countermeasure card (Faction Defense):**
 
-The ARBITER Player notes the −15 target modifier to be applied to all rolls against that faction's assets in Beat 3.
+The ARBITER Player notes the −15 threshold modifier to be applied to all rolls against that faction's assets in Beat 3.
 
 **For each Protect operation:**
 
@@ -484,13 +497,12 @@ For each operation:
 
 **Step 3 — Determine base difficulty.**
 
-1. Identify the acting faction's influence level in the target district.
-2. Look up the base difficulty target in the 2d10 System table below.
+Read the base difficulty printed on the operation card. Look up the corresponding threshold in the 2d10 System table below.
 
 **Step 4 — Apply faction-wide Countermeasure modifier.**
 
 1. Check if a Type B Countermeasure is active against the target faction.
-2. If active: reduce the roll target by 15.
+2. If active: reduce the roll threshold by 15.
 
 **Step 5 — Apply all other modifiers.**
 
@@ -549,23 +561,23 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 Establish which color is tens at session start. Keep consistent.
 
-**The target is a percentage:**
+**The threshold is a percentage:**
 
 To succeed, the roll must land equal to or below the target threshold.
 
-*The target is the percentage chance of success — a target of 75 means 75% chance of success.*
+*The threshold is the percentage chance of success — a threshold of 75 means 75% chance of success.*
 
-**Base difficulty targets:**
+**Base Difficulty Threshold:**
 
-| Acting faction's influence in target district | Difficulty | Base Target |
-|----------------------------------------------|-----------|-------------|
-| Dominant | Automatic | No roll — succeeds |
-| Established | Easy | 01–75 |
-| Present | Average | 01–50 |
-| No presence | Challenging | 01–25 |
-| No presence, target faction Dominant | Impossible | No roll — fails |
+| Difficulty (printed on card) | Threshold |
+|------------------------------|-------------|
+| Automatic | No roll — succeeds |
+| Easy | 01–75 |
+| Average | 01–50 |
+| Challenging | 01–25 |
+| Impossible | No roll — fails |
 
-*The acting faction's influence level in the target district is the **only** condition that sets the base difficulty. All other factors are modifiers applied to the target threshold.*
+*Difficulty is a property of the operation card. All other conditions — Public Standing, Modifier cards, active world effects — apply as adjustments to the target threshold.*
 
 **Critical Results:**
 
@@ -574,12 +586,12 @@ To succeed, the roll must land equal to or below the target threshold.
 | 01–05 | Critical Success | Always — regardless of modifiers |
 | 96–00 | Critical Fail | Always — regardless of modifiers |
 
-*If modifiers reduce the target to 0 or below, the roll still occurs — only a Critical Success (01–05) succeeds. If modifiers raise the target to 100 or above, the roll still occurs — only a Critical Fail (96–00) fails. Critical Success and Critical Fail carry additional action-specific consequences noted on individual operation cards (Artifact 09).*
+*If modifiers reduce the threshold to 0 or below, the roll still occurs — only a Critical Success (01–05) succeeds. If modifiers raise the threshold to 100 or above, the roll still occurs — only a Critical Fail (96–00) fails. Critical Success and Critical Fail carry additional action-specific consequences noted on individual operation cards (Artifact 09).*
 
-**Modifiers — all expressed as adjustments to target threshold:**
+**Difficulty Modifiers:**
 
-| Modifier | Target adjustment |
-|----------|------------------|
+| Modifier | Target Threshold Adjustment |
+|----------|-----------------------------|
 | Public Standing: Celebrated | +20 |
 | Public Standing: Respected | +10 |
 | Public Standing: Neutral | 0 |
@@ -589,6 +601,7 @@ To succeed, the roll must land equal to or below the target threshold.
 | Active Situation Report effect | As specified on Event Card |
 | Protect / Defend operation active | As specified on operation card |
 | Type B Countermeasure (attacker) | −15 |
+| Infrastructure district — no adjacent Core at Established or Dominant | −25 |
 
 *All active modifiers are cumulative.* Apply all before rolling.
 
@@ -610,7 +623,7 @@ For each political act in initiative order:
 
 **Step 2 — Determine base difficulty.**
 
-The acting Faction Player determines base difficulty from the same influence level table used in Beat 3.
+The acting Faction Player reads the base difficulty from the political act card and looks up the corresponding threshold in the 2d10 System table (§12.2).
 
 **Step 3 — Apply all modifiers.**
 
@@ -622,7 +635,7 @@ The acting Faction Player rolls publicly and states the result aloud.
 
 **Step 5 — Determine outcome.**
 
-The acting Faction Player compares roll to modified target. Critical Success and Critical Fail rules apply.
+The acting Faction Player compares roll to modified threshold. Critical Success and Critical Fail rules apply.
 
 **Step 6 — Flip deployment marker if applicable.**
 
@@ -822,7 +835,7 @@ The ARBITER Player flips Ghost's Data Exchange marker to the Blocked face. At Ro
 
 ### Countermeasure — Type B Example
 
-*Round 5. The Directorate plays a Type B Countermeasure. All roll targets against The Directorate's assets are −15.*
+*Round 5. The Directorate plays a Type B Countermeasure. All roll thresholds against The Directorate's assets are −15.*
 
 Ghost submits a Gather at Government Citadel (no presence — Challenging base, target 01–25). Public Standing: Neutral (0). Type B modifier: −15. Modified target: 01–10.
 

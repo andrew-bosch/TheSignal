@@ -1,10 +1,10 @@
 # PM04 — Glossary & Data Dictionary
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.2
+**Version:** 0.5
 **Status:** 🔄 Updated — Active
 **Last Updated:** 2026-05-16
-**Supersedes:** PM04 v0.1 Placeholder
+**Supersedes:** PM04 v0.3
 
 ---
 
@@ -22,7 +22,57 @@ Two sections:
 
 ## §1 — In-World Data Dictionary
 
-*Pending population. Sources to migrate: THE_SIGNAL___Project_Save_State.md (In-World Glossary table), 00a §1 Time Convention (quarter = one round = three months of real-world time). See PM02 PM04-01.*
+Canonical reference for all in-world terms and their mechanical equivalents. Each entry names the source artifact where the term receives its narrative grounding. Terms appear in artifacts only after that grounding is established (L86).
+
+### Temporal Conventions
+
+| In-World Term | Mechanical Equivalent | Narrative Grounding | Defined In |
+|---------------|----------------------|---------------------|------------|
+| Quarter | One round of play | Approximately three months of real-world time in New Meridian. Eight quarters (~two years) constitute the full session scope. The factions at The Table are operating on a human timeline. Humanity has been receiving the Chorus for thirty-one years. Both facts are present in every quarter's deliberation. | 00a §1, Artifact 03 §1 |
+
+### Component & System Terms
+
+| In-World Term | Mechanical Equivalent | Narrative Grounding | Defined In |
+|---------------|----------------------|---------------------|------------|
+| The Overview | Game mat / full shared display | The Table's shared situational interface. Negotiated data governance. ARBITER administers accuracy, not content. | Artifact 00 §8 |
+| New Meridian | Game board / district map (within The Overview) | Boom city assembled from a listening station in 31 years. 800,000 people from everywhere. | Artifact 01 §1 |
+| District | Board space / hex | A named geographic zone within New Meridian. | Artifact 01 §1 |
+| Presence token | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. Dominant is an atmosphere, not a count. | Artifact 02a §1 |
+| Operational marker | Claim marker | Temporary deployment presence; counts as a presence token during the round. | Artifact 01 §1 |
+| Dispatch case | Recipe box | Protocol for covert submission. | Artifact 06 §1 |
+| Asset token | Resource token | A unit of faction-specific human power. | Artifact 02a §1 |
+| Reservoir | Resource bank | Capitalized. The supply of available asset tokens. *"The Reservoir does not judge what is drawn from it."* | PM02 L93 |
+| Public Standing track | Popularity track | 0–20 point scale. Bell curve enforced by natural drift (above 13 = −1/quarter, below 7 = +1/quarter). | Artifact 02b §1 |
+| Chorus Portrait | Portrait score | ARBITER's private assessment of faction alignment with the Chorus Question. Determines initiative and feeds the Chronicle. | Artifact 02b §1 |
+| Intelligence token | Proof token / Intel note | Physical evidence — a slip of paper or token representing confirmed information. | Artifact 02b §1 |
+| Covert operation | Private action | Actions submitted face-down to the dispatch case. | Artifact 04 §1 |
+| Political act | Public action | Actions declared openly at the table. | Artifact 04 §1 |
+| Floor Act | Always-available political act | One native resource, outside the deck, minimal effect. Working name — in-world name pending D04-13. | PM02 D04-13 |
+| Classified directive | Hidden objective | Per-faction sealed mission carried by operatives. | Artifact 05 §1 |
+| Situation report | World event card | Two-card system: public narrative + ARBITER effect card. | Artifact 01 §1 |
+| Countermeasure card | Counter card | Reactive card type. | Artifact 04 §14.2 |
+| Field operative dossier | Operative card | Named operative with tier, cooldown, and classified directive capacity. | Artifact 05 §1 |
+
+### Faction Resources
+
+Each resource is a unit of faction-specific human power — not a generic currency.
+
+| Faction | Resource Name | Theory of Power |
+|---------|---------------|-----------------|
+| Ghost | Findings | The power of knowing |
+| Network | Exposure | The power of being seen |
+| Syndicate | Capital | The power of economic control |
+| Guild | Capacity | The power of building and doing |
+| Directorate | Mandate | The power of institutional legitimacy |
+
+### Influence Levels
+
+| Level | Threshold | Condition |
+|-------|-----------|-----------|
+| Dominant | 3+ tokens, strictly more than all others | Absolute floor + rank — L10 |
+| Established | 2+ tokens AND second place by count | Rank-based with absolute floor — L11 |
+| Present | 1+ tokens, not Established or Dominant | Presence without standing |
+| Contested | A condition, not a level | Applies when no faction holds Dominant status in a district — L12 |
 
 ---
 
@@ -43,7 +93,7 @@ All documentation uses in-world narrative terms. Each mechanical term is defined
 | Popularity track | Public Standing track | 02b §1 |
 | Portrait score | Chorus Portrait | 02b §1 |
 | Proof token | Intelligence token | 02b §1 |
-| Modifier card | Working designation — in-world name pending (D04-07) | 04 §11 |
+| Modifier card | Operational intelligence card (L06) — in-world name under review (D04-07 open) | 04 §11 |
 | Counter card | Countermeasure card | 04 §14.2 |
 | Private action | Covert operation | 04 §1 |
 | Public action | Political act | 04 §1 |
@@ -51,7 +101,7 @@ All documentation uses in-world narrative terms. Each mechanical term is defined
 | Operative card | Field operative dossier | 05 §1 |
 | World event card | Situation report | 01 §1 |
 
-| Round (game term) | Quarter (three months of real-world time) | 03 §1 |
+| Round (game term) | Quarter (three months of real-world time) | PM04 §1, 03 §1 |
 
 *ARBITER and The Table are never renamed — they are already in-world terms.*
 
@@ -110,6 +160,34 @@ This applies to: in-world component names, faction concepts, institutional terms
 
 ---
 
+### Reception Language Convention
+
+The Chorus is described from humanity's vantage point in all Narrator prose and design artifact copy. The Chorus does not begin, arrive, or start transmitting. Humanity's instruments become adequate to receive it.
+
+**Correct:** "first received," "the night it was first received," "humanity has been receiving the Chorus for thirty-one years," "the transmission was identified as non-random."
+
+**Incorrect:** "the night the Chorus arrived," "the night it first transmitted," "the Chorus has been transmitting for thirty-one years," "the Chorus began transmitting."
+
+**Faction voices may hold the incorrect framing.** Factions project human causality onto the Chorus — "the Chorus has been transmitting" is exactly how the Guild or the Network would phrase it. The Narrator does not. When the Narrator summarizes a faction's position, preserve the faction's framing in direct characterization but avoid adopting it as authorial voice.
+
+*Source: Artifact 00 correction, session 12. Scan tracked as XA-19 in PM05.*
+
+---
+
+### Roll Mechanics Terminology Convention
+
+"Threshold" is the canonical noun for the numerical value against which dice results are compared.
+
+**Correct:** "target threshold," "threshold," "threshold adjustment," "Base Difficulty Threshold," "modified threshold."
+
+**Incorrect:** "base target," "roll target," bare "target" when referring to the roll mechanic, "base difficulty targets."
+
+**Usage:** "Target threshold" on formal or first use within a section; "threshold" on subsequent use. Modifier values are "threshold adjustments" or "adjustments to the target threshold." The table mapping difficulty tiers to numerical values is headed "Base Difficulty Threshold."
+
+*Source: L98, session 13. First applied in Artifact 03 §12.*
+
+---
+
 ### Cross-Artifact Reference Convention
 
 Standard reference format: **[Artifact ID].[Section].[Subsection]**
@@ -124,4 +202,4 @@ Applies to all in-document references, cross-artifact design notes, PM02 blockin
 
 ---
 
-*End of PM04 — Glossary & Data Dictionary v0.2*
+*End of PM04 — Glossary & Data Dictionary v0.5*

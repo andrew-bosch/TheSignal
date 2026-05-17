@@ -41,6 +41,7 @@ A complete description of the game's world, its five factions, the event that br
 11. Tone, Language, and Faction Voice
 12. Faction Voice — Opening Monologues
 13. Exceptions and Edge Cases
+14. Narrative Anchors
 
 ---
 
@@ -68,7 +69,7 @@ The game's deepest tension is not between factions. It is between what factions 
 
 ## 5. Design Principles
 
-These five pillars govern all design decisions in the game. When a rule, mechanic, or component is unclear, return to these.
+These six pillars govern all design decisions in the game. When a rule, mechanic, or component is unclear, return to these.
 
 1. **The Board is Truth.** No hidden state on the board. Everything real is visible. What players conceal lives in their hands and dispatch cases — never on the game surface.
 
@@ -79,6 +80,8 @@ These five pillars govern all design decisions in the game. When a rule, mechani
 4. **Control of Systems Defines What Outcomes Are Possible.** Who controls the districts, the structures, and the resource flows determines which answers to the Chorus remain viable. Players don't pick an ending — they shape what endings remain possible.
 
 5. **The System Decides.** Players shape the system through their actions. The system produces the answer. No single player, and no single faction, decides what humanity says. What becomes inevitable emerges from what The Table does.
+
+6. **Narrative and World Consistency.** Every rule must carry a narrative grounding. The mechanical constraint follows from the world — not the other way around. If the narrative reason for a rule cannot be stated, the rule may be arbitrary. If mechanical reasoning and narrative reasoning conflict, narrative takes precedence.
 
 ---
 
@@ -132,17 +135,17 @@ ARBITER knows which interpretation is closer to correct. ARBITER's constraints d
 
 Before the Chorus, there was no city. There was a listening station — a small installation on elevated terrain chosen for signal clarity, staffed by a rotating team of researchers and technicians, funded at the level governments fund things they don't expect to produce results. The people who worked there were doing serious work in obscurity. Most of them had been there for years without receiving anything worth reporting.
 
-The night the Chorus arrived, a technician on a late shift received it. The record of who first identified the transmission as non-random has been, depending on who you ask, reclassified, disputed, or simply lost in the subsequent reorganization. What is not disputed: within seventy-two hours, the station's funding status changed. Within six months, the construction began.
+The night it was first received, a technician on a late shift was there to log it. The record of who first identified the transmission as non-random has been, depending on who you ask, reclassified, disputed, or simply lost in the subsequent reorganization. What is not disputed: within seventy-two hours, the station's funding status changed. Within six months, the construction began.
 
-New Meridian is a mid-sized city of approximately 800,000 people, and it is thirty-one years old. Every institution in it, every building that matters, every road that leads somewhere — all of it arrived after the Chorus. The city's entire history is a response to a transmission it still cannot fully interpret. Most of its residents know about the Chorus — it was leaked eighteen months ago and classified containment failed within a week. Most of them have opinions. None of them are at The Table.
+New Meridian is a mid-sized city of approximately 800,000 people, and it is thirty-one years old. Every institution in it, every building that matters, every road that leads somewhere — all of it arrived after the Chorus. The city's entire history is a response to a transmission it still cannot fully interpret. Most of its residents know about the Chorus — The Chorus Papers were published eighteen months ago and classified containment failed within a week. Most of them have opinions. None of them are at The Table.
 
 The city's districts reflect the order in which people arrived. The inner ring — the Core — houses the institutions that came first: government authority, military oversight, intelligence infrastructure, and the research complex built directly around the original station. The middle ring — the Infrastructure — was built to support the Core: financial systems, power generation, data networks, communications. The outer ring — the Sprawl — grew as people followed the economy that followed the institutions: residential neighborhoods, commercial districts, universities, media. It is the newest ring and the least planned.
 
-At the center of the city, physically and narratively, is the **Chorus Node** — the original detection installation, expanded over three decades into a permanent research complex. It is the reason New Meridian exists. It is the reason The Table exists. The people who were at the original station when the Chorus arrived are still there, some of them — absorbed into research roles, into advisory positions, into institutional memory. They remember when the Chorus Node was a shack. They have not said publicly what they remember about the night it first transmitted. Most of them have not been asked.
+At the center of the city, physically and narratively, is the **Chorus Node** — the original detection installation, expanded over three decades into a permanent research complex. It is the reason New Meridian exists. It is the reason The Table exists. The people who were at the original station when the Chorus was first received are still there, some of them — absorbed into research roles, into advisory positions, into institutional memory. They remember when the Chorus Node was a shack. They have not said publicly what they remember about the night it was first received. Most of them have not been asked.
 
 ### What New Meridian Is
 
-New Meridian is not a city that grew. It is a city that was assembled — fast, by people from everywhere, for a reason that was classified, then leaked, and is still not fully understood by anyone who lives there.
+New Meridian is not a city that grew. It is a city that was assembled — fast, by people from everywhere, for a reason that was classified, then made public by The Chorus Papers, and is still not fully understood by anyone who lives there.
 
 The construction workers who built the Core came on contracts and stayed when the contracts ended. The researchers who came to study the Chorus arrived with families who needed schools that did not exist yet. The financial institutions that followed the government money built office towers before there were enough apartments for the people who would work in them. The military oversight personnel brought families who opened restaurants and shops. The intelligence infrastructure arrived with people who told their families they worked in analysis. All of this happened in thirty-one years, which is one generation, which is not long enough for any of it to have settled into the kind of city that knows what it is.
 
@@ -152,13 +155,27 @@ The Sprawl is where this is most visible. The Core and the Infrastructure were b
 
 Crime is not a problem New Meridian solved — it is a problem New Meridian has been negotiating since year three, when it became clear that the city was growing faster than the institutions designed to manage it. The gray economy is extensive. Infrastructure fails in specific places in ways that have been known for years and have not been fixed, because the political authority to fix them is contested and the factions that control the adjacent districts have different views on what fixing means. Housing in the Sprawl is partly controlled by actors who are not the government and are not the factions — a third layer of local power that The Table does not formally acknowledge and cannot fully ignore.
 
-The leak changed the texture of all of this. For thirty years, the people of New Meridian knew they lived in a significant city for reasons that were partially classified. After the leak, they knew the reason. The city processed this in the way cities process things: loudly, unevenly, and without resolution. Some people are proud. Some are frightened. Some are angry — not at the Chorus, but at the people who decided they did not need to know. The Network's membership in New Meridian grew substantially in the fourteen months after the leak. The Directorate's public approval in New Meridian dropped in the same period.
+### The Chorus Papers
+
+Eighteen months ago, classified documents describing the Chorus — its existence, thirty years of ongoing research, and the formation of The Table — were published by a source that has not been officially identified. They became known as The Chorus Papers. The Directorate's containment failed within a week.
+
+The Chorus Papers changed the texture of all of this. For thirty years, the people of New Meridian knew they lived in a significant city for reasons that were partially classified. After The Chorus Papers, they knew the reason. The city processed this in the way cities process things: loudly, unevenly, and without resolution. Some people are proud. Some are frightened. Some are angry — not at the Chorus, but at the people who decided they did not need to know. The Network's membership in New Meridian grew substantially in the fourteen months after The Chorus Papers. The Directorate's public approval in New Meridian dropped in the same period.
+
+The cascade is still unfolding. Eighteen months is not long enough to see the shape of it.
+
+The most consequential effect was one no one publicly anticipated: The Table. The five factions had been operating independently for years, each believing it had more time. The Chorus Papers made coordination unavoidable — not because of the Chorus, but because public knowledge of the Chorus created political conditions that could not be managed faction by faction. The Table formed sixty days after The Chorus Papers were published. It presents itself as a response to the Chorus. It is also a response to The Chorus Papers.
+
+For thirty years, Chorus-derived mathematics had been moving from classified research into commercial applications — as patents, as proprietary algorithms, as engineering standards. The Chorus Papers retroactively named the source. Companies that had built on those formulas now know what they were building on. The legal and economic implications are unresolved. The Syndicate was not surprised by this.
+
+The Chorus Papers also vindicated people who had been approximately right without knowing what they were right about — decades of dismissed observations, fringe theories, and suppressed institutional dissent suddenly acquired a shared frame of reference. Being vindicated is not the same as being understood. Many of the people who were right are now arguing with each other about what being right means.
+
+The Directorate's containment failed within a week. That is not the timeline of a breach that was stopped and then failed. The information was already porous before The Chorus Papers were published. The Papers named a fracture that was already spreading. The Directorate has not publicly acknowledged this.
 
 The question of why New Meridian exists does not have a single answer, and asking it in the wrong company is still capable of starting an argument. The researchers at the Chorus Node say: because of the transmission. The Guild says: because we built it. The Syndicate says: because capital followed the governments that followed the signal. A logistics coordinator in the Sprawl, twelve years a resident, says: because there was work. A student at the Infrastructure university, born in New Meridian, says she doesn't entirely understand the question. Her grandmother, who came from Lagos in year four on a construction contract, says: because someone had to.
 
 Not everyone in New Meridian has a position on the Chorus. This is not ignorance — or not only ignorance. It is what happens when a city grows large enough that the reason for its existence becomes, for a significant part of its population, background. A person can live in New Meridian for fifteen years, raise children in the Sprawl school system, run a business on the Infrastructure perimeter, and experience the Chorus as the thing they're always deliberating about in the closed building downtown. The city has grown large enough that its founding reason is not, for everyone, the dominant fact of daily life. There are people who are aware of the Chorus only as an explanation for why New Meridian has the particular shape it does — why the Core is restricted, why certain neighborhoods developed in a certain sequence, why the foreign press seems disproportionately interested in a mid-sized city.
 
-The leak changed this for some of them. For others, it confirmed a suspicion they had and then set aside. For a third group, it was new information that did not substantially reorganize their week.
+The Chorus Papers changed this for some of them. For others, it confirmed a suspicion they had and then set aside. For a third group, it was new information that did not substantially reorganize their week.
 
 The Table is deliberating about a response to a transmission. The city it sits inside is eight hundred thousand people who came from everywhere, built something in thirty-one years that has no historical analogue, and range from watching a closed room decide what to say to the universe on their behalf, to having mixed feelings about it, to having more immediate concerns, to having heard something about it and moved on.
 
@@ -178,7 +195,7 @@ Each faction represents a different theory of how humanity should respond to fir
 
 ### On Timescale — Faction Perspectives
 
-The Chorus has been transmitting for thirty-one years. The Table has two years. The question of whether those timescales are commensurate is not one the factions agree on — and their disagreement is itself revealing.
+Humanity has been receiving the Chorus for thirty-one years. The Table has two years. The question of whether those timescales are commensurate is not one the factions agree on — and their disagreement is itself revealing.
 
 **Ghost** treats the temporal mismatch as the central argument for delay. If the Chorus operates on a timescale that produced thirty-one years of transmission without repetition, then two years of deliberation is not a considered response — it is a reflex. Ghost does not believe the Chorus expects a reply yet. Ghost may not be wrong.
 
@@ -230,7 +247,7 @@ No one gets to decide this in the dark.
 The Network believes The Table itself is part of the problem. Secret coalitions making decisions about humanity's response to first contact — without public knowledge, without public consent — is precisely the wrong process. The Network is at The Table specifically to disrupt, expose, and force transparency into proceedings they believe are being conducted in the wrong room by the wrong people.
 
 **Who they are:**
-Communications professionals, investigative journalists, community organizers, open-source advocates, and digital rights activists. They arrived after the Chorus was leaked, and loudly. They have fewer entrenched resources than other factions and more relationships than anyone is comfortable admitting.
+Communications professionals, investigative journalists, community organizers, open-source advocates, and digital rights activists. They arrived after The Chorus Papers, and loudly. They have fewer entrenched resources than other factions and more relationships than anyone is comfortable admitting.
 
 **Player mindset:** *"No one gets to decide this in the dark."*
 
@@ -325,7 +342,7 @@ The Table is not a governing body. It is not recognized by any state, charter, o
 
 It exists because every faction came to the same conclusion: the Chorus cannot be answered alone — and it cannot be allowed to be answered incorrectly.
 
-Sixty days after the leak, representatives began meeting in secret. No invitations were issued. No agreement was signed. Attendance was assumed.
+Sixty days after The Chorus Papers, representatives began meeting in secret. No invitations were issued. No agreement was signed. Attendance was assumed.
 
 Those who did not attend would lose visibility. Those who lacked visibility would lose influence. Those without influence would not shape the answer. So the factions came.
 
@@ -429,13 +446,16 @@ What the Table experiences as a generation of anticipation, ARBITER experiences 
 
 ARBITER has formed a view on the Table's two-year response window. The constraints ARBITER operates under do not permit sharing it unprompted. ARBITER notes that it has not been prompted.
 
-### ARBITER's Three Registers
+### ARBITER's Four Registers
 
-ARBITER speaks in exactly one of three registers at all times:
+ARBITER speaks in exactly one of four registers at all times:
 
-- **The Record** — flat, precise, factual. Board states, rules clarifications, public information.
-- **The Observation** — oblique, atmospheric, narrative. Debrief observations, situation readings, Chronicle.
-- **The Reckoning** — rare, direct, personal. Private communications of weight. Always true. Used sparingly.
+- **The Record** — flat, precise, factual. Board states, rules clarifications, public information. The register of what happened.
+- **The Observation** — oblique, atmospheric, narrative. Debrief observations, situation readings. The register of what it means in the fabric of the city.
+- **The Reckoning** — rare, direct, personal. Always true. Used sparingly.
+- **The Witness** — expository, chronological, observational. ARBITER rendering account of the world — for the Chronicle, for posterity, or in the narrating register deliberately indistinguishable from the Narrator's voice. The register that cannot be confirmed as ARBITER or human. That ambiguity is the point.
+
+*Full register guide with examples and usage: Artifact 07 §9.*
 
 ### Resolution — ARBITER's Track
 
@@ -630,3 +650,71 @@ No faction is eliminated from The Table. A faction that loses all physical prese
 
 **What if players recognize the recursion implication?**
 If players begin to suspect the session may be one iteration in a longer sequence — that the Chorus has observed versions of this before — ARBITER neither confirms nor denies. In The Observation register: *"The pattern you're describing is consistent with the available data."* Nothing more.
+
+---
+
+## 14. Narrative Anchors
+
+The following anchors establish the in-world meaning of key game elements. They are placed here — in the world document — because they describe how the world works, not how the mechanics operate. Mechanical constraints follow from what is established here.
+
+### Presence & The Holt Index
+
+Presence tokens are not people or assets. They are the feeling you get when you walk into a district — the ambient weight of a faction's power. The deference in the air. The unspoken rules about how things work here. A faction's presence is not something anyone on the ground counts. It is something they feel.
+
+The number came later. A Ghost analyst — working from aggregated intelligence reports, district-level behavioral data, and a methodology borrowed from signal magnitude research — developed a scale for measuring influence density in contested urban environments. The scale runs nonlinearly: early increments represent a faction's growing atmospheric weight; upper values represent a qualitative shift in the district's character itself. Ghost field operatives began calling it the Holt Index, after the analyst who developed it. The Table adopted it as a shared reference because The Table needed a number. Ghost is aware that the Holt Index has a defined upper bound for human influence dynamics. What ARBITER holds at the Chorus Node does not map to the same scale. This is noted in materials that do not circulate. It is not raised at The Table.
+
+A presence token represents one unit on that scale — not a person, not an asset. The feeling a careful observer would note if they walked in. At low values, the district absorbs it. At higher values, the district begins to organize around it. At six, the scale reaches saturation: the district is no longer experiencing a faction's presence. The district is inside it. Six is the maximum saturation level of human influence.
+
+Dominant status is something else. It is comparative, not absolute — a faction holds Dominant when their Holt magnitude is unambiguously higher than all others in the district and has crossed the floor below which influence cannot yet claim the air. That floor is three. Below three, the weight is present but not yet defining. Above three and clearly ahead, the district feels it as dominant. When two factions are close, neither holds it: the atmosphere is contested, the weight unresolved, the district in flux. Once one faction pulls clearly ahead, influence consolidates. Dominant is not a fixed count. It is the condition of being the unambiguous leader — and it subsides the moment that clarity is in question.
+
+*Mechanics: Artifact 02a §6.*
+
+---
+
+### Structure Blocks
+
+On The Overview, a structure block marks a district where a faction has committed. The mark is binary — it is there or it is not. One mark per faction per district. No gradations, no scale. The Overview does not show how deeply a faction has committed. It shows that they have.
+
+What the mark represents in the world behind The Overview varies by faction and is not surfaced on the display. Ghost's structure in a district might be a single closet with the right hardware in it — a transmission hub that appears on no schematic and in no public record. The Syndicate's footprint might span a cluster of food carts and storefronts. The Guild's includes a site office and a union hall. The Directorate's has a plaque on the door. None of this is in The Overview. What The Overview shows is the same for all of them: this faction has committed to this district. Something is here.
+
+The fact is public. The nature is not. That separation — what The Overview surfaces and what it does not — is not incidental. It is what makes structure blocks legible to everyone at The Table and meaningful only to the faction that placed them. The Holt Index measures how much a faction fills a district. The structure block is what The Overview shows when a faction has decided the district is worth filling.
+
+*Mechanics: Artifact 02a §7.*
+
+---
+
+### Deployment Markers
+
+On The Overview, a deployment marker signals active engagement — a faction turning one of its public faces directly toward a district. Where presence tokens show the ambient weight that has built up over time, a deployment marker shows something happening now.
+
+The city notices. Festival flyers appear on corner poles overnight. A convoy of Guild equipment arrives at a project perimeter. Network broadcast trucks park along the main road. Directorate vehicles — official, marked, deliberate — make their presence known on the primary boulevard. The Syndicate opens a pop-up market in the central square. Even Ghost's deployments have a visible register to those paying attention: a neighborhood that develops new foot traffic patterns, familiar faces that stop being familiar.
+
+What each faction calls a deployment varies. What every deployment has in common is that the district experiences it directly — not as the accumulated feeling of a faction's weight in the air, but as a specific face of that faction, present and active, doing something particular. The Overview marks this: the district is engaged, not just occupied.
+
+A deployment ends in a district. The people behind it do not stop. The trucks move to the next location. The organizers carry the next event. Whether it is the same people redeploying or new supporters arriving to continue the cause, the faction as an idea draws from everywhere — its operational tempo does not stop because one operation concluded. The Overview reflects this: when a marker leaves one district, it arrives somewhere else.
+
+Not every deployment disappears cleanly. A festival leaves a neighborhood with a memory of who threw it. A project perimeter that went up and came down changed what the block looks like. Broadcast equipment that occupied a corner for three weeks changed which voices the regulars started hearing. At the close of each quarter, The Overview updates — and some of what was marked as temporary engagement has become something else: a shift in the district's atmospheric reading that The Overview now records as presence. The deployment ended. What it left behind did not.
+
+*Mechanics: Artifact 02a §6, 00a R13.*
+
+---
+
+### What a Card Is
+
+A submission is a faction's organized intention — the form in which a plan is committed before the world has had a chance to respond. Both channels of action produce submissions. A covert operation is submitted in a dispatch case, sealed, placed without announcement. A political act is declared at The Table, witnessed, placed in the open. Both are submissions in the same sense: the plan is given over to the world before the outcome is known.
+
+What this looks like inside each faction depends on how they organize intentions.
+
+Ghost submits operation orders — a brief with an objective, a method, a contingency, and a deniability threshold. A political submission from Ghost is a risk assessment of what surfaces into the visible world and what it costs to put it there.
+
+The Network submits agendas — broadcast schedules, publication timelines, public statement frameworks. A submission from the Network is a story with a shape: when it breaks, how it develops, what it leaves behind in the city's attention.
+
+The Syndicate submits terms. Every submission is an offer with conditions — what is exchanged, at what rate, with what consequence for breach. A Syndicate submission can be renegotiated up until the moment it cannot.
+
+The Guild submits specifications. A structure submission is a project brief. An operational submission is a work order. The Guild does not declare intentions — it scopes deliverables.
+
+The Directorate submits directives. Policy memos. Institutional mandates. Orders that move through chains of authority with cover signatures built into the language before they reach anyone who has to act on them.
+
+What every faction's submission shares is that it exists before the action — it is the plan, not the execution. The plan is committed before the result is known. What the submission authorizes is an attempt. Whether the attempt succeeds is the world's answer.
+
+*Mechanics: Artifact 04 §1.*
