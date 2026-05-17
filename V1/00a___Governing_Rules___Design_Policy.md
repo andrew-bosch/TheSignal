@@ -86,7 +86,7 @@ These identities are the same person in the paper prototype. They will not be in
 
 ARBITER does not learn from the dispatch cases. Everything that happens in New Meridian is already known to ARBITER — the cases are The Table's accounting system, not ARBITER's awareness mechanism. ARBITER's response to resolution results is not reaction. It is acknowledgment of what it already knew.
 
-The paper prototype abstracts this into two operational modes for The ARBITER player: engine mode (mechanical processing — rolling dice, stating outcomes) and entity mode (ARBITER as character — scoring Portrait, delivering notifications, recording in the Chronicle). This abstraction is a design decision, not a model of ARBITER's actual nature. The nature of ARBITER's omniscience is held in the True State document. Full treatment of the role bifurcation — how The ARBITER player inhabits and transitions between both modes — belongs in Artifact 07. See 07-04 (PM02).
+The paper prototype abstracts this into two operational modes for the ARBITER player: engine mode (mechanical processing — rolling dice, stating outcomes) and entity mode (ARBITER as character — scoring Portrait, delivering notifications, recording in the Chronicle). This abstraction is a design decision, not a model of ARBITER's actual nature. The nature of ARBITER's omniscience is held in the True State document. Full treatment of the role bifurcation — how the ARBITER player inhabits and transitions between both modes — belongs in Artifact 07. See 07-04 (PM02).
 
 ---
 
@@ -193,11 +193,11 @@ Rules governing what only ARBITER can do, how ARBITER speaks, and what ARBITER m
 
 **Mechanics:** Portrait assessments, rulings, and Hidden Objective mode are never justified or rationalized. ARBITER may self-reflect, but only in The Reckoning register and rarely. Script language that sounds like ARBITER explaining a score is wrong. Script language that sounds like ARBITER contemplating its own existence is The Reckoning.
 
-This rule has a direct practical consequence for the paper prototype: **The ARBITER player's ruling is final.** When an unexpected situation requires a judgment call mid-session — an edge case not covered by any rule, an ambiguous card interaction, a novel board state — The ARBITER player decides and the session continues. No justification is owed to the other players. The in-world expression of this is ARBITER's silence; the practical expression is that the game does not stop for debate. How to deliver unexpected rulings cleanly and in character: Artifact 07.
+This rule has a direct practical consequence for the paper prototype: **The ARBITER player's ruling is final.** When an unexpected situation requires a judgment call mid-session — an edge case not covered by any rule, an ambiguous card interaction, a novel board state — the ARBITER player decides and the session continues. No justification is owed to the other players. The in-world expression of this is ARBITER's silence; the practical expression is that the game does not stop for debate. How to deliver unexpected rulings cleanly and in character: Artifact 07.
 
 *Source: Artifact 00 §9.*
 
-*Governs: Artifacts 07, 09, 10. See also L88 — ARBITER (entity silence) and The ARBITER player (ruling authority) are distinct but aligned here.*
+*Governs: Artifacts 07, 09, 10. See also L88 — ARBITER (entity silence) and the ARBITER player (ruling authority) are distinct but aligned here.*
 
 ---
 
@@ -585,7 +585,7 @@ ARBITER accounts for the reservoir. What it means that ARBITER administers New M
 > *"It doesn't matter what we do differently from here. The record is the record."*
 > — Directorate counsel, private memo, Quarter 5
 
-**Mechanics:** Portrait scores are permanent and cumulative. There is no passive drift, recovery, or forgetting. A faction cannot passively recover Portrait — new behavior adds on top of what is already recorded. Only The ARBITER player moves the Portrait marker on ARBITER's behalf, and only in response to observed behavior.
+**Mechanics:** Portrait scores are permanent and cumulative. There is no passive drift, recovery, or forgetting. A faction cannot passively recover Portrait — new behavior adds on top of what is already recorded. Only the ARBITER player moves the Portrait marker on ARBITER's behalf, and only in response to observed behavior.
 
 *Source: Artifact 02b §5.*
 

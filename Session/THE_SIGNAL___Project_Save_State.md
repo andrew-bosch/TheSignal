@@ -47,7 +47,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
 | 02a — Resource Systems: Board State | 1.3 | 🔄 Pending Re-Sign-Off — 02a-03 applied session 14: §6 Component Names updated, ARBITER Dominance Marker row added, DOMINANT bullet rewritten (structural impossibility, not prohibition), §10 Chorus Node constitutive presence language. PM01 §2.08 Control flag quantity corrected. Material change → re-sign-off required. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
-| 03 — Round Structure & Gameplay | 1.6 | 🔄 Session 16 in progress — D03-R01 ✅, D03-R02 ✅, D03-R03 ✅ (L100). Phases 1–5 fully reviewed and updated. Phase 6 major restructure complete: Operation System extracted to §13 (L101), Resolution Grid integrated into Beat 2 (L102), Beat 1 fully rewritten (targeting restrictions / conversion blocks), Deployment Marker Blocking overview table added. Beat 3 Steps 4–14, Beat 4, Beat 5, §14 Special Conditions, §15 Examples still need review pass. Sign-off pending Phase 6 completion. |
+| 03 — Round Structure & Gameplay | 1.6 | 🔄 Session 17 in progress — D03-R01 ✅, D03-R02 ✅, D03-R03 ✅ (L100). Phases 1–5 fully reviewed. Phase 6 major restructure complete: six-beat structure (L103), Beat 0 grid staging, Beat 1/2 pre-clean grid, Beat 3 13-step resolution, Beat 4 public political act grid. §15 Special Conditions blocked by 03-09 (Apex + Beat 0 conflict). §16 Examples stale (Apex example). Sign-off pending §15/§16 review and 03-09 decision. |
 | 04 — Action Card System | 0.9.6 | 🔄 In Progress — paused until 00a signed off |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
@@ -172,6 +172,14 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM05:** 03-03 closed; 04-07 expanded with Type A/B content; 04-12 added; 01-03 updated (Countermeasure setup note); XA-16 updated; XA-20 added; timing note added to §3
 - **Artifact 04 C09:** Design note updated — Political Act card classification, subsequent-Quarter timing
 
+**Session 17 summary (2026-05-17):**
+- **Beat 3 step restructure:** 13 steps (down from 15). Step 2 (restriction check) removed — grid pre-cleaned in Beat 1. Type B CM modifier folded into Step 3 "Apply all modifiers" (token already on card from Beat 2). Steps 8+9 (marker flip + board changes) kept combined as Step 7. Failure (Step 8) and discovery (Step 9) remain split. Step 10 cleanup: operation card + target back to dispatch case, resolution card in, modifier cards discarded, modifier tokens returned.
+- **L103 locked:** Phase 6 rebuilt to six beats (Beat 0 through Beat 5). Beat 0 (new): ARBITER opens all dispatch cases and builds the covert Resolution Grid — numbered steps, no resolution. Beat 1 (revised): targeting restrictions applied directly to grid cards; invalid ops removed and cleaned up. Beat 2 (revised): CM cards processed against grid; Type A removes blocked ops; Type B places −15 modifier tokens. Beat 3 (revised): covert ops resolve from pre-cleaned grid. Beat 4 (new): ARBITER gathers declared political act cards into a public resolution grid in initiative order; resolves using same 13-step sequence as Beat 3. Beat 5: The Table Speaks (unchanged).
+- **PM05 updates:** XA-22 updated (Beat 0 reference); XA-21 updated (purpose under review — original use case obsolete after L103; three design options documented); 03-09 added (Apex + Beat 0 design conflict — all cases opened in Beat 0, "return unopened cases" language now impossible).
+- **Artifact index added:** Root README.md and V1/README.md updated with complete artifact index, version numbers, and sign-off status — viewable in GitHub mobile app.
+- **XA-20 scan:** Running autonomously (session 17 autonomous pass — capitalization convention across 00, 00a, 01, 02a, 02b, 04, 04b, 07, 08, 10, 10a).
+- **Phase 6 review not yet complete:** §15 Special Conditions (Apex rules conflict with Beat 0 — needs 03-09 decision first), §16 Examples (Apex example references cases being opened in Beat 3 — stale). Sign-off pending.
+
 **Session 16 summary (2026-05-17):**
 - **L101 locked:** Automatic and Impossible removed as base difficulty values. Every committed action resolves with a d100 roll. Critical floor (01–05) and ceiling (96–00) are the only absolute limits. Automatic/Impossible may appear only as explicit card text. PM05 04-13 added (card audit).
 - **L102 locked:** Resolution Grid — Beat 3 resolves row-first in round-robin case receipt order. All card-1 pairs fire left to right before any card-2 pair begins. First submitter's first op fires first; all other factions' first ops follow before anyone's second op begins.
@@ -188,14 +196,15 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Whiteboard created:** `~/Projects/Whiteboard/` — working space for temporary design documents outside the project. `andytemp/` folder deleted after content migrated to Artifact 07.
 - **Phase 6 review paused:** Beat 3 Steps 4–14, Beat 4, Beat 5, §14 Special Conditions, §15 Examples not yet reviewed this session.
 
-**Recommended next steps (session 17):**
-1. **Complete Artifact 03 Phase 6 review** — Beat 3 Steps 4–14; Beat 4 full review; Beat 5; §14 Special Conditions; §15 Examples
-2. **Artifact 03 sign-off** — after Phase 6 review complete (03-04: version update in PM01, PM03 status)
-3. **Artifact 07 re-sign-off** — Resolution Grid added (material change, §8 new subsection)
-4. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
-5. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
-6. **XA-20** — "the ARBITER Player" / "the Faction Player" capitalization scan across remaining artifacts
-7. **04-13** — Audit all cards for Automatic/Impossible base difficulty values (L101)
+**Recommended next steps (session 18):**
+1. **Resolve 03-09 (Apex + Beat 0 design conflict)** — three options in PM05; decision unblocks §15 and the Apex example in §16
+2. **Complete Artifact 03 Phase 6 review** — §15 Special Conditions (Apex rules), §16 Examples (Apex example stale), then sign-off
+3. **Artifact 03 sign-off** — 03-04: version update in PM01, PM03 status
+4. **Confirm XA-20 scan results** — autonomous pass running session 17; review and mark complete
+5. **Resolve XA-21** — choose option A, B, or C from PM05 03-09 entry (player-facing restriction indicator)
+6. **Artifact 07 re-sign-off** — Resolution Grid + six-beat structure (material changes, sessions 16–17)
+7. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
+8. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
 
 **Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
