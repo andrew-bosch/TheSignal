@@ -41,9 +41,10 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 10. Phase 4 — Declaration
 11. Phase 5 — Countermeasures
 12. Phase 6 — Resolution + Debrief
-13. End of Quarter
-14. Special Conditions & Gameplay Impacts
-15. Examples & Exceptions
+13. The Operation System
+14. End of Quarter
+15. Special Conditions & Gameplay Impacts
+16. Examples & Exceptions
 
 ---
 
@@ -325,10 +326,10 @@ ARBITER announces: *"Placement is open."*
 
 **4. Transmit cases**
 
- - Faction Players place their sealed cases in the ARBITER Player's receive queue. 
- - The ARBITER Player logs each case received, preserving transmission sequence.
+ - Faction Players place their sealed cases in the ARBITER Player's receive queue.
+ - The ARBITER Player places each received case left to right in the receive queue, establishing lane order for the Resolution Grid.
 
-*Transmission order is the tiebreaker within priority tiers during Beat 3.*
+*Case receipt order determines lane assignment in the Resolution Grid and governs Beat 3 operation sequence.*
 
 **5. Close Dispatch (When timer ends)**
 - The ARBITER Player announces: *"Timer."*
@@ -401,6 +402,17 @@ Phase ends.
 - Faction Players receive outcomes and apply their own board updates.
 - All parties participate in Debrief.
 
+### Deployment Marker Blocking
+
+A deployment marker is flipped to the Blocked face when a blocking condition resolves. The flip occurs in the beat in which the condition arises.
+
+| Beat | Condition | Who Flips |
+|------|-----------|-----------|
+| Beat 1 | Situation Report effect blocks conversion in that district or ring | The ARBITER Player |
+| Beat 2 | Type A Countermeasure card names that district | The ARBITER Player |
+| Beat 3 | Covert operation outcome blocks conversion | The ARBITER Player |
+| Beat 4 | Political act outcome blocks conversion | The acting Faction Player |
+
 ### Resolution — Five Beats
 
 *ARBITER announces each beat before beginning it.*
@@ -409,15 +421,17 @@ Phase ends.
 
 **Beat 1: Check Active Restrictions**
 
-1. The ARBITER Player checks all currently active Situation Report effects for targeting restrictions or difficulty modifiers.
+ARBITER reads all currently active Situation Report effects aloud.
 
-   *For example, effects that prevent operations in specific districts or rings.*
+**Targeting restrictions** — effects that prevent operations in specific districts or rings:
 
-2. ARBITER announces all active restrictions publicly in The Record register.
+1. The ARBITER Player identifies any targeting restrictions on active Event Cards.
+2. The ARBITER Player marks the impacted districts or rings with the restriction indicator — see XA-21.
 
-   *All restrictions are announced before any operations resolve.*
+**Conversion blocks** — effects that prevent deployment marker conversion in specific districts or rings:
 
-3. If a Situation Report effect blocks deployment marker conversion in a named district or ring: The ARBITER Player flips the affected marker(s) to the Blocked face.
+1. The ARBITER Player identifies any conversion-blocking effects on active Event Cards.
+2. The ARBITER Player flips any affected deployment markers to the Blocked face.
 
 *No other board changes, track updates, or maintenance occur in this beat.*
 
@@ -425,9 +439,9 @@ Phase ends.
 
 **Beat 2: The Ground Shifts**
 
-The ARBITER Player processes all condition-setting cards received in the dispatch cases.
+The ARBITER Player opens all dispatch cases and populates the Resolution Grid: Beat 2 cards fill the Beat 2 row, Beat 3 cards and target slips fill Beat 3 rows in paired order, left to right by case receipt order. *Full Resolution Grid design: Artifact 07 — ARBITER Toolkit.*
 
-*This includes Countermeasure cards, Protect operations, Fortify Structure, Broadcast Interference, Amplify, Open Channel, Sealed Border, Golden Parachute, and any other Beat 2 card submitted this Quarter — cards that modify resolution conditions for subsequent beats before any board state changes occur.*
+The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right.
 
 **For each Type A Countermeasure card (District Block):**
 
@@ -437,6 +451,7 @@ The ARBITER Player processes all condition-setting cards received in the dispatc
    *Resources committed to blocked operations are not refunded — the attempt was made and met resistance.*
 
 3. The ARBITER Player discards all modifier cards attached to blocked operations.
+4. The ARBITER Player flips any deployment markers in the named district to the Blocked face.
 
 **For each Type B Countermeasure card (Faction Defense):**
 
@@ -446,19 +461,11 @@ The ARBITER Player notes the −15 threshold modifier to be applied to all rolls
 
 The ARBITER Player notes the target and the defensive modifier to be applied in Beat 3.
 
-**Deployment marker blocking conditions:**
-
-A deployment marker is flipped to the Blocked face when any of the following conditions are met — this happens during the beat in which the condition resolves, not in Beat 2:
-
-1. A Type A Countermeasure card named that district *(Beat 2 — ARBITER flips)*
-2. An action or operative ability against the faction that blocks conversion, as defined in Artifact 04 and Artifact 05 *(Beat 3 for covert — the ARBITER Player flips; Beat 4 for public — the acting Faction Player flips)*
-3. A Situation Report effect blocking conversion in that district or ring *(Beat 1 — ARBITER flips)*
-
 ---
 
 **Beat 3: Operations Land or Don't**
 
-ARBITER resolves all covert operations from dispatch cases in submission order.
+ARBITER resolves all covert operations from the Resolution Grid in round-robin order: all card-1 pairs resolve left to right across all lanes before any card-2 pair begins, then all card-2 pairs, and so on. The first submitter's first operation fires first; all other factions' first operations follow in case receipt order before anyone's second operation begins.
 
 For each operation:
 
@@ -467,12 +474,12 @@ For each operation:
 1. Read the operation card and target slip.
 2. Check for Apex submission.
 
-   If Apex: resolution is immediately interrupted — see Apex Activation in Section 14 before proceeding.
+   If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
    If not Apex: continue to Step 2.
 
 **Step 2 — Check Active Restrictions.**
 
-1. Check if the target district has any active Beat 1 restrictions.
+1. Check the Beat 1 targeting restriction announcement — does it cover this district or ring?
 2. If restricted: the operation fails.
 
    Return the operation card and target slip to the dispatch case with an Operation Failed resolution card. Proceed to the next operation.
@@ -480,7 +487,7 @@ For each operation:
 
 **Step 3 — Determine base difficulty.**
 
-Read the base difficulty printed on the operation card. Look up the corresponding threshold in the 2d10 System table below.
+Read the base difficulty printed on the operation card. Look up the corresponding threshold in the Operation System (§13).
 
 **Step 4 — Apply faction-wide Countermeasure modifier.**
 
@@ -491,9 +498,9 @@ Read the base difficulty printed on the operation card. Look up the correspondin
 
 Apply Public Standing modifier, Modifier card modifiers, active world effect modifiers, and Protect/defend modifiers.
 
-**Step 6 — Roll 2d10.**
+**Step 6 — Roll d100.**
 
-The ARBITER Player rolls 2d10, or nominates a Faction Player to roll and call the result aloud.
+The ARBITER Player rolls d100, or nominates a Faction Player to roll and call the result aloud.
 
 **Step 7 — Determine outcome.**
 
@@ -535,59 +542,6 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 ---
 
-### The 2d10 System
-
-**Reading the dice:**
-
-*Two ten-sided dice in two distinct colors. One color = tens digit; other = units digit. Together they produce 01–100 (both showing 0 = 100).*
-
-Establish which color is tens at session start. Keep consistent.
-
-**The threshold is a percentage:**
-
-To succeed, the roll must land equal to or below the target threshold.
-
-*The threshold is the percentage chance of success — a threshold of 75 means 75% chance of success.*
-
-**Base Difficulty Threshold:**
-
-| Difficulty (printed on card) | Threshold |
-|------------------------------|-------------|
-| Automatic | No roll — succeeds |
-| Easy | 01–75 |
-| Average | 01–50 |
-| Challenging | 01–25 |
-| Impossible | No roll — fails |
-
-*Difficulty is a property of the operation card. All other conditions — Public Standing, Modifier cards, active world effects — apply as adjustments to the target threshold.*
-
-**Critical Results:**
-
-| Roll | Result | Condition |
-|------|--------|-----------|
-| 01–05 | Critical Success | Always — regardless of modifiers |
-| 96–00 | Critical Fail | Always — regardless of modifiers |
-
-*If modifiers reduce the threshold to 0 or below, the roll still occurs — only a Critical Success (01–05) succeeds. If modifiers raise the threshold to 100 or above, the roll still occurs — only a Critical Fail (96–00) fails. Critical Success and Critical Fail carry additional action-specific consequences noted on individual operation cards (Artifact 09).*
-
-**Difficulty Modifiers:**
-
-| Modifier | Target Threshold Adjustment |
-|----------|-----------------------------|
-| Public Standing: Celebrated | +20 |
-| Public Standing: Respected | +10 |
-| Public Standing: Neutral | 0 |
-| Public Standing: Suspect | −10 |
-| Public Standing: Discredited | −20 |
-| Modifier card | As specified on card |
-| Active Situation Report effect | As specified on Event Card |
-| Protect / Defend operation active | As specified on operation card |
-| Type B Countermeasure active against target faction | −15 |
-| Infrastructure district — no adjacent Core at Established or Dominant | −25 |
-
-*All active modifiers are cumulative.* Apply all before rolling.
-
----
 
 **Beat 4: Political Acts Resolve**
 
@@ -600,18 +554,18 @@ For each political act in initiative order:
 1. The acting Faction Player reads their declared card and confirms their target.
 2. Check for Apex.
 
-   If Apex: resolution is immediately interrupted — see Apex Activation in Section 14 before proceeding.
+   If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
    If not Apex: continue to Step 2.
 
 **Step 2 — Determine base difficulty.**
 
-The acting Faction Player reads the base difficulty from the political act card and looks up the corresponding threshold in the 2d10 System table (§12.2).
+The acting Faction Player reads the base difficulty from the political act card and looks up the corresponding threshold in the Operation System (§13).
 
 **Step 3 — Apply all modifiers.**
 
 The acting Faction Player applies all relevant modifiers and announces the modified target threshold aloud.
 
-**Step 4 — Roll 2d10.**
+**Step 4 — Roll d100.**
 
 The acting Faction Player rolls publicly and states the result aloud.
 
@@ -655,7 +609,7 @@ Before Debrief opens, the ARBITER Player returns all dispatch cases to their own
 - Operation Resolution cards (one per operation)
 - Any intel notes created for this Faction Player this Quarter
 
-*Not returned: resources (spent), Modifier cards (discarded during resolution).*
+*Not returned: resources (spent), Modifier cards (discarded during resolution), Countermeasure cards (removed from the game when played).*
 
 Faction Players read their Operation Resolution cards privately.
 
@@ -714,13 +668,85 @@ If Chorus Activity changed this Quarter, ARBITER incorporates this into the Debr
 
 ---
 
-## 13. End of Quarter
+## 13. The Operation System
+
+The Operation System governs resolution for all committed actions: covert operations (Beat 3) and political acts (Beat 4).
+
+*Every committed action resolves with a roll. Submitting an operation or declaring a political act is a commitment — ARBITER renders a judgment on all of them.*
+
+---
+
+### The d100 Roll
+
+A d100 is produced by two ten-sided dice (d10) in two distinct colors. One color is designated as the tens digit; the other as the units digit. Together they produce a result from 01 to 100. Both dice showing 0 = 100.
+
+Establish which color is tens at session start. Keep consistent throughout the session.
+
+The game includes two d10 dice. If d10 dice are unavailable, any device capable of generating a random integer from 1 to 100 produces an identical result.
+
+*The d100 produces a flat uniform distribution — every result from 01 to 100 is equally likely. A threshold of 50 is a genuine 50% chance of success; a modifier of +15 shifts that probability by exactly 15 points. Probability is transparent: players can calculate exact odds before committing to an operation.*
+
+---
+
+### How to Read the Roll
+
+To succeed, the roll must land equal to or below the target threshold.
+
+*The threshold is the probability of success expressed as a percentage — a threshold of 75 means a 75% chance of success.*
+
+---
+
+### Base Difficulty
+
+Base difficulty is printed on the operation card or political act card. It represents conditions for a competent operative under neutral circumstances.
+
+| Difficulty | Threshold |
+|------------|-----------|
+| Easy | 75 |
+| Average | 50 |
+| Challenging | 25 |
+
+*Automatic and Impossible do not appear as base difficulty values. Every committed action resolves with a roll. Automatic and Impossible may appear as explicit card text for specific designed exceptions — they are not base states of the system.*
+
+---
+
+### Critical Results
+
+| Roll | Result | Condition |
+|------|--------|-----------|
+| 01–05 | Critical Success | Always — regardless of threshold or modifiers |
+| 96–00 | Critical Fail | Always — regardless of threshold or modifiers |
+
+*If modifiers reduce the threshold to 0 or below, the roll still occurs — only a Critical Success (01–05) succeeds. If modifiers raise the threshold to 100 or above, the roll still occurs — only a Critical Fail (96–00) fails. The 5% critical floor means no committed action is truly hopeless; the 5% critical ceiling means no action is guaranteed. Critical Success and Critical Fail carry additional action-specific consequences noted on individual operation cards (Artifact 09).*
+
+---
+
+### Difficulty Modifiers
+
+| Modifier | Target Threshold Adjustment |
+|----------|-----------------------------|
+| Public Standing: Celebrated | +20 |
+| Public Standing: Respected | +10 |
+| Public Standing: Neutral | 0 |
+| Public Standing: Suspect | −10 |
+| Public Standing: Discredited | −20 |
+| Modifier card | As specified on card |
+| Active Situation Report effect | As specified on Event Card |
+| Protect / Defend operation active | As specified on operation card |
+| Type B Countermeasure active against target faction | −15 |
+| Infrastructure district — no adjacent Core at Established or Dominant | −25 |
+
+*All active modifiers are cumulative. Apply all before rolling.*
+
+---
+
+## 14. End of Quarter
 
 At the close of Debrief, in strict order:
 
 1. **Findings decay:** The Ghost Faction Player checks current Findings total and applies decay publicly (7–12: lose 2; 13+: lose 4). Returns chips to the Reservoir.
 
-2. **Debrief reward:** ARBITER assesses the quality of the Debrief conversation — now that all Status markers show green, the conversation is complete — and selects a Tier A/B/C reward effect to apply before the Round Tracker advances. See Artifact 07 — ARBITER Toolkit for full reward options and effects.
+2. **Debrief reward:** ARBITER assesses the quality of the Debrief conversation and selects a Tier A/B/C reward effect to apply before the Round Tracker advances. See Artifact 07 — ARBITER Toolkit for full reward options and effects.
 
 3. **Operation Resolution cards collected:** Faction Players return their Operation Resolution cards to the ARBITER Player.
 
@@ -734,7 +760,7 @@ If the Round Tracker reaches 8 and no Apex has resolved, proceed to Session End 
 
 ---
 
-## 14. Special Conditions & Gameplay Impacts
+## 15. Special Conditions & Gameplay Impacts
 
 ### Apex Activation
 
@@ -783,7 +809,7 @@ Available during Debrief and between phases. Not available during Resolution Bea
 
 ---
 
-## 15. Examples & Exceptions
+## 16. Examples & Exceptions
 
 ### Initiative — Quarter 3
 

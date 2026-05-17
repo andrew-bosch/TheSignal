@@ -139,6 +139,43 @@ Resolution beats are the ordered procedure ARBITER follows when opening dispatch
 
 *[TBD — full resolution procedure requires Artifact 04 completion. Extrapolated sequence below.]*
 
+### The Resolution Grid
+
+The Resolution Grid is a physical staging tool used by the ARBITER Player to sort all dispatch case contents before Beat 2 processing begins. It ensures consistent resolution order and prevents card order from being disrupted by case handling.
+
+**Grid structure:**
+
+| | Lane 1 | Lane 2 | Lane 3 | Lane 4 | Lane 5 |
+|---|--------|--------|--------|--------|--------|
+| *(case receipt order →)* | first received | | | | last received |
+| Beat 2 cards | | | | | |
+| Beat 3 card 1 | | | | | |
+| Beat 3 target 1 | | | | | |
+| Beat 3 card 2 | | | | | |
+| Beat 3 target 2 | | | | | |
+| *(up to 4 pairs — Ghost)* | | | | | |
+
+*Beat 4 is not included. Political acts are declared publicly and resolve in initiative order.*
+
+**Populating the grid (opening action of Beat 2):**
+
+1. Open all dispatch cases.
+2. Place each Beat 2 card in the Beat 2 row of its lane.
+3. Place each Beat 3 card and its paired target slip into the next available Beat 3 row pair for that lane, in the order encountered when opening the case.
+
+*If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order. Faction Players cannot dictate Beat 3 operation sequence.*
+
+**Resolution order:**
+
+- **Beat 2:** process left to right across all lanes. All Beat 2 cards resolve before Beat 3 begins.
+- **Beat 3:** process row-first — all card-1 pairs resolve left to right across all lanes before any card-2 pair begins; then all card-2 pairs, continuing until all rows are cleared.
+
+*Row-first resolution establishes a round-robin initiative order by case receipt: the first submitter's first operation fires first, but all other factions' first operations follow before anyone's second operation begins. Submission speed rewards getting your first operation in — not locking in your full sequence before others can act. (L102)*
+
+*Physical design: Artifact 11. Component entry: PM01. See also XA-22.*
+
+---
+
 ### Beat 2 — The Ground Shifts
 
 Beat 2 is the condition-setting beat. ARBITER processes all Beat 2 cards before any Beat 3 operations resolve. Beat 2 scope includes all condition-setting cards: C06 (Broadcast Interference), C07 (Amplify), C10 (Protect), C11 (Fortify Structure), C21 (Invoke Jurisdiction), C25 (Sealed Border), C28 (Open Channel), C34 (Golden Parachute), and C35 (Regulatory Capture). Any card with Beat 2 in its Beat field is processed in this beat. Conditions set in Beat 2 apply for the remainder of Resolution.
@@ -146,15 +183,15 @@ Beat 2 is the condition-setting beat. ARBITER processes all Beat 2 cards before 
 *(07-02: Beat 2 canonical name confirmed "The Ground Shifts." Scope expanded to all condition-setting cards — C06, C07, C10, C11, C28, C34, C35 — not limited to countermeasures/protect cards only.)*
 
 ### 8.1 Standard Resolution Sequence
-For each dispatch case, in initiative order:
 
-1. **Open:** ARBITER opens the dispatch case.
-2. **Read:** ARBITER reads the submitted card privately.
-3. **Verify:** ARBITER confirms target district, resources submitted, and relevant board state.
-4. **Resolve:** ARBITER applies the effect per the card's effect text.
-5. **Announce:** ARBITER announces the operation to the table in The Record register.
-6. **Record:** ARBITER records the operation in the Chronicle.
-7. **Portrait:** ARBITER evaluates the Portrait field and moves the Portrait board privately.
+For each operation card drawn from the Resolution Grid in resolution order:
+
+1. **Read:** The ARBITER Player reads the card and target slip privately.
+2. **Verify:** The ARBITER Player confirms target district, resources submitted, and relevant board state.
+3. **Resolve:** The ARBITER Player applies the effect per the Operation System (Artifact 03 §13) and the card's effect text.
+4. **Announce:** ARBITER announces the outcome in The Record register.
+5. **Record:** The ARBITER Player records the operation in the Chronicle.
+6. **Portrait:** The ARBITER Player evaluates the Portrait field and moves the Portrait board privately.
 
 ### 8.2 Contested Operations
 *[TBD — when two factions play conflicting operations targeting the same district/target. Reference Artifact 04 conflict resolution rules.]*

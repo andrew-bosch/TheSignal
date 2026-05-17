@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-17 (session 15 in progress) — supersedes session 14 save state
+### Generated: 2026-05-17 (session 16 complete) — supersedes session 15 save state
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -47,7 +47,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
 | 02a — Resource Systems: Board State | 1.3 | 🔄 Pending Re-Sign-Off — 02a-03 applied session 14: §6 Component Names updated, ARBITER Dominance Marker row added, DOMINANT bullet rewritten (structural impossibility, not prohibition), §10 Chorus Node constitutive presence language. PM01 §2.08 Control flag quantity corrected. Material change → re-sign-off required. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
-| 03 — Round Structure & Gameplay | 1.5 | 🔄 Session 15 in progress — D03-R01 ✅, D03-R02 ✅, D03-R03 ✅ (L100). Phases 1–5 fully reviewed and updated. Phase 6 review in progress (paused mid-session). Sign-off pending Phase 6 completion. |
+| 03 — Round Structure & Gameplay | 1.6 | 🔄 Session 16 in progress — D03-R01 ✅, D03-R02 ✅, D03-R03 ✅ (L100). Phases 1–5 fully reviewed and updated. Phase 6 major restructure complete: Operation System extracted to §13 (L101), Resolution Grid integrated into Beat 2 (L102), Beat 1 fully rewritten (targeting restrictions / conversion blocks), Deployment Marker Blocking overview table added. Beat 3 Steps 4–14, Beat 4, Beat 5, §14 Special Conditions, §15 Examples still need review pass. Sign-off pending Phase 6 completion. |
 | 04 — Action Card System | 0.9.6 | 🔄 In Progress — paused until 00a signed off |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
@@ -172,12 +172,30 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM05:** 03-03 closed; 04-07 expanded with Type A/B content; 04-12 added; 01-03 updated (Countermeasure setup note); XA-16 updated; XA-20 added; timing note added to §3
 - **Artifact 04 C09:** Design note updated — Political Act card classification, subsequent-Quarter timing
 
-**Recommended next steps (session 16):**
-1. **Complete Artifact 03 Phase 6 review** — paused mid-review; §13 End of Quarter, §14 Special Conditions, §15 Examples still need review pass
+**Session 16 summary (2026-05-17):**
+- **L101 locked:** Automatic and Impossible removed as base difficulty values. Every committed action resolves with a d100 roll. Critical floor (01–05) and ceiling (96–00) are the only absolute limits. Automatic/Impossible may appear only as explicit card text. PM05 04-13 added (card audit).
+- **L102 locked:** Resolution Grid — Beat 3 resolves row-first in round-robin case receipt order. All card-1 pairs fire left to right before any card-2 pair begins. First submitter's first op fires first; all other factions' first ops follow before anyone's second op begins.
+- **The Operation System (§13):** Resolution system renamed from "2d10 System." Called d100 (not 2d10) — two d10 dice, tens/units digits, 01–100, flat uniform distribution. Digital fallback documented. Pulled from §12 into its own §13; §§ renumbered throughout (old §13→§14, §14→§15, §15→§16).
+- **Resolution Grid (XA-22):** Physical ARBITER staging tool — 5 lanes (columns) by case receipt order; rows are Beat 2 cards, then Beat 3 card/target pairs (up to 4 per lane). Beat 4 excluded. Integrated into Artifact 03 Beat 2 and Artifact 07 §8 (new "The Resolution Grid" subsection). PM01/PM05 entries added.
+- **Deployment Marker Blocking overview table** added before Resolution — Five Beats. Four-beat breakdown of who flips what and when. Each beat now handles only its own flip action.
+- **Beat 1 fully rewritten:** Two distinct sub-sections — Targeting Restrictions (announce + mark with XA-21) and Conversion Blocks (identify + flip markers). XA-21 added to PM05 (ARBITER visual indicator for targeting restrictions, component TBD).
+- **Beat 2 updated:** Case-opening / grid population step added as opening action. Type A Countermeasure: Step 4 added (flip affected deployment markers).
+- **Beat 3 opening updated:** Round-robin row-first resolution order stated explicitly. Step 2 updated to reference Beat 1 targeting restriction announcement. Steps 3/6 updated to reference Operation System (§13) and "d100."
+- **Beat 4 Steps 2/4 updated:** Operation System (§13) reference; "Roll d100."
+- **Phase 3 Step 4 updated:** Two-bullet format established; second bullet specifies ARBITER places cases left to right in receive queue establishing lane order for the Resolution Grid.
+- **PM02:** L101 and L102 added to locked decision log.
+- **PM05:** 04-13 added (card audit L101); XA-21 added (targeting restriction indicator); XA-22 added (Resolution Grid component).
+- **Whiteboard created:** `~/Projects/Whiteboard/` — working space for temporary design documents outside the project. `andytemp/` folder deleted after content migrated to Artifact 07.
+- **Phase 6 review paused:** Beat 3 Steps 4–14, Beat 4, Beat 5, §14 Special Conditions, §15 Examples not yet reviewed this session.
+
+**Recommended next steps (session 17):**
+1. **Complete Artifact 03 Phase 6 review** — Beat 3 Steps 4–14; Beat 4 full review; Beat 5; §14 Special Conditions; §15 Examples
 2. **Artifact 03 sign-off** — after Phase 6 review complete (03-04: version update in PM01, PM03 status)
-3. **Artifact 02a re-sign-off** — v1.3 material change
-4. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes including Chorus Papers cascade), 07 (four-register system), 04b (Chorus Portrait retired)
-5. **D-FT-01** — faction hidden truths when ready
+3. **Artifact 07 re-sign-off** — Resolution Grid added (material change, §8 new subsection)
+4. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
+5. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
+6. **XA-20** — "the ARBITER Player" / "the Faction Player" capitalization scan across remaining artifacts
+7. **04-13** — Audit all cards for Automatic/Impossible base difficulty values (L101)
 
 **Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
@@ -196,6 +214,8 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - L98: "Threshold" is canonical noun for roll target; "Base Difficulty Threshold" is canonical table header (session 13)
 - L99: Verb-first convention for procedural action headers (session 13)
 - L100: Free Accord card from C09 classified as Political Act card — cost 0, return to ARBITER on play, delivered to hand at case resolution, played in subsequent Quarter. No Phase 4 exception needed. Full design: PM05 04-12. (session 15)
+- L101: Automatic and Impossible removed as base difficulty values. Every committed action resolves with a d100 roll. Critical floor (01–05) and ceiling (96–00) are the only absolute limits. Automatic/Impossible may appear only as explicit card text. Resolution system renamed The Operation System (§13 Artifact 03). (session 16)
+- L102: Resolution Grid — Beat 3 resolves row-first in round-robin case receipt order. All card-1 pairs fire left to right before any card-2 pair begins. First submitter's first op fires first; all other factions' first ops follow before anyone's second begins. Beat 4 excluded. Full grid design: Artifact 07. (session 16)
 - Floor Act: working name for always-available political act (1 native resource, outside deck) — D04-13
 
 **Overnight punch list work (session 10 agents) — COMPLETED:**
