@@ -521,7 +521,7 @@ The ARBITER Player rolls 2d10, or nominates a Faction Player to roll and call th
 
 If this covert operation's outcome blocks the acting faction's deployment marker conversion in the target district, The ARBITER Player flips the relevant marker to the Blocked face.
 
-**Step 9 — Board changes for successes.**
+**Step 9 — Apply board changes for successes.**
 
 If the operation succeeded:
 
@@ -641,11 +641,11 @@ The acting Faction Player compares roll to modified threshold. Critical Success 
 
 If this political act's outcome blocks a deployment marker's conversion, the acting Faction Player flips the relevant marker to the Blocked face.
 
-**Step 7 — Board changes.**
+**Step 7 — Apply board changes.**
 
 The acting Faction Player makes all board changes: presence chips, structure blocks, Control flags, Tension markers.
 
-**Step 8 — Public Standing update.**
+**Step 8 — Update Public Standing.**
 
 The acting Faction Player moves their own Public Standing marker. Other affected Faction Players move their own markers.
 
@@ -760,7 +760,7 @@ An Apex operation may be submitted as a covert operation (resolved in Beat 3) or
 
 *In either case, identifying it is the first check when that operation or act is processed.*
 
-**Step 1 — ARBITER or acting Faction Player identifies the Apex.**
+**Step 1 — Identify the Apex.**
 
 - In Beat 3: The ARBITER Player identifies the Apex operation card when opening the dispatch case.
 - In Beat 4: The acting Faction Player reveals their Apex political act card.
@@ -769,25 +769,25 @@ Either way, resolution is immediately interrupted.
 
 ARBITER announces: *"An Apex operation has been submitted. Resolution is suspended."*
 
-**Step 2 — ARBITER confirms resources paid.**
+**Step 2 — Confirm resources paid.**
 
 The ARBITER Player counts the resources in the dispatch case (covert) or paid to the Reservoir (public). All five resource types must be present in the required amounts (Artifact 05).
 
 If insufficient: Apex fails immediately. Resources spent. Resolution resumes from where it was interrupted.
 
-**Step 3 — Emergency Responses.**
+**Step 3 — Process Emergency Responses.**
 
 The ARBITER Player returns all other factions' unresolved dispatch cases unopened. Resources are refunded. Each non-Apex faction submits one Emergency Response. Emergency Responses are submitted simultaneously and resolved by ARBITER in initiative order. They may change board state — presence chips, structure blocks, Public Standing — before the threshold is checked.
 
 *Emergency Response is a single faction-specific action representing each faction's final attempt to influence the outcome before the session potentially ends. Definitions and narrative framing are in Artifact 04 — Action Card System and Artifact 05 — Operative & Apex System.*
 
-**Step 4 — Board Strength threshold check.**
+**Step 4 — Check Board Strength threshold.**
 
 After Emergency Responses resolve, The ARBITER Player counts the Apex faction's total presence chips and structure blocks (Board Strength). If the total no longer meets the threshold specified in Artifact 05, the Apex is cancelled. Resources spent. Operative does not retire. Resolution resumes from where it was interrupted.
 
 *The threshold may have shifted due to Emergency Response effects — this check happens after all Emergency Responses resolve.*
 
-**Step 5 — All conditions met: Apex resolves.**
+**Step 5 — Resolve Apex.**
 
 The ARBITER Player opens the sealed Apex envelope and pauses 5 seconds. ARBITER reads the Apex narrative card aloud. The ARBITER Player applies all public board effects and updates the Chorus Portrait track. The session ends. Proceed to Session End per Artifact 10a — Victory System.
 
