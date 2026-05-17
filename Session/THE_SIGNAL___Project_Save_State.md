@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-17 (end of session 14) — supersedes session 13 save state
+### Generated: 2026-05-17 (session 15 in progress) — supersedes session 14 save state
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -47,7 +47,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
 | 02a — Resource Systems: Board State | 1.3 | 🔄 Pending Re-Sign-Off — 02a-03 applied session 14: §6 Component Names updated, ARBITER Dominance Marker row added, DOMINANT bullet rewritten (structural impossibility, not prohibition), §10 Chorus Node constitutive presence language. PM01 §2.08 Control flag quantity corrected. Material change → re-sign-off required. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
-| 03 — Round Structure & Gameplay | 1.5 | 🔄 Full scan complete session 14 — D03-R01 ✅, D03-R02 ✅, D03-R03 pending Andy review; Phase 4-end scanned and verified; L99 verb-first headers applied throughout; XA-19 fix applied. Ready for sign-off after D03-R03. |
+| 03 — Round Structure & Gameplay | 1.5 | 🔄 Session 15 in progress — D03-R01 ✅, D03-R02 ✅, D03-R03 ✅ (L100). Phases 1–5 fully reviewed and updated. Phase 6 review in progress (paused mid-session). Sign-off pending Phase 6 completion. |
 | 04 — Action Card System | 0.9.6 | 🔄 In Progress — paused until 00a signed off |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
@@ -158,14 +158,28 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Artifact 03 Phase 4–end scan complete:** L99 verb-first headers applied (Beat 3 Steps 9, Beat 4 Steps 7/8, Apex Steps 1–5). XA-19 fix applied line 66. Current Phase 4 Declaration text for D03-R03 confirmed in place. All remaining phases verified clean.
 - **10-02 complete:** §7.6 Translation rate table updated — ARBITER Script column added; Contested rate script written in The Record register; None row updated to 4:1 (L93); design note added; TBD note removed.
 
-**Recommended next steps (session 15):**
-1. **D03-R03 sign-off** — Andy reviews Phase 4 Declaration free Accord card text (already written). Approval unblocks Artifact 03 full sign-off.
-2. **Artifact 03 sign-off** — after D03-R03 review.
-3. **Artifact 02a re-sign-off** — v1.3 material change.
-4. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes including Chorus Papers cascade), 07 (four-register system), 04b (Chorus Portrait retired).
-5. **D-FT-01** — faction hidden truths when ready.
+**Session 15 summary (2026-05-17 — in progress, interrupted mid-Phase 6 review):**
+- **D03-R03 resolved (L100):** Free Accord card from C09 Fund classified as Political Act card (cost 0, return to ARBITER on play). Delivered to faction's hand at case resolution. Played in a subsequent Quarter — card returns in dispatch case after Resolution, Declaration already closed. Phase 4 carries no exception. Full card design flagged as PM05 04-12.
+- **Artifact 03 Phases 1–5 fully reviewed and updated:**
+  - Phase 4: exception note removed; Ghost pass callout removed
+  - Phase 5: fully restructured — Pass/Deploy initiative-order structure; Countermeasure cards added to Step 6 tableau check; card types/rules migrated to PM05 04-07 for card design pass; ARBITER announcement updated
+  - XA-16 complete for Artifact 03: "round" → "Quarter" throughout (~30 replacements); Round Tracker preserved
+  - XA-20 added to PM05: "the ARBITER Player" / "the Faction Player" capitalization scan — "the" lowercase mid-sentence, capitalize at sentence/bullet/post-colon starts only. Applied in Artifact 03.
+  - L98 applied in Artifact 03: "roll threshold" → "target threshold"
+  - Beat headers reformatted: "BEAT N — Name *(timing)*" → "Beat N: description"; timing estimates removed from artifact, preserved in PM05 §3
+- **Phase 6 in progress:** Bullet overview added; Beat headers reformatted; "World Condition" consolidated to "Situation Report effect"; Beat 3 Step 9 clarified; Type B modifier table label fixed; "this Quarter" fixed. **Review paused at Phase 6 — not yet signed off.**
+- **PM02:** L100 locked; D03-R03 marked resolved
+- **PM05:** 03-03 closed; 04-07 expanded with Type A/B content; 04-12 added; 01-03 updated (Countermeasure setup note); XA-16 updated; XA-20 added; timing note added to §3
+- **Artifact 04 C09:** Design note updated — Political Act card classification, subsequent-Quarter timing
 
-**Sessions 5–13 locked decisions (L85–L99):**
+**Recommended next steps (session 16):**
+1. **Complete Artifact 03 Phase 6 review** — paused mid-review; §13 End of Quarter, §14 Special Conditions, §15 Examples still need review pass
+2. **Artifact 03 sign-off** — after Phase 6 review complete (03-04: version update in PM01, PM03 status)
+3. **Artifact 02a re-sign-off** — v1.3 material change
+4. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes including Chorus Papers cascade), 07 (four-register system), 04b (Chorus Portrait retired)
+5. **D-FT-01** — faction hidden truths when ready
+
+**Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
 - L86: Terminology Sequencing (PM03 §1)
 - L87: Fourth ARBITER register — The Witness (expository, chronological)
@@ -181,6 +195,7 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - L97: Difficulty is a card property — influence-level table removed from Artifact 03 §12 (session 13)
 - L98: "Threshold" is canonical noun for roll target; "Base Difficulty Threshold" is canonical table header (session 13)
 - L99: Verb-first convention for procedural action headers (session 13)
+- L100: Free Accord card from C09 classified as Political Act card — cost 0, return to ARBITER on play, delivered to hand at case resolution, played in subsequent Quarter. No Phase 4 exception needed. Full design: PM05 04-12. (session 15)
 - Floor Act: working name for always-available political act (1 native resource, outside deck) — D04-13
 
 **Overnight punch list work (session 10 agents) — COMPLETED:**

@@ -465,7 +465,7 @@ All factions have access to all ten standard covert operations. Each faction's s
   - Syndicate: *Capital in motion creates relationships. Relationships create opportunities.*
 - **Taxonomy:** Resource — Redirect — Native resource.
 
-> **Design note:** No ring modifier — targets a faction not a district. Transfer handled covertly at case return — resources appear in recipient's case at debrief. Source anonymous by default. Acting faction may announce after receiving free Accord card from ARBITER. Recipient may convert received Capital to native resource at 1:1. Free Accord card is a triggered option — not from the political deck, ARBITER-delivered (Artifact 03 Declaration phase note applies). "Any other faction" is standard target value when self-targeting is not permitted.
+> **Design note:** No ring modifier — targets a faction not a district. Transfer handled covertly at case return — resources appear in recipient's case at debrief. Source anonymous by default. Acting faction may announce after receiving free Accord card from ARBITER. Recipient may convert received Capital to native resource at 1:1. Free Accord card is a Political Act card (cost 0; return to ARBITER on play — not discarded) delivered to acting faction's hand at case resolution. Played in a subsequent Quarter — card returns in the dispatch case after Resolution, by which point Declaration for the current Quarter has already closed. Full card design: 04-12. "Any other faction" is standard target value when self-targeting is not permitted.
 
 ---
 
