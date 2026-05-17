@@ -22,7 +22,7 @@ Before any technology is developed — before hardware terminals, computer visio
 **Is the core game good?**
 
 Specifically:
-- Does the core loop (covert operations + political acts + contested territory) produce interesting decisions every round?
+- Does the core loop (covert operations + political acts + contested territory) produce interesting decisions every quarter?
 - Do the five factions feel meaningfully different in play?
 - Does ARBITER's role feel rewarding rather than administrative?
 - Does the session end with players wanting to play again?
@@ -112,7 +112,7 @@ A self-contained tabletop game kit that can be:
 | S4 | Players want to play Session 2 before leaving | Post-session question |
 | S5 | At least one Accord is proposed per session | Count |
 | S6 | The Chronicle resonates at session end | Player agreement with ARBITER's account |
-| S7 | No single faction dominates economically by Round 4 | Resource counts at Round 4 end |
+| S7 | No single faction dominates economically by Quarter 4 | Resource counts at Round 4 end |
 
 ---
 
@@ -167,7 +167,7 @@ Production does not begin until relevant design artifacts are signed off. Items 
 | 2.05 | Resource chips | Asset tokens | 30 per type × 5 | Poker chips | 02a | ⬜ | $20–35 |
 | 2.06 | Faction chits + sticky notes | Intel notes | 4 per faction × 5 | Colored chits | 02b | ⬜ | $3–7 |
 | 2.07 | Neutral chips | Tension markers | 6 | Neutral chips | 02a | ⬜ | $1–3 |
-| 2.08 | Crown or star tokens | Control flags | 5 (1 per faction) + 1 permanent ARBITER flag for Chorus Node | See D-P-01 | 02a | ⬜ | $3–7 |
+| 2.08 | Crown or star tokens | Control flags | 5 (1 per faction) | See D-P-01 | 02a | ⬜ | $3–7 |
 | 2.08a | Fused single piece — ARBITER color | ARBITER Dominance Marker | 1 | Eight ARBITER-keyed presence tokens (white, TBD) stacked and fused, topped by ARBITER's dominance marker — same visual language as faction control flags but distinct: larger, differently keyed, or subtly off in a way that reads as *more*. All one inseparable piece. Placed at Chorus Node by ARBITER at setup. Never removed. | 00a R04, 01, 11, D-P-02 | ⬜ | $3–8 |
 | 2.09 | Ten-sided dice | — | 2 × d10 | Purchase | 03 | ⬜ | $2–5 |
 | 2.10 | Covert operation cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $8–20 |
@@ -231,6 +231,7 @@ Root: `~/Projects/TheSignal/`
 |---------------|---------|
 | `V1/` | Active design layer — L1 Paper Prototype. All artifact editing happens here. "V1" is the layer designation (Layer 1 = physical layer); does not need renaming as the project evolves. |
 | `Session/` | Session management files — save state and private design axioms. Not part of the artifact set; not referenced by any artifact. |
+| `Creative/` | World-building creative content — characters, vignettes, stories, and quotes generated as potential source material for Artifact 00 and flavor copy. See `Creative/README.md` for submission index and evaluation status. Brief for writers/AI agents: `Creative/CREATIVE_BRIEF.md`. |
 | `Retired/` | Read-only archive of superseded design generations. `Retired/Electronic/` — original electronic brainstorming suite (pre-code, old faction names). `Retired/Paper/` — 1st generation paper prototype artifacts. See PM03 §6 for file-level index. |
 | `README.md` | Project overview and folder navigation guide for new sessions or collaborators. |
 | `.gitignore` | Excludes zip archives, credentials files (`*.env`), and system files from version control. |
@@ -321,9 +322,9 @@ Binary go/no-go. Before any playtest session is scheduled, every item in the rel
 
 | ID | Risk | Likelihood | Impact | Mitigation |
 |----|------|-----------|--------|------------|
-| R01 | Core loop is not engaging — factions lack interesting decisions each round | Medium | Critical | Early S1 test with experienced game players; post-session question on decision quality. Design fallback: expand Floor Act and Accord system if board play feels thin. |
+| R01 | Core loop is not engaging — factions lack interesting decisions each quarter | Medium | Critical | Early S1 test with experienced game players; post-session question on decision quality. Design fallback: expand Floor Act and Accord system if board play feels thin. |
 | R02 | ARBITER cognitive load too high — The ARBITER player cannot run Resolution + Chronicle + Portrait + notifications simultaneously at full table | Medium | High | Run ARBITER dry-session before S1. Simplify S1 by deferring Chronicle; focus on Resolution. ARBITER script pack (Artifact 07) reduces improvisation load. |
-| R03 | Ghost asymmetry unbalancing — Ghost's 4-operation rule produces outsized covert output | Medium | Medium | Track V02 in S1. Playtest variable PT-04-03. Design fallback: reduce Ghost to 3 operations if 4 proves dominant by Round 5. |
+| R03 | Ghost asymmetry unbalancing — Ghost's 4-operation rule produces outsized covert output | Medium | Medium | Track V02 in S1. Playtest variable PT-04-03. Design fallback: reduce Ghost to 3 operations if 4 proves dominant by Quarter 5. |
 | R04 | Physical production cost exceeds budget | Low | Medium | See WBS 2 cost estimates (§7 above) — total ~$100–230. Early sourcing of poker chips and print services gives accurate cost before committing. |
 | R05 | Incomplete card set blocks S1 — political acts or faction-specific cards not ready | High (current) | High | S1 may proceed with Common card set only (C01–C15) and simplified political acts (P01–P10). Accepted S1 scope reduction — note in session records. |
 | R06 | Player count limitation — unable to assemble 5 faction players + ARBITER for first session | Medium | Low | Recommended S1 configuration is 3 faction players + ARBITER (PM01 §2). 3-player configuration is validated by design. |
