@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.94  
+**Version:** 0.95  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -157,7 +157,8 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
-| `Grid.*` | All empty — Grid instantiated at Beat 0 | Beat 0 |
+| `Grid.*` (ARBITER Resolution Area) | All empty — built at Beat 0 | Beat 0 |
+| `Grid.Political[F-xx].*` | All empty — populated at Phase 4 Declaration | Phase 4 |
 
 ---
 
@@ -302,9 +303,17 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 ---
 
-#### Resolution Grid Domain — VS-04 during Resolution
+#### Resolution Grid Domain
 
-*The Resolution Grid exists only during Beats 0–4. Built at Beat 0; cleared at Beat 5 when dispatch cases are returned.*
+*The Resolution Grid spans two physical zones, together forming the full resolution workspace for each Quarter.*
+
+*— **ARBITER Resolution Area**: ARBITER's physical workspace — built at Beat 0 from submitted dispatch cases, active through Beats 1–4, cleared at Beat 5. All variables in this area are VS-04.*
+
+*— **Political Act Declaration Area**: each faction's tableau zone — populated at Phase 4 Declaration, resolved in Beat 4, cleared at Beat 5. Declared acts are VS-01 (public) from the moment of Declaration.*
+
+*`Grid.ResolvedCells` spans both areas — it accumulates RO-xx outcomes for covert operations (Beat 3) and political acts (Beat 4).*
+
+**ARBITER Resolution Area** — VS-04
 
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
@@ -317,7 +326,14 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 *GridCell = {Lane: F-xx, Row: Beat2 \| Beat3[position], Card: C-xx \| CC-xx \| Pass, Face: Up \| Down, Target: D-xx \| RG-xx \| F-xx \| N/A}*
 
-*Political acts (P-xx) are not placed in the Resolution Grid — they remain on faction tableaux after Phase 4 Declaration and are resolved in Beat 4 by the acting Faction Player. The Grid contains covert operations and countermeasure cards only.*
+**Political Act Declaration Area** — VS-01 after Phase 4 Declaration
+
+| Variable | Type | Visibility | Mutates At |
+|----------|------|-----------|------------|
+| `Grid.Political[F-xx].DeclaredCard` | P-xx \| Pass \| None | VS-01 | Phase 4 Declaration (faction places face-up on tableau); Beat 4 Resolution (cleared) |
+| `Grid.Political[F-xx].ModifierCards` | List of MC-xx | VS-01 | Phase 4 Declaration (played alongside declared act); Beat 4 Resolution (removed from game) |
+| `Grid.Political[F-xx].ResourceStake[RT-xx]` | Integer ≥ 0 per resource type | VS-01 | Phase 4 Declaration (tokens moved from Faction.Resources, stacked on card — committed, not yet in Reservoir); Beat 4 Submit Payment (drained to Reservoir; partial marker attached if underpayment) |
+| `Grid.Political[F-xx].PartialPaymentMarker` | M-07 \| None | VS-01 | Beat 4 Submit Payment (M-07 attached if ResourceStake < card cost); Beat 4 Resolution (cleared) |
 
 ---
 
@@ -392,13 +408,13 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 #### Phase 4 — Declaration Complete
 
 **Outputs:**
-- Each faction's declared political act (P-xx) or Pass card is face-up on their tableau
-- Resource tokens for each declared act are stacked on the card — not yet transferred to Reservoir
-- Modifier cards played alongside declared acts are face-up
+- `Grid.Political[F-xx].DeclaredCard` = P-xx or Pass — face-up on faction tableau
+- `Grid.Political[F-xx].ResourceStake[RT-xx]` = resource tokens moved from `Faction.Resources` and stacked on card — committed, not yet in Reservoir
+- `Grid.Political[F-xx].ModifierCards` = modifier cards played alongside declared act — face-up
 
 **Invariants:**
 - Declared political acts are fully public — card identity, target, and modifier count visible to all
-- Resource tokens are with the declaring faction; payment transferred in Beat 4 Submit Payment only
+- `Grid.Political[F-xx].ResourceStake` is set; payment transferred to Reservoir in Beat 4 Submit Payment only
 - Declared acts cannot be withdrawn or modified
 
 ---
@@ -858,20 +874,21 @@ Beat_4() → Resolved political acts
 
 PRECONDITIONS:
   Beat_3 complete — all covert operations resolved
-  Each faction's declared political act (or Pass) is face-up on their tableau
-  Resource tokens for each declared act are stacked on the card — not yet in Reservoir
+  Grid.Political[F-xx].DeclaredCard set for all factions — face-up on faction tableau
+  Grid.Political[F-xx].ResourceStake[RT-xx] set — stacked on card, not yet in Reservoir
 
 // Submit Payment phase — initiative order
-FOR EACH faction f ∈ Faction.All WITH declared political act (in Quarter.InitiativeOrder):
-  act ← Faction.DeclaredAct[f]
-  actual_payment ← resource tokens on act card
-  card_cost ← base cost on card
-  Faction Player transfers resource tokens → Reservoir
+FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Quarter.InitiativeOrder):
+  act ← Grid.Political[f].DeclaredCard
+  actual_payment ← Grid.Political[f].ResourceStake  // total across all RT-xx
+  card_cost ← act.BaseThreshold
+  DRAIN Grid.Political[f].ResourceStake → Reservoir  // physical token transfer
   IF actual_payment = 0:
     ARBITER announces act invalid
     act.Face ← Down  // Auto-fail when reached in resolution phase
   ELSE IF actual_payment < card_cost:
-    ARBITER attaches M-07 marker to act card and announces additional difficulty
+    Grid.Political[f].PartialPaymentMarker ← M-07
+    ARBITER announces additional difficulty
     // M-07 (−50 threshold) applied in modifier stack below
 
 DESIGN FINDING [DF-02]:
@@ -883,8 +900,8 @@ DESIGN FINDING [DF-02]:
   physical token design should clarify this to prevent table play confusion.
 
 // Resolution phase — initiative order
-FOR EACH faction f ∈ Faction.All WITH declared political act (in Quarter.InitiativeOrder):
-  act ← Faction.DeclaredAct[f]
+FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Quarter.InitiativeOrder):
+  act ← Grid.Political[f].DeclaredCard
 
   // Step 1 — Identify; Apex check
   IF act.IsApex:
@@ -904,14 +921,14 @@ FOR EACH faction f ∈ Faction.All WITH declared political act (in Quarter.Initi
   // Steps 3-4 — Modifier stack; Faction Player calculates and declares aloud
   threshold ←  base_threshold
              + M_standing(f)
-             + (M-07.value  IF M-07 attached to act                 ELSE 0)  // −50 partial pmt
+             + (M-07.value  IF Grid.Political[f].PartialPaymentMarker = M-07   ELSE 0)  // −50 partial pmt
              + (M-10.value  IF Situation Report effect targets act   ELSE 0)  // Variable; Event
              + (M-12.value  IF act.Target.Ring = RG-02                        // −25 Infrastructure
                                AND NOT ∃ d ∈ D-xx: d.Ring = RG-03
                                                     AND d.AdjacentTo(act.Target)
                                                     AND Board.InfluenceLevel[d][f] ∈ {IL-01, IL-02}
                                ELSE 0)
-             + Σ(card.ModifierValue FOR EACH modifier_card IN act.ModifierCards)  // M-08; Variable
+             + Σ(card.ModifierValue FOR EACH modifier_card IN Grid.Political[f].ModifierCards)  // M-08; Variable
 
   // Note: M-06, M-09, M-11 do not apply to political acts
   Faction Player announces final threshold aloud
@@ -943,7 +960,11 @@ FOR EACH faction f ∈ Faction.All WITH declared political act (in Quarter.Initi
 
   // Step 9 — Clean up
   Card.Political.Hand[f] ← per card text (return to hand or discard)
-  DISCARD modifier cards — removed from game
+  DISCARD Grid.Political[f].ModifierCards — removed from game
+  Grid.Political[f].DeclaredCard ← None
+  Grid.Political[f].ModifierCards ← []
+  Grid.Political[f].PartialPaymentMarker ← None
+  // Grid.Political[f].ResourceStake already 0 — drained at Submit Payment
 
   // Step 10 — Portrait (private)
   ARBITER privately updates Faction.ChorusPortrait[f]
@@ -951,7 +972,10 @@ FOR EACH faction f ∈ Faction.All WITH declared political act (in Quarter.Initi
 END FOR
 
 STATE MUTATIONS:
-  Faction.Resources[F-xx][RT-xx] ← reduced (Submit Payment drain)
+  Grid.Political[F-xx].ResourceStake ← 0 (drained to Reservoir at Submit Payment)
+  Grid.Political[F-xx].PartialPaymentMarker ← M-07 where applicable; cleared after resolution
+  Grid.Political[F-xx].DeclaredCard ← None (cleared per resolution)
+  Grid.Political[F-xx].ModifierCards ← [] (cleared; removed from game)
   Grid.ResolvedCells ← RO-01, RO-02, RO-05 per act
   Board.PresenceChips ← success outcomes
   Board.StructureBlocks ← success outcomes
@@ -987,13 +1011,17 @@ FOR EACH faction f ∈ Faction.All:
 ARBITER records Quarter-level observations (patterns, notable moments)
 // Informs Debrief ARBITER statement — Art 07; Chronicle — Art 10
 
-// Step 3 — Clear Resolution Grid
+// Step 3 — Clear Resolution Grid (both areas)
 Grid.Lane[F-xx].Beat2Slot    ← None  FOR ALL f
 Grid.Lane[F-xx].Beat3Queue   ← []    FOR ALL f
 Grid.ActiveModifierTokens    ← {}    (empty map)
 Grid.ProtectModifiers        ← {}    (empty map)
 Grid.ResolvedCells           ← []    (empty list)
 Grid.ResolutionQueue         ← []    (empty list)
+Grid.Political[F-xx].DeclaredCard          ← None  FOR ALL f  // should already be None from Beat_4
+Grid.Political[F-xx].ModifierCards         ← []    FOR ALL f
+Grid.Political[F-xx].ResourceStake[RT-xx]  ← 0     FOR ALL f  // should already be 0 from Submit Payment
+Grid.Political[F-xx].PartialPaymentMarker  ← None  FOR ALL f
 
 OUTPUT:
   Faction Players hold dispatch cases — each faction's outcomes privately visible
@@ -1076,4 +1104,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.94*
+*End of Art 03a — Game Engine Specification v0.95*
