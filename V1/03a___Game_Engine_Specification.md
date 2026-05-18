@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.6  
+**Version:** 0.7  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -112,6 +112,16 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 *Deck pool sizes (30 covert / select 24; 20 political / select 12) are working baselines pending validation — Art 04 A-04-01.*
 
+#### ARBITER and System Domains at Setup
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
+| `ARBITER.ModifierToken[M-xx]` | Provisioned by denomination — full set per Art 07 | Session setup; Art 07 |
+| `ARBITER.Resources[RT-06]` | TBD — Art 07 | Art 07 |
+| `Reservoir[RT-xx]` | 0 per resource type — empty at session start | Setup |
+
+*Reservoir begins empty. Resources enter the Reservoir only through faction payments during Resolution (Beat 0 drain, Beat 4 Submit Payment). ARBITER.Resources[RT-06] is ARBITER's own operational resource — separate from the Reservoir.*
+
 #### Quarter, Event, and Grid Domains at Setup
 
 | Variable | Starting Value | Source |
@@ -183,11 +193,15 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 *Naming convention: `Card.Type.State[F-xx]` — Type identifies the card class; State is `Deck` (the draw pile), `Hand` (cards drawn to hand), or `Zone` (standing tableau area for non-deck cards).*
 
+**Card.Faction attribute:** Every card entity (C-xx, P-xx) carries a `Faction` field (Art 04 §4): `All` (Common — standard cards available to every faction) or `F-xx` (Faction-Specific — exclusive to the owning faction). `Card.Covert.Deck[F-xx]` and `Card.Political.Deck[F-xx]` are built from the faction's session pool, pre-filtered to: `Card.Faction = All` (eligible for any faction) UNION `Card.Faction = F-xx` (eligible for this faction only). This constraint governs deck construction at session setup.
+
+*ARBITER (F-06) has a distinct card set and modifier token provisioning. Variables stubbed below; full definition Art 07.*
+
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
-| `Card.Covert.Deck[F-xx]` | Ordered list of C-xx | VS-02 | Session setup (deck construction); Upkeep Step 6 (top cards drawn; discard shuffled in when exhausted) |
+| `Card.Covert.Deck[F-xx]` | Ordered list of C-xx where C-xx.Faction ∈ {All, F-xx} | VS-02 | Session setup (deck construction); Upkeep Step 6 (top cards drawn; discard shuffled in when exhausted) |
 | `Card.Covert.Hand[F-xx]` | List of C-xx | VS-02 | Upkeep Step 6 (draw to 6); Beat 3 Step 10 (returned or discarded per card text) |
-| `Card.Political.Deck[F-xx]` | Ordered list of P-xx | VS-02 | Session setup (deck construction); Upkeep Step 6 (top cards drawn; discard shuffled in when exhausted) |
+| `Card.Political.Deck[F-xx]` | Ordered list of P-xx where P-xx.Faction ∈ {All, F-xx} | VS-02 | Session setup (deck construction); Upkeep Step 6 (top cards drawn; discard shuffled in when exhausted) |
 | `Card.Political.Hand[F-xx]` | List of P-xx | VS-02 | Upkeep Step 6 (draw to 3); Beat 4 Step 9 (returned or discarded per card text) |
 | `Card.Modifier.Deck[F-xx]` | Ordered list of MC-xx (faction deck + applicable ring decks) | VS-02 | Session setup (shuffled, placed); Upkeep Step 6 (top cards drawn); Burst Play trigger (deck removed from game) |
 | `Card.Modifier.Hand[F-xx]` | List of MC-xx | VS-02 | Upkeep Step 6 (drawn by structure count + ring qualification); Beat 3/4 (discarded on use); Burst Play (all traded to Reservoir) |
@@ -195,6 +209,32 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Card.Pass.Hand[F-xx]` | Fixed list of 4 Pass | VS-01 (count); VS-02 (usage intent) | Immutable — reusable every Quarter; never discarded |
 | `Card.Floor.Hand[F-xx]` | Fixed 1 Floor Act | VS-01 (count); VS-02 (usage intent) | Immutable — always beside tableau; full design Art 04 D04-13 |
 | `Card.Operative.Zone[F-xx]` | List of operative cards in operator zone | VS-02 | Session setup (operative set selected); Phase 2 (deployed — card moves to board zone); TBD — Art 05 |
+| `Card.ARBITER.*` | TBD — resolution materials, Apex envelopes, Chronicle cards, Emergency Response set | VS-04 | TBD — Art 07 |
+
+---
+
+#### ARBITER Domain
+
+*ARBITER (F-06) holds materials that are not part of the faction card system. Modifier tokens are physical pieces in multiple denominations managed by ARBITER during Resolution. Full denomination set and physical design: Art 07.*
+
+| Variable | Type | Visibility | Mutates At |
+|----------|------|-----------|------------|
+| `ARBITER.ModifierToken[M-xx]` | Integer ≥ 0 (quantity per denomination) | VS-04 | Session setup (provisioned by denomination); Beat 2 (M-11 placed on grid cell); Beat 3/4 (tokens placed and returned to pool per resolution step) |
+| `ARBITER.Resources[RT-06]` | Integer ≥ 0 (Resolution resource — RT-06) | VS-04 | TBD — Art 07 (Translation mechanic, income source) |
+
+*`ARBITER.Resources[RT-06]` is ARBITER's operational resource (Resolution, generated at Chorus Node). It is distinct from the Reservoir — see System Domain below.*
+
+---
+
+#### System Domain
+
+*System-level state not owned by any faction. The Reservoir is the shared pool of spent faction resources, maintained on the board. It is a separate entity from ARBITER's resources.*
+
+| Variable | Type | Visibility | Mutates At |
+|----------|------|-----------|------------|
+| `Reservoir[RT-xx]` | Integer ≥ 0 per resource type | VS-01 | Beat 0 (payment drain from dispatch cases); Beat 4 Submit Payment (political act payment drain); Debrief (Burst Play trade-in; Translation payouts) |
+
+*Design decision: Reservoir = System entity (not F-06). ARBITER already has RT-06 (Resolution) as their own resource type, earned operationally. The Reservoir is the collective pool of all spent faction resources — a board-level sink owned by no faction. Conflating it with F-06 would mix ARBITER's operational budget with the city's spent-resource pool. If L2 architecture treats all resource pools under a unified `Resources[Owner][RT-xx]` model, Reservoir maps to `Owner = System.Reservoir`, not `Owner = F-06`.*
 
 ---
 
@@ -972,4 +1012,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.6*
+*End of Art 03a — Game Engine Specification v0.7*
