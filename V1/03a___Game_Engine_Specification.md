@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.5  
+**Version:** 0.6  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -93,7 +93,26 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 
 ⚠ **Starting resources — open question:** Art 01 §7 "Starting Round 1 Income" projects income from Q1 Upkeep Step 5, calculated from setup chip placement. It is unclear whether factions begin the game with resources in hand (a setup grant before Q1 Upkeep), or at zero (receiving their first income during Q1 Upkeep Step 5 only). If the income table reflects only the Upkeep yield, starting value = 0. If it includes a pre-Upkeep starting grant, the income table values are the combined total. Requires resolution in Art 00 §7 or Art 02b.
 
-#### Quarter, Event, Card, and Grid Domains at Setup
+#### Card Domain at Setup
+
+All card types follow the same structural model: `Card.Type.Deck` is the active draw deck (selected at session setup); `Card.Type.Hand` is cards currently drawn to hand; `Card.Type.Zone` is a standing tableau area for non-deck cards. Source: Art 04 §3, §11, §12; Art 05.
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
+| `Card.Covert.Deck[F-xx]` | 24 cards — selected from session pool (~30 available); shuffled and placed face-down on tableau | Session setup; Art 04 §3 |
+| `Card.Covert.Hand[F-xx]` | [] (0) — drawn to 6 in Phase 1 Upkeep Step 6 | Phase 1 |
+| `Card.Political.Deck[F-xx]` | 12 cards — selected from session pool (~20 available); shuffled and placed face-down on tableau | Session setup; Art 04 §3 |
+| `Card.Political.Hand[F-xx]` | [] (0) — drawn to 3 in Phase 1 Upkeep Step 6 | Phase 1 |
+| `Card.Modifier.Deck[F-xx]` | Faction modifier deck shuffled and placed face-down; applicable ring decks pre-positioned on board | Session setup; Art 04 §11 |
+| `Card.Modifier.Hand[F-xx]` | [] (0) — drawn in Phase 1 Upkeep Step 6 | Phase 1 |
+| `Card.Countermeasure.Zone[F-xx]` | 3 CC cards — in tableau designated area | Session setup; Art 04 |
+| `Card.Pass.Hand[F-xx]` | 4 Pass cards — beside tableau, permanent, reusable every Quarter | Session setup; Art 04 §12 |
+| `Card.Floor.Hand[F-xx]` | 1 Floor Act — beside tableau, always available | Session setup; Art 04 D04-13 |
+| `Card.Operative.Zone[F-xx]` | Operative cards selected at session setup — in operator zone, 0 deployed | Session setup; Art 05 |
+
+*Deck pool sizes (30 covert / select 24; 20 political / select 12) are working baselines pending validation — Art 04 A-04-01.*
+
+#### Quarter, Event, and Grid Domains at Setup
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
@@ -103,10 +122,6 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 | `Event.ActiveCards` | [] — empty | Setup |
 | `Event.BroadcastCard` | None | Setup |
 | `Chorus.ActivityTrack` | TBD — Art 07 | Art 07 |
-| `Faction.CovertHand[F-xx]` | [] — drawn to 6 in Phase 1 Upkeep Step 6 | Phase 1 |
-| `Faction.PoliticalHand[F-xx]` | [] — drawn to 3 in Phase 1 Upkeep Step 6 | Phase 1 |
-| `Faction.ModifierHand[F-xx]` | [] — drawn in Phase 1 Upkeep Step 6 | Phase 1 |
-| `Faction.CountermeasureHand[F-xx]` | [] — hand starts empty; deployed in Phase 5 | Phase 5 |
 | `Grid.*` | All empty — Grid instantiated at Beat 0 | Beat 0 |
 
 ---
@@ -164,14 +179,22 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 
 ---
 
-#### Card Domain — Faction-Only
+#### Card Domain
+
+*Naming convention: `Card.Type.State[F-xx]` — Type identifies the card class; State is `Deck` (the draw pile), `Hand` (cards drawn to hand), or `Zone` (standing tableau area for non-deck cards).*
 
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
-| `Faction.CovertHand[F-xx]` | List of C-xx | VS-02 | Upkeep Step 6 (draw to 6); Beat 3 Step 10 (card returned or discarded per card text) |
-| `Faction.PoliticalHand[F-xx]` | List of P-xx | VS-02 | Upkeep Step 6 (draw to 3); Beat 4 Step 9 (card returned or discarded per card text) |
-| `Faction.ModifierHand[F-xx]` | List of MC-xx | VS-02 | Upkeep Step 6 (draw by structure count + ring qualification); Beat 3/4 (discarded on use) |
-| `Faction.CountermeasureHand[F-xx]` | List of CC-xx | VS-02 | Phase 5 (deployed — handed to ARBITER); Beat 2 (processed, removed from game) |
+| `Card.Covert.Deck[F-xx]` | Ordered list of C-xx | VS-02 | Session setup (deck construction); Upkeep Step 6 (top cards drawn; discard shuffled in when exhausted) |
+| `Card.Covert.Hand[F-xx]` | List of C-xx | VS-02 | Upkeep Step 6 (draw to 6); Beat 3 Step 10 (returned or discarded per card text) |
+| `Card.Political.Deck[F-xx]` | Ordered list of P-xx | VS-02 | Session setup (deck construction); Upkeep Step 6 (top cards drawn; discard shuffled in when exhausted) |
+| `Card.Political.Hand[F-xx]` | List of P-xx | VS-02 | Upkeep Step 6 (draw to 3); Beat 4 Step 9 (returned or discarded per card text) |
+| `Card.Modifier.Deck[F-xx]` | Ordered list of MC-xx (faction deck + applicable ring decks) | VS-02 | Session setup (shuffled, placed); Upkeep Step 6 (top cards drawn); Burst Play trigger (deck removed from game) |
+| `Card.Modifier.Hand[F-xx]` | List of MC-xx | VS-02 | Upkeep Step 6 (drawn by structure count + ring qualification); Beat 3/4 (discarded on use); Burst Play (all traded to Reservoir) |
+| `Card.Countermeasure.Zone[F-xx]` | List of CC-xx (max 3) | VS-02 | Session setup (3 allocated); Phase 5 (deployed — each card handed to ARBITER); Beat 2 (processed, removed from game) |
+| `Card.Pass.Hand[F-xx]` | Fixed list of 4 Pass | VS-01 (count); VS-02 (usage intent) | Immutable — reusable every Quarter; never discarded |
+| `Card.Floor.Hand[F-xx]` | Fixed 1 Floor Act | VS-01 (count); VS-02 (usage intent) | Immutable — always beside tableau; full design Art 04 D04-13 |
+| `Card.Operative.Zone[F-xx]` | List of operative cards in operator zone | VS-02 | Session setup (operative set selected); Phase 2 (deployed — card moves to board zone); TBD — Art 05 |
 
 ---
 
@@ -228,11 +251,11 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Board.PresenceChips[D-xx][F-xx]` = updated for all markers that converted
 - `Board.InfluenceLevel`, `Board.ControlFlag`, `Board.TensionMarker` = recalculated after conversions
 - `Faction.Resources[F-xx][RT-xx]` = income collected
-- `Faction.CovertHand`, `Faction.PoliticalHand`, `Faction.ModifierHand` = drawn to hand size
+- `Card.Covert.Hand`, `Card.Political.Hand`, `Card.Modifier.Hand` = drawn to hand size
 
 **Invariants:**
 - No deployment markers on board — all in Hand
-- `Faction.CovertHand` count ≤ 6; `Faction.PoliticalHand` count ≤ 3 per faction
+- `Card.Covert.Hand` count ≤ 6; `Card.Political.Hand` count ≤ 3 per faction
 - Initiative order publicly announced and recorded on Initiative Strip
 
 ---
@@ -344,7 +367,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Faction.PublicStanding[F-xx]` = updated for failure/discovery conditions
 - `Faction.ChorusPortrait[F-xx]` = privately updated per Beat 3 Step 11 for each resolved operation
 - `Grid.ResolvedCells` = each cell marked with RO-xx; dispatch case updated with resolution card per op
-- `Faction.CovertHand[F-xx]` = resolved cards returned to faction (per card text)
+- `Card.Covert.Hand[F-xx]` = resolved cards returned to faction (per card text)
 - `Grid.ActiveModifierTokens` = all tokens returned to pool
 
 **Invariants:**
@@ -701,7 +724,7 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
   PLACE resolution card (Succeeded / Failed / Discovered) → dispatch_case[f]
   DISCARD modifier cards from cell — removed from game
   RETURN Grid.ActiveModifierTokens[cell.ID] → pool
-  Faction.CovertHand[f] ← per card text (return to hand or discard)
+  Card.Covert.Hand[f] ← per card text (return to hand or discard)
 
   // Step 11 — Portrait (private)
   ARBITER privately updates Faction.ChorusPortrait[f]
@@ -719,7 +742,7 @@ STATE MUTATIONS:
   Faction.PublicStanding ← failure/discovery conditions
   Faction.ChorusPortrait ← private, per op
   Grid.ActiveModifierTokens ← cleared (all tokens returned to pool)
-  Faction.CovertHand ← per card text
+  Card.Covert.Hand ← per card text
 ```
 
 ---
@@ -815,7 +838,7 @@ FOR EACH faction f ∈ Faction.All WITH declared political act (in Quarter.Initi
     Faction.PublicStanding[f] ← adjusted per card text
 
   // Step 9 — Clean up
-  Faction Player retrieves political act card per card text (return or discard)
+  Card.Political.Hand[f] ← per card text (return to hand or discard)
   DISCARD modifier cards — removed from game
 
   // Step 10 — Portrait (private)
@@ -834,7 +857,7 @@ STATE MUTATIONS:
   Board.DeploymentMarker ← Blocked per card text
   Faction.PublicStanding ← failure conditions
   Faction.ChorusPortrait ← private, per act
-  Faction.PoliticalHand ← per card text
+  Card.Political.Hand ← per card text
 ```
 
 ---
@@ -949,4 +972,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.5*
+*End of Art 03a — Game Engine Specification v0.6*
