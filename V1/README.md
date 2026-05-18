@@ -20,7 +20,7 @@ Status as of Session 19. Authoritative status: [PM03](PM03___Master_Artifact_Ind
 | 04b | [Action Taxonomy & Design Analysis](04b___Action_Taxonomy_Design_Analysis.md) | 1.1 | ✅ Reference Document — Active |
 | 05 | [Operative & Apex System](05___Operative_Apex_System.md) | 0.1 | 🔄 Draft placeholder |
 | 06 | [Messaging System](06___Messaging_System.md) | 0.1 | 🔄 Draft placeholder |
-| 07 | [ARBITER Toolkit](07___ARBITER_Toolkit.md) | 0.1 | 🔄 Re-sign-off pending (Resolution Grid + four-register system) |
+| 07 | [ARBITER Toolkit](07___ARBITER_Toolkit.md) | 0.1 | 🔄 Draft — Placeholder (in progress) |
 | 08 | [Player Toolkit](08___Player_Toolkit.md) | 0.1 | 🔄 Draft placeholder |
 | 09 | [Card Specifications](09___Card_Specifications.md) | 0.1 | 🔄 Draft placeholder |
 | 10 | [Game Manuals](10___Game_Manuals.md) | 0.1 | 🔄 Draft placeholder |

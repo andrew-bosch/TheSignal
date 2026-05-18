@@ -185,7 +185,7 @@ ARBITER announces: *"Markers convert."*
 1. Each Faction Player checks deployment markers currently on the board.
 2. For each marker showing the Converting face: place 1 permanent presence chip in that district and return the marker to hand.
 3. For each marker showing the Blocked face: return the marker to hand without placing a presence chip.
-4. Each Faction Player updates Control flags and Tension markers as influence levels shift from new presence chip placements.
+4. Each Faction Player updates Control flags, Established markers, and Tension markers as influence levels shift from new presence chip placements.
 
 *If no markers are on the board — as is always the case at the start of Quarter 1 — this step has no effect. Proceed to Step 5.*
 
@@ -299,7 +299,7 @@ ARBITER announces: *"Placement is open."*
 | Core | Established or Dominant in an adjacent Infrastructure district (permanent presence chips or temporary presence from first marker this phase) | None |
 | Chorus Node | Established or Dominant in an adjacent Core district (permanent presence chips or temporary presence from first marker this phase) | See Artifact 02a §10 — standard entry rules do not apply |
 
-3. After each placement, if influence levels change: the placing Faction Player updates the relevant Control flag or Tension marker immediately.
+3. After each placement, if influence levels change: the placing Faction Player updates the relevant Control flag, Established marker, or Tension marker immediately.
 
 *A Faction Player may pass either or both placements. ARBITER redirects illegal placements.*
 
@@ -451,7 +451,7 @@ From left to right, lane by lane:
 | Payment | Applies to | Resources | Card Placement |
 |---------|------------|-----------|----------------|
 | Full | All | Drain to Reservoir | Face-up in grid |
-| Partial | Non-Apex | Drain to Reservoir; attach +50 difficulty marker to stack | Face-up in grid |
+| Partial | Non-Apex | Drain to Reservoir; attach −50 threshold marker to stack | Face-up in grid |
 | Zero | Non-Apex | None to drain | Face-down in grid |
 | Any shortfall | Apex | Drain any submitted resources to Reservoir | Face-down in grid |
 
@@ -468,7 +468,7 @@ The ARBITER Player reads all currently active Situation Report effects aloud.
 1. The ARBITER Player identifies all targeting restrictions on active Event Cards.
 2. For each targeting restriction: scan the Beat 3 rows of the Resolution Grid. For each operation card targeting the restricted district or ring:
    - Place the operation card and target slip in the acting faction's dispatch case.
-   - Place an Operation Failed resolution card in the dispatch case.
+   - Place a Voided resolution card in the dispatch case.
    - Discard any modifier cards from the grid cell — removed from the game.
 3. For each targeting restriction: check all declared political acts on Faction Players' tableaux. For each political act targeting the restricted district or ring:
    - ARBITER announces the restriction.
@@ -493,7 +493,7 @@ The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right
 1. The ARBITER Player identifies all operation cards in the Beat 3 rows of the grid targeting the named district.
 2. For each matching operation:
    - Place the operation card and target slip in the acting faction's dispatch case.
-   - Place an Operation Blocked resolution card in the dispatch case.
+   - Place a Voided resolution card in the dispatch case.
    - Discard any modifier cards from the grid cell — removed from the game.
    - Return any modifier tokens placed on the card to the pool.
 
@@ -535,7 +535,7 @@ Read the base difficulty printed on the operation card. Look up the correspondin
 
 **Step 3 — Apply all modifiers.**
 
-Apply all active modifiers: partial payment difficulty marker (if attached in Beat 0), Type B Countermeasure token on the card (if any), modifier cards in cascade under the operation card, Public Standing modifier, active Situation Report effects, Protect/Defend operation modifiers, and Infrastructure district penalty (if the target district is Infrastructure and the acting faction holds no Established or Dominant presence in an adjacent Core district).
+Apply all active modifiers: partial payment threshold marker (if attached in Beat 0), Type B Countermeasure token on the card (if any), modifier cards in cascade under the operation card, Public Standing modifier, active Situation Report effects, Protect/Defend operation modifiers, and Infrastructure district penalty (if the target district is Infrastructure and the acting faction holds no Established or Dominant presence in an adjacent Core district).
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -556,7 +556,7 @@ The ARBITER Player rolls d100, or nominates a Faction Player to roll and call th
 
 If this operation's outcome blocks the acting faction's deployment marker conversion: The ARBITER Player flips the relevant marker to the Blocked face.
 
-If the operation succeeded: The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Tension markers.
+If the operation succeeded: The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Established markers, Tension markers.
 
 **Step 8 — Apply failure conditions.**
 
@@ -605,7 +605,7 @@ In initiative order, for each Faction Player with a declared political act:
 1. The Faction Player transfers resource tokens from the declared card stack to the Reservoir.
 2. The ARBITER Player verifies payment against the cost printed on the card:
    - **Full payment:** ARBITER acknowledges.
-   - **Partial payment:** The ARBITER Player attaches a +50 difficulty marker to the card. ARBITER announces the additional difficulty.
+   - **Partial payment:** The ARBITER Player attaches a −50 threshold marker to the card. ARBITER announces the adjusted threshold.
    - **Zero payment:** ARBITER announces the act is invalid. The Faction Player flips their political act card face-down.
 
 *ARBITER script for each payment outcome: Artifact 07 — ARBITER Toolkit.*
@@ -628,7 +628,7 @@ The acting Faction Player reads the base difficulty and target threshold aloud f
 
 **Step 3 — Apply all modifiers.**
 
-The acting Faction Player applies all active modifiers: partial payment difficulty marker (if placed by ARBITER in Submit Payment), modifier cards in cascade, Public Standing modifier, active Situation Report effects, and Infrastructure district penalty (if the target district is Infrastructure and the acting faction holds no Established or Dominant presence in an adjacent Core district). Announces the modified threshold aloud.
+The acting Faction Player applies all active modifiers: partial payment threshold marker (if placed by ARBITER in Submit Payment), modifier cards in cascade, Public Standing modifier, active Situation Report effects, and Infrastructure district penalty (if the target district is Infrastructure and the acting faction holds no Established or Dominant presence in an adjacent Core district). Announces the modified threshold aloud.
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -647,7 +647,7 @@ The acting Faction Player rolls publicly and states the result aloud.
 
 If this political act's outcome blocks a deployment marker's conversion: The acting Faction Player flips the relevant marker to the Blocked face.
 
-If the political act succeeded: The acting Faction Player makes all board changes — presence chips, structure blocks, Control flags, Tension markers.
+If the political act succeeded: The acting Faction Player makes all board changes — presence chips, structure blocks, Control flags, Established markers, Tension markers.
 
 **Step 8 — Apply failure conditions.**
 
@@ -935,8 +935,8 @@ Ghost rolls: 18. Target is 10. Fails. The Directorate's defensive preparation ma
 Ghost finds:
 - Three covert operation cards
 - Operation Succeeded card (Gather at Data Exchange)
-- Operation Failed card (Undermine at Financial Clearinghouse)
-- Operation Blocked card (Build Structure at Government Citadel — Type A Countermeasure)
+- Voided card (Undermine at Financial Clearinghouse — targeting restriction)
+- Voided card (Build Structure at Government Citadel — Type A Countermeasure)
 - One intel note: Faction: The Syndicate / Quarter: 5
 
 Ghost processes this privately before Debrief opens.

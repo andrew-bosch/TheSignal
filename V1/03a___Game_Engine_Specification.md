@@ -175,7 +175,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Board.StructureBlocks[D-xx][F-xx]` | Integer ≥ 0 | VS-01 | Beat 3 Step 7; Beat 4 Step 7 (op success — structure placement) |
 | `Board.DeploymentMarker[F-xx][1\|2]` | {Location: D-xx \| Hand, Face: Converting \| Blocked \| N/A} | VS-01 | Phase 2 (placed on board); Upkeep Step 3 (Blocked face from Situation Report); Upkeep Step 4 (returned to hand); Beat 1 (Blocked face from conversion restriction); Beat 2 (Blocked face from Type A CM); Beat 3 Step 7; Beat 4 Step 7 (Blocked face from op outcome) |
 
-*`Board.InfluenceLevel` and `Board.ControlFlag` are computed views. Physical components (Control flags, Tension markers) are player-maintained and must be synchronized immediately after every chip change.*
+*`Board.InfluenceLevel` and `Board.ControlFlag` are computed views. Physical components (Control flags, Established markers, Tension markers) are player-maintained and must be synchronized immediately after every chip change.*
 
 *ARBITER (F-06) chip placement at D-22 (8 chips) makes ARBITER's Dominant status at the Chorus Node structurally permanent — no playing faction can accumulate enough chips to surpass 8 while holding other board positions. See §4.0 for setup initialization. ARBITER Dominance Marker (Art 02a §10) is the physical representation.*
 
@@ -185,7 +185,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
-| `Faction.Resources[F-xx][RT-xx]` | Integer ≥ 0 | VS-02 | Upkeep Step 5 (income); Beat 0 (payment drain); Beat 3/4 failure conditions; Debrief (trades, conversion) |
+| `Faction.Resources[F-xx][RT-xx]` | Integer ≥ 0 | VS-02 | Upkeep Step 5 (income); Beat 0 (covert payment drain to Reservoir); Phase 4 Declaration (tokens moved to Grid.Political.ResourceStake — committed, not yet in Reservoir); Beat 4 Submit Payment (Grid.Political.ResourceStake drained to Reservoir); Beat 3/4 failure conditions (standing/resource penalties per card text); Debrief (trades, conversion) |
 | `Faction.PublicStanding[F-xx]` | Integer 0–20 | VS-01 | Upkeep Step 3 (Situation Report effect); Beat 3 Steps 8–9; Beat 4 Step 8 (failure/discovery conditions); Quarter close (natural drift, L13) |
 | `Faction.ChorusPortrait[F-xx]` | Integer | VS-04 | Beat 3 Step 11 (per resolved covert operation, privately); Beat 4 Step 10 (per resolved political act, privately) |
 | `Faction.StatusMarker[F-xx]` | Discussing \| Operating | VS-01 | Upkeep Step 1 (reset to Discussing) |
@@ -451,7 +451,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 #### Beat 1 End — Restrictions Applied
 
 **Outputs:**
-- `Grid.Lane[F-xx].Beat3Queue` = operations targeting restricted D-xx or RG-xx removed; placed in dispatch case with RO-03 (Blocked)
+- `Grid.Lane[F-xx].Beat3Queue` = operations targeting restricted D-xx or RG-xx removed; placed in dispatch case with RO-03 (Voided)
 - `Board.DeploymentMarker[F-xx][1|2]` = markers in conversion-blocked districts or rings flipped to Blocked face
 - Political acts targeting restricted D-xx or RG-xx: cancelled — card returned to faction; resource tokens returned (not spent)
 
@@ -465,7 +465,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 #### Beat 2 End — Ground Shifts
 
 **Outputs:**
-- `Grid.Lane[F-xx].Beat3Queue` = operations targeting Type A-named districts removed; placed in dispatch case with RO-03 (Blocked)
+- `Grid.Lane[F-xx].Beat3Queue` = operations targeting Type A-named districts removed; placed in dispatch case with RO-03 (Voided)
 - `Board.DeploymentMarker[F-xx][1|2]` = markers in Type A-named districts flipped to Blocked face
 - `Grid.ActiveModifierTokens` = M-11 Type B modifier tokens (−15) placed on operations targeting defending faction's assets
 - `Grid.ProtectModifiers` = Protect operation defensive modifiers noted for Beat 3 application
@@ -646,16 +646,12 @@ FOR EACH restriction r ∈ restrictions:
         REMOVE cell from Grid.Lane[lane].Beat3Queue
         INSERT {cell.ID, RO-03} → Grid.ResolvedCells
         PLACE operation card + target slip → dispatch_case[lane.Faction]
-        PLACE Operation Blocked resolution card → dispatch_case[lane.Faction]
+        PLACE Voided resolution card → dispatch_case[lane.Faction]
         DISCARD modifier cards from cell — removed from game
         // No resource refund — resources were drained at Beat 0
 
-DESIGN FINDING [DF-01]:
-  Art 03 Beat 1 specifies "Operation Failed" resolution card for covert operations removed
-  by targeting restrictions. Art 03 Beat 2 specifies "Operation Blocked" for Type A CC-xx
-  removals. Both map to RO-03 (Blocked) per 00b §5.2. The label discrepancy ("Failed" vs.
-  "Blocked") is inconsistent — both are pre-resolution cancellations, not failure outcomes.
-  This specification uses "Operation Blocked" for both. Art 03 §12 may require amendment.
+// DF-01 RESOLVED (L112, Session 22): "Operation Failed" (Beat 1) and "Operation Blocked"
+// (Beat 2) unified as "Voided" (RO-03). Art 03 and 00b updated. See §8.
 
 // Step 3 — Cancel restricted political acts
 FOR EACH restriction r ∈ restrictions:
@@ -677,7 +673,7 @@ FOR EACH block b ∈ conversion_blocks:
 
 STATE MUTATIONS:
   Grid.Lane[F-xx].Beat3Queue ← restriction removals
-  Grid.ResolvedCells ← RO-03 entries for restricted covert ops
+  Grid.ResolvedCells ← RO-03 (Voided) entries for restricted covert ops
   Board.DeploymentMarker[F-xx][1|2].Face ← Blocked (conversion-blocked districts/rings)
 ```
 
@@ -702,7 +698,7 @@ FOR EACH lane ∈ Grid.Lanes WHERE Grid.Lane[lane].Beat2Slot.Type = TypeA:
         REMOVE cell from Grid.Lane[target_lane].Beat3Queue
         INSERT {cell.ID, RO-03} → Grid.ResolvedCells
         PLACE operation card + target slip → dispatch_case[target_lane.Faction]
-        PLACE Operation Blocked resolution card → dispatch_case[target_lane.Faction]
+        PLACE Voided resolution card → dispatch_case[target_lane.Faction]
         DISCARD modifier cards — removed from game
         RETURN modifier tokens (M-06 if attached) → pool
         // Resources committed to blocked ops are NOT refunded — attempt was made
@@ -733,7 +729,7 @@ FOR EACH lane ∈ Grid.Lanes:
 
 STATE MUTATIONS:
   Grid.Lane[F-xx].Beat3Queue ← Type A removals
-  Grid.ResolvedCells ← RO-03 entries for Type A blocked ops
+  Grid.ResolvedCells ← RO-03 (Voided) entries for Type A voided ops
   Grid.ActiveModifierTokens ← M-11 tokens on Type B targeted ops
   Grid.ProtectModifiers ← Protect defensive modifier values
   Grid.Lane[F-xx].Beat2Slot ← cleared
@@ -1099,9 +1095,9 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 | ID | Section | Finding | Action Required |
 |----|---------|---------|-----------------|
-| DF-01 | Beat_1 | Art 03 Beat 1 uses "Operation Failed" resolution card for restriction removals; Beat 2 uses "Operation Blocked." Both are RO-03 (Blocked) per 00b. Label inconsistency — pre-resolution cancellations should not carry "Failed" label. | Confirm "Operation Blocked" for both; amend Art 03 §12 Beat 1 if agreed |
-| DF-02 | Beat_4, §7 | Partial payment marker described as "+50 difficulty" in beat prose (Art 03 Beat 0, Beat 4) but listed as "−50" Threshold Adjustment in modifier table. Inverse representations of same penalty. Physical token label may confuse table players. | Clarify notation in Art 07 physical token design; consider aligning prose to table sign convention |
-| DF-03 | §4.1 Faction Domain | `Faction.Resources[F-xx][RT-xx]` Mutates At entry lists "Beat 3/4" without distinguishing three distinct mutation points: (1) Phase 4 Declaration — tokens moved from Faction.Resources to Grid.Political.ResourceStake; (2) Beat 4 Submit Payment — Grid.Political.ResourceStake drained to Reservoir; (3) Beat 3/4 failure conditions — standing/resource penalties per card text. | Split §4.1 Faction Domain mutation point into three entries |
+| DF-01 | Beat_1/2 | ✅ Resolved — Session 22 (L112). Art 03 Beat 1 used "Operation Failed"; Beat 2 used "Operation Blocked." Both unified as **"Voided"** (RO-03). Verb form chosen: past participle implies ARBITER action without naming cause. Art 03 Beat 1/2, Beat 5 example, and 00b RO-03 all updated. | — |
+| DF-02 | Beat_4, §7 | ✅ Resolved — Session 22 (L113). Threshold convention adopted throughout. Art 03 beat prose updated: "+50 difficulty marker" → "−50 threshold marker" in Beat 0 table and Beat 4 prose. Rationale: threshold framing is positively oriented — players think "I need to roll under 69," not "I have a 31% chance to fail." All references now use threshold-subtractive sign convention matching the modifier table (M-06/M-07 = −50). | — |
+| DF-03 | §4.1 Faction Domain | ✅ Resolved — Session 22. `Faction.Resources[F-xx][RT-xx]` Mutates At split into five distinct entries: Upkeep Step 5 (income); Beat 0 (covert payment drain); Phase 4 Declaration (tokens → Grid.Political.ResourceStake); Beat 4 Submit Payment (ResourceStake → Reservoir); Beat 3/4 failure conditions (card text penalties); Debrief (trades, conversion). | — |
 | DF-04 | §4, §5 | New types introduced in 03a have no 00b entity registry entries: (a) Case — dispatch case physical component, no entity ID scheme (CA-xx?); (b) Packet — Case sub-structure; (c) GridCell — compound type defined only in a §4.1 footnote; (d) IP-xx — Initiative Pattern, referenced in Quarter.InitiativePattern but no 00b lookup table. | 00b audit — add Case, Packet, GridCell, and IP-xx to entity registry and lookup tables as applicable; assign ID namespaces |
 
 ---

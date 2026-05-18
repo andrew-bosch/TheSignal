@@ -99,7 +99,7 @@ Small enum tables that span multiple artifacts and have no single canonical sour
 |----|------|---------|-------------------|
 | RO-01 | Succeeded | Roll ≤ threshold; or Critical Success (01–05) | Operation Resolution card: Succeeded |
 | RO-02 | Failed | Roll > threshold; failure conditions apply | Operation Resolution card: Failed |
-| RO-03 | Blocked | Operation removed in Beat 1 or Beat 2 before resolution | Operation Resolution card: Blocked |
+| RO-03 | Voided | Operation removed in Beat 1 or Beat 2 before resolution — targeting restriction or Type A Countermeasure | Operation Resolution card: Voided |
 | RO-04 | Discovered | Roll outcome triggers discovery condition on card | Operation Resolution card: Discovered |
 | RO-05 | Auto-failed | Face-down card — no roll made; zero or shortfall payment | No resolution card — action card returned |
 

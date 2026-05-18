@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-18 (session 21 in progress) — supersedes session 20 save state.
+### Generated: 2026-05-18 (session 22 in progress) — supersedes session 21 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -45,7 +45,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 00 — Factions & World | 1.0 | 🔄 Signed Off — significant session 4 additions pending re-sign-off (as part of 00-04 enrichment pass): "On the Question of Cause," "On the Question of Completeness" rewrite, station crew origin, "What New Meridian Is," "What New Meridian Is" continuation, The Overview section in §8 |
 | 00a — Governing Rules & Design Policy | 0.2 | 🔄 Review complete sessions 5–7 — **pending A05/A06 decision only, then ready for sign-off.** 41 rules (R01–R38 + R13a, R13b, R29a). §10 dismissed. Appendix A (rule summary table) added. |
 | 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
-| 02a — Resource Systems: Board State | 1.3 | 🔄 Pending Re-Sign-Off — 02a-03 applied session 14: §6 Component Names updated, ARBITER Dominance Marker row added, DOMINANT bullet rewritten (structural impossibility, not prohibition), §10 Chorus Node constitutive presence language. PM01 §2.08 Control flag quantity corrected. Material change → re-sign-off required. |
+| 02a — Resource Systems: Board State | 1.4 | ✅ Signed Off — Session 22. Control flag corrected (gold, per-district, on Dominant stack); Established marker added (silver, L111, one per Established faction per district); ARBITER Dominance Marker confirmed. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
 | 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (19 types, ID namespaces), L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes) drawn from Retired/Electronic schema. L2 TypeScript schema and information hierarchy pointers in §8. Established session 20. |
 | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
@@ -57,7 +57,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 1.9 | ✅ Active — locked decisions L01–L109 |
+| PM02 | 2.0 | ✅ Active — locked decisions L01–L113 |
 | PM03 | 1.7 | ✅ Active — 00b row added, Art 03 signed off |
 | PM05 | 1.5 | ✅ Active — XA-29/PM04-04 added (L109 cleanup queue) |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
@@ -258,7 +258,16 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM03 v1.7:** 00b row added, Art 03 updated to ✅ Signed Off v1.7.
 - **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
 
-**Session 21 summary (2026-05-18 — in progress):**
+**Session 22 summary (2026-05-18 — in progress):**
+- **L110 locked — XA-21 retired.** ARBITER reads Situation Report targeting restrictions aloud at Beat 0/1. No physical indicator component. Faction Player attention is the design-intended skill.
+- **Art 07 "re-sign-off" label corrected.** Art 07 was never signed off — the re-sign-off flag was in error. Art 07 remains a Draft Placeholder; material changes (four-register system §9, Resolution Grid §8, §8.1 §14 cross-ref fix) are applied and correct. PM05 XA-05, PM03, Save State, README all corrected.
+- **Art 02a signed off at v1.4 (L111).** Control flag corrected: gold, per-district (21 total), placed on Dominant faction's chip stack. Established marker added: silver, one per Established faction per district (up to 4–5 coexist per district), quantity TBD pending Art 11. Gold/silver are material colors, not faction colors. PM03 updated. 00a-12 flagged for Established marker addition to 00a board component rules.
+- **Art 03 and 03a updated for Established marker.** Four references in Art 03 (Upkeep Step 4, Phase 2 Step 3, Beat 3 Step 7 op success, Beat 4 Step 7 political success) and one in 03a §4.1 footnote now include Established markers alongside Control flags and Tension markers.
+- **L112 locked — "Voided" resolution card (RO-03).** Replaces "Operation Failed" (Beat 1) and "Operation Blocked" (Beat 2). Verb form: past participle, ARBITER implied as agent, cause unstated. Art 03 Beat 1/2/Beat 5 example, 00b RO-03, and 03a all updated. Closes DF-01.
+- **L113 locked — threshold sign convention.** "−50 threshold marker" replaces "+50 difficulty marker" throughout Art 03 prose. Rationale: threshold framing is positively oriented. M-06/M-07 modifier table rows unchanged. Closes DF-02.
+- **DF-03 resolved.** `Faction.Resources[F-xx][RT-xx]` mutation point in 03a §4.1 split into five distinct entries: Upkeep income; Beat 0 covert payment; Phase 4 Declaration (→ ResourceStake); Beat 4 Submit Payment (→ Reservoir); Beat 3/4 failure penalties; Debrief trades.
+
+**Session 22 summary (2026-05-18 — in progress):**
 - **Art 03a (Game Engine Specification) advanced: v0.1 → v0.96.** Companion to Art 03. Code-lite formal spec — state model, pseudocode beat procedures, decision tables.
 - **Layer 1 (State Model) complete:** §4.0 Setup State (all variables with starting values, 9 domains); §4.1 State Variable Registry (9 domains: Board, Faction, Quarter, Event, Card, ARBITER, System, Case, Resolution Grid); §4.2 Beat Boundary Snapshots (12 boundaries, Start of Quarter through Debrief End). §4.0 domain order aligned to §4.1.
 - **Layer 2 (Beat Procedures) complete:** Beat_0 through Beat_5 as structured pseudocode. Modifier stack expressed as summation formula. Resolution check as formal inequality. M_standing() helper captures PS-xx → threshold mapping.
@@ -268,14 +277,14 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Design Findings registered:** DF-01 (Beat 1 "Operation Failed" vs "Operation Blocked" label inconsistency — both RO-03); DF-02 ("+50 difficulty" prose vs "−50" threshold table — inverse sign convention); DF-03 (Faction.Resources mutation point needs splitting: Phase 4 Declaration vs Beat 4 Submit Payment vs Beat 3/4 failure); DF-04 (00b audit required for new types: Case, Packet, GridCell, IP-xx — no entity IDs or lookup tables yet).
 
 **Recommended next steps (session 22 and beyond):**
-1. **XA-21** — choose option A, B, or C from PM05 entry (player-facing Situation Report restriction indicator — Beat 1 Step 3 confirms player-facing indicator IS needed)
-2. **Artifact 07 re-sign-off** — Beat 4 no-grid correction (07 §8 references obsolete public resolution grid); plus Resolution Grid + six-beat structure material changes sessions 16–17
-3. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
+1. ~~XA-21~~ — **✅ Closed session 22 (L110).** Option A — ARBITER reads restrictions aloud; no physical indicator.
+2. ~~**Artifact 07 re-sign-off**~~ — **Flagged in error.** Art 07 was never signed off; it is a Draft Placeholder. No re-sign-off applicable. Material changes (four-register system §9, Resolution Grid §8) are applied and correct; art 07 will be signed off when the full draft is complete.
+3. ~~**Artifact 02a re-sign-off**~~ — **✅ Signed off session 22 (v1.4, L111).** Gold/silver marker system added.
 4. **Artifact 04 C16–C35** — political acts and faction-specific cards; once complete, unblocks Art 05+
 5. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
 6. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
-7. **Art 03a — DF-01/DF-02 decisions** — confirm "Operation Blocked" for both Beat 1/2 (amend Art 03 §12); clarify partial payment sign convention for Art 07 token design
-8. **Art 03a — DF-03** — split Faction.Resources §4.1 mutation point into three entries (Phase 4 Declaration, Beat 4 Submit Payment, Beat 3/4 failure)
+7. ~~**Art 03a — DF-01/DF-02 decisions**~~ — **✅ Closed session 22.** DF-01: "Voided" (L112). DF-02: threshold convention (L113).
+8. ~~**Art 03a — DF-03**~~ — **✅ Closed session 22.** Faction.Resources mutation split into 5 entries.
 9. **Art 03a — DF-04** — 00b audit: add Case, Packet, GridCell, IP-xx to entity registry with ID namespaces (CA-xx? PA-xx? IP-xx already used for Initiative Pattern)
 10. **Art 03a — Layer 3** — fill DT-01 through DT-09 Decision Tables
 11. **XA-29** (unsupervised) — component terminology cleanup across all artifacts

@@ -1,8 +1,8 @@
 # 02a — Resource Systems: Board State
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.3  
-**Status:** 🔄 Pending Re-Sign-Off — session 14 material change (ARBITER Dominance Marker)  
+**Version:** 1.4  
+**Status:** ✅ Signed Off — Session 22  
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian  
 **Supersedes:** l1_generation, influence_system (board-state sections)
 
@@ -88,7 +88,8 @@ Each faction also brings reserves to The Table — resources accumulated through
 |-----------|-------------|
 | Presence chip | Small flat disc in faction color. Placed in a district to represent operational depth. Stackable. |
 | Deployment marker | Large distinct piece in faction color. Placed during the Placement phase. Counts as 1 temporary presence chip for the current quarter. Converts to 1 permanent presence chip at the following Upkeep if not blocked. |
-| Control flag | Small crown or star in faction color. Placed on the district — not on the chip stack — to indicate Dominant influence. Placed and removed by the player whose action causes the change. Faction component only — the Chorus Node uses ARBITER's Dominance Marker instead. |
+| Control flag | Gold marker placed on the Dominant faction's presence chip stack in a district to indicate 1st place (Dominant status). One per district. Placed and removed by the player whose action causes the change. Not placed at the Chorus Node — ARBITER's Dominance Marker serves this function there. |
+| Established marker | Silver marker placed on an Established faction's presence chip stack in a district. Each Established faction in the district places their own — up to 4 or 5 may coexist in a single district. Placed and removed by the player whose action causes the change. Not placed at the Chorus Node. |
 | Tension marker | Neutral chip. Placed on the district to indicate the Contested condition. Placed by the player whose action triggers the tie; removed by the player whose action resolves it. |
 | ARBITER Dominance Marker | Single fused piece placed at the Chorus Node during setup — never removed. Comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker. Inseparable. *(Component specification: PM01 §2.08a.)* |
 | Structure block | Small square chit in faction color. Placed in a district to represent a built facility. |
@@ -117,7 +118,7 @@ A faction's influence level in a district is determined simultaneously by their 
 
 - Minimum 3 chips (including any deployment marker)
 - Strictly more chips than every other faction in the district
-- Player places their faction's Control flag on the district when this condition is reached
+- Player places the gold Control flag on their presence chip stack in the district when this condition is reached
 - Not reachable at the Chorus Node — ARBITER's Dominance Marker counts as 8 ARBITER-keyed presence tokens, permanently exceeding the human faction maximum of 6; Dominant is made impossible by the board, not prohibited by rule
 
 *A person walking into this district feels it without looking. The deference in the air, the unspoken rules about how things work here — the district has organized around this faction. Dominant is an atmosphere, not a count.*
@@ -126,7 +127,8 @@ A faction's influence level in a district is determined simultaneously by their 
 
 - Minimum 2 chips (including any deployment marker)
 - In second place by chip count
-- Multiple factions may hold Established simultaneously if tied for second place
+- Player places their silver Established marker on their presence chip stack in the district when this condition is reached
+- Multiple factions may hold Established simultaneously — each places their own silver marker; up to 4 or 5 may coexist in a single district
 - A faction in second place is Established regardless of their absolute chip count
 
 *Visible, deferred to in some contexts, but not unchallenged. Another faction's weight is present and greater. A careful observer feels the competition.*
@@ -383,7 +385,8 @@ The Contested rate is not a balancing mechanism. It is ARBITER's response to fac
 | Presence chip | Presence chip | 15 per faction (75 total) | Small flat disc, faction color |
 | Deployment marker | Deployment marker | 2 per faction (10 total) | Larger distinct piece, faction color |
 | Structure block | Structure block | 6 per faction (30 total) | Small square chit, faction color |
-| Control flag | Control flag | 1 per faction (5 total) | Small crown or star, faction color |
+| Control flag | Control flag | 21 total (1 per district) | Gold marker, placed on dominant presence chip stack |
+| Established marker | Established marker | TBD — up to 4–5 per district simultaneously; total quantity pending Art 11 component spec | Silver marker, placed on Established faction's presence chip stack |
 | ARBITER Dominance Marker | ARBITER Dominance Marker | 1 (placed at Chorus Node during setup, never removed) | Fused single piece: 8 ARBITER-keyed presence tokens + dominance marker; distinct from all faction colors. *(PM01 §2.08a.)* |
 | Tension marker | Tension marker | 6 total | Neutral color chip, distinct from all faction colors |
 | Findings | Findings | 30 total | Translucent layered chips |
@@ -404,7 +407,7 @@ The Chorus Node is unique among all districts in three ways:
 
 **ARBITER's presence at the Chorus Node is constitutive.** At setup, ARBITER places the ARBITER Dominance Marker here — never removed. The piece comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker, fused as one inseparable component. *(PM01 §2.08a.)*
 
-The human faction maximum is 6 presence chips. ARBITER's permanent presence count is 8. Dominant is structurally unreachable at the Chorus Node — not prohibited by rule, made impossible by the board. No faction can reach the chip count required. The Control flag is a faction component; it is not placed at the Chorus Node.
+The human faction maximum is 6 presence chips. ARBITER's permanent presence count is 8. Dominant is structurally unreachable at the Chorus Node — not prohibited by rule, made impossible by the board. No faction can reach the chip count required. The Control flag is not placed at the Chorus Node — ARBITER's Dominance Marker serves this function.
 
 **Established is the maximum level for factions.** Only one faction may hold Established at the Chorus Node at any time. If two or more factions reach 2+ chips and tie, the Tension marker is placed and all tied factions drop to Present-equivalent benefits.
 

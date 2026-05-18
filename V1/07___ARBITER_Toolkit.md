@@ -192,7 +192,7 @@ For each operation card drawn from the Resolution Grid in resolution order:
 
 1. **Read:** The ARBITER Player reads the card and target slip privately.
 2. **Verify:** The ARBITER Player confirms target district, resources submitted, and relevant board state.
-3. **Resolve:** The ARBITER Player applies the effect per the Operation System (Artifact 03 §13) and the card's effect text.
+3. **Resolve:** The ARBITER Player applies the effect per the Operation System (Artifact 03 §14) and the card's effect text.
 4. **Announce:** ARBITER announces the outcome in The Record register.
 5. **Record:** The ARBITER Player records the operation in the Chronicle.
 6. **Portrait:** The ARBITER Player evaluates the Portrait field and moves the Portrait board privately.
