@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9  
+**Version:** 0.91  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -95,7 +95,7 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 
 #### Card Domain at Setup
 
-All card types follow the same structural model: `Card.Type.Deck` is the active draw deck (selected at session setup); `Card.Type.Hand` is cards currently drawn to hand; `Card.Type.Zone` is a standing tableau area for non-deck cards. Source: Art 04 §3, §11, §12; Art 05.
+All card types follow the same structural model: `Card.Type.Deck` is the active draw deck (selected at session setup); `Card.Type.Hand` is cards in faction possession and available to play. Lifecycle behavior (Recycle / OneShot / Permanent / Deploy) is a card attribute — not encoded in the variable name. Source: Art 04 §3, §11, §12; Art 05.
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
@@ -132,6 +132,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Event.ActiveCards` | [] — empty | Setup |
 | `Event.BroadcastCard` | None | Setup |
 | `Chorus.ActivityTrack` | TBD — Art 07 | Art 07 |
+| `Case[F-xx].*` | All empty — no packets loaded; cases submitted at Phase 3 Dispatch | Phase 3 |
 | `Grid.*` | All empty — Grid instantiated at Beat 0 | Beat 0 |
 
 ---
@@ -191,7 +192,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 #### Card Domain
 
-*Naming convention: `Card.Type.State[F-xx]` — Type identifies the card class; State is `Deck` (the draw pile), `Hand` (cards drawn to hand), or `Zone` (standing tableau area for non-deck cards).*
+*Naming convention: `Card.Type.State[F-xx]` — Type identifies the card class; State is `Deck` (the draw pile) or `Hand` (cards in faction possession, available to play — regardless of lifecycle type).*
 
 **Card.Faction attribute:** Every card entity (C-xx, P-xx) carries a `Faction` field (Art 04 §4): `All` (Common — standard cards available to every faction) or `F-xx` (Faction-Specific — exclusive to the owning faction). `Card.Covert.Deck[F-xx]` and `Card.Political.Deck[F-xx]` are built from the faction's session pool, pre-filtered to: `Card.Faction = All` (eligible for any faction) UNION `Card.Faction = F-xx` (eligible for this faction only). This constraint governs deck construction at session setup.
 
@@ -248,6 +249,31 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 *Design decision: Reservoir = System entity (not F-06). ARBITER already has RT-06 (Resolution) as their own resource type, earned operationally. The Reservoir is the collective pool of all spent faction resources — a board-level pool owned by no faction. Conflating it with F-06 would mix ARBITER's operational budget with the city's resource pool. If L2 architecture treats all resource pools under a unified `Resources[Owner][RT-xx]` model, Reservoir maps to `Owner = System.Reservoir`, not `Owner = F-06`.*
 
 *Starting value of 50 per resource type is a working baseline — sufficient to sustain Burst Play trades (modifier cards → Reservoir resources at 1:1), Translation payouts, and any other Reservoir draws across 8 Quarters. Pending playtest validation (PT-xx — to be assigned).*
+
+---
+
+#### Case Domain — physical transport layer between Faction Players and ARBITER
+
+*The dispatch case is the physical container each faction submits at Phase 3. It holds packets — one per submitted action — which ARBITER reads at Beat 0 to build the Resolution Grid. ARBITER loads response cards and intel tokens into each packet during Beats 3–4; the case is returned to the faction at Beat 5. Cases are assigned at session setup and persist for the full session; packet contents are cleared between Quarters.*
+
+*At setup and at the start of each Quarter: all packet fields are empty — cases exist as physical objects but contain no submissions.*
+
+| Variable | Type | Visibility | Mutates At |
+|----------|------|-----------|------------|
+| `Case[F-xx].ID` | Physical label — unique case identifier | VS-02 | Session setup (assigned, immutable) |
+| `Case[F-xx].Faction` | F-xx | VS-02 | Session setup (assigned, immutable) |
+| `Case[F-xx].Packet[n].SequenceID` | Integer — submission order within case (1 = first submitted) | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned to faction → VS-02) |
+| `Case[F-xx].Packet[n].Target` | D-xx \| RG-xx | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned → VS-02) |
+| `Case[F-xx].Packet[n].CovertCard` | C-xx \| Pass \| None | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned → VS-02) |
+| `Case[F-xx].Packet[n].ModifierCards` | List of MC-xx | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned → VS-02) |
+| `Case[F-xx].Packet[n].ARBITERResponseCards` | List of RO-xx — resolution cards placed by ARBITER | VS-04 | Beat 3 Step 10 / Beat 4 Step 9 (ARBITER loads); Beat 5 (returned → VS-02) |
+| `Case[F-xx].Packet[n].IntelTokens` | List of ARBITER-placed intel tokens | VS-04 | Beat 3–4 (ARBITER loads, per card text or ARBITER discretion); Beat 5 (returned → VS-02); TBD — Art 07 |
+
+*`SequenceID` establishes packet order within the case — the order in which the faction submitted their operations during Phase 3 Dispatch. This order determines lane assignment in the Resolution Grid (Beat 0 Step 2).*
+
+*`ARBITERResponseCards` and `IntelTokens` are empty at Phase 3 close. ARBITER loads them during Beats 3–4 as each operation resolves. At Beat 5, each faction receives their case with both their submitted content and ARBITER's additions.*
+
+*Intel token contents and provisioning: TBD Art 07.*
 
 ---
 
@@ -1025,4 +1051,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.9*
+*End of Art 03a — Game Engine Specification v0.91*
