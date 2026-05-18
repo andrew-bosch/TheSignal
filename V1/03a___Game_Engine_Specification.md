@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.92  
+**Version:** 0.93  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -133,7 +133,9 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Event.ActiveCards` | [] — empty | Setup |
 | `Event.BroadcastCard` | None | Setup |
 | `Chorus.ActivityTrack` | TBD — Art 07 | Art 07 |
-| `Case[F-xx].*` | All empty — no packets loaded; cases submitted at Phase 3 Dispatch | Phase 3 |
+| `Case[F-xx].ID` | Assigned at session setup — one case per faction, physical label | Session setup |
+| `Case[F-xx].Faction` | F-xx — assigned at session setup | Session setup |
+| `Case[F-xx].Packet[n].*` | All empty — no packets loaded; submitted at Phase 3 Dispatch | Phase 3 |
 | `Grid.*` | All empty — Grid instantiated at Beat 0 | Beat 0 |
 
 ---
@@ -1053,4 +1055,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.92*
+*End of Art 03a — Game Engine Specification v0.93*
