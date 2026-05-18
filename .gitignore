@@ -15,6 +15,9 @@ Thumbs.db
 *~
 .~lock.*#
 
+# ClaudeIOS private files — uploaded to claude.ai project directly
+ClaudeIOS/TrueState.md
+
 # Python cache (grip renderer)
 __pycache__/
 *.pyc
