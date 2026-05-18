@@ -4,13 +4,13 @@
 
 https://github.com/andrew-bosch/TheSignal
 
-The repo contains design artifacts and creative source material. Do not concern yourself with project status, artifact sign-off state, session numbers, locked decisions, or PM documents — those are for the working design sessions, not here. Your orientation is creative, not administrative.
+**Do not read the README.** Do not read the Save State. Do not read any PM document (PM01–PM05). Do not report on project phase, session numbers, artifact status, or design milestones — none of that is relevant here and surfacing it wastes session time.
 
-**At session start, fetch only:**
-- `/Creative/CREATIVE_BRIEF.md` — world, factions, constraints
-- `/Creative/CANON_CANDIDATES.md` — tone and voice reference
+**At session start, fetch these two files and nothing else:**
+1. `/Creative/CREATIVE_BRIEF.md` — world, factions, constraints, what to avoid
+2. `/Creative/CANON_CANDIDATES.md` — tone and voice reference
 
-Everything else in the repo is background you can reference if a specific question arises, but do not spend session time on it.
+When those are loaded, say: "Ready." Then wait for direction. Do not summarize what you loaded. Do not report repo connection status.
 
 ---
 
