@@ -178,6 +178,28 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM05 11-01/11-02 added** — index.html as informal Artifact 11 visual reference; Chorus wave as open design question for Artifact 11 §7.
 - **gh CLI token stale** — `~/.config/gh/hosts.yml` token invalid. Git push works (uses credentials.env). Fix: `gh auth login`. Non-urgent.
 
+**Session 19 summary (2026-05-18 — Phase 6 resolution complete through Beat 4):**
+- **03-09 resolved (L104):** Apex activation — Beat 0 silent note, Beat 3 queue trigger, resources non-refundable, suspended ops fail on Apex success. §15 and §16 updated.
+- **L105 locked:** Beat 0 Payment Validation — per-card resource check at case opening. Four outcomes: full (drain, face-up), partial non-Apex (drain + +50 marker, face-up), zero non-Apex (face-down auto-fail), Apex any shortfall (drain what's there, face-down). Face-down cards auto-fail at Beat 3 Step 1 before Apex check.
+- **L106 locked:** Political act payment moved from Phase 4 Declaration to Beat 4 Submit Payment. Resources stay on tableau at Declaration; paid to Reservoir in initiative order at start of Beat 4. Three-outcome validation (full/partial/zero) mirrors Beat 0. Phase 4 Step 3 updated.
+- **Beat 0 "The Cases Open" finalized:** Full dispatch case workflow — payment validation table, step structure, sub-bullet stack order. Locked by Andy.
+- **Beat 1 Step 3 added:** Targeting restriction check extended to declared political acts. Restricted political acts cancelled before payment — resource tokens remain with Faction Player.
+- **Beat 3 Step 1:** Face-down auto-fail check added (before Pass and Apex checks). Step 3: +50 payment marker added to modifier list.
+- **Beat 4 major restructure:**
+  - Submit Payment section (before resolution loop): initiative-order payment validation, ARBITER acknowledges/announces, +50 marker or face-down per outcome.
+  - Situation Report targeting restriction check moved from Beat 4 to Beat 1 Step 3.
+  - No public resolution grid — each Faction Player resolves at their own tableau in initiative order; ARBITER observes, validates, provides tokens.
+  - Step 1 reordered: Apex check → face-down auto-fail → read card.
+  - Step 2: "Faction Player reads base difficulty aloud from card" — §13 lookup removed; threshold on card face.
+  - Step 3: "any difficulty markers placed by ARBITER" (generalized from +50 specific).
+  - Step 9 (Discovery) removed — political acts are public; nothing to discover.
+  - Steps renumbered 9–12. Step 9 = Clean up, Step 10 = Portrait, Step 11 = Chronicle, Step 12 = Repeat.
+- **§15 Apex Activation:** Generalized "Resolution is suspended" / "Resources not refunded" language covers covert and public. Opening redundant italic removed. Step 4 resume language clarified.
+- **§16 Apex example:** Updated to Beat 0 detection / Beat 3 trigger / queue suspended / no refund.
+- **PM05:** 03-09 ✅, 03-10 ✅, 04-15 (modifier token set full design), XA-22 Beat 4 no-grid noted.
+- **PM02:** L104, L105, L106 locked.
+- **Beat 5 review NOT started** — stopping point for session 19.
+
 **Session 18 summary (2026-05-18 — housekeeping and creative workflow):**
 - **03-09 NOT addressed** — full session consumed by infrastructure and creative workflow work. Still the primary blocker. See Recommended Next Steps.
 - **ClaudeIOS workflow finalized:**
@@ -222,17 +244,16 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Whiteboard created:** `~/Projects/Whiteboard/` — working space for temporary design documents outside the project. `andytemp/` folder deleted after content migrated to Artifact 07.
 - **Phase 6 review paused:** Beat 3 Steps 4–14, Beat 4, Beat 5, §14 Special Conditions, §15 Examples not yet reviewed this session.
 
-**Recommended next steps (session 19):**
-1. **Resolve 03-09 (Apex + Beat 0 design conflict)** — three options in PM05; decision unblocks §15 and the Apex example in §16 **(PRIMARY BLOCKER)**
-2. **Complete Artifact 03 Phase 6 review** — §15 Special Conditions (Apex rules), §16 Examples (Apex example stale), then sign-off
-3. **Artifact 03 sign-off** — 03-04: version update in PM01, PM03 status
-4. **Confirm XA-20 scan results** — autonomous pass ran session 17; review and mark complete
-5. **Resolve XA-21** — choose option A, B, or C from PM05 entry (player-facing restriction indicator; follows 03-09)
-6. **Artifact 07 re-sign-off** — Resolution Grid + six-beat structure (material changes, sessions 16–17)
-7. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
-8. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
-9. **PM05 additions from session 18 creative work** — Holt for Artifact 00 §6 character entry; Castellan as named-but-thin minor character; transit ending as shared structural register; year-seven timeline verification
-10. **Re-upload to ClaudeIOS project files** — CANON_CANDIDATES.md (updated session 18), ProjectInstructions.md (updated session 18)
+**Recommended next steps (session 20):**
+1. **Beat 5 review** — starting point for session 20; then §16 Examples full review
+2. **Artifact 03 sign-off** — 03-04: version update to 1.7 in PM01, PM03 status updated
+3. **Resolve XA-21** — choose option A, B, or C from PM05 entry (player-facing Situation Report restriction indicator; Beat 1 Step 3 now confirms there IS a player-facing need)
+4. **Artifact 07 re-sign-off** — Beat 4 no-grid correction needed (Artifact 07 §8 references public resolution grid design — now obsolete); plus Resolution Grid + six-beat structure material changes sessions 16–17
+5. **L103 PM02 correction note** — Beat 4 description ("ARBITER gathers into public resolution grid") superseded by L106; add correction note
+6. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
+7. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
+8. **PM05 additions from session 18 creative work** — Holt for Artifact 00 §6 character entry; Castellan as named-but-thin minor character; year-seven timeline verification
+9. **Re-upload to ClaudeIOS project files** — CANON_CANDIDATES.md (updated session 18), ProjectInstructions.md (updated session 18)
 
 **Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
