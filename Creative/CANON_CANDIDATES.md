@@ -313,6 +313,86 @@ The silence that followed was not the quiet of an empty room. ~~[cut: elaborated
 
 ---
 
+## Claude Sonnet 4.6 — 2026-05-18
+
+Source files: `Vignettes/vignette-holt-index-origin-20260518.md` · `Vignettes/vignette-syndicate-ground-underneath-20260518.md`
+
+---
+
+### ⭐ "The Calibration Problem" — vignette + character
+
+**Source:** vignette-holt-index-origin-20260518.md
+**Status:** 📝 Canon candidate — strongest single vignette in the full set. Holt is the most important character introduced: his name is already embedded in the game's mechanical language (the Holt Index = the influence level system) and this is the first piece of content to give him a face. Peripheral observer, managing proximity to the truth rather than stonewalling. True State consistent throughout — the instrument detects Chorus-sensitive collective attention without that ever being stated.
+
+**No edits required.**
+
+---
+
+### ✂️ Holt closing exchange — standalone
+
+**Source:** vignette-holt-index-origin-20260518.md
+**Attribution:** Holt, in conversation with an unnamed economist
+**Status:** 📝 Flavor copy — strong standalone. Artifact 00 §6 or Artifact 07 sidebar candidate.
+
+> "I was trying to find out whether the instrument was reading the room. Or whether the room was reading the instrument."
+>
+> "Those aren't the same question."
+>
+> "No. They aren't."
+
+*No edits needed.*
+
+---
+
+### ✂️ Holt closing image — standalone
+
+**Source:** vignette-holt-index-origin-20260518.md
+**Attribution:** Narrator
+**Status:** 📝 Flavor copy — best ending in any submission. Three lines as a unit. Artifact 00 §6 or player manual sidebar.
+
+> The fluorescent light above the depot counter had a specific flicker — not the municipal grid's cycle. Holt had timed it once, years ago, against a wristwatch. Had written the interval in a notebook. Had closed the notebook.
+>
+> The interval was not random.
+>
+> Holt had never told anyone that.
+
+*No edits needed.*
+
+---
+
+### ⭐ "The Ground Underneath" — vignette + characters
+
+**Source:** vignette-syndicate-ground-underneath-20260518.md
+**Status:** 📝 Canon candidate — first Syndicate vignette; fills the only faction gap in the submission set. Castellan (Syndicate) written with no interiority — structural patience, not performed indifference. Renata Okafor (Guild-aligned development VP) is a viable recurring character; arrives through professional language before doctrine. The year-seven detail is the scene's load-bearing fact and lands correctly. True State consistent: Syndicate infrastructure position is real; belief that it constitutes the response is the error.
+
+**No edits required.**
+
+---
+
+### ✂️ Castellan closing line — standalone
+
+**Source:** vignette-syndicate-ground-underneath-20260518.md
+**Attribution:** Castellan (Syndicate), in response to Renata Okafor
+**Status:** 📝 Flavor copy — best single line of Syndicate doctrine produced. Card quote or player manual sidebar.
+
+> "Land," he said. "We thought we were buying land."
+
+*No edits needed.*
+
+---
+
+### ✂️ Renata closing observation — standalone
+
+**Source:** vignette-syndicate-ground-underneath-20260518.md
+**Attribution:** Narrator / Renata Okafor
+**Status:** 📝 Flavor copy — Artifact 00 §7 Syndicate entry or player manual sidebar.
+
+> The ground underneath the work would belong to someone who had never asked what the work meant.
+
+*No edits needed.*
+
+---
+
 ## What Was Not Selected
 
 | Item | Source | Reason |

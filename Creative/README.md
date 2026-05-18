@@ -29,6 +29,8 @@ Source material for world-building. Stories, characters, vignettes, and quotes g
 | `Vignettes/Gemini20260516_2.md` | Vignette + Quotes | AI agent — Gemini, 2026-05-16 | 2026-05-16 | 🔍 | Subject: Atacama radio observatory / peripheral observer. See CANON_CANDIDATES.md |
 | `Vignettes/Gemini20260516_3.md` | Vignette + Quotes | AI agent — Gemini, 2026-05-16 | 2026-05-16 | 🔍 | Subject: original station crew / Dr. Alistair Vance. See CANON_CANDIDATES.md |
 | `Vignettes/Gemini20260516_4.md` | Vignette + Quotes | AI agent — Gemini, 2026-05-16 | 2026-05-16 | 🔍 | Subject: ARBITER at The Table / Kang-Miller session. See CANON_CANDIDATES.md |
+| `Vignettes/vignette-holt-index-origin-20260518.md` | Vignette | AI agent — Claude Sonnet 4.6, 2026-05-18 | 2026-05-18 | ⭐ | Subject: Holt / origin of the Holt Index. See CANON_CANDIDATES.md |
+| `Vignettes/vignette-syndicate-ground-underneath-20260518.md` | Vignette | AI agent — Claude Sonnet 4.6, 2026-05-18 | 2026-05-18 | ⭐ | Subject: Syndicate / Castellan + Renata Okafor / year-seven land position. See CANON_CANDIDATES.md |
 
 ---
 
