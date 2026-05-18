@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-18 (session 20 complete) — supersedes session 19 save state.
+### Generated: 2026-05-18 (session 21 in progress) — supersedes session 20 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -49,6 +49,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
 | 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (19 types, ID namespaces), L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes) drawn from Retired/Electronic schema. L2 TypeScript schema and information hierarchy pointers in §8. Established session 20. |
 | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
+| 03a — Game Engine Specification | 0.96 | 🔄 In progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) complete; Layer 3 (Decision Tables) stubbed. DF-01–DF-04 registered. See session 21 summary. |
 | 04 — Action Card System | 0.9.6 | 🔄 In Progress — paused until 00a signed off |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
@@ -257,15 +258,28 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM03 v1.7:** 00b row added, Art 03 updated to ✅ Signed Off v1.7.
 - **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
 
-**Recommended next steps (session 21):**
+**Session 21 summary (2026-05-18 — in progress):**
+- **Art 03a (Game Engine Specification) advanced: v0.1 → v0.96.** Companion to Art 03. Code-lite formal spec — state model, pseudocode beat procedures, decision tables.
+- **Layer 1 (State Model) complete:** §4.0 Setup State (all variables with starting values, 9 domains); §4.1 State Variable Registry (9 domains: Board, Faction, Quarter, Event, Card, ARBITER, System, Case, Resolution Grid); §4.2 Beat Boundary Snapshots (12 boundaries, Start of Quarter through Debrief End). §4.0 domain order aligned to §4.1.
+- **Layer 2 (Beat Procedures) complete:** Beat_0 through Beat_5 as structured pseudocode. Modifier stack expressed as summation formula. Resolution check as formal inequality. M_standing() helper captures PS-xx → threshold mapping.
+- **Layer 3 (Decision Tables) stubbed:** DT-01–DT-09 registered, no content yet.
+- **New State Domains added:** Case Domain (dispatch case transport layer — Case[F-xx].ID, Faction, Packet[n].SequenceID/Target/CovertCard/ModifierCards/ARBITERResponseCards/IntelTokens); Resolution Grid two-zone model (ARBITER Resolution Area — existing variables; Political Act Declaration Area — Grid.Political[F-xx].DeclaredCard/ModifierCards/ResourceStake/PartialPaymentMarker); ARBITER.Notepad.
+- **Key structural decisions:** Unified Hand model — all tableau cards use .Hand, distinction is lifecycle behavior (Recycle/OneShot/Permanent/Deploy). Reservoir = System entity, not F-06. ARBITER = F-06 with 8 chips at D-22, standard faction entry. Grid.Political replaces Faction.DeclaredAct[f] — Beat_4 updated throughout.
+- **Design Findings registered:** DF-01 (Beat 1 "Operation Failed" vs "Operation Blocked" label inconsistency — both RO-03); DF-02 ("+50 difficulty" prose vs "−50" threshold table — inverse sign convention); DF-03 (Faction.Resources mutation point needs splitting: Phase 4 Declaration vs Beat 4 Submit Payment vs Beat 3/4 failure); DF-04 (00b audit required for new types: Case, Packet, GridCell, IP-xx — no entity IDs or lookup tables yet).
+
+**Recommended next steps (session 22 and beyond):**
 1. **XA-21** — choose option A, B, or C from PM05 entry (player-facing Situation Report restriction indicator — Beat 1 Step 3 confirms player-facing indicator IS needed)
 2. **Artifact 07 re-sign-off** — Beat 4 no-grid correction (07 §8 references obsolete public resolution grid); plus Resolution Grid + six-beat structure material changes sessions 16–17
 3. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
 4. **Artifact 04 C16–C35** — political acts and faction-specific cards; once complete, unblocks Art 05+
 5. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
 6. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
-7. **XA-29** (unsupervised) — component terminology cleanup across all artifacts
-8. **XA-23** (unsupervised) — index jump links for all artifact Index sections
+7. **Art 03a — DF-01/DF-02 decisions** — confirm "Operation Blocked" for both Beat 1/2 (amend Art 03 §12); clarify partial payment sign convention for Art 07 token design
+8. **Art 03a — DF-03** — split Faction.Resources §4.1 mutation point into three entries (Phase 4 Declaration, Beat 4 Submit Payment, Beat 3/4 failure)
+9. **Art 03a — DF-04** — 00b audit: add Case, Packet, GridCell, IP-xx to entity registry with ID namespaces (CA-xx? PA-xx? IP-xx already used for Initiative Pattern)
+10. **Art 03a — Layer 3** — fill DT-01 through DT-09 Decision Tables
+11. **XA-29** (unsupervised) — component terminology cleanup across all artifacts
+12. **XA-23** (unsupervised) — index jump links for all artifact Index sections
 
 **Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
