@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.7  
+**Version:** 0.8  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -118,9 +118,9 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 |----------|----------------|--------|
 | `ARBITER.ModifierToken[M-xx]` | Provisioned by denomination — full set per Art 07 | Session setup; Art 07 |
 | `ARBITER.Resources[RT-06]` | TBD — Art 07 | Art 07 |
-| `Reservoir[RT-xx]` | 0 per resource type — empty at session start | Setup |
+| `Reservoir[RT-xx]` | 50 per resource type — provisioned at session start | Setup |
 
-*Reservoir begins empty. Resources enter the Reservoir only through faction payments during Resolution (Beat 0 drain, Beat 4 Submit Payment). ARBITER.Resources[RT-06] is ARBITER's own operational resource — separate from the Reservoir.*
+*Reservoir is pre-loaded with 50 of each resource type at session start. This represents the city's existing economic base and ensures sufficient supply to sustain Burst Play trades, Translation payouts, and other Reservoir draws across all 8 Quarters. Value is a working baseline pending playtest validation. Resources also enter the Reservoir through faction payments during Resolution (Beat 0 drain, Beat 4 Submit Payment). ARBITER.Resources[RT-06] is ARBITER's own operational resource — separate from the Reservoir.*
 
 #### Quarter, Event, and Grid Domains at Setup
 
@@ -232,9 +232,11 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
-| `Reservoir[RT-xx]` | Integer ≥ 0 per resource type | VS-01 | Beat 0 (payment drain from dispatch cases); Beat 4 Submit Payment (political act payment drain); Debrief (Burst Play trade-in; Translation payouts) |
+| `Reservoir[RT-xx]` | Integer ≥ 0 per resource type | VS-01 | Session setup (pre-loaded 50 per type); Beat 0 (payment drain from dispatch cases); Beat 4 Submit Payment (political act payment drain); Debrief (Burst Play trade-in; Translation payouts) |
 
-*Design decision: Reservoir = System entity (not F-06). ARBITER already has RT-06 (Resolution) as their own resource type, earned operationally. The Reservoir is the collective pool of all spent faction resources — a board-level sink owned by no faction. Conflating it with F-06 would mix ARBITER's operational budget with the city's spent-resource pool. If L2 architecture treats all resource pools under a unified `Resources[Owner][RT-xx]` model, Reservoir maps to `Owner = System.Reservoir`, not `Owner = F-06`.*
+*Design decision: Reservoir = System entity (not F-06). ARBITER already has RT-06 (Resolution) as their own resource type, earned operationally. The Reservoir is the collective pool of all spent faction resources — a board-level pool owned by no faction. Conflating it with F-06 would mix ARBITER's operational budget with the city's resource pool. If L2 architecture treats all resource pools under a unified `Resources[Owner][RT-xx]` model, Reservoir maps to `Owner = System.Reservoir`, not `Owner = F-06`.*
+
+*Starting value of 50 per resource type is a working baseline — sufficient to sustain Burst Play trades (modifier cards → Reservoir resources at 1:1), Translation payouts, and any other Reservoir draws across 8 Quarters. Pending playtest validation (PT-xx — to be assigned).*
 
 ---
 
@@ -1012,4 +1014,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.7*
+*End of Art 03a — Game Engine Specification v0.8*
