@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.93  
+**Version:** 0.94  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -93,6 +93,22 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 
 ⚠ **Starting resources — open question:** Art 01 §7 "Starting Round 1 Income" projects income from Q1 Upkeep Step 5, calculated from setup chip placement. It is unclear whether factions begin the game with resources in hand (a setup grant before Q1 Upkeep), or at zero (receiving their first income during Q1 Upkeep Step 5 only). If the income table reflects only the Upkeep yield, starting value = 0. If it includes a pre-Upkeep starting grant, the income table values are the combined total. Requires resolution in Art 00 §7 or Art 02b.
 
+#### Quarter Domain at Setup
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
+| `Quarter.Number` | 1 | Setup |
+| `Quarter.InitiativeOrder` | Unset — established in Phase 1 Upkeep Step 2 | Phase 1 |
+| `Quarter.InitiativePattern` | Unset — established in Phase 1 Upkeep Step 2 | Phase 1 |
+
+#### Event Domain at Setup
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
+| `Event.ActiveCards` | [] — empty | Setup |
+| `Event.BroadcastCard` | None | Setup |
+| `Chorus.ActivityTrack` | TBD — Art 07 | Art 07 |
+
 #### Card Domain at Setup
 
 All card types follow the same structural model: `Card.Type.Deck` is the active draw deck (selected at session setup); `Card.Type.Hand` is cards in faction possession and available to play. Lifecycle behavior (Recycle / OneShot / Permanent / Deploy) is a card attribute — not encoded in the variable name. Source: Art 04 §3, §11, §12; Art 05.
@@ -109,33 +125,38 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Card.Pass.Hand[F-xx]` | 4 Pass cards — Lifecycle: Permanent; beside tableau | Session setup; Art 04 §12 |
 | `Card.Floor.Hand[F-xx]` | 1 Floor Act — Lifecycle: Permanent; beside tableau | Session setup; Art 04 D04-13 |
 | `Card.Operative.Hand[F-xx]` | Operative cards selected at session setup — Lifecycle: Deploy; in Hand, 0 deployed to board | Session setup; Art 05 |
+| `Card.ARBITER.*` | TBD — Art 07 (resolution materials, Apex envelopes, Chronicle cards, Emergency Response set) | Art 07 |
 
 *Deck pool sizes (30 covert / select 24; 20 political / select 12) are working baselines pending validation — Art 04 A-04-01.*
 
-#### ARBITER and System Domains at Setup
+#### ARBITER Domain at Setup
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
 | `ARBITER.ModifierToken[M-xx]` | Provisioned by denomination — full set per Art 07 | Session setup; Art 07 |
 | `ARBITER.Resources[RT-06]` | TBD — Art 07 | Art 07 |
 | `ARBITER.Notepad` | Empty | Session setup |
+
+#### System Domain at Setup
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
 | `Reservoir[RT-xx]` | 50 per resource type — provisioned at session start | Setup |
 
 *Reservoir is pre-loaded with 50 of each resource type at session start. This represents the city's existing economic base and ensures sufficient supply to sustain Burst Play trades, Translation payouts, and other Reservoir draws across all 8 Quarters. Value is a working baseline pending playtest validation. Resources also enter the Reservoir through faction payments during Resolution (Beat 0 drain, Beat 4 Submit Payment). ARBITER.Resources[RT-06] is ARBITER's own operational resource — separate from the Reservoir.*
 
-#### Quarter, Event, and Grid Domains at Setup
+#### Case Domain at Setup
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
-| `Quarter.Number` | 1 | Setup |
-| `Quarter.InitiativeOrder` | Unset — established in Phase 1 Upkeep Step 2 | Phase 1 |
-| `Quarter.InitiativePattern` | Unset — established in Phase 1 Upkeep Step 2 | Phase 1 |
-| `Event.ActiveCards` | [] — empty | Setup |
-| `Event.BroadcastCard` | None | Setup |
-| `Chorus.ActivityTrack` | TBD — Art 07 | Art 07 |
 | `Case[F-xx].ID` | Assigned at session setup — one case per faction, physical label | Session setup |
 | `Case[F-xx].Faction` | F-xx — assigned at session setup | Session setup |
 | `Case[F-xx].Packet[n].*` | All empty — no packets loaded; submitted at Phase 3 Dispatch | Phase 3 |
+
+#### Resolution Grid Domain at Setup
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
 | `Grid.*` | All empty — Grid instantiated at Beat 0 | Beat 0 |
 
 ---
@@ -1055,4 +1076,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.93*
+*End of Art 03a — Game Engine Specification v0.94*
