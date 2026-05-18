@@ -15,6 +15,7 @@ Status as of Session 19. Authoritative status: [PM03](PM03___Master_Artifact_Ind
 | 02a | [Resource Systems: Board State](02a___Resource_Systems_Board_State.md) | 1.3 | 🔄 Re-sign-off pending (v1.3 material change, session 14) |
 | 02b | [Resource Systems: Tracking](02b___Resource_Systems_Tracking.md) | 1.5 | ✅ Signed off |
 | 03 | [Round Structure & Gameplay](03___Round_Structure___Gameplay.md) | 1.7 | ✅ Signed off — Session 20 |
+| 03a | [Game Engine Specification](03a___Game_Engine_Specification.md) | 0.1 | 🔄 Draft placeholder |
 | 04 | [Action Card System](04___Action_Card_System.md) | 0.9.6 | 🔄 In progress — paused until 00a signed off |
 | 04b | [Action Taxonomy & Design Analysis](04b___Action_Taxonomy_Design_Analysis.md) | 1.1 | ✅ Reference Document — Active |
 | 05 | [Operative & Apex System](05___Operative_Apex_System.md) | 0.1 | 🔄 Draft placeholder |
