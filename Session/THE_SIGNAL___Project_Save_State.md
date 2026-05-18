@@ -198,7 +198,7 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **§16 Apex example:** Updated to Beat 0 detection / Beat 3 trigger / queue suspended / no refund.
 - **PM05:** 03-09 ✅, 03-10 ✅, 04-15 (modifier token set full design), XA-22 Beat 4 no-grid noted.
 - **PM02:** L104, L105, L106 locked.
-- **Beat 5 review NOT started** — stopping point for session 19.
+- **Beat 5 signed off** — Andy reviewed independently and approved.
 
 **Session 18 summary (2026-05-18 — housekeeping and creative workflow):**
 - **03-09 NOT addressed** — full session consumed by infrastructure and creative workflow work. Still the primary blocker. See Recommended Next Steps.
@@ -245,8 +245,9 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Phase 6 review paused:** Beat 3 Steps 4–14, Beat 4, Beat 5, §14 Special Conditions, §15 Examples not yet reviewed this session.
 
 **Recommended next steps (session 20):**
-1. **Beat 5 review** — starting point for session 20; then §16 Examples full review
-2. **Artifact 03 sign-off** — 03-04: version update to 1.7 in PM01, PM03 status updated
+1. **§13 The Operation System review** — starting point for session 20
+2. **Complete Phase 6 review** — §14 End of Quarter, §15 Special Conditions (already updated), §16 Examples; then Artifact 03 sign-off
+3. **Artifact 03 sign-off** — 03-04: version update to 1.7 in PM01, PM03 status updated
 3. **Resolve XA-21** — choose option A, B, or C from PM05 entry (player-facing Situation Report restriction indicator; Beat 1 Step 3 now confirms there IS a player-facing need)
 4. **Artifact 07 re-sign-off** — Beat 4 no-grid correction needed (Artifact 07 §8 references public resolution grid design — now obsolete); plus Resolution Grid + six-beat structure material changes sessions 16–17
 5. **L103 PM02 correction note** — Beat 4 description ("ARBITER gathers into public resolution grid") superseded by L106; add correction note
