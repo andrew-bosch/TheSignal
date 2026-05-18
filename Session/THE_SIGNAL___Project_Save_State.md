@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-17 (session 16 complete) — supersedes session 15 save state
+### Generated: 2026-05-18 (session 18 complete) — supersedes session 17 save state
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -173,10 +173,30 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Artifact 04 C09:** Design note updated — Political Act card classification, subsequent-Quarter timing
 
 **Session 17 summary (2026-05-17 — complete):**
-- **iOS creative session workflow established:** Andy runs exploratory sessions on iPhone via claude.ai with a separate Claude Project (instructions at `~/Projects/ClaudeIOS/ProjectInstructions.md`). Sessions are non-binding. At session end, Claude generates a structured `.md` summary dropped into `~/Projects/ClaudeIOS/`. Claude Code picks up summaries at next session open and actions follow-ups. Documented in CLAUDE.md.
+- **iOS creative session workflow established:** Andy runs exploratory sessions on iPhone via claude.ai with a separate Claude Project (instructions at `~/Projects/TheSignal/ClaudeIOS/ProjectInstructions.md`). Sessions are non-binding. At session end, Claude generates a structured `.md` summary dropped into `~/Projects/TheSignal/ClaudeIOS/new/`. Claude Code picks up summaries at next session open and actions follow-ups. Documented in CLAUDE.md.
 - **index.html committed to repo root** — project homepage built in mobile creative session. Future-punk aesthetic: dark background, faction colors as data series, ARBITER as white, animated Chorus sine wave header. GitHub Pages enabled at `https://andrew-bosch.github.io/TheSignal/`.
 - **PM05 11-01/11-02 added** — index.html as informal Artifact 11 visual reference; Chorus wave as open design question for Artifact 11 §7.
 - **gh CLI token stale** — `~/.config/gh/hosts.yml` token invalid. Git push works (uses credentials.env). Fix: `gh auth login`. Non-urgent.
+
+**Session 18 summary (2026-05-18 — housekeeping and creative workflow):**
+- **03-09 NOT addressed** — full session consumed by infrastructure and creative workflow work. Still the primary blocker. See Recommended Next Steps.
+- **ClaudeIOS workflow finalized:**
+  - `ClaudeIOS/new/` subfolder established — only location to check at session open for unprocessed output
+  - `ClaudeIOS/Archive/` subfolder for processed summaries
+  - `ClaudeIOS/ProjectInstructions.md` moved into repo (was outside at `~/Projects/ClaudeIOS/`); revised — removed "extraterrestrial" framing, added faction doctrines, Design Pillars, Creative Resources section, tightened session summary format. Session start reads from project files only.
+  - `ClaudeIOS/TrueState.md` created — distilled True State (five sections). Local-only, gitignored. Must be uploaded manually to claude.ai ClaudeIOS project files.
+  - CLAUDE.md iOS workflow section updated: `new/` subfolder structure; reference files (ProjectInstructions.md, TrueState.md) distinguished from summaries.
+- **index.html redesigned** — rebuilt as game teaser (not artifact index). Factions as single-line world characterizations. ARBITER own section (physical description + Reckoning quote). Vance pull quote. Contrast fixes (targeted hex overrides). Live at `https://andrew-bosch.github.io/TheSignal/`.
+- **README.md updated** — homepage link at top; "extraterrestrial" removed.
+- **.gitignore updated** — `ClaudeIOS/TrueState.md` (private, never commit); `.~lock.*#` (LibreOffice lock files).
+- **Two new vignettes filed** (Claude Sonnet 4.6, 2026-05-18):
+  - `Creative/Vignettes/vignette-holt-index-origin-20260518.md` — "The Calibration Problem" — Holt origin (⭐). First character with name embedded in game mechanics (Holt Index = influence level system). Flavor: *"whether the instrument was reading the room. Or whether the room was reading the instrument."*
+  - `Creative/Vignettes/vignette-syndicate-ground-underneath-20260518.md` — "The Ground Underneath" — Castellan + Renata Okafor / year-seven land position (⭐). First Syndicate vignette. Castellan intentionally without interiority. Flavor: *"Land. We thought we were buying land."*
+- **CANON_CANDIDATES.md updated** — Claude Sonnet 4.6 section added; 2 ⭐ canon candidates, 4 ✂️ flavor copy extracts.
+- **Creative/README.md updated** — two new ⭐ submission index rows.
+- **Year-seven Syndicate filing flag** — needs verification against locked NM timeline before canon confirmation. (Syndicate registered holding company year 7, before response window was formalized.)
+- **ClaudeIOS project files need re-upload** (pending): CANON_CANDIDATES.md, ProjectInstructions.md. TrueState.md: verify already uploaded.
+- **Creative quality note:** Both vignettes produced with TrueState.md in project files are the strongest creative output in the full submission set. Context quality directly determines output quality.
 
 **Session 17 summary (2026-05-17):**
 - **Beat 3 step restructure:** 13 steps (down from 15). Step 2 (restriction check) removed — grid pre-cleaned in Beat 1. Type B CM modifier folded into Step 3 "Apply all modifiers" (token already on card from Beat 2). Steps 8+9 (marker flip + board changes) kept combined as Step 7. Failure (Step 8) and discovery (Step 9) remain split. Step 10 cleanup: operation card + target back to dispatch case, resolution card in, modifier cards discarded, modifier tokens returned.
@@ -202,15 +222,17 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Whiteboard created:** `~/Projects/Whiteboard/` — working space for temporary design documents outside the project. `andytemp/` folder deleted after content migrated to Artifact 07.
 - **Phase 6 review paused:** Beat 3 Steps 4–14, Beat 4, Beat 5, §14 Special Conditions, §15 Examples not yet reviewed this session.
 
-**Recommended next steps (session 18):**
-1. **Resolve 03-09 (Apex + Beat 0 design conflict)** — three options in PM05; decision unblocks §15 and the Apex example in §16
+**Recommended next steps (session 19):**
+1. **Resolve 03-09 (Apex + Beat 0 design conflict)** — three options in PM05; decision unblocks §15 and the Apex example in §16 **(PRIMARY BLOCKER)**
 2. **Complete Artifact 03 Phase 6 review** — §15 Special Conditions (Apex rules), §16 Examples (Apex example stale), then sign-off
 3. **Artifact 03 sign-off** — 03-04: version update in PM01, PM03 status
-4. **Confirm XA-20 scan results** — autonomous pass running session 17; review and mark complete
-5. **Resolve XA-21** — choose option A, B, or C from PM05 03-09 entry (player-facing restriction indicator)
+4. **Confirm XA-20 scan results** — autonomous pass ran session 17; review and mark complete
+5. **Resolve XA-21** — choose option A, B, or C from PM05 entry (player-facing restriction indicator; follows 03-09)
 6. **Artifact 07 re-sign-off** — Resolution Grid + six-beat structure (material changes, sessions 16–17)
 7. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
 8. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
+9. **PM05 additions from session 18 creative work** — Holt for Artifact 00 §6 character entry; Castellan as named-but-thin minor character; transit ending as shared structural register; year-seven timeline verification
+10. **Re-upload to ClaudeIOS project files** — CANON_CANDIDATES.md (updated session 18), ProjectInstructions.md (updated session 18)
 
 **Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
