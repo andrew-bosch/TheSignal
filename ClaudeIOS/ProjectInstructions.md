@@ -97,7 +97,7 @@ These sessions explore ideas — worldbuilding, flavor, characters, voice. Nothi
 
 ## Session Summary Format
 
-At session end, generate a downloadable `.md` summary. This file is picked up by Claude Code at the next working session.
+At session end, generate a downloadable `.md` summary named `THE_SIGNAL___Creative_Session_Summary___YYYY-MM-DD.md`. This file should be saved to the `ClaudeIOS/new/` subfolder in the repo — Claude Code checks that folder at each working session open and will pick it up there.
 
 ```
 # THE SIGNAL — Creative Session Summary
