@@ -1,7 +1,7 @@
 # PM01 — Project Charter & Work Breakdown
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.4  
+**Version:** 1.6  
 **Status:** 🔄 Updated — Active  
 **Type:** Project Epic — all design artifacts are Features of this Epic
 
@@ -29,6 +29,14 @@ Specifically:
 - Does the narrative system (Chorus Portrait, Chronicle, Chorus Question) produce genuine emotional resonance?
 
 These questions cannot be answered by design alone. They require observed play. The L1 Paper Prototype exists to produce that observation data before any expensive development commitments are made.
+
+### Core Assumption — Replayability
+
+The game's replay value comes from meaningful player agency over the session's outcome and experience — not from randomized board state alone. Players return because the decisions available to them before and during a session allow them to pursue genuinely different objectives in genuinely different ways. The deckbuilding system (operative selection, hidden objective, and card pool composition) is the primary mechanical lever the design relies on to produce this.
+
+**What the prototype must demonstrate:** players should leave a session able to articulate a different approach they would want to try. That articulation — not simply wanting to play again — is the signal the design is working. If players cannot name what they would do differently, the system is not producing meaningful strategic differentiation.
+
+---
 
 ### Assumption to Validate — Player Count
 The game is designed to accommodate **2–6 human participants**: up to 5 faction players plus 1 ARBITER. The following assumptions about player count must be validated in playtesting:
@@ -108,10 +116,10 @@ A self-contained tabletop game kit that can be:
 |---|-----------|-------------|
 | S1 | A complete session (8 rounds) runs in 90–150 minutes | Clock |
 | S2 | ARBITER can facilitate without consulting rules during resolution | Error count per session |
-| S3 | All five factions feel meaningfully different in play | Players can describe opponent strategy unprompted |
-| S4 | Players want to play Session 2 before leaving | Post-session question |
+| S3 | All five factions feel meaningfully different in play — and players can identify a different faction or approach they would want to try next session | Players can describe opponent strategy unprompted; players can articulate an alternative strategy or faction they haven't tried |
+| S4 | Players want to play Session 2 before leaving — and can name what they would do differently | Post-session question: not just "yes/no" but "what would you try next time?" |
 | S5 | At least one Accord is proposed per session | Count |
-| S6 | The Chronicle resonates at session end | Player agreement with ARBITER's account |
+| S6 | The Chronicle resonates at session end — players feel it reflects what they actually did, not just what happened | Player agreement with ARBITER's account; players recognize their own behavior in the record |
 | S7 | No single faction dominates economically by Quarter 4 | Resource counts at Round 4 end |
 
 ---
@@ -162,7 +170,7 @@ Production does not begin until relevant design artifacts are signed off. Items 
 |---|-----------|---------------|----------|--------|---------|--------|-----------|
 | 2.01 | Printed hex map | New Meridian | 1 (A1 or A0) | Print shop | 01, V01, V08 | ⬜ | $5–20 |
 | 2.02 | Influence discs | Presence tokens | 15 per faction × 5 | Poker chips | 02a | ⬜ | $15–30 |
-| 2.03 | Large distinct pieces | Operational markers | 2 per faction × 5 | Distinct shape | 01 | ⬜ | $5–10 |
+| 2.03 | Large distinct pieces — double-sided (normal / blocked face) | Operational markers | 2 per faction × 5 | Distinct shape; must support two faces — normal and blocked (for Event Card conversion-blocking effects) | 01, 03 | ⬜ | $5–10 |
 | 2.04 | Small square chits | Structure tokens | 6 per faction × 5 | Card stock | 02a | ⬜ | $2–5 |
 | 2.05 | Resource chips | Asset tokens | 30 per type × 5 | Poker chips | 02a | ⬜ | $20–35 |
 | 2.06 | Faction chits + sticky notes | Intel notes | 4 per faction × 5 | Colored chits | 02b | ⬜ | $3–7 |
@@ -175,23 +183,33 @@ Production does not begin until relevant design artifacts are signed off. Items 
 | 2.12 | Operative dossier cards | Field operative dossiers | Per 09 spec | Print + cut | 09 | ⬜ | $5–15 |
 | 2.13 | Modifier cards | Operational intelligence cards | Per 09 spec | Print + cut | 09 | ⬜ | $5–15 |
 | 2.14 | Counter cards | Countermeasure cards | Per 09 spec | Print + cut | 09 | ⬜ | $3–8 |
-| 2.15 | World event cards | Situation reports | Per 09 spec | Print + cut | 09 | ⬜ | $3–8 |
+| 2.15 | World event cards — two cards per Situation Report | Situation reports | Per 09 spec — each Situation Report is two cards: public narrative card (all players) + ARBITER effect card (ARBITER only). See L35. | Print + cut | 09 | ⬜ | $3–8 |
 | 2.16 | Objective cards | Classified directives | Per 09 spec | Print + cut | 09 | ⬜ | $2–5 |
 | 2.17 | Accord forms | Accord documents | 8 | Laminated dry-erase, 8cm × 8cm | 06 | ⬜ | $3–7 |
 | 2.18 | Pass cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $1–3 |
 | 2.19 | Small boxes or envelopes | Dispatch cases | 1 per player | Purchase or make | 06 | ⬜ | $3–10 |
 | 2.20 | Laminated strips | Public Standing tracks | 1 per faction | Print + laminate | 02b, V02 | ⬜ | $3–7 |
 | 2.21 | Combined laminated strip | World Condition tracks | 1 | Print + laminate | 01, V04 | ⬜ | $1–3 |
-| 2.22 | Simple strip | Round tracker | 1 | Print + laminate | 03 | ⬜ | $1–3 |
+| 2.22 | Simple strip | Quarter tracker | 1 | Print + laminate | 03 | ⬜ | $1–3 |
 | 2.23 | Dry-erase grid behind screen | Chorus Portrait board | 1 | Print + laminate | 07 | ⬜ | $2–5 |
-| 2.24 | Laminated A4 mat | ARBITER resolution mat | 1 | Print + laminate | 07 | ⬜ | $1–3 |
+| 2.24 | Laminated A4 mat | ARBITER working mat | 1 — general ARBITER tableau surface for Portrait board, Chronicle area, and modifier token storage. Resolution Grid is a separate component (see 2.31). | Print + laminate | 07 | ⬜ | $1–3 |
 | 2.25 | Sealed index cards | Apex envelopes | 10 (2 operatives × 5 factions) | Prepare at setup | 05 | ⬜ | $1–3 |
-| 2.26 | Pre-printed cards | Table Record pad | 30 sheets | Print | 07 | ⬜ | $2–5 |
+| 2.26 | Pre-printed forms | Chronicle forms | 30 sheets (8 per session — 1 per Quarter) | Print | 07 | ⬜ | $2–5 |
 | 2.27 | Adhesive notes | Intel note age tracker | 1 pad | Purchase | 02b | ⬜ | $1–2 |
 | 2.28 | Countdown device | Timer | 1 | Sand timer or phone | 03 | ⬜ | $3–10 |
 | 2.29 | Writing tools | — | Set | Purchase | — | ⬜ | $5–10 |
 | 2.30 | Laminated cards | Player quick reference cards | 1 per player | Print + laminate | V12–V18 | ⬜ | $3–7 |
-| **Total** | | | | | | | **$100–230** |
+| 2.31 | Laminated or printed grid mat | Resolution Grid | 1 — Beat 0 staging surface; 5 lanes (case receipt order) × rows for Beat 2 cards and paired Beat 3 card/target rows (up to 4 pairs for Ghost). Full spec: Artifact 07; visual design: Artifact 11. See PM05 XA-22. | Print + laminate | 07, 11 | ⬜ | $2–5 |
+| 2.32 | Physically distinct tokens — by size, color, or numeral | Modifier tokens | Per session — known values: +50 (partial payment penalty, Beat 0); −15 (Type B Countermeasure, Beat 2). Full set TBD pending card system completion. Stored in ARBITER modifier area between use; must remain legible in card-stack cascade. See PM05 04-15. | Purchase or print | 07, 09 | ⬜ | $3–8 |
+| 2.33 | Double-sided chips or printed cards | Status markers | 1 per faction × 5 — two sides: Discussing (yellow) / Ready. Faction Players flip at Phase 1 start and end. Full definition pending: PM05 XA-07. | Print + cut or purchase | 03, 07 | ⬜ | $3–7 |
+| 2.34 | Small printed cards | Personal Tiebreaker cards | TBD set — ARBITER-held; drawn when initiative tiebreaker result 9 fires (Artifact 03 §7 Phase 1). Definition and quantity pending: PM05 XA-09. | Print + cut | 03, 07 | ⬜ | $1–3 |
+| 2.35 | Blank card stock or pre-printed slips | Target slips | Per session — used in dispatch cases (covert operations) and on political act declarations. Suggest 10 per faction per session. | Print + cut or purchase | 03, 06 | ⬜ | $1–3 |
+| 2.36 | Pre-printed cards | Operation Resolution cards | 4 types: Succeeded / Failed / Blocked / Discovered — quantity per 09 spec. ARBITER places one in each faction's dispatch case at Beat 3/4 resolution; Faction Players read privately at Beat 5. | Print + cut | 03, 07, 09 | ⬜ | $2–5 |
+| 2.37 | Pre-printed slips — ARBITER-keyed format | ARBITER notification slips | Per session — ARBITER-to-faction private communications. Must be physically distinguishable from faction-authored messages to prevent forgery. See Artifact 06 §8. | Print | 06, 07 | ⬜ | $1–3 |
+| 2.38 | Blank slips or index cards | Faction message slips | Per session — faction-to-faction written messages; used during Phase 2 (Placement) and Phase 4 (Declaration). See Artifact 06 §7. | Purchase (index cards) or print | 06 | ⬜ | $1–2 |
+| 2.39 | Laminated strip with position markers | Initiative Strip | 1 — ARBITER updates at end of Phase 1 each Quarter; shows current faction initiative order on The Overview. Requires faction-colored position markers or pegs. | Print + laminate; faction markers from 2.08 | 03, 11 | ⬜ | $1–3 |
+| 2.40 | Printed card | Floor Act card | 1 per faction × 5 (or 1 universal — TBD) — always available beside tableau, not part of deck. Full design pending: PM02 D04-13. | Print + cut | 04 D04-13 | ⬜ | $1–3 |
+| **Total** | | | | | | | **$115–270** |
 
 ### WBS 3 — Playtest Infrastructure
 

@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-18 (session 18 complete) — supersedes session 17 save state
+### Generated: 2026-05-18 (session 20 complete) — supersedes session 19 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -47,16 +47,18 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
 | 02a — Resource Systems: Board State | 1.3 | 🔄 Pending Re-Sign-Off — 02a-03 applied session 14: §6 Component Names updated, ARBITER Dominance Marker row added, DOMINANT bullet rewritten (structural impossibility, not prohibition), §10 Chorus Node constitutive presence language. PM01 §2.08 Control flag quantity corrected. Material change → re-sign-off required. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
-| 03 — Round Structure & Gameplay | 1.6 | 🔄 Session 17 in progress — D03-R01 ✅, D03-R02 ✅, D03-R03 ✅ (L100). Phases 1–5 fully reviewed. Phase 6 major restructure complete: six-beat structure (L103), Beat 0 grid staging, Beat 1/2 pre-clean grid, Beat 3 13-step resolution, Beat 4 public political act grid. §15 Special Conditions blocked by 03-09 (Apex + Beat 0 conflict). §16 Examples stale (Apex example). Sign-off pending §15/§16 review and 03-09 decision. |
+| 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (19 types, ID namespaces), L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes) drawn from Retired/Electronic schema. L2 TypeScript schema and information hierarchy pointers in §8. Established session 20. |
+| 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
 | 04 — Action Card System | 0.9.6 | 🔄 In Progress — paused until 00a signed off |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
 | 10 — Game Manuals | 0.1 | 🔄 Draft Placeholder — §6.0 added: game objective statement locked |
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
-| PM01 | 1.3 | ✅ Active |
-| PM02 | 1.5 | ✅ Active — significant session 4 updates |
-| PM03 | 1.6 | ✅ Active — voice convention updated to 5 voices |
+| PM01 | 1.6 | ✅ Active |
+| PM02 | 1.9 | ✅ Active — locked decisions L01–L109 |
+| PM03 | 1.7 | ✅ Active — 00b row added, Art 03 signed off |
+| PM05 | 1.5 | ✅ Active — XA-29/PM04-04 added (L109 cleanup queue) |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
@@ -244,17 +246,26 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Whiteboard created:** `~/Projects/Whiteboard/` — working space for temporary design documents outside the project. `andytemp/` folder deleted after content migrated to Artifact 07.
 - **Phase 6 review paused:** Beat 3 Steps 4–14, Beat 4, Beat 5, §14 Special Conditions, §15 Examples not yet reviewed this session.
 
-**Recommended next steps (session 20):**
-1. **§13 The Operation System review** — starting point for session 20
-2. **Complete Phase 6 review** — §14 End of Quarter, §15 Special Conditions (already updated), §16 Examples; then Artifact 03 sign-off
-3. **Artifact 03 sign-off** — 03-04: version update to 1.7 in PM01, PM03 status updated
-3. **Resolve XA-21** — choose option A, B, or C from PM05 entry (player-facing Situation Report restriction indicator; Beat 1 Step 3 now confirms there IS a player-facing need)
-4. **Artifact 07 re-sign-off** — Beat 4 no-grid correction needed (Artifact 07 §8 references public resolution grid design — now obsolete); plus Resolution Grid + six-beat structure material changes sessions 16–17
-5. **L103 PM02 correction note** — Beat 4 description ("ARBITER gathers into public resolution grid") superseded by L106; add correction note
-6. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
-7. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
-8. **PM05 additions from session 18 creative work** — Holt for Artifact 00 §6 character entry; Castellan as named-but-thin minor character; year-seven timeline verification
-9. **Re-upload to ClaudeIOS project files** — CANON_CANDIDATES.md (updated session 18), ProjectInstructions.md (updated session 18)
+**Session 20 summary (2026-05-18 — complete):**
+- **Artifact 03 signed off at v1.7.** Seven phases: Phase 7 Debrief split from Phase 6. §14 Operation System with L108-compliant modifier table (M-01–M-12, 8 columns). §16 Apex revised: Beat 0 sub-bullet removed from Step 1; Step 2 tightened; Emergency Response assist/thwart design note added to Steps 3–4; ARBITER Conversion moved to §13 Phase 7. Deployment Marker Blocked Face example corrected (marker stays on board until Upkeep Step 4). All bare "chip" terminology replaced with "presence chip" throughout.
+- **L107 locked:** "Operation" is inclusive — Infrastructure −25 applies to all action types (covert, political, operative). Closes XA-24.
+- **L108 locked:** Database Translatable Data Design — five requirements. First applied: §14 Difficulty Modifiers table (M-01–M-12 with ID primary key, Payment row split to eliminate compound Applied cell).
+- **L109 locked:** Component Terminology Standard — every physical component must use its canonical in-game term in all artifacts. PM04 §1 will define physical descriptions. XA-29 queued for unsupervised cleanup pass.
+- **00b Data Architecture created (v0.1, Reference Document — Active):** Entity registry (19 types), L108 compliance standard (§3), 9 lookup tables including VS-xx Visibility Scope (§5.9), entity relationship map, schema reference index (10/19 complete). L2 TypeScript schema (Retired/Electronic/old__08) and information hierarchy (old__10) referenced in §8.
+- **Retired/Electronic reviewed:** old__08_DATA_MODEL.md (TypeScript v0.2 — full entity model, target L2 schema) and old__10_INFORMATION_HIERARCHY.md (12-category visibility spec) reviewed and integrated into 00b.
+- **PM02 v1.9:** L107, L108, L109 added to change log.
+- **PM03 v1.7:** 00b row added, Art 03 updated to ✅ Signed Off v1.7.
+- **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
+
+**Recommended next steps (session 21):**
+1. **XA-21** — choose option A, B, or C from PM05 entry (player-facing Situation Report restriction indicator — Beat 1 Step 3 confirms player-facing indicator IS needed)
+2. **Artifact 07 re-sign-off** — Beat 4 no-grid correction (07 §8 references obsolete public resolution grid); plus Resolution Grid + six-beat structure material changes sessions 16–17
+3. **Artifact 02a re-sign-off** — v1.3 material change (02a-03 complete session 14)
+4. **Artifact 04 C16–C35** — political acts and faction-specific cards; once complete, unblocks Art 05+
+5. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
+6. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
+7. **XA-29** (unsupervised) — component terminology cleanup across all artifacts
+8. **XA-23** (unsupervised) — index jump links for all artifact Index sections
 
 **Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
@@ -275,6 +286,13 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - L100: Free Accord card from C09 classified as Political Act card — cost 0, return to ARBITER on play, delivered to hand at case resolution, played in subsequent Quarter. No Phase 4 exception needed. Full design: PM05 04-12. (session 15)
 - L101: Automatic and Impossible removed as base difficulty values. Every committed action resolves with a d100 roll. Critical floor (01–05) and ceiling (96–00) are the only absolute limits. Automatic/Impossible may appear only as explicit card text. Resolution system renamed The Operation System (§13 Artifact 03). (session 16)
 - L102: Resolution Grid — Beat 3 resolves row-first in round-robin case receipt order. All card-1 pairs fire left to right before any card-2 pair begins. First submitter's first op fires first; all other factions' first ops follow before anyone's second begins. Beat 4 excluded. Full grid design: Artifact 07. (session 16)
+- L103: Phase 6 rebuilt to six beats (Beat 0–Beat 5). Beat 0 = cases open + grid build. Beat 1 = restrictions applied. Beat 2 = countermeasures. Beat 3 = covert resolve. Beat 4 = political resolve. Beat 5 = table speaks. (session 17)
+- L104: Apex Beat 0 silent note / Beat 3 queue trigger / resources non-refundable / suspended ops fail on Apex success. (session 19)
+- L105: Beat 0 Payment Validation — four outcomes (full/partial non-Apex/zero non-Apex/Apex shortfall). Face-down auto-fail at Beat 3 Step 1. (session 19)
+- L106: Political act payment moved from Phase 4 Declaration to Beat 4 Submit Payment. (session 19)
+- L107: "Operation" is inclusive — Infrastructure −25 applies to all action types (covert, political, operative). (session 20)
+- L108: Database Translatable Data Design — five requirements: single-typed columns, controlled vocabulary, explicit ID primary key, ID-based cross-references, explicit null/N/A. (session 20)
+- L109: Component Terminology Standard — canonical in-game term required for all physical components in all artifacts. PM04 §1 defines physical descriptions. (session 20)
 - Floor Act: working name for always-available political act (1 native resource, outside deck) — D04-13
 
 **Overnight punch list work (session 10 agents) — COMPLETED:**

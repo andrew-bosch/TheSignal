@@ -1,9 +1,9 @@
 # 03 — Round Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.6  
+**Version:** 1.7  
 
-**Status:** 🔄 Updated — Pending Re-Sign-Off (Phase 6 restructure: Operation System §13, six-beat structure, Beat 0 grid staging, Beat 3/4 step restructure)  
+**Status:** ✅ Signed Off — Session 20  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -40,11 +40,12 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 9. Phase 3 — Dispatch
 10. Phase 4 — Declaration
 11. Phase 5 — Countermeasures
-12. Phase 6 — Resolution + Debrief
-13. The Operation System
-14. End of Quarter
-15. Special Conditions & Gameplay Impacts
-16. Examples & Exceptions
+12. Phase 6 — Resolution
+13. Phase 7 — Debrief
+14. The Operation System
+15. End of Quarter
+16. Special Conditions & Gameplay Impacts
+17. Examples & Exceptions
 
 ---
 
@@ -104,8 +105,11 @@ PHASE 4 — DECLARATION
 PHASE 5 — COUNTERMEASURES
   Countermeasure cards played openly.
 
-PHASE 6 — RESOLUTION + DEBRIEF
-  All actions resolved. Board updated. Table speaks.
+PHASE 6 — RESOLUTION
+  All committed actions resolved. Board updated.
+
+PHASE 7 — DEBRIEF
+  Table reflects on outcomes. Quarter closes.
 ```
 
 Phases do not overlap. ARBITER announces the start of each phase.
@@ -180,8 +184,8 @@ ARBITER announces: *"Markers convert."*
 
 1. Each Faction Player checks deployment markers currently on the board.
 2. For each marker showing the Converting face: place 1 permanent presence chip in that district and return the marker to hand.
-3. For each marker showing the Blocked face: return the marker to hand without placing a chip.
-4. Each Faction Player updates Control flags and Tension markers as influence levels shift from new chip placements.
+3. For each marker showing the Blocked face: return the marker to hand without placing a presence chip.
+4. Each Faction Player updates Control flags and Tension markers as influence levels shift from new presence chip placements.
 
 *If no markers are on the board — as is always the case at the start of Quarter 1 — this step has no effect. Proceed to Step 5.*
 
@@ -292,8 +296,8 @@ ARBITER announces: *"Placement is open."*
 |------|-------------------|--------------------|
 | Sprawl | None | None |
 | Infrastructure | None | −25 to all operations targeting this district if no adjacent Core district holds Established or Dominant |
-| Core | Established or Dominant in an adjacent Infrastructure district (permanent chips or temporary presence from first marker this phase) | None |
-| Chorus Node | Established or Dominant in an adjacent Core district (permanent chips or temporary presence from first marker this phase) | See Artifact 02a §10 — standard entry rules do not apply |
+| Core | Established or Dominant in an adjacent Infrastructure district (permanent presence chips or temporary presence from first marker this phase) | None |
+| Chorus Node | Established or Dominant in an adjacent Core district (permanent presence chips or temporary presence from first marker this phase) | See Artifact 02a §10 — standard entry rules do not apply |
 
 3. After each placement, if influence levels change: the placing Faction Player updates the relevant Control flag or Tension marker immediately.
 
@@ -395,7 +399,7 @@ Phase ends.
 
 ---
 
-## 12. Phase 6 — Resolution + Debrief
+## 12. Phase 6 — Resolution
 
 
 - The ARBITER Player runs Resolution in six sequential beats.
@@ -523,15 +527,15 @@ For each card in queue order:
 1. Read the card in the current grid slot.
 2. If face-down: auto-fail. Discard all modifier cards from the stack. Return the action card to the faction. Advance to the next operation. No further steps apply to this slot.
 3. If Pass: note the skip and advance to the next operation. No further steps apply to this slot.
-4. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
+4. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in Section 16 before proceeding.
 
 **Step 2 — Determine base difficulty.**
 
-Read the base difficulty printed on the operation card. Look up the corresponding threshold in the Operation System (§13).
+Read the base difficulty printed on the operation card. Look up the corresponding threshold in the Operation System (§14).
 
 **Step 3 — Apply all modifiers.**
 
-Apply all active modifiers: +50 payment difficulty marker (if attached in Beat 0), Type B Countermeasure token on the card (if any), modifier cards in cascade under the operation card, Public Standing modifier, active Situation Report effects, and Protect/Defend operation modifiers.
+Apply all active modifiers: partial payment difficulty marker (if attached in Beat 0), Type B Countermeasure token on the card (if any), modifier cards in cascade under the operation card, Public Standing modifier, active Situation Report effects, Protect/Defend operation modifiers, and Infrastructure district penalty (if the target district is Infrastructure and the acting faction holds no Established or Dominant presence in an adjacent Core district).
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -612,7 +616,7 @@ In initiative order, for each Faction Player:
 
 **Step 1 — Identify the political act. Check for Apex.**
 
-1. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
+1. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in Section 16 before proceeding.
 2. If face-down: auto-fail. Discard all modifier cards. Return the political act card to the faction. Advance to the next Faction Player. No further steps apply to this faction.
 3. Read the political act card and target slip.
 
@@ -624,7 +628,7 @@ The acting Faction Player reads the base difficulty and target threshold aloud f
 
 **Step 3 — Apply all modifiers.**
 
-The acting Faction Player applies all active modifiers: any difficulty markers placed on the card by arbiter, modifier cards in cascade, Public Standing modifier, active Situation Report effects. Announces the modified threshold aloud.
+The acting Faction Player applies all active modifiers: partial payment difficulty marker (if placed by ARBITER in Submit Payment), modifier cards in cascade, Public Standing modifier, active Situation Report effects, and Infrastructure district penalty (if the target district is Infrastructure and the acting faction holds no Established or Dominant presence in an adjacent Core district). Announces the modified threshold aloud.
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -694,7 +698,7 @@ While Faction Players review their dispatch cases, the ARBITER Player makes any 
 
 ---
 
-### Debrief
+## 13. Phase 7 — Debrief
 
 ARBITER announces: *"The Table is in Debrief."*
 
@@ -711,7 +715,7 @@ Debrief is open.
 
 **ARBITER conversion:**
 
-Available during Debrief and between phases. Not available during Resolution Beats 1–4 or while the ARBITER Player is processing board changes.
+Available during Debrief and between phases. Not available during Resolution Beats 1–4 or while the ARBITER Player is processing board changes. Faction Players requesting conversion during resolution are acknowledged and served after the current beat completes.
 
 *Conversion is the lowest priority item on the ARBITER Player's task list.*
 
@@ -739,7 +743,7 @@ If Chorus Activity changed this Quarter, ARBITER incorporates this into the Debr
 
 ---
 
-## 13. The Operation System
+## 14. The Operation System
 
 The Operation System governs resolution for all committed actions: covert operations (Beat 3) and political acts (Beat 4).
 
@@ -794,28 +798,36 @@ Base difficulty is printed on the operation card or political act card. It repre
 
 ### Difficulty Modifiers
 
-| Modifier | Target Threshold Adjustment |
-|----------|-----------------------------|
-| Public Standing: Celebrated | +20 |
-| Public Standing: Respected | +10 |
-| Public Standing: Neutral | 0 |
-| Public Standing: Suspect | −10 |
-| Public Standing: Discredited | −20 |
-| Modifier card | As specified on card |
-| Active Situation Report effect | As specified on Event Card |
-| Protect / Defend operation active | As specified on operation card |
-| Type B Countermeasure active against target faction | −15 |
-| Infrastructure district — no adjacent Core at Established or Dominant | −25 |
+| ID | Category | Modifier | Scope | Applied | Instance Limit | Value Type | Threshold Adjustment |
+|----|----------|----------|-------|---------|----------------|------------|----------------------|
+| M-01 | Standing | Celebrated | All | Persistent | 1 | Fixed | +20 |
+| M-02 | Standing | Respected | All | Persistent | 1 | Fixed | +10 |
+| M-03 | Standing | Neutral | All | Persistent | 1 | Fixed | 0 |
+| M-04 | Standing | Suspect | All | Persistent | 1 | Fixed | −10 |
+| M-05 | Standing | Discredited | All | Persistent | 1 | Fixed | −20 |
+| M-06 | Payment | Partial payment marker | Covert | Beat 0 | 1 per submitted card | Fixed | −50 |
+| M-07 | Payment | Partial payment marker | Political | Beat 4 | 1 per submitted card | Fixed | −50 |
+| M-08 | Card Effect | Modifier card | All | Pre-Resolution | Unlimited | Variable | See card |
+| M-09 | Card Effect | Protect / Defend operation | Covert | Beat 2 | 1 per Protect submitted | Variable | See card |
+| M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Event Card | Variable | See Event Card |
+| M-11 | Countermeasure | Type B — target faction assets | Covert | Beat 2 | 1 per defending faction | Fixed | −15 |
+| M-12 | District | Infrastructure — no adjacent Core | All | Persistent | 1 | Fixed | −25 |
 
 *All active modifiers are cumulative. Apply all before rolling.*
 
+*Scope: "All" covers all currently defined action types (covert and political). Extends to operative actions when Artifact 05 is designed.*
+
+*Sign convention: positive Threshold Adjustment values raise the threshold (success more likely); negative values lower it (success harder). The partial payment penalty (−50) and Infrastructure penalty (−25) are the largest single Fixed modifiers in the system — a faction simultaneously facing both plus Discredited (−20) and a Type B Countermeasure (−15) is reduced by 110 points, leaving only a Critical Success (01–05) viable on any difficulty tier.*
+
+*Variable modifiers are unbounded by this table — balance analysis across all defined modifier values is maintained in Artifact 03a.*
+
 ---
 
-## 14. End of Quarter
+## 15. End of Quarter
 
 At the close of Debrief, in strict order:
 
-1. **Findings decay:** The Ghost Faction Player checks current Findings total and applies decay publicly (7–12: lose 2; 13+: lose 4). Returns chips to the Reservoir.
+1. **Findings decay:** The Ghost Faction Player checks current Findings total and applies decay publicly (7–12: lose 2; 13+: lose 4). Returns the Findings tokens to the Reservoir.
 
 2. **Debrief reward:** ARBITER assesses the quality of the Debrief conversation and selects a Tier A/B/C reward effect to apply before the Round Tracker advances. See Artifact 07 — ARBITER Toolkit for full reward options and effects.
 
@@ -831,7 +843,7 @@ If the Round Tracker reaches 8 and no Apex has resolved, proceed to Session End 
 
 ---
 
-## 15. Special Conditions & Gameplay Impacts
+## 16. Special Conditions & Gameplay Impacts
 
 ### Apex Activation
 
@@ -839,7 +851,6 @@ An Apex operation may be submitted as a covert operation (resolved in Beat 3) or
 
 **Step 1 — Identify the Apex.**
 
-- In Beat 0 (covert): The ARBITER Player notes the Apex card when opening the dispatch case. No announcement is made.
 - In Beat 3 (covert): When the Apex card is reached in the resolution queue, resolution is immediately interrupted.
 - In Beat 4 (public): The acting Faction Player reveals their Apex political act card.
 
@@ -847,23 +858,23 @@ ARBITER announces: *"An Apex operation has been submitted. Resolution is suspend
 
 **Step 2 — Confirm resources paid.**
 
-*Covert:* Payment was verified in Beat 0. A face-down Apex card auto-fails at Beat 3 Step 1 before this procedure applies. If this step is reached, full payment was confirmed in Beat 0 and resources are already in the Reservoir.
+*Covert:* Resources were confirmed at Beat 0. If this step is reached, the card was face-up and payment is already in the Reservoir.
 
-*Public:* The ARBITER Player verifies resources paid to the Reservoir at Declaration. All five resource types must be present in the required amounts (Artifact 05). If insufficient: Apex fails immediately. Resources spent. Resolution resumes from where it was interrupted.
+*Public:* The ARBITER Player confirms resources were transferred to the Reservoir at Beat 4 Submit Payment. If payment is incomplete: Apex fails. Resources spent. Resolution resumes.
 
 **Step 3 — Process Emergency Responses.**
 
-Resolution is suspended at the current position. Each non-Apex faction submits one Emergency Response. Emergency Responses are submitted simultaneously and resolved by ARBITER in initiative order. They may change board state — presence chips, structure blocks, Public Standing — before the threshold is checked.
+Resolution is suspended at the current position. Each non-Apex faction submits one Emergency Response. Emergency Responses are submitted simultaneously and resolved by ARBITER in initiative order. They may change board state — presence chips, structure blocks, Public Standing — before the threshold check in Step 4.
 
 *Resources committed to submitted operations are not refunded.*
 
-*Emergency Response is a single faction-specific action representing each faction's final attempt to influence the outcome before the session potentially ends. Definitions and narrative framing are in Artifact 04 — Action Card System and Artifact 05 — Operative & Apex System.*
+*Emergency Response design is pending Artifact 04 / Artifact 05. Design note: Emergency Responses may be used to assist or thwart the Apex — Board Strength may increase or decrease before Step 4's threshold check.*
 
 **Step 4 — Check Board Strength threshold.**
 
-After Emergency Responses resolve, the ARBITER Player counts the Apex faction's total presence chips and structure blocks (Board Strength). If the total no longer meets the threshold specified in Artifact 05, the Apex is cancelled. Resources spent. Operative does not retire. Resolution resumes from the suspended position — operations remaining in the queue resolve normally.
+After Emergency Responses resolve, the ARBITER Player counts the Apex faction's total presence chips and structure blocks (Board Strength). If the total does not meet the threshold specified in Artifact 05, the Apex is cancelled. Resources spent. Operative does not retire. Resolution resumes from the suspended position.
 
-*The threshold may have shifted due to Emergency Response effects — this check happens after all Emergency Responses resolve.*
+*Board Strength is checked here — after all Emergency Responses — not at submission. A faction may use their Emergency Response to assist the Apex (raising Board Strength) or oppose it (reducing Board Strength). This is load-bearing for Emergency Response design in Artifact 04 / Artifact 05.*
 
 **Step 5 — Resolve Apex.**
 
@@ -873,15 +884,9 @@ The ARBITER Player opens the sealed Apex envelope and pauses 5 seconds. ARBITER 
 
 *Full Apex rules in Artifact 05 — Operative & Apex System.*
 
-### ARBITER Conversion
-
-Available during Debrief and between phases. Not available during Resolution Beats 1–4 or while the ARBITER Player is processing board changes. Rate is determined by the requesting faction's presence at the Chorus Node — see Artifact 02a §8. Announced in Quarter 1 only.
-
-*This is the lowest priority item on the ARBITER Player's task list — Faction Players requesting conversion during resolution are acknowledged and served after the current beat completes.*
-
 ---
 
-## 16. Examples & Exceptions
+## 17. Examples & Exceptions
 
 ### Initiative — Quarter 3
 
@@ -907,9 +912,9 @@ The Guild, highest by Portrait, goes third. No Faction Player can determine Port
 
 *Quarter 5 Beat 3. The Directorate's Detain operative ability successfully resolves against Ghost. Ghost has a deployment marker at Data Exchange showing the Converting face.*
 
-The ARBITER Player flips Ghost's Data Exchange marker to the Blocked face. At Quarter 5's End of Quarter, the marker returns to Ghost's hand without converting. Ghost's influence at Data Exchange does not increase.
+The ARBITER Player flips Ghost's Data Exchange marker to the Blocked face. The marker remains at Data Exchange through the end of Quarter 5.
 
-*Quarter 6 Upkeep Step 4: Ghost checks markers on the board. The Data Exchange marker is not on the board — it was returned last Quarter. No conversion occurs. Step 4 has no effect for Ghost at Data Exchange this Quarter.*
+*Quarter 6 Upkeep Step 4: Ghost checks markers on the board. The Data Exchange marker shows the Blocked face. Ghost returns the marker to hand without placing a presence chip. Ghost's influence at Data Exchange does not increase.*
 
 ---
 
@@ -964,8 +969,8 @@ ARBITER announces: *"An Apex operation has been submitted. Resolution is suspend
 
 The operation queue is suspended. Resources committed to all submitted operations were drained in Beat 0 and are not refunded. Each non-Guild faction submits one Emergency Response.
 
-The Network uses their Emergency Response to Undermine The Guild's presence at Power Grid, reducing their chip count. The Directorate Occupies Government Citadel, adding chips to their own position.
+The Network uses their Emergency Response to Undermine The Guild's presence at Power Grid, reducing their presence chip count. The Directorate Occupies Government Citadel, adding presence chips to their own position.
 
-After Emergency Responses resolve, the ARBITER Player counts The Guild's Board Strength: 11 chips + 4 structure blocks = 15. Threshold required: 12. Still met.
+After Emergency Responses resolve, the ARBITER Player counts The Guild's Board Strength: 11 presence chips + 4 structure blocks = 15. Threshold required: 12. Still met.
 
 The ARBITER Player opens the sealed Apex envelope and pauses. ARBITER reads. The session ends.

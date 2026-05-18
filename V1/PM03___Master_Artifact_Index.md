@@ -1,9 +1,9 @@
 # PM03 — MASTER ARTIFACT INDEX
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.5  
+**Version:** 1.7  
 **Status:** 🔄 Updated — Active  
-**Last Updated:** 2026-05-16  
+**Last Updated:** 2026-05-18  
 **Supersedes:** THE_SIGNAL_P1___Master_Artifact_Index v1.1  
 **Sign-off status:** See Design Artifact Registry below for individual artifact status
 
@@ -27,15 +27,16 @@
 
 | ID | Title | Version | Status | Summary |
 |----|-------|---------|--------|---------|
-| 00 | Factions & World | 1.0 | 🔄 Pending Re-Sign-Off | Factions, world, narrative context, ARBITER nature, timescale perspectives. Session 11 material changes: Design Pillar 6 added (§5), four-register system (§9), §14 Narrative Anchors (four anchors migrated from 00a). Narrative enrichment pass also pending (PM02 §2b 00-03, 00-04). |
-| 00a | Governing Rules & Design Policy | 0.2 | ✅ Signed Off — Session 7 | 41 rules (R01–R38 + R13a, R13b, R29a), §3–§9, Appendix A. Governing principles: Narrative and World Consistency; Copy Design (no hardcoded variable values). A05/A06 remain open (Chorus Node Portrait Multiplier discrepancy — see PM02). |
+| 00 | Factions & World | 1.3 | ✅ Signed Off | Factions, world, narrative context, ARBITER nature, timescale perspectives. Design Pillar 6 (§5), four-register system (§9), §14 Narrative Anchors incorporated. Narrative enrichment pass pending (PM02 §2b 00-03, 00-04) — non-blocking. |
+| 00a | Governing Rules & Design Policy | 0.2 | ✅ Signed Off — Session 7 | 41 rules (R01–R38 + R13a, R13b, R29a), §3–§9, Appendix A. Governing principles: Narrative and World Consistency; Copy Design (no hardcoded variable values). A05/A06 closed by L92 (Chorus Node Portrait Amplifier — Established threshold, flat additive). |
+| 00b | Data Architecture | 0.1 | ✅ Reference Document — Active | Entity registry (19 types, ID namespaces), L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. Established session 20. VS-xx visibility scope table drawn from Retired/Electronic schema. L2 TypeScript schema pointer in §8. |
 | 01 | Game Board — New Meridian | 1.2 | ✅ Signed Off | District layout, rings, Chorus Node, track positions, starting configuration. Adjacency table pending (PM02 D04-09). Setup update pending (01-03). |
 | 02a | Resource Systems: Board State | 1.3 | 🔄 Pending Re-Sign-Off | Presence, influence, structures, resource generation — all publicly visible board state. Session 14 material change: ARBITER Dominance Marker added (§6, §9, §10) — constitutive presence language; Dominant structurally unreachable at Node. |
 | 02b | Resource Systems: Tracking | 1.5 | ✅ Signed Off | Chorus Portrait, Public Standing, Intel Notes — tracking systems alongside the board. Cross-reference audit with 04 pending (PM02 D04-11) |
-| 03 | Round Structure & Gameplay | 1.5 | 🔄 Pending Re-Sign-Off | Six phases, timing, initiative, ARBITER conversion, Apex trigger. Material changes: Beat 2 renamed, Step 6 rewritten, Declaration phase updated. Review PM02 D03-R01 through D03-R03. |
+| 03 | Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20 | Seven phases. §14 Operation System (d100, modifiers M-01–M-12, L108-compliant table). §13 Phase 7 Debrief split from Phase 6. §16 Apex revised (Emergency Response assist/thwart design note). All presence chip terminology standardised. |
 | 04 | Action Card System | 0.9.6 | 🔄 In Progress | Covert operations C01–C15 signed off. Political acts and faction-specific cards C16–C35 pending review. 12 blocking decisions open — see PM02 §2. |
 | 04a | Card Reference Table | — | ⬜ Not Started | Condensed tabular view of all cards — one row per card, columns: Card ID, Card Name, Card Type, Card Subtype, Card Faction, Beat, Primary Cost, Difficulty, Taxonomy — Category / Function / Target, Portrait. Full card data stays in Artifact 04; 04a is the lookup and cross-reference layer. Populated after all card reviews complete. Blocked by 04 completion. (Scope confirmed L83.) |
-| 04b | Action Taxonomy & Design Analysis | 1.1 | 🔄 Pending Re-Sign-Off | Companion to 04. Session 11 material change: Cross-Category — Shift — Chorus Portrait retired from taxonomy (§4 Shift row, §5 P17, §6.1 gap row). Ghost doctrine gap flagged. Not playtest-blocking but requires sign-off. |
+| 04b | Action Taxonomy & Design Analysis | 1.1 | ✅ Reference Document — Active | Companion to 04. Category/Function/Target taxonomy framework, coverage gap analysis, faction design recommendations. Cross-Category — Shift — Chorus Portrait retired (L84). Ghost doctrine gap flagged. Not playtest-blocking. |
 | 05 | Operative & Apex System | 0.1 | 🔄 Draft — Placeholder | Placeholder file created. System structure, operative data format, Apex procedure, Founding Figure slots per faction. Blocked by 04 completion — no card content finalized. |
 | 06 | Messaging System | 0.1 | 🔄 Draft — Placeholder | Placeholder file created. Dispatch case protocol, faction messaging, ARBITER notifications, Accord documents, classified directive delivery, dispute resolution. |
 | 07 | ARBITER Toolkit | 0.1 | 🔄 Draft — Placeholder | Placeholder file created. Portrait board tracking, Debrief reward system, resolution beats, four narrative registers (The Record / The Observation / The Reckoning / The Witness — updated session 11), Chronicle, ARBITER script pack. |
@@ -54,12 +55,12 @@
 
 | ID | Title | Version | Status | Summary |
 |----|-------|---------|--------|---------|
-| PM01 | Project Charter & Work Breakdown | 1.4 | 🔄 Active | Scope, deliverables, WBS (with production cost estimates), documentation standards, governance rules, reference convention. §§10–12: Playtest Readiness Checklist, Risk Register, Go/No-Go Framework for V2. |
-| PM02 | Decision Log & Validation Tracker | 1.5 | 🔄 Active | Locked decisions (L01–L96), open blocking decisions, playtest variables. §2b punch list archived — live version in PM05. Change log through session 11. |
-| PM03 | Master Artifact Index (this document) | 1.5 | 🔄 Active | Artifact registry, standard artifact template, dependency map, retired artifacts index (/Retired/). Design standards and conventions moved to PM04 §2. |
-| PM04 | Glossary & Data Dictionary | 0.4 | 🔄 Updated — Active | Single source of truth for all terminology and design conventions. §1: In-World Data Dictionary — fully populated session 11 (Component & System Terms, Faction Resources, Influence Levels, Temporal Conventions). §2: Design Terminology — narrative language table, voice & typography, code block standard, terminology sequencing, cross-artifact reference convention. Absorbs PM03 §1 and §2. |
+| PM01 | Project Charter & Work Breakdown | 1.6 | 🔄 Active | Scope, deliverables, WBS (with production cost estimates), documentation standards, governance rules, reference convention. §§10–12: Playtest Readiness Checklist, Risk Register, Go/No-Go Framework for V2. §2: Replayability core assumption; S3/S4/S6 extended. WBS 2: 40 components (2.01–2.40), $115–270 est. |
+| PM02 | Decision Log & Validation Tracker | 1.9 | 🔄 Active | Locked decisions (L01–L109), open blocking decisions, playtest variables. §2b punch list archived — live version in PM05. Change log through session 20. |
+| PM03 | Master Artifact Index (this document) | 1.6 | 🔄 Active | Artifact registry, standard artifact template, dependency map, retired artifacts index (/Retired/). Design standards and conventions moved to PM04 §2. |
+| PM04 | Glossary & Data Dictionary | 0.5 | 🔄 Updated — Active | Single source of truth for all terminology and design conventions. §1: In-World Data Dictionary — fully populated session 11 (Component & System Terms, Faction Resources, Influence Levels, Temporal Conventions). §2: Design Terminology — narrative language table, voice & typography, code block standard, terminology sequencing, cross-artifact reference convention. Absorbs PM03 §1 and §2. |
 | PM04 | Future Phases — Parking Lot | — | ⬜ Not Started | Post-L1 design concepts, layer roadmap, electronic version considerations, ARBITER role redesign, L5 faction vision. Supersedes former PM03. |
-| PM05 | Active Punch List | 1.2 | 🔄 Active | Living action queue of all pending changes across all artifacts, extracted from PM02 §2b. Includes Validation Target Dashboard (V01–V14, PC-01–PC-04, VE-01) and Playtest Data Collection Protocol. Session 11: 14 items marked ✅ (BLOCKED BY: 00a section fully cleared). |
+| PM05 | Active Punch List | 1.5 | 🔄 Active | Living action queue of all pending changes across all artifacts. Session 20: XA-24 closed (L107), XA-25/26/27/29 added, PM04-03/04 added, Art 03 sign-off. |
 | PM (Audit) | Cross-Artifact Inconsistency Audit | 1.0 | ✅ Retired — session 10 | All 24 items migrated to PM05 punch list. File deleted. |
 
 ### Visual Artifacts (Interactive HTML)
@@ -238,4 +239,4 @@ This directory is **not part of the design artifact set.** Content here is evalu
 
 ---
 
-*End of PM03 — Master Artifact Index v1.5*
+*End of PM03 — Master Artifact Index v1.7*

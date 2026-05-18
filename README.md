@@ -47,7 +47,7 @@ A legacy tabletop board game for 5 players + ARBITER. Factions negotiate humanit
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)
 **Active design layer:** `/V1`
-**Design milestone:** Artifact 03 Phase 6 review in progress (session 17)
+**Design milestone:** Artifact 03 sign-off in progress — §§13–16 pending; Phase 6 Beats 0–5 signed off (session 19)
 
 ---
 

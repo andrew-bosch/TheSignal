@@ -271,6 +271,11 @@ For each quarter:
 ### 10.3 Chronicle Confidentiality
 The Chronicle is ARBITER's private document. Factions may not request to see it during the session. At session end, ARBITER may reference the Chronicle during scoring but is not required to share the full record.
 
+### 10.4 Chronicle Entry Design — Discussion Flag
+*[Discussion prompt — address when building the Chronicle entry procedure and script pack.]*
+
+During this design session, consider: should the Chronicle entry for a faction reflect how they played, not only where they placed? A faction that pursued the session on terms other than board dominance — playing toward narrative alignment, or toward collective action, or disruptively — might expect a Chronicle entry that reads differently from one that simply optimized board control. Does ARBITER have enough information from the Chronicle record to make that judgment? Does the script pack need to support meaningfully different entry registers depending on observable play pattern? *See PM01 §2 (Core Assumption — Replayability) and Artifact 10a §5.*
+
 ---
 
 ## 11. ARBITER Script Pack

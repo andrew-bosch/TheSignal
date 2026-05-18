@@ -96,6 +96,8 @@ Every element of the victory system should be consistent with this — that both
 
 4. **The Chorus Portrait can swing the result.** A faction that played for board control but accumulated significant negative Portrait may find the final conversion reverses their position. This is intentional.
 
+5. **The victory system should accommodate players who define winning differently.** During the design session for this artifact, discuss: does the scoring system reward or penalize players who pursued the session on their own terms — whether that means board dominance, narrative alignment, collective action, or disruption? Does the final scoring sequence produce a result that feels consistent with how each faction actually played, or does it flatten all sessions into the same competitive frame? *See PM01 §2 — Core Assumption — Replayability.*
+
 ---
 
 ## 6. Session End Conditions
