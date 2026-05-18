@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.3  
+**Version:** 0.4  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -53,6 +53,39 @@ Art 03a is organized into three layers of increasing specificity:
 The State Model defines every variable in the game system — its type, visibility scope, and the beat boundaries at which its value may change. Variable names follow the pattern `Domain.Field[index]`. Index variables in square brackets reference 00b entity IDs.
 
 **Derived vs. stored:** Variables marked *Derived* are computed from other variables and must be synchronized immediately after their inputs change. They have no independent physical component — they are recalculated. Stored variables are maintained as physical components on the board or tableau.
+
+---
+
+### 4.0 State Initialization — Pre-Quarter 1
+
+The initial values of all state variables before Quarter 1 Phase 1. This is the only point in the game where all variables are simultaneously defined from setup rather than carried forward. §4.2 "Start of Quarter" applies to Quarters 2–8 (carry-forward state) — it is not a reset.
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
+| `Board.PresenceChips[D-xx][F-xx]` | 0 — all districts, all factions | Setup |
+| `Board.InfluenceLevel[D-xx][F-xx]` | IL-05 (None) — derived from zero chips | Derived |
+| `Board.ControlFlag[D-xx]` | None — derived from InfluenceLevel | Derived |
+| `Board.TensionMarker[D-xx]` | False — all districts | Setup |
+| `Board.StructureBlocks[D-xx][F-xx]` | 0 — all districts, all factions | Setup |
+| `Board.DeploymentMarker[F-xx][1\|2]` | {Location: Hand, Face: N/A} — all factions | Setup |
+| `Faction.Resources[F-xx][RT-xx]` | Faction starting values per Art 00 §7 | Art 00 §7 |
+| `Faction.PublicStanding[F-xx]` | 10 (PS-03 — Neutral) — all factions | L48 |
+| `Faction.ChorusPortrait[F-xx]` | 0 — all factions | Setup |
+| `Faction.StatusMarker[F-xx]` | Discussing — all factions | Setup |
+| `Faction.BurstPlay[F-xx]` | False — all factions | Setup |
+| `Quarter.Number` | 1 | Setup |
+| `Quarter.InitiativeOrder` | Unset — established in Phase 1 Upkeep Step 2 | Phase 1 |
+| `Quarter.InitiativePattern` | Unset — established in Phase 1 Upkeep Step 2 | Phase 1 |
+| `Event.ActiveCards` | [] — empty | Setup |
+| `Event.BroadcastCard` | None | Setup |
+| `Chorus.ActivityTrack` | TBD — Art 07 | Art 07 |
+| `Faction.CovertHand[F-xx]` | [] — drawn to 6 in Phase 1 Upkeep Step 6 | Phase 1 |
+| `Faction.PoliticalHand[F-xx]` | [] — drawn to 3 in Phase 1 Upkeep Step 6 | Phase 1 |
+| `Faction.ModifierHand[F-xx]` | [] — drawn in Phase 1 Upkeep Step 6 | Phase 1 |
+| `Faction.CountermeasureHand[F-xx]` | [] — hand starts empty; deployed in Phase 5 | Phase 5 |
+| `Grid.*` | All empty — Grid instantiated at Beat 0 | Beat 0 |
+
+*Exception: `Board.InfluenceLevel[D-22][F-06]` = IL-01 (Dominant) at all times via ARBITER Dominance Marker — placed during setup, never changes. See §4.1 Board Domain note.*
 
 ---
 
@@ -158,7 +191,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Board.DeploymentMarker[F-xx][1|2]` = {Location: Hand, Face: N/A} for all factions — all markers returned at prior Upkeep Step 4
 - `Quarter.Number` = prior + 1
 
-*Quarter 1 exception: `Board.PresenceChips` all zero; `Faction.Resources` at faction starting values (Art 00 §7); `Faction.PublicStanding[F-xx]` all = 10 (PS-03 / Neutral); no active Event Cards.*
+*Quarter 1: initial values from §4.0 State Initialization, not carry-forward. Phase 1 Upkeep runs normally from that base.*
 
 ---
 
@@ -894,4 +927,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.3*
+*End of Art 03a — Game Engine Specification v0.4*
