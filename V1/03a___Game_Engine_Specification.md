@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.8  
+**Version:** 0.9  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -105,10 +105,10 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Card.Political.Hand[F-xx]` | [] (0) — drawn to 3 in Phase 1 Upkeep Step 6 | Phase 1 |
 | `Card.Modifier.Deck[F-xx]` | Faction modifier deck shuffled and placed face-down; applicable ring decks pre-positioned on board | Session setup; Art 04 §11 |
 | `Card.Modifier.Hand[F-xx]` | [] (0) — drawn in Phase 1 Upkeep Step 6 | Phase 1 |
-| `Card.Countermeasure.Zone[F-xx]` | 3 CC cards — in tableau designated area | Session setup; Art 04 |
-| `Card.Pass.Hand[F-xx]` | 4 Pass cards — beside tableau, permanent, reusable every Quarter | Session setup; Art 04 §12 |
-| `Card.Floor.Hand[F-xx]` | 1 Floor Act — beside tableau, always available | Session setup; Art 04 D04-13 |
-| `Card.Operative.Zone[F-xx]` | Operative cards selected at session setup — in operator zone, 0 deployed | Session setup; Art 05 |
+| `Card.Countermeasure.Hand[F-xx]` | 3 CC cards — all Active=True; in tableau designated area | Session setup; Art 04 |
+| `Card.Pass.Hand[F-xx]` | 4 Pass cards — Lifecycle: Permanent; beside tableau | Session setup; Art 04 §12 |
+| `Card.Floor.Hand[F-xx]` | 1 Floor Act — Lifecycle: Permanent; beside tableau | Session setup; Art 04 D04-13 |
+| `Card.Operative.Hand[F-xx]` | Operative cards selected at session setup — Lifecycle: Deploy; in Hand, 0 deployed to board | Session setup; Art 05 |
 
 *Deck pool sizes (30 covert / select 24; 20 political / select 12) are working baselines pending validation — Art 04 A-04-01.*
 
@@ -197,6 +197,17 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 *ARBITER (F-06) has a distinct card set and modifier token provisioning. Variables stubbed below; full definition Art 07.*
 
+**Lifecycle taxonomy:** All card variables use `.Hand` — cards in the faction's possession, available to play. The distinction between card types is in lifecycle behavior, not in the variable name:
+
+| Lifecycle | Cards | Behavior |
+|-----------|-------|----------|
+| Recycle | Covert, Political | Draw from Deck → Hand → use → discard pile → reshuffle when Deck exhausted |
+| OneShot | Modifier, Countermeasure | Drawn or pre-allocated → Hand → used → **Active=False** (removed from game; no reshuffle) |
+| Permanent | Pass, Floor Act | Always in Hand; never consumed, never discarded; reusable every Quarter |
+| Deploy | Operative | In Hand until deployed → moves to board operative zone; not recycled |
+
+**Active flag:** Modifier and Countermeasure cards carry `Active: Boolean` on each card instance. `Active=True` = in hand or in play (Countermeasure: including while held by ARBITER after Phase 5 deployment). `Active=False` = removed from game. Covert, Political, Pass, Floor Act, and Operative do not require this flag — their in-play status is determined by their position (Hand vs Deck vs board zone).
+
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
 | `Card.Covert.Deck[F-xx]` | Ordered list of C-xx where C-xx.Faction ∈ {All, F-xx} | VS-02 | Session setup (deck construction); Upkeep Step 6 (top cards drawn; discard shuffled in when exhausted) |
@@ -204,11 +215,11 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Card.Political.Deck[F-xx]` | Ordered list of P-xx where P-xx.Faction ∈ {All, F-xx} | VS-02 | Session setup (deck construction); Upkeep Step 6 (top cards drawn; discard shuffled in when exhausted) |
 | `Card.Political.Hand[F-xx]` | List of P-xx | VS-02 | Upkeep Step 6 (draw to 3); Beat 4 Step 9 (returned or discarded per card text) |
 | `Card.Modifier.Deck[F-xx]` | Ordered list of MC-xx (faction deck + applicable ring decks) | VS-02 | Session setup (shuffled, placed); Upkeep Step 6 (top cards drawn); Burst Play trigger (deck removed from game) |
-| `Card.Modifier.Hand[F-xx]` | List of MC-xx | VS-02 | Upkeep Step 6 (drawn by structure count + ring qualification); Beat 3/4 (discarded on use); Burst Play (all traded to Reservoir) |
-| `Card.Countermeasure.Zone[F-xx]` | List of CC-xx (max 3) | VS-02 | Session setup (3 allocated); Phase 5 (deployed — each card handed to ARBITER); Beat 2 (processed, removed from game) |
-| `Card.Pass.Hand[F-xx]` | Fixed list of 4 Pass | VS-01 (count); VS-02 (usage intent) | Immutable — reusable every Quarter; never discarded |
-| `Card.Floor.Hand[F-xx]` | Fixed 1 Floor Act | VS-01 (count); VS-02 (usage intent) | Immutable — always beside tableau; full design Art 04 D04-13 |
-| `Card.Operative.Zone[F-xx]` | List of operative cards in operator zone | VS-02 | Session setup (operative set selected); Phase 2 (deployed — card moves to board zone); TBD — Art 05 |
+| `Card.Modifier.Hand[F-xx]` | List of {MC-xx, Active: Boolean} | VS-02 | Upkeep Step 6 (drawn; Active=True); Beat 3/4 (used → Active=False, removed from game); Burst Play (all traded to Reservoir → Active=False) |
+| `Card.Countermeasure.Hand[F-xx]` | List of {CC-xx, Active: Boolean} (max 3) | VS-02 | Session setup (3 allocated; Active=True); Phase 5 (deployed to ARBITER; Active=True — in play); Beat 2 (processed → Active=False, removed from game) |
+| `Card.Pass.Hand[F-xx]` | Fixed list of 4 Pass — Lifecycle: Permanent | VS-01 (count); VS-02 (usage intent) | Immutable — reusable every Quarter; never removed |
+| `Card.Floor.Hand[F-xx]` | Fixed 1 Floor Act — Lifecycle: Permanent | VS-01 (count); VS-02 (usage intent) | Immutable — always available; never removed; full design Art 04 D04-13 |
+| `Card.Operative.Hand[F-xx]` | List of operative cards — Lifecycle: Deploy | VS-02 | Session setup (operative set selected; in Hand); Phase 2 (deployed → moves to board operative zone; no longer in Hand); TBD — Art 05 |
 | `Card.ARBITER.*` | TBD — resolution materials, Apex envelopes, Chronicle cards, Emergency Response set | VS-04 | TBD — Art 07 |
 
 ---
@@ -344,7 +355,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 #### Phase 5 — Countermeasures Complete
 
 **Outputs:**
-- `Faction.CountermeasureHand[F-xx]` — deployed CC-xx cards transferred to ARBITER Player
+- `Card.Countermeasure.Hand[F-xx]` — deployed CC-xx cards transferred to ARBITER Player
 - CC-xx type (Type A: District Block / Type B: Faction Defense) held by ARBITER for Beat 2
 
 **Invariants:**
@@ -1014,4 +1025,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.8*
+*End of Art 03a — Game Engine Specification v0.9*
