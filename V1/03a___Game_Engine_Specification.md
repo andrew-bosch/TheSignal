@@ -1,8 +1,8 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.2  
-**Status:** 🔄 In Progress — Layer 1 (State Model) drafted  
+**Version:** 0.3  
+**Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
 **Depends on:** [00b — Data Architecture](00b___Data_Architecture.md)
@@ -41,7 +41,7 @@ Art 03a is organized into three layers of increasing specificity:
 | Layer | Contents | Status |
 |-------|----------|--------|
 | 1 | State Model — formal game state at each beat boundary, using 00b entity IDs as variable vocabulary | ✅ Draft complete — §4 |
-| 2 | Beat Procedures — each beat as a structured pseudocode function (Beat_0() through Beat_5()) with explicit IF/THEN/ELSE branches, named inputs/outputs, modifier stack as summation formula, resolution check as formal inequality | 🔄 Pending content pass |
+| 2 | Beat Procedures — each beat as a structured pseudocode function (Beat_0() through Beat_5()) with explicit IF/THEN/ELSE branches, named inputs/outputs, modifier stack as summation formula, resolution check as formal inequality | ✅ Draft complete — §5 |
 | 3 | Decision Tables — all branching conditions surfaced as tables; edge cases include face-down/face-up, Apex vs. non-Apex, Critical overrides, partial payment, Infrastructure scope (L107), Type B scope | 🔄 Pending content pass |
 
 **Modifier balance analysis** (original XA-27 scope) is a derived output of Layer 2 once the modifier stack is formally expressed. It will be appended here as Layer 4 when Layer 2 is complete.
@@ -349,21 +349,478 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 
 ## 5. Layer 2 — Beat Procedures (Pseudocode)
 
-*Pending content pass.*
+Each beat is expressed as a structured procedure with explicit branching, named state mutations, and — for Beats 3 and 4 — the modifier stack as a summation formula and the resolution check as a formal inequality. Procedures use the State Variable vocabulary from §4 and modifier IDs from §7.
 
-Each beat is expressed as a structured function:
+**Notation:**
+- `←` assigns to a state variable; `+=` appends to a list or increments
+- `M-xx.value` is the Threshold Adjustment from §7 (positive = threshold raised = easier; negative = harder)
+- `D100()` is a uniform random integer 01–100
+- `DT-xx` defers branching detail to Layer 3 (§6)
+- `DESIGN FINDING [DF-xx]` marks an inconsistency surfaced by formalization — requires investigation
+
+---
+
+### Beat_0 — The Cases Open
 
 ```
-Beat_N(inputs) → outputs
-  // Preconditions
-  // Procedure steps (IF/THEN/ELSE)
-  // Modifier stack (summation formula)
-  // Resolution check (formal inequality)
-  // State mutations
-  // Output
+Beat_0(
+  dispatch_cases: Map[F-xx → DispatchCase],
+  countermeasures: Map[F-xx → CC-xx | None]
+) → Grid (built)
+
+PRECONDITIONS:
+  Phase 3 Dispatch closed — no additions permitted to any dispatch case
+  Phase 4 political acts declared — face-up on faction tableaux
+  Phase 5 countermeasures transferred to ARBITER Player
+
+PROCEDURE:
+
+// Step 1 — Build countermeasure row (Beat 2)
+FOR EACH faction f ∈ Faction.All:
+  Grid.Lane[f].Beat2Slot ← countermeasures[f]  // CC-xx or None
+
+// Step 2 — Lane assignment and payment validation (DT-01, DT-02)
+FOR EACH dispatch_case IN dispatch_cases (in case receipt order, Lane 1 → Lane n):
+  lane ← dispatch_case.Faction
+  FOR EACH operation_packet IN dispatch_case (in submission order):
+    card ← operation_packet.ActionCard
+    actual_payment ← resources enclosed with card in packet
+    card_cost ← base cost printed on card
+    IF card = Pass:
+      APPEND Pass → Grid.Lane[lane].Beat3Queue  // No payment; no drain
+    ELSE IF card.CardType = Beat2:
+      Grid.Lane[lane].Beat2Slot ← card  // Faction-submitted CC-xx
+      DRAIN actual_payment → Reservoir
+    ELSE:  // Beat3 covert operation
+      IF card.IsApex:  // DT-02 — Apex payment rule
+        card.Face ← IF actual_payment ≥ card_cost THEN Up ELSE Down
+        DRAIN actual_payment → Reservoir  // Any shortfall: drain what was submitted, no refund
+      ELSE:  // Non-Apex — DT-01
+        IF actual_payment = 0:
+          card.Face ← Down; // Nothing to drain
+        ELSE IF actual_payment = card_cost:
+          card.Face ← Up
+          DRAIN actual_payment → Reservoir
+        ELSE:  // 0 < actual_payment < card_cost — partial payment
+          card.Face ← Up
+          DRAIN actual_payment → Reservoir
+          Grid.ActiveModifierTokens[card.ID] += [M-06]
+          // M-06 (−50 threshold) applied in Beat_3 Step 3, not here
+      APPEND card → Grid.Lane[lane].Beat3Queue
+
+// Step 3 — Establish Resolution Queue
+// One card per lane per pass, in lane receipt order; lanes exhausted mid-pass are skipped
+Grid.ResolutionQueue ←
+  PASS 1: first card from Lane 1, Lane 2, ..., Lane n (in receipt order)
+  PASS 2: second card from Lane 1, Lane 2, ..., Lane n
+  REPEAT until all Beat3Queue positions assigned
+
+STATE MUTATIONS:
+  Grid.Lane[F-xx].Beat2Slot ← built
+  Grid.Lane[F-xx].Beat3Queue ← built (face-up or face-down per payment validation)
+  Grid.ActiveModifierTokens ← M-06 on partial-payment covert ops
+  Grid.ResolutionQueue ← established
+  Faction.Resources[F-xx][RT-xx] ← reduced by all validated payments
 ```
 
-Beat functions to define: `Beat_0()`, `Beat_1()`, `Beat_2()`, `Beat_3()`, `Beat_4()`, `Beat_5()`.
+---
+
+### Beat_1 — Check Active Restrictions
+
+```
+Beat_1(event_cards: Event.ActiveCards) → Grid, Board
+
+PRECONDITIONS:
+  Beat_0 complete — Grid fully built
+  Event.ActiveCards = current active Situation Reports (set in Phase 1 Upkeep)
+
+PROCEDURE:
+
+// Step 1 — Announce all active Situation Report effects aloud
+restrictions ← targeting restriction effects from Event.ActiveCards
+conversion_blocks ← conversion-blocking effects from Event.ActiveCards
+
+// Step 2 — Remove restricted covert operations
+FOR EACH restriction r ∈ restrictions:
+  FOR EACH lane ∈ Grid.Lanes:
+    FOR EACH cell ∈ Grid.Lane[lane].Beat3Queue:
+      IF cell.Target ∈ r.RestrictedDistricts OR cell.Target ∈ r.RestrictedRings:
+        REMOVE cell from Grid.Lane[lane].Beat3Queue
+        INSERT {cell.ID, RO-03} → Grid.ResolvedCells
+        PLACE operation card + target slip → dispatch_case[lane.Faction]
+        PLACE Operation Blocked resolution card → dispatch_case[lane.Faction]
+        DISCARD modifier cards from cell — removed from game
+        // No resource refund — resources were drained at Beat 0
+
+DESIGN FINDING [DF-01]:
+  Art 03 Beat 1 specifies "Operation Failed" resolution card for covert operations removed
+  by targeting restrictions. Art 03 Beat 2 specifies "Operation Blocked" for Type A CC-xx
+  removals. Both map to RO-03 (Blocked) per 00b §5.2. The label discrepancy ("Failed" vs.
+  "Blocked") is inconsistent — both are pre-resolution cancellations, not failure outcomes.
+  This specification uses "Operation Blocked" for both. Art 03 §12 may require amendment.
+
+// Step 3 — Cancel restricted political acts
+FOR EACH restriction r ∈ restrictions:
+  FOR EACH faction f ∈ Faction.All:
+    IF Faction.DeclaredAct[f].Target ∈ r.RestrictedDistricts:
+      ARBITER announces restriction
+      RETURN political act card → Faction Player  // Cancelled — not resolved
+      RETURN resource tokens → Faction Player  // NOT transferred to Reservoir
+      DISCARD modifier cards — removed from game
+      // No RO-xx entry — political act was cancelled before entering resolution
+
+// Step 4 — Apply conversion blocks
+FOR EACH block b ∈ conversion_blocks:
+  FOR EACH faction f ∈ Faction.All:
+    FOR EACH slot ∈ [1, 2]:
+      IF Board.DeploymentMarker[f][slot].Location ∈ b.BlockedDistricts
+         OR Board.DeploymentMarker[f][slot].Location ∈ b.BlockedRings:
+        Board.DeploymentMarker[f][slot].Face ← Blocked
+
+STATE MUTATIONS:
+  Grid.Lane[F-xx].Beat3Queue ← restriction removals
+  Grid.ResolvedCells ← RO-03 entries for restricted covert ops
+  Board.DeploymentMarker[F-xx][1|2].Face ← Blocked (conversion-blocked districts/rings)
+```
+
+---
+
+### Beat_2 — The Ground Shifts
+
+```
+Beat_2() → Grid, Board
+
+PRECONDITIONS:
+  Beat_1 complete — restriction sweep applied
+
+PROCEDURE:
+
+// Step 1 — Type A Countermeasure cards (District Block)
+FOR EACH lane ∈ Grid.Lanes WHERE Grid.Lane[lane].Beat2Slot.Type = TypeA:
+  named_district ← Grid.Lane[lane].Beat2Slot.NamedDistrict
+  FOR EACH target_lane ∈ Grid.Lanes:
+    FOR EACH cell ∈ Grid.Lane[target_lane].Beat3Queue:
+      IF cell.Target = named_district:
+        REMOVE cell from Grid.Lane[target_lane].Beat3Queue
+        INSERT {cell.ID, RO-03} → Grid.ResolvedCells
+        PLACE operation card + target slip → dispatch_case[target_lane.Faction]
+        PLACE Operation Blocked resolution card → dispatch_case[target_lane.Faction]
+        DISCARD modifier cards — removed from game
+        RETURN modifier tokens (M-06 if attached) → pool
+        // Resources committed to blocked ops are NOT refunded — attempt was made
+  FOR EACH faction f ∈ Faction.All:
+    FOR EACH slot ∈ [1, 2]:
+      IF Board.DeploymentMarker[f][slot].Location = named_district:
+        Board.DeploymentMarker[f][slot].Face ← Blocked
+
+// Step 2 — Type B Countermeasure cards (Faction Defense)
+FOR EACH lane ∈ Grid.Lanes WHERE Grid.Lane[lane].Beat2Slot.Type = TypeB:
+  defending_faction ← Grid.Lane[lane].Beat2Slot.DefendingFaction
+  FOR EACH target_lane ∈ Grid.Lanes WHERE target_lane.Faction ≠ defending_faction:
+    FOR EACH cell ∈ Grid.Lane[target_lane].Beat3Queue:
+      IF cell.Target ∈ defending_faction.Assets:
+        Grid.ActiveModifierTokens[cell.ID] += [M-11]
+        // M-11 (−15 threshold) applied in Beat_3 Step 3, not here
+
+// Step 3 — Protect operations
+FOR EACH lane ∈ Grid.Lanes:
+  FOR EACH cell ∈ Grid.Lane[lane].Beat3Queue:
+    IF cell.Card.OperationType = Protect:
+      Grid.ProtectModifiers[cell.Target] ← cell.Card.DefensiveModifier
+      // Applied to opposing covert ops targeting this district in Beat_3 Step 3
+
+// Step 4 — Clear Beat 2 row
+FOR EACH lane ∈ Grid.Lanes:
+  Grid.Lane[lane].Beat2Slot ← None  // CC-xx cards processed; removed from game
+
+STATE MUTATIONS:
+  Grid.Lane[F-xx].Beat3Queue ← Type A removals
+  Grid.ResolvedCells ← RO-03 entries for Type A blocked ops
+  Grid.ActiveModifierTokens ← M-11 tokens on Type B targeted ops
+  Grid.ProtectModifiers ← Protect defensive modifier values
+  Grid.Lane[F-xx].Beat2Slot ← cleared
+  Board.DeploymentMarker[F-xx][1|2].Face ← Blocked (Type A named district)
+```
+
+---
+
+### Beat_3 — Covert Operations Resolve
+
+```
+Beat_3() → Resolved covert operations
+
+PRECONDITIONS:
+  Beat_2 complete — countermeasures processed; M-11 tokens placed; Protect modifiers noted
+  Grid.ResolutionQueue established; every remaining card in Beat3Queue is a valid unblocked op
+
+// Standing modifier helper — exactly one M-01–M-05 applies per faction per resolution
+M_standing(f):
+  IF Faction.PublicStanding[f] ∈ [17, 20]: RETURN +20  // M-01 Celebrated  (PS-01)
+  IF Faction.PublicStanding[f] ∈ [13, 16]: RETURN +10  // M-02 Respected   (PS-02)
+  IF Faction.PublicStanding[f] ∈ [ 7, 12]: RETURN   0  // M-03 Neutral      (PS-03)
+  IF Faction.PublicStanding[f] ∈ [ 3,  6]: RETURN −10  // M-04 Suspect      (PS-04)
+  IF Faction.PublicStanding[f] ∈ [ 0,  2]: RETURN −20  // M-05 Discredited  (PS-05)
+
+FOR EACH position p IN Grid.ResolutionQueue (in established order):
+  lane ← p.Lane
+  cell ← Grid.Lane[lane].Beat3Queue[p.Index]
+  f ← lane.Faction
+
+  // Step 1 — Identify
+  IF cell.Card = Pass: CONTINUE  // No resolution; advance
+
+  IF cell.Face = Down:
+    INSERT {cell.ID, RO-05} → Grid.ResolvedCells
+    PLACE operation card + target slip → dispatch_case[f]
+    // No resolution card for auto-fail — card returned, no roll made
+    DISCARD modifier cards from stack — removed from game
+    CONTINUE
+
+  IF cell.Card.IsApex:
+    // Interrupt — Apex Activation always ends the session (§16, DT-08, DT-09)
+    RUN Apex_Activation(cell, f)
+    // Beat_3 does not return — session ends
+
+  // Step 2 — Base difficulty
+  base_threshold ← cell.Card.BaseThreshold
+
+  // Step 3 — Modifier stack (summation formula)
+  threshold ←  base_threshold
+             + M_standing(f)
+             + (M-06.value  IF M-06 ∈ Grid.ActiveModifierTokens[cell.ID]   ELSE 0)  // −50 partial pmt
+             + (M-09.value  IF cell.Target ∈ Grid.ProtectModifiers          ELSE 0)  // Variable; Protect
+             + (M-10.value  IF Situation Report difficulty effect targets op ELSE 0)  // Variable; Event
+             + (M-11.value  IF M-11 ∈ Grid.ActiveModifierTokens[cell.ID]   ELSE 0)  // −15 Type B CM
+             + (M-12.value  IF cell.Target.Ring = RG-02                              // −25 Infrastructure
+                               AND NOT ∃ d ∈ D-xx: d.Ring = RG-03
+                                                    AND d.AdjacentTo(cell.Target)
+                                                    AND Board.InfluenceLevel[d][f] ∈ {IL-01, IL-02}
+                               ELSE 0)
+             + Σ(card.ModifierValue FOR EACH modifier_card IN cell.ModifierCards)    // M-08; Variable
+
+  // threshold may be ≤ 0 or ≥ 100 — no clamping; 01–05 floor and 96–00 ceiling still active
+  ARBITER announces final threshold aloud — all parties know before roll
+
+  // Step 5 — Roll
+  roll ← D100()
+
+  // Step 6 — Determine outcome (formal resolution check)
+  IF roll ∈ [01, 05]:
+    outcome ← RO-01  // Critical Success — always, regardless of threshold
+    crit_success ← True; crit_failure ← False
+  ELSE IF roll ∈ [96, 100]:
+    outcome ← RO-02  // Critical Failure — always, regardless of threshold
+    crit_success ← False; crit_failure ← True
+  ELSE IF roll ≤ threshold:
+    outcome ← RO-01  // Succeeded  (roll ∈ [06, threshold])
+    crit_success ← False; crit_failure ← False
+  ELSE:
+    outcome ← RO-02  // Failed  (roll ∈ [threshold+1, 95])
+    crit_success ← False; crit_failure ← False
+
+  // Step 7 — Apply results
+  IF outcome = RO-01:
+    ARBITER directs; acting Faction Player applies:
+      Board.PresenceChips[cell.Target][f] ← per card text
+      Board.StructureBlocks[cell.Target][f] ← per card text
+    RECALCULATE Board.InfluenceLevel[cell.Target][*]
+    RECALCULATE Board.ControlFlag[cell.Target]
+    RECALCULATE Board.TensionMarker[cell.Target]
+    IF card text specifies conversion block:
+      Board.DeploymentMarker[f][*].Face ← Blocked
+
+  // Step 8 — Failure conditions (per card text)
+  IF outcome = RO-02:
+    APPLY failure conditions from card text
+    Faction.PublicStanding[f] ← adjusted per card text
+
+  // Step 9 — Discovery conditions (per card text)
+  IF card text specifies discovery condition:
+    IF crit_failure = True OR roll ∈ card.DiscoveryRange:
+      outcome ← RO-04  // Discovered — overrides RO-02
+      APPLY discovery conditions from card text
+
+  // Step 10 — Clean up grid cell
+  INSERT {cell.ID, outcome} → Grid.ResolvedCells
+  PLACE operation card + target slip → dispatch_case[f]
+  PLACE resolution card (Succeeded / Failed / Discovered) → dispatch_case[f]
+  DISCARD modifier cards from cell — removed from game
+  RETURN Grid.ActiveModifierTokens[cell.ID] → pool
+  Faction.CovertHand[f] ← per card text (return to hand or discard)
+
+  // Step 11 — Portrait (private)
+  ARBITER privately updates Faction.ChorusPortrait[f]
+
+END FOR
+
+STATE MUTATIONS:
+  Grid.ResolvedCells ← RO-01, RO-02, RO-04, RO-05 per op
+  Board.PresenceChips ← success outcomes
+  Board.StructureBlocks ← success outcomes
+  Board.InfluenceLevel ← recalculated (derived)
+  Board.ControlFlag ← recalculated (derived)
+  Board.TensionMarker ← recalculated
+  Board.DeploymentMarker ← Blocked per card text
+  Faction.PublicStanding ← failure/discovery conditions
+  Faction.ChorusPortrait ← private, per op
+  Grid.ActiveModifierTokens ← cleared (all tokens returned to pool)
+  Faction.CovertHand ← per card text
+```
+
+---
+
+### Beat_4 — Political Acts Resolve
+
+```
+Beat_4() → Resolved political acts
+
+PRECONDITIONS:
+  Beat_3 complete — all covert operations resolved
+  Each faction's declared political act (or Pass) is face-up on their tableau
+  Resource tokens for each declared act are stacked on the card — not yet in Reservoir
+
+// Submit Payment phase — initiative order
+FOR EACH faction f ∈ Faction.All WITH declared political act (in Quarter.InitiativeOrder):
+  act ← Faction.DeclaredAct[f]
+  actual_payment ← resource tokens on act card
+  card_cost ← base cost on card
+  Faction Player transfers resource tokens → Reservoir
+  IF actual_payment = 0:
+    ARBITER announces act invalid
+    act.Face ← Down  // Auto-fail when reached in resolution phase
+  ELSE IF actual_payment < card_cost:
+    ARBITER attaches M-07 marker to act card and announces additional difficulty
+    // M-07 (−50 threshold) applied in modifier stack below
+
+DESIGN FINDING [DF-02]:
+  Art 03 Beat 4 Submit Payment describes the marker as "+50 difficulty marker." The
+  modifier table (§7, Art 03 §14) lists M-06 and M-07 as Threshold Adjustment −50.
+  These are equivalent but expressed with opposite signs: "+50 difficulty" (difficulty
+  additive) vs. "−50" (threshold subtractive). The physical token face label and the
+  table value are inverse representations of the same penalty. Art 07 (ARBITER Toolkit)
+  physical token design should clarify this to prevent table play confusion.
+
+// Resolution phase — initiative order
+FOR EACH faction f ∈ Faction.All WITH declared political act (in Quarter.InitiativeOrder):
+  act ← Faction.DeclaredAct[f]
+
+  // Step 1 — Identify; Apex check
+  IF act.IsApex:
+    // Interrupt — Apex Activation always ends the session (§16, DT-08, DT-09)
+    RUN Apex_Activation(act, f)
+    // Beat_4 does not return — session ends
+
+  IF act.Face = Down:
+    INSERT {act.ID, RO-05} → Grid.ResolvedCells
+    DISCARD modifier cards — removed from game
+    RETURN political act card → Faction Player
+    CONTINUE
+
+  // Step 2 — Base difficulty
+  base_threshold ← act.BaseThreshold
+
+  // Steps 3-4 — Modifier stack; Faction Player calculates and declares aloud
+  threshold ←  base_threshold
+             + M_standing(f)
+             + (M-07.value  IF M-07 attached to act                 ELSE 0)  // −50 partial pmt
+             + (M-10.value  IF Situation Report effect targets act   ELSE 0)  // Variable; Event
+             + (M-12.value  IF act.Target.Ring = RG-02                        // −25 Infrastructure
+                               AND NOT ∃ d ∈ D-xx: d.Ring = RG-03
+                                                    AND d.AdjacentTo(act.Target)
+                                                    AND Board.InfluenceLevel[d][f] ∈ {IL-01, IL-02}
+                               ELSE 0)
+             + Σ(card.ModifierValue FOR EACH modifier_card IN act.ModifierCards)  // M-08; Variable
+
+  // Note: M-06, M-09, M-11 do not apply to political acts
+  Faction Player announces final threshold aloud
+
+  // Step 5 — Roll (Faction Player rolls publicly)
+  roll ← D100()
+
+  // Step 6 — Determine outcome
+  IF roll ∈ [01, 05]:    outcome ← RO-01  // Critical Success
+  ELSE IF roll ∈ [96, 100]: outcome ← RO-02  // Critical Failure
+  ELSE IF roll ≤ threshold: outcome ← RO-01  // Succeeded
+  ELSE:                   outcome ← RO-02  // Failed
+
+  // Step 7 — Apply results
+  IF outcome = RO-01:
+    Faction Player applies board changes:
+      Board.PresenceChips[act.Target][f] ← per card text
+      Board.StructureBlocks[act.Target][f] ← per card text
+    RECALCULATE Board.InfluenceLevel[act.Target][*]
+    RECALCULATE Board.ControlFlag[act.Target]
+    RECALCULATE Board.TensionMarker[act.Target]
+    IF card text specifies conversion block:
+      Board.DeploymentMarker[f][*].Face ← Blocked
+
+  // Step 8 — Failure conditions (per card text)
+  IF outcome = RO-02:
+    APPLY failure conditions from card text
+    Faction.PublicStanding[f] ← adjusted per card text
+
+  // Step 9 — Clean up
+  Faction Player retrieves political act card per card text (return or discard)
+  DISCARD modifier cards — removed from game
+
+  // Step 10 — Portrait (private)
+  ARBITER privately updates Faction.ChorusPortrait[f]
+
+END FOR
+
+STATE MUTATIONS:
+  Faction.Resources[F-xx][RT-xx] ← reduced (Submit Payment drain)
+  Grid.ResolvedCells ← RO-01, RO-02, RO-05 per act
+  Board.PresenceChips ← success outcomes
+  Board.StructureBlocks ← success outcomes
+  Board.InfluenceLevel ← recalculated (derived)
+  Board.ControlFlag ← recalculated (derived)
+  Board.TensionMarker ← recalculated
+  Board.DeploymentMarker ← Blocked per card text
+  Faction.PublicStanding ← failure conditions
+  Faction.ChorusPortrait ← private, per act
+  Faction.PoliticalHand ← per card text
+```
+
+---
+
+### Beat_5 — The Table Speaks
+
+```
+Beat_5() → Quarter resolution complete
+
+PRECONDITIONS:
+  Beat_4 complete — all political acts resolved
+  Grid.ResolvedCells contains RO-xx outcome for every submitted operation this Quarter
+
+PROCEDURE:
+
+// Step 1 — Return dispatch cases
+FOR EACH faction f ∈ Faction.All:
+  RETURN dispatch_case[f] → Faction Player
+  // Contents: operation cards, target slips, resolution cards (RO-xx), ARBITER intel notes
+  // Outcome visibility: VS-04 → VS-02 (faction-only) — each faction sees only their own ops
+
+// Step 2 — ARBITER Quarter notes
+ARBITER records Quarter-level observations (patterns, notable moments)
+// Informs Debrief ARBITER statement — Art 07; Chronicle — Art 10
+
+// Step 3 — Clear Resolution Grid
+Grid.Lane[F-xx].Beat2Slot    ← None  FOR ALL f
+Grid.Lane[F-xx].Beat3Queue   ← []    FOR ALL f
+Grid.ActiveModifierTokens    ← {}    (empty map)
+Grid.ProtectModifiers        ← {}    (empty map)
+Grid.ResolvedCells           ← []    (empty list)
+Grid.ResolutionQueue         ← []    (empty list)
+
+OUTPUT:
+  Faction Players hold dispatch cases — each faction's outcomes privately visible
+  Resolution Grid cleared — no Grid domain state carries to next Quarter
+  Debrief opens
+
+STATE MUTATIONS:
+  Grid.* ← all variables cleared to empty state
+```
 
 ---
 
@@ -389,24 +846,32 @@ Decision tables cover all branching points in Beats 0–5. Confirmed scope:
 
 ## 7. Modifier Stack Reference
 
-*Pending content pass.*
+Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 compliant — single-typed columns, controlled vocabulary.
 
-Variable modifier rows are stubbed pending Art 04:
+**Sign convention:** Positive Threshold Adjustment = threshold raised = success more likely. Negative = threshold lowered = harder. (Source: Art 03 §14.) Physical modifier tokens may express this inversely as "+N difficulty" — see [DF-02].
 
-| ID | Modifier Name | Type | Value | Dependency |
-|----|--------------|------|-------|------------|
-| M-01 | Critical Success | Fixed | −25 | Art 03 §14 |
-| M-02 | Critical Failure | Fixed | +25 | Art 03 §14 |
-| M-03 | Untrained | Fixed | +25 | Art 03 §14 |
-| M-04 | Infrastructure | Fixed | −25 | Art 03 §14, L107 |
-| M-05 | Partial Payment | Fixed | +50 | Art 03 §14 |
-| M-06 | Experienced | Fixed | −15 | Art 03 §14 |
-| M-07 | Known Operative | Fixed | +15 | Art 03 §14 |
-| M-08 | Modifier Card | Variable | TBD | Blocked — Art 04 |
-| M-09 | Protect | Variable | TBD | Blocked — Art 04 |
-| M-10 | Situation Report | Variable | TBD | Blocked — Art 04 |
-| M-11 | Type A | Fixed | 0 | Art 03 §14 |
-| M-12 | Type B | Variable | TBD | Blocked — Art 04 |
+| ID | Category | Modifier | Scope | Applied | Instance Limit | Value Type | Threshold Adjustment |
+|----|----------|----------|-------|---------|----------------|------------|---------------------|
+| M-01 | Standing | Celebrated | All | Persistent | 1 | Fixed | +20 |
+| M-02 | Standing | Respected | All | Persistent | 1 | Fixed | +10 |
+| M-03 | Standing | Neutral | All | Persistent | 1 | Fixed | 0 |
+| M-04 | Standing | Suspect | All | Persistent | 1 | Fixed | −10 |
+| M-05 | Standing | Discredited | All | Persistent | 1 | Fixed | −20 |
+| M-06 | Payment | Partial payment marker | Covert | Beat 0 | 1 per submitted card | Fixed | −50 |
+| M-07 | Payment | Partial payment marker | Political | Beat 4 | 1 per submitted card | Fixed | −50 |
+| M-08 | Card Effect | Modifier card | All | Pre-Resolution | Unlimited | Variable | See card |
+| M-09 | Card Effect | Protect / Defend operation | Covert | Beat 2 | 1 per Protect submitted | Variable | See card |
+| M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Event Card | Variable | See Event Card |
+| M-11 | Countermeasure | Type B — target faction assets | Covert | Beat 2 | 1 per defending faction | Fixed | −15 |
+| M-12 | District | Infrastructure — no adjacent Core | All | Persistent | 1 | Fixed | −25 |
+
+*Source: Art 03 §14.*
+
+*M-01–M-05 are mutually exclusive — exactly one Standing modifier applies per faction per resolution, derived from `Faction.PublicStanding[f]` via the `M_standing()` helper in §5.*
+
+*M-08, M-09, M-10, M-12 variable rows are fully specified here for Fixed modifiers; variable values pending Art 04 card definitions. Balance analysis (modifier stack mathematics) is the planned Layer 4 of this artifact, blocked until all M-xx values are defined.*
+
+**Correction note:** The §7 table in v0.2 contained values from a prior design iteration (M-01: "Critical Success −25", M-02: "Critical Failure +25", etc.) that do not match Art 03 §14. Critical Success and Critical Failure are resolution rules, not modifier stack entries. The corrected table above is authoritative. All §5 Beat Procedures reference this version.
 
 ---
 
@@ -420,4 +885,13 @@ Variable modifier rows are stubbed pending Art 04:
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.1*
+### Open Design Findings (surfaced by Layer 2 formalization)
+
+| ID | Section | Finding | Action Required |
+|----|---------|---------|-----------------|
+| DF-01 | Beat_1 | Art 03 Beat 1 uses "Operation Failed" resolution card for restriction removals; Beat 2 uses "Operation Blocked." Both are RO-03 (Blocked) per 00b. Label inconsistency — pre-resolution cancellations should not carry "Failed" label. | Confirm "Operation Blocked" for both; amend Art 03 §12 Beat 1 if agreed |
+| DF-02 | Beat_4, §7 | Partial payment marker described as "+50 difficulty" in beat prose (Art 03 Beat 0, Beat 4) but listed as "−50" Threshold Adjustment in modifier table. Inverse representations of same penalty. Physical token label may confuse table players. | Clarify notation in Art 07 physical token design; consider aligning prose to table sign convention |
+
+---
+
+*End of Art 03a — Game Engine Specification v0.3*
