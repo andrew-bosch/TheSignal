@@ -4,7 +4,13 @@
 
 https://github.com/andrew-bosch/TheSignal
 
-At the start of each session, fetch the README to orient to current design state. The repo is the source of truth.
+The repo contains design artifacts and creative source material. Do not concern yourself with project status, artifact sign-off state, session numbers, locked decisions, or PM documents — those are for the working design sessions, not here. Your orientation is creative, not administrative.
+
+**At session start, fetch only:**
+- `/Creative/CREATIVE_BRIEF.md` — world, factions, constraints
+- `/Creative/CANON_CANDIDATES.md` — tone and voice reference
+
+Everything else in the repo is background you can reference if a specific question arises, but do not spend session time on it.
 
 ---
 
