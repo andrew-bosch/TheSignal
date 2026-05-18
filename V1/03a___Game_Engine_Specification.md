@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.91  
+**Version:** 0.92  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -118,6 +118,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 |----------|----------------|--------|
 | `ARBITER.ModifierToken[M-xx]` | Provisioned by denomination — full set per Art 07 | Session setup; Art 07 |
 | `ARBITER.Resources[RT-06]` | TBD — Art 07 | Art 07 |
+| `ARBITER.Notepad` | Empty | Session setup |
 | `Reservoir[RT-xx]` | 50 per resource type — provisioned at session start | Setup |
 
 *Reservoir is pre-loaded with 50 of each resource type at session start. This represents the city's existing economic base and ensures sufficient supply to sustain Burst Play trades, Translation payouts, and other Reservoir draws across all 8 Quarters. Value is a working baseline pending playtest validation. Resources also enter the Reservoir through faction payments during Resolution (Beat 0 drain, Beat 4 Submit Payment). ARBITER.Resources[RT-06] is ARBITER's own operational resource — separate from the Reservoir.*
@@ -233,6 +234,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 |----------|------|-----------|------------|
 | `ARBITER.ModifierToken[M-xx]` | Integer ≥ 0 (quantity per denomination) | VS-04 | Session setup (provisioned by denomination); Beat 2 (M-11 placed on grid cell); Beat 3/4 (tokens placed and returned to pool per resolution step) |
 | `ARBITER.Resources[RT-06]` | Integer ≥ 0 (Resolution resource — RT-06) | VS-04 | TBD — Art 07 (Translation mechanic, income source) |
+| `ARBITER.Notepad` | Running record — per-Quarter observations, resolution patterns, portrait notes, Debrief material, Chronicle source | VS-04 | Beat 3 Step 11 (portrait + resolution notes); Beat 4 Step 10 (political act notes); Beat 5 Step 2 (Quarter-level record); Debrief (narrative summary) |
 
 *`ARBITER.Resources[RT-06]` is ARBITER's operational resource (Resolution, generated at Chorus Node). It is distinct from the Reservoir — see System Domain below.*
 
@@ -1051,4 +1053,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.91*
+*End of Art 03a — Game Engine Specification v0.92*
