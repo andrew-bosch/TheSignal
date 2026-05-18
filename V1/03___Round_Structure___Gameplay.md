@@ -358,7 +358,7 @@ For each Faction Player in initiative order:
 
 1. Announce the political act being declared.
 2. Place the declared card face-up in front of the Faction Player's tableau with the target slip and resource tokens stacked on top.
-3. Pay resources directly to the Reservoir.
+3. Resource tokens remain with the declared card on the tableau — payment is submitted to the Reservoir at the start of Beat 4.
 4. Play any modifier cards modifying the political act face-up alongside.
 
 *A Faction Player passing: place the Pass card face-up on the tableau.*
@@ -419,18 +419,37 @@ A deployment marker is flipped to the Blocked face when a blocking condition res
 
 ---
 
-**Beat 0: Open Dispatch Cases**
+**Beat 0: The Cases Open**
 
-The ARBITER Player opens all received dispatch cases and builds the Resolution Grid.
+The ARBITER Player: 
+- Arranges Dispatch cases left to right in numbered lanes above the top of the resolution grid in the order received.
+- Opens all cases and builds the Resolution Grid.
 
-1. Take the Lane 1 dispatch case (first received).
-2. Place the Beat 2 card, if any, in the Beat 2 row of Lane 1.
-3. For each Beat 3 card encountered in order: place the card and its paired target slip in the next available Beat 3 row pair for Lane 1. Stack any attached modifier cards beneath the operation card in cascade — modifier cards peek out beneath the operation card, showing their values at a glance.
-4. Repeat steps 1–3 for each remaining lane in receipt order (Lane 2 through Lane 5).
+From left to right, lane by lane: 
+
+1. Remove the first operation packet from the dispatch case.
+2. For each card in the packet, validate payment using the Payment Validation table below. 
+3. Drain resources to the Reservoir as directed.
+4. Place each card in the grid based on what Beat is indicated on the card:
+   - Beat 2 card: place in the Beat 2 row of the resolution grid for the lane being processed.
+   - Beat 3 card or Pass: Place in the uppermost vacant space in the Beat 3 section of the resolution grid for the lane being processed.
+     - Stack bottom to top: target slip, modifier cards, operation card (or pass). 
+     
+     *Cards are placed face-up or face-down per Payment Validation.*
+     *Overlap so each card beneath shows its resolution data block.*
+5. Repeat steps 1–4 for each remaining lane in receipt order (Lane 2 through Lane 5).
+6. When complete move to Beat 1.
 
 *If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order.*
 
-*Pass cards in Beat 3 slots are placed in the grid and advance the queue without action when reached in Beat 3.*
+**Payment Validation**
+
+| Payment | Applies to | Resources | Card Placement |
+|---------|------------|-----------|----------------|
+| Full | All | Drain to Reservoir | Face-up in grid |
+| Partial | Non-Apex | Drain to Reservoir; attach +50 difficulty marker to stack | Face-up in grid |
+| Zero | Non-Apex | None to drain | Face-down in grid |
+| Any shortfall | Apex | Drain any submitted resources to Reservoir | Face-down in grid |
 
 *Full Resolution Grid design: Artifact 07 — ARBITER Toolkit.*
 
@@ -447,6 +466,10 @@ The ARBITER Player reads all currently active Situation Report effects aloud.
    - Place the operation card and target slip in the acting faction's dispatch case.
    - Place an Operation Failed resolution card in the dispatch case.
    - Discard any modifier cards from the grid cell — removed from the game.
+3. For each targeting restriction: check all declared political acts on Faction Players' tableaux. For each political act targeting the restricted district or ring:
+   - ARBITER announces the restriction.
+   - The Faction Player removes the political act card and discards modifier cards.
+   - Resource tokens remain with the Faction Player — the act is cancelled before payment.
 
 **Conversion blocks** — effects that prevent deployment marker conversion in specific districts or rings:
 
@@ -498,8 +521,9 @@ For each card in queue order:
 **Step 1 — Identify the operation.**
 
 1. Read the card in the current grid slot.
-2. If Pass: note the skip and advance to the next operation. No further steps apply to this slot.
-3. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
+2. If face-down: auto-fail. Discard all modifier cards from the stack. Return the action card to the faction. Advance to the next operation. No further steps apply to this slot.
+3. If Pass: note the skip and advance to the next operation. No further steps apply to this slot.
+4. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
 
 **Step 2 — Determine base difficulty.**
 
@@ -507,7 +531,7 @@ Read the base difficulty printed on the operation card. Look up the correspondin
 
 **Step 3 — Apply all modifiers.**
 
-Apply all active modifiers: Type B Countermeasure token on the card (if any), modifier cards in cascade under the operation card, Public Standing modifier, active Situation Report effects, and Protect/Defend operation modifiers.
+Apply all active modifiers: +50 payment difficulty marker (if attached in Beat 0), Type B Countermeasure token on the card (if any), modifier cards in cascade under the operation card, Public Standing modifier, active Situation Report effects, and Protect/Defend operation modifiers.
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -570,29 +594,37 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 *Political acts are declared publicly and resolve with full transparency.*
 
-**Build the public resolution grid:**
+**Submit Payment**
 
-1. The ARBITER Player checks all declared political acts for targeting restrictions from active Situation Report effects.
-   - For each restricted act: ARBITER announces publicly which restriction applies. The Faction Player retrieves their political act card. Resources paid are not refunded.
-2. The ARBITER Player collects all remaining declared political act cards, paired modifier cards, and target slips from each faction's tableau in initiative order.
-3. The ARBITER Player arranges them in a public resolution area in initiative order — cards, modifier cards in cascade, and target slips visible to all.
+In initiative order, for each Faction Player with a declared political act:
 
-*Full public resolution grid design: Artifact 07 — ARBITER Toolkit.*
+1. The Faction Player transfers resource tokens from the declared card stack to the Reservoir.
+2. The ARBITER Player verifies payment against the cost printed on the card:
+   - **Full payment:** ARBITER acknowledges.
+   - **Partial payment:** The ARBITER Player attaches a +50 difficulty marker to the card. ARBITER announces the additional difficulty.
+   - **Zero payment:** ARBITER announces the act is invalid. The Faction Player flips their political act card face-down.
 
-For each card in grid order:
+*ARBITER script for each payment outcome: Artifact 07 — ARBITER Toolkit.*
+
+*Face-down cards auto-fail when their turn is reached in initiative order: modifier cards are discarded and the political act card is returned to the faction.*
+
+In initiative order, for each Faction Player:
 
 **Step 1 — Identify the political act. Check for Apex.**
 
-1. Read the political act card and target slip.
-2. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
+1. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in Section 15 before proceeding.
+2. If face-down: auto-fail. Discard all modifier cards. Return the political act card to the faction. Advance to the next Faction Player. No further steps apply to this faction.
+3. Read the political act card and target slip.
 
 **Step 2 — Determine base difficulty.**
 
-Read the base difficulty from the political act card. Look up the corresponding threshold in the Operation System (§13).
+The acting Faction Player reads the base difficulty and target threshold aloud from the political act card.
+
+*Base difficulty and target threshold are printed on the card face.*
 
 **Step 3 — Apply all modifiers.**
 
-The acting Faction Player applies all active modifiers: modifier cards in cascade, Public Standing modifier, active Situation Report effects. Announces the modified threshold aloud.
+The acting Faction Player applies all active modifiers: any difficulty markers placed on the card by arbiter, modifier cards in cascade, Public Standing modifier, active Situation Report effects. Announces the modified threshold aloud.
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -619,26 +651,20 @@ If the political act failed: apply the failure conditions specified on the card.
 
 The affected Faction Player applies their own board changes.
 
-**Step 9 — Apply discovery conditions.**
-
-If the political act was discovered: apply the discovery conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies board changes, apply them.
-
-The affected Faction Player applies their own board changes.
-
-**Step 10 — Clean up the grid position.**
+**Step 9 — Clean up.**
 
 1. The acting Faction Player retrieves their political act card per card rules (return to hand or discard per card text).
 2. Discard modifier cards — removed from the game.
 
-**Step 11 — Update Chorus Portrait track.**
+**Step 10 — Update Chorus Portrait track.**
 
 The ARBITER Player privately updates the acting faction's Portrait marker.
 
-**Step 12 — Note for Chronicle (optional).**
+**Step 11 — Note for Chronicle (optional).**
 
 The ARBITER Player may note a significant moment at their discretion.
 
-**Step 13 — Repeat for all remaining political acts.**
+**Step 12 — Repeat for all remaining political acts.**
 
 ---
 
@@ -811,38 +837,39 @@ If the Round Tracker reaches 8 and no Apex has resolved, proceed to Session End 
 
 An Apex operation may be submitted as a covert operation (resolved in Beat 3) or as a political act (resolved in Beat 4).
 
-*In either case, identifying it is the first check when that operation or act is processed.*
-
 **Step 1 — Identify the Apex.**
 
-- In Beat 3: The ARBITER Player identifies the Apex operation card when opening the dispatch case.
-- In Beat 4: The acting Faction Player reveals their Apex political act card.
-
-Either way, resolution is immediately interrupted.
+- In Beat 0 (covert): The ARBITER Player notes the Apex card when opening the dispatch case. No announcement is made.
+- In Beat 3 (covert): When the Apex card is reached in the resolution queue, resolution is immediately interrupted.
+- In Beat 4 (public): The acting Faction Player reveals their Apex political act card.
 
 ARBITER announces: *"An Apex operation has been submitted. Resolution is suspended."*
 
 **Step 2 — Confirm resources paid.**
 
-The ARBITER Player counts the resources in the dispatch case (covert) or paid to the Reservoir (public). All five resource types must be present in the required amounts (Artifact 05).
+*Covert:* Payment was verified in Beat 0. A face-down Apex card auto-fails at Beat 3 Step 1 before this procedure applies. If this step is reached, full payment was confirmed in Beat 0 and resources are already in the Reservoir.
 
-If insufficient: Apex fails immediately. Resources spent. Resolution resumes from where it was interrupted.
+*Public:* The ARBITER Player verifies resources paid to the Reservoir at Declaration. All five resource types must be present in the required amounts (Artifact 05). If insufficient: Apex fails immediately. Resources spent. Resolution resumes from where it was interrupted.
 
 **Step 3 — Process Emergency Responses.**
 
-The ARBITER Player returns all other factions' unresolved dispatch cases unopened. Resources are refunded. Each non-Apex faction submits one Emergency Response. Emergency Responses are submitted simultaneously and resolved by ARBITER in initiative order. They may change board state — presence chips, structure blocks, Public Standing — before the threshold is checked.
+Resolution is suspended at the current position. Each non-Apex faction submits one Emergency Response. Emergency Responses are submitted simultaneously and resolved by ARBITER in initiative order. They may change board state — presence chips, structure blocks, Public Standing — before the threshold is checked.
+
+*Resources committed to submitted operations are not refunded.*
 
 *Emergency Response is a single faction-specific action representing each faction's final attempt to influence the outcome before the session potentially ends. Definitions and narrative framing are in Artifact 04 — Action Card System and Artifact 05 — Operative & Apex System.*
 
 **Step 4 — Check Board Strength threshold.**
 
-After Emergency Responses resolve, the ARBITER Player counts the Apex faction's total presence chips and structure blocks (Board Strength). If the total no longer meets the threshold specified in Artifact 05, the Apex is cancelled. Resources spent. Operative does not retire. Resolution resumes from where it was interrupted.
+After Emergency Responses resolve, the ARBITER Player counts the Apex faction's total presence chips and structure blocks (Board Strength). If the total no longer meets the threshold specified in Artifact 05, the Apex is cancelled. Resources spent. Operative does not retire. Resolution resumes from the suspended position — operations remaining in the queue resolve normally.
 
 *The threshold may have shifted due to Emergency Response effects — this check happens after all Emergency Responses resolve.*
 
 **Step 5 — Resolve Apex.**
 
 The ARBITER Player opens the sealed Apex envelope and pauses 5 seconds. ARBITER reads the Apex narrative card aloud. The ARBITER Player applies all public board effects and updates the Chorus Portrait track. The session ends. Proceed to Session End per Artifact 10a — Victory System.
+
+*Operations remaining in the suspended queue do not resolve. Resources committed to submitted operations are not refunded.*
 
 *Full Apex rules in Artifact 05 — Operative & Apex System.*
 
@@ -931,11 +958,11 @@ The Network and The Directorate reach agreement with 20 seconds remaining. Both 
 
 ### Apex Interrupted — Beat 3
 
-*Quarter 7 Beat 3. ARBITER opens The Guild's dispatch case and finds an Apex operation card.*
+*Quarter 7 Beat 0. ARBITER opens The Guild's dispatch case, encounters an Apex operation card, and verifies resources. Resources from all dispatch cases are drained to the Reservoir. Beat 3: The Guild's Apex card is reached in the resolution queue.*
 
 ARBITER announces: *"An Apex operation has been submitted. Resolution is suspended."*
 
-Two other dispatch cases remain unopened — they are returned to their owners with resources refunded. Each non-Guild faction submits one Emergency Response.
+The operation queue is suspended. Resources committed to all submitted operations were drained in Beat 0 and are not refunded. Each non-Guild faction submits one Emergency Response.
 
 The Network uses their Emergency Response to Undermine The Guild's presence at Power Grid, reducing their chip count. The Directorate Occupies Government Citadel, adding chips to their own position.
 
