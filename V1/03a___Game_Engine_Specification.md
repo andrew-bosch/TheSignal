@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.4  
+**Version:** 0.5  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -56,23 +56,47 @@ The State Model defines every variable in the game system — its type, visibili
 
 ---
 
-### 4.0 State Initialization — Pre-Quarter 1
+### 4.0 Setup State — Pre-Quarter 1
 
-The initial values of all state variables before Quarter 1 Phase 1. This is the only point in the game where all variables are simultaneously defined from setup rather than carried forward. §4.2 "Start of Quarter" applies to Quarters 2–8 (carry-forward state) — it is not a reset.
+The physical state of the game immediately after setup and before Quarter 1 Phase 1 begins. This is not a reset — Quarter 1 is the first increment from this configuration. §4.2 "Start of Quarter" applies to Quarters 2–8 (carry-forward), not Quarter 1.
+
+**ARBITER as faction:** ARBITER (F-06) participates in the Board domain as a standard faction entry, not a special exception. At setup, F-06 holds 8 presence chips at the Chorus Node (D-22). All derived values — InfluenceLevel, ControlFlag, TensionMarker — follow normal derivation from those chips. The ARBITER Dominance Marker (Art 02a §10) is the physical component representing this placement; it replaces standard chip stacks on the board.
+
+#### Board Domain at Setup
+
+Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) added: 8 chips at D-22 only, 0 elsewhere.
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
-| `Board.PresenceChips[D-xx][F-xx]` | 0 — all districts, all factions | Setup |
-| `Board.InfluenceLevel[D-xx][F-xx]` | IL-05 (None) — derived from zero chips | Derived |
-| `Board.ControlFlag[D-xx]` | None — derived from InfluenceLevel | Derived |
-| `Board.TensionMarker[D-xx]` | False — all districts | Setup |
+| `Board.PresenceChips[D-xx][F-01..F-05]` | Per Art 01 §7 Starting Configuration | Art 01 §7 |
+| `Board.PresenceChips[D-22][F-06]` | 8 — Chorus Node only | Art 02a §10 |
+| `Board.PresenceChips[D-xx][F-06]` where D-xx ≠ D-22 | 0 | Setup |
+| `Board.InfluenceLevel[D-xx][F-xx]` | Derived from PresenceChips per normal rules | Derived |
+| `Board.ControlFlag[D-22]` | F-06 — derived (8 chips > F-05's 1 chip; ARBITER Dominant) | Derived |
+| `Board.ControlFlag[D-xx]` where D-xx ≠ D-22 | Per Art 01 §7 Starting Level notations | Derived |
+| `Board.TensionMarker[D-xx]` | False — no Contested conditions exist at setup chip counts | Derived |
 | `Board.StructureBlocks[D-xx][F-xx]` | 0 — all districts, all factions | Setup |
 | `Board.DeploymentMarker[F-xx][1\|2]` | {Location: Hand, Face: N/A} — all factions | Setup |
-| `Faction.Resources[F-xx][RT-xx]` | Faction starting values per Art 00 §7 | Art 00 §7 |
-| `Faction.PublicStanding[F-xx]` | 10 (PS-03 — Neutral) — all factions | L48 |
+
+*Chorus Node at setup: F-06 = IL-01 (Dominant), F-05 = IL-03 (Present). ControlFlag = F-06. No other faction has chips there.*
+
+#### Faction Domain at Setup
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
+| `Faction.Resources[F-xx][RT-xx]` | ⚠ Open question — see note below | Art 00 §7, Art 01 §7 |
+| `Faction.PublicStanding[F-01..F-05]` | 10 (PS-03 — Neutral) | L48 |
+| `Faction.PublicStanding[F-06]` | TBD — Art 07 | Art 07 |
 | `Faction.ChorusPortrait[F-xx]` | 0 — all factions | Setup |
 | `Faction.StatusMarker[F-xx]` | Discussing — all factions | Setup |
 | `Faction.BurstPlay[F-xx]` | False — all factions | Setup |
+
+⚠ **Starting resources — open question:** Art 01 §7 "Starting Round 1 Income" projects income from Q1 Upkeep Step 5, calculated from setup chip placement. It is unclear whether factions begin the game with resources in hand (a setup grant before Q1 Upkeep), or at zero (receiving their first income during Q1 Upkeep Step 5 only). If the income table reflects only the Upkeep yield, starting value = 0. If it includes a pre-Upkeep starting grant, the income table values are the combined total. Requires resolution in Art 00 §7 or Art 02b.
+
+#### Quarter, Event, Card, and Grid Domains at Setup
+
+| Variable | Starting Value | Source |
+|----------|----------------|--------|
 | `Quarter.Number` | 1 | Setup |
 | `Quarter.InitiativeOrder` | Unset — established in Phase 1 Upkeep Step 2 | Phase 1 |
 | `Quarter.InitiativePattern` | Unset — established in Phase 1 Upkeep Step 2 | Phase 1 |
@@ -84,8 +108,6 @@ The initial values of all state variables before Quarter 1 Phase 1. This is the 
 | `Faction.ModifierHand[F-xx]` | [] — drawn in Phase 1 Upkeep Step 6 | Phase 1 |
 | `Faction.CountermeasureHand[F-xx]` | [] — hand starts empty; deployed in Phase 5 | Phase 5 |
 | `Grid.*` | All empty — Grid instantiated at Beat 0 | Beat 0 |
-
-*Exception: `Board.InfluenceLevel[D-22][F-06]` = IL-01 (Dominant) at all times via ARBITER Dominance Marker — placed during setup, never changes. See §4.1 Board Domain note.*
 
 ---
 
@@ -104,7 +126,7 @@ The initial values of all state variables before Quarter 1 Phase 1. This is the 
 
 *`Board.InfluenceLevel` and `Board.ControlFlag` are computed views. Physical components (Control flags, Tension markers) are player-maintained and must be synchronized immediately after every chip change.*
 
-*Chorus Node exception: `Board.InfluenceLevel[D-22][F-06]` = IL-01 (Dominant) at all times via ARBITER Dominance Marker — structurally unreachable by any playing faction (Art 02a §10).*
+*ARBITER (F-06) chip placement at D-22 (8 chips) makes ARBITER's Dominant status at the Chorus Node structurally permanent — no playing faction can accumulate enough chips to surpass 8 while holding other board positions. See §4.0 for setup initialization. ARBITER Dominance Marker (Art 02a §10) is the physical representation.*
 
 ---
 
@@ -927,4 +949,4 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.4*
+*End of Art 03a — Game Engine Specification v0.5*
