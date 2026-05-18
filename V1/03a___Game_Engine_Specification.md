@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.95  
+**Version:** 0.96  
 **Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -1101,7 +1101,9 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 |----|---------|---------|-----------------|
 | DF-01 | Beat_1 | Art 03 Beat 1 uses "Operation Failed" resolution card for restriction removals; Beat 2 uses "Operation Blocked." Both are RO-03 (Blocked) per 00b. Label inconsistency — pre-resolution cancellations should not carry "Failed" label. | Confirm "Operation Blocked" for both; amend Art 03 §12 Beat 1 if agreed |
 | DF-02 | Beat_4, §7 | Partial payment marker described as "+50 difficulty" in beat prose (Art 03 Beat 0, Beat 4) but listed as "−50" Threshold Adjustment in modifier table. Inverse representations of same penalty. Physical token label may confuse table players. | Clarify notation in Art 07 physical token design; consider aligning prose to table sign convention |
+| DF-03 | §4.1 Faction Domain | `Faction.Resources[F-xx][RT-xx]` Mutates At entry lists "Beat 3/4" without distinguishing three distinct mutation points: (1) Phase 4 Declaration — tokens moved from Faction.Resources to Grid.Political.ResourceStake; (2) Beat 4 Submit Payment — Grid.Political.ResourceStake drained to Reservoir; (3) Beat 3/4 failure conditions — standing/resource penalties per card text. | Split §4.1 Faction Domain mutation point into three entries |
+| DF-04 | §4, §5 | New types introduced in 03a have no 00b entity registry entries: (a) Case — dispatch case physical component, no entity ID scheme (CA-xx?); (b) Packet — Case sub-structure; (c) GridCell — compound type defined only in a §4.1 footnote; (d) IP-xx — Initiative Pattern, referenced in Quarter.InitiativePattern but no 00b lookup table. | 00b audit — add Case, Packet, GridCell, and IP-xx to entity registry and lookup tables as applicable; assign ID namespaces |
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.95*
+*End of Art 03a — Game Engine Specification v0.96*
