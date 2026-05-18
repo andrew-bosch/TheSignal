@@ -155,7 +155,7 @@ The Resolution Grid is a physical staging tool used by the ARBITER Player to sor
 | Beat 3 target 2 | | | | | |
 | *(up to 4 pairs — Ghost)* | | | | | |
 
-*Beat 4 is not included in this grid. Political acts resolve via a separate public resolution grid in Beat 4.*
+*Beat 4 is not included in this grid. Political acts resolve at each Faction Player's tableau in initiative order — ARBITER observes, validates, and provides modifier tokens. No Beat 4 grid.*
 
 **Populating the grid (Beat 0):**
 
