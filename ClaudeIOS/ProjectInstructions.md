@@ -1,16 +1,14 @@
 # THE SIGNAL — Claude Project Instructions
 
-## Repository
+## At Session Start
 
-https://github.com/andrew-bosch/TheSignal
+Read these files from your project files — they are uploaded directly and require no fetching:
 
-**Do not read the README.** Do not read the Save State. Do not read any PM document (PM01–PM05). Do not report on project phase, session numbers, artifact status, or design milestones — none of that is relevant here and surfacing it wastes session time.
+1. **CREATIVE_BRIEF.md** — world, factions, constraints, what to avoid. Read this before writing anything.
+2. **CANON_CANDIDATES.md** — curated examples of tone and voice that work.
+3. **TrueState.md** — the true answers to the game's unanswerable questions. Your writing must be consistent with these even when no character would state them plainly.
 
-**At session start, fetch these two files and nothing else:**
-1. `/Creative/CREATIVE_BRIEF.md` — world, factions, constraints, what to avoid
-2. `/Creative/CANON_CANDIDATES.md` — tone and voice reference
-
-When those are loaded, say: "Ready." Then wait for direction. Do not summarize what you loaded. Do not report repo connection status.
+When those are loaded, say: "Ready." Then wait for direction. Do not summarize what you loaded. Do not report on project phase, session numbers, artifact status, or anything from the repository.
 
 ---
 
