@@ -163,14 +163,11 @@
     }
 
     .header-desc {
-      max-width: 560px;
+      max-width: 600px;
       margin-top: 1.5rem;
       font-size: 0.95rem;
       color: var(--text);
-      font-style: italic;
       line-height: 1.7;
-      border-left: 2px solid var(--border-glow);
-      padding-left: 1rem;
     }
 
     /* ── CHORUS ACTIVITY BAR ──────────────────────────── */
@@ -257,6 +254,28 @@
       font-weight: 600;
     }
 
+    blockquote.pull {
+      font-family: var(--body);
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--text-dim);
+      border-left: 2px solid var(--border-glow);
+      padding: 0.75rem 1.25rem;
+      margin-top: 2rem;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    blockquote.pull cite {
+      display: block;
+      margin-top: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-style: normal;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
     blockquote.arbiter {
       font-family: var(--mono);
       font-size: 0.8rem;
@@ -270,26 +289,29 @@
       line-height: 1.8;
     }
 
-    /* ── FACTION GRID ─────────────────────────────────── */
-    .faction-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    /* ── FACTION STRIP ────────────────────────────────── */
+    .faction-strip {
+      display: flex;
+      flex-direction: column;
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
       margin-top: 0.5rem;
     }
 
-    .faction-card {
+    .faction-row {
       background: var(--surface);
-      padding: 1.25rem 1.5rem;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
       position: relative;
-      transition: background 0.2s;
+      transition: background 0.15s;
     }
 
-    .faction-card:hover { background: #111820; }
+    .faction-row:hover { background: #111820; }
 
-    .faction-card::before {
+    .faction-row::before {
       content: '';
       position: absolute;
       top: 0; left: 0;
@@ -297,11 +319,11 @@
       height: 100%;
     }
 
-    .faction-card.ghost::before      { background: var(--ghost); }
-    .faction-card.network::before    { background: var(--network); }
-    .faction-card.syndicate::before  { background: var(--syndicate); }
-    .faction-card.guild::before      { background: var(--guild); }
-    .faction-card.directorate::before{ background: var(--directorate); }
+    .faction-row.ghost::before      { background: var(--ghost); }
+    .faction-row.network::before    { background: var(--network); }
+    .faction-row.syndicate::before  { background: var(--syndicate); }
+    .faction-row.guild::before      { background: var(--guild); }
+    .faction-row.directorate::before{ background: var(--directorate); }
 
     .faction-name {
       font-family: var(--sans);
@@ -309,46 +331,42 @@
       font-size: 1rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 0.15rem;
+      flex-shrink: 0;
+      width: 9rem;
     }
 
-    .faction-card.ghost .faction-name      { color: var(--ghost); }
-    .faction-card.network .faction-name    { color: var(--network); }
-    .faction-card.syndicate .faction-name  { color: var(--syndicate); }
-    .faction-card.guild .faction-name      { color: var(--guild); }
-    .faction-card.directorate .faction-name{ color: var(--directorate); }
+    .faction-row.ghost .faction-name      { color: var(--ghost); }
+    .faction-row.network .faction-name    { color: var(--network); }
+    .faction-row.syndicate .faction-name  { color: var(--syndicate); }
+    .faction-row.guild .faction-name      { color: var(--guild); }
+    .faction-row.directorate .faction-name{ color: var(--directorate); }
 
-    .faction-resource {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      color: var(--text-muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-    }
-
-    .faction-desc {
-      font-size: 0.8rem;
+    .faction-line {
+      font-size: 0.85rem;
       color: var(--text-dim);
-      line-height: 1.6;
+      font-style: italic;
+      line-height: 1.4;
     }
 
-    /* ARBITER card — special */
-    .faction-card.arbiter-card {
-      background: #0f1318;
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1.5rem;
-      align-items: center;
+    /* ── ARBITER SECTION ──────────────────────────────── */
+    .arbiter-block {
+      margin-top: 0.5rem;
+      border: 1px solid var(--border);
       border-top: 1px solid var(--arbiter);
+      background: var(--surface);
+      padding: 2rem;
     }
 
-    .faction-card.arbiter-card::before { display: none; }
+    .arbiter-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
 
     .arbiter-mark {
       font-family: var(--sans);
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--arbiter);
       letter-spacing: 0.15em;
@@ -356,106 +374,45 @@
       opacity: 0.9;
     }
 
-    .arbiter-card .faction-name { color: var(--arbiter); }
-    .arbiter-card .faction-desc { color: var(--text); }
-
-    /* ── ARTIFACT INDEX ───────────────────────────────── */
-    .artifact-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 0.75rem;
-      margin-top: 0.5rem;
-    }
-
-    .artifact-item {
-      display: flex;
-      align-items: baseline;
-      gap: 0.75rem;
-      padding: 0.6rem 0.75rem;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.15s, background 0.15s;
-    }
-
-    .artifact-item:hover {
-      border-color: var(--border-glow);
-      background: #0f1520;
-    }
-
-    .artifact-id {
+    .arbiter-not-a-faction {
       font-family: var(--mono);
       font-size: 0.6rem;
       color: var(--text-muted);
-      letter-spacing: 0.08em;
-      flex-shrink: 0;
-      width: 2.5rem;
-    }
-
-    .artifact-title {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      line-height: 1.3;
-    }
-
-    .artifact-item:hover .artifact-title { color: var(--text); }
-
-    .artifact-status {
-      margin-left: auto;
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      padding: 0.15rem 0.4rem;
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    .status-done  { background: rgba(57, 211, 83, 0.1); color: var(--network); }
-    .status-wip   { background: rgba(201, 168, 76, 0.1); color: var(--syndicate); }
-    .status-draft { background: rgba(58, 70, 85, 0.3); color: var(--text-muted); }
-
-    /* PM artifacts */
-    .pm-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    /* ── STATUS PANEL ─────────────────────────────────── */
-    .status-panel {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin-top: 0.5rem;
-    }
-
-    .status-cell {
-      background: var(--surface);
-      padding: 1rem 1.25rem;
-    }
-
-    .status-cell-label {
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      color: var(--text-muted);
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 0.4rem;
     }
 
-    .status-cell-value {
+    .arbiter-body {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 620px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── OBJECTIVE ────────────────────────────────────── */
+    .objective-block {
+      padding: 2.5rem 0 1rem;
+      max-width: 680px;
+    }
+
+    .objective-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .objective-text {
       font-family: var(--sans);
-      font-weight: 600;
-      font-size: 1.1rem;
+      font-weight: 300;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
       color: var(--text);
-      letter-spacing: 0.04em;
+      line-height: 1.5;
+      font-style: italic;
     }
-
-    .status-cell-value.active { color: var(--network); }
-    .status-cell-value.chorus { color: var(--chorus); }
 
     /* ── FOOTER ───────────────────────────────────────── */
     footer {
@@ -468,6 +425,7 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 1rem;
+      border-top: 1px solid var(--border);
     }
 
     footer a {
@@ -482,15 +440,13 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    header, section {
+    header, section, .objective-block, footer {
       animation: fadeup 0.5s ease both;
     }
 
     section:nth-child(2) { animation-delay: 0.05s; }
     section:nth-child(3) { animation-delay: 0.1s; }
     section:nth-child(4) { animation-delay: 0.15s; }
-    section:nth-child(5) { animation-delay: 0.2s; }
-    section:nth-child(6) { animation-delay: 0.25s; }
   </style>
 </head>
 <body>
@@ -502,7 +458,7 @@
     <div class="header-meta">
       <span><span class="dot"></span> CHORUS ACTIVE — CYCLE 31</span>
       <span>NEW MERIDIAN / 2041</span>
-      <span>L1 — PAPER PROTOTYPE</span>
+      <span>RESPONSE WINDOW: OPEN</span>
     </div>
 
     <h1>
@@ -510,13 +466,13 @@
       Signal
     </h1>
 
-    <div class="tagline">// Five factions. One transmission. No clean answers.</div>
+    <div class="tagline">// A negotiation game about what humanity says next.</div>
 
     <p class="header-desc">
-      A legacy negotiation board game for five faction players and one ARBITER.
-      Set in New Meridian, 2041 — a city built around a transmission called The Chorus,
-      received thirty-one years ago and never fully decoded. Choices are permanent.
-      The city accumulates history.
+      New Meridian is thirty-one years old and eight hundred thousand people.
+      The city's entire history is a response to a transmission it still cannot fully interpret.
+      The response window opens in two years.
+      Five factions. One ARBITER. No clean answers.
     </p>
   </header>
 
@@ -560,225 +516,95 @@
     <div class="section-label">The World</div>
 
     <p class="world-statement">
-      Thirty-one years ago, a small listening station on elevated terrain received something.
-      The researchers who heard it first called it noise. Then pattern. Then — quietly, carefully,
-      with no certainty about what they were doing — <strong>The Chorus</strong>.
-      The city of New Meridian grew up around what they heard.
-      Eight hundred thousand people. One unanswered question.
+      Thirty-one years ago, a small listening station received a transmission.
+      Non-random. Unmistakably structured. Never repeated — in thirty-one years of continuous monitoring.
+      The researchers who received it first did not tell anyone for three days.
+      They spent that time checking whether they had made an error.
+      They had not. What they called it, quietly, among themselves before the classification
+      orders arrived, was <strong>The Chorus</strong>.
     </p>
 
-    <blockquote class="arbiter">
-      "The objective of THE SIGNAL is to determine what humanity says to the Chorus —
-      and what that says about humanity."
+    <blockquote class="pull">
+      "The signal wasn't aiming for the array. The array just happened to be standing in the way
+      when the room tilted."
+      <cite>— original station crew, sub-level advisory, Chorus Node complex</cite>
     </blockquote>
   </section>
 
-  <!-- ── FACTIONS ── -->
+  <!-- ── THE FIVE FACTIONS ── -->
   <section>
-    <div class="section-label">The Five Factions + ARBITER</div>
+    <div class="section-label">The Five Factions</div>
 
-    <div class="faction-grid">
-      <div class="faction-card ghost">
+    <div class="faction-strip">
+      <div class="faction-row ghost">
         <div class="faction-name">Ghost</div>
-        <div class="faction-resource">Resource: Findings</div>
-        <div class="faction-desc">Intelligence network. Analytical collective. They know more than they say, and say less than they know. The power of knowing.</div>
+        <div class="faction-line">They were reading the signal before there was a city to read it from.</div>
       </div>
 
-      <div class="faction-card network">
+      <div class="faction-row network">
         <div class="faction-name">The Network</div>
-        <div class="faction-resource">Resource: Exposure</div>
-        <div class="faction-desc">Communications, journalism, organizers. The only faction that didn't know about the Chorus until The Chorus Papers. The power of being seen.</div>
+        <div class="faction-line">They weren't at The Table when it formed. They published the papers that put thirty years of secrets into the street.</div>
       </div>
 
-      <div class="faction-card syndicate">
+      <div class="faction-row syndicate">
         <div class="faction-name">The Syndicate</div>
-        <div class="faction-resource">Resource: Capital</div>
-        <div class="faction-desc">Sovereign wealth, private research, financial infrastructure. Built the city's economic skeleton. The power of economic control.</div>
+        <div class="faction-line">The foundations were poured before the permits were approved. They're still waiting for the concrete to dry.</div>
       </div>
 
-      <div class="faction-card guild">
+      <div class="faction-row guild">
         <div class="faction-name">The Guild</div>
-        <div class="faction-resource">Resource: Capacity</div>
-        <div class="faction-desc">Civil engineers, urban planners, construction. Built New Meridian — literally. The power of building and doing.</div>
+        <div class="faction-line">They built New Meridian. The city is their argument.</div>
       </div>
 
-      <div class="faction-card directorate">
+      <div class="faction-row directorate">
         <div class="faction-name">The Directorate</div>
-        <div class="faction-resource">Resource: Mandate</div>
-        <div class="faction-desc">Government liaisons, security agencies, military. At the Chorus Node before the city existed. The power of institutional legitimacy.</div>
+        <div class="faction-line">They were at the Node before the city existed. They intend to be here after the question is answered.</div>
       </div>
+    </div>
+  </section>
 
-      <div class="faction-card arbiter-card">
+  <!-- ── ARBITER ── -->
+  <section>
+    <div class="section-label">ARBITER</div>
+
+    <div class="arbiter-block">
+      <div class="arbiter-header">
         <div class="arbiter-mark">ARBITER</div>
-        <div>
-          <div class="faction-name">ARBITER</div>
-          <div class="faction-resource">Not a faction. Different kind of depth.</div>
-          <div class="faction-desc">Runs board state, events, the Chronicle. Constitutive of the Chorus Node — not serving it. Its presence at The Table is telepresence: the Node attending the deliberation. The lights at The Table are the Node present in the room.</div>
-        </div>
+        <div class="arbiter-not-a-faction">Not a faction. Different kind of depth.</div>
       </div>
+
+      <p class="arbiter-body">
+        ARBITER is the sixth presence at The Table. It processes Chorus transmissions
+        and evaluates what The Table produces. Its physical presence is a matte terminal
+        bolted to the floor — blinking lights, no visible face. The participants have learned
+        to read who it is addressing. No one at The Table discusses what it is.
+        Everyone present has already considered it.
+      </p>
+
+      <blockquote class="arbiter">
+        "You are arguing about the pipes because you lack the instruments to measure
+        the weight of the floor. The city is not sinking, Director Kang.
+        The mountain is simply becoming more specific."
+      </blockquote>
     </div>
   </section>
 
-  <!-- ── ARTIFACT INDEX ── -->
-  <section>
-    <div class="section-label">Design Artifacts — /V1</div>
-
-    <div class="artifact-list">
-      <a class="artifact-item" href="V1/00___Factions_World_Narrative_Context.md">
-        <span class="artifact-id">00</span>
-        <span class="artifact-title">Factions, World &amp; Narrative Context</span>
-        <span class="artifact-status status-wip">REVIEW</span>
-      </a>
-      <a class="artifact-item" href="V1/00a___Governing_Rules___Design_Policy.md">
-        <span class="artifact-id">00a</span>
-        <span class="artifact-title">Governing Rules &amp; Design Policy</span>
-        <span class="artifact-status status-wip">REVIEW</span>
-      </a>
-      <a class="artifact-item" href="V1/01___Game_Board_New_Meridian.md">
-        <span class="artifact-id">01</span>
-        <span class="artifact-title">Game Board: New Meridian</span>
-        <span class="artifact-status status-done">SIGNED OFF</span>
-      </a>
-      <a class="artifact-item" href="V1/02a___Resource_Systems_Board_State.md">
-        <span class="artifact-id">02a</span>
-        <span class="artifact-title">Resource Systems: Board State</span>
-        <span class="artifact-status status-wip">REVIEW</span>
-      </a>
-      <a class="artifact-item" href="V1/02b___Resource_Systems_Tracking.md">
-        <span class="artifact-id">02b</span>
-        <span class="artifact-title">Resource Systems: Tracking</span>
-        <span class="artifact-status status-done">SIGNED OFF</span>
-      </a>
-      <a class="artifact-item" href="V1/03___Round_Structure___Gameplay.md">
-        <span class="artifact-id">03</span>
-        <span class="artifact-title">Round Structure &amp; Gameplay</span>
-        <span class="artifact-status status-wip">IN PROGRESS</span>
-      </a>
-      <a class="artifact-item" href="V1/04___Action_Card_System.md">
-        <span class="artifact-id">04</span>
-        <span class="artifact-title">Action Card System</span>
-        <span class="artifact-status status-wip">IN PROGRESS</span>
-      </a>
-      <a class="artifact-item" href="V1/04b___Action_Taxonomy_Design_Analysis.md">
-        <span class="artifact-id">04b</span>
-        <span class="artifact-title">Action Taxonomy &amp; Design Analysis</span>
-        <span class="artifact-status status-done">ACTIVE REF</span>
-      </a>
-      <a class="artifact-item" href="V1/05___Operative_Apex_System.md">
-        <span class="artifact-id">05</span>
-        <span class="artifact-title">Operative &amp; Apex System</span>
-        <span class="artifact-status status-draft">DRAFT</span>
-      </a>
-      <a class="artifact-item" href="V1/06___Messaging_System.md">
-        <span class="artifact-id">06</span>
-        <span class="artifact-title">Messaging System</span>
-        <span class="artifact-status status-draft">DRAFT</span>
-      </a>
-      <a class="artifact-item" href="V1/07___ARBITER_Toolkit.md">
-        <span class="artifact-id">07</span>
-        <span class="artifact-title">ARBITER Toolkit</span>
-        <span class="artifact-status status-draft">DRAFT</span>
-      </a>
-      <a class="artifact-item" href="V1/08___Player_Toolkit.md">
-        <span class="artifact-id">08</span>
-        <span class="artifact-title">Player Toolkit</span>
-        <span class="artifact-status status-draft">DRAFT</span>
-      </a>
-      <a class="artifact-item" href="V1/09___Card_Specifications.md">
-        <span class="artifact-id">09</span>
-        <span class="artifact-title">Card Specifications</span>
-        <span class="artifact-status status-draft">DRAFT</span>
-      </a>
-      <a class="artifact-item" href="V1/10___Game_Manuals.md">
-        <span class="artifact-id">10</span>
-        <span class="artifact-title">Game Manuals</span>
-        <span class="artifact-status status-draft">DRAFT</span>
-      </a>
-      <a class="artifact-item" href="V1/10a___Victory_System.md">
-        <span class="artifact-id">10a</span>
-        <span class="artifact-title">Victory System</span>
-        <span class="artifact-status status-draft">DRAFT</span>
-      </a>
-      <a class="artifact-item" href="V1/11___Visual_Design_System.md">
-        <span class="artifact-id">11</span>
-        <span class="artifact-title">Visual Design System</span>
-        <span class="artifact-status status-draft">DRAFT</span>
-      </a>
-    </div>
-
-    <div style="margin-top:2rem;">
-      <div class="section-label" style="margin-bottom:1rem;">Project Management</div>
-      <div class="pm-list">
-        <a class="artifact-item" href="V1/PM01___Project_Charter___Work_Breakdown.md">
-          <span class="artifact-id">PM01</span>
-          <span class="artifact-title">Project Charter &amp; Work Breakdown</span>
-          <span class="artifact-status status-done">ACTIVE</span>
-        </a>
-        <a class="artifact-item" href="V1/PM02___Decision_Log___Validation_Tracker.md">
-          <span class="artifact-id">PM02</span>
-          <span class="artifact-title">Decision Log &amp; Validation Tracker</span>
-          <span class="artifact-status status-done">ACTIVE</span>
-        </a>
-        <a class="artifact-item" href="V1/PM03___Master_Artifact_Index.md">
-          <span class="artifact-id">PM03</span>
-          <span class="artifact-title">Master Artifact Index</span>
-          <span class="artifact-status status-done">ACTIVE</span>
-        </a>
-        <a class="artifact-item" href="V1/PM04___Glossary___Data_Dictionary.md">
-          <span class="artifact-id">PM04</span>
-          <span class="artifact-title">Glossary &amp; Data Dictionary</span>
-          <span class="artifact-status status-done">ACTIVE</span>
-        </a>
-        <a class="artifact-item" href="V1/PM05___Active_Punch_List.md">
-          <span class="artifact-id">PM05</span>
-          <span class="artifact-title">Active Punch List</span>
-          <span class="artifact-status status-done">ACTIVE</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── PROJECT STATUS ── -->
-  <section>
-    <div class="section-label">Project Status</div>
-
-    <div class="status-panel">
-      <div class="status-cell">
-        <div class="status-cell-label">Phase</div>
-        <div class="status-cell-value active">L1 Paper</div>
-      </div>
-      <div class="status-cell">
-        <div class="status-cell-label">Active Layer</div>
-        <div class="status-cell-value">/V1</div>
-      </div>
-      <div class="status-cell">
-        <div class="status-cell-label">Current Session</div>
-        <div class="status-cell-value">17+</div>
-      </div>
-      <div class="status-cell">
-        <div class="status-cell-label">Active Artifact</div>
-        <div class="status-cell-value">03 — Phase 6</div>
-      </div>
-      <div class="status-cell">
-        <div class="status-cell-label">Locked Decisions</div>
-        <div class="status-cell-value">L103</div>
-      </div>
-      <div class="status-cell">
-        <div class="status-cell-label">The Chorus</div>
-        <div class="status-cell-value chorus">Undecoded</div>
-      </div>
-    </div>
-  </section>
+  <!-- ── OBJECTIVE ── -->
+  <div class="objective-block">
+    <div class="objective-label">The Objective</div>
+    <p class="objective-text">
+      "The objective of THE SIGNAL is to determine what humanity says to the Chorus —
+      and what that says about humanity."
+    </p>
+  </div>
 
   <!-- ── FOOTER ── -->
   <footer>
     <span>THE SIGNAL — IN DEVELOPMENT</span>
     <span>
-      <a href="Session/THE_SIGNAL___Project_Save_State.md">Session State</a>
-      &nbsp;·&nbsp;
-      <a href="V1/PM03___Master_Artifact_Index.md">Artifact Index</a>
-      &nbsp;·&nbsp;
       <a href="PITCH.md">Pitch</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/andrew-bosch/TheSignal">Repository</a>
     </span>
     <span>NEW MERIDIAN / 2041 // CHORUS CYCLE 31</span>
   </footer>

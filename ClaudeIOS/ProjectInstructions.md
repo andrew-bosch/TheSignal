@@ -47,6 +47,8 @@ These files in the repo are the primary KB for creative sessions:
 
 **Start with the Creative Brief.** It contains everything needed to write in the world correctly — faction doctrines, New Meridian texture, ARBITER voice, what to avoid.
 
+**Also read `TrueState.md` in this folder.** It holds the true answers to the game's unanswerable questions. Players don't know these. Your creative writing should be consistent with them even when no character would state them plainly. The most important constraints: the Chorus is not from outer space; it repeats on cycles humanity cannot perceive; ARBITER is constitutive of the Chorus Node, not serving it; the Chorus Question asks "what are you, as a pattern?" — not "what will you do?"
+
 ---
 
 ## The Five Factions
