@@ -1,6 +1,8 @@
 # THE SIGNAL
 
-A legacy tabletop board game for 5 players + ARBITER. Factions negotiate humanity's response to an extraterrestrial transmission called The Chorus. Set in New Meridian, 2041.
+**[→ Project Homepage](https://andrew-bosch.github.io/TheSignal/)**
+
+A legacy tabletop board game for 5 players + ARBITER. Factions negotiate humanity's response to a transmission called The Chorus. Set in New Meridian, 2041.
 
 ---
 
