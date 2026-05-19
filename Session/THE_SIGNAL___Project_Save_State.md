@@ -57,7 +57,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 2.3 | ✅ Active — locked decisions L01–L116 |
+| PM02 | 2.4 | ✅ Active — locked decisions L01–L117 |
 | PM03 | 2.0 | ✅ Active — Art 04 session 25 format overhaul noted |
 | PM05 | 1.8 | ✅ Active — 04-16 ✅ closed (L116), XA-30 added, 04-01 updated, 09-10 corrected |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
@@ -261,10 +261,11 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 **Session 25 summary (2026-05-19 — complete):**
 - **Art 04 §6 format overhaul:** (1) VS-xx dedicated column added (6-column schema: Category | Field | Purpose | Constraints | VS-xx | Notes/Description); (2) Category column added aligning table rows to card entry groups (Identity / Mechanics / Effects / Portrait / Narrative / Taxonomy); (3) group separators applied to C01–C15 card entries; (4) Portrait mini-table (7 lines) replacing 20 bullet lines per card — applied to all C01–C15.
 - **§6 VS-xx values:** Effect fields = VS-06; Portrait Condition/Modifier Condition fields = VS-01; Portrait Base and Modifier value fields = VS-04 (L116); all other fields = VS-01.
-- **L116 locked:** Portrait value fields (Base and Modifier, all 5 factions) are VS-04 — ARBITER-Only. Card face carries a coded symbol that is physically visible to all players but only interpretable by ARBITER. Consistent with L90 ("visually coded"). PM05 04-16 closed.
-- **§6 VS-xx inline key** updated: VS-01, VS-04, VS-06 all defined directly above the table — no need to cross-reference 00b during play.
+- **L116 locked:** Portrait value fields (Base and Modifier, all 5 factions) are VS-04. Card face carries coded symbol — visible to all, interpreted by ARBITER only. PM05 04-16 closed.
+- **L117 locked:** All 20 Portrait fields VS-04 — extends L116 to Condition and Modifier Condition fields. Portrait data does not appear on card face. ARBITER uses a Card-ID-keyed reference table at resolution. PM05 07-05 flagged (ARBITER Portrait reference table design, Artifact 07).
+- **§6 VS-xx inline key** covers VS-01, VS-04, VS-06 — table is self-contained.
 - **Research reference captured:** Art 04 §6 carries italic note pointing to `Whiteboard/researchNotes_CardDesign.md`. Research notes updated with Methodology & Attribution section.
-- **PM02:** v2.2 → v2.3 (L116). **PM03:** v1.9 → v2.0.
+- **PM02:** v2.2 → v2.4 (L116, L117). **PM03:** v1.9 → v2.0.
 - **No material changes** to C01–C15 sign-off status.
 
 **Sessions 23–24 summary (2026-05-19 — complete):**

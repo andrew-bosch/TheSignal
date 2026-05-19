@@ -176,25 +176,25 @@ Every card uses this data structure. All fields are required. N/A is a valid val
 | Effects | **Effect on failure** | Failure outcome | N/A if no roll | VS-06 | — |
 | Effects | **Effect on crit failure** | Critical failure outcome | N/A if no roll | VS-06 | Additional effects beyond failure |
 | Portrait | **Portrait — Guild** | Guild base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Guild Condition** | Restriction on Guild base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Guild Condition** | Restriction on Guild base | N/A if unconditional | VS-04 | — |
 | Portrait | **Portrait — Guild Modifier** | Adjustment to Guild Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Guild Modifier Condition** | When Guild Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Guild Modifier Condition** | When Guild Modifier applies | N/A if Modifier is N/A | VS-04 | — |
 | Portrait | **Portrait — Directorate** | Directorate base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Directorate Condition** | Restriction on Directorate base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Directorate Condition** | Restriction on Directorate base | N/A if unconditional | VS-04 | — |
 | Portrait | **Portrait — Directorate Modifier** | Adjustment to Directorate Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Directorate Modifier Condition** | When Directorate Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Directorate Modifier Condition** | When Directorate Modifier applies | N/A if Modifier is N/A | VS-04 | — |
 | Portrait | **Portrait — Network** | Network base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Network Condition** | Restriction on Network base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Network Condition** | Restriction on Network base | N/A if unconditional | VS-04 | — |
 | Portrait | **Portrait — Network Modifier** | Adjustment to Network Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Network Modifier Condition** | When Network Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Network Modifier Condition** | When Network Modifier applies | N/A if Modifier is N/A | VS-04 | — |
 | Portrait | **Portrait — Ghost** | Ghost base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Ghost Condition** | Restriction on Ghost base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Ghost Condition** | Restriction on Ghost base | N/A if unconditional | VS-04 | — |
 | Portrait | **Portrait — Ghost Modifier** | Adjustment to Ghost Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Ghost Modifier Condition** | When Ghost Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Ghost Modifier Condition** | When Ghost Modifier applies | N/A if Modifier is N/A | VS-04 | — |
 | Portrait | **Portrait — Syndicate** | Syndicate base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Syndicate Condition** | Restriction on Syndicate base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Syndicate Condition** | Restriction on Syndicate base | N/A if unconditional | VS-04 | — |
 | Portrait | **Portrait — Syndicate Modifier** | Adjustment to Syndicate Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Syndicate Modifier Condition** | When Syndicate Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Syndicate Modifier Condition** | When Syndicate Modifier applies | N/A if Modifier is N/A | VS-04 | — |
 | Narrative | **Narrative anchor** | In-world narrative grounding | One sentence | VS-01 | Standard cards: neutral observer. Faction-specific: owning faction's voice |
 | Narrative | **Faction perspectives** | Per-faction in-world perspective | Required for factions with Portrait values. One sentence per faction | VS-01 | Optional for others |
 | Taxonomy | **Taxonomy — Category** | Action taxonomy — category | Controlled vocabulary: Board, Resource, Action, Cross-Category | VS-01 | See Artifact 04b §4 |
