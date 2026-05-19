@@ -1,8 +1,8 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.97  
-**Status:** 🔄 In Progress — Layers 1–3 draft complete; Layer 4 stub pending  
+**Version:** 0.98  
+**Status:** 🔄 In Progress — Layers 1–3 complete; Phase procedures added (Phase_1–Phase_7); Layer 4 stub pending  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
 **Depends on:** [00b — Data Architecture](00b___Data_Architecture.md)
@@ -27,7 +27,10 @@ Art 03a is the code-lite technical companion to Art 03. Where Art 03 describes t
 2. Index
 3. Scope and Layer Structure
 4. Layer 1 — State Model
-5. Layer 2 — Beat Procedures (Pseudocode)
+5. Layer 2 — Phase & Beat Procedures (Pseudocode)
+   - Quarter_Flow() — full Quarter entry point
+   - Phase_1() through Phase_7() — phase procedures
+   - Beat_0() through Beat_5() — Phase 6 detail
 6. Layer 3 — Decision Tables & Edge Case Registry
    - DT-01: Card face determination at Beat 0 (non-Apex)
    - DT-02: Card face determination at Beat 0 (Apex)
@@ -52,7 +55,7 @@ Art 03a is organized into three layers of increasing specificity:
 | Layer | Contents | Status |
 |-------|----------|--------|
 | 1 | State Model — formal game state at each beat boundary, using 00b entity IDs as variable vocabulary | ✅ Draft complete — §4 |
-| 2 | Beat Procedures — each beat as a structured pseudocode function (Beat_0() through Beat_5()) with explicit IF/THEN/ELSE branches, named inputs/outputs, modifier stack as summation formula, resolution check as formal inequality | ✅ Draft complete — §5 |
+| 2 | Phase & Beat Procedures — Quarter_Flow() entry point; Phase_1()–Phase_7() with explicit state mutations for all phases; Beat_0()–Beat_5() as Phase 6 detail (modifier stack summation formula, resolution inequality) | ✅ Draft complete — §5 |
 | 3 | Decision Tables — all branching conditions surfaced as tables; edge cases include face-down/face-up, Apex vs. non-Apex, Critical overrides, partial payment, Infrastructure scope (L107), Type B scope | ✅ Draft complete — §6 |
 | 4 | Modifier Balance Analysis — modifier stack mathematics: expected difficulty shift per modifier combination, pathological stack identification, modifier cap recommendations | 🔄 Stub — §9; blocked until all M-xx values fully specified (Art 04 card definitions pending) |
 
@@ -564,9 +567,9 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 
 ---
 
-## 5. Layer 2 — Beat Procedures (Pseudocode)
+## 5. Layer 2 — Phase & Beat Procedures (Pseudocode)
 
-Each beat is expressed as a structured procedure with explicit branching, named state mutations, and — for Beats 3 and 4 — the modifier stack as a summation formula and the resolution check as a formal inequality. Procedures use the State Variable vocabulary from §4 and modifier IDs from §7.
+`Quarter_Flow()` is the entry point — it calls `Phase_1()` through `Phase_7()` in sequence. `Phase_6()` delegates to `Beat_0()` through `Beat_5()`, the high-formalism detail layer for Resolution. Phase procedures capture all state mutations outside Resolution at the level of precision needed for L2 implementation. Beat procedures add the modifier stack summation formula and the resolution check as a formal inequality, plus modifier IDs from §7.
 
 **Notation:**
 - `←` assigns to a state variable; `+=` appends to a list or increments
@@ -574,6 +577,362 @@ Each beat is expressed as a structured procedure with explicit branching, named 
 - `D100()` is a uniform random integer 01–100
 - `DT-xx` defers branching detail to Layer 3 (§6)
 - `DESIGN FINDING [DF-xx]` marks an inconsistency surfaced by formalization — requires investigation
+- `district_income(d, f)` references the Art 02a §5 influence level income table — values not reproduced here
+- `D10()` is a uniform random integer 1–10
+
+---
+
+### Quarter_Flow
+
+```
+Quarter_Flow(quarter_number):
+
+  Quarter.Number ← quarter_number
+
+  Phase_1()   // Upkeep — initiative, event, conversion, income, card draw
+  Phase_2()   // Placement — deployment markers placed; entry requirements enforced
+  Phase_3()   // Dispatch — covert operations submitted in cases
+  Phase_4()   // Declaration — political acts declared publicly
+  Phase_5()   // Countermeasures — CC-xx cards deployed to ARBITER Player
+  Phase_6()   // Resolution — delegates to Beat_0 through Beat_5
+
+  // Session end check: if Apex resolved during Phase_6, Quarter_Flow does not return
+  // If Quarter.Number = 8 and no Apex resolved: proceed to Session End (Art 10a)
+
+  Phase_7()   // Debrief — table reflects; Quarter closes
+  Quarter.Number += 1
+```
+
+---
+
+### Phase_1 — Upkeep
+
+```
+Phase_1() → Quarter, Event, Board, Faction, Card state initialized for the Quarter
+
+// Step 1 — Status Marker Reset
+FOR EACH faction f ∈ Faction.All:
+  Faction.StatusMarker[f] ← Discussing
+
+// Step 2 — Initiative
+IF Quarter.Number = 1:
+  Quarter.InitiativeOrder ← factions clockwise from ARBITER Player's left
+  // All Portrait and Public Standing scores equal at Q1 — D10 result ignored
+ELSE:
+  portrait_ranks ← SORT Faction.All BY Faction.ChorusPortrait[f] DESC,
+                   TIEBREAK BY Faction.PublicStanding[f] DESC,
+                   TIEBREAK BY ARBITER discretion
+  ip_roll ← D10()
+  Quarter.InitiativePattern ← IP-xx(ip_roll)   // pattern table: Art 03 §7 Step 2
+  Quarter.InitiativeOrder ← apply(Quarter.InitiativePattern, portrait_ranks)
+ARBITER announces Quarter.InitiativeOrder; ARBITER Player updates Initiative Strip
+
+// Step 3 — Situation Report
+broadcast_card ← draw top of Broadcast Deck
+Event.BroadcastCard ← broadcast_card
+Event.ActiveCards += broadcast_card
+PLACE broadcast_card face-up in Event Zone on The Overview
+ARBITER reads Event Card aloud; announces PS changes only (does not announce difficulty modifiers or hidden effects)
+FOR EACH f WHERE event_card specifies PublicStanding change:
+  Faction.PublicStanding[f] ← adjusted per event_card
+FOR EACH (f, slot) WHERE Board.DeploymentMarker[f][slot].Location ∈ event_card.BlockedDistricts:
+  Board.DeploymentMarker[f][slot].Face ← Blocked
+// Remove expired cards (duration was decremented at prior Quarter close — Phase 1 cleans up)
+Event.ActiveCards ← FILTER Event.ActiveCards WHERE card.Duration > 0
+
+// Step 4 — Deployment Marker Conversion
+FOR EACH faction f ∈ Faction.All:
+  FOR EACH slot ∈ [1, 2] WHERE Board.DeploymentMarker[f][slot].Location ≠ Hand:
+    IF Board.DeploymentMarker[f][slot].Face = Converting:
+      d ← Board.DeploymentMarker[f][slot].Location
+      Board.PresenceChips[d][f] += 1
+      RECALCULATE Board.InfluenceLevel[d][*]
+      RECALCULATE Board.ControlFlag[d]
+      RECALCULATE Board.TensionMarker[d]
+      Faction Player updates Control flag, Established markers, Tension markers immediately
+    Board.DeploymentMarker[f][slot] ← {Location: Hand, Face: N/A}
+
+// Step 5 — Resource Collection  (simultaneous; all factions at once)
+FOR EACH faction f ∈ Faction.All:
+  FOR EACH district d WHERE Board.PresenceChips[d][f] > 0
+                         OR Board.DeploymentMarker[f][*].Location = d:
+    Faction.Resources[f][*] += district_income(d, f)   // Art 02a §5 — IL modifier × base generation
+  FOR EACH structure block s AT district d OWNED BY f:
+    resource_type ← f declares aloud: d.NativeResource OR f.NativeResource
+    Faction.Resources[f][resource_type] += 1
+  Faction.Resources[f][f.NativeResource] += 1   // passive generation — unconditional
+
+// Step 6 — Operations Preparation  (simultaneous; all factions at once)
+FOR EACH faction f ∈ Faction.All:
+  // Covert and political card draw to hand size
+  WHILE Card.Covert.Hand[f].count < 6:
+    IF Card.Covert.Deck[f] empty: SHUFFLE discard pile into Deck
+    Card.Covert.Hand[f] += draw(Card.Covert.Deck[f])
+  WHILE Card.Political.Hand[f].count < 3:
+    IF Card.Political.Deck[f] empty: SHUFFLE discard pile into Deck
+    Card.Political.Hand[f] += draw(Card.Political.Deck[f])
+  // Modifier card draw — skipped if Faction.BurstPlay[f] = True
+  IF NOT Faction.BurstPlay[f]:
+    faction_draw_count ← modifier_draw_table(Board.StructureBlocks[*][f].total)  // Art 03 §7 table
+    Card.Modifier.Hand[f] += draw(Card.Modifier.Deck[f], faction_draw_count)
+    FOR EACH ring rg ∈ {RG-01, RG-02, RG-03}:
+      IF Board.StructureBlocks[rg districts][f].total ≥ 1
+         AND ∃ d ∈ rg districts: Board.InfluenceLevel[d][f] ∈ {IL-01, IL-02}:
+        Card.Modifier.Hand[f] += draw(RingDeck[rg], 1)
+  // Burst Play window — faction may trigger before Dispatch opens
+  IF faction chooses Burst Play:
+    FOR EACH mc ∈ Card.Modifier.Hand[f]:
+      rt ← f declares any RT-xx
+      Faction.Resources[f][rt] += 1   // 1 resource per card traded, type chosen per card
+      mc.Active ← False               // removed from game
+    Card.Modifier.Hand[f] ← []
+    REMOVE Card.Modifier.Deck[f] from game
+    Faction.BurstPlay[f] ← True
+    ARBITER announces: "[Faction] has liquidated their operational reserve."
+    // BurstPlay = True persists for remainder of session; modifier draws skipped all future Q's
+
+STATE MUTATIONS:
+  Faction.StatusMarker[F-xx] ← Discussing (all)
+  Quarter.InitiativeOrder ← established; Quarter.InitiativePattern ← IP-xx
+  Event.BroadcastCard ← current EC-xx
+  Event.ActiveCards ← updated (new card added; expired cards removed)
+  Faction.PublicStanding[F-xx] ← Situation Report effects applied
+  Board.DeploymentMarker[F-xx][1|2] ← {Location: Hand, Face: N/A} (all markers returned)
+  Board.PresenceChips[D-xx][F-xx] ← +1 per converted marker
+  Board.InfluenceLevel, Board.ControlFlag, Board.TensionMarker ← recalculated (derived)
+  Faction.Resources[F-xx][RT-xx] ← income collected (district + structure blocks + passive)
+  Card.Covert.Hand[F-xx] ← drawn to 6
+  Card.Political.Hand[F-xx] ← drawn to 3
+  Card.Modifier.Hand[F-xx] ← drawn per structure block count and ring qualifications
+  Faction.BurstPlay[F-xx] ← True if triggered this step (persistent)
+```
+
+---
+
+### Phase_2 — Placement
+
+```
+Phase_2() → Board.DeploymentMarker placed; derived board state updated after each placement
+
+PRECONDITIONS:
+  Phase_1 complete — all markers in Hand; Quarter.InitiativeOrder established
+
+// Snake pattern: forward pass (Rank 1 → n, one marker each); reverse pass (Rank n → 1, second marker each)
+FOR EACH (faction f, slot s) IN snake_order(Quarter.InitiativeOrder):
+  IF faction passes:
+    CONTINUE  // Board.DeploymentMarker[f][s] remains {Location: Hand, Face: N/A}
+
+  d ← faction's chosen target district
+  // Verify entry requirement for d — ARBITER redirects illegal placements
+  IF d.Ring = RG-03 (Core):
+    REQUIRE: ∃ d2 adjacent to d WHERE d2.Ring = RG-02
+             AND Board.InfluenceLevel[d2][f] ∈ {IL-01, IL-02}
+             // Temporary presence from first marker placed this Phase counts
+  IF d = D-22 (Chorus Node):
+    REQUIRE: ∃ d2 adjacent to d WHERE d2.Ring = RG-03
+             AND Board.InfluenceLevel[d2][f] ∈ {IL-01, IL-02}
+             // Additional Chorus Node entry rules: Art 02a §10
+  // RG-01 (Sprawl) and RG-02 (Infrastructure): no entry requirement
+
+  Board.DeploymentMarker[f][s] ← {Location: d, Face: Converting}
+  // Marker counts as 1 temporary presence chip immediately upon placement
+  RECALCULATE Board.InfluenceLevel[d][*]
+  RECALCULATE Board.ControlFlag[d]
+  RECALCULATE Board.TensionMarker[d]
+  Faction Player updates Control flag, Established markers, Tension markers immediately
+
+STATE MUTATIONS:
+  Board.DeploymentMarker[F-xx][1|2] ← {Location: D-xx, Face: Converting} per placed marker
+  Board.InfluenceLevel, Board.ControlFlag, Board.TensionMarker ← recalculated after each placement (derived)
+```
+
+---
+
+### Phase_3 — Dispatch
+
+```
+Phase_3() → Case[F-xx].Packet[n].* loaded; Grid lane assignments established
+
+// Physical transmission step — minimal state mutation; no board or resource changes
+
+ARBITER announces: "Dispatch is open." Starts dispatch timer.
+
+// All factions assemble and seal their cases simultaneously and privately
+FOR EACH faction f ∈ Faction.All:
+  FOR EACH operation packet n faction submits:
+    Case[f].Packet[n].SequenceID    ← n                  // submission order within case
+    Case[f].Packet[n].CovertCard    ← C-xx | Pass
+    Case[f].Packet[n].Target        ← D-xx | RG-xx
+    Case[f].Packet[n].ModifierCards ← list of MC-xx (may be empty)
+    // Resource tokens enclosed physically — validated and drained at Beat_0
+  Faction Player seals Case[f]
+
+// ARBITER Player queues received cases in receipt order (left to right)
+lane_counter ← 1
+ON EACH case received BY ARBITER Player:
+  Grid.ResolutionQueue.LaneAssignment[case.Faction] ← lane_counter
+  lane_counter += 1
+
+// Timer expires — Dispatch closed
+// Any case not yet received: treated as all-Pass (no submitted operations)
+
+STATE MUTATIONS:
+  Case[F-xx].Packet[n].* ← populated by faction
+  Grid.ResolutionQueue.LaneAssignment ← established by case receipt order
+```
+
+---
+
+### Phase_4 — Declaration
+
+```
+Phase_4() → Grid.Political state populated; Faction.Resources committed to ResourceStake
+
+FOR EACH faction f IN Quarter.InitiativeOrder:
+  IF faction passes:
+    Grid.Political[f].DeclaredCard ← Pass
+    CONTINUE
+
+  act ← selected from Card.Political.Hand[f]
+  // Must target one of f's two placed deployment marker locations this Quarter
+  target ← f's deployment marker location (declared on target slip)
+  stake ← resource tokens f places on card — may be any amount ≤ act.BaseCost
+           // Partial or zero payment: detected and handled at Beat_4 Submit Payment
+  modifiers ← MC-xx cards played alongside (may be empty)
+
+  // Physical placement — face-up, public, irrevocable
+  PLACE act face-up on tableau with target slip; PLACE stake tokens on act; PLACE modifiers face-up alongside
+
+  Grid.Political[f].DeclaredCard ← act
+  Grid.Political[f].ResourceStake[RT-xx] ← stake  // tokens committed; not yet in Reservoir
+  Grid.Political[f].ModifierCards ← modifiers
+  Faction.Resources[f][RT-xx] -= stake             // tokens physically move to tableau stake
+
+STATE MUTATIONS:
+  Grid.Political[F-xx].DeclaredCard ← P-xx or Pass
+  Grid.Political[F-xx].ResourceStake[RT-xx] ← committed tokens
+  Grid.Political[F-xx].ModifierCards ← MC-xx list
+  Faction.Resources[F-xx][RT-xx] ← reduced by staked amount
+  // Note: ResourceStake transfers to Reservoir at Beat_4 Submit Payment only — not here
+```
+
+---
+
+### Phase_5 — Countermeasures
+
+```
+Phase_5() → CC-xx cards transferred to ARBITER Player
+
+FOR EACH faction f IN Quarter.InitiativeOrder:
+  IF faction passes:
+    CONTINUE
+  FOR EACH cc ∈ CC-xx cards faction chooses to deploy:
+    PLACE cc face-up on tableau
+    DECLARE cc.Type (Type A or Type B) to ARBITER Player
+    HAND cc to ARBITER Player  // identity is VS-04 — not yet public
+
+// ARBITER Player collects all dispatch cases from receive queue
+// Phase 6 begins immediately after
+
+STATE MUTATIONS:
+  Card.Countermeasure.Hand[F-xx] ← deployed CC-xx cards physically held by ARBITER Player
+  // No board or resource changes — Phase 5 is a physical handoff only
+```
+
+---
+
+### Phase_6 — Resolution
+
+```
+Phase_6()
+
+// Resolution executes across six sequential beats.
+// Full specification: Beat procedures below.
+
+Beat_0(dispatch_cases, countermeasures)   // Grid built; payment validated; resources drained
+Beat_1(Event.ActiveCards)                 // Restrictions applied; restricted ops/acts removed
+Beat_2()                                  // Countermeasures processed; grid cleaned
+Beat_3()                                  // Covert operations resolved
+Beat_4()                                  // Political acts resolved
+Beat_5()                                  // Cases returned; Resolution Grid cleared
+
+// If Apex resolved during Beat_3 or Beat_4: Quarter_Flow does not return from Phase_6
+// State mutations: see Beat procedures below
+```
+
+---
+
+### Phase_7 — Debrief
+
+```
+Phase_7() → Quarter closed; all end-of-Quarter state mutations applied
+
+// Open table — no initiative order, no phase timer
+// Free actions throughout (ARBITER observes; no state tracked here):
+//   Resource trades between any two factions (any terms)
+//   Intel note exchanges between any two factions
+//   Accord proposals, counter-proposals, acceptances, declines
+
+// ARBITER conversion — available between phases and throughout Debrief
+// Not available during Resolution Beats 1–4 while ARBITER is processing board changes
+
+// Chorus Question window
+IF Chorus.ActivityTrack ≥ question_threshold
+   AND ∃ f: Board.InfluenceLevel[D-22][f] ∈ {IL-01, IL-02, IL-03}  // at least Present
+   AND NOT Board.TensionMarker[D-22]:                                 // Node not Contested
+  // Any qualifying faction may propose a Chorus Question; simple majority passes
+  // ARBITER answers in The Observation register — Art 07
+
+// ARBITER Debrief observation  (one, in The Observation register)
+//   Form A: "[Faction] has moved into [PORTRAIT STATE]. [STATE LANGUAGE]."
+//   Form B: "[Faction]'s contribution to the Portrait this Quarter was [vague adjective]."
+//   If Chorus.ActivityTrack changed this Quarter: incorporate into observation
+
+// Ready-to-close
+// Each Faction Player flips Status marker to Ready (green/Operating) when done with Debrief
+// On 3-of-5 green: ARBITER announces and starts 60-second courtesy timer
+// Debrief closes when timer expires OR all 5 show green
+
+// Quarter close — strict sequence (Art 03 §15)
+
+// 1. Findings decay — Ghost (F-01) only; applied publicly
+IF Faction.Resources[F-01][RT-01] ∈ [7, 12]:
+  Faction.Resources[F-01][RT-01] -= 2
+  F-01 returns 2 Findings tokens to Reservoir
+ELSE IF Faction.Resources[F-01][RT-01] ≥ 13:
+  Faction.Resources[F-01][RT-01] -= 4
+  F-01 returns 4 Findings tokens to Reservoir
+// < 7: no decay
+
+// 2. Debrief reward — ARBITER assesses Debrief quality; applies Tier A/B/C effect — Art 07
+
+// 3. Operation Resolution cards collected
+FOR EACH faction f ∈ Faction.All:
+  COLLECT RO-xx resolution cards from f → ARBITER Player  // reusable; reset for next Quarter
+
+// 4. Event duration decrement
+FOR EACH card ∈ Event.ActiveCards:
+  card.Duration -= 1
+  // Expired cards (Duration ≤ 0) remain in ActiveCards list until Phase_1 Step 3 cleanup next Quarter
+
+// 5. Natural Public Standing drift (L13)
+FOR EACH faction f ∈ Faction.All:
+  IF Faction.PublicStanding[f] > 13: Faction.PublicStanding[f] -= 1
+  ELSE IF Faction.PublicStanding[f] < 7: Faction.PublicStanding[f] += 1
+  // Range 7–12 (PS-03 Neutral bracket): no drift
+
+// 6. Quarter.Number incremented in Quarter_Flow() after Phase_7 returns
+
+STATE MUTATIONS:
+  Faction.Resources[F-xx][RT-xx] ← trades (variable); Findings decay on F-01 if applicable
+  Faction.IntelTokens[F-xx] ← net change from intel exchanges (variable)
+  Event.ActiveCards ← duration decremented; expired cards flagged for Phase_1 cleanup
+  Faction.PublicStanding[F-xx] ← natural drift (±1 toward range 7–12; no change if already within)
+```
+
+---
+
+### Phase 6 Detail — Beat Procedures
 
 ---
 

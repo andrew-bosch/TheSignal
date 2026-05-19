@@ -27,7 +27,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | 02a | [Resource Systems: Board State](V1/02a___Resource_Systems_Board_State.md) | 1.4 | ✅ Signed off — session 22 |
 | 02b | [Resource Systems: Tracking](V1/02b___Resource_Systems_Tracking.md) | 1.5 | ✅ Signed off |
 | 03 | [Round Structure & Gameplay](V1/03___Round_Structure___Gameplay.md) | 1.7 | ✅ Signed off — session 20 |
-| 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.97 | 🔄 In Progress — Layers 1–3 drafted |
+| 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In Progress — Layers 1–3 complete; Phase procedures added |
 | 04 | [Action Card System](V1/04___Action_Card_System.md) | 0.9.6 | 🔄 In progress — C01–C15 signed off; C16–C35 and political acts pending |
 | 04b | [Action Taxonomy & Design Analysis](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.1 | ✅ Reference Document — Active |
 | 05 | [Operative & Apex System](V1/05___Operative_Apex_System.md) | 0.1 | 🔄 Draft placeholder |

@@ -49,7 +49,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
 | 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (20 types) — CA-xx (Dispatch Case) added session 22. L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes). L2 TypeScript schema pointers in §8. Established session 20. |
 | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
-| 03a — Game Engine Specification | 0.97 | 🔄 In progress — Layers 1–3 complete (DT-01–DT-09, Apex_Activation()); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
+| 03a — Game Engine Specification | 0.98 | 🔄 In progress — Layers 1–3 complete; Phase procedures added (Quarter_Flow, Phase_1–Phase_7, Beat_0–Beat_5); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
 | 04 — Action Card System | 0.9.6 | 🔄 In Progress — paused until 00a signed off |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
