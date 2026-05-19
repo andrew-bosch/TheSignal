@@ -1,7 +1,7 @@
 # PM03 — MASTER ARTIFACT INDEX
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.9  
+**Version:** 2.0  
 **Status:** 🔄 Updated — Active  
 **Last Updated:** 2026-05-19  
 **Supersedes:** THE_SIGNAL_P1___Master_Artifact_Index v1.1  
@@ -35,7 +35,7 @@
 | 02b | Resource Systems: Tracking | 1.5 | ✅ Signed Off | Chorus Portrait, Public Standing, Intel Notes — tracking systems alongside the board. Cross-reference audit with 04 pending (PM02 D04-11) |
 | 03 | Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20 | Seven phases. §14 Operation System (d100, modifiers M-01–M-12, L108-compliant table). §13 Phase 7 Debrief split from Phase 6. §16 Apex revised (Emergency Response assist/thwart design note). All presence chip terminology standardised. |
 | 03a | Game Engine Specification | 0.98 | 🔄 In Progress — Layers 1–3 complete; Layer 4 stub | Code-lite technical companion to Art 03. Layer 1 (State Model): formal game state at each beat boundary using 00b entity IDs. Layer 2 (Phase & Beat Procedures): Quarter_Flow(); Phase_1()–Phase_7() with explicit state mutations for all phases; Beat_0()–Beat_5() for Phase 6 detail (modifier stack summation formula, resolution inequality). Layer 3 (Decision Tables): DT-01–DT-09; Apex_Activation() procedure. Layer 4 stub (modifier balance analysis) — blocked on Art 04 card definitions. |
-| 04 | Card System | 0.9.8 | 🔄 In Progress | Covert operations C01–C15 signed off. Session 23 structural pass complete. Session 23 schema additions: Card version, Pool copies, Trigger condition, Outcome type fields added to §6; VS-xx annotations applied (VS-06 on effects, VS-04 on design note, VS-01 default); Beat cross-reference to Art 03 §7 added. Political acts and faction-specific cards C16–C35 pending review. 11 blocking decisions open — see PM02 §2. |
+| 04 | Card System | 0.9.8 | 🔄 In Progress | Covert operations C01–C15 signed off. Sessions 23–25 structural passes complete. Session 23–24 schema additions: Card version, Pool copies, Trigger condition, Outcome type fields; VS-xx dedicated column in §6; Beat cross-reference to Art 03 §7. Session 25 format overhaul: group separators (Identity/Mechanics/Effects/Portrait/Narrative/Taxonomy) and Portrait mini-table applied to C01–C15. Political acts and faction-specific cards C16–C35 pending review. 11 blocking decisions open — see PM02 §2. |
 | 04a | Card Reference Table | — | ⬜ Not Started | Condensed tabular view of all cards — one row per card, columns: Card ID, Card Name, Card Type, Card Subtype, Card Faction, Beat, Primary Cost, Difficulty, Taxonomy — Category / Function / Target, Portrait. Full card data stays in Artifact 04; 04a is the lookup and cross-reference layer. Populated after all card reviews complete. Blocked by 04 completion. (Scope confirmed L83.) |
 | 04b | Action Taxonomy & Design Analysis | 1.1 | ✅ Reference Document — Active | Companion to 04. Category/Function/Target taxonomy framework, coverage gap analysis, faction design recommendations. Cross-Category — Shift — Chorus Portrait retired (L84). Ghost doctrine gap flagged. Not playtest-blocking. |
 | 05 | Operative & Apex System | 0.1 | 🔄 Draft — Placeholder | Placeholder file created. System structure, operative data format, Apex procedure, Founding Figure slots per faction. Blocked by 04 completion — no card content finalized. |
@@ -240,4 +240,4 @@ This directory is **not part of the design artifact set.** Content here is evalu
 
 ---
 
-*End of PM03 — Master Artifact Index v1.7*
+*End of PM03 — Master Artifact Index v2.0*

@@ -58,7 +58,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
 | PM02 | 2.1 | ✅ Active — locked decisions L01–L114 |
-| PM03 | 1.9 | ✅ Active — Art 04 updated to v0.9.8 session 24 |
+| PM03 | 2.0 | ✅ Active — Art 04 session 25 format overhaul noted |
 | PM05 | 1.8 | ✅ Active — XA-30 added (compound effect text gap), 04-16 added (VS-xx Portrait), 04-01 updated, 09-10 updated to 20 portrait fields |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
@@ -258,6 +258,12 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM03 v1.7:** 00b row added, Art 03 updated to ✅ Signed Off v1.7.
 - **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
 
+**Session 25 summary (2026-05-19 — complete):**
+- **Art 04 format overhaul applied to C01–C15.** Three changes approved and executed: (1) VS-xx dedicated column added to §6 table (5-column schema: Field | Purpose | Constraints | VS-xx | Notes/Description); (2) group separators added to each card entry (Identity / Mechanics / Effects / Portrait / Narrative / Taxonomy bold labels with blank-line separation); (3) Portrait mini-table replacing 20 bullet lines per card (7 lines: header + separator + 5 faction rows).
+- **§6 VS-xx values:** Effect fields = VS-06 (Conditional); Portrait value fields = *pending 04-16*; all other fields = VS-01.
+- **PM03:** v1.9 → v2.0 (Art 04 status note updated to reflect sessions 23–25 structural passes).
+- **No material changes** — all session 25 changes are formatting/structural; C01–C15 sign-off status unchanged.
+
 **Sessions 23–24 summary (2026-05-19 — complete):**
 - **Art 04 structural pass complete (sessions 23–24).** All PM05 items 04-00 through 04-00e applied and closed. Session 23 executed field splits, difficulty percentages (04-13/14), Resolution field, and full Portrait → 20-field expansion (4 sub-fields × 5 factions).
 - **§6 table redesigned:** 2-column (Field | Description) → 4-column (Field | Purpose | Constraints | Notes/Description). Full review produced several structural iterations: Card type generalized to all card types; Primary/Secondary cost descriptions corrected (not always native/non-native); crit row constraints fixed; difficulty percentage table removed from §6 (cross-reference to Art 03 §13); Portrait structure evolved 3-field → 10-field → 20-field.
@@ -299,12 +305,12 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **README merged:** Root README.md is now the single artifact index (was split between root and V1/). V1/README.md replaced with 3-line redirect stub.
 - **Grip updated:** Now serves project root (TheSignal/) at localhost:6419 instead of V1/. CLAUDE.md updated.
 
-**Recommended next steps (session 25 and beyond):**
-1. **Art 04 political acts pass** — apply full §6 structure (including Outcome type values) to P01–P18 (item 04-01)
-2. **Art 04 C16–C35** — faction-specific cards; once complete, unblocks Art 05+
-3. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
-4. **Batch re-sign-offs:** Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired), 00a (sessions 11–12 material changes)
-5. **04-16** — Portrait field VS-xx annotation: confirm whether per-card portrait value fields carry VS-01 (printed on card, public) or VS-04 (ARBITER-scored); update §6 Constraints rows
+**Recommended next steps (session 26 and beyond):**
+1. **04-16** — Portrait field VS-xx: confirm VS-01 (per-card value printed on card) vs. VS-04 (ARBITER-scored aggregate); update §6 Portrait rows. Quick design decision — 5 minutes.
+2. **Art 04 political acts pass** — apply full §6 structure (including Outcome type values) to P01–P18 (item 04-01)
+3. **Art 04 C16–C35** — faction-specific cards; once complete, unblocks Art 05+
+4. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
+5. **Batch re-sign-offs:** Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired), 00a (sessions 11–12 material changes)
 6. **XA-29** (unsupervised) — component terminology cleanup across all artifacts
 7. **Open design decisions:** D04-13 (Floor Act), D04-07 (modifier card in-world name)
 
