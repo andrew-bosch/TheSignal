@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.8 Draft  
+**Version:** 0.9.9 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-05-19  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -42,7 +42,7 @@ This artifact does not define operative abilities (Artifact 05), the dispatch ca
 | §3 | Game Purpose |
 | §4 | Narrative Function |
 | §5 | Design Principles |
-| §6 | Card Data Structure |
+| §6 | Card Data Schema |
 | §7 | Standard Covert Operations C01–C10 |
 | §8 | Faction-Specific Covert Operations C11–C35 |
 | §9 | Standard Political Acts P01–P08 |
@@ -137,71 +137,159 @@ Faction-specific cards may have a secondary non-faction resource cost but their 
 
 ---
 
-## 6. Card Data Structure
+## 6. Card Data Schema
+
+**Card Pool and Draw Deck**
+
+Each faction player maintains two card pools at session start: a **Covert Operations Pool** and a **Political Acts Pool**. A pool is the full set of cards of that type available to the faction — all standard cards (2 copies per faction) plus all faction-specific cards for that faction (2 copies each). Before the session begins, the faction player selects from their pool to construct their active **draw deck** for each type. The pool is not played from directly; it is the source for deck construction. **Pool copies** defines how many copies of a given card exist in the faction's pool.
 
 Every card uses this data structure. All fields are required. N/A is a valid value.
 
 *For the action taxonomy definitions (Category, Function, Target values) see Artifact 04b §4.*
 
 *VS-xx Visibility Scope — values used in this table (full definitions: Artifact 00b §5.9):*
-- *VS-01 — Public: visible to all players at all times.*
-- *VS-04 — ARBITER-Only: visible to the ARBITER player only. Not revealed at resolution.*
+- *VS-01 — Public: visible to all players at all times. Visibility scope only — does not imply the value is printed on the physical card.*
 - *VS-06 — Conditional: hidden until the card resolves; revealed to all players at resolution.*
+
+*The **Displayed** column is a separate dimension: whether the field value appears on the physical card (Face / Back / No / TBD). Pool copies is VS-01 (public knowledge) but No for display — it is a pool count, not printed on the card. Displayed values marked TBD are deferred to Artifact 09 (Card Production Spec). See PM05 09-11.*
 
 *§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/Whiteboard/researchNotes_CardDesign.md`. Sources: MTG/Scryfall API, Netrunner DB (NRDB), Arkham Horror LCG (Fantasy Flight), Marvel Champions (Fantasy Flight). Fields added as a result: Card version (§1.1), Trigger condition (§1.2), Pool copies (§1.3), Outcome type (§1.5). Fields reviewed and not added: §8.*
 
-| Category | Field | Purpose | Constraints | VS-xx | Notes / Description |
-|----------|-------|---------|-------------|-------|---------------------|
-| Identity | **Card ID** | Primary key | Format: [type prefix][sequence number] | VS-01 | — |
-| Identity | **Card version** | Per-card revision identifier | Format: v[major].[minor] (e.g., v1.0) | VS-01 | Printed on card face. Enables playtest copy identification. Independent of Artifact 04 version. |
-| Identity | **Card name** | In-world card name | Not a mechanical label | VS-01 | — |
-| Identity | **Tagline** | One-line in-world description | One sentence | VS-01 | Printed on card face |
-| Identity | **Card type** | Top-level card category | Controlled vocabulary: Covert Operation, Political Act, Pass, Countermeasure, Modifier, Emergency Response | VS-01 | — |
-| Identity | **Card subtype** | Distribution scope | Controlled vocabulary: Standard, Faction-specific | VS-01 | — |
-| Identity | **Card faction** | Owning faction | All if available to all factions | VS-01 | — |
-| Identity | **Pool copies** | Copies in faction's setup pool | Integer | VS-01 | Standard cards: 2 per faction. Emergency Response: 1 (Singleton). Governs print quantities. |
-| Mechanics | **Beat** | Resolution beat | Numeric | VS-01 | The beat in Phase 6 in which this card is processed. Resolution order within a Beat: governed by dispatch case submission order per Art 03 §7. |
-| Mechanics | **Trigger condition** | Activation condition for non-default timing | Controlled vocabulary: N/A, Submission-time, Beat-N, Phase-N, Condition-based | VS-01 | N/A for cards resolving at their default Beat. Required for React-function cards and Countermeasures. |
-| Mechanics | **Target** | Valid submission targets | Broadest valid statement | VS-01 | Stated on card face |
-| Mechanics | **Restriction** | Submission preconditions | All stated on card. No external references | VS-01 | — |
-| Mechanics | **Primary cost** | Main cost to submit the card | — | VS-01 | — |
-| Mechanics | **Secondary cost** | Additional cost beyond primary | N/A if not applicable | VS-01 | Often a district native resource; often waivable by affinity |
-| Mechanics | **Faction affinity** | Faction receiving affinity discount | N/A if not applicable | VS-01 | — |
-| Mechanics | **Affinity bonus** | What the affinity discount provides | N/A if Faction affinity is N/A | VS-01 | — |
-| Mechanics | **Difficulty** | Base difficulty threshold | Controlled vocabulary: Easy, Average, Challenging, or N/A. Include ring modifier where applicable | VS-01 | N/A if no roll required. Thresholds defined in Artifact 03 §13 |
-| Mechanics | **Resolution** | How this card resolves | Non-roll cards must state mechanism explicitly | VS-01 | Standard: d100 roll vs. Difficulty Threshold per Artifact 03 §13 |
-| Mechanics | **Outcome type** | Political act resolution process type | Controlled vocabulary: Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A | VS-01 | N/A for all non-Political Act card types. Determines ARBITER's outcome-collection process at resolution. Required for L2+ enforcement. |
-| Effects | **Effect on crit success** | Critical success outcome | N/A if no roll | VS-06 | Additional effects beyond success |
-| Effects | **Effect on success** | Primary card effect | Full effect stated on card | VS-06 | — |
-| Effects | **Effect on failure** | Failure outcome | N/A if no roll | VS-06 | — |
-| Effects | **Effect on crit failure** | Critical failure outcome | N/A if no roll | VS-06 | Additional effects beyond failure |
-| Portrait | **Portrait — Guild** | Guild base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Guild Condition** | Restriction on Guild base | N/A if unconditional | VS-04 | — |
-| Portrait | **Portrait — Guild Modifier** | Adjustment to Guild Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Guild Modifier Condition** | When Guild Modifier applies | N/A if Modifier is N/A | VS-04 | — |
-| Portrait | **Portrait — Directorate** | Directorate base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Directorate Condition** | Restriction on Directorate base | N/A if unconditional | VS-04 | — |
-| Portrait | **Portrait — Directorate Modifier** | Adjustment to Directorate Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Directorate Modifier Condition** | When Directorate Modifier applies | N/A if Modifier is N/A | VS-04 | — |
-| Portrait | **Portrait — Network** | Network base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Network Condition** | Restriction on Network base | N/A if unconditional | VS-04 | — |
-| Portrait | **Portrait — Network Modifier** | Adjustment to Network Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Network Modifier Condition** | When Network Modifier applies | N/A if Modifier is N/A | VS-04 | — |
-| Portrait | **Portrait — Ghost** | Ghost base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Ghost Condition** | Restriction on Ghost base | N/A if unconditional | VS-04 | — |
-| Portrait | **Portrait — Ghost Modifier** | Adjustment to Ghost Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Ghost Modifier Condition** | When Ghost Modifier applies | N/A if Modifier is N/A | VS-04 | — |
-| Portrait | **Portrait — Syndicate** | Syndicate base Portrait effect | N/A if no effect | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Syndicate Condition** | Restriction on Syndicate base | N/A if unconditional | VS-04 | — |
-| Portrait | **Portrait — Syndicate Modifier** | Adjustment to Syndicate Portrait under specific circumstances | N/A if none | VS-04 | +/− numeric value. Coded symbol on card face — physically visible to all players, interpreted by ARBITER only. |
-| Portrait | **Portrait — Syndicate Modifier Condition** | When Syndicate Modifier applies | N/A if Modifier is N/A | VS-04 | — |
-| Narrative | **Narrative anchor** | In-world narrative grounding | One sentence | VS-01 | Standard cards: neutral observer. Faction-specific: owning faction's voice |
-| Narrative | **Faction perspectives** | Per-faction in-world perspective | Required for factions with Portrait values. One sentence per faction | VS-01 | Optional for others |
-| Taxonomy | **Taxonomy — Category** | Action taxonomy — category | Controlled vocabulary: Board, Resource, Action, Cross-Category | VS-01 | See Artifact 04b §4 |
-| Taxonomy | **Taxonomy — Function** | Action taxonomy — function | See Artifact 04b §4 | VS-01 | What the card does within its category |
-| Taxonomy | **Taxonomy — Target** | Action taxonomy — target | See Artifact 04b §4 | VS-01 | What the card acts on |
+| Category | Field | Type | Purpose | Constraints | VS-xx | Displayed | Notes / Description |
+|----------|-------|------|---------|-------------|-------|-----------|---------------------|
+| Identity | **Card ID** | String | Primary key | Format: [type prefix][sequence number] | VS-01 | TBD | — |
+| Identity | **Card version** | Semver | Per-card revision identifier | Format: v[major].[minor] | VS-01 | TBD | Enables playtest copy identification. Independent of Artifact 04 version. |
+| Identity | **Card name** | String | In-world card name | Not a mechanical label | VS-01 | Face | — |
+| Identity | **Tagline** | String | One-line in-world description | One sentence | VS-01 | Face | — |
+| Identity | **Card type** | Enum | Top-level card category | — | VS-01 | TBD | Covert Operation, Political Act, Pass, Countermeasure, Modifier, Emergency Response |
+| Identity | **Card subtype** | Enum | Distribution scope | — | VS-01 | TBD | Standard, Faction-specific |
+| Identity | **Card faction** | Enum | Owning faction | — | VS-01 | TBD | All if available to all factions; otherwise owning faction name. |
+| Identity | **Pool copies** | Integer | Copies in faction's setup pool | — | VS-01 | No | Standard cards: 2 per faction. Emergency Response: 1 (Singleton). Pool count — not printed on card. Governs print quantities. |
+| Taxonomy | **Category** | Enum | Action taxonomy — category | See Artifact 04b §4 | VS-01 | TBD | Board, Resource, Action, Cross-Category. |
+| Taxonomy | **Function** | Enum | Action taxonomy — function | See Artifact 04b §4 | VS-01 | TBD | What the card does within its category |
+| Taxonomy | **Target** | Enum | Action taxonomy — target | See Artifact 04b §4 | VS-01 | TBD | What the card acts on |
+| Taxonomy | **Design note** | Prose | Design intent and ARBITER resolution context | N/A if none | VS-04 | No | ARBITER-Only. Informs Artifact 11 layout decisions and Artifact 07 ARBITER resolution notes. Not printed on card. |
+| Narrative | **Narrative anchor** | String | In-world narrative grounding | One sentence | VS-01 | TBD | Standard cards: neutral observer. Faction-specific: owning faction's voice |
+| Narrative | **Faction perspectives** | String | Per-faction in-world perspective | One sentence per faction | VS-01 | TBD | — |
+| Mechanics | **Beat** | Integer | Resolution beat | — | VS-01 | TBD | The beat in Phase 6 in which this card is processed. Resolution order within a Beat: governed by dispatch case submission order per Art 03 §7. |
+| Mechanics | **Trigger condition** | Enum | Activation condition for non-default timing | — | VS-01 | TBD | N/A, Submission-time, Beat-N, Phase-N, Condition-based |
+| Mechanics | **Target** | String | Valid submission targets | Broadest valid statement | VS-01 | Face | — |
+| Mechanics | **Restriction** | Prose | Submission preconditions | All stated on card; no external references | VS-01 | Face | — |
+| Mechanics | **Primary cost** | String | Main cost to submit the card | — | VS-01 | Face | — |
+| Mechanics | **Secondary cost** | String | Additional cost beyond primary | N/A if not applicable | VS-01 | Face | Often a district native resource; often waivable by affinity |
+| Mechanics | **Faction affinity** | Enum | Faction receiving affinity discount | N/A if not applicable | VS-01 | Face | — |
+| Mechanics | **Affinity bonus** | String | What the affinity discount provides | N/A if Faction affinity is N/A | VS-01 | Face | — |
+| Mechanics | **Difficulty** | Enum | Base difficulty threshold | See Artifact 03 §13 | VS-01 | Face | Easy, Average, Challenging, N/A. |
+| Mechanics | **Resolution** | String | How this card resolves | — | VS-01 | Face | d100 roll, or state mechanism explicitly for non-roll cards |
+| Mechanics | **Outcome type** | Enum | Political act resolution process type | — | VS-01 | Face | Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A |
+| Effects | **Crit success** | Prose | Critical success outcome | N/A if no roll | VS-06 | Face | Additional effects beyond success |
+| Effects | **Success** | Prose | Primary card effect | Full effect stated on card | VS-06 | Face | — |
+| Effects | **Failure** | Prose | Failure outcome | N/A if no roll | VS-06 | Face | — |
+| Effects | **Crit failure** | Prose | Critical failure outcome | N/A if no roll | VS-06 | Face | Additional effects beyond failure |
+| Portrait | **Faction** | Enum | Faction identifier — row key | [faction] where [faction] != ARBITER | VS-06 | TBD | One row per faction per card. |
+| Portrait | **Flat** | ±Integer | Portrait modifier — fires on resolution regardless of submitting faction | N/A if no unconditional effect | VS-06 | TBD | Use when the board-state change itself carries a consequence independent of doctrine. |
+| Portrait | **Submitter** | ±Integer | Portrait modifier — fires when this faction is the submitting faction | N/A if no effect | VS-06 | TBD | One Submitter row fires per card play. See ARBITER Portrait Reference Table [name TBD, PM05 07-05]. |
+| Portrait | **Condition** | Prose | Condition on Submitter modifier | N/A if Submitter fires unconditionally | VS-06 | TBD | — |
+| Portrait | **Modifier** | ±Integer | Adjustment to Submitter modifier under specific circumstances | N/A if no conditional adjustment | VS-06 | TBD | — |
+| Portrait | **Mod Condition** | Prose | When Modifier applies | N/A if Modifier is N/A | VS-06 | TBD | — |
 
-> **Design note field:** Prose below the card data block. Not part of the card face. VS-04 (ARBITER-Only). Informs Artifact 11 layout decisions and Artifact 07 ARBITER resolution notes.
+---
+
+## Card Specifications
+
+Navigation index. Card IDs link directly to the full card entry. Section headers link to the subsection.
+
+---
+
+### Covert Operations Deck
+
+**Standard — C01–C10** · [→ §7](#user-content-7-standard-covert-operations--c01c10) · Available to all factions
+
+| [C01](#user-content-c01--build-structure) | [C02](#user-content-c02--demolish) | [C03](#user-content-c03--campaign) | [C04](#user-content-c04--undermine) | [C05](#user-content-c05--gather) |
+|---|---|---|---|---|
+| Build Structure | Demolish | Campaign | Undermine | Gather |
+
+| [C06](#user-content-c06--broadcast-interference) | [C07](#user-content-c07--amplify) | [C08](#user-content-c08--buy-influence) | [C09](#user-content-c09--fund) | [C10](#user-content-c10--protect) |
+|---|---|---|---|---|
+| Broadcast Interference | Amplify | Buy Influence | Fund | Protect |
+
+**Faction-Specific — C11–C35** · [→ §8](#user-content-8-faction-specific-covert-operations--c11c35)
+
+Guild — C11–C15 ✅
+
+| [C11](#user-content-c11--fortify-structure) | [C12](#user-content-c12--materials-acquisition) | [C13](#user-content-c13--foundation-rights) | [C14](#user-content-c14--construction-crew) | [C15](#user-content-c15--infrastructure-yield) |
+|---|---|---|---|---|
+| Fortify Structure | Materials Acquisition | Foundation Rights | Construction Crew | Infrastructure Yield |
+
+Ghost — C16–C20 🔄
+
+| [C16](#user-content-c16--pattern-match) | [C17](#user-content-c17--intercept) | [C18](#user-content-c18--identity-blind) | [C19](#user-content-c19--deep-cover) | [C20](#user-content-c20--misdirection) |
+|---|---|---|---|---|
+| Pattern Match | Intercept | Identity Blind | Deep Cover | Misdirection |
+
+Directorate — C21–C25 🔄
+
+| [C21](#user-content-c21--invoke-jurisdiction) | [C22](#user-content-c22--detain) | [C23](#user-content-c23--evidence-preservation) | [C24](#user-content-c24--surveillance-placement) | [C25](#user-content-c25--sealed-border) |
+|---|---|---|---|---|
+| Invoke Jurisdiction | Detain | Evidence Preservation | Surveillance Placement | Sealed Border |
+
+Network — C26–C30 🔄
+
+| [C26](#user-content-c26--leak) | [C27](#user-content-c27--source-protection) | [C28](#user-content-c28--open-channel) | [C29](#user-content-c29--network-cascade) | [C30](#user-content-c30--community-anchor) |
+|---|---|---|---|---|
+| Leak | Source Protection | Open Channel | Network Cascade | Community Anchor |
+
+Syndicate — C31–C35 🔄
+
+| [C31](#user-content-c31--leveraged-acquisition) | [C32](#user-content-c32--short-the-market) | [C33](#user-content-c33--hostile-acquisition) | [C34](#user-content-c34--golden-parachute) | [C35](#user-content-c35--regulatory-capture) |
+|---|---|---|---|---|
+| Leveraged Acquisition | Short the Market | Hostile Acquisition | Golden Parachute | Regulatory Capture |
+
+---
+
+### Political Acts Deck
+
+**Standard — P01–P08** · [→ §9](#user-content-9-standard-political-acts--p01p08) · Available to all factions
+
+| P01 | P02 | P03 | P04 |
+|---|---|---|---|
+| Establish Presence | Contest | Commission | Denounce |
+
+| P05 | P06 | P07 | P08 |
+|---|---|---|---|
+| Broadcast | Leverage | Invoke the Table | Propose Accord |
+
+**Faction-Specific — P09–P18** · [→ §10](#user-content-10-faction-specific-political-acts--p09p18)
+
+Guild — P09–P10
+
+| P09 | P10 |
+|---|---|
+| Public Works Declaration | Infrastructure Bond |
+
+Directorate — P11–P12
+
+| P11 | P12 |
+|---|---|
+| Issue Directive | Convene an Inquiry |
+
+Network — P13–P14
+
+| P13 | P14 |
+|---|---|
+| Public Disclosure | Open Record Request |
+
+Syndicate — P15–P16
+
+| P15 | P16 |
+|---|---|
+| Acquisition Offer | Market Pressure |
+
+Ghost — P17–P18
+
+| P17 | P18 |
+|---|---|
+| Publish Analysis | Signal Review Request |
 
 ---
 
@@ -210,6 +298,7 @@ Every card uses this data structure. All fields are required. N/A is a valid val
 All factions have access to all ten standard covert operations. Each faction's setup pool contains 2 copies of each standard type (20 standard covert cards in pool). Player selects their covert deck of 24 from a combined pool of standard and faction-specific cards.
 
 ### C01 — BUILD STRUCTURE
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -220,7 +309,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Board
+- **Function:** Add
+- **Target:** Structure block
+
+- **Design note:** Construction is publicly visible — result announced at resolution. The covert element is the intent. Maximum 1 structure per faction per district — ARBITER rejects submission if acting faction already has a structure in the target district. "At least 1 presence" includes claim markers per Artifact 02a global convention.
+
+**Narrative**
+
+- **Narrative anchor:** *Every faction that wants to matter in New Meridian eventually has to build something.*
+- **Faction perspectives:**
+  - Guild: *This is what we do. Every structure we build is an argument that permanence is possible here.*
+  - Directorate: *Infrastructure serves order. We will use it if it serves the mandate.*
+  - Network: *Building is a statement of intent. We watch carefully to understand what kind.*
+  - Ghost: *A structure is a commitment. Commitments are data points.*
+  - Syndicate: *Every structure generates value. The question is who captures it.*
 
 **Mechanics**
 
@@ -238,42 +345,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 
 **Effects**
 
-- **Effect on crit success:** N/A
-- **Effect on success:** Place 1 structure block (faction color) in the target district. Generates +1 of the district's native resource during each Upkeep while standing.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
+- **Crit success:** N/A
+- **Success:** Place 1 structure block (faction color) in the target district. Generates +1 of the district's native resource during each Upkeep while standing.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *Every faction that wants to matter in New Meridian eventually has to build something.*
-- **Faction perspectives:**
-  - Guild: *This is what we do. Every structure we build is an argument that permanence is possible here.*
-  - Directorate: *Infrastructure serves order. We will use it if it serves the mandate.*
-  - Network: *Building is a statement of intent. We watch carefully to understand what kind.*
-  - Ghost: *A structure is a commitment. Commitments are data points.*
-  - Syndicate: *Every structure generates value. The question is who captures it.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Board
-- **Taxonomy — Function:** Add
-- **Taxonomy — Target:** Structure block
-
-> **Design note:** Construction is publicly visible — result announced at resolution. The covert element is the intent. Maximum 1 structure per faction per district — ARBITER rejects submission if acting faction already has a structure in the target district. "At least 1 presence" includes claim markers per Artifact 02a global convention.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | +1 | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C02 — DEMOLISH
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -284,37 +374,15 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
 
-**Mechanics**
+**Taxonomy**
 
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target:** Any district.
-- **Restriction:** Acting faction must have at least 1 presence in the target district or in a district adjacent to the target district. Target faction must have a structure in the target district.
-- **Primary cost:** 1 native resource.
-- **Secondary cost:** 1 district native resource.
-- **Faction affinity:** None.
-- **Difficulty:** Average (50%) + ring modifier
-- **Resolution:** d100 roll vs. Difficulty Threshold per Artifact 03 §13.
-- **Outcome type:** N/A
+- **Category:** Board
+- **Function:** Remove
+- **Target:** Structure block
 
-**Effects**
-
-- **Effect on crit success:** Return primary cost to dispatch case.
-- **Effect on success:** Remove 1 target faction structure from the target district.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** −1 Popularity.
-
-**Portrait**
-
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | −1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
+- **Design note:** Structure removal is publicly visible. Source of removal is not announced. Crit failure detection condition defined in Artifact 03 §6.2. Ring modifier applies to difficulty threshold. Adjacency formal table flagged for Artifact 01 (D-ART01-01).
 
 **Narrative**
 
@@ -326,17 +394,41 @@ All factions have access to all ten standard covert operations. Each faction's s
   - Ghost: *A demolished structure tells us as much as a standing one. We note the absence.*
   - Syndicate: *Assets change hands. Sometimes the most efficient transfer is removal.*
 
-**Taxonomy**
+**Mechanics**
 
-- **Taxonomy — Category:** Board
-- **Taxonomy — Function:** Remove
-- **Taxonomy — Target:** Structure block
+- **Beat:** 3
+- **Trigger condition:** N/A
+- **Target:** Any district.
+- **Restriction:** Acting faction must have at least 1 presence in the target district or in a district adjacent to the target district. Target faction must have a structure in the target district.
+- **Primary cost:** 1 native resource.
+- **Secondary cost:** 1 district native resource.
+- **Faction affinity:** N/A
+- **Affinity bonus:** N/A
+- **Difficulty:** Average (50%) + ring modifier
+- **Resolution:** d100 roll vs. Difficulty Threshold per Artifact 03 §13.
+- **Outcome type:** N/A
 
-> **Design note:** Structure removal is publicly visible. Source of removal is not announced. Crit failure detection condition defined in Artifact 03 §6.2. Ring modifier applies to difficulty threshold. Adjacency formal table flagged for Artifact 01 (D-ART01-01).
+**Effects**
+
+- **Crit success:** Return primary cost to dispatch case.
+- **Success:** Remove 1 target faction structure from the target district.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** −1 Public Standing.
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | −1 | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C03 — CAMPAIGN
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -347,7 +439,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Board
+- **Function:** Add
+- **Target:** Presence
+
+- **Design note:** Token placement is publicly visible. C03 mirrors C01 structurally — Build Structure is the Guild's native action, Campaign is the Network's. Maximum 6 presence tokens per faction per district enforced at submission.
+
+**Narrative**
+
+- **Narrative anchor:** *Presence without roots is just occupation.*
+- **Faction perspectives:**
+  - Guild: *Presence is the foundation everything else is built on. We are methodical about this.*
+  - Directorate: *Authority requires visibility. We establish presence where the mandate requires it.*
+  - Network: *Every person we reach in a district is a relationship. Relationships are how things actually change.*
+  - Ghost: *Presence creates exposure. We expand only when the intelligence justifies the risk.*
+  - Syndicate: *Market position requires footprint. We place ourselves where the returns justify it.*
 
 **Mechanics**
 
@@ -365,42 +475,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 
 **Effects**
 
-- **Effect on crit success:** N/A
-- **Effect on success:** Place 1 additional presence token in the target district.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
+- **Crit success:** N/A
+- **Success:** Place 1 additional presence token in the target district.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | +1 | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *Presence without roots is just occupation.*
-- **Faction perspectives:**
-  - Guild: *Presence is the foundation everything else is built on. We are methodical about this.*
-  - Directorate: *Authority requires visibility. We establish presence where the mandate requires it.*
-  - Network: *Every person we reach in a district is a relationship. Relationships are how things actually change.*
-  - Ghost: *Presence creates exposure. We expand only when the intelligence justifies the risk.*
-  - Syndicate: *Market position requires footprint. We place ourselves where the returns justify it.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Board
-- **Taxonomy — Function:** Add
-- **Taxonomy — Target:** Presence
-
-> **Design note:** Token placement is publicly visible. C03 mirrors C01 structurally — Build Structure is the Guild's native action, Campaign is the Network's. Maximum 6 presence tokens per faction per district enforced at submission.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | +1 | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C04 — UNDERMINE
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -411,37 +504,15 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
 
-**Mechanics**
+**Taxonomy**
 
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target:** Any district.
-- **Restriction:** Acting faction must have at least 1 presence in the target district or in a district adjacent to the target district. Target faction must have at least 1 presence token in the target district.
-- **Primary cost:** 1 native resource.
-- **Secondary cost:** 1 district native resource.
-- **Faction affinity:** None.
-- **Difficulty:** Average (50%) + ring modifier
-- **Resolution:** d100 roll vs. Difficulty Threshold per Artifact 03 §13.
-- **Outcome type:** N/A
+- **Category:** Board
+- **Function:** Remove
+- **Target:** Presence
 
-**Effects**
-
-- **Effect on crit success:** Remove 2 presence tokens from target faction in target district.
-- **Effect on success:** Remove 1 presence token from target faction in target district.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** −1 Popularity.
-
-**Portrait**
-
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | −1 | N/A | N/A | N/A |
-| Directorate | −1 | Except when targeting Network | N/A | N/A |
-| Network | +1 | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
+- **Design note:** Source not announced. Target faction sees tokens removed but not by whom. Crit failure detection condition defined in Artifact 03 §6.2. Ring modifier applies. Portrait values reflect doctrinal alignment — Ghost and Syndicate omitted, neither strongly aligned nor opposed.
 
 **Narrative**
 
@@ -453,17 +524,41 @@ All factions have access to all ten standard covert operations. Each faction's s
   - Ghost: *Disruption without intelligence purpose is noise. We prefer signal.*
   - Syndicate: *If their presence can be eroded, it was never well-positioned to begin with.*
 
-**Taxonomy**
+**Mechanics**
 
-- **Taxonomy — Category:** Board
-- **Taxonomy — Function:** Remove
-- **Taxonomy — Target:** Presence
+- **Beat:** 3
+- **Trigger condition:** N/A
+- **Target:** Any district.
+- **Restriction:** Acting faction must have at least 1 presence in the target district or in a district adjacent to the target district. Target faction must have at least 1 presence token in the target district.
+- **Primary cost:** 1 native resource.
+- **Secondary cost:** 1 district native resource.
+- **Faction affinity:** N/A
+- **Affinity bonus:** N/A
+- **Difficulty:** Average (50%) + ring modifier
+- **Resolution:** d100 roll vs. Difficulty Threshold per Artifact 03 §13.
+- **Outcome type:** N/A
 
-> **Design note:** Source not announced. Target faction sees tokens removed but not by whom. Crit failure detection condition defined in Artifact 03 §6.2. Ring modifier applies. Portrait values reflect doctrinal alignment — Ghost and Syndicate omitted, neither strongly aligned nor opposed.
+**Effects**
+
+- **Crit success:** Remove 2 presence tokens from target faction in target district.
+- **Success:** Remove 1 presence token from target faction in target district.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** −1 Public Standing.
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | −1 | N/A | N/A | N/A |
+| Directorate | N/A | −1 | Except when targeting Network | N/A | N/A |
+| Network | N/A | +1 | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C05 — GATHER
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -474,7 +569,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Resource
+- **Function:** Add
+- **Target:** Intel token
+
+- **Design note:** No secondary cost — observation does not consume local resources. Ghost exemption from adjacency reflects doctrine: remote analysis does not require physical proximity. Ghost affinity is Easy + ring modifier — ring penalties still apply. Crit failure notification slip is a pre-written ARBITER component (A-04-05 — feasibility pending Artifact 07 confirmation). Slip text draft: *"An unknown party attempted to access sensitive information about your operations in [district]. The attempt was identified and neutralised. Exercise appropriate caution."* Intel token mechanics in Artifact 02b §8–9 (cross-reference audit pending — D-04-11). "Delivered in case" is standard language for all privately delivered effects.
+
+**Narrative**
+
+- **Narrative anchor:** *In New Meridian, knowing is the first form of power.*
+- **Faction perspectives:**
+  - Guild: *Intelligence informs construction. We gather when we need to build smarter.*
+  - Directorate: *Information is the foundation of legitimate authority. We collect it formally.*
+  - Network: *The city speaks constantly. We listen for the gaps between what is said and what is true.*
+  - Ghost: *This is what we are here for. Everything else follows from understanding.*
+  - Syndicate: *Information has market value. We acquire it when the return justifies the cost.*
 
 **Mechanics**
 
@@ -492,42 +605,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 
 **Effects**
 
-- **Effect on crit success:** ARBITER delivers 2 Intel tokens for the named faction in case.
-- **Effect on success:** ARBITER delivers 1 Intel token for the named faction in case. Token marked: faction name + round number.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** ARBITER delivers pre-written notification slip to target faction in case.
+- **Crit success:** ARBITER delivers 2 Intel tokens for the named faction in case.
+- **Success:** ARBITER delivers 1 Intel token for the named faction in case. Token marked: faction name + round number.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** ARBITER delivers pre-written notification slip to target faction in case.
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | +1 | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *In New Meridian, knowing is the first form of power.*
-- **Faction perspectives:**
-  - Guild: *Intelligence informs construction. We gather when we need to build smarter.*
-  - Directorate: *Information is the foundation of legitimate authority. We collect it formally.*
-  - Network: *The city speaks constantly. We listen for the gaps between what is said and what is true.*
-  - Ghost: *This is what we are here for. Everything else follows from understanding.*
-  - Syndicate: *Information has market value. We acquire it when the return justifies the cost.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Resource
-- **Taxonomy — Function:** Add
-- **Taxonomy — Target:** Intel token
-
-> **Design note:** No secondary cost — observation does not consume local resources. Ghost exemption from adjacency reflects doctrine: remote analysis does not require physical proximity. Ghost affinity is Easy + ring modifier — ring penalties still apply. Crit failure notification slip is a pre-written ARBITER component (A-04-05 — feasibility pending Artifact 07 confirmation). Slip text draft: *"An unknown party attempted to access sensitive information about your operations in [district]. The attempt was identified and neutralised. Exercise appropriate caution."* Intel token mechanics in Artifact 02b §8–9 (cross-reference audit pending — D-04-11). "Delivered in case" is standard language for all privately delivered effects.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | +1 | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C06 — BROADCAST INTERFERENCE
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -538,7 +634,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Action
+- **Function:** Modify
+- **Target:** Political act (cost)
+
+- **Design note:** Exposure is The Network's native resource. Non-Network factions acquire Exposure through district incursion or trade at 4:1. No presence requirement — signal disruption is broadcast. Source not announced. Beat 2 — ARBITER retains awareness after case opening. At Beat 4 declaration, ARBITER intercepts political acts targeting the affected district and states the additional cost before declaration is confirmed. Faction may proceed or withdraw.
+
+**Narrative**
+
+- **Narrative anchor:** *People don't act naturally when they know they're being watched.*
+- **Faction perspectives:**
+  - Guild: *Disrupting communications delays approvals, permits, agreements. We feel this more than most.*
+  - Directorate: *Interference with public communications is a jurisdictional matter. We note who is responsible.*
+  - Network: *Noise is a tool. Sometimes silence is louder than anything we could broadcast.*
+  - Ghost: *Interference creates analytical cover. We appreciate the quiet.*
+  - Syndicate: *Disrupted communications create market inefficiencies. Those can be profitable.*
 
 **Mechanics**
 
@@ -556,53 +670,54 @@ All factions have access to all ten standard covert operations. Each faction's s
 
 **Effects**
 
-- **Effect on crit success:** N/A
-- **Effect on success:** Political acts declared against the target district this round cost +1 additional native resource.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
+- **Crit success:** N/A
+- **Success:** Political acts declared against the target district this round cost +1 additional native resource.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | +1 | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *People don't act naturally when they know they're being watched.*
-- **Faction perspectives:**
-  - Guild: *Disrupting communications delays approvals, permits, agreements. We feel this more than most.*
-  - Directorate: *Interference with public communications is a jurisdictional matter. We note who is responsible.*
-  - Network: *Noise is a tool. Sometimes silence is louder than anything we could broadcast.*
-  - Ghost: *Interference creates analytical cover. We appreciate the quiet.*
-  - Syndicate: *Disrupted communications create market inefficiencies. Those can be profitable.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Action
-- **Taxonomy — Function:** Modify
-- **Taxonomy — Target:** Political act (cost)
-
-> **Design note:** Exposure is The Network's native resource. Non-Network factions acquire Exposure through district incursion or trade at 4:1. No presence requirement — signal disruption is broadcast. Source not announced. Beat 2 — ARBITER retains awareness after case opening. At Beat 4 declaration, ARBITER intercepts political acts targeting the affected district and states the additional cost before declaration is confirmed. Faction may proceed or withdraw.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | +1 | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C07 — AMPLIFY
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
 - **Card ID:** C07
 - **Card version:** v1.0
 - **Card name:** Amplify
-- **Tagline:** *Boost the Popularity impact of your own political act this round.*
+- **Tagline:** *Boost the Public Standing impact of your own political act this round.*
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Action
+- **Function:** Modify
+- **Target:** Political act (effect magnitude)
+
+- **Design note:** Amplification cuts both ways — a failed political act that loses −1 Public Standing loses −2 instead. ARBITER resolution mirrors C06: awareness retained after Beat 3 case opening, effect applied after political act resolves in Beat 4. "Self" is standard target value for self-targeting cards.
+
+**Narrative**
+
+- **Narrative anchor:** *A message worth sending is worth sending loudly.*
+- **Faction perspectives:**
+  - Guild: *We let our structures speak. Amplification is for those who lack physical evidence.*
+  - Directorate: *Institutional authority does not require amplification. Though we note its effectiveness.*
+  - Network: *Every message we send should land as hard as possible. This ensures it does.*
+  - Ghost: *Amplification is the opposite of what we do. Volume attracts attention. Attention ends operations.*
+  - Syndicate: *Leverage applied at the right moment can move markets. This is that tool.*
 
 **Mechanics**
 
@@ -620,42 +735,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 
 **Effects**
 
-- **Effect on crit success:** N/A
-- **Effect on success:** Popularity impact of the declared political act is doubled — positive or negative.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
+- **Crit success:** N/A
+- **Success:** Public Standing impact of the declared political act is doubled — positive or negative.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | −1 | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *A message worth sending is worth sending loudly.*
-- **Faction perspectives:**
-  - Guild: *We let our structures speak. Amplification is for those who lack physical evidence.*
-  - Directorate: *Institutional authority does not require amplification. Though we note its effectiveness.*
-  - Network: *Every message we send should land as hard as possible. This ensures it does.*
-  - Ghost: *Amplification is the opposite of what we do. Volume attracts attention. Attention ends operations.*
-  - Syndicate: *Leverage applied at the right moment can move markets. This is that tool.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Action
-- **Taxonomy — Function:** Modify
-- **Taxonomy — Target:** Political act (effect magnitude)
-
-> **Design note:** Amplification cuts both ways — a failed political act that loses −1 Popularity loses −2 instead. ARBITER resolution mirrors C06: awareness retained after Beat 3 case opening, effect applied after political act resolves in Beat 4. "Self" is standard target value for self-targeting cards.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | −1 | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C08 — BUY INFLUENCE
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -666,7 +764,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Board
+- **Function:** Add
+- **Target:** Presence
+
+- **Design note:** No secondary cost — Capital bypasses local knowledge requirements. No presence requirement — primary entry mechanism for new districts. Syndicate affinity is difficulty reduction not cost reduction — better outcomes from spending, not discounts. Three Portrait penalties reflect strong doctrinal opposition.
+
+**Narrative**
+
+- **Narrative anchor:** *In New Meridian, capital is a language everyone understands.*
+- **Faction perspectives:**
+  - Guild: *Presence earned through investment rather than community is fragile. We have seen it collapse.*
+  - Directorate: *Purchasing influence undermines the legitimate institutional processes we exist to maintain.*
+  - Network: *This is exactly the kind of power we are here to expose and resist.*
+  - Ghost: *Bought presence is noisier than earned presence. It draws the wrong kind of attention.*
+  - Syndicate: *Capital does not just open doors. It determines which doors exist in the first place.*
 
 **Mechanics**
 
@@ -684,42 +800,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 
 **Effects**
 
-- **Effect on crit success:** Place 3 presence tokens in the target district.
-- **Effect on success:** Place 2 presence tokens in the target district.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** −2 Popularity.
+- **Crit success:** Place 3 presence tokens in the target district.
+- **Success:** Place 2 presence tokens in the target district.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** −2 Public Standing.
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | −1 | N/A | N/A | N/A |
-| Directorate | −1 | N/A | N/A | N/A |
-| Network | −1 | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | +1 | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *In New Meridian, capital is a language everyone understands.*
-- **Faction perspectives:**
-  - Guild: *Presence earned through investment rather than community is fragile. We have seen it collapse.*
-  - Directorate: *Purchasing influence undermines the legitimate institutional processes we exist to maintain.*
-  - Network: *This is exactly the kind of power we are here to expose and resist.*
-  - Ghost: *Bought presence is noisier than earned presence. It draws the wrong kind of attention.*
-  - Syndicate: *Capital does not just open doors. It determines which doors exist in the first place.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Board
-- **Taxonomy — Function:** Add
-- **Taxonomy — Target:** Presence
-
-> **Design note:** No secondary cost — Capital bypasses local knowledge requirements. No presence requirement — primary entry mechanism for new districts. Syndicate affinity is difficulty reduction not cost reduction — better outcomes from spending, not discounts. Three Portrait penalties reflect strong doctrinal opposition.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | −1 | N/A | N/A | N/A |
+| Directorate | N/A | −1 | N/A | N/A | N/A |
+| Network | N/A | −1 | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | +1 | N/A | N/A | N/A |
 
 ---
 
 ### C09 — FUND
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -730,7 +829,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Resource
+- **Function:** Redirect
+- **Target:** Native resource
+
+- **Design note:** No ring modifier — targets a faction not a district. Transfer handled covertly at case return — resources appear in recipient's case at debrief. Source anonymous by default. Acting faction may announce after receiving free Accord card from ARBITER. Recipient may convert received Capital to native resource at 1:1. Free Accord card is a Political Act card (cost 0; return to ARBITER on play — not discarded) delivered to acting faction's hand at case resolution. Played in a subsequent Quarter — card returns in the dispatch case after Resolution, by which point Declaration for the current Quarter has already closed. Full card design: 04-12. "Any other faction" is standard target value when self-targeting is not permitted.
+
+**Narrative**
+
+- **Narrative anchor:** *Every alliance in New Meridian begins with someone extending a hand.*
+- **Faction perspectives:**
+  - Guild: *Investment in relationships is as important as investment in structures.*
+  - Directorate: *Financial transfers between factions warrant scrutiny. We monitor these carefully.*
+  - Network: *Follow the money. It always leads somewhere interesting.*
+  - Ghost: *Resources flowing between factions change the operational landscape. We note the direction.*
+  - Syndicate: *Capital in motion creates relationships. Relationships create opportunities.*
 
 **Mechanics**
 
@@ -748,42 +865,25 @@ All factions have access to all ten standard covert operations. Each faction's s
 
 **Effects**
 
-- **Effect on crit success:** Transfer occurs. +1 Popularity. ARBITER delivers free Accord card to acting faction.
-- **Effect on success:** Transfer occurs. ARBITER delivers free Accord card to acting faction.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** −1 Popularity.
+- **Crit success:** Transfer occurs. +1 Public Standing. ARBITER delivers free Accord card to acting faction.
+- **Success:** Transfer occurs. ARBITER delivers free Accord card to acting faction.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** −1 Public Standing.
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | +1 | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *Every alliance in New Meridian begins with someone extending a hand.*
-- **Faction perspectives:**
-  - Guild: *Investment in relationships is as important as investment in structures.*
-  - Directorate: *Financial transfers between factions warrant scrutiny. We monitor these carefully.*
-  - Network: *Follow the money. It always leads somewhere interesting.*
-  - Ghost: *Resources flowing between factions change the operational landscape. We note the direction.*
-  - Syndicate: *Capital in motion creates relationships. Relationships create opportunities.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Resource
-- **Taxonomy — Function:** Redirect
-- **Taxonomy — Target:** Native resource
-
-> **Design note:** No ring modifier — targets a faction not a district. Transfer handled covertly at case return — resources appear in recipient's case at debrief. Source anonymous by default. Acting faction may announce after receiving free Accord card from ARBITER. Recipient may convert received Capital to native resource at 1:1. Free Accord card is a Political Act card (cost 0; return to ARBITER on play — not discarded) delivered to acting faction's hand at case resolution. Played in a subsequent Quarter — card returns in the dispatch case after Resolution, by which point Declaration for the current Quarter has already closed. Full card design: 04-12. "Any other faction" is standard target value when self-targeting is not permitted.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | +1 | N/A | N/A | N/A |
 
 ---
 
 ### C10 — PROTECT
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -794,38 +894,15 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Card type:** Covert Operation
 - **Card subtype:** Standard
 - **Card faction:** All
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
 
-**Mechanics**
+**Taxonomy**
 
-- **Beat:** 2
-- **Trigger condition:** N/A
-- **Target:** Any district.
-- **Restriction:** Acting faction must have at least 1 presence token in the target district.
-- **Primary cost:** 1 district native resource.
-- **Secondary cost:** None.
-- **Faction affinity:** Guild. Directorate.
-- **Affinity bonus:** Difficulty of all covert operations targeting acting faction's assets in district increased by 2 steps instead of 1.
-- **Difficulty:** N/A
-- **Resolution:** No roll required. Effect resolves on submission.
-- **Outcome type:** N/A
+- **Category:** Cross-Category
+- **Function:** Protect
+- **Target:** Covert operation (difficulty)
 
-**Effects**
-
-- **Effect on crit success:** N/A
-- **Effect on success:** All covert operations targeting the acting faction's assets in the target district this round have their difficulty increased by 1 step.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
-
-**Portrait**
-
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | +1 | N/A | N/A | N/A |
-| Directorate | +1 | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
+- **Design note:** Applies only to acting faction's assets — not all factions' assets. ARBITER resolution mirrors C06. Source not announced. "At least 1 presence token" includes claim markers per Artifact 02a.
 
 **Narrative**
 
@@ -837,22 +914,36 @@ All factions have access to all ten standard covert operations. Each faction's s
   - Ghost: *The best protection is not being found in the first place.*
   - Syndicate: *Protected assets retain value. Unprotected assets invite acquisition.*
 
-**Taxonomy**
+**Mechanics**
 
-- **Taxonomy — Category:** Cross-Category
-- **Taxonomy — Function:** Protect
-- **Taxonomy — Target:** Covert operation (difficulty)
+- **Beat:** 2
+- **Trigger condition:** N/A
+- **Target:** Any district.
+- **Restriction:** Acting faction must have at least 1 presence token in the target district.
+- **Primary cost:** 1 district native resource.
+- **Secondary cost:** None.
+- **Faction affinity:** Guild. Directorate.
+- **Affinity bonus:** Attacker threshold reduced by an additional −20.
+- **Difficulty:** N/A
+- **Resolution:** No roll required. Effect resolves on submission.
+- **Outcome type:** N/A
 
-> **Design note:** Applies only to acting faction's assets — not all factions' assets. ARBITER resolution mirrors C06. Source not announced. "At least 1 presence token" includes claim markers per Artifact 02a.
+**Effects**
 
-**Difficulty reference — affinity bonus:**
+- **Crit success:** N/A
+- **Success:** All covert operations targeting the acting faction's assets in the target district this round have their difficulty increased by 1 step.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
-| Attacker's base difficulty | Standard Protect | Guild/Directorate Protect |
-|---------------------------|-----------------|--------------------------|
-| Automatic | Easy | Average |
-| Easy | Average | Challenging |
-| Average | Challenging | Impossible |
-| Challenging | Impossible | Impossible |
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | +1 | N/A | N/A | N/A |
+| Directorate | N/A | +1 | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
@@ -867,6 +958,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 ### THE GUILD — C11–C15 ✅ Signed Off
 
 ### C11 — FORTIFY STRUCTURE
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -877,7 +969,21 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Card type:** Covert Operation
 - **Card subtype:** Faction-specific
 - **Card faction:** Guild
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Cross-Category
+- **Function:** Protect
+- **Target:** Structure block
+
+- **Design note:** Guild only. ARBITER retains awareness after Beat 2 opens. Immunity applied when C02 Demolish resolves in Beat 3.
+
+**Narrative**
+
+- **Narrative anchor:** *The Guild does not abandon what it has built.*
+- **Faction perspectives:**
+  - Guild: *Reinforcement is not fear. It is preparation.*
 
 **Mechanics**
 
@@ -894,38 +1000,25 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 
 **Effects**
 
-- **Effect on crit success:** N/A
-- **Effect on success:** Guild structure in target district is immune to Demolish this round.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
+- **Crit success:** N/A
+- **Success:** Guild structure in target district is immune to Demolish this round.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *The Guild does not abandon what it has built.*
-- **Faction perspectives:**
-  - Guild: *Reinforcement is not fear. It is preparation.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Cross-Category
-- **Taxonomy — Function:** Protect
-- **Taxonomy — Target:** Structure block
-
-> **Design note:** Guild only. ARBITER retains awareness after Beat 2 opens. Immunity applied when C02 Demolish resolves in Beat 3.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | +1 | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C12 — MATERIALS ACQUISITION
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -936,7 +1029,21 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Card type:** Covert Operation
 - **Card subtype:** Faction-specific
 - **Card faction:** Guild
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Resource
+- **Function:** Recover
+- **Target:** Native resource
+
+- **Design note:** Guild names target faction at submission — betting that faction will execute C02 this round. Zero cost means no loss if prediction is wrong. Only the first qualifying Demolish triggers. ARBITER confirms trigger at Beat 3.
+
+**Narrative**
+
+- **Narrative anchor:** *In New Meridian, even demolition is a Guild service.*
+- **Faction perspectives:**
+  - Guild: *We do not need to swing the hammer ourselves. We simply ensure we are paid when someone else does.*
 
 **Mechanics**
 
@@ -953,38 +1060,25 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 
 **Effects**
 
-- **Effect on crit success:** N/A
-- **Effect on success:** Guild receives all resources paid by the target faction to execute C02 this round — delivered in case.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
+- **Crit success:** N/A
+- **Success:** Guild receives all resources paid by the target faction to execute C02 this round — delivered in case.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *In New Meridian, even demolition is a Guild service.*
-- **Faction perspectives:**
-  - Guild: *We do not need to swing the hammer ourselves. We simply ensure we are paid when someone else does.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Resource
-- **Taxonomy — Function:** Recover
-- **Taxonomy — Target:** Native resource
-
-> **Design note:** Guild names target faction at submission — betting that faction will execute C02 this round. Zero cost means no loss if prediction is wrong. Only the first qualifying Demolish triggers. ARBITER confirms trigger at Beat 3.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | +1 | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C13 — FOUNDATION RIGHTS
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -995,7 +1089,21 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Card type:** Covert Operation
 - **Card subtype:** Faction-specific
 - **Card faction:** Guild
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Board
+- **Function:** Add
+- **Target:** Presence
+
+- **Design note:** "Zero presence" includes deployment markers per Artifact 02a. Guild's own deployment marker disqualifies the district — Foundation Rights requires complete absence. No secondary cost — unclaimed districts have no established resource infrastructure.
+
+**Narrative**
+
+- **Narrative anchor:** *The Guild was here before the city had a name.*
+- **Faction perspectives:**
+  - Guild: *Unclaimed territory is not unknown to us. We have records going back further than anyone else at this table.*
 
 **Mechanics**
 
@@ -1012,38 +1120,25 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 
 **Effects**
 
-- **Effect on crit success:** N/A
-- **Effect on success:** Place 1 presence token in the target district.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
+- **Crit success:** N/A
+- **Success:** Place 1 presence token in the target district.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *The Guild was here before the city had a name.*
-- **Faction perspectives:**
-  - Guild: *Unclaimed territory is not unknown to us. We have records going back further than anyone else at this table.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Board
-- **Taxonomy — Function:** Add
-- **Taxonomy — Target:** Presence
-
-> **Design note:** "Zero presence" includes deployment markers per Artifact 02a. Guild's own deployment marker disqualifies the district — Foundation Rights requires complete absence. No secondary cost — unclaimed districts have no established resource infrastructure.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | +1 | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C14 — CONSTRUCTION CREW
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -1054,7 +1149,21 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Card type:** Covert Operation
 - **Card subtype:** Faction-specific
 - **Card faction:** Guild
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Action
+- **Function:** Remove Restriction
+- **Target:** Covert operation (presence requirement)
+
+- **Design note:** Waives Established requirement from C01. Difficulty scales with contested presence. Failure effects apply only when contested difficulty condition is active. Crit success refunds 1 Capacity — net cost 2 Capacity matches C01 primary cost efficiency. Intended chain: C13 establishes presence, C14 builds structure same round. ARBITER confirms presence conditions at Beat 3. Submission order within Beat 3 matters for C13→C14 chain.
+
+**Narrative**
+
+- **Narrative anchor:** *The Guild does not always wait for permission.*
+- **Faction perspectives:**
+  - Guild: *Sometimes the crews arrive before the paperwork. This is not an accident.*
 
 **Mechanics**
 
@@ -1071,38 +1180,25 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 
 **Effects**
 
-- **Effect on crit success:** Return 1 Capacity to dispatch case.
-- **Effect on success:** Place 1 structure block in target district.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** −1 Popularity.
+- **Crit success:** Return 1 Capacity to dispatch case.
+- **Success:** Place 1 structure block in target district.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** −1 Public Standing.
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *The Guild does not always wait for permission.*
-- **Faction perspectives:**
-  - Guild: *Sometimes the crews arrive before the paperwork. This is not an accident.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Action
-- **Taxonomy — Function:** Remove Restriction
-- **Taxonomy — Target:** Covert operation (presence requirement)
-
-> **Design note:** Waives Established requirement from C01. Difficulty scales with contested presence. Failure effects apply only when contested difficulty condition is active. Crit success refunds 1 Capacity — net cost 2 Capacity matches C01 primary cost efficiency. Intended chain: C13 establishes presence, C14 builds structure same round. ARBITER confirms presence conditions at Beat 3. Submission order within Beat 3 matters for C13→C14 chain.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | +1 | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C15 — INFRASTRUCTURE YIELD
+[↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
@@ -1113,7 +1209,21 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Card type:** Covert Operation
 - **Card subtype:** Faction-specific
 - **Card faction:** Guild
-- **Pool copies:** 2
+- **Pool copies:** 2 per faction
+
+**Taxonomy**
+
+- **Category:** Resource
+- **Function:** Add
+- **Target:** Native resource
+
+- **Design note:** Zero cost — Established presence is the only gate. Grid Tap (sacrifice presence for 2 native resource) tabled as political act or operative ability — flag for §10 and Artifact 05.
+
+**Narrative**
+
+- **Narrative anchor:** *The Guild built New Meridian's infrastructure. Drawing from it is not theft. It is dividend.*
+- **Faction perspectives:**
+  - Guild: *We built this. Every unit we draw from it was always ours.*
 
 **Mechanics**
 
@@ -1130,34 +1240,20 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 
 **Effects**
 
-- **Effect on crit success:** N/A
-- **Effect on success:** Gain 1 unit of the target district's native resource — delivered in case.
-- **Effect on failure:** N/A
-- **Effect on crit failure:** N/A
+- **Crit success:** N/A
+- **Success:** Gain 1 unit of the target district's native resource — delivered in case.
+- **Failure:** N/A
+- **Crit failure:** N/A
 
 **Portrait**
 
-| Faction | Base | Condition | Modifier | Mod Condition |
-|---------|------|-----------|----------|---------------|
-| Guild | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A |
-
-**Narrative**
-
-- **Narrative anchor:** *The Guild built New Meridian's infrastructure. Drawing from it is not theft. It is dividend.*
-- **Faction perspectives:**
-  - Guild: *We built this. Every unit we draw from it was always ours.*
-
-**Taxonomy**
-
-- **Taxonomy — Category:** Resource
-- **Taxonomy — Function:** Add
-- **Taxonomy — Target:** Native resource
-
-> **Design note:** Zero cost — Established presence is the only gate. Grid Tap (sacrifice presence for 2 native resource) tabled as political act or operative ability — flag for §10 and Artifact 05.
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | +1 | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
@@ -1180,17 +1276,17 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Faction affinity:** Ghost only.
 - **Difficulty:** N/A.
 - **Resolution:** Prediction accuracy — named faction must have acted. Both operation type and district correct = success. Exactly one correct = failure. Neither correct = crit failure. No roll.
-- **Effect on crit success:** N/A.
-- **Effect on success:** Named faction submitted named operation type in named district. Pattern Match resolves as a full copy of that operation in that district.
-- **Effect on failure:** Named faction submitted named operation type in a different district, OR named faction submitted any operation in named district. 2 Findings returned to Ghost.
-- **Effect on crit failure:** All other conditions. 2 Findings spent. No effect.
+- **Crit success:** N/A.
+- **Success:** Named faction submitted named operation type in named district. Pattern Match resolves as a full copy of that operation in that district.
+- **Failure:** Named faction submitted named operation type in a different district, OR named faction submitted any operation in named district. 2 Findings returned to Ghost.
+- **Crit failure:** All other conditions. 2 Findings spent. No effect.
 - **Portrait:** +2 Ghost (success). +1 Ghost (failure/refund condition).
 - **Narrative anchor:** *Ghost does not guess. Ghost identifies what is already in motion.*
 - **Faction perspectives:**
   - Ghost: *We are not predicting. We are recognising a pattern we have already seen.*
 - **Taxonomy:** Action — Copy — Covert operation (full).
 
-> **Design note:** If the copied operation cannot legally be executed by Ghost, Pattern Match fizzles — 2 Findings spent, no effect regardless of prediction accuracy.
+- **Design note:** If the copied operation cannot legally be executed by Ghost, Pattern Match fizzles — 2 Findings spent, no effect regardless of prediction accuracy.
 
 ---
 
@@ -1209,21 +1305,21 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** 2 Findings
 - **Difficulty:** Average
 - **Resolution:** 2d10 roll vs. difficulty target — see §X
-- **Effect on crit success:** ARBITER delivers first 2 covert operations submitted by target faction this round to Ghost in case — operation type and district for each
-- **Effect on success:** ARBITER delivers first covert operation submitted by target faction this round to Ghost in case — operation type and district
-- **Effect on failure:** ARBITER delivers notification slip to target faction in case — see C05 failure slip text
-- **Effect on crit failure:** Ghost Public Standing −2. Reason not disclosed. ARBITER moves marker without explanation
+- **Crit success:** ARBITER delivers first 2 covert operations submitted by target faction this round to Ghost in case — operation type and district for each
+- **Success:** ARBITER delivers first covert operation submitted by target faction this round to Ghost in case — operation type and district
+- **Failure:** ARBITER delivers notification slip to target faction in case — see C05 failure slip text
+- **Crit failure:** Ghost Public Standing −2. Reason not disclosed. ARBITER moves marker without explanation
 - **Portrait Unconditional:** +1 Ghost
 - **Portrait Bonus:** N/A
 - **Portrait Bonus Condition:** N/A
 - **Narrative anchor:** *To know what they are doing while they are doing it — that is the only intelligence that matters.*
 - **Faction perspectives:**
   - Ghost: *We do not wait for the after-action report. We read the operation as it happens.*
-- **Taxonomy — Category:** Cross-Category
-- **Taxonomy — Function:** Reveal
-- **Taxonomy — Target:** Covert operation — named faction
+- **Category:** Cross-Category
+- **Function:** Reveal
+- **Target:** Covert operation — named faction
 
-> **Design note:** Intel note consumed at submission regardless of roll outcome. "Delivered in case" is standard language per L59. Crit failure Public Standing shift is silent — ARBITER records reason internally only. Replaces C17 Archive Recovery (retired — L78).
+- **Design note:** Intel note consumed at submission regardless of roll outcome. "Delivered in case" is standard language per L59. Crit failure Public Standing shift is silent — ARBITER records reason internally only. Replaces C17 Archive Recovery (retired — L78).
 
 ---
 
@@ -1241,16 +1337,16 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Ghost only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** One attached covert operation resolves normally. ARBITER records no faction attribution for it. Ghost not surfaced even on failed detection roll.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** One attached covert operation resolves normally. ARBITER records no faction attribution for it. Ghost not surfaced even on failed detection roll.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Narrative anchor:** *The most dangerous thing an analyst can do is be noticed.*
 - **Faction perspectives:**
   - Ghost: *We were not there. The record confirms this.*
 - **Taxonomy:** Cross-Category — Protect — Action attribution.
 
-> **Design note:** One use per round. Beat 2. Flagged for redesign — duplicates function with C19 (Cross-Category — Protect — Action attribution). See D-04-02.
+- **Design note:** One use per round. Beat 2. Flagged for redesign — duplicates function with C19 (Cross-Category — Protect — Action attribution). See D-04-02.
 
 ---
 
@@ -1268,16 +1364,16 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Ghost only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** Ghost names one prior-round operation. That operation is permanently removed from any investigable record for the remainder of the session.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** Ghost names one prior-round operation. That operation is permanently removed from any investigable record for the remainder of the session.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Narrative anchor:** *Good cover does not expire at the end of the week.*
 - **Faction perspectives:**
   - Ghost: *It did not happen. This is not a lie. It is a permanent correction to an incomplete record.*
 - **Taxonomy:** Cross-Category — Protect (permanent) — Action attribution.
 
-> **Design note:** Permanent per Principle 11. Flagged for redesign — duplicates function with C18. See D-04-02.
+- **Design note:** Permanent per Principle 11. Flagged for redesign — duplicates function with C18. See D-04-02.
 
 ---
 
@@ -1295,16 +1391,16 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Ghost only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** ARBITER delivers a false Intel token to the target faction in case. Token contains a false operation type and false target district for Ghost this round.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** ARBITER delivers a false Intel token to the target faction in case. Token contains a false operation type and false target district for Ghost this round.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Narrative anchor:** *Ghost has been considering what its opponents think Ghost is doing. It is never quite right.*
 - **Faction perspectives:**
   - Ghost: *We have thought carefully about what they expect. We have given them exactly that.*
 - **Taxonomy:** Resource — Add — Intel token (corrupt content).
 
-> **Design note:** Ghost may hold self-directed Intel tokens without cap (Artifact 02b §8). False token indistinguishable from genuine Gather result. Any Denounce using it will fail. Taxonomy note: Add with corrupt content — falsification is an attribute of content, not a separate function.
+- **Design note:** Ghost may hold self-directed Intel tokens without cap (Artifact 02b §8). False token indistinguishable from genuine Gather result. Any Denounce using it will fail. Taxonomy note: Add with corrupt content — falsification is an attribute of content, not a separate function.
 
 ---
 
@@ -1326,10 +1422,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Directorate only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** No faction may submit Build Structure (C01) or Campaign (C03) targeting the named district this round. Source is public.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** No faction may submit Build Structure (C01) or Campaign (C03) targeting the named district this round. Source is public.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Directorate.
 - **Narrative anchor:** *The Directorate was here before the other factions arrived. Their jurisdictional authority is not theoretical.*
 - **Faction perspectives:**
@@ -1352,17 +1448,17 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Directorate only.
 - **Difficulty:** Average + ring modifier.
-- **Effect on crit success:** Return primary cost to dispatch case.
-- **Effect on success:** Target faction's operational marker in the named district is permanently removed for the remainder of the session. Target notified in case.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** −1 Popularity.
+- **Crit success:** Return primary cost to dispatch case.
+- **Success:** Target faction's operational marker in the named district is permanently removed for the remainder of the session. Target notified in case.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** −1 Public Standing.
 - **Portrait:** +1 Directorate.
 - **Narrative anchor:** *The Directorate does not destroy — it removes from play. Sometimes that is enough.*
 - **Faction perspectives:**
   - Directorate: *The marker has been detained. Its conversion will not occur.*
 - **Taxonomy:** Board — Remove (permanent) — Presence (claim marker).
 
-> **Design note:** Permanent per Principle 11. Prior version returned marker at end of next round — revised. Intel token requirement means Directorate must have gathered intelligence on target faction this or last round. Notification slip feasibility pending Artifact 07 (A-04-05).
+- **Design note:** Permanent per Principle 11. Prior version returned marker at end of next round — revised. Intel token requirement means Directorate must have gathered intelligence on target faction this or last round. Notification slip feasibility pending Artifact 07 (A-04-05).
 
 ---
 
@@ -1380,10 +1476,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Directorate only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** Named record element is locked for the remainder of the session. Cannot be modified by any card effect.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** Named record element is locked for the remainder of the session. Cannot be modified by any card effect.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Directorate.
 - **Narrative anchor:** *The Directorate's institutional advantage is the record. They protect it.*
 - **Faction perspectives:**
@@ -1406,17 +1502,17 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Directorate only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** For the remainder of the session, ARBITER privately notifies The Directorate of any covert operation submitted targeting the named district — operation type only, not faction. Delivered in case at Beat 3 before operations resolve.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** For the remainder of the session, ARBITER privately notifies The Directorate of any covert operation submitted targeting the named district — operation type only, not faction. Delivered in case at Beat 3 before operations resolve.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Directorate.
 - **Narrative anchor:** *The Directorate monitors because monitoring is their primary tool for managing what they cannot directly control.*
 - **Faction perspectives:**
   - Directorate: *The installation is in place. Everything that happens in that district now happens with our awareness.*
 - **Taxonomy:** Resource — Add (permanent) — Intel token.
 
-> **Design note:** Permanent per Principle 11. Prior version monitored for 2 rounds — revised. Operation type only, not faction — creates intelligence chain requiring follow-up Gather to identify actors. ARBITER maintains awareness of surveilled districts.
+- **Design note:** Permanent per Principle 11. Prior version monitored for 2 rounds — revised. Operation type only, not faction — creates intelligence chain requiring follow-up Gather to identify actors. ARBITER maintains awareness of surveilled districts.
 
 ---
 
@@ -1434,17 +1530,17 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Directorate only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** No faction may place presence tokens in the named district this round. Existing tokens unaffected. Does not prevent Demolish, Gather, or Undermine. Source is public.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** No faction may place presence tokens in the named district this round. Existing tokens unaffected. Does not prevent Demolish, Gather, or Undermine. Source is public.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Directorate.
 - **Narrative anchor:** *The Directorate can close a border. The question it always faces is whether closing makes the situation more or less manageable.*
 - **Faction perspectives:**
   - Directorate: *The border is sealed. Expansion requires our authorisation. It will not be granted today.*
 - **Taxonomy:** Action — Block — Covert operation (presence placement).
 
-> **Design note:** Flagged for redesign — C21 and C25 both Block covert operations, same function different scope. See D-04-03.
+- **Design note:** Flagged for redesign — C21 and C25 both Block covert operations, same function different scope. See D-04-03.
 
 ---
 
@@ -1466,10 +1562,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Network only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** After Beat 3 resolution, ARBITER publicly announces the target district of the highest-impact resolved covert operation from the named faction this round. Operation type not revealed — district only.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** After Beat 3 resolution, ARBITER publicly announces the target district of the highest-impact resolved covert operation from the named faction this round. Operation type not revealed — district only.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Network.
 - **Narrative anchor:** *The Network does not need to know everything — only enough to make the right question public.*
 - **Faction perspectives:**
@@ -1492,16 +1588,16 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Network only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** One Network covert operation this round has no ARBITER attribution on failed detection — fails silently.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** One Network covert operation this round has no ARBITER attribution on failed detection — fails silently.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Narrative anchor:** *The Network protects its sources. This includes itself.*
 - **Faction perspectives:**
   - Network: *We believe in transparency. Except when protecting a source requires otherwise.*
 - **Taxonomy:** Cross-Category — Protect — Action attribution.
 
-> **Design note:** Flagged for redesign — Cross-Category — Protect — Action attribution is more doctrinally Ghost than Network. Network's stated doctrine (transparency) is in tension with source concealment. The faction perspective acknowledges this tension. See D-04-04.
+- **Design note:** Flagged for redesign — Cross-Category — Protect — Action attribution is more doctrinally Ghost than Network. Network's stated doctrine (transparency) is in tension with source concealment. The faction perspective acknowledges this tension. See D-04-04.
 
 ---
 
@@ -1519,17 +1615,17 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Network only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** Any private notification ARBITER would send to the named faction this round is instead delivered publicly to the whole table.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** Any private notification ARBITER would send to the named faction this round is instead delivered publicly to the whole table.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Network.
 - **Narrative anchor:** *Secret communications between powerful institutions are themselves a form of harm. Opening the channel is the argument.*
 - **Faction perspectives:**
   - Network: *If it happened, it should be known. We are simply making that principle operational.*
 - **Taxonomy:** Cross-Category — Reveal — Private communications.
 
-> **Design note:** Does not intercept Hidden Objective or Classified Directive communications. Beat 2 — must be active before Beat 3 notifications are generated. Flagged for review — C26 and C28 both Reveal, same function different scope. See D-04-04.
+- **Design note:** Does not intercept Hidden Objective or Classified Directive communications. Beat 2 — must be active before Beat 3 notifications are generated. Flagged for review — C26 and C28 both Reveal, same function different scope. See D-04-04.
 
 ---
 
@@ -1547,10 +1643,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Network only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** Adjacent district also has political act costs +1 this round.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** Adjacent district also has political act costs +1 this round.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Network.
 - **Narrative anchor:** *The Network understands signal propagation better than anyone at this table.*
 - **Faction perspectives:**
@@ -1573,10 +1669,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Network only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** Place 1 presence token in the target Sprawl district.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** Place 1 presence token in the target Sprawl district.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Network.
 - **Narrative anchor:** *The Network did not arrive in New Meridian through official channels. They arrived through people.*
 - **Faction perspectives:**
@@ -1603,10 +1699,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Syndicate only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** Gain 1 unit of the target district's native resource this Upkeep as though Established — delivered in case.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** Gain 1 unit of the target district's native resource this Upkeep as though Established — delivered in case.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Syndicate.
 - **Narrative anchor:** *The Syndicate does not need to be somewhere to profit from it. Ownership and presence are different things.*
 - **Faction perspectives:**
@@ -1629,10 +1725,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Syndicate only.
 - **Difficulty:** Average.
-- **Effect on crit success:** Target faction generates 2 fewer units this Upkeep (minimum 0).
-- **Effect on success:** Target faction generates 1 fewer unit of their native resource during Upkeep this round (minimum 0). Applied silently.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** −1 Popularity.
+- **Crit success:** Target faction generates 2 fewer units this Upkeep (minimum 0).
+- **Success:** Target faction generates 1 fewer unit of their native resource during Upkeep this round (minimum 0). Applied silently.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** −1 Public Standing.
 - **Portrait:** +1 Syndicate.
 - **Narrative anchor:** *Capital can suppress as easily as it can produce.*
 - **Faction perspectives:**
@@ -1655,10 +1751,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Syndicate only.
 - **Difficulty:** Average + ring modifier.
-- **Effect on crit success:** Return 1 Capital to dispatch case.
-- **Effect on success:** Claim one named opponent structure. Block flips to Syndicate color. Prior owner receives 1 unit of their native resource as consideration — delivered in case.
-- **Effect on failure:** Cost spent. No effect.
-- **Effect on crit failure:** −1 Popularity.
+- **Crit success:** Return 1 Capital to dispatch case.
+- **Success:** Claim one named opponent structure. Block flips to Syndicate color. Prior owner receives 1 unit of their native resource as consideration — delivered in case.
+- **Failure:** Cost spent. No effect.
+- **Crit failure:** −1 Public Standing.
 - **Portrait:** +1 Syndicate.
 - **Narrative anchor:** *Everything in New Meridian has a price. The Syndicate is the only faction honest about this.*
 - **Faction perspectives:**
@@ -1681,10 +1777,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Syndicate only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** Transfer up to 3 Capital to named faction. Recorded by ARBITER but not announced. Transferred Capital exits Syndicate's pool before any resource-loss calculation applies this round.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** Transfer up to 3 Capital to named faction. Recorded by ARBITER but not announced. Transferred Capital exits Syndicate's pool before any resource-loss calculation applies this round.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** +1 Syndicate.
 - **Narrative anchor:** *The Syndicate plans for outcomes not yet confirmed. They move assets before the decision is made.*
 - **Faction perspectives:**
@@ -1707,10 +1803,10 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Secondary cost:** None.
 - **Faction affinity:** Syndicate only.
 - **Difficulty:** Automatic.
-- **Effect on crit success:** N/A — Automatic.
-- **Effect on success:** Named district and action type: no faction may submit that type targeting that district this round. Source is public.
-- **Effect on failure:** N/A — Automatic.
-- **Effect on crit failure:** N/A — Automatic.
+- **Crit success:** N/A — Automatic.
+- **Success:** Named district and action type: no faction may submit that type targeting that district this round. Source is public.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
 - **Portrait:** −1 Syndicate (if used to block Guild construction operations). +1 Syndicate otherwise.
 - **Narrative anchor:** *If you own enough of the regulatory structure, you define what is permitted. The Syndicate does not see this as corruption. They see it as governance.*
 - **Faction perspectives:**
@@ -1723,7 +1819,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 
 *Status: Political acts are carried forward from v0.9.4 in summary form. Full card data structure (§6) has not yet been applied card-by-card. Political act card-by-card review is the next design pass after 04 sign-off (D-04-06). Taxonomy assignments are preliminary.*
 
-Political acts use the same data structure as covert operations (§6) with two additional fields:
+Political acts use the same data schema as covert operations (§6) with two additional fields:
 
 | Additional Field | Description |
 |-----------------|-------------|

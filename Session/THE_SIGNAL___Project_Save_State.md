@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-18 (session 22 complete) — supersedes session 21 save state.
+### Generated: 2026-05-19 (session 26 complete) — supersedes session 22 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -50,7 +50,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (20 types) — CA-xx (Dispatch Case) added session 22. L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes). L2 TypeScript schema pointers in §8. Established session 20. |
 | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
 | 03a — Game Engine Specification | 0.98 | 🔄 In progress — Layers 1–3 complete; Phase procedures added (Quarter_Flow, Phase_1–Phase_7, Beat_0–Beat_5); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
-| 04 — Action Card System | 0.9.8 | 🔄 In Progress — C01–C15 structural pass complete sessions 23–24. Political acts and C16–C35 pending. |
+| 04 — Action Card System | 0.9.9 | 🔄 In Progress — Session 26 §6 schema overhaul complete. Political acts and C16–C35 pending. |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
 | 10 — Game Manuals | 0.1 | 🔄 Draft Placeholder — §6.0 added: game objective statement locked |
@@ -257,6 +257,12 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM02 v1.9:** L107, L108, L109 added to change log.
 - **PM03 v1.7:** 00b row added, Art 03 updated to ✅ Signed Off v1.7.
 - **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
+
+**Session 26 summary (2026-05-19 — complete):**
+- **Art 04 §6 schema overhaul (v0.9.8 → v0.9.9):** (1) Renamed "Card Data Structure" → "Card Data Schema". (2) Type column added — controlled vocabulary: String, Semver, Integer, Enum, Prose, ±Integer. Constraints column cleaned to pure validation rules (L108-informed separation). (3) Portrait unified table: replaces separate Flat bullet + Submitter table with single 6-column table per card (Faction | Flat | Submitter | Condition | Modifier | Mod Condition). §6 Portrait rows reduced 21 → 6. Applied to all 15 C01–C15 card entries. (4) Design note formalized as Taxonomy field (Prose type, VS-04, Displayed: No); converted from blockquote to bullet in all card entries. (5) Portrait Faction constraint updated: [faction] where [faction] != ARBITER. (6) C01 Portrait: Flat = Guild +1, Guild Submitter = N/A. C02 Portrait: Flat = Guild −1, Guild Submitter = N/A — Option A confirmed: board-state effects belong in Flat, not Submitter (doctrinal advantage from acting vs. outcome of board change).
+- **Portrait Option A principle (confirmed):** Flat = effect tied to card resolving (board state changes regardless of actor). Submitter = doctrinal advantage from performing the act. When a structural card changes the board, Flat carries the consequence; Submitter = N/A unless there is an additional doctrinal advantage.
+- **Grip display:** Template widened to 100% max-width, 40px side padding — accommodates 8-column §6 table.
+- **PM03:** v2.0 → v2.1. No PM02 or PM05 changes this session.
 
 **Session 25 summary (2026-05-19 — complete):**
 - **Art 04 §6 format overhaul:** (1) VS-xx dedicated column added (6-column schema: Category | Field | Purpose | Constraints | VS-xx | Notes/Description); (2) Category column added aligning table rows to card entry groups (Identity / Mechanics / Effects / Portrait / Narrative / Taxonomy); (3) group separators applied to C01–C15 card entries; (4) Portrait mini-table (7 lines) replacing 20 bullet lines per card — applied to all C01–C15.
