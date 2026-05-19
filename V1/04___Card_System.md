@@ -145,56 +145,58 @@ Every card uses this data structure. All fields are required. N/A is a valid val
 
 *VS-xx Visibility Scope definitions: Artifact 00b §5.9.*
 
-| Field | Purpose | Constraints | VS-xx | Notes / Description |
-|-------|---------|-------------|-------|---------------------|
-| **Card ID** | Primary key | Format: [type prefix][sequence number] | VS-01 | — |
-| **Card version** | Per-card revision identifier | Format: v[major].[minor] (e.g., v1.0) | VS-01 | Printed on card face. Enables playtest copy identification. Independent of Artifact 04 version. |
-| **Card name** | In-world card name | Not a mechanical label | VS-01 | — |
-| **Tagline** | One-line in-world description | One sentence | VS-01 | Printed on card face |
-| **Card type** | Top-level card category | Controlled vocabulary: Covert Operation, Political Act, Pass, Countermeasure, Modifier, Emergency Response | VS-01 | — |
-| **Card subtype** | Distribution scope | Controlled vocabulary: Standard, Faction-specific | VS-01 | — |
-| **Card faction** | Owning faction | All if available to all factions | VS-01 | — |
-| **Pool copies** | Copies in faction's setup pool | Integer | VS-01 | Standard cards: 2 per faction. Emergency Response: 1 (Singleton). Governs print quantities. |
-| **Beat** | Resolution beat | Numeric | VS-01 | The beat in Phase 6 in which this card is processed. Resolution order within a Beat: governed by dispatch case submission order per Art 03 §7. |
-| **Trigger condition** | Activation condition for non-default timing | Controlled vocabulary: N/A, Submission-time, Beat-N, Phase-N, Condition-based | VS-01 | N/A for cards resolving at their default Beat. Required for React-function cards and Countermeasures. |
-| **Target** | Valid submission targets | Broadest valid statement | VS-01 | Stated on card face |
-| **Restriction** | Submission preconditions | All stated on card. No external references | VS-01 | — |
-| **Primary cost** | Main cost to submit the card | — | VS-01 | — |
-| **Secondary cost** | Additional cost beyond primary | N/A if not applicable | VS-01 | Often a district native resource; often waivable by affinity |
-| **Faction affinity** | Faction receiving affinity discount | N/A if not applicable | VS-01 | — |
-| **Affinity bonus** | What the affinity discount provides | N/A if Faction affinity is N/A | VS-01 | — |
-| **Difficulty** | Base difficulty threshold | Controlled vocabulary: Easy, Average, Challenging, or N/A. Include ring modifier where applicable | VS-01 | N/A if no roll required. Thresholds defined in Artifact 03 §13 |
-| **Resolution** | How this card resolves | Non-roll cards must state mechanism explicitly | VS-01 | Standard: d100 roll vs. Difficulty Threshold per Artifact 03 §13 |
-| **Outcome type** | Political act resolution process type | Controlled vocabulary: Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A | VS-01 | N/A for all non-Political Act card types. Determines ARBITER's outcome-collection process at resolution. Required for L2+ enforcement. |
-| **Effect on crit success** | Critical success outcome | N/A if no roll | VS-06 | Additional effects beyond success |
-| **Effect on success** | Primary card effect | Full effect stated on card | VS-06 | — |
-| **Effect on failure** | Failure outcome | N/A if no roll | VS-06 | — |
-| **Effect on crit failure** | Critical failure outcome | N/A if no roll | VS-06 | Additional effects beyond failure |
-| **Portrait — Guild** | Guild base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
-| **Portrait — Guild Condition** | Restriction on Guild base | N/A if unconditional | VS-01 | — |
-| **Portrait — Guild Modifier** | Adjustment to Guild Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
-| **Portrait — Guild Modifier Condition** | When Guild Modifier applies | N/A if Modifier is N/A | VS-01 | — |
-| **Portrait — Directorate** | Directorate base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
-| **Portrait — Directorate Condition** | Restriction on Directorate base | N/A if unconditional | VS-01 | — |
-| **Portrait — Directorate Modifier** | Adjustment to Directorate Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
-| **Portrait — Directorate Modifier Condition** | When Directorate Modifier applies | N/A if Modifier is N/A | VS-01 | — |
-| **Portrait — Network** | Network base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
-| **Portrait — Network Condition** | Restriction on Network base | N/A if unconditional | VS-01 | — |
-| **Portrait — Network Modifier** | Adjustment to Network Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
-| **Portrait — Network Modifier Condition** | When Network Modifier applies | N/A if Modifier is N/A | VS-01 | — |
-| **Portrait — Ghost** | Ghost base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
-| **Portrait — Ghost Condition** | Restriction on Ghost base | N/A if unconditional | VS-01 | — |
-| **Portrait — Ghost Modifier** | Adjustment to Ghost Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
-| **Portrait — Ghost Modifier Condition** | When Ghost Modifier applies | N/A if Modifier is N/A | VS-01 | — |
-| **Portrait — Syndicate** | Syndicate base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
-| **Portrait — Syndicate Condition** | Restriction on Syndicate base | N/A if unconditional | VS-01 | — |
-| **Portrait — Syndicate Modifier** | Adjustment to Syndicate Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
-| **Portrait — Syndicate Modifier Condition** | When Syndicate Modifier applies | N/A if Modifier is N/A | VS-01 | — |
-| **Narrative anchor** | In-world narrative grounding | One sentence | VS-01 | Standard cards: neutral observer. Faction-specific: owning faction's voice |
-| **Faction perspectives** | Per-faction in-world perspective | Required for factions with Portrait values. One sentence per faction | VS-01 | Optional for others |
-| **Taxonomy — Category** | Action taxonomy — category | Controlled vocabulary: Board, Resource, Action, Cross-Category | VS-01 | See Artifact 04b §4 |
-| **Taxonomy — Function** | Action taxonomy — function | See Artifact 04b §4 | VS-01 | What the card does within its category |
-| **Taxonomy — Target** | Action taxonomy — target | See Artifact 04b §4 | VS-01 | What the card acts on |
+*§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/Whiteboard/researchNotes_CardDesign.md`. Sources: MTG/Scryfall API, Netrunner DB (NRDB), Arkham Horror LCG (Fantasy Flight), Marvel Champions (Fantasy Flight). Fields added as a result: Card version (§1.1), Trigger condition (§1.2), Pool copies (§1.3), Outcome type (§1.5). Fields reviewed and not added: §8.*
+
+| Category | Field | Purpose | Constraints | VS-xx | Notes / Description |
+|----------|-------|---------|-------------|-------|---------------------|
+| Identity | **Card ID** | Primary key | Format: [type prefix][sequence number] | VS-01 | — |
+| Identity | **Card version** | Per-card revision identifier | Format: v[major].[minor] (e.g., v1.0) | VS-01 | Printed on card face. Enables playtest copy identification. Independent of Artifact 04 version. |
+| Identity | **Card name** | In-world card name | Not a mechanical label | VS-01 | — |
+| Identity | **Tagline** | One-line in-world description | One sentence | VS-01 | Printed on card face |
+| Identity | **Card type** | Top-level card category | Controlled vocabulary: Covert Operation, Political Act, Pass, Countermeasure, Modifier, Emergency Response | VS-01 | — |
+| Identity | **Card subtype** | Distribution scope | Controlled vocabulary: Standard, Faction-specific | VS-01 | — |
+| Identity | **Card faction** | Owning faction | All if available to all factions | VS-01 | — |
+| Identity | **Pool copies** | Copies in faction's setup pool | Integer | VS-01 | Standard cards: 2 per faction. Emergency Response: 1 (Singleton). Governs print quantities. |
+| Mechanics | **Beat** | Resolution beat | Numeric | VS-01 | The beat in Phase 6 in which this card is processed. Resolution order within a Beat: governed by dispatch case submission order per Art 03 §7. |
+| Mechanics | **Trigger condition** | Activation condition for non-default timing | Controlled vocabulary: N/A, Submission-time, Beat-N, Phase-N, Condition-based | VS-01 | N/A for cards resolving at their default Beat. Required for React-function cards and Countermeasures. |
+| Mechanics | **Target** | Valid submission targets | Broadest valid statement | VS-01 | Stated on card face |
+| Mechanics | **Restriction** | Submission preconditions | All stated on card. No external references | VS-01 | — |
+| Mechanics | **Primary cost** | Main cost to submit the card | — | VS-01 | — |
+| Mechanics | **Secondary cost** | Additional cost beyond primary | N/A if not applicable | VS-01 | Often a district native resource; often waivable by affinity |
+| Mechanics | **Faction affinity** | Faction receiving affinity discount | N/A if not applicable | VS-01 | — |
+| Mechanics | **Affinity bonus** | What the affinity discount provides | N/A if Faction affinity is N/A | VS-01 | — |
+| Mechanics | **Difficulty** | Base difficulty threshold | Controlled vocabulary: Easy, Average, Challenging, or N/A. Include ring modifier where applicable | VS-01 | N/A if no roll required. Thresholds defined in Artifact 03 §13 |
+| Mechanics | **Resolution** | How this card resolves | Non-roll cards must state mechanism explicitly | VS-01 | Standard: d100 roll vs. Difficulty Threshold per Artifact 03 §13 |
+| Mechanics | **Outcome type** | Political act resolution process type | Controlled vocabulary: Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A | VS-01 | N/A for all non-Political Act card types. Determines ARBITER's outcome-collection process at resolution. Required for L2+ enforcement. |
+| Effects | **Effect on crit success** | Critical success outcome | N/A if no roll | VS-06 | Additional effects beyond success |
+| Effects | **Effect on success** | Primary card effect | Full effect stated on card | VS-06 | — |
+| Effects | **Effect on failure** | Failure outcome | N/A if no roll | VS-06 | — |
+| Effects | **Effect on crit failure** | Critical failure outcome | N/A if no roll | VS-06 | Additional effects beyond failure |
+| Portrait | **Portrait — Guild** | Guild base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Guild Condition** | Restriction on Guild base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Guild Modifier** | Adjustment to Guild Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Guild Modifier Condition** | When Guild Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Directorate** | Directorate base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Directorate Condition** | Restriction on Directorate base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Directorate Modifier** | Adjustment to Directorate Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Directorate Modifier Condition** | When Directorate Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Network** | Network base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Network Condition** | Restriction on Network base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Network Modifier** | Adjustment to Network Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Network Modifier Condition** | When Network Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Ghost** | Ghost base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Ghost Condition** | Restriction on Ghost base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Ghost Modifier** | Adjustment to Ghost Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Ghost Modifier Condition** | When Ghost Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Portrait | **Portrait — Syndicate** | Syndicate base Portrait effect | N/A if no effect | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Syndicate Condition** | Restriction on Syndicate base | N/A if unconditional | VS-01 | — |
+| Portrait | **Portrait — Syndicate Modifier** | Adjustment to Syndicate Portrait under specific circumstances | N/A if none | *pending 04-16* | +/− numeric value |
+| Portrait | **Portrait — Syndicate Modifier Condition** | When Syndicate Modifier applies | N/A if Modifier is N/A | VS-01 | — |
+| Narrative | **Narrative anchor** | In-world narrative grounding | One sentence | VS-01 | Standard cards: neutral observer. Faction-specific: owning faction's voice |
+| Narrative | **Faction perspectives** | Per-faction in-world perspective | Required for factions with Portrait values. One sentence per faction | VS-01 | Optional for others |
+| Taxonomy | **Taxonomy — Category** | Action taxonomy — category | Controlled vocabulary: Board, Resource, Action, Cross-Category | VS-01 | See Artifact 04b §4 |
+| Taxonomy | **Taxonomy — Function** | Action taxonomy — function | See Artifact 04b §4 | VS-01 | What the card does within its category |
+| Taxonomy | **Taxonomy — Target** | Action taxonomy — target | See Artifact 04b §4 | VS-01 | What the card acts on |
 
 > **Design note field:** Prose below the card data block. Not part of the card face. VS-04 (ARBITER-Only). Informs Artifact 11 layout decisions and Artifact 07 ARBITER resolution notes.
 
