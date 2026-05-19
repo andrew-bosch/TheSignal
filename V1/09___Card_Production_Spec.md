@@ -1,10 +1,10 @@
-# 09 — Card Specifications
+# 09 — Card Production Spec
 ## THE SIGNAL P1 — Paper Prototype
 
 **Version:** 0.1 Draft — Placeholder  
 **Status:** ⬜ Not Started — Blocked by Artifact 04 completion  
 **Last Updated:** 2026-05-15  
-**Depends on:** 04 — Action Card System; 04b — Action Taxonomy & Design Analysis; 05 — Operative & Apex System  
+**Depends on:** 04 — Card System; 04b — Action Taxonomy & Design Analysis; 05 — Operative & Apex System  
 **Supersedes:** card_designs (retired artifact)
 
 ---
@@ -244,5 +244,5 @@ Design considerations:
 
 ---
 
-*End of Artifact 09 — Card Specifications v0.1 Draft Placeholder*  
+*End of Artifact 09 — Card Production Spec v0.1 Draft Placeholder*  
 *This document is fully blocked pending Artifact 04 and 05 completion. Structure and field definitions are confirmed. Card content will be populated after upstream sign-offs.*

@@ -1,7 +1,7 @@
 # PM02 — Decision Log & Validation Tracker
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.1  
+**Version:** 2.2  
 **Status:** 🔄 Updated — Active
 
 ---
@@ -133,6 +133,7 @@ Decisions made and incorporated into current artifacts. Listed for reference and
 | L111 | Gold/silver marker system — Control flag (gold, Dominant) and Established marker (silver, Established) | Two district influence markers. Control flag (gold): 1 per district, placed on Dominant faction's chip stack. Established marker (silver): one per Established faction per district; up to 4–5 may coexist in a single district; quantity TBD pending Art 11. Both placed/removed by the player whose action causes the influence change. Gold/silver are material colors, not faction colors. | 02a §6, §9, PM01 |
 | L112 | Pre-resolution cancellation card unified as "Voided" (RO-03) | Replaces "Operation Failed" (Beat 1 — targeting restriction) and "Operation Blocked" (Beat 2 — Type A Countermeasure). Verb form: past participle implies ARBITER as agent without naming cause or reason. Applies to all pre-resolution removals from the Resolution Grid. Art 03 Beat 1/2 and Beat 5 example updated; 00b RO-03 updated; 03a updated. Closes DF-01. | 03, 03a, 00b §5.2 |
 | L114 | "Layer" is the canonical term for the in-world perception/reality levels (L1–L5) | The five levels of the game world (physical, social, informational, digital, ARBITER's layer) are called Layers. Design-phase designations (L1 paper prototype, L2+ electronic) are synonymous with the canonical Layers they implement — same concept, not a separate naming system. "Layer" may be used in other contexts (e.g., 03a internal document structure) where context disambiguates. No collision exists. | All artifacts |
+| L115 | Artifact 04 scope expanded to "Card System" — all faction-held card types. Artifact 09 renamed "Card Production Spec" — production-only scope, no design content. | A card is either a design question (what it does, how it behaves, faction identity) or a production question (dimensions, print format, deck counts). Art 04 owns all card design regardless of card type. Art 09 owns production specs for all cards regardless of type. Countermeasure cards are faction-played Phase 5 declarations with game effect — design content, not production spec content. The split is design/production, not action/non-action. Closes D04-12. | 04, 09 |
 | L113 | Threshold sign convention — "−50 threshold marker" replaces "+50 difficulty marker" throughout | Threshold framing is positively oriented: players think "I need to roll under X," making the number a target to beat rather than a loss to fear. Negative threshold adjustments (−50, −25, −15, −20) are the canonical form. Art 03 Beat 0 payment table and Beat 4 prose updated. M-06/M-07 modifier table rows unchanged (already −50). Closes DF-02. | 03 Beat 0/4, 03a | Two district markers added to board state. **Control flag (gold):** one per district (21 total), placed on the Dominant faction's presence chip stack; gold material distinguishes 1st place at a glance. **Established marker (silver):** up to 4–5 per district simultaneously (one per Established faction's stack); quantity TBD pending Art 11 component spec. Silver material distinguishes 2nd place at a glance. Both markers placed and removed by the player whose action causes the influence change. Gold/silver are material colors, not faction colors — faction is identified by the stack the marker sits on. Closes 02a re-sign-off; unblocks PM01 WBS 2 component entry (new row required). | 02a §6, §9, PM01 |
 
 ---
@@ -167,7 +168,7 @@ Decisions locked for the signed-off design but flagged for economic and mechanic
 
 ---
 
-### Blocking Artifact 04 — Action Card System
+### Blocking Artifact 04 — Card System
 
 | ID | Decision Required | Options | Priority |
 |----|------------------|---------|---------|
@@ -182,7 +183,7 @@ Decisions locked for the signed-off design but flagged for economic and mechanic
 | D04-09 | Adjacency definition — formal district adjacency table needed in Artifact 01. Required by C02, C04, C05, C14, C29, C30. | Add adjacency table to Artifact 01 | HIGH |
 | D04-10 | Emergency Response card data structure review — full card data structure not applied. | Apply §6 data structure to all 5 Emergency Response cards | MEDIUM |
 | D04-11 | Intel token mechanics cross-reference — Artifact 02b §8–9 audit against current card designs needed. Potential inconsistency with Denounce cost, token age rules, C05 crit failure. | Audit and resolve inconsistencies | HIGH |
-| D04-12 | Countermeasure card design — referenced in Artifact 04 §14.2 and Artifact 03 Phase 5 but no card data structure definition exists. | Define Countermeasure cards in Artifact 04 or Artifact 09 | MEDIUM |
+| D04-12 | ✅ L115 — Countermeasure cards are Card System design content; home is Artifact 04. Art 09 renamed Card Production Spec — production-only scope. | — | — |
 | D04-13 | **Floor Act** (working name) — design the standard political act available to all factions at all times, outside of deck composition, costing 1 native resource. Governing rule established in 00a R15: the action system must always guarantee at least one playable option regardless of resource state. This card prevents action paralysis for a faction that has lost board presence and enters a quarter with only passive generation (1 unit). Design questions: (1) What does the act DO — minimal presence assertion, formal declaration, contested district claim, or something faction-agnostic? (2) Does it have a faction-specific form or is it universal text? (3) Does it carry any Portrait value? (4) Is there one universal version or does each faction have their own equivalent floor card? The effect must be minimal by design — participation, not advantage. Context: scenario is a faction with 0 board presence, 1 resource, no leverage. The act keeps them in the game for another quarter. | Design during political act pass — Artifact 04 §10. Governs: 00a R20a. | HIGH |
 
 ---
@@ -236,7 +237,7 @@ Decisions locked for the signed-off design but flagged for economic and mechanic
 
 ---
 
-### Blocking Artifact 09 — Card Specifications
+### Blocking Artifact 09 — Card Production Spec
 
 | ID | Decision Required | Options | Priority |
 |----|------------------|---------|---------|
@@ -376,6 +377,7 @@ Updated after each playtest session.
 | 2026-05-18 | L111 locked — Gold/silver marker system. Control flag = gold (1 per district, on Dominant stack). Established marker = silver (up to 4–5 per district, one per Established faction's stack; quantity TBD pending Art 11). Closes 02a-03, signs off Art 02a v1.4. PM02 v2.0. | 02a §6, §9, PM01 |
 | 2026-05-18 | L112 locked — Resolution card for pre-resolution cancellations renamed to "Voided" (RO-03). Replaces "Operation Failed" (Beat 1) and "Operation Blocked" (Beat 2). Verb form chosen: past participle implies ARBITER as agent without naming cause or reason. Closes DF-01. | 03 Beat 1/2, 03a, 00b §5.2 |
 | 2026-05-18 | L113 locked — Threshold sign convention adopted throughout. Partial payment marker is "−50 threshold marker" (not "+50 difficulty marker"). Rationale: threshold framing is positively oriented — players think about what they can roll, not what fails them. Art 03 beat prose updated; M-06/M-07 modifier table rows unchanged (already −50). Closes DF-02. | 03 Beat 0/4, 03a |
+| 2026-05-19 | Session 23 — L115: Art 04 scope expanded to "Card System"; Art 09 renamed "Card Production Spec" (production-only). Design/production split now consistent across all card types. D04-12 closed. PM02 v2.2. | 04, 09 |
 | 2026-05-18 | Session 22 — L114: "Layer" locked as canonical term for in-world perception/reality levels (L1–L5). Design phases (L1, L2+) are synonymous — same concept. No collision with other "Layer" uses (context disambiguates). 00a-08 closed (resolved L92). 02a-06 closed (definition stays in 02a §10 — board mechanic trigger belongs with board document). 00a-12 applied (Established markers added to two 00a component rule lists). CA-xx entity (Dispatch Case) registered in 00b. 03a v0.97: Layers 1–3 draft complete — DT-01 through DT-09 and Apex_Activation() drafted in §6; Layer 4 stub in §9; DF-04 closed. PM01 WBS 2.08b added (Established marker). | 00a, 02a, 03a, 00b, PM01, PM02, PM05 |
 | 2026-05-18 | Art 03 v1.7 signed off — Session 20 | Seven phases (Phase 7 Debrief split). §14 Operation System with L108-compliant modifier table (M-01–M-12). §16 Apex revised. Component terminology standardised. | 03 |
 | 2026-05-18 | Phase 7 — Debrief split from Phase 6; §§13–16 renumbered §§14–17; §16 Apex revised (Beat 0 note removed, Step 2 tightened, Emergency Response assist/thwart design note added to Steps 3–4, ARBITER Conversion removed from §16 — moved to §13 Phase 7 Debrief) | Session 20 §15 review. Non-material (no mechanics change) — Debrief content unchanged; Apex procedure unchanged at Step 5. Emergency Response design note is design-forward, not design-change. | 03 §§12–16 |

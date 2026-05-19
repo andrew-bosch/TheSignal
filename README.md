@@ -28,13 +28,13 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | 02b | [Resource Systems: Tracking](V1/02b___Resource_Systems_Tracking.md) | 1.5 | ✅ Signed off |
 | 03 | [Round Structure & Gameplay](V1/03___Round_Structure___Gameplay.md) | 1.7 | ✅ Signed off — session 20 |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In Progress — Layers 1–3 complete; Phase procedures added |
-| 04 | [Action Card System](V1/04___Action_Card_System.md) | 0.9.6 | 🔄 In progress — C01–C15 signed off; C16–C35 and political acts pending |
+| 04 | [Card System](V1/04___Card_System.md) | 0.9.6 | 🔄 In progress — C01–C15 signed off; C16–C35 and political acts pending |
 | 04b | [Action Taxonomy & Design Analysis](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.1 | ✅ Reference Document — Active |
 | 05 | [Operative & Apex System](V1/05___Operative_Apex_System.md) | 0.1 | 🔄 Draft placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.1 | 🔄 Draft placeholder |
 | 07 | [ARBITER Toolkit](V1/07___ARBITER_Toolkit.md) | 0.1 | 🔄 Draft placeholder |
 | 08 | [Player Toolkit](V1/08___Player_Toolkit.md) | 0.1 | 🔄 Draft placeholder |
-| 09 | [Card Specifications](V1/09___Card_Specifications.md) | 0.1 | 🔄 Draft placeholder |
+| 09 | [Card Production Spec](V1/09___Card_Production_Spec.md) | 0.1 | 🔄 Draft placeholder |
 | 10 | [Game Manuals](V1/10___Game_Manuals.md) | 0.1 | 🔄 Draft placeholder |
 | 10a | [Victory System](V1/10a___Victory_System.md) | 0.1 | 🔄 Draft placeholder |
 | 11 | [Visual Design System](V1/11___Visual_Design_System.md) | 0.1 | ⬜ Placeholder |
