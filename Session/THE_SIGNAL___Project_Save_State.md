@@ -57,8 +57,8 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 2.4 | ✅ Active — locked decisions L01–L117 |
-| PM03 | 2.0 | ✅ Active — Art 04 session 25 format overhaul noted |
+| PM02 | 2.6 | ✅ Active — locked decisions L01–L122 |
+| PM03 | 2.1 | ✅ Active — Art 04 session 26 schema overhaul noted |
 | PM05 | 1.8 | ✅ Active — 04-16 ✅ closed (L116), XA-30 added, 04-01 updated, 09-10 corrected |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
@@ -262,7 +262,7 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **Art 04 §6 schema overhaul (v0.9.8 → v0.9.9):** (1) Renamed "Card Data Structure" → "Card Data Schema". (2) Type column added — controlled vocabulary: String, Semver, Integer, Enum, Prose, ±Integer. Constraints column cleaned to pure validation rules (L108-informed separation). (3) Portrait unified table: replaces separate Flat bullet + Submitter table with single 6-column table per card (Faction | Flat | Submitter | Condition | Modifier | Mod Condition). §6 Portrait rows reduced 21 → 6. Applied to all 15 C01–C15 card entries. (4) Design note formalized as Taxonomy field (Prose type, VS-04, Displayed: No); converted from blockquote to bullet in all card entries. (5) Portrait Faction constraint updated: [faction] where [faction] != ARBITER. (6) C01 Portrait: Flat = Guild +1, Guild Submitter = N/A. C02 Portrait: Flat = Guild −1, Guild Submitter = N/A — Option A confirmed: board-state effects belong in Flat, not Submitter (doctrinal advantage from acting vs. outcome of board change).
 - **Portrait Option A principle (confirmed):** Flat = effect tied to card resolving (board state changes regardless of actor). Submitter = doctrinal advantage from performing the act. When a structural card changes the board, Flat carries the consequence; Submitter = N/A unless there is an additional doctrinal advantage.
 - **Grip display:** Template widened to 100% max-width, 40px side padding — accommodates 8-column §6 table.
-- **PM03:** v2.0 → v2.1. No PM02 or PM05 changes this session.
+- **PM02:** v2.5 → v2.6. L119–L122 locked (Portrait unified table, Flat/Submitter semantics, Type column, Design note as formal field). **PM03:** v2.0 → v2.1. No PM05 changes this session.
 
 **Session 25 summary (2026-05-19 — complete):**
 - **Art 04 §6 format overhaul:** (1) VS-xx dedicated column added (6-column schema: Category | Field | Purpose | Constraints | VS-xx | Notes/Description); (2) Category column added aligning table rows to card entry groups (Identity / Mechanics / Effects / Portrait / Narrative / Taxonomy); (3) group separators applied to C01–C15 card entries; (4) Portrait mini-table (7 lines) replacing 20 bullet lines per card — applied to all C01–C15.
