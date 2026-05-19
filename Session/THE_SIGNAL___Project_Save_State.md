@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-18 (session 22 in progress) — supersedes session 21 save state.
+### Generated: 2026-05-18 (session 22 complete) — supersedes session 21 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -43,13 +43,13 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | Artifact | Version | Status |
 |----------|---------|--------|
 | 00 — Factions & World | 1.0 | 🔄 Signed Off — significant session 4 additions pending re-sign-off (as part of 00-04 enrichment pass): "On the Question of Cause," "On the Question of Completeness" rewrite, station crew origin, "What New Meridian Is," "What New Meridian Is" continuation, The Overview section in §8 |
-| 00a — Governing Rules & Design Policy | 0.2 | 🔄 Review complete sessions 5–7 — **pending A05/A06 decision only, then ready for sign-off.** 41 rules (R01–R38 + R13a, R13b, R29a). §10 dismissed. Appendix A (rule summary table) added. |
+| 00a — Governing Rules & Design Policy | 0.2 | ✅ Signed off — session 7. 45 rules (R01–R38 + sub-rules). A05/A06 resolved (L92, session 11). Material changes sessions 11–12 (XA-05 four-register, §9/R02 additions) → re-sign-off pending. |
 | 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
 | 02a — Resource Systems: Board State | 1.4 | ✅ Signed Off — Session 22. Control flag corrected (gold, per-district, on Dominant stack); Established marker added (silver, L111, one per Established faction per district); ARBITER Dominance Marker confirmed. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
-| 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (19 types, ID namespaces), L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes) drawn from Retired/Electronic schema. L2 TypeScript schema and information hierarchy pointers in §8. Established session 20. |
+| 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (20 types) — CA-xx (Dispatch Case) added session 22. L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes). L2 TypeScript schema pointers in §8. Established session 20. |
 | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
-| 03a — Game Engine Specification | 0.96 | 🔄 In progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) complete; Layer 3 (Decision Tables) stubbed. DF-01–DF-04 registered. See session 21 summary. |
+| 03a — Game Engine Specification | 0.97 | 🔄 In progress — Layers 1–3 complete (DT-01–DT-09, Apex_Activation()); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
 | 04 — Action Card System | 0.9.6 | 🔄 In Progress — paused until 00a signed off |
 | 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
@@ -57,9 +57,9 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 2.0 | ✅ Active — locked decisions L01–L113 |
+| PM02 | 2.1 | ✅ Active — locked decisions L01–L114 |
 | PM03 | 1.7 | ✅ Active — 00b row added, Art 03 signed off |
-| PM05 | 1.5 | ✅ Active — XA-29/PM04-04 added (L109 cleanup queue) |
+| PM05 | 1.6 | ✅ Active — XA-27 closed (03a Layers 1–3 complete); 00a-12/02a-WBS-01 closed session 22 |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
@@ -106,7 +106,7 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 
 ---
 
-## Active Work — Where We Are (Session 14)
+## Session History
 
 **Session 11 summary (completed items — see PM05 for full status):**
 - XA-05: Four-register system applied to Artifact 07 §9, Artifact 00 §9, 00a R02 — **Artifacts 00 and 07 require re-sign-off (material)**
@@ -258,37 +258,39 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM03 v1.7:** 00b row added, Art 03 updated to ✅ Signed Off v1.7.
 - **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
 
-**Session 22 summary (2026-05-18 — in progress):**
-- **L110 locked — XA-21 retired.** ARBITER reads Situation Report targeting restrictions aloud at Beat 0/1. No physical indicator component. Faction Player attention is the design-intended skill.
-- **Art 07 "re-sign-off" label corrected.** Art 07 was never signed off — the re-sign-off flag was in error. Art 07 remains a Draft Placeholder; material changes (four-register system §9, Resolution Grid §8, §8.1 §14 cross-ref fix) are applied and correct. PM05 XA-05, PM03, Save State, README all corrected.
-- **Art 02a signed off at v1.4 (L111).** Control flag corrected: gold, per-district (21 total), placed on Dominant faction's chip stack. Established marker added: silver, one per Established faction per district (up to 4–5 coexist per district), quantity TBD pending Art 11. Gold/silver are material colors, not faction colors. PM03 updated. 00a-12 flagged for Established marker addition to 00a board component rules.
-- **Art 03 and 03a updated for Established marker.** Four references in Art 03 (Upkeep Step 4, Phase 2 Step 3, Beat 3 Step 7 op success, Beat 4 Step 7 political success) and one in 03a §4.1 footnote now include Established markers alongside Control flags and Tension markers.
-- **L112 locked — "Voided" resolution card (RO-03).** Replaces "Operation Failed" (Beat 1) and "Operation Blocked" (Beat 2). Verb form: past participle, ARBITER implied as agent, cause unstated. Art 03 Beat 1/2/Beat 5 example, 00b RO-03, and 03a all updated. Closes DF-01.
-- **L113 locked — threshold sign convention.** "−50 threshold marker" replaces "+50 difficulty marker" throughout Art 03 prose. Rationale: threshold framing is positively oriented. M-06/M-07 modifier table rows unchanged. Closes DF-02.
-- **DF-03 resolved.** `Faction.Resources[F-xx][RT-xx]` mutation point in 03a §4.1 split into five distinct entries: Upkeep income; Beat 0 covert payment; Phase 4 Declaration (→ ResourceStake); Beat 4 Submit Payment (→ Reservoir); Beat 3/4 failure penalties; Debrief trades.
+**Session 22 summary (2026-05-18 — complete):**
+- **Art 03a (Game Engine Specification) advanced: v0.1 → v0.97.** Code-lite formal spec — state model, pseudocode beat procedures, decision tables, Layer 4 modifier analysis stub.
+- **Layer 1 (State Model) complete:** §4.0 Setup State (all variables, 9 domains); §4.1 State Variable Registry (Board/Faction/Quarter/Event/Card/ARBITER/System/Case/Resolution Grid); §4.2 Beat Boundary Snapshots (12 boundaries, Start of Quarter through Debrief End).
+- **Layer 2 (Beat Procedures) complete:** Beat_0 through Beat_5 as structured pseudocode. Modifier stack as summation formula. M_standing() helper captures PS-xx → threshold mapping.
+- **Layer 3 (Decision Tables) complete:** DT-01–DT-09 drafted. Card face determination (DT-01/02), Apex detection (DT-03), Critical overrides (DT-04/05), Infrastructure scope (DT-06), Type B CM scope (DT-07), Apex threshold check (DT-08), Emergency Response roles (DT-09). Apex_Activation() pseudocode procedure.
+- **Layer 4 stub:** Modifier balance analysis — known pathological case: Discredited + partial + Type B + Infrastructure = −110 threshold shift.
+- **Key structural decisions locked:** Unified Hand model (all tableau cards use .Hand, distinguished by lifecycle behavior). Reservoir = System entity. ARBITER = F-06 with 8 chips at D-22. Grid.Political replaces Faction.DeclaredAct[f].
+- **New State Domains:** Case Domain (dispatch case transport layer); Resolution Grid two-zone model (ARBITER Resolution Area + Political Act Declaration Area); ARBITER.Notepad.
+- **L110 locked:** ARBITER reads Situation Report targeting restrictions aloud at Beat 0/1. No physical indicator component. Closes XA-21.
+- **Art 07 re-sign-off flag corrected:** Was never signed off — re-sign-off flag was in error. Remains Draft Placeholder; material changes (four-register system §9, Resolution Grid §8) applied and correct.
+- **Art 02a signed off at v1.4 (L111):** Control flag gold, per-district (21 total), on Dominant stack. Established marker silver, one per Established faction per district (up to 4–5 coexist). Quantity TBD pending Art 11.
+- **Art 03 and 03a updated:** Established markers added to four Art 03 references (Upkeep Step 4, Phase 2 Step 3, Beat 3/4 op success) and 03a §4.1 footnote.
+- **L112 locked:** "Voided" is RO-03 resolution card. Replaces "Operation Failed" / "Operation Blocked." Past participle, ARBITER implied as agent, cause unstated. Closes DF-01.
+- **L113 locked:** "−50 threshold marker" replaces "+50 difficulty marker" throughout Art 03 prose. Threshold framing is positively oriented. M-06/M-07 table rows unchanged. Closes DF-02.
+- **DF-03 resolved:** Faction.Resources mutation split into 5 distinct entries: Upkeep income; Beat 0 covert payment; Phase 4 Declaration (→ ResourceStake); Beat 4 Submit Payment (→ Reservoir); Beat 3/4 failure penalties; Debrief trades.
+- **L114 locked:** "Layer" canonical for in-world perception/reality levels. Design phases (L1, L2+) and in-world Levels are synonymous — same concept. 03a's internal Layer 1/2/3 uses context to disambiguate.
+- **DF-04 resolved:** CA-xx (Dispatch Case) registered in 00b as entity type 20. Packet and GridCell = internal modeling types, no registration. IP-xx already registered.
+- **00a-12 closed:** Established markers added to 00a board component rules (visibility field + immediate-update field).
+- **02a-WBS-01 closed:** WBS row 2.08b added to PM01 for Established markers.
+- **A05/A06 confirmed closed (L92, session 11):** Chorus Node Portrait Amplifier: Established / flat additive / end-of-quarter. PM05 00a-08 and 02a-06 closed.
+- **PM audit complete:** PM02 v2.1, PM03 v1.7, PM05 v1.6. Stale entries corrected — D03-R01 closed, PM04 duplicate ID fixed, version drift across all PM headers resolved.
+- **00b updated:** CA-xx entity registered; entity count 19 → 20. §4 and §6 updated.
+- **README merged:** Root README.md is now the single artifact index (was split between root and V1/). V1/README.md replaced with 3-line redirect stub.
+- **Grip updated:** Now serves project root (TheSignal/) at localhost:6419 instead of V1/. CLAUDE.md updated.
 
-**Session 22 summary (2026-05-18 — in progress):**
-- **Art 03a (Game Engine Specification) advanced: v0.1 → v0.96.** Companion to Art 03. Code-lite formal spec — state model, pseudocode beat procedures, decision tables.
-- **Layer 1 (State Model) complete:** §4.0 Setup State (all variables with starting values, 9 domains); §4.1 State Variable Registry (9 domains: Board, Faction, Quarter, Event, Card, ARBITER, System, Case, Resolution Grid); §4.2 Beat Boundary Snapshots (12 boundaries, Start of Quarter through Debrief End). §4.0 domain order aligned to §4.1.
-- **Layer 2 (Beat Procedures) complete:** Beat_0 through Beat_5 as structured pseudocode. Modifier stack expressed as summation formula. Resolution check as formal inequality. M_standing() helper captures PS-xx → threshold mapping.
-- **Layer 3 (Decision Tables) stubbed:** DT-01–DT-09 registered, no content yet.
-- **New State Domains added:** Case Domain (dispatch case transport layer — Case[F-xx].ID, Faction, Packet[n].SequenceID/Target/CovertCard/ModifierCards/ARBITERResponseCards/IntelTokens); Resolution Grid two-zone model (ARBITER Resolution Area — existing variables; Political Act Declaration Area — Grid.Political[F-xx].DeclaredCard/ModifierCards/ResourceStake/PartialPaymentMarker); ARBITER.Notepad.
-- **Key structural decisions:** Unified Hand model — all tableau cards use .Hand, distinction is lifecycle behavior (Recycle/OneShot/Permanent/Deploy). Reservoir = System entity, not F-06. ARBITER = F-06 with 8 chips at D-22, standard faction entry. Grid.Political replaces Faction.DeclaredAct[f] — Beat_4 updated throughout.
-- **Design Findings registered:** DF-01 (Beat 1 "Operation Failed" vs "Operation Blocked" label inconsistency — both RO-03); DF-02 ("+50 difficulty" prose vs "−50" threshold table — inverse sign convention); DF-03 (Faction.Resources mutation point needs splitting: Phase 4 Declaration vs Beat 4 Submit Payment vs Beat 3/4 failure); DF-04 (00b audit required for new types: Case, Packet, GridCell, IP-xx — no entity IDs or lookup tables yet).
-
-**Recommended next steps (session 22 and beyond):**
-1. ~~XA-21~~ — **✅ Closed session 22 (L110).** Option A — ARBITER reads restrictions aloud; no physical indicator.
-2. ~~**Artifact 07 re-sign-off**~~ — **Flagged in error.** Art 07 was never signed off; it is a Draft Placeholder. No re-sign-off applicable. Material changes (four-register system §9, Resolution Grid §8) are applied and correct; art 07 will be signed off when the full draft is complete.
-3. ~~**Artifact 02a re-sign-off**~~ — **✅ Signed off session 22 (v1.4, L111).** Gold/silver marker system added.
-4. **Artifact 04 C16–C35** — political acts and faction-specific cards; once complete, unblocks Art 05+
-5. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
-6. **Batch re-sign-offs**: Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired)
-7. ~~**Art 03a — DF-01/DF-02 decisions**~~ — **✅ Closed session 22.** DF-01: "Voided" (L112). DF-02: threshold convention (L113).
-8. ~~**Art 03a — DF-03**~~ — **✅ Closed session 22.** Faction.Resources mutation split into 5 entries.
-9. **Art 03a — DF-04** — 00b audit: add Case, Packet, GridCell, IP-xx to entity registry with ID namespaces (CA-xx? PA-xx? IP-xx already used for Initiative Pattern)
-10. **Art 03a — Layer 3** — fill DT-01 through DT-09 Decision Tables
-11. **XA-29** (unsupervised) — component terminology cleanup across all artifacts
-12. **XA-23** (unsupervised) — index jump links for all artifact Index sections
+**Recommended next steps (session 23 and beyond):**
+1. **Artifact 04 C16–C35** — political acts and faction-specific cards; once complete, unblocks Art 05+
+2. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
+3. **Batch re-sign-offs:** Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired), 00a (sessions 11–12 material changes)
+4. **XA-29** (unsupervised) — component terminology cleanup across all artifacts
+5. **XA-23** (unsupervised) — index jump links for all artifact Index sections
+6. **Art 04 structural pass** — add Resolution + Beat fields; split Taxonomy/Card Type/Portrait on C01–C15 (execution-ready, no decisions needed)
+7. **Open design decisions:** D04-13 (Floor Act card design), D04-07 (modifier card in-world name), D04-12 (Countermeasure card home)
 
 **Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
@@ -341,8 +343,8 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - PM03 §6 updated: /Old → /Retired path corrected
 
 **Active high-priority punch list items (still open):**
-- D03-R03: Declaration phase free Accord card (ARBITER-delivered) — Phase 4 text already written; pending Andy review/sign-off; this is the only gate before Artifact 03 full sign-off
-- 02a re-sign-off: v1.3 material change (02a-03 complete session 14) — pending Andy review
+- ~~D03-R03~~ — ✅ Resolved as L100 (session 15). Free Accord card is Political Act card, cost 0, subsequent-Quarter timing.
+- ~~02a re-sign-off~~ — ✅ Signed off session 22 (v1.4, L111). Gold/silver control flag + Established marker system.
 - XA-19: ✅ Complete session 14 — reception language corrected in all relevant Narrator-voice contexts
 - XA-16: Systematic terminology scan — partial; "Reservoir" done; round→quarter, mat→Overview, others pending
 - D09-05: Portrait visual coding system (Artifact 09) — BLOCKING 07-05
@@ -416,7 +418,6 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 | PW-02 | Unified primary key taxonomy (do not start without direction) | LOW |
 | D09-05 | Portrait visual coding system — card layout design for ARBITER parsing (blocks 07-05) | HIGH |
 | D04-13 | Floor Act card design — effect, cost, and card text | MEDIUM |
-| A05/A06 | Chorus Node Portrait Multiplier canonical mechanic (01 vs 02a discrepancy) — resolve to unblock 00a sign-off | HIGH |
 | D-FT-01 | Faction hidden truths — why are these 5 factions at The Table? Network didn't know until The Chorus Papers; the other four had prior involvement. What does each faction know that it hasn't disclosed? May require private faction supplement analogous to PRIVATE___True_State.md. See PM05 DEFERRED. | HIGH |
 
 ---
@@ -428,14 +429,14 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 3. Negotiation is Mandatory
 4. Control of Systems Defines What Outcomes Are Possible
 5. The System Decides
-6. Narrative and World Consistency *(in 00a §1; pending formal addition to Artifact 00 §5)*
+6. Narrative and World Consistency *(in 00a §1 + Artifact 00 §5 — added session 11)*
 
 ---
 
 ## Key Reference Files
 
 - `PRIVATE___True_State.md` — private design axioms (root level, not in V1)
-- `PM02___Decision_Log___Validation_Tracker.md` — locked decisions (L01–L84+), FD-01 through FD-06, punch list, future state
+- `PM02___Decision_Log___Validation_Tracker.md` — locked decisions (L01–L114), FD-01 through FD-06, change log
 - `PM03___Master_Artifact_Index.md` — artifact registry, 5-voice convention, narrative language table
 - `PM04___Glossary___Data_Dictionary.md` — canonical in-world glossary (§1) and design terminology conventions (§2) including Reception Language Convention (session 12)
 - `00a___Governing_Rules___Design_Policy.md` — 45 rules, signed off session 7
