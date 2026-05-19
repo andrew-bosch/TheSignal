@@ -1,8 +1,8 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.96  
-**Status:** 🔄 In Progress — Layer 1 (State Model) complete; Layer 2 (Beat Procedures) drafted  
+**Version:** 0.97  
+**Status:** 🔄 In Progress — Layers 1–3 draft complete; Layer 4 stub pending  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
 **Depends on:** [00b — Data Architecture](00b___Data_Architecture.md)
@@ -29,8 +29,19 @@ Art 03a is the code-lite technical companion to Art 03. Where Art 03 describes t
 4. Layer 1 — State Model
 5. Layer 2 — Beat Procedures (Pseudocode)
 6. Layer 3 — Decision Tables & Edge Case Registry
+   - DT-01: Card face determination at Beat 0 (non-Apex)
+   - DT-02: Card face determination at Beat 0 (Apex)
+   - DT-03: Critical Success override (01–05)
+   - DT-04: Critical Failure override (96–100)
+   - DT-05: Partial payment at Beat 4
+   - DT-06: Infrastructure modifier scope (L107)
+   - DT-07: Type B Countermeasure scope
+   - DT-08: Apex activation threshold check
+   - DT-09: Emergency Response role (assist / thwart)
+   - Apex_Activation() procedure
 7. Modifier Stack Reference
 8. Design Notes
+9. Layer 4 — Modifier Balance Analysis (stub)
 
 ---
 
@@ -42,9 +53,10 @@ Art 03a is organized into three layers of increasing specificity:
 |-------|----------|--------|
 | 1 | State Model — formal game state at each beat boundary, using 00b entity IDs as variable vocabulary | ✅ Draft complete — §4 |
 | 2 | Beat Procedures — each beat as a structured pseudocode function (Beat_0() through Beat_5()) with explicit IF/THEN/ELSE branches, named inputs/outputs, modifier stack as summation formula, resolution check as formal inequality | ✅ Draft complete — §5 |
-| 3 | Decision Tables — all branching conditions surfaced as tables; edge cases include face-down/face-up, Apex vs. non-Apex, Critical overrides, partial payment, Infrastructure scope (L107), Type B scope | 🔄 Pending content pass |
+| 3 | Decision Tables — all branching conditions surfaced as tables; edge cases include face-down/face-up, Apex vs. non-Apex, Critical overrides, partial payment, Infrastructure scope (L107), Type B scope | ✅ Draft complete — §6 |
+| 4 | Modifier Balance Analysis — modifier stack mathematics: expected difficulty shift per modifier combination, pathological stack identification, modifier cap recommendations | 🔄 Stub — §9; blocked until all M-xx values fully specified (Art 04 card definitions pending) |
 
-**Modifier balance analysis** (original XA-27 scope) is a derived output of Layer 2 once the modifier stack is formally expressed. It will be appended here as Layer 4 when Layer 2 is complete.
+**Modifier balance analysis** (original XA-27 scope) is a derived output of Layer 2 once the modifier stack is formally expressed. Stub in §9 — full population blocked until Art 04 card definitions complete (M-08, M-09, M-10 variable rows).
 
 ---
 
@@ -894,13 +906,9 @@ FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Qua
     ARBITER announces additional difficulty
     // M-07 (−50 threshold) applied in modifier stack below
 
-DESIGN FINDING [DF-02]:
-  Art 03 Beat 4 Submit Payment describes the marker as "+50 difficulty marker." The
-  modifier table (§7, Art 03 §14) lists M-06 and M-07 as Threshold Adjustment −50.
-  These are equivalent but expressed with opposite signs: "+50 difficulty" (difficulty
-  additive) vs. "−50" (threshold subtractive). The physical token face label and the
-  table value are inverse representations of the same penalty. Art 07 (ARBITER Toolkit)
-  physical token design should clarify this to prevent table play confusion.
+// DF-02 RESOLVED (L113, Session 22): "+50 difficulty marker" (Art 03 Beat 4) and "−50 threshold"
+// (§7 modifier table) unified under threshold sign convention throughout. Art 03 Beat 0/4
+// updated. Art 07 physical token design note preserved in §8. See §8 Open Design Findings.
 
 // Resolution phase — initiative order
 FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Quarter.InitiativeOrder):
@@ -1040,21 +1048,200 @@ STATE MUTATIONS:
 
 ## 6. Layer 3 — Decision Tables & Edge Case Registry
 
-*Pending content pass.*
-
-Decision tables cover all branching points in Beats 0–5. Confirmed scope:
+Decision tables cover all branching points in Beats 0–5, surfacing conditions deferred in Layer 2 via `DT-xx` notation. All tables are L108 compliant — single-typed columns, controlled vocabulary, single condition per row.
 
 | Table | Branch Condition | Status |
 |-------|-----------------|--------|
-| DT-01 | Card orientation at Beat 0 (face-down / face-up) | 🔄 Pending |
-| DT-02 | Apex card detection at Beat 0 | 🔄 Pending |
-| DT-03 | Critical Success (01–05) override path | 🔄 Pending |
-| DT-04 | Critical Failure (96–00) override path | 🔄 Pending |
-| DT-05 | Partial payment at Beat 4 | 🔄 Pending |
-| DT-06 | Infrastructure modifier scope (L107 — all action types) | 🔄 Pending |
-| DT-07 | Type B card scope (Faction Player only vs. all) | 🔄 Pending |
-| DT-08 | Apex activation threshold check (Step 4) | 🔄 Pending |
-| DT-09 | Emergency Response — assist / thwart Apex (Board Strength delta before Step 4) | 🔄 Pending |
+| DT-01 | Card face determination at Beat 0 — non-Apex | ✅ Draft |
+| DT-02 | Card face determination at Beat 0 — Apex | ✅ Draft |
+| DT-03 | Critical Success override (roll 01–05) | ✅ Draft |
+| DT-04 | Critical Failure override (roll 96–100) | ✅ Draft |
+| DT-05 | Partial payment at Beat 4 Submit Payment | ✅ Draft |
+| DT-06 | Infrastructure modifier scope (L107) | ✅ Draft |
+| DT-07 | Type B Countermeasure scope | ✅ Draft (partial — pending Art 04/05 asset definition) |
+| DT-08 | Apex activation threshold check (Step 4) | ✅ Draft (threshold value pending Art 05) |
+| DT-09 | Emergency Response — assist / thwart Apex | ✅ Draft (stub — pending Art 04/05) |
+| — | Apex_Activation() procedure | ✅ Draft |
+
+---
+
+### DT-01 — Card Face Determination at Beat 0 (Non-Apex)
+
+Applied per non-Apex operation card during Beat_0 Step 2. Face determines whether the card resolves normally or auto-fails at Beat_3.
+
+| ID | Payment State | Amount Condition | Card Face | M-06 Attached | Drain |
+|----|---------------|-----------------|-----------|---------------|-------|
+| DT-01-A | Full | actual_payment = card_cost | Up | No | Yes — full amount |
+| DT-01-B | Partial | 0 < actual_payment < card_cost | Up | Yes (−50) | Yes — submitted amount |
+| DT-01-C | None | actual_payment = 0 | Down | No | None |
+
+**Face = Down consequence (DT-01-C):** Card reaches Beat_3 as auto-fail (RO-05). No roll is made. Operation card and target slip returned to dispatch case. No resolution card placed.
+
+---
+
+### DT-02 — Card Face Determination at Beat 0 (Apex)
+
+Applied when `card.IsApex = True` during Beat_0 Step 2. Differs from DT-01: partial payment does not attach M-06 — any shortfall makes the card face-down. A face-down Apex does not trigger Apex_Activation().
+
+| ID | Payment State | Amount Condition | Card Face | M-06 Attached | Drain |
+|----|---------------|-----------------|-----------|---------------|-------|
+| DT-02-A | Full | actual_payment ≥ card_cost | Up | No | Yes — submitted amount |
+| DT-02-B | Partial | 0 < actual_payment < card_cost | Down | No | Yes — submitted amount |
+| DT-02-C | None | actual_payment = 0 | Down | No | None |
+
+**Face = Down consequence on Apex (DT-02-B, DT-02-C):** Treated as auto-fail (RO-05) at Beat_3 or as invalid act (RO-05) at Beat_4 Submit Payment. Resources drained are not refunded. Apex_Activation() does not trigger.
+
+---
+
+### DT-03 — Critical Success Override (Roll 01–05)
+
+Applied at Beat_3 Step 6 and Beat_4 Step 6 whenever `roll ∈ [01, 05]`. Overrides threshold regardless of value — a threshold of 0 or lower does not prevent success on this path.
+
+| ID | Roll Range | Threshold | Outcome | crit_success | crit_failure |
+|----|------------|-----------|---------|-------------|-------------|
+| DT-03-A | 01–05 | Any | RO-01 (Critical Success) | True | False |
+
+**Card text interaction:** Critical Success may trigger bonus effects specified in card text. No other resolution path sets `crit_success = True`. Discovery conditions do not trigger on DT-03-A.
+
+---
+
+### DT-04 — Critical Failure Override (Roll 96–100)
+
+Applied at Beat_3 Step 6 and Beat_4 Step 6 whenever `roll ∈ [96, 100]`. Overrides threshold regardless of value. Discovery conditions may further override RO-02 to RO-04 at Beat_3 Step 9.
+
+| ID | Roll Range | Threshold | Initial Outcome | crit_failure | Discovery Override Available |
+|----|------------|-----------|-----------------|-------------|------------------------------|
+| DT-04-A | 96–100 | Any | RO-02 (Critical Failure) | True | Yes — if card specifies discovery condition |
+
+**Discovery override path (Beat_3 only):** If `card.DiscoveryCondition` is specified and `crit_failure = True`, outcome becomes RO-04 (Discovered) at Step 9, overriding RO-02. Discovery override does not apply to political acts (Beat_4).
+
+---
+
+### DT-05 — Partial Payment at Beat 4 (Political Acts)
+
+Applied during Beat_4 Submit Payment phase for each declared political act (excludes Pass and None).
+
+| ID | Payment State | Amount Condition | act.Face | M-07 Applied | ARBITER Announcement |
+|----|---------------|-----------------|----------|------|---|
+| DT-05-A | Full | actual_payment = card_cost | Up (unchanged) | No | None |
+| DT-05-B | Partial | 0 < actual_payment < card_cost | Up (unchanged) | Yes (−50) | "Additional difficulty" |
+| DT-05-C | None | actual_payment = 0 | Down | No | "Act invalid" |
+
+**Face = Down consequence (DT-05-C):** When reached in resolution phase, act is auto-fail (RO-05). Political act card returned to Faction Player; modifier cards discarded; no roll made.
+
+**Stacking note (DT-05-B):** Modifier cards staked on a partial-payment act remain in play and apply to the threshold. M-07 stacks additively with all other applicable modifiers.
+
+---
+
+### DT-06 — Infrastructure Modifier Scope (L107)
+
+M-12 (−25 threshold) applies to any covert operation or political act targeting a district in the Infrastructure ring (RG-02), unless the acting faction holds Established or Dominant presence in at least one adjacent Core district (RG-03) at time of resolution.
+
+| ID | Target Ring | Faction Influence in Adjacent Core | M-12 Applied |
+|----|-------------|-------------------------------------|--------------|
+| DT-06-A | Infrastructure (RG-02) | Established (IL-02) or Dominant (IL-01) in ≥ 1 adjacent RG-03 district | No |
+| DT-06-B | Infrastructure (RG-02) | Present (IL-03), Absent (IL-04), or no adjacent Core district exists | Yes (−25) |
+| DT-06-C | Sprawl (RG-01) | Any | No |
+| DT-06-D | Core (RG-03) | Any | No |
+
+**Scope (L107):** Applies to all action types — covert operations (Beat_3) and political acts (Beat_4).
+
+**Timing:** Influence check evaluated at time of resolution, not at submission. Board state changes from earlier in the same Beat (e.g., a preceding covert operation) apply to the check.
+
+---
+
+### DT-07 — Type B Countermeasure Scope
+
+M-11 (−15 threshold) is attached during Beat_2 Step 2. Applies to covert operations targeting the defending faction's assets, submitted by any faction other than the defending faction.
+
+| ID | Submitting Faction | Operation Target | M-11 Applied |
+|----|--------------------|-----------------|--------------|
+| DT-07-A | Any faction other than the defending faction | Asset belonging to the defending faction | Yes (−15) |
+| DT-07-B | Any faction other than the defending faction | Asset not belonging to the defending faction | No |
+| DT-07-C | Defending faction (self) | Any | No — own Type B does not penalise own ops |
+
+**"Defending faction's assets" definition:** Pending Art 04/05. Expected: districts where the defending faction holds Established or Dominant presence, or districts containing their structure blocks.
+
+**Multiple Type B edge case:** If two factions each play a Type B in the same Quarter, they apply independently. An operation targeting assets that satisfy two distinct Type B conditions accumulates M-11 twice (−30 total).
+
+---
+
+### DT-08 — Apex Activation Threshold Check (Step 4)
+
+After all Emergency Responses resolve, ARBITER counts Board Strength for the Apex faction. This check gates whether Apex resolves or is cancelled.
+
+**Board Strength formula:** `Σ Board.PresenceChips[D-xx][apex_faction] + Σ Board.StructureBlocks[D-xx][apex_faction]` (all districts, all types).
+
+| ID | Board Strength vs. Threshold | Outcome |
+|----|------------------------------|---------|
+| DT-08-A | board_strength ≥ threshold_required | Apex resolves — proceed to Step 5; session ends |
+| DT-08-B | board_strength < threshold_required | Apex cancelled — resources spent; Operative does not retire; resolution resumes |
+
+**Threshold source:** `apex_card.ApexThreshold` — defined in Art 05 per Operative. Pending Art 05 completion.
+
+**Resumption after DT-08-B:** Beat_3 resumes from the suspended position in `Grid.ResolutionQueue`; Beat_4 resumes from the suspended faction in initiative order. Board effects from Emergency Responses remain — they are not reversed.
+
+---
+
+### DT-09 — Emergency Response Role (Assist / Thwart Apex)
+
+Each non-Apex faction submits exactly one Emergency Response. All submitted simultaneously, resolved in `Quarter.InitiativeOrder` (excluding the Apex faction). Board state changes apply immediately — each Emergency Response takes effect before the next is resolved. Board Strength is counted once, after all Emergency Responses, at DT-08.
+
+*Full Emergency Response design pending Art 04 / Art 05.*
+
+| ID | Emergency Response Role | Board Effect | Board Strength Impact at DT-08 |
+|----|------------------------|-------------|-------------------------------|
+| DT-09-A | Assist | Adds presence chips or structure blocks to Apex faction's count | Raises Board Strength |
+| DT-09-B | Thwart | Removes presence chips or structure blocks from Apex faction | Lowers Board Strength |
+| DT-09-C | Neutral / Other | Affects board state unrelated to Apex faction (own presence, Public Standing, etc.) | No direct Board Strength impact |
+| DT-09-D | Pass | No board effect | None |
+
+**Design note (Art 03 §16):** "A faction may use their Emergency Response to assist the Apex (raising Board Strength) or oppose it (reducing Board Strength). This is load-bearing for Emergency Response design in Artifact 04 / Artifact 05."
+
+---
+
+### Apex_Activation() — Procedure
+
+Called from Beat_3 (covert) and Beat_4 (political act) when an Apex card with `card.Face = Up` is reached. Halts the calling Beat — Beat_3 and Beat_4 do not return after this call unless the Apex is cancelled (DT-08-B).
+
+```
+Apex_Activation(apex_card, apex_faction):
+
+// Step 1 — Announce
+ARBITER announces: "An Apex operation has been submitted. Resolution is suspended."
+
+// Step 2 — Payment confirmation (Beat 4 political act path only)
+// Note: Beat 4 apex with Face = Up means payment was validated at Submit Payment.
+// The DT-02 face assignment at Beat 0 (covert path) already ensured Face = Up implies full payment.
+// No additional payment check needed — guaranteed by DT-01/DT-02 preconditions.
+
+// Step 3 — Emergency Response collection (DT-09)
+COLLECT one Emergency Response simultaneously from each faction f WHERE f ≠ apex_faction
+FOR EACH f IN Quarter.InitiativeOrder WHERE f ≠ apex_faction:
+  RESOLVE Emergency Response[f]
+  // Immediately mutates: Board.PresenceChips, Board.StructureBlocks, Faction.PublicStanding
+  // per card text; changes applied before next Emergency Response resolves
+
+// Step 4 — Board Strength threshold check (DT-08)
+board_strength ←   Σ Board.PresenceChips[D-xx][apex_faction]
+                 + Σ Board.StructureBlocks[D-xx][apex_faction]
+threshold_required ← apex_card.ApexThreshold  // Art 05
+
+IF board_strength < threshold_required:         // DT-08-B — cancelled
+  ARBITER announces: "The threshold was not met. The operation is cancelled."
+  // Resources already drained — not refunded; Operative does not retire
+  RESUME Beat_3 from current Grid.ResolutionQueue position
+      OR Beat_4 from current faction in initiative order
+  RETURN
+
+// Step 5 — Apex resolves  (DT-08-A)
+ARBITER opens sealed Apex envelope (prepared at session setup — Art 05)
+PAUSE 5 seconds
+ARBITER reads Apex narrative card aloud (The Witness register)
+APPLY all public board effects specified in Apex card
+ARBITER privately updates Faction.ChorusPortrait[F-xx] for all factions
+SESSION ENDS — proceed to Artifact 10a — Victory System
+```
 
 ---
 
@@ -1106,8 +1293,35 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 | DF-01 | Beat_1/2 | ✅ Resolved — Session 22 (L112). Art 03 Beat 1 used "Operation Failed"; Beat 2 used "Operation Blocked." Both unified as **"Voided"** (RO-03). Verb form chosen: past participle implies ARBITER action without naming cause. Art 03 Beat 1/2, Beat 5 example, and 00b RO-03 all updated. | — |
 | DF-02 | Beat_4, §7 | ✅ Resolved — Session 22 (L113). Threshold convention adopted throughout. Art 03 beat prose updated: "+50 difficulty marker" → "−50 threshold marker" in Beat 0 table and Beat 4 prose. Rationale: threshold framing is positively oriented — players think "I need to roll under 69," not "I have a 31% chance to fail." All references now use threshold-subtractive sign convention matching the modifier table (M-06/M-07 = −50). | — |
 | DF-03 | §4.1 Faction Domain | ✅ Resolved — Session 22. `Faction.Resources[F-xx][RT-xx]` Mutates At split into five distinct entries: Upkeep Step 5 (income); Beat 0 (covert payment drain); Phase 4 Declaration (tokens → Grid.Political.ResourceStake); Beat 4 Submit Payment (ResourceStake → Reservoir); Beat 3/4 failure conditions (card text penalties); Debrief (trades, conversion). | — |
-| DF-04 | §4, §5 | New types introduced in 03a have no 00b entity registry entries: (a) Case — dispatch case physical component, no entity ID scheme (CA-xx?); (b) Packet — Case sub-structure; (c) GridCell — compound type defined only in a §4.1 footnote; (d) IP-xx — Initiative Pattern, referenced in Quarter.InitiativePattern but no 00b lookup table. | 00b audit — add Case, Packet, GridCell, and IP-xx to entity registry and lookup tables as applicable; assign ID namespaces |
+| DF-04 | §4, §5 | ✅ Resolved — Session 22. (a) Case (CA-xx) added to 00b §4 entity registry and §6 schema status — indexed via F-xx in V1, CA-xx prefix anticipates L2+. (b) Packet and (c) GridCell noted in 00b §4 as internal 03a modeling types (no persistent IDs; not registered entities). (d) IP-xx already registered in 00b §4 and §6 — ID column will be added to Art 03 §7 table at Art 03 sign-off. | — |
 
 ---
 
-*End of Art 03a — Game Engine Specification v0.96*
+## 9. Layer 4 — Modifier Balance Analysis
+
+*Stub — blocked until all M-xx values fully specified.*
+
+Layer 4 derives from the summation formula in Beat_3() and Beat_4(). Once M-08, M-09, and M-10 variable values are defined by Art 04 card definitions, the following analysis becomes executable:
+
+**Planned output:**
+
+| Analysis | Method | Blocked on |
+|----------|--------|-----------|
+| Expected threshold shift per modifier combination | Enumerate all valid M-xx combinations; sum Threshold Adjustment values | M-08, M-09, M-10 variable rows (Art 04) |
+| Pathological stack identification | Flag combinations where total shift causes threshold ≤ 0 or ≥ 100 (ignoring 01–05 / 96–100 override floors) | Same |
+| Modifier cap recommendation | If pathological stacks identified: propose per-resolution cap or interaction rules for 00a | Same |
+
+**Known fixed contributions (already specifiable):**
+
+| Scenario | Modifiers Active | Fixed Threshold Shift |
+|----------|-----------------|----------------------|
+| Celebrated, full payment, no other modifiers | M-01 | +20 |
+| Discredited, partial payment | M-05 + M-06 or M-07 | −70 |
+| Discredited, partial payment, Type B target, Infrastructure | M-05 + M-06 + M-11 + M-12 | −110 (threshold ≤ 0 at most base difficulties) |
+| Celebrated, full payment, Infrastructure mitigated by Core presence | M-01 | +20 (M-12 suppressed by DT-06-A) |
+
+**Pathological stack note:** The −110 scenario above forces threshold below 0 at all base difficulties except Very Easy — the only path to success is the 01–05 Critical Success override (DT-03). This is a known extreme and may be intentional design consequence for discredited factions attempting difficult covert ops under compounded conditions. Flag for playtest validation.
+
+---
+
+*End of Art 03a — Game Engine Specification v0.97*

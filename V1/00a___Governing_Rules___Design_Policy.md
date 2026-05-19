@@ -266,7 +266,7 @@ This is the compact of The Table. The factions agreed — or were compelled, dep
 
 **Narrative:** Physical presence in a city cannot be hidden. A structure exists. Deployed operatives are in the streets. The Table is a forum of acknowledged power. No one can have an invisible building.
 
-**Mechanics:** Presence tokens, deployment markers, structure blocks, control flags, and tension markers are visible to all players at all times. Nothing on the board surface is ever hidden. The board is the single source of truth for all publicly knowable game state. Cards and ARBITER scripts may not create mechanics that place hidden state on the board surface.
+**Mechanics:** Presence tokens, deployment markers, structure blocks, control flags, established markers, and tension markers are visible to all players at all times. Nothing on the board surface is ever hidden. The board is the single source of truth for all publicly knowable game state. Cards and ARBITER scripts may not create mechanics that place hidden state on the board surface.
 
 *Source: Design Pillar 1 (Artifact 00 §5), Artifact 01 §5, Artifact 02a §5, Artifact 03 §5.*
 
@@ -318,7 +318,7 @@ The factions can shape the future. They cannot revise the present. A stale Overv
 > *"New Meridian is not a map. It is a clock. What it shows is not where things were. It is where things are. Right now. While you're looking."*
 > — Senior signal analyst, original listening station staff, orientation briefing (unofficial)
 
-**Mechanics:** The board is never permitted to show a stale or deferred state. When a game action causes a board change, that change is made immediately upon resolution — not at the end of the beat or round. Control flags and tension markers update immediately when influence conditions change.
+**Mechanics:** The board is never permitted to show a stale or deferred state. When a game action causes a board change, that change is made immediately upon resolution — not at the end of the beat or round. Control flags, established markers, and tension markers update immediately when influence conditions change.
 
 *Source: Artifact 03 §5.*
 

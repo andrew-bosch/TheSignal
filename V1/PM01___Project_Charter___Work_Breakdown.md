@@ -177,6 +177,7 @@ Production does not begin until relevant design artifacts are signed off. Items 
 | 2.07 | Neutral chips | Tension markers | 6 | Neutral chips | 02a | ⬜ | $1–3 |
 | 2.08 | Crown or star tokens | Control flags | 5 (1 per faction) | See D-P-01 | 02a | ⬜ | $3–7 |
 | 2.08a | Fused single piece — ARBITER color | ARBITER Dominance Marker | 1 | Eight ARBITER-keyed presence tokens (white, TBD) stacked and fused, topped by ARBITER's dominance marker — same visual language as faction control flags but distinct: larger, differently keyed, or subtly off in a way that reads as *more*. All one inseparable piece. Placed at Chorus Node by ARBITER at setup. Never removed. | 00a R04, 01, 11, D-P-02 | ⬜ | $3–8 |
+| 2.08b | Small silver markers | Established markers | TBD pending Art 11 component spec — 1 per Established faction per district; up to 4–5 may coexist in a single district simultaneously. Silver material distinguishes 2nd-place presence at a glance; placed on Established faction's presence chip stack. Placed and removed by the player whose action causes the influence change. Not placed at the Chorus Node. | 02a §6/§9, L111 | ⬜ | TBD |
 | 2.09 | Ten-sided dice | — | 2 × d10 | Purchase | 03 | ⬜ | $2–5 |
 | 2.10 | Covert operation cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $8–20 |
 | 2.11 | Political act cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $5–15 |

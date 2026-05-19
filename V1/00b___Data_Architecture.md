@@ -67,9 +67,14 @@ Every named entity type in the game system. ID prefixes establish the primary ke
 | MC-xx | Modifier Card | Faction and ring modifier card records | Art 09 | ⬜ Not yet designed |
 | CC-xx | Countermeasure Card | Type A and Type B countermeasure card records | Art 04, Art 09 | ⬜ Not yet designed |
 | ER-xx | Emergency Response Card | Faction-specific Emergency Response cards | Art 04, Art 05 | ⬜ Not yet designed |
+| CA-xx | Case (Dispatch Case) | Physical container submitted by each Faction Player at Phase 3 close. Contains operation cards, target slips, and resource tokens for that faction's covert submissions. In V1, indexed via Faction ID (F-xx) — `dispatch_case[F-xx]`. CA-xx prefix anticipates L2+ per-case record tracking. One per Faction Player per Quarter; transient (reset at Beat_5 Step 1). | Art 03 §7, Art 06, 03a §4 | ⬜ Schema pending |
 | VS-xx | Visibility Scope | Information visibility classification — controls which parties can see a given field | 00b §5.9 (defined here) | ✅ Complete (§5.9) |
 
-*19 entity types. 1 fully L108-compliant. 2 with existing schemas pending audit. 16 schemas pending design. 1 cross-artifact standard defined here.*
+*20 entity types. 1 fully L108-compliant. 2 with existing schemas pending audit. 16 schemas pending design. 1 cross-artifact standard defined here.*
+
+*Internal 03a modeling types — not registered entities (no persistent IDs, no independent physical components):*
+- *Packet — sub-structure within a Case (one operation card + submitted resources + target slip). Indexed by submission order within the Case. No CA-sub-ID scheme needed.*
+- *GridCell — position reference in the Resolution Grid (Lane: F-xx, Queue index: integer). Identified by compound key; not a named game object.*
 
 ---
 
@@ -267,9 +272,10 @@ Status of every entity schema against L108 requirements. Updated as source artif
 | Modifier Card | MC-xx | TBD | ⬜ Not yet designed | Art 09 |
 | Countermeasure Card | CC-xx | TBD | ⬜ Not yet designed | Art 04 / Art 09 |
 | Emergency Response | ER-xx | 5 | ⬜ Not yet designed | Art 04 / Art 05 |
+| Case (Dispatch Case) | CA-xx | 5 (1 per Faction Player per Quarter; transient) | ⬜ Schema pending | Art 03 §7, Art 06 |
 | Visibility Scope | VS-xx | 8 | ✅ Complete (§5.9) | — |
 
-*10 of 19 entity schemas complete or substantially complete at v0.1. 2 existing schemas pending L108 audit. 7 pending source artifact design.*
+*10 of 20 entity schemas complete or substantially complete at v0.1. 2 existing schemas pending L108 audit. 7 pending source artifact design. 1 new entity registered (session 22: CA-xx).*
 
 ---
 
