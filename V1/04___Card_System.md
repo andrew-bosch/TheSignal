@@ -143,7 +143,9 @@ Every card uses this data structure. All fields are required. N/A is a valid val
 
 *For the action taxonomy definitions (Category, Function, Target values) see Artifact 04b §4.*
 
-*VS-xx Visibility Scope definitions: Artifact 00b §5.9.*
+*VS-xx Visibility Scope — values used in this table (full definitions: Artifact 00b §5.9):*
+- *VS-01 — Public: visible to all players at all times.*
+- *VS-06 — Conditional: hidden until the card resolves; revealed to all players at resolution.*
 
 *§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/Whiteboard/researchNotes_CardDesign.md`. Sources: MTG/Scryfall API, Netrunner DB (NRDB), Arkham Horror LCG (Fantasy Flight), Marvel Champions (Fantasy Flight). Fields added as a result: Card version (§1.1), Trigger condition (§1.2), Pool copies (§1.3), Outcome type (§1.5). Fields reviewed and not added: §8.*
 
