@@ -59,7 +59,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | PM01 | 1.6 | ✅ Active |
 | PM02 | 2.6 | ✅ Active — locked decisions L01–L122 |
 | PM03 | 2.1 | ✅ Active — Art 04 session 26 schema overhaul noted |
-| PM05 | 1.8 | ✅ Active — 04-16 ✅ closed (L116), XA-30 added, 04-01 updated, 09-10 corrected |
+| PM05 | 1.9 | ✅ Active — session 26: 04-17–04-20 added (session 26 unvalidated assumptions); PM04-05 added (schema vs data table distinction); working agreement updated (decision triage protocol) |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
