@@ -1,7 +1,7 @@
 # PM02 — Decision Log & Validation Tracker
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.0  
+**Version:** 2.1  
 **Status:** 🔄 Updated — Active
 
 ---
@@ -157,11 +157,11 @@ Decisions locked for the signed-off design but flagged for economic and mechanic
 
 **Ordered by blocking artifact.** Address decisions for each artifact before that artifact is drafted. Signed-off artifacts have all blocking decisions resolved — see Section 1 Locked Decisions for the record.
 
-### Blocking Artifact 03 — Round Structure & Gameplay (Re-Sign-Off Required)
+### ~~Blocking Artifact 03 — Round Structure & Gameplay~~ ✅ Signed Off Session 20
 
 | ID | Decision Required | Options | Priority |
 |----|------------------|---------|---------|
-| D03-R01 | Confirm Beat 2 rename "The Ground Shifts" and expanded scope (all condition-setting cards, not just countermeasures/protect) | Accept as written in v1.5 / revise scope or name | HIGH — blocks 03 re-sign-off |
+| D03-R01 | ✅ Resolved at session 20 sign-off — Beat 2 name "The Ground Shifts" and expanded scope (all condition-setting cards) accepted as written in Art 03 v1.7. | — | — |
 | D03-R02 | ✅ Confirmed session 9 — Step 6 renamed "Hand Assembly"; tableau check, action draw, modifier draw, Burst Play window reviewed and signed off. | — | — |
 | D03-R03 | ✅ Resolved session 15 — free Accord card from C09 classified as Political Act card (cost 0, return to ARBITER on play). Delivered to acting faction's hand at C09 resolution. No play-this-round constraint. Phase 4 carries no exception — card self-governs. L100. | — | — |
 

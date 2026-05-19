@@ -1,7 +1,7 @@
 # PM05 — Active Punch List
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.5
+**Version:** 1.6
 **Status:** 🔄 Active
 **Last Updated:** 2026-05-18
 **Extracted from:** PM02 §2b as of session 10
