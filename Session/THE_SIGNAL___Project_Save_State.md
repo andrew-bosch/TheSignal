@@ -57,7 +57,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 2.1 | ✅ Active — locked decisions L01–L114 |
+| PM02 | 2.2 | ✅ Active — locked decisions L01–L115 |
 | PM03 | 2.0 | ✅ Active — Art 04 session 25 format overhaul noted |
 | PM05 | 1.8 | ✅ Active — XA-30 added (compound effect text gap), 04-16 added (VS-xx Portrait), 04-01 updated, 09-10 updated to 20 portrait fields |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
@@ -259,8 +259,10 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
 
 **Session 25 summary (2026-05-19 — complete):**
-- **Art 04 format overhaul applied to C01–C15.** Three changes approved and executed: (1) VS-xx dedicated column added to §6 table (5-column schema: Field | Purpose | Constraints | VS-xx | Notes/Description); (2) group separators added to each card entry (Identity / Mechanics / Effects / Portrait / Narrative / Taxonomy bold labels with blank-line separation); (3) Portrait mini-table replacing 20 bullet lines per card (7 lines: header + separator + 5 faction rows).
+- **Art 04 §6 format overhaul:** (1) VS-xx dedicated column added (6-column schema: Category | Field | Purpose | Constraints | VS-xx | Notes/Description); (2) Category column added aligning table rows to card entry groups (Identity / Mechanics / Effects / Portrait / Narrative / Taxonomy); (3) group separators applied to C01–C15 card entries; (4) Portrait mini-table (7 lines) replacing 20 bullet lines per card — applied to all C01–C15.
 - **§6 VS-xx values:** Effect fields = VS-06 (Conditional); Portrait value fields = *pending 04-16*; all other fields = VS-01.
+- **Research reference captured:** Art 04 §6 now carries an italic reference note pointing to `Whiteboard/researchNotes_CardDesign.md` with named sources. Research notes updated with Methodology & Attribution section (AI generation note, source table: Scryfall, NRDB, Arkham Horror LCG, Marvel Champions, Slay the Spire, Aeon's End, Dominion).
+- **PM02 drift corrected in save state:** v2.1 → v2.2 (L115 from session 23 — Art 04 scope expanded to "Card System").
 - **PM03:** v1.9 → v2.0 (Art 04 status note updated to reflect sessions 23–25 structural passes).
 - **No material changes** — all session 25 changes are formatting/structural; C01–C15 sign-off status unchanged.
 
