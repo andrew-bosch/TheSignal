@@ -90,6 +90,7 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 | `Faction.ChorusPortrait[F-xx]` | 0 — all factions | Setup |
 | `Faction.StatusMarker[F-xx]` | Discussing — all factions | Setup |
 | `Faction.BurstPlay[F-xx]` | False — all factions | Setup |
+| `Faction.IntelTokens[F-xx]` | 0 — all factions | Art 02b |
 
 ⚠ **Starting resources — open question:** Art 01 §7 "Starting Round 1 Income" projects income from Q1 Upkeep Step 5, calculated from setup chip placement. It is unclear whether factions begin the game with resources in hand (a setup grant before Q1 Upkeep), or at zero (receiving their first income during Q1 Upkeep Step 5 only). If the income table reflects only the Upkeep yield, starting value = 0. If it includes a pre-Upkeep starting grant, the income table values are the combined total. Requires resolution in Art 00 §7 or Art 02b.
 
@@ -125,6 +126,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Card.Pass.Hand[F-xx]` | 4 Pass cards — Lifecycle: Permanent; beside tableau | Session setup; Art 04 §12 |
 | `Card.Floor.Hand[F-xx]` | 1 Floor Act — Lifecycle: Permanent; beside tableau | Session setup; Art 04 D04-13 |
 | `Card.Operative.Hand[F-xx]` | Operative cards selected at session setup — Lifecycle: Deploy; in Hand, 0 deployed to board | Session setup; Art 05 |
+| `Card.ClassifiedDirective.Hand[F-xx]` | Classified directive cards assigned at session setup — Lifecycle: Secret; private to faction; never removed until scored | Session setup; Art 05 |
 | `Card.ARBITER.*` | TBD — Art 07 (resolution materials, Apex envelopes, Chronicle cards, Emergency Response set) | Art 07 |
 
 *Deck pool sizes (30 covert / select 24; 20 political / select 12) are working baselines pending validation — Art 04 A-04-01.*
@@ -190,6 +192,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Faction.ChorusPortrait[F-xx]` | Integer | VS-04 | Beat 3 Step 11 (per resolved covert operation, privately); Beat 4 Step 10 (per resolved political act, privately) |
 | `Faction.StatusMarker[F-xx]` | Discussing \| Operating | VS-01 | Upkeep Step 1 (reset to Discussing) |
 | `Faction.BurstPlay[F-xx]` | Boolean | VS-01 | Upkeep Step 6 (set True on trigger — persistent for remainder of session) |
+| `Faction.IntelTokens[F-xx]` | Integer ≥ 0 | VS-02 | Beat 5 (incremented by intel tokens received from dispatch case); TBD — Art 02b §8–9 (spending, age rules, scoring) |
 
 ---
 
@@ -231,6 +234,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | OneShot | Modifier, Countermeasure | Drawn or pre-allocated → Hand → used → **Active=False** (removed from game; no reshuffle) |
 | Permanent | Pass, Floor Act | Always in Hand; never consumed, never discarded; reusable every Quarter |
 | Deploy | Operative | In Hand until deployed → moves to board operative zone; not recycled |
+| Secret | Classified Directive | Assigned at session setup → Hand; VS-04 (private to faction); held throughout session; revealed and scored at game end or per Art 05 conditions; full lifecycle TBD |
 
 **Active flag:** Modifier and Countermeasure cards carry `Active: Boolean` on each card instance. `Active=True` = in hand or in play (Countermeasure: including while held by ARBITER after Phase 5 deployment). `Active=False` = removed from game. Covert, Political, Pass, Floor Act, and Operative do not require this flag — their in-play status is determined by their position (Hand vs Deck vs board zone).
 
@@ -246,6 +250,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Card.Pass.Hand[F-xx]` | Fixed list of 4 Pass — Lifecycle: Permanent | VS-01 (count); VS-02 (usage intent) | Immutable — reusable every Quarter; never removed |
 | `Card.Floor.Hand[F-xx]` | Fixed 1 Floor Act — Lifecycle: Permanent | VS-01 (count); VS-02 (usage intent) | Immutable — always available; never removed; full design Art 04 D04-13 |
 | `Card.Operative.Hand[F-xx]` | List of operative cards — Lifecycle: Deploy | VS-02 | Session setup (operative set selected; in Hand); Phase 2 (deployed → moves to board operative zone; no longer in Hand); TBD — Art 05 |
+| `Card.ClassifiedDirective.Hand[F-xx]` | List of classified directive cards — Lifecycle: Secret | VS-04 | Session setup (assigned; private to faction); Art 05 (scoring conditions, revelation TBD) |
 | `Card.ARBITER.*` | TBD — resolution materials, Apex envelopes, Chronicle cards, Emergency Response set | VS-04 | TBD — Art 07 |
 
 ---
@@ -350,6 +355,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Faction.PublicStanding[F-xx]` — carry forward; natural drift already applied at prior Quarter close
 - `Faction.ChorusPortrait[F-xx]` — carry forward; never resets
 - `Faction.Resources[F-xx][RT-xx]` — carry forward; no reset between Quarters
+- `Faction.IntelTokens[F-xx]` — carry forward; age rules TBD (Art 02b §8–9 — decay conditions may apply at Quarter close)
 - `Event.ActiveCards` — carry forward; duration decremented at prior Quarter close
 
 **Invariants:**
@@ -521,6 +527,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 **Outputs:**
 - Dispatch cases returned to faction owners
 - `Grid.ResolvedCells` outcomes (RO-xx per operation) visible to each faction via their dispatch case
+- `Faction.IntelTokens[F-xx]` = incremented by any intel tokens ARBITER loaded into the faction's dispatch case
 - ARBITER Player's Quarter-level notes recorded for Debrief
 
 **Invariants:**
@@ -1025,6 +1032,7 @@ OUTPUT:
   Debrief opens
 
 STATE MUTATIONS:
+  Faction.IntelTokens[F-xx] ← incremented by intel tokens received from dispatch case
   Grid.* ← all variables cleared to empty state
 ```
 
