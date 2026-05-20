@@ -481,7 +481,7 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
-- **Target object:** Presence token
+- **Target object:** N/A
 - **Restriction:** Acting faction must have at least 1 presence in the target district.
 - **Primary cost qty:** 1
 - **Primary cost type:** Faction native
@@ -621,7 +621,7 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** Named opponent faction
-- **Target object:** Intel token
+- **Target object:** N/A
 - **Restriction:** Acting faction must have at least 1 presence in the target district or in a district adjacent to the target district. Ghost is exempt from this restriction.
 - **Primary cost qty:** 1
 - **Primary cost type:** Faction native
@@ -831,7 +831,7 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
-- **Target object:** Presence token
+- **Target object:** N/A
 - **Restriction:** None.
 - **Primary cost qty:** 3
 - **Primary cost type:** Capital
@@ -1177,7 +1177,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
-- **Target object:** Presence token
+- **Target object:** N/A
 - **Restriction:** Target district must have zero presence from any faction.
 - **Primary cost qty:** 1
 - **Primary cost type:** Capacity
@@ -1242,7 +1242,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
-- **Target object:** Structure block
+- **Target object:** N/A
 - **Restriction:** Acting faction must have at least 1 presence in the target district.
 - **Primary cost qty:** 3
 - **Primary cost type:** Capacity
@@ -1307,7 +1307,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
-- **Target object:** Native resource
+- **Target object:** N/A
 - **Restriction:** Acting faction must be Established or Dominant in target district.
 - **Primary cost qty:** N/A
 - **Primary cost type:** N/A
@@ -1487,7 +1487,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Beat:** 3
 - **Target district:** N/A
 - **Target faction:** Named opponent faction
-- **Target object:** Intel token
+- **Target object:** N/A
 - **Restriction:** Ghost must hold at least 1 Intel token naming Ghost (self-directed).
 - **Primary cost qty:** 1
 - **Primary cost type:** Findings
@@ -1616,7 +1616,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Beat:** 3
 - **Target district:** Any district
 - **Target faction:** N/A
-- **Target object:** Intel token
+- **Target object:** N/A
 - **Restriction:** None.
 - **Primary cost qty:** 2
 - **Primary cost type:** Mandate
@@ -1811,7 +1811,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Beat:** 3
 - **Target district:** Any Sprawl district
 - **Target faction:** N/A
-- **Target object:** Presence token
+- **Target object:** N/A
 - **Restriction:** Network must have zero presence in the target district. Sprawl districts only.
 - **Primary cost qty:** 1
 - **Primary cost type:** Exposure
@@ -1845,7 +1845,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
 - **Beat:** 3
 - **Target district:** Any district
 - **Target faction:** N/A
-- **Target object:** Native resource
+- **Target object:** N/A
 - **Restriction:** Maximum one district per round.
 - **Primary cost qty:** 4
 - **Primary cost type:** Capital
