@@ -1,7 +1,7 @@
 # PM05 — Active Punch List
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.0
+**Version:** 2.1
 **Status:** 🔄 Active
 **Last Updated:** 2026-05-19
 **Extracted from:** PM02 §2b as of session 10
@@ -159,7 +159,7 @@ Items waiting on Artifact 04 card review to continue and complete. Currently pau
 | 04-09 | Grid Tap concept — tabled as political act or operative ability. Add to §10 political act design queue and Artifact 05 discussion list when those passes begin. | Non-material (parking) | L74 | 🔄 |
 | 04-10 | Rezone concept — tabled as political act. Physical implementation question (overlay component design) must be resolved before card design can finalize. Add to §10 political act design queue. | Material (design prerequisite unresolved) | L73, R17 session 5 notes | 🔄 |
 | 04b-01 | Update card taxonomy index (§5) when any card in Artifact 04 is redesigned or added. | Non-material (sync) | Ongoing | 🔄 |
-| XA-31 | **Art 04b taxonomy field rename — "Target" → "Subject".** Art 04 §6 renamed Taxonomy.Target to Taxonomy.Subject (L136) and all §1/§6/§13.1 references updated. Art 04b still uses "Target" as the third taxonomy dimension in §4 (Category / Function / Target table) and all card taxonomy assignments. Non-material terminology pass — update 04b §4 table header and any inline references to "Category/Function/Target" notation. Coordinate with 04b-01 (taxonomy index sync) — do both in the same 04b pass. | Non-material (L136 terminology) | L136, Session 27 | 🔄 |
+| XA-31 | **Art 04b taxonomy field rename — "Target" → "Subject".** Art 04 §6 renamed Taxonomy.Target to Taxonomy.Subject (L136) and all §1/§6/§13.1 references updated. Art 04b still uses "Target" as the third taxonomy dimension in §4 (Category / Function / Target table) and all card taxonomy assignments. Non-material terminology pass — update 04b §4 table header and any inline references to "Category/Function/Target" notation. Coordinate with 04b-01 (taxonomy index sync) — do both in the same 04b pass. | Non-material (L136 terminology) | L136, Session 27 | ✅ Session 27 — all "Target" → "Subject" in headers (§1, §5, §6.1, §6.2, §7). §4 Board Valid Targets: "Presence (token or claim marker)" → "Presence token, Operational marker". §5 Subject values: 8 Presence → Presence token; C22 → Operational marker; C35 → Named action type. §7 matrix: C22 Operational marker row added; C35 Named action type row added; ~~Chorus Portrait~~ applied. Art 04b v1.2. |
 | 02b-01 | Cross-reference audit: verify Intel token mechanics in §8–9 are consistent with current card designs — specifically the Denounce cost structure (L39 vs current P04 design), token age rules, and C05 crit failure notification slip. Resolve any inconsistency. | Material (if inconsistency found) | D04-11, F-ART02B-01 | 🔄 |
 | XA-11 | Confirm status of Cross-Category — Shift — Chorus Portrait retirement: identify any cards in Artifact 04 C16–C35 and P01–P18 that use this taxonomy function and confirm they are being redesigned. Update 04b taxonomy table once confirmed. Coordinate with 04-11 (P17 redesign). | Material | PM (Audit) 04-IQ-01, L84 | 🔄 |
 | XA-12 | Flag for re-check when Artifact 04 is signed off: "Incursion" is referenced in signed-off Artifacts 01 §5, 02a §6, and 03 (multiple locations) as a known mechanic. If Incursion is renamed, redesigned, or removed in 04, all three signed-off artifacts need updating. | Non-material (flag) | PM (Audit) XA-IQ-04 | 🔄 |

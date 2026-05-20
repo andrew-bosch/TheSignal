@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** Artifact 03 signed off v1.7 (session 20) — Artifact 04 in progress (C01–C15 signed off; C16–C35 and political acts pending)
+**Design milestone:** Artifact 03 signed off v1.7 (session 20) — Artifact 04 in progress (C01–C15 signed off; C16–C35 and political acts pending) — Artifact 04b v1.2 (XA-31 complete)
 
 ---
 
@@ -29,7 +29,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | 03 | [Round Structure & Gameplay](V1/03___Round_Structure___Gameplay.md) | 1.7 | ✅ Signed off — session 20 |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In Progress — Layers 1–3 complete; Phase procedures added |
 | 04 | [Card System](V1/04___Card_System.md) | 0.9.15 | 🔄 In progress — C01 locked; C02–C35 pending review; political acts pending |
-| 04b | [Action Taxonomy & Design Analysis](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.1 | ✅ Reference Document — Active |
+| 04b | [Action Taxonomy & Design Analysis](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.2 | ✅ Reference Document — Active |
 | 05 | [Operative & Apex System](V1/05___Operative_Apex_System.md) | 0.1 | 🔄 Draft placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.1 | 🔄 Draft placeholder |
 | 07 | [ARBITER Toolkit](V1/07___ARBITER_Toolkit.md) | 0.1 | 🔄 Draft placeholder |

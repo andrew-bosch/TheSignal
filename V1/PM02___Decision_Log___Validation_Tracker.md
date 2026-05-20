@@ -1,7 +1,7 @@
 # PM02 — Decision Log & Validation Tracker
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 3.5  
+**Version:** 3.6  
 **Status:** 🔄 Updated — Active
 
 ---
@@ -399,6 +399,7 @@ Updated after each playtest session.
 | 2026-05-18 | L111 locked — Gold/silver marker system. Control flag = gold (1 per district, on Dominant stack). Established marker = silver (up to 4–5 per district, one per Established faction's stack; quantity TBD pending Art 11). Closes 02a-03, signs off Art 02a v1.4. PM02 v2.0. | 02a §6, §9, PM01 |
 | 2026-05-18 | L112 locked — Resolution card for pre-resolution cancellations renamed to "Voided" (RO-03). Replaces "Operation Failed" (Beat 1) and "Operation Blocked" (Beat 2). Verb form chosen: past participle implies ARBITER as agent without naming cause or reason. Closes DF-01. | 03 Beat 1/2, 03a, 00b §5.2 |
 | 2026-05-18 | L113 locked — Threshold sign convention adopted throughout. Partial payment marker is "−50 threshold marker" (not "+50 difficulty marker"). Rationale: threshold framing is positively oriented — players think about what they can roll, not what fails them. Art 03 beat prose updated; M-06/M-07 modifier table rows unchanged (already −50). Closes DF-02. | 03 Beat 0/4, 03a |
+| 2026-05-19 | Session 27 — XA-31: Art 04b terminology pass — "Target" → "Subject" in all table headers and text references (§1, §5, §6.1, §6.2, §7). §4 Board Valid Targets updated: "Presence (token or claim marker)" → "Presence token, Operational marker" (L109 component split). §5 Subject values updated: 8 Presence → Presence token; C22 → Operational marker (L109); C35 → Named action type (consistent with Mechanics.Target object). §7 matrix updated: C22 Operational marker row added; C35 moved to Named action type row; Chorus Portrait strikethrough applied. Art 04b v1.1 → v1.2. PM02 v3.6. | 04b |
 | 2026-05-19 | Session 26 — L118: All 20 Portrait fields VS-04 → VS-06. No coded symbol on card face. ARBITER uses Portrait Reference Table pre-resolution; effects revealed at resolution via Public Standing track update. Supersedes VS-04 scope from L116/L117. PM02 v2.5. | 04 §6 |
 | 2026-05-19 | Session 25 — L117: All 20 Portrait fields VS-04 (ARBITER-Only). Portrait data not on card face. ARBITER uses Card-ID-keyed lookup table. Extends L116. PM05 07-01 flagged (ARBITER Portrait reference table, Art 07). PM02 v2.4. | 04 §6, 07 |
 | 2026-05-19 | Session 25 — L116: Portrait Base and Modifier value fields (all 5 factions, 10 rows) assigned VS-04 (ARBITER-Only). Card face carries coded symbol — physically visible to all players, interpreted by ARBITER only. Consistent with L90. Closes PM05 04-16. PM02 v2.3. | 04 §6 |

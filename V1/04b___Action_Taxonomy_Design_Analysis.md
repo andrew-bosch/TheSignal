@@ -1,9 +1,9 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.1  
+**Version:** 1.2  
 **Status:** ✅ Reference Document — Active  
-**Last Updated:** 2026-05-14  
+**Last Updated:** 2026-05-19  
 **Companion to:** 04 — Action Card System  
 **Purpose:** Preserve the taxonomy framework, development decisions, coverage analysis, and faction design recommendations that govern Artifact 04 and all future card design passes.
 
@@ -13,7 +13,7 @@
 
 This document is the authoritative source for the action system taxonomy — the framework for categorizing what every card in The Signal can affect and how. It also contains the design analysis that produced it: coverage gap analysis, faction coverage matrix, and design recommendations for the next card pass.
 
-Card definitions live in Artifact 04. This document does not reproduce card content. The taxonomy fields on each card (Category — Function — Target) reference this document for definitions.
+Card definitions live in Artifact 04. This document does not reproduce card content. The taxonomy fields on each card (Category — Function — Subject) reference this document for definitions.
 
 ---
 
@@ -95,10 +95,10 @@ In the electronic version, ARBITER would have access to hand contents and could 
 | Category | Function | Definition | Scope | Valid Targets |
 |----------|----------|-----------|-------|---------------|
 | **1 — Board** | | *Physical state of districts* | | |
-| | Add | Place a game element in a district | Permanent or temporary | Presence (token or claim marker), Structure block |
-| | Remove | Remove a game element from a district | Permanent or temporary | Presence (token or claim marker), Structure block |
-| | Redirect | Move a game element to a different district or faction | Location or ownership change | Presence (token or claim marker), Structure block |
-| | Recover | Return a previously removed game element to play | From removed state to active | Presence (token or claim marker), Structure block |
+| | Add | Place a game element in a district | Permanent or temporary | Presence token, Operational marker, Structure block |
+| | Remove | Remove a game element from a district | Permanent or temporary | Presence token, Operational marker, Structure block |
+| | Redirect | Move a game element to a different district or faction | Location or ownership change | Presence token, Operational marker, Structure block |
+| | Recover | Return a previously removed game element to play | From removed state to active | Presence token, Operational marker, Structure block |
 | **2 — Resource** | | *Faction holdings of spendable or usable game elements* | | |
 | | Add | Faction gains a resource | — | Native resource, Intel token, Modifier card, Accord agreement |
 | | Remove | Faction loses a resource | — | Native resource, Intel token, Modifier card, Accord agreement |
@@ -120,23 +120,23 @@ In the electronic version, ARBITER would have access to hand contents and could 
 
 ## 5. Card Taxonomy Index
 
-*Card definitions are in Artifact 04. This index provides Category — Function — Target assignments for all cards as a design reference. Use this table to identify coverage gaps and duplications.*
+*Card definitions are in Artifact 04. This index provides Category — Function — Subject assignments for all cards as a design reference. Use this table to identify coverage gaps and duplications.*
 
-| Card ID | Name | Category | Function | Target |
+| Card ID | Name | Category | Function | Subject |
 |---------|------|----------|----------|--------|
 | C01 | Build Structure | Board | Add | Structure block |
 | C02 | Demolish | Board | Remove | Structure block |
-| C03 | Campaign | Board | Add | Presence |
-| C04 | Undermine | Board | Remove | Presence |
+| C03 | Campaign | Board | Add | Presence token |
+| C04 | Undermine | Board | Remove | Presence token |
 | C05 | Gather | Resource | Add | Intel token |
 | C06 | Broadcast Interference | Action | Modify | Political act (cost) |
 | C07 | Amplify | Action | Modify | Political act (effect magnitude) |
-| C08 | Buy Influence | Board | Add | Presence |
+| C08 | Buy Influence | Board | Add | Presence token |
 | C09 | Fund | Resource | Redirect | Native resource |
 | C10 | Protect | Cross-Category | Protect | Covert operation (difficulty) |
 | C11 | Fortify Structure | Cross-Category | Protect | Structure block |
 | C12 | Materials Acquisition | Resource + Action | Recover + React | Native resource |
-| C13 | Foundation Rights | Board | Add | Presence |
+| C13 | Foundation Rights | Board | Add | Presence token |
 | C14 | Construction Crew | Action | Remove Restriction | Covert operation (presence requirement) |
 | C15 | Infrastructure Yield | Resource | Add | Native resource |
 | C16 | Pattern Match | Action | Copy | Covert operation (full) |
@@ -145,7 +145,7 @@ In the electronic version, ARBITER would have access to hand contents and could 
 | C19 | Deep Cover | Cross-Category | Protect (permanent) | Action attribution |
 | C20 | Misdirection | Resource | Add | Intel token (corrupt content) |
 | C21 | Invoke Jurisdiction | Action | Block | Covert operation (C01, C03) |
-| C22 | Detain | Board | Remove (permanent) | Presence (claim marker) |
+| C22 | Detain | Board | Remove (permanent) | Operational marker |
 | C23 | Evidence Preservation | Cross-Category | Protect (permanent) | Written record |
 | C24 | Surveillance Placement | Resource | Add (permanent) | Intel token |
 | C25 | Sealed Border | Action | Block | Covert operation (presence placement) |
@@ -153,14 +153,14 @@ In the electronic version, ARBITER would have access to hand contents and could 
 | C27 | Source Protection | Cross-Category | Protect | Action attribution |
 | C28 | Open Channel | Cross-Category | Reveal | Private communications |
 | C29 | Network Cascade | Action | Modify | Covert operation (scope) |
-| C30 | Community Anchor | Board | Add | Presence |
+| C30 | Community Anchor | Board | Add | Presence token |
 | C31 | Leveraged Acquisition | Resource | Add | Native resource |
 | C32 | Short the Market | Resource | Remove | Native resource |
 | C33 | Hostile Acquisition | Board | Redirect | Structure block |
 | C34 | Golden Parachute | Cross-Category | Protect | Native resource |
-| C35 | Regulatory Capture | Action | Block | Covert operation + Political act |
-| P01 | Establish Presence | Board | Add | Presence |
-| P02 | Contest | Board | Remove | Presence (contested) |
+| C35 | Regulatory Capture | Action | Block | Named action type |
+| P01 | Establish Presence | Board | Add | Presence token |
+| P02 | Contest | Board | Remove | Presence token (contested) |
 | P03 | Commission | Board | Add | Structure block (both districts) |
 | P04 | Denounce | Cross-Category | Shift | Public Standing (−) |
 | P05 | Broadcast | Cross-Category | Reveal | Action attribution |
@@ -173,7 +173,7 @@ In the electronic version, ARBITER would have access to hand contents and could 
 | P12 | Convene an Inquiry | Resource | Add | Intel token |
 | P13 | Public Disclosure | Cross-Category | Reveal | Action attribution |
 | P14 | Open Record Request | Cross-Category | Reveal | Written record |
-| P15 | Acquisition Offer | Board | Redirect | Presence |
+| P15 | Acquisition Offer | Board | Redirect | Presence token |
 | P16 | Market Pressure | Action | Modify | Covert + Political act (cost) |
 | P17 | Publish Analysis | Cross-Category | Shift | ~~Chorus Portrait~~ — **retired (L84)**. Effect invalidated. Redesign required; see 04-11 (PM05). |
 | P18 | Signal Review Request | Action | Modify | Covert operation (difficulty) |
@@ -186,11 +186,11 @@ In the electronic version, ARBITER would have access to hand contents and could 
 
 The following combinations exist in the taxonomy but have no current card. These represent available design space for future card development.
 
-| Category | Function | Target | Priority | Notes |
+| Category | Function | Subject | Priority | Notes |
 |----------|----------|--------|----------|-------|
-| Board | Redirect | Presence | Medium | Move tokens between districts |
+| Board | Redirect | Presence token | Medium | Move tokens between districts |
 | Board | Redirect | Structure | Low | Transfer structure faction — C33 partially covers |
-| Board | Recover | Presence | Medium | Return removed tokens — Guild candidate |
+| Board | Recover | Presence token | Medium | Return removed tokens — Guild candidate |
 | Board | Recover | Structure | High | Reconstruct demolished structure — strong Guild card |
 | Resource | Remove | Intel token | Low | Strip opponent Intel tokens |
 | Resource | Remove | Modifier card | Medium | Strip opponent modifier cards |
@@ -213,9 +213,9 @@ The following combinations exist in the taxonomy but have no current card. These
 
 ### 6.2 Overrepresented combinations
 
-| Category | Function | Target | Cards | Issue |
+| Category | Function | Subject | Cards | Issue |
 |----------|----------|--------|-------|-------|
-| Board | Add | Presence | C03, C08, C13, C30, P01 | 5 cards — differentiation critical |
+| Board | Add | Presence token | C03, C08, C13, C30, P01 | 5 cards — differentiation critical |
 | Action | Block | Covert operation | C21, C25, P07, P11 | 4 Block cards across standard and faction |
 | Cross-Category | Protect | Action attribution | C18, C19, C27 | 3 cards, 2 same faction, same function |
 | Cross-Category | Reveal | Action attribution | C26, C28, P05, P13 | 4 Reveal cards, two pairs with same scope |
@@ -224,16 +224,17 @@ The following combinations exist in the taxonomy but have no current card. These
 
 ## 7. Faction Coverage Matrix
 
-| Category | Function | Target | Standard | Guild | Ghost | Directorate | Network | Syndicate |
+| Category | Function | Subject | Standard | Guild | Ghost | Directorate | Network | Syndicate |
 |----------|----------|--------|----------|-------|-------|-------------|---------|-----------|
 | **Board** | | | | | | | | |
-| | Add | Presence | C03, C08 | C13 | — | — | C30 | — |
+| | Add | Presence token | C03, C08 | C13 | — | — | C30 | — |
 | | Add | Structure | C01 | C14 | — | — | — | — |
-| | Remove | Presence | C04 | — | — | — | — | — |
+| | Remove | Presence token | C04 | — | — | — | — | — |
+| | Remove | Operational marker | — | — | — | C22 | — | — |
 | | Remove | Structure | C02 | — | — | — | — | — |
-| | Redirect | Presence | — | — | — | — | — | — |
+| | Redirect | Presence token | — | — | — | — | — | — |
 | | Redirect | Structure | — | — | — | — | — | C33 |
-| | Recover | Presence | — | — | — | — | — | — |
+| | Recover | Presence token | — | — | — | — | — | — |
 | | Recover | Structure | — | — | — | — | — | — |
 | **Resource** | | | | | | | | |
 | | Add | Native resource | — | C15 | — | — | — | C31 |
@@ -246,7 +247,8 @@ The following combinations exist in the taxonomy but have no current card. These
 | | Redirect | Native resource | C09 | — | — | — | — | — |
 | | Redirect | Accord agreement | — | — | — | — | — | — |
 | **Action** | | | | | | | | |
-| | Block | Covert operation | — | — | — | C21, C25 | — | C35 |
+| | Block | Covert operation | — | — | — | C21, C25 | — | — |
+| | Block | Named action type | — | — | — | — | — | C35 |
 | | Block | Political act | P07 | — | — | P11 | — | — |
 | | Modify | Cost | C06 | — | — | — | — | P16 |
 | | Modify | Effect magnitude | C07 | — | — | — | — | — |
@@ -260,7 +262,7 @@ The following combinations exist in the taxonomy but have no current card. These
 | | Reveal | Action attribution | — | — | — | — | C26, C28 | — |
 | | Reveal | Named faction | — | — | — | — | — | — |
 | | Shift | Public Standing | P04 | — | — | — | — | — |
-| | Shift | Chorus Portrait | — | — | P17 | — | — | — |
+| | Shift | ~~Chorus Portrait~~ | — | — | P17 | — | — | — |
 | | Protect | Structure block | — | C11 | — | — | — | — |
 | | Protect | Native resource | — | — | — | — | — | C34 |
 | | Protect | Action attribution | — | — | C18, C19 | — | C27 | — |

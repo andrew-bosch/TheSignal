@@ -51,15 +51,15 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
 | 03a — Game Engine Specification | 0.98 | 🔄 In progress — Layers 1–3 complete; Phase procedures added (Quarter_Flow, Phase_1–Phase_7, Beat_0–Beat_5); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
 | 04 — Action Card System | 0.9.15 | 🔄 In Progress — Session 27 schema updates: Taxonomy.Target → Taxonomy.Subject (L136); Target object field added (L134, L135 cascade governance); cascaded to C01–C35. Political acts P01–P18 pending. |
-| 04b — Action Taxonomy | 1.1 | ✅ Active Reference |
+| 04b — Action Taxonomy | 1.2 | ✅ Active Reference — XA-31 complete: "Target" → "Subject" throughout; Presence → Presence token/Operational marker; C35 → Named action type |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
 | 10 — Game Manuals | 0.1 | 🔄 Draft Placeholder — §6.0 added: game objective statement locked |
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 3.5 | ✅ Active — locked decisions L01–L136 |
-| PM03 | 2.1 | ✅ Active — Art 04 session 26 schema overhaul noted |
-| PM05 | 1.9 | ✅ Active — session 26: 04-17–04-20 added (session 26 unvalidated assumptions); PM04-05 added (schema vs data table distinction); working agreement updated (decision triage protocol) |
+| PM02 | 3.6 | ✅ Active — locked decisions L01–L136 |
+| PM03 | 2.2 | ✅ Active — Art 04b v1.2 noted |
+| PM05 | 2.1 | ✅ Active — XA-31 ✅ closed session 27 |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
@@ -265,7 +265,8 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **L135 (cascade governance):** Material schema changes (new columns) cascade to ALL card specs, including signed-off cards.
 - **L136 (Taxonomy.Target → Taxonomy.Subject):** Resolved naming collision with Mechanics targeting fields. "Subject" is non-colliding and accurate. Applied: §6 schema, 16 full-format card entries (C01–C15, C17). Abbreviated entries (C18–C35 inline taxonomy) required no label change. All §1/§6/§13.1 "Category — Function — Target" references updated to "Category — Function — Subject." PM03 04a row updated. XA-31 added to PM05 for Art 04b pass.
 - **Art 04 v0.9.15. PM02 v3.5.**
-- **C01 Target object correction (end of session):** Andy confirmed C01.mechanics.targetObject = N/A. Build Structure creates a new structure block; it does not act on an existing one. Cascading question: same logic may apply to other "Add" function cards (C03, C08, C13, C14, C30) — pending Andy's direction.
+- **C01 Target object correction:** Andy confirmed C01.mechanics.targetObject = N/A. Build Structure creates a new structure block — does not act on an existing one. Same logic applied to all "Add" function cards: C03, C05, C08, C13, C14, C15, C20, C24, C30, C31 all corrected to N/A.
+- **XA-31 complete (04b terminology pass):** "Target" → "Subject" in all Art 04b table headers and text. §4 Board Valid Targets: "Presence (token or claim marker)" → "Presence token, Operational marker." §5 Subject values: 8 Presence → Presence token; C22 → Operational marker; C35 → Named action type. §7 matrix: C22 Operational marker row added; C35 Named action type row added; Chorus Portrait strikethrough applied. Art 04b v1.2. PM02 v3.6.
 
 **Session 26 summary (2026-05-19 — complete):**
 - **Art 04 §6 schema overhaul (v0.9.8 → v0.9.9):** (1) Renamed "Card Data Structure" → "Card Data Schema". (2) Type column added — controlled vocabulary: String, Semver, Integer, Enum, Prose, ±Integer. Constraints column cleaned to pure validation rules (L108-informed separation). (3) Portrait unified table: replaces separate Flat bullet + Submitter table with single 6-column table per card (Faction | Flat | Submitter | Condition | Modifier | Mod Condition). §6 Portrait rows reduced 21 → 6. Applied to all 15 C01–C15 card entries. (4) Design note formalized as Taxonomy field (Prose type, VS-04, Displayed: No); converted from blockquote to bullet in all card entries. (5) Portrait Faction constraint updated: [faction] where [faction] != ARBITER. (6) C01 Portrait: Flat = Guild +1, Guild Submitter = N/A. C02 Portrait: Flat = Guild −1, Guild Submitter = N/A — Option A confirmed: board-state effects belong in Flat, not Submitter (doctrinal advantage from acting vs. outcome of board change).
