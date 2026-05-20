@@ -11,17 +11,17 @@
     :root {
       --bg:           #0a0c0f;
       --surface:      #0e1117;
-      --border:       #1e2530;
+      --border:       #4a576a;
       --border-glow:  #2a3545;
       --text:         #c8d4e0;
-      --text-dim:     #5a6878;
-      --text-muted:   #3a4655;
+      --text-dim:     #7b90a5;
+      --text-muted:   #6e829a;
       --mono:         'Share Tech Mono', monospace;
       --sans:         'Barlow Condensed', sans-serif;
       --body:         'Barlow', sans-serif;
 
       /* Faction colors */
-      --ghost:        #4a7c59;   /* charcoal green */
+      --ghost:        #6a9978;   /* charcoal green */
       --network:      #39d353;   /* bright signal green */
       --syndicate:    #c9a84c;   /* metallic gold */
       --guild:        #d4622a;   /* industrial orange */
@@ -33,7 +33,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 120%; }
 
     body {
       background: var(--bg);
@@ -156,7 +156,7 @@
 
     .tagline {
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.77rem;
       color: var(--chorus);
       letter-spacing: 0.1em;
       margin-top: 1rem;
@@ -178,7 +178,7 @@
       align-items: center;
       gap: 1.5rem;
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       overflow: hidden;
     }
@@ -222,7 +222,7 @@
 
     .section-label {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.8rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #637080;
@@ -270,7 +270,7 @@
       display: block;
       margin-top: 0.5rem;
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.72rem;
       font-style: normal;
       color: var(--text-muted);
       letter-spacing: 0.1em;
@@ -376,7 +376,7 @@
 
     .arbiter-not-a-faction {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       color: #637080;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -398,7 +398,7 @@
 
     .objective-label {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -418,7 +418,7 @@
     footer {
       padding: 2rem 0 3rem;
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       letter-spacing: 0.08em;
       display: flex;
@@ -570,7 +570,7 @@
     <div class="arbiter-block">
       <div class="arbiter-header">
         <div class="arbiter-mark">ARBITER</div>
-        <div class="arbiter-not-a-faction">Not a faction. Different kind of depth.</div>
+        <div class="arbiter-not-a-faction">Always Listening. Always Calculating.</div>
       </div>
 
       <p class="arbiter-body">
@@ -581,10 +581,16 @@
         Everyone present has already considered it.
       </p>
 
+      <blockquote class="pull">
+        "She asked it once whether it had a position on the outcome. It said it had no position on outcomes.
+        Then it said it had significant data on trajectories. No one at The Table followed up.
+        I've been thinking about that for six years."
+        <cite>— Senior Directorate Observer, Year 28</cite>
+      </blockquote>
+
       <blockquote class="arbiter">
-        "You are arguing about the pipes because you lack the instruments to measure
-        the weight of the floor. The city is not sinking, Director Kang.
-        The mountain is simply becoming more specific."
+        "The Chorus is not evaluating your intentions. It is reading your behavior.
+        These have not been the same thing in this session. ARBITER has recorded the difference."
       </blockquote>
     </div>
   </section>
@@ -593,8 +599,8 @@
   <div class="objective-block">
     <div class="objective-label">The Objective</div>
     <p class="objective-text">
-      "The objective of THE SIGNAL is to determine what humanity says to the Chorus —
-      and what that says about humanity."
+      The objective of THE SIGNAL is to determine what humanity says to the Chorus —
+      and what that says about humanity.
     </p>
   </div>
 

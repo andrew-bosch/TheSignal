@@ -1,9 +1,9 @@
 # PM04 — Glossary & Data Dictionary
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.5
+**Version:** 0.6
 **Status:** 🔄 Updated — Active
-**Last Updated:** 2026-05-16
+**Last Updated:** 2026-05-19
 **Supersedes:** PM04 v0.3
 
 ---
@@ -145,6 +145,18 @@ Character quotes are not generic "faction member" flavor. They build a cast — 
 **Code block (fenced ```)** — Standard format for any content that functions as a map, schematic, or at-a-glance structural summary rather than prose. Use when: (1) content is a structured overview meant to be scanned, not read; (2) the visual distinction from surrounding prose is intentional and meaningful; (3) the content would become a designed diagram or infographic element in final layout. Do not use for prose explanations, rules text, or examples. Applied: Artifact 03 §6 Round Overview.
 
 *Locked as L95 in PM02.*
+
+---
+
+### Data Document Types — Schema Document vs. Data Table
+
+Two distinct document types carry structured data in the artifact suite. Correct categorization determines which L108 requirements apply.
+
+**Schema document** — describes the structure of a data type. Rows are column specifications (field name, type, purpose, constraints, metadata), not data records. L108 requirements apply with one exception: **Req 3 (explicit primary key) does not apply** — the rows are not records and carry no primary key. All other L108 requirements apply: Req 1 (single-typed columns), Req 2 (controlled vocabulary), Req 4 (ID-based cross-references where applicable), Req 5 (explicit N/A). Type declarations must use the L123 canonical vocabulary (String, Semver, Integer, Enum, Prose, ±Integer, ID Reference). *Reference case: Art 04 §6 Card Data Schema.*
+
+**Data table** — contains data records. All five L108 requirements apply fully, including Req 3 (explicit primary key — first column must be a unique ID). *Reference cases: Art 03 §13 Modifier table (M-01–M-12); 00b §5 lookup tables.*
+
+*Source: Session 26 clarification (§6 is a column specification document, not a data table). L108 (data tables), L123 (type vocabulary). Cross-reference: 00b §3 L108 Compliance Standard.*
 
 ---
 

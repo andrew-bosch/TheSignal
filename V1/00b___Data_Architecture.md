@@ -41,6 +41,8 @@ All data tables in the THE SIGNAL artifact suite must satisfy the following five
 
 *These requirements apply to all data tables in all V1 artifacts, retroactively. Compliance status is tracked in §7 Schema Reference Index below.*
 
+**Column type vocabulary (L123):** All schema documents in the artifact suite must declare column types using the canonical type vocabulary: **String** (short text), **Semver** (version identifier), **Integer** (non-negative count), **Enum** (controlled vocabulary), **Prose** (long-form text), **±Integer** (signed integer), **ID Reference** (foreign key to an entity ID namespace — governed by Req 4; the type name formalizes the implicit requirement). New types require a locked decision to extend the vocabulary. Source: L121 (Art 04 §6 first application), L123 (promoted to suite-wide standard).
+
 ---
 
 ## 4. Entity Registry
@@ -290,6 +292,8 @@ Status of every entity schema against L108 requirements. Updated as source artif
 **Modifier Card schema (MC-xx):** Will require at minimum: ID, Faction (F-xx | All), Ring (RG-xx | N/A), Value Rating (1–3 per L67), Targeting Constraint (ring-native per L66), Threshold Adjustment. Full design pending D04-08 (modifier card content) and D04-07 (in-world name).
 
 **Event Card schema (EC-xx):** Dual-card system (Broadcast Card public + Event Card ARBITER-only). Schema will need: ID, Public Narrative, Difficulty Modifier (M-xx | N/A), Targeting Restriction (D-xx | RG-xx | N/A), Conversion Block (D-xx | RG-xx | N/A), Public Standing Effect (faction + delta), Duration (quarters). Full design pending Art 07 and Art 09.
+
+**Faction perspectives field — known L108 Requirement 1 exception (deliberate, revisable):** The "Faction perspectives" field in Art 04 §6 is typed as String but contains five per-faction sub-values (one sentence per faction). This is structurally a compound cell (L108 Req 1 violation). Documented as a deliberate exception rather than deferred: the field is narrative design reference with no resolution consequence and no structural inconsistency between sub-values (all homogeneous Strings). No individual faction value is queried at resolution. If a future use case requires querying individual faction perspectives (e.g., cross-card analysis by faction voice), decompose into five faction-keyed fields (Faction perspectives — Ghost / Network / Syndicate / Guild / Directorate), analogous to Portrait decomposition (L119). That decision is post-design and does not block current card passes. See PM05 04-18.
 
 **Compound effect text — known L108 Requirement 1 violation (deferred):** The Effect on success/failure/crit fields in Art 04 §6 carry multi-effect prose strings that violate L108 Requirement 1 (no compound cells). Example: C01's Effect on success encodes two distinct effects in one string — an immediate board placement and a persistent upkeep generator. These cannot be individually queried or programmatically enforced. The taxonomy triple (Category/Function/Target) is the correct decomposition model; the gap is that effect values (quantity, target ID, condition, duration) are not decomposed as typed sub-fields. Deferral rationale: decomposing effect fields requires card content to be locked first — restructuring before lock wastes effort. Action when ready: extend the taxonomy triple to carry effect quantity, target ID, and condition as typed sub-fields per card. See PM05 XA-30.
 
