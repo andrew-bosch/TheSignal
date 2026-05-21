@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.15 Draft  
+**Version:** 0.9.17 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-05-19  
+**Last Updated:** 2026-05-20  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -628,7 +628,7 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Ghost.
-- **Affinity bonus:** Difficulty is Easy (75%) + ring modifier.
+- **Affinity bonus:** +25 threshold modifier (ARBITER places +25 marker on Ghost's case at Beat 0).
 - **Difficulty:** Average (50%) + ring modifier
 - **Resolution:** d100 roll vs. Difficulty Threshold per Artifact 03 §13.
 - **Outcome type:** N/A
@@ -838,7 +838,7 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Syndicate.
-- **Affinity bonus:** Difficulty is Easy (75%) + ring modifier.
+- **Affinity bonus:** +25 threshold modifier (ARBITER places +25 marker on Syndicate's case at Beat 0).
 - **Difficulty:** Average (50%) + ring modifier
 - **Resolution:** d100 roll vs. Difficulty Threshold per Artifact 03 §13.
 - **Outcome type:** N/A
@@ -908,7 +908,7 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Syndicate.
-- **Affinity bonus:** Difficulty is Easy (75%).
+- **Affinity bonus:** +25 threshold modifier (ARBITER places +25 marker on Syndicate's case at Beat 0).
 - **Difficulty:** Average (50%)
 - **Resolution:** d100 roll vs. Difficulty Threshold per Artifact 03 §13.
 - **Outcome type:** N/A
@@ -953,7 +953,7 @@ All factions have access to all ten standard covert operations. Each faction's s
 - **Subject:** Covert operation (difficulty)
 
 - **Design note:** Applies only to acting faction's assets — not all factions' assets.
-- **Arbiter context:** ARBITER resolution mirrors C06.
+- **Arbiter context:** ARBITER resolution mirrors C06 — awareness retained after Beat 0 case opening. At Beat 1, ARBITER places −25 marker on each covert operation targeting the acting faction's assets in the target district.
 
 **Narrative**
 
@@ -986,7 +986,7 @@ All factions have access to all ten standard covert operations. Each faction's s
 **Effects**
 
 - **Crit success:** N/A
-- **Success:** All covert operations targeting the acting faction's assets in the target district this round have their difficulty increased by 1 step.
+- **Success:** All covert operations targeting the acting faction's assets in the target district this round have their threshold reduced by −25.
 - **Failure:** N/A
 - **Crit failure:** N/A
 

@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-20 (session 28 complete) — supersedes session 27 save state.
+### Generated: 2026-05-20 (session 29 complete) — supersedes session 28 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -50,16 +50,16 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (20 types) — CA-xx (Dispatch Case) added session 22. L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes). L2 TypeScript schema pointers in §8. Established session 20. |
 | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
 | 03a — Game Engine Specification | 0.98 | 🔄 In progress — Layers 1–3 complete; Phase procedures added (Quarter_Flow, Phase_1–Phase_7, Beat_0–Beat_5); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
-| 04 — Action Card System | 0.9.16 | 🔄 In Progress — Session 28: §6 schema cleanup; Pass cards redesigned (4 variants PS-01–PS-04, L137); taxonomy exclusions locked (L138); faction design notes expanded (C18/C21/C28); Syndicate gap concepts added. C01–C15 re-sign-off pending (04-23). Political acts P01–P18 pending. |
+| 04 — Action Card System | 0.9.17 | 🔄 In Progress — Session 29: C01–C10 re-sign-off confirmed clean. Affinity bonuses → +25 threshold modifier (L139). ARBITER implementation → Arbiter context field (L140). C11–C15 re-sign-off pending (04-23). Political acts P01–P18 pending. |
 | 04b — Action Taxonomy | 1.2 | ✅ Active Reference — §10 added session 28: Pass, Modifier, Emergency Response cards excluded from taxonomy (L138). |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
 | 10 — Game Manuals | 0.1 | 🔄 Draft Placeholder — §6.0 added: game objective statement locked |
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 3.7 | ✅ Active — locked decisions L01–L138 |
-| PM03 | 2.2 | ✅ Active — Art 04 v0.9.16, Art 04b v1.2 noted |
-| PM05 | 2.1 | ✅ Active — 04-23 added (C01–C15 re-sign-off, current work item) |
+| PM02 | 3.8 | ✅ Active — locked decisions L01–L140 |
+| PM03 | 2.2 | ✅ Active — Art 04 v0.9.17 noted |
+| PM05 | 2.1 | ✅ Active — 04-23 in progress (C01–C10 ✅, C11–C15 remaining); 04-24 added (cross-beat flag mechanism) |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
@@ -258,6 +258,15 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM03 v1.7:** 00b row added, Art 03 updated to ✅ Signed Off v1.7.
 - **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
 
+**Session 29 summary (2026-05-20 — complete):**
+- **L139 locked:** Affinity bonuses that modify difficulty expressed as threshold modifiers (±N), not difficulty tier changes. Integrates with Art 03 §14 M-xx table and ARBITER modifier token workflow — ARBITER places modifier token on faction's case at Beat 0. Applied: C05 (Ghost +25), C08 (Syndicate +25), C09 (Syndicate +25).
+- **L140 locked:** ARBITER implementation details belong in Arbiter context field, not Effects fields. Effects are player-facing. First applied: C10 Protect — Beat 1 marker placement moved from success field to Arbiter context.
+- **C01–C10 re-sign-off confirmed clean** (with the above corrections applied). C11–C15 remaining — next session open item.
+- **04-24 added:** C06, C07, C10 all carry cross-beat ARBITER flags — "mirrors C06" pattern. Governing mechanism (how ARBITER retains and applies the flag across beats) not yet designed. Resolve during Art 07 active development.
+- **XA-23 updated:** Index → Contents rename added to the anchor link unsupervised pass.
+- **PM02 v3.8** — L139, L140 locked. **Art 04 v0.9.17.**
+- **Copilot experiment reviewed:** AI_GUIDE pre/post session and Letter to Claude from Copilot reviewed. White/Yellow personality model and Completion Contract added to Claude memory. Cross-system AI collaboration infrastructure confirmed working.
+
 **Session 28 summary (2026-05-20 — complete):**
 - **Art 04 §6 schema cleanup:** Enum values moved from Constraints column to Notes column for Target district/faction/object and cost type rows (L108 alignment). Crit success/failure/failure constraints tightened: "N/A if no roll" → "N/A if Resolution = Automatic."
 - **L137 locked:** Pass cards redesigned — single generic card replaced by four named variants. **PS-01 STAND DOWN** (*"Nothing moves. No one knows why."* — pure pass, no secondary effect). **PS-02 RESERVE** (*"The operatives are recalled. The resources remain."* — gain 1 Findings at cleanup). **PS-03 HOLD** (*"Preparation compounds."* — draw 1 additional modifier card at next Upkeep if modifier-draw eligible). **PS-04 OBSERVATION** (*"ARBITER noted the silence."* — gain 1 Findings if this faction holds highest Chorus Portrait at cleanup). All variants reusable, kept beside tableau, valid Beat 3 or Beat 4. Ghost's Political Pass may use any variant. §12 fully rewritten; §13.4 updated.
@@ -336,8 +345,8 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **README merged:** Root README.md is now the single artifact index (was split between root and V1/). V1/README.md replaced with 3-line redirect stub.
 - **Grip updated:** Now serves project root (TheSignal/) at localhost:6419 instead of V1/. CLAUDE.md updated.
 
-**Recommended next steps (session 28 and beyond):**
-1. **C01–C15 re-sign-off** — CURRENT WORK ITEM. Review all 15 cards against cascaded changes (L130–L138, session 28 schema cleanup). Item 04-23.
+**Recommended next steps (session 29 and beyond):**
+1. **C11–C15 re-sign-off** — CURRENT WORK ITEM. C01–C10 confirmed clean session 29. Item 04-23.
 2. **Art 04 political acts pass** — apply full §6 structure (including Outcome type values) to P01–P18 (item 04-01)
 3. **Art 04 C16–C35** — faction-specific cards; once complete, unblocks Art 05+
 4. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
