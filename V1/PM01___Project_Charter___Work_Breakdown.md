@@ -150,7 +150,7 @@ The following documents must exist and be signed off before physical production 
 | 01 | Game Board — New Meridian | Defines the physical space of play: district layout, rings, information displayed on each district, track positions, starting configuration, and board setup procedure. | Yes | ✅ |
 | 02a | Resource Systems: Board State | Defines presence, influence, structures, and resource generation — the systems whose entire state is always visible on the board. | Yes | ✅ |
 | 02b | Resource Systems: Tracking | Defines Chorus Portrait, Public Standing, and Intel Notes — the tracking systems that run alongside the board. | Yes | ✅ |
-| 03 | Round Structure & Gameplay | Defines the six-phase round, timing, initiative, the Apex trigger, and ARBITER conversion. Requires 00–02 to be meaningful. | Yes | 🔄 Pending re-sign-off (v1.5 — material changes: Beat 2 renamed, Step 6 rewritten, Declaration phase updated) |
+| 03 | Round Structure & Gameplay | Defines the seven-phase round, timing, initiative, the Apex trigger, and ARBITER conversion. Requires 00–02 to be meaningful. | Yes | ✅ Signed Off — Session 20 (v1.7) |
 | 04 | Action Card System | Defines all covert operations, political acts, and faction-specific actions. Requires 00–03 for context. | Yes | 🔄 In progress — C01–C15 signed off; 12 blocking decisions open (see PM02 D04-01 through D04-12) |
 | 04b | Action Taxonomy & Design Analysis | Companion to 04. Taxonomy framework, coverage gap analysis, faction design recommendations. Not a playtest-blocking artifact — reference document. | No | ✅ Active reference |
 | 05 | Operative & Apex System | Defines all operatives, tier progression, Apex costs and effects, and the Founding Figure ceremony. Requires 00–04. | Yes | 🔄 |
@@ -287,7 +287,7 @@ Binary go/no-go. Before any playtest session is scheduled, every item in the rel
 | 1.02 | Artifact 01 — Game Board — signed off | Yes | ✅ |
 | 1.03 | Artifact 02a — Resource Systems: Board State — signed off | Yes | ✅ |
 | 1.04 | Artifact 02b — Resource Systems: Tracking — signed off | Yes | ✅ |
-| 1.05 | Artifact 03 — Round Structure — signed off (currently pending re-sign-off) | Yes | ⬜ |
+| 1.05 | Artifact 03 — Round Structure — signed off | Yes | ✅ |
 | 1.06 | Artifact 04 — Action Card System — sufficient card set complete (S1 waiver: Common set only acceptable) | Yes (waivable) | ⬜ |
 | 1.07 | Artifact 05 — Operative & Apex System — Tier 1 operatives complete (Apex and higher tiers may be deferred) | S1 waivable | ⬜ |
 | 1.08 | Artifact 07 — ARBITER Toolkit — Resolution procedure complete and ARBITER guide readable | Yes | ⬜ |

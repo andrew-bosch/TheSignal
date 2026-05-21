@@ -174,23 +174,23 @@ Every card uses this data structure. All fields are required. N/A is a valid val
 | Narrative | **Faction perspectives** | String | Per-faction in-world perspective | One sentence per faction | VS-01 | TBD | — |
 | Mechanics | **Beat** | Integer | Resolution beat | — | VS-01 | TBD | The beat in Phase 6 in which this card is processed. Resolution order within a Beat: governed by dispatch case submission order per Art 03 §7. |
 | Mechanics | **Trigger condition** | Enum | Activation condition for non-default timing | — | VS-01 | TBD | N/A, Submission-time, Beat-N, Phase-N, Condition-based |
-| Mechanics | **Target district** | String | District submission target | Broadest valid statement; N/A if no district target | VS-01 | Face | — |
-| Mechanics | **Target faction** | Enum | Faction submission target | N/A, Self, Named opponent faction | VS-01 | Face | — |
-| Mechanics | **Target object** | Enum | Game component this card acts on | Structure block, Presence token, Operational marker, Intel token, Native resource, Written record, Covert operation, Political act, Action attribution, Private communications, Named action type, N/A | VS-01 | Face | — |
+| Mechanics | **Target district** | String | District submission target | — | VS-01 | Face | Broadest valid statement (e.g. "Any district", "Any adjacent district"). N/A if no district target. |
+| Mechanics | **Target faction** | Enum | Faction submission target | — | VS-01 | Face | N/A, Self, Named opponent faction |
+| Mechanics | **Target object** | Enum | Game component this card acts on | N/A if no faction or district target | VS-01 | Face | Structure block, Presence token, Operational marker, Intel token, Native resource, Written record, Covert operation, Political act, Action attribution, Private communications, Named action type, N/A. Named action type = player-specified at submission. |
 | Mechanics | **Restriction** | Prose | Submission preconditions | All stated on card; no external references | VS-01 | Face | — |
 | Mechanics | **Primary cost qty** | Integer | Quantity of primary cost resource | N/A if no primary cost | VS-01 | Face | — |
-| Mechanics | **Primary cost type** | Enum | Type of primary cost resource | Faction native, District native, Findings, Exposure, Capital, Capacity, Mandate, Intel token, Resolution, N/A | VS-01 | Face | — |
+| Mechanics | **Primary cost type** | Enum | Type of primary cost resource | — | VS-01 | Face | Faction native, District native, Findings, Exposure, Capital, Capacity, Mandate, Intel token, Resolution, N/A |
 | Mechanics | **Secondary cost qty** | Integer | Quantity of secondary cost resource | N/A if no secondary cost | VS-01 | Face | — |
-| Mechanics | **Secondary cost type** | Enum | Type of secondary cost resource | Faction native, District native, Findings, Exposure, Capital, Capacity, Mandate, Intel token, Resolution, N/A | VS-01 | Face | Often a district native resource; often waivable by affinity |
+| Mechanics | **Secondary cost type** | Enum | Type of secondary cost resource | — | VS-01 | Face | Faction native, District native, Findings, Exposure, Capital, Capacity, Mandate, Intel token, Resolution, N/A. Often a district native resource; often waivable by affinity. |
 | Mechanics | **Faction affinity** | Enum | Faction receiving affinity discount | N/A if not applicable | VS-01 | Face | — |
 | Mechanics | **Affinity bonus** | String | What the affinity discount provides | N/A if Faction affinity is N/A | VS-01 | Face | — |
 | Mechanics | **Difficulty** | Enum | Base difficulty threshold | See Artifact 03 §13 | VS-01 | Face | Easy, Average, Challenging, N/A. |
 | Mechanics | **Resolution** | String | How this card resolves | — | VS-01 | Face | d100 roll, or Automatic for guaranteed-resolution cards (no roll, fires on submission). |
 | Mechanics | **Outcome type** | Enum | Political act resolution process type | — | VS-01 | Face | Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A |
-| Effects | **Crit success** | Prose | Critical success outcome | N/A if no roll | VS-06 | Face | Additional effects beyond success |
+| Effects | **Crit success** | Prose | Critical success outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond success |
 | Effects | **Success** | Prose | Primary card effect | Full effect stated on card | VS-06 | Face | — |
-| Effects | **Failure** | Prose | Failure outcome | N/A if no roll | VS-06 | Face | — |
-| Effects | **Crit failure** | Prose | Critical failure outcome | N/A if no roll | VS-06 | Face | Additional effects beyond failure |
+| Effects | **Failure** | Prose | Failure outcome | N/A if Resolution = Automatic | VS-06 | Face | — |
+| Effects | **Crit failure** | Prose | Critical failure outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond failure |
 | Portrait | **Faction** | Enum | Faction identifier — row key | [faction] where [faction] != ARBITER | VS-06 | TBD | One row per faction per card. |
 | Portrait | **Flat** | ±Integer | Portrait modifier — fires on resolution regardless of submitting faction | N/A if no unconditional effect | VS-06 | TBD | Use when the board-state change itself carries a consequence independent of doctrine. |
 | Portrait | **Submitter** | ±Integer | Portrait modifier — fires when this faction is the submitting faction | N/A if no effect | VS-06 | TBD | One Submitter row fires per card play. See ARBITER Portrait Reference Table [name TBD, PM05 07-05]. |
@@ -1440,7 +1440,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
   - Ghost: *We were not there. The record confirms this.*
 - **Taxonomy:** Cross-Category — Protect — Action attribution.
 
-- **Design note:** Flagged for redesign — duplicates function with C19 (Cross-Category — Protect — Action attribution). See D-04-02.
+- **Design note:** Flagged for redesign — duplicates function with C19 (Cross-Category — Protect — Action attribution). See D-04-02. Three replacement candidates (choose one for C18 slot; remaining concepts require slot trade or 6th card): **(A) SIGNALS ANALYSIS** — Resource — Add — Intel token; no adjacency restriction; Findings spent, Intel token received through remote analysis rather than field presence. *"Understanding at distance. No footprint."* **(B) TARGETED DISCLOSURE** — Cross-Category — Reveal — Named faction; Ghost delivers a private intelligence package to one named faction only; table does not know recipient or content. **(C) CALIBRATED READING** — Ghost submits a private written assessment of current board state to ARBITER before Beat 3; ARBITER evaluates accuracy; Ghost gains Findings on sliding scale (1–3); Portrait response is ARBITER's evaluation, not the card's stated effect. *"Ghost doesn't move the Portrait. Ghost earns it."*
 - **Arbiter context:** One use per round. Beat 2.
 
 ---
@@ -1667,7 +1667,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
   - Directorate: *The border is sealed. Expansion requires our authorisation. It will not be granted today.*
 - **Taxonomy:** Action — Block — Covert operation (presence placement).
 
-- **Design note:** Flagged for redesign — C21 and C25 both Block covert operations, same function different scope. See D-04-03.
+- **Design note:** Flagged for redesign — C21 and C25 both Block covert operations, same function different scope. See D-04-03. Replacement candidate: **COMPLIANCE DIVIDEND** — Resource — Add — Mandate; at cleanup, if no faction entered a Directorate-controlled district or contested a Directorate political act this round, gain 1 Mandate. Simpler fallback: gain 1 Mandate on any successful Directorate operation that goes uncontested. *"Institutional authority self-validates when respected."*
 - **Arbiter context:** N/A
 
 ---
@@ -1733,7 +1733,7 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
   - Network: *We believe in transparency. Except when protecting a source requires otherwise.*
 - **Taxonomy:** Cross-Category — Protect — Action attribution.
 
-- **Design note:** Flagged for redesign — Cross-Category — Protect — Action attribution is more doctrinally Ghost than Network. Network's stated doctrine (transparency) is in tension with source concealment. The faction perspective acknowledges this tension. See D-04-04.
+- **Design note:** Flagged for redesign — Cross-Category — Protect — Action attribution is more doctrinally Ghost than Network. Network's stated doctrine (transparency) is in tension with source concealment. See D-04-04. Replacement candidate: **DISCLOSURE LOOP** — Resource — Add — Exposure; trigger: when Network successfully resolves any Reveal card this round, gain 1 Exposure at cleanup. Creates positive feedback loop consistent with Network doctrine — disclosure generates the resource that enables further disclosure. *"The act of revealing generates the capacity for more revealing."*
 - **Arbiter context:** N/A
 
 ---
@@ -1983,6 +1983,19 @@ Each faction holds 2 copies of each of their 5 faction-specific covert operation
   - Syndicate: *The regulatory framework exists. We simply ensure it reflects current market conditions.*
 - **Taxonomy:** Action — Block — Covert operation + Political act.
 
+#### Syndicate Gap Concepts — Design Notes
+
+Three capability gaps identified in Artifact 04b §8.4: zero information/intelligence capability; Cross-Category — Corrupt — Accord unused; Resource — Redirect — Accord unused. Concepts below are placeholders for slot assignment and detail design. No full data structure — see D-04-05.
+
+**ALTER THE RECORD** — Cross-Category — Corrupt — Accord agreement.
+Design note: Syndicate modifies one numeric value in a registered Accord (Capital, presence, or term). ARBITER records the alteration. Both parties notified by case. Value of this card is that alterations are ARBITER-logged — deniable to the table, visible to the record. Addresses Corrupt — Accord gap. Requires Accord mechanic (Artifact 06) to be finalized before detail design.
+
+**SECONDARY OBLIGATIONS** — Resource — Redirect — Accord agreement.
+Design note: Transfer an Accord's obligations from the original party to a named faction. The named faction inherits all terms; original party released. Source faction gains 1 Capital at transfer. Neither party's consent is required — Syndicate controls the paper, not the relationship. Addresses Resource — Redirect — Accord gap. Requires Accord mechanic finalized before detail design.
+
+**PORTFOLIO REVIEW** — Cross-Category — Reveal — Intel tokens held.
+Design note: Name a faction; ARBITER announces that faction's current Intel token count to acting faction only (private). Syndicate may immediately offer to purchase one token from that faction at 3 Capital — target faction may decline. Provides Syndicate an information entry point without requiring field presence. Addresses zero information/intelligence gap.
+
 ---
 
 ## 9. Standard Political Acts — P01–P08
@@ -2101,15 +2114,39 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 
 ## 12. Rules & Constraints — Pass Cards
 
-**One card type. Four cards per faction.** Kept beside the tableau — not drawn from any deck. Reusable every round. Neutral grey back.
+**Four variants per faction.** Kept beside the tableau — not drawn from any deck. Reusable every round. Neutral grey back. Each faction holds one of each variant.
 
-**In dispatch case:** Signals that slot is intentionally empty. Three Pass cards with no operations = Full Covert Pass — legal, noted.
+**Generalized — Beat 3 or Beat 4.** The same Pass card is valid in either context. No specialized covert-only or political-only Pass cards.
 
-**At Declaration:** Place face-up instead of declaring a political act.
+**In dispatch case (Beat 3):** Signals that covert operation slot is intentionally empty. Three Pass cards with no operations = Full Covert Pass — legal, noted.
 
-**Ghost's Political Pass:** Confirms dispatch case contains 4 covert operations. Fourth operation slot available only when Ghost uses their Political Pass. Full rule in Artifact 03 §9.
+**At Declaration (Beat 4):** Place face-up instead of declaring a political act.
+
+**Ghost's Political Pass:** Confirms dispatch case contains 4 covert operations. Fourth operation slot available only when Ghost uses their Political Pass. Any Pass variant counts. Full rule in Artifact 03 §9.
 
 A Pass is information. Consistent passes signal posture. ARBITER notes the pattern.
+
+---
+
+### Pass Card Variants — Design Notes
+
+*Four named variants replace the single generic card. Full data structure pending detail design pass. All variants: Card type = Pass; Beat = Beat 3 or Beat 4; Subject = N/A; Portrait = N/A. See 04b §10 — Pass cards are excluded from Category — Function — Subject taxonomy.*
+
+**PS-01 — STAND DOWN**
+*"Nothing moves. No one knows why."*
+Design note: No secondary effect. The value is pure information asymmetry — opponents cannot distinguish this from a live operation until Beat 3 resolution or Declaration review. The most common pass; communicates nothing beyond the pass itself.
+
+**PS-02 — RESERVE**
+*"The operatives are recalled. The resources remain."*
+Design note: Gain 1 Findings at cleanup. Converts the opportunity cost of passing into a small information gain — the faction used the time to gather intelligence rather than act.
+
+**PS-03 — HOLD**
+*"Preparation compounds."*
+Design note: Draw 1 additional modifier card at next Upkeep, if modifier draw eligible. Rewards restraint with increased capacity next round. Most useful for factions building toward a heavy operations quarter.
+
+**PS-04 — OBSERVATION**
+*"ARBITER noted the silence."*
+Design note: If this faction holds the highest Chorus Portrait at cleanup this round, gain 1 Findings. Connects inaction to Portrait attunement — the faction most aligned with the Chorus gains something for listening rather than acting. Available to all factions; Ghost doctrine makes it most natural.
 
 ---
 
@@ -2147,7 +2184,7 @@ Face: ring constraint statement as visually distinct element, name, type indicat
 
 ### 13.4 Pass Cards
 
-Face: "Pass — This slot is intentionally empty." Ghost rule note small. Back: neutral grey.
+Four named variants (PS-01–PS-04). Face: variant name, tagline, and secondary effect (if any). Ghost rule note small on all variants. Back: neutral grey. Full card face design pending Artifact 11 visual pass.
 
 ### 13.5 Emergency Response Cards
 

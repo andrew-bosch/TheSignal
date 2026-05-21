@@ -344,4 +344,18 @@ Principle 11 (Artifact 04) eliminated cross-round temporary effects. When design
 
 ---
 
-*End of Artifact 04b — Action Taxonomy & Design Analysis v1.1*
+## 10. Standalone Card Types — Taxonomy Exclusions
+
+The following card types are excluded from the Category — Function — Subject taxonomy. They are not game-state actions targeting a Board, Resource, or Action element — they are meta-actions or structural components that operate on the play procedure rather than the game state.
+
+**Pass cards (PS-01–PS-04)** — Excluded. Pass is a procedural declaration (this slot is intentionally empty / no political act declared). Any secondary effect on a Pass card (e.g., Findings gain, modifier draw) is incidental and does not constitute a taxonomy action. Pass cards carry no Category — Function — Subject fields.
+
+**Modifier cards** — Excluded. Modifier cards alter the parameters of another card's resolution. They are resolved in Beat 2 against other cards, not against board or resource targets. Their effect is mediated by the operation they modify.
+
+**Emergency Response cards** — Excluded. Trigger-based, pre-staged cards with fixed effects. Not submitted in dispatch cases or declared in the standard action sequence.
+
+*Source: Session 28 design note. Consistent with L115 (Art 04 owns all card design; card type determines scope, not taxonomy category).*
+
+---
+
+*End of Artifact 04b — Action Taxonomy & Design Analysis v1.2*
