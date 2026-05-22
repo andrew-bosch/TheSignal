@@ -93,4 +93,4 @@ ARBITER: always all-caps. All other game terms: Title Case.
 
 ---
 
-*Maintained at session close — step 5 of close routine. Sources of truth: PM03 (artifacts), PM02 (decisions), PM05 (punch list).*
+*Updated in Phase 1 of close routine (live, before queue). Sources of truth: PM03 (artifacts), PM02 (decisions), PM05 (punch list).*
