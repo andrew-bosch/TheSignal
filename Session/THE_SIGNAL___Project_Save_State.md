@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-20 (session 29 complete) — supersedes session 28 save state.
+### Generated: 2026-05-22 (session 31 complete) — supersedes session 29 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -58,7 +58,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
 | PM02 | 3.8 | ✅ Active — locked decisions L01–L140 |
-| PM03 | 2.2 | ✅ Active — Art 04 v0.9.17 noted |
+| PM03 | 2.4 | ✅ Active — Art 04 v0.9.18; version drift corrected session 31 |
 | PM05 | 2.1 | ✅ Active — 04-23 in progress (C11–C15 remaining); 04-26 through 04-30 added session 31 |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
@@ -258,6 +258,17 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **PM03 v1.7:** 00b row added, Art 03 updated to ✅ Signed Off v1.7.
 - **PM05 v1.5:** XA-24 ✅, XA-25/26/27/28/29 added, PM04-03/04 added, all §13–16 references updated to §14–17.
 
+**Session 31 summary (2026-05-22 — complete):**
+- **Art 04 v0.9.17 → v0.9.18.** Major schema/editorial pass: crit delta convention (additional effects only), resolution notation (dice only), affinity bonus delta format, difficulty normalization ("Average (50)", "N/A"), "No effect." batch, "threshold modifier" → "modifier" batch, ARBITER context cleanup (Beat 2 marker timing fixed; ARBITER instructions moved from Effects/Mechanics to Arbiter context), status markers removed from headers/TOC, §6 "Card Pool" paragraph cut to Whiteboard.
+- **§1/§3/§5 rewritten:** §1 → single sentence; §3 → lead paragraph + 7-property table; §5 → 8 principles grounded in PM02 (down from 13).
+- **PM05 04-26 through 04-30 added** (restriction schema split, threshold-modifier flag, affinity taxonomy, ring modifier geography, P1 inter-faction Portrait amendment). No new L-decisions — all changes non-material.
+- **PM03 v2.2 → v2.4** (header drift corrected, Art 04 row updated).
+
+**Session 30 summary (2026-05-21 — complete):**
+- **00c — Economy Manifest created (v0.1):** §8 Derived Cost Analysis and §9 Round Income Analysis stubs (00c-01, 00c-02 added to PM05).
+- **Art 04 §6:** Resolution type field stub added (04-25 added to PM05).
+- **SESSION_BRIEF.md introduced:** lean startup document at `Session/SESSION_BRIEF.md` — replaces unconditional full Save State reads at session open. Startup ritual and close routine updated in CLAUDE.md.
+
 **Session 29 summary (2026-05-20 — complete):**
 - **L139 locked:** Affinity bonuses that modify difficulty expressed as threshold modifiers (±N), not difficulty tier changes. Integrates with Art 03 §14 M-xx table and ARBITER modifier token workflow — ARBITER places modifier token on faction's case at Beat 0. Applied: C05 (Ghost +25), C08 (Syndicate +25), C09 (Syndicate +25).
 - **L140 locked:** ARBITER implementation details belong in Arbiter context field, not Effects fields. Effects are player-facing. First applied: C10 Protect — Beat 1 marker placement moved from success field to Arbiter context.
@@ -345,14 +356,14 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **README merged:** Root README.md is now the single artifact index (was split between root and V1/). V1/README.md replaced with 3-line redirect stub.
 - **Grip updated:** Now serves project root (TheSignal/) at localhost:6419 instead of V1/. CLAUDE.md updated.
 
-**Recommended next steps (session 29 and beyond):**
-1. **C11–C15 re-sign-off** — CURRENT WORK ITEM. C01–C10 confirmed clean session 29. Item 04-23.
+**Recommended next steps (session 31 and beyond):**
+1. **C11–C15 re-sign-off** — next work item. C01–C10 confirmed clean sessions 29/31. Item 04-23.
 2. **Art 04 political acts pass** — apply full §6 structure (including Outcome type values) to P01–P18 (item 04-01)
 3. **Art 04 C16–C35** — faction-specific cards; once complete, unblocks Art 05+
 4. **PM04-03/04** — add L108 table design standards + L109 Component Terminology Standard + Component Physical Glossary to PM04 §2 and §1
 5. **Batch re-sign-offs:** Artifacts 00 (sessions 11+12 material changes), 04b (Chorus Portrait retired), 00a (sessions 11–12 material changes)
 6. **XA-29** (unsupervised) — component terminology cleanup across all artifacts
-7. **Open design decisions:** D04-13 (Floor Act), D04-07 (modifier card in-world name)
+7. **Open design decisions:** D04-13 (Floor Act), D04-07 (modifier card in-world name), 04-28 (affinity bonus taxonomy)
 
 **Sessions 5–15 locked decisions (L85–L100):**
 - L85: Mechanics field = constraints only, no procedure
