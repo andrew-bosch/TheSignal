@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 31 | Updated: 2026-05-22**
+**Session 32 | Updated: 2026-05-22**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 31 complete. Next: C11–C15 re-sign-off (04-23). Session 31: Art 04 full editorial pass — schema conventions (crit delta, resolution notation, affinity delta, difficulty formatting, "No effect."), ARBITER context cleanup, §1/§3/§5 rewrites (v0.9.17→0.9.18). No new L-decisions; all changes non-material.
+Session 32 complete. Next: C15 re-sign-off (04-23). Session 32: C11–C14 signed off with significant redesigns — C13 (Automatic→d100@25, crit success adds structure, crit fail intel token→Directorate), C14 (full redesign: presence+structure anywhere, d100@50, Boost mechanic introduced, crit fail→Ghost+Syndicate). New mechanics: Boost (04-34), intel-tokens-as-currency (04-32), faction-keyed card printing vision (09-12). Art 04 v0.9.18→0.9.19. No new L-decisions.
 
 ---
 
@@ -16,7 +16,7 @@ Session 31 complete. Next: C11–C15 re-sign-off (04-23). Session 31: Art 04 ful
 
 | Artifact | Version | Open Item |
 |----------|---------|-----------|
-| 04 — Action Card System | 0.9.18 | C11–C15 re-sign-off (04-23); P01–P18 pending (04-01) |
+| 04 — Action Card System | 0.9.19 | C15 re-sign-off (04-23); P01–P18 pending (04-01) |
 | 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining |
 | 00c — Economy Manifest | 0.1 | §8 Derived Cost Analysis, §9 Round Income Analysis (stubs only) |
 | 07 — ARBITER Toolkit | 0.1 | Initial sign-off pending full draft |
@@ -30,7 +30,7 @@ Signed-off artifacts: 00 (v1.3), 00a (v0.2), 00b (v0.1), 01 (v1.2), 02a (v1.4), 
 
 | ID | Item | Status |
 |----|------|--------|
-| **04-23** | **C11–C15 re-sign-off — next work item.** C01–C10 clean (S29/S31). | Open |
+| **04-23** | **C15 re-sign-off — next work item.** C01–C14 clean (S29/S31/S32). | Open |
 | 04-24 | Cross-beat flag mechanism (C06/C07/C10) — design in Art 07 | Open |
 | 04-25 | Resolution type field stub in Art 04 §6 schema | Open |
 | 04-26 | Restriction field: potential schema split (C02 + C07 confirmed dual-restriction) | Open |

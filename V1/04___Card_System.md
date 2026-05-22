@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.18 Draft  
+**Version:** 0.9.19 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-05-20  
+**Last Updated:** 2026-05-22  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -1019,6 +1019,7 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Guild only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Positional wager
@@ -1063,8 +1064,8 @@ Ghost — P17–P18
 - **Function:** Recover
 - **Subject:** Native resource
 
-- **Design note:** Guild names target faction at submission — betting that faction will execute C02 this Quarter. Zero cost means no loss if prediction is wrong.
-- **Arbiter context:** Only the first qualifying Demolish triggers. ARBITER confirms trigger at Beat 3.
+- **Design note:** Guild names target faction at submission — betting one of three Beat 2 action slots that the target will execute C02 this Quarter. The slot is the cost; a wrong read means a wasted action. Success mirrors C02's cost exactly — if C02's cost changes in playtesting, C12's reward scales automatically.
+- **Arbiter context:** ARBITER confirms trigger at Beat 3. Only the first qualifying Demolish this Quarter triggers. Effect delivered in case.
 
 **Narrative**
 
@@ -1075,16 +1076,17 @@ Ghost — P17–P18
 **Mechanics**
 
 - **Beat:** 2
-- **Trigger condition:** Condition-based: target faction completes C02 Demolish this Quarter, confirmed at Beat 3
+- **Trigger condition:** Target faction completes C02 Demolish this Quarter.
 - **Target district:** N/A
 - **Target faction:** Named opponent faction
 - **Target object:** Native resource
-- **Restriction:** Target faction must successfully complete a C02 Demolish action this Quarter. Only the first qualifying Demolish this Quarter triggers this effect.
+- **Restriction:** N/A
 - **Primary cost qty:** N/A
 - **Primary cost type:** N/A
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Guild only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Positional wager
@@ -1093,7 +1095,7 @@ Ghost — P17–P18
 **Effects**
 
 - **Crit success:** N/A
-- **Success:** Guild receives all resources paid by the target faction to execute C02 this Quarter — delivered in case.
+- **Success:** Target faction native resource + district native resource.
 - **Failure:** N/A
 - **Crit failure:** N/A
 
@@ -1129,8 +1131,8 @@ Ghost — P17–P18
 - **Function:** Add
 - **Subject:** Presence token
 
-- **Design note:** No secondary cost — unclaimed districts have no established resource infrastructure.
-- **Arbiter context:** "Zero presence" includes deployment markers per Artifact 02a. Guild's own deployment marker disqualifies the district — Foundation Rights requires complete absence.
+- **Design note:** No secondary cost — unclaimed districts have no established resource infrastructure. Crit fail delivers an intel token to Directorate because a failed foundation claim is a regulatory event — a permit application that collapsed. Directorate holds that record; Guild never knows the paper trail exists.
+- **Arbiter context:** On crit fail: deliver 1 intel token naming Guild to Directorate player via case. Do not notify Guild.
 
 **Narrative**
 
@@ -1151,17 +1153,18 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Guild only.
-- **Difficulty:** N/A
-- **Resolution:** Automatic
+- **Affinity bonus:** N/A
+- **Difficulty:** 25
+- **Resolution:** d100
 - **Resolution type:** Transactional
 - **Outcome type:** N/A
 
 **Effects**
 
-- **Crit success:** N/A
+- **Crit success:** Place 1 presence token and 1 structure block in target district.
 - **Success:** Place 1 presence token in the target district.
-- **Failure:** N/A
-- **Crit failure:** N/A
+- **Failure:** No effect.
+- **Crit failure:** +1 Guild Intel Token → Directorate.
 
 **Portrait**
 
@@ -1191,12 +1194,12 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Action
-- **Function:** Remove Restriction
-- **Subject:** Covert operation (presence requirement)
+- **Category:** Board
+- **Function:** Add
+- **Subject:** Presence + structure
 
-- **Design note:** Waives Established requirement from C01. Crit success refunds 1 Capacity — net cost 2 Capacity matches C01 primary cost efficiency. Intended chain: C13 establishes presence, C14 builds structure same Quarter.
-- **Arbiter context:** Difficulty scales with contested presence. Failure effects apply only when contested difficulty condition is active. ARBITER confirms presence conditions at Beat 3. Submission order within Beat 3 matters for C13→C14 chain.
+- **Design note:** Premium play — 3 Capacity and d100 for simultaneous presence and structure anywhere.
+- **Arbiter context:** Crit fail: deliver 1 Guild Intel Token → Ghost and 1 district native → Syndicate via case. Do not notify Guild.
 
 **Narrative**
 
@@ -1211,23 +1214,24 @@ Ghost — P17–P18
 - **Target district:** Any district
 - **Target faction:** N/A
 - **Target object:** N/A
-- **Restriction:** Acting faction must have at least 1 presence token in the target district.
+- **Restriction:** No existing structure owned by the acting faction in the target district.
 - **Primary cost qty:** 3
 - **Primary cost type:** Capacity
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Guild only.
-- **Difficulty:** N/A if no other faction has any presence token in target district. Average (50) + ring modifier if any other faction has any presence token in target district.
-- **Resolution:** Automatic if uncontested; d100 if contested.
-- **Resolution type:** Conditional — Transactional if uncontested; Probabilistic if contested
+- **Affinity bonus:** Boost([1].[+15 Difficulty])
+- **Difficulty:** 50
+- **Resolution:** d100
+- **Resolution type:** Probabilistic
 - **Outcome type:** N/A
 
 **Effects**
 
-- **Crit success:** Return 1 Capacity to dispatch case.
-- **Success:** Place 1 structure block in target district.
+- **Crit success:** +1 presence token in target district.
+- **Success:** +1 presence token and +1 structure block in target district.
 - **Failure:** No effect.
-- **Crit failure:** −1 Public Standing.
+- **Crit failure:** +1 Guild Intel Token → Ghost. +1 district native → Syndicate.
 
 **Portrait**
 
@@ -1363,7 +1367,7 @@ Ghost — P17–P18
 - **Secondary cost qty:** 2
 - **Secondary cost type:** Findings
 - **Difficulty:** Average (50)
-- **Resolution:** 2d10
+- **Resolution:** d100
 - **Crit success:** +1 covert operation (2nd submitted).
 - **Success:** First covert operation submitted by target faction this round delivered in case — operation type and district.
 - **Failure:** Notification slip delivered to target faction.
