@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.17 Draft  
+**Version:** 0.9.18 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-05-20  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -186,6 +186,7 @@ Every card uses this data structure. All fields are required. N/A is a valid val
 | Mechanics | **Affinity bonus** | String | What the affinity discount provides | N/A if Faction affinity is N/A | VS-01 | Face | — |
 | Mechanics | **Difficulty** | Enum | Base difficulty threshold | See Artifact 03 §13 | VS-01 | Face | Easy, Average, Challenging, N/A. |
 | Mechanics | **Resolution** | String | How this card resolves | — | VS-01 | Face | d100 roll, or Automatic for guaranteed-resolution cards (no roll, fires on submission). |
+| Mechanics | **Resolution type** | Enum | Strategic classification of how uncertainty resolves — for resolution-type taxonomy and economy modeling | Values TBD — pending classification pass after full card set (C01–C35, P01–P18). See PM05 04-25. | VS-01 | TBD | Working name. Known candidate types: Transactional (pay and receive, no uncertainty), Probabilistic (d100 determines outcome), Positional (player prediction determines value — target is unknown or future). May expand. Feeds 00c §8 Derived Cost Analysis. All current cards: N/A pending classification pass. |
 | Mechanics | **Outcome type** | Enum | Political act resolution process type | — | VS-01 | Face | Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A |
 | Effects | **Crit success** | Prose | Critical success outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond success |
 | Effects | **Success** | Prose | Primary card effect | Full effect stated on card | VS-06 | Face | — |
