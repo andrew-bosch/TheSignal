@@ -1,7 +1,7 @@
 # 00c — Economy Manifest
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.2
+**Version:** 0.3
 **Status:** 🔄 Partially Populated — Active Reference
 
 **Purpose:** Single-source-of-truth for all economic quantities in THE SIGNAL. Aggregates coin values, resource generation rates, starting asset values, operation costs, and modifier thresholds from across the design artifacts into one calibration reference. Primary use: balance analysis and playtesting tuning.
@@ -25,6 +25,7 @@
 5. Card Costs & Modifier Thresholds *(blocked — Art 04 incomplete)*
 6. Operation System Values
 7. Balance Notes & Playtest Observations
+8. Derived Cost Analysis *(blocked — Art 04 §7, §8 required)*
 
 ---
 
@@ -302,3 +303,45 @@ Amplifies all Public Standing changes for factions with presence in the Resident
 ## 7. Balance Notes & Playtest Observations
 
 — Pending. Populated during L1 playtesting.
+
+---
+
+## 8. Derived Cost Analysis
+
+*Blocked on Art 04 §7 (card costs) and §8 (critical effects) — full card set must be locked before this table can be populated.*
+
+**Purpose:** For each card, express the resource cost in terms of expected outcome value — not just nominal cost. A card that costs 3 Capital at Average difficulty costs 6 Capital per successful outcome on expected value. That comparison, invisible from the card itself, is the core balance signal.
+
+**Columns per card:**
+
+| Column | Description |
+|--------|-------------|
+| Card ID | Source: Art 04 |
+| Nominal Cost | Resources spent to play the card |
+| Base Difficulty | Easy / Average / Challenging (base threshold) |
+| Success Probability | At base difficulty, no modifiers |
+| Cost per Success | Nominal Cost ÷ Success Probability |
+| Cost per Crit Success | Nominal Cost at 5% floor — always possible |
+| Cost per Crit Fail | Nominal Cost at 5% ceiling — always possible |
+| Expected Cost | Weighted average across all four outcomes at base difficulty |
+
+**Formula (no modifiers, base difficulty):**
+
+```
+Expected Cost = Nominal Cost × (1 / base threshold)
+
+Cost per Success   = Nominal Cost / P(success)
+Cost per Crit Suc  = Nominal Cost / 0.05
+Cost per Crit Fail = Nominal Cost / 0.05
+```
+
+*Modifier effects (M-01–M-12) shift probability without changing nominal cost — apply modifier stack to base threshold before computing expected cost for specific scenarios.*
+
+**Example (placeholder — values not yet locked):**
+
+| Card ID | Nominal Cost | Difficulty | P(success) | Cost/Success | Expected Cost |
+|---------|-------------|-----------|------------|-------------|--------------|
+| C01 | TBD | TBD | TBD | TBD | TBD |
+| P01 | TBD | TBD | TBD | TBD | TBD |
+
+— To be populated from Art 04 §7 and §8 once C01–C35 and P01–P18 are fully locked.
