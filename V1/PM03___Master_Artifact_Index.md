@@ -1,9 +1,9 @@
 # PM03 — MASTER ARTIFACT INDEX
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.2  
+**Version:** 2.3  
 **Status:** 🔄 Updated — Active  
-**Last Updated:** 2026-05-19  
+**Last Updated:** 2026-05-21  
 **Supersedes:** THE_SIGNAL_P1___Master_Artifact_Index v1.1  
 **Sign-off status:** See Design Artifact Registry below for individual artifact status
 
@@ -30,6 +30,7 @@
 | 00 | Factions & World | 1.3 | ✅ Signed Off | Factions, world, narrative context, ARBITER nature, timescale perspectives. Design Pillar 6 (§5), four-register system (§9), §14 Narrative Anchors incorporated. Narrative enrichment pass pending (PM02 §2b 00-03, 00-04) — non-blocking. |
 | 00a | Governing Rules & Design Policy | 0.2 | ✅ Signed Off — Session 7 | 41 rules (R01–R38 + R13a, R13b, R29a), §3–§9, Appendix A. Governing principles: Narrative and World Consistency; Copy Design (no hardcoded variable values). A05/A06 closed by L92 (Chorus Node Portrait Amplifier — Established threshold, flat additive). |
 | 00b | Data Architecture | 0.1 | ✅ Reference Document — Active | Entity registry (20 types, ID namespaces), L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. Established session 20. VS-xx visibility scope table drawn from Retired/Electronic schema. L2 TypeScript schema pointer in §8. Session 22: CA-xx (Dispatch Case) added; Packet and GridCell documented as internal modeling types. |
+| 00c | Economy Manifest | 0.2 | 🔄 Partially Populated — Active Reference | Calibration reference aggregating from 02a v1.4, 02b v1.5, 03 v1.7. §3 Starting Assets (resources, components, tracking scales), §4 Resource Generation Rates (district base values, level modifiers, affinity bonus, structure bonus, passive generation, Findings decay, Public Standing drift, Translation rates, Guild Portrait bonus, Residential Quarter multiplier), §6 Operation System (M-01–M-12 modifier table, base difficulty thresholds, critical bands, Public Standing roll reference). §5 Card Costs blocked pending Art 04 completion. |
 | 01 | Game Board — New Meridian | 1.2 | ✅ Signed Off | District layout, rings, Chorus Node, track positions, starting configuration. Adjacency table pending (PM02 D04-09). Setup update pending (01-03). |
 | 02a | Resource Systems: Board State | 1.4 | ✅ Signed Off — Session 22 | Presence, influence, structures, resource generation — all publicly visible board state. Session 22: Control flag corrected (gold, per-district, placed on dominant chip stack); Established marker added (silver, per-faction, placed on Established chip stack — up to 4–5 per district); ARBITER Dominance Marker (§6, §9, §10) confirmed. |
 | 02b | Resource Systems: Tracking | 1.5 | ✅ Signed Off | Chorus Portrait, Public Standing, Intel Notes — tracking systems alongside the board. Cross-reference audit with 04 pending (PM02 D04-11) |
