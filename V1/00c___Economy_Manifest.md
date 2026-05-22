@@ -1,7 +1,7 @@
 # 00c — Economy Manifest
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.3
+**Version:** 0.4
 **Status:** 🔄 Partially Populated — Active Reference
 
 **Purpose:** Single-source-of-truth for all economic quantities in THE SIGNAL. Aggregates coin values, resource generation rates, starting asset values, operation costs, and modifier thresholds from across the design artifacts into one calibration reference. Primary use: balance analysis and playtesting tuning.
@@ -26,6 +26,7 @@
 6. Operation System Values
 7. Balance Notes & Playtest Observations
 8. Derived Cost Analysis *(blocked — Art 04 §7, §8 required)*
+9. Round Income Analysis — Quarters 2–8 *(blocked — probability model required; home TBD)*
 
 ---
 
@@ -345,3 +346,51 @@ Cost per Crit Fail = Nominal Cost / 0.05
 | P01 | TBD | TBD | TBD | TBD | TBD |
 
 — To be populated from Art 04 §7 and §8 once C01–C35 and P01–P18 are fully locked.
+
+---
+
+## 9. Round Income Analysis — Quarters 2–8
+
+*Blocked — requires a probability model of district control state distributions. Home TBD (see PM05 00c-02).*
+
+**Purpose:** For each faction, express expected income per quarter across a full session with min/max bounds — accounting for realistic board state distributions rather than theoretical extremes. Quarter 1 income is deterministic (§3 R1 Totals table). Quarters 2–8 are stochastic: income depends on who controls which districts, which is a function of all prior actions.
+
+**Planned outputs:**
+
+| Output | Description |
+|--------|-------------|
+| Expected income Q2–Q8 | Per faction, per quarter — weighted average across probable board states |
+| Minimum income Q2–Q8 | Floor per faction per quarter (passive generation only — no district presence) |
+| Maximum income Q2–Q8 | Ceiling per faction per quarter (Dominant in all affinity districts + max structures) |
+| Income trajectory | How each faction's expected income shifts across a session as board state evolves |
+
+**Why this requires a probability model:**
+
+Quarter N income depends on the probability distribution of district control states at Quarter N — which itself depends on card play, Incursion outcomes, and opponent actions across Quarters 1 through N−1. Simple arithmetic off the base generation table (§4) produces theoretical extremes only, not expected values. Modeling options: Monte Carlo simulation of board state evolution, or a Markov chain over influence level transitions per district per quarter.
+
+**Minimum income (deterministic — no model required):**
+
+Passive generation is the guaranteed floor regardless of board state.
+
+| Faction | Min Income per Quarter | Source |
+|---------|----------------------|--------|
+| Ghost | 1 Findings | Passive only |
+| The Network | 1 Exposure | Passive only |
+| The Syndicate | 1 Capital | Passive only |
+| The Guild | 1 Capacity | Passive only |
+| The Directorate | 1 Mandate | Passive only |
+
+**Maximum income (deterministic — no model required):**
+
+Theoretical ceiling: Dominant in every district of the faction's native resource ring + structure block in each + affinity bonus in each. Not achievable in play — presence chip limit (15 chips, max 6 per district) constrains simultaneous district control. Serves as a balance ceiling check only.
+
+**Expected values (Quarters 2–8):** — Pending probability model.
+
+**Artifact home decision (PM05 00c-02):**
+
+Two candidates:
+
+- **03a Layer 5** — extends the formal balance analysis already in 03a (Layer 4 = modifier stack math; Layer 5 = income probability math). Keeps all balance analysis in one artifact. 03a is a technical companion document — consistent home.
+- **00d — Probability Model** — standalone reference artifact in the 00-series. Keeps economic analysis separate from the code-engine specification. More accessible to a designer reading the economy manifest.
+
+*Resolve before Art 04 completion — this work begins immediately after the card set is locked.*
