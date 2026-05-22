@@ -23,12 +23,13 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.3 | ✅ Signed off |
 | 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.2 | ✅ Signed off — session 7 |
 | 00b | [Data Architecture](V1/00b___Data_Architecture.md) | 0.1 | ✅ Reference Document — Active |
+| 00c | [Economy Manifest](V1/00c___Economy_Manifest.md) | 0.2 | 🔄 Partially Populated — Active Reference |
 | 01 | [Game Board: New Meridian](V1/01___Game_Board_New_Meridian.md) | 1.2 | ✅ Signed off |
 | 02a | [Resource Systems: Board State](V1/02a___Resource_Systems_Board_State.md) | 1.4 | ✅ Signed off — session 22 |
 | 02b | [Resource Systems: Tracking](V1/02b___Resource_Systems_Tracking.md) | 1.5 | ✅ Signed off |
 | 03 | [Round Structure & Gameplay](V1/03___Round_Structure___Gameplay.md) | 1.7 | ✅ Signed off — session 20 |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In Progress — Layers 1–3 complete; Phase procedures added |
-| 04 | [Card System](V1/04___Card_System.md) | 0.9.15 | 🔄 In progress — C01 locked; C02–C35 pending review; political acts pending |
+| 04 | [Card System](V1/04___Card_System.md) | 0.9.17 | 🔄 In progress — C01–C10 signed off; C11–C15 re-sign-off pending; C16–C35 and political acts pending |
 | 04b | [Action Taxonomy & Design Analysis](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.2 | ✅ Reference Document — Active |
 | 05 | [Operative & Apex System](V1/05___Operative_Apex_System.md) | 0.1 | 🔄 Draft placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.1 | 🔄 Draft placeholder |
@@ -39,7 +40,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | 10a | [Victory System](V1/10a___Victory_System.md) | 0.1 | 🔄 Draft placeholder |
 | 11 | [Visual Design System](V1/11___Visual_Design_System.md) | 0.1 | ⬜ Placeholder |
 
-**Artifact reading order:** 00 → 00a → 01 → 02a → 02b → 03 → 04 → 04b → 05 → 06 → 07 → 08 → 09 → 10 → 10a → 11
+**Artifact reading order:** 00 → 00a → 00b → 00c → 01 → 02a → 02b → 03 → 04 → 04b → 05 → 06 → 07 → 08 → 09 → 10 → 10a → 11
 
 ---
 
@@ -48,7 +49,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | Doc | Purpose |
 |-----|---------|
 | [PM01 — Project Charter & Work Breakdown](V1/PM01___Project_Charter___Work_Breakdown.md) | Charter, WBS (40+ components), Playtest Readiness Checklist, Risk Register |
-| [PM02 — Decision Log & Validation Tracker](V1/PM02___Decision_Log___Validation_Tracker.md) | Locked decisions L01–L136, open decisions, change log |
+| [PM02 — Decision Log & Validation Tracker](V1/PM02___Decision_Log___Validation_Tracker.md) | Locked decisions L01–L140, open decisions, change log |
 | [PM03 — Master Artifact Index](V1/PM03___Master_Artifact_Index.md) | Sign-off registry, dependency map — authoritative artifact status |
 | [PM04 — Glossary & Data Dictionary](V1/PM04___Glossary___Data_Dictionary.md) | In-world terms (§1), design terminology conventions (§2) |
 | [PM05 — Active Punch List](V1/PM05___Active_Punch_List.md) | Live work items, validation dashboard, playtest data |
