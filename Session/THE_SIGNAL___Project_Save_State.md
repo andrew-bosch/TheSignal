@@ -50,7 +50,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (20 types) — CA-xx (Dispatch Case) added session 22. L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes). L2 TypeScript schema pointers in §8. Established session 20. |
 | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
 | 03a — Game Engine Specification | 0.98 | 🔄 In progress — Layers 1–3 complete; Phase procedures added (Quarter_Flow, Phase_1–Phase_7, Beat_0–Beat_5); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
-| 04 — Action Card System | 0.9.17 | 🔄 In Progress — Session 29: C01–C10 re-sign-off confirmed clean. Affinity bonuses → +25 threshold modifier (L139). ARBITER implementation → Arbiter context field (L140). C11–C15 re-sign-off pending (04-23). Political acts P01–P18 pending. |
+| 04 — Action Card System | 0.9.18 | 🔄 In Progress — Session 31: Major schema/editorial pass. Crit delta convention, resolution field, affinity bonus notation, difficulty normalization, ARBITER context cleanup, Beat 2 marker timing, §1/§3/§5 rewritten. C11–C15 re-sign-off still in progress (04-23). Political acts P01–P18 pending. |
 | 04b — Action Taxonomy | 1.2 | ✅ Active Reference — §10 added session 28: Pass, Modifier, Emergency Response cards excluded from taxonomy (L138). |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
 | 10 — Game Manuals | 0.1 | 🔄 Draft Placeholder — §6.0 added: game objective statement locked |
@@ -59,7 +59,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | PM01 | 1.6 | ✅ Active |
 | PM02 | 3.8 | ✅ Active — locked decisions L01–L140 |
 | PM03 | 2.2 | ✅ Active — Art 04 v0.9.17 noted |
-| PM05 | 2.1 | ✅ Active — 04-23 in progress (C01–C10 ✅, C11–C15 remaining); 04-24 added (cross-beat flag mechanism) |
+| PM05 | 2.1 | ✅ Active — 04-23 in progress (C11–C15 remaining); 04-26 through 04-30 added session 31 |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
@@ -498,7 +498,7 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 ## Key Reference Files
 
 - `PRIVATE___True_State.md` — private design axioms (root level, not in V1)
-- `PM02___Decision_Log___Validation_Tracker.md` — locked decisions (L01–L114), FD-01 through FD-06, change log
+- `PM02___Decision_Log___Validation_Tracker.md` — locked decisions (L01–L140), FD-01 through FD-06, change log
 - `PM03___Master_Artifact_Index.md` — artifact registry, 5-voice convention, narrative language table
 - `PM04___Glossary___Data_Dictionary.md` — canonical in-world glossary (§1) and design terminology conventions (§2) including Reception Language Convention (session 12)
 - `00a___Governing_Rules___Design_Policy.md` — 45 rules, signed off session 7
