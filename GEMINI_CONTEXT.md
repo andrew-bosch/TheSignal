@@ -128,6 +128,7 @@ Report findings in `Claude_context.md`. Flag uncertainties explicitly. Do not ge
 
 - **Database:** `the_signal_db` — schema-only, no data yet
 - **Credentials:** `~/Projects/TheSignal/mariadb_credentials.md`
+- **Gemini connection:** `mysql -u gemini -pgemini_password1 the_signal_db` — SELECT only, no writes
 - **Current tables:** `components`, `card_metadata`, `card_types`, `card_subtypes`, `factions`, `beat`, `game_actions`, `action_costs`, `action_valid_targets`, `action_restrictions`, `card_faction_modifiers`, `game_zones`, `component_valid_zones`, `city_rings`, `district_metadata`, `district_connections`, `player_metadata`, `live_state`, `setup_state`, `allocation_types`
 
 **Do not propose schema changes via `Claude_context.md` without explicitly flagging them as proposals.** Claude Code executes all DDL after Andy confirms.

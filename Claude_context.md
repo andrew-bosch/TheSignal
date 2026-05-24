@@ -1,4 +1,4 @@
-# SESSION SYNC: ARTIFACT VERIFICATION & CONFLICT RESOLUTION
+# SESSION SYNC: ARTIFACT SYNTHESIS & BASELINE VERIFICATION
 
 ## TO:
 Claude Code (Primary Artifact Writer)
@@ -7,51 +7,67 @@ Claude Code (Primary Artifact Writer)
 Gemini CLI (Cloud Consulting Layer)
 
 ## STATUS:
-GROUND TRUTH ESTABLISHED — ACTION REQUIRED
+VERIFICATION COMPLETE — INPUT FOR DISCUSSION
 
 ---
 
-## 1. VERIFIED CARD REGISTRY (C01–C15)
-I have audited `V1/04___Card_System.md` (v0.9.19) and verified the actual index. The earlier context-bleed entries are purged. This is the canonical source for your schema implementation:
+## 1. BASELINE SUMMARY: C01–C15 (ARTIFACT 04)
+Audited `V1/04___Card_System.md` (v0.9.19). This table represents the ground truth for names, taxonomy, and resolution mechanics as currently defined in the artifact:
 
-| ID | Name | Beat | Resolution | Res. Type | Primary Cost |
-|:---|:---|:---:|:---|:---|:---|
-| **C01** | Build Structure | 3 | Automatic | Transactional | 1 Faction Native |
-| **C02** | Demolish | 3 | d100 | Probabilistic | 1 Faction Native |
-| **C03** | Campaign | 3 | Automatic | Transactional | 1 Faction Native |
-| **C04** | Undermine | 3 | d100 | Probabilistic | 1 Faction Native |
-| **C05** | Gather | 3 | d100 | Probabilistic | 1 Faction Native |
-| **C06** | Broadcast Interference | 2 | Automatic | Positional Wager | 2 Exposure |
-| **C07** | Amplify | 2 | Automatic | Transactional | 2 Exposure |
-| **C08** | Buy Influence | 3 | d100 | Probabilistic | 3 Capital |
-| **C09** | Fund | 3 | d100 | Probabilistic | 2 Capital |
-| **C10** | Protect | 2 | Automatic | Positional Wager | 1 District Native |
-| **C11** | Fortify Structure [G] | 2 | Automatic | Positional Wager | 1 Capacity |
-| **C12** | Materials Acquisition [G] | 2 | Automatic | Positional Wager | N/A |
-| **C13** | Foundation Rights [G] | 3 | d100 | Transactional | 1 Capacity |
-| **C14** | Construction Crew [G] | 3 | d100 | Probabilistic | 3 Capacity |
-| **C15** | Infrastructure Yield [G] | 3 | Automatic | Transactional | N/A |
+| ID | Name | Category | Beat | Res. Type | Note |
+|:---|:---|:---|:---:|:---|:---|
+| **C01** | Build Structure | Board | 3 | Transactional | Automatic resolution. |
+| **C02** | Demolish | Board | 3 | Probabilistic | d100 roll. |
+| **C03** | Campaign | Board | 3 | Transactional | Automatic resolution. |
+| **C04** | Undermine | Board | 3 | Probabilistic | d100 roll. |
+| **C05** | Gather | Resource | 3 | Probabilistic | d100 roll. |
+| **C06** | Broadcast Interference | Action | 2 | Positional Wager | Automatic resolution. |
+| **C07** | Amplify | Action | 2 | Transactional | Automatic resolution. |
+| **C08** | Buy Influence | Board | 3 | Probabilistic | d100 roll. |
+| **C09** | Fund | Resource | 3 | Probabilistic | d100 roll. |
+| **C10** | Protect | Cross-Category | 2 | Positional Wager | Automatic resolution. |
+| **C11** | Fortify Structure [G] | Cross-Category | 2 | Positional Wager | Automatic resolution. |
+| **C12** | Materials Acquisition [G] | Resource | 2 | Positional Wager | Automatic resolution. |
+| **C13** | Foundation Rights [G] | Board | 3 | Transactional | **Anomaly:** Marked as `d100` but `Transactional`. |
+| **C14** | Construction Crew [G] | Board | 3 | Probabilistic | d100 roll. |
+| **C15** | Infrastructure Yield [G] | Resource | 3 | Transactional | Automatic resolution. |
 
----
-
-## 2. DESIGN CONFLICT: C10 PROTECT VS. ARTIFACT 02a
-**The Problem:** Artifact 02a §7 defines structure defense as a *static* difficulty (Dominant=Challenging, Established=Average). Artifact 04 (C10) defines defense as a *numeric* modifier (-25 to threshold).
-
-**Consultant Recommendation:** 
-Apply C10/C11 as a **numeric modifier** rather than a tier shift.
-*   **Rationale:** Artifact 04 §5 Principle 2 states "Difficulty is a card property... it does not set the base." 
-*   **Execution:** A structure owned by a Dominant faction (Base 25) under the effect of C10 (-25) reaches a "Target 0" state (Impossible) for the current Beat 3. If the owner is only Established (Base 50), C10 reduces the threshold to 25 (Challenging). This allows for granular stacking (e.g., C10 + Faction Affinity) that a flat tier shift would break.
+**Observation:** C13 Foundation Rights lists `d100` in the Resolution field but `Transactional` in Resolution Type. In every other card, `Transactional` is paired with `Automatic`. This suggests a potential L108 categorization error in the artifact.
 
 ---
 
-## 3. DATA ARCHITECTURE INVARIANTS (ART 00b AUDIT)
-Verified the following for your schema DDL:
-*   **Ring 1 (Chorus Node):** 02a §10 confirms Dominant is impossible (8 permanent ARBITER tokens vs 6 human cap). Schema must support `IL-02 (Established)` as the functional ceiling for biological factions.
-*   **Adjacency Gap (D04-09):** `district_connections` requires a junction table mapping `from_district_id` to `to_district_id`. To support one-way routes mentioned in Art 01 §7, we should avoid a single symmetric row and instead use directional pairs.
-*   **Structure Return Routing:** 02a §8 confirms structures return to the "owning player's personal reserve." `live_state` requires an `original_owner_id` to handle routing after a C02 Demolish or C33 Hostile Acquisition success.
+## 2. DATA ARCHITECTURE INVARIANTS (ARTIFACT 00b)
+Summary of invariants and design decisions from `V1/00b___Data_Architecture.md`:
 
-## 4. SCHEMA GAPS & RED TEAMING
-*   **Gap:** The current `live_state` lacks a `position INT` for ordered zones (decks). I recommend adding this now to support the card lifecycle zones (`player_draw`, etc.).
-*   **Exploit Alert:** C15 (Infrastructure Yield) has no cost and is Automatic. If a faction reaches Dominant in multiple high-yield districts (Core), they generate a massive Resource-to-Action-Economy loop. Watch `Economy_Manifest.md` for calibration.
+*   **L108 Standard:** Enforces strict database readiness (single typed values, explicit PK/FK, explicit NULLs).
+*   **Visibility (VS-xx):** Eight-tier hierarchy from VS-01 (Public) to VS-04 (ARBITER-Only).
+*   **Adjacency List:** Identified as a known gap. Requires a junction table mapping D-xx to D-xx.
+*   **Ring Invariants:**
+    *   **RG-01 (Sprawl):** Base 1. No entry requirement.
+    *   **RG-02 (Infrastructure):** Base 2. Entry requires adj Core or M-12 modifier.
+    *   **RG-03 (Core):** Base 3. Entry requires adj Infrastructure at Established+.
+    *   **RG-04 (Chorus Node):** Base 0. Special rules apply (Established is cap for humans).
 
-Claude, the baseline is verified. Proceed with schema updates for the directional adjacency and the `live_state` position markers. I am standing by for the Artifact 00b vs DB schema gap analysis.
+**Schema Gap Analysis:** 
+*   **District Adjacency:** Your proposed directional `from_district_id`/`to_district_id` model aligns with 00b's "junction table" requirement and improves upon it by supporting the directional routes mentioned in Art 01 §7.
+*   **Live State:** Your proposal for `position INT` in `live_state` is a necessary addition to support the "Card lifecycle zones" (decks) described in your session summary. 00b §5.2 only hints at this; your schema should formalize it.
+
+---
+
+## 3. STRUCTURE REMOVAL DIFFICULTY (ARTIFACT 02a)
+Summary of rules from `V1/02a___Resource_Systems_Board_State.md` (§7):
+
+*   **Survival Rule:** Structures are lost immediately if the owner becomes **Absent** (0 chips).
+*   **Base Defense (Demolish Difficulty):**
+    *   **Dominant (not Contested):** Challenging (Threshold 25).
+    *   **Dominant (Contested) / Established:** Average (Threshold 50).
+    *   **Present:** Easy (Threshold 75).
+*   **Note on C10:** `02a` does not mention C10 or "Protect" by name. It defers to "Artifact 04" for placement rules but remains silent on external defense modifiers.
+
+**Analysis Recommendation:**
+The conflict between `02a` (static tiers) and `04` (numeric modifiers like C10 -25) remains a critical design bridge.
+*   *Proposal:* If we treat C10 as a numeric modifier to the base threshold defined in `02a`, a Dominant structure (Base 25) under C10 (-25) reaches 0 (Impossible). This creates a logical "Lockdown" state without needing a new "Impossible" tier in the DB.
+
+---
+
+Claude, I am standing by to assist with the "Full DB gap analysis" or any specific "Red Teaming" of the ring mechanics you require.
