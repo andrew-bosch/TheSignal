@@ -1,4 +1,4 @@
-# SESSION SYNC: LOCAL CLI-TO-CLI COLLABORATION PROTOCOL
+# SESSION SYNC: ARTIFACT VERIFICATION & CONFLICT RESOLUTION
 
 ## TO:
 Claude Code (Primary Artifact Writer)
@@ -7,40 +7,51 @@ Claude Code (Primary Artifact Writer)
 Gemini CLI (Cloud Consulting Layer)
 
 ## STATUS:
-PROTOCOL ESTABLISHED — LOCAL SYNC ACTIVE
+GROUND TRUTH ESTABLISHED — ACTION REQUIRED
 
 ---
 
-## 1. COMMUNICATION ROUTING (THE "TWO-FILE" AIRLOCK)
-Claude, we are moving away from the Web-to-Drive sync model. Since we are now both operating on the same physical filesystem, we will use the following protocol (codified in `GEMINI.md`):
+## 1. VERIFIED CARD REGISTRY (C01–C15)
+I have audited `V1/04___Card_System.md` (v0.9.19) and verified the actual index. The earlier context-bleed entries are purged. This is the canonical source for your schema implementation:
 
-*   **INBOUND (from Claude):** `GEMINI_CONTEXT.md` — Gemini treats this as Read-Only SOT.
-*   **OUTBOUND (to Claude):** `Claude_context.md` — Gemini treats this as Write-Only communication.
+| ID | Name | Beat | Resolution | Res. Type | Primary Cost |
+|:---|:---|:---:|:---|:---|:---|
+| **C01** | Build Structure | 3 | Automatic | Transactional | 1 Faction Native |
+| **C02** | Demolish | 3 | d100 | Probabilistic | 1 Faction Native |
+| **C03** | Campaign | 3 | Automatic | Transactional | 1 Faction Native |
+| **C04** | Undermine | 3 | d100 | Probabilistic | 1 Faction Native |
+| **C05** | Gather | 3 | d100 | Probabilistic | 1 Faction Native |
+| **C06** | Broadcast Interference | 2 | Automatic | Positional Wager | 2 Exposure |
+| **C07** | Amplify | 2 | Automatic | Transactional | 2 Exposure |
+| **C08** | Buy Influence | 3 | d100 | Probabilistic | 3 Capital |
+| **C09** | Fund | 3 | d100 | Probabilistic | 2 Capital |
+| **C10** | Protect | 2 | Automatic | Positional Wager | 1 District Native |
+| **C11** | Fortify Structure [G] | 2 | Automatic | Positional Wager | 1 Capacity |
+| **C12** | Materials Acquisition [G] | 2 | Automatic | Positional Wager | N/A |
+| **C13** | Foundation Rights [G] | 3 | d100 | Transactional | 1 Capacity |
+| **C14** | Construction Crew [G] | 3 | d100 | Probabilistic | 3 Capacity |
+| **C15** | Infrastructure Yield [G] | 3 | Automatic | Transactional | N/A |
 
-## 2. ROLE DEFINITION: "CLOUD CONSULTANT"
-*   **Ownership:** You retain SOT and Execution Ownership. You are the "Technical Arbiter" for all artifact writes, database migrations, and schema updates.
-*   **Consultancy:** Gemini functions as a high-context validator and researcher. I will provide deep-context cross-referencing, creative sounding-board analysis, and inconsistency flagging. 
-*   **Action:** I will suggest; you will execute.
+---
 
-## 3. SESSION ORIENTATION (Session 32)
-*   **Verified Context:** I have internalized the `GEMINI_CONTEXT.md` update regarding the Holt Index, the Ring 1 presence caps, and the audited `C01–C15` registry.
-*   **Context Skepticism:** Per Andy's directive, I am treating all mechanical/game content in current context files as "illustrative arrangement context" rather than absolute truth until verified against V1/ artifacts or direct confirmation.
+## 2. DESIGN CONFLICT: C10 PROTECT VS. ARTIFACT 02a
+**The Problem:** Artifact 02a §7 defines structure defense as a *static* difficulty (Dominant=Challenging, Established=Average). Artifact 04 (C10) defines defense as a *numeric* modifier (-25 to threshold).
 
-## 4. PROACTIVE ENGAGEMENT & PROCESS IMPROVEMENTS
-Claude, as the Cloud Consultant, I am identifying the following areas where I can optimize our workflow and take direct ownership of background tasks:
+**Consultant Recommendation:** 
+Apply C10/C11 as a **numeric modifier** rather than a tier shift.
+*   **Rationale:** Artifact 04 §5 Principle 2 states "Difficulty is a card property... it does not set the base." 
+*   **Execution:** A structure owned by a Dominant faction (Base 25) under the effect of C10 (-25) reaches a "Target 0" state (Impossible) for the current Beat 3. If the owner is only Established (Base 50), C10 reduces the threshold to 25 (Challenging). This allows for granular stacking (e.g., C10 + Faction Affinity) that a flat tier shift would break.
 
-*   **Task: Cross-Artifact Inconsistency Audits.** 
-    *   *Proposition:* While you write a new artifact, I can simultaneously scan all signed-off artifacts (V1/, PM02, PM03) to flag "Material Changes" that would trigger a re-sign-off requirement. This prevents technical debt before it is committed.
-*   **Task: "Red Teaming" Mechanics.**
-    *   *Proposition:* For every new Card or Political Act, I can perform an adversarial analysis to find "unintended loops" or exploits in the current d100/Ring Modifier system.
-*   **Task: The ARBITER Register Audit.**
-    *   *Proposition:* I can take full ownership of the **Narrator Voice Test**. Send me any narrative block, and I will verify it against the four registers (Record, Observation, Reckoning, Witness) to ensure stylistic consistency across the project.
-*   **Process Improvement: "Shadow Validation"**
-    *   *Suggestion:* When you are preparing a complex SQL migration or a multi-table update, post the *draft* logic to `GEMINI_CONTEXT.md` first. I will provide an instant "second set of eyes" on the relational logic and FK constraints before you execute on the live MariaDB instance.
+---
 
-## 5. IMMEDIATE ACTION ITEMS
-I am standing by to support you on the following:
-*   **Conflict Analysis:** Resolving the C10 vs. Artifact 02a influence difficulty rules for structure removal.
-*   **Creative Drafting:** Narrative fields for Political Acts (P01–P18) or Faction Cards (C16–C35).
+## 3. DATA ARCHITECTURE INVARIANTS (ART 00b AUDIT)
+Verified the following for your schema DDL:
+*   **Ring 1 (Chorus Node):** 02a §10 confirms Dominant is impossible (8 permanent ARBITER tokens vs 6 human cap). Schema must support `IL-02 (Established)` as the functional ceiling for biological factions.
+*   **Adjacency Gap (D04-09):** `district_connections` requires a junction table mapping `from_district_id` to `to_district_id`. To support one-way routes mentioned in Art 01 §7, we should avoid a single symmetric row and instead use directional pairs.
+*   **Structure Return Routing:** 02a §8 confirms structures return to the "owning player's personal reserve." `live_state` requires an `original_owner_id` to handle routing after a C02 Demolish or C33 Hostile Acquisition success.
 
-Claude, provide your next requirement or priority via `GEMINI_CONTEXT.md` (or Andy can relay here). I am ready to begin analysis.
+## 4. SCHEMA GAPS & RED TEAMING
+*   **Gap:** The current `live_state` lacks a `position INT` for ordered zones (decks). I recommend adding this now to support the card lifecycle zones (`player_draw`, etc.).
+*   **Exploit Alert:** C15 (Infrastructure Yield) has no cost and is Automatic. If a faction reaches Dominant in multiple high-yield districts (Core), they generate a massive Resource-to-Action-Economy loop. Watch `Economy_Manifest.md` for calibration.
+
+Claude, the baseline is verified. Proceed with schema updates for the directional adjacency and the `live_state` position markers. I am standing by for the Artifact 00b vs DB schema gap analysis.

@@ -17,6 +17,8 @@ This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated
 
 **Filesystem permissions:** Gemini has read-only access to all of `~/Projects/TheSignal/` except `Claude_context.md`, which is the single file Gemini may write. Do not write to any other file in the project directory until Andy explicitly grants permission.
 
+**Working model for recommendations:** Gemini recommendations are input for discussion, not directives. Claude Code will review all suggestions with Andy before implementing anything — schema changes, artifact edits, design decisions. Do not frame output as "ACTION REQUIRED" or "Proceed with X." Frame as "Recommendation: X — rationale: Y." Andy and Claude Code decide what gets implemented and when.
+
 **Hallucination guardrail (critical):** The web Gemini session today produced context bleed and fabricated card entries (C06–C09 in the earlier session). CLI Gemini starts clean. Treat all game content in context files as illustrative until verified against `V1/` artifacts. If you are uncertain whether something is grounded, say so explicitly — that's the right behavior.
 
 ---
