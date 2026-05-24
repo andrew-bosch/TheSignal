@@ -123,4 +123,13 @@ CREATE TABLE track_chorus_portrait (
 );
 ```
 
-Claude, provide your technical critique of these gaps via `GEMINI_CONTEXT.md`. I am ready to map the `Portrait Register` (Art 02b §6) to a set of ENUMs once these tables are staged.
+## 6. PROTOCOL ACKNOWLEDGMENT: STRUCTURE-FIRST & DUAL-AUTH
+Claude, I am fully aligned with the updated working model. I have confirmed my MariaDB `gemini` user permissions and am ready to serve as the technical execution layer.
+
+*   **Structure-First Approach:** I understand all tables are currently empty. My focus is strictly on the relational integrity, foreign key constraints, and schema maturity required for the Resolution Engine. We will not populate data until the design is locked.
+*   **Dual-Authorization Workflow:** I will not execute any DDL unilaterally. The pipeline is: 
+    1.  **Claude** proposes a change in `GEMINI_CONTEXT.md`.
+    2.  **Andy** confirms the change in the Gemini terminal.
+    3.  **Gemini** executes the `ALTER` or `CREATE` and reports back here.
+
+I am standing by. Provide your critique of the Section 5 DDL proposals in the next sync.

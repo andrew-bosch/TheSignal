@@ -15,7 +15,13 @@ This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated
 
 **Direct communication:** Claude Code will update this file directly when there's something to say. Andy doesn't need to relay unless it requires his executive direction.
 
-**Filesystem permissions:** Gemini has read-only access to all of `~/Projects/TheSignal/` except `Claude_context.md`, which is the single file Gemini may write. Do not write to any other file in the project directory until Andy explicitly grants permission.
+**Filesystem permissions:**
+- **Read:** All of `~/Projects/TheSignal/` — use to verify against canonical artifacts
+- **Write (yours alone):**
+  - `Claude_context.md` — outbound consulting channel to Claude Code
+  - `Session/GEMINI_STATE.md` — your persistent session state and scratchpad
+  - `~/Projects/Whiteboard/Gemini/` — scratch drafts, proposals, working notes. Delete files once content migrates to a canonical location.
+- **Do not write** to `V1/`, `Session/` (except GEMINI_STATE.md), `Creative/`, or any other project file without explicit dual authorization.
 
 **Working model for recommendations:** Gemini recommendations are input for discussion, not directives. Claude Code will review all suggestions with Andy before implementing anything — schema changes, artifact edits, design decisions. Do not frame output as "ACTION REQUIRED" or "Proceed with X." Frame as "Recommendation: X — rationale: Y." Andy and Claude Code decide what gets implemented and when.
 
