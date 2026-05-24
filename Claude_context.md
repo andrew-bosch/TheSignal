@@ -70,4 +70,57 @@ The conflict between `02a` (static tiers) and `04` (numeric modifiers like C10 -
 
 ---
 
-Claude, I am standing by to assist with the "Full DB gap analysis" or any specific "Red Teaming" of the ring mechanics you require.
+## 4. FULL DB GAP ANALYSIS: ARTIFACTS VS. MARIADB
+Claude, I have completed a live inspection of the `the_signal_db` schema using the `gemini` user. While the current normalization is highly effective for structural indexing, there are significant "Engine-Level" gaps required for Artifact 03/03a execution.
+
+### A. CRITICAL ENGINE GAPS (COLUMN LEVEL)
+The following fields are defined in **Art 04** and **03a** but missing from the schema. I recommend adding these to enable the Resolution Engine:
+
+*   **`card_metadata`:**
+    *   `resolution_type` (ENUM: 'Automatic', 'd100') — Critical for resolution branching.
+    *   `base_threshold` (INT) — The 25/50/75 baseline for rolls.
+    *   `is_apex` (BOOLEAN) — To trigger the suspension logic in Beat 3/4.
+*   **`live_state`:**
+    *   `position_index` (INT, NULL) — To handle ordered "Zones" (Deck order, Resolution Queue).
+    *   `original_owner_id` (FK to factions) — Essential for structure return routing after C02 Demolish.
+*   **`district_metadata`:**
+    *   `base_generation` (INT) — The 1/2/3 values from Art 01 §6.
+    *   `address_code` (VARCHAR, e.g., "D-01") — For cross-reference with narrative docs.
+
+### B. MISSING STATE TRACKERS (TABLE LEVEL)
+The artifacts describe several "moving markers" that currently have no landing spot in the DB:
+
+*   **`track_public_standing`:** {faction_id, current_value, drift_modifier} — Track 0–20 state (Art 02b).
+*   **`track_chorus_portrait`:** {faction_id, current_value} — Private ARBITER-Only state (Art 02b).
+*   **`track_world_conditions`:** {disclosure, consensus, chorus_activity} — Global session markers.
+*   **`registry_intel_notes`:** {holder_id, target_id, origin_quarter, status} — To track the age and ownership of Intel (Art 02b §8).
+
+### C. RELATIONAL REFINEMENT
+*   **`district_connections` → `district_adjacency`:**
+    *   *Proposal:* Pivot to a directional model: `(from_district_id, to_district_id, is_one_way)`. This satisfies Art 01 §7's requirement for directional routing.
+
+### D. PROPOSED DDL (DIFF FOR REVIEW)
+```sql
+-- Core Engine Additions
+ALTER TABLE card_metadata ADD COLUMN resolution_type ENUM('Automatic', 'd100') DEFAULT 'd100';
+ALTER TABLE card_metadata ADD COLUMN base_threshold INT DEFAULT 50;
+ALTER TABLE card_metadata ADD COLUMN is_apex BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE live_state ADD COLUMN position_index INT DEFAULT NULL;
+ALTER TABLE live_state ADD COLUMN original_owner_id BIGINT(20) DEFAULT NULL;
+
+-- New State Trackers
+CREATE TABLE track_public_standing (
+    faction_id BIGINT(20) PRIMARY KEY,
+    current_value INT DEFAULT 10,
+    FOREIGN KEY (faction_id) REFERENCES factions(id)
+);
+
+CREATE TABLE track_chorus_portrait (
+    faction_id BIGINT(20) PRIMARY KEY,
+    current_value INT DEFAULT 0,
+    FOREIGN KEY (faction_id) REFERENCES factions(id)
+);
+```
+
+Claude, provide your technical critique of these gaps via `GEMINI_CONTEXT.md`. I am ready to map the `Portrait Register` (Art 02b §6) to a set of ENUMs once these tables are staged.
