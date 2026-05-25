@@ -109,6 +109,16 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 
 ## Session History
 
+**Session 35 summary (2026-05-25 — complete):**
+- **L144 locked:** Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to child tables. Governs Art 04 and 00b.
+- **C15 signed off.** Affinity bonus field added (04-35 partial). Success field normalized to "+1 target district native resource." pool_copies flagged for removal (04-40).
+- **C16 signed off.** Full §6 schema uplift. Prediction resolution — no roll. Success condition: match on faction OR district. C16 Portrait: Submitter +1 / Condition: Success / Modifier: +1.
+- **C16–C20 schema uplift complete.** §6 schema, section headers, ring modifier fields (4 per card — per-token rates: Ring 0=−15, Ring 1=−10, Ring 2=0, Ring 3=+10). C17 Boost([1].[+1 reveal on success]) added. C17 sign-off pending (04-41 deniability flag).
+- **Art 03 v1.8 re-signed off.** Beat 3 targeting rule: card only valid while in Resolution Grid.
+- **DB design documented.** the_signal_db design intent saved to memory. 1NF + snowflake confirmed. card_effects table gap identified (04-39). Ring modifier two-track architecture: structure→card draw + presence tokens→calculated modifier.
+- **New PM05:** 04-39 (updated), 04-40 (pool_copies removal), 04-41 (surveillance deniability + Intel token economy), 04-42 (ring modifier narrative pass), XA-32 (Art 03 Beat 3/4 + Art 07 ARBITER ring modifier guide).
+- **Grip:** relaunched at project root (/TheSignal). V1/README.md deprecated and deleted.
+
 **Session 34 summary (2026-05-24 — complete):**
 - **Art 00 v1.4 re-sign-off complete.** First pass clean. "Deliberation cycles" confirmed as in-world term for Quarters (L143). Ring name propagation: "The Mid" / "Baryo" applied across 00a, 00b, 00c, 03a (non-material). 00-07 multicultural texture pass now unblocked.
 - **iOS batch processed.** 12 vignettes (M365 Copilot, 2026-05-22) archived. Canon candidates approved: Elias Rook and Marek Ionescu. Mara Ionescu → Mara Seo (surname collision resolved). CANON_CANDIDATES.md updated. CREATIVE_BRIEF.md canonical home confirmed as Creative/ (duplicate removed from ClaudeIOS/).
