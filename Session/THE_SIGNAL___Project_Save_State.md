@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-22 (session 31 complete) — supersedes session 29 save state.
+### Generated: 2026-05-24 (session 33 complete) — supersedes session 31 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -42,7 +42,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 
 | Artifact | Version | Status |
 |----------|---------|--------|
-| 00 — Factions & World | 1.3 | ✅ Signed Off. Design Pillar 6 (§5), four-register system (§9), §14 Narrative Anchors incorporated. Session 4 enrichment additions included. Narrative enrichment pass (00-03, 00-04) non-blocking. |
+| 00 — Factions & World | 1.4 | 🔄 Pending Re-Sign-Off. Ring renames (Infrastructure→The Mid, Sprawl→Baryo). Session 33: 00-06 (quarter worldbuilding), XA-15 (ARBITER as sixth party), 00-03 (Layer Structure) added. Re-sign-off pending; 00-07 multicultural texture pass queued after. |
 | 00a — Governing Rules & Design Policy | 0.2 | ✅ Signed off — session 7. 45 rules (R01–R38 + sub-rules). A05/A06 resolved (L92, session 11). XA-05 four-register change to R02 was non-material for 00a sign-off (only Art 00 and 07 required re-sign-off). |
 | 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
 | 02a — Resource Systems: Board State | 1.4 | ✅ Signed Off — Session 22. Control flag corrected (gold, per-district, on Dominant stack); Established marker added (silver, L111, one per Established faction per district); ARBITER Dominance Marker confirmed. |
@@ -57,9 +57,9 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 3.8 | ✅ Active — locked decisions L01–L140 |
+| PM02 | 3.8 | ✅ Active — locked decisions L01–L142 (L141: ring numbering; L142: ring names The Mid/Baryo) |
 | PM03 | 2.4 | ✅ Active — Art 04 v0.9.18; version drift corrected session 31 |
-| PM05 | 2.1 | ✅ Active — 04-23 in progress (C11–C15 remaining); 04-26 through 04-30 added session 31 |
+| PM05 | 2.3 | ✅ Active — 04-23 in progress (C15 remaining); 00-07 added session 33 (multicultural texture pass) |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
@@ -107,6 +107,22 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 ---
 
 ## Session History
+
+**Session 33 summary (2026-05-24 — complete):**
+- **Art 00 v1.3 → v1.4 (pending re-sign-off).** Ring renames: "the Infrastructure"→"the Mid", "Sprawl"→"Baryo" at all 6 occurrences. New content blocks: 00-06 (quarter worldbuilding — deliberation cycle timescale, eight-cycle window, faction perspectives on the timeline); XA-15 (ARBITER as sixth party at The Table — seat, Chorus Node, Resolution resource, ARBITER has not said what it measures and may not know); 00-03 (The Layers — physical, social, informational, digital, ARBITER's layer; "It is.").
+- **CREATIVE_BRIEF V2 promoted to production.** ClaudeIOS/new/ V2 applied 8 ring name corrections and updated to 2026-05-24 before promotion. Frozen until Art 00 re-sign-off.
+- **PM05 v2.2 → v2.3.** 00-07 added: multicultural texture enrichment pass (governing principle: cultural references as sediment, not subject — the Baryo model; first application: eight-cycle "The reasons are not in the minutes"). Scope: §6 ring/Node descriptions, §8 deliberation calendar, faction relationships to time and obligation.
+- **PRIVATE___Design_Questions.md created** at `Session/PRIVATE___Design_Questions.md`. Companion to TrueState — Known / Unknowable by Design / Open Questions for §1–§8. Living document.
+- **Ionescu surname collision flagged.** Two background characters with surname Ionescu in creative material. Direction: rename one — background cast needs more diversity. Canon candidate review carries this forward as first action next session.
+- **No new L-decisions this session.** Ring numbering (L141) and ring names (L142) were session 32 decisions.
+
+**Session 32 summary (2026-05-22 — complete):**
+- **Art 04 v0.9.18 → v0.9.19.** C11 re-sign-off complete. C12 re-sign-off complete. C13 redesign (Automatic→d100@25; crit success adds structure; crit fail: intel token to Directorate). C14 full redesign: presence+structure anywhere, d100@50, Boost mechanic introduced, crit fail→Ghost+Syndicate.
+- **New PM05 items:** 04-34 (Boost mechanic formal spec), 04-32 (intel-tokens-as-currency interaction), 09-12 (faction-keyed card printing vision). C15 re-sign-off remains open (04-23).
+- **L141 locked:** Ring numbering — Ring 0=Chorus Node, Ring 1=Core, Ring 2=The Mid, Ring 3=Baryo. Address system [ring].[position].
+- **L142 locked:** Ring names — Ring 2="The Mid", Ring 3="Baryo". Baryo=mutation of "barrio" through 11 languages. Governing principle: cultural reference as sediment, not subject.
+
+---
 
 **Session 11 summary (completed items — see PM05 for full status):**
 - XA-05: Four-register system applied to Artifact 07 §9, Artifact 00 §9, 00a R02 — **Artifacts 00 and 07 require re-sign-off (material)**

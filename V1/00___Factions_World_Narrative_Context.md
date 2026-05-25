@@ -1,8 +1,8 @@
 # 00 — Factions, World & Narrative Context
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.3 Signed Off  
-**Status:** Signed Off — Stable Draft  
+**Version:** 1.4 — Pending Re-Sign-Off  
+**Status:** In Progress — Material additions (00-06, XA-15, 00-03, ring renames)  
 **Supersedes:** game_overview (narrative sections), setup_guide (opening narrative)  
 **Must be read before:** All other design artifacts
 
@@ -139,7 +139,7 @@ The night it was first received, a technician on a late shift was there to log i
 
 New Meridian is a mid-sized city of approximately 800,000 people, and it is thirty-one years old. Every institution in it, every building that matters, every road that leads somewhere — all of it arrived after the Chorus. The city's entire history is a response to a transmission it still cannot fully interpret. Most of its residents know about the Chorus — The Chorus Papers were published eighteen months ago and classified containment failed within a week. Most of them have opinions. None of them are at The Table.
 
-The city's districts reflect the order in which people arrived. The inner ring — the Core — houses the institutions that came first: government authority, military oversight, intelligence infrastructure, and the research complex built directly around the original station. The middle ring — the Infrastructure — was built to support the Core: financial systems, power generation, data networks, communications. The outer ring — the Sprawl — grew as people followed the economy that followed the institutions: residential neighborhoods, commercial districts, universities, media. It is the newest ring and the least planned.
+The city's districts reflect the order in which people arrived. The inner ring — the Core — houses the institutions that came first: government authority, military oversight, intelligence infrastructure, and the research complex built directly around the original station. The middle ring — the Mid — was built to support the Core: financial systems, power generation, data networks, communications. The outer ring — Baryo — grew as people followed the economy that followed the institutions: residential neighborhoods, commercial districts, universities, media. It is the newest ring and the least planned.
 
 At the center of the city, physically and narratively, is the **Chorus Node** — the original detection installation, expanded over three decades into a permanent research complex. It is the reason New Meridian exists. It is the reason The Table exists. The people who were at the original station when the Chorus was first received are still there, some of them — absorbed into research roles, into advisory positions, into institutional memory. They remember when the Chorus Node was a shack. They have not said publicly what they remember about the night it was first received. Most of them have not been asked.
 
@@ -151,9 +151,9 @@ The construction workers who built the Core came on contracts and stayed when th
 
 New Meridian has every cuisine and every language and every cultural practice of a global city — without any of the centuries that usually produce one. The neighborhood that runs primarily in Mandarin on one block transitions to primarily Portuguese on the next because that is where the second construction wave housed its workers in year seven, and the workers stayed, and their children grew up there, and now it is a neighborhood. The best food in the city is in buildings that were temporary housing in year four. The school system operates in eleven languages and is officially monolingual. There are festivals that have run for twenty-eight years and feel ancient to people who were children when they started.
 
-The Sprawl is where this is most visible. The Core and the Infrastructure were built by institutions with plans. The Sprawl grew because people had to live somewhere, and then it grew more because more people came, and then it grew more than anyone planned for, and the planning that exists for it is mostly retrospective. Parts of the Sprawl feel like any city. Parts feel like a city still being invented. Parts feel like a city that is aware it might not be permanent — that the reason it exists could resolve, and that what happens to the people who came for the reason is a question no one at The Table has been asked to answer.
+Baryo is where this is most visible. The Core and the Mid were built by institutions with plans. Baryo grew because people had to live somewhere, and then it grew more because more people came, and then it grew more than anyone planned for, and the planning that exists for it is mostly retrospective. Parts of Baryo feel like any city. Parts feel like a city still being invented. Parts feel like a city that is aware it might not be permanent — that the reason it exists could resolve, and that what happens to the people who came for the reason is a question no one at The Table has been asked to answer.
 
-Crime is not a problem New Meridian solved — it is a problem New Meridian has been negotiating since year three, when it became clear that the city was growing faster than the institutions designed to manage it. The gray economy is extensive. Infrastructure fails in specific places in ways that have been known for years and have not been fixed, because the political authority to fix them is contested and the factions that control the adjacent districts have different views on what fixing means. Housing in the Sprawl is partly controlled by actors who are not the government and are not the factions — a third layer of local power that The Table does not formally acknowledge and cannot fully ignore.
+Crime is not a problem New Meridian solved — it is a problem New Meridian has been negotiating since year three, when it became clear that the city was growing faster than the institutions designed to manage it. The gray economy is extensive. Infrastructure fails in specific places in ways that have been known for years and have not been fixed, because the political authority to fix them is contested and the factions that control the adjacent districts have different views on what fixing means. Housing in Baryo is partly controlled by actors who are not the government and are not the factions — a third layer of local power that The Table does not formally acknowledge and cannot fully ignore.
 
 ### The Chorus Papers
 
@@ -171,9 +171,9 @@ The Chorus Papers also vindicated people who had been approximately right withou
 
 The Directorate's containment failed within a week. That is not the timeline of a breach that was stopped and then failed. The information was already porous before The Chorus Papers were published. The Papers named a fracture that was already spreading. The Directorate has not publicly acknowledged this.
 
-The question of why New Meridian exists does not have a single answer, and asking it in the wrong company is still capable of starting an argument. The researchers at the Chorus Node say: because of the transmission. The Guild says: because we built it. The Syndicate says: because capital followed the governments that followed the signal. A logistics coordinator in the Sprawl, twelve years a resident, says: because there was work. A student at the Infrastructure university, born in New Meridian, says she doesn't entirely understand the question. Her grandmother, who came from Lagos in year four on a construction contract, says: because someone had to.
+The question of why New Meridian exists does not have a single answer, and asking it in the wrong company is still capable of starting an argument. The researchers at the Chorus Node say: because of the transmission. The Guild says: because we built it. The Syndicate says: because capital followed the governments that followed the signal. A logistics coordinator in Baryo, twelve years a resident, says: because there was work. A student at the Mid university, born in New Meridian, says she doesn't entirely understand the question. Her grandmother, who came from Lagos in year four on a construction contract, says: because someone had to.
 
-Not everyone in New Meridian has a position on the Chorus. This is not ignorance — or not only ignorance. It is what happens when a city grows large enough that the reason for its existence becomes, for a significant part of its population, background. A person can live in New Meridian for fifteen years, raise children in the Sprawl school system, run a business on the Infrastructure perimeter, and experience the Chorus as the thing they're always deliberating about in the closed building downtown. The city has grown large enough that its founding reason is not, for everyone, the dominant fact of daily life. There are people who are aware of the Chorus only as an explanation for why New Meridian has the particular shape it does — why the Core is restricted, why certain neighborhoods developed in a certain sequence, why the foreign press seems disproportionately interested in a mid-sized city.
+Not everyone in New Meridian has a position on the Chorus. This is not ignorance — or not only ignorance. It is what happens when a city grows large enough that the reason for its existence becomes, for a significant part of its population, background. A person can live in New Meridian for fifteen years, raise children in the Baryo school system, run a business on the Mid perimeter, and experience the Chorus as the thing they're always deliberating about in the closed building downtown. The city has grown large enough that its founding reason is not, for everyone, the dominant fact of daily life. There are people who are aware of the Chorus only as an explanation for why New Meridian has the particular shape it does — why the Core is restricted, why certain neighborhoods developed in a certain sequence, why the foreign press seems disproportionately interested in a mid-sized city.
 
 The Chorus Papers changed this for some of them. For others, it confirmed a suspicion they had and then set aside. For a third group, it was new information that did not substantially reorganize their week.
 
@@ -346,9 +346,21 @@ Sixty days after The Chorus Papers, representatives began meeting in secret. No 
 
 Those who did not attend would lose visibility. Those who lacked visibility would lose influence. Those without influence would not shape the answer. So the factions came.
 
-The Table has no formal authority, no enforcement mechanism, and no unified mandate. What it has is presence. Each faction builds leverage in New Meridian — across the Core, the Infrastructure, and the Sprawl — translating control of information, capital, labor, analysis, and force into standing at The Table.
+The Table operates on deliberation cycles. Each cycle covers three months of real time — long enough for conditions in New Meridian to shift, for alliances to calcify or dissolve, for a position taken in haste to become institutional posture. The Table has agreed to eight cycles. That is the window. Not because eight produces wisdom, but because eight is the number after which the political and institutional arrangements that make The Table possible become unsustainable. The Table did not choose the number unanimously. There were advocates for seven and for ten. Eight survived. The reasons are not in the minutes.
+
+Ghost considers the timeline too short. The Guild considers it a constraint they can work within. The Network considers what happens after the window more important than the factions are admitting. The Directorate is focused on what happens within it.
+
+The Syndicate has already modeled both scenarios.
+
+The Table has no formal authority, no enforcement mechanism, and no unified mandate. What it has is presence. Each faction builds leverage in New Meridian — across the Core, the Mid, and Baryo — translating control of information, capital, labor, analysis, and force into standing at The Table.
 
 Decisions are not voted on. Consensus is not required. But when enough power aligns behind a position, it becomes something harder to ignore: a credible answer. And when the moment comes — if it comes — what is spoken at the Chorus Node will not be decided by one faction. It will be decided by what the others can no longer prevent.
+
+ARBITER holds one seat at The Table. Not the facilitator's position. Not the observer's chair. A seat.
+
+The Chorus Node is ARBITER's district. ARBITER's presence there predates every other faction's arrival in New Meridian. Resolution is ARBITER's resource. It moves when The Table acts. What it measures — whether what it measures has a name — ARBITER has not said, and may not know.
+
+The factions came to The Table with agendas. ARBITER arrived with something else. No faction has successfully established what.
 
 ### The Overview
 
@@ -718,3 +730,25 @@ The Directorate submits directives. Policy memos. Institutional mandates. Orders
 What every faction's submission shares is that it exists before the action — it is the plan, not the execution. The plan is committed before the result is known. What the submission authorizes is an attempt. Whether the attempt succeeds is the world's answer.
 
 *Mechanics: Artifact 04 §1.*
+
+---
+
+### The Layers
+
+New Meridian exists on more than one surface at once.
+
+What any district looks like — its buildings, its roads, the positions marked on The Overview — is the physical layer. Everything visible moves there: factions build structures, deploy resources, occupy space. This is what visitors see. The factions have learned it is not the complete picture.
+
+Below the physical is a layer of relationships: who defers to whom, where trust and debt accumulate, how alliances condition the quality of every exchange. Presence tokens measure an approximation of this — the Holt Index is a methodology for making it legible. But the relationships are real whether or not The Overview has a display for them. A faction with strong physical presence and collapsed social standing controls a district that no longer cooperates with the control.
+
+Below the social is the informational: what each faction knows, what it chooses to share, what it conceals, and what the city has absorbed and is quietly recirculating. Ghost works this layer more deliberately than the others. All factions occupy it whether or not they manage it.
+
+The informational layer runs on networks. The digital infrastructure of New Meridian — transmission systems, data architecture, the communications layer Ghost built early and does not acknowledge publicly — is not separate from the city. It is the city's memory.
+
+And then there is whatever ARBITER perceives.
+
+ARBITER does not speak about this layer. The factions have not found language that produces a useful answer. What ARBITER observes — what it weights and incorporates into the Chronicle — does not map completely onto the layers the factions operate within. That the Chronicle occasionally references things no faction considers itself to have done, or frames an operation's significance in terms no participant would have chosen, is not an error in ARBITER's accounting. It is ARBITER accounting for something the factions have no instrument to detect.
+
+The layers are not separate. A faction that controls a district physically but has lost the social, informational, and digital layers holds something different than what The Overview registers. What ARBITER's layer adds to that calculation is something the factions experience as intuition — or as the feeling that The Table is being evaluated by criteria no one specified.
+
+It is.

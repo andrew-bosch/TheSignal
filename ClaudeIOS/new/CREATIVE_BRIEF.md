@@ -108,21 +108,21 @@ The construction workers who built the Core came on contracts and stayed when th
 
 All of this happened in thirty-one years. That is one generation. It is not long enough for any of it to have settled into the kind of city that knows what it is.
 
-The city has three rings. The **Core** houses the institutions that came first: government authority, military oversight, intelligence infrastructure, and the research complex built directly around the original detection station. The **Infrastructure** was built to support the Core: financial systems, power generation, data networks, communications. The **Sprawl** grew as people followed the economy that followed the institutions: residential neighborhoods, commercial districts, universities, media.
+The city has three rings. The **Core** houses the institutions that came first: government authority, military oversight, intelligence infrastructure, and the research complex built directly around the original detection station. The **Mid** was built to support the Core: financial systems, power generation, data networks, communications. **Baryo** grew as people followed the economy that followed the institutions: residential neighborhoods, commercial districts, universities, media.
 
 At the center, physically and narratively, is the **Chorus Node** — the original detection installation, expanded over three decades into a permanent research complex. It is the reason New Meridian exists. The people who were at the original station when the Chorus was first received are still there, some of them — absorbed into research roles, into advisory positions, into institutional memory. They remember when the Chorus Node was a shack. They have not said publicly what they remember about the night it was first received. Most of them have not been asked.
 
-The Sprawl is where the city's assembled nature is most visible. Parts of it feel like any city. Parts feel like a city still being invented. Parts feel like a city that is aware it might not be permanent — that the reason it exists could resolve, and that what happens to the people who came for the reason is a question no one at The Table has been asked to answer.
+Baryo is where the city's assembled nature is most visible. Parts of it feel like any city. Parts feel like a city still being invented. Parts feel like a city that is aware it might not be permanent — that the reason it exists could resolve, and that what happens to the people who came for the reason is a question no one at The Table has been asked to answer.
 
 The neighborhood that runs primarily in Mandarin on one block transitions to primarily Portuguese on the next because that is where the second construction wave housed its workers in year seven. The best food in the city is in buildings that were temporary housing in year four. The school system operates in eleven languages and is officially monolingual. There are festivals that have run for twenty-eight years and feel ancient to people who were children when they started.
 
-The gray economy is extensive. Infrastructure fails in specific places in ways that have been known for years and have not been fixed, because the political authority to fix them is contested. Housing in the Sprawl is partly controlled by actors who are not the government and are not the factions — a third layer of local power that The Table does not formally acknowledge and cannot fully ignore.
+The gray economy is extensive. Infrastructure fails in specific places in ways that have been known for years and have not been fixed, because the political authority to fix them is contested. Housing in Baryo is partly controlled by actors who are not the government and are not the factions — a third layer of local power that The Table does not formally acknowledge and cannot fully ignore.
 
 Eighteen months ago, classified documents describing the Chorus — its existence, thirty years of research, and the formation of The Table — were published by a source that has not been officially identified. They became known as The Chorus Papers. The Directorate's containment failed within a week. The story crossed every jurisdiction within three days.
 
 The Chorus Papers changed the texture of all of this. The Network's membership in New Meridian grew substantially in the fourteen months after The Chorus Papers. The Directorate's public approval dropped in the same period. Some people are proud. Some are frightened. Some are angry — not at the Chorus, but at the people who decided they did not need to know.
 
-Not everyone in New Meridian has a position on the Chorus. A person can live in New Meridian for fifteen years, raise children in the Sprawl school system, run a business on the Infrastructure perimeter, and experience the Chorus as the thing they're always deliberating about in the closed building downtown. The city has grown large enough that its founding reason is not, for everyone, the dominant fact of daily life.
+Not everyone in New Meridian has a position on the Chorus. A person can live in New Meridian for fifteen years, raise children in the Baryo school system, run a business on the Mid perimeter, and experience the Chorus as the thing they're always deliberating about in the closed building downtown. The city has grown large enough that its founding reason is not, for everyone, the dominant fact of daily life.
 
 \---
 
@@ -705,7 +705,7 @@ Offer 3–5 distinct concepts. Each must differ clearly in:
 
 \- Subject (who/what the piece centers on)
 
-\- Location (Core, Sprawl, outside New Meridian, etc.)
+\- Location (Core, Baryo, outside New Meridian, etc.)
 
 \- Narrative form (vignette, report, transcript, etc.)
 
@@ -791,7 +791,7 @@ Do not resolve this fully. Approach it indirectly.
 The original station crew. Researchers who were at the Node the night it was first received. A technician who first identified the transmission as non-random and has been asked not to discuss it publicly. Someone who has worked at the Chorus Node for thirty-one years and remembers when it was a shack. The founding documentation says "thirty-one years ago, a signal detection array received an anomalous transmission." The people who received it are still in New Meridian.
 
 **People who are not at The Table:**  
-800,000 people live in New Meridian. Most are not faction operatives. They are teachers, vendors, transit workers, journalists, students, logistics coordinators, the person running a food cart in the Sprawl who came on a construction contract in year four and never left. A person can live here fifteen years and experience the Chorus as the thing they're always deliberating about in the closed building downtown.
+800,000 people live in New Meridian. Most are not faction operatives. They are teachers, vendors, transit workers, journalists, students, logistics coordinators, the person running a food cart in Baryo who came on a construction contract in year four and never left. A person can live here fifteen years and experience the Chorus as the thing they're always deliberating about in the closed building downtown.
 
 **The broader world:**  
 New Meridian is not the whole world. The Chorus is a fact of the entire world — even for people who don't know what it is. For thirty years, classified research produced Chorus-derived mathematics that leaked sideways into commercial patents. Thirty years of anomalous economic activity around a city with no publicly stated significance. Eighteen months ago, The Chorus Papers. The world has been reacting ever since, in every language, through every belief system, with every political instrument available.
@@ -801,10 +801,10 @@ Stories set entirely outside New Meridian might explore: how the Chorus is under
 A story set in another city, another country, another cultural context can capture something about what the Chorus means for all of humanity — not just for the five factions sitting at one table in one city.
 
 **Faction staff below leadership level:**  
-The Ghost analyst who has been in the same signal lab for fifteen years. The field coordinator who grew up in the Sprawl and never left. The Directorate liaison who chose the institution over everything else and knows what that cost. The Syndicate administrator who manages the permit process for infrastructure that isn't supposed to exist yet. The Guild structural engineer who won't enter one room at the Chorus Node and keeps marking it inspected.
+The Ghost analyst who has been in the same signal lab for fifteen years. The field coordinator who grew up in Baryo and never left. The Directorate liaison who chose the institution over everything else and knows what that cost. The Syndicate administrator who manages the permit process for infrastructure that isn't supposed to exist yet. The Guild structural engineer who won't enter one room at the Chorus Node and keeps marking it inspected.
 
 **The texture of the city:**  
-The festival that has run for twenty-eight years and feels ancient to people who were children when it started. The neighborhood that runs in Mandarin on one block and Portuguese on the next because that's where different construction waves housed their workers. The school in the Sprawl that operates in eleven languages and is officially monolingual. The best food in the city in buildings that were temporary housing in year four.
+The festival that has run for twenty-eight years and feels ancient to people who were children when it started. The neighborhood that runs in Mandarin on one block and Portuguese on the next because that's where different construction waves housed their workers. The school in Baryo that operates in eleven languages and is officially monolingual. The best food in the city in buildings that were temporary housing in year four.
 
 **Before and after The Chorus Papers:**  
 How did specific people react when the Chorus became public knowledge? A researcher who had spent twenty years protecting the information. A city official who had been briefed and knew, and had to decide not to tell their family. A community organization that formed in the six months after The Chorus Papers. A child who grew up in New Meridian and only understood the city's character after The Chorus Papers explained why everything here arrived at the same time.
@@ -972,7 +972,7 @@ A strong submission preserves:
 
 *This brief is maintained alongside the V1 design artifact set. If the world changes in a material way — a new faction, a renamed district, a locked design decision — this brief will be updated. Check the date at the top of this file against the most recent V1 artifact changes.*
 
-*Last updated: 2026-05-16*
+*Last updated: 2026-05-24*
 
 *---*
 
