@@ -1287,6 +1287,7 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Guild only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Transactional
@@ -1295,7 +1296,7 @@ Ghost — P17–P18
 **Effects**
 
 - **Crit success:** N/A
-- **Success:** Gain 1 unit of the target district's native resource — delivered in case.
+- **Success:** +1 target district native resource.
 - **Failure:** N/A
 - **Crit failure:** N/A
 
@@ -1311,90 +1312,180 @@ Ghost — P17–P18
 
 ---
 
-### GHOST — C16–C20
-
-*Current cards carried forward. Taxonomy gap analysis in Artifact 04b §8.1 identifies redesign targets: C18/C19 duplicate function; Cross-Category — Shift Portrait primary card needed; Cross-Category — Reveal to named faction needed; Action — Copy subset needed.*
+### THE GHOST — C16–C20
 
 ### C16 — PATTERN MATCH
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C16
+- **Card version:** v1.0
 - **Card name:** Pattern Match
 - **Tagline:** *Identify a faction's operation and location before they move.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Ghost only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Ghost
+
+**Taxonomy**
+
+- **Category:** Action
+- **Function:** Copy
+- **Subject:** Covert operation (full)
+
+- **Design note:** Prediction resolution — no roll. Success if the named faction's submitted covert operation targets the named faction or the named district — either match sufficient. No match: failure. Beat 3 timing dependency: Pattern Match must resolve before the targeted covert operation in the Resolution Grid. If the targeted operation has already resolved this beat, Pattern Match fails automatically regardless of match.
+- **Arbiter context:** If the copied operation cannot legally be executed by Ghost, Pattern Match fizzles — 2 Findings spent, no effect regardless of prediction accuracy.
+
+**Narrative**
+
+- **Narrative anchor:** *Ghost does not guess. Ghost identifies what is already in motion.*
+- **Faction perspectives:**
+  - Ghost: *We are not predicting. We are recognising a pattern we have already seen.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** Named opponent faction
 - **Target object:** Covert operation
-- **Restriction:** Operation type and district named.
+- **Restriction:** N/A
 - **Primary cost qty:** 2
 - **Primary cost type:** Findings
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Ghost only.
-- **Difficulty:** N/A.
-- **Resolution:** Prediction accuracy — named faction must have acted. Both operation type and district correct = success. Exactly one correct = failure. Neither correct = crit failure. No roll.
-- **Crit success:** N/A.
-- **Success:** Named faction submitted named operation type in named district. Pattern Match resolves as a full copy of that operation in that district.
-- **Failure:** Named faction submitted named operation type in a different district, OR named faction submitted any operation in named district. 2 Findings returned to Ghost.
-- **Crit failure:** All other conditions. 2 Findings spent. No effect.
-- **Portrait:** +2 Ghost (success). +1 Ghost (failure/refund condition).
-- **Narrative anchor:** *Ghost does not guess. Ghost identifies what is already in motion.*
-- **Faction perspectives:**
-  - Ghost: *We are not predicting. We are recognising a pattern we have already seen.*
-- **Taxonomy:** Action — Copy — Covert operation (full).
+- **Affinity bonus:** N/A
+- **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Prediction
+- **Resolution type:** Predictive
+- **Outcome type:** N/A
 
-- **Design note:** N/A
-- **Arbiter context:** If the copied operation cannot legally be executed by Ghost, Pattern Match fizzles — 2 Findings spent, no effect regardless of prediction accuracy.
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** Pattern Match resolves as full copy of the matching covert operation.
+- **Failure:** No effect.
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | +1 | Success | +1 | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C17 — INTERCEPT
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C17
+- **Card version:** v1.0
 - **Card name:** Intercept
 - **Tagline:** *Surveil a faction's covert operations in real time.*
 - **Card type:** Covert Operation
 - **Card subtype:** Faction-specific
 - **Card faction:** Ghost
-- **Beat:** 3
-- **Target district:** N/A
-- **Target faction:** Named opponent faction
-- **Target object:** Covert operation
-- **Restriction:** Must hold at least 1 Intel note naming target faction
-- **Primary cost qty:** 1
-- **Primary cost type:** Intel token
-- **Secondary cost qty:** 2
-- **Secondary cost type:** Findings
-- **Difficulty:** Average (50)
-- **Resolution:** d100
-- **Crit success:** +1 covert operation (2nd submitted).
-- **Success:** First covert operation submitted by target faction this round delivered in case — operation type and district.
-- **Failure:** Notification slip delivered to target faction.
-- **Crit failure:** −2 Public Standing.
-- **Portrait Unconditional:** +1 Ghost
-- **Portrait Bonus:** N/A
-- **Portrait Bonus Condition:** N/A
-- **Narrative anchor:** *To know what they are doing while they are doing it — that is the only intelligence that matters.*
-- **Faction perspectives:**
-  - Ghost: *We do not wait for the after-action report. We read the operation as it happens.*
+
+**Taxonomy**
+
 - **Category:** Cross-Category
 - **Function:** Reveal
 - **Subject:** Covert operation — named faction
 
-- **Design note:** Replaces C17 Archive Recovery (retired — L78).
-- **Arbiter context:** Intel note consumed at submission regardless of roll outcome. Failure: notification slip delivered to target faction per C05 slip text. Crit failure Public Standing shift is silent — ARBITER records reason internally only.
+- **Design note:** Replaces C17 Archive Recovery (retired — L78). Intel token cost consumed at submission regardless of roll outcome — not refunded on failure.
+- **Arbiter context:** On crit success: deliver 1 Intel token naming target faction via case. On failure: deliver notification slip to target faction per C05 slip text. On crit failure: Public Standing shift is silent — record reason internally only.
+
+**Narrative**
+
+- **Narrative anchor:** *To know what they are doing while they are doing it — that is the only intelligence that matters.*
+- **Faction perspectives:**
+  - Ghost: *We do not wait for the after-action report. We read the operation as it happens.*
+
+**Mechanics**
+
+- **Beat:** 3
+- **Trigger condition:** N/A
+- **Target district:** N/A
+- **Target faction:** Named opponent faction
+- **Target object:** Covert operation
+- **Restriction:** N/A
+- **Primary cost qty:** 1
+- **Primary cost type:** Intel token — target faction
+- **Secondary cost qty:** 2
+- **Secondary cost type:** Findings
+- **Faction affinity:** Ghost only.
+- **Affinity bonus:** Boost([1].[+1 reveal on success])
+- **Difficulty:** Average (50)
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
+- **Resolution:** d100
+- **Resolution type:** Probabilistic
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** +1 target faction Intel Token.
+- **Success:** First covert operation submitted by target faction this round — operation type and district — delivered in case.
+- **Failure:** Notification slip delivered to target faction.
+- **Crit failure:** −2 Public Standing.
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | +1 | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C18 — IDENTITY BLIND
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C18
+- **Card version:** v1.0
 - **Card name:** Identity Blind
 - **Tagline:** *Submit a covert operation with no attribution this round.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Ghost only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Ghost
+
+**Taxonomy**
+
+- **Category:** Cross-Category
+- **Function:** Protect
+- **Subject:** Action attribution
+
+- **Design note:** Flagged for redesign — duplicates function with C19 (Cross-Category — Protect — Action attribution). See D-04-02. Three replacement candidates (choose one for C18 slot; remaining concepts require slot trade or 6th card): **(A) SIGNALS ANALYSIS** — Resource — Add — Intel token; no adjacency restriction; Findings spent, Intel token received through remote analysis rather than field presence. *"Understanding at distance. No footprint."* **(B) TARGETED DISCLOSURE** — Cross-Category — Reveal — Named faction; Ghost delivers a private intelligence package to one named faction only; table does not know recipient or content. **(C) CALIBRATED READING** — Ghost submits a private written assessment of current board state to ARBITER before Beat 3; ARBITER evaluates accuracy; Ghost gains Findings on sliding scale (1–3); Portrait response is ARBITER's evaluation, not the card's stated effect. *"Ghost doesn't move the Portrait. Ghost earns it."*
+- **Arbiter context:** One use per round. ARBITER records no faction attribution for the attached operation. Ghost not surfaced even on a failed detection roll.
+
+**Narrative**
+
+- **Narrative anchor:** *The most dangerous thing an analyst can do is be noticed.*
+- **Faction perspectives:**
+  - Ghost: *We were not there. The record confirms this.*
+
+**Mechanics**
+
 - **Beat:** 2
+- **Trigger condition:** N/A
 - **Target district:** N/A
 - **Target faction:** Self
 - **Target object:** Action attribution
@@ -1404,29 +1495,67 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Ghost only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
-- **Success:** One attached covert operation resolves normally. ARBITER records no faction attribution for it. Ghost not surfaced even on failed detection roll.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Narrative anchor:** *The most dangerous thing an analyst can do is be noticed.*
-- **Faction perspectives:**
-  - Ghost: *We were not there. The record confirms this.*
-- **Taxonomy:** Cross-Category — Protect — Action attribution.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
 
-- **Design note:** Flagged for redesign — duplicates function with C19 (Cross-Category — Protect — Action attribution). See D-04-02. Three replacement candidates (choose one for C18 slot; remaining concepts require slot trade or 6th card): **(A) SIGNALS ANALYSIS** — Resource — Add — Intel token; no adjacency restriction; Findings spent, Intel token received through remote analysis rather than field presence. *"Understanding at distance. No footprint."* **(B) TARGETED DISCLOSURE** — Cross-Category — Reveal — Named faction; Ghost delivers a private intelligence package to one named faction only; table does not know recipient or content. **(C) CALIBRATED READING** — Ghost submits a private written assessment of current board state to ARBITER before Beat 3; ARBITER evaluates accuracy; Ghost gains Findings on sliding scale (1–3); Portrait response is ARBITER's evaluation, not the card's stated effect. *"Ghost doesn't move the Portrait. Ghost earns it."*
-- **Arbiter context:** One use per round. Beat 2.
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** One attached covert operation resolves without faction attribution this round.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C19 — DEEP COVER
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C19
+- **Card version:** v1.0
 - **Card name:** Deep Cover
 - **Tagline:** *Permanently remove a prior operation from the accessible record.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Ghost only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Ghost
+
+**Taxonomy**
+
+- **Category:** Cross-Category
+- **Function:** Protect
+- **Subject:** Action attribution (permanent)
+
+- **Design note:** Flagged for redesign — duplicates function with C18 (Cross-Category — Protect — Action attribution). See D-04-02.
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *Good cover does not expire at the end of the week.*
+- **Faction perspectives:**
+  - Ghost: *It did not happen. This is not a lie. It is a permanent correction to an incomplete record.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** N/A
 - **Target faction:** Self
 - **Target object:** Action attribution
@@ -1436,29 +1565,67 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Ghost only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
-- **Success:** Ghost names one prior-round operation. That operation is permanently removed from any investigable record for the remainder of the session.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Narrative anchor:** *Good cover does not expire at the end of the week.*
-- **Faction perspectives:**
-  - Ghost: *It did not happen. This is not a lie. It is a permanent correction to an incomplete record.*
-- **Taxonomy:** Cross-Category — Protect (permanent) — Action attribution.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
 
-- **Design note:** Permanent per Principle 11. Flagged for redesign — duplicates function with C18. See D-04-02.
-- **Arbiter context:** N/A
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** One named prior-round Ghost operation permanently removed from the accessible record for the remainder of the session.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C20 — MISDIRECTION
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C20
+- **Card version:** v1.0
 - **Card name:** Misdirection
 - **Tagline:** *Plant false intelligence about Ghost in the accessible record.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Ghost only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Ghost
+
+**Taxonomy**
+
+- **Category:** Resource
+- **Function:** Add
+- **Subject:** Intel token (corrupt content)
+
+- **Design note:** Taxonomy note: Add with corrupt content — falsification is an attribute of content, not a separate function.
+- **Arbiter context:** Deliver false Intel token to target faction via case. Token contains false Ghost operation type and false target district for this round. False token is indistinguishable from a genuine Gather result. Any Denounce using it will fail. Ghost may hold self-directed Intel tokens without cap (Artifact 02b §8).
+
+**Narrative**
+
+- **Narrative anchor:** *Ghost has been considering what its opponents think Ghost is doing. It is never quite right.*
+- **Faction perspectives:**
+  - Ghost: *We have thought carefully about what they expect. We have given them exactly that.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** N/A
 - **Target faction:** Named opponent faction
 - **Target object:** N/A
@@ -1468,18 +1635,32 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Ghost only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
-- **Success:** ARBITER delivers a false Intel token to the target faction in case. Token contains a false operation type and false target district for Ghost this round.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Narrative anchor:** *Ghost has been considering what its opponents think Ghost is doing. It is never quite right.*
-- **Faction perspectives:**
-  - Ghost: *We have thought carefully about what they expect. We have given them exactly that.*
-- **Taxonomy:** Resource — Add — Intel token (corrupt content).
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
 
-- **Design note:** Taxonomy note: Add with corrupt content — falsification is an attribute of content, not a separate function.
-- **Arbiter context:** Ghost may hold self-directed Intel tokens without cap (Artifact 02b §8). False token indistinguishable from genuine Gather result. Any Denounce using it will fail.
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** Target faction receives false Intel token — false Ghost operation type and false target district for this round.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | +1 | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 

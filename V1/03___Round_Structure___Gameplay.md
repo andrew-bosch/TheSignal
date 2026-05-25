@@ -591,6 +591,8 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 **Step 13 — Repeat for all remaining operations.**
 
+*Note — A card is only a valid target while it occupies a slot in the Resolution Grid. Once an operation resolves and its card is returned to the dispatch case, it is no longer a valid target for any action.*
+
 ---
 
 

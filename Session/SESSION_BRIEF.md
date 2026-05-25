@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 34 | Updated: 2026-05-24**
+**Session 36 | Updated: 2026-05-25**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 34 complete. Next session: card spec work — C15 re-sign-off (04-23) is first action. Foundation clean: Art 00 v1.4 signed off, ring names consistent across all artifacts, PM04 v0.7 (L109 standard + Component Physical Glossary added). Non-material queue partially cleared. Remaining non-material: XA-29 (L109 component terminology scan across 00–04b), XA-23 (Index→Contents rename), 04-35 (Affinity bonus N/A on C15–C35), 00b-04 (RG numbering decision — careful execution). 00b-04 is a design decision needed before 00b can sign off.
+Session 35 complete. C16 signed off. C17 grip review pending sign-off (04-41 surveillance deniability open — do not sign off until resolved). C18/C19 flagged for redesign (D-04-02) — schema uplift done, Portrait N/A pending redesign decision. C20 schema uplift done, not yet reviewed. Next session: complete C17 sign-off, C20 review, then C21–C25 (Directorate). Major schema decisions this session: L144 (1NF + snowflake), ring modifier fields added (4 fields per card, per-token rates), pool_copies deprecated (04-40), effects normalization (04-39 updated), ring modifier formula working (XA-32). Art 03 v1.8 signed off (resolution grid targeting rule added S35).
 
 ---
 
@@ -16,14 +16,15 @@ Session 34 complete. Next session: card spec work — C15 re-sign-off (04-23) is
 
 | Artifact | Version | Open Item |
 |----------|---------|-----------|
-| 00 — Factions, World & Narrative | 1.4 | ✅ Signed off S34. 00-07 texture pass queued (next pass). |
-| 04 — Action Card System | 0.9.19 | C15 re-sign-off (04-23); P01–P18 pending (04-01) |
+| 04 — Action Card System | 0.9.20 | C17 sign-off pending (04-41); C18/C19 redesign (D-04-02); C20 not reviewed; P01–P18 pending (04-01) |
+| 03 — Round Structure & Gameplay | 1.8 | ✅ Re-signed off S35. |
 | 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining |
+| 00 — Factions, World & Narrative | 1.4 | 00-07 texture pass queued |
 | 00c — Economy Manifest | 0.4 | §8 Derived Cost Analysis, §9 Round Income Analysis (stubs only) |
 | 07 — ARBITER Toolkit | 0.1 | Initial sign-off pending full draft |
 | 05–06, 08–11, 10, 10a | 0.1 | Draft placeholders |
 
-Signed-off artifacts: 00 (v1.4), 00a (v0.2), 00b (v0.1), 01 (v1.2), 02a (v1.4), 02b (v1.5), 03 (v1.7), 04b (v1.2). Authoritative: PM03.
+Signed-off artifacts: 00 (v1.4), 00a (v0.2), 00b (v0.1), 01 (v1.2), 02a (v1.4), 02b (v1.5), 03 (v1.8), 04b (v1.2). Authoritative: PM03.
 
 ---
 
@@ -31,17 +32,18 @@ Signed-off artifacts: 00 (v1.4), 00a (v0.2), 00b (v0.1), 01 (v1.2), 02a (v1.4), 
 
 | ID | Item | Status |
 |----|------|--------|
-| **04-23** | **C15 re-sign-off** C01–C14 clean (S29/S31/S32). | Open — first action |
-| 04-24 | Cross-beat flag mechanism (C06/C07/C10) — design in Art 07 | Open |
-| 04-25 | Resolution type field stub in Art 04 §6 schema | Open |
-| 04-26 | Restriction field: potential schema split (C02 + C07 confirmed dual-restriction) | Open |
-| 04-28 | Affinity bonus taxonomy [bonus].[type].[value] — needs full card set first | Open |
-| 04-29 | Ring modifier geography principle — revisit at modifier card design session | Open |
+| **04-23** | C15 re-sign-off — ✅ complete S35. | Done |
+| **C17 sign-off** | 04-41 (surveillance deniability) must be resolved first | Open — first action |
+| **04-41** | Surveillance deniability — C17 failure slip identifies Ghost if only spy card. Also: Intel token economy thin if Ghost-only. Fix options: common card, multi-faction surveillance, or redesign failure. | Open — blocks C17 sign-off |
+| **XA-32** | Art 03 Beat 3/4 ring modifier step + Art 07 ARBITER ring modifier calculation guide. Formula: `ringModifier[ring] × (count(presenceToken[targetFaction][district]) − count(presenceToken[actingFaction][district]))`. Re-sign-off required for Art 03. | Open |
+| **04-42** | Ring modifier narrative confirmation pass — baseline values (−15/−10/0/+10 per token) need card-by-card narrative validation. After full card set. | Open |
+| **04-39** | Effects normalization + ring modifier extraction from C01–C15 Difficulty field. Unsupervised batch after schema locked. | Open |
+| **04-40** | Remove pool_copies from all Art 04 card specs. Unsupervised run. | Open |
+| **04-35** | Affinity bonus: N/A field missing from C16–C35 — C15 done S35, C16–C20 done S35. | Partially done |
 | **XA-29** | L109 component terminology scan (00–04b) — unsupervised run | Open |
 | **XA-23** | Index→Contents rename + anchor links — unsupervised run | Open |
-| **04-35** | Affinity bonus: N/A field missing from C15–C35 | Open |
 | **00b-04** | RG entity ID numbering vs. L141 — design decision required | Open |
-| XA-29 | Component Terminology Cleanup (L109) — queued for unsupervised run | Open |
+| **04-24** | Cross-beat flag mechanism (C06/C07/C10) — design in Art 07 | Open |
 
 → Full list: `V1/PM05___Active_Punch_List.md`
 
@@ -49,19 +51,21 @@ Signed-off artifacts: 00 (v1.4), 00a (v0.2), 00b (v0.1), 01 (v1.2), 02a (v1.4), 
 
 ## Last 3 Locked Decisions
 
+- **L144** (S35): Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to linked child tables; dimensions fully normalized. Governs Art 04 and 00b.
 - **L143** (S34): "Deliberation cycles" confirmed as Art 00 in-world term for Quarters — factions use own internal names; institutional neutral language in Art 00.
 - **L142** (S29): Ring names — Ring 2 = "The Mid," Ring 3 = "Baryo"
-- **L141** (S29): Ring numbering — inside-out, Ring 0 = Chorus Node through Ring 3 = Baryo
 
-→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L143)
+→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L144)
 
 ---
 
 ## Pending Sign-Offs
 
-- Art 04 C15 re-sign-off (04-23) — first action next session
+- **C17** — first action (04-41 must be resolved)
+- C20 — not yet reviewed
+- Art 04 C18/C19 — redesign decision pending (D-04-02)
 - Art 07 — pending full draft
-- 00-07 multicultural texture pass (queued after Art 00 sign-off — now unblocked)
+- 00-07 multicultural texture pass (queued)
 
 ---
 
