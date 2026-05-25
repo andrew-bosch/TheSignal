@@ -21,7 +21,7 @@ He waits until the door closes.
 
 The junior researcher sets her tablet down with careful precision before responding.
 
-“I’m Mara Ionescu. Signal interpretation group,” she says. “I was asked to reconcile early logs with current interpretation frameworks.”
+“I’m Mara Seo. Signal interpretation group,” she says. “I was asked to reconcile early logs with current interpretation frameworks.”
 
 Rook studies her—not skeptical, not welcoming. Measuring.
 

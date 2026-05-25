@@ -1,8 +1,8 @@
 # 00 — Factions, World & Narrative Context
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.4 — Pending Re-Sign-Off  
-**Status:** In Progress — Material additions (00-06, XA-15, 00-03, ring renames)  
+**Version:** 1.4 — Signed Off — Session 34  
+**Status:** Signed Off  
 **Supersedes:** game_overview (narrative sections), setup_guide (opening narrative)  
 **Must be read before:** All other design artifacts
 

@@ -42,7 +42,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 
 | Artifact | Version | Status |
 |----------|---------|--------|
-| 00 — Factions & World | 1.4 | 🔄 Pending Re-Sign-Off. Ring renames (Infrastructure→The Mid, Sprawl→Baryo). Session 33: 00-06 (quarter worldbuilding), XA-15 (ARBITER as sixth party), 00-03 (Layer Structure) added. Re-sign-off pending; 00-07 multicultural texture pass queued after. |
+| 00 — Factions & World | 1.4 | ✅ Signed Off — Session 34. Ring renames (The Mid / Baryo). 00-06 (quarter worldbuilding), XA-15 (ARBITER as sixth party), 00-03 (Layer Structure). 00-07 multicultural texture pass queued. |
 | 00a — Governing Rules & Design Policy | 0.2 | ✅ Signed off — session 7. 45 rules (R01–R38 + sub-rules). A05/A06 resolved (L92, session 11). XA-05 four-register change to R02 was non-material for 00a sign-off (only Art 00 and 07 required re-sign-off). |
 | 01 — Game Board | 1.2 | ✅ Signed Off — adjacency table pending (D04-09); setup update pending (01-03). |
 | 02a — Resource Systems: Board State | 1.4 | ✅ Signed Off — Session 22. Control flag corrected (gold, per-district, on Dominant stack); Established marker added (silver, L111, one per Established faction per district); ARBITER Dominance Marker confirmed. |
@@ -57,8 +57,9 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 3.8 | ✅ Active — locked decisions L01–L142 (L141: ring numbering; L142: ring names The Mid/Baryo) |
+| PM02 | 3.8 | ✅ Active — locked decisions L01–L143 (L143: deliberation cycles as in-world term for Quarters) |
 | PM03 | 2.4 | ✅ Active — Art 04 v0.9.18; version drift corrected session 31 |
+| PM04 | 0.7 | ✅ Active |
 | PM05 | 2.3 | ✅ Active — 04-23 in progress (C15 remaining); 00-07 added session 33 (multicultural texture pass) |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
@@ -107,6 +108,13 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 ---
 
 ## Session History
+
+**Session 34 summary (2026-05-24 — complete):**
+- **Art 00 v1.4 re-sign-off complete.** First pass clean. "Deliberation cycles" confirmed as in-world term for Quarters (L143). Ring name propagation: "The Mid" / "Baryo" applied across 00a, 00b, 00c, 03a (non-material). 00-07 multicultural texture pass now unblocked.
+- **iOS batch processed.** 12 vignettes (M365 Copilot, 2026-05-22) archived. Canon candidates approved: Elias Rook and Marek Ionescu. Mara Ionescu → Mara Seo (surname collision resolved). CANON_CANDIDATES.md updated. CREATIVE_BRIEF.md canonical home confirmed as Creative/ (duplicate removed from ClaudeIOS/).
+- **Non-material queue partial clear.** XA-32 (Fringe ring → Ring 3 (Baryo) in 00a), 02a-04 (§10 cross-ref added), 02a-07 (Asset token removed from PM04 §1), PM04-03 (Category column pattern), PM04-04 (L109 standard + Component Physical Glossary). PM04 v0.6 → v0.7.
+- **New PM05 item: 00b-04.** RG entity ID numbering (outside-in) vs. L141 inside-out canonical Ring numbers — design decision required before 00b signs off. Gemini-flagged risk.
+- **Remaining non-material:** XA-29 (L109 component scan across 00–04b), XA-23 (Index→Contents rename), 04-35 (Affinity bonus N/A on C15–C35), 00b-04 (RG numbering decision — careful execution required).
 
 **Session 33 summary (2026-05-24 — complete):**
 - **Art 00 v1.3 → v1.4 (pending re-sign-off).** Ring renames: "the Infrastructure"→"the Mid", "Sprawl"→"Baryo" at all 6 occurrences. New content blocks: 00-06 (quarter worldbuilding — deliberation cycle timescale, eight-cycle window, faction perspectives on the timeline); XA-15 (ARBITER as sixth party at The Table — seat, Chorus Node, Resolution resource, ARBITER has not said what it measures and may not know); 00-03 (The Layers — physical, social, informational, digital, ARBITER's layer; "It is.").

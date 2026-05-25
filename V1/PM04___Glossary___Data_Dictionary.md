@@ -1,9 +1,9 @@
 # PM04 — Glossary & Data Dictionary
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.6
+**Version:** 0.7
 **Status:** 🔄 Updated — Active
-**Last Updated:** 2026-05-19
+**Last Updated:** 2026-05-24
 **Supersedes:** PM04 v0.3
 
 ---
@@ -40,8 +40,7 @@ Canonical reference for all in-world terms and their mechanical equivalents. Eac
 | Presence token | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. Dominant is an atmosphere, not a count. | Artifact 02a §1 |
 | Operational marker | Claim marker | Temporary deployment presence; counts as a presence token during the round. | Artifact 01 §1 |
 | Dispatch case | Recipe box | Protocol for covert submission. | Artifact 06 §1 |
-| Asset token | Resource token | A unit of faction-specific human power. | Artifact 02a §1 |
-| Reservoir | Resource bank | Capitalized. The supply of available asset tokens. *"The Reservoir does not judge what is drawn from it."* | PM02 L93 |
+| Reservoir | Resource bank | Capitalized. The supply of available faction resources. *"The Reservoir does not judge what is drawn from it."* | PM02 L93 |
 | Public Standing track | Popularity track | 0–20 point scale. Bell curve enforced by natural drift (above 13 = −1/quarter, below 7 = +1/quarter). | Artifact 02b §1 |
 | Chorus Portrait | Portrait score | ARBITER's private assessment of faction alignment with the Chorus Question. Determines initiative and feeds the Chronicle. | Artifact 02b §1 |
 | Intelligence token | Proof token / Intel note | Physical evidence — a slip of paper or token representing confirmed information. | Artifact 02b §1 |
@@ -52,6 +51,31 @@ Canonical reference for all in-world terms and their mechanical equivalents. Eac
 | Situation report | World event card | Two-card system: public narrative + ARBITER effect card. | Artifact 01 §1 |
 | Countermeasure card | Counter card | Reactive card type. | Artifact 04 §14.2 |
 | Field operative dossier | Operative card | Named operative with tier, cooldown, and classified directive capacity. | Artifact 05 §1 |
+
+### Component Physical Glossary
+
+Maps each canonical in-game term to its physical/real-world description. Authoritative reference for production spec (Art 09, PM01 WBS 2).
+
+| In-Game Term | Physical Form | Notes |
+|--------------|---------------|-------|
+| Presence token | Small coloured disc or poker chip | One colour per faction; ARBITER uses white |
+| Deployment marker | Double-sided cardboard chit | Face-up = active; face-down = converting |
+| Operational marker | Double-sided cardboard chit | Distinct from deployment marker — confirm at Art 01 production pass |
+| Structure block | Wooden cube | One colour per faction |
+| Intel note | Small paper slip | Folded, sealed — handled via dispatch case |
+| Dispatch case | Sealed envelope or small box | Per-faction covert submission vessel |
+| Situation Report | Two-card set (narrative card + ARBITER effect card) | Held by ARBITER; not player-drawn |
+| Operation Resolution card | Large card or laminated sheet | One per resolution instance; held by ARBITER |
+| Status marker | Small token or disc | Used for Tension, Established flags, etc. |
+| Initiative strip | Laminated strip or card | Tracks faction initiative order per Quarter |
+| [Faction] resource token | Small wooden disc or cube; faction-coloured | Five types: Findings, Exposure, Capital, Capacity, Mandate |
+| Modifier card | Standard card, faction-neutral back | Value rating on face (1–3) |
+| Countermeasure card | Standard card, faction-back | Held in hand; reactive |
+| Pass card | Standard card, faction-back | Four variants (PS-01–PS-04); reusable |
+
+*Expand as new components are defined. Production quantities: PM01 WBS 2. Locked as PM04-04 standard.*
+
+---
 
 ### Faction Resources
 
@@ -197,6 +221,41 @@ The Chorus is described from humanity's vantage point in all Narrator prose and 
 **Usage:** "Target threshold" on formal or first use within a section; "threshold" on subsequent use. Modifier values are "threshold adjustments" or "adjustments to the target threshold." The table mapping difficulty tiers to numerical values is headed "Base Difficulty Threshold."
 
 *Source: L98, session 13. First applied in Artifact 03 §12.*
+
+---
+
+### Category Column Pattern
+
+Any reference table that holds multiple data types in a single column uses a leading Category column as the first column. The Category column names the type; subsequent columns provide the data. This prevents mixed-type cells and satisfies L108 Req 1 (single-typed columns).
+
+*First applied: Art 03 §14 Difficulty Modifiers table. Locked as session 20 table design standard.*
+
+---
+
+### L109 — Component Terminology Standard
+
+Every physical game component must be referred to by its canonical in-game term in all artifacts. Bare or generic terms — chip, token, card, block, marker, strip, slip, case — without a qualifying name are non-compliant.
+
+**Canonical terms (authoritative):**
+
+| Canonical Term | Non-Compliant Variants |
+|----------------|------------------------|
+| Presence token | chip, token, influence token, presence chip |
+| Deployment marker | marker, claim marker |
+| Operational marker | marker, temporary marker |
+| Structure block | block, building block |
+| Intel note | slip, token, proof token, intel token |
+| Dispatch case | case, box, envelope, recipe box |
+| Situation Report | event card, world event card |
+| Operation Resolution card | resolution card, card |
+| Status marker | marker, tracking marker |
+| Initiative strip | strip |
+| [Faction] resource token | token, asset token, resource |
+| Modifier card | modifier, mod card |
+| Countermeasure card | counter card |
+| Pass card | pass |
+
+*Locked as L109. First applied as a systematic cleanup pass (XA-29). Bare qualifiers in PM or design-note context (not artifact body text) are acceptable.*
 
 ---
 

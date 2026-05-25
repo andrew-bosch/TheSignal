@@ -37,7 +37,7 @@ Art 03a is the code-lite technical companion to Art 03. Where Art 03 describes t
    - DT-03: Critical Success override (01–05)
    - DT-04: Critical Failure override (96–100)
    - DT-05: Partial payment at Beat 4
-   - DT-06: Infrastructure modifier scope (L107)
+   - DT-06: The Mid modifier scope (L107)
    - DT-07: Type B Countermeasure scope
    - DT-08: Apex activation threshold check
    - DT-09: Emergency Response role (assist / thwart)
@@ -56,7 +56,7 @@ Art 03a is organized into three layers of increasing specificity:
 |-------|----------|--------|
 | 1 | State Model — formal game state at each beat boundary, using 00b entity IDs as variable vocabulary | ✅ Draft complete — §4 |
 | 2 | Phase & Beat Procedures — Quarter_Flow() entry point; Phase_1()–Phase_7() with explicit state mutations for all phases; Beat_0()–Beat_5() as Phase 6 detail (modifier stack summation formula, resolution inequality) | ✅ Draft complete — §5 |
-| 3 | Decision Tables — all branching conditions surfaced as tables; edge cases include face-down/face-up, Apex vs. non-Apex, Critical overrides, partial payment, Infrastructure scope (L107), Type B scope | ✅ Draft complete — §6 |
+| 3 | Decision Tables — all branching conditions surfaced as tables; edge cases include face-down/face-up, Apex vs. non-Apex, Critical overrides, partial payment, The Mid scope (L107), Type B scope | ✅ Draft complete — §6 |
 | 4 | Modifier Balance Analysis — modifier stack mathematics: expected difficulty shift per modifier combination, pathological stack identification, modifier cap recommendations | 🔄 Stub — §9; blocked until all M-xx values fully specified (Art 04 card definitions pending) |
 
 **Modifier balance analysis** (original XA-27 scope) is a derived output of Layer 2 once the modifier stack is formally expressed. Stub in §9 — full population blocked until Art 04 card definitions complete (M-08, M-09, M-10 variable rows).
@@ -732,7 +732,7 @@ FOR EACH (faction f, slot s) IN snake_order(Quarter.InitiativeOrder):
     REQUIRE: ∃ d2 adjacent to d WHERE d2.Ring = RG-03
              AND Board.InfluenceLevel[d2][f] ∈ {IL-01, IL-02}
              // Additional Chorus Node entry rules: Art 02a §10
-  // RG-01 (Sprawl) and RG-02 (Infrastructure): no entry requirement
+  // RG-01 (Baryo) and RG-02 (The Mid): no entry requirement
 
   Board.DeploymentMarker[f][s] ← {Location: d, Face: Converting}
   // Marker counts as 1 temporary presence chip immediately upon placement
@@ -1163,7 +1163,7 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
              + (M-09.value  IF cell.Target ∈ Grid.ProtectModifiers          ELSE 0)  // Variable; Protect
              + (M-10.value  IF Situation Report difficulty effect targets op ELSE 0)  // Variable; Event
              + (M-11.value  IF M-11 ∈ Grid.ActiveModifierTokens[cell.ID]   ELSE 0)  // −15 Type B CM
-             + (M-12.value  IF cell.Target.Ring = RG-02                              // −25 Infrastructure
+             + (M-12.value  IF cell.Target.Ring = RG-02                              // −25 The Mid
                                AND NOT ∃ d ∈ D-xx: d.Ring = RG-03
                                                     AND d.AdjacentTo(cell.Target)
                                                     AND Board.InfluenceLevel[d][f] ∈ {IL-01, IL-02}
@@ -1293,7 +1293,7 @@ FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Qua
              + M_standing(f)
              + (M-07.value  IF Grid.Political[f].PartialPaymentMarker = M-07   ELSE 0)  // −50 partial pmt
              + (M-10.value  IF Situation Report effect targets act   ELSE 0)  // Variable; Event
-             + (M-12.value  IF act.Target.Ring = RG-02                        // −25 Infrastructure
+             + (M-12.value  IF act.Target.Ring = RG-02                        // −25 The Mid
                                AND NOT ∃ d ∈ D-xx: d.Ring = RG-03
                                                     AND d.AdjacentTo(act.Target)
                                                     AND Board.InfluenceLevel[d][f] ∈ {IL-01, IL-02}
@@ -1416,7 +1416,7 @@ Decision tables cover all branching points in Beats 0–5, surfacing conditions 
 | DT-03 | Critical Success override (roll 01–05) | ✅ Draft |
 | DT-04 | Critical Failure override (roll 96–100) | ✅ Draft |
 | DT-05 | Partial payment at Beat 4 Submit Payment | ✅ Draft |
-| DT-06 | Infrastructure modifier scope (L107) | ✅ Draft |
+| DT-06 | The Mid modifier scope (L107) | ✅ Draft |
 | DT-07 | Type B Countermeasure scope | ✅ Draft (partial — pending Art 04/05 asset definition) |
 | DT-08 | Apex activation threshold check (Step 4) | ✅ Draft (threshold value pending Art 05) |
 | DT-09 | Emergency Response — assist / thwart Apex | ✅ Draft (stub — pending Art 04/05) |
@@ -1492,15 +1492,15 @@ Applied during Beat_4 Submit Payment phase for each declared political act (excl
 
 ---
 
-### DT-06 — Infrastructure Modifier Scope (L107)
+### DT-06 — The Mid Modifier Scope (L107)
 
-M-12 (−25 threshold) applies to any covert operation or political act targeting a district in the Infrastructure ring (RG-02), unless the acting faction holds Established or Dominant presence in at least one adjacent Core district (RG-03) at time of resolution.
+M-12 (−25 threshold) applies to any covert operation or political act targeting a district in the The Mid (RG-02), unless the acting faction holds Established or Dominant presence in at least one adjacent Core district (RG-03) at time of resolution.
 
 | ID | Target Ring | Faction Influence in Adjacent Core | M-12 Applied |
 |----|-------------|-------------------------------------|--------------|
-| DT-06-A | Infrastructure (RG-02) | Established (IL-02) or Dominant (IL-01) in ≥ 1 adjacent RG-03 district | No |
-| DT-06-B | Infrastructure (RG-02) | Present (IL-03), Absent (IL-04), or no adjacent Core district exists | Yes (−25) |
-| DT-06-C | Sprawl (RG-01) | Any | No |
+| DT-06-A | The Mid (RG-02) | Established (IL-02) or Dominant (IL-01) in ≥ 1 adjacent RG-03 district | No |
+| DT-06-B | The Mid (RG-02) | Present (IL-03), Absent (IL-04), or no adjacent Core district exists | Yes (−25) |
+| DT-06-C | Baryo (RG-01) | Any | No |
 | DT-06-D | Core (RG-03) | Any | No |
 
 **Scope (L107):** Applies to all action types — covert operations (Beat_3) and political acts (Beat_4).
@@ -1623,7 +1623,7 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 | M-09 | Card Effect | Protect / Defend operation | Covert | Beat 2 | 1 per Protect submitted | Variable | See card |
 | M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Event Card | Variable | See Event Card |
 | M-11 | Countermeasure | Type B — target faction assets | Covert | Beat 2 | 1 per defending faction | Fixed | −15 |
-| M-12 | District | Infrastructure — no adjacent Core | All | Persistent | 1 | Fixed | −25 |
+| M-12 | District | The Mid — no adjacent Core | All | Persistent | 1 | Fixed | −25 |
 
 *Source: Art 03 §14.*
 
@@ -1676,8 +1676,8 @@ Layer 4 derives from the summation formula in Beat_3() and Beat_4(). Once M-08, 
 |----------|-----------------|----------------------|
 | Celebrated, full payment, no other modifiers | M-01 | +20 |
 | Discredited, partial payment | M-05 + M-06 or M-07 | −70 |
-| Discredited, partial payment, Type B target, Infrastructure | M-05 + M-06 + M-11 + M-12 | −110 (threshold ≤ 0 at most base difficulties) |
-| Celebrated, full payment, Infrastructure mitigated by Core presence | M-01 | +20 (M-12 suppressed by DT-06-A) |
+| Discredited, partial payment, Type B target, The Mid | M-05 + M-06 + M-11 + M-12 | −110 (threshold ≤ 0 at most base difficulties) |
+| Celebrated, full payment, The Mid mitigated by Core presence | M-01 | +20 (M-12 suppressed by DT-06-A) |
 
 **Pathological stack note:** The −110 scenario above forces threshold below 0 at all base difficulties except Very Easy — the only path to success is the 01–05 Critical Success override (DT-03). This is a known extreme and may be intentional design consequence for discredited factions attempting difficult covert ops under compounded conditions. Flag for playtest validation.
 

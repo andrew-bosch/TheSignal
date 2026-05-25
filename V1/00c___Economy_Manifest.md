@@ -94,8 +94,8 @@
 
 | Ring | Base Value per Quarter |
 |------|----------------------|
-| Sprawl | 1 |
-| Infrastructure | 2 |
+| Baryo | 1 |
+| The Mid | 2 |
 | Core | 3 |
 | Chorus Node | 0 — no resource generation |
 
@@ -225,7 +225,7 @@ Any resource → any resource. No action slot required. No quarterly limit. Rate
 
 *Source: Art 02a §10*
 
-Amplifies all Public Standing changes for factions with presence in the Residential Quarter (Sprawl, native: Mandate).
+Amplifies all Public Standing changes for factions with presence in the Residential Quarter (Baryo, native: Mandate).
 
 | Influence Level in Residential Quarter | Public Standing Multiplier |
 |----------------------------------------|---------------------------|
@@ -283,7 +283,7 @@ Amplifies all Public Standing changes for factions with presence in the Resident
 | M-09 | Card Effect | Protect / Defend operation | Covert | Beat 2 | 1 per Protect submitted | Variable | See card |
 | M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Event Card | Variable | See Event Card |
 | M-11 | Countermeasure | Type B — target faction assets | Covert | Beat 2 | 1 per defending faction | Fixed | −15 |
-| M-12 | District | Infrastructure — no adjacent Core | All | Persistent | 1 | Fixed | −25 |
+| M-12 | District | The Mid — no adjacent Core | All | Persistent | 1 | Fixed | −25 |
 
 *All modifiers cumulative. Maximum combined penalty scenario: M-07 (−50) + M-12 (−25) + M-05 (−20) + M-11 (−15) = −110. Only Critical Success (01–05) viable.*
 

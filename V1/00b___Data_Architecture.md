@@ -53,7 +53,7 @@ Every named entity type in the game system. ID prefixes establish the primary ke
 |-----------|--------|-------------|----------------|-------------|
 | F-xx | Faction | The six parties at The Table (five playing factions + ARBITER) | Art 00 §7 | ⬜ Schema pending |
 | D-xx | District | The 22 districts of New Meridian (D-01–D-21 named districts + D-22 Chorus Node) | Art 01 §7 | ⬜ Schema pending — adjacency table queued (D04-09) |
-| RG-xx | Ring | The four geographic rings (Sprawl / Infrastructure / Core / Chorus Node) | Art 01 §6, Art 02a | ⬜ Schema pending |
+| RG-xx | Ring | The four geographic rings (Baryo / The Mid / Core / Chorus Node) | Art 01 §6, Art 02a | ⬜ Schema pending |
 | RT-xx | Resource Type | The six resource types (five faction-native + Resolution) | Art 00 §7, Art 02a | ⬜ Schema pending |
 | IL-xx | Influence Level | The presence states at a district (Dominant / Established / Present / Contested / None) | Art 02a §6 | ⬜ Schema pending |
 | PS-xx | Public Standing Tier | The five named positions on the Public Standing track | Art 02b §7 | ⬜ Schema pending |
@@ -118,9 +118,9 @@ Small enum tables that span multiple artifacts and have no single canonical sour
 
 | ID | Name | Entry Requirement | Threshold Modifier | Notes |
 |----|------|------------------|-------------------|-------|
-| RG-01 | Sprawl | None | None | — |
-| RG-02 | Infrastructure | None | −25 (M-12) if no adjacent Core at Established or Dominant | Modifier M-12 |
-| RG-03 | Core | Established or Dominant in adjacent Infrastructure district | None | — |
+| RG-01 | Baryo | None | None | — |
+| RG-02 | The Mid | None | −25 (M-12) if no adjacent Core at Established or Dominant | Modifier M-12 |
+| RG-03 | Core | Established or Dominant in adjacent The Mid district | None | — |
 | RG-04 | Chorus Node | Established or Dominant in adjacent Core district | See Art 02a §10 | Special rules apply |
 
 *Source: Art 03 §8 Phase 2 Placement, Art 02a §10. Foreign key: D-xx.Ring → RG-xx.ID*

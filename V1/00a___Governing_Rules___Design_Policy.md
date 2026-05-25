@@ -416,13 +416,13 @@ Hard constraints on board state that cannot be overridden by card effects or spe
 
 **Narrative:** A faction is an idea. Ideas draw support from beyond any single district, any single ring, any single moment of setback. The people who show up for a deployment may be the same people from last quarter or entirely new arrivals — supporters who heard the call, operatives reassigned from elsewhere, volunteers who came because the cause reached them. The faction does not stop operating because one operation concluded. The Overview does not show a faction without deployments. It shows a faction whose deployments have moved.
 
-**Mechanics:** Deployment markers are never removed from play by card effect, operative ability, or any other game mechanic. When an effect would "remove" a deployment marker, it instead moves it: the opposing faction designates the new district, or the marker returns to the Fringe ring. A faction always has deployment markers assigned to districts on the board. If a faction has no valid placement for a marker, they may always place in the Fringe ring unrestricted — no presence requirement, no card required, no action cost. The Fringe ring is the unconditional operational fallback for all factions.
+**Mechanics:** Deployment markers are never removed from play by card effect, operative ability, or any other game mechanic. When an effect would "remove" a deployment marker, it instead moves it: the opposing faction designates the new district, or the marker returns to Ring 3 (Baryo). A faction always has deployment markers assigned to districts on the board. If a faction has no valid placement for a marker, they may always place in Ring 3 (Baryo) unrestricted — no presence requirement, no card required, no action cost. Ring 3 (Baryo) is the unconditional operational fallback for all factions.
 
 *Source: Design decision B — session 6.*
 
 *Governs: All cards and effects that interact with deployment markers; Artifacts 02a, 03, 04.*
 
-*Pending: Verify "Fringe ring" naming against Artifact 01 district map — 00a-10 audit.*
+*Pending: Verify Ring 3 (Baryo) fallback rules against Artifact 01 district map — XA-32 resolved.*
 
 ---
 
@@ -680,7 +680,7 @@ Rules that constrain all card design. A proposed card that violates any of these
 
 **Rule:** Ring Modifier card effects can only target districts in the ring the card originated from.
 
-**Narrative:** Knowledge of a district is knowledge of a place. An intelligence report about the Infrastructure ring describes conditions in the Infrastructure ring — those conditions do not apply somewhere else just because the report changes hands. The character of the district travels with what is known about it.
+**Narrative:** Knowledge of a district is knowledge of a place. An intelligence report about the The Mid describes conditions in The Mid — those conditions do not apply somewhere else just because the report changes hands. The character of the district travels with what is known about it.
 
 **Mechanics:** The ring restriction is specified on the card and applies at all times, regardless of which faction holds or uses it.
 
@@ -1011,7 +1011,7 @@ The sequence is the grammar of the negotiation. The timing rules are what make t
 | 00-R11 | Max 1 structure block per faction per district | No card effect may place a second block in a district where the faction already has one |
 | 00-R12 | Structure blocks lost immediately when faction goes Absent | Removed the moment a faction reaches 0 tokens + 0 markers; no card prevents this |
 | 00-R13 | "At least 1 presence token" includes deployment markers | Global convention defined once here and in Artifact 02a; not restated on individual cards |
-| 00-R13a | Deployment markers are moved, not removed | Opposing faction designates new district when marker is displaced; Fringe ring is unconditional fallback |
+| 00-R13a | Deployment markers are moved, not removed | Opposing faction designates new district when marker is displaced; Ring 3 (Baryo) is unconditional fallback |
 | 00-R13b | No faction is eliminated from The Table | Loses board-presence resource generation; retains base generation, voice, and Table participation |
 | 00-R14 | No structures may be placed at the Chorus Node | No structure blocks at the Node from any faction by any card effect in any game state |
 | 00-R15 | Action system always guarantees at least one playable option | Floor Act (1 native resource, always available outside deck); effect minimal by design |

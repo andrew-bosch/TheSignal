@@ -393,6 +393,38 @@ Source files: `Vignettes/vignette-holt-index-origin-20260518.md` · `Vignettes/v
 
 ---
 
+## M365 Copilot — 2026-05-22
+
+Source files: `ClaudeIOS/Archive/vignette-technician-first-night-20260522_v2.md` · `ClaudeIOS/Archive/vignette-inspection-log-20260522_briefonly.md`
+
+---
+
+### ⭐ "Technician, First Night" — vignette + character (Elias Rook)
+
+**Source:** vignette-technician-first-night-20260522_v2.md
+**Status:** 📝 Canon candidate — approved S34. Rook (original signal technician, 31 years continuous, now in informal advisory role) is a strong character. The "assertion → revision" speech pattern is distinctive and owned. Dialogue-driven; epistemically precise. True State consistent — the failure to maintain dismissal of the signal is correct to the founding history. No direct Chorus sensory description.
+
+**Placement:** Creative/ (vignette). Does NOT belong in Art 00 — the generational passage at §6 line 144 already holds his world-context deliberately unnamed. Flavor copy candidates: "The instruments agreed. That was the problem." and "Write something that holds." — both strong standalones.
+
+**Note:** Interviewer character renamed Mara Seo (S34) — resolves surname collision with Marek Ionescu.
+
+**No edits required for vignette.**
+
+---
+
+### ⭐ "Inspection Log, Unentered" — vignette + character (Marek Ionescu)
+
+**Source:** vignette-inspection-log-20260522_briefonly.md
+**Status:** 📝 Canon candidate — approved S34. Marek (pre-faction, absorbed into Node technical staff; original detection-night witness) is strong in a different register from Rook — atmospheric, interior, habit-driven. Chamber B-7 detail and the three-signature anomaly are good world-texture. Faction-ambiguous (touches Directorate oversight and Guild audits without belonging to either) — high narrative utility. True State consistent throughout.
+
+**Placement:** Creative/ (vignette). Does NOT belong in Art 00 — same reasoning as Rook. Flavor copy candidates: "You don't ignore a room for sixteen years. You maintain it by not entering." and "The Chorus does not repeat. This is the only claim that has held without revision for thirty-one years. Marek has learned not to rely on claims that hold."
+
+**Note:** Three founding-technician characters now in Creative/ (Vance, Rook, Marek). Art 00 §6 line 144 covers all three without naming any. If Vance is eventually incorporated into Art 00 §6 directly, revisit whether Rook and Marek remain unnamed background.
+
+**No edits required for vignette.**
+
+---
+
 ## What Was Not Selected
 
 | Item | Source | Reason |
@@ -406,4 +438,4 @@ Source files: `Vignettes/vignette-holt-index-origin-20260518.md` · `Vignettes/v
 
 ---
 
-*Last updated: 2026-05-16 — Gemini pass 1*
+*Last updated: 2026-05-24 — M365 Copilot pass 1 (S34); Rook and Marek Ionescu approved*

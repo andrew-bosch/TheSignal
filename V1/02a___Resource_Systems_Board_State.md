@@ -409,7 +409,7 @@ The Chorus Node is unique among all districts in three ways:
 
 The human faction maximum is 6 presence chips. ARBITER's permanent presence count is 8. Dominant is structurally unreachable at the Chorus Node — not prohibited by rule, made impossible by the board. No faction can reach the chip count required. The Control flag is not placed at the Chorus Node — ARBITER's Dominance Marker serves this function.
 
-**Established is the maximum level for factions.** Only one faction may hold Established at the Chorus Node at any time. If two or more factions reach 2+ chips and tie, the Tension marker is placed and all tied factions drop to Present-equivalent benefits.
+**Established is the maximum level for factions.** Only one faction may hold Established at the Chorus Node at any time *(see §10)*. If two or more factions reach 2+ chips and tie, the Tension marker is placed and all tied factions drop to Present-equivalent benefits.
 
 **No structure blocks may be placed here.** The Chorus Node's physical space is entirely occupied by receiving infrastructure that predates every faction's presence in New Meridian.
 
