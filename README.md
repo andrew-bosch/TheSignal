@@ -20,7 +20,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.3 | ✅ Signed off |
+| 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.4 | ✅ Signed off — session 34 |
 | 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.2 | ✅ Signed off — session 7 |
 | 00b | [Data Architecture](V1/00b___Data_Architecture.md) | 0.1 | ✅ Reference Document — Active |
 | 00c | [Economy Manifest](V1/00c___Economy_Manifest.md) | 0.2 | 🔄 Partially Populated — Active Reference |

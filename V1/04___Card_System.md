@@ -116,45 +116,49 @@ Every card uses this data structure. All fields are required. N/A is a valid val
 
 *§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/Whiteboard/researchNotes_CardDesign.md`. Sources: MTG/Scryfall API, Netrunner DB (NRDB), Arkham Horror LCG (Fantasy Flight), Marvel Champions (Fantasy Flight). Fields added as a result: Card version (§1.1), Trigger condition (§1.2), Pool copies (§1.3), Outcome type (§1.5). Fields reviewed and not added: §8.*
 
-| Category | Field | Type | Purpose | Constraints | VS-xx | Displayed | Notes / Description |
-|----------|-------|------|---------|-------------|-------|-----------|---------------------|
+| Category | Field | Type | Purpose | Constraints | VS-xx | Displayed | Design notes |
+|----------|-------|------|---------|-------------|-------|-----------|--------------|
 | Identity | **Card ID** | String | Primary key | Format: [type prefix][sequence number] | VS-01 | TBD | — |
 | Identity | **Card version** | Semver | Per-card revision identifier | Format: v[major].[minor] | VS-01 | TBD | Enables playtest copy identification. Independent of Artifact 04 version. |
 | Identity | **Card name** | String | In-world card name | Not a mechanical label | VS-01 | Face | — |
 | Identity | **Tagline** | String | One-line in-world description | One sentence | VS-01 | Face | — |
-| Identity | **Card type** | Enum | Top-level card category | — | VS-01 | TBD | Covert Operation, Political Act, Pass, Countermeasure, Modifier, Emergency Response |
-| Identity | **Card subtype** | Enum | Distribution scope | — | VS-01 | TBD | Standard, Faction-specific |
-| Identity | **Card faction** | Enum | Owning faction | — | VS-01 | TBD | All if available to all factions; otherwise owning faction name. |
-| Identity | **Pool copies** | Integer | Copies in faction's setup pool | — | VS-01 | No | Standard cards: 2. Emergency Response: 1 (Singleton). Pool count — not printed on card. Governs print quantities. |
-| Taxonomy | **Category** | Enum | Action taxonomy — category | See Artifact 04b §4 | VS-01 | TBD | Board, Resource, Action, Cross-Category. |
-| Taxonomy | **Function** | Enum | Action taxonomy — function | See Artifact 04b §4 | VS-01 | TBD | What the card does within its category |
-| Taxonomy | **Subject** | Enum | Action taxonomy — subject | See Artifact 04b §4 | VS-01 | TBD | What the card acts on |
-| Taxonomy | **Design note** | Prose | Design intent — faction doctrine rationale, card purpose, Art 11 layout context | N/A if none | VS-04 | No | ARBITER-Only. Informs Artifact 11 layout decisions and Art 04b taxonomy analysis. Not printed on card. |
-| Taxonomy | **Arbiter context** | Prose | ARBITER resolution guidance — timing, edge cases, validation rules ARBITER enforces at the table | N/A if none | VS-04 | No | ARBITER-Only. Informs Artifact 07 ARBITER resolution notes. Not printed on card. |
-| Narrative | **Narrative anchor** | String | In-world narrative grounding | One sentence | VS-01 | TBD | Standard cards: neutral observer. Faction-specific: owning faction's voice |
+| Identity | **Card type** | Enum | Top-level card category | Covert Operation, Political Act, Pass, Countermeasure, Modifier, Emergency Response | VS-01 | TBD | — |
+| Identity | **Card subtype** | Enum | Distribution scope | Standard, Faction-specific | VS-01 | TBD | — |
+| Identity | **Card faction** | Enum | Owning faction | All; Ghost; The Network; The Syndicate; The Guild; The Directorate | VS-01 | TBD | All = available to all factions. Named faction = faction-specific card. |
+| Identity | **Pool copies** | Integer | Copies in faction's setup pool | Standard: 2; Emergency Response: 1 (Singleton); N/A → 0 | VS-01 | No | Pool count — not printed on card. Governs print quantities. Deprecated per L144 (04-40) — move to Art 09 or DB only. |
+| Taxonomy | **Category** | Enum | Action taxonomy — category | Board, Resource, Action, Cross-Category — see Artifact 04b §4 | VS-01 | TBD | — |
+| Taxonomy | **Function** | Enum | Action taxonomy — function | See Artifact 04b §4 | VS-01 | TBD | — |
+| Taxonomy | **Subject** | Enum | Action taxonomy — subject | See Artifact 04b §4 | VS-01 | TBD | — |
+| Taxonomy | **Design note** | Prose | Design intent — faction doctrine rationale, card purpose, Art 11 layout context | N/A if none | VS-04 | No | VS-04 ARBITER-Only. Informs Art 11 layout decisions and Art 04b taxonomy analysis. Not printed on card. |
+| Taxonomy | **Arbiter context** | Prose | ARBITER resolution guidance — timing, edge cases, validation rules enforced at the table | N/A if none | VS-04 | No | VS-04 ARBITER-Only. Informs Art 07 ARBITER resolution notes. Not printed on card. |
+| Narrative | **Narrative anchor** | String | In-world narrative grounding | One sentence | VS-01 | TBD | Standard cards: neutral observer voice. Faction-specific: owning faction's voice. |
 | Narrative | **Faction perspectives** | String | Per-faction in-world perspective | One sentence per faction | VS-01 | TBD | — |
-| Mechanics | **Beat** | Integer | Resolution beat | — | VS-01 | TBD | The beat in Phase 6 in which this card is processed. Resolution order within a Beat: governed by dispatch case submission order per Art 03 §7. |
-| Mechanics | **Trigger condition** | Enum | Activation condition for non-default timing | — | VS-01 | TBD | N/A, Submission-time, Beat-N, Phase-N, Condition-based |
-| Mechanics | **Target district** | String | District submission target | — | VS-01 | Face | Broadest valid statement (e.g. "Any district", "Any adjacent district"). N/A if no district target. |
-| Mechanics | **Target faction** | Enum | Faction submission target | — | VS-01 | Face | N/A, Self, Named opponent faction |
-| Mechanics | **Target object** | Enum | Game component this card acts on | N/A if no faction or district target | VS-01 | Face | Structure block, Presence token, Operational marker, Intel token, Native resource, Written record, Covert operation, Political act, Action attribution, Private communications, Named action type, N/A. Named action type = player-specified at submission. |
+| Mechanics | **Beat** | Integer | Resolution beat | 1–5 | VS-01 | TBD | Beat in Phase 6 this card is processed. Resolution order within a beat: governed by dispatch case submission order per Art 03 §7. |
+| Mechanics | **Trigger condition** | Enum | Activation condition for non-default timing | N/A, Submission-time, Beat-N, Phase-N, Condition-based | VS-01 | TBD | — |
+| Mechanics | **Target district** | String | District submission target | Broadest valid statement; N/A if no district target | VS-01 | Face | — |
+| Mechanics | **Target faction** | Enum | Faction submission target | N/A, Self, Named opponent faction | VS-01 | Face | — |
+| Mechanics | **Target object** | Enum | Game component this card acts on | Structure block, Presence token, Operational marker, Intel token, Native resource, Written record, Covert operation, Political act, Action attribution, Private communications, Named action type, N/A; N/A if no faction or district target | VS-01 | Face | Named action type = player-specified at submission. |
 | Mechanics | **Restriction** | Prose | Submission preconditions | All stated on card; no external references | VS-01 | Face | — |
 | Mechanics | **Primary cost qty** | Integer | Quantity of primary cost resource | N/A if no primary cost | VS-01 | Face | — |
-| Mechanics | **Primary cost type** | Enum | Type of primary cost resource | — | VS-01 | Face | Faction native, District native, Findings, Exposure, Capital, Capacity, Mandate, Intel token, Resolution, N/A |
+| Mechanics | **Primary cost type** | Enum | Type of primary cost resource | `Resource [faction.native]`, `Resource [target faction.native]`, `Resource [district.native]`, `Resource [inteltoken, target faction, active]`, `Resource [resolution]`, N/A | VS-01 | Face | `[faction.native]` → acting faction's native resource (F-xx.NativeResource → RT-xx); `[district.native]` → target district (D-xx.NativeResource → RT-xx); `[inteltoken, target faction, active]` → RT-07 instance, activation stamped, held by paying faction; `[resolution]` → RT-06, Chorus Node only. |
 | Mechanics | **Secondary cost qty** | Integer | Quantity of secondary cost resource | N/A if no secondary cost | VS-01 | Face | — |
-| Mechanics | **Secondary cost type** | Enum | Type of secondary cost resource | — | VS-01 | Face | Faction native, District native, Findings, Exposure, Capital, Capacity, Mandate, Intel token, Resolution, N/A. Often a district native resource; often waivable by affinity. |
-| Mechanics | **Faction affinity** | Array[Faction] | Faction(s) receiving affinity discount | N/A if not applicable | VS-01 | Face | Comma-separated if multiple. |
+| Mechanics | **Secondary cost type** | Enum | Type of secondary cost resource | `Resource [faction.native]`, `Resource [target faction.native]`, `Resource [district.native]`, `Resource [inteltoken, target faction, active]`, `Resource [resolution]`, N/A | VS-01 | Face | Same resolution rules as Primary cost type. Often `Resource [district.native]`; often waivable by affinity. |
+| Mechanics | **Faction affinity** | Array[Faction] | Faction(s) receiving affinity discount | N/A if not applicable; comma-separated if multiple | VS-01 | Face | — |
 | Mechanics | **Affinity bonus** | String | What the affinity discount provides | N/A if Faction affinity is N/A | VS-01 | Face | — |
-| Mechanics | **Difficulty** | Enum | Base difficulty threshold | See Artifact 03 §13 | VS-01 | Face | Easy, Average, Challenging, N/A. |
-| Mechanics | **Resolution** | String | How this card resolves | — | VS-01 | Face | d100 roll, or Automatic for guaranteed-resolution cards (no roll, fires on submission). |
-| Mechanics | **Resolution type** | String | Strategic classification of how uncertainty resolves — for resolution-type taxonomy and economy modeling | Descriptive prose for now — pattern and enum to emerge from full card set. See PM05 04-25. | VS-01 | TBD | Working name. Values are written descriptively (e.g. "Probabilistic", "Positional wager", "Conditional — Transactional if uncontested; Probabilistic if contested"). No enforced vocabulary yet — describe what is true. Classification will be rationalized into a formal taxonomy after C01–C35 and P01–P18 are complete. Feeds 00c §8 Derived Cost Analysis. |
-| Mechanics | **Outcome type** | Enum | Political act resolution process type | — | VS-01 | Face | Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A |
-| Effects | **Crit success** | Prose | Critical success outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond success |
+| Mechanics | **Difficulty** | Enum | Base difficulty threshold | Easy, Average, Challenging, N/A — see Artifact 03 §13 | VS-01 | Face | — |
+| Mechanics | **Ring 0 modifier** | ±Integer | Threshold adjustment for Chorus Node (Ring 0) district targets | N/A if card has no ring modifier | VS-01 | Face | Applied by ARBITER at Beat 3 Step 2 / Beat 4 Step 2. Calculation: Art 07 §8.4. Positive raises threshold (easier); negative lowers it (harder). |
+| Mechanics | **Ring 1 modifier** | ±Integer | Threshold adjustment for Core (Ring 1) district targets | N/A if card has no ring modifier | VS-01 | Face | As Ring 0 modifier. |
+| Mechanics | **Ring 2 modifier** | ±Integer | Threshold adjustment for The Mid (Ring 2) district targets | N/A if card has no ring modifier | VS-01 | Face | As Ring 0 modifier. |
+| Mechanics | **Ring 3 modifier** | ±Integer | Threshold adjustment for Baryo (Ring 3) district targets | N/A if card has no ring modifier | VS-01 | Face | As Ring 0 modifier. |
+| Mechanics | **Resolution** | String | How this card resolves | d100, Automatic | VS-01 | Face | Automatic = guaranteed resolution, no roll, fires on submission. |
+| Mechanics | **Resolution type** | String | Strategic classification of how uncertainty resolves | Descriptive prose — no enforced vocabulary until full card set complete. See PM05 04-25. | VS-01 | TBD | Pattern and enum to emerge from C01–C35 + P01–P18 review. Example values: "Probabilistic", "Positional wager", "Conditional — Transactional if uncontested; Probabilistic if contested". Feeds 00c §8 Derived Cost Analysis. |
+| Mechanics | **Outcome type** | Enum | Political act resolution process type | Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A | VS-01 | Face | — |
+| Effects | **Crit success** | Prose | Critical success outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond standard success. |
 | Effects | **Success** | Prose | Primary card effect | Full effect stated on card | VS-06 | Face | — |
 | Effects | **Failure** | Prose | Failure outcome | N/A if Resolution = Automatic | VS-06 | Face | — |
-| Effects | **Crit failure** | Prose | Critical failure outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond failure |
-| Portrait | **Faction** | Enum | Faction identifier — row key | [faction] where [faction] != ARBITER | VS-06 | TBD | One row per faction per card. |
-| Portrait | **Flat** | ±Integer | Portrait modifier — fires on resolution regardless of submitting faction | N/A if no unconditional effect | VS-06 | TBD | Use when the board-state change itself carries a consequence independent of doctrine. |
+| Effects | **Crit failure** | Prose | Critical failure outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond standard failure. |
+| Portrait | **Faction** | Enum | Faction identifier — row key | Ghost, The Network, The Syndicate, The Guild, The Directorate (ARBITER excluded) | VS-06 | TBD | One row per faction per card. |
+| Portrait | **Flat** | ±Integer | Portrait modifier — fires on resolution regardless of submitting faction | N/A if no unconditional effect | VS-06 | TBD | Rare — see L131. Board-state consequence independent of doctrine. Must not appear on standard (Card faction: All) cards. |
 | Portrait | **Submitter** | ±Integer | Portrait modifier — fires when this faction is the submitting faction | N/A if no effect | VS-06 | TBD | One Submitter row fires per card play. See ARBITER Portrait Reference Table [name TBD, PM05 07-05]. |
 | Portrait | **Condition** | Prose | Condition on Submitter modifier | N/A if Submitter fires unconditionally | VS-06 | TBD | — |
 | Portrait | **Modifier** | ±Integer | Adjustment to Submitter modifier under specific circumstances | N/A if no conditional adjustment | VS-06 | TBD | — |
@@ -1421,7 +1425,7 @@ Ghost — P17–P18
 - **Target object:** Covert operation
 - **Restriction:** N/A
 - **Primary cost qty:** 1
-- **Primary cost type:** Intel token — target faction
+- **Primary cost type:** Resource [inteltoken, target faction, active]
 - **Secondary cost qty:** 2
 - **Secondary cost type:** Findings
 - **Faction affinity:** Ghost only.

@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-24 (session 33 complete) — supersedes session 31 save state.
+### Generated: 2026-05-25 (session 36 complete) — supersedes session 31 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -60,7 +60,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | PM02 | 3.8 | ✅ Active — locked decisions L01–L143 (L143: deliberation cycles as in-world term for Quarters) |
 | PM03 | 2.4 | ✅ Active — Art 04 v0.9.18; version drift corrected session 31 |
 | PM04 | 0.7 | ✅ Active |
-| PM05 | 2.3 | ✅ Active — 04-23 in progress (C15 remaining); 00-07 added session 33 (multicultural texture pass) |
+| PM05 | 2.4 | ✅ Active — C17 sign-off pending (04-41); 8 items added S36 (04-43/44/45/46, DB-04/05/07/08) |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
@@ -118,6 +118,14 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **DB design documented.** the_signal_db design intent saved to memory. 1NF + snowflake confirmed. card_effects table gap identified (04-39). Ring modifier two-track architecture: structure→card draw + presence tokens→calculated modifier.
 - **New PM05:** 04-39 (updated), 04-40 (pool_copies removal), 04-41 (surveillance deniability + Intel token economy), 04-42 (ring modifier narrative pass), XA-32 (Art 03 Beat 3/4 + Art 07 ARBITER ring modifier guide).
 - **Grip:** relaunched at project root (/TheSignal). V1/README.md deprecated and deleted.
+
+**Session 36 summary (2026-05-25 — complete):**
+- **Three-agent workflow formalized.** Claude (primary), agy (Gemini CLI / Antigravity CLI), Gem (Gemini web). rclone removed entirely (binary + OAuth config deleted). Replaced with `generate_gem_context.sh` — two-file output to Desktop: `gem_message.txt` (message to Gem) + `gem_context.txt` (~1.1MB project dump). agy notified of name change via GEMINI_CONTEXT.md.
+- **`gem_web_context.md` created** as Gem's persistent session memory. Sections: Session Message, Standing Instructions, Calibration Notes, Access Scope. Two hallucination incidents logged in Calibration Notes (fabricated citations S36).
+- **8 new PM05 items from agy card verification + DB gap analysis.** Card items: 04-43 (C13 resolution type mismatch), 04-44 (difficulty hardcoding vs dynamic scaling), 04-45 (C14 difficulty format), 04-46 (C10 "assets" undefined). DB items: DB-04 (resource_types table + factions column gaps), DB-05 (native resource migration, blocked DB-04), DB-07 (quarters lookup table design decision), DB-08 (card_metadata missing fields, blocked 04-39).
+- **README fixed.** Artifact 00 corrected from v1.3 → v1.4 (Gem audit finding, already confirmed).
+- **CLAUDE.md updated.** Agent Roster section added; rclone section removed; close routine Phase 2 updated (GEM_CONTEXT replaces SYNC).
+- **Next session:** C17 sign-off (04-41 surveillance deniability must resolve first), C20 review, C21–C25 Directorate cards.
 
 **Session 34 summary (2026-05-24 — complete):**
 - **Art 00 v1.4 re-sign-off complete.** First pass clean. "Deliberation cycles" confirmed as in-world term for Quarters (L143). Ring name propagation: "The Mid" / "Baryo" applied across 00a, 00b, 00c, 03a (non-material). 00-07 multicultural texture pass now unblocked.

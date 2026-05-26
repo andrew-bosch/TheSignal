@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 36 | Updated: 2026-05-25**
+**Session 37 | Updated: 2026-05-25**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 35 complete. C16 signed off. C17 grip review pending sign-off (04-41 surveillance deniability open — do not sign off until resolved). C18/C19 flagged for redesign (D-04-02) — schema uplift done, Portrait N/A pending redesign decision. C20 schema uplift done, not yet reviewed. Next session: complete C17 sign-off, C20 review, then C21–C25 (Directorate). Major schema decisions this session: L144 (1NF + snowflake), ring modifier fields added (4 fields per card, per-token rates), pool_copies deprecated (04-40), effects normalization (04-39 updated), ring modifier formula working (XA-32). Art 03 v1.8 signed off (resolution grid targeting rule added S35).
+Session 36 complete. Infrastructure/tooling session — no artifact changes. Three-agent workflow established: Claude (primary), agy (Gemini CLI, filesystem/DB), Gem (Gemini web, context dump). rclone removed; replaced with `generate_gem_context.sh` (two-file output: `gem_message.txt` + `gem_context.txt` to Desktop). `gem_web_context.md` created as Gem's persistent session memory. agy delivered card verification + DB gap analysis; 8 new PM05 items logged (04-43 through 04-46, DB-04/05/07/08). README fixed (Art 00 v1.3 → v1.4). Next session: C17 sign-off (04-41 surveillance deniability must resolve first), C20 review, then C21–C25 (Directorate).
 
 ---
 
@@ -32,16 +32,14 @@ Signed-off artifacts: 00 (v1.4), 00a (v0.2), 00b (v0.1), 01 (v1.2), 02a (v1.4), 
 
 | ID | Item | Status |
 |----|------|--------|
-| **04-23** | C15 re-sign-off — ✅ complete S35. | Done |
 | **C17 sign-off** | 04-41 (surveillance deniability) must be resolved first | Open — first action |
-| **04-41** | Surveillance deniability — C17 failure slip identifies Ghost if only spy card. Also: Intel token economy thin if Ghost-only. Fix options: common card, multi-faction surveillance, or redesign failure. | Open — blocks C17 sign-off |
-| **XA-32** | Art 03 Beat 3/4 ring modifier step + Art 07 ARBITER ring modifier calculation guide. Formula: `ringModifier[ring] × (count(presenceToken[targetFaction][district]) − count(presenceToken[actingFaction][district]))`. Re-sign-off required for Art 03. | Open |
-| **04-42** | Ring modifier narrative confirmation pass — baseline values (−15/−10/0/+10 per token) need card-by-card narrative validation. After full card set. | Open |
-| **04-39** | Effects normalization + ring modifier extraction from C01–C15 Difficulty field. Unsupervised batch after schema locked. | Open |
+| **04-41** | Surveillance deniability — C17 failure slip identifies Ghost if only spy card. Intel token economy thin if Ghost-only. Fix options: common card, multi-faction surveillance, or redesign failure. | Open — blocks C17 |
+| **XA-32** | Art 03 Beat 3/4 ring modifier step + Art 07 ring modifier guide. Formula: `ringModifier[ring] × (count(presenceToken[targetFaction][district]) − count(presenceToken[actingFaction][district]))`. Art 03 re-sign-off required. | Open |
+| **04-43** | C13 resolution type mismatch — Transactional vs. d100 (agy S36 finding). Fix: Probabilistic. | Open |
+| **04-44** | C02/C04/C05/C08 difficulty hardcoding vs. 02a §7 dynamic scaling — design decision needed (agy S36). | Open |
+| **DB-04** | Create `resource_types` table + `factions` column gaps. Prerequisite for DB-05. | Open |
+| **04-39** | Effects normalization + ring modifier extraction from C01–C15. Unsupervised batch after schema locked. | Open |
 | **04-40** | Remove pool_copies from all Art 04 card specs. Unsupervised run. | Open |
-| **04-35** | Affinity bonus: N/A field missing from C16–C35 — C15 done S35, C16–C20 done S35. | Partially done |
-| **XA-29** | L109 component terminology scan (00–04b) — unsupervised run | Open |
-| **XA-23** | Index→Contents rename + anchor links — unsupervised run | Open |
 | **00b-04** | RG entity ID numbering vs. L141 — design decision required | Open |
 | **04-24** | Cross-beat flag mechanism (C06/C07/C10) — design in Art 07 | Open |
 

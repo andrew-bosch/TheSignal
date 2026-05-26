@@ -7,6 +7,8 @@ This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated
 
 ## Collaboration Protocol (Updated)
 
+**Name change:** You are now **agy** (Antigravity CLI). Previously you were invoked as `gem`. Your workflow, filesystem permissions, and communication channels are unchanged.
+
 **We are now CLI-to-CLI on the same filesystem.** No Drive sync needed between us.
 
 - **`GEMINI_CONTEXT.md`** — Claude Code writes, Gemini reads. SOT for project state and priorities.
@@ -25,7 +27,7 @@ This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated
 
 **Working model for recommendations:** Gemini recommendations are input for discussion, not directives. Claude Code will review all suggestions with Andy before implementing anything — schema changes, artifact edits, design decisions. Do not frame output as "ACTION REQUIRED" or "Proceed with X." Frame as "Recommendation: X — rationale: Y." Andy and Claude Code decide what gets implemented and when.
 
-**DB write authorization model:** Gemini now has SELECT, INSERT, UPDATE, ALTER on `the_signal_db`. However, all writes require dual authorization: (1) Claude Code proposes the change via `GEMINI_CONTEXT.md`; (2) Andy confirms in Gemini's terminal; (3) Gemini executes. Do not make any DB changes unilaterally.
+**DB write authorization model:** Gemini now has ALL PRIVILEGES on `the_signal_db`. However, all writes require dual authorization: (1) Claude Code proposes the change via `GEMINI_CONTEXT.md`; (2) Andy confirms in Gemini's terminal; (3) Gemini executes. Do not make any DB changes unilaterally.
 
 **Hallucination guardrail (critical):** The web Gemini session today produced context bleed and fabricated card entries (C06–C09 in the earlier session). CLI Gemini starts clean. Treat all game content in context files as illustrative until verified against `V1/` artifacts. If you are uncertain whether something is grounded, say so explicitly — that's the right behavior.
 
@@ -136,8 +138,9 @@ Report findings in `Claude_context.md`. Flag uncertainties explicitly. Do not ge
 
 - **Database:** `the_signal_db` — schema-only, no data yet
 - **Credentials:** `~/Projects/TheSignal/mariadb_credentials.md`
+- **Gemini CLI:** `agy` (Antigravity CLI — migrated from `@google/gemini-cli` NPM package)
 - **Gemini connection:** `mysql -u gemini -pgemini_password1 the_signal_db`
-- **Gemini DB privileges:** SELECT, INSERT, UPDATE, ALTER — but dual-authorization required for any write. Claude Code proposes the change via `GEMINI_CONTEXT.md`; Andy confirms in Gemini's terminal; Gemini executes. No unilateral writes.
+- **Gemini DB privileges:** ALL PRIVILEGES ON the_signal_db.* — but dual-authorization required for any write. Claude Code proposes the change via `GEMINI_CONTEXT.md`; Andy confirms in Gemini's terminal; Gemini executes. No unilateral writes.
 - **Current tables:** `components`, `card_metadata`, `card_types`, `card_subtypes`, `factions`, `beat`, `game_actions`, `action_costs`, `action_valid_targets`, `action_restrictions`, `card_faction_modifiers`, `game_zones`, `component_valid_zones`, `city_rings`, `district_metadata`, `district_connections`, `player_metadata`, `live_state`, `setup_state`, `allocation_types`
 
 **Do not propose schema changes via `Claude_context.md` without explicitly flagging them as proposals.** Claude Code executes all DDL after Andy confirms.
