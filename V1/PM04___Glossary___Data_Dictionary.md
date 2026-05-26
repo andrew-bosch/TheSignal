@@ -29,6 +29,7 @@ Canonical reference for all in-world terms and their mechanical equivalents. Eac
 | In-World Term | Mechanical Equivalent | Narrative Grounding | Defined In |
 |---------------|----------------------|---------------------|------------|
 | Quarter | One round of play | Approximately three months of real-world time in New Meridian. Eight quarters (~two years) constitute the full session scope. The factions at The Table are operating on a human timeline. Humanity has been receiving the Chorus for thirty-one years. Both facts are present in every quarter's deliberation. | 00a §1, Artifact 03 §1 |
+| Month | One of three action phases within a Quarter | Each Quarter comprises three Months. Month 1 and Month 2 are covert operational months; Month 3 is the political month. The three-month calendar framing is not decorative — it mirrors how organizations actually operate: two months of groundwork before a public commitment. **Provisional** — evaluate after use. | Artifact 03 §4, L150 |
 
 ### Component & System Terms
 

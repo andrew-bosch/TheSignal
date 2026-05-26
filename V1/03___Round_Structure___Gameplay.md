@@ -1,9 +1,9 @@
 # 03 — Round Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.7  
+**Version:** 1.9  
 
-**Status:** ✅ Signed Off — Session 20  
+**Status:** ⚠️ Pending Re-Sign-Off — S37 (Double Case Pass, Intel economy, Dispatch Tokens — material changes)  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -37,15 +37,20 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 6. Quarter Overview
 7. Phase 1 — Upkeep
 8. Phase 2 — Placement
-9. Phase 3 — Dispatch
-10. Phase 4 — Declaration
-11. Phase 5 — Countermeasures
-12. Phase 6 — Resolution
-13. Phase 7 — Debrief
-14. The Operation System
-15. End of Quarter
-16. Special Conditions & Gameplay Impacts
-17. Examples & Exceptions
+9. Month 1 — Dispatch
+10. Month 1 — Countermeasures
+11. Month 1 — Resolution
+12. Month 2 — Dispatch
+13. Month 2 — Countermeasures
+14. Month 2 — Resolution
+15. Month 3 — Declaration
+16. Month 3 — Countermeasures
+17. Month 3 — Resolution
+18. Debrief
+19. The Operation System
+20. End of Quarter
+21. Special Conditions & Gameplay Impacts
+22. Examples & Exceptions
 
 ---
 
@@ -67,7 +72,9 @@ This framing gives the game's events appropriate weight:
 - A Situation Report represents a significant event at the city or global scale — something meaningful enough to shape a quarter of operations, not a daily news cycle.
 - Humanity has been receiving the Chorus for thirty-one years — approximately 124 quarters. The Table's two-year deliberation may be, from the Chorus's perspective, a remarkably compressed response time. Whether the Chorus considers the transmission complete is a question treated fully in Artifact 00. What is relevant to round structure: each quarter carries weight proportional to what it follows. The Table is not working on a human schedule.
 
-The Quarter's internal structure mirrors how organizations operate under pressure: situational awareness first (Upkeep), then positioning (Placement), then committing to action before knowing what others will do (Dispatch and Declaration), then consequences arriving simultaneously (Resolution), then the conversation about what it all meant (Debrief).
+The Quarter's three active Months map directly to this calendar reality. Month 1 and Month 2 are the covert operational months — intelligence gathered, moves made, consequences absorbed before the next commitment. Month 3 is the political month — the public act that follows from what the covert months revealed. The sequence is not arbitrary; it is how organizations actually work under pressure.
+
+The Quarter's internal structure mirrors how organizations operate under pressure: situational awareness first (Upkeep), then positioning (Placement), then two covert passes before committing publicly (Month 1 → Month 2 → Month 3 Declaration), then consequences arriving (Resolution), then the conversation about what it all meant (Debrief).
 
 ARBITER is present throughout but speaks at specific moments. Between those moments, ARBITER watches.
 
@@ -91,24 +98,39 @@ ARBITER is present throughout but speaks at specific moments. Between those mome
 
 ```
 PHASE 1 — UPKEEP
-  Quarter opens. World updates. Resources collected. Initiative set.
+  Quarter opens. World updates. Resources collected. Tokens distributed. Initiative set.
 
 PHASE 2 — PLACEMENT
   Deployment markers placed. Entry requirements enforced.
 
-PHASE 3 — DISPATCH
-  Covert operations submitted secretly in dispatch cases.
+MONTH 1 — DISPATCH
+  Covert operations submitted with Dispatch Tokens.
 
-PHASE 4 — DECLARATION
+MONTH 1 — COUNTERMEASURES
+  Countermeasure cards deployed for Month 1 resolution.
+
+MONTH 1 — RESOLUTION (Month1.Week1–4, Beats 0–3)
+  Covert operations resolved. Board updated. Resolution Grid cleared.
+
+MONTH 2 — DISPATCH
+  Second covert pass. Remaining Dispatch Tokens used.
+
+MONTH 2 — COUNTERMEASURES
+  Countermeasure cards deployed for Month 2 resolution.
+
+MONTH 2 — RESOLUTION (Month2.Week1–4, Beats 0–3)
+  Covert operations resolved. Board updated. Resolution Grid cleared.
+
+MONTH 3 — DECLARATION (Month3.Week1)
   Political acts declared publicly in initiative order.
 
-PHASE 5 — COUNTERMEASURES
-  Countermeasure cards played openly.
+MONTH 3 — COUNTERMEASURES (Month3.Week2)
+  Countermeasure cards deployed for Month 3 resolution.
 
-PHASE 6 — RESOLUTION
-  All committed actions resolved. Board updated.
+MONTH 3 — RESOLUTION (Month3.Week3–4, Beats 4–5)
+  Political acts resolved. The Table speaks.
 
-PHASE 7 — DEBRIEF
+DEBRIEF
   Table reflects on outcomes. Quarter closes.
 ```
 
@@ -205,18 +227,42 @@ Other Faction Players observe and may challenge calculations. ARBITER resolves d
 *If The Network has any presence at University Perimeter:*
 The Network Faction Player declares whether Exposure or the district native resource will be collected from the virtual structure block.
 
-### Step 6 — Operations Preparation
+### Step 6 — Intel Token Decay
+
+ARBITER announces: *"Intel decay."*
+
+Each Faction Player checks their current Intel token count and returns tokens to the Reservoir:
+
+| Intel tokens held | Tokens lost |
+|-------------------|-------------|
+| 0 | None |
+| 1–2 | 1 |
+| 3 or more | 2 |
+
+*Applied before Operations Preparation. Remaining Intel tokens carry into the new Quarter.*
+
+---
+
+### Step 7 — Operations Preparation
 
 ARBITER announces: *"Prepare operations."*
 
-*Purpose: ensure all elements needed for Declaration and beyond are assembled and in their correct positions on the tableau. Faction Players complete this step simultaneously before Dispatch opens.*
+*Purpose: ensure all elements needed for the Quarter are assembled and in their correct positions on the tableau. Faction Players complete this step simultaneously.*
+
+**Distribute Dispatch Tokens:**
+
+Each Faction Player collects their Dispatch Tokens from the Reservoir:
+- Standard factions: 3 Dispatch Tokens
+- Ghost: 4 Dispatch Tokens
+
+*Tokens are held beside the tableau. They are spent across Month 1 and Month 2 as the player chooses.*
 
 **Tableau check — standing elements:**
 
 Verify the following elements are already in position before drawing begins:
 - Pass cards (4) — beside tableau, always available
 - Floor Act — beside tableau, always available to all factions at all times (full design: Artifact 04 D04-13)
-- Countermeasure cards (3) — in their designated area
+- Countermeasure cards — in their designated area (3 per session total; deployed across Monthly Countermeasure phases, §10/§13/§16)
 - Modifier cards carried from prior Quarters — in modifier area
 - Operator cards — in their designated area
 
@@ -227,6 +273,8 @@ Verify the following elements are already in position before drawing begins:
 3. Place all drawn cards in the active hand area of the tableau. Cards are held face-down and private.
 
 *Cards kept from the prior Quarter count toward hand size — a player with 2 kept covert cards draws 4 more to reach 6.*
+
+*Covert operation hand is drawn here only. No additional covert cards are drawn during Month 1 or Month 2 resolution. Discard down if hand size exceeds 6 at any point.*
 
 If a draw deck is exhausted mid-draw, shuffle that deck's discard pile immediately to form a new draw deck and continue.
 
@@ -305,33 +353,37 @@ ARBITER announces: *"Placement is open."*
 
 ---
 
-## 9. Phase 3 — Dispatch
+## 9. Month 1 — Dispatch
 
-- *Faction Players assemble, seal and transmit their own dispatch cases.* 
+- *Faction Players assemble, seal and transmit their own dispatch cases.*
 - *The ARBITER Player keeps watch on the Dispatch Timer, announces status, and queues cases in the order they are received.*
 
+**Dispatch Token rule:** Each covert operation card submitted in a dispatch case must be accompanied by 1 Dispatch Token placed in the case. A card submitted without a token is rejected by ARBITER at Beat 0 without resolution and returned to the faction. Pass cards require no token.
+
+*Faction Players budget their Dispatch Tokens across Month 1 and Month 2. Using all tokens in Month 1 forecloses covert action in Month 2.*
+
 **1. Open Dispatch**
-- ARBITER announces: *"Dispatch is open."*
+- ARBITER announces: *"Month 1 Dispatch is open."*
 - The ARBITER Player starts the dispatch timer.
 
 **2. Assemble cases**
 
- - Faction Players load operations, resources, target slips, and Pass cards into their cases.
+- Faction Players load operation cards, Dispatch Tokens (1 per operation card), resources, target slips, and Pass cards into their cases.
 
-  *Assembly should be handled privately and silently.*
+*Assembly should be handled privately and silently.*
 
 *Full dispatch case design, physical format, and component contents: Artifact 06 — Messaging System.*
 
 **3. Seal cases**
 
- - Faction Players close their cases. 
+- Faction Players close their cases.
 
 *No additions or changes permitted after sealing cases.*
 
 **4. Transmit cases**
 
- - Faction Players place their sealed cases in the ARBITER Player's receive queue.
- - The ARBITER Player places each received case left to right in the receive queue, establishing lane order for the Resolution Grid.
+- Faction Players place their sealed cases in the ARBITER Player's receive queue.
+- The ARBITER Player places each received case left to right in the receive queue, establishing lane order for the Month 1 Resolution Grid.
 
 *Case receipt order determines lane assignment in the Resolution Grid and governs Beat 3 operation sequence.*
 
@@ -344,45 +396,18 @@ ARBITER announces: *"Placement is open."*
 
   *Faction Players who have not transmitted may seal and transmit during the countdown.*
 
-- The ARBITER Player announces: *"Dispatch closed."* 
+- The ARBITER Player announces: *"Month 1 Dispatch closed."*
 
-  *Any case not received is treated as if all actions submitted are Pass. -*
-
----
-
-## 10. Phase 4 — Declaration
-
-
-- Faction Players declare in initiative order.
-- The ARBITER Player records.
-
-ARBITER announces: *"Declaration is open."*
-
-For each Faction Player in initiative order:
-
-1. Announce the political act being declared.
-2. Place the declared card face-up in front of the Faction Player's tableau with the target slip and resource tokens stacked on top.
-3. Resource tokens remain with the declared card on the tableau — payment is submitted to the Reservoir at the start of Beat 4.
-4. Play any modifier cards modifying the political act face-up alongside.
-
-*A Faction Player passing: place the Pass card face-up on the tableau.*
-
-**Rules:**
-
-- Must target one of the Faction Player's two deployment markers placed this Quarter
-- The Operative Card may be used as the political act
-
-*Declared political acts cannot be withdrawn or modified after declaration.*
+  *Any case not received is treated as if all actions submitted are Pass.*
 
 ---
 
-## 11. Phase 5 — Countermeasures
-
+## 10. Month 1 — Countermeasures
 
 - Faction Players deploy or pass in initiative order.
-- The ARBITER Player holds Countermeasures for application during Resolution.
+- The ARBITER Player holds Countermeasures for application during Month 1 Resolution.
 
-ARBITER announces: *"Countermeasures may be deployed now."*
+ARBITER announces: *"Countermeasures may be deployed for Month 1."*
 
 Each Faction Player, in initiative order:
 
@@ -393,56 +418,47 @@ Each Faction Player, in initiative order:
 2. Declare the card type to the ARBITER Player.
 3. Hand the card to the ARBITER Player.
 
+*Each faction has 3 Countermeasure cards available per session total across all three Monthly windows. Cards spent here are unavailable in Month 2 and Month 3.*
+
 When all Faction Players have had a chance to deploy or pass, the ARBITER Player collects all dispatch cases.
 
 Phase ends.
 
 ---
 
-## 12. Phase 6 — Resolution
+## 11. Month 1 — Resolution
 
-
-- The ARBITER Player runs Resolution in six sequential beats.
+- The ARBITER Player runs Month 1 Resolution in four sequential beats (Month1.Week1–4, Beats 0–3).
 - Faction Players receive outcomes and apply their own board updates.
-- All parties participate in Debrief.
 
-### Deployment Marker Blocking
-
-A deployment marker is flipped to the Blocked face when a blocking condition resolves. The flip occurs in the beat in which the condition arises.
-
-| Beat | Condition | Who Flips |
-|------|-----------|-----------|
-| Beat 1 | Situation Report effect blocks conversion in that district or ring | The ARBITER Player |
-| Beat 2 | Type A Countermeasure card names that district | The ARBITER Player |
-| Beat 3 | Covert operation outcome blocks conversion | The ARBITER Player |
-| Beat 4 | Political act outcome blocks conversion | The acting Faction Player |
-
-### Resolution — Six Beats
+*The Resolution Grid is built fresh for Month 1 and cleared at end of Beat 3. Month 2 builds a new grid.*
 
 *ARBITER announces each beat before beginning it.*
 
 ---
 
-**Beat 0: The Cases Open**
+**Beat 0 (Month1.Week1): The Cases Open**
 
-The ARBITER Player: 
+The ARBITER Player:
 - Arranges Dispatch cases left to right in numbered lanes above the top of the resolution grid in the order received.
 - Opens all cases and builds the Resolution Grid.
 
-From left to right, lane by lane: 
+From left to right, lane by lane:
 
 1. Remove the first operation packet from the dispatch case.
-2. For each card in the packet, validate payment using the Payment Validation table below. 
-3. Drain resources to the Reservoir as directed.
-4. Place each card in the grid based on what Beat is indicated on the card:
+2. For each card in the packet, validate payment using the Payment Validation table below.
+3. If a Dispatch Token is present with the card: set aside the token. If no Dispatch Token accompanies the card: the card is rejected by ARBITER without resolution. Return the operation card to the acting faction. No Operation Resolution card issued.
+4. Drain resources to the Reservoir as directed.
+5. Place each validated card in the grid based on what Beat is indicated on the card:
    - Beat 2 card: place in the Beat 2 row of the resolution grid for the lane being processed.
-   - Beat 3 card or Pass: Place in the uppermost vacant space in the Beat 3 section of the resolution grid for the lane being processed.
-     - Stack bottom to top: target slip, modifier cards, operation card (or pass). 
-     
+   - Beat 3 card or Pass: place in the uppermost vacant space in the Beat 3 section of the resolution grid for the lane being processed.
+     - Stack bottom to top: target slip, modifier cards, operation card (or pass).
+
      *Cards are placed face-up or face-down per Payment Validation.*
      *Overlap so each card beneath shows its resolution data block.*
-5. Repeat steps 1–4 for each remaining lane in receipt order (Lane 2 through Lane 5).
-6. When complete move to Beat 1.
+6. Repeat steps 1–5 for each remaining lane in receipt order (Lane 2 through Lane 5).
+7. Collect all Dispatch Tokens from this Month. Return to Reservoir at Upkeep.
+8. When complete, move to Beat 1.
 
 *If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order.*
 
@@ -459,7 +475,7 @@ From left to right, lane by lane:
 
 ---
 
-**Beat 1: Check Active Restrictions**
+**Beat 1 (Month1.Week2): Check Active Restrictions**
 
 The ARBITER Player reads all currently active Situation Report effects aloud.
 
@@ -470,10 +486,8 @@ The ARBITER Player reads all currently active Situation Report effects aloud.
    - Place the operation card and target slip in the acting faction's dispatch case.
    - Place a Voided resolution card in the dispatch case.
    - Discard any modifier cards from the grid cell — removed from the game.
-3. For each targeting restriction: check all declared political acts on Faction Players' tableaux. For each political act targeting the restricted district or ring:
-   - ARBITER announces the restriction.
-   - The Faction Player removes the political act card and discards modifier cards.
-   - Resource tokens remain with the Faction Player — the act is cancelled before payment.
+
+*Political acts are not yet declared. Targeting restriction checks for political acts occur at the start of Month 3 Resolution (§17).*
 
 **Conversion blocks** — effects that prevent deployment marker conversion in specific districts or rings:
 
@@ -484,7 +498,7 @@ The ARBITER Player reads all currently active Situation Report effects aloud.
 
 ---
 
-**Beat 2: The Ground Shifts**
+**Beat 2 (Month1.Week3): The Ground Shifts**
 
 The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right.
 
@@ -514,7 +528,7 @@ The ARBITER Player notes the target and the defensive modifier to be applied in 
 
 ---
 
-**Beat 3: Covert Operations Resolve**
+**Beat 3 (Month1.Week4): Covert Operations Resolve**
 
 Resolve all covert operations from the Resolution Grid in queue order: the first action for each faction fires in case receipt order, then the second action for each faction, repeating until the operation queue is empty.
 
@@ -527,11 +541,11 @@ For each card in queue order:
 1. Read the card in the current grid slot.
 2. If face-down: auto-fail. Discard all modifier cards from the stack. Return the action card to the faction. Advance to the next operation. No further steps apply to this slot.
 3. If Pass: note the skip and advance to the next operation. No further steps apply to this slot.
-4. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in Section 16 before proceeding.
+4. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in §21 before proceeding.
 
 **Step 2 — Determine base difficulty.**
 
-Read the base difficulty printed on the operation card. Look up the corresponding threshold in the Operation System (§14).
+Read the base difficulty printed on the operation card. Look up the corresponding threshold in the Operation System (§19).
 
 **Step 3 — Apply all modifiers.**
 
@@ -593,12 +607,133 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 *Note — A card is only a valid target while it occupies a slot in the Resolution Grid. Once an operation resolves and its card is returned to the dispatch case, it is no longer a valid target for any action.*
 
+**Clear the Resolution Grid.**
+
+When all operations have resolved, the ARBITER Player clears the Resolution Grid. It is rebuilt fresh for Month 2.
+
 ---
 
+## 12. Month 2 — Dispatch
 
-**Beat 4: Political Acts Resolve**
+Follows the same procedure as Month 1 — Dispatch (§9), with these differences:
+
+- ARBITER announces: *"Month 2 Dispatch is open."*
+- Faction Players submit operation cards using their **remaining** Dispatch Tokens.
+- A faction that spent all tokens in Month 1 may submit only Pass cards in Month 2.
+
+*Ghost's fourth Dispatch Token enables the GATHER→SYNTHESIZE combo: submit GATHER in Month 1, submit SYNTHESIZE in Month 2 using the fourth token.*
+
+---
+
+## 13. Month 2 — Countermeasures
+
+Follows the same procedure as Month 1 — Countermeasures (§10), with these differences:
+
+- ARBITER announces: *"Countermeasures may be deployed for Month 2."*
+- Cards spent in Month 1 are unavailable. Remaining session supply applies.
+
+---
+
+## 14. Month 2 — Resolution
+
+Follows the same procedure as Month 1 — Resolution (§11), with these differences:
+
+- ARBITER announces each beat with "Month 2" prefix: *"Month 2. Beat 0."*
+- Beats are labeled Month2.Week1–4 (Beats 0–3) for design reference.
+- Dispatch Tokens collected at Beat 0 are the final Token collection of the Quarter.
+
+*When Beat 3 clears, the Resolution Grid is closed for covert operations. Month 3 begins.*
+
+---
+
+## 15. Month 3 — Declaration
+
+
+- Faction Players declare in initiative order.
+- The ARBITER Player records.
+
+ARBITER announces: *"Declaration is open."*
+
+For each Faction Player in initiative order:
+
+1. Announce the political act being declared.
+2. Place the declared card face-up in front of the Faction Player's tableau with the target slip and resource tokens stacked on top.
+3. Resource tokens remain with the declared card on the tableau — payment is submitted to the Reservoir at the start of Beat 4.
+4. Play any modifier cards modifying the political act face-up alongside.
+
+*A Faction Player passing: place the Pass card face-up on the tableau.*
+
+**Rules:**
+
+- Must target one of the Faction Player's two deployment markers placed this Quarter
+- The Operative Card may be used as the political act
+
+**Ghost's Political Act restriction:** Ghost must retain at least 1 unspent Dispatch Token to declare a Political Act. ARBITER counts Ghost's remaining Dispatch Tokens before Ghost's turn in the declaration order. Passing a Political Act declaration requires no token — Ghost may always pass. If Ghost spent all 4 Dispatch Tokens across Month 1 and Month 2, Ghost is eligible to pass only this Month 3.
+
+*Declared political acts cannot be withdrawn or modified after declaration.*
+
+---
+
+## 16. Month 3 — Countermeasures
+
+- Faction Players deploy or pass in initiative order.
+- The ARBITER Player holds Countermeasures for application during Month 3 Resolution.
+
+ARBITER announces: *"Countermeasures may be deployed for Month 3."*
+
+Each Faction Player, in initiative order:
+
+- **Pass** — verbally declare no Countermeasure card will be played this phase, or
+- **Deploy** — play one or more Countermeasure cards. For each card deployed:
+
+1. Play the card face-up in front of the Faction Player's tableau.
+2. Declare the card type to the ARBITER Player.
+3. Hand the card to the ARBITER Player.
+
+*Each faction has 3 Countermeasure cards per session. Cards used in Month 1 and Month 2 are already spent. Any remaining supply may be deployed here.*
+
+Phase ends.
+
+---
+
+## 17. Month 3 — Resolution
+
+- The ARBITER Player runs Month 3 Resolution in two sequential beats (Month3.Week3–4, Beats 4–5).
+- Faction Players receive outcomes and apply their own board updates.
+- All parties participate in Debrief.
+
+### Deployment Marker Blocking
+
+A deployment marker is flipped to the Blocked face when a blocking condition resolves. The flip occurs in the beat in which the condition arises.
+
+| Beat | Month | Condition | Who Flips |
+|------|-------|-----------|-----------|
+| Beat 1 | Month 1 or 2 | Situation Report effect blocks conversion in that district or ring | The ARBITER Player |
+| Beat 2 | Month 1 or 2 | Type A Countermeasure card names that district | The ARBITER Player |
+| Beat 3 | Month 1 or 2 | Covert operation outcome blocks conversion | The ARBITER Player |
+| Beat 4 | Month 3 | Political act outcome blocks conversion | The acting Faction Player |
+
+### Resolution — Two Beats
+
+*ARBITER announces each beat before beginning it.*
+
+---
+
+**Beat 4 (Month3.Week3): Political Acts Resolve**
 
 *Political acts are declared publicly and resolve with full transparency.*
+
+**Check Active Restrictions**
+
+The ARBITER Player reads all currently active Situation Report targeting restrictions.
+
+1. The ARBITER Player identifies all targeting restrictions on active Event Cards.
+2. For each targeting restriction: for each Faction Player with a declared political act targeting the restricted district or ring:
+   - Return the political act card and target slip to the Faction Player.
+   - Place a Voided resolution card in front of the Faction Player's tableau.
+   - Discard any modifier cards — removed from the game.
+
+*A voided political act does not fire. No payment is due. Modifier cards already placed are lost.*
 
 **Submit Payment**
 
@@ -618,7 +753,7 @@ In initiative order, for each Faction Player:
 
 **Step 1 — Identify the political act. Check for Apex.**
 
-1. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in Section 16 before proceeding.
+1. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in §21 before proceeding.
 2. If face-down: auto-fail. Discard all modifier cards. Return the political act card to the faction. Advance to the next Faction Player. No further steps apply to this faction.
 3. Read the political act card and target slip.
 
@@ -674,7 +809,7 @@ The ARBITER Player may note a significant moment at their discretion.
 
 ---
 
-**Beat 5: The Table Speaks**
+**Beat 5 (Month3.Week4): The Table Speaks**
 
 *Everything in the session leads to this beat. Resolution is complete. The board reflects what happened. Now the table processes, reacts, and responds — privately first, then openly.*
 
@@ -700,7 +835,7 @@ While Faction Players review their dispatch cases, the ARBITER Player makes any 
 
 ---
 
-## 13. Phase 7 — Debrief
+## 18. Debrief
 
 ARBITER announces: *"The Table is in Debrief."*
 
@@ -745,7 +880,7 @@ If Chorus Activity changed this Quarter, ARBITER incorporates this into the Debr
 
 ---
 
-## 14. The Operation System
+## 19. The Operation System
 
 The Operation System governs resolution for all committed actions: covert operations (Beat 3) and political acts (Beat 4).
 
@@ -825,7 +960,7 @@ Base difficulty is printed on the operation card or political act card. It repre
 
 ---
 
-## 15. End of Quarter
+## 20. End of Quarter
 
 At the close of Debrief, in strict order:
 
@@ -845,7 +980,7 @@ If the Round Tracker reaches 8 and no Apex has resolved, proceed to Session End 
 
 ---
 
-## 16. Special Conditions & Gameplay Impacts
+## 21. Special Conditions & Gameplay Impacts
 
 ### Apex Activation
 
@@ -888,7 +1023,7 @@ The ARBITER Player opens the sealed Apex envelope and pauses 5 seconds. ARBITER 
 
 ---
 
-## 17. Examples & Exceptions
+## 22. Examples & Exceptions
 
 ### Initiative — Quarter 3
 

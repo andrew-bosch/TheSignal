@@ -1,5 +1,5 @@
 # THE SIGNAL — Gemini Context Brief
-*Last updated: 2026-05-24 — Session 32 (end of day)*
+*Last updated: 2026-05-25 — Session 37*
 
 This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated at session close.
 
@@ -77,24 +77,80 @@ A long design session covering DB architecture and world-building. Nothing writt
 
 ---
 
-## Immediate Priorities for Next Session (token reset pending)
+## Session 37 DB Tasks — Authorized for Execution
 
-1. **C01–C15 consistency pass** — Read Artifact 04. Apply new schema columns (resolution_type, base_difficulty, ring modifiers) to each card. Verify values make narrative and mechanical sense. C10 is the known problem card (conflict with 02a influence difficulty rules for structure removal). Gemini's card names for C06–C10 (Broadcast Interference, Amplify, Buy Influence, Fund, Protect) are **unverified** — treat as illustrative until confirmed against artifact.
-2. **Artifact 00b vs DB schema gap analysis** — Read Artifact 00b (Data Architecture), compare against current schema.
-3. **Full DB gap analysis** — Read design + PM docs, map against schema, identify missing tables/columns.
-4. **Ring mechanics verification** — Read Artifact 03 and 02a, verify ring modifier concepts and C10 against signed-off content.
-5. **Lock what holds up from today's exploratory session.**
+Three tasks. Execute in order. Each requires Andy's terminal confirmation before you run DDL.
 
 ---
 
-## Where Gemini Can Help Right Now
+### DB-04 — Create `resource_types` table + patch `factions`
 
-**High value tasks for your context window:**
-- Read `V1/04___Card_System.md` and provide a clean summary of C01–C15 actual names, categories, timing, and resolution types as they exist in the file. Flag any card where the definition is ambiguous or incomplete. This is verification work, not generation — report what you find, not what you expect.
-- Read `V1/00b___Data_Architecture.md` and summarize its key invariants and data design decisions. Flag anything that appears to conflict with the DB schema described above.
-- Read `V1/02a___Influence_System.md` and summarize the influence difficulty rules for structure removal — specifically what governs how hard it is to remove a structure, and whether C10 Protect is referenced or implied.
+**Rationale:** 00b §8 requires a `resource_types` lookup table. Currently `factions` and district/player metadata point native resources directly at `components`, which is wrong — resources are types, not physical instances.
 
-Report findings in `Claude_context.md`. Flag uncertainties explicitly. Do not generate card content — read and report only.
+**Step 1 — Create table:**
+```sql
+CREATE TABLE resource_types (
+  id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  resource_name VARCHAR(100) NOT NULL,
+  category VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+```
+
+**Step 2 — Add columns to `factions`:**
+```sql
+ALTER TABLE factions
+  ADD COLUMN native_resource_type_id BIGINT(20) DEFAULT NULL,
+  ADD COLUMN color VARCHAR(7) DEFAULT NULL,
+  ADD CONSTRAINT fk_factions_resource_type FOREIGN KEY (native_resource_type_id) REFERENCES resource_types (id);
+```
+
+Confirm with Andy before executing each step. Report DDL as-executed in `Claude_context.md`.
+
+---
+
+### DB-05 — Migrate native resource columns in `district_metadata` and `player_metadata`
+
+**Blocked on DB-04. Execute only after DB-04 is confirmed complete.**
+
+**Rationale:** Both tables currently use `native_resource_component_id` (FK → components.id). Under the 1NF + snowflake schema, native resource is a type, not an instance. Column must be renamed and re-pointed.
+
+**`district_metadata`:**
+```sql
+ALTER TABLE district_metadata
+  DROP FOREIGN KEY <existing_fk_name>,
+  CHANGE COLUMN native_resource_component_id native_resource_type_id BIGINT(20) DEFAULT NULL,
+  ADD CONSTRAINT fk_district_resource_type FOREIGN KEY (native_resource_type_id) REFERENCES resource_types (id);
+```
+
+**`player_metadata`:**
+```sql
+ALTER TABLE player_metadata
+  DROP FOREIGN KEY <existing_fk_name>,
+  CHANGE COLUMN native_resource_component_id native_resource_type_id BIGINT(20) DEFAULT NULL,
+  ADD CONSTRAINT fk_player_resource_type FOREIGN KEY (native_resource_type_id) REFERENCES resource_types (id);
+```
+
+**Before running:** Verify the existing FK constraint names with `SHOW CREATE TABLE district_metadata;` and `SHOW CREATE TABLE player_metadata;` — substitute the real names in the DROP FOREIGN KEY clause. Report actual constraint names and DDL as-executed in `Claude_context.md`.
+
+---
+
+### DB-07 — Add CHECK constraint to `inteltoken_metadata.inteltoken_quarter_id`
+
+**Design decision (locked S37):** No `quarters` lookup table. Quarters are a fixed 1–8 sequence with no metadata. A CHECK constraint is sufficient and correct.
+
+```sql
+ALTER TABLE inteltoken_metadata
+  ADD CONSTRAINT chk_quarter_range CHECK (inteltoken_quarter_id BETWEEN 1 AND 8);
+```
+
+Confirm with Andy before executing. Report as-executed in `Claude_context.md`.
+
+---
+
+## Still Blocked — Do Not Action
+
+- **DB-08** (card_metadata new fields) — blocked on PM05 04-39 (effects normalization). Schema must settle before card_metadata is touched.
 
 ---
 
@@ -105,8 +161,8 @@ Report findings in `Claude_context.md`. Flag uncertainties explicitly. Do not ge
 - **Material vs. Non-Material:** Material = contradicts or extends signed-off content → re-sign-off required. Non-material = formatting, terminology → no re-sign-off.
 - **Design Pillar 6:** Narrative takes precedence over mechanical. If the narrative reason for a rule cannot be stated, the rule may be arbitrary.
 - **Narrator Voice Test:** Every narrative field — could it have been written by a human who knows too much, OR by ARBITER in The Witness register? Both readings must remain valid.
-- **Signed-off artifacts:** 03 (v1.7), 02a (v1.4). Do not propose additions to these without flagging re-sign-off requirement.
-- **Artifact 04** (Card System, v0.9.17) — in progress. C11–C15 re-sign-off pending.
+- **Signed-off artifacts:** 00 (v1.4), 00a (v0.2), 00b (v0.1), 01 (v1.2), 02a (v1.4), 02b (v1.5), 03 (v1.8), 04b (v1.2). Do not propose additions without flagging re-sign-off requirement.
+- **Artifact 04** (Card System, v0.9.20) — in progress. C01–C16 signed off. C17 sign-off pending (04-41). C18/C19 redesign open (D-04-02). C20 not reviewed. C21–C35 pending.
 
 ---
 

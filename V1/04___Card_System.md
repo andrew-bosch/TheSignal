@@ -2157,6 +2157,230 @@ Design note: Name a faction; ARBITER announces that faction's current Intel toke
 
 ---
 
+### Intel Economy Cards — C36–C42
+
+*Draft specifications. Locked by L145–L148 (S37). Full §6 schema pass required (04-47). These cards establish the universal Intel token economy that closes PM05 04-41.*
+
+---
+
+### C36 — SYNTHESIZE
+
+- **Card ID:** C36
+- **Card name:** Synthesize
+- **Tagline:** *Convert raw intelligence into operational clarity.*
+- **Card type:** Faction-Specific Covert Operation
+- **Faction:** Ghost only.
+- **Beat:** 3
+- **Target district:** N/A
+- **Target faction:** N/A
+- **Target object:** Intel token
+- **Restriction:** Requires at least 1 Intel token held by Ghost at time of submission.
+- **Primary cost qty:** 1
+- **Primary cost type:** Faction native (Findings)
+- **Secondary cost qty:** 1
+- **Secondary cost type:** Intel token
+- **Faction affinity:** Ghost only.
+- **Difficulty:** N/A
+- **Crit success:** N/A — Automatic.
+- **Success:** Spend 1 Intel token; gain 3 Intel tokens. Net: +2 Intel.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
+- **Portrait:** +1 Ghost Submitter.
+- **Narrative anchor:** *Raw surveillance is noise. What Ghost does to it — that is signal.*
+- **Faction perspectives:**
+  - Ghost: *We don't just gather. We process. The difference is what we are.*
+- **Design note:** Designed for the GATHER→SYNTHESIZE Double Case Pass combo (L145). Play GATHER (C05) in Month 1 to acquire Intel; play SYNTHESIZE in Month 2 using the acquired token. Affords Ghost a compounding intelligence advantage within a single Quarter. Intel token consumed is any held token — not required to be faction-indexed.
+- **Taxonomy:** Resource — Add — Intel token.
+
+---
+
+### C37 — SACRIFICE
+
+- **Card ID:** C37
+- **Card name:** Sacrifice
+- **Tagline:** *Burn The Network's institutional credibility for an intelligence edge.*
+- **Card type:** Faction-Specific Covert Operation
+- **Faction:** Network only.
+- **Beat:** 3
+- **Target district:** N/A
+- **Target faction:** N/A
+- **Target object:** N/A
+- **Restriction:** None.
+- **Primary cost qty:** 1
+- **Primary cost type:** Public Standing (direct track step — Network Submitter moves down 1 on the PS track; not a resource spend)
+- **Secondary cost qty:** N/A
+- **Secondary cost type:** N/A
+- **Faction affinity:** Network only.
+- **Difficulty:** N/A
+- **Crit success:** N/A — Automatic.
+- **Success:** Gain 1 Intel token.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
+- **Portrait:** N/A (the PS track loss is the cost, not a Portrait adjustment).
+- **Narrative anchor:** *The Network knows: sometimes you spend credibility like currency. This is one of those times.*
+- **Faction perspectives:**
+  - Network: *Standing is not an end. It is a means. And sometimes a means must be spent.*
+- **Design note:** Converts Public Standing directly into Intel. Network Submitter loses 1 step on the PS track — this is the payment, not a portrait effect. Generates Intel without a specific target district or faction. Cost representation pending full schema review in 04-47.
+- **Taxonomy:** Resource — Convert — Public Standing (to Intel token).
+
+---
+
+### C38 — PARASITIC
+
+- **Card ID:** C38
+- **Card name:** Parasitic
+- **Tagline:** *Wire a district's commerce. Let others do the work.*
+- **Card type:** Faction-Specific Covert Operation
+- **Faction:** Syndicate only.
+- **Beat:** 2
+- **Target district:** Any district
+- **Target faction:** N/A
+- **Target object:** District (Capital flows)
+- **Restriction:** None.
+- **Primary cost qty:** 2
+- **Primary cost type:** Capital
+- **Secondary cost qty:** N/A
+- **Secondary cost type:** N/A
+- **Faction affinity:** Syndicate only.
+- **Difficulty:** N/A
+- **Crit success:** N/A — Automatic.
+- **Success:** Place a PARASITIC marker on the named district. If any faction successfully extracts Capital (native or district resource) from that district this Month, Syndicate gains 1 Intel token. ARBITER delivers at end of Beat 3.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
+- **Portrait:** +1 Syndicate Submitter (if Intel is collected this Month). N/A if no Capital extraction occurs.
+- **Narrative anchor:** *The Syndicate does not steal from the river. They build a weir.*
+- **Faction perspectives:**
+  - Syndicate: *We invested in the district's infrastructure. Why shouldn't we see what moves through it?*
+- **Design note:** Conditional Intel generation. Syndicate profits from other factions' economic activity. Requires ARBITER to track Capital extraction in the marked district through Beat 3. Physical PARASITIC marker component needed — flag for Art 07 / component spec. Portrait trigger is conditional on activation.
+- **Taxonomy:** Resource — Add — Intel token (conditional trigger).
+
+---
+
+### C39 — ABSOLUTE COMPROMISE
+
+- **Card ID:** C39
+- **Card name:** Absolute Compromise
+- **Tagline:** *Some barriers are not barriers at all — just the illusion of one.*
+- **Card type:** Covert Operation
+- **Card subtype:** Standard
+- **Faction:** All.
+- **Beat:** 2
+- **Target district:** Any district
+- **Target faction:** N/A
+- **Target object:** Block or Protect card in Beat 2 row
+- **Restriction:** Must target a face-up Beat 2 Block (Type A Countermeasure) or Protect operation in the named district.
+- **Primary cost qty:** 1
+- **Primary cost type:** Intel token
+- **Secondary cost qty:** N/A
+- **Secondary cost type:** N/A
+- **Faction affinity:** N/A.
+- **Difficulty:** N/A
+- **Crit success:** N/A — Automatic.
+- **Success:** The named Beat 2 Block or Protect card is discarded. Its effect does not apply this Month. Resources committed to the blocked card are not refunded. The operations it would have blocked or protected against proceed without that modifier.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
+- **Portrait:** N/A.
+- **Narrative anchor:** *There are no walls. There are only varying degrees of access.*
+- **Design note:** Intel cost makes this a premium counter. Intel token consumed is any held token. Cannot target Type B Countermeasures (faction defense) — only Type A (District Block) and Protect/Fortify operations. Extends Beat 2 interactions; processes in Beat 2 row alongside Countermeasures and Protect.
+- **Taxonomy:** Action — Block — Positional wager (Block + Protect).
+
+---
+
+### C40 — WEAPONIZED TRANSPARENCY
+
+- **Card ID:** C40
+- **Card name:** Weaponized Transparency
+- **Tagline:** *Exposure is not a threat. It is a delivery mechanism.*
+- **Card type:** Faction-Specific Covert Operation
+- **Faction:** Network only.
+- **Beat:** 3
+- **Target district:** N/A
+- **Target faction:** Named opponent faction
+- **Target object:** Public Standing / Covert operation
+- **Restriction:** None.
+- **Primary cost qty:** 1
+- **Primary cost type:** Intel token
+- **Secondary cost qty:** N/A
+- **Secondary cost type:** N/A
+- **Faction affinity:** Network only.
+- **Difficulty:** N/A
+- **Crit success:** N/A — Automatic.
+- **Success:** Choose one: (A) Target faction loses 1 Public Standing step — unblockable, no Countermeasure may prevent this; or (B) Target faction must submit their Month 2 covert action cards face-up (revealed play). If this is Month 2, the revealed play applies to Month 3 political acts instead.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
+- **Portrait:** +1 Network Submitter.
+- **Narrative anchor:** *The Network does not publish what it knows. It delivers it — privately, precisely, to exactly one person.*
+- **Faction perspectives:**
+  - Network: *Transparency is a tool. We decide when and where to deploy it.*
+- **Design note:** Intel cost is the authorization. The card represents The Network leveraging gathered intelligence as a coercive instrument rather than a public broadcast. Option A (PS drop) is unblockable by design — this is The Network's doctrine differentiator. Option B (revealed play) introduces information asymmetry. ARBITER enforces revealed play rule at next Month's Dispatch.
+- **Taxonomy:** Action — Shift (PS) / Reveal — Public Standing / Covert operation.
+
+---
+
+### C41 — CORPORATE BLACKMAIL
+
+- **Card ID:** C41
+- **Card name:** Corporate Blackmail
+- **Tagline:** *Leverage converts intelligence into compliance.*
+- **Card type:** Faction-Specific Covert Operation
+- **Faction:** Syndicate only.
+- **Beat:** 3
+- **Target district:** N/A
+- **Target faction:** Named opponent faction
+- **Target object:** Capital / Accord agreement
+- **Restriction:** Option B (force Yes vote) only valid if an Accord is proposed during Debrief this Quarter.
+- **Primary cost qty:** 1
+- **Primary cost type:** Intel token
+- **Secondary cost qty:** N/A
+- **Secondary cost type:** N/A
+- **Faction affinity:** Syndicate only.
+- **Difficulty:** N/A
+- **Crit success:** N/A — Automatic.
+- **Success:** Choose one: (A) Target faction transfers 2 Capital to Syndicate immediately. No negotiation. ARBITER enforces. Or (B) Target faction must vote 'Yes' on the next Accord proposal directed at them during Debrief this Quarter.
+- **Failure:** N/A — Automatic.
+- **Crit failure:** N/A — Automatic.
+- **Portrait:** −1 Syndicate Flat (blackmail corrodes everyone's trust in the system, regardless of who submits it).
+- **Narrative anchor:** *The information was gathered properly. What is done with it is simply business.*
+- **Faction perspectives:**
+  - Syndicate: *We don't call it blackmail. We call it accelerated negotiation.*
+- **Design note:** Option A (Capital theft) is unconditional — no block. Option B (forced Yes vote) requires an Accord context; if no Accord is proposed, Option B cannot be chosen. ARBITER tracks the forced vote through Debrief. Flat portrait modifier (−1 Syndicate regardless of who submits) reflects systemic corruption effect; subject to review during full Portrait economy analysis (PM05 04-21).
+- **Taxonomy:** Resource — Steal (Capital) / Action — Force (Accord vote).
+
+---
+
+### C42 — SANCTIONED RAID
+
+- **Card ID:** C42
+- **Card name:** Sanctioned Raid
+- **Tagline:** *Not every operation leaves a paper trail.*
+- **Card type:** Faction-Specific Covert Operation
+- **Faction:** Directorate only.
+- **Beat:** 3
+- **Target district:** Any district
+- **Target faction:** Named opponent faction
+- **Target object:** Presence token
+- **Restriction:** None.
+- **Primary cost qty:** 1
+- **Primary cost type:** Mandate
+- **Secondary cost qty:** 1
+- **Secondary cost type:** Intel token
+- **Faction affinity:** Directorate only.
+- **Difficulty:** Challenging (25) + ring modifier
+- **Resolution:** d100
+- **Resolution type:** Probabilistic
+- **Crit success:** Remove all named faction's presence chips from the named district. Directorate gains 1 Mandate from Reservoir.
+- **Success:** Remove all named faction's presence chips from the named district. Ignores Block cards, Type A and Type B Countermeasures, and Protect operations. No Public Standing penalty to acting faction.
+- **Failure:** No effect. Intel token and Mandate spent.
+- **Crit failure:** No effect. Intel token and Mandate spent. Notification slip delivered to target.
+- **Portrait:** +1 Directorate Submitter.
+- **Narrative anchor:** *The Directorate does not ask permission. It records the action and moves on.*
+- **Faction perspectives:**
+  - Directorate: *The intelligence warranted the action. The action was authorised. There is nothing further to say.*
+- **Design note:** The Intel cost represents the intelligence that justifies the raid — without prior surveillance, the Directorate cannot sanction the action. The "ignores blocks" property makes this a premium Directorate capability. Difficulty Challenging (rather than Automatic) reflects that even sanctioned operations can fail. ARBITER removes presence chips; acting Faction Player updates Control flags and Established markers.
+- **Taxonomy:** Action — Remove — Presence token.
+
+---
+
 ## 9. Standard Political Acts — P01–P08
 
 

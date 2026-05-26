@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-25 (session 36 complete) — supersedes session 31 save state.
+### Generated: 2026-05-26 (session 37 complete) — supersedes session 31 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -48,7 +48,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 02a — Resource Systems: Board State | 1.4 | ✅ Signed Off — Session 22. Control flag corrected (gold, per-district, on Dominant stack); Established marker added (silver, L111, one per Established faction per district); ARBITER Dominance Marker confirmed. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
 | 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (20 types) — CA-xx (Dispatch Case) added session 22. L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes). L2 TypeScript schema pointers in §8. Established session 20. |
-| 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
+| 03 — Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off — S37. Double Case Pass: Quarter restructured into Month 1/2 (covert) + Month 3 (political). Dispatch Tokens (3/faction, 4/Ghost, L146). Intel Token Decay at Upkeep Step 6 (L149). Ghost Political Act token gate (L147). Sections renumbered §9–§17 (Months), §18–§22. Phase 7 → Debrief (orphan fixed). §19 Operation System (d100, M-01–M-12, L108-compliant). |
 | 03a — Game Engine Specification | 0.98 | 🔄 In progress — Layers 1–3 complete; Phase procedures added (Quarter_Flow, Phase_1–Phase_7, Beat_0–Beat_5); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
 | 04 — Action Card System | 0.9.19 | 🔄 In Progress — Session 32: Major schema/editorial pass. Crit delta convention, resolution field, affinity bonus notation, difficulty normalization, ARBITER context cleanup, Beat 2 marker timing, §1/§3/§5 rewritten. C11–C14 re-sign-off complete. Political acts P01–P18 pending. |
 | 04b — Action Taxonomy | 1.2 | ✅ Active Reference — §10 added session 28: Pass, Modifier, Emergency Response cards excluded from taxonomy (L138). |
@@ -57,10 +57,10 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 10a — Victory System | 0.1 | 🔄 Draft Placeholder — §4 updated with dual causality governing principle |
 | 11 — Visual Design System | 0.1 | ⬜ Placeholder |
 | PM01 | 1.6 | ✅ Active |
-| PM02 | 3.8 | ✅ Active — locked decisions L01–L143 (L143: deliberation cycles as in-world term for Quarters) |
+| PM02 | 4.0 | ✅ Active — locked decisions L01–L150. S37: L145–L150 (Double Case Pass, Dispatch Tokens, Ghost token gate, Intel universal currency, Intel decay, Month canon term) |
 | PM03 | 2.4 | ✅ Active — Art 04 v0.9.18; version drift corrected session 31 |
 | PM04 | 0.7 | ✅ Active |
-| PM05 | 2.4 | ✅ Active — C17 sign-off pending (04-41); 8 items added S36 (04-43/44/45/46, DB-04/05/07/08) |
+| PM05 | 2.5 | ✅ Active — S37: 04-41 closed (Intel universal currency, L148). 04-47 added (Intel economy cards schema pass). 04-48 added (Art 03 v1.9 re-sign-off). C17 unblocked. |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 
@@ -126,6 +126,18 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - **README fixed.** Artifact 00 corrected from v1.3 → v1.4 (Gem audit finding, already confirmed).
 - **CLAUDE.md updated.** Agent Roster section added; rclone section removed; close routine Phase 2 updated (GEM_CONTEXT replaces SYNC).
 - **Next session:** C17 sign-off (04-41 surveillance deniability must resolve first), C20 review, C21–C25 Directorate cards.
+
+**Session 37 summary (2026-05-26 — complete):**
+- **Double Case Pass implemented (L145).** Art 03 restructured from linear 7-phase to Month 1 / Month 2 / Month 3 within the Quarter. Month 1 and Month 2 = covert operational months (Dispatch + Countermeasures + Resolution each). Month 3 = political month (Declaration + Countermeasures + Resolution).
+- **Dispatch Tokens locked (L146).** 3 per standard faction, 4 for Ghost. 1 token per submitted covert card. Collected per Month; redistributed at Upkeep Step 7. Ghost Political Act requires retaining ≥1 token (L147); passing requires no token.
+- **Intel as universal currency (L148).** All factions can generate and spend Intel tokens. Closes PM05 04-41 (C17 surveillance deniability blocker — Ghost's failure slip no longer uniquely identifies Ghost). C17 sign-off now unblocked.
+- **Intel Token Decay at Upkeep (L149).** New Step 6 in Phase 1: hold 1–2 tokens → lose 1; hold 3+ → lose 2.
+- **"Month" as provisional canon (L150).** Three Quarter phases named Month 1, Month 2, Month 3. Week/Beat nomenclature: Month1.Week2.Beat1 format. Beat retained for design reference.
+- **Art 03 v1.9 changes.** §2 Index updated (22 sections). §6 Quarter Overview code block updated (Month 1/2/3 + Debrief). §7 Upkeep: new Steps 6–7. §9–§17: Month 1/2/3 sections. §15: Ghost Political Act restriction. §17: political act restriction check added (before Submit Payment, Beat 4). §18: "Phase 7" prefix removed. Three blocking fixes applied (dispatch token language, orphaned Phase 7 label, political act restriction check placement). Re-sign-off pending (04-48).
+- **PM04 updated.** "Month" entry added to §1 Temporal Conventions table (provisional, evaluate after use).
+- **Intel economy cards drafted (C36–C42).** SYNTHESIZE (Ghost), SACRIFICE (Network — confirmed: direct PS track step, not resource or Portrait), PARASITIC (Syndicate), ABSOLUTE COMPROMISE (Common), WEAPONIZED TRANSPARENCY (Network), CORPORATE BLACKMAIL (Syndicate), SANCTIONED RAID (Directorate). Full schema pass queued (04-47).
+- **gem_web_context.md restructured.** Gem Profile protocol (Bucket A/B) integrated. Standing Instructions updated with session number calibration. Project Reference section seeded from Claude's working knowledge.
+- **Next session:** Art 03 v1.9 full review and re-sign-off (04-48, first item), then C17 sign-off (unblocked), then C20 review.
 
 **Session 34 summary (2026-05-24 — complete):**
 - **Art 00 v1.4 re-sign-off complete.** First pass clean. "Deliberation cycles" confirmed as in-world term for Quarters (L143). Ring name propagation: "The Mid" / "Baryo" applied across 00a, 00b, 00c, 03a (non-material). 00-07 multicultural texture pass now unblocked.
