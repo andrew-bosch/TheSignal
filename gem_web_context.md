@@ -1,6 +1,6 @@
 # Gem — Persistent Session Memory
 *This file is Gem's memory. You have no continuity between sessions except what is written here. Read this file completely before engaging with the project context dump.*
-*Last updated: 2026-05-26 — Session 37*
+*Last updated: 2026-05-26 — Session 38*
 
 ---
 
@@ -61,6 +61,43 @@ Session 37 close. The working session you are beginning is **Session 38**.
 
 - **Art 03 v1.9 re-sign-off** — Andy full review pending (Session 38 first item). Cannot sign off downstream card work that references round structure until this clears.
 - **DB-05** — blocked on DB-04 (resource_types table).
+
+---
+
+Hi Gem,
+
+Session 38 close. The working session you are beginning is **Session 39**.
+
+**Main work this session:** Dispatch Token foundation built from scratch — complete chain from narrative anchor to governing rule to component definition. Narrative anchor added to Art 00 §14 (between Deployment Markers and What a Card Is) with the PM backlog metaphor: "The Backlog is where the faction kept it until the organization was ready to send it." Governing rule added to Art 00a as R39 (covert operations require one Dispatch Token; rejected at Beat 0 without one; cost not spent). Component definition added to Art 02a as new §8a (The Backlog, distribution table, spend rules, operational meaning, Ghost asymmetry). Art 03 updated: §7 Step 2 initiative procedure moved to Art 07 placeholder (03-11 flagged); Reservoir → The Backlog terminology corrected. Three locked decisions: L151, L152, L153. Art 01 overhaul flagged as major new project (01-05) — physical space taxonomy never defined, blocks game_zones DB population. Three artifacts pending re-sign-off: 00a (v0.3), 02a (v1.5), 03 (v1.9 pending since S37).
+
+### Locked Decisions (Session 38)
+
+| Decision | Summary | Artifacts |
+|----------|---------|-----------|
+| L151 | The Backlog — canonical name for Dispatch Token pool on the table. Physically and terminologically distinct from the Reservoir (faction resource storage). 16 tokens total (Ghost: 4, others: 3). Backlog vs. active framing: spending a token moves an operation from backlog to active. | 00, 00a, 02a, 03, PM04 |
+| L152 | base_difficulty = INTEGER (or N/A) in card_metadata and Art 04 §6. Tier name ("Average", "Easy", "Challenging") is a derived dimension, not stored. NP1-01 queued for cleanup. | 04, DB |
+| L153 | Assets definition — C10 Protect scope: faction's Influence, Structure Blocks, Deployment Markers, and any covert or political actions declared this round. Narrative: everything the faction is doing, passive or active. | 04, PM04 |
+
+### Current PM05 Priorities (Session 39 open)
+
+| Item | Description | Status |
+|------|-------------|--------|
+| 04-48 | Art 03 v1.9 — re-sign-off | Open — Session 39 first item |
+| 00a-08 | 00a v0.3 re-sign-off (R39 added S38) | Open — after Art 03 |
+| 02a-10 | 02a v1.5 re-sign-off (§8a added S38) | Open |
+| C17 sign-off | C17 card sign-off | Open — unblocked after Art 03 re-sign-off |
+| 01-05 | Art 01 overhaul — physical space definition + game_zones DB alignment | New S38 — major project |
+| XA-32 | Art 03 Beat 3/4 ring modifier step + Art 07 ring modifier guide | Open — coordinates with 04-48 |
+| 04-47 | Art 04 Intel economy cards C36–C42 full §6 schema pass | Open |
+| 03-11 | Art 07 — migrate initiative procedure from Art 03 §7 Step 2 | Open |
+| NP1-01 | Art 04 §6 base_difficulty field cleanup (string → Integer) | Open — unsupervised pass |
+| DB-08 | card_metadata missing columns (resolution_type, base_difficulty INTEGER NULL, ring modifiers) — 00b §8 spec + agy DDL | Open — agent task |
+
+### Active Blockers
+
+- **Art 03 v1.9 re-sign-off (04-48)** — two terminology flags pending Andy review (Session 39 first item): §3 "Eight rounds" → "Eight Quarters"; §20 "Round Tracker" (component name vs. terminology violation). XA-32 ring modifier step also open. Cannot sign off downstream card work until this clears.
+- **01-05** — Art 01 overhaul required before game_zones DB can be populated. Physical space taxonomy never formally defined.
+- **00a/02a re-sign-offs** — Dispatch Token foundation changes require re-sign-off on both.
 
 ---
 
@@ -134,7 +171,7 @@ In Session 37, Gem referenced work as "Session 36" when the active session was 3
 
 **Intel tokens:** Universal currency as of L148. All factions can generate and spend. Decay at Upkeep: 1–2 held → lose 1; 3+ held → lose 2.
 
-**Dispatch Tokens (L146):** Ghost has 4; all other factions have 3. Shared budget across Month 1 and Month 2. Ghost Political Act requires retaining ≥1 token (L147).
+**Dispatch Tokens (L146):** Ghost has 4; all other factions have 3. Shared budget across Month 1 and Month 2. Ghost Political Act requires retaining ≥1 token (L147). The shared pool of tokens on the table is called **The Backlog** (L151) — distinct from the Reservoir (faction resource storage). Spending a token moves an operation from backlog to active. Each covert operation submitted in a dispatch case requires one token; submitted without a token = invalid, rejected at Beat 0 (R39).
 
 ---
 
