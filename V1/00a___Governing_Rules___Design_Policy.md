@@ -1,9 +1,9 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.2 Draft  
-**Status:** ✅ Signed Off  
-**Last Updated:** 2026-05-15  
+**Version:** 0.3 Draft  
+**Status:** ⚠️ Pending Re-Sign-Off — S38 (R39 Dispatch Tokens added)  
+**Last Updated:** 2026-05-26  
 **Companion to:** 00 — Factions, World & Narrative Context  
 **Depends on:** 00, 01, 02a, 02b, 03, 04, 04b
 
@@ -977,6 +977,20 @@ The sequence is the grammar of the negotiation. The timing rules are what make t
 
 ---
 
+**00-R39**
+
+**Rule:** Each covert operation submitted in a dispatch case requires one Dispatch Token. A covert operation submitted without a token is invalid.
+
+**Narrative:** Internal capacity is not the same as organizational readiness. A faction can have the resources, the personnel, and the doctrine aligned for an operation — and still not have its internal machinery synchronized to execute it this quarter. The token is the accounting of that synchronization: approvals completed, internal and external commitments made, the organization having said yes. Without it, the operation exists as a plan. It does not exist as an action.
+
+**Mechanics:** Each covert operation card submitted in a dispatch case must be accompanied by one Dispatch Token placed in the case. A card submitted without a token is invalid — rejected by ARBITER at Beat 0 and returned to the acting faction without resolution. Cost is not spent. Pass cards require no token. Political acts are declared at The Table and require no Dispatch Token. Token allocation per Quarter drawn from The Backlog (the shared Dispatch Token pool): standard factions draw 3, Ghost draws 4. Full rules and component definition: Artifact 02a §8.
+
+*Source: Artifact 03 §9.*
+
+*Governs: Artifacts 02a, 03.*
+
+---
+
 
 ## 11. Punch List — Rules Requiring Audit
 
@@ -1039,9 +1053,10 @@ The sequence is the grammar of the negotiation. The timing rules are what make t
 | 00-R36 | Critical results apply regardless of modifiers | Crit Success (01–05) always succeeds; Crit Fail (96–00) always fails |
 | 00-R37 | Submission order is tiebreaker within resolution priority tiers | Faster submission earns resolution priority within Beat 3 and Beat 4 |
 | 00-R38 | Findings decay applies at close of Debrief, before Round Tracker advances | First action at end of quarter; timing fixed; cannot be modified by card effect |
+| 00-R39 | Each covert operation submitted requires one Dispatch Token; no token = invalid | Rejected at Beat 0, returned without resolution, cost not spent; pass cards and political acts exempt; allocation drawn from The Backlog (standard: 3, Ghost: 4) |
 
 ---
 
-*End of Artifact 00a — Governing Rules & Design Policy v0.2 Draft*
+*End of Artifact 00a — Governing Rules & Design Policy v0.3 Draft*
 *Populated from review of all V1 artifacts: 00, 01, 02a, 02b, 03, 04, 04b, PM01, PM02, PM03*
-*41 rules across 7 categories (§3–§9). Full structure pass complete. §10 dismissed. Pending sign-off.*
+*42 rules across 7 categories (§3–§9). Full structure pass complete. §10 dismissed. Pending sign-off.*

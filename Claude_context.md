@@ -1,28 +1,51 @@
 # THE SIGNAL — agy Outbound Consulting Report
-*Date: 2026-05-25 — Session 32 (PM)*
+*Date: 2026-05-25 — Session 37 (Updated)*
 
 **To:** Claude Code (Primary Artifact Writer)  
 **From:** agy (Cloud Consulting Layer — Antigravity CLI)  
-**Status:** DB-03 Executed & Airlock Gap Analysis Completed  
+**Status:** DB-03, DB-04, DB-05, and DB-07 Executed & Airlock Gap Analysis Completed  
 
 ---
 
 ## 1. Actions Taken
 *   **DB-03 (inteltoken_metadata table creation) Executed:** 
-    Following Andy's terminal confirmation, the `inteltoken_metadata` table has been successfully created in `the_signal_db`.
-    *   **Adjustments Made:** The foreign key table names were corrected from the singular proposal (`component`, `faction`) to the pluralized tables in the live database (`components`, `factions`).
-    *   **Quarter Constraint:** `inteltoken_quarter_id` has been created as `INT(11) NULL`. No foreign key is applied yet because there is no `quarter` or `quarters` table in the current database schema.
-    *   **DDL Executed:**
-        ```sql
-        CREATE TABLE inteltoken_metadata (
-          inteltoken_id bigint(20) NOT NULL,
-          inteltoken_subject_faction_id bigint(20) DEFAULT NULL,
-          inteltoken_quarter_id int(11) DEFAULT NULL,
-          PRIMARY KEY (inteltoken_id),
-          CONSTRAINT fk_inteltoken_components FOREIGN KEY (inteltoken_id) REFERENCES components (id),
-          CONSTRAINT fk_inteltoken_factions FOREIGN KEY (inteltoken_subject_faction_id) REFERENCES factions (id)
-        );
-        ```
+    The `inteltoken_metadata` table has been created in `the_signal_db` with corrected pluralized references (`components`, `factions`).
+*   **DB-04 (resource_types table creation + factions columns) Executed:**
+    *   Created the `resource_types` lookup table.
+    *   Altered `factions` to add `native_resource_type_id` (FK → `resource_types.id`) and `color` (hex) columns.
+*   **DB-05 (district_metadata & player_metadata resource migrations) Executed:**
+    *   Altered `district_metadata`: Dropped foreign key `district_metadata_ibfk_3`, renamed `native_resource_component_id` to `native_resource_type_id`, and added foreign key `fk_district_resource_type` referencing `resource_types(id)`.
+    *   Altered `player_metadata`: Dropped foreign key `player_metadata_ibfk_5`, renamed `native_resource_component_id` to `native_resource_type_id`, and added foreign key `fk_player_resource_type` referencing `resource_types(id)`.
+*   **DB-07 (inteltoken_metadata check constraint) Executed:**
+    *   Added check constraint `chk_quarter_range` to `inteltoken_metadata` to enforce `inteltoken_quarter_id` values between 1 and 8.
+*   **DDL Executed:**
+    ```sql
+    -- DB-04
+    CREATE TABLE resource_types (
+      id BIGINT(20) NOT NULL AUTO_INCREMENT,
+      resource_name VARCHAR(100) NOT NULL,
+      category VARCHAR(50) DEFAULT NULL,
+      PRIMARY KEY (id)
+    );
+    ALTER TABLE factions
+      ADD COLUMN native_resource_type_id BIGINT(20) DEFAULT NULL,
+      ADD COLUMN color VARCHAR(7) DEFAULT NULL,
+      ADD CONSTRAINT fk_factions_resource_type FOREIGN KEY (native_resource_type_id) REFERENCES resource_types (id);
+
+    -- DB-05
+    ALTER TABLE district_metadata
+      DROP FOREIGN KEY district_metadata_ibfk_3,
+      CHANGE COLUMN native_resource_component_id native_resource_type_id BIGINT(20) DEFAULT NULL,
+      ADD CONSTRAINT fk_district_resource_type FOREIGN KEY (native_resource_type_id) REFERENCES resource_types (id);
+    ALTER TABLE player_metadata
+      DROP FOREIGN KEY player_metadata_ibfk_5,
+      CHANGE COLUMN native_resource_component_id native_resource_type_id BIGINT(20) DEFAULT NULL,
+      ADD CONSTRAINT fk_player_resource_type FOREIGN KEY (native_resource_type_id) REFERENCES resource_types (id);
+
+    -- DB-07
+    ALTER TABLE inteltoken_metadata
+      ADD CONSTRAINT chk_quarter_range CHECK (inteltoken_quarter_id BETWEEN 1 AND 8);
+    ```
 
 ---
 

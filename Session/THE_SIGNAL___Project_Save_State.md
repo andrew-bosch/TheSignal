@@ -1,8 +1,29 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-26 (session 37 complete) — supersedes session 31 save state.
+### Generated: 2026-05-26 (session 38 complete) — supersedes session 37 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
+
+---
+
+### Session 38 Summary — 2026-05-26
+
+**Focus:** Art 03 v1.9 review (in progress); Dispatch Token foundation built from scratch.
+
+**Decisions locked:** L151 (The Backlog), L152 (base_difficulty = Integer), L153 (Assets definition).
+
+**Artifacts changed:**
+- Art 00 v1.5 — Dispatch Token narrative anchor added §14 (The Backlog framing). **Re-sign-off complete.**
+- 00a v0.3 — R39 added (Dispatch Token governing rule). Pending re-sign-off.
+- 02a v1.5 — §8a added (Dispatch Tokens & The Backlog). Pending re-sign-off.
+- Art 03 v1.9 — §7 Step 2 simplified (initiative to Art 07); Reservoir → The Backlog corrections. Still pending re-sign-off (two terminology flags + XA-32).
+- PM04 v0.8 — Assets definition, The Backlog (Component & System Terms), Dispatch Token (Component Physical Glossary).
+
+**PM05 changes:** DB-04/05/07 closed (agy S37 executed). Added: DB-08, NP1-01, 00-08 ✅, 00a-08, 02a-10, 01-05 (Art 01 overhaul — physical space + game_zones), 03-11 (initiative procedure to Art 07).
+
+**Next session (39):** Art 03 v1.9 re-sign-off (first item — two terminology flags, XA-32 resolution); then 00a/02a re-signs-off; then C17 sign-off.
+
+---
 
 ---
 

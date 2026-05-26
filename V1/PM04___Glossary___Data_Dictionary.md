@@ -1,9 +1,9 @@
 # PM04 — Glossary & Data Dictionary
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.7
+**Version:** 0.8
 **Status:** 🔄 Updated — Active
-**Last Updated:** 2026-05-24
+**Last Updated:** 2026-05-26
 **Supersedes:** PM04 v0.3
 
 ---
@@ -40,6 +40,8 @@ Canonical reference for all in-world terms and their mechanical equivalents. Eac
 | District | Board space / hex | A named geographic zone within New Meridian. | Artifact 01 §1 |
 | Presence token | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. Dominant is an atmosphere, not a count. | Artifact 02a §1 |
 | Operational marker | Claim marker | Temporary deployment presence; counts as a presence token during the round. | Artifact 01 §1 |
+| Assets | A faction's active board presence and declared actions — includes influence (presence tokens and deployment markers), structure blocks, and any covert operations or political acts declared during the current round. | Everything the faction is doing, passive or active. Established weight in the district, physical infrastructure, and open and covert commitments combined. | PM04 §1 (C10 Protect, Art 04 §7) |
+| The Backlog | Shared Dispatch Token pool on the table | The queue of authorized but uncommitted operational work. All Dispatch Tokens live here when not in faction possession. Distinct from the Reservoir (faction resources). Tokens drawn from The Backlog at Upkeep represent a faction's active operational capacity for the Quarter; spent tokens return to The Backlog at Quarter close. | Artifact 00 §14, Artifact 02a §8a |
 | Dispatch case | Recipe box | Protocol for covert submission. | Artifact 06 §1 |
 | Reservoir | Resource bank | Capitalized. The supply of available faction resources. *"The Reservoir does not judge what is drawn from it."* | PM02 L93 |
 | Public Standing track | Popularity track | 0–20 point scale. Bell curve enforced by natural drift (above 13 = −1/quarter, below 7 = +1/quarter). | Artifact 02b §1 |
@@ -70,6 +72,7 @@ Maps each canonical in-game term to its physical/real-world description. Authori
 | Status marker | Small token or disc | Used for Tension, Established flags, etc. |
 | Initiative strip | Laminated strip or card | Tracks faction initiative order per Quarter |
 | [Faction] resource token | Small wooden disc or cube; faction-coloured | Five types: Findings, Exposure, Capital, Capacity, Mandate |
+| Dispatch Token | Small token or printed chit | 16 total (Ghost: 4; all other factions: 3 each). Held beside faction tableau when unspent. Lives in The Backlog when not in faction possession. Color TBD — Artifact 11. |
 | Modifier card | Standard card, faction-neutral back | Value rating on face (1–3) |
 | Countermeasure card | Standard card, faction-back | Held in hand; reactive |
 | Pass card | Standard card, faction-back | Four variants (PS-01–PS-04); reusable |

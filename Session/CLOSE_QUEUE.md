@@ -1,68 +1,95 @@
-## CLOSE QUEUE — Session 37
+## CLOSE QUEUE — Session 38
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: **Last Updated:** 2026-05-21
-NEW: **Last Updated:** 2026-05-26
+---
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 04 | Card System | 0.9.20 | 🔄 In Progress | S35: L144 locked (1NF + snowflake schema). C15 signed off. C16 signed off. C16–C20 schema uplift complete (§6 schema, section headers, ring modifier fields — 4 per card). pool_copies deprecated (04-40). Effects normalization queued (04-39). Ring modifier formula working (XA-32). C17 sign-off pending (04-41 open). C18/C19 redesign flagged (D-04-02). C20 not yet reviewed. |
-NEW: | 04 | Card System | 0.9.20 | 🔄 In Progress | S35: L144 locked (1NF + snowflake schema). C15 signed off. C16 signed off. C16–C20 schema uplift complete (§6 schema, section headers, ring modifier fields — 4 per card). pool_copies deprecated (04-40). Effects normalization queued (04-39). Ring modifier formula working (XA-32). C18/C19 redesign flagged (D-04-02). C20 not yet reviewed. S37: Intel economy cards C36–C42 drafted (04-47 schema pass queued). C17 sign-off unblocked (04-41 closed). C37 SACRIFICE: direct PS track step cost confirmed (develop at 04-47). |
+OLD: | 00 | Factions & World | 1.4 | ✅ Signed Off — Session 34 | Factions, world, narrative context, ARBITER nature, timescale perspectives. Design Pillar 6 (§5), four-register system (§9), §14 Narrative Anchors incorporated. Session 33: ring renames (Infrastructure→The Mid, Sprawl→Baryo applied at all occurrences); 00-06 (quarter worldbuilding), XA-15 (ARBITER as sixth party), 00-03 (Layer Structure) added. Session 34: re-sign-off complete. 00-07 multicultural texture pass queued. |
+NEW: | 00 | Factions & World | 1.5 | ✅ Signed Off — Session 34 (v1.4) / Session 38 (v1.5) | Factions, world, narrative context, ARBITER nature, timescale perspectives. Design Pillar 6 (§5), four-register system (§9), §14 Narrative Anchors incorporated. Session 33: ring renames. Session 34: re-sign-off complete. Session 38: Dispatch Token narrative anchor added §14 (The Backlog framing); re-sign-off complete. 00-07 multicultural texture pass queued. |
+
+---
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | PM02 | Decision Log & Validation Tracker | 3.6 | 🔄 Active | Locked decisions (L01–L136), open blocking decisions, playtest variables. §2b punch list archived — live version in PM05. Change log through session 27. |
-NEW: | PM02 | Decision Log & Validation Tracker | 4.0 | 🔄 Active | Locked decisions (L01–L150). S37: L145–L150 (Double Case Pass, Dispatch Tokens, Ghost token gate, Intel universal currency, Intel decay, Month canon term). §2b punch list archived — live version in PM05. |
+OLD: | 00a | Governing Rules & Design Policy | 0.2 | ✅ Signed Off — Session 7 | 41 rules (R01–R38 + R13a, R13b, R29a), §3–§9, Appendix A. Governing principles: Narrative and World Consistency; Copy Design (no hardcoded variable values). A05/A06 closed by L92 (Chorus Node Portrait Amplifier — Established threshold, flat additive). |
+NEW: | 00a | Governing Rules & Design Policy | 0.3 | ⚠️ Pending Re-Sign-Off — S38 (R39 added) | 42 rules. R39 (S38): each covert operation requires one Dispatch Token; no token = invalid at Beat 0; political acts exempt; allocation drawn from The Backlog (standard: 3, Ghost: 4). Previously: 41 rules (R01–R38 + R13a, R13b, R29a), §3–§9, Appendix A. |
+
+---
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | PM05 | Active Punch List | 2.3 | 🔄 Active | Living action queue of all pending changes across all artifacts. Session 33: 00-07 added (multicultural texture enrichment pass). |
-NEW: | PM05 | Active Punch List | 2.5 | 🔄 Active | Living action queue of all pending changes across all artifacts. Session 33: 00-07 added. S37: 04-41 closed (Intel universal currency, L148); 04-47 added (Intel economy cards schema pass); 04-48 added (Art 03 v1.9 re-sign-off). |
+OLD: | 02a | Resource Systems: Board State | 1.4 | ✅ Signed Off — Session 22 | Presence, influence, structures, resource generation — all publicly visible board state. Session 22: Control flag corrected (gold, per-district, placed on dominant chip stack); Established marker added (silver, per-faction, placed on Established chip stack — up to 4–5 per district); ARBITER Dominance Marker (§6, §9, §10) confirmed. |
+NEW: | 02a | Resource Systems: Board State | 1.5 | ⚠️ Pending Re-Sign-Off — S38 (§8a added) | Presence, influence, structures, resource generation — all publicly visible board state. Session 22: Control flag, Established marker, ARBITER Dominance Marker confirmed. Session 38: §8a Dispatch Tokens & The Backlog added — component definition, spend rules (one token per covert op, pass/political exempt), Ghost asymmetry (4 vs 3), The Backlog as named physical token pool distinct from Reservoir. |
+
+---
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | 03 | Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off — S37 | S37: Double Case Pass architecture — Quarter restructured into Month 1/2 (covert) + Month 3 (political). Dispatch Tokens (3/faction, 4/Ghost). Intel Token Decay at Upkeep (Step 6). Ghost Political Act token gate (L147). Sections renumbered §9–§17; §18–§22. Previously: Seven phases. §19 Operation System (d100, modifiers M-01–M-12, L108-compliant table). |
+NEW: | 03 | Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off — S37/S38 | S37: Double Case Pass, Month 1/2 covert + Month 3 political, Dispatch Tokens, Intel Token Decay, Ghost Political Act gate, sections renumbered. S38: §7 Step 2 simplified (initiative procedure moved to Art 07, 03-11); Dispatch Token source corrected (Reservoir → The Backlog); two terminology flags pending Andy review (§3 "Eight rounds", §20 "Round Tracker"). |
+
+---
+
+### APPEND
+FILE: /home/abosch/Projects/TheSignal/V1/PM02___Decision_Log___Validation_Tracker.md
+AFTER: | L150 | "Month" as provisional canon for the three Quarter phases; Week/Beat nomenclature for design reference | Month 1 = first covert pass; Month 2 = second covert pass; Month 3 = political act phase. Calendar motif reinforces narrative framing already in Art 03 §4 (Quarter = three months). Beat numbering retained for design reference using Month1.Week2.Beat1 format. "Provisional" — evaluate after use in play materials before promotion to locked term. | 03, PM04 |
+CONTENT:
+| L151 | The Backlog — canonical name for the Dispatch Token pool on the table; distinct from the Reservoir | Reservoir = faction resources (Findings, Capital, etc.). The Backlog = Dispatch Token supply only. PM metaphor: tokens in The Backlog are authorized work not yet committed; spending a token moves an operation from backlog to active. 16 tokens total (Ghost: 4, all others: 3 each). Narrative grounding: Art 00 §14. Component definition: 02a §8a. Governing rule: 00a R39. | 00, 00a, 02a, 03, PM04 |
+| L152 | base_difficulty = INTEGER (or N/A) in card_metadata and Art 04 §6 | Difficulty tier name ("Easy", "Average", "Challenging") is a derived dimension — join to lookup table when label needed; do not store on card record. Numeric threshold (75, 50, 25) or N/A for Automatic cards. NP1-01 queued to clean up existing §6 card entries. DB-08 column type confirmed: INTEGER NULL. | 04, 00b, DB-08, NP1-01 |
+| L153 | Assets definition — C10 Protect scope | Assets = a faction's Influence (presence tokens and deployment markers), Structure Blocks, Deployment Markers, and any covert operations or political acts declared during the current round. Narrative anchor: everything the faction is doing, passive or active. Added to PM04 §1 Component & System Terms. | 04, PM04 |
+
+---
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: ### Generated: 2026-05-25 (session 36 complete) — supersedes session 31 save state.
-NEW: ### Generated: 2026-05-26 (session 37 complete) — supersedes session 31 save state.
+OLD: ### Generated: 2026-05-26 (session 37 complete) — supersedes session 31 save state.
+NEW: ### Generated: 2026-05-26 (session 38 complete) — supersedes session 37 save state.
 
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: | 03 — Round Structure & Gameplay | 1.7 | ✅ Signed Off — Session 20. Seven phases (Phase 7 Debrief split from Phase 6). §14 Operation System with L108-compliant modifier table M-01–M-12. §16 Apex revised: Emergency Response assist/thwart design note. Deployment Marker example corrected. All presence chip terminology standardised (L109). |
-NEW: | 03 — Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off — S37. Double Case Pass: Quarter restructured into Month 1/2 (covert) + Month 3 (political). Dispatch Tokens (3/faction, 4/Ghost, L146). Intel Token Decay at Upkeep Step 6 (L149). Ghost Political Act token gate (L147). Sections renumbered §9–§17 (Months), §18–§22. Phase 7 → Debrief (orphan fixed). §19 Operation System (d100, M-01–M-12, L108-compliant). |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: | PM02 | 3.8 | ✅ Active — locked decisions L01–L143 (L143: deliberation cycles as in-world term for Quarters) |
-NEW: | PM02 | 4.0 | ✅ Active — locked decisions L01–L150. S37: L145–L150 (Double Case Pass, Dispatch Tokens, Ghost token gate, Intel universal currency, Intel decay, Month canon term) |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: | PM05 | 2.4 | ✅ Active — C17 sign-off pending (04-41); 8 items added S36 (04-43/44/45/46, DB-04/05/07/08) |
-NEW: | PM05 | 2.5 | ✅ Active — S37: 04-41 closed (Intel universal currency, L148). 04-47 added (Intel economy cards schema pass). 04-48 added (Art 03 v1.9 re-sign-off). C17 unblocked. |
+---
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: - **Next session:** C17 sign-off (04-41 surveillance deniability must resolve first), C20 review, C21–C25 Directorate cards.
+AFTER: ### Generated: 2026-05-26 (session 38 complete) — supersedes session 37 save state.
 CONTENT:
 
-**Session 37 summary (2026-05-26 — complete):**
-- **Double Case Pass implemented (L145).** Art 03 restructured from linear 7-phase to Month 1 / Month 2 / Month 3 within the Quarter. Month 1 and Month 2 = covert operational months (Dispatch + Countermeasures + Resolution each). Month 3 = political month (Declaration + Countermeasures + Resolution).
-- **Dispatch Tokens locked (L146).** 3 per standard faction, 4 for Ghost. 1 token per submitted covert card. Collected per Month; redistributed at Upkeep Step 7. Ghost Political Act requires retaining ≥1 token (L147); passing requires no token.
-- **Intel as universal currency (L148).** All factions can generate and spend Intel tokens. Closes PM05 04-41 (C17 surveillance deniability blocker — Ghost's failure slip no longer uniquely identifies Ghost). C17 sign-off now unblocked.
-- **Intel Token Decay at Upkeep (L149).** New Step 6 in Phase 1: hold 1–2 tokens → lose 1; hold 3+ → lose 2.
-- **"Month" as provisional canon (L150).** Three Quarter phases named Month 1, Month 2, Month 3. Week/Beat nomenclature: Month1.Week2.Beat1 format. Beat retained for design reference.
-- **Art 03 v1.9 changes.** §2 Index updated (22 sections). §6 Quarter Overview code block updated (Month 1/2/3 + Debrief). §7 Upkeep: new Steps 6–7. §9–§17: Month 1/2/3 sections. §15: Ghost Political Act restriction. §17: political act restriction check added (before Submit Payment, Beat 4). §18: "Phase 7" prefix removed. Three blocking fixes applied (dispatch token language, orphaned Phase 7 label, political act restriction check placement). Re-sign-off pending (04-48).
-- **PM04 updated.** "Month" entry added to §1 Temporal Conventions table (provisional, evaluate after use).
-- **Intel economy cards drafted (C36–C42).** SYNTHESIZE (Ghost), SACRIFICE (Network — confirmed: direct PS track step, not resource or Portrait), PARASITIC (Syndicate), ABSOLUTE COMPROMISE (Common), WEAPONIZED TRANSPARENCY (Network), CORPORATE BLACKMAIL (Syndicate), SANCTIONED RAID (Directorate). Full schema pass queued (04-47).
-- **gem_web_context.md restructured.** Gem Profile protocol (Bucket A/B) integrated. Standing Instructions updated with session number calibration. Project Reference section seeded from Claude's working knowledge.
-- **Next session:** Art 03 v1.9 full review and re-sign-off (04-48, first item), then C17 sign-off (unblocked), then C20 review.
+---
+
+### Session 38 Summary — 2026-05-26
+
+**Focus:** Art 03 v1.9 review (in progress); Dispatch Token foundation built from scratch.
+
+**Decisions locked:** L151 (The Backlog), L152 (base_difficulty = Integer), L153 (Assets definition).
+
+**Artifacts changed:**
+- Art 00 v1.5 — Dispatch Token narrative anchor added §14 (The Backlog framing). **Re-sign-off complete.**
+- 00a v0.3 — R39 added (Dispatch Token governing rule). Pending re-sign-off.
+- 02a v1.5 — §8a added (Dispatch Tokens & The Backlog). Pending re-sign-off.
+- Art 03 v1.9 — §7 Step 2 simplified (initiative to Art 07); Reservoir → The Backlog corrections. Still pending re-sign-off (two terminology flags + XA-32).
+- PM04 v0.8 — Assets definition, The Backlog (Component & System Terms), Dispatch Token (Component Physical Glossary).
+
+**PM05 changes:** DB-04/05/07 closed (agy S37 executed). Added: DB-08, NP1-01, 00-08 ✅, 00a-08, 02a-10, 01-05 (Art 01 overhaul — physical space + game_zones), 03-11 (initiative procedure to Art 07).
+
+**Next session (39):** Art 03 v1.9 re-sign-off (first item — two terminology flags, XA-32 resolution); then 00a/02a re-sign-offs; then C17 sign-off.
+
+---
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
+OLD: **Version:** 2.6
+NEW: **Version:** 2.7
+
+---
 
 ### COMMIT
-source ~/Projects/credentials.env && git -C /home/abosch/Projects/TheSignal add -A && git -C /home/abosch/Projects/TheSignal commit -m "session 37 — Double Case Pass, Intel economy, Art 03 v1.9, Gem Profile protocol" && git -C /home/abosch/Projects/TheSignal push
+source ~/Projects/credentials.env && git -C /home/abosch/Projects/TheSignal add -A && git -C /home/abosch/Projects/TheSignal commit -m "session 38 — Dispatch Token foundation (The Backlog), Art 03 initiative simplification, PM04/PM05 updates" && git -C /home/abosch/Projects/TheSignal push
+
+---
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
+
+---
 
 ### DELETE
 FILE: /home/abosch/Projects/TheSignal/Session/CLOSE_QUEUE.md

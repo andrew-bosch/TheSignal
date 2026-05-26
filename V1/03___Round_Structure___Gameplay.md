@@ -152,37 +152,9 @@ Each Faction Player flips their Status marker to the Discussing side (yellow/tex
 
 ### Step 2 — Initiative
 
-ARBITER determines the Quarter's initiative order.
-
-**Profile Ranking:**
-
-1. The ARBITER Player reads each faction's current Chorus Portrait score from the hidden Portrait track.
-2. ARBITER ranks factions 1 (highest) through 5 (lowest).
-
-*Ties broken by Public Standing. Remaining ties by ARBITER discretion.*
-
-**D10 Roll:**
-
-The ARBITER Player rolls 1d10 publicly.
-
-*The D10 decouples the visible initiative order from the hidden Portrait rankings — players cannot reverse-engineer their Portrait standing from their position in the order.*
-
-| Roll | Condition | Order |
-|------|-----------|-------|
-| 1 | Power order | Rank 1 → 2 → 3 → 4 → 5 |
-| 2 | Underdog order | Rank 5 → 4 → 3 → 2 → 1 |
-| 3 | Zigzag descending | Rank 1 → 5 → 2 → 4 → 3 |
-| 4 | Middle-out down | Rank 3 → 2 → 1 → 4 → 5 |
-| 5 | Middle-out up | Rank 3 → 4 → 5 → 2 → 1 |
-| 6 | Second leads | Rank 2 → 1 → 5 → 4 → 3 |
-| 7 | ARBITER chooses | Clockwise or counterclockwise from ARBITER's position — ARBITER declares which |
-| 8 | Reverse last Quarter | Exact reverse of previous Quarter's order |
-| 9 | Personal tiebreaker | ARBITER draws a Personal Tiebreaker card; Faction Players sort by that criterion. Detail in Artifact 07 — ARBITER Toolkit. |
-| 10 | Table votes | Each Faction Player writes a rank (1–5); most votes wins starting position; proceed descending; ARBITER breaks ties |
-
-*Quarter 1:* All Portrait and Public Standing scores are equal. Initiative is determined clockwise from the ARBITER Player's left regardless of D10 roll.
-
-ARBITER announces the final order. The ARBITER Player updates the Initiative Strip on the board.
+- ARBITER determines initiative order. (Full procedure: Artifact 07 — ARBITER Toolkit)
+- ARBITER announces the final order.
+- The ARBITER Player updates the Initiative Strip on the board.
 
 ### Step 3 — Situation Report
 
@@ -251,7 +223,7 @@ ARBITER announces: *"Prepare operations."*
 
 **Distribute Dispatch Tokens:**
 
-Each Faction Player collects their Dispatch Tokens from the Reservoir:
+Each Faction Player collects their Dispatch Tokens from The Backlog:
 - Standard factions: 3 Dispatch Tokens
 - Ghost: 4 Dispatch Tokens
 
@@ -457,7 +429,7 @@ From left to right, lane by lane:
      *Cards are placed face-up or face-down per Payment Validation.*
      *Overlap so each card beneath shows its resolution data block.*
 6. Repeat steps 1–5 for each remaining lane in receipt order (Lane 2 through Lane 5).
-7. Collect all Dispatch Tokens from this Month. Return to Reservoir at Upkeep.
+7. Collect all Dispatch Tokens from this Month. Return to The Backlog at Quarter close.
 8. When complete, move to Beat 1.
 
 *If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order.*

@@ -1,8 +1,8 @@
 # 02a — Resource Systems: Board State
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.4  
-**Status:** ✅ Signed Off — Session 22  
+**Version:** 1.5  
+**Status:** ⚠️ Pending Re-Sign-Off — S38 (Dispatch Tokens / The Backlog added)  
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian  
 **Supersedes:** l1_generation, influence_system (board-state sections)
 
@@ -34,6 +34,7 @@ Complete rules for three board-state systems: Presence and Influence, Structures
 6. Rules & Constraints — Presence and Influence
 7. Rules & Constraints — Structures
 8. Rules & Constraints — Resources
+8a. Dispatch Tokens & The Backlog
 9. Component Description
 10. Special Conditions & Gameplay Impacts
 11. Examples & Exceptions
@@ -93,6 +94,7 @@ Each faction also brings reserves to The Table — resources accumulated through
 | Tension marker | Neutral chip. Placed on the district to indicate the Contested condition. Placed by the player whose action triggers the tie; removed by the player whose action resolves it. |
 | ARBITER Dominance Marker | Single fused piece placed at the Chorus Node during setup — never removed. Comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker. Inseparable. *(Component specification: PM01 §2.08a.)* |
 | Structure block | Small square chit in faction color. Placed in a district to represent a built facility. |
+| Dispatch Token | Small token or chit. One accompanies each covert operation card placed in a dispatch case. Drawn from The Backlog at Upkeep; returned to The Backlog at Quarter close. Not a faction resource — does not generate, accumulate, or carry affinity. |
 
 ### Deployment Marker Conversion
 
@@ -378,6 +380,41 @@ The Contested rate is not a balancing mechanism. It is ARBITER's response to fac
 
 ---
 
+## 8a. Dispatch Tokens & The Backlog
+
+Dispatch Tokens are not faction resources. They do not generate through district presence, accumulate across Quarters, or carry an affinity system. They are a per-Quarter operational capacity allocation — a count of how many covert operations a faction has the internal authorization to run this Quarter. *(Governing rule: 00a R39. Narrative grounding: Artifact 00 §14.)*
+
+### The Backlog
+
+The Dispatch Token supply is a shared physical pool on the table — **The Backlog**. All tokens live here when not in faction possession. The Backlog is distinct from the Reservoir: the Reservoir holds faction resources (Findings, Capital, and others); The Backlog holds only Dispatch Tokens. *(Physical location on The Overview: Artifact 01 §[TBD].)*
+
+At Upkeep Step 7, each faction draws their Quarter allocation from The Backlog:
+
+| Faction | Quarterly Allocation |
+|---------|---------------------|
+| Ghost | 4 Dispatch Tokens |
+| All other factions | 3 Dispatch Tokens |
+
+Drawn tokens are held privately beside the faction tableau. Other factions cannot see how many tokens remain.
+
+### Spend Rules
+
+One Dispatch Token accompanies each covert operation card placed in a dispatch case. The token is placed in the case alongside the card.
+
+- Pass cards require no token.
+- Political acts are declared at The Table and require no token.
+- A covert operation card submitted without a token is invalid — rejected by ARBITER at Beat 0, returned to the faction, cost not spent. *(00a R39.)*
+
+ARBITER collects all spent tokens from each Month's dispatch cases at Beat 0. At Quarter close, all collected tokens are returned to The Backlog.
+
+### Operational Meaning
+
+A faction's unspent tokens represent their remaining active operational capacity this Quarter — authorized work that has not yet been committed. A faction that spends all tokens in Month 1 has nothing remaining in the backlog for Month 2; only Pass cards are available. Ghost's four-token allocation reflects a structurally deeper backlog, enabling the GATHER→SYNTHESIZE combination across Month 1 and Month 2 without foreclosing other Month 2 covert actions.
+
+*Procedure: Artifact 03 §7 Step 7 (distribution), §9 (Month 1 spend), §12 (Month 2 spend).*
+
+---
+
 ## 9. Component Description
 
 | Component | Name | Quantity | Material Suggestion |
@@ -394,6 +431,7 @@ The Contested rate is not a balancing mechanism. It is ARBITER's response to fac
 | Capital | Capital | 30 total | Metallic coins or bars |
 | Capacity | Capacity | 30 total | Industrial blocks or plates |
 | Mandate | Mandate | 30 total | Stamped seal tokens |
+| Dispatch Token | Dispatch Token | 16 total (Ghost: 4; all other factions: 3 each) | Small token or printed chit; neutral color or per-faction color (TBD Artifact 11). Held beside tableau when unspent; lives in The Backlog when not in faction possession. |
 
 *Final token aesthetics confirmed in Artifact 11 — Visual Design System.*
 

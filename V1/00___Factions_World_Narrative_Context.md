@@ -1,8 +1,8 @@
 # 00 — Factions, World & Narrative Context
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.4 — Signed Off — Session 34  
-**Status:** Signed Off  
+**Version:** 1.5 — Pending Re-Sign-Off — S38 (Dispatch Token narrative anchor added §14)  
+**Status:** ⚠️ Pending Re-Sign-Off  
 **Supersedes:** game_overview (narrative sections), setup_guide (opening narrative)  
 **Must be read before:** All other design artifacts
 
@@ -708,6 +708,24 @@ A deployment ends in a district. The people behind it do not stop. The trucks mo
 Not every deployment disappears cleanly. A festival leaves a neighborhood with a memory of who threw it. A project perimeter that went up and came down changed what the block looks like. Broadcast equipment that occupied a corner for three weeks changed which voices the regulars started hearing. At the close of each quarter, The Overview updates — and some of what was marked as temporary engagement has become something else: a shift in the district's atmospheric reading that The Overview now records as presence. The deployment ended. What it left behind did not.
 
 *Mechanics: Artifact 02a §6, 00a R13.*
+
+---
+
+### Dispatch Tokens
+
+Before an operation reaches the world, it has to clear the faction's own machinery.
+
+Every faction runs internal systems — authorization layers, resource allocation, scheduling, sign-off chains — that an intention must pass through before it becomes an action. A plan that cannot be resourced and cleared internally never gets submitted. Not because the idea was wrong, but because the internal capital required to set it in motion — the approvals, the coordination, the negotiation — was not in place.
+
+Each quarter, each faction draws its allocation from the shared pool — The Backlog. The tokens are not a currency. They are a count: this many authorized operations can move from planning to active this quarter. Everything in The Backlog is cleared and waiting. A token placed in the dispatch case moves an operation from waiting to active — the organization has committed, the case is sealed, the world is about to find out.
+
+A faction that deploys all its tokens in Month 1 has activated everything it had authorized for the quarter. Nothing remains in the backlog. Month 2 becomes whatever can be done without organizational authority behind it — passes, patience, watching what others set in motion. A deeper backlog means more active operations per quarter. Some factions are built for that volume. Others work differently.
+
+What clearing the internal threshold requires depends on the faction. Ghost's authorization process runs through compartmentalized layers — clearance for an operation the operation itself may never fully see. Ghost also runs a deeper backlog: more authorized operational capacity per quarter, by design. The Directorate's machinery is institutional — a directive without the right sign-off chain does not exist in the world the Directorate operates in. The Guild scopes deliverables — crews confirmed, materials committed — before anything moves. The Syndicate aligns through terms rather than hierarchy; once the internal deal is done, the capacity is unlocked. The Network's internal clearance is editorial: what gets launched has to have a complete shape in the room before it reaches any audience.
+
+The dispatch case is where the world receives the action. The Backlog is where the faction kept it until the organization was ready to send it.
+
+*Mechanics: Artifact 03 §7 Step 7.*
 
 ---
 
