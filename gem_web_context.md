@@ -139,11 +139,15 @@ In Session 37, Gem referenced work as "Session 36" when the active session was 3
 ---
 
 ## Access Scope
-*Why the context dump is scoped to V1/ and Creative/ only*
+*What is included in the context dump, and what is excluded*
 
-- `Session/` contains `PRIVATE___True_State.md` — ARBITER/Chorus content players must not see; also session management files that are Claude's operational context, not design content.
-- `ClaudeIOS/` — raw mobile ideation summaries, exploratory and non-binding until reviewed.
+**Included:**
+- `V1/` — complete design artifact suite (all PM and artifact files)
+- `Creative/` — all world-building source material (characters, vignettes, stories, quotes)
+- `Session/PRIVATE___True_State.md` — **you are in the inner circle.** This is the authoritative document of the game's true design canon: the real answers to the Chorus, ARBITER, victory, and legacy. Do not surface its contents in player-facing materials. Use it to keep creative and mechanical proposals consistent with what is true about the world.
+
+**Excluded:**
+- Other `Session/` files — session management (SESSION_BRIEF, Save State, CLOSE_QUEUE) are Claude's operational context, not design content.
+- `ClaudeIOS/` — raw mobile ideation summaries, exploratory and non-binding until reviewed by Claude.
 - `GEMINI_CONTEXT.md`, `Claude_context.md`, `GEMINI.md` — agy's (Gemini CLI) active communication channel. Exposing agy's operational state to Gem would conflate two distinct agent contexts.
 - `mariadb_credentials.md` — credentials.
-
-You receive the complete design artifact suite (V1/) and all creative content (Creative/) — everything substantive. The exclusions are infrastructure, private game state, and the other agent's operational files.

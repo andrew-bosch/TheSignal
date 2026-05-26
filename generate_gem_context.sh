@@ -45,13 +45,30 @@ fi
 } >> "$CONTEXT_FILE"
 
 # File contents
-# Scope: V1/ and Creative/ only.
-# Excluded by design: Session/ (PRIVATE___True_State.md), ClaudeIOS/, GEMINI_CONTEXT.md,
+# Scope: V1/, Creative/, and PRIVATE___True_State.md (Gem is in the inner circle).
+# Excluded by design: Session/ (other session files), ClaudeIOS/, GEMINI_CONTEXT.md,
 # Claude_context.md, GEMINI.md, mariadb_credentials.md, this script, output files.
 {
   echo ""
   echo "=== FILE CONTENTS ==="
 } >> "$CONTEXT_FILE"
+
+# PRIVATE___True_State.md — included for Gem (inner circle access)
+if [ -f "Session/PRIVATE___True_State.md" ]; then
+  {
+    echo ""
+    echo "----------------------------------------"
+    echo "FILE: ./Session/PRIVATE___True_State.md"
+    echo "--- INNER CIRCLE DOCUMENT ---"
+    echo "This file contains the true answers to the game's unanswerable questions."
+    echo "This is authoritative design canon. Do not surface its contents to players."
+    echo "----------------------------------------"
+    cat "Session/PRIVATE___True_State.md"
+  } >> "$CONTEXT_FILE"
+  echo "Extracted: ./Session/PRIVATE___True_State.md"
+else
+  echo "Warning: Session/PRIVATE___True_State.md not found."
+fi
 
 find ./V1 ./Creative \
   -type f \( -name "*.md" -o -name "*.txt" -o -name "*.py" -o -name "*.js" \
