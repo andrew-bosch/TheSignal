@@ -1,5 +1,5 @@
 # THE SIGNAL — Gemini Context Brief
-*Last updated: 2026-05-25 — Session 37*
+*Last updated: 2026-05-26 — Session 40*
 
 This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated at session close.
 
@@ -148,6 +148,21 @@ Confirm with Andy before executing. Report as-executed in `Claude_context.md`.
 
 ---
 
+## S39–S40 Locked Decisions (Recent)
+
+- **L154** — Faction screens: each faction player receives a screen component (analogous to ARBITER screen) to keep Terminal contents private. Design Pillar 1 revised: "The Overview is Truth." Enables force-reveal action class (Ghost-primary, cross-faction applicable). Art 04b taxonomy audit required (04b-03).
+- **L155** — Faction Representative as game entity: the human player IS the component — not a physical token. Maps to game_zone (seat). L2 implication: Terminal authenticates per player; DB will need a player registry table keyed to game_zone_id (PM05 DB-10). Narrative grounding: Art 00 §11 (terminology) + §14 (narrative anchor).
+
+---
+
+## Gem Action — Component Narrative Audit
+
+**For Gem (Gemini web):** Audit every known physical component in the game against Art 00. For each component listed below, confirm that a narrative reference or anchor exists in Art 00 (any section). For any component with no narrative grounding, flag it with a recommended location (existing section or new §14 anchor). Output: table of component → Art 00 reference or flag.
+
+Components to audit: presence tokens, deployment markers, structure blocks, established markers, control flags, tension markers, dispatch tokens, intel notes, faction Terminals, faction screens, Ring Modifier decks (×3), Session Timeline, Situation Report zone cards, ARBITER screen, ARBITER tableau, status markers, dispatch cases, initiative strips.
+
+---
+
 ## Still Blocked — Do Not Action
 
 - **DB-08** (card_metadata new fields) — blocked on PM05 04-39 (effects normalization). Schema must settle before card_metadata is touched.
@@ -161,7 +176,7 @@ Confirm with Andy before executing. Report as-executed in `Claude_context.md`.
 - **Material vs. Non-Material:** Material = contradicts or extends signed-off content → re-sign-off required. Non-material = formatting, terminology → no re-sign-off.
 - **Design Pillar 6:** Narrative takes precedence over mechanical. If the narrative reason for a rule cannot be stated, the rule may be arbitrary.
 - **Narrator Voice Test:** Every narrative field — could it have been written by a human who knows too much, OR by ARBITER in The Witness register? Both readings must remain valid.
-- **Signed-off artifacts:** 00 (v1.4), 00a (v0.2), 00b (v0.1), 01 (v1.2), 02a (v1.4), 02b (v1.5), 03 (v1.8), 04b (v1.2). Do not propose additions without flagging re-sign-off requirement.
+- **Signed-off artifacts:** 00 (v1.5 — S40), 00a (v0.3 — S40), 00b (v0.1), 01 (v1.2 — overhaul pending), 02a (v1.5 — pending re-sign-off), 02b (v1.5), 04b (v1.2 — taxonomy audit pending). Pending re-sign-off: 03 (v1.9). Do not propose additions without flagging re-sign-off requirement.
 - **Artifact 04** (Card System, v0.9.20) — in progress. C01–C16 signed off. C17 sign-off pending (04-41). C18/C19 redesign open (D-04-02). C20 not reviewed. C21–C35 pending.
 
 ---
