@@ -182,5 +182,14 @@ The accumulated Chronicles of multiple campaigns are the game's defining physica
 
 ---
 
+## 9. Open Questions — Answerable When Design Requires
+
+These are questions with answerable true states that have not yet been defined. They are logged here so the ambiguity is deliberate, not accidental, and so the answers are developed in relationship to the established axioms when the narrative requires them.
+
+**The original team — Chorus Node first night**
+Art 00 §6 (S40 texture pass) establishes: the original listening station team was small enough to know each other's shift schedules — engineers, signal technicians, graduate students on fellowships from programs across three continents, two long-tenured staff who had been there for years before it became anything worth funding. The text implies at minimum ~10 individuals. The composition, exact number, and what each of them witnessed on the night the Chorus was first received are undefined. The people who remember when the Chorus Node was a shack and have not said publicly what they remember are potential narrative material — for character development, Chronicle flavor, or faction backstory (Ghost's embedded presence in research complexes predates The Table; some of those original researchers may be part of Ghost's network, or may be the ones who aren't). Define when plot-relevant.
+
+---
+
 *End of True State v1.0*  
 *These axioms are locked as of session 4. Revisions require the same deliberation as any locked decision — but the bar is higher, because these constrain everything downstream.*

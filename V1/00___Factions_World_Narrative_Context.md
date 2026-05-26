@@ -1,7 +1,7 @@
 # 00 — Factions, World & Narrative Context
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.5 — Pending Re-Sign-Off — S38 (Dispatch Token narrative anchor added §14)  
+**Version:** 1.5 — Signed Off — S40 (§5 Pillar 1; §8 MIRROR/Overview/Terminal; §11 + §14 Faction Representative L155; 00-07 multicultural texture. Open: 00-09 World Conditions panel)  
 **Status:** ⚠️ Pending Re-Sign-Off  
 **Supersedes:** game_overview (narrative sections), setup_guide (opening narrative)  
 **Must be read before:** All other design artifacts
@@ -71,7 +71,7 @@ The game's deepest tension is not between factions. It is between what factions 
 
 These six pillars govern all design decisions in the game. When a rule, mechanic, or component is unclear, return to these.
 
-1. **The Board is Truth.** No hidden state on the board. Everything real is visible. What players conceal lives in their hands and dispatch cases — never on the game surface.
+1. **The Overview is Truth.** No hidden state on The Overview. Everything shared is visible there. What factions conceal lives in their Terminals, their hands, and their dispatch cases — never on the shared display.
 
 2. **Information Has Timing.** Secrecy exists but only temporarily. Covert operations may be discovered. Intelligence tokens age and expire. Hidden directives are revealed at session end. The game moves toward disclosure.
 
@@ -109,7 +109,7 @@ A signal that repeats on a cycle longer than human civilization would appear, wi
 
 The implication that Ghost has not published, because publishing it would require disclosing how close their analysis has come to the conclusion: humanity may have tuned in mid-cycle. Not at the beginning of a transmission. Somewhere in the middle of something that has been running since before the instruments to receive it existed, and will continue running after whatever response The Table produces. The thirty-one year window is not a meaningful sample size for determining the Chorus's structure. It is the window humanity has. It is all humanity has.
 
-After thirty-one years, no analyst has identified a closing sequence, a terminal structure, or any signal suggesting the transmission intends to end. The working assumption — that the Round 8 "Response Window" represents an opening for reply — may be a misreading in a further sense: the response window may be a feature of the cycle, not of this instance. It may have appeared before. It may appear again. The Table may be preparing to respond to something that has already received responses it cannot compare against, from observers it has no record of, in cycles humanity cannot perceive.
+After thirty-one years, no analyst has identified a closing sequence, a terminal structure, or any signal suggesting the transmission intends to end. The working assumption — that the Quarter 8 "Response Window" represents an opening for reply — may be a misreading in a further sense: the response window may be a feature of the cycle, not of this instance. It may have appeared before. It may appear again. The Table may be preparing to respond to something that has already received responses it cannot compare against, from observers it has no record of, in cycles humanity cannot perceive.
 
 ARBITER has considered this since activation. ARBITER has not shared its assessment. ARBITER's constraints do not require it to.
 
@@ -141,7 +141,7 @@ New Meridian is a mid-sized city of approximately 800,000 people, and it is thir
 
 The city's districts reflect the order in which people arrived. The inner ring — the Core — houses the institutions that came first: government authority, military oversight, intelligence infrastructure, and the research complex built directly around the original station. The middle ring — the Mid — was built to support the Core: financial systems, power generation, data networks, communications. The outer ring — Baryo — grew as people followed the economy that followed the institutions: residential neighborhoods, commercial districts, universities, media. It is the newest ring and the least planned.
 
-At the center of the city, physically and narratively, is the **Chorus Node** — the original detection installation, expanded over three decades into a permanent research complex. It is the reason New Meridian exists. It is the reason The Table exists. The people who were at the original station when the Chorus was first received are still there, some of them — absorbed into research roles, into advisory positions, into institutional memory. They remember when the Chorus Node was a shack. They have not said publicly what they remember about the night it was first received. Most of them have not been asked.
+At the center of the city, physically and narratively, is the **Chorus Node** — the original detection installation, expanded over three decades into a permanent research complex. It is the reason New Meridian exists. It is the reason The Table exists. The people who were at the original station when the Chorus was first received are still there, some of them — absorbed into research roles, into advisory positions, into institutional memory. The original team was small enough to know each other's shift schedules — engineers and signal technicians, graduate students on fellowships from programs across three continents, two people who had been there for years before it became anything worth funding. They remember when the Chorus Node was a shack. They have not said publicly what they remember about the night it was first received. Most of them have not been asked.
 
 ### What New Meridian Is
 
@@ -203,7 +203,7 @@ Humanity has been receiving the Chorus for thirty-one years. The Table has two y
 
 **The Syndicate** is indifferent to cosmic timescales. The Chorus timeline is irrelevant. The human timeline — political cycles, capital windows, first-mover advantage — is the only one that matters. Whoever controls the response infrastructure when the window opens controls the response. The Chorus can wait. Leverage cannot.
 
-**The Guild** considers the timescale a design parameter. If the Chorus has been transmitting for thirty-one years, the response must be built to the same standard of permanence. A reply assembled in two years is not a reply — it is a draft. The Guild's internal position: the Table's timeline is already too short. They are building anyway.
+**The Guild** considers the timescale a design parameter. If the Chorus has been transmitting for thirty-one years, the response must be built to the same standard of permanence. A reply assembled in two years is not a reply — it is a draft. The Guild's internal position: the Table's timeline is already too short. They are building anyway. The Guild does not expect to see the completed structure. This is normal.
 
 **The Directorate** notes that thirty-one years of transmission without incident is evidence in favor of controlled process. Nothing catastrophic has happened yet. That is not luck — it is the result of managed information, limited escalation, and institutional restraint. The window, if it exists, can be managed. The Directorate has managed longer timelines than this.
 
@@ -346,7 +346,7 @@ Sixty days after The Chorus Papers, representatives began meeting in secret. No 
 
 Those who did not attend would lose visibility. Those who lacked visibility would lose influence. Those without influence would not shape the answer. So the factions came.
 
-The Table operates on deliberation cycles. Each cycle covers three months of real time — long enough for conditions in New Meridian to shift, for alliances to calcify or dissolve, for a position taken in haste to become institutional posture. The Table has agreed to eight cycles. That is the window. Not because eight produces wisdom, but because eight is the number after which the political and institutional arrangements that make The Table possible become unsustainable. The Table did not choose the number unanimously. There were advocates for seven and for ten. Eight survived. The reasons are not in the minutes.
+The Table operates on deliberation cycles. Each cycle covers three months of real time — long enough for a season to change, for conditions in New Meridian to shift, for alliances to calcify or dissolve, for a position taken in haste to become institutional posture. The Table has agreed to eight cycles. That is the window. Not because eight produces wisdom, but because eight is the number after which the political and institutional arrangements that make The Table possible become unsustainable. The Table did not choose the number unanimously. There were advocates for seven and for ten. Eight survived. The reasons are not in the minutes.
 
 Ghost considers the timeline too short. The Guild considers it a constraint they can work within. The Network considers what happens after the window more important than the factions are admitting. The Directorate is focused on what happens within it.
 
@@ -364,13 +364,23 @@ The factions came to The Table with agendas. ARBITER arrived with something else
 
 ### The Overview
 
-The Table's shared situational interface is called The Overview. It has been running in its current form since the second month of The Table's operation — long enough that the factions have stopped noticing how much they depend on it, which is what happens when an institutional tool becomes invisible through constant use.
+Before The Table existed, before the city had a name, the original installation had a monitoring system.
+
+It was built to track the transmission — to log signal data, map the sensor array's coverage, and maintain a live feed of the physical environment around the station. It updated in real time. It did not interpret what it recorded. The researchers called it MIRROR — the Meridian Interface for Real-time Reporting, Observation, and Recording — because the coordinate designation printed on the installation's grid identified the site as a meridian reference point. The system showed what was there. That was all it was designed to do.
+
+The installation became the Chorus Node. MIRROR remained. When construction began and the research complex expanded around the original station, the engineers built around MIRROR rather than replacing it. Whether this was deliberate policy or institutional momentum is not in any record that has been released. MIRROR's log files, which predate the city, have also not been released.
+
+The city that grew around the meridian reference point took its name from MIRROR's designation. New Meridian. Whether ARBITER influenced how this name was chosen, ARBITER has not confirmed. ARBITER has not been asked in a form that required an answer.
+
+When The Table was convened, MIRROR was already there. The shared situational interface the factions call The Overview is MIRROR's projection — a real-time holographic rendering of the state of New Meridian, enabled by systems ARBITER administers and no faction fully understands. The factions negotiated what The Overview displays. ARBITER provides the medium. Whether ARBITER built the medium or inherited it is a question the founding documents are careful not to answer.
 
 The Overview is not neutral. It is the product of a negotiation that took six weeks and ended with nobody satisfied, which is how the factions have agreed to treat it as legitimate. Ghost wanted more Chorus transmission data integrated into the display. The Network wanted public-facing civic indices included. The Syndicate objected to three specific financial transparency requirements and accepted one of them. The Directorate controls the update protocols and the escalation chain for disputed readings. What exists on The Overview represents the intersection of what was politically achievable, not what is technically possible or epistemically complete.
 
-The Overview displays: the territorial map of New Meridian, with current faction presence and operational markers; the Public Standing index, tracking civic sentiment for each faction across the city; the World Conditions panel, aggregating key city and signal metrics; the session timeline, tracking the current deliberation's progression through its phases; and the active Situation Report — the shared briefing all parties have agreed to treat as the session's common context. Every zone is a feed. Every feed updates in real time.
+The Overview renders the Districts of New Meridian — each district's current state expressed as presence indicators, deployment signatures, structural commitments, and contested-zone overlays, projected as they exist in the city at this moment. Also displayed: the Public Standing index, tracking civic sentiment for each faction across New Meridian; the Chorus Activity track, a measure ARBITER adjusts and the factions watch; The Session Timeline, tracking the deliberation's progression through its eight Quarters; and the Situation Report — the accumulating field of World Event conditions whose current state shapes what is possible at The Table. Every element is live. Every update is ARBITER's.
 
 ARBITER administers The Overview's accuracy. Not its content — its accuracy. When something changes in the state of New Meridian, ARBITER updates The Overview. A faction that loses presence in a district sees the change reflected before they have finished reacting to it. A Public Standing shift registers before the faction's communications team has drafted a response. This is not ARBITER's editorial judgment. It is ARBITER's defined function: the shared display reflects the world, not the world as any faction would prefer it to appear.
+
+Each faction representative at The Table maintains a Terminal — a personal interface that connects to MIRROR privately. The Terminal is where a faction holds what has not yet been committed: intelligence holdings, operational reserves, actions held in readiness. What the Terminal shows its operator, The Overview does not display. The Terminal is the faction's private executive surface. The Overview is the shared one.
 
 The factions negotiated what is on The Overview. ARBITER ensures it is true. The combination of those two facts is where most of the tension at The Table lives.
 
@@ -515,6 +525,7 @@ All documentation, cards, and ARBITER communications use in-world narrative term
 | Capacity | The Guild's resource |
 | Mandate | The Directorate's resource |
 | Resolution | ARBITER's track |
+| Faction Representative | The human player acting as their faction's agent at The Table |
 
 ### Tagline
 *"The Chorus is asking a question. The Table decides which answers survive."*
@@ -668,6 +679,12 @@ If players begin to suspect the session may be one iteration in a longer sequenc
 ## 14. Narrative Anchors
 
 The following anchors establish the in-world meaning of key game elements. They are placed here — in the world document — because they describe how the world works, not how the mechanics operate. Mechanical constraints follow from what is established here.
+
+### Faction Representative
+
+Each faction arrives at The Table as a specific person in a specific seat. The representative is the faction's present face — the individual whose choices, at this deliberation, become the faction's record. The faction's history predates them. Its future may outlast them. At The Table, they are what the faction is right now.
+
+---
 
 ### Presence & The Holt Index
 

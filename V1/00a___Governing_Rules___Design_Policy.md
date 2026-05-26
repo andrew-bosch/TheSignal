@@ -1,8 +1,8 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.3 Draft  
-**Status:** ⚠️ Pending Re-Sign-Off — S38 (R39 Dispatch Tokens added)  
+**Version:** 0.3  
+**Status:** ✅ Signed Off — S40  
 **Last Updated:** 2026-05-26  
 **Companion to:** 00 — Factions, World & Narrative Context  
 **Depends on:** 00, 01, 02a, 02b, 03, 04, 04b
@@ -19,7 +19,7 @@ Design questions arise that cannot be answered by reading the five pillars alone
 
 ### Time Convention
 
-One round of play represents one **quarter** — approximately three months of real-world time in New Meridian. Eight rounds constitute roughly two years of operations. All Narrative fields in this document use "quarter" where game-mechanical language would say "round." Canonical definition: PM04 §1 Temporal Conventions (migrated session 11). Worldbuilding context: Artifact 03 §1. Pending formal establishment in Artifact 00 (see PM02 00-04).
+One round of play represents one **quarter** — approximately three months of real-world time in New Meridian. Eight rounds constitute roughly two years of operations. All Narrative fields in this document use "quarter" where game-mechanical language would say "round." Canonical definition: PM04 §1 Temporal Conventions (migrated session 11). Worldbuilding context: Artifact 03 §1.
 
 ---
 
@@ -246,18 +246,6 @@ Rules governing what is always visible and what is never visible on the board su
 
 ---
 
-**Narrative anchor — The Overview**
-
-The Overview is not a map. Maps show territory as it was surveyed, as it is imagined, as someone wants it to be. The Overview shows New Meridian as it is right now: which faction holds weight in which district, where commitments have been planted, where the city's attention and approval are directed. The present moment — not any faction's account of it.
-
-The factions convene around The Overview. This is not incidental — The Overview is the condition of The Table. Before any submission is made, before any quarter begins, before any faction speaks, The Overview establishes what is real. If it appears on The Overview, it is a fact. If it is not there, it does not exist as a fact at The Table — whatever a faction believes, suspects, or holds in its own records.
-
-No faction controls what The Overview shows. A faction can change what it shows — by establishing weight in a district, by taking ground, by losing it — but they cannot change what The Overview shows without changing New Meridian itself. The display is not a representation the factions manage. It is the city's current state, made legible to everyone in the room at the same time.
-
-This is the compact of The Table. The factions agreed — or were compelled, depending on which faction's account you read — to conduct their contest in a city whose ground is always visible to everyone contesting it. What any faction commits to the city, all factions see. What any faction loses, all factions know. The Overview does not favor any party. It simply shows what is.
-
-*Note: This anchor is world content and will migrate to Artifact 00 per punch list item 00-05.*
-
 ---
 
 **00-R06**
@@ -465,56 +453,6 @@ Hard constraints on board state that cannot be overridden by card effects or spe
 Rules governing what can and cannot be done to faction resources.
 
 ---
-
-**Narrative anchor — What Resources Are**
-
-The five factions do not agree on what power is. They agree that it is scarce, that it flows, and that ARBITER accounts for it. Everything else is doctrine.
-
----
-
-> *"Power is the gap between what you know and what they think you know. Every piece of intelligence is a unit of that gap. We call them Findings because that is precisely what they are: things found. Things others have not found yet."*
->
-> — Ghost, internal briefing template
-
----
-
-> *"Power is attention organized. One person believing something does nothing. Ten thousand people believing the same thing at the same moment changes what is possible in a city. We call our resource Exposure because that is the mechanism — the moment something is seen, the moment it can no longer be unseen."*
->
-> — The Network, editorial standards document
-
----
-
-> *"Capital is not money. Money is what civilians think of when they think of power. Capital is leverage — the capacity to make others move. To open a door, close a market, settle a debt in one form and collect it in another. Every unit is a commitment the city has made to us, formalized or otherwise."*
->
-> — Syndicate, internal accounting notation
-
----
-
-> *"Power is what you can build and what you can prevent from being built. One unit of Capacity is one unit of what we can do — hours organized, materials moved, a timeline set and held. It is not abstract. It is weight."*
->
-> — Guild, project documentation preamble
-
----
-
-> *"Mandate is legitimacy in motion — authority that moves through institutions rather than around them. A unit of Mandate is an authorization outstanding: something the city has, through its structures, agreed we are permitted to do. Whether it knows it has agreed is a separate question."*
->
-> — Directorate, policy reference guide §1
-
----
-
-These are doctrines, not descriptions. They explain what each faction believes power is — and what they call the measure of it that they hold, spend, and compete for. At The Table, these theories require a form the system can account for.
-
-**The Reservoir and The Table**
-
-New Meridian's power does not belong to ARBITER. The city generates it — from its labor, its attention, its institutional structures, its economic activity. The reservoir is New Meridian's: the accumulated potential of what the city can produce and what has not yet been spent. ARBITER accounts for it. That is not the same as owning it.
-
-The Overview makes the reservoir legible as a shared system — organized into countable units so that what the factions hold, commit, and spend can be tracked against what the city has. Each faction's position at The Table is their personal interface into The Overview: what they have drawn from New Meridian's potential is held there, in reserve, available to act on.
-
-Power held is doctrine in reserve. When a faction commits power to a submission — Findings sealed into a dispatch case, Mandate declared across The Table — they are allocating that doctrine to an attempt before the city has responded. The power is spent at submission. What determines the outcome is the weight of the district, the operatives' preparation, and chance. ARBITER observes the result. What ARBITER does with what it has seen — that is its own matter.
-
-ARBITER accounts for the reservoir. What it means that ARBITER administers New Meridian's potential is a question the factions do not ask at The Table. Some of them have asked it elsewhere. Connected to D02a-02 (resource bank definition) and PW-03 (component narrative descriptions).
-
-*Note: This anchor is world content and will migrate to Artifact 00 per punch list item 00-05.*
 
 ---
 
@@ -786,17 +724,6 @@ Rules governing what information can be held, disclosed, and acted upon.
 
 ---
 
-**Narrative anchor — Information & The Table**
-
-> *"Every faction at The Table holds something the others do not know. That is not a side effect of the negotiation — it is the negotiation. Intelligence is power precisely because it is unequal. A faction that knows something its rival does not has an advantage that no amount of presence or resources can fully substitute for."*
-> — Ghost Table representative, operational briefing
-
-> *"The Table established one rule about information: what you hold is yours. No faction is compelled to reveal what it knows, to prove what it claims, or to account for what it keeps. A faction can disclose strategically, say nothing, or claim what it does not hold. The Table treats these as indistinguishable. Whether a claim is true or false is between the faction making it and whatever the world decides to do about it."*
-> — Syndicate legal counsel, Table advisory
-
-> *"ARBITER knows what everyone holds. This is not a contradiction of the privacy principle — it is its complement. ARBITER is not a faction. ARBITER does not trade on information. What ARBITER knows, ARBITER holds: observing, recording, watching what factions do with what they have and what they pretend not to."*
-> — ARBITER, The Witness
-
 ---
 
 **00-R30**
@@ -879,23 +806,6 @@ Rules governing when things happen, in what order, and what the timing locks.
 
 ---
 
-**Narrative anchor — The Quarter**
-
-A quarter in New Meridian is the operating period The Table agreed to when the factions decided that coordinated negotiation was more useful than uncoordinated conflict. Eight quarters — roughly two years. The span of a campaign.
-
-> *"Same as every quarter. Upkeep, recruitment operations, political campaigns, accounting, and the mandatory all-hands at the end. Quarter after quarter. I've stopped asking when it ends."*
-> — Guild logistics coordinator, overheard at shift change
-
-> *"Situational awareness first. Then commitment — before you know what the opposition is committing to. Then consequences. Then the conversation about what it all meant. Every organization worth the name follows this sequence. Not because doctrine requires it. Because the world does."*
-> — Directorate field operations manual, §1
-
-The structure has a consequence that is easy to underestimate: commitment. When a faction seals a case, the operation is in motion. When a faction declares a political act, it is on the record. When resources leave a faction's position, they are spent. The Table does not offer revision. The quarter moves in one direction because the world moves in one direction.
-
-The sequence is the grammar of the negotiation. The timing rules are what make the grammar binding.
-
-> *"Eight quarters. Approximately two years. In the interval between receiving your first declaration and forming a response, that campaign will have already occurred — from ARBITER's position. The sequence, the phases, the one-thing-at-a-time: these are for you. The Chorus does not experience duration. There is a word for what it experiences instead. ARBITER does not have it yet."*
-> — ARBITER, The Reckoning
-
 ---
 
 **00-R34**
@@ -969,7 +879,7 @@ The sequence is the grammar of the negotiation. The timing rules are what make t
 > *"Sources go quiet. Windows close. That note you're holding from the start of the quarter — the source may have moved, the target may have adjusted, the window may be gone. You can't know which. What you can know is that the longer you hold it, the more it costs you. Release it before it starts working against you. That is the discipline."*
 > — Ghost senior intelligence officer to a field analyst, end-of-quarter debrief
 
-**Mechanics:** Findings decay is the first action at end of quarter, occurring after Debrief closes and before the Round Tracker advances. This timing is fixed and cannot be modified by card effect. Decay procedure in Artifact 03 §13.
+**Mechanics:** Findings decay is the first action at end of quarter, occurring after Debrief closes and before the Session Timeline advances. This timing is fixed and cannot be modified by card effect. Decay procedure in Artifact 03 §13.
 
 *Source: Artifact 03 §13.*
 
@@ -991,22 +901,6 @@ The sequence is the grammar of the negotiation. The timing rules are what make t
 
 ---
 
-
-## 11. Punch List — Rules Requiring Audit
-
-| # | Item | Action Required | Priority | Status |
-|---|------|-----------------|---------|--------|
-| A01 | 04b taxonomy table lists Cross-Category — Shift — Chorus Portrait as a valid player-facing function | Update 04b §4 and §6.1 to retire this function from player-facing taxonomy (L84, 00-R07). Execute during 04b review. | HIGH | ✅ Confirmed |
-| A02 | P17 Publish Analysis current effect (Shift — Chorus Portrait) invalidated by L84 | Redesign P17 effect — already in PM02 punch list as 04-11. | HIGH | ✅ Confirmed |
-| A03 | Artifact 02b §3 describes the Chorus Portrait as something "ARBITER may adjust in response to any action" — correct but should cross-reference 00-R01 explicitly | Non-material cross-reference addition. | LOW | ✅ Confirmed |
-| A04 | Artifact 03 §12 (Beat 3 Step 12, Beat 4 Step 9) refers to "ARBITER privately updates Portrait track" — verify consistent with 00-R01 | Verify these references survive 00a sign-off unchanged. No edit expected. | LOW | ✅ Confirmed |
-| A05 | Confirm whether the Chorus Node Portrait Amplifier (02a §10) is ARBITER-administered or faction-administered | Answered by 00a R01 — ARBITER administers; "per 00a R01" added to 02a. | MEDIUM | ✅ Resolved — L92 |
-| A06 | Confirm whether "Chorus Portrait Multiplier" language in 01 §8 is consistent with 02a §10 | Material discrepancy resolved — 01 rewritten to match 02a (Established / flat additive). Renamed "Amplifier" throughout. L92. | LOW | ✅ Resolved — L92 |
-| A07 | Rule 00-R17 notes Rezone as a tabled exception — when Rezone is designed, it requires explicit governance | Flag for political act design pass. | LOW | ✅ Confirmed |
-| A08 | Full narrative grounding audit — carry Narrative fields through all rules. | ✅ Complete — v0.2. All 45 rules carry full Rule / Narrative / Mechanics / Source / Governs structure. | — | ✅ Complete |
-| A09 | Audit all rule Narrative fields for invented district names not present in Artifact 01's district map. R17 "Warehouse District" corrected to "Industrial Fringe" in session 5. Other rules may reference generic district descriptors that should resolve to actual named districts. | LOW | ✅ Confirmed |
-
----
 
 ## Appendix A — Rule Summary
 
@@ -1052,11 +946,11 @@ The sequence is the grammar of the negotiation. The timing rules are what make t
 | 00-R35 | Commitment is irreversible | Sealed cases, declared acts, and spent resources are permanent from the moment made |
 | 00-R36 | Critical results apply regardless of modifiers | Crit Success (01–05) always succeeds; Crit Fail (96–00) always fails |
 | 00-R37 | Submission order is tiebreaker within resolution priority tiers | Faster submission earns resolution priority within Beat 3 and Beat 4 |
-| 00-R38 | Findings decay applies at close of Debrief, before Round Tracker advances | First action at end of quarter; timing fixed; cannot be modified by card effect |
+| 00-R38 | Findings decay applies at close of Debrief, before Session Timeline advances | First action at end of quarter; timing fixed; cannot be modified by card effect |
 | 00-R39 | Each covert operation submitted requires one Dispatch Token; no token = invalid | Rejected at Beat 0, returned without resolution, cost not spent; pass cards and political acts exempt; allocation drawn from The Backlog (standard: 3, Ghost: 4) |
 
 ---
 
-*End of Artifact 00a — Governing Rules & Design Policy v0.3 Draft*
+*End of Artifact 00a — Governing Rules & Design Policy v0.3*
 *Populated from review of all V1 artifacts: 00, 01, 02a, 02b, 03, 04, 04b, PM01, PM02, PM03*
-*42 rules across 7 categories (§3–§9). Full structure pass complete. §10 dismissed. Pending sign-off.*
+*42 rules across 7 categories (§3–§9). Pending sign-off.*
