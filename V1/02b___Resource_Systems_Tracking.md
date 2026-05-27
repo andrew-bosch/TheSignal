@@ -12,17 +12,17 @@
 
 ### Problem This Document Solves
 
-Not all game state lives on the board surface. Two parallel evaluation systems — the Chorus Portrait and Public Standing — track how each faction is perceived and recorded across the session. A third system, Intel Notes, tracks actionable intelligence factions hold about one another. These systems need precise physical representations, clear state definitions, and rules governing what information is visible to whom — without prescribing how scores change or when bonuses apply, which belong in the artifacts where those events occur.
+Not all game state lives on the board surface. Two parallel evaluation systems — the Chorus Portrait and Public Standing — track how each faction is perceived and recorded across the session. A third system, Intel Tokens, tracks actionable intelligence factions hold about one another. These systems need precise physical representations, clear state definitions, and rules governing what information is visible to whom — without prescribing how scores change or when bonuses apply, which belong in the artifacts where those events occur.
 
 ### Deliverable
 
-The physical representation, scale definitions, visibility rules, and component specifications for three tracking systems: the Chorus Portrait track, the Public Standing track, and Intel Notes.
+The physical representation, scale definitions, visibility rules, and component specifications for three tracking systems: the Chorus Portrait track, the Public Standing track, and Intel Tokens.
 
 ### Success Criteria
 
 - Any player can read any faction's Public Standing at any time from the board
 - ARBITER can read any faction's current Chorus Portrait position from their private track without calculation
-- Intel Notes are clearly defined as private physical objects whose contents are known only to the holder and ARBITER — with the holder free to disclose them however and whenever they choose
+- Intel Tokens are clearly defined as private physical objects whose contents are known only to the holder and ARBITER — with the holder free to disclose them however and whenever they choose
 - A visual designer can produce all three tracking components from this document alone
 
 ---
@@ -36,7 +36,7 @@ The physical representation, scale definitions, visibility rules, and component 
 5. [Design Principles](#5-design-principles)
 6. [Rules & Constraints — Chorus Portrait Track](#6-rules--constraints--chorus-portrait-track)
 7. [Rules & Constraints — Public Standing Track](#7-rules--constraints--public-standing-track)
-8. [Rules & Constraints — Intel Notes](#8-rules--constraints--intel-notes)
+8. [Rules & Constraints — Intel Tokens](#8-rules--constraints--intel-tokens)
 9. [Component Description](#9-component-description)
 10. [Special Conditions & Gameplay Impacts](#10-special-conditions--gameplay-impacts)
 11. [Examples & Exceptions](#11-examples--exceptions)
@@ -51,7 +51,7 @@ These three systems provide the game's two parallel evaluation layers and its in
 
 **The Public Standing track** is New Meridian's public perception of each faction. Fully visible to all players at all times. It modifies how effectively a faction can act — raising or lowering the difficulty threshold of all their 2d10 rolls — and affects their weight in the session's final vote.
 
-**Intel Notes** are small pieces of paper representing actionable intelligence one faction holds about another. They enable targeted actions, power the Denounce political act, and create a secondary economy of information running alongside the resource economy.
+**Intel Tokens** are small tokens representing actionable intelligence one faction holds about another. They enable targeted actions, power the Denounce political act, and create a secondary economy of information running alongside the resource economy.
 
 ---
 
@@ -65,7 +65,7 @@ Public Standing and the Chorus Portrait are two completely different kinds of ev
 
 The two systems are symmetrical in physical form — both use an identical track format with a position marker — but asymmetrical in visibility and memory. Public Standing is displayed openly on the board. The Chorus Portrait is hidden in ARBITER's tableau. Same ruler. Different observer. One forgets. The other does not.
 
-**Intel Notes** represent what factions know about each other. Knowledge is power — but it expires, can be traded, can be bluffed about, can be disclosed strategically, and can be turned against the faction it describes. An intel note is a piece of paper: specific, time-stamped, and targeted.
+**Intel Tokens** represent what factions know about each other. Knowledge is power — but it expires, can be traded, can be bluffed about, can be disclosed strategically, and can be turned against the faction it describes. An Intel Token is discrete, specific, time-stamped, and targeted.
 
 ---
 
@@ -79,9 +79,9 @@ The two systems are symmetrical in physical form — both use an identical track
 
 4. **The standing modifier affects action difficulty, not income.** Public Standing modifies how effectively a faction can act — shifting the difficulty target threshold of all their 2d10 rolls up or down. It does not modify resource income. Income is determined by actual presence chips and influence levels on the board.
 
-5. **A player controls disclosure of their own private information.** Any private information a player holds — intel notes, hand cards, classified directives, or any other private component — is disclosed only at the holder's discretion. The holder may share it publicly, privately, partially, or not at all. This principle applies to all private information in the game. Verbal claims about undisclosed private information cannot be verified with ARBITER without a specific game action.
+5. **A player controls disclosure of their own private information.** Any private information a player holds — Intel Tokens, hand cards, classified directives, or any other private component — is disclosed only at the holder's discretion. The holder may share it publicly, privately, partially, or not at all. This principle applies to all private information in the game. Verbal claims about undisclosed private information cannot be verified with ARBITER without a specific game action.
 
-6. **Holding guidelines are not enforcement.** Guidelines for intel note holdings represent doctrinal expectations, not mechanical limits. Players may hold more than suggested. ARBITER knows. The Portrait reflects what a faction does with information it was not supposed to hold.
+6. **Holding guidelines are not enforcement.** Guidelines for Intel Token holdings represent doctrinal expectations, not mechanical limits. Players may hold more than suggested. ARBITER knows. The Portrait reflects what a faction does with information it was not supposed to hold.
 
 ---
 
@@ -186,11 +186,11 @@ A clip or bead in faction color marks current position. Players move their own P
 
 ---
 
-## 8. Rules & Constraints — Intel Notes
+## 8. Rules & Constraints — Intel Tokens
 
-### What Intel Notes Are
+### What Intel Tokens Are
 
-An intel note is a small piece of paper created by ARBITER when a faction successfully gathers intelligence. ARBITER writes two things on each note at creation:
+An Intel Token is created by ARBITER when a faction successfully gathers intelligence. ARBITER records two things on each token at creation:
 
 - **Faction:** which faction the intelligence concerns
 - **Round:** the quarter in which it was gathered
@@ -203,11 +203,11 @@ Players calculate age: current quarter minus quarter acquired.
 | 2–3 rounds | Stale |
 | 4+ rounds | Expired — no mechanical use |
 
-Intel notes are delivered privately through the messaging system (Artifact 06) and held in the player's tableau.
+Intel Tokens are delivered privately through the messaging system (Artifact 06) and held in the player's tableau.
 
 ### Privacy and Disclosure
 
-Intel notes are private by default. The holder and ARBITER know the contents. The holder may disclose at any time in any of the following ways:
+Intel Tokens are private by default. The holder and ARBITER know the contents. The holder may disclose at any time in any of the following ways:
 
 - Show it publicly to the entire table
 - Show it privately to one specific player
@@ -220,19 +220,19 @@ Verbal claims about unshown contents cannot be verified with ARBITER without a s
 
 ### Holding Guideline
 
-- Standard factions: hold no more than 2 intel notes
-- Ghost: hold no more than 4 intel notes
-- Exception: intel notes naming your own faction do not count toward the guideline
+- Standard factions: hold no more than 2 Intel Tokens
+- Ghost: hold no more than 4 Intel Tokens
+- Exception: Intel Tokens naming your own faction do not count toward the guideline
 
 This is a guideline, not an enforced limit. ARBITER knows the true state of every player's holdings. A faction's relationship with information it was not supposed to hold is observed and may be reflected in the Portrait.
 
-### Discarding Intel Notes
+### Discarding Intel Tokens
 
-Any intel note may be discarded by its holder at any time for any reason. Discarding is immediate and requires no action. A discarded note is permanently removed from play — it cannot be retrieved, examined after the fact, or referenced by any player or ARBITER.
+Any Intel Token may be discarded by its holder at any time for any reason. Discarding is immediate and requires no action. A discarded note is permanently removed from play — it cannot be retrieved, examined after the fact, or referenced by any player or ARBITER.
 
 ### Uses
 
-Defined in Artifact 04 — Action Card System. Governing principle: an intel note can only be applied to actions involving the specific faction named on it. Effectiveness varies by age.
+Defined in Artifact 04 — Action Card System. Governing principle: an Intel Token can only be applied to actions involving the specific faction named on it. Effectiveness varies by age.
 
 ### Generation
 
@@ -252,7 +252,7 @@ Occurs primarily during Debrief. Rules defined in Artifact 03 — Round Structur
 | Portrait position marker | 1 per faction (5 total) | Clip or bead in faction color |
 | Public Standing track | 1 per faction (5 total) | Laminated strip. Scale 0–20, five named bands with target modifier labels. Displayed on board or player tableau. |
 | Public Standing marker | 1 per faction (5 total) | Clip or bead in faction color |
-| Intel notes | Variable — created during play | Small pieces of paper. Written by ARBITER at creation. Contains faction name and quarter acquired only. Blank paper cut to consistent size is sufficient. |
+| Intel Token | Variable — created during play | Small token or chit. ARBITER records faction name and Quarter acquired at creation. Physical spec TBD Artifact 11. |
 
 ---
 
@@ -273,9 +273,9 @@ The target modifier from Public Standing applies to all 2d10 rolls the faction m
 
 *Example: The Directorate is at Suspect (−10 to target). They attempt a Gather at University Perimeter with no presence there — base difficulty Challenging, target 01–25. The Suspect modifier reduces the target to 01–15. The Directorate rolls 18. At Neutral (target 01–25) this succeeds. At Suspect (target 01–15) it fails. Same die result. Different threshold. Only the target changed.*
 
-### Intel Notes — Self-Directed Holdings
+### Intel Tokens — Self-Directed Holdings
 
-Intel notes naming your own faction do not count toward the holding guideline and have no offensive use for standard factions. Their value is defensive — holding them prevents others from using them. They can be discarded immediately on receipt, held until expiry, or traded. Ghost may use self-directed notes for specific covert operations defined in Artifact 04.
+Intel Tokens naming your own faction do not count toward the holding guideline and have no offensive use for standard factions. Their value is defensive — holding them prevents others from using them. They can be discarded immediately on receipt, held until expiry, or traded. Ghost may use self-directed tokens for specific covert operations defined in Artifact 04.
 
 ---
 
@@ -293,9 +293,9 @@ Two evaluations. Same faction. Different observers. Both true.
 
 ---
 
-### Intel Note — Disclosure Choice
+### Intel Token — Disclosure Choice
 
-*Round 4 Debrief. The Network holds an intel note naming The Syndicate (Round 2 — stale). The Directorate asks directly whether The Network has anything on The Syndicate.*
+*Round 4 Debrief. The Network holds an Intel Token naming The Syndicate (Round 2 — stale). The Directorate asks directly whether The Network has anything on The Syndicate.*
 
 The Network has three options:
 - Show the note to The Directorate privately — they see faction and quarter
@@ -306,9 +306,9 @@ The Network shows it privately. The Directorate confirms it is stale and negotia
 
 ---
 
-### Intel Note — Acquired Through Trade
+### Intel Token — Acquired Through Trade
 
-*Round 4 Debrief. The Guild offers The Directorate two intel notes for 3 Mandate. The Directorate examines them first.*
+*Round 4 Debrief. The Guild offers The Directorate two Intel Tokens for 3 Mandate. The Directorate examines them first.*
 
 One names The Syndicate (Round 2 — stale). One names The Directorate itself (Round 3 — fresh). The Directorate accepts the trade. They immediately discard the self-directed note — permanently gone. They keep the Syndicate note for a future Denounce.
 

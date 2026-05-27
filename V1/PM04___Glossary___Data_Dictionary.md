@@ -38,15 +38,15 @@ Canonical reference for all in-world terms and their mechanical equivalents. Eac
 | The Overview | Game mat / full shared display | The Table's shared situational interface. Negotiated data governance. ARBITER administers accuracy, not content. | Artifact 00 §8 |
 | New Meridian | Game board / district map (within The Overview) | Boom city assembled from a listening station in 31 years. 800,000 people from everywhere. | Artifact 01 §1 |
 | District | Board space / hex | A named geographic zone within New Meridian. | Artifact 01 §1 |
-| Presence token | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. Dominant is an atmosphere, not a count. | Artifact 02a §1 |
-| Operational marker | Claim marker | Temporary deployment presence; counts as a presence token during the round. | Artifact 01 §1 |
-| Assets | A faction's active board presence and declared actions — includes influence (presence tokens and deployment markers), structure blocks, and any covert operations or political acts declared during the current round. | Everything the faction is doing, passive or active. Established weight in the district, physical infrastructure, and open and covert commitments combined. | PM04 §1 (C10 Protect, Art 04 §7) |
+| Presence chip | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. Dominant is an atmosphere, not a count. | Artifact 02a §6 |
+| Operational marker | Claim marker | Temporary deployment presence; counts as a presence chip during the Quarter. | Artifact 01 §1 |
+| Assets | A faction's active board presence and declared actions — includes influence (presence chips and deployment markers), structure blocks, and any covert operations or political acts declared during the current Quarter. | Everything the faction is doing, passive or active. Established weight in the district, physical infrastructure, and open and covert commitments combined. | PM04 §1 (C10 Protect, Art 04 §7) |
 | The Backlog | Shared Dispatch Token pool on the table | The queue of authorized but uncommitted operational work. All Dispatch Tokens live here when not in faction possession. Distinct from the Reservoir (faction resources). Tokens drawn from The Backlog at Upkeep represent a faction's active operational capacity for the Quarter; spent tokens return to The Backlog at Quarter close. | Artifact 00 §14, Artifact 02a §8a |
 | Dispatch case | Recipe box | Protocol for covert submission. | Artifact 06 §1 |
 | Reservoir | Resource bank | Capitalized. The supply of available faction resources. *"The Reservoir does not judge what is drawn from it."* | PM02 L93 |
 | Public Standing track | Popularity track | 0–20 point scale. Bell curve enforced by natural drift (above 13 = −1/quarter, below 7 = +1/quarter). | Artifact 02b §1 |
 | Chorus Portrait | Portrait score | ARBITER's private assessment of faction alignment with the Chorus Question. Determines initiative and feeds the Chronicle. | Artifact 02b §1 |
-| Intelligence token | Proof token / Intel note | Physical evidence — a slip of paper or token representing confirmed information. | Artifact 02b §1 |
+| Intel Token | Proof token / Intel note / Intelligence token | Physical token representing confirmed intelligence one faction holds about another. Held privately; disclosed at faction's discretion. | Artifact 02b §8 |
 | Covert operation | Private action | Actions submitted face-down to the dispatch case. | Artifact 04 §1 |
 | Political act | Public action | Actions declared openly at the table. | Artifact 04 §1 |
 | Floor Act | Always-available political act | One native resource, outside the deck, minimal effect. Working name — in-world name pending D04-13. | PM02 D04-13 |
@@ -61,11 +61,11 @@ Maps each canonical in-game term to its physical/real-world description. Authori
 
 | In-Game Term | Physical Form | Notes |
 |--------------|---------------|-------|
-| Presence token | Small coloured disc or poker chip | One colour per faction; ARBITER uses white |
+| Presence chip | Small coloured disc or poker chip | One colour per faction; ARBITER uses white |
 | Deployment marker | Double-sided cardboard chit | Face-up = active; face-down = converting |
 | Operational marker | Double-sided cardboard chit | Distinct from deployment marker — confirm at Art 01 production pass |
 | Structure block | Wooden cube | One colour per faction |
-| Intel note | Small paper slip | Folded, sealed — handled via dispatch case |
+| Intel Token | Small token or chit | Held privately by receiving faction; disclosed at faction's discretion — not folded or sealed |
 | Dispatch case | Sealed envelope or small box | Per-faction covert submission vessel |
 | Situation Report | Two-card set (narrative card + ARBITER effect card) | Held by ARBITER; not player-drawn |
 | Operation Resolution card | Large card or laminated sheet | One per resolution instance; held by ARBITER |
@@ -115,12 +115,12 @@ All documentation uses in-world narrative terms. Each mechanical term is defined
 | Board space | District | 01 §1 |
 | Game mat / full shared display | The Overview | 00 §8 |
 | Game board / district map (within The Overview) | New Meridian | 01 §1 |
-| Influence token | Presence token | 02a §1 |
+| Influence token | Presence chip | 02a §6 |
 | Claim marker | Operational marker | 01 §1 |
 | Recipe box | Dispatch case | 06 §1 |
 | Popularity track | Public Standing track | 02b §1 |
 | Portrait score | Chorus Portrait | 02b §1 |
-| Proof token | Intelligence token | 02b §1 |
+| Proof token | Intel Token | 02b §8 |
 | Modifier card | Operational intelligence card (L06) — in-world name under review (D04-07 open) | 04 §11 |
 | Counter card | Countermeasure card | 04 §14.2 |
 | Private action | Covert operation | 04 §1 |
@@ -244,11 +244,11 @@ Every physical game component must be referred to by its canonical in-game term 
 
 | Canonical Term | Non-Compliant Variants |
 |----------------|------------------------|
-| Presence token | chip, token, influence token, presence chip |
+| Presence chip | token, influence token, presence token |
 | Deployment marker | marker, claim marker |
 | Operational marker | marker, temporary marker |
 | Structure block | block, building block |
-| Intel note | slip, token, proof token, intel token |
+| Intel Token | note, slip, proof token, intel note, intelligence token |
 | Dispatch case | case, box, envelope, recipe box |
 | Situation Report | event card, world event card |
 | Operation Resolution card | resolution card, card |

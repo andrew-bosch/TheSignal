@@ -244,7 +244,7 @@ The following components may be present within any district zone:
 | Deployment marker | Public | Unknown |
 | Structure block | Public | Unknown |
 | Influence level marker (Dominant) | Public | Unknown |
-| Contested marker | Public | N/A |
+| Tension marker | Public | N/A |
 
 Each district tile prints its name, resource type (background color), and base generation value. All printed information remains visible regardless of components placed on it. District placement within each ring follows geographic and narrative logic — districts that depend on one another are adjacent; districts with historical faction relationships are near each other. The map is readable as a city, because it is one. Child zones: Ring 0, Ring 1, Ring 2, Ring 3.
 
@@ -468,7 +468,7 @@ Every district on the board must simultaneously display:
 | Resource type | Background color of district | All |
 | Base generation value | Printed number on district | All |
 | Faction presence tokens | Physical tokens placed on district | All |
-| Influence level | Dominant marker on controlling faction's stack; Contested marker on district | All |
+| Influence level | Dominant marker on controlling faction's stack; Tension marker on district | All |
 | Structures present | Structure tokens on district (distinct shape from presence tokens) | All |
 | Operational markers this round | Large distinct pieces placed during Placement phase | All |
 | Special rules | Distinct icon printed on district (Chorus Node, Residential Quarter) | All |
@@ -600,7 +600,7 @@ A district is Contested when two or more factions are tied for the highest prese
 
 **No faction can be Dominant in a Contested district.**
 
-ARBITER places a Contested marker (neutral chip) on the district when this state arises and removes it the moment one faction pulls strictly ahead.
+ARBITER places a Tension marker (neutral chip) on the district when this state arises and removes it the moment one faction pulls strictly ahead.
 
 **Resource generation in a Contested district:**
 
@@ -632,7 +632,7 @@ However: if The Network had placed their first marker in Chorus Research (Core) 
 
 Quarter 5. Ghost and The Syndicate both have 4 presence tokens at Data Exchange. The Guild has 2 presence tokens at Data Exchange.
 
-Ghost and The Syndicate are tied at 4 tokens — both qualify for Dominant but neither can hold it. Contested marker is placed. Both generate 1 Findings flat.
+Ghost and The Syndicate are tied at 4 tokens — both qualify for Dominant but neither can hold it. Tension marker is placed. Both generate 1 Findings flat.
 
 The Guild has 2 tokens — second place by count, 2-token minimum met. The Guild is Established. The Guild generates full Data Exchange value: 2 Findings.
 

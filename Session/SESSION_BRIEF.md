@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 41 | Updated: 2026-05-27**
+**Session 42 | Updated: 2026-05-27**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 41: Narrative anchor work and independent mechanical cleanup. **02a v1.6** — Reservoir narrative anchor added to §4; Backlog + Dispatch Token narrative anchors added to §8a. **TOC anchor links** added to all 11 active design artifacts (00, 00a, 00b, 00c, 01, 02a, 02b, 03, 03a, 04, 04b) — clickable from Index to sections. **Art 01 §4 removed** (01-07 ✅). Gem context updated: Bucket A now current through S40; Bucket B enriched with tone/register guardrails, non-canonical faction guardrail, generative spiral. Narrative anchors staged in Whiteboard for Art 01 pass (01-08). **Next: 02a v1.6 focused review → sign-off (combined §8a + narrative anchors, one pass), then Art 03 v1.9 re-sign-off.**
+Session 42: Gem consulting integration + terminology decisions. **02a v1.6 signed off** (02a-10 ✅). S42 changes to 02a: §8a Narrative Anchor subheader; Art 01 Supply stub resolved; "Quarter" sweep; Baryo/The Mid ring names; Deployment marker consistency; "Round 1" → "Quarter 1". **Three locked decisions:** L157 (Presence chip canonical), L158 (Intel Token canonical — physical form is token, not paper slip), L159 ("Quarter" locked globally, "Round" retired). **Terminology sweeps applied:** 02a, 02b (Intel Tokens throughout), 00a (Intel Tokens; Dispatch Case; Quarter sweep; §9 renamed "Quarter & Timing"), 01 (Tension marker — was Contested marker), PM04 (canonical terms updated), PM02 (L157–L159 logged), PM05 (XA-33, 00a-09 added). **Next: Art 03 v1.9 re-sign-off (04-48 + XA-33 bundled).**
 
 ---
 
@@ -19,8 +19,8 @@ Session 41: Narrative anchor work and independent mechanical cleanup. **02a v1.6
 | 00 — Factions, World & Narrative | 1.5 | ✅ Signed Off — S40. Open: 00-09 (World Conditions panel — design question, does not block sign-off). |
 | 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. |
 | 01 — Game Board: New Meridian | 1.8 | ✅ Signed Off — S40. §4 removed S41 (01-07 ✅). Open: §8/§9 Tableau stubs (Art 07 + Art 08); narrative anchor pass (01-08); district_adjacency DB table (agy); live_state → L156 + 00b. |
-| 02a — Resource Systems: Board State | 1.6 | ⚠️ Pending Re-Sign-Off — §8a added S38; Reservoir + Backlog + Dispatch Token narrative anchors added S41. Combined focused review covers all changes. **Session 42 first item.** |
-| 03 — Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off — S37/S38. Flags: §3 "Eight rounds" → "Eight Quarters" (fix confirmed S39, not yet applied); §20 "Round Tracker" (needs in-world name — blocked on Art 00/01 upstream work); XA-32 ring modifier step. After Art 02a. |
+| 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
+| 03 — Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off. Flags: §3 "Eight rounds" → "Eight Quarters" (fix not yet applied); §20 "Round Tracker" (needs in-world name); XA-32 ring modifier step; XA-33 (rename to "Quarter Structure & Gameplay" + 00a time convention rewrite — bundle in this pass). |
 | 04 — Action Card System | 0.9.20 | C17 sign-off (after Art 03); C36–C42 Intel economy cards; 04b-03 action taxonomy audit required before C16+ work. |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining. |
@@ -59,11 +59,11 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 04b (v1.2 — 04b-03 au
 
 ## Last 3 Locked Decisions
 
-- **L156** (S40): live_state schema — on_component_id (FK → components.id, nullable) and on_game_zone_id (FK → game_zones.id, nullable) columns added. Allows expressing "component rests on another component or sub-zone." Blocked: 00b-05 update first, then agy DDL.
-- **L155** (S40): Faction Representative as game entity — the human player is a named component in the data model; zone_id = their assigned Chair. L2: Terminal authenticates representative to MIRROR.
-- **L154** (S39): Faction Terminal screens — each faction player receives a screen component, analogous to ARBITER screen, to keep Terminal contents private. Pillar 1 revised to "The Overview is Truth." Enables force-reveal action class. Art 04b taxonomy audit required (04b-03).
+- **L159** (S42): "Quarter" locked globally — "Round" retired as a game term. Art 03 rename to "Quarter Structure & Gameplay" pending (XA-33, bundle with 04-48). 00a time convention rule to be rewritten same pass.
+- **L158** (S42): Intel Token canonical (also: Intelligence Token). Physical form = small token/chit, not paper slip. "Intel note" deprecated. Swept 02b, 00a, PM04.
+- **L157** (S42): Presence chip = canonical physical name. "Presence token" = card text shorthand only. PM04 updated. 00a R10/R13 sweep pending (00a-09).
 
-→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L154)
+→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L159)
 
 ---
 
@@ -72,8 +72,8 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 04b (v1.2 — 04b-03 au
 - **Art 00 v1.5** — ✅ Signed Off S40
 - **00a v0.3** — ✅ Signed Off S40
 - **Art 01 v1.8** — ✅ Signed Off S40
-- **02a v1.5** — after Art 01
-- **Art 03 v1.9** — after 02a; §3 "Eight Quarters" fix confirmed not yet applied
+- **02a v1.6** — ✅ Signed Off S42
+- **Art 03 v1.9** — next; §3 "Eight Quarters" fix + XA-32 ring modifier + XA-33 rename bundle
 - C17 — after Art 03
 
 ---

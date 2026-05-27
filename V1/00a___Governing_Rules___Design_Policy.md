@@ -136,7 +136,7 @@ Purely mechanical rules that live cleanly in their source artifact (e.g., Findin
 | §6 | [Resource & Economy](#6-resource--economy) |
 | §7 | [Card Design Constraints](#7-card-design-constraints) |
 | §8 | [Information & Privacy](#8-information--privacy) |
-| §9 | [Round & Timing](#9-round--timing) |
+| §9 | [Quarter & Timing](#9-quarter--timing) |
 
 ---
 
@@ -295,7 +295,7 @@ Rules governing what is always visible and what is never visible on the board su
 
 **00-R09**
 
-**Rule:** The board reflects true current state at every moment in the round.
+**Rule:** The board reflects true current state at every moment in the Quarter.
 
 **Narrative:** What appears on The Overview cannot be negotiated away. A structure placed is placed. Presence lost is lost. The city does not hold events in suspension while the factions decide how to characterize them — it proceeds, and The Overview proceeds with it.
 
@@ -306,7 +306,7 @@ The factions can shape the future. They cannot revise the present. A stale Overv
 > *"New Meridian is not a map. It is a clock. What it shows is not where things were. It is where things are. Right now. While you're looking."*
 > — Senior signal analyst, original listening station staff, orientation briefing (unofficial)
 
-**Mechanics:** The board is never permitted to show a stale or deferred state. When a game action causes a board change, that change is made immediately upon resolution — not at the end of the beat or round. Control flags, established markers, and tension markers update immediately when influence conditions change.
+**Mechanics:** The board is never permitted to show a stale or deferred state. When a game action causes a board change, that change is made immediately upon resolution — not at the end of the beat or Quarter. Control flags, established markers, and tension markers update immediately when influence conditions change.
 
 *Source: Artifact 03 §5.*
 
@@ -333,7 +333,7 @@ Hard constraints on board state that cannot be overridden by card effects or spe
 > *"You can fill a room so full of your people it collapses. Doesn't make it yours. Makes it something else."*
 > — Directorate district coordinator, field notes
 
-**Mechanics:** No faction may hold more than 6 presence tokens in a single district at any time. Deployment markers count toward this limit during the round they are placed. No card effect or operative ability may place a token that would exceed this limit — the attempt fails regardless of other conditions.
+**Mechanics:** No faction may hold more than 6 presence tokens in a single district at any time. Deployment markers count toward this limit during the Quarter they are placed. No card effect or operative ability may place a token that would exceed this limit — the attempt fails regardless of other conditions.
 
 *Source: L26, Artifact 02a §6.*
 
@@ -390,7 +390,7 @@ Hard constraints on board state that cannot be overridden by card effects or spe
 
 **Narrative:** A faction in motion is still a faction present. Every faction has multiple public faces — conventions, focused operations, festivals. A deployment marker is one of those faces turned toward a specific district: concentrated, temporary, purposeful. Where presence tokens represent the ambient weight that fills a district over time, a marker is the faction actively engaging there. The distinction between a token and a marker is administrative; the presence is the same.
 
-**Mechanics:** Any rule, card text, or restriction that states "at least 1 presence token" or equivalent applies equally to presence tokens and deployment markers. Deployment markers count as temporary presence tokens for all purposes during the round they are placed. This convention is defined once here and in Artifact 02a — it is not restated on individual cards.
+**Mechanics:** Any rule, card text, or restriction that states "at least 1 presence token" or equivalent applies equally to presence tokens and deployment markers. Deployment markers count as temporary presence tokens for all purposes during the Quarter they are placed. This convention is defined once here and in Artifact 02a — it is not restated on individual cards.
 
 *Source: L14, L58, Artifact 02a §6.*
 
@@ -651,7 +651,7 @@ Rules that constrain all card design. A proposed card that violates any of these
 > *"You can't counterfeit the board. You can counterfeit the Accord."*
 > — Syndicate legal counsel, Table advisory
 
-**Mechanics:** The Corrupt function (Cross-Category — Corrupt) applies only to values that are physically written or recorded in the paper prototype. Valid targets: Intel note content, Accord agreement terms. Invalid targets: printed card text, marker positions tracked by physical placement, Chronicle narrative.
+**Mechanics:** The Corrupt function (Cross-Category — Corrupt) applies only to values that are physically written or recorded in the paper prototype. Valid targets: Intel Token content, Accord agreement terms. Invalid targets: printed card text, marker positions tracked by physical placement, Chronicle narrative.
 
 *Source: Artifact 04b §3.4.*
 
@@ -735,7 +735,7 @@ Rules governing what information can be held, disclosed, and acted upon.
 > *"What I know and what I tell you are two different things. That's not a threat. That's The Table."*
 > — Ghost Table representative, open session
 
-**Mechanics:** Any private information a player holds — Intel notes, hand cards, modifier cards, classified directives, or any other private component — is disclosed only when the holder chooses. The holder may share it publicly, privately, partially, or not at all. No card may force a faction to disclose held private information without a Reveal effect.
+**Mechanics:** Any private information a player holds — Intel Tokens, hand cards, modifier cards, classified directives, or any other private component — is disclosed only when the holder chooses. The holder may share it publicly, privately, partially, or not at all. No card may force a faction to disclose held private information without a Reveal effect.
 
 *Source: Artifact 02b §5, §8.*
 
@@ -755,7 +755,7 @@ Rules governing what information can be held, disclosed, and acted upon.
 > *"ARBITER knows what is actually held — every note, every directive. ARBITER will not be used as a prop in a deception. If a faction wants to prove what they hold, they must reveal it. ARBITER watches. ARBITER does not narrate."*
 > — ARBITER, The Record
 
-**Mechanics:** A faction claiming to hold a specific Intel note, hand card, or any other private component cannot ask ARBITER to confirm or deny the claim without a specific game action (e.g., a Reveal card). ARBITER knows the true state of all holdings. ARBITER does not validate bluffs or threats that reference undisclosed private information.
+**Mechanics:** A faction claiming to hold a specific Intel Token, hand card, or any other private component cannot ask ARBITER to confirm or deny the claim without a specific game action (e.g., a Reveal card). ARBITER knows the true state of all holdings. ARBITER does not validate bluffs or threats that reference undisclosed private information.
 
 *Source: Artifact 02b §8.*
 
@@ -765,14 +765,14 @@ Rules governing what information can be held, disclosed, and acted upon.
 
 **00-R32**
 
-**Rule:** Discarded Intel notes are permanently removed from play.
+**Rule:** Discarded Intel Tokens are permanently removed from play.
 
 **Narrative:**
 
 > *"Twelve days of source contact in that note. Three locations, two operational windows, one name we'd been building toward for months. Thirty seconds in the shredder. You tell yourself you had to — and maybe you did. But there's no 'had to' that gives it back."*
 > — Ghost field operative, after-action debrief
 
-**Mechanics:** An Intel note discarded by its holder is immediately and permanently removed from the game. It cannot be retrieved, examined after the fact, or referenced by any player or ARBITER in any subsequent game action.
+**Mechanics:** An Intel Token discarded by its holder is immediately and permanently removed from the game. It cannot be retrieved, examined after the fact, or referenced by any player or ARBITER in any subsequent game action.
 
 *Source: Artifact 02b §8.*
 
@@ -782,7 +782,7 @@ Rules governing what information can be held, disclosed, and acted upon.
 
 **00-R33**
 
-**Rule:** Intel note holding guidelines are doctrinal expectations, not mechanical limits.
+**Rule:** Intel Token holding guidelines are doctrinal expectations, not mechanical limits.
 
 **Narrative:**
 
@@ -792,7 +792,7 @@ Rules governing what information can be held, disclosed, and acted upon.
 > *"The Directorate carried three notes into Quarter 5. Their doctrine calls for two. The third was a source contact they hadn't acted on. The Chorus noted the hesitation. Not the note. The hesitation."*
 > — ARBITER, The Observation
 
-**Mechanics:** The Intel note holding guideline (standard factions: 2 notes; Ghost: 4 notes; self-directed notes exempt) is a doctrinal expectation, not a mechanical enforcement. ARBITER does not force factions to discard excess notes.
+**Mechanics:** The Intel Token holding guideline (standard factions: 2 tokens; Ghost: 4 tokens; self-directed tokens exempt) is a doctrinal expectation, not a mechanical enforcement. ARBITER does not force factions to discard excess tokens.
 
 *Source: Artifact 02b §8.*
 
@@ -800,7 +800,7 @@ Rules governing what information can be held, disclosed, and acted upon.
 
 ---
 
-## 9. Round & Timing
+## 9. Quarter & Timing
 
 Rules governing when things happen, in what order, and what the timing locks.
 
@@ -826,7 +826,7 @@ Rules governing when things happen, in what order, and what the timing locks.
 
 **Rule:** Commitment is irreversible.
 
-**Narrative:** A sealed case, a declared act, a spent resource — these are facts that exist in the world now. The world does not allow uncausing. A faction that commits to something has committed. There is no taking it back, no reconsidering, no polite withdrawal. The Table moves. What was done was done.
+**Narrative:** A Dispatch Case, a declared act, a spent resource — these are facts that exist in the world now. The world does not allow uncausing. A faction that commits to something has committed. There is no taking it back, no reconsidering, no polite withdrawal. The Table moves. What was done was done.
 
 > *"The moment you close that case, you've done it. There is no 'I changed my mind.'"*
 > — Syndicate operations lead, training brief
@@ -934,16 +934,16 @@ Rules governing when things happen, in what order, and what the timing locks.
 | 00-R24 | Portrait scoring fires at Resolution — unconditionally, conditionally, or both | Two parallel mechanisms; ARBITER applies all Portrait values present on the card at Resolution |
 | 00-R25 | Ring Modifier effects target only districts in the card's originating ring | Ring restriction specified on card; applies regardless of which faction holds or uses it |
 | 00-R26 | React conditions must be publicly observable | Condition must be countable without hidden information; hidden conditions are not valid React triggers |
-| 00-R27 | Corrupt applies only to physically written or recorded values | Valid: Intel note content, Accord terms; Invalid: printed card text, marker positions, Chronicle narrative |
+| 00-R27 | Corrupt applies only to physically written or recorded values | Valid: Intel Token content, Accord terms; Invalid: printed card text, marker positions, Chronicle narrative |
 | 00-R28 | Standard language conventions apply globally and are not restated on cards | Defined once (R13, L59, L60, L61); cards use phrases as written without qualification |
 | 00-R29 | Ghost may use Gather (C05) without meeting adjacency requirement | C05 targets any district regardless of adjacency; all other Ghost actions require adjacency |
 | 00-R29a | Portrait values printed on card, visually coded for ARBITER | ARBITER player reads Portrait values from card at Resolution; no separate reference; visual coding design deferred to Artifact 09 |
 | 00-R30 | Private information disclosed only at holder's discretion | Any private component shared, withheld, or lied about at holder's choice; Reveal effect required to force disclosure |
 | 00-R31 | Verbal claims about undisclosed private information cannot be verified by ARBITER | ARBITER does not validate bluffs or threats referencing undisclosed information |
-| 00-R32 | Discarded Intel notes permanently removed from play | Immediately and permanently removed; cannot be retrieved or referenced in any subsequent action |
-| 00-R33 | Intel note holding guidelines are doctrinal expectations, not mechanical limits | ARBITER does not force factions to discard excess notes |
+| 00-R32 | Discarded Intel Tokens permanently removed from play | Immediately and permanently removed; cannot be retrieved or referenced in any subsequent action |
+| 00-R33 | Intel Token holding guidelines are doctrinal expectations, not mechanical limits | ARBITER does not force factions to discard excess notes |
 | 00-R34 | Phases do not overlap | No action valid in a later phase may be taken in an earlier phase; prior phase cannot be revisited |
-| 00-R35 | Commitment is irreversible | Sealed cases, declared acts, and spent resources are permanent from the moment made |
+| 00-R35 | Commitment is irreversible | Dispatch Cases, declared acts, and spent resources are permanent from the moment made |
 | 00-R36 | Critical results apply regardless of modifiers | Crit Success (01–05) always succeeds; Crit Fail (96–00) always fails |
 | 00-R37 | Submission order is tiebreaker within resolution priority tiers | Faster submission earns resolution priority within Beat 3 and Beat 4 |
 | 00-R38 | Findings decay applies at close of Debrief, before Session Timeline advances | First action at end of quarter; timing fixed; cannot be modified by card effect |
