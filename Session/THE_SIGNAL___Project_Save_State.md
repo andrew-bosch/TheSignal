@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-26 (session 40 complete) — supersedes session 38 save state.
+### Generated: 2026-05-27 (session 41 complete) — supersedes session 40 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -58,6 +58,25 @@ Read this document top to bottom before doing any design work in a new session. 
 - Whiteboard/Art01_Scope_S39.md — deleted (migrated to Art 01).
 
 **Next session (41):** 02a re-sign-off (02a-10) → Art 03 re-sign-off (04-48) → Art 04 continuation. Also: L156 → 00b-05 → DB-09 (live_state + district_adjacency DB for agy).
+
+---
+
+### Session 41 Summary — 2026-05-27
+
+**Focus:** Gem session narrative anchors processed; gem_web_context.md Bucket A gap fixed (S39+S40 appended); Art 01 §4 removal; TOC anchor links added to all 11 active artifacts; 02a v1.6 narrative anchors drafted; Art 01 narrative anchors staged in Whiteboard.
+
+**Decisions locked:** None.
+
+**Artifacts changed:**
+- Art 01 v1.8 — §4 Narrative Function removed (01-07 ✅). TOC anchor links added (immaterial). Open: 01-08 (narrative anchor pass — staged in Whiteboard/Art01_Narrative_Anchors_S41.md).
+- 02a v1.6 — §4 Reservoir narrative anchor added; §8a Dispatch Token narrative intro added (executive authorization framing). TOC anchor links added. Pending combined review (02a-10) — Session 42 first item.
+- gem_web_context.md — S39+S40 Bucket A summaries appended; Bucket B enriched with tone/register guardrails, non-canonical faction guardrail, generative spiral, session collaboration patterns. Header updated to Session 41.
+- PM05 v2.8 — 01-07 ✅ S41; 01-08 added (Art 01 narrative anchor pass, Material — re-sign-off required); 02a-10 updated (v1.6 combined review — §8a S38 + narrative anchors S41).
+- Creative/CANON_CANDIDATES.md — Colonel Jax Vane (Directorate Security Liaison) and potential Aris Thorne collision flagged as flavor-only, not canon.
+- TOC anchor links — all 11 active artifacts updated: 00, 00a, 00b, 00c, 01, 02a, 02b, 03, 03a, 04, 04b (immaterial — no re-sign-off).
+- Whiteboard/Art01_Narrative_Anchors_S41.md — created; Gem S41 narrative anchors staged for Art 01 integration.
+
+**Next session (42):** 02a v1.6 focused review + sign-off (02a-10) → Art 03 v1.9 re-sign-off (04-48) → Art 04 continuation. Pending: 00b-05 (live_state spec) → DB-09 (district_adjacency), 01-08 (Art 01 narrative anchor pass — after 02a sign-off).
 
 ---
 

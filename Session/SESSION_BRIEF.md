@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 40 | Updated: 2026-05-26**
+**Session 41 | Updated: 2026-05-27**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 40: Art 00 signed off (00-07, L155). 00a signed off. **Art 01 v1.8 signed off (01-05).** Full overhaul complete S40: zone hierarchy (Game Box / Chairs / Table / P1–P6 / Central Area and all children / City → Ring 0–3 → 21 districts), Physical Table Layout section, two Visio component images integrated, district tables with hex resource colors, district adjacency map (101 rows), §7 Starting Configuration (Fixed Setup / Faction Starting Tokens / Track Starting Values), §8–§9 stubs (Faction Player Tableau / ARBITER Tableau — pending Art 07 and Art 08), §10 Special Conditions (Contested Districts rewrite), §11 Examples (terminology). Open: §4 Narrative Function (removal pending); live_state on_component_id/on_game_zone_id → L156 + 00b update; district_adjacency DB table (agy); Art 08 not yet defined. **Next: 02a re-sign-off, then Art 03.**
+Session 41: Narrative anchor work and independent mechanical cleanup. **02a v1.6** — Reservoir narrative anchor added to §4; Backlog + Dispatch Token narrative anchors added to §8a. **TOC anchor links** added to all 11 active design artifacts (00, 00a, 00b, 00c, 01, 02a, 02b, 03, 03a, 04, 04b) — clickable from Index to sections. **Art 01 §4 removed** (01-07 ✅). Gem context updated: Bucket A now current through S40; Bucket B enriched with tone/register guardrails, non-canonical faction guardrail, generative spiral. Narrative anchors staged in Whiteboard for Art 01 pass (01-08). **Next: 02a v1.6 focused review → sign-off (combined §8a + narrative anchors, one pass), then Art 03 v1.9 re-sign-off.**
 
 ---
 
@@ -18,8 +18,8 @@ Session 40: Art 00 signed off (00-07, L155). 00a signed off. **Art 01 v1.8 signe
 |----------|---------|-----------|
 | 00 — Factions, World & Narrative | 1.5 | ✅ Signed Off — S40. Open: 00-09 (World Conditions panel — design question, does not block sign-off). |
 | 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. |
-| 01 — Game Board: New Meridian | 1.8 | ✅ Signed Off — S40. Open: §4 Narrative Function (removal pending); §8/§9 Tableau stubs (Art 07 + Art 08); district_adjacency DB table (agy); live_state on_component_id/on_game_zone_id → L156 + 00b. |
-| 02a — Resource Systems: Board State | 1.5 | ⚠️ Pending Re-Sign-Off — §8a (Dispatch Tokens & The Backlog) added S38. After Art 01. |
+| 01 — Game Board: New Meridian | 1.8 | ✅ Signed Off — S40. §4 removed S41 (01-07 ✅). Open: §8/§9 Tableau stubs (Art 07 + Art 08); narrative anchor pass (01-08); district_adjacency DB table (agy); live_state → L156 + 00b. |
+| 02a — Resource Systems: Board State | 1.6 | ⚠️ Pending Re-Sign-Off — §8a added S38; Reservoir + Backlog + Dispatch Token narrative anchors added S41. Combined focused review covers all changes. **Session 42 first item.** |
 | 03 — Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off — S37/S38. Flags: §3 "Eight rounds" → "Eight Quarters" (fix confirmed S39, not yet applied); §20 "Round Tracker" (needs in-world name — blocked on Art 00/01 upstream work); XA-32 ring modifier step. After Art 02a. |
 | 04 — Action Card System | 0.9.20 | C17 sign-off (after Art 03); C36–C42 Intel economy cards; 04b-03 action taxonomy audit required before C16+ work. |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
@@ -39,11 +39,12 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 04b (v1.2 — 04b-03 au
 | **01-05** | Art 01 overhaul — physical zone hierarchy, all Overview children | ✅ S40 |
 | **00b-05** | 00b live_state spec update (on_component_id + on_game_zone_id) → then agy DDL (L156) | Open |
 | **DB-09** | Create district_adjacency table (agy) — seed from Art 01 adjacency map | Open — Art 01 signed off |
-| **01-07** | Art 01 §4 Narrative Function — remove (content in §3 + Physical Table Layout) | Open |
+| **01-07** | Art 01 §4 Narrative Function — remove (content in §3 + Physical Table Layout) | ✅ S41 |
+| **01-08** | Art 01 narrative anchor pass — staged in Whiteboard/Art01_Narrative_Anchors_S41.md | Open — after 02a sign-off |
 | **08-00** | Art 08 — define scope + create stub (Faction Player Tableau + ARBITER Tableau) | Open |
 | **03-12** | Battlefield Strength trigger model — resolve in Art 03 re-sign-off (see 04-48) | Open |
 | **01-06** | Claude Design visual wireframe — table layout + mat layout | Open |
-| **02a-10** | 02a v1.5 re-sign-off (§8a Dispatch Tokens & The Backlog) | Open — after Art 01 ✅ |
+| **02a-10** | 02a v1.6 combined review — §8a (S38) + narrative anchors (S41); one focused pass | Open — Session 42 first item |
 | **04-48** | Art 03 v1.9 re-sign-off (§3 Quarter fix + §20 naming + XA-32) | Open — after 02a |
 | **04b-03** | Action taxonomy audit — prerequisite to Art 04 continuation (C16+) | Open — after Art 01 |
 | **XA-32** | Art 03 Beat 3/4 ring modifier step + Art 07 ring modifier guide | Open |
