@@ -1,9 +1,9 @@
-# 03 — Round Structure & Gameplay
+# 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.9  
+**Version:** 2.0  
 
-**Status:** ⚠️ Pending Re-Sign-Off — S37 (Double Case Pass, Intel economy, Dispatch Tokens — material changes)  
+**Status:** ✅ Signed Off — S43  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -46,19 +46,20 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 15. [Month 3 — Declaration](#15-month-3--declaration)
 16. [Month 3 — Countermeasures](#16-month-3--countermeasures)
 17. [Month 3 — Resolution](#17-month-3--resolution)
-18. [Debrief](#18-debrief)
-19. [The Operation System](#19-the-operation-system)
-20. [End of Quarter](#20-end-of-quarter)
-21. [Special Conditions & Gameplay Impacts](#21-special-conditions--gameplay-impacts)
-22. [Examples & Exceptions](#22-examples--exceptions)
+18. [Battlefield Strength — Contested District Resolution](#18-battlefield-strength--contested-district-resolution)
+19. [Debrief](#19-debrief)
+20. [The Operation System](#20-the-operation-system)
+21. [End of Quarter](#21-end-of-quarter)
+22. [Special Conditions & Gameplay Impacts](#22-special-conditions--gameplay-impacts)
+23. [Examples & Exceptions](#23-examples--exceptions)
 
 ---
 
 ## 3. Game Purpose
 
-The round structure is the engine of the session. It defines the rhythm of play — when information is revealed, when commitments are made, when consequences land. Every player decision happens within a specific phase with specific constraints on what they know and what they can do. The sequence is designed so that the most consequential decisions are made after the board state is known but before outcomes are resolved.
+The Quarter structure is the engine of the session. It defines the rhythm of play — when information is revealed, when commitments are made, when consequences land. Every player decision happens within a specific phase with specific constraints on what they know and what they can do. The sequence is designed so that the most consequential decisions are made after the board state is known but before outcomes are resolved.
 
-Eight rounds constitute a session. The session ends either at the completion of Quarter 8 or when an Apex ability resolves — whichever comes first.
+Eight Quarters constitute a session. The session ends either at the completion of Quarter 8 or when an Apex ability resolves — whichever comes first.
 
 ---
 
@@ -70,11 +71,15 @@ This framing gives the game's events appropriate weight:
 - A structure block is not a completed building but an established operational presence — a secured facility, a contracted team, a functioning node. Three months is enough time to establish a foothold; not enough to build a headquarters.
 - Influence growth represents sustained organizational investment over a quarter — relationships cultivated, presence consolidated, community engagement maintained.
 - A Situation Report represents a significant event at the city or global scale — something meaningful enough to shape a quarter of operations, not a daily news cycle.
-- Humanity has been receiving the Chorus for thirty-one years — approximately 124 quarters. The Table's two-year deliberation may be, from the Chorus's perspective, a remarkably compressed response time. Whether the Chorus considers the transmission complete is a question treated fully in Artifact 00. What is relevant to round structure: each quarter carries weight proportional to what it follows. The Table is not working on a human schedule.
+- A faction operating in The Mid or Core without a foothold in the adjacent inward ring is working without local networks, cover, or intelligence — the infrastructure of operational presence. That exposure doesn't block an attempt. It makes it harder.
+- A fresh Intel Token targeting the opposing faction adds +2 to Battlefield Strength. Intelligence on your opponent — their movements, their assets, their exposed positions — is not merely informational. At the moment of contested ground, it is force.
+- Humanity has been receiving the Chorus for thirty-one years — approximately 124 quarters. The Table's two-year deliberation may be, from the Chorus's perspective, a remarkably compressed response time. Whether the Chorus considers the transmission complete is a question treated fully in Artifact 00. What is relevant to the Quarter structure: each quarter carries weight proportional to what it follows. The Table is not working on a human schedule.
 
 The Quarter's three active Months map directly to this calendar reality. Month 1 and Month 2 are the covert operational months — intelligence gathered, moves made, consequences absorbed before the next commitment. Month 3 is the political month — the public act that follows from what the covert months revealed. The sequence is not arbitrary; it is how organizations actually work under pressure.
 
 The Quarter's internal structure mirrors how organizations operate under pressure: situational awareness first (Upkeep), then positioning (Placement), then two covert passes before committing publicly (Month 1 → Month 2 → Month 3 Declaration), then consequences arriving (Resolution), then the conversation about what it all meant (Debrief).
+
+Where two factions have contested the same ground for the full Quarter, the board forces a reckoning before the Table convenes. Battlefield Strength is the Quarter's final act of consequence — decided not by cards or resources but by who committed more deeply to the district and its surroundings.
 
 ARBITER is present throughout but speaks at specific moments. Between those moments, ARBITER watches.
 
@@ -82,7 +87,7 @@ ARBITER is present throughout but speaks at specific moments. Between those mome
 
 ## 5. Design Principles
 
-1. **Information flows in one direction per Quarter.** Players learn the world state at Upkeep, then commit to actions before seeing opponents' choices. Outcomes are revealed simultaneously during Resolution.
+1. **Information flows forward, never backward.** Players learn the board state at Upkeep, then commit to each pass with what that moment offers — no prior commitment can be revised. Covert outcomes from Month 1 are available before Month 2 dispatches; covert outcomes from both passes are available before political Declaration. The sequence is intentional: the highest-stakes commitment is always made with the most information.
 
 2. **Commitment is irreversible.** Once a dispatch case is closed, its contents cannot be changed. Once a political act is declared, it cannot be withdrawn.
 
@@ -129,6 +134,9 @@ MONTH 3 — COUNTERMEASURES (Month3.Week2)
 
 MONTH 3 — RESOLUTION (Month3.Week3–4, Beats 4–5)
   Political acts resolved. The Table speaks.
+
+BATTLEFIELD STRENGTH
+  Contested districts resolve. d10 roll-off per district. Tension markers cleared.
 
 DEBRIEF
   Table reflects on outcomes. Quarter closes.
@@ -199,23 +207,9 @@ Other Faction Players observe and may challenge calculations. ARBITER resolves d
 *If The Network has any presence at University Perimeter:*
 The Network Faction Player declares whether Exposure or the district native resource will be collected from the virtual structure block.
 
-### Step 6 — Intel Token Decay
-
-ARBITER announces: *"Intel decay."*
-
-Each Faction Player checks their current Intel token count and returns tokens to the Reservoir:
-
-| Intel tokens held | Tokens lost |
-|-------------------|-------------|
-| 0 | None |
-| 1–2 | 1 |
-| 3 or more | 2 |
-
-*Applied before Operations Preparation. Remaining Intel tokens carry into the new Quarter.*
-
 ---
 
-### Step 7 — Operations Preparation
+### Step 6 — Operations Preparation
 
 ARBITER announces: *"Prepare operations."*
 
@@ -273,7 +267,7 @@ Draw from the faction modifier deck in the player's tableau.
 
 A ring qualifies if the faction meets all of the following conditions:
 - At least 1 structure block in that ring
-- Established or Dominant presence in at least 1 district in that ring
+- Established or higher presence in at least 1 district in that ring
 
 Draw 1 card for each qualifying ring. A faction may qualify for all three rings.
 
@@ -314,10 +308,10 @@ ARBITER announces: *"Placement is open."*
 
 | Ring | Entry Requirement | Threshold Modifier |
 |------|-------------------|--------------------|
-| Sprawl | None | None |
-| Infrastructure | None | −25 to all operations targeting this district if no adjacent Core district holds Established or Dominant |
-| Core | Established or Dominant in an adjacent Infrastructure district (permanent presence chips or temporary presence from first marker this phase) | None |
-| Chorus Node | Established or Dominant in an adjacent Core district (permanent presence chips or temporary presence from first marker this phase) | See Artifact 02a §10 — standard entry rules do not apply |
+| Baryo | None | None |
+| The Mid | None | −25 to all operations targeting this district if no presence in any adjacent Core district |
+| Core | Established or higher in an adjacent The Mid district (permanent presence chips or temporary presence from first marker this phase) | −25 to all operations targeting this district if no presence at the Chorus Node |
+| Chorus Node | Established or higher in an adjacent Core district (permanent presence chips or temporary presence from first marker this phase) | −25 to all operations targeting this district |
 
 3. After each placement, if influence levels change: the placing Faction Player updates the relevant Control flag, Established marker, or Tension marker immediately.
 
@@ -340,7 +334,9 @@ ARBITER announces: *"Placement is open."*
 
 **2. Assemble cases**
 
-- Faction Players load operation cards, Dispatch Tokens (1 per operation card), resources, target slips, and Pass cards into their cases.
+- Faction Players load operation cards, Dispatch Tokens (1 per operation card), resources, target slips, Pass cards, and any Modifier Cards being assigned to specific operations into their cases.
+
+*Modifier Cards (Faction Modifier Cards and Ring Modifier Cards, drawn at Upkeep §7 Step 6) are assigned to operations by placing each card in the case with that operation's packet. A faction may assign Modifier Cards to some, all, or none of their submitted operations. Unassigned Modifier Cards remain in the tableau modifier area and are not submitted.*
 
 *Assembly should be handled privately and silently.*
 
@@ -424,10 +420,11 @@ From left to right, lane by lane:
 5. Place each validated card in the grid based on what Beat is indicated on the card:
    - Beat 2 card: place in the Beat 2 row of the resolution grid for the lane being processed.
    - Beat 3 card or Pass: place in the uppermost vacant space in the Beat 3 section of the resolution grid for the lane being processed.
-     - Stack bottom to top: target slip, modifier cards, operation card (or pass).
+     - Stack bottom to top: target slip, Modifier Cards (if any), operation card (or pass).
 
      *Cards are placed face-up or face-down per Payment Validation.*
      *Overlap so each card beneath shows its resolution data block.*
+     *(Modifier Card application procedure and ring modifier per-token rate calculation: Art 07 — ARBITER Toolkit.)*
 6. Repeat steps 1–5 for each remaining lane in receipt order (Lane 2 through Lane 5).
 7. Collect all Dispatch Tokens from this Month. Return to The Backlog at Quarter close.
 8. When complete, move to Beat 1.
@@ -445,6 +442,18 @@ From left to right, lane by lane:
 
 *Full Resolution Grid design: Artifact 07 — ARBITER Toolkit.*
 
+**Intel Token Freshness**
+
+If any Intel Token is submitted as part of payment, for each token calculate age: current Quarter number − Quarter number written on the token.
+
+1. Age 0–2: fresh — no modifier applied.
+2. Age 3: stale — attach a −25 Intel freshness modifier to the stack (M-13).
+3. Age 4 or more: expired — counts as partial payment (see Payment Validation table above).
+
+All submitted Intel Tokens are reset (erased) and returned to The Dossier, or discarded if single-use.
+
+*Quarter number and faction are written on each token by ARBITER at issuance. Physical form TBD — reusable erasable medium (erased on return) or single-use paper chit (discarded on use); see PM05 03-13. Expired tokens not submitted have no payment value but may be held and traded — age is visible on the token.*
+
 ---
 
 **Beat 1 (Month1.Week2): Check Active Restrictions**
@@ -458,6 +467,8 @@ The ARBITER Player reads all currently active Situation Report effects aloud.
    - Place the operation card and target slip in the acting faction's dispatch case.
    - Place a Voided resolution card in the dispatch case.
    - Discard any modifier cards from the grid cell — removed from the game.
+
+   *Modifier Cards on voided operations are consumed without effect.*
 
 *Political acts are not yet declared. Targeting restriction checks for political acts occur at the start of Month 3 Resolution (§17).*
 
@@ -483,20 +494,28 @@ The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right
    - Discard any modifier cards from the grid cell — removed from the game.
    - Return any modifier tokens placed on the card to the pool.
 
+   *Modifier Cards on voided operations are consumed without effect.*
+
    *Resources committed to blocked operations are not refunded — the attempt was made and met resistance.*
 
 3. The ARBITER Player flips any deployment markers in the named district to the Blocked face.
+4. Discard the Type A Countermeasure card — removed from the game.
 
 **For each Type B Countermeasure card (Faction Defense):**
 
 1. The ARBITER Player identifies all operation cards in the Beat 3 rows targeting that faction's assets.
 2. The ARBITER Player places a −15 modifier token on each identified operation card in the grid.
+3. Discard the Type B Countermeasure card — removed from the game.
 
 *Physical modifier token design: Artifact 07 — ARBITER Toolkit.*
 
 **For each Protect operation:**
 
-The ARBITER Player notes the target and the defensive modifier to be applied in Beat 3.
+1. The ARBITER Player identifies the target operation cards in the Beat 3 rows.
+2. Calculate the defensive modifier total: Protect base value + any Modifier Card value submitted with this Protect.
+3. Place a modifier token on each target operation card equal to the total defensive modifier.
+4. Discard any Modifier Cards submitted with the Protect — removed from the game.
+5. Return the Protect card to the acting faction's dispatch case.
 
 ---
 
@@ -513,15 +532,23 @@ For each card in queue order:
 1. Read the card in the current grid slot.
 2. If face-down: auto-fail. Discard all modifier cards from the stack. Return the action card to the faction. Advance to the next operation. No further steps apply to this slot.
 3. If Pass: note the skip and advance to the next operation. No further steps apply to this slot.
-4. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in §21 before proceeding.
+4. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in §22 before proceeding.
 
 **Step 2 — Determine base difficulty.**
 
-Read the base difficulty printed on the operation card. Look up the corresponding threshold in the Operation System (§19).
+Read the base difficulty printed on the operation card. Look up the corresponding threshold in the Operation System (§20).
 
 **Step 3 — Apply all modifiers.**
 
-Apply all active modifiers: partial payment threshold marker (if attached in Beat 0), Type B Countermeasure token on the card (if any), modifier cards in cascade under the operation card, Public Standing modifier, active Situation Report effects, Protect/Defend operation modifiers, and Infrastructure district penalty (if the target district is Infrastructure and the acting faction holds no Established or Dominant presence in an adjacent Core district).
+Apply all active modifiers:
+- Partial payment threshold marker (if attached in Beat 0)
+- Type B Countermeasure token (if placed on this card in Beat 2)
+- Modifier Cards in cascade
+- Ring Modifier Card calculation (see Artifact 07 — ARBITER Toolkit)
+- Public Standing modifier
+- Active Situation Report effects
+- Protect modifier token (placed by ARBITER in Beat 2)
+- Ring adjacency penalty (The Mid: no adjacent Core presence; Core: no Chorus Node presence)
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -705,7 +732,7 @@ The ARBITER Player reads all currently active Situation Report targeting restric
    - Place a Voided resolution card in front of the Faction Player's tableau.
    - Discard any modifier cards — removed from the game.
 
-*A voided political act does not fire. No payment is due. Modifier cards already placed are lost.*
+*A voided political act does not fire. No payment is due. Modifier Cards already placed are consumed without effect.*
 
 **Submit Payment**
 
@@ -717,6 +744,16 @@ In initiative order, for each Faction Player with a declared political act:
    - **Partial payment:** The ARBITER Player attaches a −50 threshold marker to the card. ARBITER announces the adjusted threshold.
    - **Zero payment:** ARBITER announces the act is invalid. The Faction Player flips their political act card face-down.
 
+**Intel Token Freshness**
+
+If any Intel Token is submitted as part of payment, for each token calculate age: current Quarter − Quarter generated (written on token).
+
+1. Age 0–2: fresh — no modifier applied.
+2. Age 3: stale — attach a −25 Intel freshness modifier to the stack (M-13).
+3. Age 4 or more: expired — counts as partial payment.
+
+Reset (erase) and return all submitted Intel Tokens to The Dossier, or discard if single-use (physical form TBD — PM05 03-13).
+
 *ARBITER script for each payment outcome: Artifact 07 — ARBITER Toolkit.*
 
 *Face-down cards auto-fail when their turn is reached in initiative order: modifier cards are discarded and the political act card is returned to the faction.*
@@ -725,7 +762,7 @@ In initiative order, for each Faction Player:
 
 **Step 1 — Identify the political act. Check for Apex.**
 
-1. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in §21 before proceeding.
+1. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in §22 before proceeding.
 2. If face-down: auto-fail. Discard all modifier cards. Return the political act card to the faction. Advance to the next Faction Player. No further steps apply to this faction.
 3. Read the political act card and target slip.
 
@@ -737,7 +774,15 @@ The acting Faction Player reads the base difficulty and target threshold aloud f
 
 **Step 3 — Apply all modifiers.**
 
-The acting Faction Player applies all active modifiers: partial payment threshold marker (if placed by ARBITER in Submit Payment), modifier cards in cascade, Public Standing modifier, active Situation Report effects, and Infrastructure district penalty (if the target district is Infrastructure and the acting faction holds no Established or Dominant presence in an adjacent Core district). Announces the modified threshold aloud.
+The acting Faction Player applies all active modifiers:
+- Partial payment threshold marker (if placed by ARBITER at Submit Payment)
+- Modifier Cards in cascade
+- Ring Modifier Card calculation (see Artifact 07 — ARBITER Toolkit)
+- Public Standing modifier
+- Active Situation Report effects
+- Ring adjacency penalty (The Mid: no adjacent Core presence; Core: no Chorus Node presence)
+
+Announces the modified threshold aloud.
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -791,7 +836,7 @@ Before Debrief opens, the ARBITER Player returns all dispatch cases to their own
 - Submitted covert operation cards
 - Target slips
 - Operation Resolution cards (one per operation)
-- Any intel notes created for this Faction Player this Quarter
+- Any Intel Tokens created for this Faction Player this Quarter
 
 *Not returned: resources (spent), Modifier cards (discarded during resolution), Countermeasure cards (removed from the game when played).*
 
@@ -807,7 +852,70 @@ While Faction Players review their dispatch cases, the ARBITER Player makes any 
 
 ---
 
-## 18. Debrief
+## 18. Battlefield Strength — Contested District Resolution
+
+*Runs after Beat 5, before Debrief. Contested districts do not carry forward across Quarters.*
+
+The ARBITER Player scans The Overview for Tension markers. If none are present, proceed to Debrief.
+
+For each district showing a Tension marker, resolving from Ring 3 (Baryo) inward to Ring 0 (Chorus Node):
+
+**Step 1 — Announce the district.**
+
+ARBITER announces: *"[District Name] — Battlefield Strength."*
+
+**Step 2 — Identify contesting factions.**
+
+All factions at Dominant influence in the contested district are contesting factions. More than two factions may contest a single district.
+
+**Step 3 — Calculate and declare totals (simultaneously).**
+
+Each contesting Faction Player:
+1. Counts all presence chips and structure blocks in the contested district and in each adjacent district. Deployment markers count as 1 presence chip.
+2. Plays any Battlefield Modifier Cards face-up. Each card's +n bonus is added to the total.
+3. Plays any fresh Intel Tokens (age 0–2) targeting the opposing faction face-up. Each token adds +2 to the total.
+4. Announces their full total (presence count + all Modifier Card and Intel Token bonuses) aloud.
+
+Battlefield Modifier Cards are discarded immediately — they may not be replayed within this contest or used in any subsequent district contest this Session.
+
+Intel Tokens played are reset and returned to The Dossier, or discarded if single-use — same restriction applies.
+
+*Adjacency map: Art 01 §[City] — District Adjacency.*
+*(Battlefield Modifier Card design: Art 04 — Action Card System.)*
+*(Intel Token Battlefield modifier: +2 per fresh token — L163.)*
+
+**Step 4 — Roll (simultaneously).**
+
+Each contesting Faction Player rolls a d10 and adds it to their declared total. Announces the final result aloud.
+
+**Step 5 — Resolve outcome.**
+
+Highest total wins. ARBITER announces: *"[Faction] holds [District Name]."* The winning Faction Player removes 1 presence chip belonging to a contesting faction of their choice from the contested district, then removes the Tension marker. Both are handed to the ARBITER Player for return to their respective pools.
+
+ARBITER announces: *"[Faction] — will you press?"*
+
+**Press the Battle (optional):** The losing Faction Player may press as long as they hold chips in adjacent districts. To press:
+1. Remove 1 presence chip from an adjacent district of their choice and hand it to the ARBITER Player for return to the pool.
+2. Return to Step 3 — both factions recalculate and re-declare totals with updated chip counts. Unspent Battlefield Modifier Cards from hand may be played.
+3. Re-roll (Step 4).
+
+**On a tie:** Each tied Faction Player removes 1 presence chip — from the contested district or an adjacent district of their choice (a faction with no chips in adjacent districts must remove from the contested district) — and hands it to the ARBITER Player for return to the pool.
+
+After chip removal, check the Dominant condition:
+- If one faction remains at Dominant and the other has dropped to Established or below: the contest is settled in that faction's favor.
+- If both factions have dropped to Established or below: no Dominant presence remains.
+
+The battle does not continue. Remove the Tension marker. Proceed to Step 6.
+
+**Step 6 — Update board.**
+
+All contesting Faction Players update Control flags, Established markers, and Tension markers as influence levels shift — in the contested district and in any adjacent districts from which chips were removed during the conflict.
+
+When all contested districts are resolved, the ARBITER Player scans The Overview and confirms no Tension markers remain. Proceed to Debrief.
+
+---
+
+## 19. Debrief
 
 ARBITER announces: *"The Table is in Debrief."*
 
@@ -818,7 +926,7 @@ Debrief is open.
 **Free actions during Debrief:**
 
 - Trade resources between any two factions (free, any terms)
-- Trade intel notes between any two factions (free, any terms, examination permitted)
+- Trade Intel Tokens between any two factions (free, any terms, examination permitted)
 - Accept or decline an Accord proposal (free action for the receiver)
 - Counter-propose Accord terms
 
@@ -852,7 +960,7 @@ If Chorus Activity changed this Quarter, ARBITER incorporates this into the Debr
 
 ---
 
-## 19. The Operation System
+## 20. The Operation System
 
 The Operation System governs resolution for all committed actions: covert operations (Beat 3) and political acts (Beat 4).
 
@@ -907,8 +1015,8 @@ Base difficulty is printed on the operation card or political act card. It repre
 
 ### Difficulty Modifiers
 
-| ID | Category | Modifier | Scope | Applied | Instance Limit | Value Type | Threshold Adjustment |
-|----|----------|----------|-------|---------|----------------|------------|----------------------|
+| ID | Category | Name | Scope | Applied | Instance Limit | Value Type | Threshold Adjustment |
+|----|----------|------|-------|---------|----------------|------------|----------------------|
 | M-01 | Standing | Celebrated | All | Persistent | 1 | Fixed | +20 |
 | M-02 | Standing | Respected | All | Persistent | 1 | Fixed | +10 |
 | M-03 | Standing | Neutral | All | Persistent | 1 | Fixed | 0 |
@@ -920,39 +1028,40 @@ Base difficulty is printed on the operation card or political act card. It repre
 | M-09 | Card Effect | Protect / Defend operation | Covert | Beat 2 | 1 per Protect submitted | Variable | See card |
 | M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Event Card | Variable | See Event Card |
 | M-11 | Countermeasure | Type B — target faction assets | Covert | Beat 2 | 1 per defending faction | Fixed | −15 |
-| M-12 | District | Infrastructure — no adjacent Core | All | Persistent | 1 | Fixed | −25 |
+| M-12 | Ring | No adjacent inward-ring presence | All | Persistent | 1 | Fixed | −25 |
+| M-13 | Intel | Stale Intel Token (age 3) | All | Beat 0 / Beat 4 | 1 per stale token | Fixed | −25 |
 
 *All active modifiers are cumulative. Apply all before rolling.*
 
 *Scope: "All" covers all currently defined action types (covert and political). Extends to operative actions when Artifact 05 is designed.*
 
-*Sign convention: positive Threshold Adjustment values raise the threshold (success more likely); negative values lower it (success harder). The partial payment penalty (−50) and Infrastructure penalty (−25) are the largest single Fixed modifiers in the system — a faction simultaneously facing both plus Discredited (−20) and a Type B Countermeasure (−15) is reduced by 110 points, leaving only a Critical Success (01–05) viable on any difficulty tier.*
+*Sign convention: positive Threshold Adjustment values raise the threshold (success more likely); negative values lower it (success harder). The partial payment penalty (−50) and ring adjacency penalty (−25) are the largest single Fixed modifiers in the system — a faction simultaneously facing both plus Discredited (−20) and a Type B Countermeasure (−15) is reduced by 110 points, leaving only a Critical Success (01–05) viable on any difficulty tier.*
 
 *Variable modifiers are unbounded by this table — balance analysis across all defined modifier values is maintained in Artifact 03a.*
 
 ---
 
-## 20. End of Quarter
+## 21. End of Quarter
 
 At the close of Debrief, in strict order:
 
 1. **Findings decay:** The Ghost Faction Player checks current Findings total and applies decay publicly (7–12: lose 2; 13+: lose 4). Returns the Findings tokens to the Reservoir.
 
-2. **Debrief reward:** ARBITER assesses the quality of the Debrief conversation and selects a Tier A/B/C reward effect to apply before the Round Tracker advances. See Artifact 07 — ARBITER Toolkit for full reward options and effects.
+2. **Debrief reward:** ARBITER assesses the quality of the Debrief conversation and selects a Tier A/B/C reward effect to apply before the Session Timeline advances. See Artifact 07 — ARBITER Toolkit for full reward options and effects.
 
 3. **Operation Resolution cards collected:** Faction Players return their Operation Resolution cards to the ARBITER Player.
 
    *These are reusable components, reset for the next Quarter.*
 
-4. **Round Tracker advances:** The ARBITER Player moves the Round Tracker forward by 1.
+4. **Session Timeline advances:** The ARBITER Player moves the Session Timeline forward by 1.
 
    *This is the final action of the Quarter — the moment it is officially closed.*
 
-If the Round Tracker reaches 8 and no Apex has resolved, proceed to Session End per Artifact 10a — Victory System.
+If the Session Timeline reaches 8 and no Apex has resolved, proceed to Session End per Artifact 10a — Victory System.
 
 ---
 
-## 21. Special Conditions & Gameplay Impacts
+## 22. Special Conditions & Gameplay Impacts
 
 ### Apex Activation
 
@@ -995,7 +1104,7 @@ The ARBITER Player opens the sealed Apex envelope and pauses 5 seconds. ARBITER 
 
 ---
 
-## 22. Examples & Exceptions
+## 23. Examples & Exceptions
 
 ### Initiative — Quarter 3
 
@@ -1046,7 +1155,7 @@ Ghost finds:
 - Operation Succeeded card (Gather at Data Exchange)
 - Voided card (Undermine at Financial Clearinghouse — targeting restriction)
 - Voided card (Build Structure at Government Citadel — Type A Countermeasure)
-- One intel note: Faction: The Syndicate / Quarter: 5
+- One Intel Token: Faction: The Syndicate / Quarter: 5
 
 Ghost processes this privately before Debrief opens.
 

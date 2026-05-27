@@ -268,3 +268,31 @@ Components to audit: presence tokens, deployment markers, structure blocks, esta
 - **Current tables:** `components`, `card_metadata`, `card_types`, `card_subtypes`, `factions`, `beat`, `game_actions`, `action_costs`, `action_valid_targets`, `action_restrictions`, `card_faction_modifiers`, `game_zones`, `component_valid_zones`, `city_rings`, `district_metadata`, `district_connections`, `player_metadata`, `live_state`, `setup_state`, `allocation_types`
 
 **Do not propose schema changes via `Claude_context.md` without explicitly flagging them as proposals.** Claude Code executes all DDL after Andy confirms.
+
+---
+
+## Session 43 Update — 2026-05-27
+
+**Art 03 v2.0 signed off.** Key changes with DB/schema implications:
+
+### Intel Token Schema — Canonical Definition (L161)
+Intel Tokens carry three attributes: `intel_id`, `faction`, `round_generated`.
+- `faction` = the faction the intel was gathered **about** (subject faction) — NOT the holder. ARBITER verifies this field at play (Beat 0, Beat 4, §18 Battlefield Strength).
+- `round_generated` = Quarter number written by ARBITER at issuance.
+- Freshness: age = current Quarter − round_generated. Age 0–2 = fresh; age 3 = stale (−25); age 4+ = expired (partial payment −50).
+
+**The Dossier (L164):** ARBITER's hidden Intel Token pool — held behind ARBITER screen, not in the public Reservoir. All blank tokens live there; ARBITER writes faction + Quarter at issuance; reset/discarded tokens return there.
+
+### Still Blocked — No New DB Work This Session
+- **DB-09** (district_adjacency DDL) — still blocked on 00b-05 (live_state spec). DDL FK fix still required: reference `district_metadata(district_component_id)` not `(id)`.
+- **DB-11** (live_state nullable columns) — still blocked on 00b-05.
+
+### New Modifier Rows in Art 03 §20
+- **M-12** updated: Category Ring (was District). Name "No adjacent inward-ring presence." Covers The Mid (no Core presence) and Core (no Chorus Node presence). Condition: any presence marker (count > 0) in adjacent inward district removes penalty. −25 fixed.
+- **M-13** added: Category Intel. "Stale Intel Token (age 3)." Applied Beat 0 / Beat 4. 1 per stale token. Fixed −25.
+
+### Apex Pentagram Model (04-52 — design flag, no DB action yet)
+At Apex submission, ARBITER arranges 5 faction players on pentagram points by Portrait track standing. Apex payment must include fresh Intel Token targeting the opposing faction (pentagram-defined). DB implication: Portrait track values need to be queryable at Apex moment. No schema change needed now — flag for L2 design pass.
+
+### Portrait Track — Dual Function (L165)
+Portrait track now serves ARBITER narrative AND Apex geometry. "Ask ARBITER" portrait delta query (07-10): faction queries absolute difference between their Portrait standing and any named faction. ARBITER reveals delta only. This is read-only on existing Portrait data — no schema change implied.

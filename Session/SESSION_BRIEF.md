@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 42 | Updated: 2026-05-27**
+**Session 43 | Updated: 2026-05-27**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 42: Gem consulting integration + terminology decisions. **02a v1.6 signed off** (02a-10 ✅). S42 changes to 02a: §8a Narrative Anchor subheader; Art 01 Supply stub resolved; "Quarter" sweep; Baryo/The Mid ring names; Deployment marker consistency; "Round 1" → "Quarter 1". **Three locked decisions:** L157 (Presence chip canonical), L158 (Intel Token canonical — physical form is token, not paper slip), L159 ("Quarter" locked globally, "Round" retired). **Terminology sweeps applied:** 02a, 02b (Intel Tokens throughout), 00a (Intel Tokens; Dispatch Case; Quarter sweep; §9 renamed "Quarter & Timing"), 01 (Tension marker — was Contested marker), PM04 (canonical terms updated), PM02 (L157–L159 logged), PM05 (XA-33, 00a-09 added). **Next: Art 03 v1.9 re-sign-off (04-48 + XA-33 bundled).**
+Session 43: Art 03 full sign-off pass. **03 v2.0 signed off** (04-48 ✅). S43 changes: XA-33 rename ("Quarter Structure & Gameplay"); new §18 Battlefield Strength (L160); Intel Token freshness replaces decay (L161, M-13, The Dossier L164); ring adjacency penalty generalized M-12 + "Established or higher" convention (XA-36); Chorus Node flat −25; §4 narrative anchors; Beat 0 + Beat 4 freshness checks; Intel Token +2 in Battlefield (L163); modifier table fixes. **Eight locked decisions:** L160–L165 + Modifier Cards convention + "Established or higher". **Key design flags:** 04-52 Apex pentagram/Portrait model, 07-09 Battlefield ARBITER script, 07-10 Portrait comparison query, 04-49 Battlefield Modifier Card, 04-50 Intel Token d100 constraint, 03-13 Dossier component. **Next: C17 sign-off (Art 04); 04b-03 action taxonomy audit.**
 
 ---
 
@@ -20,13 +20,13 @@ Session 42: Gem consulting integration + terminology decisions. **02a v1.6 signe
 | 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. |
 | 01 — Game Board: New Meridian | 1.8 | ✅ Signed Off — S40. §4 removed S41 (01-07 ✅). Open: §8/§9 Tableau stubs (Art 07 + Art 08); narrative anchor pass (01-08); district_adjacency DB table (agy); live_state → L156 + 00b. |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off. Flags: §3 "Eight rounds" → "Eight Quarters" (fix not yet applied); §20 "Round Tracker" (needs in-world name); XA-32 ring modifier step; XA-33 (rename to "Quarter Structure & Gameplay" + 00a time convention rewrite — bundle in this pass). |
+| 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. |
 | 04 — Action Card System | 0.9.20 | C17 sign-off (after Art 03); C36–C42 Intel economy cards; 04b-03 action taxonomy audit required before C16+ work. |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
-Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
+Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 03 (v2.0), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
 
 ---
 
@@ -42,10 +42,9 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 04b (v1.2 — 04b-03 au
 | **01-07** | Art 01 §4 Narrative Function — remove (content in §3 + Physical Table Layout) | ✅ S41 |
 | **01-08** | Art 01 narrative anchor pass — staged in Whiteboard/Art01_Narrative_Anchors_S41.md | Open — after 02a sign-off |
 | **08-00** | Art 08 — define scope + create stub (Faction Player Tableau + ARBITER Tableau) | Open |
-| **03-12** | Battlefield Strength trigger model — resolve in Art 03 re-sign-off (see 04-48) | Open |
+| **03-12** | Battlefield Strength trigger model | ✅ S43 — L160 |
+| **04-48** | Art 03 v2.0 sign-off | ✅ S43 |
 | **01-06** | Claude Design visual wireframe — table layout + mat layout | Open |
-| **02a-10** | 02a v1.6 combined review — §8a (S38) + narrative anchors (S41); one focused pass | Open — Session 42 first item |
-| **04-48** | Art 03 v1.9 re-sign-off (§3 Quarter fix + §20 naming + XA-32) | Open — after 02a |
 | **04b-03** | Action taxonomy audit — prerequisite to Art 04 continuation (C16+) | Open — after Art 01 |
 | **XA-32** | Art 03 Beat 3/4 ring modifier step + Art 07 ring modifier guide | Open |
 | **PM06-01** | Create PM06 — Lessons Learned | Deferred — next session |
@@ -59,11 +58,11 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 04b (v1.2 — 04b-03 au
 
 ## Last 3 Locked Decisions
 
-- **L159** (S42): "Quarter" locked globally — "Round" retired as a game term. Art 03 rename to "Quarter Structure & Gameplay" pending (XA-33, bundle with 04-48). 00a time convention rule to be rewritten same pass.
-- **L158** (S42): Intel Token canonical (also: Intelligence Token). Physical form = small token/chit, not paper slip. "Intel note" deprecated. Swept 02b, 00a, PM04.
-- **L157** (S42): Presence chip = canonical physical name. "Presence token" = card text shorthand only. PM04 updated. 00a R10/R13 sweep pending (00a-09).
+- **L165** (S43): Portrait track dual function — narrative register + Apex pentagram geometry. ARBITER Debrief observation encodes Portrait intelligence. "Ask ARBITER" delta query design flagged (07-10).
+- **L164** (S43): The Dossier — ARBITER's hidden Intel Token storage (behind screen, not public Reservoir).
+- **L163** (S43): Intel Token Battlefield modifier = +2 per fresh token targeting opposing faction.
 
-→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L159)
+→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L165)
 
 ---
 
@@ -73,8 +72,9 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 04b (v1.2 — 04b-03 au
 - **00a v0.3** — ✅ Signed Off S40
 - **Art 01 v1.8** — ✅ Signed Off S40
 - **02a v1.6** — ✅ Signed Off S42
-- **Art 03 v1.9** — next; §3 "Eight Quarters" fix + XA-32 ring modifier + XA-33 rename bundle
-- C17 — after Art 03
+- **Art 03 v2.0** — ✅ Signed Off S43
+- **C17** — next (Art 04)
+- **04b-03** action taxonomy audit — prerequisite to Art 04 continuation (C16+)
 
 ---
 

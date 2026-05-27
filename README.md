@@ -27,7 +27,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | 01 | [Game Board: New Meridian](V1/01___Game_Board_New_Meridian.md) | 1.2 | ✅ Signed off |
 | 02a | [Resource Systems: Board State](V1/02a___Resource_Systems_Board_State.md) | 1.4 | ✅ Signed off — session 22 |
 | 02b | [Resource Systems: Tracking](V1/02b___Resource_Systems_Tracking.md) | 1.5 | ✅ Signed off |
-| 03 | [Round Structure & Gameplay](V1/03___Round_Structure___Gameplay.md) | 1.7 | ✅ Signed off — session 20 |
+| 03 | [Quarter Structure & Gameplay](V1/03___Round_Structure___Gameplay.md) | 2.0 | ✅ Signed off — S43 |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In Progress — Layers 1–3 complete; Phase procedures added |
 | 04 | [Card System](V1/04___Card_System.md) | 0.9.17 | 🔄 In progress — C01–C10 signed off; C11–C15 re-sign-off pending; C16–C35 and political acts pending |
 | 04b | [Action Taxonomy & Design Analysis](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.2 | ✅ Reference Document — Active |
