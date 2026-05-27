@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 43 | Updated: 2026-05-27**
+**Session 44 | Updated: 2026-05-27**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 43: Art 03 full sign-off pass. **03 v2.0 signed off** (04-48 ✅). S43 changes: XA-33 rename ("Quarter Structure & Gameplay"); new §18 Battlefield Strength (L160); Intel Token freshness replaces decay (L161, M-13, The Dossier L164); ring adjacency penalty generalized M-12 + "Established or higher" convention (XA-36); Chorus Node flat −25; §4 narrative anchors; Beat 0 + Beat 4 freshness checks; Intel Token +2 in Battlefield (L163); modifier table fixes. **Eight locked decisions:** L160–L165 + Modifier Cards convention + "Established or higher". **Key design flags:** 04-52 Apex pentagram/Portrait model, 07-09 Battlefield ARBITER script, 07-10 Portrait comparison query, 04-49 Battlefield Modifier Card, 04-50 Intel Token d100 constraint, 03-13 Dossier component. **Next: C17 sign-off (Art 04); 04b-03 action taxonomy audit.**
+Session 44: Art 01 narrative anchor pass + sign-off. **01 v1.9 signed off** (01-08 ✅). S44 changes: §4 Narrative Function added (8 component anchors: District Tiles/Civic Grid, Influence Level Marker, Tension Markers, Session Timeline, Initiative Strip, Chorus Activity Track/The Seismograph, Accord Documents, Situation Reports); §6 Physical Environment — Zones and Components (renamed from [NEW]); §7–§12 renumbered; component narrative cross-refs resolved; forward procedure refs removed; component N/A markers updated to parent refs. True State: §9 MIRROR — Recognized Not Designed; §10 The Signal Predates Perceptibility (five and eight as Chorus signal bleed; mythology predates The Table; Apex pentagram load-bearing). New characters: Dr. Jae-won Seo (Chief Data Architect, Korean 2nd-gen NM — in CANON_CANDIDATES). New PM05: 00-11 (NM world location), 04-53 (modifier card asset taxonomy), 07-11 (Situation Report procedure), 07-12 (Accord registration/expiry). **No new L-decisions.** **Next: C17 sign-off (Art 04); 04b-03 action taxonomy audit (unblocked).**
 
 ---
 
@@ -18,7 +18,7 @@ Session 43: Art 03 full sign-off pass. **03 v2.0 signed off** (04-48 ✅). S43 c
 |----------|---------|-----------|
 | 00 — Factions, World & Narrative | 1.5 | ✅ Signed Off — S40. Open: 00-09 (World Conditions panel — design question, does not block sign-off). |
 | 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. |
-| 01 — Game Board: New Meridian | 1.8 | ✅ Signed Off — S40. §4 removed S41 (01-07 ✅). Open: §8/§9 Tableau stubs (Art 07 + Art 08); narrative anchor pass (01-08); district_adjacency DB table (agy); live_state → L156 + 00b. |
+| 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); live_state → L156 + 00b. |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. |
 | 04 — Action Card System | 0.9.20 | C17 sign-off (after Art 03); C36–C42 Intel economy cards; 04b-03 action taxonomy audit required before C16+ work. |
@@ -26,7 +26,7 @@ Session 43: Art 03 full sign-off pass. **03 v2.0 signed off** (04-48 ✅). S43 c
 | 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
-Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 03 (v2.0), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
+Signed-off artifacts: 00b (v0.1), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
 
 ---
 
@@ -45,7 +45,7 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **03-12** | Battlefield Strength trigger model | ✅ S43 — L160 |
 | **04-48** | Art 03 v2.0 sign-off | ✅ S43 |
 | **01-06** | Claude Design visual wireframe — table layout + mat layout | Open |
-| **04b-03** | Action taxonomy audit — prerequisite to Art 04 continuation (C16+) | Open — after Art 01 |
+| **04b-03** | Action taxonomy audit — prerequisite to Art 04 continuation (C16+) | Open — Art 01 signed off S44, unblocked |
 | **XA-32** | Art 03 Beat 3/4 ring modifier step + Art 07 ring modifier guide | Open |
 | **PM06-01** | Create PM06 — Lessons Learned | Deferred — next session |
 | **00-09** | World Conditions panel — content undefined | Open |
@@ -70,7 +70,7 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 - **Art 00 v1.5** — ✅ Signed Off S40
 - **00a v0.3** — ✅ Signed Off S40
-- **Art 01 v1.8** — ✅ Signed Off S40
+- **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v2.0** — ✅ Signed Off S43
 - **C17** — next (Art 04)
@@ -81,7 +81,7 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 ## Key Concepts Established S39–S40 (Not Yet in All Artifacts)
 
 - **MIRROR** = Meridian Interface for Real-time Reporting, Observation, and Recording. Holographic projection device at Chorus Node. Predates The Table and possibly ARBITER. Origin of "New Meridian" name. Written to Art 00 §8.
-- **Zone vs. Component distinction** = Zones are named physical locations (infrastructure); components are portable objects placed within zones. Central Area is a zone; The Overview is the component that fills it. Established S40 — in Art 01 [NEW] Physical Table Layout.
+- **Zone vs. Component distinction** = Zones are named physical locations (infrastructure); components are portable objects placed within zones. Central Area is a zone; The Overview is the component that fills it. Established S40 — in Art 01 §6 Physical Environment.
 - **district_adjacency** = bidirectional adjacency table for all 21 districts. In Art 01 §[City]. DB table needed (agy). Feeds Entry Rule A/B and Battlefield Strength (03-12).
 - **live_state schema addition** = on_component_id + on_game_zone_id columns confirmed S40. L156 needed; 00b update required before agy executes DDL.
 - **Art 08** = new planned artifact for Faction Player Tableau and ARBITER Tableau physical component placement. Referenced in Art 01 §8–§9 stubs. Not yet defined.

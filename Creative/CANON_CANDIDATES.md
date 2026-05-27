@@ -449,11 +449,17 @@ Source: `Desktop/gem_message_to_claude.txt` (narrative anchors for Art 01 compon
 ### 📝 Colonel Jax Vane — character name
 
 **Source:** gem_message_to_claude.txt, §1 Board Elements: District Tiles anchor
-**Attribution:** Directorate Security Liaison — vetoed Dr. Aris Thorne's fluid topographic grid design for MIRROR in favor of rigid infrastructural zones based on blast doors, riot barricades, and power-grid kill switches. The resulting brutalist grid is his legacy.
-**Status:** 📝 Flavor name only — side-mention in a narrative anchor. Not automatically canon. Promote only if Andy explicitly approves the role, title, and backstory.
-
-*Note: "Dr. Aris Thorne (Chief Data Architect)" in the same passage may or may not be the same Aris Thorne as the Atacama radio astronomer in The Dry Run vignette (Creative/ — 2026-05-16). The Atacama Thorne is already a canon candidate; this is a different professional role. Flag for reconciliation before canonizing either version.*
+**Attribution:** Directorate Security Liaison — vetoed Dr. Jae-won Seo's fluid topographic grid design for MIRROR in favor of rigid, fixed zones defined by blast doors, riot barricades, and power-grid kill switches. The resulting brutalist Civic Grid is his legacy.
+**Status:** 📝 Flavor name only — referenced in Art 01 §4 by role title only ("The Directorate Security Liaison"), not by name. Promote to named character only if Andy explicitly approves.
 
 ---
 
-*Last updated: 2026-05-27 — Gemini S41 narrative anchor pass; Colonel Jax Vane added*
+### 📝 Dr. Jae-won Seo — character name
+
+**Source:** S44 — Chief Data Architect, MIRROR Civic Grid designer
+**Attribution:** Korean ancestry, 2nd-generation New Meridian resident. Designed MIRROR's original grid as a fluid topographic model (population density, economic flow, resource access). Design was overridden by Colonel Jax Vane (Directorate Security Liaison) in favor of the current brutalist Civic Grid. Referenced in Art 01 §4 by name.
+**Status:** 📝 Named in Art 01 §4. Canon candidate — not yet in Art 00. Promote to Art 00 when character is developed.
+
+---
+
+*Last updated: 2026-05-27 — S44: Jax Vane attribution updated (Aris Thorne → Jae-won Seo); Dr. Jae-won Seo added; Aris Thorne conflict resolved (Atacama astronomer only)*

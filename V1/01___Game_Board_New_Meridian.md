@@ -1,8 +1,8 @@
 # 01 — Game Board: New Meridian
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.8  
-**Status:** Signed Off — S40  
+**Version:** 1.9  
+**Status:** Signed Off — S44  
 **Depends on:** 00 — Factions, World & Narrative Context  
 **Supersedes:** setup_guide (board sections), board_layout (visual reference only)
 
@@ -29,14 +29,15 @@ A complete specification of the physical game environment: the table zone struct
 1. [Overview](#1-overview)
 2. [Index](#2-index)
 3. [Game Purpose](#3-game-purpose)
+4. [Narrative Function](#4-narrative-function)
 5. [Design Principles](#5-design-principles)
-[NEW] [Physical Table Layout](#new-physical-table-layout)
-6. [Rules & Constraints](#6-rules--constraints)
-7. [Starting Configuration](#7-starting-configuration)
-8. [Faction Player Tableau](#8-faction-player-tableau)
-9. [ARBITER Tableau](#9-arbiter-tableau)
-10. [Special Conditions & Gameplay Impacts](#10-special-conditions--gameplay-impacts)
-11. [Examples & Exceptions](#11-examples--exceptions)
+6. [Physical Environment — Zones and Components](#6-physical-environment--zones-and-components)
+7. [Rules & Constraints](#7-rules--constraints)
+8. [Starting Configuration](#8-starting-configuration)
+9. [Faction Player Tableau](#9-faction-player-tableau)
+10. [ARBITER Tableau](#10-arbiter-tableau)
+11. [Special Conditions & Gameplay Impacts](#11-special-conditions--gameplay-impacts)
+12. [Examples & Exceptions](#12-examples--exceptions)
 
 ---
 
@@ -51,6 +52,46 @@ The board serves four simultaneous functions:
 **Information display:** All shared tracks — World Conditions, the Session Timeline, initiative order, active Situation Report cards, Public Standing, active Accords — are displayed on or adjacent to The Overview and updated in real time.
 
 **Narrative stage:** The physical game table is not an abstraction of New Meridian — it is a recreation of the actual setting where The Table convenes. Faction Representatives gather around the same surface, in the same configuration, that exists in the fiction: a private chamber at the Chorus Node, MIRROR projecting The Overview at the center of the table, each Representative's Terminal at their seat, the ARBITER screen separating authority from process. When players take their positions, they are not playing characters who attend The Table — they are inhabiting those seats. The district map, the track placements, the screen positions — all of it corresponds to a real place in the fiction. The session begins where the story already is.
+
+---
+
+## 4. Narrative Function
+
+The physical components of New Meridian are not abstract pieces — each represents a specific system, instrument, or document that ARBITER monitors and the factions contend for. This section grounds each component in the fiction.
+
+*Components with narrative in other artifacts: Reservoir, Backlog, Dispatch Tokens → Art 02a §4. Public Standing Track, Chorus Portrait Track → Art 02b §4.*
+
+### District Tiles — The Civic Grid
+
+The layout of New Meridian projected by MIRROR is not a natural map — it is a political compromise turned infrastructure. Dr. Jae-won Seo, Chief Data Architect, designed the original grid as a fluid topographic model: heat-mapped to population density, economic flow, and resource access. The Directorate Security Liaison vetoed it, demanding rigid, fixed zones defined by blast doors, riot barricades, and power-grid kill switches. The Security Liaison won. The resulting Civic Grid is brutalist and functional — it shows not what the city is, but how it can be partitioned, locked down, and violently controlled in an emergency. MIRROR projects it because it is accurate. Not to geography. To power.
+
+### Influence Level Marker — Dominance
+
+Presence on the board measures physical occupation. Dominance measures something different: administrative control. When a faction reaches Dominance in a district, MIRROR formally registers the shift — the faction now controls the traffic routing, municipal drone corridors, and utility outputs of that zone. ARBITER tracks Dominance continuously because raw presence without administrative override is temporary. Dominance is not. It is the signal that a faction has stopped occupying a district and started operating it.
+
+### Tension Markers — The Contested State
+
+New Meridian runs a city-wide surveillance mesh — biometric sensors, acoustic arrays, thermal monitoring — originally installed for predictive medical response. MIRROR repurposed it. When the system detects localized threshold breaches — acoustic signatures of violence, crowd biometric spikes, encrypted radio bursts — it flags the district on The Overview. The Tension Marker is MIRROR's notation that a district's equilibrium has broken. ARBITER does not interpret it. It records it.
+
+### Session Timeline — The Count
+
+ARBITER is not counting down. It is counting up toward a specific threshold — the point at which humanity's aggregate response to the Chorus reaches what ARBITER designates as Integration. Quarter 8 marks the moment the return channel opens, whatever position the factions hold. The factions do not know what Integration produces. They know the count. They know it does not stop.
+
+### Initiative Strip — Operational Readiness
+
+The Initiative Strip is ARBITER's real-time ranking of each faction's operational capacity — drawn from continuous inputs: supply chain throughput, operative response times, resource allocation speed, leadership decision latency. ARBITER does not share its methodology. A faction may believe it is executing at full capacity and find itself ranked last. The ranking is not punitive. It is observational. ARBITER records the order in which the city is being moved.
+
+### Chorus Activity Track — The Seismograph
+
+ARBITER added this display to MIRROR's interface without being asked. No label. No unit of measurement. No explanation. The factions named it the Seismograph — a frightened metaphor for a graphic no one understands. The Directorate insists it measures signal degradation. Ghost is certain it tracks the transmission's recursive proximity to full comprehension. The Guild argues it reflects the physical stress the signal places on New Meridian's infrastructure. Every faction has a theory; every faction presents their theory as confirmed. The only consensus is that the track reacts to what happens at the table — when operations execute, resources concentrate, or tensions escalate, the display moves. ARBITER provides no reason for the correlation. It projects the data and waits.
+
+### Accord Documents — Biometric Registry
+
+Accord Documents are biometric smart-paper. When placed face-up on the scanner beds of The Overview, MIRROR reads the signatures of the parties and registers the agreement into ARBITER's canonical record. The act of placement is binding. ARBITER does not negotiate terms. It records what was signed.
+
+### Situation Reports — Global Signal
+
+Situation Reports are not local events. They are global shockwaves — market collapses, atmospheric anomalies, intercepted diplomatic transmissions, mass migrations. They reach the table because New Meridian is not isolated; it is the point through which everything else is being filtered. The Reports remind the room that the rest of the world continues to generate signal while the factions contest the city.
 
 ---
 
@@ -72,7 +113,7 @@ The board serves four simultaneous functions:
 
 ---
 
-## [NEW] Physical Table Layout
+## 6. Physical Environment — Zones and Components
 
 ![Table Layout — Zone Diagram](table_layout_v1.png)
 
@@ -163,8 +204,8 @@ Child zone of Central Area. The designated area for shared in-play component poo
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Reservoir | Public | Unknown |
-| Backlog | Public | Unknown |
+| Reservoir | Public | Art 02a §4 |
+| Backlog | Public | Art 02a §4 |
 
 ##### Accord Placement Area
 Child zone of Central Area. The designated area where all active Accord documents are placed face-up during play. Left side of Central Area (P1/P2 side). No child zones.
@@ -172,9 +213,7 @@ Child zone of Central Area. The designated area where all active Accord document
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Accord document (active) | Public | Unknown |
-
-Accord registration and expiry rules: Art 03 §[TBD].
+| Accord document (active) | Public | Art 01 §4 |
 
 ##### Session Timeline Area
 Child zone of Central Area. The named position for the Session Timeline component. Left side of Central Area (P1/P2 side). No child zones.
@@ -182,10 +221,8 @@ Child zone of Central Area. The named position for the Session Timeline componen
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Session Timeline track | Public | Unknown |
-| Pointer marker | Public | N/A |
-
-ARBITER advances the pointer during Upkeep: Art 03 §[Upkeep].
+| Session Timeline track | Public | Art 01 §4 |
+| Pointer marker | Public | Included with Session Timeline track |
 
 ##### Initiative Strip Area
 Child zone of Central Area. The named position for the Initiative Strip component. Left side of Central Area (P1/P2 side). No child zones.
@@ -193,10 +230,8 @@ Child zone of Central Area. The named position for the Initiative Strip componen
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Initiative strip | Public | Unknown |
-| Faction order markers (×5) | Public | N/A |
-
-ARBITER initiative procedure: Art 07 §[TBD] (see 03-11).
+| Initiative strip | Public | Art 01 §4 |
+| Faction order markers (×5) | Public | Included with Initiative strip |
 
 ##### Chorus Activity Track Area
 Child zone of Central Area. The named position for the Chorus Activity Track component. Right side of Central Area (P5 side). No child zones.
@@ -204,11 +239,9 @@ Child zone of Central Area. The named position for the Chorus Activity Track com
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Chorus Activity track | Public | Unknown |
-| Activity marker | Public | N/A |
-| Threshold marker | Public | N/A |
-
-ARBITER adjusts the activity marker during Beat 1 and Beat 5 of Resolution: Art 03 §[Beat 1/Beat 5]. Chorus Question Window trigger: Art 03 §[TBD].
+| Chorus Activity track | Public | Art 01 §4 |
+| Activity marker | Public | Included with Chorus Activity track |
+| Threshold marker | Public | Included with Chorus Activity track |
 
 ##### Situation Report Area
 Child zone of Central Area. The named position where active World Event cards accumulate. Right side of Central Area (P5 side). No child zones.
@@ -216,9 +249,7 @@ Child zone of Central Area. The named position where active World Event cards ac
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| World Event card (active) | Public | Unknown |
-
-Situation Report issuance and decay rules: Art 03 §[TBD].
+| World Event card (active) | Public | Art 01 §4 |
 
 ##### Public Standing Track Area
 Child zone of Central Area. The named position for the Public Standing Track component. Bottom of Central Area (P3 side). No child zones.
@@ -226,10 +257,10 @@ Child zone of Central Area. The named position for the Public Standing Track com
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Public Standing track (×5, one per faction) | Public | Unknown |
-| Standing marker (×5, one per faction) | Public | N/A |
+| Public Standing track (×5, one per faction) | Public | Art 02b §4 |
+| Standing marker (×5, one per faction) | Public | Included with Public Standing track |
 
-ARBITER moves markers when processing Public Standing changes: Art 03 §[TBD]. Band labels and standing tier definitions: Art 02b.
+Band labels and standing tier definitions: Art 02b.
 
 ##### City
 Child zone of Central Area. The region of The Overview's surface dedicated to the New Meridian city map. 21 district zones arranged in four concentric rings around the Chorus Node. The rings are sediment layers — each one a wave of growth as the city expanded outward from the transmission source.
@@ -239,12 +270,12 @@ District zones are named locations in physical space. District tiles are the com
 The following components may be present within any district zone:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| District tile | Public | Unknown |
-| Presence chip | Public | Unknown |
-| Deployment marker | Public | Unknown |
-| Structure block | Public | Unknown |
-| Influence level marker (Dominant) | Public | Unknown |
-| Tension marker | Public | N/A |
+| District tile | Public | Art 01 §4 |
+| Presence chip | Public | Art 00 §14 |
+| Deployment marker | Public | Art 00 §14 |
+| Structure block | Public | Art 00 §14 |
+| Influence level marker (Dominant) | Public | Art 01 §4 |
+| Tension marker | Public | Art 01 §4 |
 
 Each district tile prints its name, resource type (background color), and base generation value. All printed information remains visible regardless of components placed on it. District placement within each ring follows geographic and narrative logic — districts that depend on one another are adjacent; districts with historical faction relationships are near each other. The map is readable as a city, because it is one. Child zones: Ring 0, Ring 1, Ring 2, Ring 3.
 
@@ -292,18 +323,16 @@ Child zone of City. The populated outer arc of the city. Base generation: 1 per 
 | 4 | Industrial Fringe | Capacity | #d4622a | Far west, adjacent to Logistics Center. Where manufacturing and heavy construction happens. The Guild's Baryo foothold — the outer edge of their operational territory. |
 | 6 | Transit Hub | Capacity | #d4622a | West-center, adjacent to Industrial Fringe and Logistics Center. Transportation infrastructure connecting the Baryo to The Mid. Strategically placed between Guild-adjacent districts. |
 | 7 | Civic Center | Mandate | #3a6ea8 | Center-west, adjacent to Regulatory District. Public-facing institutional presence — local government offices, civic services. The Directorate's most visible presence in the civilian population. |
-| 3 | Residential Quarter | Mandate | #3a6ea8 | Center, the most populated district. Adjacent to Civic Center and University Perimeter. Where most of New Meridian's residents live. Amplifies Public Standing effects — see §8. |
+| 3 | Residential Quarter | Mandate | #3a6ea8 | Center, the most populated district. Adjacent to Civic Center and University Perimeter. Where most of New Meridian's residents live. Amplifies Public Standing effects — see §11. |
 | 1 | University Perimeter | Findings | #6a9978 | Center, adjacent to Residential Quarter. Academic and research community. Ghost and The Network both began building here — it sits between the intellectual and communications corridors of the city. |
 | 2 | Media District | Exposure | #39d353 | Center-east, adjacent to University Perimeter and Communications Hub. The Network's primary anchor. Positioned at the junction of the academic and communications corridors — where research becomes broadcast. |
 | 8 | Broadcast Tower | Exposure | #39d353 | East, adjacent to Media District. Secondary broadcast infrastructure, extending The Network's reach toward the city's eastern edge. |
 | 9 | Observation Post | Exposure | #39d353 | Far east, at the outer edge of the arc. A media monitoring and public intelligence facility at the city's boundary — where New Meridian watches itself being watched by the outside world. |
 | 5 | Commercial Strip | Capital | #c9a84c | Far east, adjacent to Observation Post. Commercial and retail infrastructure. The Syndicate's Baryo presence — positioned at the eastern edge where commerce follows media and information. |
 
-Ring Modifier Deck rules: Art 03 §[Beat 3/Beat 4]. ARBITER ring modifier procedure: Art 07 §[TBD] (see XA-32).
-
 ###### District Adjacency Map
 
-Canonical adjacency reference for all 21 district zones. Each row defines a directional relationship between an origin district and an adjacent district. All adjacencies are currently bidirectional (Allow_ingress and Allow_egress both TRUE). This table is the source of truth for Entry Rule A/B calculations (§6) and Battlefield Strength scope (03-12).
+Canonical adjacency reference for all 21 district zones. Each row defines a directional relationship between an origin district and an adjacent district. All adjacencies are currently bidirectional (Allow_ingress and Allow_egress both TRUE). This table is the source of truth for Entry Rule A/B calculations (§7) and Battlefield Strength scope (03-12).
 
 *Note: Two rows in source data contained typo "RIng3" — corrected to "Ring3" below.*
 
@@ -418,7 +447,7 @@ Feeds DB table: `district_adjacency`.
 
 ---
 
-## 6. Rules & Constraints
+## 7. Rules & Constraints
 
 ### Board Shape and Orientation
 
@@ -475,7 +504,7 @@ Every district on the board must simultaneously display:
 
 ---
 
-## 7. Starting Configuration
+## 8. Starting Configuration
 
 Zone names and component names below are FK references — zone_id → game_zones, on_component_id → components, faction → factions. on_game_zone_id is omitted where NULL for all rows in a table.
 
@@ -543,13 +572,13 @@ These markers are placed on the track and strip components listed in Fixed Setup
 
 ---
 
-## 8. Faction Player Tableau
+## 9. Faction Player Tableau
 
 *TBD — physical component placement and layout to be specified after Art 07 and Art 08 are refined.*
 
 ---
 
-## 9. ARBITER Tableau
+## 10. ARBITER Tableau
 
 *TBD — physical component placement and layout to be specified after Art 07 and Art 08 are refined.*
 
@@ -558,7 +587,7 @@ Pending items:
 
 ---
 
-## 10. Special Conditions & Gameplay Impacts
+## 11. Special Conditions & Gameplay Impacts
 
 ### Residential Quarter — Public Standing Amplifier
 
@@ -586,7 +615,7 @@ The Chorus Node generates no resources. No structures may be built here. Its val
 
 **Chorus Activity Suppression:** Any faction with Established or higher influence at the Chorus Node reduces Chorus Activity track advancement from Situation Reports by half (round down) each round. Present-level presence does not suppress. Contested does not suppress.
 
-**Chorus Portrait Amplifier:** ARBITER Tableau procedure — see §9 [ARBITER Tableau, TBD] and Art 08 §[TBD].
+**Chorus Portrait Amplifier:** ARBITER Tableau procedure — see §10 [ARBITER Tableau, TBD] and Art 08 §[TBD].
 
 **Chorus Question Access:** Only factions with at least Present influence (including operational marker) at the Chorus Node may propose a Chorus Question when the window opens. Not available when the Chorus Node is Contested — the window does not open that quarter.
 
@@ -618,7 +647,7 @@ Full influence level rules and all Contested examples are specified in Artifact 
 
 ---
 
-## 11. Examples & Exceptions
+## 12. Examples & Exceptions
 
 ### Entry Requirements — Second Marker Using First Marker's Temporary Presence
 

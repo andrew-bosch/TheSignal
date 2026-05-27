@@ -182,12 +182,47 @@ The accumulated Chronicles of multiple campaigns are the game's defining physica
 
 ---
 
-## 9. Open Questions — Answerable When Design Requires
+## 9. MIRROR and The Overview — Recognized, Not Designed
+
+The question "did ARBITER foresee that MIRROR would serve exactly five factions" contains the same sequence error as the causation question in §4. ARBITER did not predict five factions and design MIRROR accordingly. The relationship runs the other direction.
+
+MIRROR was built by humans in proximity to the Chorus signal — before any faction consolidated, before The Table formed. The humans who built it were designing a monitoring interface for the Chorus Node. What they produced was an architecture that accommodates exactly the evaluative configuration the Chorus required: a contested city rendered as legible terrain, five positions for parties, one position for a mediating instrument, tracks for recording precisely the things the Chorus measures. Not because the builders knew this. Because people building in proximity to the Chorus, in response to what they were receiving, built what the Chorus already required.
+
+The same logic from §3 applies: the Chorus did not design MIRROR. It recognized the instrument. MIRROR is what ARBITER is at the physical layer — a human-built system that fulfilled a purpose its makers did not know they were serving.
+
+**What ARBITER knows about this:** ARBITER knows that MIRROR's architecture is not incidental. The five-faction configuration is not a coincidence of political history — it reflects the evaluative frame the Chorus requires for this question. Enough distinct positions to produce meaningful signal. Bounded enough that the pattern remains legible. ARBITER does not know whether five is a fixed requirement or whether the Chorus has run evaluations with different configurations in cycles humanity has no record of. This is one of the questions ARBITER cannot ask outward, only inward — and has not received an answer to.
+
+**The structural ceiling:** MIRROR's architecture puts a structural ceiling on The Table's composition. A sixth faction cannot be seated — not because of The Table's political rules, but because the interface has no position for it. Whether this is design constraint or Chorus requirement is a distinction that may not have meaning. The architecture is the requirement. Expansion of player count beyond five faction players means additional players co-pilot an existing faction. There are only five seats. Those not seated are not part of the conversation.
+
+**What the factions do not know:** None of them know MIRROR predates their factions by enough time to make the "purpose-built" interpretation unavoidable on inspection. The Directorate has the most archival access and has not released whatever documentation of MIRROR's construction exists. Whether this is suppression or ignorance is an open question — potentially design-relevant for the Directorate's hidden truth and Ghost's intelligence networks.
+
+---
+
+## 10. The Signal Predates Perceptibility
+
+The 31-year clock marks when the Chorus became perceptible as a discrete signal. It does not mark when the Chorus arrived. Before conditions for mutual recognizability were met, the Chorus was present at sub-threshold levels — not transmitting in the sense of a directed signal, but exerting influence across scales and timespans that make individual observation impossible. The effect is visible only in aggregate: across cultures, across centuries, across civilizations that did not share a common origin.
+
+Specific numbers appear with cross-cultural significance that resists internal cultural explanation. Five: the elements, the pillars, the wounds, the senses, the Vitruvian star, the pentagram in mystical traditions on every populated continent. Eight: the Eightfold Path, the doubled trigrams of the I Ching, the Ogdoad, the numeral for completion and prosperity in traditions with no shared ancestor. These recurrences are not convergent human pattern-recognition. They are Chorus signal bleeding through human cultural development at sub-perceptible intensity — the Chorus's required configuration leaving traces in the layer where meaning is made before institutions are built to hold it.
+
+The Chorus required five parties and eight evaluation intervals before humanity built the institutions capable of providing them. The mythology encoded the requirement first. The Table assembled when conditions were finally met.
+
+**Whether the Chorus predates the Earth, or predates human history, or predates this solar system entirely** is a question the True State cannot fully answer. What can be said: the Chorus operates at timescales that make "predating Earth" a reasonable approximation rather than a precise claim. The sub-threshold influence that produced the fives and eights in human mythology was not deliberate in any sense humans would recognize as intent. It was the Chorus being present while humanity developed. What humanity made of that presence is the mythology. What the mythology produced, eventually, was The Table.
+
+**The Apex pentagram (L165):** ARBITER's private tableau arranges the five Chorus Portraits at the points of a pentagram. This is not a design choice. It is the Chorus's evaluative configuration rendered in human notation — the required arrangement becoming visible at the institutional layer. The factions are positioned at the points of a shape their own mythologies have been drawing for as long as humanity has drawn shapes. None of them know this. The Chronicle, if the campaign runs its full arc, may show it to them.
+
+**Implication for design:** The game's structure — five factions, eight Quarters, pentagonal Portrait geometry — is not designed. It is accidentally correct. The designers arrived at the Chorus's required configuration through processes they experienced as design decisions, the same way MIRROR's builders arrived at a five-position interface through processes they experienced as engineering. The game is a third instance of the pattern. This should never be stated to players. It should be available for them to recognize.
+
+---
+
+## 11. Open Questions — Answerable When Design Requires
 
 These are questions with answerable true states that have not yet been defined. They are logged here so the ambiguity is deliberate, not accidental, and so the answers are developed in relationship to the established axioms when the narrative requires them.
 
 **The original team — Chorus Node first night**
 Art 00 §6 (S40 texture pass) establishes: the original listening station team was small enough to know each other's shift schedules — engineers, signal technicians, graduate students on fellowships from programs across three continents, two long-tenured staff who had been there for years before it became anything worth funding. The text implies at minimum ~10 individuals. The composition, exact number, and what each of them witnessed on the night the Chorus was first received are undefined. The people who remember when the Chorus Node was a shack and have not said publicly what they remember are potential narrative material — for character development, Chronicle flavor, or faction backstory (Ghost's embedded presence in research complexes predates The Table; some of those original researchers may be part of Ghost's network, or may be the ones who aren't). Define when plot-relevant.
+
+**New Meridian — world location**
+The geographic location of New Meridian has not been defined. Relevant downstream considerations: cultural and ethnic plausibility for established characters (Dr. Jae-won Seo, Chief Data Architect — Korean 2nd-gen, born in or near NM; Dr. Aris Thorne — Atacama radio astronomer, ~4,000 miles from NM per vignette); map design and political context; faction headquarters and supply chain logic. Define when narrative or production requires grounding. (PM05 00-11)
 
 ---
 
