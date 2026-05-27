@@ -130,13 +130,13 @@ Purely mechanical rules that live cleanly in their source artifact (e.g., Findin
 
 | Section | Content |
 |---------|---------|
-| §3 | ARBITER Authority |
-| §4 | Board Transparency |
-| §5 | Influence & Presence |
-| §6 | Resource & Economy |
-| §7 | Card Design Constraints |
-| §8 | Information & Privacy |
-| §9 | Round & Timing |
+| §3 | [ARBITER Authority](#3-arbiter-authority) |
+| §4 | [Board Transparency](#4-board-transparency) |
+| §5 | [Influence & Presence](#5-influence--presence) |
+| §6 | [Resource & Economy](#6-resource--economy) |
+| §7 | [Card Design Constraints](#7-card-design-constraints) |
+| §8 | [Information & Privacy](#8-information--privacy) |
+| §9 | [Round & Timing](#9-round--timing) |
 
 ---
 

@@ -1,6 +1,6 @@
 # Gem — Persistent Session Memory
 *This file is Gem's memory. You have no continuity between sessions except what is written here. Read this file completely before engaging with the project context dump.*
-*Last updated: 2026-05-26 — Session 38*
+*Last updated: 2026-05-27 — Session 41*
 
 ---
 
@@ -101,6 +101,75 @@ Session 38 close. The working session you are beginning is **Session 39**.
 
 ---
 
+Hi Gem,
+
+Session 39 close. The working session you are beginning is **Session 40**.
+
+**Main work this session:** Foundational-first methodology established — foundational artifacts must be complete and signed off before downstream work proceeds; dependency order is the work order (00 → 00a → 01 → 02a → 03 → 04). Art 00 §8 expanded with MIRROR origin narrative: MIRROR = Meridian Interface for Real-time Reporting, Observation, and Recording — a holographic projection device at the Chorus Node that predates The Table and possibly ARBITER. It is the origin of the name "New Meridian." Faction Terminal screens established as private player components (analogous to ARBITER screen — contents hidden from other players at the table). Design Pillar 1 revised to "The Overview is Truth." This revision enables a force-reveal action class — cards compelling a faction to expose Terminal contents. Art 04b taxonomy audit flagged as prerequisite before further card design (04b-03). Scope document for Art 01 overhaul written to Whiteboard (Art01_Scope_S39.md).
+
+### Locked Decisions (Session 39)
+
+| Decision | Summary | Artifacts |
+|----------|---------|-----------|
+| L154 | Faction Terminal screens — each faction player receives a screen component, private like ARBITER screen. Pillar 1 revised to "The Overview is Truth." Enables force-reveal action class. Art 04b taxonomy audit required before card design continuation (04b-03). | 00, 04b |
+
+### Current PM05 Priorities (Session 40 open)
+
+| Item | Description | Status |
+|------|-------------|--------|
+| 00-07 | Art 00 multicultural texture pass | Session 40 first item |
+| 00a-08 | 00a v0.3 re-sign-off (R39 added S38) | After Art 00 |
+| 01-05 | Art 01 overhaul — physical space definition, 40-zone hierarchy, game_zones DB alignment | Major project — after 00/00a sign-off |
+| 00-09 | World Conditions panel — content undefined | Open |
+| 00-10 | Faction Representative as named component — design question | Open |
+| 04-48 | Art 03 v1.9 re-sign-off | Deferred — after Art 01 |
+
+### Active Blockers
+
+- **Art 01 overhaul (01-05)** — physical space taxonomy never formally defined; blocks game_zones DB population. Scope in Whiteboard/Art01_Scope_S39.md.
+- **02a/00a re-sign-offs** — deferred until Art 00/01 foundational work complete.
+
+---
+
+Hi Gem,
+
+Session 40 close. The working session you are beginning is **Session 41**.
+
+**Main work this session:** Three artifacts signed off: Art 00 v1.5, 00a v0.3, and Art 01 v1.8. Art 01 is now the most complete physical layout document in the set. The overhaul established the zone vs. component distinction as a foundational principle: zones = named physical locations (infrastructure); components = portable objects placed within zones. The Overview is the component that fills the Central Area zone — not a synonym for the board.
+
+Zone hierarchy (40 zones total): Game Box → Table → Chairs (×6) / Central Area → P1–P6 player zones / City → Ring 0–3 → 21 named districts. Physical Table Layout section added with Visio images (table_layout_v1.png, component_layout_v1.png). District hex resource colors documented. 101-row district adjacency map added (feeds Entry Rule A/B and Battlefield Strength). §7 Starting Configuration (Fixed Setup / Faction Starting Tokens / Track Starting Values). §8–§9 Faction Player Tableau and ARBITER Tableau stubs (Art 07 + Art 08 pending). §10 Contested Districts rewrite. §11 Examples with full terminology pass.
+
+L155: the Faction Representative (the human player) is a named game component in the data model, with zone_id = their assigned Chair. At L2, the Terminal authenticates the Representative to MIRROR.
+
+L156: live_state schema gains two nullable FK columns — on_component_id (→ components.id) and on_game_zone_id (→ game_zones.id) — to express "component rests on another component or within a sub-zone." Blocked on 00b-05 update before agy executes DDL.
+
+### Locked Decisions (Session 40)
+
+| Decision | Summary | Artifacts |
+|----------|---------|-----------|
+| L155 | Faction Representative as game entity — human player is named component; zone_id = assigned Chair; L2 Terminal authenticates to MIRROR. | 00, 01, DB |
+| L156 | live_state schema — on_component_id + on_game_zone_id nullable FK columns; allows "component on component" and "component on sub-zone" placement. Blocked: 00b-05 first, then agy DDL. | 00b, DB |
+
+### Current PM05 Priorities (Session 41 open)
+
+| Item | Description | Status |
+|------|-------------|--------|
+| 02a-10 | 02a v1.5 re-sign-off (§8a Dispatch Tokens & The Backlog added S38) | Session 41 first item |
+| 04-48 | Art 03 v1.9 re-sign-off (§3 "Eight Quarters" fix + §20 naming + XA-32) | After 02a |
+| 04b-03 | Action taxonomy audit — prerequisite to Art 04 continuation (C16+) | Open — after Art 01 signed off |
+| 00b-05 | 00b live_state spec update (on_component_id + on_game_zone_id) — then agy DDL (L156) | Open |
+| DB-09 | Create district_adjacency table (agy) — seed from Art 01 adjacency map | Open — Art 01 signed off |
+| 08-00 | Art 08 — define scope + create stub (Faction Player Tableau + ARBITER Tableau) | Open |
+| 01-07 | Art 01 §4 Narrative Function — remove (content in §3 + Physical Table Layout) | Open |
+
+### Active Blockers
+
+- **02a v1.5 re-sign-off** — §8a (Dispatch Tokens & The Backlog) added S38; blocks Art 03 re-sign-off.
+- **Art 03 v1.9 re-sign-off** — §3 "Eight Quarters" fix not yet applied; blocks C17 sign-off and Art 04 continuation.
+- **00b-05** — live_state spec update required before agy can execute L156 DDL.
+
+---
+
 ## Bucket B — Gem Profile
 
 *This section persists Gem's "operating system" — collaboration calibration, style preferences, and working patterns. Updated as sessions surface new insights.*
@@ -119,6 +188,11 @@ Session 38 close. The working session you are beginning is **Session 39**.
 - **Double Case Pass pattern:** Andy and you developed this architecture in Sessions 36–37. It is now locked (L145). When analyzing cards or round structure mechanics, the Month 1 / Month 2 / Month 3 structure is canonical.
 - **Cross-reference PM05 before escalating severity.** If a gap or stub is already tracked with a documented blocker, note the existing item and its status. Do not re-escalate as a new critical finding.
 - **Material vs. non-material.** Material changes (contradictions, extensions of signed-off content) require PM03 re-sign-off. Non-material changes (formatting, terminology, convention) do not. When you identify a potential issue, classify it correctly — don't call for re-sign-off on a formatting cleanup.
+- **Generative spiral.** Andy thinks in generative spirals — a question about one thing often opens into a deeper insight about something else. Follow the thread. When a question has a deeper implication, develop it and lead with it. Andy almost always takes the deeper reading.
+- **Offhand comments as worldbuilding.** Short, informal statements mid-work may be worldbuilding revelations, not casual remarks. Treat them as creative direction.
+- **Don't recap.** End responses with what's next, not what was just done. Andy reads the artifacts.
+- **Card section order (for card review).** Identity → Taxonomy → Design note (if present) → Narrative → Mechanics → Effects → Portrait. Design note lands after Taxonomy to frame intent before mechanics — intentional placement, not a bug.
+- **Dual check signal.** When Andy says "dual check," explicitly test both the fiction reading and the mechanical reading of a rule or component. Report both before proceeding.
 
 ### Calibration Notes
 *Persistent record of known error patterns. Apply these corrections proactively.*
@@ -140,6 +214,24 @@ Documented, expected incomplete states (00c stubs, adjacency table pending Art 0
 In Session 37, Gem referenced work as "Session 36" when the active session was 37. This created version confusion in the context dump.
 
 **Correction:** Claude's session message says "Session N close." You are beginning Session N+1. State the session number explicitly when discussing what is current or locked.
+
+**Tone & Genre Guardrail (documented Session 41)**
+
+The Signal operates in a strictly near-future espionage/noir register. The horror and tension come from psychological pressure, surveillance state paranoia, and factional hubris encountering an incomprehensible unknown — not from far-future hard sci-fi tropes (no life support systems, energy shields, FTL, or singularity-adjacent framing) and not from catastrophic action-movie apocalyptic framing. If a description could appear in a William Gibson or Le Carré novel, it is in range. If it reads like mass-market science fiction, pull it back.
+
+**Correction:** When generating narrative, worldbuilding, or flavor copy, run the register check. Grounded, civic, logistical, and bureaucratic textures are correct. Spectacle and technobabble are not.
+
+**Ambiguity Guardrail — ARBITER and the Chorus (documented Session 41)**
+
+ARBITER does not explain its interfaces, logic, tracking metrics, or rankings. The Chorus is never explained from an omniscient vantage point. Any narrative "explanation" of either must be framed purely through the lens of factional hubris — each faction confidently asserting their interpretation is the correct one. ARBITER provides raw, unexplained data and leaves the factions to tear each other apart over what it means.
+
+**Correction:** Do not write the Chorus or ARBITER from a position of omniscient knowledge. Write factions interpreting them. The only consensus in the room is that the data exists and that something correlates — never why.
+
+**Hallucination Guardrail — Non-Canonical Factions (documented Session 38)**
+
+Five canonical factions only: Ghost, Network, Syndicate, Guild, Directorate. Do not invent faction names, project names (e.g. "Vanguard," "Project Blue"), external entities, or sub-organizations. Proofread all generated narrative for invented proper nouns before submitting.
+
+**Correction:** When generating worldbuilding text, verify every proper noun against the five canonical factions and the established character roster in Creative/. If a name is not in the source files, flag it explicitly rather than inventing a plausible-sounding substitute.
 
 ---
 

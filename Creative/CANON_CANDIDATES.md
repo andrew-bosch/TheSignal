@@ -438,4 +438,22 @@ Source files: `ClaudeIOS/Archive/vignette-technician-first-night-20260522_v2.md`
 
 ---
 
-*Last updated: 2026-05-24 — M365 Copilot pass 1 (S34); Rook and Marek Ionescu approved*
+---
+
+## Gemini — 2026-05-27
+
+Source: `Desktop/gem_message_to_claude.txt` (narrative anchors for Art 01 components)
+
+---
+
+### 📝 Colonel Jax Vane — character name
+
+**Source:** gem_message_to_claude.txt, §1 Board Elements: District Tiles anchor
+**Attribution:** Directorate Security Liaison — vetoed Dr. Aris Thorne's fluid topographic grid design for MIRROR in favor of rigid infrastructural zones based on blast doors, riot barricades, and power-grid kill switches. The resulting brutalist grid is his legacy.
+**Status:** 📝 Flavor name only — side-mention in a narrative anchor. Not automatically canon. Promote only if Andy explicitly approves the role, title, and backstory.
+
+*Note: "Dr. Aris Thorne (Chief Data Architect)" in the same passage may or may not be the same Aris Thorne as the Atacama radio astronomer in The Dry Run vignette (Creative/ — 2026-05-16). The Atacama Thorne is already a canon candidate; this is a different professional role. Flag for reconciliation before canonizing either version.*
+
+---
+
+*Last updated: 2026-05-27 — Gemini S41 narrative anchor pass; Colonel Jax Vane added*

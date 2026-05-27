@@ -1,8 +1,8 @@
 # 02a — Resource Systems: Board State
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.5  
-**Status:** ⚠️ Pending Re-Sign-Off — S38 (Dispatch Tokens / The Backlog added)  
+**Version:** 1.6  
+**Status:** ⚠️ Pending Re-Sign-Off — S38/S41 (Dispatch Tokens / The Backlog added S38; Reservoir + Dispatch Token narrative anchors added S41)  
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian  
 **Supersedes:** l1_generation, influence_system (board-state sections)
 
@@ -26,18 +26,18 @@ Complete rules for three board-state systems: Presence and Influence, Structures
 
 ## 2. Index
 
-1. Overview
-2. Index
-3. Game Purpose
-4. Narrative Function
-5. Design Principles
-6. Rules & Constraints — Presence and Influence
-7. Rules & Constraints — Structures
-8. Rules & Constraints — Resources
-8a. Dispatch Tokens & The Backlog
-9. Component Description
-10. Special Conditions & Gameplay Impacts
-11. Examples & Exceptions
+1. [Overview](#1-overview)
+2. [Index](#2-index)
+3. [Game Purpose](#3-game-purpose)
+4. [Narrative Function](#4-narrative-function)
+5. [Design Principles](#5-design-principles)
+6. [Rules & Constraints — Presence and Influence](#6-rules--constraints--presence-and-influence)
+7. [Rules & Constraints — Structures](#7-rules--constraints--structures)
+8. [Rules & Constraints — Resources](#8-rules--constraints--resources)
+8a. [Dispatch Tokens & The Backlog](#8a-dispatch-tokens--the-backlog)
+9. [Component Description](#9-component-description)
+10. [Special Conditions & Gameplay Impacts](#10-special-conditions--gameplay-impacts)
+11. [Examples & Exceptions](#11-examples--exceptions)
 
 ---
 
@@ -62,6 +62,8 @@ Structures are physical: facilities built, offices established, infrastructure i
 Resources represent each faction's theory of power made tangible. Findings accumulates and decays because intelligence must be acted on or it becomes worthless. Capital accrues because the Syndicate's financial systems are always running. Mandate flows from institutional authority that is being exercised every day — not just in New Meridian.
 
 Each faction also brings reserves to The Table — resources accumulated through operations before the session began. These are not windfalls. They are the working capital of living organizations that were doing things before The Table convened.
+
+The source of all of this is The Reservoir — a vast pool of unallocated capital, dormant infrastructure, and political credit accumulated outside New Meridian. Offshore funds, mothballed server farms, unmanned mercenary contingents, stockpiles of rare earth materials, and political favors sitting in escrow: everything the factions could deploy, but have not yet committed. Drawing income at Upkeep is not creation. It is activation — converting latent potential into working assets. The Reservoir is what remains when the faction has not yet decided to spend it.
 
 ---
 
@@ -381,6 +383,8 @@ The Contested rate is not a balancing mechanism. It is ARBITER's response to fac
 ---
 
 ## 8a. Dispatch Tokens & The Backlog
+
+Before an operation leaves a faction's internal queue, it is a theoretical project — drafted, mapped, costed, and waiting for the executive order to move. The faction has the people. They have the plan. What they do not yet have is organizational commitment. A Dispatch Token is that commitment: the authorization that converts planned work into active production for this Quarter. At the start of each Quarter, each faction draws their allocation from **The Backlog** — the shared pool on the table holding all unissued authorizations. A faction holds its drawn tokens privately beside the tableau. The pool the factions draw from is public.
 
 Dispatch Tokens are not faction resources. They do not generate through district presence, accumulate across Quarters, or carry an affinity system. They are a per-Quarter operational capacity allocation — a count of how many covert operations a faction has the internal authorization to run this Quarter. *(Governing rule: 00a R39. Narrative grounding: Artifact 00 §14.)*
 

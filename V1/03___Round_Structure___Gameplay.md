@@ -29,28 +29,28 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 
 ## 2. Index
 
-1. Overview
-2. Index
-3. Game Purpose
-4. Narrative Function
-5. Design Principles
-6. Quarter Overview
-7. Phase 1 — Upkeep
-8. Phase 2 — Placement
-9. Month 1 — Dispatch
-10. Month 1 — Countermeasures
-11. Month 1 — Resolution
-12. Month 2 — Dispatch
-13. Month 2 — Countermeasures
-14. Month 2 — Resolution
-15. Month 3 — Declaration
-16. Month 3 — Countermeasures
-17. Month 3 — Resolution
-18. Debrief
-19. The Operation System
-20. End of Quarter
-21. Special Conditions & Gameplay Impacts
-22. Examples & Exceptions
+1. [Overview](#1-overview)
+2. [Index](#2-index)
+3. [Game Purpose](#3-game-purpose)
+4. [Narrative Function](#4-narrative-function)
+5. [Design Principles](#5-design-principles)
+6. [Quarter Overview](#6-quarter-overview)
+7. [Phase 1 — Upkeep](#7-phase-1--upkeep)
+8. [Phase 2 — Placement](#8-phase-2--placement)
+9. [Month 1 — Dispatch](#9-month-1--dispatch)
+10. [Month 1 — Countermeasures](#10-month-1--countermeasures)
+11. [Month 1 — Resolution](#11-month-1--resolution)
+12. [Month 2 — Dispatch](#12-month-2--dispatch)
+13. [Month 2 — Countermeasures](#13-month-2--countermeasures)
+14. [Month 2 — Resolution](#14-month-2--resolution)
+15. [Month 3 — Declaration](#15-month-3--declaration)
+16. [Month 3 — Countermeasures](#16-month-3--countermeasures)
+17. [Month 3 — Resolution](#17-month-3--resolution)
+18. [Debrief](#18-debrief)
+19. [The Operation System](#19-the-operation-system)
+20. [End of Quarter](#20-end-of-quarter)
+21. [Special Conditions & Gameplay Impacts](#21-special-conditions--gameplay-impacts)
+22. [Examples & Exceptions](#22-examples--exceptions)
 
 ---
 

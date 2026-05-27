@@ -17,13 +17,13 @@
 ## 2. Index
 
 1. Overview (§1 above)
-2. Index
-3. L108 Compliance Standard
-4. Entity Registry
-5. Lookup Tables
-6. Entity Relationship Map
-7. Schema Reference Index
-8. Design Notes & Known Gaps
+2. [Index](#2-index)
+3. [L108 Compliance Standard](#3-l108-compliance-standard)
+4. [Entity Registry](#4-entity-registry)
+5. [Lookup Tables](#5-lookup-tables)
+6. [Entity Relationship Map](#6-entity-relationship-map)
+7. [Schema Reference Index](#7-schema-reference-index)
+8. [Design Notes & Known Gaps](#8-design-notes--known-gaps)
 
 ---
 

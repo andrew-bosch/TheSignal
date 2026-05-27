@@ -23,15 +23,15 @@ Art 03a is the code-lite technical companion to Art 03. Where Art 03 describes t
 
 ## 2. Index
 
-1. Overview
-2. Index
-3. Scope and Layer Structure
-4. Layer 1 — State Model
-5. Layer 2 — Phase & Beat Procedures (Pseudocode)
+1. [Overview](#1-overview)
+2. [Index](#2-index)
+3. [Scope and Layer Structure](#3-scope-and-layer-structure)
+4. [Layer 1 — State Model](#4-layer-1--state-model)
+5. [Layer 2 — Phase & Beat Procedures (Pseudocode)](#5-layer-2--phase--beat-procedures-pseudocode)
    - Quarter_Flow() — full Quarter entry point
    - Phase_1() through Phase_7() — phase procedures
    - Beat_0() through Beat_5() — Phase 6 detail
-6. Layer 3 — Decision Tables & Edge Case Registry
+6. [Layer 3 — Decision Tables & Edge Case Registry](#6-layer-3--decision-tables--edge-case-registry)
    - DT-01: Card face determination at Beat 0 (non-Apex)
    - DT-02: Card face determination at Beat 0 (Apex)
    - DT-03: Critical Success override (01–05)
@@ -42,9 +42,9 @@ Art 03a is the code-lite technical companion to Art 03. Where Art 03 describes t
    - DT-08: Apex activation threshold check
    - DT-09: Emergency Response role (assist / thwart)
    - Apex_Activation() procedure
-7. Modifier Stack Reference
-8. Design Notes
-9. Layer 4 — Modifier Balance Analysis (stub)
+7. [Modifier Stack Reference](#7-modifier-stack-reference)
+8. [Design Notes](#8-design-notes)
+9. [Layer 4 — Modifier Balance Analysis (stub)](#9-layer-4--modifier-balance-analysis)
 
 ---
 

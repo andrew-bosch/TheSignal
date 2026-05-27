@@ -29,17 +29,17 @@ The physical representation, scale definitions, visibility rules, and component 
 
 ## 2. Index
 
-1. Overview
-2. Index
-3. Game Purpose
-4. Narrative Function
-5. Design Principles
-6. Rules & Constraints — Chorus Portrait Track
-7. Rules & Constraints — Public Standing Track
-8. Rules & Constraints — Intel Notes
-9. Component Description
-10. Special Conditions & Gameplay Impacts
-11. Examples & Exceptions
+1. [Overview](#1-overview)
+2. [Index](#2-index)
+3. [Game Purpose](#3-game-purpose)
+4. [Narrative Function](#4-narrative-function)
+5. [Design Principles](#5-design-principles)
+6. [Rules & Constraints — Chorus Portrait Track](#6-rules--constraints--chorus-portrait-track)
+7. [Rules & Constraints — Public Standing Track](#7-rules--constraints--public-standing-track)
+8. [Rules & Constraints — Intel Notes](#8-rules--constraints--intel-notes)
+9. [Component Description](#9-component-description)
+10. [Special Conditions & Gameplay Impacts](#10-special-conditions--gameplay-impacts)
+11. [Examples & Exceptions](#11-examples--exceptions)
 
 ---
 

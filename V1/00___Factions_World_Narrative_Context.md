@@ -28,20 +28,20 @@ A complete description of the game's world, its five factions, the event that br
 
 ## 2. Index
 
-1. Overview
-2. Index
-3. Game Purpose
-4. Narrative Function
-5. Design Principles
-6. The World — New Meridian and the Chorus
-7. The Five Factions
-8. The Table
-9. ARBITER
-10. What Victory Means
-11. Tone, Language, and Faction Voice
-12. Faction Voice — Opening Monologues
-13. Exceptions and Edge Cases
-14. Narrative Anchors
+1. [Overview](#1-overview)
+2. [Index](#2-index)
+3. [Game Purpose](#3-game-purpose)
+4. [Narrative Function](#4-narrative-function)
+5. [Design Principles](#5-design-principles)
+6. [The World — New Meridian and the Chorus](#6-the-world--new-meridian-and-the-chorus)
+7. [The Five Factions](#7-the-five-factions)
+8. [The Table](#8-the-table)
+9. [ARBITER](#9-arbiter)
+10. [What Victory Means](#10-what-victory-means)
+11. [Tone, Language, and Faction Voice](#11-tone-language-and-faction-voice)
+12. [Faction Voice — Opening Monologues](#12-faction-voice--opening-monologues)
+13. [Exceptions and Edge Cases](#13-exceptions-and-edge-cases)
+14. [Narrative Anchors](#14-narrative-anchors)
 
 ---
 

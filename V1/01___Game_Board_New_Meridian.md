@@ -26,17 +26,17 @@ A complete specification of the physical game environment: the table zone struct
 
 ## 2. Index
 
-1. Overview
-2. Index
-3. Game Purpose
-4. Narrative Function
-5. Design Principles
-6. Rules & Constraints
-7. Starting Configuration
-8. Faction Player Tableau
-9. ARBITER Tableau
-10. Special Conditions & Gameplay Impacts
-11. Examples & Exceptions
+1. [Overview](#1-overview)
+2. [Index](#2-index)
+3. [Game Purpose](#3-game-purpose)
+5. [Design Principles](#5-design-principles)
+[NEW] [Physical Table Layout](#new-physical-table-layout)
+6. [Rules & Constraints](#6-rules--constraints)
+7. [Starting Configuration](#7-starting-configuration)
+8. [Faction Player Tableau](#8-faction-player-tableau)
+9. [ARBITER Tableau](#9-arbiter-tableau)
+10. [Special Conditions & Gameplay Impacts](#10-special-conditions--gameplay-impacts)
+11. [Examples & Exceptions](#11-examples--exceptions)
 
 ---
 
@@ -51,16 +51,6 @@ The board serves four simultaneous functions:
 **Information display:** All shared tracks — World Conditions, the Session Timeline, initiative order, active Situation Report cards, Public Standing, active Accords — are displayed on or adjacent to The Overview and updated in real time.
 
 **Narrative stage:** The physical game table is not an abstraction of New Meridian — it is a recreation of the actual setting where The Table convenes. Faction Representatives gather around the same surface, in the same configuration, that exists in the fiction: a private chamber at the Chorus Node, MIRROR projecting The Overview at the center of the table, each Representative's Terminal at their seat, the ARBITER screen separating authority from process. When players take their positions, they are not playing characters who attend The Table — they are inhabiting those seats. The district map, the track placements, the screen positions — all of it corresponds to a real place in the fiction. The session begins where the story already is.
-
----
-
-## 4. Narrative Function
-
-The Chorus Node sits at the top of New Meridian, north of the city. Everything that followed — every institution, every district, every faction — grew southward from that point over thirty years. The board's shape reflects that history: an inverted arc, the city spreading east and west and south from the transmission source, like a signal propagating outward.
-
-The rings are not concentric circles. They are sediment layers — each one representing a wave of growth as the city expanded away from the Node. The Core districts formed first, close to the source. The Infrastructure ring grew to support them. The Sprawl was last, the city's outermost layer where most of New Meridian's people actually live.
-
-District placement within each ring follows geographic and narrative logic. Districts that depend on one another are adjacent. Districts whose factions have historical relationships are near each other. The map should be readable as a city, not as a game board.
 
 ---
 

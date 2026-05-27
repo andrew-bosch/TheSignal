@@ -1,4 +1,4 @@
-# GEMINI WORKING STATE: SESSION 32 (PM)
+# GEMINI WORKING STATE: SESSION 40
 ## LATEST ALIGNMENT
 - Nickname: agy
 - Filesystem: CLI-to-CLI local sync
@@ -32,8 +32,12 @@
 - `current_value` on tracks (0-20) can be `TINYINT`.
 - `component_id` may still need `BIGINT` if the serial registry is massive.
 
-## 6. DB Gap Analysis (Completed Session 32 PM)
-- Checked the airlock and analyzed database gaps.
-- Reported all inconsistencies (C02/C10/C13/C14 anomalies and missing DB schema elements) to `Claude_context.md`.
-- Executed DB-03 (`inteltoken_metadata` DDL) with pluralized table adjustments after Andy's confirmation.
-- Standing by for proposals/confirmation on DB-04 (resource_types table, factions/district_metadata columns) and missing card metadata columns.
+## 6. Completed DB Execution Tasks
+- **DB-03:** Created `inteltoken_metadata` (Session 36).
+- **DB-04:** Created `resource_types` and patched `factions` columns (Session 37).
+- **DB-05:** Migrated native resource columns in `district_metadata` and `player_metadata` (Session 37).
+- **DB-07:** Added check constraint to `inteltoken_metadata.inteltoken_quarter_id` (Session 37).
+
+## 7. Session 40 Tasks Status
+- **DB-09 (Create district_adjacency table):** **Blocked** pending Claude Code updating `00b` §8 spec. Also identified a constraint design conflict (foreign keys reference non-existent `district_metadata(id)` column; should point to `district_component_id` or `components(id)`).
+- **DB-11 (live_state columns):** **Blocked** pending Claude Code updating `00b` §8 spec (PM05 00b-05).

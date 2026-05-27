@@ -19,20 +19,20 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 
 | Section | Content |
 |---------|---------|
-| §3 | Game Purpose |
-| §4 | Narrative Function |
-| §5 | Design Principles |
-| §6 | Card Data Schema |
-| §7 | Standard Covert Operations C01–C10 |
-| §8 | Faction-Specific Covert Operations C11–C35 |
-| §9 | Standard Political Acts P01–P08 |
-| §10 | Faction-Specific Political Acts P09–P18 |
-| §11 | Rules & Constraints — Modifier Cards |
-| §12 | Rules & Constraints — Pass Cards |
-| §13 | Card Information Design Requirements |
-| §14 | Special Conditions & Gameplay Impacts |
-| §15 | Examples & Exceptions |
-| §16 | Appendix — Outstanding Decisions & Assumptions |
+| §3 | [Game Purpose](#3-game-purpose) |
+| §4 | [Narrative Function](#4-narrative-function) |
+| §5 | [Design Principles](#5-design-principles) |
+| §6 | [Card Data Schema](#6-card-data-schema) |
+| §7 | [Standard Covert Operations C01–C10](#7-standard-covert-operations--c01c10) |
+| §8 | [Faction-Specific Covert Operations C11–C35](#8-faction-specific-covert-operations--c11c35) |
+| §9 | [Standard Political Acts P01–P08](#9-standard-political-acts--p01p08) |
+| §10 | [Faction-Specific Political Acts P09–P18](#10-faction-specific-political-acts--p09p18) |
+| §11 | [Rules & Constraints — Modifier Cards](#11-rules--constraints--modifier-cards) |
+| §12 | [Rules & Constraints — Pass Cards](#12-rules--constraints--pass-cards) |
+| §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
+| §14 | [Special Conditions & Gameplay Impacts](#14-special-conditions--gameplay-impacts) |
+| §15 | [Examples & Exceptions](#15-examples--exceptions) |
+| §16 | [Appendix — Outstanding Decisions & Assumptions](#16-appendix--outstanding-decisions--assumptions) |
 
 ---
 

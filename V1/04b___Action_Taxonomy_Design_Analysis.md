@@ -21,13 +21,14 @@ Card definitions live in Artifact 04. This document does not reproduce card cont
 
 | Section | Content |
 |---------|---------|
-| §3 | Taxonomy Development — Key Decisions |
-| §4 | Final Taxonomy Table |
-| §5 | Card Taxonomy Index |
-| §6 | Coverage Analysis — Gaps and Concentrations |
-| §7 | Faction Coverage Matrix |
-| §8 | Design Recommendations by Faction |
-| §9 | Design Principles Derived from Taxonomy |
+| §3 | [Taxonomy Development — Key Decisions](#3-taxonomy-development--key-decisions) |
+| §4 | [Final Taxonomy Table](#4-final-taxonomy-table) |
+| §5 | [Card Taxonomy Index](#5-card-taxonomy-index) |
+| §6 | [Coverage Analysis — Gaps and Concentrations](#6-coverage-analysis--gaps-and-concentrations) |
+| §7 | [Faction Coverage Matrix](#7-faction-coverage-matrix) |
+| §8 | [Design Recommendations by Faction](#8-design-recommendations-by-faction) |
+| §9 | [Design Principles Derived from Taxonomy](#9-design-principles-derived-from-taxonomy) |
+| §10 | [Standalone Card Types — Taxonomy Exclusions](#10-standalone-card-types--taxonomy-exclusions) |
 
 ---
 
