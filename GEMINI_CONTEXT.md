@@ -148,6 +148,59 @@ Confirm with Andy before executing. Report as-executed in `Claude_context.md`.
 
 ---
 
+## S40 DB Tasks — Open Items for agy
+
+Three new tasks authorized after Art 01 v1.8 sign-off. Execute in order. Each requires Andy's terminal confirmation before you run DDL. Report as-executed in `Claude_context.md`.
+
+---
+
+### DB-09 — Create `district_adjacency` table
+
+**Status:** READY — Art 01 signed off S40. Canonical adjacency data is in Art 01 §[City] District Adjacency Map (101 rows).
+
+**Rationale:** Art 01 defines 101 bidirectional adjacency rows for all 21 districts. This data belongs in `the_signal_db` as the `district_adjacency` table to support game_zones population, Entry Rule A/B calculations, and Battlefield Strength scope (PM05 03-12).
+
+**Step 1 — Update 00b spec first (Claude Code responsibility — wait for confirmation that this is done before proceeding).** 00b §8 must be updated to document the district_adjacency table spec before DDL is executed (Tandem-Read protocol).
+
+**Step 2 — Create table:**
+```sql
+CREATE TABLE district_adjacency (
+  id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  origin_district_id BIGINT(20) NOT NULL,
+  adjacent_district_id BIGINT(20) NOT NULL,
+  allow_ingress BOOLEAN NOT NULL DEFAULT TRUE,
+  allow_egress BOOLEAN NOT NULL DEFAULT TRUE,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_adj_origin FOREIGN KEY (origin_district_id) REFERENCES district_metadata (id),
+  CONSTRAINT fk_adj_adjacent FOREIGN KEY (adjacent_district_id) REFERENCES district_metadata (id)
+);
+```
+
+**Step 3 — Seed from Art 01 adjacency map.** Source of truth: `/home/abosch/Projects/TheSignal/V1/01___Game_Board_New_Meridian.md` — District Adjacency Map section. All 101 rows are bidirectional (allow_ingress = TRUE, allow_egress = TRUE). District IDs correspond to the # column in the Art 01 district tables (1–21).
+
+Confirm with Andy before executing. Report DDL and row count as-executed.
+
+---
+
+### DB-11 (L156) — Add `on_component_id` and `on_game_zone_id` to `live_state`
+
+**Status:** BLOCKED — Claude Code must update 00b §8 live_state spec first (PM05 00b-05). Do not execute until Claude Code confirms 00b has been updated.
+
+**Rationale:** L156 (S40) confirmed these two nullable FK columns. `on_component_id` tracks what component a component rests on (e.g., presence chip on district tile). `on_game_zone_id` tracks the sub-zone a component occupies beyond its primary zone_id.
+
+**DDL (execute only after 00b-05 complete):**
+```sql
+ALTER TABLE live_state
+  ADD COLUMN on_component_id BIGINT(20) DEFAULT NULL,
+  ADD COLUMN on_game_zone_id BIGINT(20) DEFAULT NULL,
+  ADD CONSTRAINT fk_live_on_component FOREIGN KEY (on_component_id) REFERENCES components (id),
+  ADD CONSTRAINT fk_live_on_zone FOREIGN KEY (on_game_zone_id) REFERENCES game_zones (id);
+```
+
+Wait for Claude Code's go-ahead on this one. Report as-executed in `Claude_context.md`.
+
+---
+
 ## S39–S40 Locked Decisions (Recent)
 
 - **L154** — Faction screens: each faction player receives a screen component (analogous to ARBITER screen) to keep Terminal contents private. Design Pillar 1 revised: "The Overview is Truth." Enables force-reveal action class (Ghost-primary, cross-faction applicable). Art 04b taxonomy audit required (04b-03).
@@ -176,7 +229,7 @@ Components to audit: presence tokens, deployment markers, structure blocks, esta
 - **Material vs. Non-Material:** Material = contradicts or extends signed-off content → re-sign-off required. Non-material = formatting, terminology → no re-sign-off.
 - **Design Pillar 6:** Narrative takes precedence over mechanical. If the narrative reason for a rule cannot be stated, the rule may be arbitrary.
 - **Narrator Voice Test:** Every narrative field — could it have been written by a human who knows too much, OR by ARBITER in The Witness register? Both readings must remain valid.
-- **Signed-off artifacts:** 00 (v1.5 — S40), 00a (v0.3 — S40), 00b (v0.1), 01 (v1.2 — overhaul pending), 02a (v1.5 — pending re-sign-off), 02b (v1.5), 04b (v1.2 — taxonomy audit pending). Pending re-sign-off: 03 (v1.9). Do not propose additions without flagging re-sign-off requirement.
+- **Signed-off artifacts:** 00 (v1.5 — S40), 00a (v0.3 — S40), 00b (v0.1), 01 (v1.8 — S40), 02b (v1.5), 04b (v1.2 — taxonomy audit pending). Pending re-sign-off: 02a (v1.5), 03 (v1.9). Do not propose additions without flagging re-sign-off requirement.
 - **Artifact 04** (Card System, v0.9.20) — in progress. C01–C16 signed off. C17 sign-off pending (04-41). C18/C19 redesign open (D-04-02). C20 not reviewed. C21–C35 pending.
 
 ---

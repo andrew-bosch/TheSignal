@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 40: Art 00 signed off (00-07 multicultural texture, L155 Faction Representative). 00a signed off (freestanding narrative anchors + §11 Punch List removed; Session Timeline terminology fix). **Art 01 overhaul is next (01-05)** — major scope: physical zone definitions, MIRROR/Terminal placement, district tile spec, Ring Modifier decks ×3, Session Timeline, Public Standing placement, Chorus Activity track, Situation Report zone. Source: Whiteboard `Art01_Scope_S39.md`. After Art 01: 02a re-sign-off, then Art 03.
+Session 40: Art 00 signed off (00-07, L155). 00a signed off. **Art 01 v1.8 signed off (01-05).** Full overhaul complete S40: zone hierarchy (Game Box / Chairs / Table / P1–P6 / Central Area and all children / City → Ring 0–3 → 21 districts), Physical Table Layout section, two Visio component images integrated, district tables with hex resource colors, district adjacency map (101 rows), §7 Starting Configuration (Fixed Setup / Faction Starting Tokens / Track Starting Values), §8–§9 stubs (Faction Player Tableau / ARBITER Tableau — pending Art 07 and Art 08), §10 Special Conditions (Contested Districts rewrite), §11 Examples (terminology). Open: §4 Narrative Function (removal pending); live_state on_component_id/on_game_zone_id → L156 + 00b update; district_adjacency DB table (agy); Art 08 not yet defined. **Next: 02a re-sign-off, then Art 03.**
 
 ---
 
@@ -18,7 +18,7 @@ Session 40: Art 00 signed off (00-07 multicultural texture, L155 Faction Represe
 |----------|---------|-----------|
 | 00 — Factions, World & Narrative | 1.5 | ✅ Signed Off — S40. Open: 00-09 (World Conditions panel — design question, does not block sign-off). |
 | 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. |
-| 01 — Game Board: New Meridian | 1.2 | ⚠️ Major overhaul (01-05). Scope expanded S39: physical zone definitions, MIRROR/Terminal placement, district tile spec, Ring Modifier decks ×3, Session Timeline, Public Standing placement, Chorus Activity track, Situation Report zone. See Whiteboard `Art01_Scope_S39.md`. |
+| 01 — Game Board: New Meridian | 1.8 | ✅ Signed Off — S40. Open: §4 Narrative Function (removal pending); §8/§9 Tableau stubs (Art 07 + Art 08); district_adjacency DB table (agy); live_state on_component_id/on_game_zone_id → L156 + 00b. |
 | 02a — Resource Systems: Board State | 1.5 | ⚠️ Pending Re-Sign-Off — §8a (Dispatch Tokens & The Backlog) added S38. After Art 01. |
 | 03 — Round Structure & Gameplay | 1.9 | ⚠️ Pending Re-Sign-Off — S37/S38. Flags: §3 "Eight rounds" → "Eight Quarters" (fix confirmed S39, not yet applied); §20 "Round Tracker" (needs in-world name — blocked on Art 00/01 upstream work); XA-32 ring modifier step. After Art 02a. |
 | 04 — Action Card System | 0.9.20 | C17 sign-off (after Art 03); C36–C42 Intel economy cards; 04b-03 action taxonomy audit required before C16+ work. |
@@ -26,7 +26,7 @@ Session 40: Art 00 signed off (00-07 multicultural texture, L155 Faction Represe
 | 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
-Signed-off artifacts: 00b (v0.1), 01 (v1.2 — overhaul pending), 02b (v1.5), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
+Signed-off artifacts: 00b (v0.1), 01 (v1.8), 02b (v1.5), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
 
 ---
 
@@ -34,10 +34,16 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.2 — overhaul pending), 02b (v1.5), 04
 
 | ID | Item | Status |
 |----|------|--------|
-| **00-07** | Art 00 multicultural texture pass (§6 rings/Node, §8 Table calendar, §7 faction/time) | Open — S40 first item |
-| **00a-08** | 00a v0.3 re-sign-off (R39 added S38) | Open — after Art 00 |
-| **01-05** | Art 01 overhaul — physical space + MIRROR/Terminal/zone definitions (S39 scope) | Open — after 00a |
-| **02a-10** | 02a v1.5 re-sign-off (§8a Dispatch Tokens & The Backlog) | Open — after Art 01 |
+| **00-07** | Art 00 multicultural texture pass | ✅ S40 |
+| **00a-08** | 00a v0.3 re-sign-off | ✅ S40 |
+| **01-05** | Art 01 overhaul — physical zone hierarchy, all Overview children | ✅ S40 |
+| **00b-05** | 00b live_state spec update (on_component_id + on_game_zone_id) → then agy DDL (L156) | Open |
+| **DB-09** | Create district_adjacency table (agy) — seed from Art 01 adjacency map | Open — Art 01 signed off |
+| **01-07** | Art 01 §4 Narrative Function — remove (content in §3 + Physical Table Layout) | Open |
+| **08-00** | Art 08 — define scope + create stub (Faction Player Tableau + ARBITER Tableau) | Open |
+| **03-12** | Battlefield Strength trigger model — resolve in Art 03 re-sign-off (see 04-48) | Open |
+| **01-06** | Claude Design visual wireframe — table layout + mat layout | Open |
+| **02a-10** | 02a v1.5 re-sign-off (§8a Dispatch Tokens & The Backlog) | Open — after Art 01 ✅ |
 | **04-48** | Art 03 v1.9 re-sign-off (§3 Quarter fix + §20 naming + XA-32) | Open — after 02a |
 | **04b-03** | Action taxonomy audit — prerequisite to Art 04 continuation (C16+) | Open — after Art 01 |
 | **XA-32** | Art 03 Beat 3/4 ring modifier step + Art 07 ring modifier guide | Open |
@@ -52,9 +58,9 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.2 — overhaul pending), 02b (v1.5), 04
 
 ## Last 3 Locked Decisions
 
-- **L154** (S39): Faction Terminal screens — each faction player receives a screen component, analogous to ARBITER screen, to keep Terminal contents private. Pillar 1 revised to "The Overview is Truth." Enables force-reveal action class (Ghost-primary, cross-faction applicable). Art 04b taxonomy audit required (04b-03).
-- **L153** (S38): Assets definition — C10 Protect scope: faction's Influence, Structure Blocks, Deployment Markers, and any covert or political actions declared this round.
-- **L152** (S38): base_difficulty = INTEGER (or N/A) in card_metadata and Art 04 §6.
+- **L156** (S40): live_state schema — on_component_id (FK → components.id, nullable) and on_game_zone_id (FK → game_zones.id, nullable) columns added. Allows expressing "component rests on another component or sub-zone." Blocked: 00b-05 update first, then agy DDL.
+- **L155** (S40): Faction Representative as game entity — the human player is a named component in the data model; zone_id = their assigned Chair. L2: Terminal authenticates representative to MIRROR.
+- **L154** (S39): Faction Terminal screens — each faction player receives a screen component, analogous to ARBITER screen, to keep Terminal contents private. Pillar 1 revised to "The Overview is Truth." Enables force-reveal action class. Art 04b taxonomy audit required (04b-03).
 
 → Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L154)
 
@@ -64,19 +70,20 @@ Signed-off artifacts: 00b (v0.1), 01 (v1.2 — overhaul pending), 02b (v1.5), 04
 
 - **Art 00 v1.5** — ✅ Signed Off S40
 - **00a v0.3** — ✅ Signed Off S40
-- **Art 01** — major overhaul required before sign-off
+- **Art 01 v1.8** — ✅ Signed Off S40
 - **02a v1.5** — after Art 01
 - **Art 03 v1.9** — after 02a; §3 "Eight Quarters" fix confirmed not yet applied
 - C17 — after Art 03
 
 ---
 
-## Key Concepts Established S39 (Not Yet in Artifacts)
+## Key Concepts Established S39–S40 (Not Yet in All Artifacts)
 
 - **MIRROR** = Meridian Interface for Real-time Reporting, Observation, and Recording. Holographic projection device at Chorus Node. Predates The Table and possibly ARBITER. Origin of "New Meridian" name. Written to Art 00 §8.
-- **Physical table zones** = ARBITER area / F1–F5 areas (on-table + off-table sub-zones) / central area (mat) / supply. Not yet in Art 01. See Whiteboard.
-- **Ring Modifier decks** = 3 decks, one per ring, placed adjacent to rings on mat. Not yet in Art 01.
-- **Situation Report zone** = grid on mat, opposite Chorus track corner. Accumulating World Event cards. Not yet in Art 01.
+- **Zone vs. Component distinction** = Zones are named physical locations (infrastructure); components are portable objects placed within zones. Central Area is a zone; The Overview is the component that fills it. Established S40 — in Art 01 [NEW] Physical Table Layout.
+- **district_adjacency** = bidirectional adjacency table for all 21 districts. In Art 01 §[City]. DB table needed (agy). Feeds Entry Rule A/B and Battlefield Strength (03-12).
+- **live_state schema addition** = on_component_id + on_game_zone_id columns confirmed S40. L156 needed; 00b update required before agy executes DDL.
+- **Art 08** = new planned artifact for Faction Player Tableau and ARBITER Tableau physical component placement. Referenced in Art 01 §8–§9 stubs. Not yet defined.
 - **Force-reveal action class** = actions compelling faction to expose Terminal contents. L154. Design direction for Art 04 card design.
 
 ---
