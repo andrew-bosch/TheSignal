@@ -1,10 +1,10 @@
 # 00b — Data Architecture
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1
-**Status:** ✅ Reference Document — Active
+**Version:** 0.2
+**Status:** ✅ Signed Off — S45
 
-**Purpose:** This document is the schema index for THE SIGNAL's data architecture. It defines every named entity in the game system, assigns ID namespaces, maintains all lookup/enum tables, and maps relationships between entities. It is the primary reference for L108 compliance — all data tables across all design artifacts are registered here.
+**Purpose:** This document is the schema index for THE SIGNAL data architecture. It defines every named entity in the game system, assigns ID namespaces, maintains all lookup/enum tables, and maps relationships between entities. It is the primary reference for L108 compliance — all data tables across all design artifacts are registered here.
 
 **Relationship to source artifacts:** Source artifacts remain the canonical design documents. This artifact does not duplicate their content — it indexes it. When a source artifact defines a data table (e.g., Art 03 §13 Modifier table), the table lives in the source artifact; 00b registers the entity, assigns the ID prefix, and maps its relationships.
 
@@ -18,7 +18,7 @@
 
 1. Overview (§1 above)
 2. [Index](#2-index)
-3. [L108 Compliance Standard](#3-l108-compliance-standard)
+3. [L108 Data Table Standard](#3-l108-data-table-standard-extends-1nf)
 4. [Entity Registry](#4-entity-registry)
 5. [Lookup Tables](#5-lookup-tables)
 6. [Entity Relationship Map](#6-entity-relationship-map)
@@ -27,9 +27,9 @@
 
 ---
 
-## 3. L108 Compliance Standard
+## 3. L108 Data Table Standard (extends 1NF)
 
-All data tables in the THE SIGNAL artifact suite must satisfy the following five requirements (L108 — Database Translatable Data Design):
+All data tables in THE SIGNAL artifact suite must satisfy the following five requirements (L108 — Database Translatable Data Design). Requirements 1 and 3 correspond to standard First Normal Form (1NF); Requirements 2, 4, and 5 are project-specific extensions.
 
 | # | Requirement | Test |
 |---|-------------|------|
@@ -61,7 +61,7 @@ Every named entity type in the game system. ID prefixes establish the primary ke
 | DT-xx | Difficulty Tier | The three base difficulty levels (Easy / Average / Challenging) | Art 03 §13 | ⬜ Schema pending |
 | M-xx | Modifier | Threshold modifiers applied during resolution (M-01–M-12) | Art 03 §13 | ✅ Complete — see Art 03 §13 |
 | RO-xx | Resolution Outcome | The outcome states for a resolved action | Art 03 §12 | ⬜ Schema pending |
-| IP-xx | Initiative Pattern | The ten D10 initiative order patterns | Art 03 §7 | ⬜ Schema pending — ID column needed |
+| IP-xx | Initiative Pattern | The ten D10 initiative order patterns | Art 07 | ⬜ Schema pending — Art 07 draft required |
 | C-xx | Action Card — Covert Operation | Covert operation cards C-01–C-35 | Art 04 §6 | 🔄 Schema exists; L108 audit pending (XA-28) |
 | P-xx | Action Card — Political Act | Political act cards P-01–P-18 | Art 04 §6 | 🔄 Schema exists; L108 audit pending (XA-28) |
 | O-xx | Operative | Faction operative records (tiers T1/T2/T3/Apex) | Art 05 | ⬜ Art 05 not yet designed |
@@ -72,7 +72,7 @@ Every named entity type in the game system. ID prefixes establish the primary ke
 | CA-xx | Case (Dispatch Case) | Physical container submitted by each Faction Player at Phase 3 close. Contains operation cards, target slips, and resource tokens for that faction's covert submissions. In V1, indexed via Faction ID (F-xx) — `dispatch_case[F-xx]`. CA-xx prefix anticipates L2+ per-case record tracking. One per Faction Player per Quarter; transient (reset at Beat_5 Step 1). | Art 03 §7, Art 06, 03a §4 | ⬜ Schema pending |
 | VS-xx | Visibility Scope | Information visibility classification — controls which parties can see a given field | 00b §5.9 (defined here) | ✅ Complete (§5.9) |
 
-*20 entity types. 1 fully L108-compliant. 2 with existing schemas pending audit. 16 schemas pending design. 1 cross-artifact standard defined here.*
+*20 entity types. 9 fully L108-compliant. 3 with existing schemas pending further work (PB-xx: ranges pending; C-xx + P-xx: L108 audit pending XA-28). 8 schemas pending source artifact design. 1 cross-artifact standard defined here (VS-xx).*
 
 *Internal 03a modeling types — not registered entities (no persistent IDs, no independent physical components):*
 - *Packet — sub-structure within a Case (one operation card + submitted resources + target slip). Indexed by submission order within the Case. No CA-sub-ID scheme needed.*
@@ -268,7 +268,7 @@ Status of every entity schema against L108 requirements. Updated as source artif
 | Action Card — Covert | C-xx | 35 | 🔄 Schema exists in Art 04 §6; L108 audit pending | XA-28 |
 | Action Card — Political | P-xx | 18 | 🔄 Schema exists in Art 04 §6; L108 audit pending | XA-28 |
 | District | D-xx | 22 | ⬜ Schema not yet defined | D04-09 (adjacency) |
-| Initiative Pattern | IP-xx | 10 | ⬜ Table exists in Art 03 §7; ID column needed | Art 03 sign-off |
+| Initiative Pattern | IP-xx | 10 | ⬜ Schema pending — procedure migrated to Art 07 | Art 07 draft |
 | Operative | O-xx | TBD | ⬜ Art 05 not yet designed | Art 05 |
 | Event Card | EC-xx | TBD | ⬜ Not yet designed | Art 07 / Art 09 |
 | Modifier Card | MC-xx | TBD | ⬜ Not yet designed | Art 09 |
@@ -277,7 +277,7 @@ Status of every entity schema against L108 requirements. Updated as source artif
 | Case (Dispatch Case) | CA-xx | 5 (1 per Faction Player per Quarter; transient) | ⬜ Schema pending | Art 03 §7, Art 06 |
 | Visibility Scope | VS-xx | 8 | ✅ Complete (§5.9) | — |
 
-*10 of 20 entity schemas complete or substantially complete at v0.1. 2 existing schemas pending L108 audit. 7 pending source artifact design. 1 new entity registered (session 22: CA-xx).*
+*9 of 20 entity schemas fully L108-compliant. 3 with schemas in progress. 8 pending source artifact design.*
 
 ---
 
@@ -285,7 +285,7 @@ Status of every entity schema against L108 requirements. Updated as source artif
 
 **District adjacency (D04-09):** The District entity requires a self-referencing adjacency list — a separate junction table mapping D-xx to adjacent D-xx values. This is the most complex relationship in the entity model. Cannot be completed until Art 01 adjacency table is designed and the full card set is locked (cards reference adjacency).
 
-**Initiative Pattern (IP-xx):** The D10 table in Art 03 §7 is close to L108-compliant — it has 10 rows and structured columns. Needs an ID column (IP-01 through IP-10) applied during Art 03 sign-off.
+**Initiative Pattern (IP-xx):** Initiative procedure migrated to Art 07 (PM05 03-11). Schema to be defined there — ID column (IP-01 through IP-10) and full table structure pending Art 07 draft.
 
 **Portrait Band score ranges (PB-xx):** PB-01 (Resonant: +18–+20) and PB-03 (Ambiguous: −1–0) are confirmed by L42. PB-02, PB-04, PB-05 ranges are defined in Art 02b §6 but not reproduced here pending verification during Art 02b re-sign-off.
 
@@ -296,6 +296,36 @@ Status of every entity schema against L108 requirements. Updated as source artif
 **Faction perspectives field — known L108 Requirement 1 exception (deliberate, revisable):** The "Faction perspectives" field in Art 04 §6 is typed as String but contains five per-faction sub-values (one sentence per faction). This is structurally a compound cell (L108 Req 1 violation). Documented as a deliberate exception rather than deferred: the field is narrative design reference with no resolution consequence and no structural inconsistency between sub-values (all homogeneous Strings). No individual faction value is queried at resolution. If a future use case requires querying individual faction perspectives (e.g., cross-card analysis by faction voice), decompose into five faction-keyed fields (Faction perspectives — Ghost / Network / Syndicate / Guild / Directorate), analogous to Portrait decomposition (L119). That decision is post-design and does not block current card passes. See PM05 04-18.
 
 **Compound effect text — known L108 Requirement 1 violation (deferred):** The Effect on success/failure/crit fields in Art 04 §6 carry multi-effect prose strings that violate L108 Requirement 1 (no compound cells). Example: C01's Effect on success encodes two distinct effects in one string — an immediate board placement and a persistent upkeep generator. These cannot be individually queried or programmatically enforced. The taxonomy triple (Category/Function/Target) is the correct decomposition model; the gap is that effect values (quantity, target ID, condition, duration) are not decomposed as typed sub-fields. Deferral rationale: decomposing effect fields requires card content to be locked first — restructuring before lock wastes effort. Action when ready: extend the taxonomy triple to carry effect quantity, target ID, and condition as typed sub-fields per card. See PM05 XA-30.
+
+**`component_positions` table (component location registry):** Tracks the real-time physical location of every in-play component. One row per active component. `component_positions` is an operational DB table — not a named game entity — and is not registered in §4. Formerly `live_state` (renamed DB-11).
+
+| Column | Type | Null | FK Target | Purpose |
+|--------|------|------|-----------|---------|
+| `component_id` | bigint | NOT NULL (PK) | components.id | The tracked component |
+| `current_zone_id` | bigint | NOT NULL | game_zones.id | Primary zone the component currently occupies |
+| `on_component_id` | bigint | NULL | components.id | Parent component this physically rests on. NULL when the component sits directly in a zone rather than on another component (e.g., The Overview mat: `on_component_id` = NULL, `on_game_zone_id` = Table Center). Renamed from `anchored_to_component_id`; constraint changed NOT NULL → NULL. |
+| `on_game_zone_id` | bigint | NULL | game_zones.id | Specific zone this component occupies within the physical layout; used when `on_component_id` is NULL. Expresses sub-zone context beyond `current_zone_id`. |
+
+*L156 (S40). Locked: option B — component_positions carries both nullable FK columns rather than dual-representing container components as zones. Pending: agy DB-11 — RENAME TABLE `live_state` → `component_positions`; RENAME COLUMN `anchored_to_component_id` → `on_component_id` (change NOT NULL → NULL); ADD COLUMN `on_game_zone_id` (bigint, NULL, FK → game_zones.id). Unblocked after this spec update (PM05 00b-05).*
+
+---
+
+**Running game state — derivation architecture:** All logical game state in THE SIGNAL is physically represented on the table. `component_positions` is therefore the universal state source — logical state is derived from component positions rather than stored in separate tracking tables. Derivation map:
+
+| State Dimension | Derivation from `component_positions` |
+|-----------------|--------------------------------------|
+| Faction resource counts | COUNT resource tokens by faction reserve zone |
+| Influence level per faction per district | COUNT presence chips by district zone + faction |
+| Public Standing per faction | Position of PS marker on Public Standing track |
+| Portrait score per faction | Position of Portrait marker on Portrait track |
+| Tension level | COUNT tension markers in play |
+| Current Quarter / Phase | Position of Quarter marker on Session Timeline + `beat` table |
+| Active Accords | Accord Document components whose zone = Accord Placement Area |
+| Initiative pattern for current quarter | Position of initiative markers on Initiative Strip |
+
+*Derivation queries to be documented in PM05 DB-13 once component registry and game_zones are fully seeded.*
+
+---
 
 **Code engine note:** When the L2+ game engine is built, this document is read first. The entity registry (§4) provides the entity list and ID namespaces. The lookup tables (§5) are ingested as reference data. The relationship map (§6) defines the joins. Source artifacts provide the full field definitions for each entity.
 

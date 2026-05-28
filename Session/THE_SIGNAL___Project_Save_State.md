@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-27 (session 44 complete) — supersedes session 43 save state.
+### Generated: 2026-05-27 (session 45 complete) — supersedes session 44 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -96,6 +96,24 @@ Read this document top to bottom before doing any design work in a new session. 
 **PM05 changes:** 01-08 ✅; new: 00-11, 04-53, 07-11, 07-12.
 
 **Next session (45):** C17 sign-off (Art 04); 04b-03 action taxonomy audit (unblocked — Art 01 signed off).
+
+---
+
+### Session 45 Summary — 2026-05-27
+
+**Focus:** 00b data architecture — spec additions and sign-off.
+
+**Decisions locked:** None.
+
+**Artifacts changed:**
+- 00b v0.2 — §3 renamed "L108 Data Table Standard (extends 1NF)"; component_positions table spec added to §8 (formerly live_state); running game state derivation architecture documented (all logical state derives from component_positions); IP-xx source updated to Art 07; entity/schema footer counts corrected. **Signed off S45.**
+- PM03 — 00b row updated to v0.2; PM05 row bumped to v2.9.
+- PM05 v2.9 — 00b-05 ✅; XA-32 scoped to Art 07 only; DB-11 new (agy: RENAME TABLE live_state → component_positions, RENAME COLUMN anchored_to_component_id → on_component_id nullable, ADD COLUMN on_game_zone_id); DB-12 closed (duplicate DB-09, resolved L156); DB-13 new (running game state derivation query spec); DB-02 reference updated to component_positions.
+- SESSION_BRIEF — updated to S45.
+
+**PM05 changes:** 00b-05 ✅, XA-32 updated, DB-11 new, DB-12 closed, DB-13 new, DB-02 updated.
+
+**Next session (46):** 04b-03 action taxonomy audit (unblocked S44) → C17 sign-off (Art 04).
 
 ---
 

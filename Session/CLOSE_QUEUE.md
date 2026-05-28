@@ -1,37 +1,41 @@
-## CLOSE QUEUE — Session 44
+## CLOSE QUEUE — Session 45
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: ### Generated: 2026-05-27 (session 43 complete) — supersedes session 41 save state.
-NEW: ### Generated: 2026-05-27 (session 44 complete) — supersedes session 43 save state.
+OLD: Generated: 2026-05-27 (session 44 complete) — supersedes session 43 save state.
+NEW: Generated: 2026-05-27 (session 45 complete) — supersedes session 44 save state.
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | PM05 | Active Punch List | 2.8 | 🔄 Active | Living action queue of all pending changes across all artifacts. S40: 00-07 ✅, 00a-08 ✅, 01-05 ✅; new items: 01-07, 08-00, DB-09, 00b-05. |
+NEW: | PM05 | Active Punch List | 2.9 | 🔄 Active | Living action queue of all pending changes across all artifacts. S45: 00b-05 ✅, XA-32 scoped to Art 07 only, DB-11 new (agy DDL — component_positions rename + columns), DB-12 closed (L156), DB-13 new (derivation query spec), DB-02 reference updated. |
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: ### Session 43 Summary — 2026-05-27
+AFTER: **Next session (45):** C17 sign-off (Art 04); 04b-03 action taxonomy audit (unblocked — Art 01 signed off).
 CONTENT:
 
-### Session 44 Summary — 2026-05-27
+---
 
-**Focus:** Art 01 narrative anchor pass + sign-off. True State expansion (MIRROR origin, signal predates perceptibility).
+### Session 45 Summary — 2026-05-27
+
+**Focus:** 00b data architecture — spec additions and sign-off.
 
 **Decisions locked:** None.
 
 **Artifacts changed:**
-- Art 01 v1.9 — §4 Narrative Function added (8 component anchors: District Tiles/Civic Grid with Dr. Jae-won Seo, Influence Level Marker, Tension Markers, Session Timeline, Initiative Strip, Chorus Activity Track/The Seismograph, Accord Documents, Situation Reports); §6 Physical Environment — Zones and Components (renamed from [NEW] Physical Table Layout); §7–§12 renumbered; all component narrative cross-refs resolved (Art 00 §14, Art 01 §4, Art 02a §4, Art 02b §4); forward procedure refs removed; component N/A markers updated to parent refs. **Signed off S44.**
-- True State v1.0 — §9 MIRROR and The Overview — Recognized Not Designed (Chorus recognized MIRROR as instrument; five-seat structural ceiling; Directorate archival silence flagged); §10 The Signal Predates Perceptibility (cross-cultural fives and eights as Chorus signal bleed; mythology encodes requirement before The Table; Apex pentagram geometry load-bearing at True State level; game structure accidentally correct). §11 Open Questions — NM world location added.
-- Creative/CANON_CANDIDATES.md — Dr. Jae-won Seo added (Chief Data Architect, Korean 2nd-gen NM); Colonel Jax Vane attribution updated (Seo replaces Aris Thorne as Chief Data Architect); Aris Thorne confirmed as Atacama astronomer only.
-- PM03 — Art 01 row updated to v1.9, Signed Off S44.
-- PM05 v2.9 — 01-08 ✅ S44; XA-32 status updated (Art 03 portion done S43, Art 07 still open); added: 00-11 (NM world location), 04-53 (modifier card asset taxonomy), 07-11 (Situation Report procedure), 07-12 (Accord registration/expiry).
+- 00b v0.2 — §3 renamed "L108 Data Table Standard (extends 1NF)"; component_positions table spec added to §8 (formerly live_state); running game state derivation architecture documented (all logical state derives from component_positions); IP-xx source updated to Art 07; entity/schema footer counts corrected. **Signed off S45.**
+- PM03 — 00b row updated to v0.2; PM05 row bumped to v2.9.
+- PM05 v2.9 — 00b-05 ✅; XA-32 scoped to Art 07 only; DB-11 new (agy: RENAME TABLE live_state → component_positions, RENAME COLUMN anchored_to_component_id → on_component_id nullable, ADD COLUMN on_game_zone_id); DB-12 closed (duplicate DB-09, resolved L156); DB-13 new (running game state derivation query spec); DB-02 reference updated to component_positions.
+- SESSION_BRIEF — updated to S45.
 
-**PM05 changes:** 01-08 ✅; new: 00-11, 04-53, 07-11, 07-12.
+**PM05 changes:** 00b-05 ✅, XA-32 updated, DB-11 new, DB-12 closed, DB-13 new, DB-02 updated.
 
-**Next session (45):** C17 sign-off (Art 04); 04b-03 action taxonomy audit (unblocked — Art 01 signed off).
-
----
+**Next session (46):** 04b-03 action taxonomy audit (unblocked S44) → C17 sign-off (Art 04).
 
 ### COMMIT
-source ~/Projects/credentials.env && cd /home/abosch/Projects/TheSignal && git add -A && git commit -m "session 44 — Art 01 v1.9 signed off; True State §9-§10 added" && git push
+source ~/Projects/credentials.env && cd ~/Projects/TheSignal && git add -A && git commit -m "session 45 — 00b v0.2 signed off; component_positions spec; DB-11 unblocked" && git push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
