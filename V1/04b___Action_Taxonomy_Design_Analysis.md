@@ -1,9 +1,9 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.2  
+**Version:** 1.3  
 **Status:** ✅ Reference Document — Active  
-**Last Updated:** 2026-05-19  
+**Last Updated:** 2026-05-28  
 **Companion to:** 04 — Action Card System  
 **Purpose:** Preserve the taxonomy framework, development decisions, coverage analysis, and faction design recommendations that govern Artifact 04 and all future card design passes.
 
@@ -22,7 +22,7 @@ Card definitions live in Artifact 04. This document does not reproduce card cont
 | Section | Content |
 |---------|---------|
 | §3 | [Taxonomy Development — Key Decisions](#3-taxonomy-development--key-decisions) |
-| §4 | [Final Taxonomy Table](#4-final-taxonomy-table) |
+| §4 | [Physical Action Taxonomy](#4-physical-action-taxonomy) |
 | §5 | [Card Taxonomy Index](#5-card-taxonomy-index) |
 | §6 | [Coverage Analysis — Gaps and Concentrations](#6-coverage-analysis--gaps-and-concentrations) |
 | §7 | [Faction Coverage Matrix](#7-faction-coverage-matrix) |
@@ -91,31 +91,55 @@ In the electronic version, ARBITER would have access to hand contents and could 
 
 ---
 
-## 4. Final Taxonomy Table
+## 4. Physical Action Taxonomy
 
-| Category | Function | Definition | Scope | Valid Targets |
-|----------|----------|-----------|-------|---------------|
-| **1 — Board** | | *Physical state of districts* | | |
-| | Add | Place a game element in a district | Permanent or temporary | Presence token, Operational marker, Structure block |
-| | Remove | Remove a game element from a district | Permanent or temporary | Presence token, Operational marker, Structure block |
-| | Redirect | Move a game element to a different district or faction | Location or ownership change | Presence token, Operational marker, Structure block |
-| | Recover | Return a previously removed game element to play | From removed state to active | Presence token, Operational marker, Structure block |
-| **2 — Resource** | | *Faction holdings of spendable or usable game elements* | | |
-| | Add | Faction gains a resource | — | Native resource, Intel token, Modifier card, Accord agreement |
-| | Remove | Faction loses a resource | — | Native resource, Intel token, Modifier card, Accord agreement |
-| | Recover | Previously spent resource returned to faction | — | Native resource, Intel token, Modifier card |
-| | Redirect | Resource moves from one faction to another | — | Native resource, Intel token, Modifier card, Accord agreement |
-| **3 — Action** | | *Availability and parameters of submitted actions* | | |
-| | Block | Named target cannot be submitted or resolved | At submission or resolution | Covert operation, Political act, Operative ability |
-| | Modify | Named target's parameters are changed | Difficulty, cost, scope, duration, effect magnitude | Covert operation, Political act, Operative ability |
-| | Copy | Acting faction replicates named elements of another faction's submitted target | Full action or named subset: target only, effect only, or cost only | Covert operation, Political act, Operative ability |
-| | Remove Restriction | A precondition on a named target is waived | Presence, resource, timing, sequence | Covert operation, Political act, Operative ability |
-| | React | Effect fires automatically when named condition is met | Condition must be publicly countable or observable | Presence token count, Structure block presence, Resource marker count, Public Standing position, Accord agreement existence, Action resolution outcome |
-| **Cross-Category** | | *Functions applicable across any category or target type* | | |
-| | Reveal | Hidden information disclosed to named recipients | Named faction(s) or whole table. Partial or full disclosure | Card hand contents, Dispatch case contents, Intel tokens held, Modifier cards held, Classified directives, Action attribution |
-| | Shift | Assessment marker moves in named direction | Positive or negative. Named track specified on card | Public Standing only. ~~Chorus Portrait~~ retired as player-facing target (L84, 00a R01) — ARBITER sole mover. See §6.1. |
-| | Protect | Preserve the current state of a named target against a specified effect | Effect type named on card. Not constrained to adverse effects only | Any valid target in any category |
-| | Corrupt | Alter a recorded value on a named writable game element | Physically written or recorded values only | Intel token (faction name or round number), Accord agreement (any recorded term) |
+### 4.1 Physical Action Verbs
+
+| Verb | Primitive | Definition |
+|------|-----------|------------|
+| **Add** | Place | A component enters active play from supply or off-board |
+| **Remove** | Remove | A component exits active play to supply or off-board |
+| **Move** | Remove + Place | A component relocates from one on-board location to another |
+| **Reveal** | Transform | A component's face or contents become visible to named recipients |
+| **Conceal** | Transform | A component is placed or returned face-down or closed |
+| **Flip** | Transform | A component's physical orientation is changed — not an information state change |
+| **Corrupt** | Transform | A physically written or recorded value on a component is altered |
+
+*Every game action is a sequence of one or more of these primitives: Remove → Transform? → Place. The human hand is the implicit intermediary — not modeled.*
+
+---
+
+### 4.2 Component × Verb Matrix
+
+| Component | Add | Remove | Move | Reveal | Conceal | Flip | Corrupt |
+|-----------|-----|--------|------|--------|---------|------|---------|
+| Accord agreement | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| Activity marker | ✓ | ✓ | ✓ | — | — | — | — |
+| ARBITER Dominance Marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Classified directives | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Control flag | ✓ | ✓ | ✓ | — | — | — | — |
+| Covert operation | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Deployment marker | ✓ | ✓ | ✓ | — | — | ✓ | — |
+| Dispatch case | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Dispatch token | ✓ | ✓ | ✓ | — | — | — | — |
+| Established marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Faction order marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Intel token | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| Modifier card | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Modifier token | ✓ | ✓ | ✓ | — | — | — | — |
+| Native resource | ✓ | ✓ | ✓ | — | — | — | — |
+| Operative ability | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Pointer marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Political act | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Presence token | ✓ | ✓ | ✓ | — | — | — | — |
+| Situation Report card | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Standing marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Structure block | ✓ | ✓ | ✓ | — | — | — | — |
+| Target Profile | ✓ | ✓ | ✓ | — | — | — | ✓ |
+| Tension marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Threshold marker | ✓ | ✓ | ✓ | — | — | — | — |
+
+*Source: `the_signal_db.v_comp_verb_matrix`. Art 07 and Art 08 components extend this table — update DB first, regenerate from view. Categories (Board / Resource / Action / Cross-Category) are a card design context layer — see §5.*
 
 ---
 

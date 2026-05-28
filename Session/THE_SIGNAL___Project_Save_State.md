@@ -117,6 +117,28 @@ Read this document top to bottom before doing any design work in a new session. 
 
 ---
 
+### Session 46 Summary — 2026-05-28
+
+**Focus:** 04b-03 action taxonomy audit — complete. Physical action primitive model built in the_signal_db.
+
+**Decisions locked:** None.
+
+**Artifacts changed:**
+- Art 04b v1.3 — §4 redesigned: physical action taxonomy replaces category/function table. §4.1: 7 verbs (Add, Remove, Move, Reveal, Conceal, Flip, Corrupt) with primitive definitions. §4.2: 25-component × verb matrix (source: the_signal_db.v_comp_verb_matrix). Version bumped 1.2→1.3. Sign-off pending (§3 cleanup required first — 04b-04).
+- SESSION_BRIEF — updated to S46.
+- PM03 — 04b row updated to v1.3.
+- PM05 v3.0 — 04b-03 ✅; DB-11 ✅ confirmed; new items: 04b-04, DB-14, 04-52 through 04-55.
+
+**DB work (the_signal_db, tmp_ tables — not artifact changes):**
+- tmp_component: 38 rows total, 25 actionable. New: Modifier token, Target Profile, ARBITER Dominance Marker. Schema: transform_type ENUM replaced by transform_visibility/transform_orientation/transform_data booleans.
+- tmp_verb: 7 verbs (reduced from 13). Removed: React, Copy, Remove Restriction, Recover, Modify, Protect, Block, Shift, Redirect. Added: Conceal, Flip, Move.
+- v_validact: 119 rows (subject × action × target).
+- v_comp_verb_matrix: 25 components × 7 verbs — source of Art 04b §4.2.
+
+**PM05 changes:** 04b-03 ✅, DB-11 ✅ confirmed, 04b-04 new, DB-14 new, 04-52 through 04-55 new.
+
+---
+
 ### Session 43 Summary — 2026-05-27
 
 **Focus:** Art 03 full sign-off pass — Battlefield Strength, Intel economy, modifier system, Apex endgame design.

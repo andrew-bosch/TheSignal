@@ -1,4 +1,4 @@
-# GEMINI WORKING STATE: SESSION 40
+# GEMINI WORKING STATE: SESSION 43
 ## LATEST ALIGNMENT
 - Nickname: agy
 - Filesystem: CLI-to-CLI local sync
@@ -37,7 +37,9 @@
 - **DB-04:** Created `resource_types` and patched `factions` columns (Session 37).
 - **DB-05:** Migrated native resource columns in `district_metadata` and `player_metadata` (Session 37).
 - **DB-07:** Added check constraint to `inteltoken_metadata.inteltoken_quarter_id` (Session 37).
+- **DB-11:** Renamed `live_state` to `component_positions`, renamed `anchored_to_component_id` to `on_component_id` (nullable), and added `on_game_zone_id` (Session 43).
 
-## 7. Session 40 Tasks Status
+## 7. Session 43 Tasks Status
 - **DB-09 (Create district_adjacency table):** **Blocked** pending Claude Code updating `00b` §8 spec. Also identified a constraint design conflict (foreign keys reference non-existent `district_metadata(id)` column; should point to `district_component_id` or `components(id)`).
-- **DB-11 (live_state columns):** **Blocked** pending Claude Code updating `00b` §8 spec (PM05 00b-05).
+- **Artifact 03 v2.0 Review**: Completed. Verified that Intel Token canonical attributes (L161) align with `inteltoken_metadata` columns and CHECK constraint. Identified modifier updates required in lookup data for M-12 and M-13.
+- **tmp_component Updates**: Completed. Populated missing physical components (The Overview, Arbiter Tableau, Chorus Activity Track, Reservoir, Backlog, and markers) in the `tmp_component` table and updated "Operational marker" to "Deployment marker" (ID 2). Updated outbound handoff in `Claude_context.md`.

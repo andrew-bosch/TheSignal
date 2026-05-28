@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 45 | Updated: 2026-05-27**
+**Session 46 | Updated: 2026-05-28**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,9 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 45: 00b data architecture — spec additions, v0.2 signed off. XA-32 scoped to Art 07 only (Art 03 portion confirmed complete S43). 00b-05 complete: live_state specced and renamed to component_positions; §8 component_positions table spec added; §3 renamed "L108 Data Table Standard (extends 1NF)"; running game state derivation architecture documented (all logical state derives from component_positions); IP-xx source updated to Art 07; stale footer counts corrected. DB-11 unblocked (agy: RENAME TABLE live_state → component_positions + RENAME COLUMN + ADD COLUMN on_game_zone_id). DB-12 closed (duplicate DB-09 resolved by L156). DB-13 new (derivation query spec). **No new L-decisions.** **Next: 04b-03 action taxonomy audit (unblocked S44); C17 sign-off (after 04b-03).**
+Session 46: 04b-03 action taxonomy audit COMPLETE. Built physical action primitive model in the_signal_db (tmp_ tables): tmp_component (38 rows), tmp_verb (7 verbs), tmp_subject_target, v_validact (119 rows), v_placement_matrix, v_comp_verb_matrix. Physical action verbs reduced 13→7: Add, Remove, Move, Reveal, Conceal, Flip, Corrupt. New components added: Modifier token, Target Profile, ARBITER Dominance Marker. Schema: transform_type split to 3 boolean columns (transform_visibility, transform_orientation, transform_data). Art 04b §4 redesigned: physical action taxonomy (§4.1 verbs + §4.2 component × verb matrix) replaces category/function table; v_comp_verb_matrix is DB source. Version bumped to 1.3. React reclassified as modifier card mechanic (timing/interrupt), not an action taxonomy verb. **No new L-decisions.** **Next: 04b §3 cleanup (04b-04) + Andy sign-off on v1.3; then C17 and Art 04 continuation.**
+
+DB-11 confirmed executed by agy (component_positions rename complete). tmp_ table permanence decision deferred (DB-14). New PM05 items: 04b-04 (§3 cleanup), 04-XX (modifier token Beat 4), 04-XX (React reclassification), DB-14 (tmp_ table decision).
 
 ---
 
@@ -21,7 +23,8 @@ Session 45: 00b data architecture — spec additions, v0.2 signed off. XA-32 sco
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. |
-| 04 — Action Card System | 0.9.20 | C17 sign-off (after Art 03); C36–C42 Intel economy cards; 04b-03 action taxonomy audit required before C16+ work. |
+| 04b — Action Taxonomy | 1.3 | §3 cleanup (04b-04) → Andy sign-off. Source: v_comp_verb_matrix in the_signal_db. |
+| 04 — Action Card System | 0.9.20 | C17 sign-off (after 04b sign-off); C36–C42 Intel economy cards; React card reclassification pending. |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -45,8 +48,12 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **03-12** | Battlefield Strength trigger model | ✅ S43 — L160 |
 | **04-48** | Art 03 v2.0 sign-off | ✅ S43 |
 | **01-06** | Claude Design visual wireframe — table layout + mat layout | Open |
-| **04b-03** | Action taxonomy audit — prerequisite to Art 04 continuation (C16+) | Open — Art 01 signed off S44, unblocked |
+| **04b-03** | Action taxonomy audit | ✅ S46 — §4 redesigned, pending sign-off |
+| **04b-04** | Art 04b §3 cleanup — update stale verb refs (Block→Flip, Redirect→Move, React reclassification); prerequisite to v1.3 sign-off | Open — S46 |
+| **DB-11** | agy ALTER TABLE live_state rename | ✅ Confirmed executed agy S46 |
+| **DB-14** | Decision — promote tmp_ taxonomy tables to permanent the_signal_db schema | Deferred — after 04b sign-off |
 | **XA-32** | Art 07 — ARBITER ring modifier calculation guide | Open |
+| **GEM-01** | Cross-reference integrity audit — assigned to Gem | Active — deploy via 3-file upload |
 | **PM06-01** | Create PM06 — Lessons Learned | Deferred — next session |
 | **00-09** | World Conditions panel — content undefined | Open |
 | **00-10** | Faction Representative as named component — design question | Open |
@@ -73,8 +80,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v2.0** — ✅ Signed Off S43
-- **C17** — next (Art 04)
-- **04b-03** action taxonomy audit — prerequisite to Art 04 continuation (C16+)
+- **04b v1.3** — §3 cleanup (04b-04) → sign-off
+- **C17** — after 04b sign-off
 
 ---
 
@@ -99,6 +106,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | `V1/PM02___Decision_Log___Validation_Tracker.md` | All locked decisions |
 | `V1/PM03___Master_Artifact_Index.md` | Authoritative sign-off status, dependency map |
 | `V1/PM05___Active_Punch_List.md` | Full punch list |
+| `gem_task.md` | Active Gem task — edit this to assign new work; script copies to Desktop |
 
 ---
 
@@ -135,10 +143,5 @@ ARBITER: always all-caps. All other game terms: Title Case.
 
 ---
 
-## Gem Actions Pending (write to GEMINI_CONTEXT.md at session close)
-
-- **Component narrative audit:** For every known physical component in the game (presence tokens, deployment markers, structure blocks, established markers, dispatch tokens, intel notes, faction Terminals, faction screens, Ring Modifier decks, Session Timeline, Situation Report zone cards, ARBITER screen, ARBITER tableau, status markers, dispatch cases, initiative strips, control flags, tension markers), confirm that a narrative reference or anchor exists in Art 00. For any component with no narrative grounding in Art 00, flag it with a recommended location (existing §, or new narrative anchor in §14). Output: table of component → Art 00 reference or flag.
-
----
 
 *Updated S39 Phase 1 close. Sources of truth: PM03 (artifacts), PM02 (decisions), PM05 (punch list).*

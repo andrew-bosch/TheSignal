@@ -2,18 +2,27 @@
 
 CONTEXT_FILE="$HOME/Desktop/gem_context.txt"
 MESSAGE_FILE="$HOME/Desktop/gem_message.txt"
+TASK_FILE="$HOME/Desktop/gem_task.txt"
 LOCAL_DIR="/home/abosch/Projects/TheSignal"
 SCRIPT_NAME="$(basename "$0")"
 
 echo "Building Gemini web context from $LOCAL_DIR..."
 cd "$LOCAL_DIR" || { echo "Directory not found. Exiting."; exit 1; }
 
-# --- File 1: Message to Gem (gem_web_context.md → Desktop) ---
+# --- File 1: Operating instructions (gem_web_context.md → Desktop) ---
 if [ -f "gem_web_context.md" ]; then
   cp gem_web_context.md "$MESSAGE_FILE"
-  echo "Message: $MESSAGE_FILE"
+  echo "Instructions: $MESSAGE_FILE"
 else
-  echo "Warning: gem_web_context.md not found — no message file written."
+  echo "Warning: gem_web_context.md not found — no instructions file written."
+fi
+
+# --- File 2: Current task (gem_task.md → Desktop) ---
+if [ -f "gem_task.md" ]; then
+  cp gem_task.md "$TASK_FILE"
+  echo "Task: $TASK_FILE"
+else
+  echo "Warning: gem_task.md not found — no task file written."
 fi
 
 # --- File 2: Project context dump ---
@@ -90,6 +99,7 @@ done
 
 # Summary
 echo ""
-echo "Done."
-wc -c "$MESSAGE_FILE" | awk '{printf "Message: %.1f KB\n", $1/1024}'
-wc -c "$CONTEXT_FILE" | awk '{printf "Context: %.1f KB\n", $1/1024}'
+echo "Done. Upload all three files to Gemini web:"
+wc -c "$MESSAGE_FILE" | awk '{printf "  gem_message.txt (instructions): %.1f KB\n", $1/1024}'
+wc -c "$TASK_FILE" | awk '{printf "  gem_task.txt (task): %.1f KB\n", $1/1024}'
+wc -c "$CONTEXT_FILE" | awk '{printf "  gem_context.txt (project dump): %.1f KB\n", $1/1024}'
