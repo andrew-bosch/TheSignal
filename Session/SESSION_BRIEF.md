@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 50 (close) | Updated: 2026-05-29**
+**Session 51 (close) | Updated: 2026-05-29**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,9 +8,11 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S50 complete. Infrastructure: MariaDB credentials, CLAUDE.md ClaudeIOS workflow, PITCH.md → Creative/, GEMINI.md → Session/, db_build_*.sql + schema_reference.md → Database/. C17 component gaps resolved (NS id=95, IS id=96, ERC id=97 — all seeded in DB downstream tables). Art 03 Beat 3 Steps 7/8 extended (case delivery effects — material, re-sign-off pending, PM05 03-14). DB-29 ✅: `Database/schema_reference.md` fully populated — all schemas, FK annotations, lookup values, view catalog, canonical registration pattern. agy S48+S50 DB work closed: DB-22–26 ✅, DB-27 ✅, DB-28 ✅. GEMINI_CONTEXT.md S50 section added with dual-authorization standing instructions. DB-09 DDL FK corrected (district_component_id).
+S51 complete. DB infrastructure: `Database/db_create_tmp_tables.sql`, `db_seed_lookups.sql`, `db_rebuild.sh`, `register_component.py`, `component_template.yaml` — all new. `schema_reference.md` updated: views 29→27 (dropped v_object_from, v_validact, v_verb; added v_primitive_actual_coverage), DB-09 status corrected, row counts updated.
 
-**Next session:** C18+ card vetting pass (C18–C35, P01–P18 in Art 04). Art 03 re-sign-off (03-14) still pending — Beat 3 Steps 7/8 material change.
+Art 04 S51: C18 → **Dossier Breach** (Information — Reveal — Card hand contents); C25 → **Tactical Redirection** (Territory — Move — Presence token); C27 → **Disclosure Loop** (Economy — Add — Exposure). Full schema pass C01–C35: Ring 0–3 modifier fields added to all cards; C13 resolution type corrected (Transactional→Probabilistic); C22/C32/C33 resolution fields corrected (Dice→d100). Card index updated. Unused design candidates (Ghost/Directorate/Network rejected alternates + Gem S51 concepts) → `Whiteboard/card_ideas_S51.md`.
+
+**Next session:** P01–P18 development (Art 04 §9–§10). Art 03 re-sign-off (03-14) still pending. DB-11 (agy ALTER TABLE component_positions) still open.
 
 ---
 
@@ -24,7 +26,7 @@ S50 complete. Infrastructure: MariaDB credentials, CLAUDE.md ClaudeIOS workflow,
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. **Re-sign-off pending (03-14)** — Beat 3 Steps 7/8 extended S50 (case delivery effects). |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. §9 removed; §10 → §9 (Standalone Card Types). React collapsed into Modifier cards. Emergency Response penultimate context added. |
-| 04 — Action Card System | 0.9.21 | §5 P1–P15 signed off ✅ S49. C17 signed off ✅ S49. Taxonomy sweep C01–P18 complete. Cross-faction voices C11–C15 added. **Next: C18+ vetting pass.** |
+| 04 — Action Card System | 0.9.21 | §5 P1–P15 + C17 signed off ✅ S49. S51: C18/C25/C27 replaced; full schema pass C01–C35 (Ring 0–3 fields, C17 canonical format). **Next: P01–P18 development.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |

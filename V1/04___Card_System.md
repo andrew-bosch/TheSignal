@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.19 Draft  
+**Version:** 0.9.21 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-05-22  
+**Last Updated:** 2026-05-29  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -223,19 +223,19 @@ Guild — C11–C15
 | Fortify Structure | Materials Acquisition | Foundation Rights | Construction Crew | Infrastructure Yield |
 
 Ghost — C16–C20
-| [C16](#user-content-c16--pattern-match) | [C17](#user-content-c17--intercept) | [C18](#user-content-c18--identity-blind) | [C19](#user-content-c19--deep-cover) | [C20](#user-content-c20--misdirection) |
+| [C16](#user-content-c16--pattern-match) | [C17](#user-content-c17--intercept) | [C18](#user-content-c18--dossier-breach) | [C19](#user-content-c19--deep-cover) | [C20](#user-content-c20--misdirection) |
 |---|---|---|---|---|
-| Pattern Match | Intercept | Identity Blind | Deep Cover | Misdirection |
+| Pattern Match | Intercept | Dossier Breach | Deep Cover | Misdirection |
 
 Directorate — C21–C25
-| [C21](#user-content-c21--invoke-jurisdiction) | [C22](#user-content-c22--detain) | [C23](#user-content-c23--evidence-preservation) | [C24](#user-content-c24--surveillance-placement) | [C25](#user-content-c25--sealed-border) |
+| [C21](#user-content-c21--invoke-jurisdiction) | [C22](#user-content-c22--detain) | [C23](#user-content-c23--evidence-preservation) | [C24](#user-content-c24--surveillance-placement) | [C25](#user-content-c25--tactical-redirection) |
 |---|---|---|---|---|
-| Invoke Jurisdiction | Detain | Evidence Preservation | Surveillance Placement | Sealed Border |
+| Invoke Jurisdiction | Detain | Evidence Preservation | Surveillance Placement | Tactical Redirection |
 
 Network — C26–C30
-| [C26](#user-content-c26--leak) | [C27](#user-content-c27--source-protection) | [C28](#user-content-c28--open-channel) | [C29](#user-content-c29--network-cascade) | [C30](#user-content-c30--community-anchor) |
+| [C26](#user-content-c26--leak) | [C27](#user-content-c27--disclosure-loop) | [C28](#user-content-c28--open-channel) | [C29](#user-content-c29--network-cascade) | [C30](#user-content-c30--community-anchor) |
 |---|---|---|---|---|
-| Leak | Source Protection | Open Channel | Network Cascade | Community Anchor |
+| Leak | Disclosure Loop | Open Channel | Network Cascade | Community Anchor |
 
 Syndicate — C31–C35
 | [C31](#user-content-c31--leveraged-acquisition) | [C32](#user-content-c32--short-the-market) | [C33](#user-content-c33--hostile-acquisition) | [C34](#user-content-c34--golden-parachute) | [C35](#user-content-c35--regulatory-capture) |
@@ -341,6 +341,10 @@ Ghost — P17–P18
 - **Faction affinity:** Guild
 - **Affinity bonus:** 1 native resource matching submitting faction where != Guild
 - **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Transactional
 - **Outcome type:** N/A
@@ -412,6 +416,10 @@ Ghost — P17–P18
 - **Faction affinity:** N/A
 - **Affinity bonus:** N/A
 - **Difficulty:** Average (50) + ring modifier
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
 - **Resolution:** d100
 - **Resolution type:** Probabilistic
 - **Outcome type:** N/A
@@ -483,6 +491,10 @@ Ghost — P17–P18
 - **Faction affinity:** Network.
 - **Affinity bonus:** Secondary cost −1.
 - **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Transactional
 - **Outcome type:** N/A
@@ -554,6 +566,10 @@ Ghost — P17–P18
 - **Faction affinity:** N/A
 - **Affinity bonus:** N/A
 - **Difficulty:** Average (50) + ring modifier
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
 - **Resolution:** d100
 - **Resolution type:** Probabilistic
 - **Outcome type:** N/A
@@ -625,6 +641,10 @@ Ghost — P17–P18
 - **Faction affinity:** Ghost.
 - **Affinity bonus:** +25 modifier.
 - **Difficulty:** Average (50) + ring modifier
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
 - **Resolution:** d100
 - **Resolution type:** Probabilistic
 - **Outcome type:** N/A
@@ -696,6 +716,10 @@ Ghost — P17–P18
 - **Faction affinity:** Network.
 - **Affinity bonus:** Primary cost −1.
 - **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Positional wager
 - **Outcome type:** N/A
@@ -767,6 +791,10 @@ Ghost — P17–P18
 - **Faction affinity:** Network.
 - **Affinity bonus:** Primary cost −1.
 - **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Transactional
 - **Outcome type:** N/A
@@ -838,6 +866,10 @@ Ghost — P17–P18
 - **Faction affinity:** Syndicate.
 - **Affinity bonus:** +25 modifier.
 - **Difficulty:** Average (50) + ring modifier
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
 - **Resolution:** d100
 - **Resolution type:** Probabilistic
 - **Outcome type:** N/A
@@ -909,6 +941,10 @@ Ghost — P17–P18
 - **Faction affinity:** Syndicate.
 - **Affinity bonus:** +25 modifier.
 - **Difficulty:** Average (50)
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** d100
 - **Resolution type:** Probabilistic
 - **Outcome type:** N/A
@@ -980,6 +1016,10 @@ Ghost — P17–P18
 - **Faction affinity:** Guild, Directorate.
 - **Affinity bonus:** Success −20.
 - **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Positional wager
 - **Outcome type:** N/A
@@ -1057,6 +1097,10 @@ Ghost — P17–P18
 - **Faction affinity:** Guild only.
 - **Affinity bonus:** N/A
 - **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Positional wager
 - **Outcome type:** N/A
@@ -1126,6 +1170,10 @@ Ghost — P17–P18
 - **Faction affinity:** Guild only.
 - **Affinity bonus:** N/A
 - **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Positional wager
 - **Outcome type:** N/A
@@ -1195,8 +1243,12 @@ Ghost — P17–P18
 - **Faction affinity:** Guild only.
 - **Affinity bonus:** N/A
 - **Difficulty:** 25
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
 - **Resolution:** d100
-- **Resolution type:** Transactional
+- **Resolution type:** Probabilistic
 - **Outcome type:** N/A
 
 **Effects**
@@ -1264,6 +1316,10 @@ Ghost — P17–P18
 - **Faction affinity:** Guild only.
 - **Affinity bonus:** Boost([1].[+15 Difficulty])
 - **Difficulty:** 50
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
 - **Resolution:** d100
 - **Resolution type:** Probabilistic
 - **Outcome type:** N/A
@@ -1333,6 +1389,10 @@ Ghost — P17–P18
 - **Faction affinity:** Guild only.
 - **Affinity bonus:** N/A
 - **Difficulty:** N/A
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
 - **Resolution:** Automatic
 - **Resolution type:** Transactional
 - **Outcome type:** N/A
@@ -1498,15 +1558,15 @@ Ghost — P17–P18
 
 ---
 
-### C18 — IDENTITY BLIND
+### C18 — DOSSIER BREACH
 [↑ Card Specifications](#user-content-card-specifications)
 
 **Identity**
 
 - **Card ID:** C18
 - **Card version:** v1.0
-- **Card name:** Identity Blind
-- **Tagline:** *Submit a covert operation with no attribution this round.*
+- **Card name:** Dossier Breach
+- **Tagline:** *Penetrate a faction's operational planning before the round begins.*
 - **Card type:** Covert Operation
 - **Card subtype:** Faction-specific
 - **Card faction:** Ghost
@@ -1514,26 +1574,26 @@ Ghost — P17–P18
 **Taxonomy**
 
 - **Layer:** Information
-- **Function:** Protect
-- **Subject:** Action attribution
+- **Function:** Reveal
+- **Subject:** Card hand contents
 
-- **Design note:** Flagged for redesign — duplicates function with C19 (Cross-Category — Protect — Action attribution). See D-04-02. Three replacement candidates (choose one for C18 slot; remaining concepts require slot trade or 6th card): **(A) SIGNALS ANALYSIS** — Resource — Add — Intel token; no adjacency restriction; Findings spent, Intel token received through remote analysis rather than field presence. *"Understanding at distance. No footprint."* **(B) TARGETED DISCLOSURE** — Cross-Category — Reveal — Named faction; Ghost delivers a private intelligence package to one named faction only; table does not know recipient or content. **(C) CALIBRATED READING** — Ghost submits a private written assessment of current board state to ARBITER before Beat 3; ARBITER evaluates accuracy; Ghost gains Findings on sliding scale (1–3); Portrait response is ARBITER's evaluation, not the card's stated effect. *"Ghost doesn't move the Portrait. Ghost earns it."*
-- **Arbiter context:** One use per round. ARBITER records no faction attribution for the attached operation. Ghost not surfaced even on a failed detection roll.
+- **Design note:** Replaces C18 Identity Blind (retired S51). Fills Information — Reveal — Card hand gap; no other card in the set targets unplayed cards as an object. Distinct from C17 Intercept (which targets a specific submitted operation) — Dossier Breach targets the unplayed planning pool. Ghost Double Case Pass creates natural synergy: Month 1 Breach informs Month 2 and Month 3 Declaration strategy.
+- **Arbiter context:** ARBITER privately shows the target faction's current hand of Covert and Political Act cards to the Ghost player. Modifier cards excluded. ARBITER does not confirm or announce to the table whether this card was played. Information is solely between Ghost's player and ARBITER — Ghost may not publicly announce or prove the contents.
 
 **Narrative**
 
-- **Narrative anchor:** *The most dangerous thing an analyst can do is be noticed.*
+- **Narrative anchor:** *Understanding the operation before it begins. That is the only tactical advantage worth having.*
 - **Faction perspectives:**
-  - Ghost: *We were not there. The record confirms this.*
+  - Ghost: *We did not take their cards. We simply read their intentions. They will act on plans we already know.*
 
 **Mechanics**
 
-- **Beat:** 2
+- **Beat:** 3
 - **Trigger condition:** N/A
 - **Target district:** N/A
-- **Target faction:** Self
-- **Target object:** Action attribution
-- **Restriction:** Must be submitted with one other covert operation in the same dispatch case.
+- **Target faction:** Named opponent faction
+- **Target object:** Covert and Political Act cards (unplayed hand)
+- **Restriction:** N/A
 - **Primary cost qty:** 2
 - **Primary cost type:** Findings
 - **Secondary cost qty:** N/A
@@ -1552,7 +1612,7 @@ Ghost — P17–P18
 **Effects**
 
 - **Crit success:** N/A
-- **Success:** One attached covert operation resolves without faction attribution this round.
+- **Success:** Target faction privately reveals their full unplayed hand of Covert and Political Act cards to Ghost.
 - **Failure:** N/A
 - **Crit failure:** N/A
 
@@ -1563,7 +1623,7 @@ Ghost — P17–P18
 | Guild | N/A | N/A | N/A | N/A | N/A |
 | Directorate | N/A | N/A | N/A | N/A | N/A |
 | Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | +1 | N/A | N/A | N/A |
 | Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
@@ -1587,7 +1647,7 @@ Ghost — P17–P18
 - **Function:** Protect (permanent)
 - **Subject:** Action attribution
 
-- **Design note:** Flagged for redesign — duplicates function with C18 (Cross-Category — Protect — Action attribution). See D-04-02.
+- **Design note:** Permanent attribution protection. Redesign flag resolved S51 — C18 replaced with Dossier Breach (Information — Reveal), making C19 the unique permanent-protection card in Ghost's set.
 - **Arbiter context:** N/A
 
 **Narrative**
@@ -1710,16 +1770,40 @@ Ghost — P17–P18
 
 ### THE DIRECTORATE — C21–C25
 
-*Current cards carried forward. Taxonomy gap analysis in Artifact 04b §8.2 identifies redesign targets: C21/C25 duplicate Block function; Resource — Add (Mandate generation) card needed; Cross-Category — Shift Public Standing candidate.*
+*S51: C25 Sealed Border replaced with Tactical Redirection (Territory — Move — Presence token). Block duplication resolved. Mandate generation gap and Public Standing Shift candidate remain open — see D-04-03 PM05.*
 
 ### C21 — INVOKE JURISDICTION
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C21
+- **Card version:** v1.0
 - **Card name:** Invoke Jurisdiction
 - **Tagline:** *Assert institutional authority over a target district.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Directorate only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Directorate
+
+**Taxonomy**
+
+- **Layer:** Submission
+- **Function:** Block
+- **Subject:** Covert operation (C01, C03)
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *The Directorate was here before the other factions arrived. Their jurisdictional authority is not theoretical.*
+- **Faction perspectives:**
+  - Directorate: *This district is under institutional oversight. Expansion requires authorisation. Authorisation has not been granted.*
+
+**Mechanics**
+
 - **Beat:** 2
+- **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
 - **Target object:** Covert operation
@@ -1729,60 +1813,137 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Directorate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** N/A
 - **Success:** No faction may submit Build Structure (C01) or Campaign (C03) targeting the named district this round. Source is public.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Directorate.
-- **Narrative anchor:** *The Directorate was here before the other factions arrived. Their jurisdictional authority is not theoretical.*
-- **Faction perspectives:**
-  - Directorate: *This district is under institutional oversight. Expansion requires authorisation. Authorisation has not been granted.*
-- **Taxonomy:** Submission — Block — Covert operation (C01, C03).
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | +1 | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C22 — DETAIN
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C22
+- **Card version:** v1.0
 - **Card name:** Detain
-- **Tagline:** *Permanently remove a faction's operational marker from a district.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Directorate only.
+- **Tagline:** *Permanently remove a faction's deployment marker from a district.*
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Directorate
+
+**Taxonomy**
+
+- **Layer:** Territory
+- **Function:** Remove (permanent)
+- **Subject:** Deployment marker
+
+- **Design note:** Permanent per Principle 11. Prior version returned marker at end of next round — revised.
+- **Arbiter context:** Intel token requirement means Directorate must have gathered intelligence on target faction this or last round.
+
+**Narrative**
+
+- **Narrative anchor:** *The Directorate does not destroy — it removes from play. Sometimes that is enough.*
+- **Faction perspectives:**
+  - Directorate: *The marker has been detained. Its conversion will not occur.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** Named opponent faction
-- **Target object:** Operational marker
-- **Restriction:** Target faction must have a deployment marker in the target district. Fresh Intel token naming the target faction required (age 0–1 rounds). Cannot target the Chorus Node operational marker.
+- **Target object:** Deployment marker
+- **Restriction:** Target faction must have a deployment marker in the target district. Fresh Intel token naming the target faction required (age 0–1 rounds). Cannot target the Chorus Node deployment marker.
 - **Primary cost qty:** 3
 - **Primary cost type:** Mandate
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Directorate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** Average (50) + ring modifier
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
+- **Resolution:** d100
+- **Resolution type:** Probabilistic
+- **Outcome type:** N/A
+
+**Effects**
+
 - **Crit success:** Return primary cost to dispatch case.
-- **Success:** Target faction's operational marker in the named district is permanently removed for the remainder of the session. Target notified in case.
+- **Success:** Target faction's deployment marker in the named district is permanently removed for the remainder of the session. Target notified in case.
 - **Failure:** No effect.
 - **Crit failure:** −1 Public Standing.
-- **Portrait:** +1 Directorate.
-- **Narrative anchor:** *The Directorate does not destroy — it removes from play. Sometimes that is enough.*
-- **Faction perspectives:**
-  - Directorate: *The marker has been detained. Its conversion will not occur.*
-- **Taxonomy:** Territory — Remove (permanent) — Deployment marker.
 
-- **Design note:** Permanent per Principle 11. Prior version returned marker at end of next round — revised.
-- **Arbiter context:** Intel token requirement means Directorate must have gathered intelligence on target faction this or last round.
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | +1 | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C23 — EVIDENCE PRESERVATION
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C23
+- **Card version:** v1.0
 - **Card name:** Evidence Preservation
 - **Tagline:** *Lock a written record against modification for the remainder of the session.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Directorate only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Directorate
+
+**Taxonomy**
+
+- **Layer:** Information
+- **Function:** Protect (permanent)
+- **Subject:** Written record
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *The Directorate's institutional advantage is the record. They protect it.*
+- **Faction perspectives:**
+  - Directorate: *The record is preserved. Its integrity is now institutional fact.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** N/A
 - **Target faction:** N/A
 - **Target object:** Written record
@@ -1792,27 +1953,67 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Directorate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** N/A
 - **Success:** Named record element is locked for the remainder of the session. Cannot be modified by any card effect.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Directorate.
-- **Narrative anchor:** *The Directorate's institutional advantage is the record. They protect it.*
-- **Faction perspectives:**
-  - Directorate: *The record is preserved. Its integrity is now institutional fact.*
-- **Taxonomy:** Information — Protect (permanent) — Written record.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | +1 | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C24 — SURVEILLANCE PLACEMENT
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C24
+- **Card version:** v1.0
 - **Card name:** Surveillance Placement
 - **Tagline:** *Install permanent monitoring in a target district.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Directorate only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Directorate
+
+**Taxonomy**
+
+- **Layer:** Economy
+- **Function:** Add (permanent)
+- **Subject:** Intel token
+
+- **Design note:** Permanent per Principle 11. Prior version monitored for 2 rounds — revised. Operation type only, not faction — creates intelligence chain requiring follow-up Gather to identify actors.
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *The Directorate monitors because monitoring is their primary tool for managing what they cannot directly control.*
+- **Faction perspectives:**
+  - Directorate: *The installation is in place. Everything that happens in that district now happens with our awareness.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
 - **Target object:** N/A
@@ -1822,67 +2023,141 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Directorate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
-- **Success:** For the remainder of the session, ARBITER privately notifies The Directorate of any covert operation submitted targeting the named district — operation type only, not faction. Delivered in case at Beat 3 before operations resolve.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Directorate.
-- **Narrative anchor:** *The Directorate monitors because monitoring is their primary tool for managing what they cannot directly control.*
-- **Faction perspectives:**
-  - Directorate: *The installation is in place. Everything that happens in that district now happens with our awareness.*
-- **Taxonomy:** Economy — Add (permanent) — Intel token.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
 
-- **Design note:** Permanent per Principle 11. Prior version monitored for 2 rounds — revised. Operation type only, not faction — creates intelligence chain requiring follow-up Gather to identify actors.
-- **Arbiter context:** N/A
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** For the remainder of the session, ARBITER privately notifies The Directorate of any covert operation submitted targeting the named district — operation type only, not faction. Delivered in case at Beat 3 before operations resolve.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | +1 | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
-### C25 — SEALED BORDER
+### C25 — TACTICAL REDIRECTION
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C25
-- **Card name:** Sealed Border
-- **Tagline:** *Prevent new presence from entering a district this round.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Directorate only.
+- **Card version:** v1.0
+- **Card name:** Tactical Redirection
+- **Tagline:** *Reposition institutional presence ahead of a contested exchange.*
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Directorate
+
+**Taxonomy**
+
+- **Layer:** Territory
+- **Function:** Move
+- **Subject:** Presence token
+
+- **Design note:** Replaces C25 Sealed Border (retired S51). Fills Territory — Move — Presence token gap; no other card in the full set uses this verb + subject combination. Sealed Border blocked presence placement (Submission — Block); Tactical Redirection creates board-state positioning options instead. Most impactful before Battlefield Strength when district control margins are tight.
+- **Arbiter context:** ARBITER moves the named Directorate presence tokens from source to destination. Adjacency confirmed against district adjacency table. Entry requirements rechecked at destination — if Directorate does not qualify for entry, card is discarded without effect (resources not refunded). Control flags and Established markers recalculated after move.
+
+**Narrative**
+
+- **Narrative anchor:** *Institutional authority is not static. The Directorate repositions before others recognize the shift.*
+- **Faction perspectives:**
+  - Directorate: *Our presence is where it needs to be. This was always the plan. The redistribution was anticipated.*
+
+**Mechanics**
+
 - **Beat:** 2
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** Presence token
-- **Restriction:** None.
-- **Primary cost qty:** 3
+- **Trigger condition:** N/A
+- **Target district:** Named adjacent destination district
+- **Target faction:** Self
+- **Target object:** Presence token (Directorate)
+- **Restriction:** Source and destination must be adjacent. Directorate must have at least 1 presence token in source district. Cannot move from or to the Chorus Node.
+- **Primary cost qty:** 2
 - **Primary cost type:** Mandate
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Directorate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
-- **Success:** No faction may place presence tokens in the named district this round. Existing tokens unaffected. Does not prevent Demolish, Gather, or Undermine. Source is public.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Directorate.
-- **Narrative anchor:** *The Directorate can close a border. The question it always faces is whether closing makes the situation more or less manageable.*
-- **Faction perspectives:**
-  - Directorate: *The border is sealed. Expansion requires our authorisation. It will not be granted today.*
-- **Taxonomy:** Submission — Block — Covert operation (presence placement).
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
 
-- **Design note:** Flagged for redesign — C21 and C25 both Block covert operations, same function different scope. See D-04-03. Replacement candidate: **COMPLIANCE DIVIDEND** — Resource — Add — Mandate; at cleanup, if no faction entered a Directorate-controlled district or contested a Directorate political act this round, gain 1 Mandate. Simpler fallback: gain 1 Mandate on any successful Directorate operation that goes uncontested. *"Institutional authority self-validates when respected."*
-- **Arbiter context:** N/A
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** Move up to 2 Directorate presence tokens from named source district to named adjacent destination district.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | +1 | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### THE NETWORK — C26–C30
 
-*Current cards carried forward. Taxonomy gap analysis in Artifact 04b §8.3 identifies redesign targets: C26/C28 duplicate Reveal function; C27 doctrinally misaligned; Resource — Add (Exposure generation) needed; Cross-Category — Shift Public Standing (primary) needed.*
+*S51: C27 Source Protection replaced with Disclosure Loop (Economy — Add — Exposure). Doctrinal misalignment resolved; Exposure generation gap addressed. C26/C28 Reveal overlap remains under review. Public Standing Shift covert card still needed — see D-04-04 PM05.*
 
 ### C26 — LEAK
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C26
+- **Card version:** v1.0
 - **Card name:** Leak
 - **Tagline:** *Make one resolved operation's target district public after resolution.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Network only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Network
+
+**Taxonomy**
+
+- **Layer:** Information
+- **Function:** Reveal
+- **Subject:** Action attribution
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *The Network does not need to know everything — only enough to make the right question public.*
+- **Faction perspectives:**
+  - Network: *We do not reveal everything. We reveal the piece that makes everything else visible.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** N/A
 - **Target faction:** Named opponent faction
 - **Target object:** Action attribution
@@ -1892,59 +2167,137 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Network only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** N/A
 - **Success:** After Beat 3 resolution, ARBITER publicly announces the target district of the highest-impact resolved covert operation from the named faction this round. Operation type not revealed — district only.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Network.
-- **Narrative anchor:** *The Network does not need to know everything — only enough to make the right question public.*
-- **Faction perspectives:**
-  - Network: *We do not reveal everything. We reveal the piece that makes everything else visible.*
-- **Taxonomy:** Information — Reveal — Action attribution.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | +1 | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
-### C27 — SOURCE PROTECTION
+### C27 — DISCLOSURE LOOP
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C27
-- **Card name:** Source Protection
-- **Tagline:** *Prevent attribution on one of your own operations this round.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Network only.
-- **Beat:** 2
+- **Card version:** v1.0
+- **Card name:** Disclosure Loop
+- **Tagline:** *Transparency is self-sustaining. Revealing information generates the capacity to reveal more.*
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Network
+
+**Taxonomy**
+
+- **Layer:** Economy
+- **Function:** Add
+- **Subject:** Exposure (conditional)
+
+- **Design note:** Replaces C27 Source Protection (retired S51). Source Protection was doctrinally misaligned — protecting attribution is Ghost's register, not Network's. Disclosure Loop creates a positive resource feedback loop consistent with Network doctrine. Pairs with C26 Leak and C28 Open Channel — a Network round built around Reveal operations becomes self-sustaining on Exposure.
+- **Arbiter context:** At Beat 3 cleanup, check whether any Network Reveal card resolved successfully this round. If yes, deliver 1 Exposure to Network's resource pool. If no Reveal resolved, card takes effect but produces nothing — the slot cost was the investment.
+
+**Narrative**
+
+- **Narrative anchor:** *The act of disclosure is not only a tactic. It is a resource. The Network learned this before anyone else at this table.*
+- **Faction perspectives:**
+  - Network: *We revealed something. Now we can reveal something more. The loop is already running.*
+
+**Mechanics**
+
+- **Beat:** 3
+- **Trigger condition:** Network resolves at least 1 Reveal card this round
 - **Target district:** N/A
 - **Target faction:** Self
-- **Target object:** Action attribution
-- **Restriction:** Network must submit at least one other covert operation this round.
+- **Target object:** N/A
+- **Restriction:** N/A
 - **Primary cost qty:** 1
-- **Primary cost type:** Exposure
+- **Primary cost type:** Findings
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Network only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
-- **Success:** One Network covert operation this round has no ARBITER attribution on failed detection — fails silently.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Narrative anchor:** *The Network protects its sources. This includes itself.*
-- **Faction perspectives:**
-  - Network: *We believe in transparency. Except when protecting a source requires otherwise.*
-- **Taxonomy:** Information — Protect — Action attribution.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
 
-- **Design note:** Flagged for redesign — Cross-Category — Protect — Action attribution is more doctrinally Ghost than Network. Network's stated doctrine (transparency) is in tension with source concealment. See D-04-04. Replacement candidate: **DISCLOSURE LOOP** — Resource — Add — Exposure; trigger: when Network successfully resolves any Reveal card this round, gain 1 Exposure at cleanup. Creates positive feedback loop consistent with Network doctrine — disclosure generates the resource that enables further disclosure. *"The act of revealing generates the capacity for more revealing."*
-- **Arbiter context:** N/A
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** Gain 1 Exposure at cleanup if any Network Reveal card resolved successfully this round. No effect if no Reveal resolved.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C28 — OPEN CHANNEL
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C28
+- **Card version:** v1.0
 - **Card name:** Open Channel
 - **Tagline:** *Force private ARBITER notifications to a faction to be delivered publicly.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Network only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Network
+
+**Taxonomy**
+
+- **Layer:** Information
+- **Function:** Reveal
+- **Subject:** Private communications
+
+- **Design note:** Flagged for review — C26 and C28 both Reveal, same function different scope. See D-04-04.
+- **Arbiter context:** Does not intercept Hidden Objective or Classified Directive communications. Beat 2 — must be active before Beat 3 notifications are generated.
+
+**Narrative**
+
+- **Narrative anchor:** *Secret communications between powerful institutions are themselves a form of harm. Opening the channel is the argument.*
+- **Faction perspectives:**
+  - Network: *If it happened, it should be known. We are simply making that principle operational.*
+
+**Mechanics**
+
 - **Beat:** 2
+- **Trigger condition:** N/A
 - **Target district:** N/A
 - **Target faction:** Named opponent faction
 - **Target object:** Private communications
@@ -1954,30 +2307,67 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Network only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
-- **Success:** Any private notification ARBITER would send to the named faction this round is instead delivered publicly to the whole table.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Network.
-- **Narrative anchor:** *Secret communications between powerful institutions are themselves a form of harm. Opening the channel is the argument.*
-- **Faction perspectives:**
-  - Network: *If it happened, it should be known. We are simply making that principle operational.*
-- **Taxonomy:** Information — Reveal — Private communications.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
 
-- **Design note:** Flagged for review — C26 and C28 both Reveal, same function different scope. See D-04-04.
-- **Arbiter context:** Does not intercept Hidden Objective or Classified Directive communications. Beat 2 — must be active before Beat 3 notifications are generated.
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** Any private notification ARBITER would send to the named faction this round is instead delivered publicly to the whole table.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | +1 | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C29 — NETWORK CASCADE
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C29
+- **Card version:** v1.0
 - **Card name:** Network Cascade
 - **Tagline:** *Extend Broadcast Interference to an adjacent district.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Network only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Network
+
+**Taxonomy**
+
+- **Layer:** Submission
+- **Function:** Modify
+- **Subject:** Political act (scope)
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *The Network understands signal propagation better than anyone at this table.*
+- **Faction perspectives:**
+  - Network: *The signal does not stop at district borders. Neither do we.*
+
+**Mechanics**
+
 - **Beat:** 2
+- **Trigger condition:** N/A
 - **Target district:** Any district adjacent to the Network's Broadcast Interference target this round
 - **Target faction:** N/A
 - **Target object:** Political act
@@ -1987,46 +2377,102 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Network only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** N/A
 - **Success:** Adjacent district also has political act costs +1 this round.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Network.
-- **Narrative anchor:** *The Network understands signal propagation better than anyone at this table.*
-- **Faction perspectives:**
-  - Network: *The signal does not stop at district borders. Neither do we.*
-- **Taxonomy:** Submission — Modify — Covert operation (scope).
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | +1 | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
 ### C30 — COMMUNITY ANCHOR
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C30
+- **Card version:** v1.0
 - **Card name:** Community Anchor
-- **Tagline:** *Establish presence in a Sprawl district through existing relationships.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Network only.
+- **Tagline:** *Establish presence in a Baryo district through existing relationships.*
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Network
+
+**Taxonomy**
+
+- **Layer:** Territory
+- **Function:** Add
+- **Subject:** Presence token
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *The Network did not arrive in New Meridian through official channels. They arrived through people.*
+- **Faction perspectives:**
+  - Network: *We already have contacts there. This is formalising what already exists.*
+
+**Mechanics**
+
 - **Beat:** 3
-- **Target district:** Any Sprawl district
+- **Trigger condition:** N/A
+- **Target district:** Any Baryo district
 - **Target faction:** N/A
 - **Target object:** N/A
-- **Restriction:** Network must have zero presence in the target district. Sprawl districts only.
+- **Restriction:** Network must have zero presence in the target district. Baryo districts only.
 - **Primary cost qty:** 1
 - **Primary cost type:** Exposure
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Network only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
-- **Success:** Place 1 presence token in the target Sprawl district.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Network.
-- **Narrative anchor:** *The Network did not arrive in New Meridian through official channels. They arrived through people.*
-- **Faction perspectives:**
-  - Network: *We already have contacts there. This is formalising what already exists.*
-- **Taxonomy:** Territory — Add — Presence token.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** N/A
+- **Success:** Place 1 presence token in the target Baryo district.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | +1 | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | N/A | N/A | N/A | N/A |
 
 ---
 
@@ -2035,13 +2481,37 @@ Ghost — P17–P18
 *Current cards carried forward. Taxonomy gap analysis in Artifact 04b §8.4 identifies redesign targets: zero information/intelligence capability; Cross-Category — Corrupt Accord unused; Resource — Redirect Accord ("small print") unused.*
 
 ### C31 — LEVERAGED ACQUISITION
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C31
+- **Card version:** v1.0
 - **Card name:** Leveraged Acquisition
 - **Tagline:** *Gain resource generation from a district without presence.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Syndicate only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Syndicate
+
+**Taxonomy**
+
+- **Layer:** Economy
+- **Function:** Add
+- **Subject:** Native resource
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *The Syndicate does not need to be somewhere to profit from it. Ownership and presence are different things.*
+- **Faction perspectives:**
+  - Syndicate: *We own the revenue stream. Whether we are physically present is irrelevant.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
 - **Target object:** N/A
@@ -2051,27 +2521,67 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Syndicate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** N/A
 - **Success:** Gain 1 unit of the target district's native resource this Upkeep as though Established — delivered in case.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Syndicate.
-- **Narrative anchor:** *The Syndicate does not need to be somewhere to profit from it. Ownership and presence are different things.*
-- **Faction perspectives:**
-  - Syndicate: *We own the revenue stream. Whether we are physically present is irrelevant.*
-- **Taxonomy:** Economy — Add — Native resource.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | +1 | N/A | N/A | N/A |
 
 ---
 
 ### C32 — SHORT THE MARKET
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C32
+- **Card version:** v1.0
 - **Card name:** Short the Market
 - **Tagline:** *Reduce a faction's native resource generation for one round.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Syndicate only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Syndicate
+
+**Taxonomy**
+
+- **Layer:** Economy
+- **Function:** Remove
+- **Subject:** Native resource
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *Capital can suppress as easily as it can produce.*
+- **Faction perspectives:**
+  - Syndicate: *We are not destroying their capacity. We are adjusting market conditions temporarily.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** N/A
 - **Target faction:** Named opponent faction
 - **Target object:** Native resource
@@ -2081,27 +2591,67 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Syndicate only.
-- **Difficulty:** Average (50)
+- **Affinity bonus:** N/A
+- **Difficulty:** Average (50) + ring modifier
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
+- **Resolution:** d100
+- **Resolution type:** Probabilistic
+- **Outcome type:** N/A
+
+**Effects**
+
 - **Crit success:** Target faction generates 2 fewer units this Upkeep (minimum 0).
 - **Success:** Target faction generates 1 fewer unit of their native resource during Upkeep this round (minimum 0). Applied silently.
 - **Failure:** No effect.
 - **Crit failure:** −1 Public Standing.
-- **Portrait:** +1 Syndicate.
-- **Narrative anchor:** *Capital can suppress as easily as it can produce.*
-- **Faction perspectives:**
-  - Syndicate: *We are not destroying their capacity. We are adjusting market conditions temporarily.*
-- **Taxonomy:** Economy — Remove — Native resource.
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | +1 | N/A | N/A | N/A |
 
 ---
 
 ### C33 — HOSTILE ACQUISITION
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C33
+- **Card version:** v1.0
 - **Card name:** Hostile Acquisition
 - **Tagline:** *Purchase ownership of an opponent's structure.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Syndicate only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Syndicate
+
+**Taxonomy**
+
+- **Layer:** Territory
+- **Function:** Redirect
+- **Subject:** Structure block
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *Everything in New Meridian has a price. The Syndicate is the only faction honest about this.*
+- **Faction perspectives:**
+  - Syndicate: *We made a fair offer. The market determined the value. We accepted the market's judgment.*
+
+**Mechanics**
+
 - **Beat:** 3
+- **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** Named opponent faction
 - **Target object:** Structure block
@@ -2111,27 +2661,67 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Syndicate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** Average (50) + ring modifier
+- **Ring 0 modifier:** −15
+- **Ring 1 modifier:** −10
+- **Ring 2 modifier:** 0
+- **Ring 3 modifier:** +10
+- **Resolution:** d100
+- **Resolution type:** Probabilistic
+- **Outcome type:** N/A
+
+**Effects**
+
 - **Crit success:** Return 1 Capital to dispatch case.
 - **Success:** Claim one named opponent structure. Block flips to Syndicate color. Prior owner receives 1 unit of their native resource as consideration — delivered in case.
 - **Failure:** No effect.
 - **Crit failure:** −1 Public Standing.
-- **Portrait:** +1 Syndicate.
-- **Narrative anchor:** *Everything in New Meridian has a price. The Syndicate is the only faction honest about this.*
-- **Faction perspectives:**
-  - Syndicate: *We made a fair offer. The market determined the value. We accepted the market's judgment.*
-- **Taxonomy:** Territory — Redirect — Structure block.
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | +1 | N/A | N/A | N/A |
 
 ---
 
 ### C34 — GOLDEN PARACHUTE
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C34
+- **Card version:** v1.0
 - **Card name:** Golden Parachute
 - **Tagline:** *Transfer resources before a forced resource-loss event.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Syndicate only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Syndicate
+
+**Taxonomy**
+
+- **Layer:** Economy
+- **Function:** Protect
+- **Subject:** Native resource
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *The Syndicate plans for outcomes not yet confirmed. They move assets before the decision is made.*
+- **Faction perspectives:**
+  - Syndicate: *We did not lose those resources. We repositioned them. There is a difference.*
+
+**Mechanics**
+
 - **Beat:** 2
+- **Trigger condition:** N/A
 - **Target district:** N/A
 - **Target faction:** Named opponent faction
 - **Target object:** Native resource
@@ -2141,27 +2731,67 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Syndicate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** N/A
 - **Success:** Transfer up to 3 Capital to named faction. Recorded by ARBITER but not announced. Transferred Capital exits Syndicate's pool before any resource-loss calculation applies this round.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** +1 Syndicate.
-- **Narrative anchor:** *The Syndicate plans for outcomes not yet confirmed. They move assets before the decision is made.*
-- **Faction perspectives:**
-  - Syndicate: *We did not lose those resources. We repositioned them. There is a difference.*
-- **Taxonomy:** Economy — Protect — Native resource.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | +1 | N/A | N/A | N/A |
 
 ---
 
 ### C35 — REGULATORY CAPTURE
+[↑ Card Specifications](#user-content-card-specifications)
+
+**Identity**
 
 - **Card ID:** C35
+- **Card version:** v1.0
 - **Card name:** Regulatory Capture
 - **Tagline:** *Block a specific action type in a named district for one round.*
-- **Card type:** Faction-Specific Covert Operation
-- **Faction:** Syndicate only.
+- **Card type:** Covert Operation
+- **Card subtype:** Faction-specific
+- **Card faction:** Syndicate
+
+**Taxonomy**
+
+- **Layer:** Submission
+- **Function:** Block
+- **Subject:** Named action type
+
+- **Design note:** N/A
+- **Arbiter context:** N/A
+
+**Narrative**
+
+- **Narrative anchor:** *If you own enough of the regulatory structure, you define what is permitted. The Syndicate does not see this as corruption. They see it as governance.*
+- **Faction perspectives:**
+  - Syndicate: *The regulatory framework exists. We simply ensure it reflects current market conditions.*
+
+**Mechanics**
+
 - **Beat:** 2
+- **Trigger condition:** N/A
 - **Target district:** Any district
 - **Target faction:** N/A
 - **Target object:** Named action type
@@ -2171,16 +2801,32 @@ Ghost — P17–P18
 - **Secondary cost qty:** N/A
 - **Secondary cost type:** N/A
 - **Faction affinity:** Syndicate only.
+- **Affinity bonus:** N/A
 - **Difficulty:** N/A
-- **Crit success:** N/A — Automatic.
+- **Ring 0 modifier:** N/A
+- **Ring 1 modifier:** N/A
+- **Ring 2 modifier:** N/A
+- **Ring 3 modifier:** N/A
+- **Resolution:** Automatic
+- **Resolution type:** Transactional
+- **Outcome type:** N/A
+
+**Effects**
+
+- **Crit success:** N/A
 - **Success:** Named district and action type: no faction may submit that type targeting that district this round. Source is public.
-- **Failure:** N/A — Automatic.
-- **Crit failure:** N/A — Automatic.
-- **Portrait:** −1 Syndicate (if used to block Guild construction operations). +1 Syndicate otherwise.
-- **Narrative anchor:** *If you own enough of the regulatory structure, you define what is permitted. The Syndicate does not see this as corruption. They see it as governance.*
-- **Faction perspectives:**
-  - Syndicate: *The regulatory framework exists. We simply ensure it reflects current market conditions.*
-- **Taxonomy:** Submission — Block — Named action type.
+- **Failure:** N/A
+- **Crit failure:** N/A
+
+**Portrait**
+
+| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
+|---------|------|-----------|-----------|----------|---------------|
+| Guild | N/A | N/A | N/A | N/A | N/A |
+| Directorate | N/A | N/A | N/A | N/A | N/A |
+| Network | N/A | N/A | N/A | N/A | N/A |
+| Ghost | N/A | N/A | N/A | N/A | N/A |
+| Syndicate | N/A | +1 | −2 | Blocking Guild construction | N/A |
 
 #### Syndicate Gap Concepts — Design Notes
 
@@ -2705,9 +3351,9 @@ Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacit
 | ID | Description | Blocking what |
 |----|-------------|---------------|
 | D-04-01 | Card set completeness — taxonomy gaps may warrant additional cards before production. Setup pool sizes (30/24 covert, 20/12 political) are assumptions pending final card set. | Production, Artifact 09 |
-| D-04-02 | Ghost C16–C20 redesign — C18/C19 duplicate function; Portrait Shift, targeted Reveal, Copy subset gaps unaddressed. Approve current set or redesign? | Artifact 09 |
-| D-04-03 | Directorate C21–C25 redesign — C21/C25 duplicate Block function; Mandate generation card needed. Approve current set or redesign? | Artifact 09 |
-| D-04-04 | Network C26–C30 redesign — C26/C28 duplicate Reveal; C27 doctrinally misaligned; Exposure generation and Public Standing Shift needed. Approve current set or redesign? | Artifact 09 |
+| D-04-02 | Ghost C16–C20 redesign — C18 replaced with Dossier Breach (S51); C19 now unique. Portrait Shift, targeted Reveal, Copy subset gaps remain open. | Artifact 09 |
+| D-04-03 | Directorate C21–C25 redesign — C25 replaced with Tactical Redirection (S51). Block duplication resolved. Mandate generation and Public Standing Shift cards still needed. | Artifact 09 |
+| D-04-04 | Network C26–C30 redesign — C27 replaced with Disclosure Loop (S51). Exposure generation addressed. C26/C28 Reveal overlap and Public Standing Shift card remain open. | Artifact 09 |
 | D-04-05 | Syndicate C31–C35 redesign — zero information capability; Corrupt Accord and Redirect Accord unused. Approve current set or redesign? | Artifact 09 |
 | D-04-06 | Political acts P01–P18 full card data structure review — all fields (Beat, Taxonomy, Faction perspectives, Restriction, crit effects, Portrait) need card-by-card application. | Artifact 09 |
 | D-04-07 | Modifier card in-world naming — "Modifier cards" is a working designation. | Artifact 09 |

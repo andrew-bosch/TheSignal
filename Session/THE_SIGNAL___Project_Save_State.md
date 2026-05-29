@@ -1,6 +1,6 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
-### Generated: 2026-05-29 (session 49 complete) — supersedes session 48 save state.
+### Generated: 2026-05-29 (session 51 complete) — supersedes session 50 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -226,6 +226,29 @@ Read this document top to bottom before doing any design work in a new session. 
 - district_metadata and player_metadata PKs confirmed (district_component_id, faction_id).
 
 **PM05 changes:** DB-22–26 ✅, DB-27–28 ✅, DB-29 ✅, WEB-01 added (deferred), 04b-11 added (Inspect verb). Last Updated → 2026-05-29.
+
+---
+
+### Session 51 Summary — 2026-05-29
+
+**Focus:** DB infrastructure build-out. Art 04 C18–C35 vetting pass and full schema sweep (C01–C35).
+
+**Decisions locked:** None.
+
+**Artifacts changed:**
+- Art 04 v0.9.21 — C18→Dossier Breach (Information — Reveal — Card hand contents); C25→Tactical Redirection (Territory — Move — Presence token); C27→Disclosure Loop (Economy — Add — Exposure). Full schema pass C01–C35: Ring 0–3 modifier fields added to all cards (C17 canonical format). C13 resolution type corrected (Transactional→Probabilistic). C22/C32/C33 resolution fields corrected (Dice→d100, Transactional→Probabilistic, Standard→N/A). Card index updated (C18/C25/C27 new names). Version 0.9.21, date 2026-05-29.
+- Database/schema_reference.md — views 29→27 (dropped v_object_from, v_validact, v_verb; added v_primitive_actual_coverage). DB-09 status corrected (✅ S50). Row counts updated.
+- SESSION_BRIEF — updated to S51 close.
+
+**New files:**
+- Database/db_create_tmp_tables.sql — CREATE TABLE IF NOT EXISTS for all 22 tmp_ tables in dependency order.
+- Database/db_seed_lookups.sql — INSERT IGNORE for 8 lookup tables (idempotent).
+- Database/db_rebuild.sh — full wipe+rebuild script (confirmation gate, FK-safe drop order).
+- Database/register_component.py — Python component registration tool (YAML→SQL, dry run by default).
+- Database/component_template.yaml — reference YAML template for register_component.py.
+- Whiteboard/card_ideas_S51.md — unused design candidates: Ghost/Directorate/Network C18/C25/C27 rejected alternates + Gem S51 new concepts.
+
+**PM05 changes:** None (no new items flagged this session).
 
 ---
 
