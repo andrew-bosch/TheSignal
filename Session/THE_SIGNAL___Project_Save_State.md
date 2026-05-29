@@ -193,6 +193,42 @@ Read this document top to bottom before doing any design work in a new session. 
 
 ---
 
+### Session 50 Summary — 2026-05-29
+
+**Focus:** Infrastructure, DB schema documentation, and agy S48+S50 DB work intake.
+
+**Decisions locked:** None.
+
+**Artifacts changed:**
+- Art 03 v2.0 — Beat 3 Steps 7/8 extended to cover case delivery effects (Notification Slip and Intel Delivery Slip). Material change — re-sign-off flagged (PM05 03-14).
+- Art 04 v0.9.21 — C17 component names updated to use canonical terms (Notification Slip, Intel Delivery Slip, Emergency Response card).
+- Database/schema_reference.md — fully populated (DB-29 ✅). All 19 tmp_ table schemas with FK annotations, 8 lookup tables with values, 29-view catalog, canonical component registration pattern (Countermeasure id=52), §2.5 table/view purposes.
+- GEMINI_CONTEXT.md — §DB Schema Reference updated (Database/ path); Session 50 update section added with agy punch list and dual-authorization standing instructions.
+- PM05 v3.0 — DB-22–26 ✅, DB-27–28 ✅, DB-29 ✅, WEB-01 added (deferred), 04b-11 added (Inspect verb).
+- SESSION_BRIEF — updated to S50 close.
+
+**Infrastructure changes:**
+- PITCH.md moved to Creative/
+- GEMINI.md moved to Session/
+- db_build_*.sql moved to Database/
+- schema_reference.md moved from the_signal_db_documentation/ to Database/
+- CLAUDE.md updated (Pitch reference path, ClaudeIOS workflow → Gem)
+- ~/.my.cnf configured for claude user (no flags needed for mysql the_signal_db)
+
+**DB work (the_signal_db — agy S48+S50):**
+- DB-22 ✅: Upkeep primitives seeded — Faction/ARBITER Flip Status marker (ids 295/296), Add Presence token (297/298), Remove Deployment marker (299/300), ARBITER Move SitRep (301).
+- DB-23 ✅: Status marker transform_data corrected to 0; Debrief Flip FK corrected to id=49.
+- DB-24 ✅: Portrait marker registered in tmp_subject_target.
+- DB-25 ✅: Design-confirmed — SitReps move to expired area; Target Profiles returned in dispatch case. No Remove primitive needed.
+- DB-26 ✅: Move role permissions verified per Art 03.
+- DB-27 ✅: Emergency Response card id=97 registered and fully seeded.
+- DB-28 ✅: Notification Slip (id=95) and Intel Delivery Slip (id=96) seeded.
+- district_metadata and player_metadata PKs confirmed (district_component_id, faction_id).
+
+**PM05 changes:** DB-22–26 ✅, DB-27–28 ✅, DB-29 ✅, WEB-01 added (deferred), 04b-11 added (Inspect verb). Last Updated → 2026-05-29.
+
+---
+
 ### Session 46 Summary — 2026-05-28
 
 **Focus:** 04b-03 action taxonomy audit — complete. Physical action primitive model built in the_signal_db.
@@ -293,9 +329,9 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | 02a — Resource Systems: Board State | 1.4 | ✅ Signed Off — Session 22. Control flag corrected (gold, per-district, on Dominant stack); Established marker added (silver, L111, one per Established faction per district); ARBITER Dominance Marker confirmed. |
 | 02b — Resource Systems: Tracking | 1.5 | ✅ Signed Off |
 | 00b — Data Architecture | 0.1 | ✅ Reference Document — Active. Entity registry (20 types) — CA-xx (Dispatch Case) added session 22. L108 compliance standard, 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. VS-xx Visibility Scope (8 scopes). L2 TypeScript schema pointers in §8. Established session 20. |
-| 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. XA-33 rename; §18 Battlefield Strength (L160); Intel freshness replaces decay (L161, M-13, The Dossier L164); ring adjacency M-12 generalized (The Mid + Core); "Established or higher" convention; Chorus Node flat −25; §4 narrative anchors; Intel +2 in Battlefield (L163); Portrait dual function (L165); pentagram Apex model (04-52). |
+| 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. **Re-sign-off pending (03-14)** — Beat 3 Steps 7/8 extended S50 (case delivery effects — material). XA-33 rename; §18 Battlefield Strength (L160); Intel freshness replaces decay (L161, M-13, The Dossier L164); ring adjacency M-12 generalized (The Mid + Core); "Established or higher" convention; Chorus Node flat −25; §4 narrative anchors; Intel +2 in Battlefield (L163); Portrait dual function (L165); pentagram Apex model (04-52). |
 | 03a — Game Engine Specification | 0.98 | 🔄 In progress — Layers 1–3 complete; Phase procedures added (Quarter_Flow, Phase_1–Phase_7, Beat_0–Beat_5); Layer 4 stub. DF-01–DF-04 all resolved session 22. |
-| 04 — Action Card System | 0.9.20 | 🔄 In Progress — S48: §5 P1–P14 rewritten (P1–P6 taxonomy constraints, P7–P14 former P1–P8). 04-54 (P1–P6 review) prerequisite to C17. |
+| 04 — Action Card System | 0.9.21 | 🔄 In Progress — S49: §5 P1–P15 signed off; C17 signed off. S50: C17 component names updated (Notification Slip id=95, Intel Delivery Slip id=96, Emergency Response card id=97). Beat 3 Steps 7/8 extended (case delivery effects — material, re-sign-off pending 03-14). Next: C18+ vetting pass. |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. §9 removed; §10 → §9. React collapsed into Modifier cards. Emergency Response penultimate context. Six-layer system locked (L167). |
 | 05–09 | 0.1 | 🔄 Draft Placeholders |
 | 10 — Game Manuals | 0.1 | 🔄 Draft Placeholder — §6.0 added: game objective statement locked |
@@ -305,7 +341,7 @@ Consult before writing ARBITER behavior, Chronicle language, Portrait mechanics,
 | PM02 | 4.0 | ✅ Active — locked decisions L01–L168. S48: L167 (six-layer taxonomy), L168 (Tier N rename). |
 | PM03 | 2.4 | ✅ Active — Art 04 v0.9.18; version drift corrected session 31 |
 | PM04 | 0.7 | ✅ Active |
-| PM05 | 2.9 | ✅ Active — S43: 03-12 ✅ (L160), 04-48 ✅ (Art 03 v2.0). Added: 03-13 (Dossier component), 04-49 (Battlefield Modifier Card), 04-50 (Intel d100 constraint), 04-51 ✅ (Intel +2), 04-52 (Apex pentagram), 07-09 (Battlefield ARBITER script), 07-10 (Portrait delta query), XA-34 (artifact renumber), XA-35 (Assets rename), XA-36 ("Established or higher" sweep). |
+| PM05 | 3.0 | ✅ Active — S50: DB-22 ✅, DB-23 ✅, DB-24 ✅, DB-25 ✅, DB-26 ✅, DB-27 ✅, DB-28 ✅, DB-29 ✅ (schema_reference.md fully populated). WEB-01 added (deferred). 04b-11 added (Inspect verb). DB-09 DDL FK corrected. |
 | PM (Audit) | 1.0 | ✅ Retired — session 10. All 24 items migrated to PM05. File deleted. |
 | PRIVATE — True State | 1.1 | 🔒 Locked — private document outside V1 |
 

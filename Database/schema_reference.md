@@ -473,7 +473,7 @@ CREATE TABLE `tmp_state_condition_clause` (
 | 44 | Dispatch case | 1 | 1 | 1 | 1 | 0 | 0 |
 | 47 | Modifier token | 1 | 0 | 0 | 0 | 0 | 0 |
 | 48 | Target Profile | 1 | 1 | 0 | 0 | 0 | 1 |
-| 49 | Status marker | 1 | 1 | 0 | 0 | 1 | 1 |
+| 49 | Status marker | 1 | 1 | 0 | 0 | 1 | 0 |
 | 50 | Portrait track | 0 | 0 | 0 | 0 | 0 | 0 |
 | 51 | Portrait marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 52 | Countermeasure card | 1 | 1 | 0 | 1 | 0 | 0 |
@@ -645,12 +645,12 @@ As of S50:
 - **DB-14** (PM05): Decision pending — promote tmp_ tables to permanent schema (drop tmp_ prefix). Evaluate after Art 04b sign-off.
 - **DB-18** (PM05): Cross-beat modifier persistence not modeled. C06/C07/C10/C11/C12 play at Beat 2 but modify Beat 3/4 — no deferred-effect mechanism in tmp_action.
 - **DB-19** (PM05): Concurrent Political acts (C09) not verified in resolution model.
-- **DB-22** (PM05 — agy assigned): Upkeep beat (id=1) missing 3 primitives: Faction Flip Status marker (§7 Step 1), Faction Add Presence token (§7 Step 4), Faction Remove Deployment marker (§7 Step 4).
-- **DB-23** (PM05 — agy assigned): Status marker (id=49) `transform_data=1` may be wrong (tracks orientation only, no written data). Debrief Flip Status marker has wrong component_id in tmp_action — uses id=2 (Deployment marker) instead of id=49.
-- **DB-24** (PM05 — agy assigned): Portrait marker (id=51) missing from tmp_subject_target — Move=0 in v_comp_verb_matrix despite being its primary action.
-- **DB-25** (PM05 — agy assigned): Situation Report card and Target Profile missing Remove primitives.
-- **DB-26** (PM05 — agy assigned): Political act, Situation Report card, Target Profile have Move role permissions in tmp_comp_verb_role but zero Move primitives.
-- **DB-09** (PM05): district_adjacency table — Art 01 signed off S40; DDL FK references `district_metadata(id)` but PK column name unconfirmed — verify with SHOW CREATE TABLE before executing.
+- **DB-22** ✅ S50 (agy): Upkeep primitives seeded — Faction/ARBITER Flip Status marker (ids 295/296), Faction/ARBITER Add Presence token (ids 297/298), Faction/ARBITER Remove Deployment marker (ids 299/300), ARBITER Move Situation Report card (id 301).
+- **DB-23** ✅ S50 (agy): Status marker `transform_data` corrected to 0. Debrief Flip Status marker FK corrected to component id=49.
+- **DB-24** ✅ S50 (agy): Portrait marker (id=51) registered in tmp_subject_target. Move primitives seeded.
+- **DB-25** ✅ S50 (agy): Design-confirmed — Situation Report cards move to expired area (not removed); Target Profiles returned in dispatch case. No Remove primitive needed per Art 03.
+- **DB-26** ✅ S50 (agy): Move role permissions verified against Art 03. Political act, Situation Report card, Target Profile resolved.
+- **DB-09** (PM05): district_adjacency table — PK confirmed `district_component_id` (S50). DDL FK corrected in GEMINI_CONTEXT.md. Still blocked on 00b-05 (live_state spec). agy to execute after 00b §8 update.
 - **tmp_category / tmp_type**: Deprecated. Drop and rebuild after Art 04b sign-off (DB-16).
 - **destination_component_id / destination_zone_id** in tmp_action: Unpopulated — destination currently encoded in notes text only.
 

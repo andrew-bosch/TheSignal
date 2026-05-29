@@ -62,7 +62,7 @@
 | PM03 | Master Artifact Index (this document) | 2.4 | 🔄 Active | Artifact registry, standard artifact template, dependency map, retired artifacts index (/Retired/). Design standards and conventions moved to PM04 §2. |
 | PM04 | Glossary & Data Dictionary | 0.7 | 🔄 Updated — Active | Single source of truth for all terminology and design conventions. §1: In-World Data Dictionary — Component Physical Glossary added (S34); Asset token removed. §2: Design Terminology — Category column pattern (S34), L109 Component Terminology Standard (S34) added alongside existing conventions. |
 | PM04b | Future Phases — Parking Lot | — | ⬜ Not Started | Post-Tier 1 design concepts, tier roadmap, electronic version considerations, ARBITER role redesign, Tier 5 faction vision. Companion to PM04 — not yet created. |
-| PM05 | Active Punch List | 2.9 | 🔄 Active | Living action queue of all pending changes across all artifacts. S45: 00b-05 ✅, XA-32 scoped to Art 07 only, DB-11 new (agy DDL — component_positions rename + columns), DB-12 closed (L156), DB-13 new (derivation query spec), DB-02 reference updated. |
+| PM05 | Active Punch List | 3.0 | 🔄 Active | Living action queue of all pending changes across all artifacts. S50: DB-22–26 ✅ (agy), DB-27–28 ✅ (agy), DB-29 ✅ (schema_reference.md populated), WEB-01 added (deferred), 04b-11 added (Inspect verb). |
 | PM (Audit) | Cross-Artifact Inconsistency Audit | 1.0 | ✅ Retired — session 10 | All 24 items migrated to PM05 punch list. File deleted. |
 
 ### Visual Artifacts (Interactive HTML)

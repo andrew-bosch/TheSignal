@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 50 | Updated: 2026-05-29**
+**Session 50 (close) | Updated: 2026-05-29**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,9 +8,9 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S50 in progress. Infrastructure and credential work: MariaDB credentials resolved (~/.my.cnf → claude user); CLAUDE.md updated (ClaudeIOS workflow → Gem, DB credentials documented). C17 component gaps resolved: Notification Slip (NS-xx, id=95) and Intel Delivery Slip (IS-xx, id=96) registered in 00b §4/§7 and seeded in all DB downstream tables (tmp_comp_verb_beat, tmp_comp_verb_role, tmp_action, tmp_subject_target). Emergency Response card (id=97) registered and fully seeded. Art 03 Beat 3 Steps 7/8 extended to cover case delivery effects (material — re-sign-off flagged as PM05 03-14). C17 effects and Arbiter context updated to use component names. DB schema reference stub created at Database/schema_reference.md (PM05 DB-29 — priority over 03-14).
+S50 complete. Infrastructure: MariaDB credentials, CLAUDE.md ClaudeIOS workflow, PITCH.md → Creative/, GEMINI.md → Session/, db_build_*.sql + schema_reference.md → Database/. C17 component gaps resolved (NS id=95, IS id=96, ERC id=97 — all seeded in DB downstream tables). Art 03 Beat 3 Steps 7/8 extended (case delivery effects — material, re-sign-off pending, PM05 03-14). DB-29 ✅: `Database/schema_reference.md` fully populated — all schemas, FK annotations, lookup values, view catalog, canonical registration pattern. agy S48+S50 DB work closed: DB-22–26 ✅, DB-27 ✅, DB-28 ✅. GEMINI_CONTEXT.md S50 section added with dual-authorization standing instructions. DB-09 DDL FK corrected (district_component_id).
 
-**Next:** Populate schema_reference.md (DB-29) after token reset. Then C18+ card vetting pass — C18–C35 and P01–P18.
+**Next session:** C18+ card vetting pass (C18–C35, P01–P18 in Art 04). Art 03 re-sign-off (03-14) still pending — Beat 3 Steps 7/8 material change.
 
 ---
 
@@ -42,9 +42,11 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **01-05** | Art 01 overhaul — physical zone hierarchy, all Overview children | ✅ S40 |
 | **04-54** | Art 04 §5 P1–P15 signed off + C17 signed off | ✅ S49 |
 | **XA-37** | Haiku sweep: rename Ln/Layer N expansion tier refs → Tier N across 00b, 00c, 03a, Art 07–11; strip "Layer N —" from 03a section headings | ✅ S49 |
-| **DB-27** | agy: register Emergency Response card id=95 in tmp_component (1\|1\|0\|1\|0\|0) + seed role/beat primitives | Open — agy |
-| **DB-11** | agy ALTER TABLE live_state — rename anchored_to_component_id → on_component_id (nullable) + add on_game_zone_id | Open — unblocked S45 |
-| **DB-09** | Create district_adjacency table (agy) — seed from Art 01 adjacency map | Open — Art 01 signed off |
+| **DB-22–26** | agy S48+S50 DB fixes — upkeep primitives, Status marker, Portrait marker, SitRep/Target Profile, Move mismatch | ✅ S50 (agy) |
+| **DB-27** | agy: register Emergency Response card id=97 in tmp_component + seed role/beat primitives | ✅ S50 (agy) |
+| **DB-09** | Create district_adjacency table (agy) — DDL FK corrected (district_component_id). Blocked on 00b-05 | Open — blocked |
+| **DB-11** | agy ALTER TABLE component_positions — rename anchored_to_component_id → on_component_id + add on_game_zone_id | Open — unblocked |
+| **03-14** | Art 03 v2.0 re-sign-off — Beat 3 Steps 7/8 extended S50 (material change) | Open — pending |
 | **01-07** | Art 01 §4 Narrative Function — remove (content in §3 + Physical Table Layout) | ✅ S41 |
 | **01-08** | Art 01 narrative anchor pass — staged in Whiteboard/Art01_Narrative_Anchors_S41.md | Open — after 02a sign-off |
 | **08-00** | Art 08 — define scope + create stub (Faction Player Tableau + ARBITER Tableau) | Open |

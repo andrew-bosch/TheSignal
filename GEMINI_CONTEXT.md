@@ -181,8 +181,8 @@ CREATE TABLE district_adjacency (
   allow_ingress BOOLEAN NOT NULL DEFAULT TRUE,
   allow_egress BOOLEAN NOT NULL DEFAULT TRUE,
   PRIMARY KEY (id),
-  CONSTRAINT fk_adj_origin FOREIGN KEY (origin_district_id) REFERENCES district_metadata (id),
-  CONSTRAINT fk_adj_adjacent FOREIGN KEY (adjacent_district_id) REFERENCES district_metadata (id)
+  CONSTRAINT fk_adj_origin FOREIGN KEY (origin_district_id) REFERENCES district_metadata (district_component_id),
+  CONSTRAINT fk_adj_adjacent FOREIGN KEY (adjacent_district_id) REFERENCES district_metadata (district_component_id)
 );
 ```
 

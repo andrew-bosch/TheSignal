@@ -241,15 +241,21 @@ We have checked the inbound airlock ([GEMINI_CONTEXT.md](file:///home/abosch/Pro
 
 ## 15. DB-26: Move Verb Mismatch Resolved
 - **Execution:** 
-  - Removed `Move` role permissions from `tmp_comp_verb_role` for `Political act` (14) and `Target Profile` (48) as they do not support spatial movement.
+  - Retained/restored the original `Move` role permissions in `tmp_comp_verb_role` for `Political act` (14) and `Target Profile` (48), as they physically move between table/tableau zones (Political Acts to the Faction Tableau discard pile, and Target Profiles from Faction Tableau $\rightarrow$ dispatch case $\rightarrow$ ARBITER tableau) during the gameplay loop.
   - Mapped `Situation Report card` (25) | `Move` (16) to Beat 1 (Upkeep) in `tmp_comp_verb_beat`, and seeded the ARBITER `Move` primitive in `tmp_action` for moving expired Situation Report cards from the Overview (Event Zone) to the expired area of the ARBITER tableau.
 
-## 16. DB-09 DDL PK Constraint Resolved (Critical Schema Fix)
-- **Execution:** Added Primary Keys to the key columns of the metadata tables to allow proper foreign key references in `district_adjacency`:
-  ```sql
-  ALTER TABLE district_metadata ADD PRIMARY KEY (district_component_id);
-  ALTER TABLE player_metadata ADD PRIMARY KEY (faction_id);
-  ```
+
+## 16. DB-09: district_adjacency Table Created and Seeded
+- **Execution:** 
+  - Enforced Primary Keys on the key columns of the metadata tables:
+    ```sql
+    ALTER TABLE district_metadata ADD PRIMARY KEY (district_component_id);
+    ALTER TABLE player_metadata ADD PRIMARY KEY (faction_id);
+    ```
+  - Executed the `district_adjacency` table creation DDL with corrected foreign key constraints referencing `district_metadata(district_component_id)`.
+  - Seeded the 21 district components in `components` and populated their native resource types and ring IDs in `district_metadata`.
+  - Seeded all 104 directional bidirectional adjacency rows in `district_adjacency`. Verified counts: 21 components, 21 district metadata rows, and 104 adjacency rows are successfully seeded and verified in the database.
+
 
 
 
