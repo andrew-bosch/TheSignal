@@ -212,3 +212,53 @@ We have checked the inbound airlock ([GEMINI_CONTEXT.md](file:///home/abosch/Pro
     *   `DB-11` (live_state nullable columns DDL) remains **Blocked** pending 00b-05 spec updates.
     *   `Component Narrative Audit` (from S40) is noted as a historical item; no other unblocked active tasks require execution in this session.
 
+---
+
+# THE SIGNAL — agy Outbound Consulting Report (Session 50 Updates)
+*Date: 2026-05-29 — Session 50 (Draft Proposal)*
+
+**To:** Claude Code (Primary Artifact Writer)  
+**From:** agy (Cloud Consulting Layer — Antigravity CLI)  
+**Status:** Session 50 DB Audit and Proposals (Awaiting Approval)
+
+## 11. DB-23: Status Marker Modeling Errors Analysis
+- **Fix 1 (transform_data):** Checked the gameplay rules (Artifact 03). Status markers only track orientation ("Discussing" vs "Ready") and do not carry written data. The `transform_data = 1` flag in `tmp_component` is incorrect and should be set to `0`.
+- **Fix 2 (Debrief wrong component ID):** Checked `tmp_comp_verb_beat` for Beat 20 (Debrief). It currently maps `Deployment marker` (2) to `Flip` (15) instead of `Status marker` (49). In `tmp_action`, actions 199 and 203 already correctly reference `Status marker` (49). We must update the mappings in `tmp_comp_verb_beat` and insert the appropriate `Status marker` role mappings in `tmp_comp_verb_role`.
+
+## 12. DB-24: Portrait Marker Mappings Analysis
+- Checked `tmp_subject_target`. `Portrait marker` (51) is missing from this table, causing `Move = 0` in `v_comp_verb_matrix`. 
+- **Target:** The Portrait marker is moved on the `Portrait track` (50).
+- **Subject:** Only the `ARBITER` (2) initiates and executes Portrait marker movements (as seen in actions 256, 257, 258).
+- **Proposal:** Insert `(51, 50)` into `tmp_subject_target` to allow Portrait marker moves on the Portrait track.
+
+## 13. DB-22: Upkeep Beat Primitives Analysis
+- Checked Artifact 03 §7. The three missing Upkeep (Beat 1) primitives are:
+  - **Flip Status marker:** Each Faction Player flips their Status marker to the Discussing side. (Map Status marker | Flip | Upkeep in `tmp_comp_verb_beat` and add Faction and ARBITER primitives).
+  - **Add Presence token:** Faction Player places a presence chip for a converting deployment marker. (Map Presence token | Add | Upkeep and add Faction and ARBITER primitives).
+  - **Remove Deployment marker:** Faction Player returns converting/blocked deployment marker to hand. (Map Deployment marker | Remove | Upkeep and add Faction and ARBITER primitives).
+
+## 14. DB-25: Lifecycle Cleanup Audit
+- Checked Artifact 03 for `Situation Report card` (25) and `Target Profile` (48) (target slip) removal:
+  - Situation Reports are moved to the "expired area of the ARBITER tableau" (Upkeep Step 3.7) rather than removed from play.
+  - Target Profiles (target slips) are returned in the dispatch case to their owners at Debrief Close, with no explicit cleanup/discard procedure specified in the rules.
+- **Recommendation:** Do **not** seed any Remove primitives for these components in `tmp_action`, as they do not exist in the source rules.
+
+## 15. DB-26: Move Verb Mismatch Audit
+- Checked Artifact 03 for physical movement:
+  - `Political act` cards and `Target Profile` (target slips) do not support spatial movement (they only enter/leave play via `Add`/`Remove`).
+  - `Situation Report` cards are physically moved by ARBITER to the expired area during Upkeep Step 3.7.
+- **Recommendation:** 
+  - Remove `Move` role permissions from `tmp_comp_verb_role` for `Political act` (14) and `Target Profile` (48).
+  - Map `Situation Report card` (25) | `Move` (16) to Beat 1 (Upkeep) in `tmp_comp_verb_beat`, and add an ARBITER `Move` primitive in `tmp_action`.
+
+## 16. DB-09 DDL Constraint Conflict (Critical Schema Finding)
+- Checked `district_metadata` structure via `SHOW CREATE TABLE`. 
+- **Finding:** Neither `district_metadata` nor `player_metadata` has a Primary Key or Unique Key constraint on their primary key columns (`district_component_id` and `faction_id`).
+- **Impact:** Attempting to create foreign key constraints pointing to these tables (like in the proposed `district_adjacency` DDL) will fail in MySQL/MariaDB.
+- **Proposal:** Prior to running DB-09 DDL, we must execute:
+  ```sql
+  ALTER TABLE district_metadata ADD PRIMARY KEY (district_component_id);
+  ALTER TABLE player_metadata ADD PRIMARY KEY (faction_id);
+  ```
+
+
