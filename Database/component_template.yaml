@@ -1,0 +1,104 @@
+# component_template.yaml
+# THE SIGNAL — Component registration template for register_component.py
+#
+# Usage:
+#   python3 register_component.py component_template.yaml             # dry run
+#   python3 register_component.py component_template.yaml --execute   # live
+
+# ── Component identity ────────────────────────────────────────────────────────
+name: "New Component Name"
+
+# State machine flags — set to true only if the component actually uses the feature
+actionable: true            # participates in the action grammar (required for all game components)
+transformable: false        # can be transformed (has a before/after state)
+receivable: false           # can receive other components placed on it
+transform_visibility: false  # can be flipped face-down/face-up (Reveal / Conceal verbs)
+transform_orientation: false # can be rotated / has an A/B side (Flip verb)
+transform_data: false        # has writable data that can be changed (Corrupt verb)
+
+# ── Placement targets (Step 5: tmp_subject_target) ───────────────────────────
+# What zones/components can this component be placed on or moved to?
+# Comment out if this component is never physically moved (Move verb = 0).
+# targets:
+#   - "Faction Terminal"
+#   - "ARBITER Tableau"
+
+# ── Verb × beat coverage (Step 2: tmp_comp_verb_beat) ────────────────────────
+# Which verbs are valid for this component, and in which beats?
+# Verb names: Add | Remove | Reveal | Corrupt | Conceal | Flip | Move | Invoke
+# Beat names must match tmp_beat.name exactly (see schema_reference.md §3).
+verbs:
+  - verb: "Add"
+    beats:
+      - "Placement"
+  - verb: "Remove"
+    beats:
+      - "Month 1 — Beat 3"
+      - "Month 2 — Beat 3"
+      - "Month 3 — Beat 4"
+  - verb: "Reveal"
+    beats:
+      - "Month 1 — Beat 3"
+      - "Month 2 — Beat 3"
+      - "Month 3 — Beat 4"
+
+# ── Role assignments (Step 3: tmp_comp_verb_role) ─────────────────────────────
+# Who performs each verb, and in what capacity?
+# player_role: "Faction" | "ARBITER"
+# phase: "initiator" | "executor" | "fulfiller"
+# Each (verb, player_role, phase) combo = one row. Most verbs need 3 rows (one per phase).
+roles:
+  - verb: "Add"
+    player_role: "ARBITER"
+    phase: "initiator"
+  - verb: "Add"
+    player_role: "ARBITER"
+    phase: "executor"
+  - verb: "Add"
+    player_role: "ARBITER"
+    phase: "fulfiller"
+  - verb: "Remove"
+    player_role: "ARBITER"
+    phase: "initiator"
+  - verb: "Remove"
+    player_role: "ARBITER"
+    phase: "executor"
+  - verb: "Remove"
+    player_role: "ARBITER"
+    phase: "fulfiller"
+  - verb: "Reveal"
+    player_role: "Faction"
+    phase: "initiator"
+  - verb: "Reveal"
+    player_role: "Faction"
+    phase: "executor"
+  - verb: "Reveal"
+    player_role: "ARBITER"
+    phase: "fulfiller"
+
+# ── Action primitives (Step 4: tmp_action) ────────────────────────────────────
+# The legal moves — one row per (beat, subject, verb) combination.
+# subject: "Faction" | "ARBITER"
+# trigger format: "type.subtype" or just "type" for NULL-subtype triggers
+#   phase.open | phase.during | phase.closed
+#   rule.card | rule.resolution
+#   player.introduce_card | player.agreement | player.verbal_statement
+#   state_condition | cascade
+# beat_trigger: "during" (default) | "on_close"
+primitives:
+  - beat: "Placement"
+    subject: "ARBITER"
+    verb: "Add"
+    trigger: "rule.resolution"
+    notes: "ARBITER distributes components to Factions at Placement"
+  - beat: "Month 1 — Beat 3"
+    subject: "Faction"
+    verb: "Reveal"
+    trigger: "rule.card"
+    notes: "Faction reveals component on card resolution"
+  - beat: "Month 1 — Beat 3"
+    subject: "ARBITER"
+    verb: "Remove"
+    trigger: "rule.resolution"
+    notes: "ARBITER removes component after resolution"
+  # Repeat for Month 2 / Month 3 beats as needed

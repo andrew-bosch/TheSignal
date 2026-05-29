@@ -256,6 +256,39 @@ We have checked the inbound airlock ([GEMINI_CONTEXT.md](file:///home/abosch/Pro
   - Seeded the 21 district components in `components` and populated their native resource types and ring IDs in `district_metadata`.
   - Seeded all 104 directional bidirectional adjacency rows in `district_adjacency`. Verified counts: 21 components, 21 district metadata rows, and 104 adjacency rows are successfully seeded and verified in the database.
 
+## 17. Database Schema Audit & Tooling Recommendations
+Following a complete database schema and build script audit, we have flagged several compilation errors, DDL missing files, and context omissions. Please integrate these suggestions when refining our data layout:
+
+### A. View Compilation Failures & Legacy Leftovers
+Three compiled views currently fail to execute due to references to legacy columns or deprecated taxonomy:
+*   `v_object_from` is **BROKEN**: References `tmp_action.NAME`, which is not a column on the physical table (likely a leftover from an earlier layout). It also relies on the deprecated `'Transform'` action verb.
+*   `v_validact` is **BROKEN**: Directly depends on the broken view `v_object_from`.
+*   `v_verb` is **BROKEN**: Directly depends on the broken view `v_object_from`.
+*   *Action:* Drop these legacy views or rewrite them if their verification logic (validating component placement rules) is still needed.
+
+### B. Missing DDL Schemas in `Database/`
+The base creation definitions (DDLs) for many of the core tables are documented in [schema_reference.md](file:///home/abosch/Projects/TheSignal/Database/schema_reference.md) but are **missing from our build scripts**. We have no SQL scripts creating:
+*   `tmp_component` (seeded across patches, but schema is not instantiated in code)
+*   `tmp_verb` (seeded in [db_build_gap5_invoke.sql](file:///home/abosch/Projects/TheSignal/Database/db_build_gap5_invoke.sql))
+*   `tmp_visibility_scope`
+*   `tmp_layer`
+*   `tmp_component_faction` / `tmp_component_ring`
+*   `tmp_condition` / `tmp_condition_clause`
+*   `tmp_function` / `tmp_function_verb`
+*   `tmp_subject_target`
+*   *Action:* Create a base DDL migration script to ensure the environment is reproducible from scratch.
+
+### C. Context Omissions in `schema_reference.md`
+*   **Synthetic View Columns:** Document that `v_comp_verb_matrix` uses hardcoded columns (`Add = 1` and `Remove = 1` for all actionable components), masking whether actual operational primitives have been seeded in `tmp_action`. Recommend creating a view `v_primitive_actual_coverage` to track genuine coverage.
+*   **Blocked Card Reference Table:** The `v_card_primitive_map` view is blocked due to the missing table `tmp_card_ref`. We need to define this mapping table to connect the logical cards in [04___Card_System.md](file:///home/abosch/Projects/TheSignal/V1/04___Card_System.md) to their physical database primitives.
+*   **Prerequisite Chains:** Note that although `tmp_action.prereq_id` is defined, currently all 206 rows carry NULLs (the action sequence engine is flat). Document the intended sequence logic to guide future development.
+
+### D. Proposed DB Administration Tooling
+Recommend creating a `/Database/scripts/` toolset:
+1.  `db_rebuild.sh`: Orchestrator script running builds in strict dependency order (including legacy schemas to prevent FK failures on base lookup tables).
+2.  `db_validate.py`: Validation wrapper executing view integrity checks (`v_duplicate_primitives`, `v_unassigned_triggers`, etc.) and flagging compilation failures.
+3.  `register_component.py`: Python CLI tool taking a simple YAML component configuration to automate transaction-safe writes across all 5 cascading taxonomy tables.
+
 
 
 

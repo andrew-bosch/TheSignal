@@ -170,11 +170,9 @@ Views are the primary interface to the model. They transform raw table data into
 | View | Purpose |
 |------|---------|
 | `v_layer_function_coverage` | Every Faction-initiatable Function × Component combination with beat availability. Bridges Art 04b taxonomy (functions) to the primitive model (verbs + beats). The design-space view for card design sessions. |
-| `v_object_from` | Subject-to-object relationships derived from the model. |
-| `v_validact` | Valid (subject, verb, component) action combinations per the model. |
-| `v_verb` | Verb reference with name. |
+| `v_primitive_actual_coverage` | Actual primitive counts per (component, verb) — only rows with count > 0. Use alongside v_comp_verb_matrix to distinguish design-space capability from implemented primitives. |
 
-**Migration impact on views:** All 29 views reference tmp_ tables directly. Migrating to permanent tables requires rewriting every view. The view DDL is the migration's hidden cost — plan for it before executing any table rename.
+**Migration impact on views:** All 27 views reference tmp_ tables directly. Migrating to permanent tables requires rewriting every view. The view DDL is the migration's hidden cost — plan for it before executing any table rename.
 
 ---
 
@@ -499,7 +497,7 @@ CREATE TABLE `tmp_state_condition_clause` (
 
 ---
 
-## 6. View Catalog (29 views)
+## 6. View Catalog (27 views)
 
 ### Gap Analysis Views — Use These First
 
@@ -532,6 +530,7 @@ CREATE TABLE `tmp_state_condition_clause` (
 | View | What it answers |
 |------|----------------|
 | `v_comp_verb_matrix` | Per-component capability grid: Add/Remove/Move/Reveal/Conceal/Flip/Corrupt. **Note: Add and Remove hardcoded to 1 for all actionable components** — not derived from tmp_action. Move=1 if component is in tmp_subject_target. Others derived from transform_ flags |
+| `v_primitive_actual_coverage` | Actual primitive counts per (component, verb) — only rows with count > 0. Use alongside v_comp_verb_matrix to see which design-space capabilities have real primitives in tmp_action |
 | `v_placement_matrix` | Which components can be placed on which receivable target components (from tmp_subject_target) |
 | `v_beat_subject_coverage` | Per-beat: verb count, component count, primitive count by subject |
 | `v_beat_role_matrix` | Role coverage per beat |
@@ -541,9 +540,6 @@ CREATE TABLE `tmp_state_condition_clause` (
 | `v_beat_verb_summary` | Verb usage per beat |
 | `v_fulfiller_summary` | Fulfiller role coverage |
 | `v_layer_function_coverage` | Every Faction-initiatable Function × Component with beat availability |
-| `v_object_from` | Subject-object relationships |
-| `v_validact` | Valid action combinations |
-| `v_verb` | Verb reference |
 
 ---
 
@@ -630,8 +626,8 @@ INSERT INTO tmp_subject_target (subject_id, target_id) VALUES
 ## 8. Row Counts
 
 As of S50:
-- `tmp_action`: **206 total rows, all root actions (prereq_id IS NULL)**
-- `tmp_component`: **57 rows, next AUTO_INCREMENT = 98**
+- `tmp_action`: **213 total rows, all root actions (prereq_id IS NULL)**
+- `tmp_component`: **58 rows, next AUTO_INCREMENT = 98**
 - `tmp_beat`: **20 rows** (fixed set — not AUTO_INCREMENT)
 - `tmp_verb`: **8 rows** (id gaps from deprecated verbs)
 - `tmp_trigger_type`: **10 rows**
@@ -650,7 +646,7 @@ As of S50:
 - **DB-24** ✅ S50 (agy): Portrait marker (id=51) registered in tmp_subject_target. Move primitives seeded.
 - **DB-25** ✅ S50 (agy): Design-confirmed — Situation Report cards move to expired area (not removed); Target Profiles returned in dispatch case. No Remove primitive needed per Art 03.
 - **DB-26** ✅ S50 (agy): Move role permissions verified against Art 03. Political act, Situation Report card, Target Profile resolved.
-- **DB-09** (PM05): district_adjacency table — PK confirmed `district_component_id` (S50). DDL FK corrected in GEMINI_CONTEXT.md. Still blocked on 00b-05 (live_state spec). agy to execute after 00b §8 update.
+- **DB-09** ✅ S50 (agy): district_adjacency created and fully seeded — 21 district components in `components`, 21 rows in `district_metadata`, 104 bidirectional adjacency rows. PKs enforced on district_metadata and player_metadata.
 - **tmp_category / tmp_type**: Deprecated. Drop and rebuild after Art 04b sign-off (DB-16).
 - **destination_component_id / destination_zone_id** in tmp_action: Unpopulated — destination currently encoded in notes text only.
 
