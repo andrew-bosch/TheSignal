@@ -62,6 +62,122 @@ The most expensive session mistake: assuming `tmp_comp_verb_role.phase_id` refer
 
 ---
 
+## 2.5 Table Purposes & Relationships
+
+### The Three-Table Cascade (Core Design Model)
+
+The action primitive model is built from three tables that answer three different questions about the same (component × verb) pair. All three must be populated for a component to be fully modeled.
+
+```
+tmp_comp_verb_beat   — WHEN is this (component × verb) valid?
+                       One row per (component, verb, beat).
+
+tmp_comp_verb_role   — WHO performs this (component × verb), and in what role?
+                       One row per (component, verb, player_role, action_phase).
+
+tmp_action           — WHAT is the specific legal primitive?
+                       One row per (beat, subject, verb, component) root action.
+```
+
+`tmp_comp_verb_beat` + `tmp_comp_verb_role` together define the **possibility space** — everything that could in principle be modeled. `tmp_action` is the **legal space** — what is actually legislated. The gap between them is visible via `v_unlegislated_primitives`. This relationship is locked as **L166**: taxonomy defines possibility; Art 03 defines legality. Gaps are procedure coverage signals, not errors.
+
+`tmp_subject_target` is a fourth table in the cascade for components that Move: it answers WHERE can this component be placed/moved to.
+
+### Per-Table Purpose
+
+| Table | Purpose | Key question answered |
+|-------|---------|----------------------|
+| `tmp_component` | Component **type** registry. One row per type (not per physical copy). State-machine flags define what can be done to that type. | "What component types exist, and what are they capable of?" |
+| `tmp_verb` | Physical verb vocabulary. 8 verbs covering all primitive physical actions. | "What actions can be physically performed?" |
+| `tmp_beat` | Beat and phase registry. 20 beats covering a full Quarter from Upkeep through Debrief. | "What are the named game phases, and when do they occur?" |
+| `tmp_player_role` | Actor lookup. 2 values: Faction and ARBITER. Used as `role_id` in tmp_comp_verb_role and `subject_id` in tmp_action. | "Who are the two types of actors?" |
+| `tmp_role_phase` | Action phase lookup. 3 values: initiator / executor / fulfiller. Used as `phase_id` in tmp_comp_verb_role — **not a beat reference**. | "What role does an actor play in an action chain?" |
+| `tmp_comp_verb_beat` | Beat coverage matrix. Declares which beats a component×verb pair is in scope for. Does not specify who or how. | "At which beats is this component×verb combination valid?" |
+| `tmp_comp_verb_role` | Role assignment matrix. Declares who (Faction or ARBITER) performs a component×verb action and in what phase role. Does not create primitives — only declares the design-space claim. | "Who performs this component×verb action, and as what role?" |
+| `tmp_action` | Action primitive table. Each root row is one concrete, legally modeled action: (beat + trigger + subject + verb + component). This is the intersection of design space and Art 03 legal space. | "What specific actions are legally modeled in the game?" |
+| `tmp_subject_target` | Placement target registry. Pairs a component (subject) with valid destination components (targets). Drives `Move=1` in v_comp_verb_matrix. | "Where can this component be placed or moved to?" |
+| `tmp_trigger_type` | Trigger vocabulary. 10 types classifying what causes an action to fire (phase open/during/close, rule.card, player.introduce_card, state_condition, cascade, etc.). | "What event causes this action to become active?" |
+| `tmp_function` | Card function vocabulary. 12 abstract functions (Add, Remove, Redirect, Protect, Block, Copy…) used in Art 04b taxonomy. Abstract layer above physical verbs. | "What does this card do in game-design terms?" |
+| `tmp_function_verb` | Function → verb mapping. Bridges card design language (functions) to physical action language (verbs). Modify/Protect/Block have no verb mapping — they are constraint functions, not physical primitives. | "What physical verb does this card function resolve to?" |
+| `tmp_layer` | Six-layer taxonomy (Territory / Economy / Information / Submission / Resolution / Standing). Classifies what layer of game reality a card affects. | "Which game layer does this card or action operate on?" |
+| `tmp_visibility_scope` | VS-xx visibility codes. 8 scopes classifying who can see a piece of information during play. Referenced by tmp_layer and Art 04 §6 schema. | "Who can see this?" |
+| `tmp_state_condition` | State condition header. Groups a set of game-state clauses with a logic operator (AND/OR). Used when trigger_type = state_condition. | "What combination of game state conditions triggers this?" |
+| `tmp_state_condition_clause` | Individual game-state clause. One testable condition: (component, state_key, operator, value). Multiple clauses per condition combine via the parent's logic_operator. | "What is the specific state test in this condition?" |
+| `tmp_component_faction` | Faction-specific component assignments. Maps components to factions that own or have special rules for them. | "Which faction owns or has exclusive access to this component?" |
+| `tmp_component_ring` | Ring-specific component assignments. Maps components to rings where they are available or restricted. | "In which rings is this component valid?" |
+| `tmp_category` / `tmp_type` | **Deprecated.** Old card taxonomy (Board / Resource / Action / Cross-Category). Superseded by the six-layer system (tmp_layer). Drop and rebuild after Art 04b sign-off (PM05 DB-16). | — |
+
+### Relationship to Legacy Tables
+
+The tmp_ model is a **design workspace** that partially overlaps with and partially extends the legacy schema:
+
+| tmp_ table | Legacy counterpart | Relationship |
+|-----------|-------------------|--------------|
+| `tmp_component` | `components` | Different structures. `tmp_component` = type registry with state flags. `components` = physical instance registry with parent hierarchy and master_blueprint_id. Migration requires a reconciled design: a `component_types` table plus the existing `components` instance table. Not a simple rename. |
+| `tmp_action` | `game_actions` | Different structures. `game_actions` = flat verb/definition catalog. `tmp_action` = full operational grammar (beat, trigger, subject, verb, component, prereq chain). Migration requires 00b §8 to define the target permanent structure before any DDL. |
+| `tmp_verb` | `game_actions.action_verb` | Verbs are inline in `game_actions`; `tmp_verb` is a normalized lookup. |
+| `tmp_beat` | `beat` | Parallel tables with similar purpose. `tmp_beat` is more fully populated and has richer metadata (month, beat_num, primary_agent, description). |
+| `tmp_subject_target` | `action_valid_targets` | Overlapping purpose. `action_valid_targets` predates the tmp_ model and may be inconsistent with current design. |
+
+**Migration is not ready** until: Art 04b is signed off, DB-22–26 are closed, and 00b §8 is updated with the reconciled permanent schema design. See PM05 DB-14.
+
+### Views — Purpose by Group
+
+Views are the primary interface to the model. They transform raw table data into actionable answers. All views are read-only and auto-update from base tables.
+
+**Gap Analysis — "What's missing or wrong?"**
+
+| View | Purpose |
+|------|---------|
+| `v_unlegislated_primitives` | Shows (beat, subject, verb, component) tuples that exist in the design space (tmp_comp_verb_beat × tmp_comp_verb_role phase_id=1) but have no matching root row in tmp_action. Primary audit tool. |
+| `v_unlegislated_by_trigger` | Collapses v_unlegislated_primitives to (subject, verb, component) with beat_count. Answers: "what gaps exist across ALL beats?" — ignores which specific beat is missing. |
+| `v_gap_executor_check` | For each gap in v_unlegislated_by_trigger, shows who the phase_id=2 executor is. ARBITER executor = expected gap (Faction declares, ARBITER executes physically — these are structural). Faction executor = true unmodeled gap requiring a design decision. |
+| `v_component_coverage` | Every component with its primitive count. Zero on an actionable=1 component = nothing modeled for it. |
+| `v_duplicate_primitives` | Detects duplicate (beat, subject, verb, component) rows where prereq_id IS NULL. Used to catch bulk-insert double-seeding (occurred in S48 — 37 duplicates removed). |
+| `v_unassigned_triggers` | Primitives in tmp_action where trigger_type_id IS NULL. Used after bulk seeding to find rows that slipped through without a trigger type. |
+
+**Primitive Browsing — "What's modeled?"**
+
+| View | Purpose |
+|------|---------|
+| `v_primitives_with_trigger` | Full human-readable primitive list: beat name, trigger type, subject, verb, component, notes. The main view for reading what's in the model. |
+| `v_primitives` | Simplified version without trigger type. |
+| `v_action_by_beat` | Primitives grouped by beat. Useful for reviewing what a specific beat contains. |
+| `v_faction_primitives` | All Faction-subject root primitives. |
+| `v_arbiter_primitives` | All ARBITER-subject root primitives. |
+| `v_faction_exclusive` | Primitives where only Faction acts (no ARBITER row for the same beat/verb/component). |
+| `v_arbiter_exclusive` | Primitives where only ARBITER acts. |
+| `v_arbiter_triggered` | ARBITER-initiated primitives specifically. |
+| `v_split_agency` | Primitives where Faction initiates (phase_id=1) but ARBITER executes (phase_id=2). Captures the "player declares, referee executes" pattern that is structurally common. |
+| `v_action_chain` | Prerequisite chains (prereq_id linkage). Currently empty — no multi-step chains are populated yet. |
+
+**Coverage Matrices — "What can what do, and where?"**
+
+| View | Purpose |
+|------|---------|
+| `v_comp_verb_matrix` | Per-component capability grid (Add / Remove / Move / Reveal / Conceal / Flip / Corrupt). **Important caveat:** Add and Remove are hardcoded to 1 for all actionable=1 components — they are NOT derived from tmp_action. Move=1 is derived from tmp_subject_target. Reveal/Conceal/Flip/Corrupt are derived from transform_ flags. The view shows design-space capability, not actual primitive coverage. |
+| `v_placement_matrix` | Which components can be placed on which receivable target components. Derived from tmp_subject_target. Columns are the 13 receivable components; rows are all actionable components. |
+| `v_beat_subject_coverage` | Per-beat primitive counts broken down by subject (Faction vs. ARBITER). Shows load ratio and under-populated beats. |
+| `v_beat_role_matrix` | Role coverage (initiator/executor/fulfiller) per beat. |
+| `v_trigger_beat_coverage` | Trigger types present in each beat. A beat with no `rule.card` or `player.*` triggers may be missing card-driven actions. |
+| `v_trigger_summary` | Trigger type distribution across the full model. |
+| `v_role_matrix` | Cross-reference of roles across components and verbs. |
+| `v_beat_verb_summary` | Verb usage counts per beat. |
+| `v_fulfiller_summary` | Fulfiller role coverage across the model. |
+
+**Design-Layer Views — "How does card design connect to primitives?"**
+
+| View | Purpose |
+|------|---------|
+| `v_layer_function_coverage` | Every Faction-initiatable Function × Component combination with beat availability. Bridges Art 04b taxonomy (functions) to the primitive model (verbs + beats). The design-space view for card design sessions. |
+| `v_object_from` | Subject-to-object relationships derived from the model. |
+| `v_validact` | Valid (subject, verb, component) action combinations per the model. |
+| `v_verb` | Verb reference with name. |
+
+**Migration impact on views:** All 29 views reference tmp_ tables directly. Migrating to permanent tables requires rewriting every view. The view DDL is the migration's hidden cost — plan for it before executing any table rename.
+
+---
+
 ## 3. Lookup Tables — Full Values
 
 ### tmp_verb (8 rows)
