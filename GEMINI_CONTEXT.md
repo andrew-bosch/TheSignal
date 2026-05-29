@@ -1,5 +1,5 @@
 # THE SIGNAL — Gemini Context Brief
-*Last updated: 2026-05-26 — Session 40*
+*Last updated: 2026-05-28 — Session 47*
 
 This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated at session close.
 
@@ -268,6 +268,269 @@ Components to audit: presence tokens, deployment markers, structure blocks, esta
 - **Current tables:** `components`, `card_metadata`, `card_types`, `card_subtypes`, `factions`, `beat`, `game_actions`, `action_costs`, `action_valid_targets`, `action_restrictions`, `card_faction_modifiers`, `game_zones`, `component_valid_zones`, `city_rings`, `district_metadata`, `district_connections`, `player_metadata`, `live_state`, `setup_state`, `allocation_types`
 
 **Do not propose schema changes via `Claude_context.md` without explicitly flagging them as proposals.** Claude Code executes all DDL after Andy confirms.
+
+---
+
+## Session 47 Update — 2026-05-28
+
+### S47 DB Work Complete — New tmp_ Tables
+
+Session 47 built out the formal action taxonomy model in `the_signal_db`. All tables are live and populated. **Do not truncate or rebuild these tables without dual authorization.**
+
+New tables: `tmp_trigger_type`, `tmp_state_condition`, `tmp_state_condition_clause`
+Altered: `tmp_action` — added `trigger_type_id` (FK → tmp_trigger_type), `source_action_id` (FK → tmp_action, self-ref), `component_id` relaxed to nullable
+New verb: `Invoke` (id=17) in `tmp_verb`
+New components: Portrait track (id=50, non-actionable), Portrait marker (id=51, ARBITER-controlled), Status marker (id=49)
+Primitives: 213 rows in `tmp_action`; trigger types assigned across all rows
+
+New views live in `the_signal_db`:
+- `v_primitives_with_trigger` — readable primitive library with trigger type
+- `v_trigger_summary` — trigger distribution by subject
+- `v_unlegislated_primitives` — (beat, subject, verb, component) in taxonomy but not in tmp_action (60 rows)
+- `v_unlegislated_by_trigger` — (subject, verb, component) with no coverage in tmp_action under any trigger (14 rows)
+
+Governing principle locked as **L166** in PM02: the taxonomy defines possibility space; Art 03 defines legal space. Gaps are procedure coverage signals — permit / prohibit / defer. The two artifacts co-evolve.
+
+`tmp_component` is becoming the working source of truth for the physical component registry. DB entries are expected to eventually drive or align all design artifacts. The gap analysis and audit work below is organized around that goal.
+
+---
+
+### agy Punch List — S47
+
+Work through these in priority order. Get as far as you can; report what you complete, what you find, and where you're blocked in `Claude_context.md`. You do not need fully-prescribed SQL for every item — read the artifacts and DB, form your own queries, and report findings. This is investigative work.
+
+**Connection:** `mysql -u gemini -pgemini_password1 the_signal_db`
+**Read access:** all of `~/Projects/TheSignal/` — use freely for verification
+
+---
+
+#### A. Gap Analysis Views (CREATE OR REPLACE VIEW — no DDL/DML otherwise)
+
+Seven views to build. For views 1–6 the SQL is provided for precision; for view 7 flag as blocked. Report row counts for each.
+
+**A1 — v_gap_executor_check**
+For each row in `v_unlegislated_by_trigger`, show who is the executor (phase_id=2) in `tmp_comp_verb_role`. If executor = ARBITER, the gap may be expected (Faction initiates via card, ARBITER physically executes). If executor = Faction, it is a true unlegislated gap requiring a design decision.
+
+```sql
+CREATE OR REPLACE VIEW v_gap_executor_check AS
+SELECT
+  g.subject, g.verb, g.component, g.beat_count,
+  r.name AS executor
+FROM v_unlegislated_by_trigger g
+JOIN tmp_comp_verb_role cvr
+  ON  cvr.component_id = g.component_id
+  AND cvr.verb_id      = g.verb_id
+  AND cvr.phase_id     = 2
+JOIN tmp_player_role r ON cvr.role_id = r.id
+ORDER BY g.subject, g.verb, g.component;
+```
+
+**A2 — v_unassigned_triggers**
+Primitives in `tmp_action` where `trigger_type_id IS NULL`. These slipped through bulk UPDATE assignment and need classification.
+
+```sql
+CREATE OR REPLACE VIEW v_unassigned_triggers AS
+SELECT a.id, b.name AS beat, r.name AS subject, v.name AS verb,
+       c.name AS component, a.notes
+FROM tmp_action a
+JOIN tmp_beat        b  ON a.beat_id      = b.id
+JOIN tmp_player_role r  ON a.subject_id   = r.id
+JOIN tmp_verb        v  ON a.verb_id      = v.id
+LEFT JOIN tmp_component c ON a.component_id = c.id
+WHERE a.trigger_type_id IS NULL
+ORDER BY b.id, r.id, v.name;
+```
+
+**A3 — v_duplicate_primitives**
+Duplicate (beat_id, subject_id, verb_id, component_id) in `tmp_action` where `prereq_id IS NULL`.
+
+```sql
+CREATE OR REPLACE VIEW v_duplicate_primitives AS
+SELECT b.name AS beat, r.name AS subject, v.name AS verb,
+       c.name AS component, COUNT(*) AS duplicate_count,
+       GROUP_CONCAT(a.id ORDER BY a.id) AS action_ids
+FROM tmp_action a
+JOIN tmp_beat        b  ON a.beat_id      = b.id
+JOIN tmp_player_role r  ON a.subject_id   = r.id
+JOIN tmp_verb        v  ON a.verb_id      = v.id
+LEFT JOIN tmp_component c ON a.component_id = c.id
+WHERE a.prereq_id IS NULL
+GROUP BY a.beat_id, a.subject_id, a.verb_id, a.component_id,
+         b.name, r.name, v.name, c.name
+HAVING COUNT(*) > 1
+ORDER BY b.id, r.id, v.name;
+```
+
+**A4 — v_component_coverage**
+All tmp_component rows with their primitive count. Zero = no legal action assigned. Flag any actionable=1 component with zero primitives.
+
+```sql
+CREATE OR REPLACE VIEW v_component_coverage AS
+SELECT c.id, c.name, c.actionable, c.transformable,
+       COALESCE(cnt.n, 0) AS primitive_count
+FROM tmp_component c
+LEFT JOIN (
+  SELECT component_id, COUNT(*) AS n
+  FROM tmp_action
+  WHERE prereq_id IS NULL AND component_id IS NOT NULL
+  GROUP BY component_id
+) cnt ON cnt.component_id = c.id
+ORDER BY primitive_count ASC, c.name;
+```
+
+**A5 — v_beat_subject_coverage**
+Distinct verb count, component count, and total primitives per subject per beat.
+
+```sql
+CREATE OR REPLACE VIEW v_beat_subject_coverage AS
+SELECT b.id AS beat_id, b.name AS beat, r.name AS subject,
+       COUNT(DISTINCT a.verb_id)      AS verb_count,
+       COUNT(DISTINCT a.component_id) AS component_count,
+       COUNT(*)                       AS primitive_count
+FROM tmp_action a
+JOIN tmp_beat        b ON a.beat_id    = b.id
+JOIN tmp_player_role r ON a.subject_id = r.id
+WHERE a.prereq_id IS NULL
+GROUP BY b.id, b.name, r.id, r.name
+ORDER BY b.id, r.id;
+```
+
+**A6 — v_trigger_beat_coverage**
+Trigger types present in each beat. A beat with no `rule.card` or `player.*` triggers may be missing card-driven actions.
+
+```sql
+CREATE OR REPLACE VIEW v_trigger_beat_coverage AS
+SELECT b.id AS beat_id, b.name AS beat,
+       CONCAT(tt.type, CASE WHEN tt.subtype IS NOT NULL
+              THEN CONCAT('.', tt.subtype) ELSE '' END) AS trigger_type,
+       COUNT(*) AS cnt
+FROM tmp_action a
+JOIN tmp_beat         b  ON a.beat_id         = b.id
+JOIN tmp_trigger_type tt ON a.trigger_type_id = tt.id
+WHERE a.prereq_id IS NULL
+GROUP BY b.id, b.name, tt.id, tt.type, tt.subtype
+ORDER BY b.id, tt.type, tt.subtype;
+```
+
+**A7 — v_card_primitive_map** — **BLOCKED.** Requires a `tmp_card_ref` seed table (card_id → component_id, verb_id, subject_id) that Claude Code has not yet provided. Flag as blocked in `Claude_context.md`.
+
+---
+
+#### B. Art 03 Bidirectional Alignment Audit
+
+**This is the highest-value investigation.**
+
+Read `~/Projects/TheSignal/V1/03___Game_Procedures_Rules.md` — specifically the beat-by-beat procedures in §3.11 (and surrounding sections covering Upkeep, Debrief, Battlefield Strength, etc.).
+
+For each procedure described in Art 03 that involves a physical action on a component:
+1. Identify the (beat, subject, verb, component) tuple it describes
+2. Check whether a corresponding primitive exists in `tmp_action`
+3. Flag procedures with no primitive — these are Art 03 saying something is legal that the model doesn't yet capture (gaps from the other direction)
+
+Cross-reference with `v_unlegislated_primitives` (gaps in the model with no Art 03 procedure). The bidirectional audit — Art 03 procedures with no primitive AND primitives with no Art 03 procedure — is the complete picture of alignment between the two artifacts.
+
+Report: table of (beat, subject, verb, component, Art 03 procedure reference, primitive id or MISSING).
+
+---
+
+#### C. Art 00b Schema Alignment
+
+Read `~/Projects/TheSignal/V1/00b___Data_Architecture.md`.
+
+`tmp_component` is a prototype of `components`. `tmp_action` relates to `game_actions`. `tmp_verb` relates to action verb vocabulary. Compare:
+
+1. **tmp_component vs. components** — are the fields (actionable, transformable, receivable, transform_*) consistent with 00b's component entity spec? Are there fields in 00b's components table missing from tmp_component, or vice versa? Flag discrepancies.
+
+2. **tmp_action vs. game_actions** — does the S47 action grammar (beat_id, trigger_type_id, prereq_id, source_action_id, subject_id, verb_id, component_id) align with 00b's game_actions design intent? Are there fields in game_actions not represented in tmp_action? Are there S47 design decisions (trigger taxonomy, invoke meta-verb) that need to be reflected back into 00b?
+
+3. **Known gaps Andy flagged** — 00b has documented gaps for ARBITER and faction components that live only in the tableaux or in procedures not yet defined. Read 00b and identify: which component types and zones are referenced in 00b but have no corresponding tmp_component rows? These are candidates for the next component registry expansion.
+
+Report: a gap table (entity → 00b spec → tmp_ table → status: aligned / gap / missing).
+
+---
+
+#### D. Art 04b §4.2 Matrix Verification
+
+Read `~/Projects/TheSignal/V1/04b___Action_Taxonomy_Design_Analysis.md` §4.2 (Component × Verb Matrix).
+
+§4.2 is a hand-written table listing which verbs each component supports. `tmp_comp_verb_role` is the DB-derived equivalent. Diff them:
+
+1. Any component/verb combination in §4.2 but absent from `tmp_comp_verb_role` — documentation ahead of DB
+2. Any component/verb combination in `tmp_comp_verb_role` but absent from §4.2 — DB ahead of documentation (S47 additions)
+3. Any component present in Art 02a/02b component definitions but absent from `tmp_component` entirely
+
+Report the diff table. Also note: §4.2 does not yet include Portrait track, Portrait marker, or Status marker — these were added in S47. Confirm they are correctly absent from §4.2 (they will be added in the next Art 04b update).
+
+---
+
+#### E. Component Lifecycle Completeness
+
+For each component in `tmp_component`, examine its lifecycle coverage across `tmp_action`:
+
+1. Can it be Added? Can it be Removed? If it can be Added at some beat but never Removed at any beat (or vice versa), that is a lifecycle gap — either a modeling error or an intentional design choice that should be documented.
+2. Can it be Moved? If a component has Move in `tmp_comp_verb_role` but no Move primitive in `tmp_action` at any beat, flag it.
+3. For transformable components (transformable=1): are there Flip/Corrupt/Reveal/Conceal primitives corresponding to its transform properties?
+
+Report: component lifecycle table (component, Add beats, Remove beats, Move beats, Transform verbs covered, gaps flagged).
+
+---
+
+#### F. Beat Load Distribution
+
+Query `v_beat_subject_coverage` once it's created (task A5). Produce a beat-by-beat summary:
+
+1. For each beat, what is the ratio of Faction primitives to ARBITER primitives?
+2. Which beats are ARBITER-dominant (>80% ARBITER)? Are these the expected resolution beats?
+3. Which beats have zero Faction actions? Is that intentional per Art 03?
+4. Flag any beats that appear under-populated relative to their narrative weight in Art 03 (e.g., a major resolution beat with only 1–2 primitives).
+
+This is a design-quality check, not a schema check. Report qualitative observations alongside the numbers.
+
+---
+
+#### G. Tableau and Unmodeled Component Strategy
+
+This is strategic planning, not a specific query.
+
+Andy notes that `tmp_component` is becoming the source of truth for the physical component registry, and that 00b has known gaps for components stored in or associated with ARBITER's tableau and faction tableaux — components involved in procedures not yet formally designed.
+
+Read:
+- `~/Projects/TheSignal/V1/00b___Data_Architecture.md` — for what's documented about tableaux and component storage
+- `~/Projects/TheSignal/V1/03___Game_Procedures_Rules.md` — for procedure references to components that may not yet be in tmp_component
+- `~/Projects/TheSignal/V1/04___Card_System.md` — for card effects that reference components not in tmp_component
+
+Identify:
+1. Component types referenced in procedures or card effects that have no tmp_component row
+2. Components that exist implicitly (e.g., "ARBITER places a modifier token on the case" — modifier token is in tmp_component, but what about the case itself as a zone vs. component?)
+3. Any tableau-resident components (items that live on ARBITER Tableau or Faction Tableau by default) with no actionable status defined
+
+Output: a prioritized list of missing or underspecified components, with notes on where each is referenced and what DB fields would be needed to add them correctly. This feeds the next round of tmp_component expansion.
+
+---
+
+---
+
+#### H. Web Research — Card Interaction Patterns from Other Game Media
+
+The Signal's card system has identified a two-layer structure: **execution cards** (directly invoke a physical primitive on a component) and **constraint cards** (modify conditions under which another action fires — Block, Protect, Modify). Before finalizing the Function vocabulary in Art 04b §5, research what interaction patterns exist in established games that The Signal may not yet be modeling.
+
+Research focus areas:
+
+1. **Deckbuilding games** (Dominion, Arkham Horror LCG, Marvel Champions, Netrunner, Twilight Imperium) — what action/reaction interaction types do these games use? Are there Function-equivalents The Signal hasn't considered? Pay particular attention to: interrupt mechanics, conditional triggers, permanent vs. temporary modifiers, resource conversion chains, and hidden-information manipulation.
+
+2. **Negotiation/area control games** (Twilight Imperium, Dune, Root, Oath, Pax series) — what deal-making, alliance, and betrayal mechanics exist that The Signal's Accord and political act system may not be capturing? What card-driven asymmetric faction abilities are common patterns?
+
+3. **Asymmetric action economy** — The Signal has Faction (player) and ARBITER roles. What patterns in other games handle referee/moderator roles that also interact with the card system mechanically (not just narratively)?
+
+4. **Specific gaps to check against** — The Signal's current unlegislated Faction interactions include: Faction Corrupt (Intel token, Accord, Target Profile), Faction Conceal Intel token, Faction Reveal/Remove Intel token. Do other games have mechanics for players manipulating their own or opponent's information assets? What are the established patterns for "falsify," "intercept," "plant," "burn" in card game design?
+
+Report: for each research area, list 3–5 specific interaction patterns with game citations, and for each one flag whether The Signal's current Function vocabulary covers it, partially covers it, or has no equivalent. This feeds the §5 Category/Function design discussion and potential new card concepts.
+
+**Do not propose new card designs** — that is Andy's creative domain. Report patterns and gaps only.
+
+---
+
+**Reporting format:** Write findings to `Claude_context.md` as you complete each section. You do not need to finish everything in one session. Partial results on high-priority items (B and C) are more valuable than silence on all items. Flag blockers clearly with the specific artifact reference or DB query that produced the dead end.
 
 ---
 

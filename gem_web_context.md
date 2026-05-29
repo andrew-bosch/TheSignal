@@ -51,6 +51,76 @@ You are Gem, the Gemini web collaborator on THE SIGNAL tabletop game design proj
 
 ---
 
+## Bucket A — Session 47 Tasks
+
+**Current session: 47.** Two tasks. Complete both. Deliver output structured for Andy to relay to Claude.
+
+---
+
+### Task 1 — Card Taxonomy Index: Verify Signed-Off Cards + Gap Analysis
+
+Art 04b §5.2 (in the context dump) now has a full card index (C01–C35, P01–P18) with Status, Category, Function, Subject, and Primitive Verb columns.
+
+**Signed-off cards for this task: C01–C16 only.** C17 and beyond are draft or unreviewed — do not include them in the gap analysis, but flag any obvious taxonomy inconsistencies you notice in passing.
+
+**Part A — Verify the index entries for C01–C16.**
+
+For each signed-off card, read its full entry in Artifact 04 (the card system) and verify:
+1. Category assignment is correct per the §5.1 definitions
+2. Function assignment matches the card's actual mechanical effect
+3. Subject is the correct component being acted on
+4. Primitive Verb(s) column correctly identifies the physical verb(s) from §3.1 — or `—` where the card operates as a constraint
+
+Report discrepancies as a table: Card ID | Field | Current value | Recommended value | Reason. If a card's entry is correct, no row needed — only flag disagreements.
+
+**Part B — Gap analysis on C01–C16.**
+
+Using only the signed-off cards as the data set:
+1. Which Category × Function combinations appear in C01–C16? Build the frequency table.
+2. Which combinations are missing entirely from the signed-off set? Flag each as: (a) exists in §6.1 design space list, (b) not yet in §6.1, or (c) intentionally excluded per §4 key decisions.
+3. Which subjects (components) appear most frequently? Which never appear as a subject?
+4. Constraint cards (Primitive Verb = `—`): what fraction of C01–C16? Is this ratio sustainable across a 53-card deck?
+
+Deliver: verification table (Part A, discrepancies only) + gap table (Part B, complete).
+
+---
+
+### Task 2 — Interaction Patterns from Other Game Media
+
+The Signal's card Function vocabulary currently covers: Add, Remove, Redirect, Recover, Modify, Protect, Block, Copy, Reveal, Conceal, Shift, Corrupt, React.
+
+The system has identified a structural distinction between **execution functions** (directly invoke a physical primitive) and **constraint functions** (modify conditions under which another action fires). Block, Protect, and Modify are constraint functions with no physical primitive equivalent.
+
+Research and report:
+
+**Part A — Interaction patterns from deckbuilding and negotiation games.**
+
+For each of the following interaction types, cite at least one game that implements it, describe the mechanism, and assess whether The Signal's current Function vocabulary covers it, partially covers it, or has no equivalent:
+
+- Card countering / interrupts (reactive play)
+- Information asymmetry exploitation (using knowledge of opponent's hand or plans)
+- Conditional effects (if X is true, then Y fires)
+- Chained / combo actions (card A unlocks card B)
+- Taxation / toll mechanics (actions that impose costs on opponents)
+- Alliance and betrayal mechanics (agreements that can be broken with in-game consequences)
+- Exhaustion / cool-down mechanics (components or actions locked for N rounds)
+- Forced disclosure (compel opponent to reveal)
+- Deception / bluffing with mechanical consequence
+- Resource denial / disruption
+
+**Part B — Specific gaps to flag.**
+
+The Signal has unlegislated Faction interactions: Corrupt (Intel token, Accord, Target Profile), Conceal (Intel token), Reveal/Remove (Intel token). In other deckbuilding or negotiation games, what mechanics exist for:
+- Players falsifying information assets
+- Players burning or destroying their own assets to deny opponents
+- Players intercepting or redirecting an opponent's submitted action before resolution
+
+For each: cite the game, describe the mechanic, and assess fit for The Signal's design constraints (paper prototype, negotiation-focused, ARBITER as mediator).
+
+Deliver: two tables — Part A (interaction type | game | mechanism | Signal coverage status) and Part B (mechanic | game | Signal fit assessment).
+
+---
+
 ## Bucket B — Profile & Calibration
 
 *Persistent record of working patterns and known error patterns. Apply these proactively.*

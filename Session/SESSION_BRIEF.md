@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 46 | Updated: 2026-05-28**
+**Session 47 | Updated: 2026-05-28**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,9 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 46: 04b-03 action taxonomy audit COMPLETE. Built physical action primitive model in the_signal_db (tmp_ tables): tmp_component (38 rows), tmp_verb (7 verbs), tmp_subject_target, v_validact (119 rows), v_placement_matrix, v_comp_verb_matrix. Physical action verbs reduced 13→7: Add, Remove, Move, Reveal, Conceal, Flip, Corrupt. New components added: Modifier token, Target Profile, ARBITER Dominance Marker. Schema: transform_type split to 3 boolean columns (transform_visibility, transform_orientation, transform_data). Art 04b §4 redesigned: physical action taxonomy (§4.1 verbs + §4.2 component × verb matrix) replaces category/function table; v_comp_verb_matrix is DB source. Version bumped to 1.3. React reclassified as modifier card mechanic (timing/interrupt), not an action taxonomy verb. **No new L-decisions.** **Next: 04b §3 cleanup (04b-04) + Andy sign-off on v1.3; then C17 and Art 04 continuation.**
-
-DB-11 confirmed executed by agy (component_positions rename complete). tmp_ table permanence decision deferred (DB-14). New PM05 items: 04b-04 (§3 cleanup), 04-XX (modifier token Beat 4), 04-XX (React reclassification), DB-14 (tmp_ table decision).
+Session 47: Action taxonomy formalized into DB primitive model. New tables: tmp_player_role, tmp_role_phase, tmp_beat (20 beats), tmp_comp_verb_beat, tmp_comp_verb_role, tmp_action, tmp_trigger_type (10 types), tmp_state_condition, tmp_state_condition_clause. 213 primitives in tmp_action. New components: Status marker (49), Portrait track (50), Portrait marker (51). Verb Invoke (17) added for C16 meta-action. Gap analysis: v_unlegislated_primitives (60 rows) + v_unlegislated_by_trigger (14 rows — all Faction-initiated). **L166 locked:** taxonomy = possibility space; Art 03 = legal space; gaps = procedure coverage signals. Art 04b restructured: §3 physical action layer first, §4 card design layer (former §3), §5 column definitions + Status column + Primitive Verb column. agy punch list A–H queued (GEMINI_CONTEXT.md). Gem tasks queued (gem_web_context.md Bucket A). **Next: agy/Gem analysis; Art 04b v1.4 sign-off (04b-09); C17 sign-off; DB-18/19/20 legalization decisions; continue §5 gap analysis triage.**
 
 ---
 
@@ -23,7 +21,7 @@ DB-11 confirmed executed by agy (component_positions rename complete). tmp_ tabl
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. |
-| 04b — Action Taxonomy | 1.3 | §3 cleanup (04b-04) → Andy sign-off. Source: v_comp_verb_matrix in the_signal_db. |
+| 04b — Action Taxonomy | 1.4 | Re-sign-off required (material: §3.3 DB model, §4 card design layer, §5 col defs + status). Source: tmp_action + gap views in the_signal_db. |
 | 04 — Action Card System | 0.9.20 | C17 sign-off (after 04b sign-off); C36–C42 Intel economy cards; React card reclassification pending. |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining. |
@@ -65,11 +63,11 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
-- **L165** (S43): Portrait track dual function — narrative register + Apex pentagram geometry. ARBITER Debrief observation encodes Portrait intelligence. "Ask ARBITER" delta query design flagged (07-10).
+- **L166** (S47): Action taxonomy = possibility space; Art 03 = legal space. Gaps are procedure coverage signals — permit / prohibit / defer. The two artifacts co-evolve iteratively.
+- **L165** (S43): Portrait track dual function — narrative register + Apex pentagram geometry.
 - **L164** (S43): The Dossier — ARBITER's hidden Intel Token storage (behind screen, not public Reservoir).
-- **L163** (S43): Intel Token Battlefield modifier = +2 per fresh token targeting opposing faction.
 
-→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L165)
+→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L166)
 
 ---
 
@@ -80,7 +78,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v2.0** — ✅ Signed Off S43
-- **04b v1.3** — §3 cleanup (04b-04) → sign-off
+- **04b v1.4** — re-sign-off required (material additions S47)
 - **C17** — after 04b sign-off
 
 ---
