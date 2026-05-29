@@ -8,9 +8,9 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S48 complete. Art 04b v1.5 signed off. Six-layer card taxonomy locked (L167). Expansion stages renamed Tier 1–5 (L168) — Tier 5 public name "Chorus" only. Art 04 §5 P1–P6 inserted (taxonomy constraints from 04b §9); old P1–P8 renumbered P7–P14. 00a cross-refs updated. PM01 and True State swept for Tier N terminology. XA-37 queued for Haiku (rename remaining Ln/Layer N references in 00b, 00c, 03a, Art 07–11). DB-27 queued for agy (register Emergency Response card id=95).
+S49 complete. Art 04 §5 P1–P15 signed off (04-54 ✅). C17 (Intercept) signed off. XA-37 complete. Art 04 taxonomy sweep C01–P18 done (Category→Layer field rename + six-layer values applied to all cards). §11.1 expanded with canonical modifier card definition. New Principle 8 (cross-faction narrative voices). C11–C15 cross-faction narrative voices added (one aligned, one opposed per card). Faction pentagram alignment model saved to Whiteboard (pending canonical home in Art 00 §7). Beat 20 DB trade primitives inserted (tmp_action rows 278–279; tmp_subject_target seeded Faction→Faction and Faction→ARBITER).
 
-**Next session:** Art 04 §5 P1–P6 review (04-54) → C17 sign-off → XA-37 (Haiku).
+**Next session:** C18+ card vetting pass — C18–C35 and P01–P18.
 
 ---
 
@@ -24,7 +24,7 @@ S48 complete. Art 04b v1.5 signed off. Six-layer card taxonomy locked (L167). Ex
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. §9 removed; §10 → §9 (Standalone Card Types). React collapsed into Modifier cards. Emergency Response penultimate context added. |
-| 04 — Action Card System | 0.9.20 | §5 P1–P14 rewritten (P1–P6 taxonomy constraints, P7–P14 former P1–P8). **04-54: P1–P6 review prerequisite to C17.** C17 next after 04-54. |
+| 04 — Action Card System | 0.9.21 | §5 P1–P15 signed off ✅ S49. C17 signed off ✅ S49. Taxonomy sweep C01–P18 complete. Cross-faction voices C11–C15 added. **Next: C18+ vetting pass.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -40,8 +40,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **00-07** | Art 00 multicultural texture pass | ✅ S40 |
 | **00a-08** | 00a v0.3 re-sign-off | ✅ S40 |
 | **01-05** | Art 01 overhaul — physical zone hierarchy, all Overview children | ✅ S40 |
-| **04-54** | Art 04 §5 P1–P6 review — prerequisite to C17 | Open — first item S49 |
-| **XA-37** | Haiku sweep: rename Ln/Layer N expansion tier refs → Tier N across 00b, 00c, 03a, Art 07–11; strip "Layer N —" from 03a section headings | Open — Haiku-executable |
+| **04-54** | Art 04 §5 P1–P15 signed off + C17 signed off | ✅ S49 |
+| **XA-37** | Haiku sweep: rename Ln/Layer N expansion tier refs → Tier N across 00b, 00c, 03a, Art 07–11; strip "Layer N —" from 03a section headings | ✅ S49 |
 | **DB-27** | agy: register Emergency Response card id=95 in tmp_component (1\|1\|0\|1\|0\|0) + seed role/beat primitives | Open — agy |
 | **DB-11** | agy ALTER TABLE live_state — rename anchored_to_component_id → on_component_id (nullable) + add on_game_zone_id | Open — unblocked S45 |
 | **DB-09** | Create district_adjacency table (agy) — seed from Art 01 adjacency map | Open — Art 01 signed off |
@@ -84,7 +84,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v2.0** — ✅ Signed Off S43
-- **C17** — after 04-54 (Art 04 §5 P1–P6 review)
+- **C17** — ✅ Signed Off S49
 
 ---
 

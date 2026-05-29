@@ -266,7 +266,7 @@ For each quarter:
 - Debrief distribution
 
 ### 10.2 Chronicle Format
-*[TBD — physical format. Options: (a) pre-printed Chronicle sheet per quarter, one page per quarter, 8 pages per session; (b) lined notepad with ARBITER's written record. Recommend: structured pre-printed form for L1 to enforce completeness. Design in Artifact 11.]*
+*[TBD — physical format. Options: (a) pre-printed Chronicle sheet per quarter, one page per quarter, 8 pages per session; (b) lined notepad with ARBITER's written record. Recommend: structured pre-printed form for Tier 1 to enforce completeness. Design in Artifact 11.]*
 
 ### 10.3 Chronicle Confidentiality
 The Chronicle is ARBITER's private document. Factions may not request to see it during the session. At session end, ARBITER may reference the Chronicle during scoring but is not required to share the full record.
@@ -347,7 +347,7 @@ See PM02 10-01 for flavor text placement in player manuals.
 ## 14. Special Conditions & Gameplay Impacts
 
 ### ARBITER Absence
-*[TBD — can the game be run without a dedicated ARBITER player? L1 recommendation: no. ARBITER is required. If an ARBITER is unavailable, the session cannot begin.]*
+*[TBD — can the game be run without a dedicated ARBITER player? Tier 1 recommendation: no. ARBITER is required. If an ARBITER is unavailable, the session cannot begin.]*
 
 ### ARBITER Disputes
 If the table disputes an ARBITER ruling: ARBITER cites the relevant rule from Artifact 00a or the applicable artifact. The rule is authoritative. If no rule covers the case, ARBITER rules in favor of the more conservative interpretation (the one that changes the board state least) and notes it in the Chronicle for post-session review.

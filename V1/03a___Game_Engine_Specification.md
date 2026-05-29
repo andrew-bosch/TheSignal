@@ -2,7 +2,7 @@
 ## THE SIGNAL P1 — Paper Prototype
 
 **Version:** 0.98  
-**Status:** 🔄 In Progress — Layers 1–3 complete; Phase procedures added (Phase_1–Phase_7); Layer 4 stub pending  
+**Status:** 🔄 In Progress — Tiers 1–3 complete; Phase procedures added (Phase_1–Phase_7); Tier 4 stub pending  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
 **Depends on:** [00b — Data Architecture](00b___Data_Architecture.md)
@@ -25,13 +25,13 @@ Art 03a is the code-lite technical companion to Art 03. Where Art 03 describes t
 
 1. [Overview](#1-overview)
 2. [Index](#2-index)
-3. [Scope and Layer Structure](#3-scope-and-layer-structure)
-4. [Layer 1 — State Model](#4-layer-1--state-model)
-5. [Layer 2 — Phase & Beat Procedures (Pseudocode)](#5-layer-2--phase--beat-procedures-pseudocode)
+3. [Scope and Tier Structure](#3-scope-and-tier-structure)
+4. [State Model](#4-state-model)
+5. [Phase & Beat Procedures (Pseudocode)](#5-phase--beat-procedures-pseudocode)
    - Quarter_Flow() — full Quarter entry point
    - Phase_1() through Phase_7() — phase procedures
    - Beat_0() through Beat_5() — Phase 6 detail
-6. [Layer 3 — Decision Tables & Edge Case Registry](#6-layer-3--decision-tables--edge-case-registry)
+6. [Decision Tables & Edge Case Registry](#6-decision-tables--edge-case-registry)
    - DT-01: Card face determination at Beat 0 (non-Apex)
    - DT-02: Card face determination at Beat 0 (Apex)
    - DT-03: Critical Success override (01–05)
@@ -44,26 +44,26 @@ Art 03a is the code-lite technical companion to Art 03. Where Art 03 describes t
    - Apex_Activation() procedure
 7. [Modifier Stack Reference](#7-modifier-stack-reference)
 8. [Design Notes](#8-design-notes)
-9. [Layer 4 — Modifier Balance Analysis (stub)](#9-layer-4--modifier-balance-analysis)
+9. [Modifier Balance Analysis (stub)](#9-modifier-balance-analysis)
 
 ---
 
-## 3. Scope and Layer Structure
+## 3. Scope and Tier Structure
 
-Art 03a is organized into three layers of increasing specificity:
+Art 03a is organized into three tiers of increasing specificity:
 
-| Layer | Contents | Status |
+| Tier | Contents | Status |
 |-------|----------|--------|
 | 1 | State Model — formal game state at each beat boundary, using 00b entity IDs as variable vocabulary | ✅ Draft complete — §4 |
 | 2 | Phase & Beat Procedures — Quarter_Flow() entry point; Phase_1()–Phase_7() with explicit state mutations for all phases; Beat_0()–Beat_5() as Phase 6 detail (modifier stack summation formula, resolution inequality) | ✅ Draft complete — §5 |
 | 3 | Decision Tables — all branching conditions surfaced as tables; edge cases include face-down/face-up, Apex vs. non-Apex, Critical overrides, partial payment, The Mid scope (L107), Type B scope | ✅ Draft complete — §6 |
 | 4 | Modifier Balance Analysis — modifier stack mathematics: expected difficulty shift per modifier combination, pathological stack identification, modifier cap recommendations | 🔄 Stub — §9; blocked until all M-xx values fully specified (Art 04 card definitions pending) |
 
-**Modifier balance analysis** (original XA-27 scope) is a derived output of Layer 2 once the modifier stack is formally expressed. Stub in §9 — full population blocked until Art 04 card definitions complete (M-08, M-09, M-10 variable rows).
+**Modifier balance analysis** (original XA-27 scope) is a derived output of Tier 2 once the modifier stack is formally expressed. Stub in §9 — full population blocked until Art 04 card definitions complete (M-08, M-09, M-10 variable rows).
 
 ---
 
-## 4. Layer 1 — State Model
+## 4. State Model
 
 The State Model defines every variable in the game system — its type, visibility scope, and the beat boundaries at which its value may change. Variable names follow the pattern `Domain.Field[index]`. Index variables in square brackets reference 00b entity IDs.
 
@@ -292,7 +292,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 |----------|------|-----------|------------|
 | `Reservoir[RT-xx]` | Integer ≥ 0 per resource type | VS-01 | Session setup (pre-loaded 50 per type); Beat 0 (payment drain from dispatch cases); Beat 4 Submit Payment (political act payment drain); Debrief (Burst Play trade-in; Translation payouts) |
 
-*Design decision: Reservoir = System entity (not F-06). ARBITER already has RT-06 (Resolution) as their own resource type, earned operationally. The Reservoir is the collective pool of all spent faction resources — a board-level pool owned by no faction. Conflating it with F-06 would mix ARBITER's operational budget with the city's resource pool. If L2 architecture treats all resource pools under a unified `Resources[Owner][RT-xx]` model, Reservoir maps to `Owner = System.Reservoir`, not `Owner = F-06`.*
+*Design decision: Reservoir = System entity (not F-06). ARBITER already has RT-06 (Resolution) as their own resource type, earned operationally. The Reservoir is the collective pool of all spent faction resources — a board-level pool owned by no faction. Conflating it with F-06 would mix ARBITER's operational budget with the city's resource pool. If Tier 2 architecture treats all resource pools under a unified `Resources[Owner][RT-xx]` model, Reservoir maps to `Owner = System.Reservoir`, not `Owner = F-06`.*
 
 *Starting value of 50 per resource type is a working baseline — sufficient to sustain Burst Play trades (modifier cards → Reservoir resources at 1:1), Translation payouts, and any other Reservoir draws across 8 Quarters. Pending playtest validation (PT-xx — to be assigned).*
 
@@ -567,15 +567,15 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 
 ---
 
-## 5. Layer 2 — Phase & Beat Procedures (Pseudocode)
+## 5. Phase & Beat Procedures (Pseudocode)
 
-`Quarter_Flow()` is the entry point — it calls `Phase_1()` through `Phase_7()` in sequence. `Phase_6()` delegates to `Beat_0()` through `Beat_5()`, the high-formalism detail layer for Resolution. Phase procedures capture all state mutations outside Resolution at the level of precision needed for L2 implementation. Beat procedures add the modifier stack summation formula and the resolution check as a formal inequality, plus modifier IDs from §7.
+`Quarter_Flow()` is the entry point — it calls `Phase_1()` through `Phase_7()` in sequence. `Phase_6()` delegates to `Beat_0()` through `Beat_5()`, the high-formalism detail tier for Resolution. Phase procedures capture all state mutations outside Resolution at the level of precision needed for Tier 2 implementation. Beat procedures add the modifier stack summation formula and the resolution check as a formal inequality, plus modifier IDs from §7.
 
 **Notation:**
 - `←` assigns to a state variable; `+=` appends to a list or increments
 - `M-xx.value` is the Threshold Adjustment from §7 (positive = threshold raised = easier; negative = harder)
 - `D100()` is a uniform random integer 01–100
-- `DT-xx` defers branching detail to Layer 3 (§6)
+- `DT-xx` defers branching detail to Tier 3 (§6)
 - `DESIGN FINDING [DF-xx]` marks an inconsistency surfaced by formalization — requires investigation
 - `district_income(d, f)` references the Art 02a §5 influence level income table — values not reproduced here
 - `D10()` is a uniform random integer 1–10
@@ -1405,9 +1405,9 @@ STATE MUTATIONS:
 
 ---
 
-## 6. Layer 3 — Decision Tables & Edge Case Registry
+## 6. Decision Tables & Edge Case Registry
 
-Decision tables cover all branching points in Beats 0–5, surfacing conditions deferred in Layer 2 via `DT-xx` notation. All tables are L108 compliant — single-typed columns, controlled vocabulary, single condition per row.
+Decision tables cover all branching points in Beats 0–5, surfacing conditions deferred in Tier 2 via `DT-xx` notation. All tables are L108 compliant — single-typed columns, controlled vocabulary, single condition per row.
 
 | Table | Branch Condition | Status |
 |-------|-----------------|--------|
@@ -1629,7 +1629,7 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 *M-01–M-05 are mutually exclusive — exactly one Standing modifier applies per faction per resolution, derived from `Faction.PublicStanding[f]` via the `M_standing()` helper in §5.*
 
-*M-08, M-09, M-10, M-12 variable rows are fully specified here for Fixed modifiers; variable values pending Art 04 card definitions. Balance analysis (modifier stack mathematics) is the planned Layer 4 of this artifact, blocked until all M-xx values are defined.*
+*M-08, M-09, M-10, M-12 variable rows are fully specified here for Fixed modifiers; variable values pending Art 04 card definitions. Balance analysis (modifier stack mathematics) is the planned Tier 4 of this artifact, blocked until all M-xx values are defined.*
 
 **Correction note:** The §7 table in v0.2 contained values from a prior design iteration (M-01: "Critical Success −25", M-02: "Critical Failure +25", etc.) that do not match Art 03 §14. Critical Success and Critical Failure are resolution rules, not modifier stack entries. The corrected table above is authoritative. All §5 Beat Procedures reference this version.
 
@@ -1639,28 +1639,28 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 **Source of truth:** Art 03 is the current authoritative specification. This document is a formalization layer — where 03a contradicts 03, the inconsistency must be investigated. The conflict may reflect an error in 03a's formalization, or it may surface an ambiguity, edge case, or gap in Art 03 that prose obscured. Either outcome is a design finding requiring resolution and, if necessary, refinement of Art 03.
 
-**L2 implication:** The Beat Procedures in Layer 2 are intended to be directly translatable to a server-side game engine (L2 architecture). The TypeScript schema in Retired/Electronic/old__08_DATA_MODEL.md is the target L2 data model; 00b entity IDs should align to it.
+**Tier 2 implication:** The Beat Procedures in Tier 2 are intended to be directly translatable to a server-side game engine (Tier 2 architecture). The TypeScript schema in Retired/Electronic/old__08_DATA_MODEL.md is the target Tier 2 data model; 00b entity IDs should align to it.
 
 **Modifier balance analysis:** Once all modifier rows (M-01–M-12) are fully specified, the summation formula in Beat_3() enables a full balance analysis: expected difficulty shift per modifier combination, pathological stack identification, and recommendation for modifier caps if needed.
 
 ---
 
-### Open Design Findings (surfaced by Layer 2 formalization)
+### Open Design Findings (surfaced by Tier 2 formalization)
 
 | ID | Section | Finding | Action Required |
 |----|---------|---------|-----------------|
 | DF-01 | Beat_1/2 | ✅ Resolved — Session 22 (L112). Art 03 Beat 1 used "Operation Failed"; Beat 2 used "Operation Blocked." Both unified as **"Voided"** (RO-03). Verb form chosen: past participle implies ARBITER action without naming cause. Art 03 Beat 1/2, Beat 5 example, and 00b RO-03 all updated. | — |
 | DF-02 | Beat_4, §7 | ✅ Resolved — Session 22 (L113). Threshold convention adopted throughout. Art 03 beat prose updated: "+50 difficulty marker" → "−50 threshold marker" in Beat 0 table and Beat 4 prose. Rationale: threshold framing is positively oriented — players think "I need to roll under 69," not "I have a 31% chance to fail." All references now use threshold-subtractive sign convention matching the modifier table (M-06/M-07 = −50). | — |
 | DF-03 | §4.1 Faction Domain | ✅ Resolved — Session 22. `Faction.Resources[F-xx][RT-xx]` Mutates At split into five distinct entries: Upkeep Step 5 (income); Beat 0 (covert payment drain); Phase 4 Declaration (tokens → Grid.Political.ResourceStake); Beat 4 Submit Payment (ResourceStake → Reservoir); Beat 3/4 failure conditions (card text penalties); Debrief (trades, conversion). | — |
-| DF-04 | §4, §5 | ✅ Resolved — Session 22. (a) Case (CA-xx) added to 00b §4 entity registry and §6 schema status — indexed via F-xx in V1, CA-xx prefix anticipates L2+. (b) Packet and (c) GridCell noted in 00b §4 as internal 03a modeling types (no persistent IDs; not registered entities). (d) IP-xx already registered in 00b §4 and §6 — ID column will be added to Art 03 §7 table at Art 03 sign-off. | — |
+| DF-04 | §4, §5 | ✅ Resolved — Session 22. (a) Case (CA-xx) added to 00b §4 entity registry and §6 schema status — indexed via F-xx in Tier 1, CA-xx prefix anticipates Tier 2+. (b) Packet and (c) GridCell noted in 00b §4 as internal 03a modeling types (no persistent IDs; not registered entities). (d) IP-xx already registered in 00b §4 and §6 — ID column will be added to Art 03 §7 table at Art 03 sign-off. | — |
 
 ---
 
-## 9. Layer 4 — Modifier Balance Analysis
+## 9. Modifier Balance Analysis
 
 *Stub — blocked until all M-xx values fully specified.*
 
-Layer 4 derives from the summation formula in Beat_3() and Beat_4(). Once M-08, M-09, and M-10 variable values are defined by Art 04 card definitions, the following analysis becomes executable:
+Tier 4 derives from the summation formula in Beat_3() and Beat_4(). Once M-08, M-09, and M-10 variable values are defined by Art 04 card definitions, the following analysis becomes executable:
 
 **Planned output:**
 

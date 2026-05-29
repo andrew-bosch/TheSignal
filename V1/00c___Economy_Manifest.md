@@ -8,7 +8,7 @@
 
 **Relationship to source artifacts:** Source artifacts remain canonical. This document does not define economic values — it indexes them. When a source artifact defines a cost or rate, the value lives in the source artifact; 00c registers it here for cross-system visibility. Discrepancies resolve in favor of the source artifact; flag and correct here.
 
-**Future state:** Becomes the primary playtesting tuning tool at L1 playtest. At L2+, feeds directly into the code engine's balance configuration layer.
+**Future state:** Becomes the primary playtesting tuning tool at Tier 1 playtest. At Tier 2+, feeds directly into the code engine's balance configuration layer.
 
 **Depends on:** 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking; 03 — Round Structure & Gameplay; 04 — Card System (§5 blocked pending completion)
 
@@ -303,7 +303,7 @@ Amplifies all Public Standing changes for factions with presence in the Resident
 
 ## 7. Balance Notes & Playtest Observations
 
-— Pending. Populated during L1 playtesting.
+— Pending. Populated during Tier 1 playtesting.
 
 ---
 
@@ -390,7 +390,7 @@ Theoretical ceiling: Dominant in every district of the faction's native resource
 
 Two candidates:
 
-- **03a Layer 5** — extends the formal balance analysis already in 03a (Layer 4 = modifier stack math; Layer 5 = income probability math). Keeps all balance analysis in one artifact. 03a is a technical companion document — consistent home.
+- **03a Tier 5** — extends the formal balance analysis already in 03a (Tier 4 = modifier stack math; Tier 5 = income probability math). Keeps all balance analysis in one artifact. 03a is a technical companion document — consistent home.
 - **00d — Probability Model** — standalone reference artifact in the 00-series. Keeps economic analysis separate from the code-engine specification. More accessible to a designer reading the economy manifest.
 
 *Resolve before Art 04 completion — this work begins immediately after the card set is locked.*

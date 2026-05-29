@@ -361,7 +361,7 @@ React and Instant are timing sub-functions within the Modifier card type — the
 | C14 | Construction Crew | ✅ | Submission | Remove Restriction | Covert operation (presence requirement) | — |
 | C15 | Infrastructure Yield | ✅ | Economy | Add | Native resource | Add |
 | C16 | Pattern Match | ✅ | Submission | Copy | Covert operation (full) | Invoke |
-| C17 | Archive Recovery | 📝 | Economy | Recover | Intel token | Add |
+| C17 | Intercept | 📝 | Information | Reveal | Covert operation — named faction | Reveal |
 | C18 | Identity Blind | 📝 | Information | Protect | Action attribution | Conceal |
 | C19 | Deep Cover | 📝 | Information | Protect (permanent) | Action attribution | Conceal |
 | C20 | Misdirection | 📝 | Information | Add | Intel token (corrupt content) | Add + Corrupt |

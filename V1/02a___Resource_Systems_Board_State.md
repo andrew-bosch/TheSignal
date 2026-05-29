@@ -506,18 +506,18 @@ This gives The Network an additional resource each Upkeep from their academic ne
 *Data Exchange — The Mid, Findings, base value 2*
 
 ```
-Ghost:       3 chips + 1 structure block → Dominant
+Ghost:       3 presence chips + 1 structure block → Dominant
              Income: 2 Findings (full)
                    + 1 Findings (affinity bonus — Ghost native = Findings,
                      district resource = Findings, Ghost is Dominant)
                    + 1 Findings (structure block, declared as district resource)
              Total: 4 Findings
 
-The Syndicate: 2 chips → Established (second place)
+The Syndicate: 2 presence chips → Established (second place)
              Income: 2 Findings (full, no affinity bonus — Capital ≠ Findings)
              Total: 2 Findings
 
-The Network:  1 chip → Present (third place)
+The Network:  1 presence chip → Present (third place)
              Income: 1 Findings (half of 2 = 1, rounded down)
              Total: 1 Findings
 ```
@@ -529,10 +529,10 @@ Ghost places the Control flag on Data Exchange. Each player collects their own i
 *Financial Clearinghouse — The Mid, Capital, base value 2, Round 5*
 
 ```
-The Syndicate: 4 chips → CONTESTED (tied with Ghost at top)
-Ghost:         4 chips → CONTESTED (tied with Syndicate)
-The Guild:     2 chips → ESTABLISHED (second place, 2-chip minimum met)
-The Network:   1 chip  → PRESENT (third place)
+The Syndicate: 4 presence chips → CONTESTED (tied with Ghost at top)
+Ghost:         4 presence chips → CONTESTED (tied with Syndicate)
+The Guild:     2 presence chips → ESTABLISHED (second place, 2-chip minimum met)
+The Network:   1 presence chip  → PRESENT (third place)
 
 The player who created the tie places the Tension marker on the district.
 
@@ -550,7 +550,7 @@ The Guild with 2 chips generates more than Ghost and The Syndicate combined. The
 
 *Power Grid — The Mid, Capacity, base value 2, Round 4*
 
-The Guild is Dominant (3 chips). They have 1 structure block here.
+The Guild is Dominant (3 presence chips). They have 1 structure block here.
 
 At Upkeep, the Guild player declares: *"Power Grid structure produces Capacity."*
 

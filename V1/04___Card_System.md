@@ -74,7 +74,7 @@ Cards may produce secondary effects in other layers, but their primary layer and
 
 **Principle 2 — Faction-specific cards fill gaps, not duplicate standard cards.**
 
-Where standard cards already cover a function/target combination, faction-specific cards should either fill a gap or provide a meaningfully differentiated version (different restriction, scope, or scale).
+Where standard cards already cover a Layer — Function — Subject combination, faction-specific cards should either fill a gap or provide a meaningfully differentiated version (different restriction, scope, or scale).
 
 **Principle 3 — Layer assignment reflects the game system being affected, not the physical verb.**
 
@@ -88,39 +88,45 @@ Protect is not cross-layer. A card that protects a Territory element is a Territ
 
 React fires on publicly countable or observable conditions. Hidden conditions are not valid React triggers. This maintains information integrity — you cannot react to information you shouldn't have.
 
-**Principle 6 — Permanent effects are more interesting than temporary ones.**
+**Principle 6 — Effect duration is permanent or within-Quarter. Multi-Quarter temporaries are prohibited.**
 
-Cross-round temporary effects are prohibited. When designing new cards, prefer permanent effects over temporary ones.
+Effects either resolve permanently (persisting for the remainder of the session) or expire at end of the current Quarter. An effect that lasts a stated number of Quarters is not a valid design — it creates tracking overhead with no corresponding design payoff. When both durations could work, prefer permanent.
 
 **Principle 7 — Faction-specific cards are doctrinally exclusive.**
 
 Every faction-specific card must pass two tests: mechanical (only this faction would do this — the effect cannot be justified by another faction's doctrine) and narrative (only this faction would say it this way — the card text sounds like no other faction). If either test fails, the card belongs to no one. Traceable to Artifact 00 §7. *00a R29.*
 
-**Principle 8 — Difficulty is a card property.**
+**Principle 8 — Every card carries multiple voices in tension.**
+
+The same action means different things depending on who is watching — this is the narrative texture of The Signal, and it runs through every card. Standard cards carry one perspective from each of the five factions. Faction-specific cards carry three: the owning faction's voice, one perspective from a doctrinally aligned faction, and one perspective from a doctrinally opposed faction.
+
+*Faction alignment map: Whiteboard/faction_pentagram_alignment.md — pending canonical home in Art 00 §7.*
+
+**Principle 9 — Difficulty is a card property.**
 
 Base difficulty is designed and printed on the card. It is not derived from board state or influence level. Board state may modify the threshold through ring modifiers and affinity bonuses — it does not set the base. *L91, L97.*
 
-**Principle 9 — Narrative consistency with Artifact 00.**
+**Principle 10 — Narrative consistency with Artifact 00.**
 
 All card text is consistent with the world, factions, and doctrines in Artifact 00. Standard cards are grounded in actions any capable organization in New Meridian might plausibly take. The mechanics and the fiction are the same thing written differently.
 
-**Principle 10 — Portrait fires on action, not outcome.**
+**Principle 11 — Portrait fires on action, not outcome.**
 
 Portrait is impacted when an action strongly aligns with or against faction doctrine. Grey areas produce no Portrait effect. Unconditional Portrait fires on action taken regardless of roll outcome. Portrait Bonus fires only on a specified condition. *L82.*
 
-**Principle 11 — ARBITER is the sole mover of the Portrait track.**
+**Principle 12 — ARBITER is the sole mover of the Portrait track.**
 
 No card Effect field may state a direct Portrait track shift. Faction influence on Portrait is mediated entirely through ARBITER's application of Portrait scoring. *L84.*
 
-**Principle 12 — Flat portrait modifiers are prohibited on standard cards.**
+**Principle 13 — Flat portrait modifiers are prohibited on standard cards.**
 
 Flat modifiers fire on every resolution regardless of submitter — on standard cards this creates unbounded accumulation risk. Flat is reserved for faction-specific cards where a board-state change is doctrinally significant in a bounded, deliberate way. *L131.*
 
-**Principle 13 — Card entries contain only card-specific information.**
+**Principle 14 — Card entries contain only card-specific information.**
 
 If a rule or convention is already established in a signed-off artifact, do not restate it. Card entries contain only information unique to that card: restrictions that override a general rule, ARBITER timing specific to this card, edge cases not covered by universal rules. *L127.*
 
-**Principle 14 — Cost is equitable to the success effect.**
+**Principle 15 — Cost is equitable to the success effect.**
 
 The resource cost of a card is calibrated to the expected value of its success outcome. A high-cost card must deliver a commensurately significant success. Connects to 00c §8 Derived Cost Analysis.
 
@@ -130,7 +136,7 @@ The resource cost of a card is calibrated to the expected value of its success o
 
 Every card uses this data structure. All fields are required. N/A is a valid value.
 
-*For the action taxonomy definitions (Category, Function, Subject values) see Artifact 04b §4.*
+*For the action taxonomy definitions (Layer, Function, Subject values) see Artifact 04b §4.*
 
 *VS-xx Visibility Scope — values used in this table (full definitions: Artifact 00b §5.9):*
 - *VS-01 — Public: visible to all players at all times. Visibility scope only — does not imply the value is printed on the physical card.*
@@ -150,13 +156,13 @@ Every card uses this data structure. All fields are required. N/A is a valid val
 | Identity | **Card subtype** | Enum | Distribution scope | Standard, Faction-specific | VS-01 | TBD | — |
 | Identity | **Card faction** | Enum | Owning faction | All; Ghost; The Network; The Syndicate; The Guild; The Directorate | VS-01 | TBD | All = available to all factions. Named faction = faction-specific card. |
 | Identity | **Pool copies** | Integer | Copies in faction's setup pool | Standard: 2; Emergency Response: 1 (Singleton); N/A → 0 | VS-01 | No | Pool count — not printed on card. Governs print quantities. Deprecated per L144 (04-40) — move to Art 09 or DB only. |
-| Taxonomy | **Category** | Enum | Action taxonomy — category | Board, Resource, Action, Cross-Category — see Artifact 04b §4 | VS-01 | TBD | — |
+| Taxonomy | **Layer** | Enum | Action taxonomy — layer | Territory, Economy, Information, Submission, Resolution, Standing — see Artifact 04b §4 | VS-01 | TBD | — |
 | Taxonomy | **Function** | Enum | Action taxonomy — function | See Artifact 04b §4 | VS-01 | TBD | — |
 | Taxonomy | **Subject** | Enum | Action taxonomy — subject | See Artifact 04b §4 | VS-01 | TBD | — |
 | Taxonomy | **Design note** | Prose | Design intent — faction doctrine rationale, card purpose, Art 11 layout context | N/A if none | VS-04 | No | VS-04 ARBITER-Only. Informs Art 11 layout decisions and Art 04b taxonomy analysis. Not printed on card. |
 | Taxonomy | **Arbiter context** | Prose | ARBITER resolution guidance — timing, edge cases, validation rules enforced at the table | N/A if none | VS-04 | No | VS-04 ARBITER-Only. Informs Art 07 ARBITER resolution notes. Not printed on card. |
 | Narrative | **Narrative anchor** | String | In-world narrative grounding | One sentence | VS-01 | TBD | Standard cards: neutral observer voice. Faction-specific: owning faction's voice. |
-| Narrative | **Faction perspectives** | String | Per-faction in-world perspective | One sentence per faction | VS-01 | TBD | — |
+| Narrative | **Faction perspectives** | String | Per-faction in-world perspective | Standard cards: one sentence per faction (all 5). Faction-specific cards: owning faction + one doctrinally aligned faction + one doctrinally opposed faction (see P8, Whiteboard/faction_pentagram_alignment.md). | VS-01 | TBD | — |
 | Mechanics | **Beat** | Integer | Resolution beat | 1–5 | VS-01 | TBD | Beat in Phase 6 this card is processed. Resolution order within a beat: governed by dispatch case submission order per Art 03 §7. |
 | Mechanics | **Trigger condition** | Enum | Activation condition for non-default timing | N/A, Submission-time, Beat-N, Phase-N, Condition-based | VS-01 | TBD | — |
 | Mechanics | **Target district** | String | District submission target | Broadest valid statement; N/A if no district target | VS-01 | Face | — |
@@ -303,7 +309,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Board
+- **Layer:** Territory
 - **Function:** Add
 - **Subject:** Structure block
 
@@ -374,7 +380,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Board
+- **Layer:** Territory
 - **Function:** Remove
 - **Subject:** Structure block
 
@@ -445,9 +451,9 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Board
+- **Layer:** Territory
 - **Function:** Add
-- **Subject:** Presence
+- **Subject:** Presence token
 
 - **Design note:** C03 mirrors C01 structurally — Build Structure is the Guild's native action, Campaign is the Network's.
 - **Arbiter context:** N/A
@@ -516,9 +522,9 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Board
+- **Layer:** Territory
 - **Function:** Remove
-- **Subject:** Presence
+- **Subject:** Presence token
 
 - **Design note:** Portrait values reflect doctrinal alignment — Ghost and Syndicate omitted, neither strongly aligned nor opposed.
 - **Arbiter context:** N/A
@@ -587,7 +593,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Resource
+- **Layer:** Economy
 - **Function:** Add
 - **Subject:** Intel token
 
@@ -658,7 +664,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Action
+- **Layer:** Submission
 - **Function:** Modify
 - **Subject:** Political act (cost)
 
@@ -729,9 +735,9 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Action
+- **Layer:** Resolution
 - **Function:** Modify
-- **Subject:** Political act (effect magnitude)
+- **Subject:** Political act (outcome scale)
 
 - **Design note:** Amplification cuts both ways — a failed political act that loses −1 Public Standing loses −2 instead.
 - **Arbiter context:** Beat 2 — ARBITER retains awareness at resolution. Effect applied when political act resolves in Beat 4. [Beat 4 handling: TBD.] [TBD: how to flag submitting faction using Pass in Declaration step — restriction enforcement mechanism.]
@@ -800,9 +806,9 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Board
+- **Layer:** Territory
 - **Function:** Add
-- **Subject:** Presence
+- **Subject:** Presence token
 
 - **Design note:** No secondary cost — Capital bypasses local knowledge requirements. No presence requirement — primary entry mechanism for new districts. Syndicate affinity is difficulty reduction not cost reduction — better outcomes from spending, not discounts. Three Portrait penalties reflect strong doctrinal opposition.
 - **Arbiter context:** N/A
@@ -871,7 +877,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Resource
+- **Layer:** Economy
 - **Function:** Redirect
 - **Subject:** Native resource
 
@@ -942,7 +948,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Cross-Category
+- **Layer:** Resolution
 - **Function:** Protect
 - **Subject:** Covert operation (difficulty)
 
@@ -1021,7 +1027,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Cross-Category
+- **Layer:** Territory
 - **Function:** Protect
 - **Subject:** Structure block
 
@@ -1033,6 +1039,8 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Guild does not abandon what it has built.*
 - **Faction perspectives:**
   - Guild: *Reinforcement is not fear. It is preparation.*
+  - Network: *Hardened walls are preparation. What's inside them decides whether the cost was worth it.*
+  - Directorate: *A structure immune to demolition is a structure immune to code review. We notice these arrangements.*
 
 **Mechanics**
 
@@ -1088,7 +1096,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Resource
+- **Layer:** Economy
 - **Function:** Recover
 - **Subject:** Native resource
 
@@ -1100,6 +1108,8 @@ Ghost — P17–P18
 - **Narrative anchor:** *In New Meridian, even demolition is a Guild service.*
 - **Faction perspectives:**
   - Guild: *We do not need to swing the hammer ourselves. We simply ensure we are paid when someone else does.*
+  - Syndicate: *Positioning to profit from someone else's action before they take it. The instinct is sound. We simply call it by a different name.*
+  - Ghost: *A faction that announces it expects demolition before demolition happens has already told us what it knows.*
 
 **Mechanics**
 
@@ -1155,7 +1165,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Board
+- **Layer:** Territory
 - **Function:** Add
 - **Subject:** Presence token
 
@@ -1167,6 +1177,8 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Guild was here before the city had a name.*
 - **Faction perspectives:**
   - Guild: *Unclaimed territory is not unknown to us. We have records going back further than anyone else at this table.*
+  - Network: *The Guild's records go back further than ours. What they do with that history is what we watch.*
+  - Directorate: *Precedence is established through legal process, not through whoever kept the longer archive.*
 
 **Mechanics**
 
@@ -1222,9 +1234,9 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Board
-- **Function:** Add
-- **Subject:** Presence + structure
+- **Layer:** Submission
+- **Function:** Remove Restriction
+- **Subject:** Covert operation (presence requirement)
 
 - **Design note:** Premium play — 3 Capacity and d100 for simultaneous presence and structure anywhere.
 - **Arbiter context:** Crit fail: deliver 1 Guild Intel Token → Ghost and 1 district native → Syndicate via case. Do not notify Guild.
@@ -1234,6 +1246,8 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Guild does not always wait for permission.*
 - **Faction perspectives:**
   - Guild: *Sometimes the crews arrive before the paperwork. This is not an accident.*
+  - Network: *We know this method. Presence before permission is how this city was actually built.*
+  - Ghost: *Establishing presence before authorization is requested — the Guild is better at covert operations than they admit.*
 
 **Mechanics**
 
@@ -1289,7 +1303,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Resource
+- **Layer:** Economy
 - **Function:** Add
 - **Subject:** Native resource
 
@@ -1301,6 +1315,8 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Guild built New Meridian's infrastructure. Drawing from it is not theft. It is dividend.*
 - **Faction perspectives:**
   - Guild: *We built this. Every unit we draw from it was always ours.*
+  - Syndicate: *The Guild built the pipes. They are billing us for the water. We respect the position even if we resent the rate.*
+  - Directorate: *Infrastructure built under city contract belongs to New Meridian, not to the builder. We have the original agreements.*
 
 **Mechanics**
 
@@ -1357,7 +1373,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Action
+- **Layer:** Submission
 - **Function:** Copy
 - **Subject:** Covert operation (full)
 
@@ -1427,7 +1443,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Cross-Category
+- **Layer:** Information
 - **Function:** Reveal
 - **Subject:** Covert operation — named faction
 
@@ -1497,7 +1513,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Cross-Category
+- **Layer:** Information
 - **Function:** Protect
 - **Subject:** Action attribution
 
@@ -1567,9 +1583,9 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Cross-Category
-- **Function:** Protect
-- **Subject:** Action attribution (permanent)
+- **Layer:** Information
+- **Function:** Protect (permanent)
+- **Subject:** Action attribution
 
 - **Design note:** Flagged for redesign — duplicates function with C18 (Cross-Category — Protect — Action attribution). See D-04-02.
 - **Arbiter context:** N/A
@@ -1637,7 +1653,7 @@ Ghost — P17–P18
 
 **Taxonomy**
 
-- **Category:** Resource
+- **Layer:** Information
 - **Function:** Add
 - **Subject:** Intel token (corrupt content)
 
@@ -1722,7 +1738,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Directorate was here before the other factions arrived. Their jurisdictional authority is not theoretical.*
 - **Faction perspectives:**
   - Directorate: *This district is under institutional oversight. Expansion requires authorisation. Authorisation has not been granted.*
-- **Taxonomy:** Action — Block — Covert operation (C01, C03).
+- **Taxonomy:** Submission — Block — Covert operation (C01, C03).
 
 ---
 
@@ -1752,7 +1768,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Directorate does not destroy — it removes from play. Sometimes that is enough.*
 - **Faction perspectives:**
   - Directorate: *The marker has been detained. Its conversion will not occur.*
-- **Taxonomy:** Board — Remove (permanent) — Presence (claim marker).
+- **Taxonomy:** Territory — Remove (permanent) — Deployment marker.
 
 - **Design note:** Permanent per Principle 11. Prior version returned marker at end of next round — revised.
 - **Arbiter context:** Intel token requirement means Directorate must have gathered intelligence on target faction this or last round.
@@ -1785,7 +1801,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Directorate's institutional advantage is the record. They protect it.*
 - **Faction perspectives:**
   - Directorate: *The record is preserved. Its integrity is now institutional fact.*
-- **Taxonomy:** Cross-Category — Protect (permanent) — Accord agreement / written record.
+- **Taxonomy:** Information — Protect (permanent) — Written record.
 
 ---
 
@@ -1815,7 +1831,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Directorate monitors because monitoring is their primary tool for managing what they cannot directly control.*
 - **Faction perspectives:**
   - Directorate: *The installation is in place. Everything that happens in that district now happens with our awareness.*
-- **Taxonomy:** Resource — Add (permanent) — Intel token.
+- **Taxonomy:** Economy — Add (permanent) — Intel token.
 
 - **Design note:** Permanent per Principle 11. Prior version monitored for 2 rounds — revised. Operation type only, not faction — creates intelligence chain requiring follow-up Gather to identify actors.
 - **Arbiter context:** N/A
@@ -1848,7 +1864,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Directorate can close a border. The question it always faces is whether closing makes the situation more or less manageable.*
 - **Faction perspectives:**
   - Directorate: *The border is sealed. Expansion requires our authorisation. It will not be granted today.*
-- **Taxonomy:** Action — Block — Covert operation (presence placement).
+- **Taxonomy:** Submission — Block — Covert operation (presence placement).
 
 - **Design note:** Flagged for redesign — C21 and C25 both Block covert operations, same function different scope. See D-04-03. Replacement candidate: **COMPLIANCE DIVIDEND** — Resource — Add — Mandate; at cleanup, if no faction entered a Directorate-controlled district or contested a Directorate political act this round, gain 1 Mandate. Simpler fallback: gain 1 Mandate on any successful Directorate operation that goes uncontested. *"Institutional authority self-validates when respected."*
 - **Arbiter context:** N/A
@@ -1885,7 +1901,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Network does not need to know everything — only enough to make the right question public.*
 - **Faction perspectives:**
   - Network: *We do not reveal everything. We reveal the piece that makes everything else visible.*
-- **Taxonomy:** Cross-Category — Reveal — Action attribution.
+- **Taxonomy:** Information — Reveal — Action attribution.
 
 ---
 
@@ -1914,7 +1930,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Network protects its sources. This includes itself.*
 - **Faction perspectives:**
   - Network: *We believe in transparency. Except when protecting a source requires otherwise.*
-- **Taxonomy:** Cross-Category — Protect — Action attribution.
+- **Taxonomy:** Information — Protect — Action attribution.
 
 - **Design note:** Flagged for redesign — Cross-Category — Protect — Action attribution is more doctrinally Ghost than Network. Network's stated doctrine (transparency) is in tension with source concealment. See D-04-04. Replacement candidate: **DISCLOSURE LOOP** — Resource — Add — Exposure; trigger: when Network successfully resolves any Reveal card this round, gain 1 Exposure at cleanup. Creates positive feedback loop consistent with Network doctrine — disclosure generates the resource that enables further disclosure. *"The act of revealing generates the capacity for more revealing."*
 - **Arbiter context:** N/A
@@ -1947,7 +1963,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *Secret communications between powerful institutions are themselves a form of harm. Opening the channel is the argument.*
 - **Faction perspectives:**
   - Network: *If it happened, it should be known. We are simply making that principle operational.*
-- **Taxonomy:** Cross-Category — Reveal — Private communications.
+- **Taxonomy:** Information — Reveal — Private communications.
 
 - **Design note:** Flagged for review — C26 and C28 both Reveal, same function different scope. See D-04-04.
 - **Arbiter context:** Does not intercept Hidden Objective or Classified Directive communications. Beat 2 — must be active before Beat 3 notifications are generated.
@@ -1980,7 +1996,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Network understands signal propagation better than anyone at this table.*
 - **Faction perspectives:**
   - Network: *The signal does not stop at district borders. Neither do we.*
-- **Taxonomy:** Action — Modify — Covert operation (scope).
+- **Taxonomy:** Submission — Modify — Covert operation (scope).
 
 ---
 
@@ -2010,7 +2026,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Network did not arrive in New Meridian through official channels. They arrived through people.*
 - **Faction perspectives:**
   - Network: *We already have contacts there. This is formalising what already exists.*
-- **Taxonomy:** Board — Add — Presence.
+- **Taxonomy:** Territory — Add — Presence token.
 
 ---
 
@@ -2044,7 +2060,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Syndicate does not need to be somewhere to profit from it. Ownership and presence are different things.*
 - **Faction perspectives:**
   - Syndicate: *We own the revenue stream. Whether we are physically present is irrelevant.*
-- **Taxonomy:** Resource — Add — Native resource.
+- **Taxonomy:** Economy — Add — Native resource.
 
 ---
 
@@ -2074,7 +2090,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *Capital can suppress as easily as it can produce.*
 - **Faction perspectives:**
   - Syndicate: *We are not destroying their capacity. We are adjusting market conditions temporarily.*
-- **Taxonomy:** Resource — Remove — Native resource.
+- **Taxonomy:** Economy — Remove — Native resource.
 
 ---
 
@@ -2104,7 +2120,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *Everything in New Meridian has a price. The Syndicate is the only faction honest about this.*
 - **Faction perspectives:**
   - Syndicate: *We made a fair offer. The market determined the value. We accepted the market's judgment.*
-- **Taxonomy:** Board — Redirect — Structure block.
+- **Taxonomy:** Territory — Redirect — Structure block.
 
 ---
 
@@ -2134,7 +2150,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *The Syndicate plans for outcomes not yet confirmed. They move assets before the decision is made.*
 - **Faction perspectives:**
   - Syndicate: *We did not lose those resources. We repositioned them. There is a difference.*
-- **Taxonomy:** Cross-Category — Protect — Native resource.
+- **Taxonomy:** Economy — Protect — Native resource.
 
 ---
 
@@ -2164,7 +2180,7 @@ Ghost — P17–P18
 - **Narrative anchor:** *If you own enough of the regulatory structure, you define what is permitted. The Syndicate does not see this as corruption. They see it as governance.*
 - **Faction perspectives:**
   - Syndicate: *The regulatory framework exists. We simply ensure it reflects current market conditions.*
-- **Taxonomy:** Action — Block — Covert operation + Political act.
+- **Taxonomy:** Submission — Block — Named action type.
 
 #### Syndicate Gap Concepts — Design Notes
 
@@ -2419,14 +2435,14 @@ Political acts are Beat 4 cards unless otherwise specified.
 
 | Card ID | Name | Primary taxonomy | Faction affinity | Status |
 |---------|------|-----------------|-----------------|--------|
-| P01 | Establish Presence | Board — Add — Presence | Directorate | Pending full data structure |
-| P02 | Contest | Board — Remove — Presence (contested) | Directorate, Network | Pending |
-| P03 | Commission | Board — Add — Structure (both deployment districts) | Guild | Pending |
-| P04 | Denounce | Cross-Category — Shift — Public Standing (−) | Network, Directorate | Pending |
-| P05 | Broadcast | Cross-Category — Reveal — Action attribution | Network | Pending |
-| P06 | Leverage | Resource — Remove — Native resource | Syndicate | Pending |
-| P07 | Invoke the Table | Action — Block — Any (procedural) | Directorate | Pending |
-| P08 | Propose Accord | Resource — Add — Accord agreement | Directorate | Pending |
+| P01 | Establish Presence | Territory — Add — Presence token | Directorate | Pending full data structure |
+| P02 | Contest | Territory — Remove — Presence token (contested) | Directorate, Network | Pending |
+| P03 | Commission | Territory — Add — Structure block (both districts) | Guild | Pending |
+| P04 | Denounce | Standing — Shift — Public Standing (−) | Network, Directorate | Pending |
+| P05 | Broadcast | Information — Reveal — Action attribution | Network | Pending |
+| P06 | Leverage | Economy — Remove — Native resource | Syndicate | Pending |
+| P07 | Invoke the Table | Submission — Block — Any (procedural) | Directorate | Pending |
+| P08 | Propose Accord | Economy — Add — Accord agreement | Directorate | Pending |
 
 ---
 
@@ -2436,16 +2452,16 @@ Political acts are Beat 4 cards unless otherwise specified.
 
 | Card ID | Name | Faction | Primary taxonomy | Status |
 |---------|------|---------|-----------------|--------|
-| P09 | Public Works Declaration | Guild | Board — Add — Structure (both districts) | Pending |
-| P10 | Infrastructure Bond | Guild | Resource — Add — Native resource (target faction) | Pending |
-| P11 | Issue Directive | Directorate | Action — Block — Political act | Pending |
-| P12 | Convene an Inquiry | Directorate | Resource — Add — Intel token (all factions) | Pending |
-| P13 | Public Disclosure | Network | Cross-Category — Reveal — Action attribution | Pending |
-| P14 | Open Record Request | Network | Cross-Category — Reveal — Written record | Pending |
-| P15 | Acquisition Offer | Syndicate | Board — Redirect — Presence | Pending |
-| P16 | Market Pressure | Syndicate | Action — Modify — Covert + Political act (cost) | Pending |
+| P09 | Public Works Declaration | Guild | Territory — Add — Structure block (both districts) | Pending |
+| P10 | Infrastructure Bond | Guild | Economy — Add — Native resource (target faction) | Pending |
+| P11 | Issue Directive | Directorate | Submission — Block — Political act | Pending |
+| P12 | Convene an Inquiry | Directorate | Economy — Add — Intel token | Pending |
+| P13 | Public Disclosure | Network | Information — Reveal — Action attribution | Pending |
+| P14 | Open Record Request | Network | Information — Reveal — Written record | Pending |
+| P15 | Acquisition Offer | Syndicate | Territory — Redirect — Presence token | Pending |
+| P16 | Market Pressure | Syndicate | Submission — Modify — Covert + Political act (cost) | Pending |
 | P17 | Publish Analysis | Ghost | Cross-Category — Shift — Chorus Portrait | Pending |
-| P18 | Signal Review Request | Ghost | Action — Modify — Covert operation (difficulty) | Pending |
+| P18 | Signal Review Request | Ghost | Resolution — Modify — Covert operation (difficulty) | Pending |
 
 ---
 
@@ -2453,7 +2469,18 @@ Political acts are Beat 4 cards unless otherwise specified.
 
 ### 11.1 What They Are
 
+Modifier cards alter the parameters of an action rather than targeting a game layer directly. They produce no game-state primitives on their own; their effect is mediated by the host action or condition they modify. Parameters a modifier card can alter include difficulty, cost, threshold, scope, outcome, timing, or validity of the host action. Modifier cards carry no Layer — Function — Subject assignment and are excluded from the card taxonomy. *(Art 04b §5.1, §9)*
+
+Two timing sub-types govern when a modifier card fires:
+
+- **React** — fires automatically when a named publicly-observable condition is met; not submitted in the standard action sequence.
+- **Instant** — played actively during a defined window.
+
+React and Instant describe *when* a modifier fires, not what it does.
+
 Two sets:
+
+Faction modifier cards represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. Ring modifier cards represent key ring individuals, assets, equipment, and synergies within the ring.
 
 **Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–3).*
 
@@ -2536,7 +2563,7 @@ A Pass is information. Consistent passes signal posture. ARBITER notes the patte
 
 ### Pass Card Variants — Design Notes
 
-*Four named variants replace the single generic card. Full data structure pending detail design pass. All variants: Card type = Pass; Beat = Beat 3 or Beat 4; Subject = N/A; Portrait = N/A. See 04b §10 — Pass cards are excluded from Category — Function — Subject taxonomy.*
+*Four named variants replace the single generic card. Full data structure pending detail design pass. All variants: Card type = Pass; Beat = Beat 3 or Beat 4; Subject = N/A; Portrait = N/A. See 04b §10 — Pass cards are excluded from Layer — Function — Subject taxonomy.*
 
 **PS-01 — STAND DOWN**
 *"Nothing moves. No one knows why."*
@@ -2576,7 +2603,7 @@ Card face must carry in clear information hierarchy:
 11. Effect fields (grouped under single "Effect" header — crit success, success, failure, crit failure listed beneath)
 12. Portrait (positive/negative values only)
 13. Narrative anchor
-14. Taxonomy (Category — Function — Subject)
+14. Taxonomy (Layer — Function — Subject)
 
 Faction perspectives are in the card data structure. Visual design (Artifact 11) decides whether they appear on the card face.
 

@@ -16,7 +16,7 @@ Physical game components communicate before a player reads a word. The color of 
 
 Without a design system, physical prototype construction produces visual inconsistency — and visual inconsistency produces cognitive load at the table. A player who has to look twice to confirm whose token is whose is not thinking about the Chorus.
 
-This artifact defines the visual standards that govern every physical component and every printable visual artifact in the L1 paper prototype.
+This artifact defines the visual standards that govern every physical component and every printable visual artifact in the Tier 1 paper prototype.
 
 ### Deliverable
 - Faction color palette and identity system
@@ -77,7 +77,7 @@ The Overview's aesthetic direction follows from this: **it should look like a li
 
 In the paper prototype, this aesthetic is achieved through visual design choices: typography, track design, data-visualization-style indicators rather than decorative borders, faction colors functioning as data series rather than heraldry.
 
-In the digital version (L2+), The Overview becomes literally the screen The Table is looking at. The faction presence tokens animate as they are placed. The Public Standing track updates as a live feed. The Chorus Activity track pulses. The fiction and the artifact are the same object — the paper prototype was always a physical instantiation of something that wants to be electronic.
+In the digital version (Tier 2+), The Overview becomes literally the screen The Table is looking at. The faction presence tokens animate as they are placed. The Public Standing track updates as a live feed. The Chorus Activity track pulses. The fiction and the artifact are the same object — the paper prototype was always a physical instantiation of something that wants to be electronic.
 
 This design direction is locked. See PM02 FD-02. It governs all mat visual design decisions from L1 forward.
 

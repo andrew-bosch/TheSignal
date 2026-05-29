@@ -8,7 +8,7 @@
 
 **Relationship to source artifacts:** Source artifacts remain the canonical design documents. This artifact does not duplicate their content — it indexes it. When a source artifact defines a data table (e.g., Art 03 §13 Modifier table), the table lives in the source artifact; 00b registers the entity, assigns the ID prefix, and maps its relationships.
 
-**Future state:** At L2+ code engine development, this document becomes the master database design document — the DDL (data definition layer) that the game engine reads first. The paper prototype data structures are designed to be ingested directly, without structural transformation (L108).
+**Future state:** At Tier 2+ code engine development, this document becomes the master database design document — the DDL (data definition layer) that the game engine reads first. The paper prototype data structures are designed to be ingested directly, without structural transformation (L108).
 
 **Depends on:** 00 — Factions, World & Narrative Context; 00a — Governing Rules & Design Policy; all design artifacts (as schemas are defined)
 
@@ -203,7 +203,7 @@ Small enum tables that span multiple artifacts and have no single canonical sour
 
 ### 5.9 Visibility Scope (VS-xx)
 
-Information visibility classification. Used as a field tag on any data element in the game system to define which parties may observe it. Enforced by human ARBITER discipline in V1; enforced by server-side API scoping in L2+.
+Information visibility classification. Used as a field tag on any data element in the game system to define which parties may observe it. Enforced by human ARBITER discipline in Tier 1; enforced by server-side API scoping in Tier 2+.
 
 | ID | Scope | Visible To | V1 Usage |
 |----|-------|-----------|---------|
@@ -213,10 +213,10 @@ Information visibility classification. Used as a field tag on any data element i
 | VS-04 | ARBITER-Only | ARBITER only; never surfaced directly | Active — Chorus Portrait scores, operation failure outcomes, loyalty tracking |
 | VS-05 | Player-Only | Single player within a multi-player faction | Active — individual operative assignments when factions field multiple players |
 | VS-06 | Conditional | After a specific reveal mechanism triggers | Active — e.g., hidden operation card revealed upon resolution; card effect on activation |
-| VS-07 | Website-Public | Any authenticated player via website | L2+ — Chronicles, Founding Figures, historical session records |
-| VS-08 | Website-Private | Authenticated player only; personal records | L2+ — personal ARBITER messages, private faction records |
+| VS-07 | Website-Public | Any authenticated player via website | Tier 2+ — Chronicles, Founding Figures, historical session records |
+| VS-08 | Website-Private | Authenticated player only; personal records | Tier 2+ — personal ARBITER messages, private faction records |
 
-*Design principle: default is private. If a field is not explicitly tagged VS-01 (Public), it is restricted. This principle governs all entity field definitions at L2+. In V1, ARBITER is the enforcement layer. Source: Retired/Electronic/old__10_INFORMATION_HIERARCHY.md (visibility design principles). Foreign key: any entity field may reference VS-xx.ID to declare its visibility scope.*
+*Design principle: default is private. If a field is not explicitly tagged VS-01 (Public), it is restricted. This principle governs all entity field definitions at Tier 2+. In Tier 1, ARBITER is the enforcement layer. Source: Retired/Electronic/old__10_INFORMATION_HIERARCHY.md (visibility design principles). Foreign key: any entity field may reference VS-xx.ID to declare its visibility scope.*
 
 ---
 
@@ -327,11 +327,11 @@ Status of every entity schema against L108 requirements. Updated as source artif
 
 ---
 
-**Code engine note:** When the L2+ game engine is built, this document is read first. The entity registry (§4) provides the entity list and ID namespaces. The lookup tables (§5) are ingested as reference data. The relationship map (§6) defines the joins. Source artifacts provide the full field definitions for each entity.
+**Code engine note:** When the Tier 2+ game engine is built, this document is read first. The entity registry (§4) provides the entity list and ID namespaces. The lookup tables (§5) are ingested as reference data. The relationship map (§6) defines the joins. Source artifacts provide the full field definitions for each entity.
 
 **L2 TypeScript schema (reference):** A complete TypeScript game state schema (v0.2) exists in `Retired/Electronic/old__08_DATA_MODEL.md`. It defines the full entity model for the electronic version, including enumerations (ResourceType, PopularityState, CardType, DistrictType, LoyaltyLevel, UnlockTier, VisibilityScope, Layer, ActionType, StateChangeType), complete interfaces for all game objects, an event-sourcing architecture (every state change is an event appended to an event log), and a visibility-scoped API contract. V1 entities in this document are designed as conceptual subsets of that schema's types. When defining new V1 entities, check old__08 for corresponding TypeScript types — alignment avoids structural transformation at L2 ingestion. The VS-xx Visibility Scope table (§5.9) is drawn directly from that schema.
 
-**Information hierarchy reference (L2+):** A complete 12-category information visibility specification exists in `Retired/Electronic/old__10_INFORMATION_HIERARCHY.md`. It defines visibility rules for all game state — Player Identity, Faction State, Operative/Unlock, Board/District, Asset, Card, Action, Alliance/Accord, World Condition, ARBITER Internal, Table Question, and Legacy. This is the L2 server-side enforcement specification. In V1, these rules are enforced by ARBITER discipline. VS-xx (§5.9) provides the vocabulary; old__10 provides the application.
+**Information hierarchy reference (Tier 2+):** A complete 12-category information visibility specification exists in `Retired/Electronic/old__10_INFORMATION_HIERARCHY.md`. It defines visibility rules for all game state — Player Identity, Faction State, Operative/Unlock, Board/District, Asset, Card, Action, Alliance/Accord, World Condition, ARBITER Internal, Table Question, and Legacy. This is the Tier 2 server-side enforcement specification. In Tier 1, these rules are enforced by ARBITER discipline. VS-xx (§5.9) provides the vocabulary; old__10 provides the application.
 
 ---
 
