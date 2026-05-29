@@ -563,7 +563,7 @@ Rules that constrain all card design. A proposed card that violates any of these
 
 **Mechanics:** Immediate effects resolve this quarter with no carry-over. Permanent effects persist for the remainder of the session. World Condition effects from Situation Reports carry over until resolved. No other duration is valid.
 
-*Source: L55, Artifact 04 Principle 11, Artifact 04b §3.8.*
+*Source: L55, Artifact 04 Principle 6, Artifact 04b §3.8.*
 
 *Governs: All card design.*
 
@@ -636,7 +636,7 @@ Rules that constrain all card design. A proposed card that violates any of these
 
 **Mechanics:** React cards (Action — React) fire automatically when a named condition is met. That condition must be something any player at the table can count or observe without hidden information. Hidden conditions are not valid React triggers.
 
-*Source: Artifact 04b §3.5, Artifact 04b Taxonomy Principle 5.*
+*Source: Artifact 04b §3.5, Artifact 04 Principle 5.*
 
 *Governs: All React card design.*
 

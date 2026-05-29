@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 47 | Updated: 2026-05-28**
+**Session 49 | Updated: 2026-05-29**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,9 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-Session 47: Action taxonomy formalized into DB primitive model. New tables: tmp_player_role, tmp_role_phase, tmp_beat (20 beats), tmp_comp_verb_beat, tmp_comp_verb_role, tmp_action, tmp_trigger_type (10 types), tmp_state_condition, tmp_state_condition_clause. 213 primitives in tmp_action. New components: Status marker (49), Portrait track (50), Portrait marker (51). Verb Invoke (17) added for C16 meta-action. Gap analysis: v_unlegislated_primitives (60 rows) + v_unlegislated_by_trigger (14 rows — all Faction-initiated). **L166 locked:** taxonomy = possibility space; Art 03 = legal space; gaps = procedure coverage signals. Art 04b restructured: §3 physical action layer first, §4 card design layer (former §3), §5 column definitions + Status column + Primitive Verb column. agy punch list A–H queued (GEMINI_CONTEXT.md). Gem tasks queued (gem_web_context.md Bucket A). **Next: agy/Gem analysis; Art 04b v1.4 sign-off (04b-09); C17 sign-off; DB-18/19/20 legalization decisions; continue §5 gap analysis triage.**
+S48 complete. Art 04b v1.5 signed off. Six-layer card taxonomy locked (L167). Expansion stages renamed Tier 1–5 (L168) — Tier 5 public name "Chorus" only. Art 04 §5 P1–P6 inserted (taxonomy constraints from 04b §9); old P1–P8 renumbered P7–P14. 00a cross-refs updated. PM01 and True State swept for Tier N terminology. XA-37 queued for Haiku (rename remaining Ln/Layer N references in 00b, 00c, 03a, Art 07–11). DB-27 queued for agy (register Emergency Response card id=95).
+
+**Next session:** Art 04 §5 P1–P6 review (04-54) → C17 sign-off → XA-37 (Haiku).
 
 ---
 
@@ -21,10 +23,10 @@ Session 47: Action taxonomy formalized into DB primitive model. New tables: tmp_
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. |
-| 04b — Action Taxonomy | 1.4 | Re-sign-off required (material: §3.3 DB model, §4 card design layer, §5 col defs + status). Source: tmp_action + gap views in the_signal_db. |
-| 04 — Action Card System | 0.9.20 | C17 sign-off (after 04b sign-off); C36–C42 Intel economy cards; React card reclassification pending. |
+| 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. §9 removed; §10 → §9 (Standalone Card Types). React collapsed into Modifier cards. Emergency Response penultimate context added. |
+| 04 — Action Card System | 0.9.20 | §5 P1–P14 rewritten (P1–P6 taxonomy constraints, P7–P14 former P1–P8). **04-54: P1–P6 review prerequisite to C17.** C17 next after 04-54. |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
-| 03a — Game Engine Specification | 0.98 | Layer 4 stub remaining. |
+| 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
 Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
@@ -38,6 +40,9 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **00-07** | Art 00 multicultural texture pass | ✅ S40 |
 | **00a-08** | 00a v0.3 re-sign-off | ✅ S40 |
 | **01-05** | Art 01 overhaul — physical zone hierarchy, all Overview children | ✅ S40 |
+| **04-54** | Art 04 §5 P1–P6 review — prerequisite to C17 | Open — first item S49 |
+| **XA-37** | Haiku sweep: rename Ln/Layer N expansion tier refs → Tier N across 00b, 00c, 03a, Art 07–11; strip "Layer N —" from 03a section headings | Open — Haiku-executable |
+| **DB-27** | agy: register Emergency Response card id=95 in tmp_component (1\|1\|0\|1\|0\|0) + seed role/beat primitives | Open — agy |
 | **DB-11** | agy ALTER TABLE live_state — rename anchored_to_component_id → on_component_id (nullable) + add on_game_zone_id | Open — unblocked S45 |
 | **DB-09** | Create district_adjacency table (agy) — seed from Art 01 adjacency map | Open — Art 01 signed off |
 | **01-07** | Art 01 §4 Narrative Function — remove (content in §3 + Physical Table Layout) | ✅ S41 |
@@ -63,11 +68,12 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L168** (S48): Expansion/perception stages renamed Tier N. Canonical: Tier 1 Physical, Tier 2 Social, Tier 3 Wireless/Communications, Tier 4 Web/Data, Tier 5 Chorus. Tier 5 public name only — technical nature intentionally undefined. XA-37 queued.
+- **L167** (S48): Six-layer card design system locked — Territory / Economy / Information / Submission / Resolution / Standing. "Layer" is the canonical taxonomy term. Cross-Category retired.
 - **L166** (S47): Action taxonomy = possibility space; Art 03 = legal space. Gaps are procedure coverage signals — permit / prohibit / defer. The two artifacts co-evolve iteratively.
-- **L165** (S43): Portrait track dual function — narrative register + Apex pentagram geometry.
 - **L164** (S43): The Dossier — ARBITER's hidden Intel Token storage (behind screen, not public Reservoir).
 
-→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L166)
+→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L168)
 
 ---
 
@@ -78,8 +84,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v2.0** — ✅ Signed Off S43
-- **04b v1.4** — re-sign-off required (material additions S47)
-- **C17** — after 04b sign-off
+- **C17** — after 04-54 (Art 04 §5 P1–P6 review)
 
 ---
 

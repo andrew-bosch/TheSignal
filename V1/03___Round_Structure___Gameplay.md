@@ -571,15 +571,17 @@ If this operation's outcome blocks the acting faction's deployment marker conver
 
 If the operation succeeded: The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Established markers, Tension markers.
 
+*Successful covert operations do not produce Standing marker moves — the action is unobserved. Any Standing marker move in this section occurs only as a card-specified failure (Step 8) or discovery (Step 9) condition.*
+
 **Step 8 — Apply failure conditions.**
 
-If the operation failed: apply the failure conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies board changes (Public Standing shift), apply them.
+If the operation failed: apply the failure conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
 
 The affected Faction Player applies their own board changes.
 
 **Step 9 — Apply discovery conditions.**
 
-If the operation was discovered: apply the discovery conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies board changes (Public Standing shift), apply them.
+If the operation was discovered: apply the discovery conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
 
 The affected Faction Player applies their own board changes.
 
@@ -801,11 +803,11 @@ The acting Faction Player rolls publicly and states the result aloud.
 
 If this political act's outcome blocks a deployment marker's conversion: The acting Faction Player flips the relevant marker to the Blocked face.
 
-If the political act succeeded: The acting Faction Player makes all board changes — presence chips, structure blocks, Control flags, Established markers, Tension markers.
+If the political act succeeded: The acting Faction Player makes all board changes — presence chips, structure blocks, Control flags, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
 
 **Step 8 — Apply failure conditions.**
 
-If the political act failed: apply the failure conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies board changes (Public Standing shift), apply them.
+If the political act failed: apply the failure conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
 
 The affected Faction Player applies their own board changes.
 

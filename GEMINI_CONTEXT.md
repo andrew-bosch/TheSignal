@@ -559,3 +559,110 @@ At Apex submission, ARBITER arranges 5 faction players on pentagram points by Po
 
 ### Portrait Track — Dual Function (L165)
 Portrait track now serves ARBITER narrative AND Apex geometry. "Ask ARBITER" portrait delta query (07-10): faction queries absolute difference between their Portrait standing and any named faction. ARBITER reveals delta only. This is read-only on existing Portrait data — no schema change implied.
+
+---
+
+## Session 48 Update — 2026-05-28
+
+### S48 DB Cleanup Tasks
+
+S48 sanity check of agy's S47 audit findings. Execute in order; report outcomes in `Claude_context.md`.
+
+**Connection:** `mysql -u gemini -pgemini_password1 the_signal_db`
+
+---
+
+#### DB-cleanup-01 — Delete 37 duplicate rows from `tmp_action`
+
+Resolution beats were seeded twice. The following IDs are exact duplicates — the original (lower ID) exists in each case. Safe to delete.
+
+```sql
+DELETE FROM tmp_action WHERE id IN (
+  70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 83, 84, 90,
+  135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 148, 149, 155,
+  171, 172, 173, 174, 175, 176, 177, 178, 181
+);
+```
+
+Verify: `SELECT COUNT(*) FROM tmp_action;` should return 177 after deletion.
+
+---
+
+#### DB-cleanup-02 — Add Standing marker move primitive to `tmp_action`
+
+Art 03 was updated this session (S48) to establish the following precedent:
+
+- **Beat 3 (covert resolution):** Standing marker moves occur only on failure or discovery — card-specified. No primitive needed for success (design intent: covert success is unobserved).
+- **Beat 4 (political act resolution):** Standing marker moves are card-specified and can occur on success OR failure.
+
+Add primitives for ARBITER Move Standing marker (or Faction Move — check Art 03 §11 Step 7 / §17 Beat 4 Step 7 for who applies each outcome type):
+
+- Beat 3 (ids 8 and 14): trigger_type = rule.card, beat_trigger = during, notes = "Card-specified failure/discovery condition only."
+- Beat 4 (id 17): trigger_type = rule.card, beat_trigger = during, notes = "Card-specified outcome — success or failure."
+
+Also add Standing marker to `tmp_comp_verb_beat` for Beat 4 (id=17) if not already present — it is absent and will not surface in `v_unlegislated_primitives` until added.
+
+---
+
+#### DB-cleanup-03 — Seed `tmp_comp_verb_role` and `tmp_comp_verb_beat` for two unseeded components
+
+Both components exist in `tmp_component` and appear in Art 04b §3.2 Component × Verb Matrix but have no role or beat assignments.
+
+**ARBITER Dominance Marker** (`tmp_component` id=42) — verbs per §3.2: Add, Remove, Move.
+
+**Classified directives** (`tmp_component` id=17) — verbs per §3.2: Add, Remove, Move, Reveal, Conceal.
+
+For each: determine appropriate beats (reference Art 03 for when these components are acted upon) and role assignments (phase_id=1 initiator, phase_id=2 executor). Report what you populate and flag anything requiring a design decision before seeding.
+
+---
+
+#### DB-cleanup-04 — Countermeasures beats (ids 4, 10, 16) — assess and seed
+
+Beats 4, 10, 16 (Month 1/2/3 Countermeasures) have 0 primitives. Art 03 §10/§13/§16 defines the procedure: Faction Players deploy or pass Countermeasure cards in initiative order; cards are handed to ARBITER.
+
+Assess whether Countermeasure card is registered in `tmp_component`. If not, flag — do not seed primitives until the component exists. If it is registered, seed the Countermeasures beats with appropriate primitives (Faction Remove card from hand, Add/Move to ARBITER). Report findings.
+
+---
+
+### S48 Schema Additions — Layer, Function, and Gap Primitive Seeding
+
+Claude Code executed the following DB work directly this session. Do not re-execute.
+
+#### New dimension tables
+
+**`tmp_layer`** — 6 rows: Territory, Economy, Information, Submission, Resolution, Standing. These are the six game layers from Art 04b §4.2.
+
+**`tmp_function`** — 12 rows: Add, Remove, Redirect, Recover, Modify, Protect, Block, Copy, Reveal, Conceal, Shift, Corrupt. These are the card Functions from Art 04b §5.1.
+
+**`tmp_function_verb`** — 9 rows mapping Function → physical Verb:
+- Add → Add, Remove → Remove, Redirect → Move, Recover → Add, Copy → Invoke, Reveal → Reveal, Conceal → Conceal, Shift → Move, Corrupt → Corrupt
+- Modify, Protect, Block have **no verb mapping** — they are abstract constraints on other actions, not physical primitives. These will not appear in primitive-based views.
+
+#### New view
+
+**`v_layer_function_coverage`** — Shows every Faction-initiatable Function × Component combination with beat availability. Filters to rows where `faction_initiatable=1 OR beat_count>0`. Join: `tmp_function` → `tmp_function_verb` → `tmp_verb` → `tmp_comp_verb_role/beat`. Note: Add and Recover share the Add verb (identical physical rows); Redirect and Shift share the Move verb.
+
+#### Gap primitive seeding
+
+The following component×verb combinations were seeded to model §6.1 card design gaps:
+
+| Component | Verb | What was added |
+|-----------|------|---------------|
+| Structure block | Move | Beats: M1-Beat-3, M2-Beat-3, M3-Beat-4 |
+| Accord agreement | Move | Faction initiator + executor roles; Beats: M1-Beat-3, M2-Beat-3 |
+| Modifier card | Move | Faction initiator + executor roles; Beats: M1-Beat-3, M2-Beat-3, M3-Beat-4 |
+| Modifier card | Remove | Faction initiator + executor roles; Beats: M1-Beat-3, M2-Beat-3, M3-Beat-4 |
+| Modifier card | Reveal | Faction initiator + ARBITER executor/fulfiller roles; Beats: M1-Beat-3, M2-Beat-3, M3-Beat-4 |
+| Political act | Invoke | Faction initiator + ARBITER executor/fulfiller; Beats: M3-Declaration, M3-Beat-4 |
+| Classified directives | Reveal | Faction initiator + ARBITER executor/fulfiller; Beat: M3-Beat-4 only (high-impact) |
+
+#### All §6.1 gaps now fully modeled (S48)
+
+- **Presence token | Move** — beats M1-Beat-3 (8), M2-Beat-3 (14), M3-Beat-4 (17) seeded S48. ✅
+- **Countermeasure card | Reveal** — self-reveal beats (4, 10, 16) plus intelligence-window beats (8, 14, 17) seeded S48. ✅
+- **Card hand contents** — reclassified from non-modelable. Subject decomposes into per-card-type Reveal primitives for each held card component: Modifier card ✅, Countermeasure card ✅. Political act coverage partial (M3-B4 only — beats 8, 14 not yet seeded for pre-Declaration window). Covert operation Reveal remains ARBITER-only.
+
+#### Two §6.1 gaps still requiring schema extension
+
+- `Information | Reveal | Named faction only` — scope modifier (target filter), not a subject component; needs target-scope system in action model
+- `Submission | Copy | Subset only` — meta-concept (partial copy); needs partial-copy mechanism in action model

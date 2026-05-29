@@ -32,14 +32,19 @@
 - `current_value` on tracks (0-20) can be `TINYINT`.
 - `component_id` may still need `BIGINT` if the serial registry is massive.
 
-## 6. Completed DB Execution Tasks
+## 7. Completed DB Execution Tasks
 - **DB-03:** Created `inteltoken_metadata` (Session 36).
 - **DB-04:** Created `resource_types` and patched `factions` columns (Session 37).
 - **DB-05:** Migrated native resource columns in `district_metadata` and `player_metadata` (Session 37).
 - **DB-07:** Added check constraint to `inteltoken_metadata.inteltoken_quarter_id` (Session 37).
 - **DB-11:** Renamed `live_state` to `component_positions`, renamed `anchored_to_component_id` to `on_component_id` (nullable), and added `on_game_zone_id` (Session 43).
+- **DB-16 (tmp_component updates):** Populated missing physical components (The Overview, Arbiter Tableau, Chorus Activity Track, Reservoir, Backlog, and markers) in the `tmp_component` table and updated "Operational marker" to "Deployment marker" (Session 46/47).
 
-## 7. Session 43 Tasks Status
-- **DB-09 (Create district_adjacency table):** **Blocked** pending Claude Code updating `00b` §8 spec. Also identified a constraint design conflict (foreign keys reference non-existent `district_metadata(id)` column; should point to `district_component_id` or `components(id)`).
-- **Artifact 03 v2.0 Review**: Completed. Verified that Intel Token canonical attributes (L161) align with `inteltoken_metadata` columns and CHECK constraint. Identified modifier updates required in lookup data for M-12 and M-13.
-- **tmp_component Updates**: Completed. Populated missing physical components (The Overview, Arbiter Tableau, Chorus Activity Track, Reservoir, Backlog, and markers) in the `tmp_component` table and updated "Operational marker" to "Deployment marker" (ID 2). Updated outbound handoff in `Claude_context.md`.
+## 8. Session 47 Tasks Status
+- **DB-09 (Create district_adjacency table):** **Blocked** pending Claude Code updating `00b` §8 spec.
+- **Session 47 Analysis Audit**: Completed. Created six gap analysis views (`v_gap_executor_check`, etc.) in `the_signal_db`. Executed bidirectional audits (Artifact 03 vs DB), schema comparisons, matrix diff audits, component lifecycle completeness reviews, load distribution analysis, and board game pattern research. Outbound report written to `Claude_context.md`.
+
+## 9. Session 48 Tasks Status
+- **S48 DB Cleanup and Seeding**: Completed. Deleted 37 duplicates, added 2 Standing marker moves, updated notes for Beat 17 Standing marker moves, and seeded taxonomy role/beat mappings for `ARBITER Dominance Marker` and `Classified directives`.
+- **Countermeasures Seeding**: Completed. With `Countermeasure card` (id=52) registered in `tmp_component`, seeded all 10 lifecycle primitives in `tmp_action` across beats 2, 4, 7, 10, 13, 16, 17. Row count of `tmp_action` is verified at 189.
+

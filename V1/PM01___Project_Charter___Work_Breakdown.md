@@ -11,7 +11,7 @@
 
 THE SIGNAL is a negotiation and area-control tabletop game for 2–6 participants (up to 5 faction players plus 1 ARBITER). Five factions compete for influence over a city called New Meridian while negotiating humanity's response to an extraterrestrial transmission called the Chorus. The game ends with a vote. What matters is everything that happened before it.
 
-The **L1 Paper Prototype** is the first playable version of the game. It uses only the Physical Layer (Layer 1) of the game's intended five-layer design. All game information is public. No digital technology is required. It is played with printed cards, physical tokens, and a human ARBITER.
+The **Tier 1 Paper Prototype** is the first playable version of the game. It uses only the Physical Tier (Tier 1) of the game's intended five-tier design. All game information is public. No digital technology is required. It is played with printed cards, physical tokens, and a human ARBITER.
 
 ---
 
@@ -28,7 +28,7 @@ Specifically:
 - Does the session end with players wanting to play again?
 - Does the narrative system (Chorus Portrait, Chronicle, Chorus Question) produce genuine emotional resonance?
 
-These questions cannot be answered by design alone. They require observed play. The L1 Paper Prototype exists to produce that observation data before any expensive development commitments are made.
+These questions cannot be answered by design alone. They require observed play. The Tier 1 Paper Prototype exists to produce that observation data before any expensive development commitments are made.
 
 ### Core Assumption — Replayability
 
@@ -58,8 +58,8 @@ All five conditions are tracked in PM02 validation targets.
 ### Why Paper First
 Technology cannot rescue a game with broken mechanics. Building hardware, writing firmware, and training AI narrative before validating core gameplay would produce an expensive, unplayable product. The paper prototype isolates the game design variables from the technology variables — problems found at this stage cost hours to fix, not months.
 
-### Why Layer 1 First
-THE SIGNAL is designed with five information layers per district. Attempting to validate all five simultaneously would make it impossible to isolate which layer is causing any observed problem. Layer 1 — the physical layer, fully public, no hidden information — is the foundation every other layer builds on. If it is not compelling on its own, adding layers will not save it.
+### Why Tier 1 First
+THE SIGNAL is designed with five information tiers per district. Attempting to validate all five simultaneously would make it impossible to isolate which tier is causing any observed problem. Tier 1 — the physical tier, fully public, no hidden information — is the foundation every other tier builds on. If it is not compelling on its own, adding tiers will not save it.
 
 ### Why This Documentation Structure
 Each design document is a Feature of this Epic. Features must be independently useful (a reader can understand and act on them without reading every other document) but collectively complete (together they describe the entire game). The documentation is ordered so that each artifact builds only on concepts introduced in prior artifacts:
@@ -126,11 +126,11 @@ A self-contained tabletop game kit that can be:
 
 ## 6. Out of Scope
 
-The following are explicitly excluded from the L1 Paper Prototype:
+The following are explicitly excluded from the Tier 1 Paper Prototype:
 
 - Digital terminals, ESP32 hardware, or any electronics
 - Computer vision or board projection
-- Layer 2–5 mechanics (social, informational, digital, subspace)
+- Tier 2–5 mechanics (social, wireless/communications, web/data, Chorus)
 - AI-generated narrative
 - Legacy or Covenant persistence between sessions
 - Website or between-session content
@@ -248,7 +248,7 @@ Root: `~/Projects/TheSignal/`
 
 | Folder / File | Purpose |
 |---------------|---------|
-| `V1/` | Active design layer — L1 Paper Prototype. All artifact editing happens here. "V1" is the layer designation (Layer 1 = physical layer); does not need renaming as the project evolves. |
+| `V1/` | Active design tier — Tier 1 Paper Prototype. All artifact editing happens here. "V1" is the tier designation (Tier 1 = physical tier); does not need renaming as the project evolves. |
 | `Session/` | Session management files — save state and private design axioms. Not part of the artifact set; not referenced by any artifact. |
 | `Creative/` | World-building creative content — characters, vignettes, stories, and quotes generated as potential source material for Artifact 00 and flavor copy. See `Creative/README.md` for submission index and evaluation status. Brief for writers/AI agents: `Creative/CREATIVE_BRIEF.md`. |
 | `Retired/` | Read-only archive of superseded design generations. `Retired/Electronic/` — original electronic brainstorming suite (pre-code, old faction names). `Retired/Paper/` — 1st generation paper prototype artifacts. See PM03 §6 for file-level index. |
@@ -381,4 +381,4 @@ Criteria that must be met before paper prototype development concludes and elect
 
 Andy — this is a product and project decision, not a design decision. Can be made with designer confidence that the core is validated, regardless of remaining polish items.
 
-**What Go/No-Go is not:** a determination that the paper prototype is "finished." Paper prototype refinement continues in parallel with electronic development. Go/No-Go is a commitment to invest in the next layer, not a declaration that Layer 1 is complete. The criteria above define the minimum bar for confidence, not the maximum level of polish.
+**What Go/No-Go is not:** a determination that the paper prototype is "finished." Paper prototype refinement continues in parallel with electronic development. Go/No-Go is a commitment to invest in the next tier, not a declaration that Tier 1 is complete. The criteria above define the minimum bar for confidence, not the maximum level of polish.

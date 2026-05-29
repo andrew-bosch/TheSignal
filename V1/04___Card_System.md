@@ -68,35 +68,59 @@ All card names, action text, and effect descriptions are written in the language
 
 ## 5. Design Principles
 
-**Principle 1 — Faction-specific cards are doctrinally exclusive.**
+**Principle 1 — Every card has exactly one primary layer.**
+
+Cards may produce secondary effects in other layers, but their primary layer and function must be unambiguous. A card that appears to span layers belongs to the layer of its primary target. When the primary target is unclear, the card is a design problem.
+
+**Principle 2 — Faction-specific cards fill gaps, not duplicate standard cards.**
+
+Where standard cards already cover a function/target combination, faction-specific cards should either fill a gap or provide a meaningfully differentiated version (different restriction, scope, or scale).
+
+**Principle 3 — Layer assignment reflects the game system being affected, not the physical verb.**
+
+The same physical verb (`Add`, `Move`) can serve different layers depending on what it is acting on. Economy and Territory both use `Add` — the layer is determined by the target, not the action.
+
+**Principle 4 — Protect belongs to the target's layer.**
+
+Protect is not cross-layer. A card that protects a Territory element is a Territory card. A card that protects an Information element is an Information card. This keeps Protect assessable within faction coverage analysis for each layer independently.
+
+**Principle 5 — React conditions must be publicly observable.**
+
+React fires on publicly countable or observable conditions. Hidden conditions are not valid React triggers. This maintains information integrity — you cannot react to information you shouldn't have.
+
+**Principle 6 — Permanent effects are more interesting than temporary ones.**
+
+Cross-round temporary effects are prohibited. When designing new cards, prefer permanent effects over temporary ones.
+
+**Principle 7 — Faction-specific cards are doctrinally exclusive.**
 
 Every faction-specific card must pass two tests: mechanical (only this faction would do this — the effect cannot be justified by another faction's doctrine) and narrative (only this faction would say it this way — the card text sounds like no other faction). If either test fails, the card belongs to no one. Traceable to Artifact 00 §7. *00a R29.*
 
-**Principle 2 — Difficulty is a card property.**
+**Principle 8 — Difficulty is a card property.**
 
 Base difficulty is designed and printed on the card. It is not derived from board state or influence level. Board state may modify the threshold through ring modifiers and affinity bonuses — it does not set the base. *L91, L97.*
 
-**Principle 3 — Narrative consistency with Artifact 00.**
+**Principle 9 — Narrative consistency with Artifact 00.**
 
 All card text is consistent with the world, factions, and doctrines in Artifact 00. Standard cards are grounded in actions any capable organization in New Meridian might plausibly take. The mechanics and the fiction are the same thing written differently.
 
-**Principle 4 — Portrait fires on action, not outcome.**
+**Principle 10 — Portrait fires on action, not outcome.**
 
 Portrait is impacted when an action strongly aligns with or against faction doctrine. Grey areas produce no Portrait effect. Unconditional Portrait fires on action taken regardless of roll outcome. Portrait Bonus fires only on a specified condition. *L82.*
 
-**Principle 5 — ARBITER is the sole mover of the Portrait track.**
+**Principle 11 — ARBITER is the sole mover of the Portrait track.**
 
 No card Effect field may state a direct Portrait track shift. Faction influence on Portrait is mediated entirely through ARBITER's application of Portrait scoring. *L84.*
 
-**Principle 6 — Flat portrait modifiers are prohibited on standard cards.**
+**Principle 12 — Flat portrait modifiers are prohibited on standard cards.**
 
 Flat modifiers fire on every resolution regardless of submitter — on standard cards this creates unbounded accumulation risk. Flat is reserved for faction-specific cards where a board-state change is doctrinally significant in a bounded, deliberate way. *L131.*
 
-**Principle 7 — Card entries contain only card-specific information.**
+**Principle 13 — Card entries contain only card-specific information.**
 
 If a rule or convention is already established in a signed-off artifact, do not restate it. Card entries contain only information unique to that card: restrictions that override a general rule, ARBITER timing specific to this card, edge cases not covered by universal rules. *L127.*
 
-**Principle 8 — Cost is equitable to the success effect.**
+**Principle 14 — Cost is equitable to the success effect.**
 
 The resource cost of a card is calibrated to the expected value of its success outcome. A high-cost card must deliver a commensurately significant success. Connects to 00c §8 Derived Cost Analysis.
 
