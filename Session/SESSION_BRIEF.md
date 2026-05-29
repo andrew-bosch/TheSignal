@@ -8,7 +8,7 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S50 in progress. Infrastructure and credential work: MariaDB credentials resolved (~/.my.cnf → claude user); CLAUDE.md updated (ClaudeIOS workflow → Gem, DB credentials documented). C17 component gaps resolved: Notification Slip (NS-xx, id=95) and Intel Delivery Slip (IS-xx, id=96) registered in 00b §4/§7 and seeded in all DB downstream tables (tmp_comp_verb_beat, tmp_comp_verb_role, tmp_action, tmp_subject_target). Emergency Response card (id=97) registered and fully seeded. Art 03 Beat 3 Steps 7/8 extended to cover case delivery effects (material — re-sign-off flagged as PM05 03-14). C17 effects and Arbiter context updated to use component names. DB schema reference stub created at the_signal_db_documentation/schema_reference.md (PM05 DB-29 — priority over 03-14).
+S50 in progress. Infrastructure and credential work: MariaDB credentials resolved (~/.my.cnf → claude user); CLAUDE.md updated (ClaudeIOS workflow → Gem, DB credentials documented). C17 component gaps resolved: Notification Slip (NS-xx, id=95) and Intel Delivery Slip (IS-xx, id=96) registered in 00b §4/§7 and seeded in all DB downstream tables (tmp_comp_verb_beat, tmp_comp_verb_role, tmp_action, tmp_subject_target). Emergency Response card (id=97) registered and fully seeded. Art 03 Beat 3 Steps 7/8 extended to cover case delivery effects (material — re-sign-off flagged as PM05 03-14). C17 effects and Arbiter context updated to use component names. DB schema reference stub created at Database/schema_reference.md (PM05 DB-29 — priority over 03-14).
 
 **Next:** Populate schema_reference.md (DB-29) after token reset. Then C18+ card vetting pass — C18–C35 and P01–P18.
 

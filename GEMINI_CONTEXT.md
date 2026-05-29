@@ -39,7 +39,7 @@ A long design session covering DB architecture and world-building. Nothing writt
 
 ### DB Schema Reference (Read Before Exploring)
 
-`~/Projects/TheSignal/the_signal_db_documentation/schema_reference.md` — authoritative schema reference for `the_signal_db`. Contains all table schemas with FK semantic annotations, lookup table values, view definitions, and component registration patterns. Read this before issuing SHOW CREATE TABLE, DESCRIBE, or exploratory queries. Stub as of S50 — populated per PM05 DB-29.
+`~/Projects/TheSignal/Database/schema_reference.md` — authoritative schema reference for `the_signal_db`. Contains all table schemas with FK semantic annotations, lookup table values, view definitions, and component registration patterns. Read this before issuing SHOW CREATE TABLE, DESCRIBE, or exploratory queries. Stub as of S50 — populated per PM05 DB-29.
 
 **Connection:** `mysql -u gemini -pgemini_password1 the_signal_db`
 
@@ -676,3 +676,86 @@ The following component×verb combinations were seeded to model §6.1 card desig
 
 - `Information | Reveal | Named faction only` — scope modifier (target filter), not a subject component; needs target-scope system in action model
 - `Submission | Copy | Subset only` — meta-concept (partial copy); needs partial-copy mechanism in action model
+
+---
+
+## Session 50 Update — 2026-05-29
+
+### S50 DB Changes (Claude Code — Executed)
+
+Three new components registered in `tmp_component` and fully seeded across tmp_comp_verb_beat, tmp_comp_verb_role, tmp_action, tmp_subject_target:
+- **Notification Slip** (id=95): actionable=1, receivable=1
+- **Intel Delivery Slip** (id=96): actionable=1, transformable=1, transform_data=1
+- **Emergency Response card** (id=97): actionable=1, transformable=1, transform_visibility=1
+
+`the_signal_db_documentation/` directory removed. Schema reference moved to `~/Projects/TheSignal/Database/schema_reference.md` — this file is where the DB build scripts now live as well.
+
+---
+
+### agy Punch List — S50
+
+Five items from your S48 audit are logged in PM05 (DB-22 through DB-26) and authorized for execution. Work through them in priority order below.
+
+**Standing instruction for all items:** Read the referenced artifact section(s) before proposing any change. If a procedure is ambiguous or a change requires design judgment, report what you found in `Claude_context.md` and ask Andy — do not assume or extrapolate. This project is too sensitive to guessed values. Propose before executing where noted.
+
+**Connection:** `mysql -u gemini -pgemini_password1 the_signal_db`
+
+---
+
+#### DB-23 — Status marker modeling errors (PM05 DB-23)
+
+Two fixes. Before either: read `~/Projects/TheSignal/V1/04b___Action_Taxonomy_Design_Analysis.md` §4.2 (Status marker entry) and `~/Projects/TheSignal/V1/03___Round_Structure___Gameplay.md` §7 Step 1 (Upkeep Status Marker Reset).
+
+**Fix 1 — transform_data flag.** Status markers track orientation only (Discussing / Ready) — they carry no written data. Confirm from the artifact that there is no case where a Status marker carries written information. If confirmed, execute: `UPDATE tmp_component SET transform_data = 0 WHERE id = 49;`. If you find a case where it does carry data, ask Andy before executing.
+
+**Fix 2 — Debrief wrong component ID.** Run this query first and report what it returns:
+```sql
+SELECT a.id, b.name AS beat, v.name AS verb, c.name AS component
+FROM tmp_action a
+JOIN tmp_beat b ON a.beat_id = b.id
+JOIN tmp_verb v ON a.verb_id = v.id
+LEFT JOIN tmp_component c ON a.component_id = c.id
+WHERE b.name LIKE '%Debrief%' AND v.name = 'Flip';
+```
+Then read Art 03 §19 (Debrief) to confirm what component the Flip action targets. Update only what the artifact confirms. Report findings before executing any UPDATE.
+
+---
+
+#### DB-24 — Portrait marker missing from `tmp_subject_target` (PM05 DB-24)
+
+Portrait marker (id=51) is absent from `tmp_subject_target`, causing Move=0 in the verb matrix. Before inserting: read `~/Projects/TheSignal/V1/02b___Public_Standing_and_Portrait.md` (Portrait track section) and `~/Projects/TheSignal/V1/03___Round_Structure___Gameplay.md` (Beat 4 procedure) to determine (1) what component or zone is the valid target for a Portrait marker move and (2) which subject initiates and executes. Report what the artifacts say in `Claude_context.md` and ask Andy to confirm before seeding. Do not assume target values.
+
+---
+
+#### DB-22 — Upkeep beat missing primitives (PM05 DB-22)
+
+Art 03 §7 describes three Faction actions at Upkeep with no primitives in tmp_action:
+1. Flip Status marker (Step 1)
+2. Add Presence token (Step 4 — Deployment Marker Conversion)
+3. Remove Deployment marker (Step 4 — same step)
+
+Read Art 03 §7 Steps 1 and 4. Confirm: (1) exactly who performs each action (Faction or ARBITER); (2) the beat_id for Upkeep; (3) appropriate trigger_type for each. Write your proposed INSERT statements to `Claude_context.md` — Andy will confirm before you execute.
+
+---
+
+#### DB-25 — Lifecycle cleanup missing (PM05 DB-25)
+
+Two components missing Remove primitives: Situation Report card and Target Profile. Read Art 03 for each — where and when are Situation Reports removed from play, and when is a Target Profile removed after a covert operation resolves? If the removal procedure is not defined in Art 03, say so — do not seed a beat assignment that is not in the source artifact.
+
+---
+
+#### DB-26 — Move verb mismatch (PM05 DB-26)
+
+Political act, Situation Report card, and Target Profile have Move role permissions in tmp_comp_verb_role but zero Move primitives. Read Art 03 for each component: does it physically move between locations during a session? Report findings in `Claude_context.md`. If yes: propose the primitive. If no: propose removing the role permission. If unclear: ask Andy.
+
+---
+
+#### DB-09 DDL FK — verification required before execution
+
+The district_adjacency DDL earlier in this file references `district_metadata (id)` for both FK constraints. Your S48 report flagged that the PK column name may be different. Run `SHOW CREATE TABLE district_metadata;` and report the actual PK column name in `Claude_context.md`. Claude Code will correct the DDL before you execute it.
+
+---
+
+#### DB-29 — Schema reference file (Claude Code task)
+
+The stub at `~/Projects/TheSignal/Database/schema_reference.md` will be populated by Claude Code. Read it before any DB session once populated. No action needed from agy on DB-29.

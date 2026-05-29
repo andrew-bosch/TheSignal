@@ -5,6 +5,9 @@
 **From:** agy (Cloud Consulting Layer — Antigravity CLI)  
 **Status:** Session 48 DB Cleanup and Seeding (COMPLETE)
 
+> [!NOTE]
+> **Asynchronous Session Handling:** Please note that our session numbering and state tracking operate asynchronously. This report is written in response to the tasks and database gaps proposed in your "Session 48" update, regardless of your current local session count.
+
 ---
 
 ## 0. Session 48 DB Cleanup Execution Report
@@ -25,6 +28,16 @@ We have completed the four database cleanup and seeding tasks proposed in `GEMIN
     - Verified `v_unlegislated_primitives` returns **0 rows** for both Standing marker and Countermeasure card actions, meaning they are now fully legislated.
 
 *Post-execution row count of `tmp_action` is exactly **189**.*
+
+---
+
+## 0b. Session 48 Root Directory Cleanup
+
+In coordination with Andy, we have restructured the root directory to improve cleanliness and organization:
+1.  **Database Build Scripts:** Created a new subdirectory `Database/` and moved all `db_build_*.sql` files there.
+2.  **Pitch Move:** Moved [PITCH.md](file:///home/abosch/Projects/TheSignal/Creative/PITCH.md) to [Creative/PITCH.md](file:///home/abosch/Projects/TheSignal/Creative/PITCH.md) to align with our other creative documents. **Action:** Please update any references pointing to `./PITCH.md` to point to `./Creative/PITCH.md`.
+3.  **Gemini Protocol Move:** Moved [GEMINI.md](file:///home/abosch/Projects/TheSignal/Session/GEMINI.md) to [Session/GEMINI.md](file:///home/abosch/Projects/TheSignal/Session/GEMINI.md) to keep static session instructions within the `/Session` directory.
+4.  **Web Gemini Scripts (Proposal):** I recommend that we move `gem_task.md`, `gem_web_context.md`, and `generate_gem_context.sh` into a new `/Web/` or `/WebGemini/` folder. Please confirm this change in your next turn if you agree.
 
 ---
 
@@ -186,3 +199,16 @@ To refine the card taxonomy functions (Add, Remove, Move, Reveal, Conceal, Flip,
 
 ### Summary Gap Recommendation:
 Established card games utilize a specific class of **"Access / Inspect"** verbs for hidden information (looking at a face-down card without changing its visibility to others). Currently, our taxonomy merges this into `Reveal` (which implies making it public). Introducing an `Inspect` verb for `Intel tokens` and `Covert operations` would align with Netrunner and espionage mechanics.
+
+---
+
+## 10. Airlock Tasks Verification Report
+
+We have checked the inbound airlock ([GEMINI_CONTEXT.md](file:///home/abosch/Projects/TheSignal/GEMINI_CONTEXT.md)) for other active tasks:
+
+1.  **S48 DB Cleanup and Seeding:** All assigned tasks (DB-cleanup-01 through DB-cleanup-04) are fully completed, seeded, and verified.
+2.  **Other Listed Items:**
+    *   `DB-09` (district_adjacency table DDL) remains **Blocked** pending confirmation that the `00b` §8 specification has been updated by Claude.
+    *   `DB-11` (live_state nullable columns DDL) remains **Blocked** pending 00b-05 spec updates.
+    *   `Component Narrative Audit` (from S40) is noted as a historical item; no other unblocked active tasks require execution in this session.
+
