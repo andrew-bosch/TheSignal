@@ -71,8 +71,10 @@ Every named entity type in the game system. ID prefixes establish the primary ke
 | ER-xx | Emergency Response Card | Faction-specific Emergency Response cards | Art 04, Art 05 | ⬜ Not yet designed |
 | CA-xx | Case (Dispatch Case) | Physical container submitted by each Faction Player at Phase 3 close. Contains operation cards, target slips, and resource tokens for that faction's covert submissions. In V1, indexed via Faction ID (F-xx) — `dispatch_case[F-xx]`. CA-xx prefix anticipates L2+ per-case record tracking. One per Faction Player per Quarter; transient (reset at Beat_5 Step 1). | Art 03 §7, Art 06, 03a §4 | ⬜ Schema pending |
 | VS-xx | Visibility Scope | Information visibility classification — controls which parties can see a given field | 00b §5.9 (defined here) | ✅ Complete (§5.9) |
+| NS-xx | Notification Slip | Pre-written ARBITER delivery slip placed in a targeted faction's dispatch case when a covert operation against them fails. Text and format defined in Art 07. | Art 04, Art 07 | ⬜ Schema pending |
+| IS-xx | Intel Delivery Slip | Blank slip on ARBITER's tableau. At Beat 3, ARBITER writes the collected intelligence onto the slip and places it in the acting faction's dispatch case. Content determined by the resolving card's success outcome. | Art 04, Art 07 | ⬜ Schema pending |
 
-*20 entity types. 9 fully L108-compliant. 3 with existing schemas pending further work (PB-xx: ranges pending; C-xx + P-xx: L108 audit pending XA-28). 8 schemas pending source artifact design. 1 cross-artifact standard defined here (VS-xx).*
+*22 entity types. 9 fully L108-compliant. 3 with existing schemas pending further work (PB-xx: ranges pending; C-xx + P-xx: L108 audit pending XA-28). 10 schemas pending source artifact design. 1 cross-artifact standard defined here (VS-xx).*
 
 *Internal 03a modeling types — not registered entities (no persistent IDs, no independent physical components):*
 - *Packet — sub-structure within a Case (one operation card + submitted resources + target slip). Indexed by submission order within the Case. No CA-sub-ID scheme needed.*
@@ -276,8 +278,10 @@ Status of every entity schema against L108 requirements. Updated as source artif
 | Emergency Response | ER-xx | 5 | ⬜ Not yet designed | Art 04 / Art 05 |
 | Case (Dispatch Case) | CA-xx | 5 (1 per Faction Player per Quarter; transient) | ⬜ Schema pending | Art 03 §7, Art 06 |
 | Visibility Scope | VS-xx | 8 | ✅ Complete (§5.9) | — |
+| Notification Slip | NS-xx | TBD | ⬜ Schema pending — text/format: Art 07 | Art 04, Art 07 |
+| Intel Delivery Slip | IS-xx | TBD | ⬜ Schema pending — content fields: Art 07 | Art 04, Art 07 |
 
-*9 of 20 entity schemas fully L108-compliant. 3 with schemas in progress. 8 pending source artifact design.*
+*9 of 22 entity schemas fully L108-compliant. 3 with schemas in progress. 10 pending source artifact design.*
 
 ---
 

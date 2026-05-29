@@ -37,6 +37,16 @@ This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated
 
 A long design session covering DB architecture and world-building. Nothing written to artifacts. Everything below is **exploratory** unless marked locked.
 
+### DB Schema Reference (Read Before Exploring)
+
+`~/Projects/TheSignal/the_signal_db_documentation/schema_reference.md` — authoritative schema reference for `the_signal_db`. Contains all table schemas with FK semantic annotations, lookup table values, view definitions, and component registration patterns. Read this before issuing SHOW CREATE TABLE, DESCRIBE, or exploratory queries. Stub as of S50 — populated per PM05 DB-29.
+
+**Connection:** `mysql -u gemini -pgemini_password1 the_signal_db`
+
+**Critical FK gotcha:** `tmp_comp_verb_role.role_id` → `tmp_player_role` (1=Faction, 2=ARBITER); `tmp_comp_verb_role.phase_id` → `tmp_role_phase` (1=initiator, 2=executor, 3=fulfiller). Column names imply beat references — they do not.
+
+---
+
 ### DB Design Principles (Locked)
 - **North Star:** "Could an engine read this and know exactly what to do?" If the engine needs to make assumptions, something is missing. Schema is the data model for a future game engine (L2/ESP32), not the engine itself.
 - **`components`** = bill of materials / serial registry. Every physical object in the box gets a row. Self-referencing `parent_component_id` handles nesting (Board → District Tile → tokens).

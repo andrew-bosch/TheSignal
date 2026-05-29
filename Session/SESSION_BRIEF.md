@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 49 | Updated: 2026-05-29**
+**Session 50 | Updated: 2026-05-29**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,9 +8,9 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S49 complete. Art 04 §5 P1–P15 signed off (04-54 ✅). C17 (Intercept) signed off. XA-37 complete. Art 04 taxonomy sweep C01–P18 done (Category→Layer field rename + six-layer values applied to all cards). §11.1 expanded with canonical modifier card definition. New Principle 8 (cross-faction narrative voices). C11–C15 cross-faction narrative voices added (one aligned, one opposed per card). Faction pentagram alignment model saved to Whiteboard (pending canonical home in Art 00 §7). Beat 20 DB trade primitives inserted (tmp_action rows 278–279; tmp_subject_target seeded Faction→Faction and Faction→ARBITER).
+S50 in progress. Infrastructure and credential work: MariaDB credentials resolved (~/.my.cnf → claude user); CLAUDE.md updated (ClaudeIOS workflow → Gem, DB credentials documented). C17 component gaps resolved: Notification Slip (NS-xx, id=95) and Intel Delivery Slip (IS-xx, id=96) registered in 00b §4/§7 and seeded in all DB downstream tables (tmp_comp_verb_beat, tmp_comp_verb_role, tmp_action, tmp_subject_target). Emergency Response card (id=97) registered and fully seeded. Art 03 Beat 3 Steps 7/8 extended to cover case delivery effects (material — re-sign-off flagged as PM05 03-14). C17 effects and Arbiter context updated to use component names. DB schema reference stub created at the_signal_db_documentation/schema_reference.md (PM05 DB-29 — priority over 03-14).
 
-**Next session:** C18+ card vetting pass — C18–C35 and P01–P18.
+**Next:** Populate schema_reference.md (DB-29) after token reset. Then C18+ card vetting pass — C18–C35 and P01–P18.
 
 ---
 
@@ -22,7 +22,7 @@ S49 complete. Art 04 §5 P1–P15 signed off (04-54 ✅). C17 (Intercept) signed
 | 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. |
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. |
+| 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. **Re-sign-off pending (03-14)** — Beat 3 Steps 7/8 extended S50 (case delivery effects). |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. §9 removed; §10 → §9 (Standalone Card Types). React collapsed into Modifier cards. Emergency Response penultimate context added. |
 | 04 — Action Card System | 0.9.21 | §5 P1–P15 signed off ✅ S49. C17 signed off ✅ S49. Taxonomy sweep C01–P18 complete. Cross-faction voices C11–C15 added. **Next: C18+ vetting pass.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |

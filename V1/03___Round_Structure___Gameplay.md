@@ -571,11 +571,17 @@ If this operation's outcome blocks the acting faction's deployment marker conver
 
 If the operation succeeded: The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Established markers, Tension markers.
 
+If the card's success outcome specifies an Intel Delivery Slip: ARBITER writes the specified intelligence onto a blank Intel Delivery Slip from their tableau and places it in the indicated faction's dispatch case.
+
+If the card's success outcome specifies a Notification Slip delivered to another faction: ARBITER places the pre-written Notification Slip in that faction's dispatch case.
+
 *Successful covert operations do not produce Standing marker moves — the action is unobserved. Any Standing marker move in this section occurs only as a card-specified failure (Step 8) or discovery (Step 9) condition.*
 
 **Step 8 — Apply failure conditions.**
 
 If the operation failed: apply the failure conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
+
+If the card's failure outcome specifies a Notification Slip delivered to another faction: ARBITER places the pre-written Notification Slip in that faction's dispatch case.
 
 The affected Faction Player applies their own board changes.
 

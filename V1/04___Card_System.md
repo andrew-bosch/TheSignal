@@ -1448,7 +1448,7 @@ Ghost — P17–P18
 - **Subject:** Covert operation — named faction
 
 - **Design note:** Replaces C17 Archive Recovery (retired — L78). Intel token cost consumed at submission regardless of roll outcome — not refunded on failure.
-- **Arbiter context:** On crit success: deliver 1 Intel token naming target faction via case. On failure: deliver notification slip to target faction per C05 slip text. On crit failure: Public Standing shift is silent — record reason internally only.
+- **Arbiter context:** On crit success: place 1 Intel Token naming target faction in acting faction's dispatch case. On success: write target faction's first submitted covert operation type and district on an Intel Delivery Slip; place in acting faction's dispatch case. On failure: place pre-written Notification Slip in target faction's dispatch case (use C05 text). On crit failure: Public Standing shift is silent — record reason internally only.
 
 **Narrative**
 
@@ -1482,8 +1482,8 @@ Ghost — P17–P18
 **Effects**
 
 - **Crit success:** +1 target faction Intel Token.
-- **Success:** First covert operation submitted by target faction this round — operation type and district — delivered in case.
-- **Failure:** Notification slip delivered to target faction.
+- **Success:** Intel Delivery Slip — operation type and district of target faction's first submitted covert operation this round — placed in acting faction's dispatch case.
+- **Failure:** Notification Slip placed in target faction's dispatch case.
 - **Crit failure:** −2 Public Standing.
 
 **Portrait**
@@ -2725,7 +2725,7 @@ Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacit
 | A-04-02 | Deck exhaustion occurs at approximately Round 4 | Pacing and strategy may differ — playtesting required |
 | A-04-03 | Maximum 1 structure per faction per district is the right balance cap | Guild doctrine and late-game economy affected |
 | A-04-04 | Ghost 4-operation slot available only when Ghost passes politically — confirmed design intent | Ghost balance and doctrine affected |
-| A-04-05 | Pre-written ARBITER notification slips are feasible as paper prototype components | Multiple cards (C05, C22, C24, C32) depend on this component |
+| A-04-05 | Pre-written ARBITER notification slips are feasible as paper prototype components | ✅ Resolved S50 — Notification Slip (NS-xx, id=95) and Intel Delivery Slip (IS-xx, id=96) registered in 00b §4 and tmp_component. Text/format: Art 07 (F-ART07-01). |
 
 ### Cross-Artifact Flags
 
