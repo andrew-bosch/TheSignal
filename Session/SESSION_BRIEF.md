@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 51 (close) | Updated: 2026-05-29**
+**Session 53 (close) | Updated: 2026-05-30**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,11 +8,13 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S53 in progress. L172 locked: card `id` = integer autoincrement PK; variable name prefix (C01, C02…) is document convention only. 04-57 ✅ closed.
+S53 complete. L172 locked (card `id` = integer autoincrement PK). 04-57 ✅ closed.
 
-Art 04 S53: C01–C16 retrofitted to Python object notation (`Card(...)` constructor format per §6 class definition). C17–C35 remaining.
+Art 04 S53: C17–C35 retrofitted to Python object notation. C01–C17 design rationale fully structured: two-subheader format (Design Rationale + Outstanding Issues), checklist converted to Category/Pass/Note table. Fixes applied: C01/C02 notation (`district(target).faction(acting)`), C07 `restriction=None`, C17 portrait `flat→submitter`.
 
-**Next session:** C17–C35 retrofit to Python object notation (§6 class format). Then P01–P18 development.
+Outstanding Issues per-card document six open design questions: C05 (crit semantics), C09 (Art 06 dependency / Syndicate reliability), C10 (−45 vs −35 threshold), C13 (Ring 0 effective threshold), C15 (per-Quarter cap), C16 (Pattern Match cost).
+
+**Next session:** Continue C01–C17 review pass — walk Outstanding Issues, take decisions. Then C18–C35 design rationale. Then P01–P18 development.
 
 ---
 
@@ -26,7 +28,7 @@ Art 04 S53: C01–C16 retrofitted to Python object notation (`Card(...)` constru
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.1 | ✅ Signed Off — S52. Beat 3/4 outcome steps restructured (7a/7b/7b.i). L170 locked. 03-15 open: generalize when Art 07/08 developed. |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. §9 removed; §10 → §9 (Standalone Card Types). React collapsed into Modifier cards. Emergency Response penultimate context added. |
-| 04 — Action Card System | 0.9.21 | §5 P1–P15 + C17 signed off ✅ S49. S51: C18/C25/C27 replaced; full schema pass C01–C35 (Ring 0–3 fields, C17 canonical format). **Next: P01–P18 development.** |
+| 04 — Action Card System | 0.9.21 | §5 P1–P15 + C17 signed off ✅ S49. S53: C17–C35 Python notation retrofit complete; C01–C17 design rationale structured (two-subheader + table checklist); C01/C02/C07/C17 notation fixes. Outstanding Issues per card documented. **Next: C01–C17 review pass (Outstanding Issues decisions), C18–C35 rationale, P01–P18.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |

@@ -370,7 +370,20 @@ Ghost — P17–P18
 ### C01 — BUILD STRUCTURE
 [↑ Card Specifications](#user-content-card-specifications)
 
-Construction is publicly visible — result announced at resolution. The covert element is intent, not act. Guild affinity waives the district-native cost because the Guild *is* the city's builder — they do not purchase permission to work in their own infrastructure ecosystem.
+#### Design Rationale
+Territory-control foundation card. Construction is publicly visible — the covert element is intent, not the act. Every faction must establish structured positions to hold territory; this is the universal mechanism. Cost vs reward: dual cost (1 faction native + 1 district native) models that building requires both faction resources and local knowledge; Automatic resolution is appropriate if prerequisites are met. Guild affinity waives the district-native cost: the Guild *is* the city's builder and does not purchase access to their own infrastructure ecosystem.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | Each faction reads construction through its doctrine; Syndicate's "the question is who captures it" is particularly sharp. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — the covert element is unannounced *intent*, not the visible act of construction itself. |
+| Balance | ✓ | Automatic resolution gated by dual cost + existing presence + no-existing-structure restriction. Not independently playable without prior presence. |
+| Supported by existing mechanics | ✓ | Structure flag and control tier calculation in Art 02. |
+
+#### Outstanding Issues and Design Questions
+None.
 
 ```python
 C01 = Card(
@@ -395,8 +408,8 @@ C01 = Card(
 
     affinity    = faction(acting) == Guild: cost.resource.district(native) = 0,
     restriction = (
-        district.faction(acting).presence > 0 and
-        district.faction(acting).structure == 0
+        district(target).faction(acting).presence > 0 and
+        district(target).faction(acting).structure == 0
     ),
     cost = resource.faction(acting) * 1 + resource.district(native) * 1,
 
@@ -424,7 +437,20 @@ C01 = Card(
 ### C02 — DEMOLISH
 [↑ Card Specifications](#user-content-card-specifications)
 
-Structure removal is publicly visible; source of removal is not announced. Demolish is probabilistic where Build Structure is Automatic — the asymmetry is intentional: building is certain (you control your own resources), demolishing someone else's infrastructure meets resistance. Crit success yields salvage; crit fail costs Public Standing.
+#### Design Rationale
+Territory disruption card — the destructive mirror of C01. Structure removal is publicly visible; source of removal is not announced. Cost vs reward: dual cost (1 faction native + 1 district native) reflects that demolition requires both capability and local knowledge; probabilistic resolution models genuine resistance — you do not control what you are destroying. Crit success yields salvage (1 native recovered); crit fail costs Public Standing, representing the reputational risk of publicly-failed covert demolition.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | The asymmetry (Demolish probabilistic vs Build Automatic) is intentional — building is certain because you control your own resources; demolishing someone else's infrastructure meets resistance. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — the destructive act is covert, source undisclosed. |
+| Balance | ✓ | Probabilistic mirror of C01 at same cost. Crit success partial refund (salvage) rewards operational success. Crit fail PS loss creates meaningful downside for failed demolition ops. |
+| Supported by existing mechanics | ✓ | Structure flag and control tier calculation in Art 02. Demolish feeds C12 (Materials Acquisition) trigger. |
+
+#### Outstanding Issues and Design Questions
+- C12 trigger notation uses `id=C02` (variable name, not integer). Update to `id=2` when DB integers are assigned. Non-material — carry.
 
 ```python
 C02 = Card(
@@ -450,7 +476,7 @@ C02 = Card(
     affinity    = None,
     restriction = (
         district(self|adjacent).faction(acting).presence > 0 and
-        district.faction(target).structure > 0
+        district(target).faction(target).structure > 0
     ),
     cost = resource.faction(acting) * 1 + resource.district(native) * 1,
 
@@ -478,7 +504,20 @@ C02 = Card(
 ### C03 — CAMPAIGN
 [↑ Card Specifications](#user-content-card-specifications)
 
-Presence deepening, not entry — you must already be in a district to Campaign. Mirrors C01 structurally: Automatic resolution, same dual cost. Network affinity waives the district-native component because Network growth is built through relationships with existing residents, not material acquisition.
+#### Design Rationale
+Presence-deepening card — a deliberate structural parallel to C01. To Campaign, you must already be present; this is not an entry card. Cost vs reward: dual cost mirrors C01 (same principle, same gate). Automatic resolution because you're operating within your own established footprint, not against opposition. Network affinity waives the district-native cost because Network growth is relational, not material — it does not purchase access to local infrastructure.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | Each faction's perspective reads presence-building through its own doctrine. Network's "relationships are how things actually change" explains the affinity mechanically. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — presence building is done quietly, not as a public act. |
+| Balance | ✓ | Automatic resolution gated by existing presence. Structurally identical to C01 in cost and gate — intentional symmetry between territory-building and presence-building. |
+| Supported by existing mechanics | ✓ | Presence token mechanics and control tier thresholds in Art 02. |
+
+#### Outstanding Issues and Design Questions
+None.
 
 ```python
 C03 = Card(
@@ -529,7 +568,20 @@ C03 = Card(
 ### C04 — UNDERMINE
 [↑ Card Specifications](#user-content-card-specifications)
 
-Presence-removal mirror of C03. Probabilistic for the same reason as Demolish: reducing someone else's presence meets resistance. Portrait reflects doctrinal alignment — Ghost and Syndicate are omitted, neither strongly aligned nor opposed to presence disruption as a tactic.
+#### Design Rationale
+Presence-disruption card — the destructive mirror of C03, following the same build/demolish asymmetry as C01/C02. Probabilistic because you're operating against someone else's established footing. Cost vs reward: same dual cost as C03; crit success doubles effect (−2 presence), crit fail costs PS. Portrait is selective: Guild and Directorate are negatively disposed to undercutting presence (institutional stability preference); Network is affirmative (disruption aligns with its counter-entrenchment doctrine). Ghost and Syndicate are absent — neither is doctrinally committed to presence disruption as a default.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | Guild and Directorate opposition is coherent — both treat established presence as legitimate. Network affirmative. Ghost/Syndicate absence is accurate; they're tactically neutral on this. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — covert erosion, source undisclosed. |
+| Balance | ✓ | Probabilistic mirror of C03. Crit success double-effect (not partial refund like C02 salvage) is intentionally stronger — presence erosion compounds. Crit fail PS penalty mirrors Demolish. |
+| Supported by existing mechanics | ✓ | Presence token mechanics in Art 02. |
+
+#### Outstanding Issues and Design Questions
+None.
 
 ```python
 C04 = Card(
@@ -587,7 +639,20 @@ C04 = Card(
 ### C05 — GATHER
 [↑ Card Specifications](#user-content-card-specifications)
 
-No secondary cost — observation does not consume local resources. Ghost exemption from adjacency reflects doctrine: remote analysis does not require physical proximity. Crit fail notifies the target, creating genuine operational risk for careless intelligence-gathering.
+#### Design Rationale
+Universal intelligence card — the baseline for the Information layer. Observation does not consume local infrastructure, hence faction-native-only cost. Ghost adjacency exemption is doctrinal: remote analysis does not require physical proximity. Crit success is additive (both `success` and `successcrit` dispatch the same token type — 2 Intel Tokens total on crit). Crit fail reveals the attempt to the target, creating genuine operational risk for careless intelligence-gathering.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | Each faction reads intelligence-gathering through its own doctrine. Ghost's "this is what we are here for" makes the Ghost affinity (threshold+25) legible as natural aptitude, not exception. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — covert observation, universally available. |
+| Balance | ✓ | Cheapest intel card in the set. Single faction-native cost. Crit success double-intel reward is appropriately limited by probabilistic resolution (50 base; Ghost effective 75). |
+| Supported by existing mechanics | ✓ | Intel Token mechanics in Art 02b. Notification slip in ARBITER toolkit (Art 07). |
+
+#### Outstanding Issues and Design Questions
+- Crit semantics: `successcrit` is the same `game.dispatch` as `success` — intended to mean 2 Intel Tokens total on crit (success fires first, crit adds a second). Confirm before v1.2. Low priority — carry.
 
 ```python
 C05 = Card(
@@ -641,7 +706,20 @@ C05 = Card(
 ### C06 — BROADCAST INTERFERENCE
 [↑ Card Specifications](#user-content-card-specifications)
 
-Exposure is The Network's native resource; non-Network factions acquire it through district incursion or trade at a premium rate. No presence requirement — signal disruption is broadcast, not physical. Network affinity reduces cost by 1, making this effectively a 1-Exposure card for Network alone.
+#### Design Rationale
+Submission-layer Beat 2 card — places a cost modifier on Political Acts targeting a district this round. Broadcast interference is ambient, hence no presence requirement. Cost is Exposure-denominated: non-Network factions must acquire Exposure through incursion or trade, making this card natively affordable only to the Network. Network affinity reduces cost by 1 (net: 1 Exposure), making it a low-friction tactical tool for Network while remaining expensive for others.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | Broadcast disruption as a covert act rather than a visible one fits the game's information economy. Each faction reads the disruption through its own risk surface. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — signal disruption is covert even if the effect (raised PA cost) is potentially visible at Beat 4. |
+| Balance | ✓ | Beat 2 positional wager with no fail state. Raises opponent PA cost by 1 native — meaningful deterrence without being a hard block. ARBITER intercept mechanic prevents silent gotcha (arbiter_note). |
+| Supported by existing mechanics | ✓ | Beat 2 case awareness required (positional wager). ARBITER holds awareness through Beat 4. |
+
+#### Outstanding Issues and Design Questions
+None.
 
 ```python
 C06 = Card(
@@ -692,7 +770,20 @@ C06 = Card(
 ### C07 — AMPLIFY
 [↑ Card Specifications](#user-content-card-specifications)
 
-Amplification cuts both ways — a Political Act that loses −1 PS on failure resolves as −2 with Amplify active. Beat 2 commitment before Beat 4 declaration: if no Political Act is submitted in Beat 4, Amplify fizzles without refund. The restriction field was removed — ARBITER holds awareness through Beat 4 and applies or fizzles at that point.
+#### Design Rationale
+Beat 2 modifier for the acting faction's own Political Act — the offensive counterpart to C06. Amplification cuts both ways: a PA that wins +1 PS resolves as +2; a PA that loses −1 PS resolves as −2. Cost is Exposure-denominated (same as C06), slightly favoring the Network. Restriction is None — ARBITER holds awareness through Beat 4; if no Political Act is submitted, Amplify fizzles and Exposure is spent.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | Ghost's opposition is mechanically coherent — "volume attracts attention" is the narrative expression of a doctrine that avoids standing-impact cards. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — covert amplification of a public act. The PA itself is public; the amplification mechanism is not. |
+| Balance | ✓ | Symmetric multiplier (success and failure both ×2) prevents risk-free use. The fizzle mechanic ensures the Beat 2 commitment is real even when plans change. |
+| Supported by existing mechanics | ✓ | Beat 2 case awareness required (positional wager). ARBITER awareness model for beat-span effects established in Art 07. |
+
+#### Outstanding Issues and Design Questions
+None.
 
 ```python
 C07 = Card(
@@ -716,10 +807,7 @@ C07 = Card(
     target_object   = PoliticalAct,
 
     affinity    = faction(acting) == Network: cost.resource.exposure -= 1,
-    restriction = (
-        faction(acting).scheduled_op(beat=4).type == PoliticalAct and
-        faction(acting).scheduled_op(beat=4) != Pass
-    ),
+    restriction = None,
     cost        = resource.faction(acting).exposure * 2,
 
     success     = faction(acting).op(beat=4, type=PoliticalAct).standing_impact *= 2,
@@ -746,7 +834,20 @@ C07 = Card(
 ### C08 — BUY INFLUENCE
 [↑ Card Specifications](#user-content-card-specifications)
 
-Capital bypasses local knowledge requirements — no presence needed, no district-native cost. Syndicate affinity is difficulty reduction (better outcomes from spending), not cost reduction. Three Portrait penalties reflect strong doctrinal opposition: for Guild, Directorate, and Network, bought influence is an institutional threat, not just a distasteful tactic.
+#### Design Rationale
+Economy-bypasses-Territory card — the only Standard CovertOperation with no restriction and no presence requirement. Capital buys presence directly, reflecting that money can substitute for community groundwork. Cost vs reward: 3 Capital is high but buys 2 presence on success (more than C03's 1), and crit success adds a third. Syndicate affinity is difficulty reduction, not cost reduction — the Syndicate does not spend less; it converts capital to presence more reliably. Three portrait penalties represent strong doctrinal opposition: bought influence is an institutional threat to Guild's earned-presence model, Directorate's legitimate-process model, and Network's relational model.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | Syndicate's "capital determines which doors exist" is the sharpest justification for the card's design logic. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — the purchase is covert; the resulting presence tokens are visible. |
+| Balance | ✓ | 3 Capital is the highest single-resource cost in the Standard set. No presence requirement is the tradeoff for that expense. Crit fail −2 PS is severe — publicly-failed capital deployment is more damaging than ordinary covert failure. |
+| Supported by existing mechanics | ✓ | Capital resource and presence tokens in Art 02. Probabilistic resolution at same difficulty level as C03/C04. |
+
+#### Outstanding Issues and Design Questions
+None.
 
 ```python
 C08 = Card(
@@ -802,7 +903,21 @@ C08 = Card(
 ### C09 — FUND
 [↑ Card Specifications](#user-content-card-specifications)
 
-Resource transfer enabling alliance mechanics. Source is anonymous by default; acting faction may announce after receiving the Accord Card from ARBITER. No ring modifier — this operation targets a faction, not a district. Full balance assessment is deferred until Art 06 (Accord mechanics) is developed.
+#### Design Rationale
+Alliance-seeding card — the only card in the Standard set that transfers resources between factions. Source is anonymous by default; the acting faction receives an Accord Card (cost 0) that it may play to announce the transfer publicly. Cost vs reward: 2 Capital spent to transfer 2 Capital to the target — net zero to the actor at success, but crit success awards +1 PS and the Accord Card opens alliance mechanics. Syndicate affinity is difficulty reduction — the Syndicate is the faction most practiced at informal financial transfers. Full balance assessment deferred until Art 06 (Accord mechanics) is developed.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | Each faction reads cross-faction financial transfer through its own lens. Directorate's "we monitor these carefully" is a light institutional threat without being a block. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — anonymous transfer is covert. Accord Card mechanism preserves optionality on disclosure. |
+| Balance | ⚠ | Syndicate affinity threshold+25 (~75% reliable). Net capital exchange is zero at success, making this primarily a relationship/Accord tool. Full balance deferred until Art 06 defines Accord value. |
+| Supported by existing mechanics | ✓ | Capital resource mechanics in Art 02. Accord Card defined in Art 06 (stub — dependency noted). |
+
+#### Outstanding Issues and Design Questions
+- Art 06 (Accord mechanics) dependency — balance cannot be fully assessed until Accord Card value is defined. Flagged.
+- Syndicate near-reliability (threshold+25 ≈ 75%): confirm intended. The Syndicate is the faction most practiced at financial transfers — argument for keeping it.
 
 ```python
 C09 = Card(
@@ -856,7 +971,20 @@ C09 = Card(
 ### C10 — PROTECT
 [↑ Card Specifications](#user-content-card-specifications)
 
-Applies only to the acting faction's assets — not all assets in the district. A positional wager: Beat 2 commitment that bets on being attacked in that district this round. Guild and Directorate affinity reflects their doctrine that institutional defense is a core competency, not an optional response.
+#### Design Rationale
+Defensive Beat 2 positional wager — the only Standard card that explicitly protects existing assets. Applies only to the acting faction's assets in the named district, not the district broadly. Cost vs reward: 1 district-native paid regardless of whether an attack materializes; if it does, −25 threshold reduction (−45 for Guild/Directorate) meaningfully degrades opponents' attack probability. Guild and Directorate affinity reflects institutional defense as core competency, not exceptional response.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | "What you build is only worth as much as your willingness to defend it" — direct. Ghost's "best protection is not being found" expresses their non-use preference cleanly. |
+| Type/Subtype fit | ✓ | CovertOperation / Standard — defensive preparations are covert. Effect is felt at Beat 3 resolution, not announced at submission. |
+| Balance | ⚠ | Guild/Directorate affinity at −45 threshold reduction: C02 Demolish base threshold = 50; −45 reduces effective threshold to 5. Near-nullification. Confirm this is intended, or reduce to −35 (leaves 15%). |
+| Supported by existing mechanics | ✓ | ARBITER threshold marker mechanic in Art 07. Requires Beat 2 case awareness (positional wager). |
+
+#### Outstanding Issues and Design Questions
+- Guild/Directorate affinity reduces C02 Demolish effective threshold from 50 → 5. Intended near-nullification, or should reduce to −35 (leaves 15% chance)? Confirm before v1.2.
 
 ```python
 C10 = Card(
@@ -918,6 +1046,21 @@ C10 = Card(
 ### C11 — FORTIFY STRUCTURE
 [↑ Card Specifications](#user-content-card-specifications)
 
+#### Design Rationale
+Guild-exclusive structural defense card. The hardest counter to C02 Demolish in the set — not a threshold reduction (C10 Protect) but total immunity. Cost vs reward: 1 Capacity is relatively cheap for full immunity; the Beat 2 commitment is the real cost, since you're betting a slot that your structure will be targeted this round. Guild's structural investment is its primary territorial asset; this card formalizes that the Guild defends what it has built.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | "The Guild does not abandon what it has built" is the doctrine statement. Network's "what's inside them" counter-perspective acknowledges the immunity without attacking the mechanism. |
+| Type/Subtype fit | ✓ | CovertOperation / FactionSpecific (Guild) — structural reinforcement is Guild's unique competency. Immunity not available to any other faction. |
+| Balance | ✓ | Beat 2 positional wager means wrong-read wastes the slot. Immunity is total but Quarter-limited. Does not protect multiple structures — one play, one structure. |
+| Supported by existing mechanics | ✓ | Demolish flag mechanic in Art 02. ARBITER applies immunity at C02 resolution per arbiter_note. |
+
+#### Outstanding Issues and Design Questions
+None.
+
 ```python
 C11 = Card(
     id      = 11,  version = "v1.1",
@@ -965,7 +1108,20 @@ C11 = Card(
 ### C12 — MATERIALS ACQUISITION
 [↑ Card Specifications](#user-content-card-specifications)
 
-Guild names the target faction at submission, betting one of three Beat 2 action slots that this faction will execute C02 this Quarter. The slot is the cost; a wrong read wastes the action with no resource loss. Success mirrors C02's cost exactly — if C02's cost changes in playtesting, C12's reward scales automatically.
+#### Design Rationale
+Guild-exclusive economic counter to demolition — not a defense card but a revenue card. The Guild names a target faction at submission, betting a Beat 2 slot that this faction will execute C02 this Quarter. Cost vs reward: zero resource cost; the action slot itself is the bet. Success mirrors C02's cost exactly (1 native + 1 district native) — intentionally self-calibrating; if C02's cost changes in playtesting, C12's reward scales automatically. A wrong read wastes the slot with no other loss.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | "We simply ensure we are paid when someone else does" — Guild positions itself as infrastructure provider even when its own structures are being demolished. |
+| Type/Subtype fit | ✓ | CovertOperation / FactionSpecific (Guild) — the observation and positioning is covert; the payment materializes through ARBITER case mechanism. |
+| Balance | ✓ | Zero resource cost offset by action slot. Trigger-contingent — if named faction doesn't play C02, nothing happens. Only first qualifying Demolish from named faction triggers (arbiter_note). |
+| Supported by existing mechanics | ✓ | ARBITER trigger confirmation model in Art 07. Trigger references C02 by id. |
+
+#### Outstanding Issues and Design Questions
+- Trigger notation uses `id=C02` (variable name, not integer). Update to `id=2` when DB integers are assigned. Non-material — carry.
 
 ```python
 C12 = Card(
@@ -1017,7 +1173,20 @@ C12 = Card(
 ### C13 — FOUNDATION RIGHTS
 [↑ Card Specifications](#user-content-card-specifications)
 
-No secondary cost — unclaimed districts have no established resource infrastructure. The hard threshold (25) models genuine first-mover difficulty: unclaimed territory resists entry even for the Guild. Crit fail delivers an Intel Token to the Directorate silently — a failed foundation claim is a regulatory event, and the Directorate holds that record. Guild never knows the paper trail exists.
+#### Design Rationale
+Guild-exclusive first-entry card for unclaimed districts. Unclaimed territory has no established resource infrastructure, hence Capacity-only cost. Threshold 25 reflects genuine first-mover difficulty — unclaimed territory resists entry even for the faction with the deepest historical claim. Crit success upgrades presence to presence+structure (immediate foothold). Crit fail is politically the most sensitive outcome: a failed foundation claim is a regulatory event, and the Directorate receives an Intel Token silently. Guild never knows the paper trail was created.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | "The Guild was here before the city had a name" — Foundation Rights is the doctrine card. Directorate's counter ("precedence is established through legal process") makes the institutional tension mechanical. |
+| Type/Subtype fit | ✓ | CovertOperation / FactionSpecific (Guild) — unannounced territorial claim. Covert until established. |
+| Balance | ⚠ | Threshold 25 with ring_mod {0: −15} = effective threshold 10 in Ring 0 districts. Near-automatic in the city center. Confirm this is intentional — first-entry to unclaimed Ring 0 territory should be hard. Consider raising base threshold to 35–40. |
+| Supported by existing mechanics | ✓ | Restriction enforced by `district(target).presence.total == 0`. ARBITER crit-fail silent delivery in Art 07. |
+
+#### Outstanding Issues and Design Questions
+- Ring 0 effective threshold: 25 − 15 (ring_mod) = 10. Near-automatic for unclaimed Ring 0 districts. Consider raising base threshold to 35–40. Design question — confirm before v1.2.
 
 ```python
 C13 = Card(
@@ -1066,7 +1235,20 @@ C13 = Card(
 ### C14 — CONSTRUCTION CREW
 [↑ Card Specifications](#user-content-card-specifications)
 
-Threshold 65 = base 50 + Guild doctrine +15. Premium play: 3 Capacity buys simultaneous presence and structure anywhere, bypassing C01's presence prerequisite. Crit fail consequences are deliberately asymmetric — unauthorized construction without cleared permits attracts Ghost surveillance and Syndicate resource extraction.
+#### Design Rationale
+Guild-exclusive rush-construction card — bypasses C01's presence prerequisite at premium cost and elevated difficulty. Threshold 65 models that unauthorized construction (without prior presence) is significantly harder than licensed work. Cost: 3 Capacity vs C01's 1 faction native + 1 district native — a premium for skipping the prerequisite. Crit fail is deliberately multi-faction: failed unauthorized construction triggers both Ghost surveillance and Syndicate resource extraction — the city's two most opportunistic actors benefit from the Guild's overreach.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | "Sometimes the crews arrive before the paperwork" — makes the Guild's relationship with its own rules explicit. Ghost's observation ("better at covert operations than they admit") acknowledges the tension. |
+| Type/Subtype fit | ✓ | CovertOperation / FactionSpecific (Guild) — unauthorized construction is covert until established. |
+| Balance | ✓ | High cost (3 Capacity), high threshold (65), asymmetric crit fail. Bypasses only the C01 presence prerequisite — ring mods still apply. Net value: saves C03+C01 sequential plays in exchange for one high-cost probabilistic play. |
+| Supported by existing mechanics | ✓ | Crit fail silent delivery to Ghost and Syndicate via ARBITER case (arbiter_note). Control tier mechanics in Art 02. |
+
+#### Outstanding Issues and Design Questions
+None.
 
 ```python
 C14 = Card(
@@ -1121,7 +1303,20 @@ C14 = Card(
 ### C15 — INFRASTRUCTURE YIELD
 [↑ Card Specifications](#user-content-card-specifications)
 
-Zero cost — Established or Dominant control tier is the only gate. The Guild built New Meridian's infrastructure; this card formalizes that the return on that investment is structural, not incidental. The counter-lever is territorial: if Guild loses control tier, the card becomes unplayable in that district.
+#### Design Rationale
+Guild-exclusive passive income card — the economic expression of territorial control. Zero cost reflects that drawing from established infrastructure is not a new expenditure; it is the return on prior investment. The sole gate (Established or Dominant control tier) makes this card valuable precisely because it rewards maintained territorial control. Counter-lever is territorial: the card becomes unplayable if the Guild loses control tier, creating natural interdependence with C01/C03.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | "Drawing from it is not theft. It is dividend." — Guild doctrine frames this as entitlement, not acquisition. Directorate's "original agreements" counter introduces institutional friction without blocking the mechanic. |
+| Type/Subtype fit | ✓ | CovertOperation / FactionSpecific (Guild) — drawing from covertly-leveraged infrastructure. The yield itself is not publicly attributed. |
+| Balance | ⚠ | Zero cost + Automatic resolution + no failure state + repeatable each Quarter. At Established/Dominant tier across multiple districts, this compounds freely. No per-Quarter cap currently defined. Consider cap of 2 activations per Quarter. |
+| Supported by existing mechanics | ✓ | Control tier thresholds in Art 02. Resource gain mechanics in Art 02b. |
+
+#### Outstanding Issues and Design Questions
+- No per-Quarter cap: zero cost + Automatic + repeatable = uncapped free income in Dominant-tier districts. If Guild holds 3+ Established/Dominant districts, this yields 3+ free native resources per Quarter. Flag for playtesting — consider cap of 2 activations per Quarter.
 
 ```python
 C15 = Card(
@@ -1172,7 +1367,20 @@ C15 = Card(
 ### C16 — PATTERN MATCH
 [↑ Card Specifications](#user-content-card-specifications)
 
-Prediction resolution — no roll. Success if the named faction's submitted covert operation matches on either faction or district; either is sufficient, rewarding moderate intelligence over perfect intelligence. Pattern Match must resolve before the targeted operation; if that op has already resolved this beat, Pattern Match fails. If Ghost cannot legally execute the copied operation (e.g., it requires a resource Ghost does not hold), it fizzles — 2 Findings spent, no effect.
+#### Design Rationale
+Ghost-exclusive intelligence-into-action card — the only card with Prediction resolution in the set. No roll; success is structural (correct prediction on faction OR district — either match is sufficient). Rewards moderate intelligence rather than perfect intelligence. Cost vs reward: 2 Findings to copy a covert operation worth whatever that operation costs — asymmetric upside if the copied op is expensive. Portrait modifier on success (+1 PS on crit) reflects the Ghost doctrine that intelligence is vindicated by successful prediction, not by gathering alone.
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | "We are not predicting. We are recognising a pattern we have already seen." — Ghost frames intelligence as pattern recognition, not guessing. |
+| Type/Subtype fit | ✓ | CovertOperation / FactionSpecific (Ghost) — Prediction resolution is Ghost's unique mechanism. |
+| Balance | ⚠ | Fizzle mechanic (Ghost cannot supply copied op's costs → fizzle) is the primary constraint. If Ghost has broad resources, Pattern Match can copy expensive ops at low marginal cost. Key question: does Ghost pay the copied op's cost? Recommended: yes — fizzle if Ghost cannot supply (already in arbiter_note). Confirm before v1.1. |
+| Supported by existing mechanics | ✓ | Prediction resolution type in Art 03. ARBITER confirms match at resolution per arbiter_note. |
+
+#### Outstanding Issues and Design Questions
+- Does Ghost pay the copied operation's cost? Three options: (A) no cost — Ghost executes free; (B) Ghost pays equivalent resource; (C) fizzle if Ghost cannot supply the original op's cost. Recommended: Option C (per arbiter_note). Confirm before v1.1.
 
 ```python
 C16 = Card(
@@ -1219,7 +1427,20 @@ C16 = Card(
 ### C17 — INTERCEPT
 [↑ Card Specifications](#user-content-card-specifications)
 
-Replaces C17 Archive Recovery (retired — L78). Intel Token cost is consumed at submission regardless of roll outcome — not refunded on failure. The cost structure (Intel Token + 2 Findings) reflects the operational depth required to surveil active operations, as opposed to C18 Dossier Breach which reads planning state before the round begins.
+#### Design Rationale
+Ghost-exclusive active-surveillance card — distinguishes from C18 Dossier Breach by targeting submitted operations, not hand contents. Intel Token cost consumed at submission regardless of outcome: you spend what you know to learn what they're doing. Cost structure (Intel Token + 2 Findings) reflects active operational depth — harder to execute than Gather, rewarded with real-time intelligence rather than historical data. Failure notifies the target; crit fail triggers a silent PS loss (recorded internally by ARBITER only).
+
+**Design checklist:**
+
+| Category | Pass | Note |
+|----------|------|------|
+| Narrative fit | ✓ | "We read the operation as it happens" — the Ghost doctrine card for active surveillance. Ghost-only card; no other faction perspectives needed. |
+| Type/Subtype fit | ✓ | CovertOperation / FactionSpecific (Ghost) — real-time surveillance of submitted covert operations. |
+| Balance | ✓ | Intel Token consumed at submission regardless of outcome — meaningful downside for failed surveillance. Crit success adds an Intel Token on top of the Intel Delivery Slip, compounding intelligence advantage. |
+| Supported by existing mechanics | ✓ | Intel Token mechanics in Art 02b. ARBITER delivery mechanic in Art 07. Notification slip text defined in C05 arbiter_note. |
+
+#### Outstanding Issues and Design Questions
+None.
 
 ```python
 C17 = Card(
@@ -1239,7 +1460,7 @@ C17 = Card(
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = game.dispatch(faction(target), NotificationSlip),
     failcrit    = faction(acting).standing -= 2,
-    portrait    = {Ghost: PortraitEntry(flat=+1)},
+    portrait    = {Ghost: PortraitEntry(submitter=+1)},
     narrative   = "To know what they are doing while they are doing it — that is the only intelligence that matters.",
     perspectives = {Ghost: "We do not wait for the after-action report. We read the operation as it happens."},
     arbiter_note = "Crit success: deliver Intel Token (faction=target) to acting faction's case. Success: write target faction's first submitted op type and district on Intel Delivery Slip; deliver to acting faction's case. Failure: deliver pre-written Notification Slip (C05 text) to target faction's case. Crit failure: PS shift is silent — record internally only.",

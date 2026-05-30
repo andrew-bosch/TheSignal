@@ -1,8 +1,18 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
+
+**Last Updated:** S53
+
 ### Generated: 2026-05-29 (session 51 complete) — supersedes session 50 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
+
+---
+
+## Session Log
+
+### S53 — 2026-05-30
+Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`Card(...)` constructor format). C01–C17 design rationale fully restructured: two-subheader format (#### Design Rationale + #### Outstanding Issues and Design Questions), checklist converted to Category/Pass/Note table format. Code block fixes: C01/C02 `district(target).faction(acting)` notation, C07 `restriction=None` (removed unenforeable Beat 4 check), C17 portrait `flat→submitter`. Six open design questions documented in Outstanding Issues for C05/C09/C10/C13/C15/C16. L172 locked. 04-57 closed. 04-58 opened (C01–C17 Outstanding Issues resolution).
 
 ---
 
