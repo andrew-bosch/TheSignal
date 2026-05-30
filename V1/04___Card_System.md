@@ -370,6 +370,8 @@ Ghost — P17–P18
 ### C01 — BUILD STRUCTURE
 [↑ Card Specifications](#user-content-card-specifications)
 
+Construction is publicly visible — result announced at resolution. The covert element is intent, not act. Guild affinity waives the district-native cost because the Guild *is* the city's builder — they do not purchase permission to work in their own infrastructure ecosystem.
+
 ```python
 C01 = Card(
     id      = 1,  version = "v1.1",
@@ -413,7 +415,6 @@ C01 = Card(
         Ghost:       "A structure is a commitment. Commitments are data points.",
         Syndicate:   "Every structure generates value. The question is who captures it.",
     },
-    design_note  = "Construction is publicly visible — result announced at resolution. The covert element is the intent. The Guild-as-infrastructure-provider doctrine: every structure in New Meridian, regardless of who commissions it, is in some sense a Guild project.",
     arbiter_note = None,
 )
 ```
@@ -422,6 +423,8 @@ C01 = Card(
 
 ### C02 — DEMOLISH
 [↑ Card Specifications](#user-content-card-specifications)
+
+Structure removal is publicly visible; source of removal is not announced. Demolish is probabilistic where Build Structure is Automatic — the asymmetry is intentional: building is certain (you control your own resources), demolishing someone else's infrastructure meets resistance. Crit success yields salvage; crit fail costs Public Standing.
 
 ```python
 C02 = Card(
@@ -466,7 +469,6 @@ C02 = Card(
         Ghost:       "A demolished structure tells us as much as a standing one. We note the absence.",
         Syndicate:   "Assets change hands. Sometimes the most efficient transfer is removal.",
     },
-    design_note  = "Structure removal is publicly visible. Source of removal is not announced.",
     arbiter_note = None,
 )
 ```
@@ -475,6 +477,8 @@ C02 = Card(
 
 ### C03 — CAMPAIGN
 [↑ Card Specifications](#user-content-card-specifications)
+
+Presence deepening, not entry — you must already be in a district to Campaign. Mirrors C01 structurally: Automatic resolution, same dual cost. Network affinity waives the district-native component because Network growth is built through relationships with existing residents, not material acquisition.
 
 ```python
 C03 = Card(
@@ -516,7 +520,6 @@ C03 = Card(
         Ghost:       "Presence creates exposure. We expand only when the intelligence justifies the risk.",
         Syndicate:   "Market position requires footprint. We place ourselves where the returns justify it.",
     },
-    design_note  = "C03 mirrors C01 structurally — Build Structure is the Guild's native action, Campaign is the Network's.",
     arbiter_note = None,
 )
 ```
@@ -525,6 +528,8 @@ C03 = Card(
 
 ### C04 — UNDERMINE
 [↑ Card Specifications](#user-content-card-specifications)
+
+Presence-removal mirror of C03. Probabilistic for the same reason as Demolish: reducing someone else's presence meets resistance. Portrait reflects doctrinal alignment — Ghost and Syndicate are omitted, neither strongly aligned nor opposed to presence disruption as a tactic.
 
 ```python
 C04 = Card(
@@ -573,7 +578,6 @@ C04 = Card(
         Ghost:       "Disruption without intelligence purpose is noise. We prefer signal.",
         Syndicate:   "If their presence can be eroded, it was never well-positioned to begin with.",
     },
-    design_note  = "Portrait values reflect doctrinal alignment — Ghost and Syndicate omitted, neither strongly aligned nor opposed.",
     arbiter_note = None,
 )
 ```
@@ -582,6 +586,8 @@ C04 = Card(
 
 ### C05 — GATHER
 [↑ Card Specifications](#user-content-card-specifications)
+
+No secondary cost — observation does not consume local resources. Ghost exemption from adjacency reflects doctrine: remote analysis does not require physical proximity. Crit fail notifies the target, creating genuine operational risk for careless intelligence-gathering.
 
 ```python
 C05 = Card(
@@ -626,7 +632,6 @@ C05 = Card(
         Ghost:       "This is what we are here for. Everything else follows from understanding.",
         Syndicate:   "Information has market value. We acquire it when the return justifies the cost.",
     },
-    design_note  = "No secondary cost — observation does not consume local resources. Ghost exemption from adjacency reflects doctrine: remote analysis does not require physical proximity.",
     arbiter_note = "Ghost affinity: ring penalties still apply. Intel token marked with faction name and round number. Crit failure notification slip: 'An unknown party attempted to access sensitive information about your operations in [district]. The attempt was identified and neutralised. Exercise appropriate caution.'",
 )
 ```
@@ -635,6 +640,8 @@ C05 = Card(
 
 ### C06 — BROADCAST INTERFERENCE
 [↑ Card Specifications](#user-content-card-specifications)
+
+Exposure is The Network's native resource; non-Network factions acquire it through district incursion or trade at a premium rate. No presence requirement — signal disruption is broadcast, not physical. Network affinity reduces cost by 1, making this effectively a 1-Exposure card for Network alone.
 
 ```python
 C06 = Card(
@@ -676,7 +683,6 @@ C06 = Card(
         Ghost:       "Interference creates analytical cover. We appreciate the quiet.",
         Syndicate:   "Disrupted communications create market inefficiencies. Those can be profitable.",
     },
-    design_note  = "Exposure is The Network's native resource. Non-Network factions acquire Exposure through district incursion or trade at 4:1. No presence requirement — signal disruption is broadcast.",
     arbiter_note = "Beat 2 — ARBITER retains awareness after case opening. At Beat 4 declaration, ARBITER intercepts political acts targeting the affected district and states the additional cost before declaration is confirmed. Faction may proceed or withdraw.",
 )
 ```
@@ -685,6 +691,8 @@ C06 = Card(
 
 ### C07 — AMPLIFY
 [↑ Card Specifications](#user-content-card-specifications)
+
+Amplification cuts both ways — a Political Act that loses −1 PS on failure resolves as −2 with Amplify active. Beat 2 commitment before Beat 4 declaration: if no Political Act is submitted in Beat 4, Amplify fizzles without refund. The restriction field was removed — ARBITER holds awareness through Beat 4 and applies or fizzles at that point.
 
 ```python
 C07 = Card(
@@ -729,8 +737,7 @@ C07 = Card(
         Ghost:       "Amplification is the opposite of what we do. Volume attracts attention. Attention ends operations.",
         Syndicate:   "Leverage applied at the right moment can move markets. This is that tool.",
     },
-    design_note  = "Amplification cuts both ways — a failed political act that loses −1 Public Standing loses −2 instead.",
-    arbiter_note = "Beat 2 — ARBITER retains awareness at resolution. Effect applied when political act resolves in Beat 4. [Beat 4 handling: TBD.]",
+    arbiter_note = "Beat 2 — ARBITER retains awareness at resolution. Effect applied when political act resolves in Beat 4. If no Political Act submitted in Beat 4, Amplify fizzles — Exposure spent, no effect.",
 )
 ```
 
@@ -738,6 +745,8 @@ C07 = Card(
 
 ### C08 — BUY INFLUENCE
 [↑ Card Specifications](#user-content-card-specifications)
+
+Capital bypasses local knowledge requirements — no presence needed, no district-native cost. Syndicate affinity is difficulty reduction (better outcomes from spending), not cost reduction. Three Portrait penalties reflect strong doctrinal opposition: for Guild, Directorate, and Network, bought influence is an institutional threat, not just a distasteful tactic.
 
 ```python
 C08 = Card(
@@ -784,7 +793,6 @@ C08 = Card(
         Ghost:       "Bought presence is noisier than earned presence. It draws the wrong kind of attention.",
         Syndicate:   "Capital does not just open doors. It determines which doors exist in the first place.",
     },
-    design_note  = "No secondary cost — Capital bypasses local knowledge requirements. No presence requirement — primary entry mechanism for new districts. Syndicate affinity is difficulty reduction not cost reduction — better outcomes from spending, not discounts. Three Portrait penalties reflect strong doctrinal opposition.",
     arbiter_note = None,
 )
 ```
@@ -793,6 +801,8 @@ C08 = Card(
 
 ### C09 — FUND
 [↑ Card Specifications](#user-content-card-specifications)
+
+Resource transfer enabling alliance mechanics. Source is anonymous by default; acting faction may announce after receiving the Accord Card from ARBITER. No ring modifier — this operation targets a faction, not a district. Full balance assessment is deferred until Art 06 (Accord mechanics) is developed.
 
 ```python
 C09 = Card(
@@ -837,7 +847,6 @@ C09 = Card(
         Ghost:       "Resources flowing between factions change the operational landscape. We note the direction.",
         Syndicate:   "Capital in motion creates relationships. Relationships create opportunities.",
     },
-    design_note  = "No ring modifier — targets a faction not a district. Source anonymous by default. Acting faction may announce after receiving free Accord card from ARBITER.",
     arbiter_note = "Transfer handled covertly at case return — resources appear in recipient's case at debrief. Recipient may convert received Capital to native resource at 1:1. Accord card (cost 0, return to ARBITER on play) delivered to acting faction's hand at case resolution.",
 )
 ```
@@ -846,6 +855,8 @@ C09 = Card(
 
 ### C10 — PROTECT
 [↑ Card Specifications](#user-content-card-specifications)
+
+Applies only to the acting faction's assets — not all assets in the district. A positional wager: Beat 2 commitment that bets on being attacked in that district this round. Guild and Directorate affinity reflects their doctrine that institutional defense is a core competency, not an optional response.
 
 ```python
 C10 = Card(
@@ -890,7 +901,6 @@ C10 = Card(
         Ghost:       "The best protection is not being found in the first place.",
         Syndicate:   "Protected assets retain value. Unprotected assets invite acquisition.",
     },
-    design_note  = "Applies only to acting faction's assets — not all factions' assets.",
     arbiter_note = "Beat 2 — at resolution, ARBITER places threshold reduction marker (−25; −45 with Guild/Directorate affinity) on each Beat 3 covert operation in the grid targeting the acting faction's assets in the target district.",
 )
 ```
@@ -946,7 +956,6 @@ C11 = Card(
         Network:     "Hardened walls are preparation. What's inside them decides whether the cost was worth it.",
         Directorate: "A structure immune to demolition is a structure immune to code review. We notice these arrangements.",
     },
-    design_note  = None,
     arbiter_note = "ARBITER retains awareness after Beat 2 opens. Immunity applied when C02 Demolish resolves in Beat 3.",
 )
 ```
@@ -955,6 +964,8 @@ C11 = Card(
 
 ### C12 — MATERIALS ACQUISITION
 [↑ Card Specifications](#user-content-card-specifications)
+
+Guild names the target faction at submission, betting one of three Beat 2 action slots that this faction will execute C02 this Quarter. The slot is the cost; a wrong read wastes the action with no resource loss. Success mirrors C02's cost exactly — if C02's cost changes in playtesting, C12's reward scales automatically.
 
 ```python
 C12 = Card(
@@ -997,8 +1008,7 @@ C12 = Card(
         Syndicate: "Positioning to profit from someone else's action before they take it. The instinct is sound. We simply call it by a different name.",
         Ghost:     "A faction that announces it expects demolition before demolition happens has already told us what it knows.",
     },
-    design_note  = "Guild names target faction at submission — betting one of three Beat 2 action slots that the target will execute C02 this Quarter. The slot is the cost; a wrong read means a wasted action. Success mirrors C02's cost exactly — if C02's cost changes in playtesting, C12's reward scales automatically.",
-    arbiter_note = "ARBITER confirms trigger at Beat 3. Only the first qualifying Demolish this Quarter triggers. Effect delivered in case.",
+    arbiter_note = "ARBITER confirms trigger at Beat 3. Only the first qualifying Demolish from the named faction this Quarter triggers. Effect delivered in case.",
 )
 ```
 
@@ -1006,6 +1016,8 @@ C12 = Card(
 
 ### C13 — FOUNDATION RIGHTS
 [↑ Card Specifications](#user-content-card-specifications)
+
+No secondary cost — unclaimed districts have no established resource infrastructure. The hard threshold (25) models genuine first-mover difficulty: unclaimed territory resists entry even for the Guild. Crit fail delivers an Intel Token to the Directorate silently — a failed foundation claim is a regulatory event, and the Directorate holds that record. Guild never knows the paper trail exists.
 
 ```python
 C13 = Card(
@@ -1045,7 +1057,6 @@ C13 = Card(
         Network:     "The Guild's records go back further than ours. What they do with that history is what we watch.",
         Directorate: "Precedence is established through legal process, not through whoever kept the longer archive.",
     },
-    design_note  = "No secondary cost — unclaimed districts have no established resource infrastructure. Crit fail delivers intel token to Directorate because a failed foundation claim is a regulatory event. Directorate holds that record; Guild never knows the paper trail exists.",
     arbiter_note = "On crit fail: deliver 1 intel token naming Guild to Directorate player via case. Do not notify Guild.",
 )
 ```
@@ -1054,6 +1065,8 @@ C13 = Card(
 
 ### C14 — CONSTRUCTION CREW
 [↑ Card Specifications](#user-content-card-specifications)
+
+Threshold 65 = base 50 + Guild doctrine +15. Premium play: 3 Capacity buys simultaneous presence and structure anywhere, bypassing C01's presence prerequisite. Crit fail consequences are deliberately asymmetric — unauthorized construction without cleared permits attracts Ghost surveillance and Syndicate resource extraction.
 
 ```python
 C14 = Card(
@@ -1099,7 +1112,6 @@ C14 = Card(
         Network:  "We know this method. Presence before permission is how this city was actually built.",
         Ghost:    "Establishing presence before authorization is requested — the Guild is better at covert operations than they admit.",
     },
-    design_note  = "threshold = 65 (base 50 + Guild doctrine +15). Premium play — 3 Capacity for simultaneous presence and structure anywhere, bypassing C01's presence prerequisite.",
     arbiter_note = "Crit fail: deliver 1 Guild Intel Token → Ghost and 1 district native → Syndicate via case. Do not notify Guild.",
 )
 ```
@@ -1108,6 +1120,8 @@ C14 = Card(
 
 ### C15 — INFRASTRUCTURE YIELD
 [↑ Card Specifications](#user-content-card-specifications)
+
+Zero cost — Established or Dominant control tier is the only gate. The Guild built New Meridian's infrastructure; this card formalizes that the return on that investment is structural, not incidental. The counter-lever is territorial: if Guild loses control tier, the card becomes unplayable in that district.
 
 ```python
 C15 = Card(
@@ -1147,7 +1161,6 @@ C15 = Card(
         Syndicate:   "The Guild built the pipes. They are billing us for the water. We respect the position even if we resent the rate.",
         Directorate: "Infrastructure built under city contract belongs to New Meridian, not to the builder. We have the original agreements.",
     },
-    design_note  = "Zero cost — Established or Dominant control tier is the only gate.",
     arbiter_note = None,
 )
 ```
@@ -1158,6 +1171,8 @@ C15 = Card(
 
 ### C16 — PATTERN MATCH
 [↑ Card Specifications](#user-content-card-specifications)
+
+Prediction resolution — no roll. Success if the named faction's submitted covert operation matches on either faction or district; either is sufficient, rewarding moderate intelligence over perfect intelligence. Pattern Match must resolve before the targeted operation; if that op has already resolved this beat, Pattern Match fails. If Ghost cannot legally execute the copied operation (e.g., it requires a resource Ghost does not hold), it fizzles — 2 Findings spent, no effect.
 
 ```python
 C16 = Card(
@@ -1195,7 +1210,6 @@ C16 = Card(
     perspectives = {
         Ghost: "We are not predicting. We are recognising a pattern we have already seen.",
     },
-    design_note  = "Prediction resolution — no roll. Success if the named faction's submitted covert operation targets the named faction or the named district — either match sufficient. Pattern Match must resolve before the targeted operation; if target has already resolved this beat, Pattern Match fails.",
     arbiter_note = "If the copied operation cannot legally be executed by Ghost, Pattern Match fizzles — 2 Findings spent, no effect regardless of prediction accuracy.",
 )
 ```
@@ -1204,6 +1218,8 @@ C16 = Card(
 
 ### C17 — INTERCEPT
 [↑ Card Specifications](#user-content-card-specifications)
+
+Replaces C17 Archive Recovery (retired — L78). Intel Token cost is consumed at submission regardless of roll outcome — not refunded on failure. The cost structure (Intel Token + 2 Findings) reflects the operational depth required to surveil active operations, as opposed to C18 Dossier Breach which reads planning state before the round begins.
 
 ```python
 C17 = Card(
@@ -1226,7 +1242,6 @@ C17 = Card(
     portrait    = {Ghost: PortraitEntry(flat=+1)},
     narrative   = "To know what they are doing while they are doing it — that is the only intelligence that matters.",
     perspectives = {Ghost: "We do not wait for the after-action report. We read the operation as it happens."},
-    design_note  = "Replaces C17 Archive Recovery (retired — L78). Intel token cost consumed at submission regardless of roll outcome — not refunded on failure. Ghost-only affinity bonus baked into success effect.",
     arbiter_note = "Crit success: deliver Intel Token (faction=target) to acting faction's case. Success: write target faction's first submitted op type and district on Intel Delivery Slip; deliver to acting faction's case. Failure: deliver pre-written Notification Slip (C05 text) to target faction's case. Crit failure: PS shift is silent — record internally only.",
 )
 ```
