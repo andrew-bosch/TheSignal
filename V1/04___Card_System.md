@@ -372,7 +372,7 @@ Ghost — P17–P18
 
 ```python
 C01 = Card(
-    id      = "C01",  version = "v1.1",
+    id      = 1,  version = "v1.1",
     name    = "Build Structure",
     tagline = "Construct a physical installation in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -425,7 +425,7 @@ C01 = Card(
 
 ```python
 C02 = Card(
-    id      = "C02",  version = "v1.1",
+    id      = 2,  version = "v1.1",
     name    = "Demolish",
     tagline = "Remove an opponent's structure from a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -476,600 +476,424 @@ C02 = Card(
 ### C03 — CAMPAIGN
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C03 = Card(
+    id      = 3,  version = "v1.1",
+    name    = "Campaign",
+    tagline = "Build local support and deepen presence in a district.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C03
-- **Card version:** v1.1
-- **Card name:** Campaign
-- **Tagline:** *Build local support and deepen presence in a district.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Territory,  function = Add,  subject = PresenceToken,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = None,
 
-- **Layer:** Territory
-- **Function:** Add
-- **Subject:** Presence token
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
 
-- **Design note:** C03 mirrors C01 structurally — Build Structure is the Guild's native action, Campaign is the Network's.
-- **Arbiter context:** N/A
+    affinity    = faction(acting) == Network: cost.resource.district(native) = 0,
+    restriction = district(target).faction(acting).presence > 0,
+    cost        = resource.faction(acting) * 1 + resource.district(native) * 1,
 
-**Narrative**
+    success     = district(target).faction(acting).presence += 1,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *Presence without roots is just occupation.*
-- **Faction perspectives:**
-  - Guild: *Presence is the foundation everything else is built on. We are methodical about this.*
-  - Directorate: *Authority requires visibility. We establish presence where the mandate requires it.*
-  - Network: *Every person we reach in a district is a relationship. Relationships are how things actually change.*
-  - Ghost: *Presence creates exposure. We expand only when the intelligence justifies the risk.*
-  - Syndicate: *Market position requires footprint. We place ourselves where the returns justify it.*
+    portrait = {Network: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** N/A
-- **Restriction:** Acting faction must have at least 1 presence in the target district.
-- **Primary cost qty:** 1
-- **Primary cost type:** Faction native
-- **Secondary cost qty:** 1
-- **Secondary cost type:** District native
-- **Faction affinity:** Network.
-- **Affinity bonus:** Secondary cost −1.
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Automatic
-- **Resolution type:** Transactional
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** Place 1 additional presence token in the target district.
-- **Failure:** N/A
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | +1 | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "Presence without roots is just occupation.",
+    perspectives = {
+        Guild:       "Presence is the foundation everything else is built on. We are methodical about this.",
+        Directorate: "Authority requires visibility. We establish presence where the mandate requires it.",
+        Network:     "Every person we reach in a district is a relationship. Relationships are how things actually change.",
+        Ghost:       "Presence creates exposure. We expand only when the intelligence justifies the risk.",
+        Syndicate:   "Market position requires footprint. We place ourselves where the returns justify it.",
+    },
+    design_note  = "C03 mirrors C01 structurally — Build Structure is the Guild's native action, Campaign is the Network's.",
+    arbiter_note = None,
+)
+```
 
 ---
 
 ### C04 — UNDERMINE
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C04 = Card(
+    id      = 4,  version = "v1.1",
+    name    = "Undermine",
+    tagline = "Erode an opponent's presence in a district.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C04
-- **Card version:** v1.1
-- **Card name:** Undermine
-- **Tagline:** *Erode an opponent's presence in a district.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Territory,  function = Remove,  subject = PresenceToken,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = None,
 
-- **Layer:** Territory
-- **Function:** Remove
-- **Subject:** Presence token
+    target_district = district.any,
+    target_faction  = faction.opponent,
+    target_object   = PresenceToken,
 
-- **Design note:** Portrait values reflect doctrinal alignment — Ghost and Syndicate omitted, neither strongly aligned nor opposed.
-- **Arbiter context:** N/A
+    affinity    = None,
+    restriction = (
+        district(self|adjacent).faction(acting).presence > 0 and
+        district(target).faction(target).presence > 0
+    ),
+    cost        = resource.faction(acting) * 1 + resource.district(native) * 1,
 
-**Narrative**
+    success     = district(target).faction(target).presence -= 1,
+    successcrit = district(target).faction(target).presence -= 1,
+    fail        = None,
+    failcrit    = faction(acting).standing -= 1,
 
-- **Narrative anchor:** *The most effective opposition leaves no visible wound.*
-- **Faction perspectives:**
-  - Guild: *We do not erase what others have built. Even our enemies.*
-  - Directorate: *Covert erosion is not governance. Unless the target is The Network — then it is public safety.*
-  - Network: *Entrenched presence does not become legitimate just because it has been there long enough.*
-  - Ghost: *Disruption without intelligence purpose is noise. We prefer signal.*
-  - Syndicate: *If their presence can be eroded, it was never well-positioned to begin with.*
+    portrait = {
+        Guild:       PortraitEntry(submitter=-1),
+        Directorate: PortraitEntry(submitter=-1, condition=faction(target) != Network),
+        Network:     PortraitEntry(submitter=+1),
+    },
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** Named opponent faction
-- **Target object:** Presence token
-- **Restriction:** Acting faction must have at least 1 presence in the target district or in a district adjacent to the target district. Target faction must have at least 1 presence token in the target district.
-- **Primary cost qty:** 1
-- **Primary cost type:** Faction native
-- **Secondary cost qty:** 1
-- **Secondary cost type:** District native
-- **Faction affinity:** N/A
-- **Affinity bonus:** N/A
-- **Difficulty:** Average (50) + ring modifier
-- **Ring 0 modifier:** −15
-- **Ring 1 modifier:** −10
-- **Ring 2 modifier:** 0
-- **Ring 3 modifier:** +10
-- **Resolution:** d100
-- **Resolution type:** Probabilistic
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** +1 presence token removed.
-- **Success:** Remove 1 presence token from target faction in target district.
-- **Failure:** No effect.
-- **Crit failure:** −1 Public Standing.
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | −1 | N/A | N/A | N/A |
-| Directorate | N/A | −1 | Except when targeting Network | N/A | N/A |
-| Network | N/A | +1 | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "The most effective opposition leaves no visible wound.",
+    perspectives = {
+        Guild:       "We do not erase what others have built. Even our enemies.",
+        Directorate: "Covert erosion is not governance. Unless the target is The Network — then it is public safety.",
+        Network:     "Entrenched presence does not become legitimate just because it has been there long enough.",
+        Ghost:       "Disruption without intelligence purpose is noise. We prefer signal.",
+        Syndicate:   "If their presence can be eroded, it was never well-positioned to begin with.",
+    },
+    design_note  = "Portrait values reflect doctrinal alignment — Ghost and Syndicate omitted, neither strongly aligned nor opposed.",
+    arbiter_note = None,
+)
+```
 
 ---
 
 ### C05 — GATHER
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C05 = Card(
+    id      = 5,  version = "v1.1",
+    name    = "Gather",
+    tagline = "Extract actionable intelligence about a specific faction's operations.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C05
-- **Card version:** v1.1
-- **Card name:** Gather
-- **Tagline:** *Extract actionable intelligence about a specific faction's operations.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Economy,  function = Add,  subject = IntelToken,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = None,
 
-- **Layer:** Economy
-- **Function:** Add
-- **Subject:** Intel token
+    target_district = district.any,
+    target_faction  = faction.opponent,
+    target_object   = None,
 
-- **Design note:** No secondary cost — observation does not consume local resources. Ghost exemption from adjacency reflects doctrine: remote analysis does not require physical proximity.
-- **Arbiter context:** Ghost affinity: ring penalties still apply. Intel token marked with faction name and round number. Crit failure notification slip delivered in case: *"An unknown party attempted to access sensitive information about your operations in [district]. The attempt was identified and neutralised. Exercise appropriate caution."*
+    affinity    = faction(acting) == Ghost: threshold += 25,
+    restriction = (
+        district(self|adjacent).faction(acting).presence > 0 or
+        faction(acting) == Ghost
+    ),
+    cost        = resource.faction(acting) * 1,
 
-**Narrative**
+    success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
+    successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
+    fail        = None,
+    failcrit    = game.dispatch(faction(target), NotificationSlip),
 
-- **Narrative anchor:** *In New Meridian, knowing is the first form of power.*
-- **Faction perspectives:**
-  - Guild: *Intelligence informs construction. We gather when we need to build smarter.*
-  - Directorate: *Information is the foundation of legitimate authority. We collect it formally.*
-  - Network: *The city speaks constantly. We listen for the gaps between what is said and what is true.*
-  - Ghost: *This is what we are here for. Everything else follows from understanding.*
-  - Syndicate: *Information has market value. We acquire it when the return justifies the cost.*
+    portrait = {Ghost: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** Named opponent faction
-- **Target object:** N/A
-- **Restriction:** Acting faction must have at least 1 presence in the target district or in a district adjacent to the target district. Ghost is exempt from this restriction.
-- **Primary cost qty:** 1
-- **Primary cost type:** Faction native
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Ghost.
-- **Affinity bonus:** +25 modifier.
-- **Difficulty:** Average (50) + ring modifier
-- **Ring 0 modifier:** −15
-- **Ring 1 modifier:** −10
-- **Ring 2 modifier:** 0
-- **Ring 3 modifier:** +10
-- **Resolution:** d100
-- **Resolution type:** Probabilistic
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** +1 Intel token.
-- **Success:** 1 Intel token for the named faction delivered in case.
-- **Failure:** No effect.
-- **Crit failure:** Notification slip delivered to target faction.
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | +1 | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "In New Meridian, knowing is the first form of power.",
+    perspectives = {
+        Guild:       "Intelligence informs construction. We gather when we need to build smarter.",
+        Directorate: "Information is the foundation of legitimate authority. We collect it formally.",
+        Network:     "The city speaks constantly. We listen for the gaps between what is said and what is true.",
+        Ghost:       "This is what we are here for. Everything else follows from understanding.",
+        Syndicate:   "Information has market value. We acquire it when the return justifies the cost.",
+    },
+    design_note  = "No secondary cost — observation does not consume local resources. Ghost exemption from adjacency reflects doctrine: remote analysis does not require physical proximity.",
+    arbiter_note = "Ghost affinity: ring penalties still apply. Intel token marked with faction name and round number. Crit failure notification slip: 'An unknown party attempted to access sensitive information about your operations in [district]. The attempt was identified and neutralised. Exercise appropriate caution.'",
+)
+```
 
 ---
 
 ### C06 — BROADCAST INTERFERENCE
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C06 = Card(
+    id      = 6,  version = "v1.1",
+    name    = "Broadcast Interference",
+    tagline = "Disrupt public communications in a district, dampening political activity.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C06
-- **Card version:** v1.1
-- **Card name:** Broadcast Interference
-- **Tagline:** *Disrupt public communications in a district, dampening political activity.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Submission,  function = Modify,  subject = PoliticalAct,
 
-**Taxonomy**
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Positional wager",
+    outcome_type    = None,
 
-- **Layer:** Submission
-- **Function:** Modify
-- **Subject:** Political act (cost)
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = PoliticalAct,
 
-- **Design note:** Exposure is The Network's native resource. Non-Network factions acquire Exposure through district incursion or trade at 4:1. No presence requirement — signal disruption is broadcast.
-- **Arbiter context:** Beat 2 — ARBITER retains awareness after case opening. At Beat 4 declaration, ARBITER intercepts political acts targeting the affected district and states the additional cost before declaration is confirmed. Faction may proceed or withdraw.
+    affinity    = faction(acting) == Network: cost.resource.exposure -= 1,
+    restriction = None,
+    cost        = resource.faction(acting).exposure * 2,
 
-**Narrative**
+    success     = game.ops(beat=4, type=PoliticalAct, at=district(target)).cost.native += 1,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *People don't act naturally when they know they're being watched.*
-- **Faction perspectives:**
-  - Guild: *Disrupting communications delays approvals, permits, agreements. We feel this more than most.*
-  - Directorate: *Interference with public communications is a jurisdictional matter. We note who is responsible.*
-  - Network: *Noise is a tool. Sometimes silence is louder than anything we could broadcast.*
-  - Ghost: *Interference creates analytical cover. We appreciate the quiet.*
-  - Syndicate: *Disrupted communications create market inefficiencies. Those can be profitable.*
+    portrait = {Network: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 2
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** Political act
-- **Restriction:** None.
-- **Primary cost qty:** 2
-- **Primary cost type:** Exposure
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Network.
-- **Affinity bonus:** Primary cost −1.
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Automatic
-- **Resolution type:** Positional wager
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** Political acts declared against the target district this round cost +1 additional native resource.
-- **Failure:** N/A
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | +1 | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "People don't act naturally when they know they're being watched.",
+    perspectives = {
+        Guild:       "Disrupting communications delays approvals, permits, agreements. We feel this more than most.",
+        Directorate: "Interference with public communications is a jurisdictional matter. We note who is responsible.",
+        Network:     "Noise is a tool. Sometimes silence is louder than anything we could broadcast.",
+        Ghost:       "Interference creates analytical cover. We appreciate the quiet.",
+        Syndicate:   "Disrupted communications create market inefficiencies. Those can be profitable.",
+    },
+    design_note  = "Exposure is The Network's native resource. Non-Network factions acquire Exposure through district incursion or trade at 4:1. No presence requirement — signal disruption is broadcast.",
+    arbiter_note = "Beat 2 — ARBITER retains awareness after case opening. At Beat 4 declaration, ARBITER intercepts political acts targeting the affected district and states the additional cost before declaration is confirmed. Faction may proceed or withdraw.",
+)
+```
 
 ---
 
 ### C07 — AMPLIFY
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C07 = Card(
+    id      = 7,  version = "v1.1",
+    name    = "Amplify",
+    tagline = "Boost the Public Standing impact of your own political act this round.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C07
-- **Card version:** v1.1
-- **Card name:** Amplify
-- **Tagline:** *Boost the Public Standing impact of your own political act this round.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Resolution,  function = Modify,  subject = PoliticalAct,
 
-**Taxonomy**
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = None,
 
-- **Layer:** Resolution
-- **Function:** Modify
-- **Subject:** Political act (outcome scale)
+    target_district = None,
+    target_faction  = faction.acting,
+    target_object   = PoliticalAct,
 
-- **Design note:** Amplification cuts both ways — a failed political act that loses −1 Public Standing loses −2 instead.
-- **Arbiter context:** Beat 2 — ARBITER retains awareness at resolution. Effect applied when political act resolves in Beat 4. [Beat 4 handling: TBD.] [TBD: how to flag submitting faction using Pass in Declaration step — restriction enforcement mechanism.]
+    affinity    = faction(acting) == Network: cost.resource.exposure -= 1,
+    restriction = (
+        faction(acting).scheduled_op(beat=4).type == PoliticalAct and
+        faction(acting).scheduled_op(beat=4) != Pass
+    ),
+    cost        = resource.faction(acting).exposure * 2,
 
-**Narrative**
+    success     = faction(acting).op(beat=4, type=PoliticalAct).standing_impact *= 2,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *A message worth sending is worth sending loudly.*
-- **Faction perspectives:**
-  - Guild: *We let our structures speak. Amplification is for those who lack physical evidence.*
-  - Directorate: *Institutional authority does not require amplification. Though we note its effectiveness.*
-  - Network: *Every message we send should land as hard as possible. This ensures it does.*
-  - Ghost: *Amplification is the opposite of what we do. Volume attracts attention. Attention ends operations.*
-  - Syndicate: *Leverage applied at the right moment can move markets. This is that tool.*
+    portrait = {Ghost: PortraitEntry(submitter=-1)},
 
-**Mechanics**
-
-- **Beat:** 2
-- **Trigger condition:** N/A
-- **Target district:** N/A
-- **Target faction:** Self
-- **Target object:** Political act
-- **Restriction:** Acting faction must declare a political act this round. Cannot target a Pass.
-- **Primary cost qty:** 2
-- **Primary cost type:** Exposure
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Network.
-- **Affinity bonus:** Primary cost −1.
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Automatic
-- **Resolution type:** Transactional
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** Public Standing impact of the declared political act is doubled — positive or negative.
-- **Failure:** N/A
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | −1 | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "A message worth sending is worth sending loudly.",
+    perspectives = {
+        Guild:       "We let our structures speak. Amplification is for those who lack physical evidence.",
+        Directorate: "Institutional authority does not require amplification. Though we note its effectiveness.",
+        Network:     "Every message we send should land as hard as possible. This ensures it does.",
+        Ghost:       "Amplification is the opposite of what we do. Volume attracts attention. Attention ends operations.",
+        Syndicate:   "Leverage applied at the right moment can move markets. This is that tool.",
+    },
+    design_note  = "Amplification cuts both ways — a failed political act that loses −1 Public Standing loses −2 instead.",
+    arbiter_note = "Beat 2 — ARBITER retains awareness at resolution. Effect applied when political act resolves in Beat 4. [Beat 4 handling: TBD.]",
+)
+```
 
 ---
 
 ### C08 — BUY INFLUENCE
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C08 = Card(
+    id      = 8,  version = "v1.1",
+    name    = "Buy Influence",
+    tagline = "Deploy capital to place presence tokens directly, without groundwork.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C08
-- **Card version:** v1.1
-- **Card name:** Buy Influence
-- **Tagline:** *Deploy capital to place presence tokens directly, without groundwork.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Territory,  function = Add,  subject = PresenceToken,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = None,
 
-- **Layer:** Territory
-- **Function:** Add
-- **Subject:** Presence token
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
 
-- **Design note:** No secondary cost — Capital bypasses local knowledge requirements. No presence requirement — primary entry mechanism for new districts. Syndicate affinity is difficulty reduction not cost reduction — better outcomes from spending, not discounts. Three Portrait penalties reflect strong doctrinal opposition.
-- **Arbiter context:** N/A
+    affinity    = faction(acting) == Syndicate: threshold += 25,
+    restriction = None,
+    cost        = resource.faction(acting).capital * 3,
 
-**Narrative**
+    success     = district(target).faction(acting).presence += 2,
+    successcrit = district(target).faction(acting).presence += 1,
+    fail        = None,
+    failcrit    = faction(acting).standing -= 2,
 
-- **Narrative anchor:** *In New Meridian, capital is a language everyone understands.*
-- **Faction perspectives:**
-  - Guild: *Presence earned through investment rather than community is fragile. We have seen it collapse.*
-  - Directorate: *Purchasing influence undermines the legitimate institutional processes we exist to maintain.*
-  - Network: *This is exactly the kind of power we are here to expose and resist.*
-  - Ghost: *Bought presence is noisier than earned presence. It draws the wrong kind of attention.*
-  - Syndicate: *Capital does not just open doors. It determines which doors exist in the first place.*
+    portrait = {
+        Guild:       PortraitEntry(submitter=-1),
+        Directorate: PortraitEntry(submitter=-1),
+        Network:     PortraitEntry(submitter=-1),
+        Syndicate:   PortraitEntry(submitter=+1),
+    },
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** N/A
-- **Restriction:** None.
-- **Primary cost qty:** 3
-- **Primary cost type:** Capital
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Syndicate.
-- **Affinity bonus:** +25 modifier.
-- **Difficulty:** Average (50) + ring modifier
-- **Ring 0 modifier:** −15
-- **Ring 1 modifier:** −10
-- **Ring 2 modifier:** 0
-- **Ring 3 modifier:** +10
-- **Resolution:** d100
-- **Resolution type:** Probabilistic
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** +1 presence token placed.
-- **Success:** Place 2 presence tokens in the target district.
-- **Failure:** No effect.
-- **Crit failure:** −2 Public Standing.
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | −1 | N/A | N/A | N/A |
-| Directorate | N/A | −1 | N/A | N/A | N/A |
-| Network | N/A | −1 | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | +1 | N/A | N/A | N/A |
+    narrative    = "In New Meridian, capital is a language everyone understands.",
+    perspectives = {
+        Guild:       "Presence earned through investment rather than community is fragile. We have seen it collapse.",
+        Directorate: "Purchasing influence undermines the legitimate institutional processes we exist to maintain.",
+        Network:     "This is exactly the kind of power we are here to expose and resist.",
+        Ghost:       "Bought presence is noisier than earned presence. It draws the wrong kind of attention.",
+        Syndicate:   "Capital does not just open doors. It determines which doors exist in the first place.",
+    },
+    design_note  = "No secondary cost — Capital bypasses local knowledge requirements. No presence requirement — primary entry mechanism for new districts. Syndicate affinity is difficulty reduction not cost reduction — better outcomes from spending, not discounts. Three Portrait penalties reflect strong doctrinal opposition.",
+    arbiter_note = None,
+)
+```
 
 ---
 
 ### C09 — FUND
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C09 = Card(
+    id      = 9,  version = "v1.1",
+    name    = "Fund",
+    tagline = "Transfer resources to another faction as a gesture of support.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C09
-- **Card version:** v1.1
-- **Card name:** Fund
-- **Tagline:** *Transfer resources to another faction as a gesture of support.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Economy,  function = Redirect,  subject = NativeResource,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = None,
 
-- **Layer:** Economy
-- **Function:** Redirect
-- **Subject:** Native resource
+    target_district = None,
+    target_faction  = faction.opponent,
+    target_object   = NativeResource,
 
-- **Design note:** No ring modifier — targets a faction not a district. Source anonymous by default. Acting faction may announce after receiving free Accord card from ARBITER.
-- **Arbiter context:** Transfer handled covertly at case return — resources appear in recipient's case at debrief. Recipient may convert received Capital to native resource at 1:1. Free Accord card is a Political Act card (cost 0; return to ARBITER on play — not discarded) delivered to acting faction's hand at case resolution. Played in a subsequent Quarter — card returns in the dispatch case after Resolution, by which point Declaration for the current Quarter has already closed.
+    affinity    = faction(acting) == Syndicate: threshold += 25,
+    restriction = None,
+    cost        = resource.faction(acting).capital * 2,
 
-**Narrative**
+    success     = (
+        faction(target).resource.capital += 2,
+        game.dispatch(faction(acting), AccordCard)
+    ),
+    successcrit = faction(acting).standing += 1,
+    fail        = None,
+    failcrit    = faction(acting).standing -= 1,
 
-- **Narrative anchor:** *Every alliance in New Meridian begins with someone extending a hand.*
-- **Faction perspectives:**
-  - Guild: *Investment in relationships is as important as investment in structures.*
-  - Directorate: *Financial transfers between factions warrant scrutiny. We monitor these carefully.*
-  - Network: *Follow the money. It always leads somewhere interesting.*
-  - Ghost: *Resources flowing between factions change the operational landscape. We note the direction.*
-  - Syndicate: *Capital in motion creates relationships. Relationships create opportunities.*
+    portrait = {Syndicate: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** N/A
-- **Target faction:** Named opponent faction
-- **Target object:** Native resource
-- **Restriction:** None.
-- **Primary cost qty:** 2
-- **Primary cost type:** Capital
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Syndicate.
-- **Affinity bonus:** +25 modifier.
-- **Difficulty:** Average (50)
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** d100
-- **Resolution type:** Probabilistic
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** +1 Public Standing.
-- **Success:** Transfer occurs. Free Accord card delivered.
-- **Failure:** No effect.
-- **Crit failure:** −1 Public Standing.
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | +1 | N/A | N/A | N/A |
+    narrative    = "Every alliance in New Meridian begins with someone extending a hand.",
+    perspectives = {
+        Guild:       "Investment in relationships is as important as investment in structures.",
+        Directorate: "Financial transfers between factions warrant scrutiny. We monitor these carefully.",
+        Network:     "Follow the money. It always leads somewhere interesting.",
+        Ghost:       "Resources flowing between factions change the operational landscape. We note the direction.",
+        Syndicate:   "Capital in motion creates relationships. Relationships create opportunities.",
+    },
+    design_note  = "No ring modifier — targets a faction not a district. Source anonymous by default. Acting faction may announce after receiving free Accord card from ARBITER.",
+    arbiter_note = "Transfer handled covertly at case return — resources appear in recipient's case at debrief. Recipient may convert received Capital to native resource at 1:1. Accord card (cost 0, return to ARBITER on play) delivered to acting faction's hand at case resolution.",
+)
+```
 
 ---
 
 ### C10 — PROTECT
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C10 = Card(
+    id      = 10,  version = "v1.1",
+    name    = "Protect",
+    tagline = "Defend a district's assets from covert disruption this round.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C10
-- **Card version:** v1.1
-- **Card name:** Protect
-- **Tagline:** *Defend a district's assets from covert disruption this round.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Resolution,  function = Protect,  subject = CovertOperation,
 
-**Taxonomy**
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Positional wager",
+    outcome_type    = None,
 
-- **Layer:** Resolution
-- **Function:** Protect
-- **Subject:** Covert operation (difficulty)
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = CovertOperation,
 
-- **Design note:** Applies only to acting faction's assets — not all factions' assets.
-- **Arbiter context:** Beat 2 — at resolution, ARBITER places −25 marker (−45 with Guild/Directorate affinity) directly on each Beat 3 covert operation in the grid targeting the acting faction's assets in the target district.
+    affinity    = faction(acting) IN [Guild, Directorate]: threshold_protection = 45,
+    restriction = district(target).faction(acting).presence > 0,
+    cost        = resource.district(native) * 1,
 
-**Narrative**
+    success     = game.ops(beat=3, at=district(target), targeting=faction(acting).assets).threshold -= (threshold_protection if affinity else 25),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *What you build is only worth as much as your willingness to defend it.*
-- **Faction perspectives:**
-  - Guild: *We protect what we build. This is not optional.*
-  - Directorate: *Institutional assets require active defense. We resource this accordingly.*
-  - Network: *We protect our people first. Infrastructure is secondary.*
-  - Ghost: *The best protection is not being found in the first place.*
-  - Syndicate: *Protected assets retain value. Unprotected assets invite acquisition.*
+    portrait = {
+        Guild:       PortraitEntry(submitter=+1),
+        Directorate: PortraitEntry(submitter=+1),
+    },
 
-**Mechanics**
-
-- **Beat:** 2
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** Covert operation
-- **Restriction:** Acting faction must have at least 1 presence token in the target district.
-- **Primary cost qty:** 1
-- **Primary cost type:** District native
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Guild, Directorate.
-- **Affinity bonus:** Success −20.
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Automatic
-- **Resolution type:** Positional wager
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** All covert operations targeting the acting faction's assets in the target district this round have their threshold reduced by −25.
-- **Failure:** N/A
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | +1 | N/A | N/A | N/A |
-| Directorate | N/A | +1 | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "What you build is only worth as much as your willingness to defend it.",
+    perspectives = {
+        Guild:       "We protect what we build. This is not optional.",
+        Directorate: "Institutional assets require active defense. We resource this accordingly.",
+        Network:     "We protect our people first. Infrastructure is secondary.",
+        Ghost:       "The best protection is not being found in the first place.",
+        Syndicate:   "Protected assets retain value. Unprotected assets invite acquisition.",
+    },
+    design_note  = "Applies only to acting faction's assets — not all factions' assets.",
+    arbiter_note = "Beat 2 — at resolution, ARBITER places threshold reduction marker (−25; −45 with Guild/Directorate affinity) on each Beat 3 covert operation in the grid targeting the acting faction's assets in the target district.",
+)
+```
 
 ---
 
@@ -1084,365 +908,249 @@ C02 = Card(
 ### C11 — FORTIFY STRUCTURE
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C11 = Card(
+    id      = 11,  version = "v1.1",
+    name    = "Fortify Structure",
+    tagline = "Reinforce a structure against demolition this Quarter.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-- **Card ID:** C11
-- **Card version:** v1.1
-- **Card name:** Fortify Structure
-- **Tagline:** *Reinforce a structure against demolition this Quarter.*
-- **Card type:** Covert Operation
-- **Card subtype:** Faction-specific
-- **Card faction:** Guild
-- **Pool copies:** 2
+    layer    = Territory,  function = Protect,  subject = StructureBlock,
 
-**Taxonomy**
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Positional wager",
+    outcome_type    = None,
 
-- **Layer:** Territory
-- **Function:** Protect
-- **Subject:** Structure block
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = StructureBlock,
 
-- **Design note:** N/A
-- **Arbiter context:** ARBITER retains awareness after Beat 2 opens. Immunity applied when C02 Demolish resolves in Beat 3.
+    affinity    = None,
+    restriction = district(target).faction(acting).structure > 0,
+    cost        = resource.faction(acting).capacity * 1,
 
-**Narrative**
+    success     = district(target).faction(acting).structure.set_flag(immune_to_demolish=True),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *The Guild does not abandon what it has built.*
-- **Faction perspectives:**
-  - Guild: *Reinforcement is not fear. It is preparation.*
-  - Network: *Hardened walls are preparation. What's inside them decides whether the cost was worth it.*
-  - Directorate: *A structure immune to demolition is a structure immune to code review. We notice these arrangements.*
+    portrait = {Guild: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 2
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** Structure block
-- **Restriction:** Acting faction must have a structure in the target district.
-- **Primary cost qty:** 1
-- **Primary cost type:** Capacity
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Guild only.
-- **Affinity bonus:** N/A
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Automatic
-- **Resolution type:** Positional wager
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** Guild structure in target district is immune to Demolish this Quarter.
-- **Failure:** N/A
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "The Guild does not abandon what it has built.",
+    perspectives = {
+        Guild:       "Reinforcement is not fear. It is preparation.",
+        Network:     "Hardened walls are preparation. What's inside them decides whether the cost was worth it.",
+        Directorate: "A structure immune to demolition is a structure immune to code review. We notice these arrangements.",
+    },
+    design_note  = None,
+    arbiter_note = "ARBITER retains awareness after Beat 2 opens. Immunity applied when C02 Demolish resolves in Beat 3.",
+)
+```
 
 ---
 
 ### C12 — MATERIALS ACQUISITION
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C12 = Card(
+    id      = 12,  version = "v1.1",
+    name    = "Materials Acquisition",
+    tagline = "Recover the costs of demolition as subcontract payment.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-- **Card ID:** C12
-- **Card version:** v1.1
-- **Card name:** Materials Acquisition
-- **Tagline:** *Recover the costs of demolition as subcontract payment.*
-- **Card type:** Covert Operation
-- **Card subtype:** Faction-specific
-- **Card faction:** Guild
-- **Pool copies:** 2
+    layer    = Economy,  function = Recover,  subject = NativeResource,
 
-**Taxonomy**
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = faction(target).completes(CovertOp, id=C02),
+    resolution_type = "Positional wager",
+    outcome_type    = None,
 
-- **Layer:** Economy
-- **Function:** Recover
-- **Subject:** Native resource
+    target_district = None,
+    target_faction  = faction.opponent,
+    target_object   = NativeResource,
 
-- **Design note:** Guild names target faction at submission — betting one of three Beat 2 action slots that the target will execute C02 this Quarter. The slot is the cost; a wrong read means a wasted action. Success mirrors C02's cost exactly — if C02's cost changes in playtesting, C12's reward scales automatically.
-- **Arbiter context:** ARBITER confirms trigger at Beat 3. Only the first qualifying Demolish this Quarter triggers. Effect delivered in case.
+    affinity    = None,
+    restriction = None,
+    cost        = None,
 
-**Narrative**
+    success     = (
+        faction(acting).resource.native += 1,
+        faction(acting).resource.native += 1   # mirrors C02.cost: 1 faction native + 1 district native
+    ),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *In New Meridian, even demolition is a Guild service.*
-- **Faction perspectives:**
-  - Guild: *We do not need to swing the hammer ourselves. We simply ensure we are paid when someone else does.*
-  - Syndicate: *Positioning to profit from someone else's action before they take it. The instinct is sound. We simply call it by a different name.*
-  - Ghost: *A faction that announces it expects demolition before demolition happens has already told us what it knows.*
+    portrait = {Guild: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 2
-- **Trigger condition:** Target faction completes C02 Demolish this Quarter.
-- **Target district:** N/A
-- **Target faction:** Named opponent faction
-- **Target object:** Native resource
-- **Restriction:** N/A
-- **Primary cost qty:** N/A
-- **Primary cost type:** N/A
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Guild only.
-- **Affinity bonus:** N/A
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Automatic
-- **Resolution type:** Positional wager
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** Target faction native resource + district native resource.
-- **Failure:** N/A
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "In New Meridian, even demolition is a Guild service.",
+    perspectives = {
+        Guild:     "We do not need to swing the hammer ourselves. We simply ensure we are paid when someone else does.",
+        Syndicate: "Positioning to profit from someone else's action before they take it. The instinct is sound. We simply call it by a different name.",
+        Ghost:     "A faction that announces it expects demolition before demolition happens has already told us what it knows.",
+    },
+    design_note  = "Guild names target faction at submission — betting one of three Beat 2 action slots that the target will execute C02 this Quarter. The slot is the cost; a wrong read means a wasted action. Success mirrors C02's cost exactly — if C02's cost changes in playtesting, C12's reward scales automatically.",
+    arbiter_note = "ARBITER confirms trigger at Beat 3. Only the first qualifying Demolish this Quarter triggers. Effect delivered in case.",
+)
+```
 
 ---
 
 ### C13 — FOUNDATION RIGHTS
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C13 = Card(
+    id      = 13,  version = "v1.1",
+    name    = "Foundation Rights",
+    tagline = "Claim a foothold in territory no other faction has entered.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-- **Card ID:** C13
-- **Card version:** v1.1
-- **Card name:** Foundation Rights
-- **Tagline:** *Claim a foothold in territory no other faction has entered.*
-- **Card type:** Covert Operation
-- **Card subtype:** Faction-specific
-- **Card faction:** Guild
-- **Pool copies:** 2
+    layer    = Territory,  function = Add,  subject = PresenceToken,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 25,
+    ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = None,
 
-- **Layer:** Territory
-- **Function:** Add
-- **Subject:** Presence token
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
 
-- **Design note:** No secondary cost — unclaimed districts have no established resource infrastructure. Crit fail delivers an intel token to Directorate because a failed foundation claim is a regulatory event — a permit application that collapsed. Directorate holds that record; Guild never knows the paper trail exists.
-- **Arbiter context:** On crit fail: deliver 1 intel token naming Guild to Directorate player via case. Do not notify Guild.
+    affinity    = None,
+    restriction = district(target).presence.total == 0,
+    cost        = resource.faction(acting).capacity * 1,
 
-**Narrative**
+    success     = district(target).faction(acting).presence += 1,
+    successcrit = district(target).faction(acting).structure += 1,
+    fail        = None,
+    failcrit    = game.dispatch(Directorate, IntelToken(faction=acting, quarter=game.quarter)),
 
-- **Narrative anchor:** *The Guild was here before the city had a name.*
-- **Faction perspectives:**
-  - Guild: *Unclaimed territory is not unknown to us. We have records going back further than anyone else at this table.*
-  - Network: *The Guild's records go back further than ours. What they do with that history is what we watch.*
-  - Directorate: *Precedence is established through legal process, not through whoever kept the longer archive.*
+    portrait = {Guild: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** N/A
-- **Restriction:** Target district must have zero presence from any faction.
-- **Primary cost qty:** 1
-- **Primary cost type:** Capacity
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Guild only.
-- **Affinity bonus:** N/A
-- **Difficulty:** 25
-- **Ring 0 modifier:** −15
-- **Ring 1 modifier:** −10
-- **Ring 2 modifier:** 0
-- **Ring 3 modifier:** +10
-- **Resolution:** d100
-- **Resolution type:** Probabilistic
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** Place 1 presence token and 1 structure block in target district.
-- **Success:** Place 1 presence token in the target district.
-- **Failure:** No effect.
-- **Crit failure:** +1 Guild Intel Token → Directorate.
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "The Guild was here before the city had a name.",
+    perspectives = {
+        Guild:       "Unclaimed territory is not unknown to us. We have records going back further than anyone else at this table.",
+        Network:     "The Guild's records go back further than ours. What they do with that history is what we watch.",
+        Directorate: "Precedence is established through legal process, not through whoever kept the longer archive.",
+    },
+    design_note  = "No secondary cost — unclaimed districts have no established resource infrastructure. Crit fail delivers intel token to Directorate because a failed foundation claim is a regulatory event. Directorate holds that record; Guild never knows the paper trail exists.",
+    arbiter_note = "On crit fail: deliver 1 intel token naming Guild to Directorate player via case. Do not notify Guild.",
+)
+```
 
 ---
 
 ### C14 — CONSTRUCTION CREW
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C14 = Card(
+    id      = 14,  version = "v1.1",
+    name    = "Construction Crew",
+    tagline = "Build a structure before your presence is fully established.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-- **Card ID:** C14
-- **Card version:** v1.1
-- **Card name:** Construction Crew
-- **Tagline:** *Build a structure before your presence is fully established.*
-- **Card type:** Covert Operation
-- **Card subtype:** Faction-specific
-- **Card faction:** Guild
-- **Pool copies:** 2
+    layer    = Submission,  function = RemoveRestriction,  subject = CovertOperation,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 65,
+    ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = None,
 
-- **Layer:** Submission
-- **Function:** Remove Restriction
-- **Subject:** Covert operation (presence requirement)
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
 
-- **Design note:** Premium play — 3 Capacity and d100 for simultaneous presence and structure anywhere.
-- **Arbiter context:** Crit fail: deliver 1 Guild Intel Token → Ghost and 1 district native → Syndicate via case. Do not notify Guild.
+    affinity    = None,
+    restriction = district(target).faction(acting).structure == 0,
+    cost        = resource.faction(acting).capacity * 3,
 
-**Narrative**
+    success     = (
+        district(target).faction(acting).presence += 1,
+        district(target).faction(acting).structure += 1
+    ),
+    successcrit = district(target).faction(acting).presence += 1,
+    fail        = None,
+    failcrit    = (
+        game.dispatch(Ghost, IntelToken(faction=acting, quarter=game.quarter)),
+        game.transfer(district(target).resource.native, 1, faction(Syndicate))
+    ),
 
-- **Narrative anchor:** *The Guild does not always wait for permission.*
-- **Faction perspectives:**
-  - Guild: *Sometimes the crews arrive before the paperwork. This is not an accident.*
-  - Network: *We know this method. Presence before permission is how this city was actually built.*
-  - Ghost: *Establishing presence before authorization is requested — the Guild is better at covert operations than they admit.*
+    portrait = {Guild: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** N/A
-- **Restriction:** No existing structure owned by the acting faction in the target district.
-- **Primary cost qty:** 3
-- **Primary cost type:** Capacity
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Guild only.
-- **Affinity bonus:** Boost([1].[+15 Difficulty])
-- **Difficulty:** 50
-- **Ring 0 modifier:** −15
-- **Ring 1 modifier:** −10
-- **Ring 2 modifier:** 0
-- **Ring 3 modifier:** +10
-- **Resolution:** d100
-- **Resolution type:** Probabilistic
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** +1 presence token in target district.
-- **Success:** +1 presence token and +1 structure block in target district.
-- **Failure:** No effect.
-- **Crit failure:** +1 Guild Intel Token → Ghost. +1 district native → Syndicate.
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "The Guild does not always wait for permission.",
+    perspectives = {
+        Guild:    "Sometimes the crews arrive before the paperwork. This is not an accident.",
+        Network:  "We know this method. Presence before permission is how this city was actually built.",
+        Ghost:    "Establishing presence before authorization is requested — the Guild is better at covert operations than they admit.",
+    },
+    design_note  = "threshold = 65 (base 50 + Guild doctrine +15). Premium play — 3 Capacity for simultaneous presence and structure anywhere, bypassing C01's presence prerequisite.",
+    arbiter_note = "Crit fail: deliver 1 Guild Intel Token → Ghost and 1 district native → Syndicate via case. Do not notify Guild.",
+)
+```
 
 ---
 
 ### C15 — INFRASTRUCTURE YIELD
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C15 = Card(
+    id      = 15,  version = "v1.1",
+    name    = "Infrastructure Yield",
+    tagline = "Draw resources from infrastructure you have already built.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-- **Card ID:** C15
-- **Card version:** v1.1
-- **Card name:** Infrastructure Yield
-- **Tagline:** *Draw resources from infrastructure you have already built.*
-- **Card type:** Covert Operation
-- **Card subtype:** Faction-specific
-- **Card faction:** Guild
-- **Pool copies:** 2
+    layer    = Economy,  function = Add,  subject = NativeResource,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = None,
 
-- **Layer:** Economy
-- **Function:** Add
-- **Subject:** Native resource
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
 
-- **Design note:** Zero cost — Established presence is the only gate. Grid Tap (sacrifice presence for 2 native resource) tabled as political act or operative ability — flag for §10 and Artifact 05.
-- **Arbiter context:** N/A
+    affinity    = None,
+    restriction = district(target).faction(acting).control_tier IN [Established, Dominant],
+    cost        = None,
 
-**Narrative**
+    success     = faction(acting).resource.native += 1,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *The Guild built New Meridian's infrastructure. Drawing from it is not theft. It is dividend.*
-- **Faction perspectives:**
-  - Guild: *We built this. Every unit we draw from it was always ours.*
-  - Syndicate: *The Guild built the pipes. They are billing us for the water. We respect the position even if we resent the rate.*
-  - Directorate: *Infrastructure built under city contract belongs to New Meridian, not to the builder. We have the original agreements.*
+    portrait = {Guild: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** N/A
-- **Restriction:** Acting faction must be Established or Dominant in target district.
-- **Primary cost qty:** N/A
-- **Primary cost type:** N/A
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Guild only.
-- **Affinity bonus:** N/A
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Automatic
-- **Resolution type:** Transactional
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** +1 target district native resource.
-- **Failure:** N/A
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "The Guild built New Meridian's infrastructure. Drawing from it is not theft. It is dividend.",
+    perspectives = {
+        Guild:       "We built this. Every unit we draw from it was always ours.",
+        Syndicate:   "The Guild built the pipes. They are billing us for the water. We respect the position even if we resent the rate.",
+        Directorate: "Infrastructure built under city contract belongs to New Meridian, not to the builder. We have the original agreements.",
+    },
+    design_note  = "Zero cost — Established or Dominant control tier is the only gate.",
+    arbiter_note = None,
+)
+```
 
 ---
 
@@ -1451,70 +1159,46 @@ C02 = Card(
 ### C16 — PATTERN MATCH
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C16 = Card(
+    id      = 16,  version = "v1.0",
+    name    = "Pattern Match",
+    tagline = "Identify a faction's operation and location before they move.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
 
-- **Card ID:** C16
-- **Card version:** v1.0
-- **Card name:** Pattern Match
-- **Tagline:** *Identify a faction's operation and location before they move.*
-- **Card type:** Covert Operation
-- **Card subtype:** Faction-specific
-- **Card faction:** Ghost
+    layer    = Submission,  function = Copy,  subject = CovertOperation,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = Prediction,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Predictive",
+    outcome_type    = None,
 
-- **Layer:** Submission
-- **Function:** Copy
-- **Subject:** Covert operation (full)
+    target_district = district.any,
+    target_faction  = faction.opponent,
+    target_object   = CovertOperation,
 
-- **Design note:** Prediction resolution — no roll. Success if the named faction's submitted covert operation targets the named faction or the named district — either match sufficient. No match: failure. Beat 3 timing dependency: Pattern Match must resolve before the targeted covert operation in the Resolution Grid. If the targeted operation has already resolved this beat, Pattern Match fails automatically regardless of match.
-- **Arbiter context:** If the copied operation cannot legally be executed by Ghost, Pattern Match fizzles — 2 Findings spent, no effect regardless of prediction accuracy.
+    affinity    = None,
+    restriction = None,
+    cost        = resource.faction(acting).findings * 2,
 
-**Narrative**
+    success     = game.copy_op(faction(target).op(beat=3, type=CovertOperation)),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *Ghost does not guess. Ghost identifies what is already in motion.*
-- **Faction perspectives:**
-  - Ghost: *We are not predicting. We are recognising a pattern we have already seen.*
+    portrait = {Ghost: PortraitEntry(submitter=+1, modifier=+1, mod_condition=game.outcome == Success)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** Named opponent faction
-- **Target object:** Covert operation
-- **Restriction:** N/A
-- **Primary cost qty:** 2
-- **Primary cost type:** Findings
-- **Secondary cost qty:** N/A
-- **Secondary cost type:** N/A
-- **Faction affinity:** Ghost only.
-- **Affinity bonus:** N/A
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Prediction
-- **Resolution type:** Predictive
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** Pattern Match resolves as full copy of the matching covert operation.
-- **Failure:** No effect.
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | N/A | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | +1 | Success | +1 | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "Ghost does not guess. Ghost identifies what is already in motion.",
+    perspectives = {
+        Ghost: "We are not predicting. We are recognising a pattern we have already seen.",
+    },
+    design_note  = "Prediction resolution — no roll. Success if the named faction's submitted covert operation targets the named faction or the named district — either match sufficient. Pattern Match must resolve before the targeted operation; if target has already resolved this beat, Pattern Match fails.",
+    arbiter_note = "If the copied operation cannot legally be executed by Ghost, Pattern Match fizzles — 2 Findings spent, no effect regardless of prediction accuracy.",
+)
+```
 
 ---
 

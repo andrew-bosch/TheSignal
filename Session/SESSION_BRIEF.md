@@ -8,11 +8,11 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S51 complete. DB infrastructure: `Database/db_create_tmp_tables.sql`, `db_seed_lookups.sql`, `db_rebuild.sh`, `register_component.py`, `component_template.yaml` — all new. `schema_reference.md` updated: views 29→27 (dropped v_object_from, v_validact, v_verb; added v_primitive_actual_coverage), DB-09 status corrected, row counts updated.
+S53 in progress. L172 locked: card `id` = integer autoincrement PK; variable name prefix (C01, C02…) is document convention only. 04-57 ✅ closed.
 
-Art 04 S51: C18 → **Dossier Breach** (Information — Reveal — Card hand contents); C25 → **Tactical Redirection** (Territory — Move — Presence token); C27 → **Disclosure Loop** (Economy — Add — Exposure). Full schema pass C01–C35: Ring 0–3 modifier fields added to all cards; C13 resolution type corrected (Transactional→Probabilistic); C22/C32/C33 resolution fields corrected (Dice→d100). Card index updated. Unused design candidates (Ghost/Directorate/Network rejected alternates + Gem S51 concepts) → `Whiteboard/card_ideas_S51.md`.
+Art 04 S53: C01–C16 retrofitted to Python object notation (`Card(...)` constructor format per §6 class definition). C17–C35 remaining.
 
-**Next session:** C03–C35 retrofit to Python object notation (§6 class format). Card ID hybrid field decision (04-55) before any P-type cards assigned IDs. Then P01–P18 development.
+**Next session:** C17–C35 retrofit to Python object notation (§6 class format). Then P01–P18 development.
 
 ---
 
@@ -72,6 +72,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L172** (S53): Card `id` = integer autoincrement PK. `type` field is the sole discriminator. Variable name prefix (`C01`, `C02`) is document convention only — not the DB key. P-type cards continue the same integer sequence. Resolves 04-57.
 - **L171** (S52): Full program architecture — six artifact sections. Governing Constraints (00, 00a) — narrative IS the primary design constraint, not a category alongside it; Design Pillar 6 is the enforcement mechanism. Logical Data Model (00b, 00c). Imports (01, 02a/b). Main() (03-init, 03, 03a). Stored Procedures (04–08, 10a). Documentation (09, 10, 11). Formal equivalence: artifacts = source code; DB = runtime; physical components = I/O; ARBITER = interpreter. New artifact 03-init created (setup_state / game init). Extends L170.
 - **L170** (S52): Artifact architecture = program design. Art 01 = Zone; Art 02 = Component; Art 03 = Loop; Art 07 = ARBITER subroutines; Art 08 = Faction Player subroutines; Art 04 = Actions. Art 03 owns sequence only — role execution detail migrates to 07/08 as those artifacts are developed. PM05 03-15.
 - **L169** (S52): Component taxonomy schema redesign — `tmp_component` gains `parent_component_id` (self-referential); "Card" becomes parent node with card types as children, outcome subtypes as grandchildren. Two new dim tables: `tmp_component_dim` (description), `component_type` (classification). Advances DB-14. Queued as DB-32 for agy.
