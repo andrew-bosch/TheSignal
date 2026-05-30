@@ -565,33 +565,35 @@ The ARBITER Player rolls d100, or nominates a Faction Player to roll and call th
 1. Compare roll to the declared threshold.
 2. Apply Critical Success/Fail rules.
 
-**Step 7 — Apply results.**
+**Step 7 — Apply outcome.**
 
 If this operation's outcome blocks the acting faction's deployment marker conversion: The ARBITER Player flips the relevant marker to the Blocked face.
 
-If the operation succeeded: The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Established markers, Tension markers.
+**Step 7a — Succeeded.**
+
+The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Established markers, Tension markers.
 
 If the card's success outcome specifies an Intel Delivery Slip: ARBITER writes the specified intelligence onto a blank Intel Delivery Slip from their tableau and places it in the indicated faction's dispatch case.
 
 If the card's success outcome specifies a Notification Slip delivered to another faction: ARBITER places the pre-written Notification Slip in that faction's dispatch case.
 
-*Successful covert operations do not produce Standing marker moves — the action is unobserved. Any Standing marker move in this section occurs only as a card-specified failure (Step 8) or discovery (Step 9) condition.*
+*Successful covert operations do not produce Standing marker moves — the action is unobserved. Any Standing marker move in this section occurs only as a card-specified failure (Step 7b) or discovery (Step 7b.i) condition.*
 
-**Step 8 — Apply failure conditions.**
+**Step 7b — Failed.**
 
-If the operation failed: apply the failure conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
+Apply the failure conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
 
 If the card's failure outcome specifies a Notification Slip delivered to another faction: ARBITER places the pre-written Notification Slip in that faction's dispatch case.
 
 The affected Faction Player applies their own board changes.
 
-**Step 9 — Apply discovery conditions.**
+**Step 7b.i — Discovered.**
 
-If the operation was discovered: apply the discovery conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
+Apply the discovery conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
 
 The affected Faction Player applies their own board changes.
 
-**Step 10 — Clean up the grid cell.**
+**Step 8 — Clean up the grid cell.**
 
 1. Place the operation card and target slip back in the acting faction's dispatch case.
 2. Place the appropriate Operation Resolution card in the dispatch case: Succeeded / Failed / Blocked / Discovered.
@@ -600,17 +602,17 @@ The affected Faction Player applies their own board changes.
 
 *Modifier token pool location: TBD — Artifact 07.*
 
-**Step 11 — Update Chorus Portrait track.**
+**Step 9 — Update Chorus Portrait track.**
 
 The ARBITER Player privately updates the acting faction's Portrait marker on the hidden track.
 
-**Step 12 — Note for Chronicle (optional).**
+**Step 10 — Note for Chronicle (optional).**
 
 The ARBITER Player may write a brief note if this operation produced a moment worth preserving.
 
 *At ARBITER's discretion. Detail in Artifact 07 — ARBITER Toolkit.*
 
-**Step 13 — Repeat for all remaining operations.**
+**Step 11 — Repeat for all remaining operations.**
 
 *Note — A card is only a valid target while it occupies a slot in the Resolution Grid. Once an operation resolves and its card is returned to the dispatch case, it is no longer a valid target for any action.*
 
@@ -805,32 +807,34 @@ The acting Faction Player rolls publicly and states the result aloud.
 1. Compare roll to the declared threshold.
 2. Apply Critical Success/Fail rules.
 
-**Step 7 — Apply results.**
+**Step 7 — Apply outcome.**
 
 If this political act's outcome blocks a deployment marker's conversion: The acting Faction Player flips the relevant marker to the Blocked face.
 
-If the political act succeeded: The acting Faction Player makes all board changes — presence chips, structure blocks, Control flags, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
+**Step 7a — Succeeded.**
 
-**Step 8 — Apply failure conditions.**
+The acting Faction Player makes all board changes — presence chips, structure blocks, Control flags, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
 
-If the political act failed: apply the failure conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
+**Step 7b — Failed.**
+
+Apply the failure conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
 
 The affected Faction Player applies their own board changes.
 
-**Step 9 — Clean up.**
+**Step 8 — Clean up.**
 
 1. The acting Faction Player retrieves their political act card per card rules (return to hand or discard per card text).
 2. Discard modifier cards — removed from the game.
 
-**Step 10 — Update Chorus Portrait track.**
+**Step 9 — Update Chorus Portrait track.**
 
 The ARBITER Player privately updates the acting faction's Portrait marker.
 
-**Step 11 — Note for Chronicle (optional).**
+**Step 10 — Note for Chronicle (optional).**
 
 The ARBITER Player may note a significant moment at their discretion.
 
-**Step 12 — Repeat for all remaining political acts.**
+**Step 11 — Repeat for all remaining political acts.**
 
 ---
 

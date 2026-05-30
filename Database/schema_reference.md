@@ -44,21 +44,46 @@ The most expensive session mistake: assuming `tmp_comp_verb_role.phase_id` refer
 
 ---
 
-## 2. Database Layout
+## 2. Core Design Principle — Snowflake Schema
+
+The schema is a snowflake. Three tables are the center registry:
+
+| Core table | Axis | What it registers |
+|------------|------|-------------------|
+| `components` | **What** | Every physical object in the game — one row per instance (district tile, card, token, marker, deck, screen) |
+| `game_zones` | **Where** | Every named location — districts, tableau areas, dispatch cases, the Reservoir, the Dossier |
+| `game_actions` | **Verb** | Every action — the grammar of physical interaction (evolving into `tmp_action`) |
+
+Every other table in the schema is one of:
+- **Dimension** — classifies or describes a core table by its ID (e.g., `district_metadata` → `components`, `tmp_component` → `components`, `component_positions` → `components` + `game_zones`)
+- **Sub-dimension** — a dimension of a dimension (e.g., `district_adjacency` → `district_metadata` → `components`; `tmp_component_dim` → `tmp_component` → `components`)
+- **Metadata snowflake** — its own branching subtree anchored to a core table ID (e.g., `card_metadata` hangs off `components` via `master_blueprint_id`; `card_types`, `card_subtypes`, `card_faction_modifiers` are sub-dims of that snowflake)
+
+No table should be designed without knowing which core axis it hangs from and at what distance. New tables: identify the core ID they reference (directly or through an intermediate dim), then place them in the snowflake accordingly.
+
+---
+
+## 3. Database Layout
 
 ### Two Schema Families
 
 **`tmp_` tables** — Active design workspace. These are the canonical source of truth for action primitives and component taxonomy. All design work happens here.
 
-**Non-`tmp_` tables** (components, game_zones, card_metadata, etc.) — Legacy schema from earlier sessions. Structurally consistent but not actively populated for game logic. Eventually tmp_ tables will be promoted to replace or augment these (DB-14).
+**Non-`tmp_` tables** — Two distinct categories:
+
+- **Physical manifest tables** (`components`, `district_metadata`, `district_adjacency`, `component_positions`, `factions`, `game_zones`, etc.) — Canonical registries of every physical object and location in the game. `components` is the master Bill of Materials: every district tile, every individual card, every token, every marker — one row per physical thing. Currently seeded with 21 district tiles; grows to encompass the full game component set. These are permanent-schema tables, not legacy placeholders.
+- **Early-schema tables** (`action_costs`, `action_restrictions`, `action_valid_targets`, `game_actions`, `beat`, `card_metadata`, `card_types`, `card_subtypes`, etc.) — Predated the tmp_ design workspace. Structurally inconsistent with current design; being replaced or reconciled via DB-14.
 
 ### Full Table List
 
 **tmp_ tables (design workspace — active):**
 `tmp_action`, `tmp_beat`, `tmp_comp_verb_beat`, `tmp_comp_verb_role`, `tmp_component`, `tmp_component_faction`, `tmp_component_ring`, `tmp_condition`, `tmp_condition_clause`, `tmp_function`, `tmp_function_verb`, `tmp_layer`, `tmp_player_role`, `tmp_role_phase`, `tmp_state_condition`, `tmp_state_condition_clause`, `tmp_subject_target`, `tmp_trigger_type`, `tmp_verb`, `tmp_visibility_scope`, `tmp_category` (deprecated), `tmp_type` (deprecated)
 
-**Legacy tables (structural, not actively used for game logic):**
-`action_costs`, `action_restrictions`, `action_valid_targets`, `allocation_types`, `beat`, `card_faction_modifiers`, `card_metadata`, `card_subtypes`, `card_types`, `city_rings`, `component_positions`, `component_valid_zones`, `components`, `district_connections`, `district_metadata`, `factions`, `game_actions`, `game_zones`, `inteltoken_metadata`, `player_metadata`, `resource_types`, `setup_state`
+**Physical manifest tables (permanent schema — active):**
+`components`, `district_metadata`, `district_adjacency`, `component_positions`, `component_valid_zones`, `factions`, `game_zones`, `player_metadata`, `resource_types`, `city_rings`, `inteltoken_metadata`, `setup_state`
+
+**Early-schema tables (predates tmp_ model — being replaced via DB-14):**
+`action_costs`, `action_restrictions`, `action_valid_targets`, `allocation_types`, `beat`, `card_faction_modifiers`, `card_metadata`, `card_subtypes`, `card_types`, `district_connections`, `game_actions`
 
 ---
 
@@ -87,7 +112,7 @@ tmp_action           — WHAT is the specific legal primitive?
 
 | Table | Purpose | Key question answered |
 |-------|---------|----------------------|
-| `tmp_component` | Component **type** registry. One row per type (not per physical copy). State-machine flags define what can be done to that type. | "What component types exist, and what are they capable of?" |
+| `tmp_component` | Component **type** registry. One row per type (not per physical copy). State-machine flags define what can be done to that type. **Pending L169 (DB-32):** gains `parent_component_id` (self-referential FK) to enable hierarchy — "Card" as parent, specific card types as children, outcome subtypes as grandchildren. Two new dimension tables incoming: `tmp_component_dim` (description) and `component_type` (classification). | "What component types exist, and what are they capable of?" |
 | `tmp_verb` | Physical verb vocabulary. 8 verbs covering all primitive physical actions. | "What actions can be physically performed?" |
 | `tmp_beat` | Beat and phase registry. 20 beats covering a full Quarter from Upkeep through Debrief. | "What are the named game phases, and when do they occur?" |
 | `tmp_player_role` | Actor lookup. 2 values: Faction and ARBITER. Used as `role_id` in tmp_comp_verb_role and `subject_id` in tmp_action. | "Who are the two types of actors?" |
@@ -113,7 +138,7 @@ The tmp_ model is a **design workspace** that partially overlaps with and partia
 
 | tmp_ table | Legacy counterpart | Relationship |
 |-----------|-------------------|--------------|
-| `tmp_component` | `components` | Different structures. `tmp_component` = type registry with state flags. `components` = physical instance registry with parent hierarchy and master_blueprint_id. Migration requires a reconciled design: a `component_types` table plus the existing `components` instance table. Not a simple rename. |
+| `tmp_component` | `components` | Complementary, not competing. `tmp_component` = component **type** registry (what types exist, what they can do — state-machine flags, verb coverage). `components` = physical **instance** manifest (every individual object in the game box — each district tile, each card, each token, each marker). Both are permanent; neither replaces the other. L169 (DB-32) adds `parent_component_id` to `tmp_component` for type hierarchy ("Card" → "Covert operation card" → outcome subtypes). `components` already has `parent_component_id` for instance grouping (e.g., individual cards grouped under their deck parent). The `master_blueprint_id` FK on `components` → `card_metadata` links physical card instances to their design blueprint. |
 | `tmp_action` | `game_actions` | Different structures. `game_actions` = flat verb/definition catalog. `tmp_action` = full operational grammar (beat, trigger, subject, verb, component, prereq chain). Migration requires 00b §8 to define the target permanent structure before any DDL. |
 | `tmp_verb` | `game_actions.action_verb` | Verbs are inline in `game_actions`; `tmp_verb` is a normalized lookup. |
 | `tmp_beat` | `beat` | Parallel tables with similar purpose. `tmp_beat` is more fully populated and has richer metadata (month, beat_num, primary_agent, description). |
@@ -310,6 +335,25 @@ CREATE TABLE `tmp_component` (
 )
 ```
 *AUTO_INCREMENT=98 as of S50. Next component will receive id=98.*
+
+**Pending schema change — L169 (DB-32):** Add `parent_component_id INT NULL` (self-referential FK → `tmp_component(id)`). Enables component hierarchy: parent nodes ("Card", "Marker", "Token") group child types ("Covert operation card", "Presence token"), which may have grandchild subtypes ("Operation Resolution — Succeeded"). Two companion tables also incoming:
+
+```sql
+-- L169 additions (not yet implemented)
+ALTER TABLE tmp_component ADD COLUMN parent_component_id INT NULL REFERENCES tmp_component(id);
+
+CREATE TABLE tmp_component_dim (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  component_id INT NOT NULL REFERENCES tmp_component(id),
+  description TEXT
+);
+
+CREATE TABLE component_type (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  component_id INT NOT NULL REFERENCES tmp_component(id),
+  component_type VARCHAR(60)
+);
+```
 
 ### tmp_comp_verb_beat
 ```sql

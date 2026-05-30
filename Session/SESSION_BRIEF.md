@@ -24,7 +24,7 @@ Art 04 S51: C18 → **Dossier Breach** (Information — Reveal — Card hand con
 | 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. |
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Quarter Structure & Gameplay | 2.0 | ✅ Signed Off — S43. **Re-sign-off pending (03-14)** — Beat 3 Steps 7/8 extended S50 (case delivery effects). |
+| 03 — Quarter Structure & Gameplay | 2.1 | ✅ Signed Off — S52. Beat 3/4 outcome steps restructured (7a/7b/7b.i). L170 locked. 03-15 open: generalize when Art 07/08 developed. |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. §9 removed; §10 → §9 (Standalone Card Types). React collapsed into Modifier cards. Emergency Response penultimate context added. |
 | 04 — Action Card System | 0.9.21 | §5 P1–P15 + C17 signed off ✅ S49. S51: C18/C25/C27 replaced; full schema pass C01–C35 (Ring 0–3 fields, C17 canonical format). **Next: P01–P18 development.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
@@ -72,6 +72,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L170** (S52): Artifact architecture = program design. Art 01 = Zone; Art 02 = Component; Art 03 = Loop; Art 07 = ARBITER subroutines; Art 08 = Faction Player subroutines; Art 04 = Actions. Art 03 owns sequence only — role execution detail migrates to 07/08 as those artifacts are developed. PM05 03-15.
+- **L169** (S52): Component taxonomy schema redesign — `tmp_component` gains `parent_component_id` (self-referential); "Card" becomes parent node with card types as children, outcome subtypes as grandchildren. Two new dim tables: `tmp_component_dim` (description), `component_type` (classification). Advances DB-14. Queued as DB-32 for agy.
 - **L168** (S48): Expansion/perception stages renamed Tier N. Canonical: Tier 1 Physical, Tier 2 Social, Tier 3 Wireless/Communications, Tier 4 Web/Data, Tier 5 Chorus. Tier 5 public name only — technical nature intentionally undefined. XA-37 queued.
 - **L167** (S48): Six-layer card design system locked — Territory / Economy / Information / Submission / Resolution / Standing. "Layer" is the canonical taxonomy term. Cross-Category retired.
 - **L166** (S47): Action taxonomy = possibility space; Art 03 = legal space. Gaps are procedure coverage signals — permit / prohibit / defer. The two artifacts co-evolve iteratively.
