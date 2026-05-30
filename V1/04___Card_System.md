@@ -134,65 +134,139 @@ The resource cost of a card is calibrated to the expected value of its success o
 
 ## 6. Card Data Schema
 
-Every card uses this data structure. All fields are required. N/A is a valid value.
+*§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/Whiteboard/researchNotes_CardDesign.md`.*
 
-*For the action taxonomy definitions (Layer, Function, Subject values) see Artifact 04b §4.*
+---
 
-*VS-xx Visibility Scope — values used in this table (full definitions: Artifact 00b §5.9):*
-- *VS-01 — Public: visible to all players at all times. Visibility scope only — does not imply the value is printed on the physical card.*
-- *VS-06 — Conditional: hidden until the card resolves; revealed to all players at resolution.*
+### 6.1 Card Class Definition
 
-*The **Displayed** column is a separate dimension: whether the field value appears on the physical card (Face / Back / No / TBD). Pool copies is VS-01 (public knowledge) but No for display — it is a pool count, not printed on the card. Displayed values marked TBD are deferred to Artifact 09 (Card Production Spec). See PM05 09-11.*
+Each card is an instance of `Card`. Fields are grouped by class. Narrative fields are prose; all other fields are typed expressions or static values.
 
-*§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/Whiteboard/researchNotes_CardDesign.md`. Sources: MTG/Scryfall API, Netrunner DB (NRDB), Arkham Horror LCG (Fantasy Flight), Marvel Champions (Fantasy Flight). Fields added as a result: Card version (§1.1), Trigger condition (§1.2), Pool copies (§1.3), Outcome type (§1.5). Fields reviewed and not added: §8.*
+```python
+class Card:
+    # ── Identity ──────────────────────────────────── static
+    id:           str
+    version:      Semver
+    name:         str
+    tagline:      str
+    type:         CardType
+    subtype:      Subtype
+    faction:      Faction
 
-| Category | Field | Type | Purpose | Constraints | VS-xx | Displayed | Design notes |
-|----------|-------|------|---------|-------------|-------|-----------|--------------|
-| Identity | **Card ID** | String | Primary key | Format: [type prefix][sequence number] | VS-01 | TBD | — |
-| Identity | **Card version** | Semver | Per-card revision identifier | Format: v[major].[minor] | VS-01 | TBD | Enables playtest copy identification. Independent of Artifact 04 version. |
-| Identity | **Card name** | String | In-world card name | Not a mechanical label | VS-01 | Face | — |
-| Identity | **Tagline** | String | One-line in-world description | One sentence | VS-01 | Face | — |
-| Identity | **Card type** | Enum | Top-level card category | Covert Operation, Political Act, Pass, Countermeasure, Modifier, Emergency Response | VS-01 | TBD | — |
-| Identity | **Card subtype** | Enum | Distribution scope | Standard, Faction-specific | VS-01 | TBD | — |
-| Identity | **Card faction** | Enum | Owning faction | All; Ghost; The Network; The Syndicate; The Guild; The Directorate | VS-01 | TBD | All = available to all factions. Named faction = faction-specific card. |
-| Identity | **Pool copies** | Integer | Copies in faction's setup pool | Standard: 2; Emergency Response: 1 (Singleton); N/A → 0 | VS-01 | No | Pool count — not printed on card. Governs print quantities. Deprecated per L144 (04-40) — move to Art 09 or DB only. |
-| Taxonomy | **Layer** | Enum | Action taxonomy — layer | Territory, Economy, Information, Submission, Resolution, Standing — see Artifact 04b §4 | VS-01 | TBD | — |
-| Taxonomy | **Function** | Enum | Action taxonomy — function | See Artifact 04b §4 | VS-01 | TBD | — |
-| Taxonomy | **Subject** | Enum | Action taxonomy — subject | See Artifact 04b §4 | VS-01 | TBD | — |
-| Taxonomy | **Design note** | Prose | Design intent — faction doctrine rationale, card purpose, Art 11 layout context | N/A if none | VS-04 | No | VS-04 ARBITER-Only. Informs Art 11 layout decisions and Art 04b taxonomy analysis. Not printed on card. |
-| Taxonomy | **Arbiter context** | Prose | ARBITER resolution guidance — timing, edge cases, validation rules enforced at the table | N/A if none | VS-04 | No | VS-04 ARBITER-Only. Informs Art 07 ARBITER resolution notes. Not printed on card. |
-| Narrative | **Narrative anchor** | String | In-world narrative grounding | One sentence | VS-01 | TBD | Standard cards: neutral observer voice. Faction-specific: owning faction's voice. |
-| Narrative | **Faction perspectives** | String | Per-faction in-world perspective | Standard cards: one sentence per faction (all 5). Faction-specific cards: owning faction + one doctrinally aligned faction + one doctrinally opposed faction (see P8, Whiteboard/faction_pentagram_alignment.md). | VS-01 | TBD | — |
-| Mechanics | **Beat** | Integer | Resolution beat | 1–5 | VS-01 | TBD | Beat in Phase 6 this card is processed. Resolution order within a beat: governed by dispatch case submission order per Art 03 §7. |
-| Mechanics | **Trigger condition** | Enum | Activation condition for non-default timing | N/A, Submission-time, Beat-N, Phase-N, Condition-based | VS-01 | TBD | — |
-| Mechanics | **Target district** | String | District submission target | Broadest valid statement; N/A if no district target | VS-01 | Face | — |
-| Mechanics | **Target faction** | Enum | Faction submission target | N/A, Self, Named opponent faction | VS-01 | Face | — |
-| Mechanics | **Target object** | Enum | Game component this card acts on | Structure block, Presence token, Operational marker, Intel token, Native resource, Written record, Covert operation, Political act, Action attribution, Private communications, Named action type, N/A; N/A if no faction or district target | VS-01 | Face | Named action type = player-specified at submission. |
-| Mechanics | **Restriction** | Prose | Submission preconditions | All stated on card; no external references | VS-01 | Face | — |
-| Mechanics | **Primary cost qty** | Integer | Quantity of primary cost resource | N/A if no primary cost | VS-01 | Face | — |
-| Mechanics | **Primary cost type** | Enum | Type of primary cost resource | `Resource [faction.native]`, `Resource [target faction.native]`, `Resource [district.native]`, `Resource [inteltoken, target faction, active]`, `Resource [resolution]`, N/A | VS-01 | Face | `[faction.native]` → acting faction's native resource (F-xx.NativeResource → RT-xx); `[district.native]` → target district (D-xx.NativeResource → RT-xx); `[inteltoken, target faction, active]` → RT-07 instance, activation stamped, held by paying faction; `[resolution]` → RT-06, Chorus Node only. |
-| Mechanics | **Secondary cost qty** | Integer | Quantity of secondary cost resource | N/A if no secondary cost | VS-01 | Face | — |
-| Mechanics | **Secondary cost type** | Enum | Type of secondary cost resource | `Resource [faction.native]`, `Resource [target faction.native]`, `Resource [district.native]`, `Resource [inteltoken, target faction, active]`, `Resource [resolution]`, N/A | VS-01 | Face | Same resolution rules as Primary cost type. Often `Resource [district.native]`; often waivable by affinity. |
-| Mechanics | **Faction affinity** | Array[Faction] | Faction(s) receiving affinity discount | N/A if not applicable; comma-separated if multiple | VS-01 | Face | — |
-| Mechanics | **Affinity bonus** | String | What the affinity discount provides | N/A if Faction affinity is N/A | VS-01 | Face | — |
-| Mechanics | **Difficulty** | Enum | Base difficulty threshold | Easy, Average, Challenging, N/A — see Artifact 03 §13 | VS-01 | Face | — |
-| Mechanics | **Ring 0 modifier** | ±Integer | Threshold adjustment for Chorus Node (Ring 0) district targets | N/A if card has no ring modifier | VS-01 | Face | Applied by ARBITER at Beat 3 Step 2 / Beat 4 Step 2. Calculation: Art 07 §8.4. Positive raises threshold (easier); negative lowers it (harder). |
-| Mechanics | **Ring 1 modifier** | ±Integer | Threshold adjustment for Core (Ring 1) district targets | N/A if card has no ring modifier | VS-01 | Face | As Ring 0 modifier. |
-| Mechanics | **Ring 2 modifier** | ±Integer | Threshold adjustment for The Mid (Ring 2) district targets | N/A if card has no ring modifier | VS-01 | Face | As Ring 0 modifier. |
-| Mechanics | **Ring 3 modifier** | ±Integer | Threshold adjustment for Baryo (Ring 3) district targets | N/A if card has no ring modifier | VS-01 | Face | As Ring 0 modifier. |
-| Mechanics | **Resolution** | String | How this card resolves | d100, Automatic | VS-01 | Face | Automatic = guaranteed resolution, no roll, fires on submission. |
-| Mechanics | **Resolution type** | String | Strategic classification of how uncertainty resolves | Descriptive prose — no enforced vocabulary until full card set complete. See PM05 04-25. | VS-01 | TBD | Pattern and enum to emerge from C01–C35 + P01–P18 review. Example values: "Probabilistic", "Positional wager", "Conditional — Transactional if uncontested; Probabilistic if contested". Feeds 00c §8 Derived Cost Analysis. |
-| Mechanics | **Outcome type** | Enum | Political act resolution process type | Binary (For/Against), Elect player, Elect district, Elect faction, Bilateral agreement, Unilateral, N/A | VS-01 | Face | — |
-| Effects | **Crit success** | Prose | Critical success outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond standard success. |
-| Effects | **Success** | Prose | Primary card effect | Full effect stated on card | VS-06 | Face | — |
-| Effects | **Failure** | Prose | Failure outcome | N/A if Resolution = Automatic | VS-06 | Face | — |
-| Effects | **Crit failure** | Prose | Critical failure outcome | N/A if Resolution = Automatic | VS-06 | Face | Additional effects beyond standard failure. |
-| Portrait | **Faction** | Enum | Faction identifier — row key | Ghost, The Network, The Syndicate, The Guild, The Directorate (ARBITER excluded) | VS-06 | TBD | One row per faction per card. |
-| Portrait | **Flat** | ±Integer | Portrait modifier — fires on resolution regardless of submitting faction | N/A if no unconditional effect | VS-06 | TBD | Rare — see L131. Board-state consequence independent of doctrine. Must not appear on standard (Card faction: All) cards. |
-| Portrait | **Submitter** | ±Integer | Portrait modifier — fires when this faction is the submitting faction | N/A if no effect | VS-06 | TBD | One Submitter row fires per card play. See ARBITER Portrait Reference Table [name TBD, PM05 07-05]. |
-| Portrait | **Condition** | Prose | Condition on Submitter modifier | N/A if Submitter fires unconditionally | VS-06 | TBD | — |
-| Portrait | **Modifier** | ±Integer | Adjustment to Submitter modifier under specific circumstances | N/A if no conditional adjustment | VS-06 | TBD | — |
-| Portrait | **Mod Condition** | Prose | When Modifier applies | N/A if Modifier is N/A | VS-06 | TBD | — |
+    # ── Taxonomy ──────────────────────────────────── static, dimension-backed (Art 04b §4)
+    layer:        Layer
+    function:     Function
+    subject:      Subject
+
+    # ── Metadata ──────────────────────────────────── static
+    beat:         int                       # 1–5
+    resolution:   Resolution                # d100 | Automatic
+    threshold:    int | None                # None when Automatic
+    ring_mod:     dict[Ring, int] | None    # None when no ring variation
+    trigger:      TriggerExpr | None        # None = default beat timing
+    resolution_type: str | None            # evolving vocabulary — feeds 00c §8
+    outcome_type: OutcomeType | None        # political acts only
+
+    # ── Targeting ─────────────────────────────────── expressions
+    target_district: DistrictExpr
+    target_faction:  FactionExpr | None
+    target_object:   ObjectExpr  | None
+
+    # ── Logic ─────────────────────────────────────── predicates + expressions
+    affinity:     ConditionalExpr | None    # evaluated before cost
+    restriction:  BoolExpr       | None    # card unplayable if False
+    cost:         CostExpr
+
+    # ── Effects ───────────────────────────────────── mutations  [VS-06]
+    success:      MutationExpr | None
+    successcrit:  MutationExpr | None       # additive delta — fires with success
+    fail:         MutationExpr | None
+    failcrit:     MutationExpr | None       # additive delta — fires with fail
+
+    # ── Portrait ──────────────────────────────────── dimension table  [VS-06]
+    portrait:     dict[Faction, PortraitEntry]
+
+    # ── Narrative ─────────────────────────────────── prose
+    narrative:    str
+    perspectives: dict[Faction, str]
+    design_note:  str | None                # [VS-04 — ARBITER-only]
+    arbiter_note: str | None                # [VS-04 — ARBITER-only]
+
+
+class PortraitEntry:
+    flat:          int | None         # fires on resolution regardless of submitter — faction-specific cards only (L131)
+    submitter:     int | None         # fires when this faction submits the card
+    condition:     BoolExpr | None    # condition on submitter modifier
+    modifier:      int | None         # adjustment to submitter under condition
+    mod_condition: BoolExpr | None    # when modifier applies
+```
+
+---
+
+### 6.2 Data Dictionary
+
+| Field | Class | Type | Purpose | Displayed |
+|-------|-------|------|---------|-----------|
+| id | Identity | str | Primary key — format: [type prefix][sequence number] | TBD |
+| version | Identity | Semver | Per-card revision — v[major].[minor]; independent of Art 04 version | TBD |
+| name | Identity | str | In-world card name — not a mechanical label | Face |
+| tagline | Identity | str | One-line in-world description | Face |
+| type | Identity | CardType | Top-level card category — governs deck assignment and resolution handling | TBD |
+| subtype | Identity | Subtype | Distribution scope | TBD |
+| faction | Identity | Faction | Owning faction — All = standard card; named faction = faction-specific | TBD |
+| layer | Taxonomy | Layer | Action taxonomy layer — see Art 04b §4 | TBD |
+| function | Taxonomy | Function | Action taxonomy function — see Art 04b §4 | TBD |
+| subject | Taxonomy | Subject | Action taxonomy subject — see Art 04b §4 | TBD |
+| beat | Metadata | int | Phase 6 beat this card resolves in; order within beat = dispatch case submission order (Art 03 §7) | TBD |
+| resolution | Metadata | Resolution | d100 = probability roll; Automatic = guaranteed, fires on submission | Face |
+| threshold | Metadata | int | Base difficulty as numeric threshold; None when Automatic | Face |
+| ring_mod | Metadata | dict[Ring, int] | Per-ring threshold adjustment; positive = easier, negative = harder; None when no variation | Face |
+| trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
+| resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
+| outcome_type | Metadata | OutcomeType | Political act resolution process type; None for covert operations | Face |
+| target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
+| target_faction | Targeting | FactionExpr | Faction this card targets; None = no faction target | Face |
+| target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
+| affinity | Logic | ConditionalExpr | Faction-based cost modifier — evaluated before cost expression | Face |
+| restriction | Logic | BoolExpr | Submission preconditions — card unplayable if evaluates False | Face |
+| cost | Logic | CostExpr | Resources consumed at submission | Face |
+| success | Effects | MutationExpr | Primary effect on resolution success | Face |
+| successcrit | Effects | MutationExpr | Additive delta on critical success (roll < 5); None when Automatic | Face |
+| fail | Effects | MutationExpr | Effect on failure; None = cost spent, no additional effect | Face |
+| failcrit | Effects | MutationExpr | Additive delta on critical failure (roll ≥ 95); None when Automatic | Face |
+| portrait | Portrait | dict[Faction, PortraitEntry] | Per-faction portrait scoring — evaluated by ARBITER; analyzed in DB | TBD |
+| narrative | Narrative | str | In-world narrative grounding — one sentence; neutral observer (standard) or owning faction voice (faction-specific) | TBD |
+| perspectives | Narrative | dict[Faction, str] | Per-faction in-world perspective — one sentence per faction | TBD |
+| design_note | Narrative | str | Design intent — doctrine rationale, Art 11 layout context | No |
+| arbiter_note | Narrative | str | ARBITER resolution guidance — timing, edge cases, table validation | No |
+
+---
+
+### 6.3 Enum Vocabularies
+
+```
+CardType:     CovertOperation | PoliticalAct | Pass | Countermeasure | Modifier | EmergencyResponse
+Subtype:      Standard | FactionSpecific
+Faction:      All | Ghost | Network | Syndicate | Guild | Directorate
+Layer:        Territory | Economy | Information | Submission | Resolution | Standing
+Function:     → Art 04b §4
+Subject:      → Art 04b §4
+Resolution:   d100 | Automatic
+Ring:         0 (Chorus Node) | 1 (Core) | 2 (The Mid) | 3 (Baryo)
+OutcomeType:  Binary | ElectPlayer | ElectDistrict | ElectFaction | BilateralAgreement | Unilateral
+```
+
+---
+
+### 6.4 Visibility Rules
+
+Three rules replace per-field VS-xx notation:
+
+- **VS-01 (Public):** All fields not listed below
+- **VS-04 (ARBITER-only):** `design_note`, `arbiter_note`
+- **VS-06 (Hidden until resolution):** `success`, `successcrit`, `fail`, `failcrit`, `portrait`
+
+---
 
 ---
 
@@ -296,150 +370,106 @@ Ghost — P17–P18
 ### C01 — BUILD STRUCTURE
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C01 = Card(
+    id      = "C01",  version = "v1.1",
+    name    = "Build Structure",
+    tagline = "Construct a physical installation in a district.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C01
-- **Card version:** v1.1
-- **Card name:** Build Structure
-- **Tagline:** *Construct a physical installation in a district.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Territory,  function = Add,  subject = StructureBlock,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = None,
 
-- **Layer:** Territory
-- **Function:** Add
-- **Subject:** Structure block
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
 
-- **Design note:** Construction is publicly visible — result announced at resolution. The covert element is the intent. The Guild-as-infrastructure-provider doctrine: every structure in New Meridian, regardless of who commissions it, is in some sense a Guild project.
-- **Arbiter context:** N/A
+    affinity    = faction(acting) == Guild: cost.resource.district(native) = 0,
+    restriction = (
+        district.faction(acting).presence > 0 and
+        district.faction(acting).structure == 0
+    ),
+    cost = resource.faction(acting) * 1 + resource.district(native) * 1,
 
-**Narrative**
+    success     = district(target).faction(acting).structure += 1,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
 
-- **Narrative anchor:** *Every faction that wants to matter in New Meridian eventually has to build something.*
-- **Faction perspectives:**
-  - Guild: *This is what we do. Every structure we build is an argument that permanence is possible here.*
-  - Directorate: *Infrastructure serves order. We will use it if it serves the mandate.*
-  - Network: *Building is a statement of intent. We watch carefully to understand what kind.*
-  - Ghost: *A structure is a commitment. Commitments are data points.*
-  - Syndicate: *Every structure generates value. The question is who captures it.*
+    portrait = {Guild: PortraitEntry(submitter=+1)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** N/A
-- **Target object:** N/A
-- **Restriction:** Acting faction must have at least 1 presence in the target district. No existing structure owned by the acting faction in the target district.
-- **Primary cost qty:** 1
-- **Primary cost type:** Faction native
-- **Secondary cost qty:** 1
-- **Secondary cost type:** District native
-- **Faction affinity:** Guild
-- **Affinity bonus:** 1 native resource matching submitting faction where != Guild
-- **Difficulty:** N/A
-- **Ring 0 modifier:** N/A
-- **Ring 1 modifier:** N/A
-- **Ring 2 modifier:** N/A
-- **Ring 3 modifier:** N/A
-- **Resolution:** Automatic
-- **Resolution type:** Transactional
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** N/A
-- **Success:** Place 1 structure block (faction color) in the target district.
-- **Failure:** N/A
-- **Crit failure:** N/A
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | +1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "Every faction that wants to matter in New Meridian eventually has to build something.",
+    perspectives = {
+        Guild:       "This is what we do. Every structure we build is an argument that permanence is possible here.",
+        Directorate: "Infrastructure serves order. We will use it if it serves the mandate.",
+        Network:     "Building is a statement of intent. We watch carefully to understand what kind.",
+        Ghost:       "A structure is a commitment. Commitments are data points.",
+        Syndicate:   "Every structure generates value. The question is who captures it.",
+    },
+    design_note  = "Construction is publicly visible — result announced at resolution. The covert element is the intent. The Guild-as-infrastructure-provider doctrine: every structure in New Meridian, regardless of who commissions it, is in some sense a Guild project.",
+    arbiter_note = None,
+)
+```
 
 ---
 
 ### C02 — DEMOLISH
 [↑ Card Specifications](#user-content-card-specifications)
 
-**Identity**
+```python
+C02 = Card(
+    id      = "C02",  version = "v1.1",
+    name    = "Demolish",
+    tagline = "Remove an opponent's structure from a district.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
 
-- **Card ID:** C02
-- **Card version:** v1.1
-- **Card name:** Demolish
-- **Tagline:** *Remove an opponent's structure from a district.*
-- **Card type:** Covert Operation
-- **Card subtype:** Standard
-- **Card faction:** All
-- **Pool copies:** 2
+    layer    = Territory,  function = Remove,  subject = StructureBlock,
 
-**Taxonomy**
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = None,
 
-- **Layer:** Territory
-- **Function:** Remove
-- **Subject:** Structure block
+    target_district = district.any,
+    target_faction  = faction.opponent,
+    target_object   = StructureBlock,
 
-- **Design note:** Structure removal is publicly visible. Source of removal is not announced.
-- **Arbiter context:** N/A
+    affinity    = None,
+    restriction = (
+        district(self|adjacent).faction(acting).presence > 0 and
+        district.faction(target).structure > 0
+    ),
+    cost = resource.faction(acting) * 1 + resource.district(native) * 1,
 
-**Narrative**
+    success     = district(target).faction(target).structure -= 1,
+    successcrit = resource.faction(acting).native += 1,
+    fail        = None,
+    failcrit    = faction(acting).standing -= 1,
 
-- **Narrative anchor:** *Not everything built in New Meridian was meant to last.*
-- **Faction perspectives:**
-  - Guild: *We build. We do not unmake. Every time we perform this action something has gone badly wrong.*
-  - Directorate: *Demolition is a last resort. Structures represent investment in the city we are here to protect.*
-  - Network: *Sometimes the infrastructure of control needs to come down before something better can be built.*
-  - Ghost: *A demolished structure tells us as much as a standing one. We note the absence.*
-  - Syndicate: *Assets change hands. Sometimes the most efficient transfer is removal.*
+    portrait = {Guild: PortraitEntry(submitter=-1)},
 
-**Mechanics**
-
-- **Beat:** 3
-- **Trigger condition:** N/A
-- **Target district:** Any district
-- **Target faction:** Named opponent faction
-- **Target object:** Structure block
-- **Restriction:** Acting faction must have at least 1 presence in the target district or in a district adjacent to the target district. Target faction must have a structure in the target district.
-- **Primary cost qty:** 1
-- **Primary cost type:** Faction native
-- **Secondary cost qty:** 1
-- **Secondary cost type:** District native
-- **Faction affinity:** N/A
-- **Affinity bonus:** N/A
-- **Difficulty:** Average (50) + ring modifier
-- **Ring 0 modifier:** −15
-- **Ring 1 modifier:** −10
-- **Ring 2 modifier:** 0
-- **Ring 3 modifier:** +10
-- **Resolution:** d100
-- **Resolution type:** Probabilistic
-- **Outcome type:** N/A
-
-**Effects**
-
-- **Crit success:** Return primary cost to dispatch case.
-- **Success:** Remove 1 target faction structure from the target district.
-- **Failure:** No effect.
-- **Crit failure:** −1 Public Standing.
-
-**Portrait**
-
-| Faction | Flat | Submitter | Condition | Modifier | Mod Condition |
-|---------|------|-----------|-----------|----------|---------------|
-| Guild | N/A | −1 | N/A | N/A | N/A |
-| Directorate | N/A | N/A | N/A | N/A | N/A |
-| Network | N/A | N/A | N/A | N/A | N/A |
-| Ghost | N/A | N/A | N/A | N/A | N/A |
-| Syndicate | N/A | N/A | N/A | N/A | N/A |
+    narrative    = "Not everything built in New Meridian was meant to last.",
+    perspectives = {
+        Guild:       "We build. We do not unmake. Every time we perform this action something has gone badly wrong.",
+        Directorate: "Demolition is a last resort. Structures represent investment in the city we are here to protect.",
+        Network:     "Sometimes the infrastructure of control needs to come down before something better can be built.",
+        Ghost:       "A demolished structure tells us as much as a standing one. We note the absence.",
+        Syndicate:   "Assets change hands. Sometimes the most efficient transfer is removal.",
+    },
+    design_note  = "Structure removal is publicly visible. Source of removal is not announced.",
+    arbiter_note = None,
+)
+```
 
 ---
 
