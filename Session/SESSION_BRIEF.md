@@ -12,7 +12,7 @@ S51 complete. DB infrastructure: `Database/db_create_tmp_tables.sql`, `db_seed_l
 
 Art 04 S51: C18 → **Dossier Breach** (Information — Reveal — Card hand contents); C25 → **Tactical Redirection** (Territory — Move — Presence token); C27 → **Disclosure Loop** (Economy — Add — Exposure). Full schema pass C01–C35: Ring 0–3 modifier fields added to all cards; C13 resolution type corrected (Transactional→Probabilistic); C22/C32/C33 resolution fields corrected (Dice→d100). Card index updated. Unused design candidates (Ghost/Directorate/Network rejected alternates + Gem S51 concepts) → `Whiteboard/card_ideas_S51.md`.
 
-**Next session:** P01–P18 development (Art 04 §9–§10). Art 04 §6 schema redesign to Python object notation (card as executable spec). DB-11 (agy ALTER TABLE component_positions) still open.
+**Next session:** C03–C35 retrofit to Python object notation (§6 class format). Card ID hybrid field decision (04-55) before any P-type cards assigned IDs. Then P01–P18 development.
 
 ---
 
