@@ -74,11 +74,11 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L175** (S55): Card layer = primary game system the card's effect serves. IntelToken-generating cards = Information layer (not Economy). Economy = capital flow only: NativeResource transactions, faction resource pools (Exposure), card counts, Accord existence. Applied: C05/C24 `layer = Economy` → `layer = Information`. Art 04b §4.2/§4.4 governing rule updated.
 - **L174** (S54/S55): Doctrinal alignment pentagram locked. Clockwise: Ghost → Directorate → Guild → Network → Syndicate. Pentagon edges = Neighbor; star diagonals = Opposed. See Art 00 §7 and Art 04 §6.5 (`doctrine_mod` field). `PentagramRelation` enum: `Neighbor | Opposed`. Baselines: Neighbor +15, Opposed −15.
-- **L173** (S54): `doctrine_mod` field added to card schema. `doctrine_mod: dict[PentagramRelation, int] | None`. Default `None` (explicit design choice, not missing). Cards with `target_faction = faction.opponent` may specify `{Neighbor: +15, Opposed: -15}` or override. See Art 04 §6.5.
-- **L172** (S53): Card `id` = integer autoincrement PK. `type` field is the sole discriminator. Variable name prefix (`C01`, `C02`) is document convention only — not the DB key. P-type cards continue the same integer sequence. Resolves 04-57.
+- **L173** (S54): Beat 4 carry row — Beat 2 cards with Beat 4 effects moved physically to carry row at Resolution Grid setup (Beat 0). Row persists across Months. ARBITER processes at start of §17 Beat 4. Option A confirmed S54.
 
-→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L174+)
+→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L175)
 
 ---
 
