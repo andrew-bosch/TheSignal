@@ -113,95 +113,37 @@ ARBITER is the sole physical mover of Portrait markers. No card effect, operativ
 
 ## 7. Debrief Reward System
 
-*[TBD — complete design required. Baseline extrapolation below.]*
+*[Migrated to Art 03 §19 (Debrief) and §21 (End of Quarter). Full procedure returns here when Art 07 is developed.]*
 
 ### 7.1 What Debrief Is
-Debrief occurs at the end of Phase 6 (Resolution). After all card effects are resolved, ARBITER addresses The Table. Debrief has three components:
-1. **Summary** — what happened this quarter (factual, The Record register)
-2. **Observation** — one or two The Observation register comments on patterns ARBITER has noted
-3. **Distribution** — ARBITER distributes any quarter-end rewards
+*[Stub — see Art 03 §19.]*
 
 ### 7.2 Debrief Rewards
-*[TBD — reward types and triggers require design. Candidates:]*
-- **Intelligence token** distributed to the faction with the highest net information gain this quarter
-- **Bonus resource** distributed for Accord compliance (if ARBITER determines it notable)
-- **Situation Report (world event card)** revealed at end of Debrief — world event for the following quarter
-- *[TBD — are Debrief rewards fixed (every quarter, same structure) or variable (ARBITER discretion)?]*
+*[Stub — see Art 03 §21.]*
 
 ### 7.3 Debrief Duration
-Debrief should take no more than [TBD] minutes. The script pack provides timed language for each component.
+*[Stub — see Art 03 §19.]*
 
 ---
 
 ## 8. Resolution Beats
 
-Resolution beats are the ordered procedure ARBITER follows when opening dispatch cases and processing submitted operations during Phase 6.
-
-*[TBD — full resolution procedure requires Artifact 04 completion. Extrapolated sequence below.]*
+*[Migrated to Art 03 §11 (Month 1 — Resolution), §14 (Month 2 — Resolution), §17 (Month 3 — Resolution). Full ARBITER procedure returns here when Art 07 is developed.]*
 
 ### The Resolution Grid
-
-The Resolution Grid is a physical staging tool used by the ARBITER Player to sort all dispatch case contents during Beat 0. It ensures consistent resolution order and prevents card order from being disrupted by case handling. Once built, the grid persists through Beats 1 and 2 as invalid and blocked operations are removed. Beat 3 resolves from the cleaned grid.
-
-**Grid structure:**
-
-| | Lane 1 | Lane 2 | Lane 3 | Lane 4 | Lane 5 |
-|---|--------|--------|--------|--------|--------|
-| *(case receipt order →)* | first received | | | | last received |
-| Beat 2 cards | | | | | |
-| Beat 3 card 1 | | | | | |
-| Beat 3 target 1 | | | | | |
-| Beat 3 card 2 | | | | | |
-| Beat 3 target 2 | | | | | |
-| *(up to 4 pairs — Ghost)* | | | | | |
-
-*Beat 4 is not included in this grid. Political acts resolve at each Faction Player's tableau in initiative order — ARBITER observes, validates, and provides modifier tokens. No Beat 4 grid.*
-
-**Populating the grid (Beat 0):**
-
-1. Take the Lane 1 dispatch case (first received).
-2. Place the Beat 2 card, if any, in the Beat 2 row of Lane 1.
-3. Place each Beat 3 card and its paired target slip in the next available Beat 3 row pair for Lane 1, in order encountered. Stack any attached modifier cards beneath the operation card — modifier cards peek out at the bottom to display their values at a glance.
-4. Repeat for each remaining lane in receipt order.
-
-*If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order. Faction Players cannot dictate Beat 3 operation sequence.*
-
-*Modifier card physical design must support cascade orientation: value printed prominently at both top and bottom edge. See XA-22.*
-
-**Resolution order:**
-
-- **Beat 1:** targeting restriction scan — invalid operations removed from the grid.
-- **Beat 2:** process left to right across all lanes. Blocked operations removed; Type B modifier tokens placed.
-- **Beat 3:** process row-first — all card-1 pairs resolve left to right across all lanes before any card-2 pair begins; then all card-2 pairs, continuing until all rows are cleared.
-
-*Row-first resolution establishes a round-robin initiative order by case receipt: the first submitter's first operation fires first, but all other factions' first operations follow before anyone's second operation begins. Submission speed rewards getting your first operation in — not locking in your full sequence before others can act. (L102)*
-
-*Physical design: Artifact 11. Component entry: PM01. See also XA-22.*
-
----
+*[Stub — see Art 03 §11 Beat 0.]*
 
 ### Beat 2 — The Ground Shifts
-
-Beat 2 is the condition-setting beat. ARBITER processes all Beat 2 cards before any Beat 3 operations resolve. Beat 2 scope includes all condition-setting cards: C06 (Broadcast Interference), C07 (Amplify), C10 (Protect), C11 (Fortify Structure), C21 (Invoke Jurisdiction), C25 (Sealed Border), C28 (Open Channel), C34 (Golden Parachute), and C35 (Regulatory Capture). Any card with Beat 2 in its Beat field is processed in this beat. Conditions set in Beat 2 apply for the remainder of Resolution.
-
-*(07-02: Beat 2 canonical name confirmed "The Ground Shifts." Scope expanded to all condition-setting cards — C06, C07, C10, C11, C28, C34, C35 — not limited to countermeasures/protect cards only.)*
+*[Stub — see Art 03 §11 Beat 2.]*
 
 ### 8.1 Standard Resolution Sequence
-
-For each operation card drawn from the Resolution Grid in resolution order:
-
-1. **Read:** The ARBITER Player reads the card and target slip privately.
-2. **Verify:** The ARBITER Player confirms target district, resources submitted, and relevant board state.
-3. **Resolve:** The ARBITER Player applies the effect per the Operation System (Artifact 03 §14) and the card's effect text.
-4. **Announce:** ARBITER announces the outcome in The Record register.
-5. **Record:** The ARBITER Player records the operation in the Chronicle.
-6. **Portrait:** The ARBITER Player evaluates the Portrait field and moves the Portrait board privately.
+*[Stub — see Art 03 §11 Beat 3, Steps 1–11.]*
 
 ### 8.2 Contested Operations
-*[TBD — when two factions play conflicting operations targeting the same district/target. Reference Artifact 04 conflict resolution rules.]*
+*[Stub — see Art 03 §11 Beat 3.]*
 
 ### 8.3 Failed Operations
-*[TBD — when an operation cannot resolve due to board state (target no longer valid, resource insufficient). Reference Artifact 04 failure handling.]*
+*[Stub — see Art 03 §11 Beat 3.]*
 
 ---
 

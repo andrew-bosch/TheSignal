@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 53 (close) | Updated: 2026-05-30**
+**Session 55 (close) | Updated: 2026-05-31**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,13 +8,13 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S53 complete. L172 locked (card `id` = integer autoincrement PK). 04-57 ✅ closed.
+S54/S55: L174 locked (doctrinal alignment pentagram: Ghost → Directorate → Guild → Network → Syndicate). Art 00 §7 fully rewritten with pentagram geometry; PM05 00-13, 00-14 added. Whiteboard file `faction_pentagram_alignment.md` deleted (superseded).
 
-Art 04 S53: C17–C35 retrofitted to Python object notation. C01–C17 design rationale fully structured: two-subheader format (Design Rationale + Outstanding Issues), checklist converted to Category/Pass/Note table. Fixes applied: C01/C02 notation (`district(target).faction(acting)`), C07 `restriction=None`, C17 portrait `flat→submitter`.
+Art 04/04b: Option C taxonomy decision — IntelToken generation = Information layer (not Economy). Economy = capital flow only (NativeResource transactions). Applied: C05 and C24 `layer = Economy` → `layer = Information`. Art 04b §4.2/§4.4 updated. Art 04b §5.2 table updated. PM05 04-63 added (Art 04b §4.6 stale C27 entry).
 
-Outstanding Issues per-card document six open design questions: C05 (crit semantics), C09 (Art 06 dependency / Syndicate reliability), C10 (−45 vs −35 threshold), C13 (Ring 0 effective threshold), C15 (per-Quarter cap), C16 (Pattern Match cost).
+C01–C17 review pass complete: all 17 cards expanded to 12-row checklist format (04-60 ✅, 04-61 ✅). Cards with Issues Resolved ✓: C01–C08, C12, C14. Open issues documented in Outstanding Issues sections for C09, C10, C11, C13, C15, C16, C17.
 
-**Next session:** Continue C01–C17 review pass — walk Outstanding Issues, take decisions. Then C18–C35 design rationale. Then P01–P18 development.
+**Next session:** PM02 log L175 (Option C taxonomy) if Andy approves. Then: resolve Outstanding Issues (C09 Art06, C10 threshold, C13 Ring 0, C15 cap, C16 cost, C17 procedure). Then Art 00 §7 doctrine text additions (PM05 00-13, 00-14). Then C18–C35 design rationale.
 
 ---
 
@@ -27,8 +27,8 @@ Outstanding Issues per-card document six open design questions: C05 (crit semant
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.1 | ✅ Signed Off — S52. Beat 3/4 outcome steps restructured (7a/7b/7b.i). L170 locked. 03-15 open: generalize when Art 07/08 developed. |
-| 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. §9 removed; §10 → §9 (Standalone Card Types). React collapsed into Modifier cards. Emergency Response penultimate context added. |
-| 04 — Action Card System | 0.9.21 | §5 P1–P15 + C17 signed off ✅ S49. S53: C17–C35 Python notation retrofit complete; C01–C17 design rationale structured (two-subheader + table checklist); C01/C02/C07/C17 notation fixes. Outstanding Issues per card documented. **Next: C01–C17 review pass (Outstanding Issues decisions), C18–C35 rationale, P01–P18.** |
+| 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. S55: §4.2/§4.4 updated (Economy narrowed; IntelToken = Information), §5.2 table updated (C05, C24 → Information). 04-63 flagged (stale C27 §4.6 entry). |
+| 04 — Action Card System | 0.9.22 | §5 P1–P15 + C17 signed off ✅ S49. S55: C01–C17 full 12-row checklist sweep complete (04-60 ✅, 04-61 ✅). C05/C24 taxonomy fix (Economy→Information). Outstanding Issues documented per card (C09, C10, C11, C13, C15, C16, C17 open). **Next: resolve Outstanding Issues, C18–C35 rationale.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -74,16 +74,11 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L174** (S54/S55): Doctrinal alignment pentagram locked. Clockwise: Ghost → Directorate → Guild → Network → Syndicate. Pentagon edges = Neighbor; star diagonals = Opposed. See Art 00 §7 and Art 04 §6.5 (`doctrine_mod` field). `PentagramRelation` enum: `Neighbor | Opposed`. Baselines: Neighbor +15, Opposed −15.
+- **L173** (S54): `doctrine_mod` field added to card schema. `doctrine_mod: dict[PentagramRelation, int] | None`. Default `None` (explicit design choice, not missing). Cards with `target_faction = faction.opponent` may specify `{Neighbor: +15, Opposed: -15}` or override. See Art 04 §6.5.
 - **L172** (S53): Card `id` = integer autoincrement PK. `type` field is the sole discriminator. Variable name prefix (`C01`, `C02`) is document convention only — not the DB key. P-type cards continue the same integer sequence. Resolves 04-57.
-- **L171** (S52): Full program architecture — six artifact sections. Governing Constraints (00, 00a) — narrative IS the primary design constraint, not a category alongside it; Design Pillar 6 is the enforcement mechanism. Logical Data Model (00b, 00c). Imports (01, 02a/b). Main() (03-init, 03, 03a). Stored Procedures (04–08, 10a). Documentation (09, 10, 11). Formal equivalence: artifacts = source code; DB = runtime; physical components = I/O; ARBITER = interpreter. New artifact 03-init created (setup_state / game init). Extends L170.
-- **L170** (S52): Artifact architecture = program design. Art 01 = Zone; Art 02 = Component; Art 03 = Loop; Art 07 = ARBITER subroutines; Art 08 = Faction Player subroutines; Art 04 = Actions. Art 03 owns sequence only — role execution detail migrates to 07/08 as those artifacts are developed. PM05 03-15.
-- **L169** (S52): Component taxonomy schema redesign — `tmp_component` gains `parent_component_id` (self-referential); "Card" becomes parent node with card types as children, outcome subtypes as grandchildren. Two new dim tables: `tmp_component_dim` (description), `component_type` (classification). Advances DB-14. Queued as DB-32 for agy.
-- **L168** (S48): Expansion/perception stages renamed Tier N. Canonical: Tier 1 Physical, Tier 2 Social, Tier 3 Wireless/Communications, Tier 4 Web/Data, Tier 5 Chorus. Tier 5 public name only — technical nature intentionally undefined. XA-37 queued.
-- **L167** (S48): Six-layer card design system locked — Territory / Economy / Information / Submission / Resolution / Standing. "Layer" is the canonical taxonomy term. Cross-Category retired.
-- **L166** (S47): Action taxonomy = possibility space; Art 03 = legal space. Gaps are procedure coverage signals — permit / prohibit / defer. The two artifacts co-evolve iteratively.
-- **L164** (S43): The Dossier — ARBITER's hidden Intel Token storage (behind screen, not public Reservoir).
 
-→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L168)
+→ Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L174+)
 
 ---
 

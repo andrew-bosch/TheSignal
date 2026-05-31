@@ -336,6 +336,38 @@ Government liaison offices, security agencies, regulatory bodies, and the milita
 
 ---
 
+### Doctrinal Alignment Pentagram
+
+The five factions are arranged on a pentagram whose geometry reflects doctrinal proximity. Pentagon edges connect factions with closer doctrinal relationships. Star diagonals connect factions with opposed doctrines. This structure is fixed — it reflects inherent faction alignment, not Portrait standing (which is behavioral and session-dependent).
+
+**Clockwise arrangement:** Ghost → Directorate → Guild → Network → Syndicate → (back to Ghost)
+
+| Faction | Left Neighbor | Opposed | Opposed | Right Neighbor |
+|---------|--------------|---------|---------|----------------|
+| Ghost | Syndicate | Network | Guild | Directorate |
+| Directorate | Ghost | Syndicate | Network | Guild |
+| Guild | Directorate | Ghost | Syndicate | Network |
+| Network | Guild | Directorate | Ghost | Syndicate |
+| Syndicate | Network | Guild | Directorate | Ghost |
+
+**Neighbor pairs (pentagon edges):**
+- Ghost↔Directorate: Secrecy, containment, and institutional history — both present at the Chorus Node since the classified era; both believe premature action is an existential threat
+- Directorate↔Guild: Structural authority — the Directorate provides the mandate, the Guild provides the physical infrastructure; the heavy, tangible reality of New Meridian's establishment
+- Guild↔Network: The public reality — the Guild believes the answer must exist as built structure; the Network believes it must exist in public consciousness; both share a disdain for the Directorate's classified red tape, though for different reasons
+- Network↔Syndicate: The subversive layer — both bypass the Directorate's vertical authority laterally; the Network via pirate transmitters and grassroots exposure, the Syndicate via shell companies and gray-market capital; both thrive when state control fails
+- Syndicate↔Ghost: The long game — both operate on generational timelines immune to short-term political panic; Ghost has been embedded in the research for 31 years; the Syndicate was acquiring ground underneath response facilities as early as year seven
+
+**Opposed pairs (star diagonals):**
+- Ghost↔Network: Secrecy vs. exposure — Ghost believes understanding must precede action and requires careful, quiet study; the Network believes secrecy is the ultimate danger and demands total transparency
+- Ghost↔Guild: Paralysis vs. execution — Ghost insists humanity does not yet understand the question and must wait; the Guild believes improvisation and delay are weaknesses, and that humanity must prove itself by building the answer now
+- Directorate↔Network: Containment vs. disruption — the Directorate's survival requires control and restricted dissemination; the Network was built specifically to shatter that control and force the doors open
+- Directorate↔Syndicate: State authority vs. shadow capital — the Directorate seeks institutional continuity and regulatory control; the Syndicate treats state regulation as an obstacle to bypass via sovereign wealth and untraceable acquisitions
+- Guild↔Syndicate: Integrity vs. commodification — the Guild believes the physical integrity of the work is the response; the Syndicate does not care what the work means, only who owns the ground it stands on
+
+*This structure governs `doctrine_mod` on faction-targeting cards (Art 04 §6.5) and informs Principle 8 (faction-specific card perspective selection). Distinct from the Apex pentagram (Art 05), which is Portrait-driven and session-specific. L174.*
+
+---
+
 ## 8. The Table
 
 The Table is not a governing body. It is not recognized by any state, charter, or law.

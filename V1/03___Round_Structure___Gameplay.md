@@ -440,7 +440,26 @@ From left to right, lane by lane:
 | Zero | Non-Apex | None to drain | Face-down in grid |
 | Any shortfall | Apex | Drain any submitted resources to Reservoir | Face-down in grid |
 
-*Full Resolution Grid design: Artifact 07 — ARBITER Toolkit.*
+**Resolution Grid layout:**
+
+| | Lane 1 | Lane 2 | Lane 3 | Lane 4 | Lane 5 |
+|---|--------|--------|--------|--------|--------|
+| *(case receipt order →)* | first received | | | | last received |
+| Beat 2 row | | | | | |
+| Beat 3 card 1 | | | | | |
+| Beat 3 target 1 | | | | | |
+| Beat 3 card 2 | | | | | |
+| Beat 3 target 2 | | | | | |
+| *(up to 4 pairs — Ghost)* | | | | | |
+| Beat 4 carry | | | | | |
+
+*Beat 4 is not included in this grid. Political acts resolve at each Faction Player's tableau in initiative order — ARBITER observes, validates, and provides modifier tokens. No Beat 4 grid.*
+
+*The Beat 4 carry row holds Beat 2 cards whose effects resolve at Beat 4 (currently: C06 Broadcast Interference, C07 Amplify). These cards are moved here during Beat 2 processing — they do not return to the faction until after M3 Resolution. The row persists across Months and accumulates: cards from M1 Beat 2 and M2 Beat 2 coexist in the row when M3 Resolution begins. ARBITER processes this row at the start of Beat 4 (§17).*
+
+*Beat 3 processes row-first across all lanes: all card-1 pairs resolve left to right before any card-2 pair begins. Round-robin initiative by case receipt — submission speed rewards getting your first operation in, not locking in a full sequence before others act. (L102)*
+
+*Modifier cards in a stack peek out at the bottom to display their values during resolution. Modifier card physical design must support cascade orientation — value printed prominently at both top and bottom edge. (XA-22, Art 11)*
 
 **Intel Token Freshness**
 
@@ -483,6 +502,8 @@ The ARBITER Player reads all currently active Situation Report effects aloud.
 
 **Beat 2 (Month1.Week3): The Ground Shifts**
 
+Beat 2 is the condition-setting beat. All cards with `beat = 2` are processed before any Beat 3 operations resolve. Current Beat 2 cards: Type A/B Countermeasures, C06 Broadcast Interference, C07 Amplify, C10 Protect, C11 Fortify Structure. Cards C21, C25, C28, C34, C35 are pending design — any card with `beat = 2` is processed here when defined.
+
 The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right.
 
 **For each Type A Countermeasure card (District Block):**
@@ -516,6 +537,29 @@ The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right
 3. Place a modifier token on each target operation card equal to the total defensive modifier.
 4. Discard any Modifier Cards submitted with the Protect — removed from the game.
 5. Return the Protect card to the acting faction's dispatch case.
+
+**For each Broadcast Interference operation:**
+
+1. The ARBITER Player identifies the target district named on the card.
+2. Move the card (with its target slip) from the Beat 2 row to the Beat 4 carry row. No board change at Beat 2.
+3. Proceed to the next Beat 2 card.
+
+*The card remains on the grid in the Beat 4 carry row until M3 Resolution. It returns to the acting faction's dispatch case after Beat 4 processing (§17).*
+
+**For each Amplify operation:**
+
+1. The ARBITER Player identifies the acting faction from the card.
+2. Move the card (with its target slip noting the acting faction) from the Beat 2 row to the Beat 4 carry row. No board change at Beat 2.
+3. Proceed to the next Beat 2 card.
+
+*The card remains on the grid in the Beat 4 carry row until M3 Resolution. It returns to the acting faction's dispatch case after Beat 4 processing (§17).*
+
+**For each Fortify Structure operation (Guild only):**
+
+1. The ARBITER Player identifies the target structure — the Guild structure token in the named district.
+2. ARBITER retains awareness — no grid effect at Beat 2.
+3. At Beat 3: if any Demolish operation in the grid targets the fortified structure, ARBITER intercepts at Step 1 of that operation's resolution. The Demolish has no effect. ARBITER announces: *"The structure in [DISTRICT] is reinforced. Demolition has no effect this Quarter."* Place a Voided resolution card in the Demolish submitter's dispatch case.
+4. Return the card to the acting faction's dispatch case.
 
 ---
 
@@ -616,9 +660,17 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 *Note — A card is only a valid target while it occupies a slot in the Resolution Grid. Once an operation resolves and its card is returned to the dispatch case, it is no longer a valid target for any action.*
 
+**Contested Operations**
+
+*[TBD — when two operations target the same object or produce conflicting outcomes in the same resolution pass. Design pending Art 04 conflict resolution rules.]*
+
+**Failed Operations**
+
+*[TBD — when an operation cannot resolve due to board state change between Dispatch and Beat 3 (target no longer valid, resource conditions changed). Design pending Art 04 failure handling.]*
+
 **Clear the Resolution Grid.**
 
-When all operations have resolved, the ARBITER Player clears the Resolution Grid. It is rebuilt fresh for Month 2.
+When all operations have resolved, the ARBITER Player clears all rows of the Resolution Grid except the Beat 4 carry row. The Beat 4 carry row persists — it is not cleared at end of Beat 3. The grid is rebuilt fresh for Month 2; the Beat 4 carry row continues to accumulate.
 
 ---
 
@@ -650,8 +702,9 @@ Follows the same procedure as Month 1 — Resolution (§11), with these differen
 - ARBITER announces each beat with "Month 2" prefix: *"Month 2. Beat 0."*
 - Beats are labeled Month2.Week1–4 (Beats 0–3) for design reference.
 - Dispatch Tokens collected at Beat 0 are the final Token collection of the Quarter.
+- Any Beat 2 cards with Beat 4 effects (C06, C07) are moved to the Beat 4 carry row during Month 2 Beat 2 processing, alongside any carry row cards from Month 1.
 
-*When Beat 3 clears, the Resolution Grid is closed for covert operations. Month 3 begins.*
+*When Beat 3 clears, the Resolution Grid is closed for covert operations. The Beat 4 carry row is not cleared — it remains set until processed at the start of §17 Beat 4. Month 3 begins.*
 
 ---
 
@@ -731,6 +784,24 @@ A deployment marker is flipped to the Blocked face when a blocking condition res
 **Beat 4 (Month3.Week3): Political Acts Resolve**
 
 *Political acts are declared publicly and resolve with full transparency.*
+
+**Process Beat 4 Carry Row**
+
+Before any declarations are checked or payments submitted, the ARBITER Player arms the effects of all cards in the Beat 4 carry row. These effects are active for the duration of Beat 4. Cards are returned to their acting factions' dispatch cases after all political acts have resolved (after Step 11).
+
+**For each Broadcast Interference card in the carry row:**
+
+1. Note the target district from the attached target slip.
+2. During Check Active Restrictions (next step): when the ARBITER Player reads targeting restrictions, also note that a political act targeting [DISTRICT] carries an additional 1 native resource cost. When any Faction Player declares a Political Act targeting that district, ARBITER intercepts before declaration is confirmed: *"A political act targeting [DISTRICT] carries an additional 1 native resource cost this Quarter."* The declaring faction may proceed (paying the additional cost) or withdraw the declaration.
+3. If no Political Act targets the affected district in Beat 4, Broadcast Interference expires — Exposure spent, no effect.
+
+**For each Amplify card in the carry row:**
+
+1. Note the acting faction from the attached target slip.
+2. When the acting faction's Political Act resolves (Step 7 — Apply outcome): apply a ×2 multiplier to that act's standing_impact outcome — both positive and negative results are doubled.
+3. If the acting faction submits no Political Act in Beat 4, Amplify fizzles — Exposure spent, no effect.
+
+---
 
 **Check Active Restrictions**
 
@@ -954,6 +1025,13 @@ Announced by ARBITER in Quarter 1 only: *"Resource conversion is available whene
 
 If the Chorus Activity track has reached the Question threshold, any faction with at least Present influence at the Chorus Node may propose a question during Debrief — provided the Chorus Node is not Contested. If the Chorus Node is Contested, the window does not open this Quarter. Simple majority passes it. ARBITER answers in The Observation register. Full rules in Artifact 07 — ARBITER Toolkit.
 
+**Debrief structure:**
+
+ARBITER addresses The Table in three components, in order:
+1. **Summary** — factual account of Quarter resolution outcomes. The Record register.
+2. **Observation** — one or two pattern observations ARBITER has noted from the Quarter. The Observation register.
+3. **Distribution** — ARBITER distributes Quarter-end rewards (see §21).
+
 **ARBITER's Debrief observation:**
 
 ARBITER delivers one observation in The Observation register — never combining both forms:
@@ -1059,7 +1137,12 @@ At the close of Debrief, in strict order:
 
 1. **Findings decay:** The Ghost Faction Player checks current Findings total and applies decay publicly (7–12: lose 2; 13+: lose 4). Returns the Findings tokens to the Reservoir.
 
-2. **Debrief reward:** ARBITER assesses the quality of the Debrief conversation and selects a Tier A/B/C reward effect to apply before the Session Timeline advances. See Artifact 07 — ARBITER Toolkit for full reward options and effects.
+2. **Debrief reward:** ARBITER assesses the Quarter and distributes rewards before the Session Timeline advances. Reward candidates *(TBD — design pending)*:
+   - Intelligence Token distributed to the faction with the highest net information gain this Quarter
+   - Bonus resource distributed for Accord compliance (ARBITER discretion)
+   - Situation Report (world event card) revealed — sets the world event for the following Quarter
+
+   *[TBD — are Debrief rewards fixed (every Quarter, same structure) or variable (ARBITER discretion)?]*
 
 3. **Operation Resolution cards collected:** Faction Players return their Operation Resolution cards to the ARBITER Player.
 

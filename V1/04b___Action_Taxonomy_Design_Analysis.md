@@ -205,7 +205,7 @@ Layers are game-design partitions — not narrative concepts, not phase concepts
 | Layer | Visibility | Governs |
 |-------|-----------|---------|
 | **Territory** | Public | The influence landscape: presence tokens, structures, control flags, spatial markers |
-| **Economy** | Public | Quantitative holdings: native resources, token counts, card counts, Accord existence |
+| **Economy** | Public | Quantitative holdings: native resources, card counts, Accord existence |
 | **Information** | Private → Public | Qualitative content: token content, written records, attribution, reconnaissance |
 | **Submission** | Split (covert = private, political = public) | What enters the resolution queue: costs, eligibility, blocks, scope |
 | **Resolution** | Split by phase | The d100 system: threshold, modifier stack, difficulty, Battlefield Strength, outcome scale |
@@ -232,7 +232,7 @@ Some components have both quantitative and qualitative properties. The count of 
 | Modifier card | Count held | What modifiers the card carries |
 | Accord agreement | Whether an Accord exists | Recorded terms and obligations |
 
-A card that adds an Intel token to the pool (C05 Gather) is an Economy card. A card that reveals the content of a token is an Information card. A card that introduces a token with falsified content (C20 Misdirection) is an Information card — the qualitative deception is the primary design intent, even though the Add primitive is also executed.
+A card that adds an Intel token to the pool (C05 Gather) is an Information card — the dominant design intent is intelligence acquisition, not resource accumulation. Token count is an Economy property of a held asset; card layer is classified by what the card's primary effect serves. A card that reveals the content of a token is an Information card. A card that introduces a token with falsified content (C20 Misdirection) is an Information card — the qualitative deception is the primary design intent, even though the Add primitive is also executed.
 
 ### 4.5 Accord is a known-narrow Economy subset
 
@@ -349,7 +349,7 @@ React and Instant are timing sub-functions within the Modifier card type — the
 | C02 | Demolish | ✅ | Territory | Remove | Structure block | Remove |
 | C03 | Campaign | ✅ | Territory | Add | Presence token | Add |
 | C04 | Undermine | ✅ | Territory | Remove | Presence token | Remove |
-| C05 | Gather | ✅ | Economy | Add | Intel token | Add |
+| C05 | Gather | ✅ | Information | Add | Intel token | Add |
 | C06 | Broadcast Interference | ✅ | Submission | Modify | Political act (cost) | — |
 | C07 | Amplify | ✅ | Resolution | Modify | Political act (outcome scale) | — |
 | C08 | Buy Influence | ✅ | Territory | Add | Presence token | Add |
@@ -368,7 +368,7 @@ React and Instant are timing sub-functions within the Modifier card type — the
 | C21 | Invoke Jurisdiction | 📝 | Submission | Block | Covert operation (C01, C03) | — |
 | C22 | Detain | 📝 | Territory | Remove (permanent) | Deployment marker | Remove |
 | C23 | Evidence Preservation | 📝 | Information | Protect (permanent) | Written record | — |
-| C24 | Surveillance Placement | 📝 | Economy | Add (permanent) | Intel token | Add |
+| C24 | Surveillance Placement | 📝 | Information | Add (permanent) | Intel token | Add |
 | C25 | Sealed Border | 📝 | Submission | Block | Covert operation (presence placement) | — |
 | C26 | Leak | 📝 | Information | Reveal | Action attribution | Reveal |
 | C27 | Source Protection | 📝 | Information | Protect | Action attribution | — |
