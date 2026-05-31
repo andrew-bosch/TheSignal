@@ -249,7 +249,6 @@ A Protect card belongs to the layer of its protected target — it is not a cros
 | C18 Identity Blind | Action attribution | Information | 📝 Pending development |
 | C19 Deep Cover | Action attribution (permanent) | Information | 📝 Pending development |
 | C23 Evidence Preservation | Written record | Information | 📝 Pending development |
-| C27 Source Protection | Action attribution | Information | 📝 Pending development |
 | C34 Golden Parachute | Native resource | Economy | 📝 Pending development |
 
 ### 4.7 Submission and Resolution are distinct layers

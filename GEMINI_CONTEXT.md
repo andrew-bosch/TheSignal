@@ -759,3 +759,60 @@ The district_adjacency DDL earlier in this file references `district_metadata (i
 #### DB-29 — Schema reference file (Claude Code task)
 
 The stub at `~/Projects/TheSignal/Database/schema_reference.md` will be populated by Claude Code. Read it before any DB session once populated. No action needed from agy on DB-29.
+
+---
+
+## S55–S56 State Update
+
+*Updated: 2026-05-31 — Session 56*
+
+### What Changed S50→S56
+
+**L175 locked (S55) — Card layer taxonomy:**
+- A card's layer = the primary game system its effect *serves*, not a side-effect of what it produces.
+- Economy = capital flow only: NativeResource transactions, faction resource pools (Exposure), card counts, Accord existence.
+- Applied: C05 Gather and C24 Surveillance Placement `layer = Economy` → `layer = Information`.
+- C27 Disclosure Loop confirmed `layer = Economy` (Exposure = capital flow — correct).
+- Art 04b §4.2/§4.4 governing rule updated. §5.2 taxonomy table corrected.
+
+**S51:** C27 replaced — "Source Protection" → "Disclosure Loop" (`layer = Economy, function = Add, subject = Exposure`).
+
+**Art 04b v1.5** signed off S48. C01–C17 full 12-row checklist sweep complete S55.
+
+**03-14:** Art 03 v2.1 signed off S52. Beat 3/4 outcome steps restructured (7/7a/7b/7b.i). L170 locked.
+
+### L176 — tmp_ table promotion (Locked S56)
+
+**Decision:** Promote all tmp_ design-workspace tables to permanent schema (drop `tmp_` prefix). Design workspace phase is complete — Art 04b signed off S48.
+
+**Rationale:** Permanence creates tighter alignment between the DB and Art 01/02 data structures, and establishes the schema backbone for Art 03/04+ mechanical design.
+
+**Scope of migration:**
+- **Tables to rename (drop tmp_ prefix):** tmp_action, tmp_beat, tmp_comp_verb_beat, tmp_comp_verb_role, tmp_component, tmp_component_faction, tmp_component_ring, tmp_condition, tmp_condition_clause, tmp_function, tmp_function_verb, tmp_layer, tmp_player_role, tmp_role_phase, tmp_state_condition, tmp_state_condition_clause, tmp_subject_target, tmp_trigger_type, tmp_verb, tmp_visibility_scope (20 tables)
+- **Tables to DROP (unused pre-S46):** tmp_category, tmp_type (tmp_legal already dropped)
+- **Views:** All 27 views reference tmp_ tables — SQL must be rewritten to reference new names
+- **Legacy early-schema tables** (action_costs, action_restrictions, game_actions, beat, card_metadata, etc.) — in-scope for audit during migration; report status to Claude Code before any changes
+
+**schema_reference.md** at `~/Projects/TheSignal/Database/schema_reference.md` must be updated after migration to reflect permanent table names.
+
+---
+
+### DB-14 Task — Phase A (agy)
+
+**Working model for this task:** Andy will be present in your sessions. You are not operating independently — ask Andy for clarification when something is ambiguous. Do not guess or assume.
+
+**Decision protocol:** Any decisions made during your DB sessions (schema design choices, naming conventions, edge cases, anything with design implications) must be written to `Claude_context.md` in a `## Decisions for Claude Code to Log` section. Claude Code will pick them up, log to PM02, and handle any resulting documentation activity. You execute; Claude Code logs and maintains artifact alignment.
+
+**Documentation gaps:** If you encounter a case where the artifacts (Art 01, 02a, 02b, 03, 04, 04b) are ambiguous or missing information needed to proceed, flag it in `Claude_context.md` as a `## Documentation Gaps` item. Do not fill documentation gaps yourself — return them to Claude Code. Some gaps may require design decisions by Andy before DB work can continue.
+
+**Read `~/Projects/TheSignal/Database/schema_reference.md` before starting.** It is the authoritative schema reference.
+
+**Phase A — Audit and migration plan (no DDL yet):**
+
+1. Run `SHOW TABLES;` and confirm the 20 tmp_ tables above are all present. Note any discrepancies.
+2. For each of the 27 views, capture the current `SHOW CREATE VIEW <view_name>;` output. Identify which tmp_ table names appear in each view's SQL.
+3. For the 2 tables to drop (tmp_category, tmp_type): run `SELECT COUNT(*) FROM tmp_category;` and `SELECT COUNT(*) FROM tmp_type;` to confirm they are empty/unused before dropping.
+4. For the legacy early-schema tables: run `SHOW TABLES;` cross-reference against the list in schema_reference.md §2 (Early-schema tables). For each, run `SELECT COUNT(*) FROM <table>;` and report row counts. Do not drop or alter any legacy table — report only.
+5. Write your findings to `Claude_context.md`: (a) confirmed table list; (b) view dependency map (which views reference which tmp_ tables); (c) legacy table row counts; (d) proposed rename DDL for all 20 tables; (e) rewritten SQL for all 27 views using new permanent names.
+
+**Andy confirms Phase A findings before Phase B executes.** Do not rename, drop, or alter any table or view until Phase A is confirmed.

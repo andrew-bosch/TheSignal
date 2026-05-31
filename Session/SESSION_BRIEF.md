@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 55 (close) | Updated: 2026-05-31**
+**Session 56 (close) | Updated: 2026-05-31**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,13 +8,9 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S54/S55: L174 locked (doctrinal alignment pentagram: Ghost → Directorate → Guild → Network → Syndicate). Art 00 §7 fully rewritten with pentagram geometry; PM05 00-13, 00-14 added. Whiteboard file `faction_pentagram_alignment.md` deleted (superseded).
+S56: PM02 L175 Change Log entry added. L176 locked — tmp_ tables promoted to permanent schema (DB-14 queued for agy, Phase A: audit + migration plan). 03-14 confirmed ✅ S52 (SESSION_BRIEF stale entry fixed). Art 03 file header corrected v2.0 → v2.1. 04-63 ✅ — C27 row removed from Art 04b §4.6. GEMINI_CONTEXT.md updated with S55–S56 state + DB-14 Phase A task for agy. DB-11 SESSION_BRIEF entry corrected (✅ S46, not open).
 
-Art 04/04b: Option C taxonomy decision — IntelToken generation = Information layer (not Economy). Economy = capital flow only (NativeResource transactions). Applied: C05 and C24 `layer = Economy` → `layer = Information`. Art 04b §4.2/§4.4 updated. Art 04b §5.2 table updated. PM05 04-63 added (Art 04b §4.6 stale C27 entry).
-
-C01–C17 review pass complete: all 17 cards expanded to 12-row checklist format (04-60 ✅, 04-61 ✅). Cards with Issues Resolved ✓: C01–C08, C12, C14. Open issues documented in Outstanding Issues sections for C09, C10, C11, C13, C15, C16, C17.
-
-**Next session:** PM02 log L175 (Option C taxonomy) if Andy approves. Then: resolve Outstanding Issues (C09 Art06, C10 threshold, C13 Ring 0, C15 cap, C16 cost, C17 procedure). Then Art 00 §7 doctrine text additions (PM05 00-13, 00-14). Then C18–C35 design rationale.
+**Next session:** Resolve Outstanding Issues (C09 Art06, C10 threshold, C13 Ring 0, C15 cap, C16 cost, C17 procedure). Then Art 00 §7 doctrine text additions (PM05 00-13, 00-14). Then C18–C35 design rationale. agy: DB-14 Phase A (audit + migration plan — confirm with Andy before any DDL).
 
 ---
 
@@ -49,8 +45,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **DB-22–26** | agy S48+S50 DB fixes — upkeep primitives, Status marker, Portrait marker, SitRep/Target Profile, Move mismatch | ✅ S50 (agy) |
 | **DB-27** | agy: register Emergency Response card id=97 in tmp_component + seed role/beat primitives | ✅ S50 (agy) |
 | **DB-09** | Create district_adjacency table — ✅ S50 (agy). 21 districts, 104 adjacency rows seeded. | ✅ S50 |
-| **DB-11** | agy ALTER TABLE component_positions — rename anchored_to_component_id → on_component_id + add on_game_zone_id | Open — unblocked |
-| **03-14** | Art 03 v2.0 re-sign-off — Beat 3 Steps 7/8 extended S50 (material change) | Open — pending |
+| **DB-11** | agy ALTER TABLE component_positions — rename anchored_to_component_id → on_component_id + add on_game_zone_id | ✅ S46 (agy) |
+| **03-14** | Art 03 v2.1 sign-off — Beat 3/4 outcome steps restructured (7a/7b/7b.i); L170 locked | ✅ S52 |
 | **01-07** | Art 01 §4 Narrative Function — remove (content in §3 + Physical Table Layout) | ✅ S41 |
 | **01-08** | Art 01 narrative anchor pass — staged in Whiteboard/Art01_Narrative_Anchors_S41.md | Open — after 02a sign-off |
 | **08-00** | Art 08 — define scope + create stub (Faction Player Tableau + ARBITER Tableau) | Open |
@@ -74,6 +70,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L176** (S56): tmp_ tables promoted to permanent schema (DB-14). Design workspace phase complete post Art 04b sign-off. 20 table renames + 27 view rewrites — phased via agy (Phase A: audit; Phase B: execute on confirmation). Drop tmp_category, tmp_type. Legacy early-schema tables: audit-only, no changes until confirmed.
 - **L175** (S55): Card layer = primary game system the card's effect serves. IntelToken-generating cards = Information layer (not Economy). Economy = capital flow only: NativeResource transactions, faction resource pools (Exposure), card counts, Accord existence. Applied: C05/C24 `layer = Economy` → `layer = Information`. Art 04b §4.2/§4.4 governing rule updated.
 - **L174** (S54/S55): Doctrinal alignment pentagram locked. Clockwise: Ghost → Directorate → Guild → Network → Syndicate. Pentagon edges = Neighbor; star diagonals = Opposed. See Art 00 §7 and Art 04 §6.5 (`doctrine_mod` field). `PentagramRelation` enum: `Neighbor | Opposed`. Baselines: Neighbor +15, Opposed −15.
 - **L173** (S54): Beat 4 carry row — Beat 2 cards with Beat 4 effects moved physically to carry row at Resolution Grid setup (Beat 0). Row persists across Months. ARBITER processes at start of §17 Beat 4. Option A confirmed S54.

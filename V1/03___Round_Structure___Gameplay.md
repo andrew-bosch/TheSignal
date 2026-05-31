@@ -1,7 +1,7 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.0  
+**Version:** 2.1  
 
 **Status:** ✅ Signed Off — S43  
 
