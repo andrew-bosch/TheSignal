@@ -3,7 +3,7 @@
 
 **Version:** 3.0
 **Status:** 🔄 Active
-**Last Updated:** 2026-05-29
+**Last Updated:** 2026-05-31
 **Extracted from:** PM02 §2b as of session 10
 
 ---

@@ -1,9 +1,9 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** S53
+**Last Updated:** S55
 
-### Generated: 2026-05-29 (session 51 complete) — supersedes session 50 save state.
+### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
@@ -13,6 +13,23 @@ Read this document top to bottom before doing any design work in a new session. 
 
 ### S53 — 2026-05-30
 Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`Card(...)` constructor format). C01–C17 design rationale fully restructured: two-subheader format (#### Design Rationale + #### Outstanding Issues and Design Questions), checklist converted to Category/Pass/Note table format. Code block fixes: C01/C02 `district(target).faction(acting)` notation, C07 `restriction=None` (removed unenforeable Beat 4 check), C17 portrait `flat→submitter`. Six open design questions documented in Outstanding Issues for C05/C09/C10/C13/C15/C16. L172 locked. 04-57 closed. 04-58 opened (C01–C17 Outstanding Issues resolution).
+
+### S54/S55 — 2026-05-31
+**Focus:** L174 doctrinal alignment pentagram locked; C01–C17 full 12-row design checklist sweep; Option C taxonomy (L175) locked.
+
+**Decisions locked:** L173 (Beat 4 carry row — Beat 2 cards move to carry row at Resolution Grid setup; ARBITER processes at §17 Beat 4 start; L173 confirmed S54). L174 (doctrinal alignment pentagram: Ghost → Directorate → Guild → Network → Syndicate clockwise; pentagon edges = Neighbor, star diagonals = Opposed; PentagramRelation enum; baselines Neighbor +15 / Opposed −15). L175 (card layer = primary game system the card's effect serves; IntelToken generation = Information layer; Economy = capital flow only: NativeResource, faction resource pools, card counts, Accord existence).
+
+**Artifacts changed:**
+- Art 00 v1.5 — §7 Doctrinal Alignment Pentagram fully rewritten with pentagram geometry, 10 pairs, L174 cross-ref. PM05 00-13, 00-14 added (doctrine text additions + Missing Author Vacuum rule).
+- Art 04 v0.9.22 — C01–C17 expanded to 12-row checklist format (Action fit, Voice fit, Doctrine alignment, Card type fit, Taxonomy fit, Balance, Effect duration, Trigger validity, Portrait validity, Supported by zones/components/game procedure). Status tables added to all C01–C17. C05/C24 `layer = Economy` → `layer = Information` (L175). Outstanding Issues sections document open design questions for C09/C10/C11/C13/C15/C16/C17. 04-60 ✅, 04-61 ✅.
+- Art 04b v1.5 — §4.2 Economy definition narrowed (removed "token counts"); §4.4 governing rule updated (IntelToken generation = Information); §5.2 table updated (C05, C24: Economy→Information). PM05 04-63 added (stale C27 §4.6 entry).
+- PM02 — L173, L174, L175 added.
+- PM05 — 00-13, 00-14, 04-61 ✅, 04-62, 04-63 added/updated.
+- Whiteboard — `faction_pentagram_alignment.md` deleted (superseded by L174); `faction_pentagram_andy.md` retained (source material).
+
+**PM05 changes:** 04-60 ✅, 04-61 ✅. New: 00-13 (Art 00 §7 faction doctrine text additions), 00-14 (Missing Author Vacuum rule), 04-62 (artifact reference notation convention), 04-63 (Art 04b §4.6 stale C27 entry).
+
+**Next session:** Resolve C01–C17 Outstanding Issues (C09 Art06 dep, C10 −45 threshold, C11 §11 procedure gap, C13 Ring 0, C15 per-Quarter cap, C16 copied op cost + prediction procedure, C17 Art 03 migration). Art 00 §7 doctrine text additions (00-13, 00-14). Then C18–C35 design rationale.
 
 ---
 
