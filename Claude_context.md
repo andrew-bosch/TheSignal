@@ -292,3 +292,203 @@ Recommend creating a `/Database/scripts/` toolset:
 
 
 
+  - Seeded all 104 directional bidirectional adjacency rows in `district_adjacency`. Verified counts: 21 components, 21 district metadata rows, and 104 adjacency rows are successfully seeded and verified in the database.
+
+## 18. DB-14 Phase A: Database Table Promotion Audit & Migration Plan
+We have completed the Phase A audit for the `tmp_` table promotion task (DB-14). Below is the comprehensive report detailing the confirmed tables, view dependencies, legacy table counts, rename DDL sequences, and rewritten view DDLs.
+
+> [!NOTE]
+> **Fundamental Snowflake Alignment:** The current DB-14 rename/promotion plan drops the `tmp_` prefix to establish permanent table status, but **does not yet unify** the workspace taxonomy with the instance registries (`components`/`game_zones`) into the final unified "snowflake" ER architecture. That unification remains deferred until L2+ integration. We have officially documented this core snowflake design model (anchored by `components`, `game_zones`, and `action`) in Section 2.5 of [schema_reference.md](file:///home/abosch/Projects/TheSignal/Database/schema_reference.md#L110).
+
+### (a) Confirmed Table List
+All 22 tables starting with the `tmp_` prefix are confirmed present in `the_signal_db`. 
+*   **Active design workspace tables (20):** `tmp_action`, `tmp_beat`, `tmp_comp_verb_beat`, `tmp_comp_verb_role`, `tmp_component`, `tmp_component_faction`, `tmp_component_ring`, `tmp_condition`, `tmp_condition_clause`, `tmp_function`, `tmp_function_verb`, `tmp_layer`, `tmp_player_role`, `tmp_role_phase`, `tmp_state_condition`, `tmp_state_condition_clause`, `tmp_subject_target`, `tmp_trigger_type`, `tmp_verb`, `tmp_visibility_scope`.
+*   **Deprecated tables to drop (2):** `tmp_category` and `tmp_type`.
+*   *Validation:* Confirmed that `tmp_category` has exactly 4 rows (historical taxonomy) and `tmp_type` has exactly 6 rows. Neither table is referenced by any active database columns, foreign keys, or view definitions. Both are confirmed safe to drop.
+
+### (b) View Dependency Map
+Each of the 27 active views has been audited to map its dependencies on the active `tmp_` tables:
+
+| View Name | Referenced `tmp_` Tables |
+| :--- | :--- |
+| `v_action_by_beat` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+| `v_action_chain` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+| `v_arbiter_exclusive` | `tmp_comp_verb_role`, `tmp_component`, `tmp_verb` |
+| `v_arbiter_primitives` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_verb` |
+| `v_arbiter_triggered` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_verb` |
+| `v_beat_role_matrix` | `tmp_beat`, `tmp_comp_verb_beat`, `tmp_comp_verb_role`, `tmp_component`, `tmp_player_role`, `tmp_role_phase`, `tmp_verb` |
+| `v_beat_subject_coverage` | `tmp_action`, `tmp_beat`, `tmp_player_role` |
+| `v_beat_verb_summary` | `tmp_action`, `tmp_beat`, `tmp_player_role`, `tmp_verb` |
+| `v_comp_verb_matrix` | `tmp_component`, `tmp_subject_target` |
+| `v_component_coverage` | `tmp_action`, `tmp_component` |
+| `v_duplicate_primitives` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+| `v_faction_exclusive` | `tmp_comp_verb_role`, `tmp_component`, `tmp_verb` |
+| `v_faction_primitives` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_verb` |
+| `v_fulfiller_summary` | `tmp_comp_verb_role`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+| `v_gap_executor_check` | `tmp_comp_verb_role`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+| `v_layer_function_coverage` | `tmp_beat`, `tmp_comp_verb_beat`, `tmp_comp_verb_role`, `tmp_component`, `tmp_function`, `tmp_function_verb`, `tmp_verb` |
+| `v_placement_matrix` | `tmp_component`, `tmp_subject_target` |
+| `v_primitive_actual_coverage` | `tmp_action`, `tmp_component`, `tmp_verb` |
+| `v_primitives` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+| `v_primitives_with_trigger` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_player_role`, `tmp_trigger_type`, `tmp_verb` |
+| `v_role_matrix` | `tmp_comp_verb_role`, `tmp_component`, `tmp_player_role`, `tmp_role_phase`, `tmp_verb` |
+| `v_split_agency` | `tmp_comp_verb_role`, `tmp_component`, `tmp_player_role`, `tmp_role_phase`, `tmp_verb` |
+| `v_trigger_beat_coverage` | `tmp_action`, `tmp_beat`, `tmp_trigger_type` |
+| `v_trigger_summary` | `tmp_action`, `tmp_player_role`, `tmp_trigger_type` |
+| `v_unassigned_triggers` | `tmp_action`, `tmp_beat`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+| `v_unlegislated_by_trigger` | `tmp_action`, `tmp_comp_verb_beat`, `tmp_comp_verb_role`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+| `v_unlegislated_primitives` | `tmp_action`, `tmp_beat`, `tmp_comp_verb_beat`, `tmp_comp_verb_role`, `tmp_component`, `tmp_player_role`, `tmp_verb` |
+
+### (c) Legacy Table Audit & Row Counts
+We audited all 22 legacy early-schema tables listed in [schema_reference.md §2](file:///home/abosch/Projects/TheSignal/Database/schema_reference.md#L60) to check their existence and data occupancy:
+
+| Table Name | Row Count | Status & Notes |
+| :--- | :--- | :--- |
+| `action_costs` | 0 | Empty legacy schema. |
+| `action_restrictions` | 0 | Empty legacy schema. |
+| `action_valid_targets` | 0 | Empty legacy schema. |
+| `allocation_types` | 0 | Empty legacy schema. |
+| `beat` | 0 | **Collision Risk:** Empty table. Must be dropped before `tmp_beat` is renamed to `beat`. |
+| `card_faction_modifiers` | 0 | Empty legacy schema. |
+| `card_metadata` | 0 | Empty legacy schema. |
+| `card_subtypes` | 0 | Empty legacy schema. |
+| `card_types` | 0 | Empty legacy schema. |
+| `city_rings` | 4 | Populated (4 city rings). Used by `tmp_component_ring` constraints. |
+| `component_positions` | 0 | Empty legacy schema. |
+| `component_valid_zones` | 0 | Empty legacy schema. |
+| `components` | 21 | Populated (21 district components seeded in S50). Used by `district_adjacency`. |
+| `district_connections` | 0 | Empty legacy schema. Replaced by `district_adjacency` (104 rows). |
+| `district_metadata` | 21 | Populated (21 district metadata rows seeded in S50). Used by `district_adjacency`. |
+| `factions` | 5 | Populated (5 playing factions). Used by `tmp_component_faction` constraints. |
+| `game_actions` | 0 | Empty legacy schema. |
+| `game_zones` | 0 | Empty legacy schema. |
+| `inteltoken_metadata` | 0 | Empty legacy schema. |
+| `player_metadata` | 0 | Empty legacy schema. |
+| `resource_types` | 5 | Populated (5 resource types seeded in S37/S50). |
+| `setup_state` | 0 | Empty legacy schema. |
+
+### (d) Proposed Rename DDL
+To promote the design tables cleanly, the migration must execute in a specific order to avoid collisions (namely, dropping the legacy `beat` table first) and temporarily disable foreign key checks to prevent lockouts:
+
+```sql
+-- Disable foreign key constraints during renaming
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Drop deprecated taxonomy tables
+DROP TABLE IF EXISTS tmp_category;
+DROP TABLE IF EXISTS tmp_type;
+
+-- Drop empty legacy collision tables
+DROP TABLE IF EXISTS beat;
+
+-- Rename workspace tables to permanent status
+RENAME TABLE tmp_action TO action;
+RENAME TABLE tmp_beat TO beat;
+RENAME TABLE tmp_comp_verb_beat TO comp_verb_beat;
+RENAME TABLE tmp_comp_verb_role TO comp_verb_role;
+RENAME TABLE tmp_component TO component;
+RENAME TABLE tmp_component_faction TO component_faction;
+RENAME TABLE tmp_component_ring TO component_ring;
+RENAME TABLE tmp_condition TO condition;
+RENAME TABLE tmp_condition_clause TO condition_clause;
+RENAME TABLE tmp_function TO function;
+RENAME TABLE tmp_function_verb TO function_verb;
+RENAME TABLE tmp_layer TO layer;
+RENAME TABLE tmp_player_role TO player_role;
+RENAME TABLE tmp_role_phase TO role_phase;
+RENAME TABLE tmp_state_condition TO state_condition;
+RENAME TABLE tmp_state_condition_clause TO state_condition_clause;
+RENAME TABLE tmp_subject_target TO subject_target;
+RENAME TABLE tmp_trigger_type TO trigger_type;
+RENAME TABLE tmp_verb TO verb;
+RENAME TABLE tmp_visibility_scope TO visibility_scope;
+
+-- Re-enable constraints
+SET FOREIGN_KEY_CHECKS = 1;
+```
+
+### (e) Rewritten SQL for all 27 views
+Below is the complete set of rewritten SQL statements for the view compilation pass:
+
+```sql
+CREATE OR REPLACE VIEW v_comp_verb_matrix AS
+select `c`.`name` AS `component`,1 AS `Add`,1 AS `Remove`,if(exists(select 1 from `subject_target` `st` where `st`.`subject_id` = `c`.`id` limit 1),1,0) AS `Move`,`c`.`transform_visibility` AS `Reveal`,`c`.`transform_visibility` AS `Conceal`,`c`.`transform_orientation` AS `Flip`,`c`.`transform_data` AS `Corrupt` from `component` `c` where `c`.`actionable` = 1 order by `c`.`name`;
+
+CREATE OR REPLACE VIEW v_duplicate_primitives AS
+select `b`.`name` AS `beat`,`r`.`name` AS `subject`,`v`.`name` AS `verb`,`c`.`name` AS `component`,count(0) AS `duplicate_count`,group_concat(`a`.`id` order by `a`.`id` ASC separator ',') AS `action_ids` from ((((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) left join `component` `c` on(`a`.`component_id` = `c`.`id`)) where `a`.`prereq_id` is null group by `a`.`beat_id`,`a`.`subject_id`,`a`.`verb_id`,`a`.`component_id`,`b`.`name`,`r`.`name`,`v`.`name`,`c`.`name` having count(0) > 1 order by `b`.`id`,`r`.`id`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_primitives AS
+select `a`.`id` AS `id`,`b`.`name` AS `beat`,`r`.`name` AS `subject`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`a`.`notes` AS `notes` from ((((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) join `component` `c` on(`a`.`component_id` = `c`.`id`)) where `a`.`prereq_id` is null order by `b`.`id`,`r`.`id`,`v`.`name`,`c`.`name`;
+
+CREATE OR REPLACE VIEW v_fulfiller_summary AS
+select `c`.`name` AS `component`,`v`.`name` AS `verb`,`r`.`name` AS `fulfiller` from (((`comp_verb_role` `cvr` join `component` `c` on(`cvr`.`component_id` = `c`.`id`)) join `verb` `v` on(`cvr`.`verb_id` = `v`.`id`)) join `player_role` `r` on(`cvr`.`role_id` = `r`.`id`)) where `cvr`.`phase_id` = 3 order by `r`.`name`,`c`.`name`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_unlegislated_by_trigger AS
+select `r`.`name` AS `subject`,`v`.`name` AS `verb`,`c`.`name` AS `component`,count(distinct `cvb`.`beat_id`) AS `beat_count` from ((((`comp_verb_role` `cvr` join `player_role` `r` on(`cvr`.`role_id` = `r`.`id`)) join `verb` `v` on(`cvr`.`verb_id` = `v`.`id`)) join `component` `c` on(`cvr`.`component_id` = `c`.`id`)) join `comp_verb_beat` `cvb` on(`cvb`.`component_id` = `cvr`.`component_id` and `cvb`.`verb_id` = `cvr`.`verb_id`)) where `cvr`.`phase_id` = 1 and !exists(select 1 from `action` `a` where `a`.`subject_id` = `cvr`.`role_id` and `a`.`verb_id` = `cvr`.`verb_id` and `a`.`component_id` = `cvr`.`component_id` limit 1) group by `cvr`.`role_id`,`r`.`name`,`cvr`.`verb_id`,`v`.`name`,`cvr`.`component_id`,`c`.`name` order by `r`.`id`,`v`.`name`,`c`.`name`;
+
+CREATE OR REPLACE VIEW v_arbiter_exclusive AS
+select distinct `c`.`name` AS `component`,`v`.`name` AS `verb` from ((`comp_verb_role` `cvr` join `component` `c` on(`cvr`.`component_id` = `c`.`id`)) join `verb` `v` on(`cvr`.`verb_id` = `v`.`id`)) where `cvr`.`phase_id` = 1 and `cvr`.`role_id` = 2 and !exists(select 1 from `comp_verb_role` `x` where `x`.`component_id` = `cvr`.`component_id` and `x`.`verb_id` = `cvr`.`verb_id` and `x`.`phase_id` = 1 and `x`.`role_id` = 1 limit 1) order by `c`.`name`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_unlegislated_primitives AS
+select `cvb`.`beat_id` AS `beat_id`,`b`.`name` AS `beat`,`cvr`.`role_id` AS `subject_id`,`r`.`name` AS `subject`,`cvb`.`verb_id` AS `verb_id`,`v`.`name` AS `verb`,`cvb`.`component_id` AS `component_id`,`c`.`name` AS `component` from (((((`comp_verb_beat` `cvb` join `comp_verb_role` `cvr` on(`cvr`.`component_id` = `cvb`.`component_id` and `cvr`.`verb_id` = `cvb`.`verb_id` and `cvr`.`phase_id` = 1)) join `beat` `b` on(`cvb`.`beat_id` = `b`.`id`)) join `player_role` `r` on(`cvr`.`role_id` = `r`.`id`)) join `verb` `v` on(`cvb`.`verb_id` = `v`.`id`)) join `component` `c` on(`cvb`.`component_id` = `c`.`id`)) where !exists(select 1 from `action` `a` where `a`.`beat_id` = `cvb`.`beat_id` and `a`.`subject_id` = `cvr`.`role_id` and `a`.`verb_id` = `cvb`.`verb_id` and `a`.`component_id` = `cvb`.`component_id` and `a`.`prereq_id` is null limit 1) order by `cvb`.`beat_id`,`cvr`.`role_id`,`v`.`name`,`c`.`name`;
+
+CREATE OR REPLACE VIEW v_action_by_beat AS
+select `b`.`id` AS `beat_id`,`b`.`name` AS `beat`,`r`.`name` AS `subject`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`a`.`beat_trigger` AS `beat_trigger`,`a`.`prereq_id` AS `prereq_id` from ((((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) join `component` `c` on(`a`.`component_id` = `c`.`id`)) order by `b`.`id`,`a`.`id`;
+
+CREATE OR REPLACE VIEW v_faction_exclusive AS
+select distinct `c`.`name` AS `component`,`v`.`name` AS `verb` from ((`comp_verb_role` `cvr` join `component` `c` on(`cvr`.`component_id` = `c`.`id`)) join `verb` `v` on(`cvr`.`verb_id` = `v`.`id`)) where `cvr`.`phase_id` = 1 and `cvr`.`role_id` = 1 and !exists(select 1 from `comp_verb_role` `x` where `x`.`component_id` = `cvr`.`component_id` and `x`.`verb_id` = `cvr`.`verb_id` and `x`.`phase_id` = 1 and `x`.`role_id` = 2 limit 1) order by `c`.`name`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_primitive_actual_coverage AS
+select `c`.`name` AS `component`,`v`.`name` AS `verb`,count(`a`.`id`) AS `primitive_count` from ((`component` `c` join `verb` `v`) left join `action` `a` on(`a`.`component_id` = `c`.`id` and `a`.`verb_id` = `v`.`id`)) where `c`.`actionable` = 1 group by `c`.`id`,`c`.`name`,`v`.`id`,`v`.`name` having count(`a`.`id`) > 0 order by `c`.`name`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_unassigned_triggers AS
+select `a`.`id` AS `id`,`b`.`name` AS `beat`,`r`.`name` AS `subject`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`a`.`notes` AS `notes` from ((((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) left join `component` `c` on(`a`.`component_id` = `c`.`id`)) where `a`.`trigger_type_id` is null order by `b`.`id`,`r`.`id`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_beat_subject_coverage AS
+select `b`.`id` AS `beat_id`,`b`.`name` AS `beat`,`r`.`name` AS `subject`,count(distinct `a`.`verb_id`) AS `verb_count`,count(distinct `a`.`component_id`) AS `component_count`,count(0) AS `primitive_count` from ((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) where `a`.`prereq_id` is null group by `b`.`id`,`b`.`name`,`r`.`id`,`r`.`name` order by `b`.`id`,`r`.`id`;
+
+CREATE OR REPLACE VIEW v_layer_function_coverage AS
+select `f`.`name` AS `card_function`,`v`.`name` AS `physical_verb`,`c`.`name` AS `component`,count(distinct `cvb`.`beat_id`) AS `beat_count`,max(case when `cvr`.`role_id` = 1 and `cvr`.`phase_id` = 1 then 1 else 0 end) AS `faction_initiatable`,group_concat(distinct `b`.`name` order by `b`.`id` ASC separator ' | ') AS `beats_available` from ((((((`function` `f` join `function_verb` `fv` on(`f`.`id` = `fv`.`function_id`)) join `verb` `v` on(`v`.`id` = `fv`.`verb_id`)) join `component` `c` on(1 = 1)) left join `comp_verb_role` `cvr` on(`c`.`id` = `cvr`.`component_id` and `v`.`id` = `cvr`.`verb_id`)) left join `comp_verb_beat` `cvb` on(`c`.`id` = `cvb`.`component_id` and `v`.`id` = `cvb`.`verb_id`)) left join `beat` `b` on(`cvb`.`beat_id` = `b`.`id`)) group by `f`.`name`,`v`.`name`,`c`.`name` having `faction_initiatable` = 1 or `beat_count` > 0 order by `f`.`name`,`c`.`name`;
+
+CREATE OR REPLACE VIEW v_trigger_summary AS
+select concat(`tt`.`type`,case when `tt`.`subtype` is not null then concat('.',`tt`.`subtype`) else '' end) AS `trigger_type`,`r`.`name` AS `subject`,count(0) AS `cnt` from ((`action` `a` join `trigger_type` `tt` on(`a`.`trigger_type_id` = `tt`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) where `a`.`prereq_id` is null group by `tt`.`type`,`tt`.`subtype`,`r`.`id`,`r`.`name` order by `tt`.`type`,`tt`.`subtype`,`r`.`id`;
+
+CREATE OR REPLACE VIEW v_role_matrix AS
+select `c`.`name` AS `component`,`v`.`name` AS `verb`,`r`.`name` AS `role`,`p`.`name` AS `phase`,`cvr`.`notes` AS `notes` from ((((`comp_verb_role` `cvr` join `component` `c` on(`cvr`.`component_id` = `c`.`id`)) join `verb` `v` on(`cvr`.`verb_id` = `v`.`id`)) join `player_role` `r` on(`cvr`.`role_id` = `r`.`id`)) join `role_phase` `p` on(`cvr`.`phase_id` = `p`.`id`)) order by `c`.`name`,`v`.`name`,`p`.`id`,`r`.`name`;
+
+CREATE OR REPLACE VIEW v_beat_verb_summary AS
+select `b`.`name` AS `beat`,`r`.`name` AS `subject`,`v`.`name` AS `verb`,count(0) AS `component_cnt` from (((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) where `a`.`prereq_id` is null group by `b`.`id`,`b`.`name`,`r`.`id`,`r`.`name`,`v`.`id`,`v`.`name` order by `b`.`id`,`r`.`id`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_faction_primitives AS
+select `b`.`name` AS `beat`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`a`.`notes` AS `notes` from (((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) join `component` `c` on(`a`.`component_id` = `c`.`id`)) where `a`.`subject_id` = 1 and `a`.`prereq_id` is null order by `b`.`id`,`v`.`name`,`c`.`name`;
+
+CREATE OR REPLACE VIEW v_placement_matrix AS
+select `c`.`name` AS `subject`,max(if(`t`.`name` = 'District tile',if(`st`.`target_id` is not null,1,0),0)) AS `District_tile`,max(if(`t`.`name` = 'Public Standing',if(`st`.`target_id` is not null,1,0),0)) AS `Public_Standing`,max(if(`t`.`name` = 'Chorus Portrait',if(`st`.`target_id` is not null,1,0),0)) AS `Chorus_Portrait`,max(if(`t`.`name` = 'Session Timeline',if(`st`.`target_id` is not null,1,0),0)) AS `Session_Timeline`,max(if(`t`.`name` = 'Initiative strip',if(`st`.`target_id` is not null,1,0),0)) AS `Initiative_strip`,max(if(`t`.`name` = 'Faction Terminal',if(`st`.`target_id` is not null,1,0),0)) AS `Faction_Terminal`,max(if(`t`.`name` = 'The Overview',if(`st`.`target_id` is not null,1,0),0)) AS `The_Overview`,max(if(`t`.`name` = 'Arbiter Tableau',if(`st`.`target_id` is not null,1,0),0)) AS `Arbiter_Tableau`,max(if(`t`.`name` = 'Chorus Activity Track',if(`st`.`target_id` is not null,1,0),0)) AS `Chorus_Activity_Track`,max(if(`t`.`name` = 'Reservoir',if(`st`.`target_id` is not null,1,0),0)) AS `Reservoir`,max(if(`t`.`name` = 'Backlog',if(`st`.`target_id` is not null,1,0),0)) AS `Backlog`,max(if(`t`.`name` = 'Dispatch case',if(`st`.`target_id` is not null,1,0),0)) AS `Dispatch_case` from ((`component` `c` join `component` `t`) left join `subject_target` `st` on(`st`.`subject_id` = `c`.`id` and `st`.`target_id` = `t`.`id`)) where `c`.`actionable` = 1 and `t`.`receivable` = 1 group by `c`.`id`,`c`.`name` order by `c`.`name`;
+
+CREATE OR REPLACE VIEW v_split_agency AS
+select distinct `c`.`name` AS `component`,`v`.`name` AS `verb`,'Faction' AS `initiator`,max(case when `p`.`name` = 'executor' and `r`.`name` = 'ARBITER' then 'ARBITER' else NULL end) AS `executor`,max(case when `p`.`name` = 'fulfiller' and `r`.`name` = 'ARBITER' then 'ARBITER' else NULL end) AS `fulfiller` from ((((`comp_verb_role` `cvr` join `component` `c` on(`cvr`.`component_id` = `c`.`id`)) join `verb` `v` on(`cvr`.`verb_id` = `v`.`id`)) join `player_role` `r` on(`cvr`.`role_id` = `r`.`id`)) join `role_phase` `p` on(`cvr`.`phase_id` = `p`.`id`)) where exists(select 1 from `comp_verb_role` `fi` where `fi`.`component_id` = `cvr`.`component_id` and `fi`.`verb_id` = `cvr`.`verb_id` and `fi`.`phase_id` = 1 and `fi`.`role_id` = 1 limit 1) and exists(select 1 from `comp_verb_role` `ae` where `ae`.`component_id` = `cvr`.`component_id` and `ae`.`verb_id` = `cvr`.`verb_id` and `ae`.`phase_id` in (2,3) and `ae`.`role_id` = 2 limit 1) group by `c`.`name`,`v`.`name` order by `c`.`name`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_component_coverage AS
+select `c`.`id` AS `id`,`c`.`name` AS `name`,`c`.`actionable` AS `actionable`,`c`.`transformable` AS `transformable`,coalesce(`cnt`.`n`,0) AS `primitive_count` from (`component` `c` left join (select `action`.`component_id` AS `component_id`,count(0) AS `n` from `action` where `action`.`prereq_id` is null and `action`.`component_id` is not null group by `action`.`component_id`) `cnt` on(`cnt`.`component_id` = `c`.`id`)) order by coalesce(`cnt`.`n`,0),`c`.`name`;
+
+CREATE OR REPLACE VIEW v_gap_executor_check AS
+select `g`.`subject` AS `subject`,`g`.`verb` AS `verb`,`g`.`component` AS `component`,`g`.`beat_count` AS `beat_count`,`r`.`name` AS `executor` from ((((`v_unlegislated_by_trigger` `g` join `component` `tc` on(`g`.`component` = `tc`.`name`)) join `verb` `tv` on(`g`.`verb` = `tv`.`name`)) join `comp_verb_role` `cvr` on(`cvr`.`component_id` = `tc`.`id` and `cvr`.`verb_id` = `tv`.`id` and `cvr`.`phase_id` = 2)) join `player_role` `r` on(`cvr`.`role_id` = `r`.`id`)) order by `g`.`subject`,`g`.`verb`,`g`.`component`;
+
+CREATE OR REPLACE VIEW v_arbiter_primitives AS
+select `b`.`name` AS `beat`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`a`.`notes` AS `notes` from (((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) join `component` `c` on(`a`.`component_id` = `c`.`id`)) where `a`.`subject_id` = 2 and `a`.`prereq_id` is null order by `b`.`id`,`v`.`name`,`c`.`name`;
+
+CREATE OR REPLACE VIEW v_arbiter_triggered AS
+select `a`.`id` AS `id`,`b`.`name` AS `beat`,`a`.`beat_trigger` AS `beat_trigger`,`pa`.`id` AS `trigger_action_id`,`pv`.`name` AS `trigger_verb`,`pc`.`name` AS `trigger_component`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`dc`.`name` AS `destination` from (((((((`action` `a` join `action` `pa` on(`a`.`prereq_id` = `pa`.`id`)) join `verb` `pv` on(`pa`.`verb_id` = `pv`.`id`)) join `component` `pc` on(`pa`.`component_id` = `pc`.`id`)) join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) join `component` `c` on(`a`.`component_id` = `c`.`id`)) left join `component` `dc` on(`a`.`destination_component_id` = `dc`.`id`)) where `a`.`subject_id` = 2 order by `a`.`beat_id`,`a`.`id`;
+
+CREATE OR REPLACE VIEW v_primitives_with_trigger AS
+select `a`.`id` AS `id`,`b`.`name` AS `beat`,concat(`tt`.`type`,case when `tt`.`subtype` is not null then concat('.',`tt`.`subtype`) else '' end) AS `trigger_type`,`r`.`name` AS `subject`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`a`.`notes` AS `notes` from (((((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `trigger_type` `tt` on(`a`.`trigger_type_id` = `tt`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) join `component` `c` on(`a`.`component_id` = `c`.`id`)) where `a`.`prereq_id` is null order by `b`.`id`,`tt`.`type`,`tt`.`subtype`,`r`.`id`,`v`.`name`,`c`.`name`;
+
+CREATE OR REPLACE VIEW v_trigger_beat_coverage AS
+select `b`.`id` AS `beat_id`,`b`.`name` AS `beat`,concat(`tt`.`type`,case when `tt`.`subtype` is not null then concat('.',`tt`.`subtype`) else '' end) AS `trigger_type`,count(0) AS `cnt` from ((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) join `trigger_type` `tt` on(`a`.`trigger_type_id` = `tt`.`id`)) where `a`.`prereq_id` is null group by `b`.`id`,`b`.`name`,`tt`.`id`,`tt`.`type`,`tt`.`subtype` order by `b`.`id`,`tt`.`type`,`tt`.`subtype`;
+
+CREATE OR REPLACE VIEW v_beat_role_matrix AS
+select `b`.`id` AS `phase_id`,`b`.`name` AS `phase_name`,`b`.`month` AS `month`,`b`.`beat_num` AS `beat_num`,`rp`.`name` AS `role_phase`,`r`.`name` AS `role`,`c`.`name` AS `component`,`v`.`name` AS `verb`,`cvb`.`notes` AS `beat_notes` from ((((((`comp_verb_beat` `cvb` join `beat` `b` on(`cvb`.`beat_id` = `b`.`id`)) join `component` `c` on(`cvb`.`component_id` = `c`.`id`)) join `verb` `v` on(`cvb`.`verb_id` = `v`.`id`)) join `comp_verb_role` `cvr` on(`cvr`.`component_id` = `cvb`.`component_id` and `cvr`.`verb_id` = `cvb`.`verb_id`)) join `player_role` `r` on(`cvr`.`role_id` = `r`.`id`)) join `role_phase` `rp` on(`cvr`.`phase_id` = `rp`.`id`)) order by `b`.`id`,`rp`.`id`,`r`.`name`,`c`.`name`,`v`.`name`;
+
+CREATE OR REPLACE VIEW v_action_chain AS
+select `a`.`id` AS `id`,`b`.`name` AS `beat`,`a`.`beat_trigger` AS `beat_trigger`,`a`.`prereq_id` AS `prereq_id`,`pb`.`name` AS `prereq_beat`,`r`.`name` AS `subject`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`dc`.`name` AS `destination`,`a`.`notes` AS `notes` from ((((((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) left join `beat` `pb` on(`a`.`prereq_beat_id` = `pb`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) join `component` `c` on(`a`.`component_id` = `c`.`id`)) left join `component` `dc` on(`a`.`destination_component_id` = `dc`.`id`)) order by `a`.`beat_id`,`a`.`id`;
+```

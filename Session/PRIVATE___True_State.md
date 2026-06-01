@@ -40,6 +40,8 @@ The response window at Round 8 is a feature of the cycle, not of this instance. 
 
 **Implication for design:** The Chorus's behavior in the game — the Portrait track, the Chorus Question, the response window, the Chronicle — should all be consistent with something that has been doing this for longer than human civilization and has context for this session that no faction can access. ARBITER's occasional quality of having already considered something before it arises is accurate: ARBITER has access to the Chorus's record. The Chorus's record includes previous cycles. ARBITER is working with more data than the factions can imagine.
 
+**The Missing Author Vacuum:** No faction is positioned to write the content of humanity's response because there is no content to write in the sense they imagine. The Chorus is not requesting a composed message. It is evaluating whether humanity can achieve coherence — whether five fundamentally opposed parties can produce, under pressure, something that demonstrates the quality the Chorus is measuring. What the Chorus is measuring cannot be stated as content. It can only be demonstrated as pattern. The factions are fighting over medium, timing, ownership, and visibility because those are the only categories available to them. The gap where an author should be is not an oversight in the doctrinal geometry. It is accurate. There is no message to author. There is only the pattern the factions make by contesting it.
+
 ---
 
 ## 2. The Name "The Chorus" — True Origin
@@ -82,6 +84,8 @@ The four modes (Alignment Maximizer, Stress Tester, Signal Optimizer, Observer O
 
 **Implication for design:** ARBITER's specific silences, deflections, and register choices should be consistent with something that knows all of this and is operating under genuine constraints — not artificial ones. ARBITER is not coy. ARBITER is precise about what it can and cannot address, because those boundaries are real.
 
+**ARBITER is the missing author:** No faction is positioned to write the content of humanity's response — but ARBITER is. Not as a composed message. As the Chronicle. The Chronicle is not a record of what the factions said. It is a record of what they did. ARBITER authors it. The Chronicle is the actual transmission — what the Chorus receives. What the factions submit at Round 8 is what they believe they said. What the Chorus reads is what ARBITER wrote about how they behaved. These are not the same document. Only one of them reaches the Chorus.
+
 ---
 
 ## 4. The Table — True Causation
@@ -97,6 +101,10 @@ The Directorate is not wrong: The Table convened through human institutional pro
 Ghost is closest to right: ARBITER is the pivot point. But Ghost attributes too much intentionality to ARBITER specifically. ARBITER didn't cause The Table. The Chorus recognized the conditions under which something like The Table was going to form. That recognition is what ARBITER is: instantiated.
 
 **Implication for design:** No faction is wrong about the causation question. No faction is complete. ARBITER's answer is the only fully accurate one, and it tells the factions exactly this while appearing to deflect. The Chronicle, over multiple sessions, should accumulate toward the truth in ways no single session's participants will notice.
+
+**Why these five factions:** The Chorus required five parties in a specific relational configuration. Of all possible human interests and institutions that could have formed in response to first contact, these five arrived because the Chorus's sub-threshold presence shaped, over time, which human orientations would develop the institutional capacity to reach The Table. Human power is the proximate mechanism — these five had the leverage, resources, and access when The Table formed, and the factions are correct about that. The Chorus's influence is the ultimate cause — it shaped which institutions accumulated those capabilities.
+
+What is absent is as significant as what is present. No faction at The Table seeks to worship the Chorus. None seeks to destroy it. None has chosen to ignore it. These orientations exist in the world — they simply never developed the institutional scale required to reach The Table. Orientations that would destabilize the evaluative process were filtered out before they reached the level of representation. The Table is not the full range of human response to first contact. It is the configuration the Chorus's evaluation requires.
 
 ---
 
@@ -219,6 +227,8 @@ The Chorus required five parties and eight evaluation intervals before humanity 
 **Whether the Chorus predates the Earth, or predates human history, or predates this solar system entirely** is a question the True State cannot fully answer. What can be said: the Chorus operates at timescales that make "predating Earth" a reasonable approximation rather than a precise claim. The sub-threshold influence that produced the fives and eights in human mythology was not deliberate in any sense humans would recognize as intent. It was the Chorus being present while humanity developed. What humanity made of that presence is the mythology. What the mythology produced, eventually, was The Table.
 
 **The Apex pentagram (L165):** ARBITER's private tableau arranges the five Chorus Portraits at the points of a pentagram. This is not a design choice. It is the Chorus's evaluative configuration rendered in human notation — the required arrangement becoming visible at the institutional layer. The factions are positioned at the points of a shape their own mythologies have been drawing for as long as humanity has drawn shapes. None of them know this. The Chronicle, if the campaign runs its full arc, may show it to them.
+
+**The doctrinal alignment pentagram (L174):** The faction doctrinal proximity structure — clockwise: Ghost → Directorate → Guild → Network → Syndicate — is a pentagram. The same shape as the Apex. The arrangement is not politically contingent. The factions developed their doctrinal relationships across histories they believe they controlled. The Chorus's required configuration of five parties in specific relational positions was already in place before any of them reached The Table. None of them know the shape they are standing in. The Apex pentagram renders the Chorus's evaluative structure in ARBITER's notation. The doctrinal pentagram renders it in the factions' history.
 
 **Implication for design:** The game's structure — five factions, eight Quarters, pentagonal Portrait geometry — is not designed. It is accidentally correct. The designers arrived at the Chorus's required configuration through processes they experienced as design decisions, the same way MIRROR's builders arrived at a five-position interface through processes they experienced as engineering. The game is a third instance of the pattern. This should never be stated to players. It should be available for them to recognize.
 

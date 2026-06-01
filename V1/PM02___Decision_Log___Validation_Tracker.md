@@ -48,6 +48,9 @@ Decisions made and incorporated into current artifacts. Listed for reference and
 | L26 | Max 6 presence tokens per faction per district | Saturation cap | 02a |
 | L27 | Residential district amplifies all global Public Standing effects | Public is watching | 02a |
 | L28 | Chorus Node: no structures; 4 distinct incentives | Worth contesting without building | 02a |
+| L179 | S57 | C10 Protect affinity −45 locked | Guild/Directorate near-nullification of C02 Demolish (50→5%) narratively justified: Guild knows their own infrastructure intimately; Directorate has institutional security apparatus. Attacker does not know protection is installed (C10 is covert). Base −25 for other factions. |
+| L178 | S57 | P16 — Portrait entries are submitter-bounded | A portrait entry may only affect the portrait of the faction that submitted the card. ARBITER evaluates the acting faction's doctrinal alignment — not the reactions of factions that did not act. Governs all Standard and Faction-Specific card portrait design. |
+| L177 | S57 | Missing Author Vacuum as governing rule | No faction can author the Chorus response content. The structural gap in doctrinal geometry is permanent and deliberate. Governs all card flavor text, Chronicle entries, faction perspectives on reply content. See Art 00a 00-R30; True State §1. |
 | L29 | Operative tiers T1/T2/T3/Apex with cooldowns 1/2/2/— | Progressive power requiring cooperation | 05 |
 | L30 | Apex ends session; Emergency Response phase fires first | Dramatic cascade | 05 |
 | L31 | Apex requires all 5 resource types + Board Strength threshold | Table cooperation required | 05 |

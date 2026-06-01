@@ -271,6 +271,8 @@ Whatever this is, it has value. Control comes from positioning early.
 
 The Syndicate does not debate whether the Chorus matters. It asks who will control the conditions under which a response is made. A reply requires infrastructure: transmission systems, energy, materials, coordination at scale. These are investments. The Syndicate believes the real question is not what humanity will say — but who owns the systems that make saying it possible. Ownership determines who speaks, how they speak, and what survives the process.
 
+The Syndicate's timeline is not political. The Chorus was first received thirty-one years ago. The Syndicate was acquiring ground underneath the planned response facilities as early as year seven. The window is not closing. The Syndicate was inside before anyone else found the door.
+
 **Who they are:**
 Sovereign wealth funds, private research consortia, patent holders, and financial infrastructure operators. They arrived when Chorus-derived mathematics produced the first commercially viable patents and have been filing new ones ever since.
 
@@ -295,6 +297,8 @@ Sovereign wealth funds, private research consortia, patent holders, and financia
 Humanity's response must demonstrate what it is capable of at its best.
 
 The Guild believes the Chorus is an evaluation. The response will not be judged by intent but by execution. What humanity builds in reply — its structure, its function, its integrity — is the answer. Improvisation reveals weakness. Shortcuts reveal urgency. Instability reveals fragility. The Guild insists on something built to endure: functional, durable, honest. What you build reveals what you are.
+
+The Guild is also the only faction at The Table that cannot operate covertly. Planetary-scale infrastructure cannot be classified. To build the response is to expose it. The Guild does not share the Network's politics, but they share the Network's conclusion: nothing of this scope happens in the dark.
 
 **Who they are:**
 Civil engineers, urban planners, construction consortia, and infrastructure operators who physically maintain New Meridian. They built the power systems. They laid the transit corridors. They constructed the research complex. Every other faction depends on infrastructure the Guild designed. The closer one gets to the Chorus Node, the more tightly Guild systems are embedded.
@@ -321,6 +325,8 @@ Survival requires control, restraint, and continuity.
 
 The Directorate believes the Chorus represents an unknown variable with potentially existential consequences. That is not speculation — it is the only responsible working assumption. Uncontrolled dissemination risks destabilization. Uncoordinated action risks escalation. Premature response risks consequences that may not be survivable. Their position is not ideological. It is procedural: maintain control, preserve institutional continuity, avoid irreversible actions until consequences are understood.
 
+The Directorate makes no distinction between rogue capital and rogue information. The Syndicate's gray-market acquisitions and the Network's pirate transmitters are the same threat expressed through different channels — both bypass state authority, both accelerate consequences the Directorate has not yet modeled. The procedural commitment does not change based on the mechanism of the disruption.
+
 **Who they are:**
 Government liaison offices, security agencies, regulatory bodies, and the military installation that has maintained physical presence near the Chorus Node since the first classified readings — before the city existed. They were here first. Their sanctioned access to the receiving apparatus predates every other faction's presence in New Meridian.
 
@@ -336,11 +342,11 @@ Government liaison offices, security agencies, regulatory bodies, and the milita
 
 ---
 
-### Doctrinal Alignment Pentagram
+### Inter-Faction Doctrinal Alignment
 
-The five factions are arranged on a pentagram whose geometry reflects doctrinal proximity. Pentagon edges connect factions with closer doctrinal relationships. Star diagonals connect factions with opposed doctrines. This structure is fixed — it reflects inherent faction alignment, not Portrait standing (which is behavioral and session-dependent).
+The five factions occupy fixed positions in a doctrinal alignment structure. Adjacent factions share closer philosophical relationships; non-adjacent factions are doctrinally opposed. This arrangement is fixed — it reflects inherent faction alignment, not Portrait standing (which is behavioral and session-dependent).
 
-**Clockwise arrangement:** Ghost → Directorate → Guild → Network → Syndicate → (back to Ghost)
+**Arrangement:** Ghost → Directorate → Guild → Network → Syndicate → (back to Ghost)
 
 | Faction | Left Neighbor | Opposed | Opposed | Right Neighbor |
 |---------|--------------|---------|---------|----------------|
@@ -350,21 +356,23 @@ The five factions are arranged on a pentagram whose geometry reflects doctrinal 
 | Network | Guild | Directorate | Ghost | Syndicate |
 | Syndicate | Network | Guild | Directorate | Ghost |
 
-**Neighbor pairs (pentagon edges):**
+**Neighbor pairs:**
 - Ghost↔Directorate: Secrecy, containment, and institutional history — both present at the Chorus Node since the classified era; both believe premature action is an existential threat
 - Directorate↔Guild: Structural authority — the Directorate provides the mandate, the Guild provides the physical infrastructure; the heavy, tangible reality of New Meridian's establishment
 - Guild↔Network: The public reality — the Guild believes the answer must exist as built structure; the Network believes it must exist in public consciousness; both share a disdain for the Directorate's classified red tape, though for different reasons
 - Network↔Syndicate: The subversive layer — both bypass the Directorate's vertical authority laterally; the Network via pirate transmitters and grassroots exposure, the Syndicate via shell companies and gray-market capital; both thrive when state control fails
 - Syndicate↔Ghost: The long game — both operate on generational timelines immune to short-term political panic; Ghost has been embedded in the research for 31 years; the Syndicate was acquiring ground underneath response facilities as early as year seven
 
-**Opposed pairs (star diagonals):**
+**Opposed pairs:**
 - Ghost↔Network: Secrecy vs. exposure — Ghost believes understanding must precede action and requires careful, quiet study; the Network believes secrecy is the ultimate danger and demands total transparency
 - Ghost↔Guild: Paralysis vs. execution — Ghost insists humanity does not yet understand the question and must wait; the Guild believes improvisation and delay are weaknesses, and that humanity must prove itself by building the answer now
 - Directorate↔Network: Containment vs. disruption — the Directorate's survival requires control and restricted dissemination; the Network was built specifically to shatter that control and force the doors open
 - Directorate↔Syndicate: State authority vs. shadow capital — the Directorate seeks institutional continuity and regulatory control; the Syndicate treats state regulation as an obstacle to bypass via sovereign wealth and untraceable acquisitions
 - Guild↔Syndicate: Integrity vs. commodification — the Guild believes the physical integrity of the work is the response; the Syndicate does not care what the work means, only who owns the ground it stands on
 
-*This structure governs `doctrine_mod` on faction-targeting cards (Art 04 §6.5) and informs Principle 8 (faction-specific card perspective selection). Distinct from the Apex pentagram (Art 05), which is Portrait-driven and session-specific. L174.*
+*This structure governs `doctrine_mod` on faction-targeting cards (Art 04 §6.5) and informs Principle 8 (faction-specific card perspective selection). L174.*
+
+The geometry of The Table has one structural gap no faction has publicly named. Ghost translates the question. The Guild builds the transmitter. The Syndicate funds the infrastructure. The Network broadcasts to whoever will receive it. The Directorate controls the timeline. No faction is doctrinally positioned to write the content of the response. Every seat at The Table is a claim to medium, timing, ownership, or access. None is a claim to authorship.
 
 ---
 

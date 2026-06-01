@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** S55
+**Last Updated:** 2026-06-01
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -10,6 +10,12 @@ Read this document top to bottom before doing any design work in a new session. 
 ---
 
 ## Session Log
+
+### Session 57 — 2026-06-01
+**Focus:** DB-14 Phase B confirmation; Art 00 §7 redesign + re-sign-off v1.6; Art 00a 00-R30 (Missing Author Vacuum); True State §1/§3/§4/§10 updates; Art 04 P16 added (portrait entries submitter-bounded); C01–C10 full 5-faction portrait sweep; C01/C02/C03/C04/C05/C06/C07/C08/C10 signed off; C09 portrait + dependency cleanup; C10 −45 affinity locked (L179). Ghost faction mechanics concept noted for playstyle summary.
+**Decisions locked:** L177 (Missing Author Vacuum governing rule), L178 (P16 portrait submitter-bounded), L179 (C10 −45 affinity narratively justified).
+**Artifacts updated:** Art 00 (v1.6, signed off S57), Art 00a (00-R30 added, re-sign-off pending), True State (§1/§3/§4/§10), Art 04 (v0.9.23, C01–C10 portrait sweep, C01/C02/C03/C04/C05/C06/C07/C08/C10 signed off).
+**Next:** S58 — faction playstyle summary (blocking C11), Outstanding Issues (C13/C15/C16/C17), C11–C35 design rationale.
 
 ### S53 — 2026-05-30
 Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`Card(...)` constructor format). C01–C17 design rationale fully restructured: two-subheader format (#### Design Rationale + #### Outstanding Issues and Design Questions), checklist converted to Category/Pass/Note table format. Code block fixes: C01/C02 `district(target).faction(acting)` notation, C07 `restriction=None` (removed unenforeable Beat 4 check), C17 portrait `flat→submitter`. Six open design questions documented in Outstanding Issues for C05/C09/C10/C13/C15/C16. L172 locked. 04-57 closed. 04-58 opened (C01–C17 Outstanding Issues resolution).

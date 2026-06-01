@@ -718,6 +718,18 @@ Cards use these phrases as written. They do not define or qualify them.
 
 ---
 
+**00-R30 — The Missing Author Vacuum**
+
+**Rule:** No card flavor text, Chronicle entry, or faction perspective may assert or imply that any faction knows the content of the message — what humanity should say to the Chorus.
+
+**Narrative:** The structural gap in the doctrinal geometry is permanent and deliberate. The moment any faction claims authorship of the response, the geometry collapses. Every faction at The Table fights over medium, timing, ownership, or access. None of them are positioned to write what the message says. That vacuum is not an oversight — it is the design.
+
+*Source: L174, 00-14.*
+
+*Governs: All card flavor text; Chronicle entries; faction perspectives; any written material implying a faction position on the content — not the medium, timing, ownership, or visibility — of the reply.*
+
+---
+
 ## 8. Information & Privacy
 
 Rules governing what information can be held, disclosed, and acted upon.
