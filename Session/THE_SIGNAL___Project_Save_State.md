@@ -17,6 +17,18 @@ Read this document top to bottom before doing any design work in a new session. 
 **Artifacts updated:** Art 00 (v1.6, signed off S57), Art 00a (00-R30 added, re-sign-off pending), True State (§1/§3/§4/§10), Art 04 (v0.9.23, C01–C10 portrait sweep, C01/C02/C03/C04/C05/C06/C07/C08/C10 signed off).
 **Next:** S58 — faction playstyle summary (blocking C11), Outstanding Issues (C13/C15/C16/C17), C11–C35 design rationale.
 
+### Session 58 — 2026-06-01
+**Focus:** Faction playstyle summaries (§5a): Ghost (Intel/SCIF/Flip), Guild (Capacity flywheel), Network (Exposure + modifier self-feed), Directorate (Mandate + suppression), Syndicate (Capital-only upkeep + Intel premium). Victory Architecture table added. Gap analysis complete — 12 net new cards across all factions. Modifier deck architecture locked: three types (react/tripwire/operation/battlefield). New PM05 items: 04-n1 (card numbering), 04-n2 (Guild C01 passive income), 04-n3 (Labor Contract), 04-n4 (modifier taxonomy). Whiteboard files: faction_playstyle_S58.md, modifier_card_ideas.md, design_reference.md.
+**Decisions locked:** None (design exploration session).
+**Artifacts updated:** Art 04 (v0.9.23, §5a added).
+**Next:** S59 — Ghost card design (Station, Full Take, SCIF, Flip, Signals Analysis), then remaining faction gap cards.
+
+### Session 59 — 2026-06-01
+**Focus:** Full covert op design pass. All C01–C42 baseline drafted. Design rationale scaffold (Design Rationale / Design Checklist / Outstanding Issues / Status) added to C18–C35. C36–C42 migrated from §8 Intel Economy appendix to canonical faction sections (Python spec + scaffold). New faction-specific covert cards: Ghost (Station, Full Take, SCIF, Flip, Signals Analysis), Guild (Labor Contract), Directorate (Regulatory Downgrade, Regulatory Freeze + C42 Sanctioned Raid from migration), Syndicate (Land Title, Hostile Takeover, Accord Transfer + C38 Parasitic + C41 Corporate Blackmail from migration), Standard (C39 Absolute Compromise). Network (C37 Sacrifice + C40 Weaponized Transparency from migration). Entry/Exit Controls (Directorate PA) written to §10. New components awaiting Art 02 registration: SCIFRecordCard, TierPenaltyMarker, TierFreezeMarker, EntryControlMarker, LandTitleMarker, ParasiticMarker. PM05 04-n5 (SCIF debrief step), 04-n6 (00-R29 Ghost adjacency clarification) remain open. PM05 04-n7 closed.
+**Decisions locked:** None (design execution session).
+**Artifacts updated:** Art 04 (v0.9.24), PM05 (04-n7 closed), SESSION_BRIEF (S59).
+**Next:** S60 — Directorate + Syndicate sanity checks; Art 02 registration for 6 new components; P-series PA design pass (dedicated session); Outstanding Issues (C13/C15/C16/C17).
+
 ### S53 — 2026-05-30
 Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`Card(...)` constructor format). C01–C17 design rationale fully restructured: two-subheader format (#### Design Rationale + #### Outstanding Issues and Design Questions), checklist converted to Category/Pass/Note table format. Code block fixes: C01/C02 `district(target).faction(acting)` notation, C07 `restriction=None` (removed unenforeable Beat 4 check), C17 portrait `flat→submitter`. Six open design questions documented in Outstanding Issues for C05/C09/C10/C13/C15/C16. L172 locked. 04-57 closed. 04-58 opened (C01–C17 Outstanding Issues resolution).
 

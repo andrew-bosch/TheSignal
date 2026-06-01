@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 57 (close) | Updated: 2026-06-01**
+**Session 59 (close) | Updated: 2026-06-01**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,9 +8,11 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S57: DB-14 Phase B confirmed complete (tmp_ → permanent schema executed by agy). Art 00 §7 major update — doctrinal alignment section rewritten (shape language removed; header → "Inter-Faction Doctrinal Alignment"), three faction doctrine inserts (Guild/Syndicate/Directorate), Missing Author Vacuum paragraph added. Art 00a 00-R30 (Missing Author Vacuum governing rule) added. Art 00 re-signed off v1.6 S57. PM05 00-13 ✅, 00-14 ✅. True State updated: §1 (Missing Author Vacuum), §3 (ARBITER as missing author), §4 (why these five factions), §10 (doctrinal alignment pentagram L174). Art 04 checklist definitions updated (Doctrine alignment two-part; Portrait validity Standard-card coverage requirement + P16). P16 added (L178): portrait entries are submitter-bounded — ARBITER evaluates only the acting faction. C01–C10 full portrait sweep complete: all 5-faction portrait assessments documented, N/A Pass rows fixed to ✓, P16 references throughout. New portrait entries: C01 Ghost−1, C02 Network+1/Directorate−1, C08 Ghost−1, C09 Directorate−1. C09 portrait + AccordCard architecture decisions: AccordCard = Art 02 component; procedure Art 03 → Art 07; balance gated by P-series PA costs. C10 affinity −45 locked (L179): near-nullification narratively justified for Guild/Directorate. Ghost faction mechanics concept: flip/SCIF as temporary access not ownership; Ghost may hold no permanent territory — flagged for playstyle summary. C01/C02/C03/C04/C05/C06/C07/C08/C10 signed off S57. C09 sign-off deferred (P-series + Art 02/03 dependencies).
+S59: Full covert op design pass complete. All C01–C42 are baseline drafted. Design rationale scaffold (Design Rationale / Design Checklist / Outstanding Issues / Status) added to C18–C35. C36–C42 migrated from old §8 Intel Economy appendix to canonical faction sections (Python spec, scaffold attached). New faction cards written: Ghost (Station, Full Take, SCIF, Flip, Signals Analysis), Guild (Labor Contract), Directorate (Regulatory Downgrade, Regulatory Freeze), Syndicate (Land Title, Hostile Takeover, Accord Transfer). Standard: Absolute Compromise (C39). Entry/Exit Controls (Directorate PA) written to §10. New components: SCIFRecordCard, TierPenaltyMarker, TierFreezeMarker, EntryControlMarker, LandTitleMarker, ParasiticMarker (all need Art 02 registration). PM05 04-n7 closed.
 
-**Next session:** Faction playstyle summary (blocking before C11 design) — one paragraph per faction on intended operation economy, win path, and what makes their deck feel distinct. Then Art 04 Outstanding Issues (C13 Ring 0 threshold + crit success, C15 cap, C16 copied op cost, C17 failcrit PS silent). Then C11–C35 design rationale.
+**ALWAYS read `TheSignal/Whiteboard/design_reference.md` before any Art 04+ design work.**
+
+**Next session:** Directorate + Syndicate faction sanity checks (deferred in S59). New component Art 02 registration (6 new components). P-series PA design pass (P01–P18 all stubs — dedicated session). Outstanding Issues (C13/C15/C16/C17).
 
 ---
 
@@ -24,7 +26,7 @@ S57: DB-14 Phase B confirmed complete (tmp_ → permanent schema executed by agy
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 2.1 | ✅ Signed Off — S52. Beat 3/4 outcome steps restructured (7a/7b/7b.i). L170 locked. 03-15 open: generalize when Art 07/08 developed. |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. S55: §4.2/§4.4 updated (Economy narrowed; IntelToken = Information), §5.2 table updated (C05, C24 → Information). 04-63 flagged (stale C27 §4.6 entry). |
-| 04 — Action Card System | 0.9.23 | S57: P16 added (portrait entries submitter-bounded, L178). C01–C10 full 5-faction portrait sweep complete. C01/C02/C03/C04/C05/C06/C07/C08/C10 signed off S57. C09 deferred (P-series + Art 02/03 dependencies). C10 −45 affinity locked (L179). **Next: faction playstyle summary (blocking C11), Outstanding Issues (C13/C15/C16/C17), C11–C35 design rationale.** |
+| 04 — Action Card System | 0.9.24 | S59: All C01–C42 baseline drafted. Scaffold on C18–C35. C36–C42 migrated. New faction cards (Ghost/Guild/Directorate/Syndicate gaps). Entry/Exit Controls (§10). **Next: Directorate+Syndicate sanity checks; Art 02 component registration (6 new); P-series PA pass; Outstanding Issues (C13/C15/C16/C17).** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -73,6 +75,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **L179** (S57): C10 Protect affinity −45 locked. Guild/Directorate near-nullification of C02 Demolish (50→5%) narratively justified: Guild knows their own infrastructure intimately; Directorate has institutional security apparatus. Attacker doesn't see protection coming (C10 is covert). Base −25 for other factions (50→25%) remains.
 - **L178** (S57): P16 — Portrait entries are submitter-bounded. A portrait entry may only affect the portrait of the faction that submitted the card. ARBITER evaluates the acting faction's doctrinal alignment — not the reactions of factions that did not act.
 - **L177** (S57): Missing Author Vacuum as governing rule. No faction can author the Chorus response content — structural gap in doctrinal geometry is permanent and deliberate. Governs all card flavor, Chronicle entries, faction perspectives. See Art 00a 00-R30; True State §1.
+
+*S59: No new L-decisions. Design execution session — all covert card drafts, scaffold pass, C36–C42 migration. Component architecture (TierPenaltyMarker, TierFreezeMarker, EntryControlMarker, LandTitleMarker, ParasiticMarker, SCIFRecordCard) and 00-R29 clarification deferred to respective PM05 items.*
 - **L176** (S56): tmp_ tables promoted to permanent schema (DB-14). Design workspace phase complete post Art 04b sign-off. 20 table renames + 27 view rewrites — phased via agy (Phase A: audit; Phase B: execute on confirmation). Drop tmp_category, tmp_type. Legacy early-schema tables: audit-only, no changes until confirmed.
 
 → Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L175)

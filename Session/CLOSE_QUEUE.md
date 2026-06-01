@@ -1,57 +1,39 @@
-## CLOSE QUEUE — Session 57
+## CLOSE QUEUE — Session 59
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 00 | Factions & World | 1.5 | ✅ Signed Off — S40 | Factions, world, narrative context, ARBITER nature, timescale perspectives. Design Pillar 6 (§5), four-register system (§9), §14 Narrative Anchors incorporated. S33: ring renames. S34: re-sign-off. S38: Dispatch Token anchor §14. S39: §5 Pillar 1 revised ("The Overview is Truth"); §8 MIRROR origin narrative, holographic projection metaphor, Terminal definition; 00-04 closed (Quarter fix). S40: 00-07 multicultural texture (§6 Chorus Node first team, §8 season/cycle, §7 Guild generational building); §11 + §14 Faction Representative (L155). S54: §7 Doctrinal Alignment Pentagram rewritten (L174 — clockwise arrangement, 10 pairs, pentagram geometry). Material change post-sign-off. Open: 00-09 (World Conditions panel); 00-13 (faction doctrine text additions); 00-14 (Missing Author Vacuum rule). |
-NEW: | 00 | Factions & World | 1.6 | ✅ Signed Off — S57 | Factions, world, narrative context, ARBITER nature, timescale perspectives. Design Pillar 6 (§5), four-register system (§9), §14 Narrative Anchors incorporated. S33: ring renames. S34: re-sign-off. S38: Dispatch Token anchor §14. S39: §5 Pillar 1 revised ("The Overview is Truth"); §8 MIRROR origin narrative, holographic projection metaphor, Terminal definition; 00-04 closed (Quarter fix). S40: 00-07 multicultural texture (§6 Chorus Node first team, §8 season/cycle, §7 Guild generational building); §11 + §14 Faction Representative (L155). S54: §7 Doctrinal Alignment Pentagram rewritten (L174 — clockwise arrangement, 10 pairs, pentagram geometry). S57: §7 redesigned — shape language removed (header → "Inter-Faction Doctrinal Alignment"), three faction doctrine inserts (Guild/Syndicate/Directorate), Missing Author Vacuum paragraph added; re-signed off v1.6. Open: 00-09 (World Conditions panel). |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 00a | Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40 | 42 rules (R01–R39 + R13a, R13b, R29a), §3–§9, Appendix A. S38: R39 (Dispatch Tokens). S40: stale migration notes removed (§4, §6, §8, §9 freestanding narrative anchors removed — content in Art 00); §11 Punch List removed (belongs in PM05); R38 "Session Timeline" terminology fix. |
-NEW: | 00a | Governing Rules & Design Policy | 0.3 | ⚠ Re-sign-off pending — S57 material change | 42 rules (R01–R39 + R13a, R13b, R29a, R30), §3–§9, Appendix A. S38: R39 (Dispatch Tokens). S40: stale migration notes removed; §11 Punch List removed; R38 fix. S57: 00-R30 added (Missing Author Vacuum — no faction may claim authorship of Chorus response content; L177). Material change post-S40 sign-off. |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 04 | Card System | 0.9.22 (S55) | 🔄 In Progress |
-NEW: | 04 | Card System | 0.9.23 (S57) | 🔄 In Progress |
-
-### APPEND
-FILE: /home/abosch/Projects/TheSignal/V1/PM02___Decision_Log___Validation_Tracker.md
-AFTER: ## Decision Log
-CONTENT:
-| L179 | S57 | C10 Protect affinity −45 locked | Guild/Directorate near-nullification of C02 Demolish (50→5%) narratively justified: Guild knows their own infrastructure intimately; Directorate has institutional security apparatus. Attacker does not know protection is installed (C10 is covert). Base −25 for other factions. |
-| L178 | S57 | P16 — Portrait entries are submitter-bounded | A portrait entry may only affect the portrait of the faction that submitted the card. ARBITER evaluates the acting faction's doctrinal alignment — not the reactions of factions that did not act. Governs all Standard and Faction-Specific card portrait design. |
-| L177 | S57 | Missing Author Vacuum as governing rule | No faction can author the Chorus response content. The structural gap in doctrinal geometry is permanent and deliberate. Governs all card flavor text, Chronicle entries, faction perspectives on reply content. See Art 00a 00-R30; True State §1. |
-
-### APPEND
 FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
-AFTER: → Full list: `V1/PM05___Active_Punch_List.md`
-CONTENT:
-| **04-xx** | Faction playstyle summary — write one paragraph per faction on intended operation economy, win path, and what makes their deck feel distinct. **Blocking before C11 design.** | Open — S58 |
-| **04-xy** | Ghost faction card set constraint: must have sufficient intel-consumption economy that C01/C03 feel suboptimal. Ghost mechanics direction: flip/SCIF as temporary access not ownership; Ghost may hold no permanent territory. Art 05 scoring may need to account for a territory-free faction win path. | Open — S58+ |
-| **02-xx** | AccordCard component definition — define AccordCard in Art 02 series (component type, properties, rules). Prerequisite to C09 sign-off. | Open |
-| **03-xx** | Art 03 anonymous transfer procedure — case-return delivery of capital to recipient at debrief (covert until AccordCard played). Add to Art 03 §11 Beat 3. Eventually migrates to Art 07 when ARBITER subroutines are identified. | Open |
-| **03-xy** | Art 03 C10 threshold reduction marker procedure — ARBITER places −25/−45 marker on Beat 3 covert ops targeting acting faction's assets at Beat 2 resolution. Add to Art 03 §11 Beat 2 processing steps. | Open |
-| **00a-xx** | Art 00a re-sign-off — 00-R30 (Missing Author Vacuum) added S57, material change post-S40 sign-off. | Open — S58 |
-
-### APPEND
-FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: ## Session Log
-CONTENT:
-### Session 57 — 2026-06-01
-**Focus:** DB-14 Phase B confirmation; Art 00 §7 redesign + re-sign-off v1.6; Art 00a 00-R30 (Missing Author Vacuum); True State §1/§3/§4/§10 updates; Art 04 P16 added (portrait entries submitter-bounded); C01–C10 full 5-faction portrait sweep; C01/C02/C03/C04/C05/C06/C07/C08/C10 signed off; C09 portrait + dependency cleanup; C10 −45 affinity locked (L179). Ghost faction mechanics concept noted for playstyle summary.
-**Decisions locked:** L177 (Missing Author Vacuum governing rule), L178 (P16 portrait submitter-bounded), L179 (C10 −45 affinity narratively justified).
-**Artifacts updated:** Art 00 (v1.6, signed off S57), Art 00a (00-R30 added, re-sign-off pending), True State (§1/§3/§4/§10), Art 04 (v0.9.23, C01–C10 portrait sweep, C01/C02/C03/C04/C05/C06/C07/C08/C10 signed off).
-**Next:** S58 — faction playstyle summary (blocking C11), Outstanding Issues (C13/C15/C16/C17), C11–C35 design rationale.
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
 OLD: **Last Updated:** 2026-05-31
 NEW: **Last Updated:** 2026-06-01
 
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
+OLD: | **04-n7** | Migrate C36–C42 (Intel Economy cards in §8 appendix) to their respective faction sections. C36-C42 currently sit in a standalone appendix block below the Syndicate gap concepts, in the old flat format. After the S59 covert op design pass is complete, move each card to its canonical faction section and perform a full §6 schema pass (already flagged under 04-47). Confirm which faction each card belongs to before migrating. | Open — post-S59 covert pass |
+NEW: | **04-n7** | Migrate C36–C42 (Intel Economy cards in §8 appendix) to their respective faction sections. C36-C42 currently sit in a standalone appendix block below the Syndicate gap concepts, in the old flat format. After the S59 covert op design pass is complete, move each card to its canonical faction section and perform a full §6 schema pass (already flagged under 04-47). Confirm which faction each card belongs to before migrating. | ✅ S59 — migrated to faction sections; Python spec format; scaffold attached; §8 section replaced with migration note then removed. Full schema pass still pending under 04-47. |
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | 04 | Card System | 0.9.23 (S57) | 🔄 In Progress | S35: L144 locked (1NF + snowflake schema). C15 signed off. C16 signed off. C16–C20 schema uplift complete (§6 schema, section headers, ring modifier fields — 4 per card). pool_copies deprecated (04-40). Effects normalization queued (04-39). Ring modifier formula working (XA-32). C18/C19 redesign flagged (D-04-02). C20 not yet reviewed. S37: Intel economy cards C36–C42 drafted (04-47 schema pass queued). C17 sign-off unblocked (04-41 closed). C37 SACRIFICE: direct PS track step cost confirmed (develop at 04-47). S49: §5 P1–P15 signed off (C17) — P2 updated, P6 rewritten, P8 new (multiple voices in tension). §11.1 modifier card canonical definition expanded. Taxonomy sweep C01–P18 (Category→Layer; six-layer values). Cross-faction narrative voices C11–C15. Art 04b §5.2 C17 row corrected. S51: C18→Dossier Breach (Information — Reveal — Card hand), C25→Tactical Redirection (Territory — Move — Presence token), C27→Disclosure Loop (Economy — Add — Exposure). Full schema pass C01–C35 — Ring 0–3 modifier fields (C17 canonical format); C13 resolution type fix; C22/C32/C33 resolution fields corrected. S54: doctrine_mod field added to schema (L173); all C01–C17 doctrine_mod populated. L174 doctrinal pentagram locked. S55: L175 taxonomy (C05/C24 Economy→Information). C01–C17 full 12-row checklist sweep (04-60/04-61 ✅). Outstanding Issues documented per card — C09/C10/C11/C13/C15/C16/C17 open. Next: resolve C01–C17 Outstanding Issues; C18–C35 design rationale; P01–P18 development. |
+NEW: | 04 | Card System | 0.9.24 (S59) | 🔄 In Progress | S35: L144 locked (1NF + snowflake schema). C15 signed off. C16 signed off. C16–C20 schema uplift complete (§6 schema, section headers, ring modifier fields — 4 per card). pool_copies deprecated (04-40). Effects normalization queued (04-39). Ring modifier formula working (XA-32). C18/C19 redesign flagged (D-04-02). C20 not yet reviewed. S37: Intel economy cards C36–C42 drafted (04-47 schema pass queued). C17 sign-off unblocked (04-41 closed). C37 SACRIFICE: direct PS track step cost confirmed (develop at 04-47). S49: §5 P1–P15 signed off (C17) — P2 updated, P6 rewritten, P8 new (multiple voices in tension). §11.1 modifier card canonical definition expanded. Taxonomy sweep C01–P18 (Category→Layer; six-layer values). Cross-faction narrative voices C11–C15. Art 04b §5.2 C17 row corrected. S51: C18→Dossier Breach (Information — Reveal — Card hand), C25→Tactical Redirection (Territory — Move — Presence token), C27→Disclosure Loop (Economy — Add — Exposure). Full schema pass C01–C35 — Ring 0–3 modifier fields (C17 canonical format); C13 resolution type fix; C22/C32/C33 resolution fields corrected. S54: doctrine_mod field added to schema (L173); all C01–C17 doctrine_mod populated. L174 doctrinal pentagram locked. S55: L175 taxonomy (C05/C24 Economy→Information). C01–C17 full 12-row checklist sweep (04-60/04-61 ✅). Outstanding Issues documented per card — C09/C10/C11/C13/C15/C16/C17 open. S58: §5a Faction Playstyle Reference added; gap analysis complete — 12 new cards identified. S59: Full covert op design pass complete — all C01–C42 baseline drafted. Design rationale scaffold added C18–C35. C36–C42 migrated from §8 Intel Economy appendix to canonical faction sections (Python spec). New faction cards: Ghost (Station, Full Take, SCIF, Flip, Signals Analysis), Guild (Labor Contract), Directorate (Regulatory Downgrade, Regulatory Freeze), Syndicate (Land Title, Hostile Takeover, Accord Transfer); Standard (Absolute Compromise=C39). Entry/Exit Controls (Directorate PA) written to §10. New components pending Art 02 registration: SCIFRecordCard, TierPenaltyMarker, TierFreezeMarker, EntryControlMarker, LandTitleMarker, ParasiticMarker. PM05 04-n7 closed. Next: Directorate+Syndicate sanity checks; Art 02 component registration; P-series PA pass; Outstanding Issues (C13/C15/C16/C17). |
+
+### APPEND
+FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
+AFTER: ### Session 57 — 2026-06-01
+CONTENT:
+### Session 58 — 2026-06-01
+**Focus:** Faction playstyle summaries (§5a): Ghost (Intel/SCIF/Flip), Guild (Capacity flywheel), Network (Exposure + modifier self-feed), Directorate (Mandate + suppression), Syndicate (Capital-only upkeep + Intel premium). Victory Architecture table added. Gap analysis complete — 12 net new cards across all factions. Modifier deck architecture locked: three types (react/tripwire/operation/battlefield). New PM05 items: 04-n1 (card numbering), 04-n2 (Guild C01 passive income), 04-n3 (Labor Contract), 04-n4 (modifier taxonomy). Whiteboard files: faction_playstyle_S58.md, modifier_card_ideas.md, design_reference.md.
+**Decisions locked:** None (design exploration session).
+**Artifacts updated:** Art 04 (v0.9.23, §5a added).
+**Next:** S59 — Ghost card design (Station, Full Take, SCIF, Flip, Signals Analysis), then remaining faction gap cards.
+
+### Session 59 — 2026-06-01
+**Focus:** Full covert op design pass. All C01–C42 baseline drafted. Design rationale scaffold (Design Rationale / Design Checklist / Outstanding Issues / Status) added to C18–C35. C36–C42 migrated from §8 Intel Economy appendix to canonical faction sections (Python spec + scaffold). New faction-specific covert cards: Ghost (Station, Full Take, SCIF, Flip, Signals Analysis), Guild (Labor Contract), Directorate (Regulatory Downgrade, Regulatory Freeze + C42 Sanctioned Raid from migration), Syndicate (Land Title, Hostile Takeover, Accord Transfer + C38 Parasitic + C41 Corporate Blackmail from migration), Standard (C39 Absolute Compromise). Network (C37 Sacrifice + C40 Weaponized Transparency from migration). Entry/Exit Controls (Directorate PA) written to §10. New components awaiting Art 02 registration: SCIFRecordCard, TierPenaltyMarker, TierFreezeMarker, EntryControlMarker, LandTitleMarker, ParasiticMarker. PM05 04-n5 (SCIF debrief step), 04-n6 (00-R29 Ghost adjacency clarification) remain open. PM05 04-n7 closed.
+**Decisions locked:** None (design execution session).
+**Artifacts updated:** Art 04 (v0.9.24), PM05 (04-n7 closed), SESSION_BRIEF (S59).
+**Next:** S60 — Directorate + Syndicate sanity checks; Art 02 registration for 6 new components; P-series PA design pass (dedicated session); Outstanding Issues (C13/C15/C16/C17).
+
 ### COMMIT
-source ~/Projects/credentials.env && git add -A && git commit -m "session 57 — Art 00 v1.6 sign-off; P16 portrait principle; C01–C10 portrait sweep + sign-offs; C10 −45 locked" && git push
+source ~/Projects/credentials.env && git -C /home/abosch/Projects/TheSignal add -A && git -C /home/abosch/Projects/TheSignal commit -m "session 59 — all covert cards baseline drafted; C36–C42 migrated; scaffold on C18–C35" && git -C /home/abosch/Projects/TheSignal push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
