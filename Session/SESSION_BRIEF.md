@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 60 (close) | Updated: 2026-06-01**
+**Session 61 (close) | Updated: 2026-06-01**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,13 +8,17 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S60: Art 03 v3.0 full review pass — all S60 corrections applied. L180 architecture (monthly A/B/C/D structure, Public Act rename, dispatch token parity) fully reflected in document. **Art 03 v3.0 sign-off (03-17) pending — must happen before 00a 00-R39 revision, XA-40 (Art 04 PA→Public Act sweep), XA-41 (Art 03a schema rename), XA-42 (design_reference.md L180 sweep) can proceed.**
+S61: Art 03 v3.0 ✅ signed off (L181). Art 00a v0.4 ✅ signed off (L182). XA-40 (Art 04 PA→Public Act sweep) ✅ and XA-42 (design_reference.md L180 sweep) ✅ complete. XA-41 deferred.
 
-Key S60 changes to Art 03: all factions = 4 Dispatch Tokens; face-down = void (no Voided Resolution Card component); Phase C/D labels removed; Beat 2 renamed "Conditions Set"; §17 = Contested District Resolution; §18 = Month 3 Quarter Notes; §20 = End of Quarter; §21 = Operation System; Beat 3 Step 12 = Dispatch Case Return (Month 3); Beat 4 Step 2 = board state validation; Pass cards removed; Contested/Failed TBD blocks removed.
+§5a Narrative Anchor section added; Faction Goals reordered (Anchor first, Goals below); Ghost goal corrected (Delay — no premature answer to the Chorus); playstyle summaries reformatted to bullet lists. L183: C22 Detain locked — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine. C22 card spec updated (move to Detention zone, PS/NotificationSlip removed). C42 Sanctioned Raid updated: Mandate×2 (was ×1), PS −1 on success added. C32 Short the Market flagged for mechanical redesign (04-n14 — "applied silently" doesn't survive paper prototype). 04-n13 (Network modifier card responding to C42 sweep) added.
+
+Key S61 changes to Art 03: Beat 3 Step 12 "(Month 3 only)" label and flavor line removed; Beat 4 Submit Payment promoted to Step 1 (steps renumbered 1–13, repeated initiative order header removed); Gameplay Procedure and Reference Material section breaks added in index and body. Duration taxonomy: 5→4 types (Tripwire collapsed into Permanent).
+
+Key S61 changes to Art 00a: 00-R21 updated to 4-type taxonomy; 00-R22 rewritten (partial payment model); 00-R29b (Missing Author Vacuum, renamed from duplicate 00-R30); 00-R39 revised to cover both covert ops and public acts. 43 rules.
 
 **ALWAYS read `TheSignal/Whiteboard/design_reference.md` before any Art 04+ design work.**
 
-**Next session:** 03-17 sign-off (Art 03 v3.0) → then 00a-xx (00-R39 revision) → then Art 04 work resumes (04-n8, Directorate+Syndicate sanity checks, P-series PA pass, Outstanding Issues C13/C15/C16/C17).
+**Next session:** Art 04 — P-series Public Act pass (P01–P18, all stubs); Outstanding Issues C13/C15/C16/C17; C32 redesign (04-n14); 04-n10/n11 pentagram gaps; XA-41 (Art 03a schema rename) deferred.
 
 ---
 
@@ -23,12 +27,12 @@ Key S60 changes to Art 03: all factions = 4 Dispatch Tokens; face-down = void (n
 | Artifact | Version | Open Item |
 |----------|---------|-----------|
 | 00 — Factions, World & Narrative | 1.6 | ✅ Signed Off — S57. Open: 00-09 (World Conditions panel — design question, does not block sign-off). |
-| 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. S57: 00-R30 added (Missing Author Vacuum) — material change, re-sign-off pending. |
+| 00a — Governing Rules & Design Policy | 0.4 | ✅ Signed Off — S61 (L182). 00-R21 (4-type taxonomy), 00-R22 (partial payment), 00-R29b (Author Vacuum), 00-R39 (covert+public). 43 rules. |
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Quarter Structure & Gameplay | 3.0 | 🔄 In Progress S60 — L180 full revision applied. **03-17 sign-off required.** Blocks: 00a-xx (00-R39 rev), XA-40, XA-41, XA-42. |
+| 03 — Quarter Structure & Gameplay | 3.0 | ✅ Signed Off — S61 (L181). Beat 3 Step 12 cleaned; Beat 4 steps renumbered 1–13; section breaks added. |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. S55: §4.2/§4.4 updated (Economy narrowed; IntelToken = Information), §5.2 table updated (C05, C24 → Information). 04-63 flagged (stale C27 §4.6 entry). |
-| 04 — Action Card System | 0.9.24 | S59: All C01–C42 baseline drafted. Scaffold on C18–C35. C36–C42 migrated. New faction cards (Ghost/Guild/Directorate/Syndicate gaps). Entry/Exit Controls (§10). **Next: Directorate+Syndicate sanity checks; Art 02 component registration (6 new); P-series PA pass; Outstanding Issues (C13/C15/C16/C17).** |
+| 04 — Action Card System | 0.9.24 | S61: §5a Narrative Anchor added; C22 Detain updated (L183 — Detention zone); C42 Sanctioned Raid updated (Mandate×2, PS −1 on success, v1.1). C32 flagged for redesign (04-n14). **Next: P-series PA pass; Outstanding Issues C13/C15/C16/C17; 04-n10/11/13/14.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -67,6 +71,11 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **00-09** | World Conditions panel — content undefined | Open |
 | **00-10** | Faction Representative as named component — design question | Open |
 | **FS-01-WBS** | Add faction screen to PM01 WBS 2 | Open |
+| **04-n10** | Pentagram gap — Ghost↔Guild opposed pair has no card-level expression | Open — P-series pass |
+| **04-n11** | Pentagram gap — Guild↔Network neighbor pair has no cooperative mechanic | Open — P-series pass |
+| **04-n12** | Faction Terminal unique zone design direction (L183) — define per-faction named zones in Art 08 | Open — Art 08 |
+| **04-n13** | Network modifier card — auto-trigger off C42 Sanctioned Raid sweep | Open — modifier card pass |
+| **04-n14** | C32 Short the Market — mechanical redesign required ("applied silently" doesn't survive paper prototype; tagline/code conflict on generation vs stockpile) | Open — redesign pass |
 
 → Full list: `V1/PM05___Active_Punch_List.md`
 
@@ -74,11 +83,9 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
-*S60: No new L-decisions. Art 03 review execution session — all pre-planned changes applied.*
-
-- **L179** (S57): C10 Protect affinity −45 locked. Guild/Directorate near-nullification of C02 Demolish (50→5%) narratively justified: Guild knows their own infrastructure intimately; Directorate has institutional security apparatus. Attacker doesn't see protection coming (C10 is covert). Base −25 for other factions (50→25%) remains.
-- **L178** (S57): P16 — Portrait entries are submitter-bounded. A portrait entry may only affect the portrait of the faction that submitted the card. ARBITER evaluates the acting faction's doctrinal alignment — not the reactions of factions that did not act.
-- **L177** (S57): Missing Author Vacuum as governing rule. No faction can author the Chorus response content — structural gap in doctrinal geometry is permanent and deliberate. Governs all card flavor, Chronicle entries, faction perspectives. See Art 00a 00-R30; True State §1.
+- **L183** (S61): C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine.
+- **L182** (S61): Art 00a v0.4 signed off. 00-R21 (4-type duration taxonomy), 00-R22 (partial payment model), 00-R29b (Missing Author Vacuum renamed from duplicate 00-R30), 00-R39 (covers covert ops + public acts). 43 rules.
+- **L181** (S61): Art 03 v3.0 signed off. Beat 3 Step 12 cleaned; Beat 4 Submit Payment → Step 1, steps renumbered 1–13; section breaks added; duration taxonomy 5→4 types.
 
 → Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L175)
 
@@ -87,10 +94,10 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 ## Pending Sign-Offs
 
 - **Art 00 v1.6** — ✅ Signed Off S57
-- **00a v0.3** — ✅ Signed Off S40 · S57 material change (00-R30) — re-sign-off pending
+- **00a v0.4** — ✅ Signed Off S61 (L182)
 - **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
-- **Art 03 v3.0** — 🔄 In Progress S60 — re-sign-off required (03-17). Blocks 00a-xx, XA-40/41/42.
+- **Art 03 v3.0** — ✅ Signed Off S61 (L181).
 - **C17** — ✅ Signed Off S49
 
 ---
@@ -103,6 +110,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **component_positions** = renamed from live_state (S45). Spec in 00b §8. DB-11 queued for agy: RENAME TABLE, RENAME COLUMN anchored_to_component_id → on_component_id (nullable), ADD COLUMN on_game_zone_id.
 - **Art 08** = new planned artifact for Faction Player Tableau and ARBITER Tableau physical component placement. Referenced in Art 01 §8–§9 stubs. Not yet defined.
 - **Force-reveal action class** = actions compelling faction to expose Terminal contents. L154. Design direction for Art 04 card design.
+- **Faction Terminal unique zones** = L183. Terminals may have named zones per faction doctrine. Directorate: public Detention zone (C22). Others TBD — develop in Art 08.
 
 ---
 

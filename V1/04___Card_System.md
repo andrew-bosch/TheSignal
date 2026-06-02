@@ -26,8 +26,8 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §6 | [Card Data Schema](#6-card-data-schema) |
 | §7 | [Standard Covert Operations C01–C10](#7-standard-covert-operations--c01c10) |
 | §8 | [Faction-Specific Covert Operations C11–C35](#8-faction-specific-covert-operations--c11c35) |
-| §9 | [Standard Political Acts P01–P08](#9-standard-political-acts--p01p08) |
-| §10 | [Faction-Specific Political Acts P09–P18](#10-faction-specific-political-acts--p09p18) |
+| §9 | [Standard Public Acts P01–P08](#9-standard-public-acts--p01p08) |
+| §10 | [Faction-Specific Public Acts P09–P18](#10-faction-specific-public-acts--p09p18) |
 | §11 | [Rules & Constraints — Modifier Cards](#11-rules--constraints--modifier-cards) |
 | §12 | [Rules & Constraints — Pass Cards](#12-rules--constraints--pass-cards) |
 | §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
@@ -48,8 +48,8 @@ Card systems serve many design purposes. The Signal uses all seven below — the
 | **Deck construction** — Pre-game strategic layer through selection from a larger pool. | Factions select their deck before each session. Preparation expresses doctrine. You cannot play a card you didn't prepare with. |
 | **Draw variance** — Shuffle creates uncertainty about card availability each round. | Shuffled decks mean your intended action may not be available — forcing adaptation and planning for uncertainty. |
 | **Resource economy** — Cards as tradeable assets with diplomatic value. | Modifier cards can be traded between factions — giving up a real advantage to build a relationship. |
-| **Simultaneous commitment** — All players commit before any outcomes are known. | A covert operation card placed in the dispatch case is irreversible. A political act laid face-up cannot be retracted. |
-| **Hidden information** — Decisions made under incomplete knowledge of opponent intentions. | Covert operations remain secret until ARBITER opens the case. Political acts are public — known, but not yet resolved. |
+| **Simultaneous commitment** — All players commit before any outcomes are known. | A covert operation card placed in the dispatch case is irreversible. A public act laid face-up cannot be retracted. |
+| **Hidden information** — Decisions made under incomplete knowledge of opponent intentions. | Covert operations remain secret until ARBITER opens the case. Public acts are public — known, but not yet resolved. |
 | **Asymmetric options** — Different players have access to different choices. | Faction-specific cards give each faction a decision space that reflects its doctrine. No two factions face exactly the same choices. |
 | **Self-contained resolution** — Each card resolves without external reference. | Each card carries everything needed — no rules lookup required. |
 
@@ -59,7 +59,7 @@ Card systems serve many design purposes. The Signal uses all seven below — the
 
 Every card is a decision made under incomplete information by people who believe the stakes are existential.
 
-A covert operation in the dispatch case represents operatives committed, resources allocated, and a plan set in motion before anyone knows what anyone else has planned. A political act is a public stance taken in front of The Table: a claim that can be supported, refuted, or turned against the faction that made it.
+A covert operation in the dispatch case represents operatives committed, resources allocated, and a plan set in motion before anyone knows what anyone else has planned. A public act is a public stance taken in front of The Table: a claim that can be supported, refuted, or turned against the faction that made it.
 
 The fiction is not window dressing. A Denounce costs the target faction's native resource because accusations in New Meridian are drawn from the domain where a faction is most powerful. A Broadcast operation raises difficulty because people under observation behave differently. The mechanics are the story.
 
@@ -193,11 +193,28 @@ This section defines each faction's intended operation economy, win path, and de
 
 ---
 
+### Narrative Anchor
+
+Each faction's playstyle is the mechanical expression of its doctrinal position in Art 00 §7. Operation economy, win path, and deck identity are not design choices independent of the fiction — they are the fiction made playable. A card that feels wrong for a faction is wrong narratively before it is wrong mechanically.
+
+| Faction | Core doctrine | Mechanical expression |
+|---------|--------------|----------------------|
+| Ghost | Understanding must precede action | Intelligence pipeline; delay; suppress premature consensus |
+| Network | No one gets to decide this in the dark | Broadcast-derived presence; modifier deck growth; reactive exposure |
+| Guild | What you build reveals what you are | Structures as win condition; permanence over adaptation; everything leaves a physical artifact |
+| Directorate | Survival requires control, restraint, and continuity | Suppression over construction; legislative mode; managed stability |
+| Syndicate | Whatever this is, it has value. Control comes from positioning early | Capital accumulation; infrastructure ownership; Ring 1/2 Dominant |
+
+**Inter-faction doctrinal alignment:** Ghost → Directorate → Guild → Network → Syndicate → Ghost  
+Adjacent factions share philosophical proximity; non-adjacent are opposed. Neighbor targeting: positive `doctrine_mod`. Opposed targeting: negative `doctrine_mod`. Full pair descriptions: Art 00 §7.
+
+---
+
 ### Faction Goals
 
 | Faction | Win via | Territory | Preferred Ring | Strategy |
 |---------|---------|-----------|----------------|----------|
-| Ghost | Others betray doctrine | None required | N/A | Information control; manipulate toward doctrinal deviation |
+| Ghost | Delay — no premature answer to the Chorus | None required | N/A | Information control; intelligence pipeline; suppress premature consensus |
 | Guild | Structures on board | Core / Mid priority | 0–1 | Build deep; compound via C15 |
 | Network | Wide Presence tokens | Baryo outward | 3 → 2 → 1 | Broadcast-derived presence; grow modifier deck |
 | Directorate | Established in more districts than any other faction | Wide, Core outward | 0 → all | Suppress Dominant; Directorate-moderated hegemony |
@@ -225,23 +242,65 @@ Five scoring axes are active simultaneously throughout all eight Quarters. There
 
 **Ghost**
 
-Ghost's operation economy runs on Intel, a native resource spent to fund Gather operations that produce faction-keyed Intel tokens. Those tokens gate two exploitation cards: SCIF, which records a target faction's building count at time of play and converts it to modifier card draws at Quarter debrief, and Flip, which triggers ARBITER to load the target faction's native resources directly into Ghost's Dispatch Case. Ghost holds no permanent territory; their presence is operational rather than positional. The SCIF Record card — a deferred income artifact placed in the Dispatch Case — captures a snapshot of the target's position and cashes out at Quarter's edge, meaning Ghost is always building next Quarter's hand rather than spending this one. Higher-tier Ghost cards carry a secondary resource cost drawn from Flip acquisitions, consumed on play: the target faction's own assets turned against them. Ghost generates passive Intel tokens from game events occurring near their presence, and a high-cost operation allows them to deduce a target faction's Classified Directive — knowledge used to engineer situations where pursuing a hidden objective requires betraying visible doctrine. Ghost is second only to ARBITER in knowledge of the true board state. Win path: build an intelligence pipeline against primary targets early, pre-fund multiple Quarters of SCIF/Flip through the Deep Cover burst card, and arrive at Q8 with a hand assembled from other factions' capabilities. Ghost wins by preventing doctrinal coherence elsewhere — every cooperative Apex bid and every forced deviation scores. The deck feels precise, patient, and deliberately small.
+Ghost believes understanding must precede action — that an incorrect answer to the Chorus may be worse than no answer at all. The pressure to respond at The Table, driven by politics, capital, and institutional anxiety, is, in Ghost's view, the greatest danger. Their presence in New Meridian is embedded, invisible, and thirty-one years deep — long enough to know that certainty about the Chorus is indistinguishable from hubris. Ghost wins not by answering the question, but by ensuring no one else answers it prematurely. Intelligence is the mechanism; doctrinal deviation in others is the outcome. Every faction that fractures its own doctrine — chasing a Cooperative Apex, acting on incomplete intelligence, overcommitting to a position it cannot sustain — has done Ghost's work for it.
+
+- **Economy:** Intel (Findings) → faction-keyed Intel tokens via Gather operations
+- **SCIF:** consume token → place SCIF Record card in Dispatch Case; at debrief, draw modifier cards equal to target's building count at time of play — Ghost is always funding next Quarter's hand
+- **Flip:** consume token → ARBITER loads target faction's native resources into Ghost's Dispatch Case
+- **Higher-tier cards:** carry a secondary cost drawn from Flip acquisitions — the target faction's own assets turned against them
+- **Passive generation:** Intel tokens from game events occurring near Ghost presence
+- **Signals Analysis:** high-cost; deduce a target faction's Classified Directive — knowledge used to suppress premature consensus
+- **No permanent territory** — presence is operational, not positional
+- **Win path:** build intelligence pipeline early; pre-fund multiple Quarters via Deep Cover (burst card); arrive at Q8 with a hand assembled from other factions' capabilities
+- **Deck feel:** precise, patient, deliberately small
 
 **Guild**
 
-Guild's operation economy runs on Capacity, compounded through Infrastructure Yield (C15) — a zero-cost Automatic card drawing Capacity from each district at Established or Dominant control tier. Passive income layers on top: Guild earns 1 Capacity when any opponent builds a structure in a district where Guild has presence (Guild employees did the work), and Materials Acquisition (C12) converts correctly anticipated demolition into paid recovery. Guild's covert operations are covert only in timing — not announced before play, but results land immediately on the board as presence tokens and structures. Everything they do leaves a physical artifact. Structures are the win condition, not just presence tokens; Guild is building the response, not positioning for it. Win path: claim unclaimed districts early via Foundation Rights (C13, near-automatic in Ring 0), establish high control tier in Core and Mid, let C15 compound, and protect critical structures with Fortify Structure (C11) while collecting C12 salvage from the table's demolition activity. The deck feels heavy, deliberate, and permanent.
+Guild believes the Chorus is an evaluation: humanity's response will be judged not by intent, but by what it builds. Improvisation reveals weakness. Shortcuts reveal urgency. What Guild places on the board is not a tactical position — it is an argument about what humanity is capable of at its best, made permanent in physical form. Guild is also the only faction at The Table that cannot operate covertly in principle: planetary-scale infrastructure cannot be classified. Operations are submitted through the shared dispatch procedure (sealed, timed), but the results are never hidden — everything lands immediately on the board as a presence token or structure. The procedure is shared; the doctrine is not. The deck does not feel covert. It feels like construction.
+
+- **Economy:** Capacity, compounded via C15 Infrastructure Yield — zero-cost Automatic; draws Capacity from each Established or Dominant district each Quarter
+- **Passive income:** +1 Capacity when any opponent completes C01 in a district where Guild has presence (Guild employees did the work)
+- **C12 Materials Acquisition:** converts correctly anticipated demolition into paid recovery
+- **Win condition:** structures on board, not just presence tokens — Guild is building the response, not positioning for it
+- **Win path:** Foundation Rights (C13, near-automatic in Ring 0) → high tier in Core and Mid → C15 compounds → Fortify Structure (C11) defends → C12 collects salvage from the table's demolition activity
+- **Deck feel:** heavy, deliberate, permanent
 
 **Network**
 
-Network's operation economy runs on Exposure, generated through Political Acts and tripwire fires, but the true engine is the modifier deck. React and instant modifier cards, when discarded after play, pull cards from the action deck into the modifier deck; the deck grows each Quarter through play, making Network louder without making individual cards stronger. Structures accelerate growth but are not the win condition. The tripwire — a public global condition placed on the Overview declaring Network is monitoring a specific operation type from a named faction — fires when that condition is met, delivering Exposure income, Standing damage to the target, and presence token gains for Network; the paranoia effect of a pending broadcast is free. Win path: generate wide Presence token coverage across New Meridian, Baryo outward, through broadcast-derived presence rather than construction. By Q6–8, a self-sustaining modifier deck generates multiple react options per upkeep simultaneously. Primary attack vector against Directorate is territorial; against Ghost is informational — exposing covert operations and SCIF pipelines. The deck feels distributed, reactive, and increasingly loud as the game progresses.
+Network believes no one gets to decide this in the dark. They arrived after The Chorus Papers, and loudly. Their presence in New Meridian is not territorial occupation — it is broadcast reach, community relationships, and the infrastructure of public knowledge. A district with Network presence is a district that knows what is happening there. Presence tokens represent how far the Network's voice carries; the win condition is not about holding ground — it is about ensuring that when the answer to the Chorus is spoken, the public of New Meridian has already heard everything The Table tried to keep quiet. Network and Syndicate share a structural relationship neither faction announces publicly: proxy funding flows through channels that route around Directorate visibility, a lateral bypass that both factions find useful for different reasons.
+
+- **Economy:** Exposure via Public Acts and tripwire fires
+- **True engine:** modifier deck — React and instant modifier cards pulled from action deck into modifier deck on discard; deck grows each Quarter through play, making Network louder without individual cards becoming stronger
+- **Tripwire:** public global condition on the Overview; declares Network is monitoring a named operation type from a named faction; fires when condition met → Exposure income + Standing damage to target + presence token gains; paranoia effect of a pending broadcast is free
+- **Structures:** accelerate modifier deck growth; not the win condition
+- **Win path:** wide Presence coverage, Baryo outward, broadcast-derived; Q6–8 modifier deck self-sustaining with multiple React options per Upkeep
+- **Attack vectors:** vs. Directorate = territorial; vs. Ghost = informational (exposing covert operations and SCIF pipelines)
+- **Deck feel:** distributed, reactive, increasingly loud as the game progresses
 
 **Directorate**
 
-Directorate's operation economy runs on Mandate, generated through institutional acts and Core structures. Those structures draw an adjacency bonus: +1 modifier card per adjacent district at Established presence, rewarding wide territorial spread over depth. Modifier cards divide into military assets — enforcement personnel and equipment for conflict resolution and presence removal — and legislative assets — regulatory teams that reduce Political Act costs and extend world event duration. Win path: hold Established control tier in more districts than any other faction, achieved through the best suppression toolkit in the game — pushing other factions' control tiers down rather than building own tiers up — and entry/exit control world events, persistent district-level conditions that lower opposing presence placement thresholds until another faction removes them. Directorate's win state is not neutral balance: it is Directorate-moderated hegemony, no faction Dominant and Directorate Established everywhere. Military action is available but costs Portrait; legislation is the doctrinal mode. The deck feels institutional, methodical, and capable of making the whole table play defensively.
+The Directorate's doctrine is not domination — it is managed stability. Survival requires control, restraint, and continuity; the win state is Established in more districts than any other faction because that configuration is not hegemony — it is the only board state the Directorate can guarantee remains reversible. No faction Dominant anywhere means no escalation has outrun institutional capacity to model and correct. Suppression is the instrument of restraint, not aggression: pushing another faction's tier down prevents a condition from becoming irreversible. The Directorate makes no distinction between rogue capital and rogue information — the Syndicate's gray-market acquisitions and the Network's broadcast operations are the same threat expressed through different channels. The procedural commitment does not change based on the mechanism of the disruption.
+
+- **Economy:** Mandate via institutional acts and Core structures; Core structures draw an adjacency bonus: +1 modifier card per adjacent district at Established presence
+- **Modifier deck — military assets:** enforcement personnel and equipment for conflict resolution and presence removal; available but costs Portrait
+- **Modifier deck — legislative assets:** regulatory teams that reduce Public Act costs and extend world event duration; the doctrinal mode
+- **Suppression toolkit:** push other factions' control tiers down rather than building own tiers up — best suppression capability in the game
+- **Entry/Exit Controls (P-D1):** persistent world event; lowers opposing presence placement thresholds district-wide until another faction removes it
+- **Win path:** Established in more districts than any other faction; no faction Dominant anywhere
+- **Deck feel:** institutional, methodical, capable of making the whole table play defensively
 
 **Syndicate**
 
-Syndicate's operation economy runs exclusively on Capital, generated at upkeep at a higher rate than any other faction's native resource — the Capital pool is visibly larger than every other faction's resource stack from Quarter 1. No secondary resource is produced natively; acquiring other resource types requires direct trade, a formal Accord, or ARBITER's 4:1 conversion rate. Capital has more application lanes than any other resource: direct card costs, deferred investment returns, bypass payments that negate enforcement actions without a dice roll, hostile takeover costs that replace a faction's presence tokens at equivalent control tier, and proxy funding through a shadow relationship with Network neither faction announces. High-cost plays — accord transfer, hostile takeover, battle winner deployment — additionally require faction-keyed Intel tokens, creating a structural link with Ghost that operates beneath the table's visible alliances. Syndicate alone can transfer accords between factions, making every bilateral agreement a potential Syndicate asset. Win path: position in Ring 1/2 through foresight cards and Land Title in early Quarters, compound Capital through Q4, then push Dominant in key economic spine districts Q5–8. Battle winner modifier cards are rare and costly, serving primarily as deterrent — Directorate's awareness of their existence shapes Ring 1/2 calculus without deployment. The deck feels wealthy, patient, and capable of restructuring the table's deals from underneath.
+The Syndicate does not debate whether the Chorus matters. They ask who will control the conditions under which a response is made. A reply requires infrastructure: transmission systems, energy, materials, coordination at scale. Whoever owns that infrastructure owns who speaks, how they speak, and what survives the process. Capital in The Signal is not just a resource — it is the Syndicate's argument that control over the physical basis of communication outlasts any political arrangement at The Table. The Syndicate was acquiring ground underneath the planned response facilities as early as year seven. They were inside before anyone else found the door.
+
+- **Economy:** Capital exclusively; generated at upkeep at a higher rate than any other faction's native resource — the Capital pool is visibly larger from Quarter 1
+- **No native secondary resource** — other types require direct trade, a formal Accord, or ARBITER's 4:1 conversion rate
+- **Capital application lanes:** direct card costs; deferred investment returns; bypass payments (negate enforcement actions without a dice roll); hostile takeover costs (replace a faction's presence tokens at equivalent control tier); proxy funding via Network shadow relationship
+- **Ghost structural link:** high-cost plays (accord transfer, hostile takeover, battle winner) additionally require faction-keyed Intel tokens — a link that operates beneath the table's visible alliances
+- **Accord Transfer:** Syndicate alone can transfer accords between factions — every bilateral agreement is a potential Syndicate asset
+- **Battle winner modifier cards:** rare and costly; serve primarily as deterrent — Directorate's awareness shapes Ring 1/2 calculus without deployment
+- **Win path:** early positioning via foresight cards and Land Title → compound Capital through Q4 → push Dominant in Ring 1/2 economic spine Q5–8
+- **Deck feel:** wealthy, patient, capable of restructuring the table's deals from underneath
 
 ---
 
@@ -279,7 +338,7 @@ class Card:
     doctrine_mod: dict[PentagramRelation, int] | None # None when no faction target or no doctrinal variation
     trigger:      TriggerExpr | None        # None = default beat timing
     resolution_type: str | None            # evolving vocabulary — feeds 00c §8
-    outcome_type: OutcomeType | None        # political acts only
+    outcome_type: OutcomeType | None        # public acts only
 
     # ── Targeting ─────────────────────────────────── expressions
     target_district: DistrictExpr
@@ -338,7 +397,7 @@ class PortraitEntry:
 | doctrine_mod | Metadata | dict[PentagramRelation, int] | Per-doctrinal-relationship threshold adjustment based on acting/target faction pentagram proximity; positive = easier, negative = harder; None when no faction target or no doctrinal variation | Face |
 | trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
 | resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
-| outcome_type | Metadata | OutcomeType | Political act resolution process type; None for covert operations | Face |
+| outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
 | target_faction | Targeting | FactionExpr | Faction this card targets; None = no faction target | Face |
 | target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
@@ -483,9 +542,9 @@ Syndicate extended — IDs TBD (pending PM05 04-n1)
 
 ---
 
-### Political Acts Deck
+### Public Acts Deck
 
-**Standard — P01–P08** · [→ §9](#user-content-9-standard-political-acts--p01p08) · Available to all factions
+**Standard — P01–P08** · [→ §9](#user-content-9-standard-public-acts--p01p08) · Available to all factions
 
 | P01 | P02 | P03 | P04 |
 |---|---|---|---|
@@ -495,7 +554,7 @@ Syndicate extended — IDs TBD (pending PM05 04-n1)
 |---|---|---|---|
 | Broadcast | Leverage | Invoke the Table | Propose Accord |
 
-**Faction-Specific — P09–P18** · [→ §10](#user-content-10-faction-specific-political-acts--p09p18)
+**Faction-Specific — P09–P18** · [→ §10](#user-content-10-faction-specific-public-acts--p09p18)
 
 Guild — P09–P10
 
@@ -934,7 +993,7 @@ C05 = Card(
 [↑ Card Specifications](#user-content-card-specifications)
 
 #### Design Rationale
-Submission-layer Beat 2 card — places a cost modifier on Political Acts targeting a district this round. Broadcast interference is ambient, hence no presence requirement. Cost is Exposure-denominated: non-Network factions must acquire Exposure through incursion or trade, making this card natively affordable only to the Network. Network affinity reduces cost by 1 (net: 1 Exposure), making it a low-friction tactical tool for Network while remaining expensive for others.
+Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting a district this round. Broadcast interference is ambient, hence no presence requirement. Cost is Exposure-denominated: non-Network factions must acquire Exposure through incursion or trade, making this card natively affordable only to the Network. Network affinity reduces cost by 1 (net: 1 Exposure), making it a low-friction tactical tool for Network while remaining expensive for others.
 
 **Design checklist:**
 
@@ -963,7 +1022,7 @@ Submission-layer Beat 2 card — places a cost modifier on Political Acts target
 C06 = Card(
     id      = 6,  version = "v1.1",
     name    = "Broadcast Interference",
-    tagline = "Disrupt public communications in a district, dampening political activity.",
+    tagline = "Disrupt public communications in a district, dampening public activity.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
 
     layer    = Submission,  function = Modify,  subject = PoliticalAct,
@@ -1013,7 +1072,7 @@ C06 = Card(
 [↑ Card Specifications](#user-content-card-specifications)
 
 #### Design Rationale
-Beat 2 modifier for the acting faction's own Political Act — the offensive counterpart to C06. Amplification cuts both ways: a PA that wins +1 PS resolves as +2; a PA that loses −1 PS resolves as −2. Cost is Exposure-denominated (same as C06), slightly favoring the Network. Restriction is None — ARBITER holds awareness through Beat 4; if no Political Act is submitted, Amplify fizzles and Exposure is spent.
+Beat 2 modifier for the acting faction's own Public Act — the offensive counterpart to C06. Amplification cuts both ways: a PA that wins +1 PS resolves as +2; a PA that loses −1 PS resolves as −2. Cost is Exposure-denominated (same as C06), slightly favoring the Network. Restriction is None — ARBITER holds awareness through Beat 4; if no Public Act is submitted, Amplify fizzles and Exposure is spent.
 
 **Design checklist:**
 
@@ -1042,7 +1101,7 @@ Beat 2 modifier for the acting faction's own Political Act — the offensive cou
 C07 = Card(
     id      = 7,  version = "v1.1",
     name    = "Amplify",
-    tagline = "Boost the Public Standing impact of your own political act this round.",
+    tagline = "Boost the Public Standing impact of your own public act this round.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
 
     layer    = Resolution,  function = Modify,  subject = PoliticalAct,
@@ -1183,7 +1242,7 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 | Doctrine alignment | ✓ | `target_faction = faction.opponent` — `doctrine_mod = {Neighbor: +15, Opposed: -15}` applies. Syndicate affinity (+25) stacks — funding a Neighbor as Syndicate reaches effective threshold 90. Capital flows where doctrine is aligned; crosses resistance where it is not. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: anonymous transfer is covert; Accord Card preserves optionality on disclosure. Standard: all factions can fund others. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Economy` — capital transfer is NativeResource flow, correctly Economy under Art 04b §4.4. `function = Redirect`, `subject = NativeResource` — correctly scoped. | Art 04b §4, §5 |
-| Balance | ⚠ | Net capital zero at success (2 Capital spent = 2 Capital delivered). Syndicate effective threshold 75%. Crit success = +1 PS bonus. **Open:** AccordCard = free Political Act (cost 0); its value is determined by P-series PA card costs. Reassess C09 balance once P-series is designed — if a free PA is worth more than 2 Capital spent, cost or threshold may need adjustment. | Art 02a §8; Art 04 P-series (pending) |
+| Balance | ⚠ | Net capital zero at success (2 Capital spent = 2 Capital delivered). Syndicate effective threshold 75%. Crit success = +1 PS bonus. **Open:** AccordCard = free Public Act (cost 0); its value is determined by P-series PA card costs. Reassess C09 balance once P-series is designed — if a free PA is worth more than 2 Capital spent, cost or threshold may need adjustment. | Art 02a §8; Art 04 P-series (pending) |
 | Effect duration | ✓ | Capital transfer is instantaneous. AccordCard duration governed by Art 06 (pending). | Art 06 (pending) |
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Syndicate `submitter=+1`: capital-in-motion doctrine — "relationships create opportunities" (P11, P16). Directorate `submitter=−1`: using anonymous financial transfer conflicts with legitimate-process doctrine; Directorate scrutinises these transfers in others — performing one is in-doctrine hypocrisy (P11, P16). Guild: no entry — relationship investment is pragmatic, not doctrinal; absence justified. Network: no entry — analytical framing only; no doctrinal stake as actor; absence justified. Ghost: no entry — observational framing; Ghost tracks capital flows for intelligence, not as participant; absence justified. | Art 04 §6.2 |
@@ -1193,8 +1252,8 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 
 #### Outstanding Issues
 
-- **P-series dependency:** AccordCard = free Political Act; its balance value is determined by P-series PA card costs. Reassess after P-series is designed.
-- **AccordCard PA slot conflict:** AccordCard grants a free, additional Political Act beyond normal dispatch. This likely violates Art 03 Quarter structure — PA slot limits, dispatch sequencing, or Beat 2/4 submission rules. Needs Art 03 review; AccordCard mechanic may need to be reframed (e.g., as a modifier to an existing PA rather than an extra one, or as a deferred PA in a later Quarter).
+- **P-series dependency:** AccordCard = free Public Act; its balance value is determined by P-series PA card costs. Reassess after P-series is designed.
+- **AccordCard PA slot conflict:** AccordCard grants a free, additional Public Act beyond normal dispatch. This likely violates Art 03 Quarter structure — PA slot limits, dispatch sequencing, or Beat 2/4 submission rules. Needs Art 03 review; AccordCard mechanic may need to be reframed (e.g., as a modifier to an existing PA rather than an extra one, or as a deferred PA in a later Quarter).
 - **Art 02 dependency:** AccordCard requires component definition in Art 02 series before C09 spec is complete.
 - **Art 03 dependency:** Anonymous transfer case-return procedure (resources delivered at debrief, covert until AccordCard played) and AccordCard delivery procedure to be defined in Art 03; migrates to Art 07 when ARBITER subroutines are identified.
 
@@ -2089,7 +2148,7 @@ C18 = Card(
     narrative   = "Understanding the operation before it begins. That is the only tactical advantage worth having.",
     perspectives = {Ghost: "We did not take their cards. We simply read their intentions. They will act on plans we already know."},
     design_note  = "Replaces C18 Identity Blind (retired S51). Fills Information — Reveal — Card hand gap; distinct from C17 Intercept (submitted ops) — Dossier Breach targets the unplayed planning pool. Ghost Double Case Pass creates natural synergy: Month 1 Breach informs Month 2 and Month 3 Declaration strategy.",
-    arbiter_note = "Privately show target faction's current hand of Covert and Political Act cards to Ghost player. Modifier cards excluded. Do not confirm or announce to the table. Information is solely between Ghost and ARBITER — Ghost may not publicly announce or prove the contents.",
+    arbiter_note = "Privately show target faction's current hand of Covert and Public Act cards to Ghost player. Modifier cards excluded. Do not confirm or announce to the table. Information is solely between Ghost and ARBITER — Ghost may not publicly announce or prove the contents.",
 )
 ```
 
@@ -2806,18 +2865,15 @@ C22 = Card(
         AND district(target) != ChorusNode.deployment_marker
     ),
     cost        = resource.faction(acting).mandate * 3,
-    success     = (
-        game.remove(faction(target).deployment_marker, district(target), permanent=True),
-        game.dispatch(faction(target), NotificationSlip),
-    ),
+    success     = game.move(faction(target).deployment_marker, from_=district(target), to=Directorate.tableau.detention, public=True),
     successcrit = resource.faction(acting).mandate += 3,
     fail=None,
     failcrit    = faction(acting).standing -= 1,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
-    narrative   = "The Directorate does not destroy — it removes from play. Sometimes that is enough.",
+    narrative   = "The Directorate does not destroy — it detains. The distinction matters to them.",
     perspectives = {Directorate: "The marker has been detained. Its conversion will not occur."},
-    design_note  = "Permanent per Principle 11. Prior version returned marker at end of next round — revised.",
-    arbiter_note = "Intel token requirement means Directorate must have gathered intelligence on target faction this or last round.",
+    design_note  = "L183. Marker moved to Directorate public tableau Detention zone — 00-R13a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction (L183).",
+    arbiter_note = "Consume Intel token. Move named faction's deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.",
 )
 ```
 
@@ -3183,7 +3239,7 @@ Directorate's maximum-force removal card — removes all of a target faction's p
 
 ```python
 C42 = Card(
-    id=42,  version="v1.0",
+    id=42,  version="v1.1",
     name    = "Sanctioned Raid",
     tagline = "Not every operation leaves a paper trail.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -3194,16 +3250,17 @@ C42 = Card(
     target_district=district.named, target_faction=faction(named_opponent), target_object=PresenceToken,
     affinity=Directorate,
     restriction=None,
-    cost        = resource.faction(acting).mandate * 1 + IntelToken(faction=faction(target)) * 1,
-    success     = game.remove(faction(target).presence_tokens, district(target), count=all, ignore_blocks=True),
+    cost        = resource.faction(acting).mandate * 2 + IntelToken(faction=faction(target)) * 1,
+    success     = [game.remove(faction(target).presence_tokens, district(target), count=all, ignore_blocks=True),
+                   faction(acting).standing -= 1],
     successcrit = resource.faction(acting).mandate += 1,
     fail=None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
     narrative   = "The Directorate does not ask permission. It records the action and moves on.",
     perspectives = {Directorate: "The intelligence warranted the action. The action was authorised. There is nothing further to say."},
-    design_note  = "Ignores Block cards, Type A and Type B Countermeasures, and Protect operations. No PS penalty on success — sanctioned action, not covert overreach. Threshold 25: hardest in Directorate set. Intel token faction-keying confirmation outstanding. Migrated from §8 Intel Economy block.",
-    arbiter_note = "At resolution: bypass all countermeasure and protect checks. Remove ALL named faction's presence tokens from named district. Crit success: also return 1 Mandate to Directorate. Crit fail: deliver NotificationSlip to target — no other effect. No PS adjustment on success.",
+    design_note  = "Ignores Block cards, Type A and Type B Countermeasures, and Protect operations. PS −1 on success: sanctioned but a sweep still carries institutional weight. Mandate×2 balances 'ignore all blocks' + 'remove ALL' scope. Threshold 25: hardest in Directorate set. Intel token faction-keying confirmation outstanding. Migrated from §8 Intel Economy block. See 04-n13: Network should have a modifier card that can auto-trigger off a Directorate sweep.",
+    arbiter_note = "At resolution: bypass all countermeasure and protect checks. Remove ALL named faction's presence tokens from named district. Reduce Directorate PS by 1 (visible). Crit success: also return 1 Mandate to Directorate. Crit fail: deliver NotificationSlip to target — no other effect.",
     pool_copies=TBD,
 )
 ```
@@ -3401,7 +3458,7 @@ C28 = Card(
 [↑ Card Specifications](#user-content-card-specifications)
 
 #### Design Rationale
-Network's signal propagation card — extends C06 Broadcast Interference's Political Act cost increase to an adjacent district on the same round. Mechanically ties the two cards together: C06 must be submitted in the same round for C29 to fire. This creates a planned two-card combo: pay the C06 Exposure cost to disrupt PA activity in one district, then pay C29's Exposure×2 to extend that disruption to an adjacent district. The "signal propagation" framing is doctrinally exact — The Network understands that broadcast interference is not bounded by administrative district lines. Beat 2 Automatic means both disruption effects land before Beat 4 PA resolution.
+Network's signal propagation card — extends C06 Broadcast Interference's Public Act cost increase to an adjacent district on the same round. Mechanically ties the two cards together: C06 must be submitted in the same round for C29 to fire. This creates a planned two-card combo: pay the C06 Exposure cost to disrupt PA activity in one district, then pay C29's Exposure×2 to extend that disruption to an adjacent district. The "signal propagation" framing is doctrinally exact — The Network understands that broadcast interference is not bounded by administrative district lines. Beat 2 Automatic means both disruption effects land before Beat 4 PA resolution.
 
 **Design checklist:**
 
@@ -3606,7 +3663,7 @@ Network's coercive intelligence card — spends an Intel token to deliver one of
 #### Outstanding Issues
 
 - **Unblockable PS drop:** Option A cannot be countered by any Countermeasure. Confirm this is an explicit exception to Art 03's countermeasure rules, and that it's documented in Art 03 or Art 04 §6 rather than only in this card's design note.
-- **Option B "Month 2" timing:** Original design note: "If this is Month 2, the revealed play applies to Month 3 political acts instead." Confirm this clarification is accurate — why does Month 2 timing shift the scope?
+- **Option B "Month 2" timing:** Original design note: "If this is Month 2, the revealed play applies to Month 3 public acts instead." Confirm this clarification is accurate — why does Month 2 timing shift the scope?
 - **choose_one mechanic:** `game.choose_one(A, B)` — confirm whether the choice is made at Dispatch or at resolution, and whether ARBITER must know the choice before the card resolves.
 
 #### Status
@@ -4322,17 +4379,17 @@ C41 = Card(
 
 ---
 
-## 9. Standard Political Acts — P01–P08
+## 9. Standard Public Acts — P01–P08
 
 
-Political acts use the same data schema as covert operations (§6) with two additional fields:
+Public acts use the same data schema as covert operations (§6) with two additional fields:
 
 | Additional Field | Description |
 |-----------------|-------------|
 | **Popularity effect** | Popularity movement on success and failure. |
 | **Declaration requirement** | Any verbal or physical declaration required at time of play. |
 
-Political acts are Beat 4 cards unless otherwise specified.
+Public acts are Beat 4 cards unless otherwise specified.
 
 | Card ID | Name | Primary taxonomy | Faction affinity | Status |
 |---------|------|-----------------|-----------------|--------|
@@ -4347,7 +4404,7 @@ Political acts are Beat 4 cards unless otherwise specified.
 
 ---
 
-## 10. Faction-Specific Political Acts — P09–P18
+## 10. Faction-Specific Public Acts — P09–P18
 
 *Status: Same as §9 — pending full card data structure revision.*
 
@@ -4355,13 +4412,13 @@ Political acts are Beat 4 cards unless otherwise specified.
 |---------|------|---------|-----------------|--------|
 | P09 | Public Works Declaration | Guild | Territory — Add — Structure block (both districts) | Pending |
 | P10 | Infrastructure Bond | Guild | Economy — Add — Native resource (target faction) | Pending |
-| P11 | Issue Directive | Directorate | Submission — Block — Political act | Pending |
+| P11 | Issue Directive | Directorate | Submission — Block — Public act | Pending |
 | P12 | Convene an Inquiry | Directorate | Economy — Add — Intel token | Pending |
 | TBD | Entry/Exit Controls | Directorate | Territory — Block — CovertOperation (ring-wide) | Draft S59 |
 | P13 | Public Disclosure | Network | Information — Reveal — Action attribution | Pending |
 | P14 | Open Record Request | Network | Information — Reveal — Written record | Pending |
 | P15 | Acquisition Offer | Syndicate | Territory — Redirect — Presence token | Pending |
-| P16 | Market Pressure | Syndicate | Submission — Modify — Covert + Political act (cost) | Pending |
+| P16 | Market Pressure | Syndicate | Submission — Modify — Covert + Public act (cost) | Pending |
 | P17 | Publish Analysis | Ghost | Cross-Category — Shift — Chorus Portrait | Pending |
 | P18 | Signal Review Request | Ghost | Resolution — Modify — Covert operation (difficulty) | Pending |
 
@@ -4522,7 +4579,7 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 | Cost reduction | Reduce resource cost of modified action by 1 unit |
 | Effect extension | Extend a one-round effect — permanent where applicable per Principle 11 |
 | Detection immunity | One failed detection roll does not surface the faction |
-| Reach extension | Apply a political act to a non-operational-marker district |
+| Reach extension | Apply a public act to a non-operational-marker district |
 
 ---
 
@@ -4534,7 +4591,7 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 
 **In dispatch case (Beat 3):** Signals that covert operation slot is intentionally empty. Three Pass cards with no operations = Full Covert Pass — legal, noted.
 
-**At Declaration (Beat 4):** Place face-up instead of declaring a political act.
+**At Declaration (Beat 4):** Place face-up instead of declaring a public act.
 
 **Ghost's Political Pass:** Confirms dispatch case contains 4 covert operations. Fourth operation slot available only when Ghost uses their Political Pass. Any Pass variant counts. Full rule in Artifact 03 §9.
 
@@ -4622,11 +4679,11 @@ Face: name, faction indicator, trigger condition, complete effect text, Board St
 
 ### 14.2 Countermeasure Interaction
 
-Countermeasure cards interact with covert operations only — not political acts. Type A (district block) blocks covert operations targeting the named district. Type B (faction defense) reduces covert operation difficulty against that faction's assets. Full Countermeasure card design pending D-04-12.
+Countermeasure cards interact with covert operations only — not public acts. Type A (district block) blocks covert operations targeting the named district. Type B (faction defense) reduces covert operation difficulty against that faction's assets. Full Countermeasure card design pending D-04-12.
 
 ### 14.3 Resource Availability Constraint
 
-Covert operation resources must be physically present in the dispatch case at Beat 3. Political act resources must be physically paid at Declaration. If absent:
+Covert operation resources must be physically present in the dispatch case at Beat 3. Public act resources must be physically paid at Declaration. If absent:
 - **Covert:** Action fails. Resources spent. ARBITER notes privately.
 - **Political:** Declaration void. Faction takes Political Pass. Public Standing −1 as "failed commitment." Resources already paid returned.
 
@@ -4690,7 +4747,7 @@ Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacit
 | D-04-03 | Directorate C21–C25 redesign — C25 replaced with Tactical Redirection (S51). Block duplication resolved. Mandate generation and Public Standing Shift cards still needed. | Artifact 09 |
 | D-04-04 | Network C26–C30 redesign — C27 replaced with Disclosure Loop (S51). Exposure generation addressed. C26/C28 Reveal overlap and Public Standing Shift card remain open. | Artifact 09 |
 | D-04-05 | Syndicate C31–C35 redesign — zero information capability; Corrupt Accord and Redirect Accord unused. Approve current set or redesign? | Artifact 09 |
-| D-04-06 | Political acts P01–P18 full card data structure review — all fields (Beat, Taxonomy, Faction perspectives, Restriction, crit effects, Portrait) need card-by-card application. | Artifact 09 |
+| D-04-06 | Public acts P01–P18 full card data structure review — all fields (Beat, Taxonomy, Faction perspectives, Restriction, crit effects, Portrait) need card-by-card application. | Artifact 09 |
 | D-04-07 | Modifier card in-world naming — "Modifier cards" is a working designation. | Artifact 09 |
 | D-04-08 | Modifier card individual content — faction modifier decks and ring modifier decks have no individual card designs. | Artifact 09, physical production |
 | D-04-09 | Adjacency definition — formal district adjacency table needed in Artifact 01. Required by C02, C04, C05, C14, C29, C30. | Artifact 01, physical play |

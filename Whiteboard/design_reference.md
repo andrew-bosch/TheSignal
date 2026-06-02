@@ -10,9 +10,9 @@
 
 1. **Upkeep** (Phase 1)
 2. **Placement** (Phase 2) — 2 deployment markers per faction, snake order
-3. **Month 1** — Dispatch → Countermeasures → Resolution (Beats 0–4)
-4. **Month 2** — Dispatch → Countermeasures → Resolution (Beats 0–4)
-5. **Month 3** — Declaration → Countermeasures → Resolution (Beats 0–4, Political Acts only)
+3. **Month 1** — Dispatch (A: Covert, B: Public Declaration) → Countermeasures (C) → Resolution (D, Beats 0–5)
+4. **Month 2** — Dispatch (A: Covert, B: Public Declaration) → Countermeasures (C) → Resolution (D, Beats 0–5)
+5. **Month 3** — Dispatch (A: Covert, B: Public Declaration) → Countermeasures (C) → Resolution (D, Beats 0–5) → Contested District Resolution
 6. **Debrief** (Phase 19) — open discussion, Accord activity, distribution
 7. **End of Quarter** (Phase 21) — Findings decay → Debrief reward → Session Timeline advance
 
@@ -25,7 +25,7 @@
 | 3 | Situation Report drawn; Event Card effects applied; Standing markers moved; Blocked markers set |
 | 4 | **Deployment Marker Conversion** — Converting face: place 1 permanent presence chip, return marker to hand; Blocked face: return to hand without chip |
 | 5 | **Resource Collection** — presence chips + deployment markers generate; structure block resource declared publicly; passive generation (+1 native, unconditional) |
-| 6 | Operations Preparation — Dispatch Tokens from Backlog (Ghost: 4, others: 3); card draws (covert: hand of 6; political: hand of 3); modifier card draws |
+| 6 | Operations Preparation — Dispatch Tokens from Backlog (Ghost: 4, others: 3); card draws (covert: hand of 6; public act hand size: TBD); modifier card draws |
 
 ### Modifier Card Draw Formula (Upkeep Step 6)
 
@@ -55,15 +55,13 @@
 |------|-------------|
 | Beat 0 | ARBITER validates each case (token present, payment present); invalid ops returned |
 | Beat 1 | Covert operation effects that fire before dice roll (Automatic resolution; block mechanics) |
-| Beat 2 | Positional wager cards (Beat 2 cards); Beat 4 carry row set for C06/C07 |
+| Beat 2 | Positional wager cards (Beat 2 cards) |
 | Beat 3 | Covert operation dice rolls; outcomes applied; Portrait fires |
-| Beat 4 | Political Acts (Month 3 only); Beat 4 carry row processed |
+| Beat 4 | Public acts (all months) |
 | Beat 5 | Post-resolution cleanup; Battlefield Strength if Contested |
 
-*Month 3 Resolution: Beat 4 carry row (C06/C07 accumulated across M1+M2) processed at start.*
-
 ### Dispatch Rules
-- Each covert op card requires 1 Dispatch Token in case (00-R39); no token = rejected at Beat 0
+- Each covert op requires 1 Dispatch Token in case; each public act requires 1 token on declared card at Phase B (00-R39); no token = rejected at Beat 0 (covert) or voided (public act)
 - Cases sealed before transmit; no modifications after sealing (00-R35)
 - Submission order = tiebreaker within resolution priority tiers (00-R37)
 - Ghost: 4 Dispatch Tokens/Quarter; others: 3
@@ -228,27 +226,27 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | **00-R13a** | Deployment markers never removed — always moved | All cards targeting markers |
 | **00-R13b** | No faction is eliminated | All |
 | **00-R14** HARD | No structures at Chorus Node | C01, C14 + new build cards |
-| **00-R15** | Floor Act always available (1 native resource); cannot be blocked | Political act design |
+| **00-R15** | Floor Act always available (1 native resource); cannot be blocked | Public act design |
 | **00-R16** HARD | Passive generation (+1 native/Quarter) cannot be blocked or reduced | Resource cards |
 | **00-R17** | District resource type never changes | District-targeting cards |
 | **00-R18** | Structure block resource choice declared publicly at Upkeep | Upkeep procedure |
 | **00-R19** | Portrait accumulates, no drift or decay | Portrait fields |
 | **00-R20** | Public Standing modifies roll difficulty only; not resource income | PS-affecting cards |
-| **00-R21** HARD | Effects: immediate, permanent, or World Condition only — no other duration | All card effects |
-| **00-R22** HARD | All resource costs physically present at time of play; no deferred payments | All cards |
+| **00-R21** HARD | Effects: exactly one of four durations — Immediate, Transient, Seasonal, Permanent; no other duration valid | All card effects |
+| **00-R22** HARD | Actions proceed with whatever resources are committed; shortfalls carry consequences (partial = threshold penalty; zero = voided) | All cards |
 | **00-R23** | Crit success never adds cost | All cards |
 | **00-R24** | Portrait fires at Resolution; unconditional on act or conditional on outcome | Portrait fields |
 | **00-R25** | Ring modifier cards target only their ring's districts | Modifier card design |
 | **00-R26** HARD | React conditions must be publicly observable — no hidden triggers | All React cards |
 | **00-R27** | Corrupt applies only to physically written/recorded values (Intel tokens, Accords) | Corrupt function cards |
 | **00-R29** | Ghost may use C05 (Gather) without adjacency; all other Ghost cards require adjacency | Ghost card design |
-| **00-R30** | No card flavor may imply any faction knows the content of the message | All flavor text |
+| **00-R29b** | No card flavor may imply any faction knows the content of the message | All flavor text |
 | **00-R34** HARD | Phases don't overlap; no revisiting prior phases | Timing rules |
 | **00-R35** HARD | Commitment irreversible once case sealed / act declared | All |
 | **00-R36** | Crits (01–05 / 96–00) apply regardless of modifiers | All dice cards |
 | **00-R37** | Submission order is tiebreaker within priority tiers | Dispatch procedure |
 | **00-R38** | Findings decay fires after Debrief, before Session Timeline advance | Findings cards |
-| **00-R39** HARD | Each covert op requires 1 Dispatch Token; no token = invalid | All covert ops |
+| **00-R39** HARD | Each action (covert op or public act) requires 1 Dispatch Token | All covert ops and public acts |
 
 ---
 
@@ -265,8 +263,8 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 ## Design Flags for New Card Proposals
 
 Before writing any new card spec, check:
-1. Duration — one of: immediate / permanent / World Condition (00-R21)
-2. Cost physically present at play (00-R22) — for React/Tripwire: at time of play (S58 rule needed in Art 03)
+1. Duration — one of: Immediate / Transient / Seasonal / Permanent (00-R21)
+2. Resource payment — full proceeds at stated difficulty; partial incurs threshold penalty; zero voids the action (00-R22)
 3. Does it target a deployment marker? → it moves, doesn't remove (00-R13a)
 4. Does it affect Ghost adjacency? → only C05 is exempt (00-R29)
 5. React trigger — is it publicly observable? (00-R26)
@@ -301,13 +299,13 @@ Before writing any new card spec, check:
 |----|------|-----------------|
 | C-Gu1 | Labor Contract | Placeholder pending design; PM05 04-n3 |
 
-**Directorate — Covert (2 new), Political (1 new)**
+**Directorate — Covert (2 new), Public (1 new)**
 
 | ID | Card | Type | Mechanic summary |
 |----|------|------|-----------------|
 | C-D1 | Regulatory Downgrade | Covert | Suppress a faction's influence tier in a district |
 | C-D2 | Regulatory Freeze | Covert | Block tier advancement for a faction in a district |
-| P-D1 | Entry/Exit Controls | Political | Persistent World Event; threshold penalty |
+| P-D1 | Entry/Exit Controls | Public | Persistent World Event; threshold penalty |
 
 **Syndicate — Covert (3 new)**
 
@@ -332,7 +330,7 @@ When writing a new card spec, include these fields (some are gaps not yet in all
 | `Card version` | Gap — L108 | Add "v1.0" to all new cards; enables errata tracking on physical copies |
 | `Trigger condition` | Gap — React/Tripwire only | Structured field: when does the card activate? `N/A` for standard ops |
 | `Pool copies` | Gap — operational | How many copies in setup pool; governs print quantities; singleton = 1 |
-| `Outcome type` | Gap — Political Acts only | `Binary \| Elect player \| Bilateral agreement \| Unilateral` etc. |
+| `Outcome type` | Gap — Public Acts only | `Binary \| Elect player \| Bilateral agreement \| Unilateral` etc. |
 | Per-field VS-xx | Gap — L2+ | Effect fields = VS-06 (Conditional); Portrait = VS-04 (ARBITER-only); card face fields = VS-01 |
 
 *Intra-Beat priority: covered by Art 03 §7 submission order rule — no card-level field needed. Compound effect text: known L108 violation, deferred until card content locked (documented in 00b).*

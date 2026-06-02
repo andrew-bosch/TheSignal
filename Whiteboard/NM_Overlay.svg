@@ -83,10 +83,10 @@
 
   <g text-anchor="middle" font-size="11" fill="#ffffff" font-weight="bold" filter="url(#ui-glow)">
     
-    <text x="461" y="107"><tspan x="461" dy="-6">Military Inst.</tspan><tspan x="461" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
-    <text x="542" y="189"><tspan x="542" dy="-6">Gov. Citadel</tspan><tspan x="542" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
-    <text x="658" y="189"><tspan x="658" dy="-6">Chorus Rsch.</tspan><tspan x="658" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
-    <text x="739" y="107"><tspan x="739" dy="-6">Fin. Sanctum</tspan><tspan x="739" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="461" y="107"><tspan x="461" dy="-6">Military Inst.</tspan><tspan x="461" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
+    <text x="542" y="189"><tspan x="542" dy="-6">Govmt. Citadel</tspan><tspan x="542" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
+    <text x="658" y="189"><tspan x="658" dy="-6">Chorus Research.</tspan><tspan x="658" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
+    <text x="739" y="107"><tspan x="739" dy="-6">Fin. Sanctum</tspan><tspan x="739" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
 
     <text x="323" y="134"><tspan x="323" dy="-6">Regulatory</tspan><tspan x="323" dy="16" font-size="9" fill="#e0e6ed">GEN: 2</tspan></text>
     <text x="383" y="240"><tspan x="383" dy="-6">Power Grid</tspan><tspan x="383" dy="16" font-size="9" fill="#e0e6ed">GEN: 2</tspan></text>
@@ -94,17 +94,17 @@
     <text x="600" y="339"><tspan x="600" dy="-6">Research Inst.</tspan><tspan x="600" dy="16" font-size="9" fill="#e0e6ed">GEN: 2</tspan></text>
     <text x="719" y="313"><tspan x="719" dy="-6">Data Exchange</tspan><tspan x="719" dy="16" font-size="9" fill="#e0e6ed">GEN: 2</tspan></text>
     <text x="817" y="240"><tspan x="817" dy="-6">Comms Hub</tspan><tspan x="817" dy="16" font-size="9" fill="#e0e6ed">GEN: 2</tspan></text>
-    <text x="876" y="134"><tspan x="876" dy="-6">Fin. Clearing.</tspan><tspan x="876" dy="16" font-size="9" fill="#e0e6ed">GEN: 2</tspan></text>
+    <text x="876" y="134"><tspan x="876" dy="-6">Fin. Clearinghouse</tspan><tspan x="876" dy="16" font-size="9" fill="#e0e6ed">GEN: 2</tspan></text>
 
-    <text x="147" y="204"><tspan x="147" dy="-6">Ind. Fringe</tspan><tspan x="147" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
-    <text x="216" y="335"><tspan x="216" dy="-6">Transit Hub</tspan><tspan x="216" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
-    <text x="321" y="438"><tspan x="321" dy="-6">Civic Center</tspan><tspan x="321" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
-    <text x="454" y="505"><tspan x="454" dy="-6">Residential</tspan><tspan x="454" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
-    <text x="600" y="528"><tspan x="600" dy="-6">Uni. Perimeter</tspan><tspan x="600" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
-    <text x="746" y="505"><tspan x="746" dy="-6">Media Dist.</tspan><tspan x="746" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
-    <text x="878" y="438"><tspan x="878" dy="-6">B-cast Tower</tspan><tspan x="878" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
-    <text x="983" y="335"><tspan x="983" dy="-6">Obs. Post</tspan><tspan x="983" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
-    <text x="1052" y="204"><tspan x="1052" dy="-6">Comm. Strip</tspan><tspan x="1052" dy="16" font-size="9" fill="#e0e6ed">GEN: 1</tspan></text>
+    <text x="147" y="204"><tspan x="147" dy="-6">Industrial Fringe</tspan><tspan x="147" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="216" y="335"><tspan x="216" dy="-6">Transit Hub</tspan><tspan x="216" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="321" y="438"><tspan x="321" dy="-6">Civic Center</tspan><tspan x="321" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="454" y="505"><tspan x="454" dy="-6">Residential</tspan><tspan x="454" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="600" y="528"><tspan x="600" dy="-6">Univ. Perimeter</tspan><tspan x="600" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="746" y="505"><tspan x="746" dy="-6">Media Dist.</tspan><tspan x="746" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="878" y="438"><tspan x="878" dy="-6">Broadcast Tower</tspan><tspan x="878" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="983" y="335"><tspan x="983" dy="-6">Observation Post</tspan><tspan x="983" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
+    <text x="1052" y="204"><tspan x="1052" dy="-6">Commerce Strip</tspan><tspan x="1052" dy="16" font-size="9" fill="#e0e6ed">GEN: 3</tspan></text>
   </g>
 
   <g>

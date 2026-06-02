@@ -1,9 +1,9 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.3  
-**Status:** ✅ Signed Off — S40  
-**Last Updated:** 2026-05-26  
+**Version:** 0.4  
+**Status:** ✅ Signed Off — S61  
+**Last Updated:** 2026-06-01  
 **Companion to:** 00 — Factions, World & Narrative Context  
 **Depends on:** 00, 01, 02a, 02b, 03, 04, 04b
 
@@ -557,13 +557,17 @@ Rules that constrain all card design. A proposed card that violates any of these
 
 **00-R21**
 
-**Rule:** Card effects have exactly one of three durations: immediate, permanent, or World Condition.
+**Rule:** Card effects have exactly one of four defined durations.
 
-**Narrative:** Actions have consequences in the moment. The world does not hold temporary states open for factions — a window of opportunity closes, an advantage dissolves, a disruption resolves. What persists does so because it became a fact — not because it was scheduled to linger.
+**Narrative:** Actions have consequences with natural lifespans. A disruption cleared by morning. An act that shapes a month. A commitment that holds for the quarter. A wire tripped once, then gone. A fact that persists until something removes it. The nature of the action determines how long it lives — not an arbitrary schedule.
 
-**Mechanics:** Immediate effects resolve this quarter with no carry-over. Permanent effects persist for the remainder of the session. World Condition effects from Situation Reports carry over until resolved. No other duration is valid.
+**Mechanics:** Each card effect is assigned exactly one duration type at design time. No other duration is valid.
+- **Immediate** — resolves and is removed at resolution
+- **Transient** — removed at Beat 5 (end of month)
+- **Seasonal** — removed at End of Quarter
+- **Permanent** — persists until a named action or named condition removes it, including a self-clearing trigger on the card
 
-*Source: L55, Artifact 04 Principle 6, Artifact 04b §3.8.*
+*Source: L55; Artifact 03 §23; L180.*
 
 *Governs: All card design.*
 
@@ -571,15 +575,20 @@ Rules that constrain all card design. A proposed card that violates any of these
 
 **00-R22**
 
-**Rule:** All resource costs must be physically present at time of play.
+**Rule:** Actions proceed with whatever resources are committed. Shortfalls carry consequences.
 
-**Narrative:** Commitment is real. You cannot promise power you do not hold. The Table does not extend credit. A faction that seals a case without the resources to back it has made a promise the world will not honor — the operation fails, the resources are spent, and the failure is recorded.
+**Narrative:** The Table does not extend credit. A faction that commits less than the cost of an action has stated honestly that this is what they have. The gap between cost and commitment is real — the world reflects it. Partial commitment is not a forfeit. It is a constraint, and constraints have consequences.
 
-**Mechanics:** No deferred payments. Covert operation costs must be in the dispatch case before sealing. Political act costs must be returned to the reservoir at Declaration. If costs are absent at resolution: covert fails with cost spent; political act is voided with Public Standing penalty.
+**Mechanics:** Resource payment is assessed at resolution. Consequences scale to what was submitted:
+- **Full payment:** action proceeds at stated difficulty.
+- **Partial payment:** action proceeds with a threshold penalty.
+- **Zero payment:** action is voided.
 
-*Source: Artifact 04 Principle 4, Artifact 04 §14.3.*
+Payment timing and penalty values: Artifact 03.
 
-*Governs: All card design; Artifact 09.*
+*Source: Artifact 03; L180.*
+
+*Governs: All card design; Artifact 03.*
 
 ---
 
@@ -718,7 +727,7 @@ Cards use these phrases as written. They do not define or qualify them.
 
 ---
 
-**00-R30 — The Missing Author Vacuum**
+**00-R29b — The Missing Author Vacuum**
 
 **Rule:** No card flavor text, Chronicle entry, or faction perspective may assert or imply that any faction knows the content of the message — what humanity should say to the Chorus.
 
@@ -901,13 +910,17 @@ Rules governing when things happen, in what order, and what the timing locks.
 
 **00-R39**
 
-**Rule:** Each covert operation submitted in a dispatch case requires one Dispatch Token. A covert operation submitted without a token is invalid.
+**Rule:** Each action committed to The Table — covert operation or public act — requires one Dispatch Token.
 
 **Narrative:** Internal capacity is not the same as organizational readiness. A faction can have the resources, the personnel, and the doctrine aligned for an operation — and still not have its internal machinery synchronized to execute it this quarter. The token is the accounting of that synchronization: approvals completed, internal and external commitments made, the organization having said yes. Without it, the operation exists as a plan. It does not exist as an action.
 
-**Mechanics:** Each covert operation card submitted in a dispatch case must be accompanied by one Dispatch Token placed in the case. A card submitted without a token is invalid — rejected by ARBITER at Beat 0 and returned to the acting faction without resolution. Cost is not spent. Pass cards require no token. Political acts are declared at The Table and require no Dispatch Token. Token allocation per Quarter drawn from The Backlog (the shared Dispatch Token pool): standard factions draw 3, Ghost draws 4. Full rules and component definition: Artifact 02a §8.
+**Mechanics:** Each action requires one Dispatch Token:
+- **Covert operation:** One token placed in the dispatch case with the submitted operation card. A card submitted without a token is invalid — rejected by ARBITER at Beat 0, returned to the acting faction without resolution. Cost is not spent.
+- **Public act:** One token placed on top of the declared card on the Overview at Phase B (Public Declaration). The token is returned to the faction at Beat 4 Step 1 (Submit Payment).
 
-*Source: Artifact 03 §9.*
+Full rules and component definition: Artifact 02a §8.
+
+*Source: Artifact 03 §9; L180.*
 
 *Governs: Artifacts 02a, 03.*
 
@@ -940,8 +953,8 @@ Rules governing when things happen, in what order, and what the timing locks.
 | 00-R18 | Structure block resource choice declared publicly before income | Public declaration of +1 district native or +1 faction native before income collection each quarter |
 | 00-R19 | Chorus Portrait accumulates without drift or decay | Permanent and cumulative; no passive recovery; ARBITER player only moves Portrait marker |
 | 00-R20 | Public Standing modifies action difficulty, not resource income | Shifts 2d10 difficulty threshold; does not affect income generation |
-| 00-R21 | Card effects have exactly one of three durations | Immediate, permanent, or World Condition; no other duration valid |
-| 00-R22 | All resource costs must be physically present at time of play | No deferred payments; covert and political act failure penalties apply if costs absent at resolution |
+| 00-R21 | Card effects have exactly one of four defined durations | Immediate, Transient, Seasonal, Permanent; no other duration valid |
+| 00-R22 | Actions proceed with whatever resources are committed; shortfalls carry consequences | Full payment: stated difficulty. Partial payment: threshold penalty. Zero payment: voided. Timing and values in Artifact 03 |
 | 00-R23 | Crit success never carries an additional cost | Same resource cost as success; cost reductions on crit success permitted |
 | 00-R24 | Portrait scoring fires at Resolution — unconditionally, conditionally, or both | Two parallel mechanisms; ARBITER applies all Portrait values present on the card at Resolution |
 | 00-R25 | Ring Modifier effects target only districts in the card's originating ring | Ring restriction specified on card; applies regardless of which faction holds or uses it |
@@ -950,6 +963,7 @@ Rules governing when things happen, in what order, and what the timing locks.
 | 00-R28 | Standard language conventions apply globally and are not restated on cards | Defined once (R13, L59, L60, L61); cards use phrases as written without qualification |
 | 00-R29 | Ghost may use Gather (C05) without meeting adjacency requirement | C05 targets any district regardless of adjacency; all other Ghost actions require adjacency |
 | 00-R29a | Portrait values printed on card, visually coded for ARBITER | ARBITER player reads Portrait values from card at Resolution; no separate reference; visual coding design deferred to Artifact 09 |
+| 00-R29b | No card flavor text, Chronicle entry, or faction perspective may assert or imply any faction knows what the message to the Chorus should say | The Missing Author Vacuum — structural gap is permanent and deliberate; governs all written material on message content |
 | 00-R30 | Private information disclosed only at holder's discretion | Any private component shared, withheld, or lied about at holder's choice; Reveal effect required to force disclosure |
 | 00-R31 | Verbal claims about undisclosed private information cannot be verified by ARBITER | ARBITER does not validate bluffs or threats referencing undisclosed information |
 | 00-R32 | Discarded Intel Tokens permanently removed from play | Immediately and permanently removed; cannot be retrieved or referenced in any subsequent action |
@@ -959,10 +973,10 @@ Rules governing when things happen, in what order, and what the timing locks.
 | 00-R36 | Critical results apply regardless of modifiers | Crit Success (01–05) always succeeds; Crit Fail (96–00) always fails |
 | 00-R37 | Submission order is tiebreaker within resolution priority tiers | Faster submission earns resolution priority within Beat 3 and Beat 4 |
 | 00-R38 | Findings decay applies at close of Debrief, before Session Timeline advances | First action at end of quarter; timing fixed; cannot be modified by card effect |
-| 00-R39 | Each covert operation submitted requires one Dispatch Token; no token = invalid | Rejected at Beat 0, returned without resolution, cost not spent; pass cards and political acts exempt; allocation drawn from The Backlog (standard: 3, Ghost: 4) |
+| 00-R39 | Each action — covert operation or public act — requires one Dispatch Token | Covert: token in dispatch case; no token = rejected at Beat 0, cost not spent. Public act: token on declared card at Phase B, returned at Beat 4 Step 1 |
 
 ---
 
-*End of Artifact 00a — Governing Rules & Design Policy v0.3*
+*End of Artifact 00a — Governing Rules & Design Policy v0.4*
 *Populated from review of all V1 artifacts: 00, 01, 02a, 02b, 03, 04, 04b, PM01, PM02, PM03*
-*42 rules across 7 categories (§3–§9). Pending sign-off.*
+*43 rules across 7 categories (§3–§9). Signed off S61.*

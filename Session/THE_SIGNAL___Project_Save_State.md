@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-01 (S60)
+**Last Updated:** 2026-06-01 (S61)
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -34,6 +34,12 @@ Read this document top to bottom before doing any design work in a new session. 
 **Decisions locked:** None (review execution session).
 **Artifacts updated:** Art 03 (v3.0 in progress, 03-17 re-sign-off required), PM05 (XA-43/44, 04-n9 added), SESSION_BRIEF (S60).
 **Next:** 03-17 sign-off (Art 03 v3.0) → 00a-xx (00-R39 revision) → Art 04 resumes (04-n8, Directorate+Syndicate sanity checks, P-series PA pass, Outstanding Issues C13/C15/C16/C17).
+
+### Session 61 — 2026-06-01
+**Focus:** Art 03 v3.0 sign-off (L181): Beat 3 Step 12 label/flavor removed; Beat 4 Submit Payment → Step 1, steps renumbered 1–13; section breaks added; duration taxonomy 5→4 types (Tripwire collapsed into Permanent). Art 00a v0.4 sign-off (L182): 00-R21 (4-type duration taxonomy), 00-R22 (partial payment model), 00-R29b (Missing Author Vacuum — renamed from duplicate 00-R30), 00-R39 (covers covert ops + public acts); 43 rules. XA-40 (Political→Public Act sweep in Art 04) ✅. XA-42 (design_reference.md L180 sweep) ✅. Art 04 §5a: Narrative Anchor section added (doctrine→mechanic table per faction); Faction Goals reordered (Anchor first, Goals below); Ghost goal corrected to "Delay — no premature answer to the Chorus"; playstyle summaries reformatted to bullet lists. L183: C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per doctrine. C22 card spec updated (move to Detention zone, NotificationSlip removed, PS tracking added). C42 Sanctioned Raid updated v1.1 (Mandate×2, PS −1 on success added). C32 Short the Market flagged for mechanical redesign (04-n14 — "applied silently" incompatible with paper prototype; tagline/code conflict on generation vs stockpile). PM05 04-n10/11 (pentagram gaps), 04-n12 (Terminal unique zones), 04-n13 (Network modifier card / C42 response), 04-n14 (C32 redesign) added.
+**Decisions locked:** L181 (Art 03 v3.0), L182 (Art 00a v0.4), L183 (C22 Detain — Directorate Detention zone; Terminal uniqueness).
+**Artifacts updated:** Art 03 (v3.0, signed off L181), Art 00a (v0.4, signed off L182), Art 04 (§5a Narrative Anchor, C22 updated, C42 v1.1), PM02 (L183), PM05 (04-n10–14 added), SESSION_BRIEF (S61).
+**Next:** S62 — Art 04 P-series Public Act pass (P01–P18, all stubs); Outstanding Issues C13/C15/C16/C17; C32 redesign (04-n14); 04-n10/n11 pentagram gaps. XA-41 (Art 03a schema rename) deferred.
 
 ### S53 — 2026-05-30
 Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`Card(...)` constructor format). C01–C17 design rationale fully restructured: two-subheader format (#### Design Rationale + #### Outstanding Issues and Design Questions), checklist converted to Category/Pass/Note table format. Code block fixes: C01/C02 `district(target).faction(acting)` notation, C07 `restriction=None` (removed unenforeable Beat 4 check), C17 portrait `flat→submitter`. Six open design questions documented in Outstanding Issues for C05/C09/C10/C13/C15/C16. L172 locked. 04-57 closed. 04-58 opened (C01–C17 Outstanding Issues resolution).

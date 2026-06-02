@@ -35,6 +35,9 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 4. [Narrative Function](#4-narrative-function)
 5. [Design Principles](#5-design-principles)
 6. [Quarter Overview](#6-quarter-overview)
+
+**Gameplay Procedure**
+
 7. [Phase 1 — Upkeep](#7-phase-1--upkeep)
 8. [Phase 2 — Placement](#8-phase-2--placement)
 9. [Month 1 — Dispatch](#9-month-1--dispatch)
@@ -49,6 +52,9 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 18. [Month 3 — Quarter Notes](#18-month-3--quarter-notes)
 19. [Debrief](#19-debrief)
 20. [End of Quarter](#20-end-of-quarter)
+
+**Reference Material**
+
 21. [The Operation System](#21-the-operation-system)
 22. [Special Conditions & Gameplay Impacts](#22-special-conditions--gameplay-impacts)
 23. [Duration Taxonomy](#23-duration-taxonomy)
@@ -152,6 +158,8 @@ DEBRIEF
 Phases do not overlap. ARBITER announces the start of each phase.
 
 ---
+
+## Gameplay Procedure
 
 ## 7. Phase 1 — Upkeep
 
@@ -696,7 +704,7 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 When all operations have resolved, the ARBITER Player clears the Resolution Grid. The grid is rebuilt fresh for Month 2.
 
-**Step 12 — Dispatch Case Return (Month 3 only).**
+**Step 12 — Dispatch Case Return.**
 
 After all operations have resolved and the Resolution Grid is cleared:
 
@@ -709,8 +717,6 @@ The ARBITER Player returns all dispatch cases to their owners. Each case contain
 *Not returned: resources (spent), Modifier cards (discarded during resolution), Countermeasure cards (removed from the game when played).*
 
 Faction Players read their Operation Resolution cards privately.
-
-*This is the moment each faction learns what happened to their covert operations — before the table conversation begins.*
 
 ---
 
@@ -733,7 +739,7 @@ A deployment marker is flipped to the Blocked face when a blocking condition res
 
 *Beat 4 fires every month. The procedure below applies to Month 1, Month 2, and Month 3 equally.*
 
-**Submit Payment**
+**Step 1 — Submit Payment.**
 
 In initiative order, for each Faction Player with a declared public act on the Overview (that has not been voided):
 
@@ -756,26 +762,24 @@ Reset (erase) and return all submitted Intel Tokens to The Dossier, or discard i
 
 *Face-down cards auto-fail when their turn is reached in initiative order: modifier cards are discarded and the public act card is returned to the faction.*
 
-In initiative order, for each Faction Player:
-
-**Step 1 — Identify the public act. Check for Apex.**
+**Step 2 — Identify the public act. Check for Apex.**
 
 1. Check for Apex. If Apex: resolution is immediately interrupted — see Apex Activation in §22 before proceeding.
 2. If face-down: auto-fail. Discard all modifier cards. Return the public act card to the faction. Advance to the next Faction Player. No further steps apply.
 3. Read the public act card and target slip.
 
-**Step 2 — Validate board state conditions.**
+**Step 3 — Validate board state conditions.**
 
 Check that the current board state still satisfies the declared public act's play conditions. Play conditions are those required at the point of declaration (Phase B) that may have been altered by covert operations resolving in Beat 3.
 
-- If conditions are met: proceed to Step 3.
+- If conditions are met: proceed to Step 4.
 - If conditions are no longer met: The ARBITER Player announces the invalidation. The Faction Player flips the public act card face-down. Discard all modifier cards. Return the public act card to the faction. Advance to the next Faction Player. No further steps apply.
 
-**Step 3 — Determine base difficulty.**
+**Step 4 — Determine base difficulty.**
 
 The acting Faction Player reads the base difficulty and target threshold aloud from the public act card.
 
-**Step 4 — Apply all modifiers.**
+**Step 5 — Apply all modifiers.**
 
 The acting Faction Player applies all active modifiers:
 - Partial payment threshold marker (if placed by ARBITER at Submit Payment)
@@ -785,47 +789,47 @@ The acting Faction Player applies all active modifiers:
 - Active board state effects (Situation Report + standing public acts)
 - Ring adjacency penalty (The Mid: no adjacent Core presence; Core: no Chorus Node presence)
 
-**Step 5 — Calculate and declare threshold.**
+**Step 6 — Calculate and declare threshold.**
 
 The acting Faction Player totals the base threshold plus all active modifier adjustments and states the final target threshold aloud.
 
-**Step 6 — Roll d100.**
+**Step 7 — Roll d100.**
 
 The acting Faction Player rolls publicly and states the result aloud.
 
-**Step 7 — Determine outcome.**
+**Step 8 — Determine outcome.**
 
 1. Compare roll to the declared threshold.
 2. Apply Critical Success/Fail rules.
 
-**Step 8 — Apply outcome.**
+**Step 9 — Apply outcome.**
 
 If this public act's outcome blocks a deployment marker's conversion: The acting Faction Player flips the relevant marker to the Blocked face.
 
-**Step 8a — Succeeded.**
+**Step 9a — Succeeded.**
 
 The acting Faction Player makes all board changes — presence chips, structure blocks, Control flags, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
 
-**Step 8b — Failed.**
+**Step 9b — Failed.**
 
 Apply the failure conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it. The affected Faction Player applies their own board changes.
 
-**Step 9 — Clean up.**
+**Step 10 — Clean up.**
 
 1. Modifier cards placed alongside the public act are discarded — removed from the game.
 2. The public act card remains on the Overview per its duration type (§23). Immediate cards only: remove from the board and discard or remove from game per card text.
 
 *No pool modifier tokens are used in Beat 4. Modifier cards placed alongside a public act in Phase B serve as their own tracking mechanism — the card itself carries the modifier value through resolution. Pool tokens (placed by ARBITER in Beat 2) apply to covert operations in the Resolution Grid only.*
 
-**Step 10 — Update Chorus Portrait track.**
+**Step 11 — Update Chorus Portrait track.**
 
 The ARBITER Player privately updates the acting faction's Portrait marker.
 
-**Step 11 — Note for Chronicle (optional).**
+**Step 12 — Note for Chronicle (optional).**
 
 The ARBITER Player may note a significant moment at their discretion.
 
-**Step 11 — Repeat for all remaining public acts.**
+**Step 13 — Repeat for all remaining public acts.**
 
 ---
 
@@ -1040,6 +1044,8 @@ If the Session Timeline reaches 8 and no Apex has resolved, proceed to Session E
 
 ---
 
+## Reference Material
+
 ## 21. The Operation System
 
 The Operation System governs resolution for all committed actions: covert operations (Beat 3) and public acts (Beat 4).
@@ -1168,15 +1174,14 @@ The ARBITER Player opens the sealed Apex envelope and pauses 5 seconds. ARBITER 
 
 ## 23. Duration Taxonomy
 
-All public acts, modifier cards, and board state cards carry one of five duration types. Duration is printed on the card. Cleared behavior (return to discard pile vs. remove from game) is specified per card text.
+All public acts, modifier cards, and board state cards carry one of four duration types. Duration is printed on the card. Cleared behavior (return to discard pile vs. remove from game) is specified per card text.
 
 | Type | Duration | Cleared |
 |------|----------|---------|
 | Immediate | Placed on the board; resolves immediately upon placement. Must move from hand to board to trigger. Cannot be returned to hand, discarded, or removed from game until placed on the board. | Per card text after resolution — removed from board (discard or remove from game) |
 | Transient | Active for this month only | Beat 5 cleanup of the month in which it was played |
 | Seasonal | Active for this Quarter | End of Quarter §20 Seasonal card cleanup |
-| Tripwire | Active until condition is met; fires once, then self-clears | Automatically on trigger |
-| Permanent | Active until a named action or condition removes it | Per card text (discard or remove from game) |
+| Permanent | Active until a named action or condition removes it — including a self-clearing trigger on the card | Per card text (discard or remove from game) |
 
 *ARBITER's Situation Reports carry Seasonal duration by default. Card text may specify otherwise.*
 
