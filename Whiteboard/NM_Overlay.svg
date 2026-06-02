@@ -20,7 +20,7 @@
 
   <rect width="100%" height="100%" fill="#0a0c0f" />
 
-  <image href="nm.png" 
+  <image href="NM.png" 
          width="100%" height="90%" preserveAspectRatio="xMidYMid slice" 
          opacity="0.5" filter="url(#tactical-tint)" />
          

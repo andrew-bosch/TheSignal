@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 59 (close) | Updated: 2026-06-01**
+**Session 60 (close) | Updated: 2026-06-01**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,11 +8,13 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S59: Full covert op design pass complete. All C01–C42 are baseline drafted. Design rationale scaffold (Design Rationale / Design Checklist / Outstanding Issues / Status) added to C18–C35. C36–C42 migrated from old §8 Intel Economy appendix to canonical faction sections (Python spec, scaffold attached). New faction cards written: Ghost (Station, Full Take, SCIF, Flip, Signals Analysis), Guild (Labor Contract), Directorate (Regulatory Downgrade, Regulatory Freeze), Syndicate (Land Title, Hostile Takeover, Accord Transfer). Standard: Absolute Compromise (C39). Entry/Exit Controls (Directorate PA) written to §10. New components: SCIFRecordCard, TierPenaltyMarker, TierFreezeMarker, EntryControlMarker, LandTitleMarker, ParasiticMarker (all need Art 02 registration). PM05 04-n7 closed.
+S60: Art 03 v3.0 full review pass — all S60 corrections applied. L180 architecture (monthly A/B/C/D structure, Public Act rename, dispatch token parity) fully reflected in document. **Art 03 v3.0 sign-off (03-17) pending — must happen before 00a 00-R39 revision, XA-40 (Art 04 PA→Public Act sweep), XA-41 (Art 03a schema rename), XA-42 (design_reference.md L180 sweep) can proceed.**
+
+Key S60 changes to Art 03: all factions = 4 Dispatch Tokens; face-down = void (no Voided Resolution Card component); Phase C/D labels removed; Beat 2 renamed "Conditions Set"; §17 = Contested District Resolution; §18 = Month 3 Quarter Notes; §20 = End of Quarter; §21 = Operation System; Beat 3 Step 12 = Dispatch Case Return (Month 3); Beat 4 Step 2 = board state validation; Pass cards removed; Contested/Failed TBD blocks removed.
 
 **ALWAYS read `TheSignal/Whiteboard/design_reference.md` before any Art 04+ design work.**
 
-**Next session:** Directorate + Syndicate faction sanity checks (deferred in S59). New component Art 02 registration (6 new components). P-series PA design pass (P01–P18 all stubs — dedicated session). Outstanding Issues (C13/C15/C16/C17).
+**Next session:** 03-17 sign-off (Art 03 v3.0) → then 00a-xx (00-R39 revision) → then Art 04 work resumes (04-n8, Directorate+Syndicate sanity checks, P-series PA pass, Outstanding Issues C13/C15/C16/C17).
 
 ---
 
@@ -24,7 +26,7 @@ S59: Full covert op design pass complete. All C01–C42 are baseline drafted. De
 | 00a — Governing Rules & Design Policy | 0.3 | ✅ Signed Off — S40. S57: 00-R30 added (Missing Author Vacuum) — material change, re-sign-off pending. |
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Quarter Structure & Gameplay | 2.1 | ✅ Signed Off — S52. Beat 3/4 outcome steps restructured (7a/7b/7b.i). L170 locked. 03-15 open: generalize when Art 07/08 developed. |
+| 03 — Quarter Structure & Gameplay | 3.0 | 🔄 In Progress S60 — L180 full revision applied. **03-17 sign-off required.** Blocks: 00a-xx (00-R39 rev), XA-40, XA-41, XA-42. |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. S55: §4.2/§4.4 updated (Economy narrowed; IntelToken = Information), §5.2 table updated (C05, C24 → Information). 04-63 flagged (stale C27 §4.6 entry). |
 | 04 — Action Card System | 0.9.24 | S59: All C01–C42 baseline drafted. Scaffold on C18–C35. C36–C42 migrated. New faction cards (Ghost/Guild/Directorate/Syndicate gaps). Entry/Exit Controls (§10). **Next: Directorate+Syndicate sanity checks; Art 02 component registration (6 new); P-series PA pass; Outstanding Issues (C13/C15/C16/C17).** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
@@ -72,12 +74,11 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+*S60: No new L-decisions. Art 03 review execution session — all pre-planned changes applied.*
+
 - **L179** (S57): C10 Protect affinity −45 locked. Guild/Directorate near-nullification of C02 Demolish (50→5%) narratively justified: Guild knows their own infrastructure intimately; Directorate has institutional security apparatus. Attacker doesn't see protection coming (C10 is covert). Base −25 for other factions (50→25%) remains.
 - **L178** (S57): P16 — Portrait entries are submitter-bounded. A portrait entry may only affect the portrait of the faction that submitted the card. ARBITER evaluates the acting faction's doctrinal alignment — not the reactions of factions that did not act.
 - **L177** (S57): Missing Author Vacuum as governing rule. No faction can author the Chorus response content — structural gap in doctrinal geometry is permanent and deliberate. Governs all card flavor, Chronicle entries, faction perspectives. See Art 00a 00-R30; True State §1.
-
-*S59: No new L-decisions. Design execution session — all covert card drafts, scaffold pass, C36–C42 migration. Component architecture (TierPenaltyMarker, TierFreezeMarker, EntryControlMarker, LandTitleMarker, ParasiticMarker, SCIFRecordCard) and 00-R29 clarification deferred to respective PM05 items.*
-- **L176** (S56): tmp_ tables promoted to permanent schema (DB-14). Design workspace phase complete post Art 04b sign-off. 20 table renames + 27 view rewrites — phased via agy (Phase A: audit; Phase B: execute on confirmation). Drop tmp_category, tmp_type. Legacy early-schema tables: audit-only, no changes until confirmed.
 
 → Full log: `V1/PM02___Decision_Log___Validation_Tracker.md` (L01–L175)
 
@@ -89,7 +90,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **00a v0.3** — ✅ Signed Off S40 · S57 material change (00-R30) — re-sign-off pending
 - **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
-- **Art 03 v2.0** — ✅ Signed Off S43
+- **Art 03 v3.0** — 🔄 In Progress S60 — re-sign-off required (03-17). Blocks 00a-xx, XA-40/41/42.
 - **C17** — ✅ Signed Off S49
 
 ---
@@ -131,7 +132,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | Deployment marker / Operational marker | Claim marker |
 | Public Standing track | Popularity track |
 | Covert operation | Private action |
-| Political act | Public action |
+| Public act | Political act / Public action |
 | Situation report | World event card |
 | The Mid | Infrastructure ring |
 | Baryo | Sprawl |

@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-01
+**Last Updated:** 2026-06-01 (S60)
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -28,6 +28,12 @@ Read this document top to bottom before doing any design work in a new session. 
 **Decisions locked:** None (design execution session).
 **Artifacts updated:** Art 04 (v0.9.24), PM05 (04-n7 closed), SESSION_BRIEF (S59).
 **Next:** S60 — Directorate + Syndicate sanity checks; Art 02 registration for 6 new components; P-series PA design pass (dedicated session); Outstanding Issues (C13/C15/C16/C17).
+
+### Session 60 — 2026-06-01
+**Focus:** Art 03 v3.0 full review pass — all L180 corrections applied. Beat 4 new Step 2 (board state validation). §20/§21 swapped (End of Quarter now §20, Operation System §21). §23 Immediate row fixed (placed on board; hand→board required). §6 Phase C/D labels removed; BATTLEFIELD STRENGTH → CONTESTED DISTRICT RESOLUTION. §7 all factions = 4 Dispatch Tokens; modifier draw substeps hierarchically formatted. §10/§11 headers stripped of Phase IDs. §11 Beat 0 steps 3/4 swapped (drain first); step 7 simplified. Beat 1/2 voided card language → face-down convention throughout. Beat 2 renamed "Conditions Set." Beat 3 Pass card step removed; Contested/Failed TBD blocks removed; Step 12 (Dispatch Case Return, Month 3 only) added. §12 Ghost combo note reframed. §17 = Contested District Resolution (was §18); §18 = Month 3 Quarter Notes (was §17). PM05: XA-43 (pass card sweep), XA-44 (Voided Resolution Card component sweep), 04-n9 (deployment marker blocking flag) added to READY NOW.
+**Decisions locked:** None (review execution session).
+**Artifacts updated:** Art 03 (v3.0 in progress, 03-17 re-sign-off required), PM05 (XA-43/44, 04-n9 added), SESSION_BRIEF (S60).
+**Next:** 03-17 sign-off (Art 03 v3.0) → 00a-xx (00-R39 revision) → Art 04 resumes (04-n8, Directorate+Syndicate sanity checks, P-series PA pass, Outstanding Issues C13/C15/C16/C17).
 
 ### S53 — 2026-05-30
 Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`Card(...)` constructor format). C01–C17 design rationale fully restructured: two-subheader format (#### Design Rationale + #### Outstanding Issues and Design Questions), checklist converted to Category/Pass/Note table format. Code block fixes: C01/C02 `district(target).faction(acting)` notation, C07 `restriction=None` (removed unenforeable Beat 4 check), C17 portrait `flat→submitter`. Six open design questions documented in Outstanding Issues for C05/C09/C10/C13/C15/C16. L172 locked. 04-57 closed. 04-58 opened (C01–C17 Outstanding Issues resolution).

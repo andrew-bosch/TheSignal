@@ -278,7 +278,7 @@ Amplifies all Public Standing changes for factions with presence in the Resident
 | M-04 | Standing | Suspect | All | Persistent | 1 | Fixed | −10 |
 | M-05 | Standing | Discredited | All | Persistent | 1 | Fixed | −20 |
 | M-06 | Payment | Partial payment marker | Covert | Beat 0 | 1 per submitted card | Fixed | −50 |
-| M-07 | Payment | Partial payment marker | Political | Beat 4 | 1 per submitted card | Fixed | −50 |
+| M-07 | Payment | Partial payment marker | Public | Beat 4 | 1 per submitted card | Fixed | −50 |
 | M-08 | Card Effect | Modifier card | All | Pre-Resolution | Unlimited | Variable | See card |
 | M-09 | Card Effect | Protect / Defend operation | Covert | Beat 2 | 1 per Protect submitted | Variable | See card |
 | M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Event Card | Variable | See Event Card |
