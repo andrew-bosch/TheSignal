@@ -492,3 +492,28 @@ select `b`.`id` AS `phase_id`,`b`.`name` AS `phase_name`,`b`.`month` AS `month`,
 CREATE OR REPLACE VIEW v_action_chain AS
 select `a`.`id` AS `id`,`b`.`name` AS `beat`,`a`.`beat_trigger` AS `beat_trigger`,`a`.`prereq_id` AS `prereq_id`,`pb`.`name` AS `prereq_beat`,`r`.`name` AS `subject`,`v`.`name` AS `verb`,`c`.`name` AS `component`,`dc`.`name` AS `destination`,`a`.`notes` AS `notes` from ((((((`action` `a` join `beat` `b` on(`a`.`beat_id` = `b`.`id`)) left join `beat` `pb` on(`a`.`prereq_beat_id` = `pb`.`id`)) join `player_role` `r` on(`a`.`subject_id` = `r`.`id`)) join `verb` `v` on(`a`.`verb_id` = `v`.`id`)) join `component` `c` on(`a`.`component_id` = `c`.`id`)) left join `component` `dc` on(`a`.`destination_component_id` = `dc`.`id`)) order by `a`.`beat_id`,`a`.`id`;
 ```
+
+## 19. DB-14 Phase B & Updates: Table Promotion Execution, CLI/System Updates, and 3NF Normalization Proposal
+
+We have successfully executed the DB-14 table promotion plan and performed CLI/system upgrades, as well as drafted a 3NF normalization proposal.
+
+### (a) Table Promotion Execution (Completed)
+*   **Orphaned Constraint Resolution:** Located and dropped a legacy constraint `fk_beat` on `card_metadata` referencing `beat(beat_value)` from the dropped legacy table.
+*   **Column Adjustment:** Altered `card_metadata.beat` to `int(11)` to match `beat.id`.
+*   **Atomic Table Rename:** Renamed all 20 design tables atomically, dropping the `tmp_` prefix.
+*   **Foreign Key Re-establishment:** Restored `fk_beat` on `card_metadata` pointing to the promoted `beat(id)` table.
+*   **View Re-compilation:** Successfully recompiled all 27 database views (`v_*`) to point to the new permanent tables. Verified that all views query successfully.
+*   **Documentation Alignment:** Updated `schema_reference.md` to drop all `tmp_` prefixes throughout the definitions and marked DB-14 as completed in Section 9.
+
+### (b) CLI and System Upgrades (Completed)
+*   **Claude Code CLI:** Upgraded from version `2.1.152` to `2.1.160`.
+*   **Antigravity CLI (`agy`):** Upgraded from version `1.0.3` to `1.0.4`.
+*   **Debian System Upgrades:** Ran full package updates (`apt-get upgrade -y`), successfully applying all pending security patches and system updates.
+
+### (c) 3NF Normalization Proposal (Drafted)
+We drafted a proposal at [normalization_proposal.md](file:///home/abosch/.gemini/antigravity-cli/brain/1b0a1012-b6cd-4730-ba7a-73f0b460c12a/normalization_proposal.md) to expand the L108 data design standard to include Third Normal Form (3NF) requirements:
+1.  **L108 Requirement 6 (No Transitive Dependencies):** Prevent columns like `action.prereq_beat_id` that depend on other non-key columns (resolved dynamically via joins).
+2.  **L108 Requirement 7 (No Stored Derived Data):** Drop base table columns like `component.transformable` and calculate them dynamically (e.g., via generated virtual columns).
+3.  **Required Schema Updates:** Drop `action.prereq_beat_id`, convert `component.transformable` to a virtual generated column, normalize `card_metadata` card types vs. subtypes, and convert `card_metadata.primary_action_verb` to an ID reference.
+4.  **Documentation updates:** Documented updates needed in `schema_reference.md` once these normalizations are applied.
+```

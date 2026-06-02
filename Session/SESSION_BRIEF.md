@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 62 (close) | Updated: 2026-06-02**
+**Session 63 (active) | Updated: 2026-06-02**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,18 +8,15 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-S61: Art 03 v3.0 ✅ signed off (L181). Art 00a v0.4 ✅ signed off (L182). XA-40 (Art 04 PA→Public Act sweep) ✅ and XA-42 (design_reference.md L180 sweep) ✅ complete. XA-41 deferred.
+S63: Checklist template → 13 rows (Persistence added as row 8). `persistence = Immediate` added to 35 C-series Python specs; 9 sign-offs cleared to n/a (pending Andy re-review). 11 stale Persistence checklist rows removed. `tmp_card_review.line_start` recalculated for all 75 cards.
 
-§5a Narrative Anchor section added; Faction Goals reordered (Anchor first, Goals below); Ghost goal corrected (Delay — no premature answer to the Chorus); playstyle summaries reformatted to bullet lists. L183: C22 Detain locked — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine. C22 card spec updated (move to Detention zone, PS/NotificationSlip removed). C42 Sanctioned Raid updated: Mandate×2 (was ×1), PS −1 on success added. C32 Short the Market flagged for mechanical redesign (04-n14 — "applied silently" doesn't survive paper prototype). 04-n13 (Network modifier card responding to C42 sweep) added.
-
-Key S61 changes to Art 03: Beat 3 Step 12 "(Month 3 only)" label and flavor line removed; Beat 4 Submit Payment promoted to Step 1 (steps renumbered 1–13, repeated initiative order header removed); Gameplay Procedure and Reference Material section breaks added in index and body. Duration taxonomy: 5→4 types (Tripwire collapsed into Permanent).
-
-Key S61 changes to Art 00a: 00-R21 updated to 4-type taxonomy; 00-R22 rewritten (partial payment model); 00-R29b (Missing Author Vacuum, renamed from duplicate 00-R30); 00-R39 revised to cover both covert ops and public acts. 43 rules.
+P-series design pass complete (P01–P18). P01–P08: Design Pass ✓ / Issues Resolved ✓ (P08 holds Art 06 gaps). P09–P18: Design Pass ✓ / Issues Resolved blank — all blocked on 04-n23 (aligned + opposed perspectives missing on all 10 faction-specific PAs, Principle 8). Card decisions resolved: P05 Expired excluded from restriction; P06 floor clause added; P07 → Standing/Shift; P08 on-decline +1 PS intentional.
 
 **ALWAYS read `TheSignal/Whiteboard/design_reference.md` before any Art 04+ design work.**
 **ALSO read `TheSignal/Whiteboard/gap_card_sketches_S62.md` before any Art 04 gap card work.**
+**For P-series pass: read `TheSignal/Whiteboard/p_series_pass_S63.md` first.**
 
-**Next session:** P-series sign-off pass (P01–P18); write full specs for Disprove / Disinformation Campaign / Standing Injunction / Asset Extraction (sketches in Whiteboard); Directorate covert reclassification (C21–C24, C42); Art 04b §5.2 update (P-series entries stale); Outstanding Issues C13/C15/C16; C32 redesign (04-n14).
+**Current:** P-series design pass complete. Next: write aligned + opposed perspectives for P09–P18 (04-n23) → Issues Resolved ✓ per card. Then: C-series sign-off re-review; 04-n18 (Art 04b §5.2 refresh).
 
 ---
 
@@ -33,7 +30,7 @@ Key S61 changes to Art 00a: 00-R21 updated to 4-type taxonomy; 00-R22 rewritten 
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 3.0 | ✅ Signed Off — S61 (L181). Beat 3 Step 12 cleaned; Beat 4 steps renumbered 1–13; section breaks added. |
 | 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. S55: §4.2/§4.4 updated (Economy narrowed; IntelToken = Information), §5.2 table updated (C05, C24 → Information). 04-63 flagged (stale C27 §4.6 entry). |
-| 04 — Action Card System | 0.9.25 | S62: P01–P18 full specs (Draft S62 — not signed off). Schema: `persistence` field added. Principle 17 added. Ghost: Source Substitution, Backdate, Field Verification specs added. Coverage analysis complete. Gap card sketches in Whiteboard. **Next: P-series sign-off pass; Disprove/Disinformation Campaign/Standing Injunction/Asset Extraction full specs; Directorate covert reclassification; 04-n10/11/13/14.** |
+| 04 — Action Card System | 0.9.25 | S63: Checklist → 13 rows (Persistence row 8). `persistence = Immediate` added to 35 C-series specs; 9 sign-offs cleared to n/a. P01–P08 Design Pass ✓/Issues Resolved ✓ (P08 Art 06 gaps). P09–P18 Design Pass ✓ / Issues Resolved pending 04-n23 (perspectives). **Next: 04-n23 (P09–P18 perspectives); C-series re-sign-off; 04-n18 (Art 04b §5.2); then gap card specs.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -83,6 +80,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **04-n18** | Art 04b §5.2 update — refresh P01–P18 entries (all stale placeholders); add Source Substitution / Backdate / Field Verification; taxonomy corrections (P11 = Submission/Modify, P07 = Standing/Shift, P16 = Economy/Add) | Open — S62 |
 | **04-n19** | Accord procedure design pass (Art 06) required before Group A gap cards: Economy/Remove/Accord, Economy/Redirect/Accord (C-S3), Information/Corrupt/Accord | Blocked — Art 06 |
 | **04-n20** | Directorate covert reclassification — review C21 Invoke Jurisdiction, C22 Detain, C23 Evidence Preservation, C25 Tactical Redirection, C42 Sanctioned Raid for PA reclassification | Open — next session |
+| **04-n23** | P09–P18 Voice fit gap — all 10 faction-specific PAs missing aligned + opposed perspectives (Principle 8 requires 3). 20 perspectives to write. Gates Issues Resolved ✓ for all P09–P18. | Open — S63 |
 
 → Full list: `V1/PM05___Active_Punch_List.md`
 

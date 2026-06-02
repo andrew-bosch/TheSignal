@@ -1,56 +1,41 @@
-## CLOSE QUEUE — Session 62
+## CLOSE QUEUE — Session 63
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/04___Card_System.md
-OLD: **Version:** 0.9.21 Draft  
-**Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-05-29  
-NEW: **Version:** 0.9.25 Draft  
-**Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-02  
-
-### APPEND
-FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
-AFTER: | **04-n14** | C32 Short the Market — mechanical redesign required ("applied silently" doesn't survive paper prototype; tagline/code conflict on generation vs stockpile) | Open — redesign pass |
-CONTENT:
-| **04-n15** | Standard equivalents for Source Substitution, Backdate, Field Verification — hired data specialist / PI versions; higher cost or lower threshold (Principle 17) | Open — S62 |
-| **04-n16** | Apply Principle 17 systematically — audit full card set for faction-native capabilities lacking outsourced standard counterparts | Open — S62 |
-| **04-n17** | Write full specs: Disprove, Disinformation Campaign, Standing Injunction, Asset Extraction (sketches in Whiteboard/gap_card_sketches_S62.md) | Open — S62 |
-| **04-n18** | Art 04b §5.2 update — refresh P01–P18 entries (all stale placeholders); add Source Substitution / Backdate / Field Verification; taxonomy corrections (P11 = Submission/Modify, P07 = Standing/Shift, P16 = Economy/Add) | Open — S62 |
-| **04-n19** | Accord procedure design pass (Art 06) required before Group A gap cards: Economy/Remove/Accord, Economy/Redirect/Accord (C-S3), Information/Corrupt/Accord | Blocked — Art 06 |
-| **04-n20** | Directorate covert reclassification — review C21 Invoke Jurisdiction, C22 Detain, C23 Evidence Preservation, C25 Tactical Redirection, C42 Sanctioned Raid for PA reclassification | Open — next session |
+FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
+OLD: **Last Updated:** 2026-06-02 (S62)
+NEW: **Last Updated:** 2026-06-02 (S63)
 
 ### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: **Last Session:** S61
-NEW: **Last Session:** S62
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: Next: P-series PA pass (P01–P18); Outstanding Issues C13/C15/C16/C17; C32 redesign; 04-n10/n11 pentagram gaps. |
+NEW: Next: P-series PA pass (P01–P18); Outstanding Issues C13/C15/C16/C17; C32 redesign; 04-n10/n11 pentagram gaps. S63: Checklist template → 13 rows (Persistence added as row 8). `persistence = Immediate` added to 35 C-series Python specs; 9 C-series sign-offs cleared to n/a. P01–P08 design pass complete: Design Pass ✓/Issues Resolved ✓ (P08 Art 06 gaps). P09–P18 design pass complete: Design Pass ✓/Issues Resolved pending 04-n23 (aligned + opposed perspectives). `tmp_card_review.line_start` recalculated for all 75 cards. P05 Expired excluded, P06 floor clause, P07 → Standing/Shift, P08 on-decline intentional. 04-n23 added. Next: 04-n23; C-series re-sign-off; 04-n18. |
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: ---
+AFTER: **Next session opens on:** P-series sign-off pass; Disprove/Disinformation Campaign/Standing Injunction/Asset Extraction full specs; Directorate covert reclassification; Art 04b §5.2 update.
 CONTENT:
-## S62 — 2026-06-02
 
-**Focus:** Art 04 P-series full design pass + Ghost intel manipulation cards + coverage gap analysis.
+## S63 — 2026-06-02
+
+**Focus:** Art 04 design checklist infrastructure + P-series design pass (P01–P18).
 
 **What was done:**
-- P01–P18 all specced (Draft S62 — not signed off). Names revised from stubs. Standard PAs (P01–P08) and faction-specific PAs (P09–P18) fully written.
-- Art 04 schema: `persistence` field added to Card class, Data Dictionary, Enum (Immediate/Transient/Seasonal/Permanent).
-- Art 04 §5: Principle 17 added (faction-native capabilities have outsourced standard equivalents).
-- Ghost extended set: Source Substitution (Information/Corrupt/IntelToken — faction field), Backdate (Information/Corrupt/IntelToken — quarter field), Field Verification (Information/Recover/IntelToken) — full specs written.
-- Art 04b coverage analysis: gaps catalogued by layer/function/subject, prioritised, Territory/Recover removed from valid taxonomy, Copy/PA retired.
-- Gap card sketches preserved in Whiteboard/gap_card_sketches_S62.md: Disprove, Disinformation Campaign, Standing Injunction, Asset Extraction.
-- PA persistence policy established: PA cards carry `persistence` field; Beat 4/5 and Phase 21 govern cleanup.
-- Design decision: Accord procedure (Art 06) is prerequisite for Group A gap cards.
-- PM05 items 04-n15 through 04-n20 added.
+- Checklist template expanded to 13 rows (Persistence added as row 8; gate updated to "13 rows assessed").
+- `persistence = Immediate` added to 35 C-series Python specs (C01–C19, C21–C35, C39); 9 C-series sign-offs cleared to n/a pending re-review.
+- 11 stale Persistence checklist rows removed from P-series + Ghost card checklists (wrong location — field belongs in Python spec only).
+- `tmp_card_review.line_start` recalculated for all 75 cards after edits.
+- P01–P08: full 13-row checklists complete. P05 restriction updated (Expired tokens excluded — `age__in=[Fresh, Stale]`). P06 floor clause added (`min(2, available)`). P07 taxonomy corrected to Standing/Shift/PublicStanding. P08 on-decline +1 PS confirmed intentional.
+- P01–P07: Design Pass ✓ / Issues Resolved ✓. P08: Design Pass ✓ / Issues Resolved open (Art 06 gaps).
+- P09–P18 (faction-specific PAs): 13-row checklists complete. Design Pass ✓ on all 10. Issues Resolved pending 04-n23 (all 10 missing aligned + opposed perspectives per Principle 8).
+- PM05: 04-n23 added (write 2 additional perspectives per card for P09–P18, 20 total).
 
 **No locked decisions (L-decisions) this session — draft pass only.**
 
-**Next session opens on:** P-series sign-off pass; Disprove/Disinformation Campaign/Standing Injunction/Asset Extraction full specs; Directorate covert reclassification; Art 04b §5.2 update.
+**Next session opens on:** 04-n23 (aligned + opposed perspectives for P09–P18); C-series sign-off re-review (persistence added); 04-n18 (Art 04b §5.2 update).
 
 ### COMMIT
-source ~/Projects/credentials.env && git add -A && git commit -m "session 62 — Art 04 P-series full specs, Ghost intel manipulation cards, schema persistence field, Principle 17, coverage gap analysis" && git push
+source ~/Projects/credentials.env && cd /home/abosch/Projects/TheSignal && git add -A && git commit -m "session 63 — P-series design pass complete; checklist → 13 rows; persistence sweep" && git push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
