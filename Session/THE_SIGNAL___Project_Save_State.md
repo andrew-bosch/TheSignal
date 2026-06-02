@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-01 (S61)
+**Last Updated:** 2026-06-02 (S62)
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -40,6 +40,27 @@ Read this document top to bottom before doing any design work in a new session. 
 **Decisions locked:** L181 (Art 03 v3.0), L182 (Art 00a v0.4), L183 (C22 Detain — Directorate Detention zone; Terminal uniqueness).
 **Artifacts updated:** Art 03 (v3.0, signed off L181), Art 00a (v0.4, signed off L182), Art 04 (§5a Narrative Anchor, C22 updated, C42 v1.1), PM02 (L183), PM05 (04-n10–14 added), SESSION_BRIEF (S61).
 **Next:** S62 — Art 04 P-series Public Act pass (P01–P18, all stubs); Outstanding Issues C13/C15/C16/C17; C32 redesign (04-n14); 04-n10/n11 pentagram gaps. XA-41 (Art 03a schema rename) deferred.
+
+## S62 — 2026-06-02
+
+**Focus:** Art 04 P-series full design pass + Ghost intel manipulation cards + coverage gap analysis.
+
+**What was done:**
+- P01–P18 all specced (Draft S62 — not signed off). Names revised from stubs. Standard PAs (P01–P08) and faction-specific PAs (P09–P18) fully written.
+- Art 04 schema: `persistence` field added to Card class, Data Dictionary, Enum (Immediate/Transient/Seasonal/Permanent).
+- Art 04 §5: Principle 17 added (faction-native capabilities have outsourced standard equivalents).
+- Ghost extended set: Source Substitution (Information/Corrupt/IntelToken — faction field), Backdate (Information/Corrupt/IntelToken — quarter field), Field Verification (Information/Recover/IntelToken) — full specs written.
+- Art 04b coverage analysis: gaps catalogued by layer/function/subject, prioritised, Territory/Recover removed from valid taxonomy, Copy/PA retired.
+- Gap card sketches preserved in Whiteboard/gap_card_sketches_S62.md: Disprove, Disinformation Campaign, Standing Injunction, Asset Extraction.
+- PA persistence policy established: PA cards carry `persistence` field; Beat 4/5 and Phase 21 govern cleanup.
+- Design decision: Accord procedure (Art 06) is prerequisite for Group A gap cards.
+- PM05 items 04-n15 through 04-n20 added.
+
+**No locked decisions (L-decisions) this session — draft pass only.**
+
+**Next session opens on:** P-series sign-off pass; Disprove/Disinformation Campaign/Standing Injunction/Asset Extraction full specs; Directorate covert reclassification; Art 04b §5.2 update.
+
+---
 
 ### S53 — 2026-05-30
 Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`Card(...)` constructor format). C01–C17 design rationale fully restructured: two-subheader format (#### Design Rationale + #### Outstanding Issues and Design Questions), checklist converted to Category/Pass/Note table format. Code block fixes: C01/C02 `district(target).faction(acting)` notation, C07 `restriction=None` (removed unenforeable Beat 4 check), C17 portrait `flat→submitter`. Six open design questions documented in Outstanding Issues for C05/C09/C10/C13/C15/C16. L172 locked. 04-57 closed. 04-58 opened (C01–C17 Outstanding Issues resolution).
