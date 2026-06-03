@@ -11,7 +11,9 @@ S64 complete. S65 opens here.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
-**S66 entry point:** 04-n25 remaining: `target_ring` (Entry/Exit Controls — needs Art 01 ring-scope definition + §6 field).
+**S66 accomplishments:** 04-n25 ✅ closed. Entry/Exit Controls redesigned v2.0 (district target; permanent placement block; `persistence_condition`). Art 03 v3.2 signed off (L186). Art 04 §6.6 removed. `persistence_condition` added to §6.1/§6.2. New PM05: 04-n29 (counter-card design + Art 03 persistence monitoring), 04-n30 (persistence_condition sweep).
+
+**S67 entry point:** 04-n26 (component interaction design pass — critical path to Issues Resolved on multiple cards).
 
 **Priority order for S66+:** 04-n25 `target_ring` (critical) → 04-n26 (component interaction design) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
 

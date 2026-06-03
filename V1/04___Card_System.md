@@ -341,7 +341,8 @@ class Card:
     trigger:      TriggerExpr | None        # None = default beat timing
     resolution_type: str | None            # evolving vocabulary — feeds 00c §8
     outcome_type: OutcomeType | None        # public acts only
-    persistence:  Persistence              # card table presence — Immediate/Transient/Seasonal/Permanent; default Immediate for covert ops
+    persistence:           Persistence              # card table presence — Immediate/Transient/Seasonal/Permanent; default Immediate for covert ops
+    persistence_condition: BoolExpr | None           # None unless persistence=Permanent; card discarded immediately when this evaluates False
 
     # ── Targeting ─────────────────────────────────── expressions
     target_district: DistrictExpr
@@ -402,6 +403,7 @@ class PortraitEntry:
 | resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
 | persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Beat 5 of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. PA cards with active board-condition effects must use Transient or Seasonal. | Face |
+| persistence_condition | Metadata | BoolExpr | Condition that must remain True for a Permanent card to stay in play; card is discarded immediately when it evaluates False. None for all non-Permanent cards. | Face |
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
 | target_faction | Targeting | FactionExpr | Faction this card targets; None = no faction target | Face |
 | target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
@@ -471,14 +473,6 @@ Design guidance for `ring_mod` and `doctrine_mod`. Not locked — adjust based o
 *Applies only when `target_faction` is set. `doctrine_mod = None` when card has no faction target. Pentagram arrangement: Art 00 §7. L174.*
 
 ---
-
-### 6.6 Expression Parameters
-
-Named parameters that modify how an expression executes. Recognized values:
-
-| Parameter | Applies to | Meaning |
-|-----------|-----------|---------|
-| `pre_loss_calc=True` | `game.transfer()` in `success` | Transfer executes before resource-loss calculations at the resolving beat. ARBITER records privately. Loss calculations apply to the post-transfer pool. See Art 03 Beat 2. |
 
 ---
 
@@ -5231,33 +5225,32 @@ P12 = Card(
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-Directorate's persistent territorial control tool — a ring-wide World Event that penalizes all non-Directorate covert operations in the named ring for as long as Directorate maintains presence there. Distinct from Invoke Jurisdiction (C21), which blocks specific card types in a single district for one round: Entry/Exit Controls operates at ring scope, lasts across rounds and Quarters, and applies a threshold penalty rather than a hard block. The −10 threshold is meaningful but not absolute — non-Directorate factions can still operate in the ring at reduced probability. PS +1 at resolution reflects the public institutional legitimacy signal of establishing movement oversight. Directorate voluntarily lifting the restriction (1 Mandate) creates a useful diplomatic tool: the threat of Entry/Exit Controls shapes table behavior even before it is played.
+Directorate's persistent territorial control tool — a district-level board condition that displaces non-Directorate deployment markers immediately and blocks future placement in the named district. Distinct from Invoke Jurisdiction (C21), which blocks specific card types in a single district for one Beat: Entry/Exit Controls operates on deployment marker movement, persists across rounds and Quarters, and is self-policing via persistence_condition (auto-discards if Directorate loses Established status). PS −1 at resolution reflects the public backlash of establishing hard movement restrictions. Removal requires a counter-action — new card type TBD (PM05).
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Ring-wide movement oversight — persistent −10 threshold on all non-Directorate covert ops in a ring; distinct from C21 (district, one round) and C25 (own repositioning) | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Directorate perspective by design — regulatory oversight as institutional infrastructure | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; Mandate×3 for persistent ring-wide effect; Established restriction (jurisdictional legitimacy); diplomatic lift mechanic outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Directorate) — ring-level regulatory authority is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Block/CovertOperation — threshold penalty is a soft block; target_ring schema field outstanding (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×3, ring-wide persistent −10 — threshold modifier scope and World Event overlap outstanding (Outstanding Issues); PS +1 reward at resolution | Art 02a §6–§7 |
-| Effect duration | ✓ | Persistent World Event: applies across rounds/Quarters until cleared (voluntary lift or Absent) | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None; restriction requires Directorate Established in at least one ring district | — |
-| Portrait validity | ✓ | Directorate +1 submitter; PS +1 is a game effect at Beat 4 resolution, not portrait | Art 04 §6.2 |
-| Supported by zones | ✓ | target_ring = ring.named — new schema field outstanding (Outstanding Issue); ring definition in Art 01 | Art 01 §6–§7 |
-| Supported by components | ✓ | EntryControlMarker registration outstanding (Outstanding Issue); placed on ring display | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 4 PA resolution; World Event persists across rounds/Quarters; lift conditions and stack behavior outstanding (Outstanding Issues) | Art 03 §9, §17 |
+| Action fit | ✓ | District-level movement control — displaces markers immediately; blocks future placement; distinct from C21 (card-type block) and C25 (repositioning) | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Directorate perspective — regulatory authority as territorial infrastructure | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate only; Mandate×3 for permanent district lock; Established restriction (jurisdictional legitimacy requires institutional presence) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PoliticalAct / FactionSpecific (Directorate) — district-level movement authority is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Territory/Block/DeploymentMarker — hard block on placement is the function | Art 04b §4, §5 |
+| Balance | ✓ | Mandate×3, permanent district lock, PS −1 — pool_copies and cost TBD playtesting | Art 02a §6–§7 |
+| Effect duration | ✓ | Permanent — persists until counter-acted or persistence_condition fails | — |
+| Persistence | ✓ | Permanent; persistence_condition auto-discards on Directorate falling below Established in named district | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None; restriction requires Directorate Established in named district | — |
+| Portrait validity | ✓ | Directorate submitter=+1; PS −1 in success field is a game effect, not portrait | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named — standard targeting | Art 01 §6–§7 |
+| Supported by components | ✓ | Operates on deployment markers (existing component); no new component required | Art 02a §6–§8 |
+| Supported by game procedure | ⚠ | Beat 4 PA resolution defined; persistence_condition monitoring trigger not yet in Art 03 (PM05 04-n29 — blocks Issues Resolved) | Art 03 §9 |
 
 #### Outstanding Issues
 
-- **target_ring field:** New schema field not in existing card spec. `target_ring=ring.named` needs schema addition and Art 01 ring definition confirmation. Flag for PM05 04-n1 schema rework scope.
-- **EntryControlMarker component:** New component not yet registered in Art 02. Fields needed: `ring | clear_conditions`. Placed on ring display (physical zone indicator).
-- **Threshold modifier scope:** Entry/Exit Controls reduces covert op thresholds by −10. Confirm: does this stack with ring_mod? Does it apply before or after affinity bonuses? Interaction with Ghost faction ops (which often have restriction=None) — confirm −10 applies even without adjacency restriction.
-- **Diplomatic use / lift conditions:** Directorate spending 1 Mandate to lift the restriction voluntarily — confirm this is an unannounced action (private Mandate payment to ARBITER) or a public act. Public lift signals weakness; private lift is a concealed diplomatic move.
-- **World Event overlap:** If Directorate plays Entry/Exit Controls twice in different rings simultaneously, confirm each marker is tracked independently.
+- **Counter-card removal:** Card sits in Directorate's PA area as a permanent board condition. Removal by counter-action requires new card type(s) — design TBD. See PM05 04-n29.
+- **Art 03 persistence monitoring:** ARBITER needs a defined trigger point to check persistence_condition of all permanent PA cards (e.g., after any influence tier change). See PM05 04-n29. Blocks Issues Resolved.
+- **Displaced faction with no presence elsewhere:** `move_to=district.where(faction.has_presence)` has no valid destination if the displaced faction holds no presence outside the named district. Fallback rule needed — e.g., marker is returned to hand (faction skips next placement) or moved to Baryo as unconditional fallback (00-R13b: no elimination).
+- **pool_copies:** TBD — playtesting and balance question.
 
 #### Status
 
@@ -5265,43 +5258,47 @@ Directorate's persistent territorial control tool — a ring-wide World Event th
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Draft S59 — design pass pending*
+*Redesigned S66 — v1.0 (ring-scope) retired*
 
 ```python
 EntryExitControls = Card(
-    id=TBD,  version="v1.0",
+    id=TBD,  version="v2.0",
     name    = "Entry/Exit Controls",
-    tagline = "Establish movement oversight across a ring — penalizing all non-Directorate covert operations in the zone.",
+    tagline = "Designate a district as a controlled zone — displacing non-Directorate deployment markers and blocking future placement.",
     type    = PoliticalAct,  subtype = FactionSpecific,  faction = Directorate,
-    layer   = Territory,  function = Block,  subject = CovertOperation,
-    beat=4, resolution=Automatic, threshold=None, ring_mod=None,
+    layer   = Territory,  function = Block,  subject = DeploymentMarker,
+    beat=4,  resolution=Automatic,  threshold=None,  ring_mod=None,
     trigger=None,
-    resolution_type="Transactional", outcome_type=None,
-    target_district=None, target_ring=ring.named,  # new schema field — outstanding issue
-    target_faction=faction.all_except(Directorate),
+    resolution_type="Transactional",  outcome_type=Unilateral,
+    persistence           = Permanent,
+    persistence_condition = faction(acting).influence_tier(district.named) >= Established,
+    target_district = district.named,
+    target_faction  = faction.all_except(Directorate),
+    target_object   = None,
     affinity=None,
-    restriction = faction(acting).influence_tier(district.any_in(ring.named)) >= Established,
-    cost        = resource.faction(acting).mandate * 3,
+    restriction = faction(acting).influence_tier(district.named) >= Established,
+    cost = resource.faction(acting).mandate * 3,
     success = (
-        arbiter.place(EntryControlMarker, ring(named)),
-        game.world_condition(
-            scope=ring(named),
-            effect=covert_op(faction=faction.all_except(Directorate)).threshold -= 10,
-            duration=persistent,
-            clear_on=(
-                faction(acting).mandate -= 1  # voluntary lift
-                OR faction(acting).influence_tier(district.all_in(ring.named)) == Absent
-            ),
+        for_each(
+            deployment_marker(faction=faction.all_except(Directorate), district=district.named),
+            arbiter.instruct(marker.owner, move_to=district.where(faction.has_presence), flip_to=Blocked),
         ),
-        faction(acting).standing += 1,
+        game.board_condition(
+            scope    = district.named,
+            effect   = placement(faction.all_except(Directorate), type=DeploymentMarker).blocked,
+            duration = Permanent,
+        ),
+        faction(acting).standing -= 1,
     ),
-    successcrit=None, fail=None, failcrit=None,
-    portrait    = {Directorate: PortraitEntry(submitter=+1)},
-    narrative   = "The Directorate has established movement oversight across the zone. Activities will be subject to review.",
-    perspectives = {Directorate: "Movement in this ring is now regulated. Non-compliant operations will find their margins significantly reduced. Compliance, however, remains an option."},
-    design_note  = "Persistent World Event / Board Condition. EntryControlMarker placed on ring display. Applies −10 to threshold of all non-Directorate covert op resolutions in the ring. Clears: Directorate voluntarily pays 1 Mandate (diplomatic lift) OR Directorate reaches Absent in all ring districts. PS +1 at Beat 4 resolution — institutional legitimacy signal. New schema field target_ring pending PM05 04-n1.",
-    arbiter_note = "Place EntryControlMarker on ring display. Apply −10 to threshold for all non-Directorate covert op d100 resolutions in any district within that ring — applies from next round onward. Apply PS +1 to Directorate at resolution. Clear conditions: Directorate voluntarily pays 1 Mandate (announce publicly) OR Directorate reaches Absent in all districts of that ring — remove marker and announce. Multiple rings may have independent markers.",
-    pool_copies=1,
+    successcrit=None,  fail=None,  failcrit=None,
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    narrative    = "Movement within the designated zone is now subject to Directorate authorization. Non-compliant presence has been relocated.",
+    perspectives = {
+        Directorate: "The district is designated. Who enters does so with our permission — or not at all.",
+    },
+    design_note  = "Persistent PA. Card sits in Directorate's active PA area on the Overview (not on district tile). Immediate: non-Directorate deployment markers in named district displaced to any district where owning faction has presence, flipped to Blocked. Persistent: non-Directorate deployment marker placement blocked in named district. persistence_condition auto-discards card if Directorate falls below Established. PS −1 at resolution (public backlash). Counter-card removal TBD — see PM05 04-n29.",
+    arbiter_note = "Name the district. Each non-Directorate deployment marker there: owning faction moves it to any district where they have presence, flip to Blocked.",
+    pool_copies  = TBD,
 )
 ```
 
@@ -5784,7 +5781,7 @@ C37 = Card(
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     target_district=None, target_faction=faction.any, target_object=None,
-    affinity=Network,
+    affinity=None,
     restriction=None,
     cost        = None,
     success     = faction(acting).public_standing -= 2, IntelToken(target_faction) += 1,

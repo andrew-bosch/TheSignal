@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-03 (S65)
+**Last Updated:** 2026-06-03 (S66)
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -137,6 +137,25 @@ Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`
 - L185: Art 03 v3.1 signed off. Golden Parachute bribe mechanic (Beat 0/2/3). Art 04 §6.2 cost field (fungible only). §6.6 Expression Parameters. C37 Sacrifice + C34 Golden Parachute redesigned.
 
 **Next session:** 04-n25 remaining: `target_ring` (Entry/Exit Controls — needs Art 01 ring-scope definition + §6 field). Then 04-n26 → 04-n27 → 04-n28.
+
+## Session 66 — 2026-06-03
+
+**Focus:** 04-n25 completion; Entry/Exit Controls full redesign
+
+**Accomplished:**
+- Entry/Exit Controls redesigned v2.0 — district target (not ring); permanent deployment marker placement block; non-Directorate markers displaced to any district where faction has presence (Blocked face); persistence_condition auto-discard when Directorate loses Established; PS −1; card sits in Directorate's PA area on the Overview
+- Art 04 §6.1/§6.2: persistence_condition field added (BoolExpr | None — card discarded immediately when evaluates False)
+- Art 04 §6.6 Expression Parameters removed — pre_loss_calc was added ahead of card sign-off; schema additions must follow sign-off
+- Art 03 v3.2 signed off (L186) — Beat 2 pre_loss_calc block removed
+- C37 Sacrifice: affinity=None (stale field on a cost=None card)
+- 04-n25 ✅ fully closed (all 3 items: target_ring moot; pre_loss_calc orphaned+removed; PS-as-cost already fixed in S65)
+- PM05: 04-n29 added (counter-card design + Art 03 persistence monitoring); 04-n30 added (persistence_condition sweep on all card specs)
+- Entry/Exit Controls: design pass ✓; Issues Resolved blocked by 04-n29 and no-presence-elsewhere edge case
+
+**L-decisions this session:**
+- L186: Art 03 v3.2 signed off. Beat 2 pre_loss_calc procedure block removed (C34 uses game.bribe(); no card uses pre_loss_calc). Art 04 §6.6 removed. Schema additions must follow card sign-off.
+
+**Next session:** 04-n26 (component interaction design pass).
 
 ---
 

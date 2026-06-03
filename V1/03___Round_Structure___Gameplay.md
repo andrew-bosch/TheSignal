@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 3.1  
+**Version:** 3.2  
 
-**Status:** ✅ Signed Off — S65 (L185). Beat 0 Retained payment validation; Beat 2 Golden Parachute bribe procedure; Beat 3 partial payment marker source updated.  
+**Status:** ✅ Signed Off — S66 (L186). Beat 2 `pre_loss_calc=True` procedure block removed (no card uses it; schema addition predated sign-off).  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -602,12 +602,6 @@ The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right
 2. ARBITER retains awareness — no grid effect at Beat 2.
 3. At Beat 3: if any Demolish operation in the grid targets the fortified structure, ARBITER intercepts at Step 1 of that operation's resolution. The Demolish has no effect. ARBITER announces: *"The structure in [DISTRICT] is reinforced. Demolition has no effect this Quarter."* Place the Demolish operation card and target slip face-down in the Demolish submitter's dispatch case. Face-down operation cards are void.
 4. Return the card to the acting faction's dispatch case.
-
-**For each Beat 2 card with `pre_loss_calc=True` in its success expression:**
-
-1. Execute the transfer immediately — before any resource-loss event resolves this round.
-2. ARBITER records the transfer privately. Do not announce to the table.
-3. All resource-loss calculations at Beat 3 and Beat 4 apply to the post-transfer pool. The transferred resources are no longer in the acting faction's pool at the time of loss calculation.
 
 **For each Golden Parachute card:**
 
