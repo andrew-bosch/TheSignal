@@ -20,13 +20,13 @@
 
 1. Overview (§1 above)
 2. [Index](#2-index)
-3. [Starting Assets & Resource Quantities](#3-starting-assets--resource-quantities)
+3. [Starting Assets & Resource Quantities](#3-starting-assets-resource-quantities)
 4. [Resource Generation Rates](#4-resource-generation-rates)
-5. [Card Costs & Modifier Thresholds](#5-card-costs--modifier-thresholds) *(blocked — Art 04 incomplete)*
+5. [Card Costs & Modifier Thresholds](#5-card-costs-modifier-thresholds) *(blocked — Art 04 incomplete)*
 6. [Operation System Values](#6-operation-system-values)
-7. [Balance Notes & Playtest Observations](#7-balance-notes--playtest-observations)
+7. [Balance Notes & Playtest Observations](#7-balance-notes-playtest-observations)
 8. [Derived Cost Analysis](#8-derived-cost-analysis) *(blocked — Art 04 §7, §8 required)*
-9. [Round Income Analysis — Quarters 2–8](#9-round-income-analysis--quarters-2-8) *(blocked — probability model required; home TBD)*
+9. [Round Income Analysis — Quarters 2–8](#9-round-income-analysis-quarters-2-8) *(blocked — probability model required; home TBD)*
 
 ---
 

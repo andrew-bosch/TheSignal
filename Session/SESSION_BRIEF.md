@@ -9,14 +9,11 @@ Read full files only when deep work requires it.
 ## Current Focus
 S64 complete. S65 opens here.
 
-**S64 accomplishments:** 04-n17 ✅ — Disprove, Intel Extraction, Modifier Raid written to Art 04; Art 04b §5.2 updated (+5 new rows). Design pass ✓ complete across ALL Art 04 cards. PM05 04-n25/26/27/28 added (schema fields critical; component design high; Art 03 gaps high/pre-accord; Art 06 accord design high/post-27).
+**S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
-**S65 entry point:** 04-n25 (critical — schema field gaps). Three fields used in Art 04 card specs with no §6 or Art 03 basis:
-- `target_ring` — Entry/Exit Controls; needs Art 01 ring-scope definition + §6 field
-- `pre_loss_calc=True` — Golden Parachute; needs Art 03 Beat 2 sequence addition
-- PS-as-cost in cost field — Sacrifice; needs §6 cost field schema extension
+**S66 entry point:** 04-n25 remaining: `target_ring` (Entry/Exit Controls — needs Art 01 ring-scope definition + §6 field).
 
-**Priority order for S65+:** 04-n25 (critical) → 04-n26 (component interaction design) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
+**Priority order for S66+:** 04-n25 `target_ring` (critical) → 04-n26 (component interaction design) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
 
 **Also pending:** Standing Injunction 5 open flags (tracks under 04-n26 component/process design); agy DB-S63-01/02/03 check-in.
 
@@ -31,7 +28,7 @@ S64 complete. S65 opens here.
 | 00a — Governing Rules & Design Policy | 0.4 | ✅ Signed Off — S61 (L182). 00-R21 (4-type taxonomy), 00-R22 (partial payment), 00-R29b (Author Vacuum), 00-R39 (covert+public). 43 rules. |
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Quarter Structure & Gameplay | 3.0 | ✅ Signed Off — S61 (L181). Beat 3 Step 12 cleaned; Beat 4 steps renumbered 1–13; section breaks added. |
+| 03 — Quarter Structure & Gameplay | 3.1 | ✅ Signed Off — S65 (L185). Beat 0 Retained payment validation; Beat 2 Golden Parachute bribe procedure; Beat 3 partial payment marker source updated. |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
 | 04 — Action Card System | 0.9.26 | S64: 04-n17 ✅ (Disprove, Intel Extraction, Modifier Raid written); design pass ✓ all cards. **Next: 04-n25 (schema fields, critical) → 04-n26 → 04-n27 → 04-n28.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
@@ -95,6 +92,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.
 - **L184** (S63): L108 amended — 3NF requirements (6 + 7) added; component.transformable → virtual generated; action.prereq_beat_id dropped.
 - **L183** (S61): C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine.
 - **L182** (S61): Art 00a v0.4 signed off. 00-R21 (4-type duration taxonomy), 00-R22 (partial payment model), 00-R29b (Missing Author Vacuum renamed from duplicate 00-R30), 00-R39 (covers covert ops + public acts). 43 rules.

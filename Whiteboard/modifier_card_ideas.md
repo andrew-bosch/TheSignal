@@ -117,6 +117,9 @@ Trigger: immediately when a Guild structure block is removed by Demolish or pres
 **NETWORK PS SHIFT** — Standing — Shift — Public Standing
 Covert card: Network manages city-wide public perception through covert information operations. PS shift as a covert op rather than political act. Fills D-04-04 PS Shift gap.
 
+**NETWORK PS RECOVERY / NEGATION** — Standing — Shift — Public Standing
+Modifier card: negates some or all PS track changes for one beat, OR adds PS back after a deliberate sacrifice (e.g., post-Sacrifice recovery). Network-specific. Two possible forms: (1) React — when any effect would reduce Network PS, negate or reduce the loss; (2) Persistent — place at Dispatch, grants +1 or +2 PS at Beat 4 resolution. Pairs directly with Sacrifice (C37) — enables burst-and-recover pattern if Network builds around it. *(S65 — flagged during Sacrifice redesign)*
+
 **REACT — PRESENCE PLACEMENT**
 Trigger: when an opponent's political act succeeds this round, Network may immediately place 1 presence token in any district where they already have presence. *(Complex React timing — needs beat-sequencing review against Art 03)*
 

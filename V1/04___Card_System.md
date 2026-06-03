@@ -25,12 +25,12 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §5a | [Faction Playstyle Reference](#5a-faction-playstyle-reference) |
 | §6 | [Card Data Schema](#6-card-data-schema) |
 | §7 | [Card Specifications](#7-card-specifications) |
-| §11 | [Rules & Constraints — Modifier Cards](#11-rules--constraints--modifier-cards) |
-| §12 | [Rules & Constraints — Pass Cards](#12-rules--constraints--pass-cards) |
+| §11 | [Rules & Constraints — Modifier Cards](#11-rules-constraints-modifier-cards) |
+| §12 | [Rules & Constraints — Pass Cards](#12-rules-constraints-pass-cards) |
 | §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
-| §14 | [Special Conditions & Gameplay Impacts](#14-special-conditions--gameplay-impacts) |
-| §15 | [Examples & Exceptions](#15-examples--exceptions) |
-| §16 | [Appendix — Outstanding Decisions & Assumptions](#16-appendix--outstanding-decisions--assumptions) |
+| §14 | [Special Conditions & Gameplay Impacts](#14-special-conditions-gameplay-impacts) |
+| §15 | [Examples & Exceptions](#15-examples-exceptions) |
+| §16 | [Appendix — Outstanding Decisions & Assumptions](#16-appendix-outstanding-decisions-assumptions) |
 
 ---
 
@@ -407,7 +407,7 @@ class PortraitEntry:
 | target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
 | affinity | Logic | ConditionalExpr | Faction-based cost modifier — evaluated before cost expression | Face |
 | restriction | Logic | BoolExpr | Submission preconditions — card unplayable if evaluates False | Face |
-| cost | Logic | CostExpr | Resources consumed at submission | Face |
+| cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid cost resources are those that can be traded or transferred (Mandate, Capital, Influence, district native resource). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
 | success | Effects | MutationExpr | Primary effect on resolution success | Face |
 | successcrit | Effects | MutationExpr | Additive delta on critical success (roll < 5); None when Automatic | Face |
 | fail | Effects | MutationExpr | Effect on failure; None = cost spent, no additional effect | Face |
@@ -469,6 +469,16 @@ Design guidance for `ring_mod` and `doctrine_mod`. Not locked — adjust based o
 | Opposed | −15 | Capital faces resistance crossing doctrinal distance |
 
 *Applies only when `target_faction` is set. `doctrine_mod = None` when card has no faction target. Pentagram arrangement: Art 00 §7. L174.*
+
+---
+
+### 6.6 Expression Parameters
+
+Named parameters that modify how an expression executes. Recognized values:
+
+| Parameter | Applies to | Meaning |
+|-----------|-----------|---------|
+| `pre_loss_calc=True` | `game.transfer()` in `success` | Transfer executes before resource-loss calculations at the resolving beat. ARBITER records privately. Loss calculations apply to the post-transfer pool. See Art 03 Beat 2. |
 
 ---
 
@@ -5732,59 +5742,58 @@ C30 = Card(
 [↑ Covert Operations](#network-covert-operations)
 
 #### Design Rationale
-Network's credibility-to-Intel conversion card — the only card in the game where Public Standing is spent as a cost rather than lost as a consequence. Reflects the Network doctrine that standing is a means, not an end: when The Network needs intelligence and has no other path to it, it trades institutional credibility for operational capability. Automatic, faction-gated, no target. The PS loss is a track step applied at Dispatch, not a portrait effect. No pool restrictions — Network can play this repeatedly, but repeated PS loss has cumulative strategic cost.
+Network's credibility-to-Intel conversion card. Reflects the Network doctrine that institutional standing is a means, not an end: when The Network needs intelligence on a specific faction and has no other path to it, it trades credibility for operational capability. The PS loss is a success effect — not a submission cost — because Public Standing is a non-fungible marker, not a tradeable resource (Art 04 §6.2). Single use per play, 2 PS per token. Faction target is required: tokens must be keyed to a faction at Dispatch ("no blank checks").
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | PS-to-Intel conversion — only card where Public Standing is spent as cost; Network doctrine: standing is a means, not an end | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Network perspective by design — deliberate credibility sacrifice as doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Network only; PS-as-cost is unique mechanic; no target; Automatic; no pool restrictions — repeated use has cumulative PS cost | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — PS-as-cost is Network-exclusive mechanic | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Add/IntelToken — PS cost generates Intel resource; Economy layer correct | Art 04b §4, §5 |
-| Balance | ✓ | PS−1 for 1 IntelToken — finite PS resource is the real gate; PS-as-cost schema and token faction-keying outstanding (Outstanding Issues) | Art 02a §6–§7; Art 02b §7 |
-| Effect duration | ✓ | Immediate: PS reduced at Dispatch, Intel token delivered at Beat 3 | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Action fit | ✓ | PS-to-Intel conversion — Network doctrine: standing is a means, not an end; deliberate sacrifice for targeted intelligence | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Network perspective by design | Art 00 §7 |
+| Doctrine alignment | ✓ | Network only; free submission; PS loss as success effect; target_faction required for token keying; 2 PS per token calibrated as real doctrine commitment | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Economy/Add/IntelToken — PS effect generates faction-keyed Intel; Economy layer correct | Art 04b §4, §5 |
+| Balance | ✓ | Free cost; 2 PS for 1 IntelToken; single use per play — PS track scarcity is the gate; 2:1 ratio prevents cheap arbitrage vs. Weaponized Transparency | Art 02a §6–§7; Art 02b §7 |
+| Effect duration | ✓ | Immediate: PS reduced and token delivered at Beat 3 resolution | — |
+| Persistence | ✓ | Immediate — card fully resolved at resolution beat | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | portrait = {} — PS loss is the cost field, not a portrait track shift; absence confirmed intentional per P12 | Art 04 §6.2 |
+| Portrait validity | ✓ | portrait = {} — PS loss is a success effect, not a portrait track shift; absence confirmed intentional | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — no district context | Art 01 §6–§7 |
-| Supported by components | ✓ | PublicStanding as cost; IntelToken as subject; PS-as-cost schema outstanding (Outstanding Issue) | Art 02a §6–§8; Art 02b §7 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; PS loss at Dispatch; Intel at Beat 3; PS-cost dispatch procedure outstanding (Outstanding Issue) | Art 03 §9, §11 |
+| Supported by components | ✓ | target_faction required; IntelToken keyed to target_faction at Dispatch | Art 02a §6–§8; Art 02b §7 |
+| Supported by game procedure | ✓ | Beat 3 Automatic; PS loss and IntelToken delivery handled by Art 03 apply effect | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **PS-as-cost schema:** `cost = faction(acting).public_standing -= 1` models PS loss as a cost field, not as a success/failcrit effect. Confirm this is the correct field for a pre-resolution PS deduction — Art 03 Dispatch procedure must define how PS-cost cards are processed.
-- **Generated token faction-keying:** The delivered Intel token has no faction key. Confirm it is a generic/unkeyed token (distinct from faction-keyed Intel needed for SCIF/Flip), or whether it receives a random key.
+*None.*
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
 
 *Migrated from §8 Intel Economy block to Network extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
 
 ```python
 C37 = Card(
-    id=37,  version="v1.0",
+    id=37,  version="v1.1",
     name    = "Sacrifice",
-    tagline = "Burn The Network's institutional credibility for an intelligence edge.",
+    tagline = "Spend two steps of credibility. Receive one piece of intelligence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
-    target_district=None, target_faction=None, target_object=None,
+    target_district=None, target_faction=faction.any, target_object=None,
     affinity=Network,
     restriction=None,
-    cost        = faction(acting).public_standing -= 1,
-    success     = game.dispatch(faction(acting), IntelToken(any) * 1),
+    cost        = None,
+    success     = faction(acting).public_standing -= 2, IntelToken(target_faction) += 1,
     successcrit=None, fail=None, failcrit=None,
     portrait    = {},
     narrative   = "The Network knows: sometimes you spend credibility like currency. This is one of those times.",
-    perspectives = {Network: "Standing is not an end. It is a means. And sometimes a means must be spent."},
-    design_note  = "PS −1 is the cost, not a portrait effect — applied at Dispatch, not as an outcome. No target faction or district. Generated Intel token is unkeyed (any) — confirm faction-keying status at schema pass.",
-    arbiter_note = "At Dispatch: reduce Network's Public Standing track by 1. At Beat 3: deliver 1 Intel token to Network's case.",
+    perspectives = {Network: "What we have built is not a goal. It is a tool. And sometimes a tool must be spent."},
+    design_note  = "PS −2 is a success effect, not a cost — PS is non-fungible and cannot appear in the cost field (Art 04 §6.2). target_faction required: tokens must be keyed at Dispatch. Single use per play; 2:1 ratio prevents cheap IntelToken arbitrage.",
+    arbiter_note = None,
 )
 ```
 
@@ -6264,61 +6273,59 @@ C33 = Card(
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate's asset protection card — the only zero-cost card in the Syndicate set. Transfers up to 3 Capital to a named faction at Beat 2, before any resource-loss event resolves this round. The pre-loss transfer is the entire mechanic: Capital exits Syndicate's pool before loss calculations are applied, meaning enforcement actions, confiscation effects, or penalty costs subtract from a smaller pool. The named faction receives the Capital and can use it normally — making this also a covert funding mechanism. Beat 2 Automatic with `pre_loss_calc=True` parameter makes the timing unambiguous to ARBITER. No fail state.
+Syndicate's bribe card — pays a named faction to nullify their Beat 3 operations against Syndicate. Capital is declared at Dispatch, validated at Beat 0 (retained with card, not drained to Reservoir), and distributed at Beat 2 across the target faction's Beat 3 ops that target Syndicate in submission order until exhausted. At Beat 3: any operation with full Capital coverage is voided and the Capital returns to that faction's case; partial coverage attaches a −50 threshold marker. If the target faction submitted no operations against Syndicate, the Capital arrives in their return case as an unexplained windfall — the bribe worked, or was unnecessary. Either way, the Capital is gone from Syndicate's pool.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Zero-cost pre-loss asset transfer — only card where timing before loss calculations is the entire mechanic; also a covert funding mechanism | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — strategic repositioning as doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; zero cost (slot IS the investment); Beat 2 Automatic; no restriction; private transfer; pre_loss_calc procedure outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — pre-loss timing is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Protect/NativeResource — protects Capital by transferring it before loss event applies | Art 04b §4, §5 |
-| Balance | ✓ | Zero cost; covert funding aspect noted; pre_loss_calc scope and transfer amount outstanding (Outstanding Issues) | Art 02a §6–§7 |
-| Effect duration | ✓ | Immediate: transfer executes at Beat 2 before loss calculations | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None; no restriction; player judgment on timing | — |
-| Portrait validity | ✓ | Syndicate +1 submitter; pre-loss positioning aligns with capital preservation doctrine | Art 04 §6.2 |
+| Action fit | ✓ | Bribe mechanic — Capital always reaches target faction; nullification is conditional on their submitted ops | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Syndicate perspective — positional wager is doctrine | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only; Beat 2 Automatic; Capital retained with card (not drained); target_faction = bribe recipient; wager structure (positional vs. faction) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Economy/Protect/NativeResource — Capital expenditure protects Syndicate assets from named faction's ops | Art 04b §4, §5 |
+| Balance | ✓ | Variable cost 1–N declared at Dispatch; cost is the effect vehicle — goes to target regardless of outcome; over-payment is wasted Capital | Art 02a §6–§7 |
+| Effect duration | ✓ | Immediate: Capital distributed at Beat 2, void/partial resolved at Beat 3 | — |
+| Persistence | ✓ | Immediate — fully resolved by end of Beat 3 | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None; player judgment on whether to submit | — |
+| Portrait validity | ✓ | Syndicate +1 submitter — positional wager aligns with capital doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted | Art 01 §6–§7 |
-| Supported by components | ✓ | Capital transfer; pre_loss_calc parameter; private ARBITER record outstanding (Outstanding Issue) | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; pre_loss_calc sequence definition outstanding (Outstanding Issue) | Art 03 §9, §11 |
+| Supported by components | ✓ | Capital retained with card at Beat 0; distributed Beat 2; returned to target_faction at Beat 3 | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | Beat 0 Retained validation; Beat 2 distribution procedure; Beat 3 capital-on-card void/partial — all defined in Art 03 | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **`pre_loss_calc=True` procedure:** Beat 2 Automatic with pre-loss transfer is a novel mechanic. Art 03 Beat 2 sequence does not currently define pre-loss calculation ordering. ARBITER needs explicit instruction on which resource-loss events trigger C34's protection and when the snapshot is taken.
-- **Named faction disclosure:** ARBITER records the transfer privately — the table does not see where Capital went. Confirm this is intentional (covert funding) and that ARBITER notes for year-end reconciliation.
-- **Transfer amount:** Fixed at 3 Capital. Confirm this isn't a "maximum" — does Syndicate always transfer exactly 3, or can they transfer 1–3?
+*None.*
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
 
-*Pre-convention card — design rationale scaffold added S59. Design pass pending.*
+*Pre-convention card — design rationale scaffold added S59. Full redesign S65.*
 
 ```python
 C34 = Card(
-    id=34,  version="v1.0",
+    id=34,  version="v2.0",
     name    = "Golden Parachute",
-    tagline = "Transfer resources before a forced resource-loss event.",
+    tagline = "Declare a bribe. Their operations against you are covered. Windfall or nullification — the Capital leaves either way.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Protect,  subject = NativeResource,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
-    target_district=None, target_faction=faction(named), target_object=NativeResource,
-    affinity=None,
-    restriction=None,  # player judgment — submitted when resource-loss event is anticipated this round
-    cost=None,
-    success     = game.transfer(faction(acting).capital, count=3, to=faction(target), pre_loss_calc=True),
-    successcrit=None, fail=None, failcrit=None,
-    portrait    = {Syndicate: PortraitEntry(submitter=+1)},
-    narrative   = "The Syndicate plans for outcomes not yet confirmed. They move assets before the decision is made.",
-    perspectives = {Syndicate: "We did not lose those resources. We repositioned them. There is a difference."},
-    design_note  = "Transfer cannot be reclaimed after execution. Transferred Capital exits Syndicate's pool before any resource-loss calculation applies this round.",
-    arbiter_note = "Record transfer privately. Do not announce to table. Transferred Capital exits Syndicate's pool before resource-loss calculations this round.",
+    target_district = None, target_faction = faction(named), target_object = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(acting).capital * declared(N, min=1),  # retained with card at Beat 0 — does not drain to Reservoir
+    success         = game.bribe(capital=declared(N), target=faction(target), against=faction(acting), beat3_ops_first_to_last=True),
+    successcrit     = None, fail=None, failcrit=None,
+    portrait        = {Syndicate: PortraitEntry(submitter=+1)},
+    narrative       = "The Syndicate does not wait to find out. They price the outcome in advance.",
+    perspectives    = {Syndicate: "We did not lose those resources. We placed them where the problem would be. There is a difference."},
+    design_note     = "Capital declared at Dispatch on target profile. Beat 0: retained (not drained). Beat 2: distributed across target_faction Beat 3 ops targeting Syndicate, first-to-last, until exhausted. Beat 3: full coverage = void + Capital to submitter case; partial = −50 marker + Capital to submitter case. No ops from target_faction = windfall to return case. Wager structure: Syndicate bets positionally — wrong bet wastes Capital, correct bet nullifies threat.",
+    arbiter_note    = "See Art 03 Beat 0 (Retained validation), Beat 2 (Golden Parachute procedure), Beat 3 Step 1.4 (capital-on-card resolution).",
 )
 ```
 

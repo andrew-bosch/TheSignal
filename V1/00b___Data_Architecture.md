@@ -23,7 +23,7 @@
 5. [Lookup Tables](#5-lookup-tables)
 6. [Entity Relationship Map](#6-entity-relationship-map)
 7. [Schema Reference Index](#7-schema-reference-index)
-8. [Design Notes & Known Gaps](#8-design-notes--known-gaps)
+8. [Design Notes & Known Gaps](#8-design-notes-known-gaps)
 
 ---
 

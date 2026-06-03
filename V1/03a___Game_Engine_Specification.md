@@ -27,11 +27,11 @@ Art 03a is the code-lite technical companion to Art 03. Where Art 03 describes t
 2. [Index](#2-index)
 3. [Scope and Tier Structure](#3-scope-and-tier-structure)
 4. [State Model](#4-state-model)
-5. [Phase & Beat Procedures (Pseudocode)](#5-phase--beat-procedures-pseudocode)
+5. [Phase & Beat Procedures (Pseudocode)](#5-phase-beat-procedures-pseudocode)
    - Quarter_Flow() — full Quarter entry point
    - Phase_1() through Phase_7() — phase procedures
    - Beat_0() through Beat_5() — Phase 6 detail
-6. [Decision Tables & Edge Case Registry](#6-decision-tables--edge-case-registry)
+6. [Decision Tables & Edge Case Registry](#6-decision-tables-edge-case-registry)
    - DT-01: Card face determination at Beat 0 (non-Apex)
    - DT-02: Card face determination at Beat 0 (Apex)
    - DT-03: Critical Success override (01–05)

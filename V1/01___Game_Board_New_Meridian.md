@@ -31,13 +31,13 @@ A complete specification of the physical game environment: the table zone struct
 3. [Game Purpose](#3-game-purpose)
 4. [Narrative Function](#4-narrative-function)
 5. [Design Principles](#5-design-principles)
-6. [Physical Environment — Zones and Components](#6-physical-environment--zones-and-components)
-7. [Rules & Constraints](#7-rules--constraints)
+6. [Physical Environment — Zones and Components](#6-physical-environment-zones-and-components)
+7. [Rules & Constraints](#7-rules-constraints)
 8. [Starting Configuration](#8-starting-configuration)
 9. [Faction Player Tableau](#9-faction-player-tableau)
 10. [ARBITER Tableau](#10-arbiter-tableau)
-11. [Special Conditions & Gameplay Impacts](#11-special-conditions--gameplay-impacts)
-12. [Examples & Exceptions](#12-examples--exceptions)
+11. [Special Conditions & Gameplay Impacts](#11-special-conditions-gameplay-impacts)
+12. [Examples & Exceptions](#12-examples-exceptions)
 
 ---
 

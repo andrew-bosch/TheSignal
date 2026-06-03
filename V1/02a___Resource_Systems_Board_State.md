@@ -31,13 +31,13 @@ Complete rules for three board-state systems: Presence and Influence, Structures
 3. [Game Purpose](#3-game-purpose)
 4. [Narrative Function](#4-narrative-function)
 5. [Design Principles](#5-design-principles)
-6. [Rules & Constraints — Presence and Influence](#6-rules--constraints--presence-and-influence)
-7. [Rules & Constraints — Structures](#7-rules--constraints--structures)
-8. [Rules & Constraints — Resources](#8-rules--constraints--resources)
-8a. [Dispatch Tokens & The Backlog](#8a-dispatch-tokens--the-backlog)
+6. [Rules & Constraints — Presence and Influence](#6-rules-constraints-presence-and-influence)
+7. [Rules & Constraints — Structures](#7-rules-constraints-structures)
+8. [Rules & Constraints — Resources](#8-rules-constraints-resources)
+8a. [Dispatch Tokens & The Backlog](#8a-dispatch-tokens-the-backlog)
 9. [Component Description](#9-component-description)
-10. [Special Conditions & Gameplay Impacts](#10-special-conditions--gameplay-impacts)
-11. [Examples & Exceptions](#11-examples--exceptions)
+10. [Special Conditions & Gameplay Impacts](#10-special-conditions-gameplay-impacts)
+11. [Examples & Exceptions](#11-examples-exceptions)
 
 ---
 

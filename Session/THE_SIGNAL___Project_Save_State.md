@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-02 (S63)
+**Last Updated:** 2026-06-03 (S65)
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -118,6 +118,25 @@ Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`
 **No L-decisions this session.**
 
 **Next session:** Resolve C01–C17 Outstanding Issues (C09 Art06 dep, C10 −45 threshold, C11 §11 procedure gap, C13 Ring 0, C15 per-Quarter cap, C16 copied op cost + prediction procedure, C17 Art 03 migration). Art 00 §7 doctrine text additions (00-13, 00-14). Then C18–C35 design rationale.
+
+## Session 65 — 2026-06-03
+
+**Focus:** 04-n25 schema field gaps (PS-as-cost + pre_loss_calc)
+
+**Accomplished:**
+- Art 04 §6.2 cost field redefined — fungible, tradeable resources only; non-fungible markers (PS, presence tiers) are effects not costs
+- Art 04 §6.6 added — Expression Parameters table; `pre_loss_calc=True` defined
+- C37 Sacrifice redesigned v1.1 — cost=None; target_faction required (tokens must be keyed); success=ps−2+IntelToken(target_faction); perspective rewritten ("Standing" → in-narrative); arbiter_note removed
+- C34 Golden Parachute redesigned v2.0 — bribe mechanic: Syndicate pays variable Capital to nullify target_faction's Beat 3 ops targeting Syndicate; windfall if no qualifying ops; retained payment type (resources travel with card, not drained to Reservoir)
+- Art 03 v3.1 signed off (L185) — Beat 0 Retained payment validation row; Beat 2 Golden Parachute bribe distribution procedure; Beat 3 partial payment marker source updated (Beat 0 or Beat 2)
+- XA-38 closed — anchor link sweep complete; 38 double-hyphen anchors fixed across 11 artifacts (em dash/& in headings incompatible with Python-Markdown toc slugifier)
+- Network PS recovery/negation modifier card concept added to modifier_card_ideas.md
+- 04-n25 PS-as-cost ✅, pre_loss_calc ✅ closed. target_ring remains.
+
+**L-decisions this session:**
+- L185: Art 03 v3.1 signed off. Golden Parachute bribe mechanic (Beat 0/2/3). Art 04 §6.2 cost field (fungible only). §6.6 Expression Parameters. C37 Sacrifice + C34 Golden Parachute redesigned.
+
+**Next session:** 04-n25 remaining: `target_ring` (Entry/Exit Controls — needs Art 01 ring-scope definition + §6 field). Then 04-n26 → 04-n27 → 04-n28.
 
 ---
 

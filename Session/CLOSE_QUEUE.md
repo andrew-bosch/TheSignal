@@ -1,51 +1,47 @@
-## CLOSE QUEUE — Session 64
+## CLOSE QUEUE — Session 65
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/04___Card_System.md
-OLD: **Version:** 0.9.25 Draft
-NEW: **Version:** 0.9.26 Draft
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/04b___Action_Taxonomy_Design_Analysis.md
-OLD: **Version:** 1.5
-NEW: **Version:** 1.6
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | 03 | while session(true): Round Structure | 3.0 | ✅ Signed Off — S61 (L181) |
+NEW: | 03 | while session(true): Round Structure | 3.1 | ✅ Signed Off — S65 (L185) |
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 04 | Card System | 0.9.24 (S59) |
-NEW: | 04 | Card System | 0.9.26 (S64) |
+OLD: | 04 | Card System | 0.9.26 (S64) | 🔄 In Progress |
+NEW: | 04 | Card System | 0.9.27 (S65) | 🔄 In Progress |
 
 ### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 04b | Action Taxonomy & Design Analysis | 1.5 |
-NEW: | 04b | Action Taxonomy & Design Analysis | 1.6 |
+FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
+OLD: **Last Updated:** 2026-06-02 (S63)
+NEW: **Last Updated:** 2026-06-03 (S65)
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: <!-- SESSION SUMMARIES -->
+AFTER: ## Session 64 — 2026-06-03
 CONTENT:
-## Session 64 — 2026-06-03
 
-**Focus:** 04-n17 completion + design pass sweep
+## Session 65 — 2026-06-03
+
+**Focus:** 04-n25 schema field gaps (PS-as-cost + pre_loss_calc)
 
 **Accomplished:**
-- 04-n17 ✅ — Disprove, Intel Extraction, Modifier Raid written to Art 04 (Economy/Remove/IntelToken, Economy/Redirect/IntelToken, Economy/Redirect/ModifierCard). Fixed cost/threshold; no Syndicate affinity (Ghost threshold +10 only); blind draw/removal; silent on success.
-- Art 04b §5.2 updated — 5 new rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid).
-- Design pass ✓ complete across ALL Art 04 cards — first time. ~40 cards processed; checklist rows filled, outstanding issues documented.
-- PM05: 04-n25 (critical — schema fields), 04-n26 (high — component design), 04-n27 (high/pre-accord — Art 03 gaps), 04-n28 (high/post-27 — Art 06 Accord) added.
-- Art 04 v0.9.26 (also catches S63 bump), Art 04b v1.6.
+- Art 04 §6.2 cost field redefined — fungible, tradeable resources only; non-fungible markers (PS, presence tiers) are effects not costs
+- Art 04 §6.6 added — Expression Parameters table; `pre_loss_calc=True` defined
+- C37 Sacrifice redesigned v1.1 — cost=None; target_faction required (tokens must be keyed); success=ps−2+IntelToken(target_faction); perspective rewritten ("Standing" → in-narrative); arbiter_note removed
+- C34 Golden Parachute redesigned v2.0 — bribe mechanic: Syndicate pays variable Capital to nullify target_faction's Beat 3 ops targeting Syndicate; windfall if no qualifying ops; retained payment type (resources travel with card, not drained to Reservoir)
+- Art 03 v3.1 signed off (L185) — Beat 0 Retained payment validation row; Beat 2 Golden Parachute bribe distribution procedure; Beat 3 partial payment marker source updated (Beat 0 or Beat 2)
+- XA-38 closed — anchor link sweep complete; 38 double-hyphen anchors fixed across 11 artifacts (em dash/& in headings incompatible with Python-Markdown toc slugifier)
+- Network PS recovery/negation modifier card concept added to modifier_card_ideas.md
+- 04-n25 PS-as-cost ✅, pre_loss_calc ✅ closed. target_ring remains.
 
-**Priority ordering locked S64:**
-1. Critical: 04-n25 schema field gaps (target_ring, pre_loss_calc, PS-as-cost)
-2. High: 04-n26 component interaction design (12+ components — undesigned processes)
-3. High (before accord): 04-n27 Art 03 procedure gaps
-4. High (after 04-n27): 04-n28 Art 06 Accord design
+**L-decisions this session:**
+- L185: Art 03 v3.1 signed off. Golden Parachute bribe mechanic (Beat 0/2/3). Art 04 §6.2 cost field (fungible only). §6.6 Expression Parameters. C37 Sacrifice + C34 Golden Parachute redesigned.
 
-**No L-decisions this session.**
+**Next session:** 04-n25 remaining: `target_ring` (Entry/Exit Controls — needs Art 01 ring-scope definition + §6 field). Then 04-n26 → 04-n27 → 04-n28.
 
 ### COMMIT
-source ~/Projects/credentials.env && git add -A && git commit -m "session 64 — 04-n17 complete; design pass all Art 04 cards" && git push
+source ~/Projects/credentials.env && git add -A && git commit -m "session 65 — Art 03 v3.1 sign-off; Golden Parachute + Sacrifice redesign; §6 cost field + §6.6; anchor sweep" && git push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh

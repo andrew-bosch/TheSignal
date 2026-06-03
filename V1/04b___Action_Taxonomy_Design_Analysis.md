@@ -22,13 +22,13 @@ Card definitions live in Artifact 04. This document does not reproduce card cont
 | Section | Content |
 |---------|---------|
 | §3 | [Physical Action Taxonomy](#3-physical-action-taxonomy) — verbs, component matrix, DB primitive model |
-| §3.3 | [Primitive Action Model — Database-Backed Analysis](#33-primitive-action-model--database-backed-analysis-s47) |
-| §4 | [Card Design Layer — Key Decisions](#4-card-design-layer--key-decisions) — rationale for Layer/Function framework; six game layers |
+| §3.3 | [Primitive Action Model — Database-Backed Analysis](#33-primitive-action-model-database-backed-analysis-s47) |
+| §4 | [Card Design Layer — Key Decisions](#4-card-design-layer-key-decisions) — rationale for Layer/Function framework; six game layers |
 | §5 | [Card Taxonomy Index](#5-card-taxonomy-index) — Layer, Function, Subject, Primitive Verb per card |
-| §6 | [Coverage Analysis — Gaps and Concentrations](#6-coverage-analysis--gaps-and-concentrations) |
+| §6 | [Coverage Analysis — Gaps and Concentrations](#6-coverage-analysis-gaps-and-concentrations) |
 | §7 | [Faction Coverage Matrix](#7-faction-coverage-matrix) |
 | §8 | [Design Recommendations by Faction](#8-design-recommendations-by-faction) |
-| §9 | [Standalone Card Types — Taxonomy Exclusions](#9-standalone-card-types--taxonomy-exclusions) |
+| §9 | [Standalone Card Types — Taxonomy Exclusions](#9-standalone-card-types-taxonomy-exclusions) |
 
 ---
 

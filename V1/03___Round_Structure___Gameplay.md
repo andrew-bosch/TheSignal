@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 3.0  
+**Version:** 3.1  
 
-**Status:** 🔄 In Progress — S60 revision (L180). Re-sign-off required.  
+**Status:** ✅ Signed Off — S65 (L185). Beat 0 Retained payment validation; Beat 2 Golden Parachute bribe procedure; Beat 3 partial payment marker source updated.  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -38,30 +38,30 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 
 **Gameplay Procedure**
 
-7. [Phase 1 — Upkeep](#7-phase-1--upkeep)
-8. [Phase 2 — Placement](#8-phase-2--placement)
-9. [Month 1 — Dispatch](#9-month-1--dispatch)
-10. [Month 1 — Countermeasures](#10-month-1--countermeasures)
-11. [Month 1 — Resolution](#11-month-1--resolution)
-12. [Month 2 — Dispatch](#12-month-2--dispatch)
-13. [Month 2 — Countermeasures](#13-month-2--countermeasures)
-14. [Month 2 — Resolution](#14-month-2--resolution)
-15. [Month 3 — Dispatch](#15-month-3--dispatch)
-16. [Month 3 — Countermeasures](#16-month-3--countermeasures)
+7. [Phase 1 — Upkeep](#7-phase-1-upkeep)
+8. [Phase 2 — Placement](#8-phase-2-placement)
+9. [Month 1 — Dispatch](#9-month-1-dispatch)
+10. [Month 1 — Countermeasures](#10-month-1-countermeasures)
+11. [Month 1 — Resolution](#11-month-1-resolution)
+12. [Month 2 — Dispatch](#12-month-2-dispatch)
+13. [Month 2 — Countermeasures](#13-month-2-countermeasures)
+14. [Month 2 — Resolution](#14-month-2-resolution)
+15. [Month 3 — Dispatch](#15-month-3-dispatch)
+16. [Month 3 — Countermeasures](#16-month-3-countermeasures)
 17. [Contested District Resolution](#17-contested-district-resolution)
-18. [Month 3 — Quarter Notes](#18-month-3--quarter-notes)
+18. [Month 3 — Quarter Notes](#18-month-3-quarter-notes)
 19. [Debrief](#19-debrief)
 20. [End of Quarter](#20-end-of-quarter)
 
 **Reference Material**
 
 21. [The Operation System](#21-the-operation-system)
-22. [Special Conditions & Gameplay Impacts](#22-special-conditions--gameplay-impacts)
+22. [Special Conditions & Gameplay Impacts](#22-special-conditions-gameplay-impacts)
 23. [Duration Taxonomy](#23-duration-taxonomy)
 24. [Public Act Placement Rules](#24-public-act-placement-rules)
 25. [Modifier React Card Rules](#25-modifier-react-card-rules)
 26. [Countermeasure Card Rules](#26-countermeasure-card-rules)
-27. [Examples & Exceptions](#27-examples--exceptions)
+27. [Examples & Exceptions](#27-examples-exceptions)
 
 ---
 
@@ -486,6 +486,7 @@ From left to right, lane by lane:
 | Partial | Non-Apex | Drain to Reservoir; attach −50 threshold marker to stack | Face-up in grid |
 | Zero | Non-Apex | None to drain | Face-down in grid |
 | Any shortfall | Apex | Drain any submitted resources to Reservoir | Face-down in grid |
+| Retained | Resource-retaining cards | Validate Resource count matches declared value on target profile; resources declared are placed on card — do not drain to Reservoir. Any unallocated resources (not placed on Beat 3 cards in Beat 2) are placed in target_faction's dispatch case. | Face-up in grid |
 
 **Resolution Grid layout:**
 
@@ -602,6 +603,23 @@ The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right
 3. At Beat 3: if any Demolish operation in the grid targets the fortified structure, ARBITER intercepts at Step 1 of that operation's resolution. The Demolish has no effect. ARBITER announces: *"The structure in [DISTRICT] is reinforced. Demolition has no effect this Quarter."* Place the Demolish operation card and target slip face-down in the Demolish submitter's dispatch case. Face-down operation cards are void.
 4. Return the card to the acting faction's dispatch case.
 
+**For each Beat 2 card with `pre_loss_calc=True` in its success expression:**
+
+1. Execute the transfer immediately — before any resource-loss event resolves this round.
+2. ARBITER records the transfer privately. Do not announce to the table.
+3. All resource-loss calculations at Beat 3 and Beat 4 apply to the post-transfer pool. The transferred resources are no longer in the acting faction's pool at the time of loss calculation.
+
+**For each Golden Parachute card:**
+
+1. Identify the Beat 3 column belonging to `target_faction` in the Resolution Grid. Apex is not a valid target.
+2. Scan that column top to bottom (submission order). For each **face-up** operation card in the column that names Syndicate as target:
+   a. Place resources from the card's retained stack onto that operation — amount equal to the operation's cost value — until the retained stack is exhausted.
+   b. If the retained stack is exhausted before all qualifying operations are covered, remaining operations receive no resources.
+3. Any cards in Beat 3 where resources placed on the Beat 3 card equal the total resource cost on that card: flip the Beat 3 card face-down, then place those resources into target_faction's dispatch case.
+   3a. Any cards in Beat 3 where resources placed on the Beat 3 card are less than the total resource cost on that card: place a partial payment modifier token on the Beat 3 card, then place those resources into target_faction's dispatch case.
+4. Discard the target profile slip and any modifier cards submitted with Golden Parachute.
+5. Return the Golden Parachute card to Syndicate's return case.
+
 ---
 
 **Beat 3 (Month1.Week4): Covert Operations Resolve**
@@ -625,7 +643,7 @@ Read the base difficulty printed on the operation card. Look up the correspondin
 **Step 3 — Apply all modifiers.**
 
 Apply all active modifiers:
-- Partial payment threshold marker (if attached in Beat 0)
+- Partial payment threshold marker (if attached in Beat 0 or Beat 2)
 - Type B Countermeasure token (if placed on this card in Beat 2)
 - Modifier Cards in cascade
 - Ring Modifier Card calculation (see Artifact 07 — ARBITER Toolkit)
