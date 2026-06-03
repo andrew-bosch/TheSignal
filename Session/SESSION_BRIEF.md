@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 63 (active) | Updated: 2026-06-02**
+**Session 65 (active) | Updated: 2026-06-03**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,18 +7,21 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
+S64 complete. S65 opens here.
 
-S63: Checklist template → 13 rows (Persistence added as row 8). `persistence = Immediate` added to 35 C-series Python specs; 9 sign-offs cleared to n/a (pending Andy re-review). 11 stale Persistence checklist rows removed. `tmp_card_review.line_start` recalculated for all 75 cards.
+**S64 accomplishments:** 04-n17 ✅ — Disprove, Intel Extraction, Modifier Raid written to Art 04; Art 04b §5.2 updated (+5 new rows). Design pass ✓ complete across ALL Art 04 cards. PM05 04-n25/26/27/28 added (schema fields critical; component design high; Art 03 gaps high/pre-accord; Art 06 accord design high/post-27).
 
-P-series design pass complete (P01–P18). P01–P08: Design Pass ✓ / Issues Resolved ✓ (P08 holds Art 06 gaps). P09–P18: Design Pass ✓ / Issues Resolved blank — all blocked on 04-n23 (aligned + opposed perspectives missing on all 10 faction-specific PAs, Principle 8). Card decisions resolved: P05 Expired excluded from restriction; P06 floor clause added; P07 → Standing/Shift; P08 on-decline +1 PS intentional.
+**S65 entry point:** 04-n25 (critical — schema field gaps). Three fields used in Art 04 card specs with no §6 or Art 03 basis:
+- `target_ring` — Entry/Exit Controls; needs Art 01 ring-scope definition + §6 field
+- `pre_loss_calc=True` — Golden Parachute; needs Art 03 Beat 2 sequence addition
+- PS-as-cost in cost field — Sacrifice; needs §6 cost field schema extension
+
+**Priority order for S65+:** 04-n25 (critical) → 04-n26 (component interaction design) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
+
+**Also pending:** Standing Injunction 5 open flags (tracks under 04-n26 component/process design); agy DB-S63-01/02/03 check-in.
 
 **ALWAYS read `TheSignal/Whiteboard/design_reference.md` before any Art 04+ design work.**
-**ALSO read `TheSignal/Whiteboard/gap_card_sketches_S62.md` before any Art 04 gap card work.**
-**For P-series pass: read `TheSignal/Whiteboard/p_series_pass_S63.md` first.**
-
-**Current:** P-series design pass complete. Next: write aligned + opposed perspectives for P09–P18 (04-n23) → Issues Resolved ✓ per card. Then: C-series sign-off re-review; 04-n18 (Art 04b §5.2 refresh).
-
----
+**ALSO read `TheSignal/Whiteboard/gap_card_sketches_S62.md` before any Art 04 gap card work.
 
 ## In-Progress Artifacts
 
@@ -29,8 +32,8 @@ P-series design pass complete (P01–P18). P01–P08: Design Pass ✓ / Issues R
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 3.0 | ✅ Signed Off — S61 (L181). Beat 3 Step 12 cleaned; Beat 4 steps renumbered 1–13; section breaks added. |
-| 04b — Action Taxonomy | 1.5 | ✅ Signed Off — S48. S55: §4.2/§4.4 updated (Economy narrowed; IntelToken = Information), §5.2 table updated (C05, C24 → Information). 04-63 flagged (stale C27 §4.6 entry). |
-| 04 — Action Card System | 0.9.25 | S63: Checklist → 13 rows (Persistence row 8). `persistence = Immediate` added to 35 C-series specs; 9 sign-offs cleared to n/a. P01–P08 Design Pass ✓/Issues Resolved ✓ (P08 Art 06 gaps). P09–P18 Design Pass ✓ / Issues Resolved pending 04-n23 (perspectives). **Next: 04-n23 (P09–P18 perspectives); C-series re-sign-off; 04-n18 (Art 04b §5.2); then gap card specs.** |
+| 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
+| 04 — Action Card System | 0.9.26 | S64: 04-n17 ✅ (Disprove, Intel Extraction, Modifier Raid written); design pass ✓ all cards. **Next: 04-n25 (schema fields, critical) → 04-n26 → 04-n27 → 04-n28.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -76,11 +79,15 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **04-n14** | C32 Short the Market — mechanical redesign required ("applied silently" doesn't survive paper prototype; tagline/code conflict on generation vs stockpile) | Open — redesign pass |
 | **04-n15** | Standard equivalents for Source Substitution, Backdate, Field Verification — hired data specialist / PI versions; higher cost or lower threshold (Principle 17) | Open — S62 |
 | **04-n16** | Apply Principle 17 systematically — audit full card set for faction-native capabilities lacking outsourced standard counterparts | Open — S62 |
-| **04-n17** | Write full specs: Disprove, Disinformation Campaign, Standing Injunction, Asset Extraction (sketches in Whiteboard/gap_card_sketches_S62.md) | Open — S62 |
-| **04-n18** | Art 04b §5.2 update — refresh P01–P18 entries (all stale placeholders); add Source Substitution / Backdate / Field Verification; taxonomy corrections (P11 = Submission/Modify, P07 = Standing/Shift, P16 = Economy/Add) | Open — S62 |
-| **04-n19** | Accord procedure design pass (Art 06) required before Group A gap cards: Economy/Remove/Accord, Economy/Redirect/Accord (C-S3), Information/Corrupt/Accord | Blocked — Art 06 |
-| **04-n20** | Directorate covert reclassification — review C21 Invoke Jurisdiction, C22 Detain, C23 Evidence Preservation, C25 Tactical Redirection, C42 Sanctioned Raid for PA reclassification | Open — next session |
-| **04-n23** | P09–P18 Voice fit gap — all 10 faction-specific PAs missing aligned + opposed perspectives (Principle 8 requires 3). 20 perspectives to write. Gates Issues Resolved ✓ for all P09–P18. | Open — S63 |
+| **04-n17** | Gap card specs: Disinformation Campaign ✓, Standing Injunction ✓, Disprove ✓, Intel Extraction ✓, Modifier Raid ✓. Standing Injunction 5 open flags → tracks under 04-n26. | ✅ S64 |
+| **04-n18** | Art 04b §5.2 refresh complete (artifact side). agy DB cascade outstanding (DB-S63-01/02/03 queued). | ✅ S63 (agy pending) |
+| **04-n19** | Accord procedure design pass (Art 06) required before Group A gap cards. After 04-n27 (Art 03 gaps). | Blocked — after 04-n27 |
+| **04-n20** | Directorate covert reclassification — review C21 Invoke Jurisdiction, C22 Detain, C23 Evidence Preservation, C25 Tactical Redirection, C42 Sanctioned Raid for PA reclassification | Open |
+| **04-n23** | P09–P18 Voice fit gap — 20 perspectives written. Gates Issues Resolved ✓ for all P09–P18. | ✅ S63 |
+| **04-n25** | CRITICAL — Art 04 §6 schema field gaps: `target_ring`, `pre_loss_calc`, PS-as-cost | Critical — S65 |
+| **04-n26** | HIGH — Component interaction design pass: 12+ components needing lifecycle design before Art 02 registration | High — S65+ |
+| **04-n27** | HIGH (before accord) — Art 03 procedure gaps: 6 holes blocking Issues Resolved on multiple cards | High — S65+ |
+| **04-n28** | HIGH (after 04-n27) — Art 06 Accord design: structure Accords clearly before finalizing dependent cards | High — S65+ |
 
 → Full list: `V1/PM05___Active_Punch_List.md`
 
@@ -88,6 +95,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L184** (S63): L108 amended — 3NF requirements (6 + 7) added; component.transformable → virtual generated; action.prereq_beat_id dropped.
 - **L183** (S61): C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine.
 - **L182** (S61): Art 00a v0.4 signed off. 00-R21 (4-type duration taxonomy), 00-R22 (partial payment model), 00-R29b (Missing Author Vacuum renamed from duplicate 00-R30), 00-R39 (covers covert ops + public acts). 43 rules.
 - **L181** (S61): Art 03 v3.0 signed off. Beat 3 Step 12 cleaned; Beat 4 Submit Payment → Step 1, steps renumbered 1–13; section breaks added; duration taxonomy 5→4 types.

@@ -1,7 +1,7 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.5  
+**Version:** 1.6  
 **Status:** ✅ Signed Off — S48  
 **Last Updated:** 2026-05-29  
 **Companion to:** 04 — Action Card System  
@@ -379,23 +379,31 @@ React and Instant are timing sub-functions within the Modifier card type — the
 | C33 | Hostile Acquisition | 📝 | Territory | Redirect | Structure block | Move |
 | C34 | Golden Parachute | 📝 | Economy | Protect | Native resource | — |
 | C35 | Regulatory Capture | 📝 | Submission | Block | Named action type | — |
-| P01 | Establish Presence | 📝 | Territory | Add | Presence token | Add |
-| P02 | Contest | 📝 | Territory | Remove | Presence token (contested) | Remove |
-| P03 | Commission | 📝 | Territory | Add | Structure block (both districts) | Add |
-| P04 | Denounce | 📝 | Standing | Shift | Public Standing (−) | Move |
-| P05 | Broadcast | 📝 | Information | Reveal | Action attribution | Reveal |
-| P06 | Leverage | 📝 | Economy | Remove | Native resource | Remove |
-| P07 | Invoke the Table | 📝 | Submission | Block | Any (procedural) | — |
-| P08 | Propose Accord | 📝 | Economy | Add | Accord agreement | Add |
-| P09 | Public Works Declaration | 📝 | Territory | Add | Structure block | Add |
-| P10 | Infrastructure Bond | 📝 | Economy | Add | Native resource (target faction) | Add |
-| P11 | Issue Directive | 📝 | Submission | Block | Political act | — |
-| P12 | Convene an Inquiry | 📝 | Economy | Add | Intel token | Add |
+| — | Source Substitution | 📝 | Information | Corrupt | Intel token | Corrupt |
+| — | Backdate | 📝 | Information | Corrupt | Intel token | Corrupt |
+| — | Field Verification | 📝 | Information | Recover | Intel token | — |
+| — | Disinformation Campaign | 📝 | Standing | Shift | Public Standing | Move |
+| — | Standing Injunction | 📝 | Submission | Block | Political act | — |
+| — | Disprove | 📝 | Economy | Remove | Intel token | Remove |
+| — | Intel Extraction | 📝 | Economy | Redirect | Intel token | Move |
+| — | Modifier Raid | 📝 | Economy | Redirect | Modifier card | Move |
+| P01 | Open Operations | 📝 | Territory | Add | Presence token | Add |
+| P02 | Disputed Claim | 📝 | Territory | Remove | Presence token | Remove |
+| P03 | Public Commission | 📝 | Territory | Add | Structure block | Add |
+| P04 | Public Censure | 📝 | Standing | Shift | Public Standing (−) | Move |
+| P05 | On the Record | 📝 | Information | Reveal | Action attribution | Reveal |
+| P06 | Economic Sanction | 📝 | Economy | Remove | Native resource | Remove |
+| P07 | Public Address | 📝 | Standing | Shift | Public Standing (+) | Move |
+| P08 | Table an Accord | 📝 | Economy | Add | Accord agreement | Add |
+| P09 | Civic Works Mandate | 📝 | Territory | Add | Structure block | Add |
+| P10 | Infrastructure Bond | 📝 | Economy | Add | Accord agreement | Add |
+| P11 | Regulatory Override | 📝 | Submission | Modify | Presence token (placement cost) | — |
+| P12 | Convene an Inquiry | 📝 | Information | Add | Intel token | Add |
 | P13 | Public Disclosure | 📝 | Information | Reveal | Action attribution | Reveal |
-| P14 | Open Record Request | 📝 | Information | Reveal | Written record | Reveal |
+| P14 | Community Rally | 📝 | Territory | Add | Presence token | Add |
 | P15 | Acquisition Offer | 📝 | Territory | Redirect | Presence token | Move |
-| P16 | Market Pressure | 📝 | Submission | Modify | Covert + Political act (cost) | — |
-| P17 | Publish Analysis | 🚫 | Standing | Shift | ~~Chorus Portrait~~ — retired (L84). Redesign required; see PM05 04-11. | — |
+| P16 | Public Dividend | 📝 | Economy | Add | Native resource (conditional) | Add |
+| P17 | Publish Analysis | 📝 | Information | Reveal | Action attribution | Reveal |
 | P18 | Signal Review Request | 📝 | Resolution | Modify | Covert operation (difficulty) | — |
 
 ---
@@ -532,8 +540,7 @@ All planned gap views completed S47 — see §3.3 for view list and status. `v_c
 | | Modify | Difficulty | — | — | — | — | — | P18 |
 | | Protect | Covert operation (difficulty) | C10 | — | — | — | — | — |
 | **Standing** | | | | | | | | |
-| | Shift | Public Standing | P04 | — | — | — | — | — |
-| | Shift | ~~Chorus Portrait~~ | — | — | P17 | — | — | — |
+| | Shift | Public Standing | P04, P07 | — | — | — | — | — |
 
 ---
 

@@ -98,6 +98,25 @@ Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`
 
 **PM05 changes:** 04-60 ✅, 04-61 ✅. New: 00-13 (Art 00 §7 faction doctrine text additions), 00-14 (Missing Author Vacuum rule), 04-62 (artifact reference notation convention), 04-63 (Art 04b §4.6 stale C27 entry).
 
+## Session 64 — 2026-06-03
+
+**Focus:** 04-n17 completion + design pass sweep
+
+**Accomplished:**
+- 04-n17 ✅ — Disprove, Intel Extraction, Modifier Raid written to Art 04 (Economy/Remove/IntelToken, Economy/Redirect/IntelToken, Economy/Redirect/ModifierCard). Fixed cost/threshold; no Syndicate affinity (Ghost threshold +10 only); blind draw/removal; silent on success.
+- Art 04b §5.2 updated — 5 new rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid).
+- Design pass ✓ complete across ALL Art 04 cards — first time. ~40 cards processed; checklist rows filled, outstanding issues documented.
+- PM05: 04-n25 (critical — schema fields), 04-n26 (high — component design), 04-n27 (high/pre-accord — Art 03 gaps), 04-n28 (high/post-27 — Art 06 Accord) added.
+- Art 04 v0.9.26 (also catches S63 bump), Art 04b v1.6.
+
+**Priority ordering locked S64:**
+1. Critical: 04-n25 schema field gaps (target_ring, pre_loss_calc, PS-as-cost)
+2. High: 04-n26 component interaction design (12+ components — undesigned processes)
+3. High (before accord): 04-n27 Art 03 procedure gaps
+4. High (after 04-n27): 04-n28 Art 06 Accord design
+
+**No L-decisions this session.**
+
 **Next session:** Resolve C01–C17 Outstanding Issues (C09 Art06 dep, C10 −45 threshold, C11 §11 procedure gap, C13 Ring 0, C15 per-Quarter cap, C16 copied op cost + prediction procedure, C17 Art 03 migration). Art 00 §7 doctrine text additions (00-13, 00-14). Then C18–C35 design rationale.
 
 ---

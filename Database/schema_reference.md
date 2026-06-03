@@ -38,7 +38,6 @@ The most expensive session mistake: assuming `comp_verb_role.phase_id` reference
 | `destination_zone_id` | `game_zones(id)` | Destination zone (nullable — legacy schema; currently unpopulated) |
 | `prereq_id` | `action(id)` | Self-referential: prerequisite action in chain (NULL for root actions) |
 | `source_action_id` | `action(id)` | Self-referential: Copy/Invoke source chain (NULL unless Copy) |
-| `prereq_beat_id` | `beat(id)` | Beat in which the prereq fires (nullable) |
 
 **`beat` is NOT referenced by `comp_verb_role` at all.** Beat assignments live in `comp_verb_beat`.
 
@@ -355,7 +354,7 @@ CREATE TABLE `component` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
   `actionable` tinyint(1) NOT NULL DEFAULT 0,      -- 1 = can be acted upon in action
-  `transformable` tinyint(1) NOT NULL DEFAULT 0,   -- 1 = has at least one transform_ flag set
+  `transformable` tinyint(1) GENERATED ALWAYS AS (transform_visibility OR transform_orientation OR transform_data) VIRTUAL, -- L184: derived; never stored
   `receivable` tinyint(1) NOT NULL DEFAULT 0,      -- 1 = can be a target in subject_target
   `transform_visibility` tinyint(1) NOT NULL DEFAULT 0,  -- 1 = can be Revealed/Concealed
   `transform_orientation` tinyint(1) NOT NULL DEFAULT 0, -- 1 = can be Flipped
@@ -417,7 +416,6 @@ CREATE TABLE `action` (
   `beat_trigger` enum('during','on_close') NOT NULL DEFAULT 'during',
   `trigger_type_id` int(11) DEFAULT NULL,             -- FK → trigger_type(id)
   `prereq_id` int(11) DEFAULT NULL,                   -- FK → action(id) self-ref; NULL = root action
-  `prereq_beat_id` int(11) DEFAULT NULL,              -- FK → beat(id); beat where prereq fires
   `source_action_id` int(11) DEFAULT NULL,            -- FK → action(id) self-ref; Copy source chain
   `subject_id` int(11) NOT NULL,                      -- FK → player_role(id) — who performs this
   `verb_id` int(11) NOT NULL,                         -- FK → verb(id)
@@ -622,9 +620,10 @@ Use **Countermeasure card (id=52)** as the reference. Full 4-table cascade requi
 
 ### Step 1 — Register in component
 ```sql
-INSERT INTO component (name, actionable, transformable, receivable,
+INSERT INTO component (name, actionable, receivable,
   transform_visibility, transform_orientation, transform_data)
-VALUES ('Component Name', 1, 1, 0, 1, 0, 0);
+VALUES ('Component Name', 1, 0, 1, 0, 0);
+-- transformable is VIRTUAL GENERATED — omit from INSERT
 -- Next AUTO_INCREMENT = 98 as of S50
 ```
 
@@ -712,6 +711,7 @@ As of S50:
 ## 9. Open Design Notes / Known Gaps
 
 - **DB-14** ✅ S50 (agy): Promoted all 20 design tables to permanent schema (dropped tmp_ prefix) and recompiled all 27 views.
+- **DB-3NF** ✅ S63 (L184): 3NF applied. `component.transformable` → VIRTUAL GENERATED (derived from transform_ flags). `action.prereq_beat_id` dropped — prereq beat resolved dynamically via `prereq_id → action.beat_id`. `v_action_chain` rewritten. L108 amended (Requirements 6–7). `card_metadata` 3NF deferred to Art 04.6.
 - **DB-18** (PM05): Cross-beat modifier persistence not modeled. C06/C07/C10/C11/C12 play at Beat 2 but modify Beat 3/4 — no deferred-effect mechanism in action.
 - **DB-19** (PM05): Concurrent Political acts (C09) not verified in resolution model.
 - **DB-22** ✅ S50 (agy): Upkeep primitives seeded — Faction/ARBITER Flip Status marker (ids 295/296), Faction/ARBITER Add Presence token (ids 297/298), Faction/ARBITER Remove Deployment marker (ids 299/300), ARBITER Move Situation Report card (id 301).

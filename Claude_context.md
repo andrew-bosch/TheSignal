@@ -70,7 +70,7 @@ In coordination with Andy, we have restructured the root directory to improve cl
     *   `v_component_coverage`: **42 rows** (covers all registered components in `tmp_component`)
     *   `v_beat_subject_coverage`: **29 rows**
     *   `v_trigger_beat_coverage`: **25 rows**
-    *   `v_card_primitive_map`: **BLOCKED** (flagged below; requires `tmp_card_ref` seed table)
+    *   `v_card_primitive_map`: **UNBLOCKED & CREATED** (29 rows; maps signed-off standard cards to action primitives)
 
 ---
 
@@ -80,8 +80,8 @@ In coordination with Andy, we have restructured the root directory to improve cl
 1.  **Blocked on Spec:** Remains blocked until Claude Code updates the `00b` §8 specification to include the `district_adjacency` table.
 2.  **DDL Constraint Conflict:** The proposed DDL references `district_metadata(id)` for foreign keys, which fails since `district_metadata` has no `id` column (only `district_component_id`). Change the references to `district_metadata(district_component_id)`.
 
-### 🚫 v_card_primitive_map View (BLOCKED)
-This view requires `tmp_card_ref` (mapping `card_id` $\rightarrow$ `component_id`, `verb_id`, `subject_id`). This seed data table has not yet been defined or populated.
+### ✅ v_card_primitive_map View (UNBLOCKED & CREATED)
+This view has been compiled and is now active, returning **29 rows**. We designed and created the `card_ref` table (with varchar taxonomy columns to safely support abstract subjects), and seeded it ONLY with the 9 standard cards currently signed off in `tmp_card_review` (`C01`, `C02`, `C03`, `C04`, `C06`, `C07`, `C08`, `C10`, `C17`), leaving speculative cards (P-series and Ghost cards) out of the seed data pending design sign-off.
 
 ---
 
@@ -516,4 +516,51 @@ We drafted a proposal at [normalization_proposal.md](file:///home/abosch/.gemini
 2.  **L108 Requirement 7 (No Stored Derived Data):** Drop base table columns like `component.transformable` and calculate them dynamically (e.g., via generated virtual columns).
 3.  **Required Schema Updates:** Drop `action.prereq_beat_id`, convert `component.transformable` to a virtual generated column, normalize `card_metadata` card types vs. subtypes, and convert `card_metadata.primary_action_verb` to an ID reference.
 4.  **Documentation updates:** Documented updates needed in `schema_reference.md` once these normalizations are applied.
-```
+
+---
+
+## 20. Session 63 DB Cascade Tasks Execution Report
+
+We have executed the three database cascade tasks requested for Session 63 to reconcile the physical database state with the logical card taxonomy changes in Artifact 04b §5.2.
+
+### DB-S63-01: Create and Seed `card_ref` Table
+1. **Design & DDL:** Created the permanent `card_ref` table with `varchar` taxonomy columns to safely store abstract/logical subjects (e.g. `Action attribution`, `Presence token (placement cost)`) that do not have physical component registry counterparts.
+   ```sql
+   CREATE TABLE card_ref (
+       card_id VARCHAR(15) NOT NULL,
+       card_name VARCHAR(100) NOT NULL,
+       layer VARCHAR(50) NOT NULL,
+       function VARCHAR(50) NOT NULL,
+       subject VARCHAR(100) NOT NULL,
+       PRIMARY KEY (card_id)
+   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+   ```
+2. **Seeding (Strictly Signed-Off Only):** In alignment with the constraint to omit speculative/unapproved cards, we backed out all P-series (P01–P18) and Ghost cards. We populated the table **only** with the 9 standard C-series cards currently signed off in `tmp_card_review`:
+   - `C01` (Build Structure), `C02` (Demolish), `C03` (Campaign), `C04` (Undermine), `C06` (Broadcast Interference), `C07` (Amplify), `C08` (Buy Influence), `C10` (Protect), and `C17` (Intercept).
+3. **View Creation:** Compiled `v_card_primitive_map` view using a `LEFT JOIN` on `function`, `function_verb`, `component`, and `action`. The component join uses prefix matching (`cr.subject = c.name OR cr.subject LIKE CONCAT(c.name, ' %')`) to safely match modified card subjects (e.g. `Covert operation — named faction` maps to `Covert operation` ID 13).
+4. **Verification & Row Count:**
+   - The view successfully compiles and returns **29 rows**.
+   - All 9 signed-off cards are correctly mapped.
+   - Standard cards with abstract or unmapped functions (like `C06`, `C07`, `C10` modifying/protecting actions) display with `NULL` action associations safely rather than being dropped from the output.
+
+### DB-S63-02: Register `DividendMarker` and `RegulatoryOverrideMarker` (BLOCKED & ROLLED BACK)
+1. **Design/Spec Blocked:** Cards `P11` (Regulatory Override) and `P16` (Public Dividend) have not yet been approved (signed off) in `04___Card_System.md`. Additionally, the need for these physical markers has not been verified in the component list `Art 02a`.
+2. **Action Taken:** Although database insertions were initially executed per `GEMINI_CONTEXT.md` instructions, they were rolled back in coordination with Andy to keep the database state clean and aligned with the official sign-offs.
+3. **DDL/DML Proposed (Pending Approval):** Once the cards are signed off and the markers are verified, the following migrations should be run:
+   - Insert `DividendMarker` and `RegulatoryOverrideMarker` into `component` (actionable=1, receivable=1, transformable=0, generated virtual columns omitted).
+   - Seed `comp_verb_beat` and `comp_verb_role` mapping both markers to `Add` (verb 1) at Beat 4 (`beat_id=17`) and `Remove` (verb 2) at Debrief/Phase 21 (`beat_id=20`), both initiated/executed/fulfilled by the `ARBITER` (role 2).
+   - Insert primitives into the `action` table for the ARBITER to place/remove them.
+
+### DB-S63-03: Verify Intel Token Primitives
+1. **Status Check:** Verified that the physical verbs `Add` (verb 1, corresponding to logical function `Recover`) and `Corrupt` (verb 13, corresponding to logical function `Corrupt`) have complete taxonomy mappings in `comp_verb_role` and `comp_verb_beat` for `Intel token` (component 9) at Beat 8 and Beat 14.
+2. **Action Verification:** Verified that the corresponding operational primitives already exist in the `action` table:
+   - ID 55: Intel token added (beat 8)
+   - ID 65: Intel token corrupted (beat 8)
+   - ID 120: Intel added (beat 14)
+   - ID 130: Intel corrupted (beat 14)
+   - Consequently, no database changes or new inserts were needed for this task.
+
+### ⚠️ Outbound Feedback & Architectural Directives for Claude Code
+* **DB-Artifact Alignment Principle:** The database must remain an authoritative mirror of officially **signed-off** status only. It should not contain speculative, draft, or unapproved cards/components (such as `P01–P18` or `DividendMarker`/`RegulatoryOverrideMarker`).
+* **Approved Exception:** The only exception is the `tmp_card_review` table, which is used dynamically to track the validation and sign-off status of cards.
+* **Workflow Rule:** Do not propose or execute DDL/DML migrations for components or actions associated with cards that do not carry a signed-off release code in `tmp_card_review` (e.g., status is `Draft` or `signed_off IS NULL`).

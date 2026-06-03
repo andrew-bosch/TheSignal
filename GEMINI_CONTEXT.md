@@ -1,5 +1,5 @@
 # THE SIGNAL — Gemini Context Brief
-*Last updated: 2026-05-28 — Session 47*
+*Last updated: 2026-06-02 — Session 63*
 
 This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated at session close.
 
@@ -816,3 +816,83 @@ The stub at `~/Projects/TheSignal/Database/schema_reference.md` will be populate
 5. Write your findings to `Claude_context.md`: (a) confirmed table list; (b) view dependency map (which views reference which tmp_ tables); (c) legacy table row counts; (d) proposed rename DDL for all 20 tables; (e) rewritten SQL for all 27 views using new permanent names.
 
 **Andy confirms Phase A findings before Phase B executes.** Do not rename, drop, or alter any table or view until Phase A is confirmed.
+
+---
+
+## Session 63 DB Tasks — 2026-06-02
+
+**Schema state note:** DB-14 is complete. All `tmp_` tables have been renamed to their permanent equivalents — use `component`, `comp_verb_beat`, `comp_verb_role`, `verb`, `beat`, `action`, etc. throughout. `schema_reference.md` reflects the promoted names. Read it before querying.
+
+**Read `~/Projects/TheSignal/Database/schema_reference.md` before starting.**
+
+These four tasks come from the 04-n18 DB cascade (Art 04b §5.2 refresh — artifact side complete S63). Execute in order; write findings and any decisions to `Claude_context.md`.
+
+---
+
+### DB-S63-01 — Create and seed `card_ref` table
+
+**Background:** `v_card_primitive_map` view is blocked (flagged S48) because it depends on a `card_ref` table that has never been created. This table maps each card's ID to its taxonomy (Layer/Function/Subject) so the view can cross-reference card design against operational primitives in `action`.
+
+**Task:**
+1. Design and create the `card_ref` table. Minimum columns: `card_id` (varchar, e.g. "P01"), `card_name` (varchar), `layer` (varchar), `function` (varchar), `subject` (varchar). Add a primary key on `card_id`. If a more normalized design (FK to a layers/functions lookup) is warranted, propose it in `Claude_context.md` before executing.
+2. Seed all P-series cards (P01–P18) using the canonical taxonomy from Art 04b §5.2 (see below).
+3. Seed the three Ghost intel manipulation cards: Source Substitution (Information/Corrupt/IntelToken), Backdate (Information/Corrupt/IntelToken), Field Verification (Information/Recover/IntelToken). These don't have formal card IDs yet — use the names as identifiers or propose an ID convention.
+4. Verify `v_card_primitive_map` compiles and returns rows after seeding.
+5. Write row counts and any design decisions to `Claude_context.md`.
+
+**P-series taxonomy for seeding (from Art 04b §5.2 — S63):**
+
+| card_id | card_name | layer | function | subject |
+|---------|-----------|-------|----------|---------|
+| P01 | Open Operations | Territory | Add | Presence token |
+| P02 | Disputed Claim | Territory | Remove | Presence token |
+| P03 | Public Commission | Territory | Add | Structure block |
+| P04 | Public Censure | Standing | Shift | Public Standing |
+| P05 | On the Record | Information | Reveal | Action attribution |
+| P06 | Economic Sanction | Economy | Remove | Native resource |
+| P07 | Public Address | Standing | Shift | Public Standing |
+| P08 | Table an Accord | Economy | Add | Accord agreement |
+| P09 | Civic Works Mandate | Territory | Add | Structure block |
+| P10 | Infrastructure Bond | Economy | Add | Accord agreement |
+| P11 | Regulatory Override | Submission | Modify | Presence token (placement cost) |
+| P12 | Convene an Inquiry | Information | Add | Intel token |
+| P13 | Public Disclosure | Information | Reveal | Action attribution |
+| P14 | Community Rally | Territory | Add | Presence token |
+| P15 | Acquisition Offer | Territory | Redirect | Presence token |
+| P16 | Public Dividend | Economy | Add | Native resource (conditional) |
+| P17 | Publish Analysis | Information | Reveal | Action attribution |
+| P18 | Signal Review Request | Resolution | Modify | Covert operation (difficulty) |
+
+---
+
+### DB-S63-02 — Register DividendMarker and RegulatoryOverrideMarker in `component`
+
+**Background:** P16 (Public Dividend) requires a `DividendMarker` component; P11 (Regulatory Override) requires a `RegulatoryOverrideMarker`. Both are new physical components not yet registered.
+
+**Task:**
+1. Check whether `DividendMarker` and `RegulatoryOverrideMarker` already exist in the `component` table.
+2. If absent, insert both. Use the Countermeasure card (id=52) registration pattern in `schema_reference.md` §7 as the template. Both are markers (non-card components):
+   - `DividendMarker`: `actionable=1, receivable=1, transform_visibility=0, transform_orientation=0, transform_data=0`
+   - `RegulatoryOverrideMarker`: `actionable=1, receivable=1, transform_visibility=0, transform_orientation=0, transform_data=0`
+   - Note: `transformable` is now a VIRTUAL GENERATED column — omit from INSERT.
+3. Seed the minimum role/beat primitives for each (Add and Remove at minimum — ARBITER places at Beat 4, removes at Phase 21 or trigger condition).
+4. Report new component IDs and primitive rows inserted to `Claude_context.md`.
+
+---
+
+### DB-S63-03 — Verify Information/Corrupt and Information/Recover IntelToken primitives
+
+**Background:** Source Substitution and Backdate use `Information / Corrupt / IntelToken`. Field Verification uses `Information / Recover / IntelToken`. These combinations need to exist in `comp_verb_role` and `comp_verb_beat` for the Ghost intel manipulation cards to be fully legislated.
+
+**Task:**
+1. Check whether the verbs `Corrupt` and `Recover` exist in the `verb` table.
+2. Check whether `IntelToken` (component) has `Corrupt` and `Recover` role/beat mappings in `comp_verb_role` and `comp_verb_beat`.
+3. For any missing entries: propose the DDL in `Claude_context.md` (beat assignment, phase/role — Beat 3 Faction initiator is the default for covert ops). Do not insert without Andy confirming beat assignments.
+4. Check `v_unlegislated_primitives` after any inserts to confirm coverage.
+
+---
+
+### Working model reminder
+- Write all findings and design decisions to `Claude_context.md` — Claude Code picks them up next session
+- Flag any documentation gaps (ambiguous specs, missing Art 02a component entries, etc.) — do not fill them
+- DB-S63-01 through DB-S63-03 are independent — execute in any order that makes sense given what you find
