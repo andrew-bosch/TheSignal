@@ -24,8 +24,13 @@ S64 complete. S65 opens here.
 - **00-R40 locked (L187):** ARBITER Cognitive Load governing rule. Art 00a (44 rules, pending re-sign-off) + Art 03 §5 P6 + Art 04 §5 P18. design_reference.md + memory updated.
 - Regulatory Downgrade redesigned v2.0 ✅: CovertOperation → PublicAct (permanent). Card-as-condition (success=None). persistence_effect = resource gen −1 tier. Clears: target pays 2 native to Reservoir any time after Beat 4. No TierPenaltyMarker.
 - Art 04 §6.1/§6.2: `persistence_effect` field added to schema (S67). PM05 04-n31 added (sweep).
+- Regulatory Freeze redesigned v2.0 ✅: PublicAct, card-as-condition (no TierFreezeMarker), self-policing enforcement per 00-R40a. Issues Resolved ✓. Pending sign-off.
+- Standing Injunction redesigned v2.0 ✅: PublicAct, card-as-condition (no InjunctionMarker), Permanent with dual clearing (trigger OR Phase 21), target_taxonomy field introduced (§6.1/§6.2), Accords excluded, no operational restriction. Dispatch Token consumed on trigger per 00-R35. Issues Resolved ✓. Pending sign-off.
+- Art 04 §6.1/§6.2: target_taxonomy field added to schema (S67).
+- 00a: R06a added (corollary to R06 — board states committed on resolution; countering requires forward action).
+- 00a: R40a added (corollary to R40 — factions police their own permanent effects; ARBITER adjudicates on call). R40 relocated from §9 to §3. Rule count: 44 → 46. Pending re-sign-off.
 
-**S67+ entry point:** Continue 04-n26 Cluster A — Regulatory Freeze next, then Standing Injunction.
+**S67+ entry point:** 04-n26 Cluster A complete. Next: 04-n27 (Art 03 procedure gaps) or 04-n28 (Art 06 Accord design).
 
 **Priority order:** 04-n26 (component interaction) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
 
@@ -46,8 +51,8 @@ S64 complete. S65 opens here.
 | GrantDeed | Syndicate Land Title | ✅ Spec written — registration pending | New component (SCIF-pattern). Blank card in ARBITER tableau; filled + dispatched to Syndicate case at Beat 3. Fields: `district \| owner`. Tracks under 04-n26. |
 | ParasiticMarker | Syndicate Parasitic | ✅ No component needed | Positional wager redesigned v2.0. Beat 2 checks Beat 3 queue; Intel keyed to first card's submitter. No marker, no deferred effect. Decision S67. |
 | TierPenaltyMarker | Directorate Regulatory Downgrade | ✅ No component needed | Redesigned v2.0 as Permanent PublicAct. Card-on-board IS the condition. Clearing: target pays 2 native to Reservoir. S67. |
-| TierFreezeMarker | Directorate Regulatory Freeze | ⬜ Not yet reviewed | Permanent public board condition. Paired with TierPenaltyMarker — same decision. |
-| InjunctionMarker | Directorate Standing Injunction | ⬜ Not yet reviewed | 5 open design flags: restriction wording, PA type declaration (card name vs. taxonomy), Art 03 Phase B void procedure, Accord overlap. |
+| TierFreezeMarker | Directorate Regulatory Freeze | ✅ No component needed | Redesigned v2.0 as Permanent PublicAct. Card-on-board IS the condition. S67. |
+| InjunctionMarker | Directorate Standing Injunction | ✅ No component needed | Redesigned v2.0 as Seasonal PublicAct. Card-on-board IS the condition. target_taxonomy field introduced. Art 03 void procedure outstanding (04-n27). S67. |
 
 ### Cluster B — Information-state objects (private reveal + visibility)
 
@@ -149,6 +154,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L188** (S67): 00-R06a locked (board states committed on resolution; countering requires forward action). 00-R40a locked (factions police own permanent effects; other players may call clearing conditions). R40 relocated §9→§3. Art 04 target_taxonomy field added (§6.1/§6.2). Art 00a: 46 rules, pending re-sign-off.
 - **L187** (S67): 00-R40 locked — ARBITER Cognitive Load. Art 00a + Art 03 §5 + Art 04 §5 updated. Art 00a and Art 03 pending re-sign-off.
 - **L186** (S66): Art 03 v3.2 signed off. pre_loss_calc procedure block + Art 04 §6.6 removed.
 - **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.

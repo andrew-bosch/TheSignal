@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.26 Draft  
+**Version:** 0.9.30 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-06-02  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -350,9 +350,10 @@ class Card:
     persistence_effect:    MutationExpr | None        # None unless persistence=Permanent; ongoing board condition active while card is in play
 
     # ── Targeting ─────────────────────────────────── expressions
-    target_district: DistrictExpr
-    target_faction:  FactionExpr | None
-    target_object:   ObjectExpr  | None
+    target_district:  DistrictExpr
+    target_faction:   FactionExpr  | None
+    target_object:    ObjectExpr   | None
+    target_taxonomy:  TaxonomyExpr | None   # action taxonomy category this card targets; None = no taxonomy target
 
     # ── Logic ─────────────────────────────────────── predicates + expressions
     affinity:     ConditionalExpr | None    # evaluated before cost
@@ -413,6 +414,7 @@ class PortraitEntry:
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
 | target_faction | Targeting | FactionExpr | Faction this card targets; None = no faction target | Face |
 | target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
+| target_taxonomy | Targeting | TaxonomyExpr | Action taxonomy category this card targets (Layer/Function or Layer/Function/Subject); used when the effect targets a class of actions rather than a specific object; declared at Phase B alongside target_faction; None = no taxonomy target | Face |
 | affinity | Logic | ConditionalExpr | Faction-based cost modifier — evaluated before cost expression | Face |
 | restriction | Logic | BoolExpr | Submission preconditions — card unplayable if evaluates False | Face |
 | cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid cost resources are those that can be traded or transferred (Mandate, Capital, Influence, district native resource). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
@@ -4888,64 +4890,84 @@ RegulatoryDowngrade = Card(
 ---
 
 ### Directorate — REGULATORY FREEZE
-[↑ Covert Operations](#directorate-covert-operations)
+[↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-Preventive tier suppression — lighter than Regulatory Downgrade but cheaper and automatic. Where Downgrade reduces an existing tier, Freeze prevents advancement from the current tier. Applied against Present or Established factions to gate them out of higher-tier resource generation before they consolidate. Cost Mandate×2 and Automatic resolution reflect that issuing a regulatory ceiling is a procedural act, not a contested operation. No ring_mod — administrative acts carry the same institutional weight anywhere in New Meridian. Clearing is deliberately cheaper than Downgrade (1 native vs 2) because a ceiling is a future constraint, not a reclassification of existing status.
+Preventive tier suppression — lighter than Regulatory Downgrade but cheaper. Where Downgrade reduces an existing tier, Freeze prevents advancement from the current tier. Cost Mandate×2 and Automatic resolution reflect that issuing a regulatory ceiling is a procedural act, not a contested operation. No ring_mod — administrative acts carry the same institutional weight anywhere in New Meridian. Clearing is deliberately cheaper than Downgrade (1 native vs 2) because a ceiling is a future constraint, not a reclassification of existing status. Card-as-condition pattern: the card placed in the Directorate play area is the persistent condition; no separate marker component needed. Enforcement per 00-R40a: Directorate monitors, calls violations, ARBITER adjudicates and reverses. Paired with Regulatory Downgrade for full suppression toolkit.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Preventive tier suppression — cheaper alternative to Regulatory Downgrade; blocks advancement from current tier; paired with Downgrade for full suppression toolkit | Art 00 §7 |
+| Action fit | ✓ | Preventive tier suppression — cheaper alternative to Regulatory Downgrade; blocks advancement from current tier; card-as-condition pattern | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Directorate perspective by design — administrative tier ceiling as institutional act | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; Mandate×2, Automatic — procedural institutional act; Dominant restriction by design (Outstanding Issue for documentation); no ring_mod consistent with administrative nature | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — regulatory tier ceiling is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Block/InfluenceTier — blocks tier advancement; TierFreezeMarker registration outstanding (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×2, Automatic — 1-Mandate cheaper than Downgrade; Automatic vs Probabilistic calibration noted; clearing 1 native vs Downgrade 2 native is intentional (ceiling vs reclassification) | Art 02a §6–§7 |
-| Effect duration | ✓ | Persistent: TierFreezeMarker until cleared (1 native spend or Absent) | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Doctrine alignment | ✓ | Directorate only; Mandate×2, Automatic; no ring_mod consistent with administrative nature; no restriction on target tier | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) — institutional act must be on record to be binding; consistent with Regulatory Downgrade | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Territory/Block/InfluenceTier — blocks tier advancement; card IS the persistent condition | Art 04b §4, §5 |
+| Balance | ✓ | Mandate×2, Automatic — 1-Mandate cheaper than Downgrade; clearing 1 native vs Downgrade 2 native is intentional (ceiling vs reclassification) | Art 02a §6–§7 |
+| Effect duration | ✓ | Permanent — card stays on Overview until persistence_condition met | — |
+| Persistence | ✓ | Permanent public act; card on board IS the condition; self-policing per 00-R40a | Art 04 §6; 00-R40a |
 | Trigger validity | ✓ | N/A — trigger = None | — |
 | Portrait validity | ✓ | Directorate +1 submitter — single entry; tier ceiling aligns with regulatory authority doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named — standard zone targeting | Art 01 §6–§7 |
-| Supported by components | ✓ | TierFreezeMarker registration outstanding (Outstanding Issue); placement at Beat 3 | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; marker placed at Beat 3; simultaneous marker interaction with Downgrade outstanding (Outstanding Issue) | Art 03 §9, §11 |
+| Supported by components | ✓ | No new component — card on Overview is the persistent condition | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | Phase B declaration → Countermeasure window → Beat 4 Automatic; standard Permanent Public Act lifecycle; Downgrade/Freeze coexistence = one tier down for gen + blocked advancement, no additional interaction | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **TierFreezeMarker component:** New component not yet registered in Art 02. Needs fields: `faction | district | tier_cap`. Confirm: excess presence placements that would advance tier — are they returned to supply or simply denied?
-- **Dominant restriction by design:** Freeze restricted to Present or Established — cannot freeze a Dominant faction. This is intentional (a preventive tool cannot act on the top tier), but needs explicit documentation in 00a or Art 04 §6.5.
-- **Simultaneous marker interaction:** See Regulatory Downgrade outstanding issue — both markers in same district on same faction needs combined-effect clarification.
+None.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
 
-*Draft S59 — design pass pending*
+*Redesigned S67 — v2.0. CovertOperation → PublicAct. TierFreezeMarker removed; card-as-condition pattern. Self-policing per 00-R40a.*
 
 ```python
 RegulatoryFreeze = Card(
-    id=TBD,  version="v1.0",
+    id=TBD,  version="v2.0",
     name    = "Regulatory Freeze",
-    tagline = "Block a faction from advancing their institutional standing in a target district.",
-    type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
+    tagline = "Establish a tier ceiling in a target district. Target cannot advance beyond their current standing until they pay to lift it.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
+
     layer   = Territory,  function = Block,  subject = InfluenceTier,
-    beat=3, resolution=Automatic, threshold=None, ring_mod=None,
-    trigger=None,
-    resolution_type="Transactional", outcome_type=None,
-    target_district=district.named, target_faction=faction(named_opponent), target_object=None,
-    affinity=None,
-    restriction = faction(target).influence_tier(district(target)) in [Present, Established],
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Permanent public act",
+    outcome_type    = None,
+    persistence     = Permanent,
+    persistence_condition = (
+        faction(target).pays(1, resource.native, to=Reservoir) OR
+        faction(target).influence_tier(district(target)) == Absent
+    ),
+    persistence_effect = tier_advancement.blocked(
+        above = faction(target).influence_tier(district(target)).at_resolution
+    ),
+
+    target_district = district.named,
+    target_faction  = faction(named_opponent),
+    target_object   = None,
+
+    affinity    = None,
+    restriction = None,
     cost        = resource.faction(acting).mandate * 2,
-    success     = arbiter.place(TierFreezeMarker(faction=faction(target)), district(target)),
-    successcrit=None, fail=None, failcrit=None,
+
+    success     = None,
+    successcrit = None,
+
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
-    narrative   = "Forward progress in this district has been administratively paused. The Directorate is still reviewing.",
+
+    narrative    = "Forward progress in this district has been administratively paused. The Directorate is still reviewing.",
     perspectives = {Directorate: "They can build all they want. The tier ceiling is established. They will not pass through it."},
-    design_note  = "TierFreezeMarker: target faction cannot advance above current tier in district while marker is in place. Permanent per Principle 11. Clearing: target spends 1 native resource OR target reaches Absent. Paired with Regulatory Downgrade for full suppression toolkit.",
-    arbiter_note = "Place TierFreezeMarker on target faction in target district. While marker is present: deny any presence placement that would advance target above their current tier — return excess tokens to supply. Clear: target pays 1 native resource (at upkeep or voluntarily) OR target reaches Absent — remove marker and announce.",
+
+    design_note  = "Card placed in Directorate play area (public, face-up) — card IS the persistent condition. Tier cap = target's tier at Beat 4 resolution. Enforcement per 00-R40a: Directorate monitors tier advancement attempts; on called violation, ARBITER reverses the placement and returns tokens to supply. Clearing: target pays 1 native to Reservoir (any time after Beat 4) OR target reaches Absent in district — remove card and announce. No restriction on target tier — playing against a Dominant faction is a legal but wasted play. Paired with Regulatory Downgrade for full suppression toolkit.",
 )
 ```
 
@@ -5290,48 +5312,46 @@ EntryExitControls = Card(
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-Directorate's pre-emptive PA block — distinct from P11 Regulatory Override (which raises presence-placement cost) and C21 Invoke Jurisdiction (which blocks a specific card type for one Beat in one district). Standing Injunction blocks the next instance of a named PA type from a named faction for the entire Quarter or until triggered. The Seasonal persistence and 3 Mandate cost reflect the institutional weight of a formal injunction. The partial Mandate refund on Phase 21 expiry (untriggered) provides a safety valve against pure deterrent plays that are never triggered. PS +1 at placement reflects the public legitimacy signal of filing the injunction. Restriction: Directorate must share a ring with target's operations — institutional authority requires operational footprint overlap.
+Directorate's pre-emptive PA block — distinct from P11 Regulatory Override (which raises presence-placement cost) and C21 Invoke Jurisdiction (which blocks a specific card type for one Beat in one district). Standing Injunction blocks any PA of a named taxonomy (Layer/Function) from a named faction until triggered or until the quarter ends. Permanent persistence with a dual clearing condition: trigger (target submits blocked PA at Phase B) or quarter end (Phase 21). The partial Mandate refund on Phase 21 expiry provides a safety valve against pure deterrent plays that are never triggered. PS +1 at placement reflects the public legitimacy signal of filing the injunction. No operational footprint restriction — 3 Mandate is the gate. Accords excluded: bilateral acts cannot be unilaterally blocked. Card-as-condition: the card placed in the Directorate play area IS the condition; no marker component needed. Enforcement per 00-R40a: Directorate monitors Phase B declarations, calls the trigger, ARBITER adjudicates.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Pre-emptive institutional block on a named PA type is Directorate doctrine — controlling the space of permissible action rather than reacting after the fact | Art 00 §7 |
+| Action fit | ✓ | Pre-emptive institutional block on a named PA taxonomy is Directorate doctrine — controlling the space of permissible action rather than reacting after the fact | Art 00 §7 |
 | Voice fit | ✓ | Directorate on-doctrine; Ghost (aligned) recognizes structural pre-emption as correct; Network (opposed) names it as information control | Art 00 §7, §9 |
-| Doctrine alignment | ✓ | Directorate exclusive: Mandate × 3, Established restriction, PS +1. Pre-emptive control over PA space is core Directorate doctrine | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Directorate): only Directorate would use institutional mechanism to pre-emptively block a named PA type | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Submission / Block / PoliticalAct — blocks a PA from entering the resolution queue | Art 04b §4 |
-| Balance | ⚠ | 3 Mandate for a Seasonal block on a specific PA type. Partial refund (1 Mandate) on Phase 21 expiry reduces deadweight loss. Balance review pending playtesting — single PA type block may be too narrow or too powerful depending on table state | Art 02a §6–§7 |
-| Effect duration | ✓ | Seasonal — marker stays until triggered or Phase 21 | 00-R21 |
-| Persistence | ✓ | Seasonal — InjunctionMarker stays on table face-up as active condition indicator | Art 04 §6 |
-| Trigger validity | ✓ | trigger = None at placement; trigger condition is target declaring blocked PA type at Phase B | — |
-| Portrait validity | ✓ | Directorate +1: submitter-bounded; placing a public institutional block is maximum doctrinal expression | Art 04 §6.2 |
-| Supported by zones | ⚠ | Restriction: "Directorate Established+ in any district where target also has Established+" — "primary ring" wording from sketch replaced; confirm intent. No district-level target — faction-targeted | Art 01 §6–§7 |
-| Supported by components | ⚠ | InjunctionMarker is a new component — Art 02a registration required. Queue for agy DB-S63-02 extension | Art 02a |
-| Supported by game procedure | ⚠ | Trigger behavior requires ARBITER to track active injunctions across Phase B declarations for remaining Months of Quarter. Voiding a declared PA at Phase B is not yet covered in Art 03 §9 procedure. Phase 21 Mandate refund needs Upkeep/EoQ procedure note | Art 03 §9, §19 |
+| Doctrine alignment | ✓ | Directorate exclusive: Mandate×3, PS +1. Pre-emptive control over PA space is core Directorate doctrine. No operational footprint restriction — cost is the gate | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) — institutional act is public; consistent with Regulatory Downgrade/Freeze pattern | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Submission/Block/PublicAct — blocks a PA taxonomy from entering the resolution queue | Art 04b §4 |
+| Balance | ⚠ | 3 Mandate for a Seasonal taxonomy block. Partial refund (1 Mandate) on Phase 21 expiry reduces deadweight loss. Balance review pending playtesting | Art 02a §6–§7 |
+| Effect duration | ✓ | Permanent — dual clearing condition: trigger (target submits blocked PA) or quarter end (Phase 21) | 00-R21 |
+| Persistence | ✓ | Permanent public act; card on board IS the condition; self-policing per 00-R40a | Art 04 §6; 00-R40a |
+| Trigger validity | ✓ | No beat-timing trigger; reactive condition (target declares blocked taxonomy at Phase B) documented in design_note | — |
+| Portrait validity | ✓ | Directorate +1 submitter-bounded; placing a public institutional block is maximum doctrinal expression | Art 04 §6.2 |
+| Supported by zones | ✓ | No district target — faction-targeted; no operational footprint restriction | Art 01 §6–§7 |
+| Supported by components | ✓ | No new component — card on Overview is the persistent condition | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | Phase B void: Dispatch Token returned, target −1 PS, card removed. No resources committed at Phase B (payment is Beat 4 Step 1) — nothing to refund. PAs declared before Injunction resolved (Beat 4) are committed board states; R06a governs, no retroactive block applies | Art 03 §9; 00-R06a; 00-R35 |
 
 #### Outstanding Issues
 
-- **⚠ Restriction wording:** "Directorate Established+ in any district where target also has Established+" — confirm this is the right gatekeeping intent vs. the original sketch's "same ring as primary operations."
-- **⚠ InjunctionMarker:** New component — Art 02a registration required.
-- **⚠ PA type declaration:** Blocked by card name (e.g., "Open Operations") or by taxonomy (Territory/Add). Current spec: by card name. Taxonomy block would be more powerful and harder to execute at the table.
-- **⚠ Art 03 gap:** Phase B procedure for voiding a declared PA not yet specified. ARBITER needs a defined protocol for checking active injunctions when target declares a PA type.
-- **⚠ Accord overlap:** Confirm PoliticalAct block applies to all PA types including BilateralAgreement (P08/P10) — or is Accord-targeting excluded?
+None.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
+
+*Redesigned S67 — v2.0. PoliticalAct → PublicAct. InjunctionMarker removed; card-as-condition pattern. Seasonal → Permanent with dual clearing condition (trigger OR Phase 21). Dispatch Token consumed on trigger per 00-R35. target_taxonomy field introduced (§6.1/§6.2). Self-policing per 00-R40a.*
 
 ```python
 P_StandingInjunction = Card(
-    id      = "—",  version = "v1.0",
+    id      = "—",  version = "v2.0",
     name    = "Standing Injunction",
-    tagline = "Place a conditional block on a named faction's next declared act of a specified type.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Directorate,
+    tagline = "Declare a public restriction on a named faction's next act of a specified type. If triggered, the act is voided.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
 
-    layer    = Submission,  function = Block,  subject = PoliticalAct,
+    layer    = Submission,  function = Block,  subject = PublicAct,
 
     beat            = 4,
     resolution      = Automatic,
@@ -5339,26 +5359,25 @@ P_StandingInjunction = Card(
     ring_mod        = None,
     doctrine_mod    = None,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = "Permanent public act",
     outcome_type    = Unilateral,
-    persistence     = Seasonal,
+    persistence     = Permanent,
+    persistence_condition = (
+        faction(target).submits(PA(taxonomy=target_taxonomy)) OR
+        quarter.phase == 21
+    ),
+    persistence_effect = PA(taxonomy=target_taxonomy, submitter=faction(target)).blocked_at(phase_b),
 
-    target_district = None,
-    target_faction  = faction.opponent,
-    target_object   = PoliticalAct(type=declared),  # declared card type at Phase B
+    target_district  = None,
+    target_faction   = faction.named_opponent,
+    target_object    = None,
+    target_taxonomy  = taxonomy.declared,  # Layer/Function declared at Phase B; BilateralAgreement excluded
 
     affinity    = None,
-    restriction = faction(Directorate).influence_tier(district.any_where(faction(target).influence >= Established)) >= Established,
+    restriction = None,
     cost        = resource.faction(Directorate).mandate * 3,
 
-    success = (
-        arbiter.place(InjunctionMarker(target=target_faction, blocked_pa=declared_pa_type)),
-        faction(Directorate).standing += 1,
-        # on trigger (target declares blocked PA type at Phase B any subsequent Month):
-        #   PA voided; resources returned; target PS −1; InjunctionMarker removed
-        # on Phase 21 expiry (untriggered):
-        #   InjunctionMarker removed; Directorate recovers 1 Mandate
-    ),
+    success     = faction(Directorate).standing += 1,
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -5368,11 +5387,11 @@ P_StandingInjunction = Card(
     narrative    = "The Injunction does not prevent the act. It establishes that the act will carry costs the target has not yet calculated.",
     perspectives = {
         Directorate: "The Injunction does not prevent the act. It relocates its costs.",
-        Ghost:       "Directorate pre-empts the declaration rather than reacting to it. We recognize this as the structurally correct approach.",  # aligned
-        Network:     "A pre-emptive block on a public act is the Directorate deciding which information enters the record. We have a word for that.",  # opposed
+        Ghost:       "Directorate pre-empts the declaration rather than reacting to it. We recognize this as the structurally correct approach.",
+        Network:     "A pre-emptive block on a public act is the Directorate deciding which information enters the record. We have a word for that.",
     },
-    design_note  = "⚠ Multiple open design questions — see Outstanding Issues. Seasonal PA block; InjunctionMarker face-up on table as active condition. Trigger: target declares blocked PA type at Phase B → void PA, return resources, target −1 PS, remove marker. Phase 21 untriggered: Directorate recovers 1 Mandate. Distinct from P11 (cost increase on presence placement) and C21 (single-Beat block in one district). Restriction: Directorate shares ring with target's operations — institutional authority requires footprint overlap.",
-    arbiter_note = "Phase B: Directorate names target faction + PA card type (by card name). Beat 0: restriction check. Beat 4: place InjunctionMarker face-up on table. Directorate +1 PS. From next Month onward: at each Phase B, check if target faction declares the blocked PA type — if yes, void that PA (resources returned, target −1 PS, announce 'Standing Injunction applied', remove marker). Phase 21: if marker still present, return 1 Mandate to Directorate, remove marker.",
+
+    design_note = "Card placed in Directorate play area (public, face-up; target faction and target_taxonomy declared at Phase B). Card IS the persistent condition. Enforcement per 00-R40a: Directorate monitors Phase B — when target submits a PA matching target_taxonomy, Directorate calls it; ARBITER voids the PA (target −1 PS, Dispatch Token consumed per 00-R35, card removed). PA resources not yet committed at Phase B (payment is Beat 4 Step 1) — nothing to refund. PAs declared before Injunction resolved at Beat 4 are unaffected — committed board state per 00-R06a. Quarter-end expiry: if untriggered at Phase 21, Directorate removes card and recovers 1 Mandate. target_taxonomy may not be BilateralAgreement — Accords are bilateral and cannot be unilaterally blocked. Distinct from P11 (cost increase on presence placement) and C21 (single-Beat block in one district).",
 )
 ```
 

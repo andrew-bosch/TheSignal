@@ -240,6 +240,32 @@ The Translation is different. A faction requesting The Translation is admitting 
 
 ---
 
+**00-R40**
+
+**Rule:** ARBITER executes general procedures, not card-specific instructions. All ARBITER-facing content in the game must map to defined, generalizable procedures that apply uniformly across all game states in their category — derivable from a reference document, without per-card notes or per-beat tracking tables. Physical tools (card UI, reference mats, threshold calculators, splaying conventions) carry the complexity; ARBITER carries the judgment.
+
+**Narrative:** ARBITER is a human player, not a computer. The game must protect that experience. An ARBITER maintaining per-card notes, per-beat tracking tables, and card-specific exception procedures is not playing — they are administering. The mechanism for protecting ARBITER's experience is generalization: rules learned once and applied everywhere.
+
+*Source: L187. See also: 00-R40a (faction monitoring of permanent effects).*
+
+*Governs: All artifacts defining ARBITER-facing procedure or content. Each governing artifact implements this rule within its own scope.*
+
+---
+
+**00-R40a**
+
+**Rule:** A faction that plays a permanent effect is responsible for monitoring and enforcing that effect for its duration. When a violation occurs, the owning faction calls it; ARBITER adjudicates and applies the consequence. ARBITER does not proactively track faction-played permanent effects between calls.
+
+**Narrative:** The faction that issued the regulation enforces it. ARBITER does not maintain a running watch on every card in play — that is the owning faction's obligation. Faction law, faction enforcement.
+
+**Mechanics:** At resolution of a permanent card, the playing faction assumes monitoring responsibility. When a violation is called, ARBITER adjudicates and reverses the violating board change. If the owning faction does not call a violation at the time it occurs, the board state stands (00-R06a). Other players may call clearing conditions on any active permanent effect; ARBITER adjudicates all calls.
+
+*Source: Corollary to 00-R40. See also: 00-R06a (committed board states).*
+
+*Governs: All faction-played permanent effects.*
+
+---
+
 ## 4. Board Transparency
 
 Rules governing what is always visible and what is never visible on the board surface.
@@ -259,6 +285,20 @@ Rules governing what is always visible and what is never visible on the board su
 *Source: Design Pillar 1 (Artifact 00 §5), Artifact 01 §5, Artifact 02a §5, Artifact 03 §5.*
 
 *Governs: All artifacts. No exceptions.*
+
+---
+
+**00-R06a**
+
+**Rule:** Board states are committed on resolution. Once an effect resolves and alters the board, that change is fixed — no subsequent card, effect, or procedure may retroactively nullify it. Countering an established board state requires a forward action: remove it, override it, or modify it going forward.
+
+**Narrative:** The building was built. Demolish it to counter it. The signal was transmitted. You respond to what was sent.
+
+**Mechanics:** Effects resolve against the board state as it exists at time of resolution. An effect already in place is the board state the next effect resolves against. There is no mechanism for undoing a committed board state — only for acting on it going forward.
+
+*Source: Corollary to 00-R06. See also: 00-R09 (changes applied immediately), 00-R40a (factions police permanent effects).*
+
+*Governs: All card effects, all phases.*
 
 ---
 
@@ -926,17 +966,6 @@ Full rules and component definition: Artifact 02a §8.
 
 ---
 
-**00-R40**
-
-**Rule:** ARBITER executes general procedures, not card-specific instructions. All ARBITER-facing content in the game must map to defined, generalizable procedures that apply uniformly across all game states in their category — derivable from a reference document, without per-card notes or per-beat tracking tables. Physical tools (card UI, reference mats, threshold calculators, splaying conventions) carry the complexity; ARBITER carries the judgment.
-
-**Narrative:** ARBITER is a human player, not a computer. The game must protect that experience. An ARBITER maintaining per-card notes, per-beat tracking tables, and card-specific exception procedures is not playing — they are administering. The mechanism for protecting ARBITER's experience is generalization: rules learned once and applied everywhere.
-
-*Source: L187.*
-
-*Governs: All artifacts defining ARBITER-facing procedure or content. Each governing artifact implements this rule within its own scope.*
-
----
 
 
 ## Appendix A — Rule Summary
@@ -949,6 +978,7 @@ Full rules and component definition: Artifact 02a §8.
 | 00-R04 | ARBITER's Node presence is categorically beyond faction influence | Single fused piece at Chorus Node — never removed; Dominant structurally unreachable there |
 | 00-R05 | ARBITER conversion is low-priority, not a phase action | Translation available during Debrief and between phases only; rate in Artifact 03 / D02a-01 |
 | 00-R06 | All board state is always publicly visible | Nothing on board surface ever hidden; no card may create hidden board state |
+| 00-R06a | Board states are committed on resolution | Once established, no effect may retroactively nullify a board state — countering requires a forward action |
 | 00-R07 | Chorus Portrait track is always private | No faction sees any Portrait position; ARBITER communicates only via Debrief observations and Chronicle |
 | 00-R08 | Public Standing track is always publicly visible | On The Overview, readable by all at all times; no mechanic may make it private |
 | 00-R09 | Board reflects true current state at every moment | Changes made immediately upon resolution; no deferred or stale state permitted |
@@ -987,9 +1017,10 @@ Full rules and component definition: Artifact 02a §8.
 | 00-R38 | Findings decay applies at close of Debrief, before Session Timeline advances | First action at end of quarter; timing fixed; cannot be modified by card effect |
 | 00-R39 | Each action — covert operation or public act — requires one Dispatch Token | Covert: token in dispatch case; no token = rejected at Beat 0, cost not spent. Public act: token on declared card at Phase B, returned at Beat 4 Step 1 |
 | 00-R40 | ARBITER executes general procedures, not card-specific instructions | All ARBITER-facing content maps to generalizable procedures derivable from a reference document; physical tools carry complexity; ARBITER carries judgment |
+| 00-R40a | Factions police their own permanent effects | Owning faction monitors and calls violations; other players may call clearing conditions; ARBITER adjudicates all calls — ARBITER does not proactively track |
 
 ---
 
 *End of Artifact 00a — Governing Rules & Design Policy v0.4*
 *Populated from review of all V1 artifacts: 00, 01, 02a, 02b, 03, 04, 04b, PM01, PM02, PM03*
-*44 rules across 7 categories (§3–§9). Pending re-sign-off S67 (L187).*
+*46 rules across 7 categories (§3–§9). Pending re-sign-off S67 (L187 — R40 relocated to §3; R06a, R40a added S67).*

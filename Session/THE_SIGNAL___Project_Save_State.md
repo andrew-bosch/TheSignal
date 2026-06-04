@@ -169,12 +169,19 @@ Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`
 - 00-R40 locked (L187) — ARBITER Cognitive Load governing rule: ARBITER executes general procedures, not card-specific instructions; generalization of procedure is the mechanism. Written to Art 00a (44 rules, pending re-sign-off), Art 03 §5 P6 (pending re-sign-off), Art 04 §5 P18. design_reference.md + memory updated.
 - Regulatory Downgrade redesigned v2.0 — CovertOperation → PublicAct (permanent); card-as-condition (success=None); persistence_effect = resource gen −1 tier for target faction in district; clears when target pays 2 native to Reservoir any time after Beat 4. No TierPenaltyMarker.
 - Art 04 §6.1/§6.2: persistence_effect field added to schema. PM05 04-n31 added (sweep).
-- 04-n26 Cluster A status: SCIF ✅, Land Title ✅, Parasitic ✅, Regulatory Downgrade ✅; Regulatory Freeze + Standing Injunction remaining.
+- 04-n26 Cluster A complete — SCIF ✅, Land Title ✅, Parasitic ✅, Regulatory Downgrade ✅, Regulatory Freeze ✅, Standing Injunction ✅. Four of six with no new component (card-as-condition pattern).
+- Regulatory Freeze redesigned v2.0 — PublicAct; card-as-condition (no TierFreezeMarker); self-policing per 00-R40a. Issues Resolved ✓. Pending sign-off.
+- Standing Injunction redesigned v2.0 — PublicAct; card-as-condition (no InjunctionMarker); Permanent with dual clearing (target PA submission OR Phase 21); target_taxonomy field introduced (§6.1/§6.2). Issues Resolved ✓. Pending sign-off.
+- 00-R06a added (corollary to R06): board states committed on resolution (L188).
+- 00-R40a added (corollary to R40): factions police own permanent effects; other players may call clearing conditions (L188). R40 relocated §9→§3.
+- Art 04: target_taxonomy field added §6.1/§6.2 (L188). v0.9.30.
+- PM05: 04-n32 added (target_taxonomy sweep — C21 and block-type cards).
 
 **L-decisions this session:**
 - L187: 00-R40 ARBITER Cognitive Load governing rule locked. Art 00a, Art 03 §5, Art 04 §5 updated. Art 00a and Art 03 pending re-sign-off.
+- L188: 00-R06a + 00-R40a locked; R40 relocated §9→§3. target_taxonomy field added to Art 04 §6.1/§6.2. Art 00a: 46 rules, pending re-sign-off.
 
-**Next session:** 04-n26 Cluster A — Regulatory Freeze, then Standing Injunction.
+**Next session:** 04-n27 (Art 03 procedure gaps) or 04-n28 (Art 06 Accord design); Regulatory Freeze + Standing Injunction sign-offs.
 
 ---
 
