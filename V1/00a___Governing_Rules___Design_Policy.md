@@ -2,7 +2,7 @@
 ## THE SIGNAL P1 — Paper Prototype
 
 **Version:** 0.4  
-**Status:** ✅ Signed Off — S61  
+**Status:** 🔄 Pending Re-sign-off — S67 (L187 — 00-R40 added)  
 **Last Updated:** 2026-06-01  
 **Companion to:** 00 — Factions, World & Narrative Context  
 **Depends on:** 00, 01, 02a, 02b, 03, 04, 04b
@@ -926,6 +926,18 @@ Full rules and component definition: Artifact 02a §8.
 
 ---
 
+**00-R40**
+
+**Rule:** ARBITER executes general procedures, not card-specific instructions. All ARBITER-facing content in the game must map to defined, generalizable procedures that apply uniformly across all game states in their category — derivable from a reference document, without per-card notes or per-beat tracking tables. Physical tools (card UI, reference mats, threshold calculators, splaying conventions) carry the complexity; ARBITER carries the judgment.
+
+**Narrative:** ARBITER is a human player, not a computer. The game must protect that experience. An ARBITER maintaining per-card notes, per-beat tracking tables, and card-specific exception procedures is not playing — they are administering. The mechanism for protecting ARBITER's experience is generalization: rules learned once and applied everywhere.
+
+*Source: L187.*
+
+*Governs: All artifacts defining ARBITER-facing procedure or content. Each governing artifact implements this rule within its own scope.*
+
+---
+
 
 ## Appendix A — Rule Summary
 
@@ -974,9 +986,10 @@ Full rules and component definition: Artifact 02a §8.
 | 00-R37 | Submission order is tiebreaker within resolution priority tiers | Faster submission earns resolution priority within Beat 3 and Beat 4 |
 | 00-R38 | Findings decay applies at close of Debrief, before Session Timeline advances | First action at end of quarter; timing fixed; cannot be modified by card effect |
 | 00-R39 | Each action — covert operation or public act — requires one Dispatch Token | Covert: token in dispatch case; no token = rejected at Beat 0, cost not spent. Public act: token on declared card at Phase B, returned at Beat 4 Step 1 |
+| 00-R40 | ARBITER executes general procedures, not card-specific instructions | All ARBITER-facing content maps to generalizable procedures derivable from a reference document; physical tools carry complexity; ARBITER carries judgment |
 
 ---
 
 *End of Artifact 00a — Governing Rules & Design Policy v0.4*
 *Populated from review of all V1 artifacts: 00, 01, 02a, 02b, 03, 04, 04b, PM01, PM02, PM03*
-*43 rules across 7 categories (§3–§9). Signed off S61.*
+*44 rules across 7 categories (§3–§9). Pending re-sign-off S67 (L187).*

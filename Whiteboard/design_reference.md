@@ -247,6 +247,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | **00-R37** | Submission order is tiebreaker within priority tiers | Dispatch procedure |
 | **00-R38** | Findings decay fires after Debrief, before Session Timeline advance | Findings cards |
 | **00-R39** HARD | Each action (covert op or public act) requires 1 Dispatch Token | All covert ops and public acts |
+| **00-R40** | ARBITER executes general procedures, not card-specific instructions. `arbiter_note` fields reference existing procedures defined in governing artifacts — they do not define new ones. When a card requires new ARBITER behavior, that behavior must be defined as a generalizable procedure in Art 03 or Art 07 before the card is finalized. *(Art 04 Principle 18)* | All cards with ARBITER-facing content |
 
 ---
 
@@ -329,7 +330,6 @@ When writing a new card spec, include these fields (some are gaps not yet in all
 |-------|--------|-------|
 | `Card version` | Gap — L108 | Add "v1.0" to all new cards; enables errata tracking on physical copies |
 | `Trigger condition` | Gap — React/Tripwire only | Structured field: when does the card activate? `N/A` for standard ops |
-| `Pool copies` | Gap — operational | How many copies in setup pool; governs print quantities; singleton = 1 |
 | `Outcome type` | Gap — Public Acts only | `Binary \| Elect player \| Bilateral agreement \| Unilateral` etc. |
 | Per-field VS-xx | Gap — L2+ | Effect fields = VS-06 (Conditional); Portrait = VS-04 (ARBITER-only); card face fields = VS-01 |
 

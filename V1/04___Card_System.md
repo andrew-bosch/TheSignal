@@ -136,6 +136,10 @@ A portrait entry may only affect the portrait of the faction that submitted the 
 
 Where a faction-specific card represents a native, in-house capability (Ghost's intelligence pipeline, Guild's construction expertise, Directorate's regulatory authority), a corresponding standard card should exist that any faction can access — at higher cost or lower threshold — representing outsourced execution through hired data specialists, contractors, or counsel. Faction-specific cards embody the competency; standard cards are the contract. Standard equivalents are designed as separate cards alongside their faction-specific counterparts and are tracked as PM05 items when the faction-specific card is written.
 
+**Principle 18 — ARBITER instructions reference procedures; they do not define them.**
+
+Every card requiring ARBITER action maps to a named general procedure defined in a governing artifact. `arbiter_note` fields reference existing procedures — they do not define new ones. When a card design requires new ARBITER behavior, that behavior must be defined as a generalizable procedure in a governing artifact (Art 03, Art 07, or equivalent) before the card is finalized. *00-R40.*
+
 ---
 
 ### Design Rationale
@@ -343,6 +347,7 @@ class Card:
     outcome_type: OutcomeType | None        # public acts only
     persistence:           Persistence              # card table presence — Immediate/Transient/Seasonal/Permanent; default Immediate for covert ops
     persistence_condition: BoolExpr | None           # None unless persistence=Permanent; card discarded immediately when this evaluates False
+    persistence_effect:    MutationExpr | None        # None unless persistence=Permanent; ongoing board condition active while card is in play
 
     # ── Targeting ─────────────────────────────────── expressions
     target_district: DistrictExpr
@@ -404,6 +409,7 @@ class PortraitEntry:
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
 | persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Beat 5 of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. PA cards with active board-condition effects must use Transient or Seasonal. | Face |
 | persistence_condition | Metadata | BoolExpr | Condition that must remain True for a Permanent card to stay in play; card is discarded immediately when it evaluates False. None for all non-Permanent cards. | Face |
+| persistence_effect | Metadata | MutationExpr | Ongoing board condition active while a Permanent card is in play; evaluated continuously until persistence_condition is met. Use `game.board_condition(...)` to express scoped persistent effects. None for all non-Permanent cards. | Face |
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
 | target_faction | Targeting | FactionExpr | Faction this card targets; None = no faction target | Face |
 | target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
@@ -1487,7 +1493,6 @@ C_DisinformationCampaign = Card(
     },
     design_note  = "First Standard covert card with PS shift as primary effect — fills Standing/Shift coverage gap. Presence restriction: must have operational footprint to run local narrative operation. Success swing: target −2 PS, acting +1 PS (net 3). Fail: acting −1 PS. Failcrit: acting −2 PS + NotificationSlip to target (campaign ran against you in [district] this Month; not who ran it). Ring modifier: harder in Core (denser institutional oversight). Standard equivalents under Principle 17: Network and Ghost have superior faction-specific versions.",
     arbiter_note = "Beat 0: confirm acting faction has presence (token or deployment marker) in target district; if not — op voided, resources returned. Beat 3: roll d100. Success: target −2 PS, acting +1 PS. Fail: acting −1 PS. Fail crit (01–05): acting −2 PS; dispatch NotificationSlip to target faction ('A disinformation campaign was run against you in [district] this Month'). Target does not learn who ran it.",
-    pool_copies  = 3,
 )
 ```
 
@@ -1571,7 +1576,6 @@ C_Disprove = Card(
     },
     design_note  = "Standard covert op targeting an opponent's Intel token supply via blind random removal — ARBITER draws one token from target's supply without acting faction specifying which. No district restriction; no affinity (destroying evidence has no faction-native doctrine edge). Silent on success: target receives no notification. Automatic fail if target holds no tokens at Beat 3 (cost sunk).",
     arbiter_note = "Phase A: acting faction names target faction. Beat 3: if target faction holds zero Intel tokens, op fails (cost sunk; do not announce reason). Otherwise, draw one Intel token at random from target faction's supply and remove from play (return to box). Acting faction receives no information about the removed token. Target faction receives no notification.",
-    pool_copies  = 3,
 )
 ```
 
@@ -1658,7 +1662,6 @@ C_IntelExtraction = Card(
     },
     design_note  = "Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two cards. Blind random draw from target's supply; acting faction receives token face-down in case, inspects privately at Beat 3 resolution. Target's token count decreases visibly (visible resource denial). Ghost affinity (threshold +10): covert acquisition doctrine. Syndicate portrait +1: capital intelligence motivation, no threshold bonus (physical acquisition is not Syndicate-native). Automatic fail if target holds no tokens at Beat 3.",
     arbiter_note = "Phase A: acting faction names target faction. Beat 3: if target faction holds zero Intel tokens, op fails (cost sunk; do not announce reason). Otherwise, draw one Intel token at random from target faction's supply. Transfer face-down to acting faction's dispatch case — acting faction may inspect privately. Target faction's token count decreases by 1 (visible).",
-    pool_copies  = 3,
 )
 ```
 
@@ -1745,7 +1748,6 @@ C_ModifierRaid = Card(
     },
     design_note  = "Economy/Redirect/ModifierCard — splits Asset Extraction (S62) into two cards alongside Intel Extraction. Blind random draw from target's modifier hand; acting faction receives card face-down in case, inspects privately at Beat 3 resolution. Target's card count decreases visibly. Ghost affinity (threshold +10); Syndicate portrait +1. Automatic fail if target holds no modifier cards at Beat 3.",
     arbiter_note = "Phase A: acting faction names target faction. Beat 3: if target faction holds zero modifier cards, op fails (cost sunk; do not announce reason). Otherwise, draw one modifier card at random from target faction's hand. Transfer face-down to acting faction's dispatch case — acting faction may inspect privately. Target faction's modifier card count decreases by 1 (visible).",
-    pool_copies  = 3,
 )
 ```
 
@@ -1854,7 +1856,6 @@ P01 = Card(
     },
     design_note  = "Public version of C03 Campaign. Same cost (2 native), guaranteed outcome (Automatic), PS +1 on success. Trade: covert = hidden + risky vs. public = visible + certain. Directorate affinity: formal institutional presence declaration has no resource cost against mandate doctrine. Ghost −1: visibility conflicts with concealment doctrine. Ring entry rules still enforced by ARBITER at Beat 0.",
     arbiter_note = "Place 2 presence tokens for acting faction in declared district at Beat 4. Apply PS +1 to acting faction. Confirm ring entry requirements at Beat 0 — if not satisfied, PA voided; resources returned; acting faction takes Public Pass.",
-    pool_copies  = 6,
 )
 ```
 
@@ -1946,7 +1947,6 @@ P02 = Card(
     },
     design_note  = "Public version of C04 Undermine. Same cost (2 native); threshold 45 vs C04's 40; PS consequences added. Fail/failcrit penalise the challenger — public challenges are public commitments. Network/Directorate +10 threshold: doctrinal alignment with formal dispute mechanisms. Ghost −1: public confrontation conflicts with concealment doctrine. doctrine_mod: Neighbor +10, Opposed −10 on target faction relationship.",
     arbiter_note = "Beat 4. Remove 1 presence token from target faction. Check for tie at highest chip count — if tie at 3+ chips, place Contested marker. PS: acting +1, target −1 on success. Acting −1 on fail. Acting −2 on failcrit (no token removed on fail/failcrit).",
-    pool_copies  = 6,
 )
 ```
 
@@ -2032,7 +2032,6 @@ P03 = Card(
     },
     design_note  = "Public counterpart to C01. Same cost; Automatic (no fail risk); PS +1. Guild affinity (district native = 0) on-doctrine. Ghost −1: public structure = permanent commitment against concealment doctrine. Counter to Guild's build pace: Directorate P11 (Regulatory Override) raises cost of presence-placement in district (prerequisite for this card); P09 (Civic Works Mandate) can be blocked by P11.",
     arbiter_note = "Place 1 structure block for acting faction in declared district at Beat 4. PS +1. Restriction at Beat 0: acting faction must have presence and no existing structure. If restriction fails, PA voided.",
-    pool_copies  = 6,
 )
 ```
 
@@ -2120,7 +2119,6 @@ P04 = Card(
     },
     design_note  = "PS attack card of the standard set. Base threshold 35 — demanding. Fresh Intel token (optional, submitted at Phase B, spent regardless of outcome) provides +15 threshold. Network/Directorate −1 cost each. Fail/failcrit PS penalties punish reckless censure. Ghost −1 portrait: public accusation = self-exposure. PS shifts in success/fail are game effects, not Portrait (P12).",
     arbiter_note = "At Phase B: acting faction names target faction. If Intel token submitted, ARBITER holds it. Beat 4: threshold = 35 + 15 if Fresh Intel submitted. On success: target −2 PS, acting +1 PS; Intel token spent. On fail: acting −1 PS; Intel token still spent. On failcrit: acting −2 PS.",
-    pool_copies  = 6,
 )
 ```
 
@@ -2211,7 +2209,6 @@ P05 = Card(
     },
     design_note  = "Standard information-attribution PA. Restriction requires Fresh or Stale token — Expired excluded (too degraded to constitute usable attribution evidence). Token spent regardless of outcome. Threshold from token age (Fresh = 50, Stale = 35) + Network +10. Ghost portrait −2: attributing any faction's covert op violates Ghost's belief that operational anonymity protects the intelligence discipline of the whole table — the highest negative portrait value in the set.",
     arbiter_note = "Intel token submitted at Phase B. Verify token age: Fresh or Stale satisfies restriction; Expired does not. Beat 4: threshold = age-based (50 Fresh / 35 Stale) + 10 if Network. On success: announce '[Acting faction] attributes [op type, quarter] to [target faction].' Target −2 PS, acting +2 PS. Token spent. On fail: acting −1 PS. Token spent regardless.",
-    pool_copies  = 6,
 )
 ```
 
@@ -2298,7 +2295,6 @@ P06 = Card(
     },
     design_note  = "PS reversed by design: acting −1 (aggressor optic), target +1 (sympathy) on success. Value is purely resource denial (target loses up to 2 native; floor = 0 — remove all available if fewer than 2). Faction differentiation: Ghost plays freely (PS-agnostic), Network avoids (PS-dependent), Syndicate primary user (+15 threshold). Guild −1 portrait: economic weapons conflict with permanence-through-building doctrine.",
     arbiter_note = "Beat 4. d100 vs threshold 40 (+15 Syndicate; doctrine_mod Neighbor +10 / Opposed −10). On success: remove 2 native resources from target, or all available if fewer than 2 (floor = 0); acting −1 PS; target +1 PS. On fail: acting −1 PS only. On failcrit: acting −2 PS.",
-    pool_copies  = 6,
 )
 ```
 
@@ -2382,7 +2378,6 @@ P07 = Card(
     },
     design_note  = "Self-directed PS building — the missing card type in the standard set. P04 attacks opponent PS; P07 builds own. Automatic, 1 native, +2 PS. Presence requirement: cannot claim standing in districts where you have no legitimacy. Directorate +1 and Network +1: institutional communication and broadcasting are doctrinal for both. Ghost −1: public address = attention = exposure risk.",
     arbiter_note = "Beat 4. Restriction at Beat 0: acting faction must have at least 1 presence token in declared district. If restriction fails, PA voided. On success: acting faction +2 PS.",
-    pool_copies  = 6,
 )
 ```
 
@@ -2475,7 +2470,6 @@ P08 = Card(
     },
     design_note  = "Accord creation PA. Directorate affinity only (−1 cost). Persistence = Seasonal: P08 card or AccordOffer marker stays on table from Beat 4 through Debrief. Terms declared publicly at Phase B — cannot be retracted. AccordCard created on acceptance; both parties +1 PS. On decline: target −1 PS, proposer +1 PS. Ghost −1: Accords are commitments. Art 06 governs AccordCard terms and lifecycle.",
     arbiter_note = "Phase B: terms declared publicly. Beat 4: place AccordOffer marker (or leave P08 card) on table with terms visible. Card persists until Debrief. At Debrief: target faction publicly accepts or declines. On accept: create AccordCard (terms per Art 06); both +1 PS. On decline: target −1 PS, proposer +1 PS. Remove AccordOffer marker after resolution.",
-    pool_copies  = 6,
 )
 ```
 
@@ -2926,7 +2920,7 @@ Construction analogue to C12 Materials Acquisition — C12 covers demolition rev
 | Doctrine alignment | ✓ | Guild only; zero resource cost (slot IS the bet); payout 2 Capacity mirrors C01.cost — self-calibrating on balance pass; Beat 2 positional wager fits the "bet on opponent building" play style | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — Guild's passive revenue model | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Economy/Recover/NativeResource — Recover returns resources based on triggered event; C03 exclusion confirmed locked S59 | Art 04b §4, §5 |
-| Balance | ✓ | Payout 2 Capacity mirrors C01.cost — self-calibrating; pool copies outstanding (Outstanding Issue) | Art 02a §6–§7 |
+| Balance | ✓ | Payout 2 Capacity mirrors C01.cost — self-calibrating | Art 02a §6–§7 |
 | Effect duration | ✓ | Immediate: Capacity delivered at Beat 3 when trigger fires | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | Trigger = C01 completion by named faction; first qualifying play only; Beat 2 positional wager monitors trigger across the round | Art 04 (C01) |
@@ -2938,7 +2932,6 @@ Construction analogue to C12 Materials Acquisition — C12 covers demolition rev
 #### Outstanding Issues
 
 - **C03 scope confirmed excluded:** Labor Contract is a financial claim on physical construction (C01) only. Campaign (C03) does not trigger — no labor fee on presence/influence activity. Locked S59.
-- **Pool copies:** 2 copies assumed (same as C12) — confirm during card set balance pass.
 
 #### Status
 
@@ -2990,7 +2983,6 @@ Card(
         Directorate: "The Guild has found a way to treat infrastructure development as a private revenue stream. This requires a regulatory response.",
         Network:     "Every build is a Guild fee. Every fee is a constraint. The city grows on Guild's terms.",
     },
-    pool_copies  = 2,
     design_note  = "Construction analogue to C12 Materials Acquisition. Together with C12 and 04-n2 passive rule: no faction demolishes or builds in New Meridian without Guild being paid. Trigger is C01 only — Labor Contract is a financial claim on physical construction, not influence or presence activity. Payout mirrors C01.cost (2 Capacity). First qualifying C01 from named faction only.",
     arbiter_note = "At Beat 3: confirm whether named faction completed C01 this Quarter. First qualifying play only. If triggered: deliver 2 Capacity to Guild's Dispatch Case.",
 )
@@ -3090,7 +3082,6 @@ P09 = Card(
     },
     design_note  = "Guild's prestige build PA. 4 Capacity (district native waived for both). Both-or-nothing: if either district fails restriction at Beat 0, full PA is voided. PS +3: highest single-card build reward. Portrait +2: double structure = doctrinal maximum. Counter: Directorate P11 Regulatory Override applied to either district beforehand raises presence-placement costs, potentially blocking prerequisite presence for this card.",
     arbiter_note = "Phase B: two distinct districts named. Beat 0: both restrictions checked simultaneously. If either fails (no Guild presence, or existing structure), entire PA voided; 4 Capacity returned; Guild takes Public Pass. Beat 4: place 1 structure in each declared district; Guild +3 PS.",
-    pool_copies  = 1,
 )
 ```
 
@@ -3179,7 +3170,6 @@ P10 = Card(
     },
     design_note  = "Guild economic relationship PA. 2 Capacity cost; 2 native delivered to target immediately (good-faith investment). AccordCard on acceptance with ongoing income (1 Capacity/Upkeep from target). Net positive for Guild over 2+ rounds. Restriction: Guild must have Established adjacent to target's operations. Distinct from C09 Fund (Capital, one-time, no income return). Addresses 04-n11 (Guild↔Network neighbor cooperation); Network is natural target given pentagram proximity.",
     arbiter_note = "Phase B: target faction named. Beat 4: deliver 2 native resources to target immediately. Place AccordOffer on table (persistent through Debrief). On acceptance: create AccordCard; Guild +1 PS, target +1 PS. Track Accord income: at each Upkeep Step 6 while Accord active, target pays Guild 1 Capacity. On decline: Guild +1 PS, target −1 PS.",
-    pool_copies  = 1,
 )
 ```
 
@@ -3562,7 +3552,7 @@ Ghost's dedicated faction-specific gather platform. Distinct from C05 Gather (st
 | Doctrine alignment | ✓ | Ghost only; 2 Findings cost for 2-token yield reflects sustained collection investment; threshold 45 vs C05 50 — offset for higher cost (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — Ghost's primary Intel generation card beyond standard C05 | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Information/Add/IntelToken — same taxonomy as C05; faction-specific variant with higher yield | Art 04b §4, §5 |
-| Balance | ✓ | Threshold 45, cost 2 Findings, yield 2 tokens — calibration vs C05 outstanding (Outstanding Issue); pool_copies=2 makes this Ghost's primary gather platform | Art 02a §6–§7 |
+| Balance | ✓ | Threshold 45, cost 2 Findings, yield 2 tokens — calibration vs C05 outstanding (Outstanding Issue) | Art 02a §6–§7 |
 | Effect duration | ✓ | Immediate: Intel tokens dispatched at Beat 3; durable resource, no card-level duration | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
@@ -3619,7 +3609,6 @@ Card(
 
     narrative    = "Every asset leaves a signal. Ghost listens until the signal becomes a pattern.",
     perspectives = {Ghost: "A station does not move. It waits until the target walks past it again."},
-    pool_copies  = 2,
     design_note  = "Ghost's dedicated gather platform. Higher yield than C05 (2 tokens vs 1 on success) at double Findings cost. No adjacency restriction — consistent with C16-C20 pattern; 00-R29 refinement pending. Cards stack: C05 and Station may both target same faction in same Quarter.",
 )
 ```
@@ -3699,7 +3688,6 @@ Card(
 
     narrative    = "Some intelligence is gathered patiently. Some is taken all at once.",
     perspectives = {Ghost: "The take was complete. Everything they transmitted this Quarter. We have it."},
-    pool_copies  = 1,
     design_note  = "Singleton. Variable cost: Ghost declares n at submission; cost = n Findings; success = 2n Intel tokens; crit success = 3n. Fail = nothing. ARBITER validates n Findings present at Beat 0. NOT Deep Cover — C19 is Deep Cover. Intel holding guideline is 4 (not HARD); high-n plays may exceed guideline.",
     arbiter_note = "At Beat 0: record declared n; validate n Findings present in case. At Beat 3: success = dispatch 2n IntelToken(faction=target) to Ghost's case; crit success = dispatch 3n; fail = nothing; crit fail = NotificationSlip to target.",
 )
@@ -3721,21 +3709,21 @@ Converts existing faction-keyed Intel into future modifier capability. Spends on
 | Voice fit | ✓ | Faction-specific; single Ghost perspective by design — intelligence as infrastructure for future action | Art 00 §7 |
 | Doctrine alignment | ✓ | Ghost only; IntelToken cost gates use on prior collection; yield scales with target development — balance concern flagged (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — deferred modifier economy is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Add/SCIFRecordCard — new component outstanding (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Yield = target's structure count; singleton; SCIFRecordCard + Debrief step both outstanding (Outstanding Issues) — balance assessment deferred until components and procedure locked | Art 02a §6–§7 |
-| Effect duration | ✓ | Immediate: SCIF Record card placed in case at Beat 3; Debrief draw is procedural (component triggers step), not a card-level lingering effect — compliant with 00-R21 | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Taxonomy fit | ✓ | Information/Add/SCIFRecord — registered 00b §4 (SR-xx); agy task outstanding | Art 04b §4, §5 |
+| Balance | ✓ | Yield scales with target's structure count per ring; balance assessment deferred until Art 03 procedure locked | Art 02a §6–§7 |
+| Effect duration | ✓ | Immediate: SCIFRecord instantiated at Beat 3; Debrief draw is Art 03 procedure, not a card-level lingering effect — compliant with 00-R21 | — |
+| Persistence | ✓ | Immediate — card fully resolved at Beat 3; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — Automatic resolution; restriction enforces Intel token presence | — |
 | Portrait validity | ✓ | Ghost +1 submitter — intelligence-to-modifier conversion aligns with Ghost doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.any (required for target_faction context) | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken cost; SCIFRecordCard is a new component — Art 02 registration outstanding (Outstanding Issue) | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Art 03 Debrief phase requires new "Process SCIF Records" step — PM05 04-n5 outstanding (Outstanding Issue) | Art 03 §9, §11, §19 |
+| Supported by zones | ✓ | target_district = None — faction-targeted operation; no district required | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken cost; SCIFRecord registered 00b §4 (SR-xx) — agy task outstanding | Art 02a §6–§8 |
+| Supported by game procedure | ⚠ | Art 03 Beat 3 instantiation + Debrief draw procedure outstanding — blocks Issues Resolved (04-n27) | Art 03 §9, §11, §19 |
 
 #### Outstanding Issues
 
-- **Art 03 Debrief step:** Processing SCIF Records at Debrief is not yet in Art 03 §19. Blocked on PM05 04-n5.
-- **SCIFRecordCard component:** New component not yet registered in Art 02a/02b. Register fields: `Q[quarter] | Draw [n] modifier cards`. Blocked until Art 02 component registration pass.
-- **Balance — yield scaling:** SCIF yield grows as Guild and Directorate build. Confirm Ghost is not inadvertently incentivised to let heavy-builders win just to maximise SCIF draw count.
+- **SCIFRecord component:** Register SR-xx in 00b §4 (agy). Fields: `quarter | draw_ring1 | draw_ring2 | draw_ring3 | draw_faction`. draw_ringN = target's structure block count per ring at Beat 3 (snapshot). draw_faction = upkeep step formula on target's total structure block count (0–1: 0, 2–3: 1, 4–5: 2, 6+: 3).
+- **⚠ Art 03 procedure — blocks Issues Resolved:** Beat 3 instantiation sequence and Debrief draw procedure (process all SCIF Records in Ghost's case; draw from ring decks + Ghost faction deck per recorded counts; no ring-eligibility check; discard slip after use; discard unused at Phase 21) not yet in Art 03. Track under 04-n27.
+- **Balance — yield scaling:** SCIF yield grows as Guild and Directorate build. Playtest flag — non-blocking.
 
 #### Status
 
@@ -3743,16 +3731,14 @@ Converts existing faction-keyed Intel into future modifier capability. Spends on
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Draft S59 — design pass pending*
-
 ```python
 Card(
     id=TBD,  version="v1.0",  # ID pending PM05 04-n1
     name    = "SCIF",
-    tagline = "Convert operational intelligence into future modifier capability.",
+    tagline = "Turn intelligence into operational assets.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
 
-    layer    = Information,  function = Add,  subject = SCIFRecordCard,
+    layer    = Information,  function = Add,  subject = SCIFRecord,
 
     beat            = 3,
     resolution      = Automatic,
@@ -3763,21 +3749,15 @@ Card(
     resolution_type = "Transactional",
     outcome_type    = None,
 
-    target_district = district.any,
+    target_district = None,
     target_faction  = faction.opponent,
-    target_object   = SCIFRecordCard,
+    target_object   = None,
 
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 1,
     cost        = IntelToken(faction=faction(target)) * 1,
 
-    success = arbiter.place(
-                SCIFRecordCard(
-                    quarter    = game.quarter,
-                    draw_count = faction(target).structure_blocks.count
-                ),
-                in = faction(acting).dispatch_case
-              ),
+    success     = SCIFRecord(target=faction(target)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -3786,9 +3766,8 @@ Card(
 
     narrative    = "The structure count is the number of ways they have committed themselves. Ghost counts carefully.",
     perspectives = {Ghost: "We do not need to be inside their operation. We need to know how large it is."},
-    pool_copies  = 1,
-    design_note  = "SCIF Record card is a new component: fields = Q[quarter] | Draw [n] modifier cards. draw_count = target's structure block count at time of Beat 3 resolution. Art 03 Debrief procedure requires new step: for each SCIF Record card in Ghost's case, Ghost draws draw_count modifier cards; cards enter Ghost's modifier hand for next Quarter.",
-    arbiter_note = "At Beat 3: consume IntelToken(faction=target) from Ghost's case. Count target's current structure blocks (all districts). Place SCIFRecordCard in Ghost's Dispatch Case with draw_count filled in. At Debrief: process all SCIF Records in Ghost's case — Ghost draws the recorded number of modifier cards from their deck for each record.",
+    design_note  = "Converts held intelligence into future modifier capability — Ghost builds next Quarter's hand from this Quarter's intelligence. Pairs with Station, Full Take, and Synthesize: the SCIF pipeline is the destination for accumulated faction-keyed Intel. Yield scales with target development, creating an intelligence premium on heavily-built opponents.",
+    arbiter_note = "⚠ Procedure outstanding — Beat 3 instantiation and Debrief draw sequence not yet in Art 03. See PM05 04-n27. Blocks Issues Resolved.",
 )
 ```
 
@@ -3867,7 +3846,6 @@ Card(
 
     narrative    = "Ghost does not steal. Ghost redirects what was already in motion.",
     perspectives = {Ghost: "Their resource. Our pipeline. They built something worth taking."},
-    pool_copies  = 1,
     design_note  = "Layer=Economy per L175 — primary effect is resource acquisition despite intelligence gating. Resources dispatched to Ghost's Dispatch Case at Beat 3; returned to Ghost at month-end with normal case contents. Target faction does NOT lose resources. Quantity 2 is a design placeholder — calibrate against Art 00c. Higher-tier Ghost cards carry secondary cost = faction(target).native consumed on play (C17 model).",
     arbiter_note = "At Beat 3: consume IntelToken(faction=target) from Ghost's case. Dispatch 2 units of target faction's native resource type to Ghost's Dispatch Case. Target faction's resource pool is not reduced. Resources available to Ghost at month-end with normal case return.",
 )
@@ -3952,7 +3930,6 @@ Card(
 
     narrative    = "The Directive is not a secret. It is a pattern. Ghost reads patterns.",
     perspectives = {Ghost: "We are not guessing. We have read enough of their decisions to know what they are trying to protect."},
-    pool_copies  = 1,
     design_note  = "Ghost's highest-cost card. Cost: 2 faction-keyed Intel tokens + 3 Findings, all physically present (00-R22). Threshold 30 — reserved for Ghost players who have built Intel reserves. No adjacency restriction (analytical work — consistent with C16-C20 pattern). Portrait: submitter=+1 unconditional + modifier=+1 on success. ClassifiedDirective component type pending verification in Art 02 series.",
     arbiter_note = "Privately reveal target faction's Classified Directive to Ghost player across screen. Do not announce to table. Ghost may not publicly prove knowledge. Crit fail: NotificationSlip to target only — do not reveal what Ghost was attempting.",
 )
@@ -4109,7 +4086,6 @@ SourceSubstitution = Card(
     },
     design_note  = "Intelligence falsification — faction field only. Keep mode: Ghost retains the altered token for future attribution plays. Plant mode: token delivered discreetly to target faction's terminal at Beat 3 cleanup; target holds a token they believe is valid. Fail destroys token. Failcrit additionally alerts the originally-named faction via NotificationSlip. Ghost adjacency applies only in plant mode (00-R29). Standard equivalent flagged PM05 04-n15.",
     arbiter_note = "Phase A: Ghost declares keep or plant mode and named faction (if plant). Token submitted in case with written instructions slip. Beat 3: d100 vs 45. On success: alter faction name field on token per slip. Keep: return token in case. Plant: deliver token discreetly to target faction's terminal during Beat 3 cleanup — do not announce. On fail: destroy token. On failcrit: destroy token AND dispatch NotificationSlip to the faction originally named on the token.",
-    pool_copies  = 1,
 )
 ```
 
@@ -4202,7 +4178,6 @@ Backdate = Card(
     },
     design_note  = "Temporal falsification — quarter field only. Distinct from Source Substitution (faction field). Threshold 30 vs 45: altering when is harder than altering who. Primary use: plant mode to deliver degraded/Expired token as poisoned gift — target wastes a future attribution play. Keep mode: make own operations appear to have occurred earlier. Intel token component must support two writable fields (faction + quarter). Standard equivalent PM05 04-n15.",
     arbiter_note = "Instructions slip in case: new quarter number (must pre-date current Quarter) + keep or plant destination. Beat 3: d100 vs 30. On success: alter quarter field; token age reclassified accordingly (may shift Fresh → Stale, Stale → Expired, or Fresh → Expired depending on magnitude). Keep: return in case. Plant: discreet delivery to target terminal (same protocol as Source Substitution). On fail: destroy token. On failcrit: destroy + NotificationSlip to faction named on token.",
-    pool_copies  = 1,
 )
 ```
 
@@ -4284,7 +4259,6 @@ FieldVerification = Card(
     },
     design_note  = "Self-operation to re-validate cold intelligence. No Findings cost — dispatch slot only. Fail returns the token Expired (no loss beyond the slot). Success advances token to Fresh (current Quarter). d100 threshold 35 reflects genuine uncertainty about whether aged intelligence still describes reality. Not falsification — Ghost is actually checking. Distinct from Source Substitution and Backdate. Standard equivalent (hired PI, higher cost) flagged PM05 04-n15.",
     arbiter_note = "Token submitted in case. Restriction: token must be Expired. No instructions slip needed. Beat 3: d100 vs 35. On success: update token's quarter field to current Quarter; token is now Fresh; return in case. On fail: return token in case unchanged (still Expired). No resource consumed either outcome.",
-    pool_copies  = 1,
 )
 ```
 
@@ -4387,7 +4361,6 @@ P17 = Card(
     },
     design_note  = "Ghost's highest-cost PA. 3 Findings + 2 Intel tokens (different factions). Automatic — token requirement is the certainty check (Ghost does not publish speculation). Simultaneous dual attribution: each target −2 PS, Ghost +2 PS flat. Portrait +1: calculated disclosure affirms 'understanding must precede action' doctrine. Option 3 (operational blackout mechanic) flagged as PM05 item for potential Network PA extension.",
     arbiter_note = "Phase B: Ghost names two target factions. Both Intel tokens submitted with case. Beat 4: announce '[Ghost] attributes [op type, quarter] to [target1]' and '[Ghost] attributes [op type, quarter] to [target2].' Each target −2 PS. Ghost +2 PS. Both tokens spent.",
-    pool_copies  = 1,
 )
 ```
 
@@ -4472,7 +4445,6 @@ P18 = Card(
     },
     design_note  = "Ghost operational pressure PA. Uses institutional scrutiny (ARBITER) to apply −15 threshold to target faction's covert ops in named district next Month. No PS gain for Ghost — the channel is a tool. Ghost adjacency (00-R29): must have presence in adjacent district. Persistence = Transient: P18 card face-up on table + district marker until Beat 5 of next Month. Multiple P18s from different Months can stack. Distinct from P17 (attribution) — P18 creates ongoing pressure without disclosure.",
     arbiter_note = "Beat 4: place P18 card face-up on table with marker on target district. Apply −15 threshold penalty to all covert operations submitted by target faction in target district next Month (Beat 3). Card expires Beat 5 that Month — announce removal, return card to Ghost. Multiple P18 cards on same district from different Months stack (each tracked independently). Ghost adjacency enforced at Beat 0.",
-    pool_copies  = 1,
 )
 ```
 
@@ -4832,35 +4804,33 @@ C25 = Card(
 ---
 
 ### Directorate — REGULATORY DOWNGRADE
-[↑ Covert Operations](#directorate-covert-operations)
+[↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-Directorate's tier suppression tool — the operational core of the "push tiers down rather than build own up" doctrine. Established and Dominant factions in a district generate more resources and defend structures more effectively; a one-tier effective downgrade directly impairs both. The TierPenaltyMarker is a permanent persistent Board Condition (00-R21): cleared only by the target spending 2 native resource in the district or reaching Absent. Cost calibrated at Mandate×3 — Directorate's highest standard covert op cost — reflecting the institutional weight of reclassifying a competitor. Paired with Regulatory Freeze: Downgrade is the active suppression play once a faction is entrenched; Freeze is the cheaper preventive play to gate lower-tier factions out of advancement.
+Directorate's active tier suppression play — declared publicly at Phase B, resolved at Beat 4. The card stays on the Overview as the persistent condition: no separate marker component needed. Target faction collects resources in the named district as one tier lower (resource generation only; actual presence count still governs control tier for win-condition calculations). Cleared when target pays 2 native to Reservoir — available any time after Beat 4 resolution, including immediately. Economics: clearing same Quarter costs the target 2 native (net 3 from a full Core+structure district). Each Upkeep with the card active costs −1 resource generation plus the eventual 2 to clear. Directorate spent 3 Mandate for a guaranteed minimum 2-resource drain; compounding if target delays. Paired with Regulatory Freeze: Downgrade is the active suppression play once a faction is entrenched; Freeze is the cheaper preventive play to gate lower-tier factions out of advancement.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Tier suppression — effective one-tier downgrade on an entrenched faction; Directorate's active suppression play paired with Regulatory Freeze (preventive) | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Directorate perspective by design — reclassification as institutional act | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; requires target to be Established+ (restriction); restriction is territorial enforcement, not institutional authority | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — institutional tier reclassification is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Modify/InfluenceTier — TierPenaltyMarker is new component (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×3, threshold 45, permanent suppression — calibrated against C22 Detain; TierPenaltyMarker scope and clearing timing outstanding (Outstanding Issues) | Art 02a §6–§7 |
-| Effect duration | ✓ | Permanent: TierPenaltyMarker persists until cleared (2 native resource spend by target); clearing timing outstanding (Outstanding Issue) | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Action fit | ✓ | Public institutional reclassification — declared openly, contested in Countermeasure window, persistent economic suppression | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Directorate perspective — reclassification as institutional act | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate only; target must be Established+; public act fits regulatory authority doctrine — the Directorate does not act in secret when it reclassifies | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) — institutional reclassification is public, permanent, and Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Territory/Modify/InfluenceTier — card on board IS the condition; no separate component needed | Art 04b §4, §5 |
+| Balance | ✓ | Mandate×3, Automatic; guaranteed economic suppression; minimum 2-native drain on target; compounding cost per Upkeep delayed | Art 02a §6–§7 |
+| Effect duration | ✓ | Permanent — card stays on Overview until persistence_condition met | — |
+| Persistence | ✓ | Permanent public act; `persistence_condition` = target pays 2 native to Reservoir; card removed on payment | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Directorate +1 submitter — single entry; reclassification aligns with regulatory authority doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.named — standard zone targeting | Art 01 §6–§7 |
-| Supported by components | ✓ | TierPenaltyMarker registration and scope outstanding (Outstanding Issue) | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 d100 resolution; ARBITER places marker; clearing mechanism and Freeze interaction outstanding (Outstanding Issues) | Art 03 §9, §11 |
+| Portrait validity | ✓ | Directorate +1 submitter — reclassification aligns with regulatory authority doctrine | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
+| Supported by components | ✓ | No new component — card on Overview is the persistent condition | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | Phase B declaration → Countermeasure window → Beat 4 Automatic resolution; standard Permanent Public Act lifecycle | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **TierPenaltyMarker component:** New component not yet registered in Art 02. Needs fields: `faction | district | clear_conditions`. Also: does TierPenaltyMarker affect win-condition tier calculations or only resource generation and structural defense? Confirm scope before Art 02 registration.
-- **"Structural defense" definition:** Unclear what structural defense means in existing mechanics — needs definition in Art 01 or Art 03 before this checklist row can pass.
-- **Clearing mechanism timing:** TierPenaltyMarker clears when target spends 2 native resource. Confirm when: at upkeep step, on voluntary action, or immediately on spending? Confirm with Art 03 upkeep procedure.
-- **Interaction with Regulatory Freeze:** Can both markers be placed simultaneously on the same faction in the same district? If Downgrade reduces Dominant to Established and Freeze is already in place at Established, combined effect needs clarification.
+- **Win-condition scope:** Resource generation tier penalty only — actual presence count governs control tier for Dominance/Established win-condition calculations. Needs explicit statement in Art 03 Upkeep Step 5 procedure or Art 07 reference. Tracks under 04-n27.
+- **Freeze interaction:** If Downgrade and Freeze are both active on the same faction/district simultaneously, combined effect is: one tier down for resource gen + blocked from tier advancement. Needs explicit procedure note confirming coexistence is valid and no additional interaction applies.
 
 #### Status
 
@@ -4868,32 +4838,50 @@ Directorate's tier suppression tool — the operational core of the "push tiers 
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Draft S59 — design pass pending*
+*Redesigned S67 — v2.0. CovertOperation → PublicAct. TierPenaltyMarker removed; card-as-condition pattern.*
 
 ```python
 RegulatoryDowngrade = Card(
-    id=TBD,  version="v1.0",
+    id=TBD,  version="v2.0",
     name    = "Regulatory Downgrade",
-    tagline = "Reclassify a faction's institutional standing in a district, reducing their effective control tier.",
-    type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
+    tagline = "Reclassify a faction's standing in a district. They generate resources as if one tier lower until they pay to clear it.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
+
     layer   = Territory,  function = Modify,  subject = InfluenceTier,
-    beat=3, resolution=d100, threshold=45, ring_mod={0:-15,1:-10,2:0,3:+10},
-    trigger=None,
-    resolution_type="Probabilistic", outcome_type=None,
-    target_district=district.named, target_faction=faction(named_opponent), target_object=None,
-    affinity=None,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Permanent public act",
+    outcome_type    = None,
+    persistence     = Permanent,
+    persistence_condition = faction(target).pays(2, resource.native, to=Reservoir),
+    persistence_effect    = game.board_condition(
+                                scope  = district(target) + faction(target),
+                                effect = resource_gen.tier_effective -= 1,
+                            ),
+
+    target_district = district.named,
+    target_faction  = faction(named_opponent),
+    target_object   = None,
+
+    affinity    = None,
     restriction = faction(target).influence_tier(district(target)) >= Established,
     cost        = resource.faction(acting).mandate * 3,
-    success     = arbiter.place(TierPenaltyMarker(faction=faction(target)), district(target)),
-    successcrit = resource.faction(acting).mandate += 1,
-    fail=None,
-    failcrit    = game.dispatch(faction(target), NotificationSlip),
+
+    success     = None,
+    successcrit = None,
+
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
-    narrative   = "The Directorate does not need to remove them. It need only redefine what they are.",
+
+    narrative    = "The Directorate does not need to remove them. It need only redefine what they are.",
     perspectives = {Directorate: "The reclassification stands. Their tier in this district now reflects our assessment, not their aspirations."},
-    design_note  = "TierPenaltyMarker: target faction treated as one tier lower for resource generation and structural defense in district. Permanent per Principle 11. Clearing: target faction spends 2 native resource in the district OR target reaches Absent. Paired with Regulatory Freeze for full suppression toolkit. New components — TierPenaltyMarker and TierFreezeMarker — need Art 02 registration.",
-    arbiter_note = "Place TierPenaltyMarker on target faction's position in target district. Apply one-tier reduction to resource gen and structural defense only — control-tier win-condition calculation uses actual presence count. Announce placement publicly. Clear: target pays 2 native resource (at upkeep or voluntarily) OR target reaches Absent — remove marker and announce.",
-    pool_copies=2,
+
+    design_note  = "Card placed in Directorate play area (public, face-up) — no TierPenaltyMarker. Card IS the persistent condition. Resource generation only; presence count unchanged. Clearing: target pays 2 native to Reservoir, any time after Beat 4 resolution. Economics: clear same Quarter = net 3; each Upkeep active = −1 gen then pay 2. Paired with Regulatory Freeze for full suppression toolkit.",
+    arbiter_note = "Per Permanent Public Act procedure: card placed in Directorate play area at Beat 4 (public, face-up; target district and faction declared). At each Upkeep Step 5: apply one-tier reduction to resource generation for faction(target) in district(target). Win-condition tier (Dominance/Established) uses actual presence count — do not apply penalty to control calculations. Clearing: when faction(target) pays 2 native to Reservoir (any time after Beat 4), remove card and announce.",
 )
 ```
 
@@ -4958,7 +4946,6 @@ RegulatoryFreeze = Card(
     perspectives = {Directorate: "They can build all they want. The tier ceiling is established. They will not pass through it."},
     design_note  = "TierFreezeMarker: target faction cannot advance above current tier in district while marker is in place. Permanent per Principle 11. Clearing: target spends 1 native resource OR target reaches Absent. Paired with Regulatory Downgrade for full suppression toolkit.",
     arbiter_note = "Place TierFreezeMarker on target faction in target district. While marker is present: deny any presence placement that would advance target above their current tier — return excess tokens to supply. Clear: target pays 1 native resource (at upkeep or voluntarily) OR target reaches Absent — remove marker and announce.",
-    pool_copies=2,
 )
 ```
 
@@ -5026,7 +5013,6 @@ C42 = Card(
     perspectives = {Directorate: "The intelligence warranted the action. The action was authorised. There is nothing further to say."},
     design_note  = "Ignores Block cards, Type A and Type B Countermeasures, and Protect operations. PS −1 on success: sanctioned but a sweep still carries institutional weight. Mandate×2 balances 'ignore all blocks' + 'remove ALL' scope. Threshold 25: hardest in Directorate set. Intel token faction-keying confirmation outstanding. Migrated from §8 Intel Economy block. See 04-n13: Network should have a modifier card that can auto-trigger off a Directorate sweep.",
     arbiter_note = "At resolution: bypass all countermeasure and protect checks. Remove ALL named faction's presence tokens from named district. Reduce Directorate PS by 1 (visible). Crit success: also return 1 Mandate to Directorate. Crit fail: deliver NotificationSlip to target — no other effect.",
-    pool_copies=TBD,
 )
 ```
 
@@ -5129,7 +5115,6 @@ P11 = Card(
     },
     design_note  = "District-level regulatory PA. +1 native cost on all non-Directorate PresenceToken.Add actions in district for remainder of Quarter (Seasonal). Physical marker on district; card stays on table as marker. Counter to Guild P03/P09 build chain — raises cost of presence prerequisite. Restriction: Directorate Established+ in district. Multiple P11s may target different districts. Balance review pending playtesting.",
     arbiter_note = "Beat 4: place RegulatoryOverrideMarker on declared district. P11 card stays on table as marker. Apply +1 native cost to all non-Directorate presence-placement actions (C03 Campaign, P01 Open Operations, C08 Buy Influence, P09 Civic Works Mandate) targeting this district for remaining Months of Quarter. Directorate PS +1. Clear: Directorate Absent in district (remove immediately) OR Phase 21 cleanup. Multiple markers on different districts tracked independently.",
-    pool_copies  = 1,
 )
 ```
 
@@ -5215,7 +5200,6 @@ P12 = Card(
     },
     design_note  = "Directorate intelligence PA via institutional channel. No restriction — always available. Yield: 1 Intel token per publicly attributed covert action against target faction in last 2 months (from successful P04 or P05 this Quarter). 0 tokens = 3 Mandate wasted (costly gamble without prior groundwork). Distinct from Ghost C05 Gather (covert fieldwork). Creates two-step sequence incentive: P04/P05 → P12.",
     arbiter_note = "Beat 4. Count: how many successful P04 or P05 resolutions named this target faction this Quarter? Provide Directorate with that many Fresh Intel tokens (max 2). Apply PS: target −1, Directorate +1. If count = 0: no tokens delivered. 3 Mandate spent regardless.",
-    pool_copies  = 1,
 )
 ```
 
@@ -5236,7 +5220,7 @@ Directorate's persistent territorial control tool — a district-level board con
 | Doctrine alignment | ✓ | Directorate only; Mandate×3 for permanent district lock; Established restriction (jurisdictional legitimacy requires institutional presence) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PoliticalAct / FactionSpecific (Directorate) — district-level movement authority is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Territory/Block/DeploymentMarker — hard block on placement is the function | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×3, permanent district lock, PS −1 — pool_copies and cost TBD playtesting | Art 02a §6–§7 |
+| Balance | ✓ | Mandate×3, permanent district lock, PS −1 — cost TBD playtesting | Art 02a §6–§7 |
 | Effect duration | ✓ | Permanent — persists until counter-acted or persistence_condition fails | — |
 | Persistence | ✓ | Permanent; persistence_condition auto-discards on Directorate falling below Established in named district | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None; restriction requires Directorate Established in named district | — |
@@ -5250,7 +5234,6 @@ Directorate's persistent territorial control tool — a district-level board con
 - **Counter-card removal:** Card sits in Directorate's PA area as a permanent board condition. Removal by counter-action requires new card type(s) — design TBD. See PM05 04-n29.
 - **Art 03 persistence monitoring:** ARBITER needs a defined trigger point to check persistence_condition of all permanent PA cards (e.g., after any influence tier change). See PM05 04-n29. Blocks Issues Resolved.
 - **Displaced faction with no presence elsewhere:** `move_to=district.where(faction.has_presence)` has no valid destination if the displaced faction holds no presence outside the named district. Fallback rule needed — e.g., marker is returned to hand (faction skips next placement) or moved to Baryo as unconditional fallback (00-R13b: no elimination).
-- **pool_copies:** TBD — playtesting and balance question.
 
 #### Status
 
@@ -5298,7 +5281,6 @@ EntryExitControls = Card(
     },
     design_note  = "Persistent PA. Card sits in Directorate's active PA area on the Overview (not on district tile). Immediate: non-Directorate deployment markers in named district displaced to any district where owning faction has presence, flipped to Blocked. Persistent: non-Directorate deployment marker placement blocked in named district. persistence_condition auto-discards card if Directorate falls below Established. PS −1 at resolution (public backlash). Counter-card removal TBD — see PM05 04-n29.",
     arbiter_note = "Name the district. Each non-Directorate deployment marker there: owning faction moves it to any district where they have presence, flip to Blocked.",
-    pool_copies  = TBD,
 )
 ```
 
@@ -5391,7 +5373,6 @@ P_StandingInjunction = Card(
     },
     design_note  = "⚠ Multiple open design questions — see Outstanding Issues. Seasonal PA block; InjunctionMarker face-up on table as active condition. Trigger: target declares blocked PA type at Phase B → void PA, return resources, target −1 PS, remove marker. Phase 21 untriggered: Directorate recovers 1 Mandate. Distinct from P11 (cost increase on presence placement) and C21 (single-Beat block in one district). Restriction: Directorate shares ring with target's operations — institutional authority requires footprint overlap.",
     arbiter_note = "Phase B: Directorate names target faction + PA card type (by card name). Beat 0: restriction check. Beat 4: place InjunctionMarker face-up on table. Directorate +1 PS. From next Month onward: at each Phase B, check if target faction declares the blocked PA type — if yes, void that PA (resources returned, target −1 PS, announce 'Standing Injunction applied', remove marker). Phase 21: if marker still present, return 1 Mandate to Directorate, remove marker.",
-    pool_copies  = 1,
 )
 ```
 
@@ -5951,7 +5932,6 @@ P13 = Card(
     },
     design_note  = "Network's highest-damage information PA. Threshold: 30 base + 10 per token held (1 token=40, 2=50, 3=60). All held tokens spent regardless. Success: −2 PS per token, Network +2 flat. Fail: −1 PS per token (partial release), Network −1. Token scarcity (Ghost pipeline or covert gathering) is natural limiter. Beat 4 timing: benefits from covert ops having resolved at Beat 3.",
     arbiter_note = "Count Network's held Intel tokens naming target. Threshold = 30 + (10 × count). All tokens spent at resolution. On success: target loses (2 × count) PS; Network +2 PS. On fail: target loses (1 × count) PS (partial release announced); Network −1 PS. Token count cannot be zero (restriction enforces minimum 1).",
-    pool_copies  = 1,
 )
 ```
 
@@ -6033,7 +6013,6 @@ P14 = Card(
     },
     design_note  = "Broadcast-derived presence PA. Deepens existing foothold (Established+) rather than expanding into new territory. Scaling cost: 2 Exposure (1 district), 3 (2 districts), 4 (3 districts). Partial resolution: if a named district fails Established+ restriction at Beat 0, that district is dropped from resolution; remaining valid districts proceed; cost already committed. Replaces Open Record Request (unworkable).",
     arbiter_note = "Phase B: Network names 1–3 districts. Cost calculated (2 + extras) and committed. Beat 0: check each named district for Established+ restriction. Drop invalid districts from resolution. Beat 4: place 1 presence token in each valid district. Network +1 PS.",
-    pool_copies  = 1,
 )
 ```
 
@@ -6407,32 +6386,30 @@ Design note: Name a faction; ARBITER announces that faction's current Intel toke
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate's permanent territorial claim card — Capital purchases a deed-level right to a district's native resource stream without requiring physical presence. Distinct from C31 Leveraged Acquisition (one-round extraction, no permanent claim) by duration and mechanism: Land Title places a permanent marker and generates passive income at every subsequent Upkeep. Designed as an early-game investment play — positioning in Ring 1/2 in Q1–Q3 so the compound Capital income supports the later high-cost plays (Hostile Takeover, Accord Transfer, battle winner modifier cards). The Syndicate's win path depends on Capital compounding; Land Title is the mechanism that makes Ring 1/2 pay dividends without requiring presence buildout.
+Land Title files a capital claim on undeveloped land — no faction holds a structure block there yet. The card delivers a Grant Deed (ARBITER-issued card, placed in Syndicate's Dispatch Case, moves to hand at Debrief). Grant Deed is a tripwire React card Syndicate holds until another faction builds in the named district, at which point the deed fires. No board marker from this card; no ongoing ARBITER monitoring. Distinct from C31 Leveraged Acquisition (transactional per-round income): Land Title is a positional play — Syndicate reads the board, registers claims on districts likely to develop, then reacts when the trigger fires. Multiple Grant Deeds on the same district are permitted; cost-governed.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Permanent territorial revenue claim — Capital buys deed-level right to district income without presence; early-game investment enabling Capital compounding | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — paper as durable than presence | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; Capital×5; permanent claim; ChorusNode excluded; clearing conditions and multiple-title stacking outstanding (Outstanding Issues) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — permanent deed claim is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Add/NativeResource — permanent upkeep income; LandTitleMarker is new component (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Capital×5 for permanent upkeep; ~5-round payback; clearing conditions and stacking outstanding (Outstanding Issues) | Art 02a §6–§7 |
-| Effect duration | ✓ | Permanent: LandTitleMarker persists; income at each Upkeep until cleared or game end | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Syndicate +1 submitter; permanent capital claim aligns with deed-ownership doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.named; ChorusNode excluded per restriction | Art 01 §6–§7 |
-| Supported by components | ✓ | LandTitleMarker registration and clearing conditions outstanding (Outstanding Issues) | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; Upkeep per-marker grant delivery outstanding (Outstanding Issue) | Art 03 §9, §11, §19 |
+| Action fit | ✓ | Capital claim on undeveloped district; delivers Grant Deed to hand | Art 00 §7 |
+| Voice fit | ✓ | Syndicate-only; paper before patrols | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only; undeveloped districts only; ChorusNode excluded; multiple deeds permitted (cost-governed) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Territory/Add/StructureBlock — ultimate effect is Syndicate structure placed via Grant Deed | Art 04b §4, §5 |
+| Balance | ✓ | Capital×5 per deed; payback contingent on opponent building in target district | Art 02a §6–§7 |
+| Effect duration | ✓ | Permanent — Grant Deed held until played or game end | — |
+| Trigger validity | ✓ | N/A — trigger = None on this card | — |
+| Portrait validity | ✓ | Syndicate +1 submitter | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named; ChorusNode excluded | Art 01 §6–§7 |
+| Supported by components | ✓ | Grant Deed = new component (SCIF-pattern); stored blank in ARBITER tableau; no marker placed by this card | Art 02a §6–§8 |
+| Supported by game procedure | ⚠ | Grant Deed tripwire react window needs Art 03 procedure addition (04-n27 territory) | Art 03 §11 |
 
 #### Outstanding Issues
 
-- **LandTitleMarker component:** New component not yet registered in Art 02. Fields: `district | owner | upkeep_grant_type`. Permanent per Principle 11.
-- **Clearing conditions:** No clearing condition currently defined — Land Title is permanent. Is there a mechanism for another faction to challenge or remove a Syndicate land claim? If not, this needs explicit documentation as intentional (permanent deed with no counter-card). Flag for balance review.
-- **Multiple titles per district:** Can Syndicate hold multiple Land Titles on the same district (from multiple pool copies)? If so, income stacks. Confirm whether one-per-district restriction is intended.
-- **ChorusNode exclusion:** Confirm ChorusNode is excluded — ARBITER's district should not be claimable under Land Title.
+- **Grant Deed tripwire react window:** "immediately after structure block placed, before any other board state change" — this react class is not yet in Art 03. Tracks under 04-n27.
+- **Grant Deed component registration:** New component; needs Art 02 entry (SCIF-pattern: blank card stored in ARBITER tableau, fields: `district | owner`). Tracks under 04-n26.
+- **00-R11 interaction on Grant Deed fire:** If Syndicate already holds a structure block in the named district when the deed fires, step 3 (place Syndicate structure) is blocked by 00-R11. Steps 1–2 still execute. No card-level restriction needed — 00-R11 governs.
 
 #### Status
 
@@ -6440,34 +6417,32 @@ Syndicate's permanent territorial claim card — Capital purchases a deed-level 
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Draft S59 — design pass pending*
+*Redesigned S67 — v2.0*
 
 ```python
 LandTitle = Card(
-    id=TBD,  version="v1.0",
+    id=TBD,  version="v2.0",
     name    = "Land Title",
-    tagline = "Register a permanent capital claim on a district's native resource stream.",
+    tagline = "File a capital claim on undeveloped land. Let someone else build. Then collect.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = Economy,  function = Add,  subject = NativeResource,
+    layer   = Territory,  function = Add,  subject = StructureBlock,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None,
     trigger=None,
     resolution_type="Transactional", outcome_type=None,
     target_district=district.named, target_faction=None, target_object=None,
     affinity=None,
     restriction = (
-        NOT faction(acting).land_title_active(district(target))
+        district(target).structure_count == 0
         AND district(target) != ChorusNode
     ),
     cost        = resource.faction(acting).capital * 5,
-    success     = arbiter.place(LandTitleMarker(district=district(target), owner=faction(acting)), district(target)),
-    successcrit = game.dispatch(faction(acting), resource.district(target).native * 1),  # immediate first payment
-    fail=None, failcrit=None,
+    success     = arbiter.dispatch(GrantDeed(district=district(target)), faction(acting).case),
+    successcrit = None,  fail=None,  failcrit=None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
-    narrative   = "A deed is more durable than a presence. The Syndicate prefers paper to patrols.",
-    perspectives = {Syndicate: "We registered the title. The revenue stream is ours. Whether we are visible in that district is a separate question entirely."},
-    design_note  = "LandTitleMarker: Syndicate receives 1 district native resource at each Upkeep while marker is in place. Permanent per Principle 11; no clearing condition currently defined — flag for balance review. Crit success delivers immediate first-payment on registration. Distinct from C31 (one-round transactional extraction). Upkeep grant delivery requires Art 03 Upkeep procedure addition.",
-    arbiter_note = "Place LandTitleMarker in target district, assigned to Syndicate. At each Upkeep, deliver 1 district native resource to Syndicate's supply for each active LandTitleMarker. Track markers in ARBITER ledger. Crit success: also deliver 1 native immediately at Beat 3 (in addition to future Upkeep grants).",
-    pool_copies=2,
+    narrative   = "The deed was filed before the foundation was poured. That is how the Syndicate prefers it.",
+    perspectives = {Syndicate: "We don't need to be there. We just need to be on the paperwork."},
+    design_note  = "Delivers Grant Deed component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire React played from hand when any faction places a structure block in the named district. No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds permitted; cost-governed. 00-R11 governs step 3 of Grant Deed effect.",
+    arbiter_note = "Take 1 blank Grant Deed from ARBITER tableau. Write target district name. Place in submitting faction's Dispatch Case. Grant Deed moves to Syndicate hand at Debrief.",
 )
 ```
 
@@ -6541,7 +6516,6 @@ HostileTakeover = Card(
     perspectives = {Syndicate: "We purchased the relationship. The people can stay. Their affiliation is now ours."},
     design_note  = "Distinct from C33 Hostile Acquisition (StructureBlock). Replaces ALL target presence in district with Syndicate presence at same count (same control tier — neutral effect on tier, swing in ownership). Requires Ghost-sourced faction-keyed Intel token. Intel token creates structural link between Ghost and Syndicate — neither faction announces it publicly.",
     arbiter_note = "At resolution: count target's presence tokens in district. Remove all of them. Place equal count of Syndicate presence tokens in same district. Net tier unchanged; ownership transferred. Deliver NotificationSlip to target on crit fail. Crit success: +1 Capital to Syndicate.",
-    pool_copies=2,
 )
 ```
 
@@ -6615,7 +6589,6 @@ AccordTransfer = Card(
     perspectives = {Syndicate: "The accord has been restructured. The original parties will be notified. Their feelings about it are noted."},
     design_note  = "Blocked on Art 06 Accord mechanic. Replaces one party in any active named Accord — neither original party's consent required. Syndicate may insert itself or name a third faction as the incoming party. Both original parties notified by ARBITER case dispatch. Supersedes gap concept SECONDARY OBLIGATIONS (which was obligations-only) — confirm at Art 06 design pass.",
     arbiter_note = "At resolution: update named Accord in ARBITER record, replacing named outgoing party with named incoming party. All terms (obligations and benefits) transfer to incoming party. Dispatch case notifications to both original parties: '[Accord name] party assignment has been amended.' New party takes effect immediately.",
-    pool_copies=1,
 )
 ```
 
@@ -6625,31 +6598,29 @@ AccordTransfer = Card(
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate's passive Intel generation card — places a marker at Beat 2, then collects an Intel token at Beat 3 cleanup if any faction extracted Capital or native resource from the district this round. Reflects the Syndicate doctrine of building infrastructure that pays dividends regardless of who does the work. Capital×2 and Beat 2 placement means this is a forward-looking investment each round: Syndicate bets on economic activity in a district before it happens. The conditional portrait entry (only fires if Intel collected) models the doctrine precisely — Parasitic only rewards the submitter when the weir catches something.
+Syndicate's economic intelligence tap — a positional wager on district activity. At Beat 2, Syndicate bets that someone is already operating in the target district this round. ARBITER checks the Beat 3 dispatch queue; if a Beat 3 card targeting the district exists, Syndicate receives an Intel token keyed to that card's submitting faction (first in resolution order). If no one is operating there, the card fails and Capital is spent. The wager rewards Syndicate for reading the board correctly before operations fire — not for monitoring what happens, but for knowing what's coming. Covert — other factions cannot observe the tap.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Passive Intel generation from others' economic activity — "weir" doctrine; Capital investment pays dividends from the district regardless of who does the work | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — infrastructure that monitors commerce | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; Capital×2; Beat 2 forward-looking investment; conditional payoff requires economic activity; "Capital extraction" definition outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — passive economic monitoring is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Add/IntelToken — conditional Intel from district economic activity | Art 04b §4, §5 |
-| Balance | ✓ | Capital×2, conditional; payoff rate depends on other factions' activity; ParasiticMarker stacking outstanding (Outstanding Issue) | Art 02a §6–§7 |
-| Effect duration | ✓ | One round: marker at Beat 2, conditional Intel at Beat 3 cleanup | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | Conditional trigger — Capital extraction in target district this round fires at Beat 3 cleanup; "Capital extraction" definition outstanding (Outstanding Issue) | — |
-| Portrait validity | ✓ | Conditional portrait — fires only when Intel collected; portrait pattern validation outstanding (Outstanding Issue) | Art 04 §6.2 |
+| Action fit | ✓ | Intel from reading opponent dispatch queue — positional wager on district activity before Beat 3 fires | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Syndicate perspective — infrastructure that reads commerce before it happens | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only; Capital×2; positional wager; payoff requires correct district read; covert | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Economy/Add/IntelToken — Intel from district activity read | Art 04b §4, §5 |
+| Balance | ✓ | Capital×2; fail = cost spent; payoff contingent on opponent operating in district this round | Art 02a §6–§7 |
+| Effect duration | ✓ | Immediate — resolved fully at Beat 2; no carry, no deferred effects | — |
+| Persistence | ✓ | Immediate — no game-state marker persists beyond Beat 2 resolution | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None; Beat 3 queue check is resolution condition, not a trigger | — |
+| Portrait validity | ✓ | Fires on success (Intel delivered); unconditional on success — no mod_where needed | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
-| Supported by components | ✓ | ParasiticMarker registration outstanding (Outstanding Issue); Capital cost | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; ARBITER tracks Capital extraction through Beat 3; conditional delivery at cleanup | Art 03 §9, §11 |
+| Supported by components | ✓ | No new component — Intel token from standard stock | Art 02a §6–§8 |
+| Supported by game procedure | ⚠ | ARBITER Beat 3 queue check at Beat 2 resolution — procedure not yet in Art 03 §11. Tracks under 04-n27. | Art 03 §11 |
 
 #### Outstanding Issues
 
-- **ParasiticMarker component:** New component not yet registered in Art 02. Fields: `district | owner | trigger_condition`. Confirm whether multiple Syndicate Parasitic markers can be placed in the same district in the same round (from pool copies).
-- **"Capital extraction" definition:** What counts as extraction — any resource delivery to any faction from the district, or only operations that explicitly extract Capital/native? Confirm scope includes C31 Leveraged Acquisition, C01 Build Structure construction cost, upkeep grants, etc.
-- **Conditional portrait:** `submitter=+1, mod_where=ParasiticMarker.triggered` — confirm this is a valid portrait pattern per P11/P12 (portrait fires on action taken, not on outcome).
+- **Art 03 Beat 2 procedure:** ARBITER checking the Beat 3 dispatch queue at Beat 2 resolution is not yet proceduralized in Art 03 §11. Tracks under 04-n27.
 
 #### Status
 
@@ -6657,28 +6628,48 @@ Syndicate's passive Intel generation card — places a marker at Beat 2, then co
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Migrated from §8 Intel Economy block to Syndicate extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
+*Redesigned S67 — v2.0. Positional wager replacing deferred conditional. No component needed.*
 
 ```python
 C38 = Card(
-    id=38,  version="v1.0",
+    id=38,  version="v2.0",
     name    = "Parasitic",
     tagline = "Wire a district's commerce. Let others do the work.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
+
     layer   = Economy,  function = Add,  subject = IntelToken,
-    beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
-    target_district=district.named, target_faction=None, target_object=None,
-    affinity=Syndicate,
-    restriction=None,
+
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Positional wager",
+    outcome_type    = None,
+    persistence     = Immediate,
+
+    target_district = district.named,
+    target_faction  = None,
+    target_object   = None,
+
+    affinity    = Syndicate,
+    restriction = None,
     cost        = resource.faction(acting).capital * 2,
-    success     = arbiter.place(ParasiticMarker(district=district(target), owner=faction(acting)), district(target)),
-    successcrit=None, fail=None, failcrit=None,
-    portrait    = {Syndicate: PortraitEntry(submitter=+1, mod_where=ParasiticMarker.triggered(district(target)))},
-    narrative   = "The Syndicate does not steal from the river. They build a weir.",
+
+    success     = arbiter.dispatch(
+                    IntelToken(faction=game.ops(beat=3, at=district(target)).first(resolution_order).submitter),
+                    faction(acting).case
+                  ),
+    successcrit = None,
+
+    portrait    = {Syndicate: PortraitEntry(submitter=+1)},
+
+    narrative    = "The Syndicate does not steal from the river. They build a weir.",
     perspectives = {Syndicate: "We invested in the district's infrastructure. Why shouldn't we see what moves through it?"},
-    design_note  = "Conditional Intel generation. ARBITER places ParasiticMarker at Beat 2. If any faction extracts Capital or native resource from district this round, deliver 1 Intel token to Syndicate at Beat 3 cleanup. ParasiticMarker is new — needs Art 02 registration.",
-    arbiter_note = "Place ParasiticMarker in district at Beat 2. At Beat 3 cleanup: if any Capital or native resource was extracted from that district this round by any faction, deliver 1 Intel token to Syndicate's case. Portrait fires only if Intel delivered.",
+
+    design_note  = "Positional wager — resolved fully at Beat 2. ARBITER checks Beat 3 dispatch queue for any card targeting district(target). If found: Intel token keyed to the submitting faction of the first card in resolution order delivered to Syndicate's case. If no Beat 3 card targets the district: cost spent, no effect. Covert — other factions cannot observe.",
+    arbiter_note = "At Beat 2 resolution: check Beat 3 dispatch queue for any card targeting district(target). If found: deliver IntelToken keyed to that card's submitting faction (first in resolution order) to Syndicate's case; portrait fires. If none found: cost spent, no effect, portrait does not fire. Covert — do not announce.",
 )
 ```
 
@@ -6842,7 +6833,6 @@ P15 = Card(
     },
     design_note  = "Public counterpart to C33 Hostile Acquisition. 1 Capital offer fee non-refundable. Balance payment (2n Capital) conditional on acceptance, paid at Beat 4. Scaling: n=2 (Established min) = 4 Capital; n=6 (Dominant max) = 12 Capital. On accept: both PS +1. On decline: Syndicate +1, target −1. Beat 4 resolution — not Debrief.",
     arbiter_note = "Phase B: Syndicate names target faction, district, token count (n). 1 Capital offer fee committed. Beat 0: restriction check (target Established+). Beat 4: target faction publicly accepts or declines. On accept: transfer n presence tokens from target to Syndicate; Syndicate pays 2n Capital to target from supply; both +1 PS. On decline: Syndicate +1 PS, target −1 PS. Offer fee (1 Capital) is not returned in either case.",
-    pool_copies  = 1,
 )
 ```
 
@@ -6926,7 +6916,6 @@ P16 = Card(
     },
     design_note  = "Persistent economic leverage PA. 2 Capital placed as physical escrow under DividendMarker on district. At next Upkeep Step 5: Dominant faction claims it. If no Dominant (Contested or all Absent): marker stays, recheck next Upkeep. Quarter end: Syndicate recovers unclaimed escrow. Voluntary withdrawal: 1 Mandate public declaration. DividendMarker is a new component — Art 02a registration required.",
     arbiter_note = "Beat 4: place DividendMarker on district with 2 Capital tokens as physical escrow. Syndicate +1 PS. At each Upkeep Step 5 while marker present: check for Dominant in district. If Dominant: transfer 2 Capital to that faction; remove marker. If Contested or Absent: marker remains for next Upkeep. Phase 21: return unclaimed escrow to Syndicate. Voluntary withdrawal: Syndicate declares to ARBITER, pays 1 Mandate; escrow returned.",
-    pool_copies  = 1,
 )
 ```
 

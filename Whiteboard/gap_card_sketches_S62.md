@@ -144,4 +144,34 @@ Do not draft these cards until Art 06 establishes:
 
 ---
 
-*Last updated: S62 — 2026-06-02*
+---
+
+## Grant Deed — Tripwire React Card (S67 sketch)
+
+**Source:** Delivered by Syndicate Land Title (Beat 3 success). Blank card stored in ARBITER tableau; district name written on it at delivery; placed in Syndicate's Dispatch Case; moves to hand at Debrief.
+
+**Card type:** New — Tripwire React. Held in faction player's hand. Not dispatched in a case.
+
+**Named district:** Written on the physical card at issuance. Deed is district-specific.
+
+**Trigger:** Any faction places a structure block in the named district.
+
+**React window:** Immediately after the structure block is placed, before any other board state change. (New react class — needs Art 03 procedure addition; tracks under 04-n27.)
+
+**Effect (sequence is fixed):**
+1. Add 1 presence chip to `grant_deed.faction.owner` in the named district.
+2. Remove the triggering faction's structure block from the named district.
+3. Place 1 structure block for `grant_deed.faction.owner` in the named district.
+   — Step 3 governed by 00-R11: skip if `grant_deed.faction.owner` already holds a structure block there.
+
+**Consumption:** Single use. Grant Deed is discarded after firing.
+
+**Holding:** Syndicate may hold multiple Grant Deeds, including multiple deeds naming the same district.
+
+**Narrative anchor:** "Surprise — that land you just built on is ours. Here's the title to prove it."
+
+*Sketch S67 — full spec pending 04-n26 component registration*
+
+---
+
+*Last updated: S67 — 2026-06-03*

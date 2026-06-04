@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-03 (S66)
+**Last Updated:** 2026-06-04 (S67)
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -156,6 +156,25 @@ Art 04 major structural pass. C17–C35 retrofitted to Python object notation (`
 - L186: Art 03 v3.2 signed off. Beat 2 pre_loss_calc procedure block removed (C34 uses game.bribe(); no card uses pre_loss_calc). Art 04 §6.6 removed. Schema additions must follow card sign-off.
 
 **Next session:** 04-n26 (component interaction design pass).
+
+---
+
+## Session 67 — 2026-06-04
+
+**Focus:** 04-n26 Cluster A component interaction design pass; 00-R40 ARBITER Cognitive Load
+
+**Accomplished:**
+- Land Title redesigned v2.0 — Territory/Add/StructureBlock; success = Grant Deed delivered to Syndicate case; restriction = district.structure_count == 0; no board marker; no LandTitleMarker component. Grant Deed = new tripwire React component (SCIF-pattern, ARBITER tableau); sketch in gap_card_sketches_S62.md. Outstanding: component registration (04-n26) + tripwire react window (04-n27).
+- Parasitic redesigned v2.0 — Positional wager; Beat 2 checks Beat 3 dispatch queue; Intel token keyed to first card's submitter (resolution order); no ParasiticMarker component.
+- 00-R40 locked (L187) — ARBITER Cognitive Load governing rule: ARBITER executes general procedures, not card-specific instructions; generalization of procedure is the mechanism. Written to Art 00a (44 rules, pending re-sign-off), Art 03 §5 P6 (pending re-sign-off), Art 04 §5 P18. design_reference.md + memory updated.
+- Regulatory Downgrade redesigned v2.0 — CovertOperation → PublicAct (permanent); card-as-condition (success=None); persistence_effect = resource gen −1 tier for target faction in district; clears when target pays 2 native to Reservoir any time after Beat 4. No TierPenaltyMarker.
+- Art 04 §6.1/§6.2: persistence_effect field added to schema. PM05 04-n31 added (sweep).
+- 04-n26 Cluster A status: SCIF ✅, Land Title ✅, Parasitic ✅, Regulatory Downgrade ✅; Regulatory Freeze + Standing Injunction remaining.
+
+**L-decisions this session:**
+- L187: 00-R40 ARBITER Cognitive Load governing rule locked. Art 00a, Art 03 §5, Art 04 §5 updated. Art 00a and Art 03 pending re-sign-off.
+
+**Next session:** 04-n26 Cluster A — Regulatory Freeze, then Standing Injunction.
 
 ---
 

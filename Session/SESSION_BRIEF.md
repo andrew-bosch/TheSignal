@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 65 (active) | Updated: 2026-06-03**
+**Session 67 (active) | Updated: 2026-06-03**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -13,11 +13,66 @@ S64 complete. S65 opens here.
 
 **S66 accomplishments:** 04-n25 ✅ closed. Entry/Exit Controls redesigned v2.0 (district target; permanent placement block; `persistence_condition`). Art 03 v3.2 signed off (L186). Art 04 §6.6 removed. `persistence_condition` added to §6.1/§6.2. New PM05: 04-n29 (counter-card design + Art 03 persistence monitoring), 04-n30 (persistence_condition sweep).
 
-**S67 entry point:** 04-n26 (component interaction design pass — critical path to Issues Resolved on multiple cards).
+**S67 accomplishments:**
+- 04-n26 started: Cluster A in progress (SCIF complete; Land Title, Parasitic, Regulatory Downgrade complete)
+- SCIF card: spec cleaned — `success = SCIFRecord(target=faction(target))`, tagline fixed (in-fiction), design_note doctrine-only, arbiter_note flagged ⚠ outstanding (04-n27), `target_district/target_object = None`. SR-xx registered in 00b §4 concept (agy task).
+- pool_copies sweep: **04-40 ✅** — 42 code-block instances + 7 prose references removed from Art 04; Pool copies row removed from design_reference.md.
+- PM05 additions: XA-45 (merge Art 02a + 02b → Art 02), DB-31 (update tmp_component refs → `component` table).
+- IS-xx (Intel Delivery Slip): used by C17 Intercept (success) and C28 Open Channel (redirect scope). Art 03 §11 has one covering sentence; detailed steps not yet written (migration pending, overlaps 04-n27).
+- Land Title redesigned v2.0 ✅: Territory/Add/StructureBlock; success = Grant Deed delivered to Syndicate case; no board marker; restriction = district.structure_count == 0. Grant Deed = new tripwire React component (SCIF-pattern, ARBITER tableau). Grant Deed sketch in gap_card_sketches_S62.md. Outstanding: Grant Deed component registration (04-n26), tripwire react window in Art 03 (04-n27).
+- Parasitic redesigned v2.0 ✅: Positional wager. Beat 2 checks Beat 3 queue; Intel keyed to first card's submitter (resolution order). No component.
+- **00-R40 locked (L187):** ARBITER Cognitive Load governing rule. Art 00a (44 rules, pending re-sign-off) + Art 03 §5 P6 + Art 04 §5 P18. design_reference.md + memory updated.
+- Regulatory Downgrade redesigned v2.0 ✅: CovertOperation → PublicAct (permanent). Card-as-condition (success=None). persistence_effect = resource gen −1 tier. Clears: target pays 2 native to Reservoir any time after Beat 4. No TierPenaltyMarker.
+- Art 04 §6.1/§6.2: `persistence_effect` field added to schema (S67). PM05 04-n31 added (sweep).
 
-**Priority order for S66+:** 04-n25 `target_ring` (critical) → 04-n26 (component interaction design) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
+**S67+ entry point:** Continue 04-n26 Cluster A — Regulatory Freeze next, then Standing Injunction.
 
-**Also pending:** Standing Injunction 5 open flags (tracks under 04-n26 component/process design); agy DB-S63-01/02/03 check-in.
+**Priority order:** 04-n26 (component interaction) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
+
+**Also pending:** Standing Injunction 5 open flags (tracks under 04-n26); agy DB-S63-01/02/03 check-in.
+
+---
+
+## 04-n26 Component Analysis — Full Cluster Map
+*Captured S67 mid-session. Read this before any n26 work.*
+
+**Governing principle (Andy S67):** Walk each card individually — components are not automatically needed. Ask whether the card can be reworked to avoid a new component before committing to registration. Only SCIF Record (SR-xx) confirmed as new component so far.
+
+### Cluster A — Process-blocked (new game procedures required)
+
+| Component | Card | Status | Direction |
+|-----------|------|--------|-----------|
+| SCIFRecord (SR-xx) | Ghost SCIF | ✅ Component confirmed — 00b §4 registration (agy). Art 03 Debrief procedure outstanding (04-n27). | ARBITER slip, not board marker |
+| GrantDeed | Syndicate Land Title | ✅ Spec written — registration pending | New component (SCIF-pattern). Blank card in ARBITER tableau; filled + dispatched to Syndicate case at Beat 3. Fields: `district \| owner`. Tracks under 04-n26. |
+| ParasiticMarker | Syndicate Parasitic | ✅ No component needed | Positional wager redesigned v2.0. Beat 2 checks Beat 3 queue; Intel keyed to first card's submitter. No marker, no deferred effect. Decision S67. |
+| TierPenaltyMarker | Directorate Regulatory Downgrade | ✅ No component needed | Redesigned v2.0 as Permanent PublicAct. Card-on-board IS the condition. Clearing: target pays 2 native to Reservoir. S67. |
+| TierFreezeMarker | Directorate Regulatory Freeze | ⬜ Not yet reviewed | Permanent public board condition. Paired with TierPenaltyMarker — same decision. |
+| InjunctionMarker | Directorate Standing Injunction | ⬜ Not yet reviewed | 5 open design flags: restriction wording, PA type declaration (card name vs. taxonomy), Art 03 Phase B void procedure, Accord overlap. |
+
+### Cluster B — Information-state objects (private reveal + visibility)
+
+*Andy S67: Many of these may be taxonomy labels, not physical components. Walk each card before committing to registration.*
+
+| Component | Card | Key Question |
+|-----------|------|-------------|
+| CardHandContents | C18 Dossier Breach | Is this a physical component or a taxonomy subject label? Ghost reads hand — no physical object changes hands. |
+| ActionAttribution | C19 Deep Cover, C26 Leak | Concept of "who did the action" — is this a component or a record in ARBITER's ledger? |
+| ClassifiedDirective | Ghost Signals Analysis | IS a physical component — the faction's secret objective card. Likely already registered or easily registered. |
+| WrittenRecord | C23 Evidence Preservation | Locks an existing record (Intel token, Accord). May not need separate registration — acts on existing components. |
+| PrivateCommunications | C28 Open Channel | Scope undefined: which ARBITER-to-faction comms qualify? Intel Delivery Slips and Notification Slips confirmed in scope. |
+
+### Cluster C — Taxonomy mismatch
+
+| Component | Card | Fix |
+|-----------|------|-----|
+| SurveillanceDevice | C24 Surveillance Placement | `subject = IntelToken` is wrong — primary effect is surveillance infrastructure. Needs `subject = SurveillanceDevice` once a SurveillanceDevice component is defined. Design SurveillanceDevice before fixing subject field. |
+
+### Standing Injunction open flags (under 04-n26)
+1. Restriction wording: "Directorate Established+ in any district where target also has Established+" — confirm intent vs. original "same ring as primary operations"
+2. InjunctionMarker: component registration
+3. PA type declaration: by card name or by taxonomy (e.g., Territory/Add)?
+4. Art 03 gap: Phase B procedure for voiding a declared PA not specified
+5. Accord overlap: does PA block apply to Accord-type PAs (P08/P10)?
 
 **ALWAYS read `TheSignal/Whiteboard/design_reference.md` before any Art 04+ design work.**
 **ALSO read `TheSignal/Whiteboard/gap_card_sketches_S62.md` before any Art 04 gap card work.
@@ -94,6 +149,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L187** (S67): 00-R40 locked — ARBITER Cognitive Load. Art 00a + Art 03 §5 + Art 04 §5 updated. Art 00a and Art 03 pending re-sign-off.
+- **L186** (S66): Art 03 v3.2 signed off. pre_loss_calc procedure block + Art 04 §6.6 removed.
 - **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.
 - **L184** (S63): L108 amended — 3NF requirements (6 + 7) added; component.transformable → virtual generated; action.prereq_beat_id dropped.
 - **L183** (S61): C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine.

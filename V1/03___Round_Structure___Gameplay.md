@@ -3,7 +3,7 @@
 
 **Version:** 3.2  
 
-**Status:** ✅ Signed Off — S66 (L186). Beat 2 `pre_loss_calc=True` procedure block removed (no card uses it; schema addition predated sign-off).  
+**Status:** 🔄 Pending Re-sign-off — S67 (L187 — §5 Principle 6 added).  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -106,6 +106,8 @@ ARBITER is present throughout but speaks at specific moments. Between those mome
 4. **Players run their own economy.** Resource collection, marker placement, flag and marker updates, and structure block removal are all performed by players. ARBITER facilitates and resolves disputes.
 
 5. **Speed has consequences.** Dispatch case submission order is the tiebreaker within resolution priority tiers.
+
+6. **ARBITER executes procedures, not exceptions.** All ARBITER-facing content in this artifact is written as generalizable rules applicable uniformly across all game states within their phase. No phase-specific or context-specific exception procedures. Complexity is managed through physical tools and reference materials, not through ARBITER memorization. *00-R40.*
 
 ---
 
