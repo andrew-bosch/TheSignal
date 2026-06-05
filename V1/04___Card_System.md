@@ -3354,30 +3354,31 @@ C17 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Fills the Information — Reveal — CardHand gap: Ghost reads the opponent's planning pool before they play it. Distinct from C17 Intercept (targets submitted ops in the Resolution Grid) and C05 Gather (generates Intel tokens rather than revealing content). No Notification risk — card hand reveal is private to Ghost; ARBITER does not announce it. 2 Findings cost and Automatic resolution reflects that penetrating planning files is achievable but requires a meaningful resource commitment. Ghost Double-Case Pass creates natural synergy: Month 1 Breach informs Month 2 and 3 strategy.
+SIGINT tap on a named faction's dispatch channel. Ghost submits at Beat 2 — before dispatch cases are sealed — establishing the tap. When the target submits their case in Phase 3, ARBITER prepares a DispatchReport listing all operations in the target's Beat 3 resolution grid (operation name and declared target only; modifier cards excluded — splayed edge not readable). Report delivered to Ghost before Beat 3 resolution begins. No interaction with the target player. Covert attribution preserved throughout.
+
+Redesigned S68: original target was the unplayed hand (CardHandContents) — requires physical access to the target player's cards during Beat 3, which breaks covert attribution at the paper table. The SIGINT model removes that constraint: Ghost's tap is in ARBITER's domain (dispatch cases), not the target player's private domain. Information target shifts from planning pool to committed operations — what the faction decided to do, not what they could do. Beat 2 commitment is the risk: 2 Findings spent before Ghost knows what the target will submit.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Preemptive read of opponent's planning pool fills Information/Reveal/CardHandContents gap; distinct from C17 (submitted ops) and C05 (token yield) | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — planning-pool penetration is Ghost-exclusive doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Ghost only; no portrait entry (intelligence revelation carries no PS consequence — confirmed intentional per Ghost low-profile doctrine); Automatic resolution fits analytical intelligence work | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — deeper intelligence access than Standard C17 | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Reveal/CardHandContents — fills gap; component registration outstanding (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | 2 Findings, Automatic — information advantage without dice risk; Automatic justified for analytical work; different information class from C17 (planning vs. attribution) | Art 02a §6–§7 |
-| Effect duration | ✓ | Immediate: private reveal once at Beat 3; no persistent state | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Action fit | ✓ | SIGINT tap on dispatch channel — fills Information/Reveal/DispatchReport gap; distinct from C17 (disrupts one submitted op) and C05 (generates intel tokens); Ghost reads committed operations, not planning pool | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — covert channel interception is Ghost-exclusive doctrine | Art 00 §7 |
+| Doctrine alignment | ✓ | Ghost only; Beat 2 commitment is the risk (spends before knowing target's submission); Automatic resolution fits signals intelligence work | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — covert channel access is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Reveal/DispatchReport — subject corrected S68; DispatchReport component registration in 00b §4 and design in 02a pending (Outstanding Issue) | Art 04b §4, §5 |
+| Balance | ✓ | 2 Findings, Automatic, Beat 2 — information advantage without dice risk; Beat 2 blind commitment is the cost; empty case = resources spent | Art 02a §6–§7 |
+| Effect duration | ✓ | Immediate: DispatchReport delivered once at beat3_pre_resolution; no persistent state | — |
+| Persistence | ✓ | Immediate — card fully resolved at delivery; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | No portrait entry — intelligence work carries no PS consequence by Ghost doctrine; absence confirmed intentional | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — operates on card hand; no district context required | Art 01 §6–§7 |
-| Supported by components | ✓ | CardHandContents as target_object — component registration outstanding (Outstanding Issue); modifier cards excluded from reveal per arbiter_note | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Private reveal via ARBITER; private faction-to-faction reveal procedure outstanding (Outstanding Issue) | Art 03 §9, §11; Art 07 |
+| Portrait validity | ✓ | Ghost +1 submitter — intelligence operation confirms Ghost operational activity | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — operates on dispatch case contents; no district context required | Art 01 §6–§7 |
+| Supported by components | ✓ | DispatchReport as subject and delivery artifact — registration in 00b §4 and design in 02a pending (Outstanding Issue) | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | ARBITER prepares DispatchReport from Beat 3 resolution grid at beat3_pre_resolution; no interaction with target player required | Art 03 §9, §11; Art 07 |
 
 #### Outstanding Issues
 
-- **CardHandContents as component type:** Confirm `target_object = CardHandContents` is registered or flagged for Art 02 registration.
-- **Private reveal procedure:** Same mechanism as C17 IntelDeliverySlip? Confirm Art 07 covers faction-to-faction private reveals via ARBITER.
+- **DispatchReport component:** Registration in 00b §4 and design in 02a required before Issues Resolved can be set. Gate: 00b §4 framework. Audit sweep needed: any component in 00b without 02a/02b design is a gap (PM05 04-n38).
 
 #### Status
 
@@ -3385,31 +3386,31 @@ Fills the Information — Reveal — CardHand gap: Ghost reads the opponent's pl
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*S51 redesign — design pass pending*
+*S68 redesign — SIGINT tap model*
 
-```python
+\`\`\`python
 C18 = Card(
-    id=18,  version="v1.0",
+    id=18, version="v1.1",
     name    = "Dossier Breach",
-    tagline = "Penetrate a faction's operational planning before the round begins.",
-    type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = Information,  function = Reveal,  subject = CardHandContents,
-    beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    tagline = "Tap a rival's dispatch channel — read their submitted operations before Beat 3 resolves.",
+    type    = CovertOperation, subtype = FactionSpecific, faction = Ghost,
+    layer   = Information, function = Reveal, subject = DispatchReport,
+    beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
-    target_district=None, target_faction=faction(named_opponent), target_object=CardHand,
+    target_district=None, target_faction=faction(named_opponent), target_object=DispatchCase(faction=faction(target)),
     affinity=None,
     restriction=None,
     cost        = resource.faction(acting).findings * 2,
-    success     = game.reveal(faction(target).hand(types=[CovertOperation, PoliticalAct]), to=faction(acting), private=True),
+    success     = game.deliver(DispatchReport(faction=faction(target), contents=resolution_grid(month=current, beat=3, faction=faction(target)).operations(fields=[name, target])), to=faction(acting), private=True, timing="beat3_pre_resolution"),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     narrative   = "Understanding the operation before it begins. That is the only tactical advantage worth having.",
     perspectives = {Ghost: "We did not take their cards. We simply read their intentions. They will act on plans we already know."},
-    design_note  = "Replaces C18 Identity Blind (retired S51). Fills Information — Reveal — Card hand gap; distinct from C17 Intercept (submitted ops) — Dossier Breach targets the unplayed planning pool. Ghost Double Case Pass creates natural synergy: Month 1 Breach informs Month 2 and Month 3 Declaration strategy.",
-    arbiter_note = "Privately show target faction's current hand of Covert and Public Act cards to Ghost player. Modifier cards excluded. Do not confirm or announce to the table. Information is solely between Ghost and ARBITER — Ghost may not publicly announce or prove the contents.",
+    design_note  = "Redesigned S68: original target was unplayed hand (CardHandContents) — requires physical access to target player's cards, not executable covertly at paper table. Redesigned to SIGINT tap model: Ghost submits at Beat 2, tapping faction X's dispatch channel. ARBITER prepares DispatchReport from Beat 3 resolution grid (operation name + declared target only; modifier cards excluded — splayed edge not readable). Delivered to Ghost before Beat 3 resolution begins. Beat 2 commitment is the risk. If target passes or submits empty case, Ghost receives empty report — resources spent.",
+    arbiter_note = "Ghost has tapped faction X's dispatch channel this round. Before Beat 3 resolution begins, prepare a DispatchReport listing all operations in faction X's Beat 3 resolution grid: operation name and declared target (district, faction, or object) for each. Modifier cards are not included. Deliver privately to Ghost. Do not notify faction X. Do not announce to the table. If faction X has no operations in the Beat 3 grid, deliver an empty DispatchReport — Ghost's resources are spent.",
 )
-```
+\`\`\`
 
 ---
 
@@ -3440,7 +3441,6 @@ Ghost's operational security card — intelligence denial rather than intelligen
 #### Outstanding Issues
 
 - **Empty portrait:** No portrait entry. Confirm intentional — Ghost concealment doctrine means even performing Deep Cover leaves no doctrinal signal.
-- **ActionAttribution component:** `target_object = ActionAttribution` — confirm this is a defined component/record entity in Art 00b or Art 02.
 
 #### Status
 
@@ -3452,25 +3452,25 @@ Ghost's operational security card — intelligence denial rather than intelligen
 
 ```python
 C19 = Card(
-    id=19,  version="v1.0",
+    id=19,  version="v1.1",
     name    = "Deep Cover",
-    tagline = "Permanently remove a prior operation from the accessible record.",
+    tagline = "Permanently destroy a rival's intelligence file on Ghost.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = Information,  function = Protect,  subject = ActionAttribution,
+    layer   = Information,  function = Remove,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
-    target_district=None, target_faction=faction(acting), target_object=ActionAttribution,
+    target_district=None, target_faction=faction(named_opponent), target_object=IntelToken(faction=Ghost, holder=faction(target)),
     affinity=None,
-    restriction = faction(acting).prior_op(min_rounds_ago=1, attributed=False).count >= 1,
+    restriction = None,
     cost        = resource.faction(acting).findings * 1,
-    success     = game.remove_attribution(faction(acting).op(prior=True, unattributed=True, named=True), permanent=True),
+    success     = game.remove(IntelToken(faction=Ghost, holder=faction(target)), permanent=True),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {},
     narrative   = "Good cover does not expire at the end of the week.",
     perspectives = {Ghost: "It did not happen. This is not a lie. It is a permanent correction to an incomplete record."},
-    design_note  = "Permanent attribution protection. Redesign flag resolved S51 — C18 replaced with Dossier Breach, making C19 the unique permanent-protection card in Ghost's set.",
-    arbiter_note = None,
+    design_note  = "Evidence destruction — Ghost permanently removes an IntelToken referencing Ghost from a named rival's pool. Redesigned S68: original remove_attribution() assumed ARBITER ledger (R40 violation); narrowed to IntelToken as the only surviving physical attribution object. Ghost's own tokens are freely discardable; this card's value is exclusively against rival-held tokens.",
+    arbiter_note = "ARBITER retrieves and permanently removes one IntelToken(faction=Ghost) from the named faction's pool at Beat 3. Act is visible to all players. If no such token exists, operation has no effect — resources spent.",
 )
 ```
 
@@ -4469,7 +4469,7 @@ P18 = Card(
 |------|------|
 | [C21](#c21-invoke-jurisdiction) | Invoke Jurisdiction |
 | [C22](#c22-detain) | Detain |
-| [C23](#c23-evidence-preservation) | Evidence Preservation |
+| [C23](#c23-tort-interference) | Tort Interference |
 | [C24](#c24-surveillance-placement) | Surveillance Placement |
 | [C25](#c25-tactical-redirection) | Tactical Redirection |
 | [C42](#directorate-sanctioned-raid) | Sanctioned Raid |
@@ -4609,68 +4609,71 @@ C22 = Card(
 
 ---
 
-### C23 — EVIDENCE PRESERVATION
-[↑ Covert Operations](#directorate-covert-operations)
+### C23 — TORT INTERFERENCE
+[↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
-Directorate's record integrity card — locks a named written record permanently, preventing its modification for the remainder of the session. Reflects the institutional doctrine that the record is the Directorate's primary long-term advantage: once an event is inscribed and locked, no faction can revise, retract, or expunge it. The restriction (written record that isn't printed card text) is deliberately narrow — Evidence Preservation cannot lock card text itself, only ARBITER-maintained or player-written game records. Mandate×2 and Automatic resolution make this a routine institutional act. Permanent per Principle 11.
+Standard card available to all factions — any faction with a stake in an active Accord can lock it against voluntary dissolution through back-channel means. Reflects the legal concept of tortious interference: a third party prevents two contracting parties from exiting an agreement the third party benefits from. Directorate invokes this with institutional standing; Ghost files paperwork no one can trace; Syndicate retains counsel; Network embeds the agreement in public record; Collective organizes pressure around it. Cost is 1 Mandate + 1 of the acting faction's native resource — the Mandate requirement means any faction must spend a unit of institutional authority to invoke this regardless of doctrine. Lock persists until game end or direct breach by the Accord parties; breach is not blocked, but consequences apply normally. Voluntary dissolution suspended; unilateral breach is not.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Record integrity card — permanently locks a game record against modification; distinct from C24 (surveillance infrastructure) and C19 Deep Cover (attribution erasure); Directorate's long-term institutional advantage | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Directorate perspective by design — institutional record preservation as doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; Mandate×2, Automatic — routine institutional act; restriction narrowly scoped (no printed card text); WrittenRecord and lock enforcement outstanding (Outstanding Issues) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — record locking is Directorate-exclusive institutional capability | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Protect/WrittenRecord — permanent protection per Principle 11; WrittenRecord component registration outstanding (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×2, Automatic — balance assessment deferred until WrittenRecord component and lock enforcement defined (Outstanding Issues); currently low-cost for potentially high-impact preservation | Art 02a §6–§7 |
-| Effect duration | ✓ | Permanent: locked record cannot be modified for remainder of session | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Action fit | ✓ | Accord lock — prevents voluntary dissolution of a named executed Accord; distinct from C19 (evidence destruction) and C24 (surveillance); any faction with a stake can invoke | Art 00 §7 |
+| Voice fit | ✓ | Standard card; five faction perspectives by design — each faction arrives at the same outcome through different means | Art 00 §7 |
+| Doctrine alignment | ✓ | Standard; 1 Mandate + 1 native resource; Mandate requirement gates casual play regardless of faction; lock/breach distinction is mechanically clean | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / Standard — lock filed covertly; acting faction not announced at resolution; effect (marked Accord) is publicly visible | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Corrupt/Accord — corrupts the dissolution process; target is a defined physical component (executed Accord on table) | Art 04b §4, §5 |
+| Balance | ✓ | 1 Mandate + 1 native — dual resource cost reflects invoking legal/institutional authority outside normal doctrine; balance deferred until lock enforcement defined | Art 02a §6–§7 |
+| Effect duration | ✓ | Until game end or breach — not permanent in the absolute sense; releases on direct breach by parties | — |
+| Persistence | ✓ | Until(game.end OR Accord(named).breach_by_party) — card leaves a physical lock marker on the Accord; lingering per design | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Directorate +1 submitter — single entry; record preservation aligns with institutional doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — operates on game record, not a district | Art 01 §6–§7 |
-| Supported by components | ✓ | WrittenRecord as target_object — component registration and scope outstanding (Outstanding Issue) | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; lock enforcement mechanism and naming procedure outstanding (Outstanding Issues) | Art 03 §9, §11 |
+| Portrait validity | ✓ | No portrait entry — PS implications deferred to 04-n34 sweep | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — Accord is on table/overview, not district-anchored | Art 01 §6–§7 |
+| Supported by components | ✓ | Accord (executed, on table) — physically verifiable by all players; no ARBITER ledger required | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | Beat 3 Automatic; lock enforcement and breach detection outstanding (Outstanding Issues) | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **WrittenRecord component type:** Undefined. Needs Art 02 registration. What physical or tracked game elements qualify as written records — ARBITER's ledger? Accord cards? Notated Chorus results? Scope must be defined before card passes component check.
-- **Lock enforcement:** How does ARBITER enforce that a locked record cannot be modified? No existing procedure covers this. Needs Art 03 or Art 07 definition.
-- **Naming specific records:** `game.record.element(named)` requires the Directorate player to name the specific record at Dispatch. Confirm procedure for naming and whether ARBITER validates the named element exists.
+None — all resolved S68. District-keyed resource model makes Mandate acquirable by any faction (S68). `faction(acting).native` is existing notation precedent. Enforcement and breach detection are player-visible via the annotated public document per R40a — ARBITER does not track.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
 
-*Pre-convention card — design rationale scaffold added S59. Design pass pending.*
+*Redesigned S68: Directorate FactionSpecific CovertOperation (Evidence Preservation) → Standard CovertOperation. Name: Evidence Preservation → Tort Interference.*
 
 ```python
 C23 = Card(
-    id=23,  version="v1.0",
-    name    = "Evidence Preservation",
-    tagline = "Lock a written record against modification for the remainder of the session.",
-    type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
-    layer   = Information,  function = Protect,  subject = WrittenRecord,
+    id=23,  version="v2.0",
+    name    = "Tort Interference",
+    tagline = "Lock an executed Accord against voluntary dissolution until game end or breach.",
+    type    = CovertOperation,  subtype = Standard,  faction = None,
+    layer   = Information,  function = Corrupt,  subject = Accord,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
-    persistence     = Immediate,
-    target_district=None, target_faction=None, target_object=WrittenRecord,
+    persistence     = Until(game.end OR Accord(named).breach_by_party),
+    target_district=None, target_faction=None, target_object=Accord(executed, on_table),
     affinity=None,
-    restriction = game.record.element(target).is_written == True AND game.record.element(target).is_printed_card_text == False,
-    cost        = resource.faction(acting).mandate * 2,
-    success     = game.lock(game.record.element(named), permanent=True),
+    restriction = Accord(named).is_executed == True AND Accord(named).on_table == True,
+    cost        = resource.faction(acting).mandate * 1 + resource.faction(acting).native * 1,
+    success     = game.lock(Accord(named), until=game.end OR Accord(named).breach_by_party),
     successcrit=None, fail=None, failcrit=None,
-    portrait    = {Directorate: PortraitEntry(submitter=+1)},
-    narrative   = "The Directorate's institutional advantage is the record. They protect it.",
-    perspectives = {Directorate: "The record is preserved. Its integrity is now institutional fact."},
-    design_note  = None,
-    arbiter_note = None,
+    portrait    = {},
+    narrative   = "The agreement stands. Whatever your reasons for wanting out, the record disagrees.",
+    perspectives = {
+        Directorate: "The agreement is now a matter of institutional record. Dissolution would require a filing no one is prepared to make.",
+        Ghost:       "The paperwork has been submitted. Quietly. Neither party knows who filed it.",
+        Syndicate:   "We have an interest in this arrangement continuing. Our lawyers agree.",
+        Network:     "We have made this agreement part of the public record. Dissolving it now would be a story.",
+        Collective:  "We hold both parties to what they agreed to. The community remembers.",
+    },
+    design_note  = "Redesigned S68: Directorate FactionSpecific CovertOperation (Evidence Preservation) → Standard CovertOperation. Any faction with a stake in an active Accord can lock it against voluntary dissolution. Cost: 1 Mandate + 1 faction native resource. Lock persists until game end or direct breach by Accord parties — breach not blocked, consequences apply normally.",
+    arbiter_note = "ARBITER annotates the named Accord document at Beat 3 — writes 'cannot voluntarily dissolve' or marks equivalent field on the Accord blank (TBD Art 06). No new component. Annotation is public; faction players enforce. Annotation is voided if either party directly breaches the Accord terms — breach consequences apply normally. Acting faction identity is not announced at resolution.",
 )
 ```
-
 ---
 
 ### C24 — SURVEILLANCE PLACEMENT
@@ -4709,7 +4712,7 @@ Directorate's permanent intelligence infrastructure card — installs monitoring
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Pre-convention card — design rationale scaffold added S59. Design pass pending.*
+*S68 design review: card mechanics invalidated. Covert resolution grid is entirely ARBITER-domain — faction players cannot monitor it; any ARBITER notification mechanism requires cross-beat state tracking, violating Governing Principle — ARBITER Cognitive Efficiency (00a §1) and R40. Requires narrative-first rethink before any mechanics work. Gate: 04-n41.*
 
 ```python
 C24 = Card(
@@ -5424,30 +5427,29 @@ P_StandingInjunction = Card(
 [↑ Covert Operations](#network-covert-operations)
 
 #### Design Rationale
-Network's attribution revelation card — spends 1 Exposure to force a target faction's highest-impact covert operation's target district into public record after Beat 3 resolution. Operation type is not revealed, only the district — enough information to trigger table reactions without fully exposing the target. Automatic resolution reflects that The Network's broadcast infrastructure makes district leaks routine; the cost is resources, not probability. No restriction means Leak can fire regardless of Network's own position. Pairs with C27 Disclosure Loop (Leak → free Exposure) to make revelation self-sustaining.
+Network's pre-execution discovery card — spends 1 Exposure + 1 Findings to expose a target faction's most resource-costly unresolved covert operation before it fires, cancelling it in the process. Full discovery mechanic applies: ARBITER publicly announces operation type, acting faction, and targets; target faction suffers PS reduction; the operation does not resolve. Resources the target submitted are lost. Beat 3 timing is intentional — Network has a strategic incentive to go first in initiative order so Leak fires before the target's operation resolves; going late risks a fizzle if all valid targets have already been processed. The Findings cost requires Network to have a trade relationship with Ghost or hold Findings-generating territory — cross-resource by design. Pairs with C27 Disclosure Loop (successful Reveal → +1 Exposure) to make revelation self-sustaining.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Attribution revelation via broadcast infrastructure — district-only post-resolution reveal; lighter than C28 (full round, pre-resolution) | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Network perspective by design — selective disclosure as doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Network only; Exposure×1 cost; Automatic — broadcast infrastructure makes district leaks routine; "highest-impact op" definition outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — broadcast-based attribution is Network-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Reveal/ActionAttribution — district-only reveal (not operation type); pairs with C27 Disclosure Loop | Art 04b §4, §5 |
-| Balance | ✓ | Exposure×1, Automatic, district-only — relatively cheap for attribution intel; "highest-impact op" ranking outstanding (Outstanding Issue) | Art 02a §6–§7 |
-| Effect duration | ✓ | Immediate: district announced after Beat 3 resolution; no persistent state | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Action fit | ✓ | Pre-execution discovery + cancellation — distinct from C28 (faction communications) and all post-resolution reveal cards; Network burns the plan before it fires | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Network perspective — selective, precision disclosure as doctrine | Art 00 §7 |
+| Doctrine alignment | ✓ | Network only; 1 Exposure + 1 Findings cross-resource; Automatic; fizzle risk on low initiative creates meaningful cost beyond resources | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — broadcast-based pre-execution discovery is Network-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Reveal/District — what is made public is geographic (district + operation type); subject corrected from ActionAttribution S68 | Art 04b §4, §5 |
+| Balance | ✓ | 1 Exposure + 1 Findings; can cancel a costly op — cross-resource cost is the primary gate; fizzle risk and initiative dependency add further constraint; flag for 04-n34c sweep | Art 02a §6–§7 |
+| Effect duration | ✓ | Immediate — discovery announced and cancellation applied at resolution; no lingering state | — |
+| Persistence | ✓ | Immediate — card resolves fully at Beat 3; cancelled op leaves no residual game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Network +1 submitter; broadcast attribution aligns with transparency doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — reveals the district but targets a faction, not a zone | Art 01 §6–§7 |
-| Supported by components | ✓ | ActionAttribution as target_object — component registration outstanding (Outstanding Issue) | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; announcement post-Beat 3 resolution; ordering with other Beat 3 outcomes noted | Art 03 §9, §11 |
+| Portrait validity | ✓ | Network +1 submitter — discovery operation aligns with transparency doctrine | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — operation district is revealed as part of discovery, not targeted as a zone | Art 01 §6–§7 |
+| Supported by components | ✓ | CovertOperation (unresolved, in Beat 3 grid) as target — physically verifiable by ARBITER at resolution | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | Beat 3 Automatic; initiative order determines valid targets; ps_framing on target pending 04-n33/04-n34b | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **"Highest-impact op" ranking:** `op(beat=3, rank=highest_impact)` — "highest impact" is undefined. Ranking criteria needed: by resource spent, by effect scope, by player declaration? Needs formal definition before checklist passes.
-- **C26/C28 Reveal overlap:** Flagged in section header (D-04-04). C26 reveals district of one op post-resolution; C28 redirects all notifications of a faction to public pre-resolution. Different scopes and timings — confirm the distinction is sufficient to keep both cards or resolve one.
+- **ps_framing on target:** Target faction PS reduction on discovery is the standard failcrit consequence — pending 04-n33 schema addition and 04-n34b sweep to formalise in spec.
 
 #### Status
 
@@ -5455,32 +5457,34 @@ Network's attribution revelation card — spends 1 Exposure to force a target fa
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Pre-convention card — design rationale scaffold added S59. Design pass pending.*
+*Redesigned S68: subject ActionAttribution → District; pre-execution discovery + cancellation model; cross-resource cost; beat=3 initiative incentive confirmed.*
 
 ```python
 C26 = Card(
-    id=26,  version="v1.0",
+    id=26,  version="v1.1",
     name    = "Leak",
-    tagline = "Make one resolved operation's target district public after resolution.",
+    tagline = "Expose and cancel a rival's most costly unresolved operation before it fires.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
-    layer   = Information,  function = Reveal,  subject = ActionAttribution,
+    layer   = Information,  function = Reveal,  subject = District,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
-    target_district=None, target_faction=faction(named_opponent), target_object=ActionAttribution,
+    target_district=None, target_faction=faction(named_opponent), target_object=CovertOperation(faction=faction(target), beat=3, unresolved=True),
     affinity=None,
-    restriction=None,
-    cost        = resource.faction(acting).exposure * 1,
-    success     = game.announce(faction(target).op(beat=3, rank=highest_impact).district, public=True),
+    restriction = faction(target).op(beat=3, unresolved=True).count >= 1,
+    cost        = resource.faction(acting).exposure * 1 + resource.faction(acting).findings * 1,
+    success     = [
+        game.announce(faction(target).op(beat=3, unresolved=True, selection=highest_cost), discovery=True, public=True),
+        game.cancel(faction(target).op(beat=3, unresolved=True, selection=highest_cost)),
+    ],
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
     narrative   = "The Network does not need to know everything — only enough to make the right question public.",
     perspectives = {Network: "We do not reveal everything. We reveal the piece that makes everything else visible."},
-    design_note  = None,
-    arbiter_note = "Announce target district of highest-impact resolved covert operation from named faction this round — operation type not revealed, district only. Delivered after Beat 3 resolution.",
+    design_note  = "Redesigned S68: subject corrected to District (was ActionAttribution — taxonomy mismatch); pre-execution discovery + cancellation model confirmed (target op cancelled, resources lost, PS reduction applies); cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending 04-n33/04-n34b.",
+    arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending 04-n33). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
 )
 ```
-
 ---
 
 ### C27 — DISCLOSURE LOOP
@@ -5550,30 +5554,29 @@ C27 = Card(
 [↑ Covert Operations](#network-covert-operations)
 
 #### Design Rationale
-Network's pre-emptive transparency card — placed at Beat 2, redirects all of a target faction's ARBITER case notifications for the round to public delivery. Where C26 Leak reveals one specific piece of attribution after the fact, Open Channel opens the pipeline before it runs. Any Intel Delivery Slips, Notification Slips, or other ARBITER-to-faction private communications generated for the target this round are delivered publicly instead. Higher cost (Exposure×2) reflects the broader scope. The Beat 2 timing is essential: must be placed before Beat 3 notifications are generated. Does not intercept Hidden Objective or Classified Directive communications — those are ARBITER-to-ARBITER constructs, not faction notifications.
+Network's pre-emptive transparency card — submitted at Beat 2, redirects all ARBITER-to-faction communications destined for a named faction to public delivery for the rest of the round. Where C26 Leak reveals and cancels one committed operation before it fires, Open Channel opens the notification pipeline before it runs: any NotificationSlip or IntelDeliverySlip generated for the target this round is delivered to the whole table instead of privately. The Beat 2 timing is essential — must be placed before Beat 3 notifications are generated. Does not intercept Hidden Objective or Classified Directive communications (ARBITER-internal constructs, not faction-to-faction notifications). Portrait movements are ARBITER-private and not in scope.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Pre-emptive transparency — opens pipeline before notifications are generated; distinct from C26 (post-resolution, one op, district-only) | Art 00 §7 |
+| Action fit | ✓ | Pre-emptive transparency — redirects notification pipeline before generation; distinct from C26 (pre-execution op cancellation, S68 redesign) | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Network perspective by design — forced transparency as doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Network only; Exposure×2 for broader scope; Beat 2 timing essential — must precede Beat 3 notification generation; HO/CD exclusion confirmed | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — pipeline redirect is Network-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Reveal/PrivateCommunications — round-wide redirect vs C26 single-op; C26/C28 overlap outstanding (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Exposure×2, Beat 2 Automatic, round-wide redirect — higher cost than C26 justified by broader scope | Art 02a §6–§7 |
-| Effect duration | ✓ | One round: notifications generated this round delivered publicly; no carry-forward | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Doctrine alignment | ✓ | Network only; Exposure×2 for round-wide redirect; Beat 2 timing essential; HO/CD exclusion confirmed; Portrait events out of scope (ARBITER-private) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — notification pipeline redirect is Network-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Reveal/NotificationSlip — subject corrected S68 (was PrivateCommunications, not a registered component); C26/C28 overlap resolved S68 (C26 is now pre-execution cancellation, functionally distinct) | Art 04b §4, §5 |
+| Balance | ✓ | Exposure×2, Beat 2 Automatic, round-wide redirect — higher cost than C26 justified by scope; acting faction identity not announced at resolution | Art 02a §6–§7 |
+| Effect duration | ✓ | Until(round.end): redirect state active from Beat 2 resolution through end of Beat 3 notification generation; no carry-forward | — |
+| Persistence | ✓ | Until(round.end) — corrected S68; Immediate was wrong (effect must survive through Beat 3); ARBITER holds round-state note, no new physical marker required at L1 | Art 04 §6 |
 | Trigger validity | ✓ | N/A — Beat 2 placement fires on submission | — |
 | Portrait validity | ✓ | Network +1 submitter; forced transparency aligns with broadcast doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
-| Supported by components | ✓ | PrivateCommunications as target_object — component scope outstanding (Outstanding Issue); Intel Delivery Slips and Notification Slips confirmed | Art 02a §6–§8; Art 07 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; redirect applied before Beat 3 generation; HO/CD exclusions confirmed in arbiter_note | Art 03 §9, §11 |
+| Supported by components | ✓ | NotificationSlip and IntelDeliverySlip confirmed in scope; NotificationSlip Art 02 registration to confirm (referenced in C17 — likely registered; Outstanding Issue) | Art 02a §6–§8; Art 07 |
+| Supported by game procedure | ✓ | Beat 2 Automatic; ARBITER notes redirect state on own tableau for round; delivers target faction's slips publicly through Beat 3 | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **C26/C28 Reveal overlap (D-04-04):** Both cards are Information — Reveal. C26: post-Beat 3, district-only, one op. C28: pre-Beat 3, all notifications, whole round. Scope and timing are genuinely different. Confirm both cards survive the D-04-04 review or whether one should be retired/merged.
-- **PrivateCommunications component:** Undefined. Needs Art 02/Art 07 definition: which ARBITER-to-faction communications are "notifications" in scope of C28? Intel Delivery Slips, Notification Slips confirmed. Confirm scope edge cases.
+- **NotificationSlip Art 02 registration:** Confirm registered in Art 02a or 02b (referenced in C17 success field — likely registered; verify before Issues Resolved is set).
 
 #### Status
 
@@ -5581,29 +5584,29 @@ Network's pre-emptive transparency card — placed at Beat 2, redirects all of a
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Pre-convention card — design rationale scaffold added S59. Design pass pending.*
+*Retired to L2 — S68. Card requires ARBITER to hold active redirect state across beats (Beat 2 → Beat 3): R40 violation. Only valuable content (IntelToken delivery exposure) depends on C17 rich attribution output — also L2-native (PM05 04-n39). No valid L1 execution path. Network L1 replacement needed (PM05 04-n40).*
 
 ```python
 C28 = Card(
-    id=28,  version="v1.0",
+    id=28, version="v1.1",
     name    = "Open Channel",
-    tagline = "Force private ARBITER notifications to a faction to be delivered publicly.",
-    type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
-    layer   = Information,  function = Reveal,  subject = PrivateCommunications,
+    tagline = "Force all ARBITER notifications to a named faction to be delivered publicly for the round.",
+    type    = CovertOperation, subtype = FactionSpecific, faction = Network,
+    layer   = Information, function = Reveal, subject = NotificationSlip,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
-    persistence     = Immediate,
-    target_district=None, target_faction=faction(named_opponent), target_object=PrivateCommunications,
+    persistence     = Until(round.end),
+    target_district=None, target_faction=faction(named_opponent), target_object=NotificationSlip,
     affinity=None,
     restriction=None,
     cost        = resource.faction(acting).exposure * 2,
-    success     = game.redirect(faction(target).notifications(round=game.round), destination=public),
+    success     = game.redirect(faction(target).notifications(round=game.round, types=[NotificationSlip, IntelDeliverySlip]), destination=public),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
     narrative   = "Secret communications between powerful institutions are themselves a form of harm. Opening the channel is the argument.",
     perspectives = {Network: "If it happened, it should be known. We are simply making that principle operational."},
-    design_note  = "Flagged for review — C26 and C28 both Reveal, same function different scope. See D-04-04.",
-    arbiter_note = "Does not intercept Hidden Objective or Classified Directive communications. Beat 2 — must be active before Beat 3 notifications are generated.",
+    design_note  = "Redesigned S68: subject corrected from PrivateCommunications (unregistered) to NotificationSlip; persistence corrected from Immediate to Until(round.end) — effect must survive through Beat 3 notification generation; C26/C28 D-04-04 overlap resolved (C26 redesigned S68 as pre-execution cancellation, functionally distinct). Scope: NotificationSlips and IntelDeliverySlips TO the target faction; excludes HO/CD (ARBITER-internal) and Portrait events (ARBITER-private).",
+    arbiter_note = "Network has opened faction X's channel this round. From Beat 2 resolution through end of Beat 3: any NotificationSlip or IntelDeliverySlip destined for faction X is delivered publicly to the table instead of privately. Note the redirect state on your tableau. Hidden Objective and Classified Directive communications are not affected. Portrait movements are not affected. Do not announce Network as the acting faction.",
 )
 ```
 

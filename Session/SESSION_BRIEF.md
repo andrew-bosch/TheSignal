@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 67 (active) | Updated: 2026-06-03**
+**Session 68 (active) | Updated: 2026-06-04**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -30,11 +30,21 @@ S64 complete. S65 opens here.
 - 00a: R06a added (corollary to R06 — board states committed on resolution; countering requires forward action).
 - 00a: R40a added (corollary to R40 — factions police their own permanent effects; ARBITER adjudicates on call). R40 relocated from §9 to §3. Rule count: 44 → 46. Pending re-sign-off.
 
+**S68 accomplishments (pre-compact):** 04-n26 Cluster B complete — C19 Deep Cover v1.1 (R40 fix; IntelToken physical target only), C23 Tort Interference v2.0 (Standard; any faction; Accord lock until game end or breach), C26 Leak v1.1 (pre-execution cancellation; highest-cost target; cross-resource cost 1 Exposure + 1 Findings). Cross-resource cost design principle established and locked to PM05 04-n34c. PM05 04-n34 split into 04-n34a/b/c. PM05 01-n01, 02-n01 added (zone/component design review items).
+
+**S68 accomplishments (post-compact):** C18 Dossier Breach v1.1 — redesigned to SIGINT tap / DispatchReport model (Beat 2 submission; ARBITER delivers DispatchReport from Beat 0 grid data at beat3_pre_resolution). C28 Open Channel — retired to L2 (cross-beat ARBITER state required; R40 + cognitive efficiency violations; PM05 04-n40). C24 Surveillance Placement — mechanics invalidated; narrative-first rethink required (PM05 04-n41; gate for all covert intelligence card redesign). **Governing Principle — ARBITER Cognitive Efficiency** added to 00a §1 (parent of R40 and R40a — objective, not just rule; design question: "how can this narrative function be implemented while impacting ARBITER as lightly as possible?"). Resolution grid confirmed entirely covert — factions never see it; return deliveries only valid L1 intercept targets. NS-xx defined in 00b §4. IS-xx reinstated with tighter definition (R40 misdiagnosis corrected). DR-xx (DispatchReport) registered in 00b §4. PM05 04-n38–04-n41 added. C17 redesign flagged (PM05 04-n39).
+
+**S68+ entry point:** 04-n41 (04b gap assessment + narrative-first design pass) gates all covert intelligence card work. Then: 04-n27 (Art 03 procedure gaps) or 04-n28 (Art 06 Accord design).
+
+**Priority order:** 04-n41 (narrative-first gap assessment) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
+
+**Also pending:** 04-n39 (C17 redesign — gates on 04-n41); 04-n40 (C28 Network replacement — gates on 04-n41); C24 redesign (gates on 04-n41); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in.
+
 **S67+ entry point:** 04-n26 Cluster A complete. Next: 04-n27 (Art 03 procedure gaps) or 04-n28 (Art 06 Accord design).
 
-**Priority order:** 04-n26 (component interaction) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
+**Priority order (S67):** 04-n26 (component interaction) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
 
-**Also pending:** Standing Injunction 5 open flags (tracks under 04-n26); agy DB-S63-01/02/03 check-in.
+**Also pending (S67):** Standing Injunction 5 open flags (tracks under 04-n26); agy DB-S63-01/02/03 check-in.
 
 ---
 

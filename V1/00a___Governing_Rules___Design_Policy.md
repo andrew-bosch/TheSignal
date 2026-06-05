@@ -90,6 +90,26 @@ The paper prototype abstracts this into two operational modes for the ARBITER pl
 
 ---
 
+### Governing Principle — ARBITER Cognitive Efficiency
+
+Every rule, card effect, and game procedure that involves ARBITER must be designed by asking: *how can this narrative function be implemented while impacting the ARBITER player as lightly as possible?*
+
+The ARBITER player is running the game engine in real time, under table pressure, across multiple resolution sequences. Design that adds tracking requirements, per-card exception checks, or cross-beat state maintenance degrades ARBITER reliability and therefore game quality. The question is not "can ARBITER do this?" — it is "can ARBITER do this reliably, every time, without slowing the game?"
+
+**Implementation preference order:**
+1. Physical objects carry their own state — ARBITER moves components, does not track state
+2. Faction players monitor and enforce — ARBITER adjudicates calls; does not watch
+3. General procedures applied uniformly — no per-card special cases; ARBITER executes the same step for every card in a category
+4. ARBITER-specific per-instance procedures — only when the above are unavailable; precisely defined and added to the ARBITER reference document
+
+If a narrative function cannot be implemented within this order without significant cognitive overhead, it is either deferred to L2+ or redesigned until it fits.
+
+R40 and R40a are the implementation rules that follow from this principle. R40 prohibits card-specific instructions and per-beat tracking. R40a — faction monitoring of permanent effects — is a subset of the same principle: faction players carry monitoring burden so ARBITER does not. When testing a design against R40 or R40a, ask the cognitive efficiency question first — the rules are consequences of the objective, not the objective itself.
+
+*Source: S68 design review — C17, C24, C28 analysis. Principle identified through ARBITER cognitive load analysis during Beat 0–5 resolution sequences. Governs: all artifacts defining ARBITER-facing procedure or content.*
+
+---
+
 ### Governing Principle — The Overview Zone Anchoring
 
 Every zone, track, and strip on The Overview must have a narrative anchor — a statement of what that element IS in the world of New Meridian — before visual design is finalized. The district map is New Meridian. The tracks surrounding it are the data streams The Table has agreed to surface collectively. They are not decorative. They are feeds.
@@ -246,7 +266,7 @@ The Translation is different. A faction requesting The Translation is admitting 
 
 **Narrative:** ARBITER is a human player, not a computer. The game must protect that experience. An ARBITER maintaining per-card notes, per-beat tracking tables, and card-specific exception procedures is not playing — they are administering. The mechanism for protecting ARBITER's experience is generalization: rules learned once and applied everywhere.
 
-*Source: L187. See also: 00-R40a (faction monitoring of permanent effects).*
+*Source: L187. Implementation of: Governing Principle — ARBITER Cognitive Efficiency (§1). See also: 00-R40a.*
 
 *Governs: All artifacts defining ARBITER-facing procedure or content. Each governing artifact implements this rule within its own scope.*
 
@@ -260,7 +280,7 @@ The Translation is different. A faction requesting The Translation is admitting 
 
 **Mechanics:** At resolution of a permanent card, the playing faction assumes monitoring responsibility. When a violation is called, ARBITER adjudicates and reverses the violating board change. If the owning faction does not call a violation at the time it occurs, the board state stands (00-R06a). Other players may call clearing conditions on any active permanent effect; ARBITER adjudicates all calls.
 
-*Source: Corollary to 00-R40. See also: 00-R06a (committed board states).*
+*Source: Subset of Governing Principle — ARBITER Cognitive Efficiency (§1); corollary to 00-R40. See also: 00-R06a (committed board states).*
 
 *Governs: All faction-played permanent effects.*
 
