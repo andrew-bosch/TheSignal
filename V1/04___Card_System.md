@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.30 Draft  
+**Version:** 0.9.31 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-02  
+**Last Updated:** 2026-06-05  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -1176,32 +1176,31 @@ C08 = Card(
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
-Alliance-seeding card — the only card in the Standard set that transfers resources between factions. Source is anonymous by default; the acting faction receives an Accord Card (cost 0) that it may play to announce the transfer publicly. Cost vs reward: 2 Capital spent to transfer 2 Capital to the target — net zero to the actor at success, but crit success awards +1 PS and the Accord Card opens alliance mechanics. Syndicate affinity is difficulty reduction — the Syndicate is the faction most practiced at informal financial transfers. Full balance assessment deferred until Art 06 (Accord mechanics) is developed.
+Alliance-seeding card — the only card in the Standard set that transfers resources between factions. Source is anonymous by default; on success the acting faction receives an Overture modifier card (delivered from ARBITER tableau) that may be assigned to any of their PAs to initiate an Accord proposal per Art 06 §9.4. Cost vs reward: 2 Capital spent to transfer 2 Capital to the target — net zero to the actor at success, but crit success awards +1 PS and Overture opens alliance mechanics. Syndicate affinity is difficulty reduction — the Syndicate is the faction most practiced at informal financial transfers.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Anonymous resource transfer as covert act — the act of funding is covert; the Accord Card is what potentially reveals it. Faction-to-faction relationship seeding fits the game's alliance layer. | Art 00 §7; Art 04b §5 |
+| Action fit | ✓ | Anonymous resource transfer as covert act — the act of funding is covert; Overture is what potentially reveals it. Faction-to-faction relationship seeding fits the game's alliance layer. | Art 00 §7; Art 04b §5 |
 | Voice fit | ✓ | Directorate's "we monitor these carefully" is the subtlest threat at the table. All five perspectives doctrinally distinct — relationship investment, institutional scrutiny, financial exposure, operational awareness, capital relationships. | Art 00 §7 |
 | Doctrine alignment | ✓ | `target_faction = faction.opponent` — `doctrine_mod = {Neighbor: +15, Opposed: -15}` applies. Syndicate affinity (+25) stacks — funding a Neighbor as Syndicate reaches effective threshold 90. Capital flows where doctrine is aligned; crosses resistance where it is not. | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation: anonymous transfer is covert; Accord Card preserves optionality on disclosure. Standard: all factions can fund others. | Art 04 §6.2; Art 04b §5 |
+| Card type fit | ✓ | CovertOperation: anonymous transfer is covert; Overture preserves optionality on disclosure. Standard: all factions can fund others. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Economy` — capital transfer is NativeResource flow, correctly Economy under Art 04b §4.4. `function = Redirect`, `subject = NativeResource` — correctly scoped. | Art 04b §4, §5 |
-| Balance | ⚠ | Net capital zero at success (2 Capital spent = 2 Capital delivered). Syndicate effective threshold 75%. Crit success = +1 PS bonus. **Open:** AccordCard = free Public Act (cost 0); its value is determined by P-series PA card costs. Reassess C09 balance once P-series is designed — if a free PA is worth more than 2 Capital spent, cost or threshold may need adjustment. | Art 02a §8; Art 04 P-series (pending) |
-| Effect duration | ✓ | Capital transfer is instantaneous. AccordCard duration governed by Art 06 (pending). | Art 06 (pending) |
+| Balance | ⚠ | Net capital zero at success (2 Capital spent = 2 Capital delivered). Syndicate effective threshold 75%. Crit success = +1 PS bonus. **Open:** Overture is a modifier card (not a PA) — balance value determined by modifier card taxonomy design pass. Reassess C09 balance after §11 redesign. | Art 02a §8; Art 04 §11 (pending) |
+| Effect duration | ✓ | Capital transfer is instantaneous. Overture modifier card lifecycle governed by Art 04 §11.8 and Art 06 §9.4. | Art 04 §11.8; Art 06 §9.4 |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Syndicate `submitter=+1`: capital-in-motion doctrine — "relationships create opportunities" (P11, P16). Directorate `submitter=−1`: using anonymous financial transfer conflicts with legitimate-process doctrine; Directorate scrutinises these transfers in others — performing one is in-doctrine hypocrisy (P11, P16). Guild: no entry — relationship investment is pragmatic, not doctrinal; absence justified. Network: no entry — analytical framing only; no doctrinal stake as actor; absence justified. Ghost: no entry — observational framing; Ghost tracks capital flows for intelligence, not as participant; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | N/A — `target_district = None`; faction-level operation, no district target. | — |
-| Supported by components | ⚠ | Capital (Art 02a §8) ✓. AccordCard undefined — pending Art 02 component definition. | Art 02a §8; Art 02 (pending) |
-| Supported by game procedure | ⚠ | Dispatch and Beat 3 resolution ✓. Anonymous transfer case-return procedure and AccordCard delivery undefined — pending Art 03 definition. | Art 03 §9, §11; Art 03 (pending) |
+| Supported by components | ⚠ | Capital (Art 02a §8) ✓. Overture modifier card defined as stub in Art 04 §11.8 — full spec pending §11 redesign. | Art 02a §8; Art 04 §11.8 |
+| Supported by game procedure | ⚠ | Dispatch and Beat 3 resolution ✓. Overture delivery procedure (ARBITER tableau → faction hand at Beat 3 resolution) pending §11 redesign. | Art 03 §9; Art 04 §11.8 |
 
 #### Outstanding Issues
 
-- **P-series dependency:** AccordCard = free Public Act; its balance value is determined by P-series PA card costs. Reassess after P-series is designed.
-- **AccordCard PA slot conflict:** AccordCard grants a free, additional Public Act beyond normal dispatch. This likely violates Art 03 Quarter structure — PA slot limits, dispatch sequencing, or Beat 2/4 submission rules. Needs Art 03 review; AccordCard mechanic may need to be reframed (e.g., as a modifier to an existing PA rather than an extra one, or as a deferred PA in a later Quarter).
-- **Art 02 dependency:** AccordCard requires component definition in Art 02 series before C09 spec is complete.
-- **Art 03 dependency:** Anonymous transfer case-return procedure (resources delivered at debrief, covert until AccordCard played) and AccordCard delivery procedure to be defined in Art 03; migrates to Art 07 when ARBITER subroutines are identified.
+- **Balance reassessment pending §11 redesign:** Overture is a modifier card (not a PA) — balance value determined by modifier card taxonomy design pass. No PA slot conflict. Reassess C09 cost/threshold after §11 redesign confirms Overture's modifier value.
+- **Overture delivery procedure:** Overture delivered from ARBITER tableau to acting faction's hand at Beat 3 resolution of C09. Exact procedure (ARBITER hands card; notation) pending §11 redesign and Art 07 ARBITER subroutine pass.
+- **Anonymous transfer case-return:** Resources delivered to target faction at Beat 3. Covert attribution preserved — acting faction not announced. Procedure pending Art 03/Art 07 pass.
 
 #### Status
 
@@ -1238,7 +1237,7 @@ C09 = Card(
 
     success     = (
         faction(target).resource.capital += 2,
-        game.dispatch(faction(acting), AccordCard)
+        arbiter.deliver(faction(acting), Overture),  # from ARBITER tableau supply
     ),
     successcrit = faction(acting).standing += 1,
     fail        = None,
@@ -6585,6 +6584,7 @@ Syndicate's accord manipulation card — the mechanism by which the Syndicate tu
 #### Outstanding Issues
 
 - **Blocked on Art 06:** Full spec cannot be finalized until Art 06 Accord mechanic defines AccordCard structure, party roles, obligations vs benefits, and what constitutes a transferable term. This card is a design placeholder — mechanic direction is locked but implementation details depend on Art 06.
+- **"ARBITER record" is not a registered component (S69):** The arbiter_note and design_note reference updating a named Accord in the "ARBITER record" — this is not a registered component. Art 06 §9 establishes that the Accord form placed in the Accord Placement Area is the physical record. Party replacement under Transfer (§9.10) is a physical alteration to the Accord form — outgoing party struck, incoming party written in. Spec language must be updated to reflect this on Art 06 completion.
 - **Who can be named as incoming party:** Can Syndicate assign the accord to any faction, including ones not currently party to any accord? Or only factions already in the game's active accord network? Confirm restriction scope.
 - **Consent mechanics:** "Neither party's consent required" — confirm this is intentional (Syndicate's doctrinal power) and that there is no counter-card available to block Accord Transfer in the same Beat.
 - **SECONDARY OBLIGATIONS overlap:** The gap concept in the file describes a similar mechanic (obligations-only transfer). Confirm whether Accord Transfer supersedes SECONDARY OBLIGATIONS or if they are two distinct cards.
@@ -7038,6 +7038,26 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 | Effect extension | Extend a one-round effect — permanent where applicable per Principle 11 |
 | Detection immunity | One failed detection roll does not surface the faction |
 | Reach extension | Apply a public act to a non-operational-marker district |
+| Outcome addition | Attach an additional resolution outcome to the modified action |
+
+### 11.8 Named Modifier Cards — Stubs
+
+*Individual modifier card design is a full design pass pending decision D-04-08 and §11 redesign. Named cards below are direction-locked stubs.*
+
+---
+
+#### OVERTURE
+
+*Stub — S69. Full spec deferred to modifier card taxonomy design pass.*
+
+**Effect type:** Outcome addition
+**Timing:** Instant — assigned to a Public Act in dispatch
+**Beat:** 4 (resolves alongside the modified PA)
+**Effect:** When the modified PA resolves at Beat 4, ARBITER places a blank Accord form in the Accord Placement Area. Proposing faction and target faction declared at time of card assignment. All formation, execution, and dissolution procedure per Art 06 §9.4.
+**Source:** ARBITER tableau supply. Delivered to acting faction on C09 Fund success.
+**Dispatch token:** Not required — modifier card.
+
+*Outstanding: full card spec pending modifier card taxonomy design pass. Outcome addition is a new effect category — formalization required in §11 redesign.*
 
 ---
 

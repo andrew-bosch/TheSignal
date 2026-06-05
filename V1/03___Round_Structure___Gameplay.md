@@ -1352,9 +1352,9 @@ React cards fire in response to publicly visible board state changes. They are h
 1. A React card may only fire on a publicly visible board state change (00-R06). It cannot fire on ARBITER-internal state changes such as the Resolution Grid.
 2. When a trigger condition is met: the holding Faction Player announces *"React"*, presents the card, and states the trigger condition listed on the card. ARBITER confirms the trigger is valid and pauses the quarter procedure.
 
-   2a. First to announce pauses play. ARBITER decides tiebreakers. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves.
+    2a. First to announce pauses play. ARBITER decides tiebreakers. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves.
 
-   2b. A React must be announced at the moment the triggering board state change occurs. It cannot be declared retroactively — once the procedure moves past the trigger point, the window closes.
+    2b. A React must be announced at the moment the triggering board state change occurs. It cannot be declared retroactively — once the procedure moves past the trigger point, the window closes.
 
 3. The React card resolves per its stated effect.
 4. Once the React has resolved, the original procedure resumes from the point it paused.

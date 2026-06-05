@@ -1,9 +1,9 @@
 # 06 — Messaging System
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1 Draft — Placeholder  
-**Status:** ⬜ Not Started — Blocked by Artifact 05 (implicitly) and Artifact 04 completion  
-**Last Updated:** 2026-05-15  
+**Version:** 0.2 Draft — Accord Governance Active; Messaging Sections Stub  
+**Status:** 🟡 In Progress — §9 Accord Documents active design; §6–§8, §10–§12 non-canonical stubs  
+**Last Updated:** 2026-06-05  
 **Depends on:** 04 — Action Card System; 03 — Round Structure & Gameplay; 07 — ARBITER Toolkit  
 **Supersedes:** arbiter_guide (messaging sections, retired), hidden_objectives (classified directive delivery, retired)
 
@@ -71,19 +71,23 @@ An Accord is a document. It bears the faction's identifier. When an Accord is br
 
 ## 5. Design Principles
 
-1. **Physical commitment is binding.** A card in the dispatch case cannot be retrieved. A signed Accord cannot be unsigned. The physical act of closing the case or signing the form is the point of no return.
+*Revised S69 — prior principles predated current design framework and have been replaced.*
 
-2. **ARBITER is the sole witness.** ARBITER opens all dispatch cases. ARBITER delivers all private notifications. No player may access another player's private information except through ARBITER.
+1. **Placement is binding.** A signed Accord placed in the Accord Placement Area cannot be unilaterally withdrawn. The physical act of signing and placing the form is the point of no return.
 
-3. **Ambiguity defaults to ARBITER.** If a message's content or intent is disputed, ARBITER's reading is authoritative.
+2. **Accords are public.** All active Accords are placed face-up in the Accord Placement Area. Every player may read the terms at any time. There is no private Accord.
 
-4. **Accord terms must be mechanical.** Accords cannot bind vague intentions — they bind specific, verifiable game actions ("Faction A will not place presence tokens in District 7 for two rounds"). ARBITER can verify this.
+3. **Terms must be player-verifiable.** Accord terms must describe conditions any player can evaluate from the public board state without requesting private information from ARBITER. ARBITER adjudicates disputes — players are the primary compliance monitors.
 
-5. **Messages are in-world.** All written communications between factions use in-world language. There is no mechanical shorthand in an Accord. If you cannot say it in the language of New Meridian, you cannot put it in an Accord.
+4. **Breach is observable, not adjudicated in advance.** Violation is determined from the public board state. Any player may call a potential breach; ARBITER rules on it. ARBITER does not monitor compliance proactively.
+
+5. **Accords carry narrative weight.** Written agreements are legible to The Table, The Chorus, and ARBITER. Breach, compliance, manipulation, and dissolution all carry Portrait implications.
 
 ---
 
 ## 6. The Dispatch Case — Covert Operation Submission
+
+> ⚠ *Draft Stub — Non-Canonical. This section was written prior to the current design framework and has not been reviewed against signed-off artifacts. Content is placeholder only and should not be treated as established procedure.*
 
 ### 6.1 What the Dispatch Case Is
 The dispatch case (in-world name: dispatch case; physical component: recipe box — see PM01 §2) is each faction's private submission container. Each faction has one dispatch case; ARBITER has one. All cases are identical in appearance to prevent identification.
@@ -112,6 +116,8 @@ A faction submitting a Pass card places it face-down in the dispatch case. No re
 
 ## 7. Faction Private Communication
 
+> ⚠ *Draft Stub — Non-Canonical. This section was written prior to the current design framework and has not been reviewed against signed-off artifacts. Content is placeholder only and should not be treated as established procedure.*
+
 ### 7.1 Direct Faction Messages
 Factions may send written private messages to other factions at **any time during Phase 2 (Placement) and Phase 4 (Declaration)**. Messages are written on blank message slips (see PM01 §2 — *[TBD component: message slips]*) and delivered by handing the slip to the recipient faction directly or through ARBITER.
 
@@ -126,6 +132,8 @@ Factions may write false information in private messages. ARBITER does not verif
 ---
 
 ## 8. ARBITER Notifications
+
+> ⚠ *Draft Stub — Non-Canonical. This section was written prior to the current design framework and has not been reviewed against signed-off artifacts. Content is placeholder only and should not be treated as established procedure.*
 
 ARBITER communicates with individual factions via private notification slips. A notification slip is placed face-down in front of the receiving faction. The faction reads it privately and places it in their hand.
 
@@ -146,26 +154,117 @@ No faction may demand to read another faction's notification. Factions may revea
 ## 9. Accord Documents — Negotiated Agreements
 
 ### 9.1 What an Accord Is
-An Accord is a formal, verifiable agreement between two or more factions. It is written on an Accord form (see PM01 §2 — *[TBD component: Accord forms]*), signed by all parties, and held by ARBITER.
 
-### 9.2 Accord Terms
-Accord terms must be:
-- **Specific:** name the factions, the actions, and the duration ("for rounds 3 and 4")
-- **Verifiable:** ARBITER must be able to determine at any point whether the Accord is being honored
-- **Mechanical:** terms must reference observable game actions, not intentions
+An Accord is a written, binding agreement between two or more factions, initiated by card submission and executed at Debrief. It is a physical component — a completed Accord form bearing the terms of the agreement and signature marks from all parties. Active executed Accords are placed face-up in the Accord Placement Area on The Overview and are public record. Proposed but unexecuted Accord forms also remain on the table in the Accord Placement Area as a record of the proposal.
 
-### 9.3 Accord Execution
-1. Proposing faction drafts the Accord in writing on an Accord form.
-2. All named parties review and sign.
-3. ARBITER receives and holds the signed Accord.
-4. ARBITER monitors compliance. Violations are noted by ARBITER — *[TBD: what is the mechanical consequence? Recommend: Portrait input for the violating faction; ARBITER reveals the violation at Debrief. No automatic mechanical penalty — consequences emerge through the faction's reputation and Portrait.]*
+### 9.2 Accord Form — Physical Component
 
-### 9.4 Accord Dissolution
-An Accord may be dissolved only by mutual written agreement of all parties, counter-signed and presented to ARBITER. Unilateral dissolution is a violation. *[TBD — whether a dissolved Accord has Portrait consequence for the dissolving party even if mutual. Recommend: yes, slight Portrait input — the Chorus notes the renegotiation regardless of consent.]*
+An Accord form (see PM01 §2 — *[TBD component: Accord forms]*) is a structured guided contract. It provides pre-printed clause types (obligation, prohibition, resource payment), fill-in-the-blank fields for faction names, districts, resources, and duration, and a signature checkbox per party. Players select from structured terms; free-form text is not permitted on the form.
+
+Fields:
+- **Parties** — checkboxes for each faction party to the agreement (minimum two)
+- **Terms** — one or more clauses selected from pre-printed types; fill-in fields for names, values, districts, duration
+- **Duration** — fill-in field: Quarter range, named condition, or "until game end"
+- **Signatures** — one checkbox per named party; checking the box constitutes execution
+
+The drafted form is placed in the Accord Placement Area at Beat 4, whether or not it is ultimately executed or signed.
+
+### 9.3 Accord Terms
+
+Valid Accord terms must be:
+
+- **Specific** — name the bound factions, the actions or restrictions, and the duration.
+- **Player-verifiable** — any player at the table must be able to evaluate compliance from the public board state alone. Terms requiring ARBITER private knowledge are not valid. *(Example: "Faction A will not place a Structure Block in District 7" — valid. "Faction A will not submit more than two covert operations" — not valid; case count is ARBITER-private.)*
+- **Written in New Meridian language** — all terms use in-world names for places, resources, and factions.
+
+Ongoing obligations (e.g., resource transfers per Upkeep) are valid — they must be performed publicly at the named phase and are player-visible.
+
+### 9.4 Formation
+
+All Accords must be initiated by card submission. Accords cannot be executed at Debrief without a prior card submission in the same Quarter.
+
+All Accord forms appear in the Accord Placement Area as Beat 4 resolution outcomes, regardless of the initiating card type.
+
+**Submission (Beat 4)**
+
+Three cards may initiate Accord formation:
+
+| Card | How the submission is created |
+|------|-------------------------------|
+| P08 Table an Accord | Declared at Phase B; drafted form placed at Beat 4 as PA resolution outcome |
+| P10 Infrastructure Bond | Declared at Phase B; drafted form placed at Beat 4 as PA resolution outcome |
+| Overture modifier card (from C09 Fund) | Instant modifier assigned to faction's own PA; blank Accord form placed as additional Beat 4 resolution outcome — per Art 04 §11.8 |
+
+At Beat 4: a drafted Accord form is placed in the Accord Placement Area, terms visible to all players. The form stays on the table from this point forward — regardless of whether execution follows.
+
+**Execution Window (Debrief)**
+
+At Debrief, for each drafted Accord form on the table, the proposing faction may:
+
+- **Execute** — all named parties check their signature box; the Accord becomes active immediately. Per-card PS consequences apply.
+- **Negotiate** — counter-offer and counter-counter-offer are permitted; terms may be amended by mutual agreement before signing.
+- **Withdraw** — the proposing faction may freely withdraw the Accord offer. The form is erased and returned as a blank to the ARBITER supply, or discarded if non-erasable. No consequence.
+- **Decline** (by the target) — the unsigned form remains on the table as a record of the failed proposal and is removed at End of Quarter cleanup.
+
+Accords can only be executed at Debrief. A drafted form that survives to End of Quarter without execution or withdrawal is removed during cleanup.
+
+### 9.5 Compliance Monitoring
+
+Active Accords are face-up in the Accord Placement Area. All players may read the terms at any time. Compliance monitoring is the table's collective responsibility — any player may call a potential breach.
+
+ARBITER may raise a breach unprompted if observed during resolution or Debrief. ARBITER does not proactively audit for breach between phases.
+
+### 9.6 Breach
+
+A breach occurs when a party fails to fulfill a term while the Accord is active.
+
+1. Any player (including ARBITER) may call a potential breach, naming the term and the apparent violation.
+2. ARBITER evaluates the call against the written Accord text. ARBITER's ruling is final.
+3. On confirmed breach: ARBITER removes the Accord form from the Accord Placement Area to the ARBITER area. Other players observe the removal.
+4. Any cards or effects attached to or acting on the Accord are released on removal.
+5. ARBITER notes a Portrait entry for the breaching faction. *(Values: ARBITER reference only — see §9.9.)*
+
+### 9.7 Accord Completion
+
+When an Accord's stated duration expires with no breach:
+
+1. Any player may call completion by naming the expired condition.
+2. ARBITER confirms compliance over the full duration.
+3. ARBITER removes the form from the Accord Placement Area to the ARBITER area.
+4. ARBITER notes Portrait entries for all complying parties. *(Values: ARBITER reference only — see §9.9.)*
+
+### 9.8 Dissolution
+
+**Mutual dissolution** — available at Debrief only. All parties countersign a dissolution annotation on the form and present it to ARBITER. ARBITER removes the form to the ARBITER area. No Portrait consequence.
+
+**Unilateral dissolution** — not permitted. A party that ceases to honor terms is in breach (§9.6).
+
+### 9.9 Portrait Scale — Accord Events
+
+*ARBITER reference only. These values are not revealed to players.*
+
+| Event | Parties affected | Portrait entry | Register |
+|-------|-----------------|----------------|---------|
+| Breach confirmed | Breaching party only | −4 | The Record |
+| Per-Quarter compliance (active Accord) | All complying parties | +1 | The Record |
+| Accord completed (full duration, no breach) | All complying parties | +2 | The Record |
+| Mutual dissolution | None | — | — |
+
+### 9.10 Accord Manipulation
+
+Cards and effects may interact with active Accords. The following interaction types define what is mechanically possible; specific card implementations are governed by card text. Additional interaction types may be registered as new card effects are designed.
+
+**Lock** — Prevents voluntary dissolution of the named Accord until a stated condition releases it. All locks are released when the Accord is removed from the Accord Placement Area for any reason (breach, completion, or dissolution).
+
+**Alter** — Changes one or more physically written values on the Accord form (numeric values, faction names, district names, duration conditions). The alteration is made directly on the form. The Accord remains active; affected parties are notified per card text.
+
+**Transfer** — Replaces one named party in the Accord. The outgoing party is struck from the form; the incoming party is written in. All obligations and benefits transfer to the incoming party. The Accord remains active; affected parties are notified per card text.
 
 ---
 
 ## 10. Classified Directives
+
+> ⚠ *Draft Stub — Non-Canonical. This section was written prior to the current design framework and has not been reviewed against signed-off artifacts. Content is placeholder only and should not be treated as established procedure.*
 
 ### 10.1 What a Classified Directive Is
 A classified directive (in-world name: classified directive; mechanical term: hidden objective — see PM03 §1) is a secret objective assigned to each faction at session setup. It describes a condition the faction should achieve by session end, and the VP reward for achieving it.
@@ -182,6 +281,8 @@ At end of session scoring (Artifact 10a), each faction reveals their classified 
 
 ## 11. Message Authentication & Dispute Resolution
 
+> ⚠ *Draft Stub — Non-Canonical. This section was written prior to the current design framework and has not been reviewed against signed-off artifacts. Content is placeholder only and should not be treated as established procedure.*
+
 ### 11.1 Disputed Accord Terms
 If factions dispute what an Accord says, ARBITER produces the original document. ARBITER's reading of the written text is final.
 
@@ -194,6 +295,8 @@ If the order of message receipt or submission is disputed, initiative order from
 ---
 
 ## 12. Special Conditions & Gameplay Impacts
+
+> ⚠ *Draft Stub — Non-Canonical. This section was written prior to the current design framework and has not been reviewed against signed-off artifacts. Content is placeholder only and should not be treated as established procedure.*
 
 ### Chorus Node and Messaging
 *[TBD — are there special messaging rules at the Chorus Node? Recommend: no mechanical special cases for L1. ARBITER observes all messaging regardless of district.]*

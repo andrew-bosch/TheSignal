@@ -38,9 +38,11 @@ S64 complete. S65 opens here.
 
 **S68 accomplishments (session close):** 04-n27 substantially resolved — Art 03 §19 Debrief Actions step added (DebriefActionCard type; SCIFRecord first subtype); §25 Modifier React Card Rules updated to cross-reference §28; §28 React Card Rules added (interrupt model; fires on visible board state change only; first-to-announce pauses play; ARBITER decides tiebreakers). Art 03 v3.3 signed off (L189). 04-n39 substantially closed — IS-xx reinstatement confirmed; Art 03 migration concern closed; C17 "silent" PS language removed; beat timing correction flagged (04-n49). Art 04 SCIF card spec updated: DebriefActionCard (type) / SCIFRecord (subtype). PM05 04-n47 (no-branching design constraint), 04-n48 (card redesign batch: C31/C40/C41/C42/Signals Analysis), 04-n49 (C17 beat timing correction) added. 04-n27 sub-items all resolved or delegated.
 
-**S69 entry point:** 04-n28 (Art 06 Accord design) — unblocked by 04-n27 completion.
+**S69 accomplishments:** 04-n28 substantially complete. Art 06 §5 reworked (Accords-are-public; player-verified compliance; R40a does not apply). Art 06 §9 Accord governance overhauled and signed off (L191): §9.1–§9.10 — Accord form (mad-libs structured contract), terms, formation (Beat 4 submission; Debrief execution window; all Accord blanks as Beat 4 resolution outcomes), compliance monitoring, breach (form → ARBITER area; Portrait −4 breacher only), completion (Portrait +1/Quarter + +2 on completion), dissolution (Debrief only; no Portrait), Portrait scale (L190 — pending playtesting + modeling), manipulation types (Lock/Alter/Transfer). §6/7/8/10/11/12 stub-flagged non-canonical. Art 06 v0.2. C-S3 outstanding issue added (ARBITER record → physical Accord form). Art 04 §11.7 Outcome addition effect type added. Art 04 §11.8 Overture stub: Instant modifier / outcome addition / Beat 4 / delivers blank Accord form / from ARBITER tableau via C09 success / full spec pending §11 redesign. C09 Fund references updated (AccordCard → Overture). L190/L191 locked.
 
-**Priority order:** 04-n28 (Art 06 Accord design) → 04-n49 (C17 beat correction + re-sign-off) → 04-n48 (card redesign batch, gate: 04-n41).
+**S70 entry point:** 04-n49 (C17 beat timing correction + re-sign-off).
+
+**Priority order:** 04-n49 (C17 beat correction + re-sign-off) → 04-n48 (card redesign batch, gate: 04-n41) → 04-n28 remainder (Overture full spec, gates §11 redesign).
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00a/00b/04b re-sign-offs.
 
@@ -154,7 +156,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **04-n25** | CRITICAL — Art 04 §6 schema field gaps: `target_ring`, `pre_loss_calc`, PS-as-cost | Critical — S65 |
 | **04-n26** | HIGH — Component interaction design pass: 12+ components needing lifecycle design before Art 02 registration | High — S65+ |
 | **04-n27** | HIGH (before accord) — Art 03 procedure gaps: 6 holes blocking Issues Resolved on multiple cards | High — S65+ |
-| **04-n28** | HIGH (after 04-n27) — Art 06 Accord design: structure Accords clearly before finalizing dependent cards | High — S65+ |
+| **04-n28** | Art 06 Accord design — §9 signed off (L191). Overture stub in §11.8. Remainder: Overture full spec (gates §11 redesign). | 🟡 Substantially complete — S69 |
 
 → Full list: `V1/PM05___Active_Punch_List.md`
 
@@ -162,9 +164,9 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L191** (S69): Art 06 §9 Accord Documents signed off (v0.2). Governance: Accords public; player-monitored compliance; R40a does not apply. Formation: card-driven only (P08/P10/Overture); all Accord blanks at Beat 4. Breach: form → ARBITER area; Portrait −4 breacher. Completion: Portrait +1/Quarter + +2 final. Manipulation types: Lock/Alter/Transfer. Overture stub in Art 04 §11.8.
+- **L190** (S69): Accord Portrait scale locked — pending playtesting + economy/portrait/PS modeling. Breach: −4 breacher only. Per-Quarter compliance: +1. Completion bonus: +2. Mutual dissolution: no consequence.
 - **L189** (S68): Art 03 v3.3 signed off. §19 Debrief Actions step (DebriefActionCard type). §25 updated to cross-reference §28. §28 React Card Rules added: interrupt model; fires on visible board state change only (00-R06); player announces + presents card + states trigger; ARBITER confirms and pauses; first to announce pauses play; ARBITER decides tiebreakers; one React at a time; second React requires new board state.
-- **L188** (S67): 00-R06a locked (board states committed on resolution; countering requires forward action). 00-R40a locked (factions police own permanent effects; other players may call clearing conditions). R40 relocated §9→§3. Art 04 target_taxonomy field added (§6.1/§6.2). Art 00a: 46 rules, pending re-sign-off.
-- **L187** (S67): 00-R40 locked — ARBITER Cognitive Load. Art 00a + Art 03 §5 + Art 04 §5 updated. Art 00a and Art 03 pending re-sign-off.
 - **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.
 - **L184** (S63): L108 amended — 3NF requirements (6 + 7) added; component.transformable → virtual generated; action.prereq_beat_id dropped.
 - **L183** (S61): C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine.
