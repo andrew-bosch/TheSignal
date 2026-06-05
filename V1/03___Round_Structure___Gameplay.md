@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 3.2  
+**Version:** 3.3  
 
-**Status:** 🔄 Pending Re-sign-off — S67 (L187 — §5 Principle 6 added).  
+**Status:** ✅ Signed Off — S68 (L189).  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -62,6 +62,7 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 25. [Modifier React Card Rules](#25-modifier-react-card-rules)
 26. [Countermeasure Card Rules](#26-countermeasure-card-rules)
 27. [Examples & Exceptions](#27-examples-exceptions)
+28. [React Card Rules](#28-react-card-rules)
 
 ---
 
@@ -1006,6 +1007,19 @@ Announced by ARBITER in Quarter 1 only: *"Resource conversion is available whene
 
 If the Chorus Activity track has reached the Question threshold, any faction with at least Present influence at the Chorus Node may propose a question during Debrief — provided the Chorus Node is not Contested. If the Chorus Node is Contested, the window does not open this Quarter. Simple majority passes it. ARBITER answers in The Observation register. Full rules in Artifact 07 — ARBITER Toolkit.
 
+**Debrief Actions:**
+
+After the Chorus Question window resolves (or immediately at Debrief open if no Chorus window triggers), any faction holding a Debrief Action card in hand resolves it now. In initiative order:
+
+1. The holding Faction Player announces the card name.
+2. The Faction Player executes the card's Debrief instruction.
+3. ARBITER confirms the effect.
+4. The Debrief Action card is removed from the game or returned to the ARBITER pool — physical form TBD.
+
+*If no faction holds a Debrief Action card, this step is skipped.*
+
+---
+
 **Debrief structure:**
 
 ARBITER addresses The Table in three components, in order:
@@ -1221,11 +1235,9 @@ All public acts, modifier cards, and board state cards carry one of four duratio
 
 ## 25. Modifier React Card Rules
 
-1. Modifier react cards are triggered by any board state change.
-2. Any player may trigger a react card at any time a triggering board state change occurs.
-3. React cards resolve immediately. There is no stack — simultaneous reacts are resolved in the order chosen by the reacting player, then any remaining reacts by the next player to act.
-4. If a modifier react card creates a persistent board state (a card placed on the board), the card remains with its duration type per §23.
-5. A modifier react card cannot trigger if nothing on the board has changed.
+Modifier react cards follow the general React Card procedure (§28). The following rule applies specifically to modifier react cards:
+
+1. If a modifier react card creates a persistent board state (a card placed on the board), the card remains with its duration type per §23.
 
 ---
 
@@ -1330,3 +1342,19 @@ The Network uses their Emergency Response to Undermine The Guild's presence at P
 After Emergency Responses resolve, the ARBITER Player counts The Guild's Board Strength: 11 presence chips + 4 structure blocks = 15. Threshold required: 12. Still met.
 
 The ARBITER Player opens the sealed Apex envelope and pauses. ARBITER reads. The session ends.
+
+---
+
+## 28. React Card Rules
+
+React cards fire in response to publicly visible board state changes. They are held in hand until their trigger condition is met.
+
+1. A React card may only fire on a publicly visible board state change (00-R06). It cannot fire on ARBITER-internal state changes such as the Resolution Grid.
+2. When a trigger condition is met: the holding Faction Player announces *"React"*, presents the card, and states the trigger condition listed on the card. ARBITER confirms the trigger is valid and pauses the quarter procedure.
+
+   2a. First to announce pauses play. ARBITER decides tiebreakers. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves.
+
+   2b. A React must be announced at the moment the triggering board state change occurs. It cannot be declared retroactively — once the procedure moves past the trigger point, the window closes.
+
+3. The React card resolves per its stated effect.
+4. Once the React has resolved, the original procedure resumes from the point it paused.

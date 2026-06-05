@@ -3291,7 +3291,7 @@ C16 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost-exclusive active-surveillance card — distinguishes from C18 Dossier Breach by targeting submitted operations, not hand contents. Intel Token cost consumed at submission regardless of outcome: you spend what you know to learn what they're doing. Cost structure (Intel Token + 2 Findings) reflects active operational depth — harder to execute than Gather, rewarded with real-time intelligence rather than historical data. Failure notifies the target; crit fail triggers a silent PS loss (recorded internally by ARBITER only).
+Ghost-exclusive active-surveillance card — distinguishes from C18 Dossier Breach by targeting submitted operations, not hand contents. Intel Token cost consumed at submission regardless of outcome: you spend what you know to learn what they're doing. Cost structure (Intel Token + 2 Findings) reflects active operational depth — harder to execute than Gather, rewarded with real-time intelligence rather than historical data. Failure notifies the target; crit fail triggers a PS loss.
 
 **Design checklist:**
 
@@ -3313,9 +3313,9 @@ Ghost-exclusive active-surveillance card — distinguishes from C18 Dossier Brea
 
 #### Outstanding Issues
 
-- **Art 03 procedure migration:** §11 Beat 3 does not yet include the Intercept delivery steps (IntelDeliverySlip, NotificationSlip, silent PS loss). Migration pending post-S52 Art 03 reorganization. Card design was signed off S49.
-- **Failcrit PS "silent" question:** `failcrit = standing -= 2` is a PS shift — confirm whether ARBITER announces at Beat 3 or records internally only. PS is normally a public track.
-- **Arbiter note:** Crit success: deliver IntelToken (faction=target) to acting faction's case. Success: write target faction's first submitted op type and district on Intel Delivery Slip; deliver to acting faction's case. Fail: deliver Notification Slip to target faction's case. Crit fail: PS −2 — record internally only (per Design Rationale).
+- **Beat timing correction:** C17 fires at beat=3 but reads target faction's submitted ops from the Resolution Grid — ARBITER can only read the grid intact at Beat 2. Fix: change beat=3 to beat=2; update success field read timing accordingly. NotificationSlip on fail does not telegraph to target mid-resolution (dispatch cases not returned until Beat 3 Step 12). Material change — requires re-sign-off. Track under PM05 04-n49.
+- **Art 03 procedure migration:** ✓ S68 — resolved by general Beat 3 procedures (Step 7a covers IS-xx delivery; Step 7b covers NotificationSlip; Step 7b.i covers failcrit). No migration action needed.
+- **Arbiter note:** Crit success: deliver IntelToken (faction=target) to acting faction's case. Success: write target faction's first submitted op type and district on Intel Delivery Slip; deliver to acting faction's case. Fail: deliver Notification Slip to target faction's case. Crit fail: apply PS −2.
 
 #### Status
 
@@ -3718,19 +3718,19 @@ Converts existing faction-keyed Intel into future modifier capability. Spends on
 | Voice fit | ✓ | Faction-specific; single Ghost perspective by design — intelligence as infrastructure for future action | Art 00 §7 |
 | Doctrine alignment | ✓ | Ghost only; IntelToken cost gates use on prior collection; yield scales with target development — balance concern flagged (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — deferred modifier economy is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Add/SCIFRecord — registered 00b §4 (SR-xx); agy task outstanding | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | Information/Add/DebriefActionCard — SCIFRecord is a subtype; register DebriefActionCard (type) + SCIFRecord (subtype, SR-xx) in 00b §4; agy task outstanding | Art 04b §4, §5 |
 | Balance | ✓ | Yield scales with target's structure count per ring; balance assessment deferred until Art 03 procedure locked | Art 02a §6–§7 |
 | Effect duration | ✓ | Immediate: SCIFRecord instantiated at Beat 3; Debrief draw is Art 03 procedure, not a card-level lingering effect — compliant with 00-R21 | — |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 3; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — Automatic resolution; restriction enforces Intel token presence | — |
 | Portrait validity | ✓ | Ghost +1 submitter — intelligence-to-modifier conversion aligns with Ghost doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted operation; no district required | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken cost; SCIFRecord registered 00b §4 (SR-xx) — agy task outstanding | Art 02a §6–§8 |
+| Supported by components | ✓ | IntelToken cost; DebriefActionCard (type) / SCIFRecord (subtype, SR-xx) — registration in 00b §4 outstanding (agy task) | Art 02a §6–§8 |
 | Supported by game procedure | ⚠ | Art 03 Beat 3 instantiation + Debrief draw procedure outstanding — blocks Issues Resolved (04-n27) | Art 03 §9, §11, §19 |
 
 #### Outstanding Issues
 
-- **SCIFRecord component:** Register SR-xx in 00b §4 (agy). Fields: `quarter | draw_ring1 | draw_ring2 | draw_ring3 | draw_faction`. draw_ringN = target's structure block count per ring at Beat 3 (snapshot). draw_faction = upkeep step formula on target's total structure block count (0–1: 0, 2–3: 1, 4–5: 2, 6+: 3).
+- **DebriefActionCard component (type) / SCIFRecord (subtype):** Register DebriefActionCard as the component type in 00b §4 and 02a/02b (agy). SCIFRecord is the first identified subtype. Fields: `quarter | draw_ring1 | draw_ring2 | draw_ring3 | draw_faction`. draw_ringN = target's structure block count per ring at Beat 3 (snapshot). draw_faction = upkeep step formula on target's total structure block count (0–1: 0, 2–3: 1, 4–5: 2, 6+: 3).
 - **⚠ Art 03 procedure — blocks Issues Resolved:** Beat 3 instantiation sequence and Debrief draw procedure (process all SCIF Records in Ghost's case; draw from ring decks + Ghost faction deck per recorded counts; no ring-eligibility check; discard slip after use; discard unused at Phase 21) not yet in Art 03. Track under 04-n27.
 - **Balance — yield scaling:** SCIF yield grows as Guild and Directorate build. Playtest flag — non-blocking.
 
@@ -3747,7 +3747,7 @@ Card(
     tagline = "Turn intelligence into operational assets.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
 
-    layer    = Information,  function = Add,  subject = SCIFRecord,
+    layer    = Information,  function = Add,  subject = DebriefActionCard,  # subtype = SCIFRecord
 
     beat            = 3,
     resolution      = Automatic,
@@ -3766,7 +3766,7 @@ Card(
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 1,
     cost        = IntelToken(faction=faction(target)) * 1,
 
-    success     = SCIFRecord(target=faction(target)),
+    success     = DebriefActionCard(subtype=SCIFRecord, target=faction(target)),
     successcrit = None,
     fail        = None,
     failcrit    = None,

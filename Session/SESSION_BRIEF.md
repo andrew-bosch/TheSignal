@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 68 (active) | Updated: 2026-06-04**
+**Session 69 (active) | Updated: 2026-06-05**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -36,17 +36,13 @@ S64 complete. S65 opens here.
 
 **S68 accomplishments (S68+):** 04-n41 gap assessment complete — L1 scan confirmed no new execution problems beyond C17/C24/C28/C18; Beat 0 = payment validation only; Beat 1 = SitRep only; Beat 2 = first resolution opportunity. C24 Surveillance Placement redesigned v2.0 (Beat 2 episodic model; IntelDeliverySlip delivery; no board marker — R06 prohibits covert markers; op type only, no faction; 04-n42/43/44/45/46 added). DR-xx (DispatchReport) collapsed into IS-xx (IntelDeliverySlip) — IS-xx expanded to cover Beat 2/3, column reads (C18) and row reads (C24). C18 Dossier Breach updated v1.2 (subject=IntelDeliverySlip; delivery at Beat 2 resolution). PM03: 04b marked pending re-sign-off (S64 material addition missed). Art 04 v0.9.32. Session startup memory added (boot must be proactive + include summary).
 
-**S68+ entry point:** 04-n27 (Art 03 procedure gaps) or 04-n39 (C17 IS-xx review). 04-n41 substantially complete.
+**S68 accomplishments (session close):** 04-n27 substantially resolved — Art 03 §19 Debrief Actions step added (DebriefActionCard type; SCIFRecord first subtype); §25 Modifier React Card Rules updated to cross-reference §28; §28 React Card Rules added (interrupt model; fires on visible board state change only; first-to-announce pauses play; ARBITER decides tiebreakers). Art 03 v3.3 signed off (L189). 04-n39 substantially closed — IS-xx reinstatement confirmed; Art 03 migration concern closed; C17 "silent" PS language removed; beat timing correction flagged (04-n49). Art 04 SCIF card spec updated: DebriefActionCard (type) / SCIFRecord (subtype). PM05 04-n47 (no-branching design constraint), 04-n48 (card redesign batch: C31/C40/C41/C42/Signals Analysis), 04-n49 (C17 beat timing correction) added. 04-n27 sub-items all resolved or delegated.
 
-**Priority order:** 04-n27 (Art 03 procedure gaps) → 04-n39 (C17 IS-xx review + re-sign-off) → 04-n28 (Art 06 Accord design).
+**S69 entry point:** 04-n28 (Art 06 Accord design) — unblocked by 04-n27 completion.
 
-**Also pending:** 04-n40 (C28 Network replacement); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00a/00b/03/04b re-sign-offs (targeted edits known).
+**Priority order:** 04-n28 (Art 06 Accord design) → 04-n49 (C17 beat correction + re-sign-off) → 04-n48 (card redesign batch, gate: 04-n41).
 
-**S67+ entry point:** 04-n26 Cluster A complete. Next: 04-n27 (Art 03 procedure gaps) or 04-n28 (Art 06 Accord design).
-
-**Priority order (S67):** 04-n26 (component interaction) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
-
-**Also pending (S67):** Standing Injunction 5 open flags (tracks under 04-n26); agy DB-S63-01/02/03 check-in.
+**Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00a/00b/04b re-sign-offs.
 
 ---
 
@@ -102,7 +98,7 @@ S64 complete. S65 opens here.
 | 00a — Governing Rules & Design Policy | 0.4 | ✅ Signed Off — S61 (L182). 00-R21 (4-type taxonomy), 00-R22 (partial payment), 00-R29b (Author Vacuum), 00-R39 (covert+public). 43 rules. |
 | 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Quarter Structure & Gameplay | 3.1 | ✅ Signed Off — S65 (L185). Beat 0 Retained payment validation; Beat 2 Golden Parachute bribe procedure; Beat 3 partial payment marker source updated. |
+| 03 — Quarter Structure & Gameplay | 3.3 | ✅ Signed Off — S68 (L189). §19 Debrief Actions step (DebriefActionCard type); §25 updated (cross-refs §28); §28 React Card Rules added (interrupt model). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
 | 04 — Action Card System | 0.9.26 | S64: 04-n17 ✅ (Disprove, Intel Extraction, Modifier Raid written); design pass ✓ all cards. **Next: 04-n25 (schema fields, critical) → 04-n26 → 04-n27 → 04-n28.** |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
@@ -166,9 +162,9 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L189** (S68): Art 03 v3.3 signed off. §19 Debrief Actions step (DebriefActionCard type). §25 updated to cross-reference §28. §28 React Card Rules added: interrupt model; fires on visible board state change only (00-R06); player announces + presents card + states trigger; ARBITER confirms and pauses; first to announce pauses play; ARBITER decides tiebreakers; one React at a time; second React requires new board state.
 - **L188** (S67): 00-R06a locked (board states committed on resolution; countering requires forward action). 00-R40a locked (factions police own permanent effects; other players may call clearing conditions). R40 relocated §9→§3. Art 04 target_taxonomy field added (§6.1/§6.2). Art 00a: 46 rules, pending re-sign-off.
 - **L187** (S67): 00-R40 locked — ARBITER Cognitive Load. Art 00a + Art 03 §5 + Art 04 §5 updated. Art 00a and Art 03 pending re-sign-off.
-- **L186** (S66): Art 03 v3.2 signed off. pre_loss_calc procedure block + Art 04 §6.6 removed.
 - **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.
 - **L184** (S63): L108 amended — 3NF requirements (6 + 7) added; component.transformable → virtual generated; action.prereq_beat_id dropped.
 - **L183** (S61): C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine.
@@ -187,8 +183,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **00a v0.4** — ✅ Signed Off S61 (L182)
 - **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
-- **Art 03 v3.0** — ✅ Signed Off S61 (L181).
-- **C17** — ✅ Signed Off S49
+- **Art 03 v3.3** — ✅ Signed Off S68 (L189).
+- **C17** — ✅ Signed Off S49 (v1.0). ⚠ Beat timing correction pending (04-n49) — re-sign-off required.
 
 ---
 
