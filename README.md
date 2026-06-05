@@ -77,7 +77,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.21 | 🔄 C01–C15 ✅; P01–P18 in progress |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.5 | ✅ S48 — design analysis companion to 04 |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.1 | ⬜ Placeholder |
-| 06 | [Dispatch System](V1/06___Messaging_System.md) | 0.1 | ⬜ Placeholder |
+| 06 | [Messaging System](V1/06___Messaging_System.md) | 0.2 | 🟡 In Progress — §9 Accord governance signed off |
 | 07 | [ARBITER Subroutines](V1/07___ARBITER_Toolkit.md) | 0.1 | ⬜ Placeholder |
 | 08 | [Faction Player Subroutines](V1/08___Player_Toolkit.md) | 0.1 | ⬜ Placeholder |
 | 10a | [Victory: Game Exit](V1/10a___Victory_System.md) | 0.1 | ⬜ Placeholder |
