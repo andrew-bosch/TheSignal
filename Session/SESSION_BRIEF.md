@@ -34,11 +34,13 @@ S64 complete. S65 opens here.
 
 **S68 accomplishments (post-compact):** C18 Dossier Breach v1.1 — redesigned to SIGINT tap / DispatchReport model (Beat 2 submission; ARBITER delivers DispatchReport from Beat 0 grid data at beat3_pre_resolution). C28 Open Channel — retired to L2 (cross-beat ARBITER state required; R40 + cognitive efficiency violations; PM05 04-n40). C24 Surveillance Placement — mechanics invalidated; narrative-first rethink required (PM05 04-n41; gate for all covert intelligence card redesign). **Governing Principle — ARBITER Cognitive Efficiency** added to 00a §1 (parent of R40 and R40a — objective, not just rule; design question: "how can this narrative function be implemented while impacting ARBITER as lightly as possible?"). Resolution grid confirmed entirely covert — factions never see it; return deliveries only valid L1 intercept targets. NS-xx defined in 00b §4. IS-xx reinstated with tighter definition (R40 misdiagnosis corrected). DR-xx (DispatchReport) registered in 00b §4. PM05 04-n38–04-n41 added. C17 redesign flagged (PM05 04-n39).
 
-**S68+ entry point:** 04-n41 (04b gap assessment + narrative-first design pass) gates all covert intelligence card work. Then: 04-n27 (Art 03 procedure gaps) or 04-n28 (Art 06 Accord design).
+**S68 accomplishments (S68+):** 04-n41 gap assessment complete — L1 scan confirmed no new execution problems beyond C17/C24/C28/C18; Beat 0 = payment validation only; Beat 1 = SitRep only; Beat 2 = first resolution opportunity. C24 Surveillance Placement redesigned v2.0 (Beat 2 episodic model; IntelDeliverySlip delivery; no board marker — R06 prohibits covert markers; op type only, no faction; 04-n42/43/44/45/46 added). DR-xx (DispatchReport) collapsed into IS-xx (IntelDeliverySlip) — IS-xx expanded to cover Beat 2/3, column reads (C18) and row reads (C24). C18 Dossier Breach updated v1.2 (subject=IntelDeliverySlip; delivery at Beat 2 resolution). PM03: 04b marked pending re-sign-off (S64 material addition missed). Art 04 v0.9.32. Session startup memory added (boot must be proactive + include summary).
 
-**Priority order:** 04-n41 (narrative-first gap assessment) → 04-n27 (Art 03 procedure gaps) → 04-n28 (Art 06 Accord design).
+**S68+ entry point:** 04-n27 (Art 03 procedure gaps) or 04-n39 (C17 IS-xx review). 04-n41 substantially complete.
 
-**Also pending:** 04-n39 (C17 redesign — gates on 04-n41); 04-n40 (C28 Network replacement — gates on 04-n41); C24 redesign (gates on 04-n41); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in.
+**Priority order:** 04-n27 (Art 03 procedure gaps) → 04-n39 (C17 IS-xx review + re-sign-off) → 04-n28 (Art 06 Accord design).
+
+**Also pending:** 04-n40 (C28 Network replacement); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00a/00b/03/04b re-sign-offs (targeted edits known).
 
 **S67+ entry point:** 04-n26 Cluster A complete. Next: 04-n27 (Art 03 procedure gaps) or 04-n28 (Art 06 Accord design).
 

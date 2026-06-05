@@ -3354,7 +3354,9 @@ C17 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-SIGINT tap on a named faction's dispatch channel. Ghost submits at Beat 2 — before dispatch cases are sealed — establishing the tap. When the target submits their case in Phase 3, ARBITER prepares a DispatchReport listing all operations in the target's Beat 3 resolution grid (operation name and declared target only; modifier cards excluded — splayed edge not readable). Report delivered to Ghost before Beat 3 resolution begins. No interaction with the target player. Covert attribution preserved throughout.
+SIGINT tap on a named faction's dispatch channel. Ghost submits at Beat 2 — establishing the tap before Beat 3 fires. At Beat 2 resolution, ARBITER reads the target faction's Beat 3 grid column (all submitted ops for that faction: name and declared target only; modifier cards excluded — splayed edge not readable) and delivers an IntelDeliverySlip to Ghost privately. No interaction with the target player. Covert attribution preserved throughout.
+
+C18 reads a faction column from the Beat 3 grid; C24 reads a district row. Both use IntelDeliverySlip — the content varies by card procedure.
 
 Redesigned S68: original target was the unplayed hand (CardHandContents) — requires physical access to the target player's cards during Beat 3, which breaks covert attribution at the paper table. The SIGINT model removes that constraint: Ghost's tap is in ARBITER's domain (dispatch cases), not the target player's private domain. Information target shifts from planning pool to committed operations — what the faction decided to do, not what they could do. Beat 2 commitment is the risk: 2 Findings spent before Ghost knows what the target will submit.
 
@@ -3362,23 +3364,25 @@ Redesigned S68: original target was the unplayed hand (CardHandContents) — req
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | SIGINT tap on dispatch channel — fills Information/Reveal/DispatchReport gap; distinct from C17 (disrupts one submitted op) and C05 (generates intel tokens); Ghost reads committed operations, not planning pool | Art 00 §7 |
+| Action fit | ✓ | SIGINT tap on dispatch channel — faction column read from Beat 3 grid; distinct from C17 (disrupts one submitted op), C24 (district row read), and C05 (generates intel tokens); Ghost reads committed operations, not planning pool | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Ghost perspective by design — covert channel interception is Ghost-exclusive doctrine | Art 00 §7 |
 | Doctrine alignment | ✓ | Ghost only; Beat 2 commitment is the risk (spends before knowing target's submission); Automatic resolution fits signals intelligence work | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — covert channel access is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Reveal/DispatchReport — subject corrected S68; DispatchReport component registration in 00b §4 and design in 02a pending (Outstanding Issue) | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | Information/Reveal/IntelDeliverySlip — subject updated S68 (DR-xx collapsed into IS-xx) | Art 04b §4, §5 |
 | Balance | ✓ | 2 Findings, Automatic, Beat 2 — information advantage without dice risk; Beat 2 blind commitment is the cost; empty case = resources spent | Art 02a §6–§7 |
-| Effect duration | ✓ | Immediate: DispatchReport delivered once at beat3_pre_resolution; no persistent state | — |
-| Persistence | ✓ | Immediate — card fully resolved at delivery; no lingering game-state marker | Art 04 §6 |
+| Effect duration | ✓ | Immediate: IntelDeliverySlip delivered at Beat 2 resolution; no persistent state | — |
+| Persistence | ✓ | Immediate — card fully resolved at Beat 2; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
 | Portrait validity | ✓ | Ghost +1 submitter — intelligence operation confirms Ghost operational activity | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — operates on dispatch case contents; no district context required | Art 01 §6–§7 |
-| Supported by components | ✓ | DispatchReport as subject and delivery artifact — registration in 00b §4 and design in 02a pending (Outstanding Issue) | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | ARBITER prepares DispatchReport from Beat 3 resolution grid at beat3_pre_resolution; no interaction with target player required | Art 03 §9, §11; Art 07 |
+| Supported by zones | ✓ | target_district = None — operates on Beat 3 grid faction column; no district context required | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelDeliverySlip (IS-xx) — 02a component entry pending (04-n45); 00b definition update pending (04-n46) | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | Beat 2 Automatic; ARBITER reads existing Beat 3 grid faction column — no new tracking required; Art 03 Beat 2 procedure addition pending (04-n44) | Art 03 §9, §11; Art 07 |
 
 #### Outstanding Issues
 
-- **DispatchReport component:** Registration in 00b §4 and design in 02a required before Issues Resolved can be set. Gate: 00b §4 framework. Audit sweep needed: any component in 00b without 02a/02b design is a gap (PM05 04-n38).
+- **Art 03 Beat 2 procedure:** Beat 2 section does not yet cover IntelDeliverySlip delivery for intelligence cards. Procedure addition required before Issues Resolved (04-n44).
+- **02a component entry:** IntelDeliverySlip has no design entry in 02a. Addition required before Issues Resolved (04-n45).
+- **00b IS-xx definition:** IS-xx definition needs updating to cover Beat 2 delivery and faction column reads (04-n46).
 
 #### Status
 
@@ -3390,25 +3394,28 @@ Redesigned S68: original target was the unplayed hand (CardHandContents) — req
 
 \`\`\`python
 C18 = Card(
-    id=18, version="v1.1",
+    id=18, version="v1.2",
     name    = "Dossier Breach",
-    tagline = "Tap a rival's dispatch channel — read their submitted operations before Beat 3 resolves.",
+    tagline = "Tap a rival's dispatch channel — read their submitted operations at Beat 2 resolution.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Ghost,
-    layer   = Information, function = Reveal, subject = DispatchReport,
+    layer   = Information, function = Reveal, subject = IntelDeliverySlip,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
     target_district=None, target_faction=faction(named_opponent), target_object=DispatchCase(faction=faction(target)),
+    target_taxonomy=None,
     affinity=None,
     restriction=None,
     cost        = resource.faction(acting).findings * 2,
-    success     = game.deliver(DispatchReport(faction=faction(target), contents=resolution_grid(month=current, beat=3, faction=faction(target)).operations(fields=[name, target])), to=faction(acting), private=True, timing="beat3_pre_resolution"),
+    success     = game.deliver(IntelDeliverySlip(faction=faction(target), content=resolution_grid(month=current, beat=3, faction=faction(target)).operations(fields=[name, target])), to=faction(acting), private=True),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     narrative   = "Understanding the operation before it begins. That is the only tactical advantage worth having.",
     perspectives = {Ghost: "We did not take their cards. We simply read their intentions. They will act on plans we already know."},
-    design_note  = "Redesigned S68: original target was unplayed hand (CardHandContents) — requires physical access to target player's cards, not executable covertly at paper table. Redesigned to SIGINT tap model: Ghost submits at Beat 2, tapping faction X's dispatch channel. ARBITER prepares DispatchReport from Beat 3 resolution grid (operation name + declared target only; modifier cards excluded — splayed edge not readable). Delivered to Ghost before Beat 3 resolution begins. Beat 2 commitment is the risk. If target passes or submits empty case, Ghost receives empty report — resources spent.",
-    arbiter_note = "Ghost has tapped faction X's dispatch channel this round. Before Beat 3 resolution begins, prepare a DispatchReport listing all operations in faction X's Beat 3 resolution grid: operation name and declared target (district, faction, or object) for each. Modifier cards are not included. Deliver privately to Ghost. Do not notify faction X. Do not announce to the table. If faction X has no operations in the Beat 3 grid, deliver an empty DispatchReport — Ghost's resources are spent.",
+    design_note  = "Redesigned S68: original target was unplayed hand (CardHandContents) — requires physical access to target player's cards, not executable covertly at paper table. Redesigned to SIGINT tap model: Ghost taps faction X's dispatch channel at Beat 2. ARBITER reads faction X's Beat 3 grid column at Beat 2 resolution (name + declared target only; modifier cards excluded). IntelDeliverySlip delivered to Ghost at Beat 2 resolution. Beat 2 commitment is the risk. Empty case = empty slip — resources spent. DR-xx (DispatchReport) collapsed into IS-xx S68 — column read is IntelDeliverySlip with list content.",
+    arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
 )
 \`\`\`
 
@@ -4680,31 +4687,36 @@ C23 = Card(
 [↑ Covert Operations](#directorate-covert-operations)
 
 #### Design Rationale
-Directorate's permanent intelligence infrastructure card — installs monitoring in a district that delivers operation-type notifications to Directorate before Beat 3 resolution for the rest of the game. Distinct from C05 Gather (one-time Intel token) and C17 Intercept (disrupts a single op): Surveillance Placement creates a permanent passive feed from a specific district. Operation type only (not faction) is intentional — it creates an intelligence chain requiring a follow-up Gather to identify the acting faction, rather than delivering full intelligence in one card. Automatic resolution reflects that installation is a procedural infrastructure act.
+Directorate's active surveillance card — dedicates operational resources to watch a named district this month. Resolves at Beat 2: ARBITER checks the Beat 3 resolution grid for submitted ops targeting that district and delivers an IntelDeliverySlip (op type only, no faction) to Directorate before Beat 3 fires. If no ops target the district, nothing is delivered and resources are spent. Distinct from C05 Gather (generates an Intel token about a named faction) and C17 Intercept (targets a named faction's op and disrupts it): C24 watches territory, not actors. Op type only — no faction identity delivered; Directorate learns what is happening in the district, not who is doing it.
+
+Episodic by design: no board marker exists (any covert placement would be public per R06); surveillance cannot persist. Directorate must play the card to surveil. Multiple deck copies flagged for deck design pass (04-n42, 04-n43).
+
+Redesigned S68: original model was permanent passive feed with beat3_pre_resolution delivery — invalidated (R06 prohibits covert board markers; ARBITER holds no log in L1 paper game).
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Permanent intelligence infrastructure — installs passive district monitoring; distinct from C05 (one-time token) and C17 (disrupts single op); creates ongoing information chain | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Directorate perspective by design — monitoring as institutional infrastructure | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; no presence requirement; Mandate×2 for permanent passive feed; delivery timing outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — institutional surveillance infrastructure is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Add/SurveillanceDevice — current spec has subject=IntelToken (taxonomy mismatch outstanding, Outstanding Issue); correct subject is surveillance infrastructure component | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×2, Automatic, permanent — balance assessment deferred until SurveillanceDevice component and delivery timing resolved (Outstanding Issues) | Art 02a §6–§7 |
-| Effect duration | ✓ | Permanent: surveillance infrastructure persists until end of game | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Action fit | ✓ | Active district surveillance — watches territory this month; distinct from C05 (faction-targeted token) and C17 (faction-targeted disruption) | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Directorate perspective — institutional monitoring doctrine | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate only; no presence requirement; Mandate×2 for intelligence without dice risk; Beat 2 blind commitment (resources spent before knowing if ops are in flight) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information / Reveal / CovertOperation — district-scoped; subject = submitted op type(s) in target district | Art 04b §4, §5 |
+| Balance | ✓ | Mandate×2, Automatic, Beat 2 — no dice risk; blind commitment is the cost; empty district = nothing delivered | Art 02a §6–§7 |
+| Effect duration | ✓ | Immediate — IntelDeliverySlip delivered once at Beat 2 resolution; no persistent state | — |
+| Persistence | ✓ | Immediate — card fully resolved at Beat 2; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Directorate +1 submitter — single entry; surveillance installation aligns with institutional monitoring doctrine | Art 04 §6.2 |
+| Portrait validity | ✓ | Directorate +1 submitter — institutional monitoring doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any — no presence requirement | Art 01 §6–§7 |
-| Supported by components | ✓ | SurveillanceDevice component registration outstanding (Outstanding Issue); game.surveillance() function pending Art 02 definition | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; beat3_pre_resolution delivery timing outstanding (Outstanding Issue) | Art 03 §9, §11 |
+| Supported by components | ✓ | IntelDeliverySlip (IS-xx) — 02a component entry pending (04-n45); 00b definition update pending (04-n46) | Art 02a §6–§8 |
+| Supported by game procedure | ✓ | Beat 2 Automatic; ARBITER reads existing Beat 3 grid row — no new tracking required; Art 03 Beat 2 procedure addition pending (04-n44) | Art 03 §11 |
 
 #### Outstanding Issues
 
-- **Surveillance component:** `game.surveillance()` implies a physical or tracked component (a marker or flag on the district). Needs Art 02 registration as `SurveillanceDevice` or similar; `subject = IntelToken` in current spec is a taxonomy mismatch — the card adds surveillance infrastructure, not Intel tokens.
-- **Taxonomy subject mismatch:** `subject = IntelToken` is incorrect — the card's primary effect is surveillance infrastructure. Subject should be a surveillance component type pending Art 02 registration.
-- **`beat3_pre_resolution` delivery timing:** Confirm whether ARBITER reveals the operation type to Directorate before or after the submitting faction resolves. Before resolution changes the information's strategic value significantly.
+- **Art 03 Beat 2 procedure:** Beat 2 section does not yet include district-surveillance IntelDeliverySlip delivery. Procedure addition required before Issues Resolved (04-n44). Gates Art 03 re-sign-off.
+- **02a component entry:** IntelDeliverySlip has no design entry in 02a. Addition required before Issues Resolved (04-n45). Gates 02a re-sign-off.
+- **00b IS-xx definition:** IS-xx definition covers Beat 3 delivery only. Update required to include Beat 2 delivery pattern (04-n46). Gates 00b re-sign-off.
+- **Card name:** "Placement" implies permanent installation — consider rename (e.g., "Surveillance Order," "District Watch") during naming pass.
 
 #### Status
 
@@ -4712,29 +4724,32 @@ Directorate's permanent intelligence infrastructure card — installs monitoring
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*S68 design review: card mechanics invalidated. Covert resolution grid is entirely ARBITER-domain — faction players cannot monitor it; any ARBITER notification mechanism requires cross-beat state tracking, violating Governing Principle — ARBITER Cognitive Efficiency (00a §1) and R40. Requires narrative-first rethink before any mechanics work. Gate: 04-n41.*
+*Redesigned S68 v2.0 — episodic Beat 2 model. Blocking open issues: 04-n44 (Art 03), 04-n45 (02a), 04-n46 (00b).*
 
 ```python
 C24 = Card(
-    id=24,  version="v1.0",
+    id=24, version="v2.0",
     name    = "Surveillance Placement",
-    tagline = "Install permanent monitoring in a target district.",
-    type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
-    layer   = Information,  function = Add,  subject = IntelToken,
-    beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    tagline = "Watch a named district — learn what has been submitted before it resolves.",
+    type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
+    layer   = Information, function = Reveal, subject = CovertOperation,
+    beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
     target_district=district.any, target_faction=None, target_object=None,
+    target_taxonomy=None,
     affinity=None,
     restriction=None,
     cost        = resource.faction(acting).mandate * 2,
-    success     = game.surveillance(district(target), notify=Directorate, content="op_type_only", delivery="beat3_pre_resolution", permanent=True),
+    success     = game.deliver(IntelDeliverySlip(district=district(target), content="op_type_only", source="beat3_grid"), to=faction(acting), private=True),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
     narrative   = "The Directorate monitors because monitoring is their primary tool for managing what they cannot directly control.",
-    perspectives = {Directorate: "The installation is in place. Everything that happens in that district now happens with our awareness."},
-    design_note  = "Permanent per Principle 11. Prior version monitored for 2 rounds — revised. Operation type only, not faction — creates intelligence chain requiring follow-up Gather to identify actors.",
-    arbiter_note = None,
+    perspectives = {Directorate: "We know what moves through that district before it moves. We will respond accordingly."},
+    design_note  = "Redesigned S68 v2.0: original permanent passive feed with beat3_pre_resolution delivery invalidated — R06 prohibits covert board markers; ARBITER holds no log in L1. Episodic model: Directorate watches one district one month. ARBITER reads existing Beat 3 grid row at Beat 2 resolution — no new tracking. Op type only, no faction. Multiple copies in Directorate deck flagged for deck design pass (04-n42).",
+    arbiter_note = "During Beat 2 resolution of this card: check the Beat 3 resolution grid for covert operations targeting district(target). For each operation present, write the operation type on an IntelDeliverySlip and deliver privately to Directorate. Do not include faction identity. If no Beat 3 operations target the district, deliver nothing — Directorate's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
 )
 ```
 
