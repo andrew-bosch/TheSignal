@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-05 (S69)
+**Last Updated:** 2026-06-07 — Session 70
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -673,6 +673,12 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 ---
 
 ## Session History
+
+### Session 70 — 2026-06-07
+- Startup fix: dynamic mtime comparison command added to feedback_agy_context_check.md
+- C17 Intercept v1.1: beat=3 → beat=2; 04-n49 ✅; pending re-sign-off (04-n50)
+- PM05 04-n50–04-n67: set-level card milestone tracking (Standard + 5 factions × design pass / issues resolved / sign-off pass)
+- 04-n48 substantially complete: Signals Analysis (blocked — Art 06.x); C31 v1.1 (Immediate); C40 split (React stub + PA stub); C41 v1.1 split (Capital coercion + Accord Leverage stub); C42 block-bypass deferred
 
 **Session 35 summary (2026-05-25 — complete):**
 - **L144 locked:** Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to child tables. Governs Art 04 and 00b.

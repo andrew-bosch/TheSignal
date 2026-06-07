@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 69 (active) | Updated: 2026-06-05**
+**Session 71 (active) | Updated: 2026-06-07**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -40,9 +40,11 @@ S64 complete. S65 opens here.
 
 **S69 accomplishments:** 04-n28 substantially complete. Art 06 §5 reworked (Accords-are-public; player-verified compliance; R40a does not apply). Art 06 §9 Accord governance overhauled and signed off (L191): §9.1–§9.10 — Accord form (mad-libs structured contract), terms, formation (Beat 4 submission; Debrief execution window; all Accord blanks as Beat 4 resolution outcomes), compliance monitoring, breach (form → ARBITER area; Portrait −4 breacher only), completion (Portrait +1/Quarter + +2 on completion), dissolution (Debrief only; no Portrait), Portrait scale (L190 — pending playtesting + modeling), manipulation types (Lock/Alter/Transfer). §6/7/8/10/11/12 stub-flagged non-canonical. Art 06 v0.2. C-S3 outstanding issue added (ARBITER record → physical Accord form). Art 04 §11.7 Outcome addition effect type added. Art 04 §11.8 Overture stub: Instant modifier / outcome addition / Beat 4 / delivers blank Accord form / from ARBITER tableau via C09 success / full spec pending §11 redesign. C09 Fund references updated (AccordCard → Overture). L190/L191 locked.
 
-**S70 entry point:** 04-n49 (C17 beat timing correction + re-sign-off).
+**S70 accomplishments:** Startup fix — dynamic mtime comparison command added to feedback_agy_context_check.md (prevents hardcoded timestamp false positives). C17 Intercept v1.1: beat=3 → beat=2; checklist/issues/code updated; 04-n49 ✅ closed; pending re-sign-off (04-n50). PM05: 04-n50 through 04-n67 added — set-level card milestone tracking for 6 sets (Standard + 5 factions), each with 3 items: design pass complete / issues resolved / sign-off pass; 04-n50 updated to gate on 04-n54 + 04-n55. 04-n48 substantially complete — all five cards written with outstanding issues: Signals Analysis (BLOCKED — Art 06.x Classified Directive procedure required); C31 Leveraged Acquisition v1.1 (timing=Upkeep removed; Immediate at Beat 3); C40 Weaponized Transparency retired/split → Card A Reputational Strike (React stub) + Card B Forced Disclosure (PA stub); C41 Corporate Blackmail v1.1 split → Card A spec (Capital coercion) + Card B stub (Accord Leverage, deferred); C42 Sanctioned Raid (block-bypass Art 03 rule deferred; issues clarified).
 
-**Priority order:** 04-n49 (C17 beat correction + re-sign-off) → 04-n48 (card redesign batch, gate: 04-n41) → 04-n28 remainder (Overture full spec, gates §11 redesign).
+**S71 entry point:** Andy reviews 04-n48 cards on grip → sign-offs or further direction → 04-n28 remainder (Overture full spec, gates §11 redesign).
+
+**Priority order:** 04-n48 Andy review → 04-n28 remainder (Overture full spec, gates §11 redesign) → 04-n40 (C28 Network replacement).
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00a/00b/04b re-sign-offs.
 
@@ -102,7 +104,7 @@ S64 complete. S65 opens here.
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 3.3 | ✅ Signed Off — S68 (L189). §19 Debrief Actions step (DebriefActionCard type); §25 updated (cross-refs §28); §28 React Card Rules added (interrupt model). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
-| 04 — Action Card System | 0.9.26 | S64: 04-n17 ✅ (Disprove, Intel Extraction, Modifier Raid written); design pass ✓ all cards. **Next: 04-n25 (schema fields, critical) → 04-n26 → 04-n27 → 04-n28.** |
+| 04 — Action Card System | 0.9.32 | S70: C17 v1.1 (beat timing correction; ⚠ re-sign-off pending). C31 v1.1 (Immediate delivery). C40 retired/split (Card A React stub; Card B PA stub). C41 v1.1 split (Card A spec; Card B stub). C42 block-bypass issues clarified. Signals Analysis blocked (Art 06.x). 04-n48 substantially complete. |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -186,7 +188,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **Art 01 v1.9** — ✅ Signed Off S44
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v3.3** — ✅ Signed Off S68 (L189).
-- **C17** — ✅ Signed Off S49 (v1.0). ⚠ Beat timing correction pending (04-n49) — re-sign-off required.
+- **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50).
 
 ---
 
