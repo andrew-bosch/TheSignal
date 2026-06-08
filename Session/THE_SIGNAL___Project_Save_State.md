@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-07 — Session 70
+**Last Updated:** 2026-06-08 — Session 71
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -679,6 +679,17 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - C17 Intercept v1.1: beat=3 → beat=2; 04-n49 ✅; pending re-sign-off (04-n50)
 - PM05 04-n50–04-n67: set-level card milestone tracking (Standard + 5 factions × design pass / issues resolved / sign-off pass)
 - 04-n48 substantially complete: Signals Analysis (blocked — Art 06.x); C31 v1.1 (Immediate); C40 split (React stub + PA stub); C41 v1.1 split (Capital coercion + Accord Leverage stub); C42 block-bypass deferred
+
+### Session 71 — 2026-06-08
+- C31 v1.4: 2:1 cost; restriction=None; boost field added (`boost = True: capital*2`); doctrine_mod added; expanded format; Issues Resolved ✓. affinity=None (tag values invalid per §6).
+- C40A (Reputational Strike) stub moved from Network section to §11.8 (Named Modifier Cards).
+- C41A Corporate Blackmail v2.0: forced transfer → ElectPlayer covert choice; target_district added; restriction = target presence > 0; ARBITER whispers to target at Beat 3; comply (pay resources TBD) or resist (presence tier −1 + PS −1); Syndicate PS −1 always. Art 03 covert ElectPlayer procedure outstanding (04-n72).
+- C41B Accord Leverage v1.0: redesigned as ModifierCard/Instant; Accord draft restriction; forces acceptance of terms as written; Art 06 §9 Lock manipulation type; outstanding issues (party requirement, procedure, Lock interaction).
+- C42 Sanctioned Raid v2.0: block-bypass removed; success = clear all modifier cards at district + remove n presence tokens; threshold = 75−10n (variable); per-token cost TBD; Beat 0 declared count mechanism flagged (04-n71).
+- Art 04 §5: "Data schema validation" added as 14th checklist row (04-n68 ✅). Status table updated: "all 14 rows assessed."
+- Art 04 §6.1/§6.2/§6.3: `boost: BoostExpr | None` first-class schema field added to Logic block. BoostExpr = condition: CostExpr; no Phase B declaration; submitted resources imply n.
+- PM05: 04-n68 ✅; 04-n69/70/71/72 added; 04-34/36 superseded by §6 boost field; 04-n48 status updated; 00a-xx → 00a-72 UNBLOCKED (Art 03 v3.3 cleared gate S68 — missed until S71 review). Full PM05 prioritization review conducted.
+- Art 04 v0.9.33.
 
 **Session 35 summary (2026-05-25 — complete):**
 - **L144 locked:** Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to child tables. Governs Art 04 and 00b.

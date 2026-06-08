@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 71 (active) | Updated: 2026-06-07**
+**Session 72 (active) | Updated: 2026-06-08**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -42,11 +42,13 @@ S64 complete. S65 opens here.
 
 **S70 accomplishments:** Startup fix — dynamic mtime comparison command added to feedback_agy_context_check.md (prevents hardcoded timestamp false positives). C17 Intercept v1.1: beat=3 → beat=2; checklist/issues/code updated; 04-n49 ✅ closed; pending re-sign-off (04-n50). PM05: 04-n50 through 04-n67 added — set-level card milestone tracking for 6 sets (Standard + 5 factions), each with 3 items: design pass complete / issues resolved / sign-off pass; 04-n50 updated to gate on 04-n54 + 04-n55. 04-n48 substantially complete — all five cards written with outstanding issues: Signals Analysis (BLOCKED — Art 06.x Classified Directive procedure required); C31 Leveraged Acquisition v1.1 (timing=Upkeep removed; Immediate at Beat 3); C40 Weaponized Transparency retired/split → Card A Reputational Strike (React stub) + Card B Forced Disclosure (PA stub); C41 Corporate Blackmail v1.1 split → Card A spec (Capital coercion) + Card B stub (Accord Leverage, deferred); C42 Sanctioned Raid (block-bypass Art 03 rule deferred; issues clarified).
 
-**S71 entry point:** Andy reviews 04-n48 cards on grip → sign-offs or further direction → 04-n28 remainder (Overture full spec, gates §11 redesign).
+**S71 accomplishments:** C31 v1.4 — redesigned (2:1 cost, restriction=None, boost field added, Issues Resolved ✓). C40A (Reputational Strike) stub moved to §11.8. C41A Corporate Blackmail v2.0 — ElectPlayer covert choice redesign; target_district added; comply/resist model. C41B Accord Leverage v1.0 — modifier card spec (Instant; Accord draft restriction; Lock manipulation). C42 Sanctioned Raid v2.0 — block-bypass removed; modifier card clearing on success; variable threshold (75−10n); Beat 0 declared count mechanism flagged (04-n71). Art 04 §5: "Data schema validation" added as 14th checklist row (04-n68 ✅). Art 04 §6.1/§6.2/§6.3: `boost: BoostExpr | None` first-class schema field added; 04-34/04-36 superseded. PM05: 04-n69–04-n72 added; 00a-xx → 00a-72 (UNBLOCKED — Art 03 v3.3 cleared gate S68). PM05 full review and prioritization conducted. Signals Analysis still BLOCKED (Art 06.x). C40B and C42 per-token cost open.
 
-**Priority order:** 04-n48 Andy review → 04-n28 remainder (Overture full spec, gates §11 redesign) → 04-n40 (C28 Network replacement).
+**S72 entry point:** 00a-72 re-sign-off (UNBLOCKED, high priority) → 04-n28 Overture full spec → 04-n40 C28 Network replacement.
 
-**Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00a/00b/04b re-sign-offs.
+**Priority order:** 00a-72 re-sign-off → 04-n28 (Overture, gates §11) → 04-n40 (C28 replacement) → C40B narrative → C42 per-token cost resolution.
+
+**Also pending:** 00a-72 re-sign-off (UNBLOCKED ⚠); 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs.
 
 ---
 
@@ -104,7 +106,7 @@ S64 complete. S65 opens here.
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 3.3 | ✅ Signed Off — S68 (L189). §19 Debrief Actions step (DebriefActionCard type); §25 updated (cross-refs §28); §28 React Card Rules added (interrupt model). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
-| 04 — Action Card System | 0.9.32 | S70: C17 v1.1 (beat timing correction; ⚠ re-sign-off pending). C31 v1.1 (Immediate delivery). C40 retired/split (Card A React stub; Card B PA stub). C41 v1.1 split (Card A spec; Card B stub). C42 block-bypass issues clarified. Signals Analysis blocked (Art 06.x). 04-n48 substantially complete. |
+| 04 — Action Card System | 0.9.33 | S71: C31 v1.4 (2:1 cost; boost field; Issues Resolved ✓). C40A stub → §11.8. C41A v2.0 (ElectPlayer covert choice). C41B v1.0 (modifier card; Accord Leverage). C42 v2.0 (block-bypass removed; variable threshold; modifier clearing). §5 14th checklist row (data schema validation). §6 boost field added. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |

@@ -169,7 +169,7 @@ The **Artifact ref** column in each card's checklist should cite the specific se
 |--|-------------|-----------------|------------|
 | Status | | | |
 
-- **Design Pass** ✓ — checklist evaluation complete; all 13 rows assessed
+- **Design Pass** ✓ — checklist evaluation complete; all 14 rows assessed
 - **Issues Resolved** ✓ — all flagged issues addressed; blank if open issues remain
 - **Signed off** ✓ — Andy's explicit approval; record session number (e.g., ✓ S49); blank until signed
 
@@ -190,6 +190,7 @@ A card with no issues from the design pass gets ✓ in both Design Pass and Issu
 | Supported by zones | Does `target_district` reference a valid zone? Is ring context consistent? | Art 01 §6–§7 |
 | Supported by components | Do all referenced components and cost resources exist? | Art 02a §6–§8 |
 | Supported by game procedure | Are all ARBITER and player actions implied by this card covered by Art 03 procedure? Flag any implied action not yet procedurally defined as a gap. | Art 03 |
+| Data schema validation | Are all required fields from §6.1 present in the card spec? Do field values match §6.2 data dictionary types — e.g., `affinity` is `ConditionalExpr \| None` (not a tag); `doctrine_mod` is present and correctly typed; `persistence_condition`/`persistence_effect` are None unless `persistence=Permanent`; all enum values are valid per §6.3? | Art 04 §6.1–§6.3 |
 
 ---
 
@@ -359,6 +360,7 @@ class Card:
     affinity:     ConditionalExpr | None    # evaluated before cost
     restriction:  BoolExpr       | None    # card unplayable if False
     cost:         CostExpr
+    boost:        BoostExpr | None          # optional scaling — condition: per-unit CostExpr; may differ from base cost type
 
     # ── Effects ───────────────────────────────────── mutations  [VS-06]
     success:      MutationExpr | None
@@ -418,6 +420,7 @@ class PortraitEntry:
 | affinity | Logic | ConditionalExpr | Faction-based cost modifier — evaluated before cost expression | Face |
 | restriction | Logic | BoolExpr | Submission preconditions — card unplayable if evaluates False | Face |
 | cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid cost resources are those that can be traded or transferred (Mandate, Capital, Influence, district native resource). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
+| boost | Logic | BoostExpr | Optional variable-multiplier mechanic — player submits additional resources beyond base cost; no declaration required. ARBITER detects at Beat 0: n = (total submitted − base cost) / boost unit cost; success fires (1 + n) times at resolution. Boost unit cost may differ from base cost resource type. None = no boost mechanic. | Face |
 | success | Effects | MutationExpr | Primary effect on resolution success | Face |
 | successcrit | Effects | MutationExpr | Additive delta on critical success (roll < 5); None when Automatic | Face |
 | fail | Effects | MutationExpr | Effect on failure; None = cost spent, no additional effect | Face |
@@ -444,6 +447,13 @@ Ring:                0 (Chorus Node) | 1 (Core) | 2 (The Mid) | 3 (Baryo)
 PentagramRelation:   Neighbor | Opposed
 OutcomeType:         Binary | ElectPlayer | ElectDistrict | ElectFaction | BilateralAgreement | Unilateral
 Persistence:         Immediate | Transient | Seasonal | Permanent
+
+BoostExpr:           condition: CostExpr
+# condition: BoolExpr — when the boost mechanic is available to the acting player
+# CostExpr: per-unit cost for each additional success instance beyond the first
+# No Phase B declaration — player submits resources implying n; ARBITER counts at Beat 0
+# Submitted resources must be an exact multiple of boost unit cost (no partial units)
+# Boost condition False + excess resources submitted: Beat 0 rejects as invalid cost
 ```
 
 ---
@@ -4993,32 +5003,33 @@ RegulatoryFreeze = Card(
 [↑ Covert Operations](#directorate-covert-operations)
 
 #### Design Rationale
-Directorate's maximum-force removal card — removes all of a target faction's presence tokens from a district, ignoring all blocks, countermeasures, and protect operations. The "sanctioned" framing reflects that the Directorate is not acting covertly but institutionally: the Intel token is the authorization document, not a tradecraft requirement. Threshold 25 is the hardest in the Directorate set — making this a high-risk/high-reward play that requires both Intel investment and dice luck. Where C22 Detain removes a deployment marker (permanently, probabilistic), Sanctioned Raid removes all presence tokens (also permanent removal) at a much harder threshold but also bypasses all defenses. Migrated from §8 Intel Economy block.
+Directorate's maximum-force territorial removal card — declared at Phase B with a specific token count (n); cost and difficulty both scale to n. The "sanctioned" framing reflects institutional authorization, not covert tradecraft: the Intel token is the authorization document. Cannot bypass countermeasures — instead, the Raid clears all modifier cards at the district at Beat 3 before removing presence tokens, trading block-bypass for a battlefield-clearing sweep. Where C22 Detain removes a deployment marker (permanently, probabilistic), Sanctioned Raid scales: remove more tokens, pay more, face a harder roll. Migrated from §8 Intel Economy block.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Maximum-force removal — removes ALL target presence tokens from a district, bypassing all defenses; highest-impact Directorate territorial play | Art 00 §7 |
+| Action fit | ✓ | Scaled-force removal — n tokens declared at Phase B; cost and difficulty scale; modifier card clear replaces block-bypass | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Directorate perspective by design — sanctioned institutional action | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; threshold 25 (hardest in set) compensates for block-bypass; PS −1 on success distinguishes institutional weight from suppression; Intel token authorization outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — block-bypass authority is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Remove/PresenceToken — permanent all-token removal; block-bypass scope outstanding (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×2 + IntelToken, threshold 25 — lowest threshold compensates for block-bypass; dominant play risk outstanding (Outstanding Issue) | Art 02a §6–§7 |
-| Effect duration | ✓ | Permanent: all presence tokens removed; faction rebuilds from zero | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Doctrine alignment | ✓ | Directorate only; variable threshold (75−10n) replaces fixed 25; variable cost outstanding; modifier token scope outstanding | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Territory/Remove/PresenceToken — n tokens removed at Beat 3 | Art 04b §4, §5 |
+| Balance | — | Variable cost per token outstanding; threshold 75−10n; crit success Mandate recovery retained; dominant play risk TBD pending playtesting | Art 02a §6–§7 |
+| Effect duration | ✓ | Permanent: n presence tokens removed; modifier cards cleared | — |
+| Persistence | ✓ | Immediate — no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Directorate +1 submitter; PS −1 on success is game effect (not portrait), confirmed per P12 | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.named — all target presence tokens in specific district | Art 01 §6–§7 |
-| Supported by components | ✓ | PresenceToken as target; Mandate + IntelToken costs; NotificationSlip on failcrit; no new components | Art 02a §6, §8; Art 02b §7–§8 |
-| Supported by game procedure | ✓ | Beat 3 d100; block-bypass procedure outstanding (Outstanding Issue); ARBITER removes all tokens | Art 03 §9, §11 |
+| Portrait validity | ✓ | Directorate +1 submitter; PS −1 on success is game effect (not portrait) | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
+| Supported by components | — | PresenceToken as target; Mandate + IntelToken costs; per-token cost component TBD; NotificationSlip on failcrit | Art 02a §6, §8; Art 02b §7–§8 |
+| Supported by game procedure | — | Beat 0 declared count validation required (new procedure); modifier card clearing at Beat 3 — scope and sequence outstanding | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **Block-bypass Art 03 governing rule:** Block-bypass intent is confirmed in `design_note` and `arbiter_note`. Formalizing as a general Art 03 §11 Beat 1 rule (applying to all authorized institutional operations) is deferred — write when a second bypass-capable card establishes the generalizable pattern. `ignore_blocks=True` documents the intent; Issues Resolved cannot be set until the Art 03 rule is written.
-- **Block-bypass scope:** Confirm exhaustive list — does bypass cover C10 Protect (Standard), C11 Fortify Structure (Guild), C21 Invoke Jurisdiction (Directorate) in addition to Type A/B Countermeasures? Resolve when Art 03 governing rule is written.
+- **Beat 0 declared count mechanism:** Player declares n at Phase B. ARBITER validates at Beat 0: faction(target) has ≥ n presence tokens at district; Directorate has paid cost(n). n is locked at submission — not recalculated at Beat 3. Does n cap at current presence count, or can Directorate overshoot and remove whatever's available?
+- **Per-token cost increment:** Base cost is Mandate×2 + IntelToken. Variable cost per token (n × ?) is TBD. Confirm increment before Issues Resolved.
+- **Modifier card clearing scope:** "Remove all modifier cards at district(target_district)" — all factions' modifier cards at the district, or only the target faction's? Sanctioned sweep framing suggests all.
 - **Intel token faction-keying:** Spec has `IntelToken(faction=faction(target))` — confirm faction-keyed to target is correct (vs. any held token).
-- **No PS penalty on success:** Current code has `faction(acting).standing -= 1` on success. Original design note says "no Public Standing penalty." Contradiction — confirm which is locked.
+- **PS penalty on success:** Retained from v1.1. Confirm PS −1 on success is locked.
 
 #### Status
 
@@ -5026,32 +5037,36 @@ Directorate's maximum-force removal card — removes all of a target faction's p
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Migrated from §8 Intel Economy block to Directorate extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
+*v2.0 — S71: block-bypass removed; modifier card clearing added; variable threshold 75−10n; variable cost (per-token increment TBD); declared count mechanism required at Beat 0.*
 
 ```python
 C42 = Card(
-    id=42,  version="v1.1",
+    id=42,  version="v2.0",
     name    = "Sanctioned Raid",
     tagline = "Not every operation leaves a paper trail.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
-    beat=3, resolution=d100, threshold=25, ring_mod={0:-15,1:-10,2:0,3:+10},
-    trigger=None,
-    resolution_type="Probabilistic", outcome_type=None,
-    target_district=district.named, target_faction=faction(named_opponent), target_object=PresenceToken,
-    affinity=Directorate,
-    restriction=None,
-    cost        = resource.faction(acting).mandate * 2 + IntelToken(faction=faction(target)) * 1,
-    success     = [game.remove(faction(target).presence_tokens, district(target), count=all, ignore_blocks=True),
-                   faction(acting).standing -= 1],
+    beat=3, resolution=d100,
+    threshold = 75 - (10 * n),  # n = declared removal count (Phase B); Beat 0 validates
+    ring_mod  = {0:-15, 1:-10, 2:0, 3:+10},
+    trigger   = None,
+    resolution_type = "Probabilistic", outcome_type = None,
+    target_district = district.named, target_faction = faction(named_opponent), target_object = PresenceToken,
+    affinity  = Directorate,
+    restriction = None,
+    # cost: base + per-token increment TBD; n declared at Phase B
+    cost      = resource.faction(acting).mandate * 2 + IntelToken(faction=faction(target)) * 1,  # + (n * TBD)
+    success   = [game.remove_modifier_cards(district(target_district)),   # clear all modifier cards first
+                 game.remove(faction(target).presence_tokens, district(target_district), count=n),
+                 faction(acting).standing -= 1],
     successcrit = resource.faction(acting).mandate += 1,
-    fail=None,
-    failcrit    = game.dispatch(faction(target), NotificationSlip),
-    portrait    = {Directorate: PortraitEntry(submitter=+1)},
-    narrative   = "The Directorate does not ask permission. It records the action and moves on.",
+    fail      = None,
+    failcrit  = game.dispatch(faction(target), NotificationSlip),
+    portrait  = {Directorate: PortraitEntry(submitter=+1)},
+    narrative = "The Directorate does not ask permission. It records the action and moves on.",
     perspectives = {Directorate: "The intelligence warranted the action. The action was authorised. There is nothing further to say."},
-    design_note  = "Ignores Block cards, Type A and Type B Countermeasures, and Protect operations. PS −1 on success: sanctioned but a sweep still carries institutional weight. Mandate×2 balances 'ignore all blocks' + 'remove ALL' scope. Threshold 25: hardest in Directorate set. Intel token faction-keying confirmation outstanding. Migrated from §8 Intel Economy block. See 04-n13: Network should have a modifier card that can auto-trigger off a Directorate sweep.",
-    arbiter_note = "At resolution: bypass all countermeasure and protect checks. Remove ALL named faction's presence tokens from named district. Reduce Directorate PS by 1 (visible). Crit success: also return 1 Mandate to Directorate. Crit fail: deliver NotificationSlip to target — no other effect.",
+    design_note  = "Cannot bypass countermeasures — clears all modifier cards at district before removing presence tokens. Variable n declared at Phase B; threshold = 75−10n (harder to remove more). Per-token cost TBD. Beat 0 declared count validation required. PS −1 on success retained. See 04-n13: Network modifier card auto-triggers off Directorate sweep.",
+    arbiter_note = "Phase B: Directorate declares n (token count). Beat 0: validate faction(target) has ≥ n presence tokens; validate cost paid. Beat 3: on success — remove all modifier cards from district (all factions); remove n presence tokens from faction(target) at district; reduce Directorate PS by 1. Crit success: also return 1 Mandate. Crit fail: deliver NotificationSlip to target.",
 )
 ```
 
@@ -5820,64 +5835,6 @@ C37 = Card(
 
 ---
 
-### Network — REPUTATIONAL STRIKE *(placeholder name)*
-[↑ Covert Operations](#network-covert-operations)
-
-*Successor to C40 Option A. React modifier card stub. Moves to modifier card spec section when Art 04 modifier section is defined (PM05 04-n4).*
-
-#### Design Rationale
-Network deploys gathered intelligence to damage a faction's reputation at the moment a visible trigger fires. The PS reduction is unblockable — once Network activates the information, the reputational damage cannot be countered or retracted. Operates as a React modifier card per Art 03 §28: Network announces and presents the card on the trigger condition; ARBITER confirms and pauses play. Trigger condition TBD.
-
-**Design checklist:**
-
-| Category | Pass | Note | Artifact ref |
-|----------|------|------|--------------|
-| Action fit | — | Intelligence-to-reputation conversion; unblockable PS −1 on visible trigger | Art 00 §7 |
-| Voice fit | — | TBD — single Network perspective minimum | Art 00 §7 |
-| Doctrine alignment | — | TBD | Art 00 §7; Art 04 §6.5 |
-| Card type fit | — | ModifierCard / React — not a CovertOperation; modifier card schema applies (04-n4) | Art 04 §6.2 |
-| Taxonomy fit | — | TBD — modifier card taxonomy differs from action card taxonomy | Art 04b §4, §5 |
-| Balance | — | IntelToken cost; Automatic; PS −1; unblockable — TBD relative to countermeasure rarity | Art 02a §6–§7 |
-| Effect duration | — | Immediate at trigger point | — |
-| Persistence | — | Immediate | Art 04 §6 |
-| Trigger validity | — | **TBD.** Must be publicly observable (00-R26). Candidates: target faction plays a PA at Beat 4; target faction achieves Established+ in any district; target faction places a deployment marker. | Art 03 §28; 00-R26 |
-| Portrait validity | — | TBD — modifier card portrait model | Art 04 §6.2 |
-| Supported by zones | — | TBD | Art 01 §6–§7 |
-| Supported by components | — | IntelToken cost; PublicStanding target | Art 02a §6–§8 |
-| Supported by game procedure | — | Art 03 §28 React rules apply; unblockability governing rule outstanding | Art 03 §28 |
-
-#### Outstanding Issues
-
-- **Trigger condition:** What visible board state change fires this card? Must satisfy 00-R26. Candidates: target faction plays a PA at Beat 4; target faction achieves Established+; other. Define before design pass.
-- **Unblockability formalization:** Unblockable intent carried from C40 Option A. Art 03 governing rule deferred until a second bypass-capable card establishes the generalizable pattern (consistent with C42 deferral). Issues Resolved cannot be set until the rule is written.
-- **Card name:** Placeholder — confirm before sign-off.
-- **Card ID:** TBD — pending PM05 04-n1 numbering pass.
-- **Modifier card schema:** Full spec pending modifier card design pass (04-n4). Current stub uses action card field placeholders.
-
-#### Status
-
-| | Design Pass | Issues Resolved | Signed off |
-|--|-------------|-----------------|------------|
-| Status | | | |
-
-*Stub S70 — successor to C40 Option A. Trigger condition and modifier card schema required before design pass.*
-
-```python
-# STUB — modifier card schema TBD (04-n4)
-Card(
-    id=TBD,  version="v0.1",
-    name    = "Reputational Strike",  # placeholder
-    type    = ModifierCard,  subtype = React,  faction = Network,
-    layer   = Information,  function = Reveal,  subject = PublicStanding,
-    trigger = TBD,  # visible board state change — see Outstanding Issues
-    cost    = IntelToken(any) * 1,
-    success = faction(target).standing -= 1,  # unblockable — governing rule TBD
-    portrait = {Network: PortraitEntry(submitter=+1)},  # TBD — modifier card portrait model
-)
-```
-
----
-
 
 ---
 
@@ -6144,7 +6101,7 @@ Card(
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate's non-presence resource extraction card — Capital buys immediate resource extraction from any district without Syndicate being physically present. Establishes the doctrine that ownership and presence are separate things. Distinguished from Land Title (extended set) by duration: C31 is a per-round transactional play; Land Title creates a permanent revenue claim. Per-round global limit (`game.ops_submitted(C31) <= 1`) prevents Syndicate from stacking multiple district extractions in one round.
+Syndicate's non-presence resource extraction card — Capital buys immediate resource extraction from any district without Syndicate being physically present. Establishes the doctrine that ownership and presence are separate things. Distinguished from Land Title (extended set) by duration: C31 is a per-round transactional play; Land Title creates a permanent revenue claim. Core cost is the action slot itself; the 2:1 Capital:native conversion is a secondary trade rate, not the primary barrier.
 
 **Design checklist:**
 
@@ -6152,10 +6109,10 @@ Syndicate's non-presence resource extraction card — Capital buys immediate res
 |----------|------|------|--------------|
 | Action fit | ✓ | Non-presence resource extraction — Capital buys revenue stream from any district; implements "ownership ≠ presence" doctrine; distinct from Land Title (permanent) | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Syndicate perspective by design | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; Capital×4; per-round global limit prevents stacking; timing-lag risk is intentional (cash-flow mechanic) | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Syndicate only; Capital×2; no per-round limit; core cost = action slot; affinity boost directed (condition TBD — see Outstanding Issues) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — non-presence extraction is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Economy/Add/NativeResource — deferred upkeep delivery accepted | Art 04b §4, §5 |
-| Balance | ✓ | Capital×4 for 1 district native resource at Beat 3 resolution; per-round limit scope outstanding (Outstanding Issue) | Art 02a §6–§7 |
+| Balance | ✓ | Capital×2 for 1 district native resource at Beat 3 resolution; core cost = action slot. No per-round limit. Boost on affinity TBD. | Art 02a §6–§7 |
 | Effect duration | ✓ | Immediate: native resource of target district delivered at Beat 3 resolution. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
@@ -6166,37 +6123,57 @@ Syndicate's non-presence resource extraction card — Capital buys immediate res
 
 #### Outstanding Issues
 
-- **Per-round limit scope:** `game.ops_submitted(C31, round=game.round) <= 1` — confirm this is a table-wide limit (Syndicate cannot play C31 twice from multiple deck copies in one round) vs. a per-player-instance limit.
+- **Schema violations in C41/C42:** Both have `affinity=Syndicate` / `affinity=Directorate` (invalid tag values). Flag for schema pass (04-n70).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
 
-*v1.1 — S70: timing=Upkeep removed; Immediate delivery at Beat 3. Per-round limit scope outstanding.*
+*v1.4 — S71: boost field added (True: capital×2); affinity=None confirmed; Issues Resolved ✓.*
 
 ```python
 C31 = Card(
-    id=31,  version="v1.1",
+    id      = 31,  version = "v1.4",
     name    = "Leveraged Acquisition",
     tagline = "Extract resource income from a district without physical presence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
+
     layer   = Economy,  function = Add,  subject = NativeResource,
-    beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+
+    beat            = 3,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = None,
     persistence     = Immediate,
-    target_district=district.any, target_faction=None, target_object=None,
-    affinity=None,
-    restriction = game.ops_submitted(C31, round=game.round) <= 1,
-    cost        = resource.faction(acting).capital * 4,
+
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = resource.faction(acting).capital * 2,
+    boost       = True: resource.faction(acting).capital * 2,
+    # submit 2 Capital → 1 native; submit 4 Capital → 2 native; submit 6 Capital → 3 native
+    # ARBITER counts n = (submitted − 2) / 2 at Beat 0; success fires (1 + n) times
+
     success     = game.grant(faction(acting), district(target).resource.native * 1),
-    successcrit=None, fail=None, failcrit=None,
-    portrait    = {Syndicate: PortraitEntry(submitter=+1)},
-    narrative   = "The Syndicate does not need to be somewhere to profit from it. Ownership and presence are different things.",
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+
+    portrait = {Syndicate: PortraitEntry(submitter=+1)},
+
+    narrative    = "The Syndicate does not need to be somewhere to profit from it. Ownership and presence are different things.",
     perspectives = {Syndicate: "We own the revenue stream. Whether we are physically present is irrelevant."},
-    design_note  = "Immediate delivery at Beat 3 resolution — no deferred ARBITER tracking required. Per-round limit scope outstanding (see Outstanding Issues).",
-    arbiter_note = "Beat 3: grant Syndicate 1 unit of target district's native resource. Immediate — no tracking between beats.",
+    design_note  = "Immediate delivery at Beat 3 resolution. Core cost = action slot; 2:1 Capital:native is the unit rate. Boost: player submits multiples of 2 Capital; each unit yields 1 additional native. No declaration required.",
+    arbiter_note = "Beat 0: if extra Capital submitted beyond 2, calculate n = (total − 2) / 2; must be whole number or reject. Beat 3: grant Syndicate (1 + n) units of target district's native resource.",
 )
 ```
 
@@ -6782,32 +6759,32 @@ C38 = Card(
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate converts gathered intelligence into immediate Capital extraction. The Intel token is the leverage — submitted covertly, the coercion executes at resolution whether the target is prepared or not. The covert part is the submission and attribution; at Beat 3 ARBITER transfers Capital visibly from target to Syndicate. The flat portrait modifier (−1 Syndicate regardless of outcome) reflects that blackmail is systemically corrosive — even Syndicate pays a doctrinal cost, because operating this way erodes the institutional trust underlying all Capital relationships.
+Syndicate uses covertly gathered intelligence to threaten a faction operating in a named district. ARBITER delivers the blackmail notice privately to the target at Beat 3 — notification is covert, not public. The target faces a binary choice: comply (pay resources and keep their position) or resist (accept consequences). Either way, Syndicate pays a PS cost — operating this way corrodes institutional relationships regardless of outcome. Distinct from C31 Leveraged Acquisition: C31 is transactional extraction (pays Capital, receives native output without interaction); C41 is coercive leverage (threatens loss to extract compliance from a specific target at a specific position).
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Intel-to-Capital conversion — direct resource coercion; systemic self-cost (flat −1) reflects institutional corrosion | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — leverage as doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; IntelToken cost; flat portrait −1 schema outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — intelligence leverage is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Redirect/Capital — covert submission; Capital transfer at Beat 3 resolution | Art 04b §4, §5 |
-| Balance | ✓ | IntelToken cost, Automatic; 2 Capital transfer; covert submission / public execution dynamic outstanding (Outstanding Issue) | Art 02a §6–§7 |
+| Action fit | ✓ | Intel-to-compliance coercion; target choice (pay or suffer) replaces forced transfer; presence restriction grounds the threat in a real position | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Syndicate perspective by design | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only; IntelToken cost; flat portrait −1 self-cost; target_district added (S71) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Economy/Redirect/NativeResource — compliance payment or presence loss at target district | Art 04b §4, §5 |
+| Balance | — | Comply cost (resource amount) TBD; resist consequence (presence tier loss + PS −1) outstanding | Art 02a §6–§7 |
 | Effect duration | ✓ | Immediate at Beat 3 resolution | — |
 | Persistence | ✓ | Immediate — no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None | — |
-| Portrait validity | ✓ | Syndicate flat=−1 regardless of submitter — schema validation outstanding (Outstanding Issue) | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — faction-targeted | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken cost; Capital as transfer target; no new components | Art 02a §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; ARBITER executes Capital transfer at resolution; transfer is publicly visible — confirm acceptable (Outstanding Issue) | Art 03 §9, §11 |
+| Portrait validity | ✓ | Syndicate flat=−1 regardless of outcome — schema validation outstanding | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named — presence restriction is district-specific | Art 01 §6–§7 |
+| Supported by components | — | Comply path: resource transfer (amount TBD). Resist path: presence tier reduction + PS — components confirmed; amount outstanding | Art 02a §6–§8 |
+| Supported by game procedure | — | Beat 3 covert ElectPlayer: ARBITER whispers to target; target elects comply/resist. No existing Art 03 procedure for covert notification + choice at Beat 3. New procedure required before Issues Resolved. | Art 03 §9, §11 |
 
 #### Outstanding Issues
 
-- **Covert submission / public transfer:** Syndicate submits covertly; ARBITER transfers Capital publicly at Beat 3. All players see the transfer occur. Confirm this dynamic is acceptable — other factions will know Syndicate coerced the target even if they don't know the card name until reveal.
-- **Flat portrait modifier:** `portrait = {Syndicate: PortraitEntry(flat=-1)}` — confirm "flat" is a valid portrait field (vs "submitter", "modifier"). Flag for schema pass if not.
-- **Intel token faction-keying:** Any held token is sufficient (not faction-keyed) — confirm consistent with C37 and C39.
-- **Unblockability:** Original C41 claimed unblockable. If retained, same deferral applies as C42: Art 03 governing rule required before Issues Resolved. If removed, card enters standard Beat 1 blocking model.
+- **Comply resource amount:** What does the target pay on compliance? Suggest 2 native of target district (parallel to C31 output rate). Confirm type and amount.
+- **Resist consequence — presence loss:** "Lose influence" interpreted as lose 1 presence tier at target_district. Confirm: tier loss vs. token count loss.
+- **Covert ElectPlayer procedure:** No Art 03 procedure exists for covert notification + player choice at Beat 3. Must be written as generalizable procedure. Issues Resolved blocked until written.
+- **Flat portrait modifier:** `portrait = {Syndicate: PortraitEntry(flat=-1)}` — confirm "flat" is valid schema field. Flag for schema pass if not.
 
 #### Status
 
@@ -6815,29 +6792,40 @@ Syndicate converts gathered intelligence into immediate Capital extraction. The 
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*v1.1 — S70: choose_one split; Card A only. Per-round limit and unblockability outstanding.*
+*v2.0 — S71: full redesign. Forced transfer replaced with coercive choice (ElectPlayer). target_district added. Restriction: target presence > 0 at district. Comply/resist model. Covert notification procedure outstanding.*
 
 ```python
 C41 = Card(
-    id=41,  version="v1.1",
+    id=41,  version="v2.0",
     name    = "Corporate Blackmail",
-    tagline = "Leverage converts intelligence into compliance.",
+    tagline = "Submit covertly. The target decides what compliance costs less.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = Economy,  function = Redirect,  subject = Capital,
+    layer   = Economy,  function = Redirect,  subject = NativeResource,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type="Transactional", outcome_type=ElectPlayer,
     persistence     = Immediate,
-    target_district=None, target_faction=faction(named_opponent), target_object=None,
-    affinity=Syndicate,
-    restriction=None,
-    cost        = IntelToken(any) * 1,
-    success     = game.transfer(faction(target).capital, count=2, to=faction(acting)),
-    successcrit=None, fail=None, failcrit=None,
+    target_district = district.named,
+    target_faction  = faction(named_opponent),
+    target_object   = None,
+    affinity        = Syndicate,
+    restriction     = faction(target).presence(district(target_district)) > 0,
+    cost            = IntelToken(any) * 1,
+
+    # ElectPlayer — ARBITER notifies target privately at Beat 3 resolution
+    # on_comply:  faction(target) pays [X native TBD] to faction(acting)
+    # on_refuse:  faction(target).presence_tier(district(target_district)) -= 1
+    #             faction(target).standing -= 1
+    # always:     faction(acting).standing -= 1  (Syndicate self-cost, flat)
+
+    success     = None,  # governed by ElectPlayer — see arbiter_note
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
     portrait    = {Syndicate: PortraitEntry(flat=-1)},
     narrative   = "The information was gathered properly. What is done with it is simply business.",
-    perspectives = {Syndicate: "We don't call it blackmail. We call it accelerated negotiation."},
-    design_note  = "Covert submission; Capital transfer executes publicly at Beat 3 — all players see the transfer. Unblockability outstanding (see Outstanding Issues). Flat portrait modifier reflects systemic trust cost.",
-    arbiter_note = "Beat 3: transfer 2 Capital from target faction to Syndicate. Announce the transfer. No countermeasure check unless unblockability question is resolved against bypass.",
+    perspectives = {Syndicate: "We don't call it blackmail. We call it an incentive structure with consequences attached."},
+    design_note  = "Covert submission; private notification at Beat 3 (ARBITER whispers to target — not public). Target elects comply or resist. Comply: pay resources (amount TBD). Resist: presence tier −1 at target district + PS −1. Syndicate PS −1 always. Covert ElectPlayer procedure required in Art 03 before Issues Resolved.",
+    arbiter_note = "Beat 3: whisper privately to target faction — inform them of blackmail attempt. Target elects comply or resist (not announced publicly). On comply: transfer [X native TBD] from target to Syndicate. On resist: reduce target's presence tier at named district by 1; reduce target PS by 1. Regardless of outcome: reduce Directorate PS by 1.",
 )
 ```
 
@@ -6846,25 +6834,59 @@ C41 = Card(
 ### Syndicate — ACCORD LEVERAGE *(placeholder name)*
 [↑ Covert Operations](#syndicate-covert-operations)
 
-*Successor to C41 Option B — forced Accord vote. Mechanics deferred to future session.*
-
 #### Design Rationale
-Syndicate converts gathered intelligence into a forced Accord commitment from the target faction. The Intel token establishes the leverage; the compliance fires at the next Debrief Accord window. Design direction TBD — depends on Art 06 §9 "Lock" manipulation type and how a forced Yes vote interacts with Accord formation procedure.
+Syndicate converts gathered intelligence into a forced Accord commitment. The Intel token is the leverage; the effect fires during the Beat 4 Accord formation window. The target cannot negotiate amendments, decline, or counter-propose — they accept the draft as written. Uses Art 06 §9 Lock manipulation type. Distinct from C41 Corporate Blackmail (presence-based coercion in a district): Accord Leverage operates entirely in the Accord formation layer, with no district dependency. The target must be a named party to the Accord draft being locked.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Intelligence leverage applied to Accord formation — forces yes-vote on existing draft terms | Art 00 §7 |
+| Voice fit | — | TBD — single Syndicate perspective minimum | Art 00 §7 |
+| Doctrine alignment | — | Syndicate only; IntelToken cost; Art 06 §9 Lock interaction outstanding | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | ModifierCard / Instant — modifier applied to Accord formation window, not a CovertOperation | Art 04 §6.2 |
+| Taxonomy fit | — | Modifier card taxonomy — excluded from Layer/Function/Subject taxonomy | Art 04b §5.1, §9 |
+| Balance | — | IntelToken × 1; effect = forced acceptance of existing Accord draft; scope and party requirements outstanding | Art 02a §6–§7 |
+| Effect duration | ✓ | Immediate at Beat 4 Accord formation | — |
+| Persistence | ✓ | Immediate — Accord execution follows standard Art 06 §9 procedure once locked | Art 04 §6 |
+| Trigger validity | — | Trigger = named Accord draft exists + not yet executed. Trigger confirmation outstanding. | Art 06 §9 |
+| Portrait validity | — | TBD — modifier card portrait model | Art 04 §6.2 |
+| Supported by zones | ✓ | No district dependency — Accord-layer effect only | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken cost; AccordDraft as target object (registered Art 06 §9) | Art 02a §6–§8 |
+| Supported by game procedure | — | Art 06 §9 Lock manipulation type covers forced acceptance in principle. Interaction between modifier card timing and Beat 4 Accord window not yet written. Procedure required before Issues Resolved. | Art 06 §9; Art 03 §9 |
 
 #### Outstanding Issues
 
-- **Mechanics TBD:** How does a forced Yes vote interact with Art 06 §9? Does "Lock" manipulation type cover this? Does Syndicate force an existing Accord proposal to pass, or force the target to participate in an Accord Syndicate proposes?
-- **Art 06 §9 gate:** Art 06 §9 signed off S69 — unblocked in principle, but interaction with Lock/Alter/Transfer types needs design work.
-- **Card name:** Placeholder.
-- **Card ID:** TBD.
+- **Art 03 procedure — modifier card in Accord window:** No procedure written for Instant modifier cards played during Beat 4 Accord formation. Must be written as generalizable rule before Issues Resolved.
+- **Party requirement:** Must Syndicate be a named party to the target Accord? Expected yes — this is leverage, not arbitration. Confirm.
+- **Scope after forced acceptance:** Can the target exercise any standard Accord rights after forced acceptance (dissolution, breach action), or are they fully bound as written? Clarify.
+- **Lock type interaction:** Art 06 §9 Lock applies to a single manipulation within an existing Accord. Confirm whether "forcing acceptance of a draft Accord" is a Lock (modifying the target's vote) or a new manipulation category.
+- **Card name:** Placeholder — confirm before sign-off.
+- **Card ID:** TBD — pending PM05 04-n1 numbering pass.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ | | |
 
-*Stub S70 — deferred to future session. Art 06 §9 interaction required before design pass.*
+*v1.0 — S71: redesigned as modifier card (Instant). Forced acceptance of Accord draft as written. Replaces deferred "forced Accord vote" stub from S70.*
+
+```python
+# STUB — modifier card schema TBD (04-n4); Art 06 §9 Lock interaction outstanding
+Card(
+    id=TBD,  version="v1.0",
+    name        = "Accord Leverage",  # placeholder
+    type        = ModifierCard,  subtype = Instant,  faction = Syndicate,
+    beat        = 4,  # Accord formation window
+    trigger     = AccordDraft(named).status == Draft,  # draft exists, not yet executed
+    restriction = AccordDraft(named).party(faction(target)) == True,  # target is named party
+    cost        = IntelToken(any) * 1,
+    effect      = AccordDraft(named).lock(faction(target), accept_as_written=True),
+    # Art 06 §9 Lock manipulation type — target cannot negotiate, decline, or counter-propose
+    portrait    = {Syndicate: PortraitEntry(submitter=+1)},  # TBD — modifier card portrait model
+)
+```
 
 ---
 
@@ -7147,6 +7169,56 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 **Dispatch token:** Not required — modifier card.
 
 *Outstanding: full card spec pending modifier card taxonomy design pass. Outcome addition is a new effect category — formalization required in §11 redesign.*
+
+---
+
+#### REPUTATIONAL STRIKE *(placeholder name)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Moved to §11.8 — S71. Successor to C40 Option A (Weaponized Transparency). React modifier card — Network faction.*
+
+**Design Rationale:** Network deploys gathered intelligence to damage a faction's reputation at the moment a visible trigger fires. The PS reduction is unblockable — once Network activates the information, the reputational damage cannot be countered or retracted. Operates as a React modifier card per Art 03 §28: Network announces and presents the card on the trigger condition; ARBITER confirms and pauses play. Trigger condition TBD.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | — | Intelligence-to-reputation conversion; unblockable PS −1 on visible trigger | Art 00 §7 |
+| Voice fit | — | TBD — single Network perspective minimum | Art 00 §7 |
+| Doctrine alignment | — | TBD | Art 00 §7; Art 04 §6.5 |
+| Card type fit | — | ModifierCard / React — not a CovertOperation; modifier card schema applies (04-n4) | Art 04 §6.2 |
+| Taxonomy fit | — | TBD — modifier card taxonomy differs from action card taxonomy | Art 04b §4, §5 |
+| Balance | — | IntelToken cost; Automatic; PS −1; unblockable — TBD relative to countermeasure rarity | Art 02a §6–§7 |
+| Effect duration | — | Immediate at trigger point | — |
+| Persistence | — | Immediate | Art 04 §6 |
+| Trigger validity | — | **TBD.** Must be publicly observable (00-R26). Candidates: target faction plays a PA at Beat 4; target faction achieves Established+ in any district; target faction places a deployment marker. | Art 03 §28; 00-R26 |
+| Portrait validity | — | TBD — modifier card portrait model | Art 04 §6.2 |
+| Supported by zones | — | TBD | Art 01 §6–§7 |
+| Supported by components | — | IntelToken cost; PublicStanding target | Art 02a §6–§8 |
+| Supported by game procedure | — | Art 03 §28 React rules apply; unblockability governing rule outstanding | Art 03 §28 |
+
+**Outstanding Issues:**
+- **Trigger condition:** What visible board state change fires this card? Must satisfy 00-R26. Candidates: target faction plays a PA at Beat 4; target faction achieves Established+; target faction places a deployment marker. Define before design pass.
+- **Unblockability formalization:** Art 03 governing rule deferred until a second bypass-capable card establishes the generalizable pattern. Issues Resolved cannot be set until the rule is written.
+- **Card name:** Placeholder — confirm before sign-off.
+- **Card ID:** TBD — pending PM05 04-n1 numbering pass.
+- **Modifier card schema:** Full spec pending modifier card design pass (04-n4).
+
+**Status:** Stub — design pass, Issues Resolved, sign-off all pending.
+
+```python
+# STUB — modifier card schema TBD (04-n4)
+Card(
+    id=TBD,  version="v0.1",
+    name    = "Reputational Strike",  # placeholder
+    type    = ModifierCard,  subtype = React,  faction = Network,
+    layer   = Information,  function = Reveal,  subject = PublicStanding,
+    trigger = TBD,  # visible board state change — see Outstanding Issues
+    cost    = IntelToken(any) * 1,
+    success = faction(target).standing -= 1,  # unblockable — governing rule TBD
+    portrait = {Network: PortraitEntry(submitter=+1)},  # TBD — modifier card portrait model
+)
+```
 
 ---
 
