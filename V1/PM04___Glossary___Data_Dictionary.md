@@ -10,97 +10,23 @@
 
 ## Purpose
 
-Single source of truth for all terminology and design conventions used across THE SIGNAL design artifacts. Internal reference document for designers — not player-facing. Player-facing glossary lives in Artifact 10.
+Design process conventions for THE SIGNAL artifact set. Internal reference for designers — not player-facing. Player-facing glossary lives in Art 10.
 
-Two sections:
+**Canonical game definitions** (in-world terms, components, physical forms, faction resources, influence levels) have moved to **00a §3.1** (L192). This document no longer duplicates them.
 
-1. **In-World Data Dictionary** — what things ARE in the world: component definitions, institutional terms, temporal conventions, named systems. Each entry carries its narrative grounding.
+One section:
 
-2. **Design Terminology** — conventions governing how design artifacts are written and structured: narrative language table (mechanical → in-world term mapping), voice and typography convention, code block standard, terminology sequencing principle, and cross-artifact reference convention.
+1. **Design Terminology** — conventions governing how design artifacts are written and structured: narrative language table (mechanical → in-world term mapping), voice and typography convention, code block standard, and cross-artifact reference convention.
+
+*Action: Review PM04 §2 for any remaining content that belongs in a design artifact rather than a PM document — see PM05.*
 
 ---
 
 ## §1 — In-World Data Dictionary
 
-Canonical reference for all in-world terms and their mechanical equivalents. Each entry names the source artifact where the term receives its narrative grounding. Terms appear in artifacts only after that grounding is established (L86).
+Canonical definitions for all in-world terms, components, physical forms, faction resources, and influence levels have moved to **00a §3.1**. That section is the source of truth; this document no longer duplicates them.
 
-### Temporal Conventions
-
-| In-World Term | Mechanical Equivalent | Narrative Grounding | Defined In |
-|---------------|----------------------|---------------------|------------|
-| Quarter | One round of play | Approximately three months of real-world time in New Meridian. Eight quarters (~two years) constitute the full session scope. The factions at The Table are operating on a human timeline. Humanity has been receiving the Chorus for thirty-one years. Both facts are present in every quarter's deliberation. | 00a §1, Artifact 03 §1 |
-| Month | One of three action phases within a Quarter | Each Quarter comprises three Months. Month 1 and Month 2 are covert operational months; Month 3 is the political month. The three-month calendar framing is not decorative — it mirrors how organizations actually operate: two months of groundwork before a public commitment. **Provisional** — evaluate after use. | Artifact 03 §4, L150 |
-
-### Component & System Terms
-
-| In-World Term | Mechanical Equivalent | Narrative Grounding | Defined In |
-|---------------|----------------------|---------------------|------------|
-| The Overview | Game mat / full shared display | The Table's shared situational interface. Negotiated data governance. ARBITER administers accuracy, not content. | Artifact 00 §8 |
-| New Meridian | Game board / district map (within The Overview) | Boom city assembled from a listening station in 31 years. 800,000 people from everywhere. | Artifact 01 §1 |
-| District | Board space / hex | A named geographic zone within New Meridian. | Artifact 01 §1 |
-| Presence chip | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. Dominant is an atmosphere, not a count. | Artifact 02a §6 |
-| Operational marker | Claim marker | Temporary deployment presence; counts as a presence chip during the Quarter. | Artifact 01 §1 |
-| Assets | A faction's active board presence and declared actions — includes influence (presence chips and deployment markers), structure blocks, and any covert operations or political acts declared during the current Quarter. | Everything the faction is doing, passive or active. Established weight in the district, physical infrastructure, and open and covert commitments combined. | PM04 §1 (C10 Protect, Art 04 §7) |
-| The Backlog | Shared Dispatch Token pool on the table | The queue of authorized but uncommitted operational work. All Dispatch Tokens live here when not in faction possession. Distinct from the Reservoir (faction resources). Tokens drawn from The Backlog at Upkeep represent a faction's active operational capacity for the Quarter; spent tokens return to The Backlog at Quarter close. | Artifact 00 §14, Artifact 02a §8a |
-| Dispatch case | Recipe box | Protocol for covert submission. | Artifact 06 §1 |
-| Reservoir | Resource bank | Capitalized. The supply of available faction resources. *"The Reservoir does not judge what is drawn from it."* | PM02 L93 |
-| Public Standing track | Popularity track | 0–20 point scale. Bell curve enforced by natural drift (above 13 = −1/quarter, below 7 = +1/quarter). | Artifact 02b §1 |
-| Chorus Portrait | Portrait score | ARBITER's private assessment of faction alignment with the Chorus Question. Determines initiative and feeds the Chronicle. | Artifact 02b §1 |
-| Intel Token | Proof token / Intel note / Intelligence token | Physical token representing confirmed intelligence one faction holds about another. Held privately; disclosed at faction's discretion. | Artifact 02b §8 |
-| Covert operation | Private action | Actions submitted face-down to the dispatch case. | Artifact 04 §1 |
-| Political act | Public action | Actions declared openly at the table. | Artifact 04 §1 |
-| Floor Act | Always-available political act | One native resource, outside the deck, minimal effect. Working name — in-world name pending D04-13. | PM02 D04-13 |
-| Classified directive | Hidden objective | Per-faction sealed mission carried by operatives. | Artifact 05 §1 |
-| Situation report | World event card | Two-card system: public narrative + ARBITER effect card. | Artifact 01 §1 |
-| Countermeasure card | Counter card | Reactive card type. | Artifact 04 §14.2 |
-| Field operative dossier | Operative card | Named operative with tier, cooldown, and classified directive capacity. | Artifact 05 §1 |
-
-### Component Physical Glossary
-
-Maps each canonical in-game term to its physical/real-world description. Authoritative reference for production spec (Art 09, PM01 WBS 2).
-
-| In-Game Term | Physical Form | Notes |
-|--------------|---------------|-------|
-| Presence chip | Small coloured disc or poker chip | One colour per faction; ARBITER uses white |
-| Deployment marker | Double-sided cardboard chit | Face-up = active; face-down = converting |
-| Operational marker | Double-sided cardboard chit | Distinct from deployment marker — confirm at Art 01 production pass |
-| Structure block | Wooden cube | One colour per faction |
-| Intel Token | Small token or chit | Held privately by receiving faction; disclosed at faction's discretion — not folded or sealed |
-| Dispatch case | Sealed envelope or small box | Per-faction covert submission vessel |
-| Situation Report | Two-card set (narrative card + ARBITER effect card) | Held by ARBITER; not player-drawn |
-| Operation Resolution card | Large card or laminated sheet | One per resolution instance; held by ARBITER |
-| Status marker | Small token or disc | Used for Tension, Established flags, etc. |
-| Initiative strip | Laminated strip or card | Tracks faction initiative order per Quarter |
-| [Faction] resource token | Small wooden disc or cube; faction-coloured | Five types: Findings, Exposure, Capital, Capacity, Mandate |
-| Dispatch Token | Small token or printed chit | 16 total (Ghost: 4; all other factions: 3 each). Held beside faction tableau when unspent. Lives in The Backlog when not in faction possession. Color TBD — Artifact 11. |
-| Modifier card | Standard card, faction-neutral back | Value rating on face (1–3) |
-| Countermeasure card | Standard card, faction-back | Held in hand; reactive |
-| Pass card | Standard card, faction-back | Four variants (PS-01–PS-04); reusable |
-
-*Expand as new components are defined. Production quantities: PM01 WBS 2. Locked as PM04-04 standard.*
-
----
-
-### Faction Resources
-
-Each resource is a unit of faction-specific human power — not a generic currency.
-
-| Faction | Resource Name | Theory of Power |
-|---------|---------------|-----------------|
-| Ghost | Findings | The power of knowing |
-| Network | Exposure | The power of being seen |
-| Syndicate | Capital | The power of economic control |
-| Guild | Capacity | The power of building and doing |
-| Directorate | Mandate | The power of institutional legitimacy |
-
-### Influence Levels
-
-| Level | Threshold | Condition |
-|-------|-----------|-----------|
-| Dominant | 3+ tokens, strictly more than all others | Absolute floor + rank — L10 |
-| Established | 2+ tokens AND second place by count | Rank-based with absolute floor — L11 |
-| Present | 1+ tokens, not Established or Dominant | Presence without standing |
-| Contested | A condition, not a level | Applies when no faction holds Dominant status in a district — L12 |
+Terms appear in artifacts only after narrative grounding is established in artifact reading order (L86). See 00a §3 "Information Design — Terminology Sequencing" for the full principle.
 
 ---
 
@@ -129,7 +55,7 @@ All documentation uses in-world narrative terms. Each mechanical term is defined
 | Operative card | Field operative dossier | 05 §1 |
 | World event card | Situation report | 01 §1 |
 
-| Round (game term) | Quarter (three months of real-world time) | PM04 §1, 03 §1 |
+| Round (game term) | Quarter (three months of real-world time) | 00a §3.1 |
 
 *ARBITER and The Table are never renamed — they are already in-world terms.*
 
@@ -190,13 +116,7 @@ Two distinct document types carry structured data in the artifact suite. Correct
 
 ### Information Design Principle — Terminology Sequencing
 
-No term, in-world concept, or named component may appear in an artifact without its narrative grounding having been established first — in a prior artifact or earlier in the same artifact. A reader moving through the artifact set in order should never encounter a term before the world has given it meaning. The mechanics that use a term are downstream of the fiction that defines it.
-
-This applies to: in-world component names, faction concepts, institutional terms, temporal conventions, and named game elements. Violations are not copy problems — they indicate missing narrative foundation.
-
-*Example: "quarter" as the deliberation period must be established in Artifact 00 before it appears in 00a or Artifact 03. The Narrative Language table above is the audit instrument — if a term appears there, verify its narrative grounding in Artifact 00 precedes its first mechanical use.*
-
-*Locked as L86 in PM02.*
+See **00a §3 — Information Design — Terminology Sequencing** for the canonical statement of this principle. Locked as L86 in PM02.
 
 ---
 

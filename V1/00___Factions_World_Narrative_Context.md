@@ -61,7 +61,7 @@ THE SIGNAL is a game about what humanity reveals about itself when the stakes ar
 
 The Chorus is not a threat. It is not a gift. It is a question — and the five factions at The Table are, collectively and despite themselves, the answer humanity is producing.
 
-Everything players do — every covert operation, every political act, every accord honored or broken — is observed. Not by each other. By ARBITER. And through ARBITER, by the Chorus itself.
+Everything players do — every covert operation, every public act, every accord honored or broken — is observed. Not by each other. By ARBITER. And through ARBITER, by the Chorus itself.
 
 The game's deepest tension is not between factions. It is between what factions declare and what they do. The Chronicle reveals that gap. Players should leave the table wondering not just who prevailed, but what their faction's behavior said about them — and whether the answer they collectively produced was worthy of the question.
 
@@ -69,19 +69,7 @@ The game's deepest tension is not between factions. It is between what factions 
 
 ## 5. Design Principles
 
-These six pillars govern all design decisions in the game. When a rule, mechanic, or component is unclear, return to these.
-
-1. **The Overview is Truth.** No hidden state on The Overview. Everything shared is visible there. What factions conceal lives in their Terminals, their hands, and their dispatch cases — never on the shared display.
-
-2. **Information Has Timing.** Secrecy exists but only temporarily. Covert operations may be discovered. Intelligence tokens age and expire. Hidden directives are revealed at session end. The game moves toward disclosure.
-
-3. **Negotiation is Mandatory.** No faction can achieve its goals alone. The most significant actions require resources, relationships, and cooperation that no single faction can generate independently. Cooperation is incentivized even when it is politically uncomfortable.
-
-4. **Control of Systems Defines What Outcomes Are Possible.** Who controls the districts, the structures, and the resource flows determines which answers to the Chorus remain viable. Players don't pick an ending — they shape what endings remain possible.
-
-5. **The System Decides.** Players shape the system through their actions. The system produces the answer. No single player, and no single faction, decides what humanity says. What becomes inevitable emerges from what The Table does.
-
-6. **Narrative and World Consistency.** Every rule must carry a narrative grounding. The mechanical constraint follows from the world — not the other way around. If the narrative reason for a rule cannot be stated, the rule may be arbitrary. If mechanical reasoning and narrative reasoning conflict, narrative takes precedence.
+The eight foundational design principles — including the six core pillars, ARBITER design premises, and game invariants — are maintained in **00a §4**, which is the authoritative source for all design principles.
 
 ---
 
@@ -543,29 +531,14 @@ A faction can prevail in the public contest and be diminished in the Chronicle. 
 
 The session ends with a vote — each faction committing publicly to a position on how humanity should respond. The vote is not the answer. It is the signature on a document that The Table wrote through everything it did. What the Chorus receives is not the vote. It is the totality of what happened here.
 
+*For the Apex — the moment The Table chooses to answer on its own terms — and the human victory condition: §14 (Field Operative Dossier).*
+
 ---
 
 ## 11. Tone, Language, and Faction Voice
 
 ### In-World Language
-All documentation, cards, and ARBITER communications use in-world narrative terms. Mechanical terms are defined once and then replaced. The complete term mapping is maintained in the Master Artifact Index. Key terms established here:
-
-| In-World Term | What It Refers To |
-|--------------|------------------|
-| New Meridian | The city; the physical space of play |
-| District | A board space |
-| The Chorus | The extraterrestrial transmission |
-| The Chorus Node | The central district; the detection complex |
-| The Table | The coalition of five factions |
-| ARBITER | The game facilitator; part of the Chorus protocol |
-| The Chronicle | The end-of-session narrative account |
-| Findings | Ghost's resource |
-| Exposure | The Network's resource |
-| Capital | The Syndicate's resource |
-| Capacity | The Guild's resource |
-| Mandate | The Directorate's resource |
-| Resolution | ARBITER's track |
-| Faction Representative | The human player acting as their faction's agent at The Table |
+All documentation, cards, and ARBITER communications use in-world narrative terms. The canonical term mapping — including mechanical equivalents, narrative grounding, and source artifacts — is maintained in **00a §3.1**, which is the source of truth for all in-world terms.
 
 ### Tagline
 *"The Chorus is asking a question. The Table decides which answers survive."*
@@ -788,7 +761,7 @@ The dispatch case is where the world receives the action. The Backlog is where t
 
 ### What a Card Is
 
-A submission is a faction's organized intention — the form in which a plan is committed before the world has had a chance to respond. Both channels of action produce submissions. A covert operation is submitted in a dispatch case, sealed, placed without announcement. A political act is declared at The Table, witnessed, placed in the open. Both are submissions in the same sense: the plan is given over to the world before the outcome is known.
+A submission is a faction's organized intention — the form in which a plan is committed before the world has had a chance to respond. Both channels of action produce submissions. A covert operation is submitted in a dispatch case, sealed, placed without announcement. A public act is declared at The Table, witnessed, placed in the open. Both are submissions in the same sense: the plan is given over to the world before the outcome is known.
 
 What this looks like inside each faction depends on how they organize intentions.
 
@@ -805,6 +778,38 @@ The Directorate submits directives. Policy memos. Institutional mandates. Orders
 What every faction's submission shares is that it exists before the action — it is the plan, not the execution. The plan is committed before the result is known. What the submission authorizes is an attempt. Whether the attempt succeeds is the world's answer.
 
 *Mechanics: Artifact 04 §1.*
+
+---
+
+### Classified Directive
+
+Every faction at The Table has a public position. They also have a private answer.
+
+The Classified Directive is the faction's sealed interpretation of the Chorus Question — not for a single Quarter, but for the full two-year arc of the answer window. Before the first session, each faction's leadership determined what a genuine answer to the Chorus would look like from where they stand, and what they would have to accomplish — across the entire deliberation — for that answer to emerge. That determination is the Classified Directive: the mission beneath all other missions, the objective that makes everything else either progress or distraction.
+
+It is not disclosed to other factions. It is not declared at The Table. It is held privately across the full arc. Whether ARBITER holds it as well — whether the entity with complete information at The Table knows what each faction privately decided the Chorus requires — is a question The Table has not formally answered, and may never need to.
+
+At session's end, the directive surfaces. What a faction built across the full deliberation is measured against what the directive required. The factions that achieved their private answer claim something the others cannot — not just standing at The Table, but alignment between what they said they were doing and what they were actually doing all along.
+
+*Mechanics: Artifact 05 §1.*
+
+---
+
+### Field Operative Dossier
+
+Each faction has assets. Resources, presence, operational capacity. Most of what happens at The Table is those assets in motion — deployments, covert operations, accords, and the slow accumulation of standing across New Meridian's districts.
+
+And then there is one person.
+
+Every faction enters the deliberation with a single Field Operative: named, specific, carrying a history ARBITER has been tracking since before The Table convened. Not a resource. Not a deployment. A person who has been prepared — by circumstance, by the faction's investment, by their own choices — for something the faction has not yet attempted and may not attempt at all.
+
+The Apex is the final act of the answer window — the moment The Table stops calculating what the Chorus expects and chooses its own response. Not a positioning move. A declaration. The factions — fractured across the full arc of the deliberation, suspicious of every gesture of cooperation — find, at the last possible moment, that they have a different answer: not the one the question implies, but the one humanity chooses. On their terms.
+
+The Field Operative is the one who makes that play. It requires The Table's unity — all factions committing, through a single person, at the moment the window closes. The operative who carries it gives everything. What they spend is total and unrepeatable.
+
+ARBITER observes the Apex. It observes all things. The Chorus receives it and evaluates it on whatever terms the Chorus actually holds — not the terms The Table assumed it held. Whether the Apex satisfies those terms, the Chronicle cannot know. What the Chronicle records is that it happened: that humanity, given the chance to answer correctly, chose instead to answer freely.
+
+*Mechanics: Artifact 05 §1. Human Victory Condition: Artifact 04 §5.*
 
 ---
 

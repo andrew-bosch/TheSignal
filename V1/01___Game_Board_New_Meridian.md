@@ -447,6 +447,32 @@ Feeds DB table: `district_adjacency`.
 
 ---
 
+### Component Physical Forms
+
+Maps each canonical in-game term to its physical/real-world description. Production quantities: PM01 WBS 2.
+
+| In-Game Term | Physical Form | Notes |
+|--------------|---------------|-------|
+| Presence chip | Small coloured disc or poker chip | One colour per faction; ARBITER uses white |
+| Deployment marker | Double-sided cardboard chit | Face-up = active; face-down = converting |
+| Operational marker | Double-sided cardboard chit | Distinct from deployment marker |
+| Structure block | Wooden cube | One colour per faction |
+| Intel Token | Small token or chit | Held privately by receiving faction; disclosed at faction's discretion — not folded or sealed |
+| Dispatch case | Sealed envelope or small box | Per-faction covert submission vessel |
+| Situation Report | Two-card set (narrative card + ARBITER effect card) | Held by ARBITER; not player-drawn |
+| Operation Resolution card | Large card or laminated sheet | One per resolution instance; held by ARBITER |
+| Status marker | Small token or disc | Used for Tension, Established flags, etc. |
+| Initiative strip | Laminated strip or card | Tracks faction initiative order per Quarter |
+| [Faction] resource token | Small wooden disc or cube; faction-coloured | Five types: Findings, Exposure, Capital, Capacity, Mandate |
+| Dispatch Token | Small token or printed chit | Held beside faction tableau when unspent. Lives in The Backlog when not in faction possession. Faction allocation and total count: Art 02a §8a. Color TBD — Art 11. |
+| Modifier card | Standard card, faction-neutral back | Value rating on face — range: Art 04 §11. |
+| Countermeasure card | Standard card, faction-back | Held in hand; reactive |
+| Pass card | Standard card, faction-back | Four variants (PS-01–PS-04); reusable |
+
+*Expand as new components are defined. Locked as PM04-04 standard.*
+
+---
+
 ## 7. Rules & Constraints
 
 ### Board Shape and Orientation

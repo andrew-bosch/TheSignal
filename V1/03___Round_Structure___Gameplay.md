@@ -76,15 +76,13 @@ Eight Quarters constitute a session. The session ends either at the completion o
 
 ## 4. Narrative Function
 
-Each Quarter represents approximately **one quarter** — three months of real-world time — in New Meridian. Eight Quarters constitute roughly two years of operations from The Table's formation to the final vote.
+The temporal grounding of the Quarter — its real-world equivalence and its relationship to the Chorus timeline — is defined in 00a §3.1. Each Quarter carries weight proportional to what it follows; The Table is not working on a human schedule. That weight is expressed in what each Quarter action means at scale:
 
-This framing gives the game's events appropriate weight:
 - A structure block is not a completed building but an established operational presence — a secured facility, a contracted team, a functioning node. Three months is enough time to establish a foothold; not enough to build a headquarters.
 - Influence growth represents sustained organizational investment over a quarter — relationships cultivated, presence consolidated, community engagement maintained.
 - A Situation Report represents a significant event at the city or global scale — something meaningful enough to shape a quarter of operations, not a daily news cycle.
 - A faction operating in The Mid or Core without a foothold in the adjacent inward ring is working without local networks, cover, or intelligence — the infrastructure of operational presence. That exposure doesn't block an attempt. It makes it harder.
 - A fresh Intel Token targeting the opposing faction adds +2 to Battlefield Strength. Intelligence on your opponent — their movements, their assets, their exposed positions — is not merely informational. At the moment of contested ground, it is force.
-- Humanity has been receiving the Chorus for thirty-one years — approximately 124 quarters. The Table's two-year deliberation may be, from the Chorus's perspective, a remarkably compressed response time. Whether the Chorus considers the transmission complete is a question treated fully in Artifact 00. What is relevant to the Quarter structure: each quarter carries weight proportional to what it follows. The Table is not working on a human schedule.
 
 The Quarter's three active Months each carry both covert and public operations. The covert work of Month 1 and Month 2 shapes what public acts are viable by Month 3 — but all three months offer both modes of play. Factions choose how to allocate their Dispatch Tokens each month: operations sealed in a case, or acts declared openly on the board. The sequence is not arbitrary; it is how organizations actually work under pressure.
 

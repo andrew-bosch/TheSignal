@@ -1,40 +1,52 @@
-## CLOSE QUEUE — Session 71
+## CLOSE QUEUE — Session 73
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM02___Decision_Log___Validation_Tracker.md
+OLD: | L192 | S73 | Canonical game definitions migrated from PM04 to 00a §3.1. 00a §3.1 is now the source of truth for all in-world terms, component definitions, physical forms, faction resources, and influence levels. PM04 §1 is a pointer only. PM04 §2 retains design process conventions (voice, typography, code block standard). Rationale: design artifacts, not PM documents, are the source of truth for game information. All downstream "Defined In" references updated. PM04 review queued (PM05). |
+NEW: | L193 | S73 | Art 00a v0.6 signed off. §4 Foundational Design Pillars: 8 numbered pillars (4.1–4.8) with lettered corollaries; Core Design Pillars (4.1–4.6b), ARBITER Design Principles (4.7–4.7b), Guaranteed Effects (4.8–4.8d). Art 00 §5 design principles (6 pillars) migrated to 00a 4.1–4.6; Art 00 §5 vacated with pointer. Rule numbering changed to section-prefixed n.n format across §5–§10. §5–§10 headers include "Rules." §8 Footprint Rules; §3.1 Footprint definition added. §9 upkeep income distinction; 9.1b (card/action resources not income). §10 Reveal effect defined (stake not compulsion); intel limits and expiry. 31 rules. |
+| L192 | S73 | Canonical game definitions migrated from PM04 to 00a §3.1. 00a §3.1 is now the source of truth for all in-world terms, component definitions, physical forms, faction resources, and influence levels. PM04 §1 is a pointer only. PM04 §2 retains design process conventions (voice, typography, code block standard). Rationale: design artifacts, not PM documents, are the source of truth for game information. All downstream "Defined In" references updated. PM04 review queued (PM05). |
+
+### BASH
+sed -i 's/| 0\.4 | 🔄 Pending Re-sign-off — S67\/S68 (L187, L188) /| 0.6 | ✅ Signed Off — S73 (L193) /' /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+
+### EDIT
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: **Last Updated:** 2026-06-07 — Session 70
-NEW: **Last Updated:** 2026-06-08 — Session 71
+OLD: **Last Updated:** 2026-06-08 — Session 71
+NEW: **Last Updated:** 2026-06-09 — Session 73
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: - PM05 04-n50–04-n67: set-level card milestone tracking (Standard + 5 factions × design pass / issues resolved / sign-off pass)
-- 04-n48 substantially complete: Signals Analysis (blocked — Art 06.x); C31 v1.1 (Immediate); C40 split (React stub + PA stub); C41 v1.1 split (Capital coercion + Accord Leverage stub); C42 block-bypass deferred
+AFTER: ### Session 71 — 2026-06-08
 CONTENT:
 
-### Session 71 — 2026-06-08
-- C31 v1.4: 2:1 cost; restriction=None; boost field added (`boost = True: capital*2`); doctrine_mod added; expanded format; Issues Resolved ✓. affinity=None (tag values invalid per §6).
-- C40A (Reputational Strike) stub moved from Network section to §11.8 (Named Modifier Cards).
-- C41A Corporate Blackmail v2.0: forced transfer → ElectPlayer covert choice; target_district added; restriction = target presence > 0; ARBITER whispers to target at Beat 3; comply (pay resources TBD) or resist (presence tier −1 + PS −1); Syndicate PS −1 always. Art 03 covert ElectPlayer procedure outstanding (04-n72).
-- C41B Accord Leverage v1.0: redesigned as ModifierCard/Instant; Accord draft restriction; forces acceptance of terms as written; Art 06 §9 Lock manipulation type; outstanding issues (party requirement, procedure, Lock interaction).
-- C42 Sanctioned Raid v2.0: block-bypass removed; success = clear all modifier cards at district + remove n presence tokens; threshold = 75−10n (variable); per-token cost TBD; Beat 0 declared count mechanism flagged (04-n71).
-- Art 04 §5: "Data schema validation" added as 14th checklist row (04-n68 ✅). Status table updated: "all 14 rows assessed."
-- Art 04 §6.1/§6.2/§6.3: `boost: BoostExpr | None` first-class schema field added to Logic block. BoostExpr = condition: CostExpr; no Phase B declaration; submitted resources imply n.
-- PM05: 04-n68 ✅; 04-n69/70/71/72 added; 04-34/36 superseded by §6 boost field; 04-n48 status updated; 00a-xx → 00a-72 UNBLOCKED (Art 03 v3.3 cleared gate S68 — missed until S71 review). Full PM05 prioritization review conducted.
-- Art 04 v0.9.33.
+### Session 72 — 2026-06-08
+- 00a full structural review complete. 00a v0.5 draft written — material restructure. Rule count 46 → 30.
+- New §3 (Design Principles for this Artifact) and §4 (Foundational Design Principles) added.
+- Former §7 card design constraints flagged for Art 04 migration (XA-47).
+- §8 and §9 dissolved — content moved to Foundational Design, Art 03, or redistributed.
+- Rules reorganized into parent→corollary structure throughout. Appendix B migration map written.
+- PM05: XA-46 (cross-ref sweep), XA-47 (Art 04 card design principles migration), XA-48 (Art 07 registers stub), 00a-73 (Art 03 R18 verify), 00a-74 (Art 02b alignment) added.
+- 00a-72 draft complete; pending Andy grip review → sign-off.
 
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 04 | Card System | 0.9.32 | 🔄 In Progress | S70:
-NEW: | 04 | Card System | 0.9.33 | 🔄 In Progress | S71: C31 v1.4 (2:1 cost; boost field; Issues Resolved ✓). C40A stub → §11.8. C41A v2.0 (ElectPlayer covert choice; target_district). C41B v1.0 (ModifierCard; Accord Leverage; Lock manipulation). C42 v2.0 (block-bypass removed; modifier clearing; variable threshold 75−10n). §5 14th checklist row (data schema validation; 04-n68 ✅). §6 boost: BoostExpr | None field added; 04-34/36 superseded. C17 ⚠ re-sign-off pending (04-n50). Signals Analysis BLOCKED (Art 06.x). S70:
+### Session 73 — 2026-06-09
+- PM05 additions: 00a-73, 00a-74, XA-46, XA-47, XA-48 added. PM02 D02a-03 updated.
+- 00a §1 rewritten (three categories). 00a §3 reordered. 00a §3.1 created — canonical definitions migrated from PM04 (L192). Art 03 §4 pointer added. PM04 §1 collapsed.
+- L150 amended (Month 3 provisional flag retired).
+- §4 Foundational Design Pillars: 8 numbered pillars (4.1–4.8) with lettered corollaries. Art 00 §5 migrated → 00a 4.1–4.6; Art 00 §5 vacated with pointer.
+- Rule numbering: 00-Rnn → section-prefixed n.n across §5–§10 (30→31 rules). §5–§10 headers include "Rules."
+- §8 renamed "Footprint Rules." §3.1 Footprint definition row added.
+- §8 precision edits: 8.2 Mechanics (Absent sentence removed), 8.3 Rule simplified, 8.3a precision fix.
+- §9: upkeep income clarification; 9.1b added (card/action resources ≠ income).
+- §10: 10.1 Lock B (Reveal effect = stake); 10.1a cross-ref 4.7a/4.7b; 10.3 limits + expiry.
+- PM05: 00a-13 (7.3b revision), 00a-14 (Source/Governs audit) added.
+- 00a v0.6 signed off — L193.
 
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
-OLD: **Last Updated:** 2026-06-01
-NEW: **Last Updated:** 2026-06-08
+### DELETE
+FILE: /home/abosch/Projects/TheSignal/Whiteboard/00a_S72_pending.md
 
 ### COMMIT
-source ~/Projects/credentials.env && git add -A && git commit -m "session 71 — Art 04 card redesigns (C31/C41A/C41B/C42); boost schema field; data schema validation checklist row; PM05 review" && git push
+source ~/Projects/credentials.env && git add -A && git commit -m "session 73 — 00a v0.6 signed off (L193); §4 pillars, n.n rule numbering, §9/§10 revisions" && git push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
