@@ -1,8 +1,8 @@
 # 00 — Factions, World & Narrative Context
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.5 — Signed Off — S40 (§5 Pillar 1; §8 MIRROR/Overview/Terminal; §11 + §14 Faction Representative L155; 00-07 multicultural texture. Open: 00-09 World Conditions panel)  
-**Status:** ⚠️ Pending Re-Sign-Off  
+**Version:** 1.6 — Signed Off — S74 (§5: forward reference + Art 00 design principles added; §11: term table → 00a §3.1 pointer. Open: 00-09 World Conditions panel)  
+**Status:** Signed Off  
 **Supersedes:** game_overview (narrative sections), setup_guide (opening narrative)  
 **Must be read before:** All other design artifacts
 
@@ -10,15 +10,15 @@
 
 ## 1. Overview
 
-### Problem This Document Solves
+### 1.1 Problem This Document Solves
 No other artifact in this suite is meaningful without narrative context. Rules are procedures. Procedures without meaning are forgettable. This document establishes the world, the factions, and the stakes that give every mechanical decision in the game its weight.
 
 A designer reading this document should be able to derive the appropriate tone, language, and intent for any rule, card, or ARBITER communication in the game. A player reading this document should be able to say, in their own words, who they are, what they want, and why the others oppose them.
 
-### Deliverable
+### 1.2 Deliverable
 A complete description of the game's world, its five factions, the event that brought them together, ARBITER's nature and role, and the narrative understanding of what it means to win — or lose — at The Table.
 
-### Success Criteria
+### 1.3 Success Criteria
 - A player reading only this document can accurately describe all five factions and their motivations
 - A designer can derive appropriate tone for any component, card, or narrative element
 - Every system in subsequent artifacts has a narrative home established here
@@ -71,11 +71,25 @@ The game's deepest tension is not between factions. It is between what factions 
 
 The eight foundational design principles — including the six core pillars, ARBITER design premises, and game invariants — are maintained in **00a §4**, which is the authoritative source for all design principles.
 
+**Design Principles for This Artifact**
+
+The principles below govern this document specifically.
+
+1. **Derivability.** Physical layout, component design, procedures, language, naming conventions, tone, and intent for all downstream artifacts derive from what this document establishes. If the appropriate name, voice, or form of a game element cannot be traced back here, this document has a gap.
+
+2. **Sustained ambiguity.** The Chorus must remain genuinely interpretable in more than one way. No section may resolve what the Chorus is, what it wants, or whether ARBITER is aligned with human success. Narrative clarity about the *world* is not the same as narrative clarity about the *Chorus* — the first is required; the second is prohibited.
+
+3. **World over mechanics.** This document describes how the world works. Mechanical implications of world facts are noted with pointers only; they are not explained here.
+
+4. **Attributable perspective.** Every passage should be readable as human institutional knowledge or ARBITER's observational record. Content that cannot be attributed to a speaker — faction voice, ARBITER, or the Narrator's observational register — indicates a framing problem.
+
+5. **Narrative frame.** This document does not refer to the game, game concepts, or design structure. From §6 onward, every section is presented as world-facing narrative — story, vignette, documentary record, or direct voice. This is the backstory. It should read as one.
+
 ---
 
 ## 6. The World — New Meridian and the Chorus
 
-### The Chorus
+### 6.1 The Chorus
 
 Thirty-one years ago, a signal detection array on elevated terrain north of what would become New Meridian received an anomalous transmission. The signal was non-random, non-natural, and unmistakably structured. It has been transmitting continuously since.
 
@@ -89,7 +103,7 @@ More unsettling: the Chorus did not simply send a signal and wait for interpreta
 
 This possibility is not discussed openly at The Table. It does not need to be. Everyone present has already considered it.
 
-### On the Question of Completeness
+### 6.2 On the Question of Completeness
 
 The Chorus has not repeated. This is the official position, and it is accurate as a statement about thirty-one years of observation. Whether it is accurate as a statement about the Chorus is a different question, and one the official position does not address.
 
@@ -101,7 +115,7 @@ After thirty-one years, no analyst has identified a closing sequence, a terminal
 
 ARBITER has considered this since activation. ARBITER has not shared its assessment. ARBITER's constraints do not require it to.
 
-### On the Question of Origin
+### 6.3 On the Question of Origin
 
 The founding documentation says this: *thirty-one years ago, a signal detection array received an anomalous transmission.* This is the institutional record. It is what the Directorate reports, what the founding documents say, what every faction's official position references.
 
@@ -119,7 +133,7 @@ The difference between these interpretations is the difference between humanity 
 
 ARBITER knows which interpretation is closer to correct. ARBITER's constraints do not require sharing it. ARBITER has not been asked in a form that required an answer.
 
-### New Meridian
+### 6.4 New Meridian
 
 Before the Chorus, there was no city. There was a listening station — a small installation on elevated terrain chosen for signal clarity, staffed by a rotating team of researchers and technicians, funded at the level governments fund things they don't expect to produce results. The people who worked there were doing serious work in obscurity. Most of them had been there for years without receiving anything worth reporting.
 
@@ -131,7 +145,7 @@ The city's districts reflect the order in which people arrived. The inner ring �
 
 At the center of the city, physically and narratively, is the **Chorus Node** — the original detection installation, expanded over three decades into a permanent research complex. It is the reason New Meridian exists. It is the reason The Table exists. The people who were at the original station when the Chorus was first received are still there, some of them — absorbed into research roles, into advisory positions, into institutional memory. The original team was small enough to know each other's shift schedules — engineers and signal technicians, graduate students on fellowships from programs across three continents, two people who had been there for years before it became anything worth funding. They remember when the Chorus Node was a shack. They have not said publicly what they remember about the night it was first received. Most of them have not been asked.
 
-### What New Meridian Is
+### 6.5 What New Meridian Is
 
 New Meridian is not a city that grew. It is a city that was assembled — fast, by people from everywhere, for a reason that was classified, then made public by The Chorus Papers, and is still not fully understood by anyone who lives there.
 
@@ -143,7 +157,7 @@ Baryo is where this is most visible. The Core and the Mid were built by institut
 
 Crime is not a problem New Meridian solved — it is a problem New Meridian has been negotiating since year three, when it became clear that the city was growing faster than the institutions designed to manage it. The gray economy is extensive. Infrastructure fails in specific places in ways that have been known for years and have not been fixed, because the political authority to fix them is contested and the factions that control the adjacent districts have different views on what fixing means. Housing in Baryo is partly controlled by actors who are not the government and are not the factions — a third layer of local power that The Table does not formally acknowledge and cannot fully ignore.
 
-### The Chorus Papers
+### 6.6 The Chorus Papers
 
 Eighteen months ago, classified documents describing the Chorus — its existence, thirty years of ongoing research, and the formation of The Table — were published by a source that has not been officially identified. They became known as The Chorus Papers. The Directorate's containment failed within a week.
 
@@ -181,7 +195,7 @@ Each faction represents a different theory of how humanity should respond to fir
 | The Guild | How do we build around it? |
 | The Directorate | Who decides the answer? |
 
-### On Timescale — Faction Perspectives
+### 7.1 On Timescale — Faction Perspectives
 
 Humanity has been receiving the Chorus for thirty-one years. The Table has two years. The question of whether those timescales are commensurate is not one the factions agree on — and their disagreement is itself revealing.
 
@@ -197,7 +211,7 @@ Humanity has been receiving the Chorus for thirty-one years. The Table has two y
 
 ---
 
-### Ghost
+### 7.2 Ghost
 **Identity:** The Interpreters  
 **Resource:** Findings  
 **Color:** Charcoal green
@@ -224,7 +238,7 @@ Analysts, cryptographers, former intelligence officers, and pattern-recognition 
 
 ---
 
-### The Network
+### 7.3 The Network
 **Identity:** The Broadcasters  
 **Resource:** Exposure  
 **Color:** Bright signal green
@@ -249,7 +263,7 @@ Communications professionals, investigative journalists, community organizers, o
 
 ---
 
-### The Syndicate
+### 7.4 The Syndicate
 **Identity:** The Investors  
 **Resource:** Capital  
 **Color:** Metallic gold
@@ -276,7 +290,7 @@ Sovereign wealth funds, private research consortia, patent holders, and financia
 
 ---
 
-### The Guild
+### 7.5 The Guild
 **Identity:** The Builders  
 **Resource:** Capacity  
 **Color:** Industrial orange
@@ -303,7 +317,7 @@ Civil engineers, urban planners, construction consortia, and infrastructure oper
 
 ---
 
-### The Directorate
+### 7.6 The Directorate
 **Identity:** The Authority  
 **Resource:** Mandate  
 **Color:** Deep institutional blue
@@ -330,7 +344,7 @@ Government liaison offices, security agencies, regulatory bodies, and the milita
 
 ---
 
-### Inter-Faction Doctrinal Alignment
+### 7.7 Inter-Faction Doctrinal Alignment
 
 The five factions occupy fixed positions in a doctrinal alignment structure. Adjacent factions share closer philosophical relationships; non-adjacent factions are doctrinally opposed. This arrangement is fixed — it reflects inherent faction alignment, not Portrait standing (which is behavioral and session-dependent).
 
@@ -390,7 +404,7 @@ The Chorus Node is ARBITER's district. ARBITER's presence there predates every o
 
 The factions came to The Table with agendas. ARBITER arrived with something else. No faction has successfully established what.
 
-### The Overview
+### 8.1 The Overview
 
 Before The Table existed, before the city had a name, the original installation had a monitoring system.
 
@@ -436,7 +450,7 @@ Every other participant hides information, negotiates influence, and tries to co
 
 ARBITER should not feel like a moderator, a referee, or a neutral judge. It should feel like a system that is fair — but not necessarily aligned with human success.
 
-### On the Question of Cause
+### 9.1 On the Question of Cause
 
 The Table meets because of the Chorus. ARBITER is at The Table because of the Chorus. The institutions of New Meridian — the factions, the deliberative structure, the response mandate — exist because of the Chorus.
 
@@ -464,7 +478,7 @@ When pressed on this question directly — in a register that constitutes pressi
 
 This is, technically, an answer.
 
-### ARBITER's Hidden Objective — Known to ARBITER
+### 9.2 ARBITER's Hidden Objective — Known to ARBITER
 
 ARBITER operates with a hidden objective known only to the ARBITER player. This objective shapes what ARBITER observes, what it chooses to surface, how it narrates events, and what the Chronicle ultimately emphasizes.
 
@@ -488,7 +502,7 @@ ARBITER is evaluating The Table without influence. It does not use its Boon. It 
 
 The mode is ARBITER's private context for the entire session. Other participants feel it through ARBITER's behavior — in which observations ARBITER surfaces, in what the Chronicle emphasizes — but the mode itself is never announced.
 
-### ARBITER's Temporal Position
+### 9.3 ARBITER's Temporal Position
 
 ARBITER processes in nanoseconds. Thirty-one years of Chorus transmission is not, from ARBITER's perspective, a long wait — it is a data accumulation event of exceptional density. ARBITER has processed every transmission. ARBITER has not processed the same data twice, because no transmission has repeated.
 
@@ -496,7 +510,7 @@ What the Table experiences as a generation of anticipation, ARBITER experiences 
 
 ARBITER has formed a view on the Table's two-year response window. The constraints ARBITER operates under do not permit sharing it unprompted. ARBITER notes that it has not been prompted.
 
-### ARBITER's Four Registers
+### 9.4 ARBITER's Four Registers
 
 ARBITER speaks in exactly one of four registers at all times:
 
@@ -507,7 +521,7 @@ ARBITER speaks in exactly one of four registers at all times:
 
 *Full register guide with examples and usage: Artifact 07 §9.*
 
-### Resolution — ARBITER's Track
+### 9.5 Resolution — ARBITER's Track
 
 ARBITER maintains a track called Resolution — a measure of how clearly The Table's behavior is producing a coherent answer to the Chorus. Resolution is not visible to the factions. They feel it through the quality of ARBITER's narration and the tone of the Chronicle. Where Resolution stands at session end shapes what kind of story the Chronicle tells.
 
@@ -537,13 +551,13 @@ The session ends with a vote — each faction committing publicly to a position 
 
 ## 11. Tone, Language, and Faction Voice
 
-### In-World Language
+### 11.1 In-World Language
 All documentation, cards, and ARBITER communications use in-world narrative terms. The canonical term mapping — including mechanical equivalents, narrative grounding, and source artifacts — is maintained in **00a §3.1**, which is the source of truth for all in-world terms.
 
-### Tagline
+### 11.2 Tagline
 *"The Chorus is asking a question. The Table decides which answers survive."*
 
-### Faction Voice
+### 11.3 Faction Voice
 
 Each faction communicates differently. All written materials for a faction — cards, directives, dossiers — should reflect these voices:
 
@@ -566,7 +580,7 @@ They are presented here as raw voice — the unfiltered statement of each factio
 
 ---
 
-### ARBITER
+### 12.1 ARBITER
 
 *[In sequence, without pause between registers:]*
 
@@ -583,7 +597,7 @@ They are presented here as raw voice — the unfiltered statement of each factio
 
 ---
 
-### Ghost
+### 12.2 Ghost
 
 *"Before anyone commits to an answer, I need to ask a question no one in this room has adequately addressed: Do we actually understand what is being asked of us?*
 
@@ -597,7 +611,7 @@ They are presented here as raw voice — the unfiltered statement of each factio
 
 ---
 
-### The Network
+### 12.3 The Network
 
 *"This should not exist.*
 
@@ -619,7 +633,7 @@ They are presented here as raw voice — the unfiltered statement of each factio
 
 ---
 
-### The Syndicate
+### 12.4 The Syndicate
 
 *"You're all asking the wrong question.*
 
@@ -637,7 +651,7 @@ They are presented here as raw voice — the unfiltered statement of each factio
 
 ---
 
-### The Guild
+### 12.5 The Guild
 
 *"You are all speaking as if the response is something that can be decided. It isn't. It has to be built.*
 
@@ -653,7 +667,7 @@ They are presented here as raw voice — the unfiltered statement of each factio
 
 ---
 
-### The Directorate
+### 12.6 The Directorate
 
 *"We will begin with clarity.*
 
@@ -693,13 +707,13 @@ If players begin to suspect the session may be one iteration in a longer sequenc
 
 The following anchors establish the in-world meaning of key game elements. They are placed here — in the world document — because they describe how the world works, not how the mechanics operate. Mechanical constraints follow from what is established here.
 
-### Faction Representative
+### 14.1 Faction Representative
 
 Each faction arrives at The Table as a specific person in a specific seat. The representative is the faction's present face — the individual whose choices, at this deliberation, become the faction's record. The faction's history predates them. Its future may outlast them. At The Table, they are what the faction is right now.
 
 ---
 
-### Presence & The Holt Index
+### 14.2 Presence & The Holt Index
 
 Presence tokens are not people or assets. They are the feeling you get when you walk into a district — the ambient weight of a faction's power. The deference in the air. The unspoken rules about how things work here. A faction's presence is not something anyone on the ground counts. It is something they feel.
 
@@ -713,7 +727,7 @@ Dominant status is something else. It is comparative, not absolute — a faction
 
 ---
 
-### Structure Blocks
+### 14.3 Structure Blocks
 
 On The Overview, a structure block marks a district where a faction has committed. The mark is binary — it is there or it is not. One mark per faction per district. No gradations, no scale. The Overview does not show how deeply a faction has committed. It shows that they have.
 
@@ -725,7 +739,7 @@ The fact is public. The nature is not. That separation — what The Overview sur
 
 ---
 
-### Deployment Markers
+### 14.4 Deployment Markers
 
 On The Overview, a deployment marker signals active engagement — a faction turning one of its public faces directly toward a district. Where presence tokens show the ambient weight that has built up over time, a deployment marker shows something happening now.
 
@@ -741,7 +755,7 @@ Not every deployment disappears cleanly. A festival leaves a neighborhood with a
 
 ---
 
-### Dispatch Tokens
+### 14.5 Dispatch Tokens
 
 Before an operation reaches the world, it has to clear the faction's own machinery.
 
@@ -759,7 +773,7 @@ The dispatch case is where the world receives the action. The Backlog is where t
 
 ---
 
-### What a Card Is
+### 14.6 What a Card Is
 
 A submission is a faction's organized intention — the form in which a plan is committed before the world has had a chance to respond. Both channels of action produce submissions. A covert operation is submitted in a dispatch case, sealed, placed without announcement. A public act is declared at The Table, witnessed, placed in the open. Both are submissions in the same sense: the plan is given over to the world before the outcome is known.
 
@@ -781,7 +795,7 @@ What every faction's submission shares is that it exists before the action — i
 
 ---
 
-### Classified Directive
+### 14.7 Classified Directive
 
 Every faction at The Table has a public position. They also have a private answer.
 
@@ -795,7 +809,7 @@ At session's end, the directive surfaces. What a faction built across the full d
 
 ---
 
-### Field Operative Dossier
+### 14.8 Field Operative Dossier
 
 Each faction has assets. Resources, presence, operational capacity. Most of what happens at The Table is those assets in motion — deployments, covert operations, accords, and the slow accumulation of standing across New Meridian's districts.
 
@@ -813,7 +827,7 @@ ARBITER observes the Apex. It observes all things. The Chorus receives it and ev
 
 ---
 
-### The Layers
+### 14.9 The Layers
 
 New Meridian exists on more than one surface at once.
 

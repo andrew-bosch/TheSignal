@@ -48,11 +48,13 @@ S73 complete. S74 opens here.
 
 **S73 accomplishments:** PM05 additions complete: 00a-73, 00a-74, XA-46, XA-47, XA-48 added. PM02 D02a-03 updated (00a §5 migration note on resolution; stale R05 ref → R40b). 00a §1 "What This Document Is Not" rewritten (three categories: §3 design principles / §4 foundational premises / §5–§10 governing rules). 00a §3 fully reordered (logical argument sequence); principles scoped to this document; "Time Convention" → "Copy Design Principle — In-Game Terms in Narrative Fields." 00a §3.1 created — all canonical definitions migrated from PM04 (temporal, component/system, physical forms, faction resources, influence levels); hardcoded values replaced with source artifact references. Art 03 §4 temporal framing removed, pointer to 00a §3.1 added. PM04 §1 collapsed to pointer; Purpose updated; §2 stale refs cleaned. L192 locked (source of truth migration — 00a §3.1 canonical for game definitions). L150 amended (Month 3 "political act phase" retired; all months carry both modes; "Provisional" flag retired). PM05 PM04-06 added (PM04 §2 review). §4 Foundational Design Pillars restructured — 8 numbered pillars (4.1–4.8) with lettered corollaries; subsections: Core Design Pillars (4.1–4.6b), ARBITER Design Principles (4.7–4.7b), Guaranteed Effects (4.8–4.8d). Art 00 §5 design principles (6 pillars) migrated to 00a 4.1–4.6; Art 00 §5 vacated with pointer. Rule numbering changed to section-prefixed n.n format across §5–§10. §5–§10 headers include "Rules." §8 renamed "Footprint Rules"; §3.1 Footprint definition row added. §8 precision edits: 8.2 Mechanics (Absent sentence removed — 8.2b owns it); 8.3 Rule simplified; 8.3a header/rule/mechanics precision fix (displaced markers are repositioned, not simply removed). §9: "upkeep income" clarification; 9.1b added (card/action resources ≠ income). §10: 10.1 Lock B (Reveal effect = stake not compulsion); 10.1a cross-ref 4.7a/4.7b; 10.3 header/rule/mechanics updated (limits + expiry). PM05: 00a-13 (7.3b revision), 00a-14 (Source/Governs audit). 31 rules. 00a v0.6 signed off — **L193**.
 
-**S74 entry point:** Re-sign-off queue — Art 00 (00-12: §5 pointer, §11 term table moved), Art 01 (01-09: Component Physical Forms added to §6). Then: XA-46/47/48 (rule ID sweep — 00-Rnn → n.n across all V1 artifacts, Appendix B migration guide in 00a). Then: 04-n28 Overture full spec → 04-n40 C28 Network replacement.
+**S74 accomplishments:** Art 00 v1.6 signed off (L194) — §5 Art 00 design principles added (5 principles: Derivability, Sustained Ambiguity, World over Mechanics, Attributable Perspective, Narrative Frame); all subsections numbered throughout (§1.1–§14.9). 00a v0.7 signed off (L196) — §3 renamed "Design Principles for This Document" + scope routing note; §4 scope line added; §4.6 amended with Narrative Origin Principle: Art 00 as sole canonical narrative source (L195). Art 01 v2.0 signed off (L197) — Component Physical Forms column → "Proposed Form"; 01-10 (table → Art 02a, add Design Requirements column) and 01-11 (scope overhaul: §8→03-init, §11/§12→downstream) flagged. PM05: 00-15 (Art 00 full narrative revision per §5 P1+P5), 01-10, 01-11, 00a-75 added.
 
-**Priority order:** Art 00 re-sign-off (00-12) → Art 01 re-sign-off (01-09) → XA-46/47/48 (rule ID sweep) → 04-n28 (Overture, gates §11) → 04-n40 (C28 replacement) → C40B narrative → C42 per-token cost resolution.
+**S75 entry point:** XA-46/47/48 (rule ID sweep — 00-Rnn → n.n across all V1 artifacts; gate cleared S74). Then: 04-n28 Overture full spec → 04-n40 C28 Network replacement.
 
-**Also pending:** Art 00 re-sign-off ⚠ (00-12 — §5 pointer + §11 term table moved); Art 01 re-sign-off ⚠ (01-09 — Component Physical Forms); downstream 00a rule ID sweep (XA-46/47/48 — gate: Art 00/01 re-sign-off); 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs.
+**Priority order:** XA-46/47/48 (rule ID sweep) → 04-n28 (Overture, gates §11) → 04-n40 (C28 replacement) → C40B narrative → C42 per-token cost resolution.
+
+**Also pending:** XA-46/47/48 (rule ID sweep — gate cleared S74); 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs.
 
 ---
 
@@ -104,9 +106,9 @@ S73 complete. S74 opens here.
 
 | Artifact | Version | Open Item |
 |----------|---------|-----------|
-| 00 — Factions, World & Narrative | 1.6 | ✅ Signed Off — S57. Open: 00-09 (World Conditions panel — design question, does not block sign-off). |
-| 00a — Governing Rules & Design Policy | 0.6 | ✅ Signed Off — S73 (L193). 31 rules (§5–§10, section-prefixed n.n IDs). §4 Foundational Design Pillars (4.1–4.8). §3.1 Canonical Definitions. Appendix B: v0.4→v0.5→v0.6 migration map. |
-| 01 — Game Board: New Meridian | 1.9 | ✅ Signed Off — S44. S44: §4 Narrative Function, §6 Physical Environment renamed, §7–§12 renumbered, all cross-refs resolved, procedure clutter removed (01-08 ✅). Open: §9/§10 Tableau stubs (Art 08); district_adjacency DB (DB-09); DB-11 (agy DDL — component_positions rename + columns). |
+| 00 — Factions, World & Narrative | 1.6 | ✅ Signed Off — S74 (L194). §5 Art 00 design principles added (5 principles). Subsections numbered §1.1–§14.9. Open: 00-09 (World Conditions panel); 00-15 (full narrative revision per §5 P1+P5). |
+| 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-72–00a-74 (rule ID sweep gate cleared). |
+| 01 — Game Board: New Meridian | 2.0 | ✅ Signed Off — S74 (L197). §6 Component Physical Forms column → "Proposed Form". Open: 01-10 (table → Art 02a); 01-11 (scope overhaul §8/§11/§12). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 3.3 | ✅ Signed Off — S68 (L189). §19 Debrief Actions step (DebriefActionCard type); §25 updated (cross-refs §28); §28 React Card Rules added (interrupt model). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
@@ -172,9 +174,10 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
-- **L193** (S73): Art 00a v0.6 signed off. §4 Foundational Design Pillars: 8 numbered pillars (4.1–4.8) with lettered corollaries; Core Design Pillars, ARBITER Design Principles, Guaranteed Effects subsections. Art 00 §5 design principles migrated to 00a 4.1–4.6; §5 vacated with pointer. Rule numbering: section-prefixed n.n format throughout §5–§10. §8 Footprint Rules. §9 upkeep income distinction; 9.1b (card/action resources ≠ income). §10 Reveal effect defined (stake not compulsion); intel limits + expiry. 31 rules.
-- **L192** (S73): Canonical game definitions migrated from PM04 to 00a §3.1. 00a §3.1 is the source of truth for all in-world terms, component definitions, physical forms, faction resources, and influence levels. PM04 §1 is a pointer only.
-- **L191** (S69): Art 06 §9 Accord Documents signed off (v0.2). Governance: Accords public; player-monitored compliance; R40a does not apply. Formation: card-driven only (P08/P10/Overture); all Accord blanks at Beat 4. Breach: form → ARBITER area; Portrait −4 breacher. Completion: Portrait +1/Quarter + +2 final. Manipulation types: Lock/Alter/Transfer. Overture stub in Art 04 §11.8.
+- **L197** (S74): Art 01 v2.0 signed off. §6 Component Physical Forms column → "Proposed Form" (non-binding, not material spec). Open: 01-10 (table → Art 02a + Design Requirements column); 01-11 (scope overhaul — §8→03-init, §11/§12→downstream).
+- **L196** (S74): Art 00a v0.7 signed off. §3 renamed "Design Principles for This Document" + scope routing note. §4 scope line added. §4.6 amended: Art 00 as origin of all canonical narrative (L195).
+- **L195** (S74): Art 00 as sole canonical narrative origin. No canonical narrative may originate in a downstream artifact. Art 00 amended first; downstream artifacts reference it. Written to 00a §4.6. Governs all V1 artifacts.
+- **L194** (S74): Art 00 v1.6 signed off. §5 Art 00 design principles added (5 principles). §11 term table → 00a §3.1 pointer. Subsections numbered §1.1–§14.9.
 - **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.
 - **L184** (S63): L108 amended — 3NF requirements (6 + 7) added; component.transformable → virtual generated; action.prereq_beat_id dropped.
 - **L183** (S61): C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine.
@@ -189,9 +192,9 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Pending Sign-Offs
 
-- **Art 00 v1.6** — ⚠ Re-sign-off pending S74 (§5 design principles moved to 00a §4; §11 term table → 00a §3.1 — tracked 00-12)
-- **00a v0.6** — ✅ Signed Off S73 (L193)
-- **Art 01 v1.9** — ⚠ Re-sign-off pending S74 (Component Physical Forms added to §6 — tracked 01-09)
+- **Art 00 v1.6** — ✅ Signed Off S74 (L194)
+- **00a v0.7** — ✅ Signed Off S74 (L196)
+- **Art 01 v2.0** — ✅ Signed Off S74 (L197)
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v3.3** — ✅ Signed Off S68 (L189)
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)

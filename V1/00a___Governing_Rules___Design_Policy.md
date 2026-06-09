@@ -1,9 +1,9 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.5  
-**Status:** 🔄 Pending Re-sign-off — S72 (material restructure)  
-**Last Updated:** 2026-06-08  
+**Version:** 0.7 — Signed Off — S74 (§3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle added — L195/L196)  
+**Status:** Signed Off  
+**Last Updated:** 2026-06-09  
 **Companion to:** 00 — Factions, World & Narrative Context  
 **Depends on:** 00, 01, 02a, 02b, 03, 04, 04b
 
@@ -43,7 +43,7 @@ Purely mechanical rules that live cleanly in their source artifact (e.g., Findin
 |---------|---------|
 | §1 | Overview |
 | §2 | Index |
-| §3 | [Design Principles for this Artifact](#3-design-principles-for-this-artifact) |
+| §3 | [Design Principles for This Document](#3-design-principles-for-this-document) |
 | §4 | [Foundational Design Pillars](#4-foundational-design-pillars) |
 | §5 | [Portrait & Evaluation Rules](#5-portrait--evaluation-rules) |
 | §6 | [ARBITER Procedure Rules](#6-arbiter-procedure-rules) |
@@ -54,7 +54,9 @@ Purely mechanical rules that live cleanly in their source artifact (e.g., Findin
 
 ---
 
-## 3. Design Principles for this Artifact
+## 3. Design Principles for This Document
+
+*Scope: this document only. Principles here govern how 00a is written, structured, and extended. Cross-artifact premises — things that are true about the game and drive design decisions across all artifacts — belong in §4.*
 
 *How the rules and foundational principles in this document were constructed. These are not governing rules — they do not constrain card or mechanic design. They explain how to read and extend this document.*
 
@@ -180,6 +182,8 @@ Authoritative definitions for all in-world terms, components, and game systems u
 
 ## 4. Foundational Design Pillars
 
+*Scope: all V1 artifacts. These are the premises from which governing rules are derived and against which all downstream design is tested.*
+
 *First-principles about The Signal — premises about the game world, the ARBITER role, and design intent. These are not mechanical rules. They are the basis from which governing rules are derived.*
 
 ---
@@ -231,6 +235,10 @@ No single player, and no single faction, decides what humanity says. What become
 **Every rule must carry a narrative grounding — the mechanical constraint follows from the world, not the other way around. If narrative reasoning and mechanical reasoning conflict, narrative takes precedence.**
 
 If the narrative reason for a rule cannot be stated, the rule may be arbitrary. This is the operative meta-principle for all design in The Signal — it applies to every rule, card, decision, and policy.
+
+**Art 00 is the origin of all canonical narrative.** Downstream artifacts may reference, summarize, or point to Art 00 narrative — they may not introduce canonical narrative of their own. If narrative content is needed anywhere in the design, Art 00 is amended first; downstream artifacts reference it. A narrative statement that does not have its origin in Art 00 is not canonical.
+
+*Source: PM02 L195. Governs: all V1 artifacts.*
 
 ---
 

@@ -1,8 +1,8 @@
 # 01 — Game Board: New Meridian
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.9  
-**Status:** Signed Off — S44  
+**Version:** 2.0 — Signed Off — S74 (§6 Component Physical Forms added S73; "Proposed Form" column header S74. Open: 01-10 table migration → Art 02a; 01-11 scope overhaul)  
+**Status:** Signed Off  
 **Depends on:** 00 — Factions, World & Narrative Context  
 **Supersedes:** setup_guide (board sections), board_layout (visual reference only)
 
@@ -451,7 +451,7 @@ Feeds DB table: `district_adjacency`.
 
 Maps each canonical in-game term to its physical/real-world description. Production quantities: PM01 WBS 2.
 
-| In-Game Term | Physical Form | Notes |
+| In-Game Term | Proposed Form | Notes |
 |--------------|---------------|-------|
 | Presence chip | Small coloured disc or poker chip | One colour per faction; ARBITER uses white |
 | Deployment marker | Double-sided cardboard chit | Face-up = active; face-down = converting |

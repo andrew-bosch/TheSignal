@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-09 — Session 73
+**Last Updated:** 2026-06-09 — Session 74
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -712,6 +712,13 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - Art 04 §6.1/§6.2/§6.3: `boost: BoostExpr | None` first-class schema field added to Logic block. BoostExpr = condition: CostExpr; no Phase B declaration; submitted resources imply n.
 - PM05: 04-n68 ✅; 04-n69/70/71/72 added; 04-34/36 superseded by §6 boost field; 04-n48 status updated; 00a-xx → 00a-72 UNBLOCKED (Art 03 v3.3 cleared gate S68 — missed until S71 review). Full PM05 prioritization review conducted.
 - Art 04 v0.9.33.
+
+### Session 74 — 2026-06-09
+- Art 00 v1.6 signed off (L194): §5 Art 00 design principles added (5 principles — Derivability, Sustained Ambiguity, World over Mechanics, Attributable Perspective, Narrative Frame); §11 term table → 00a §3.1 pointer; all subsections numbered §1.1–§14.9.
+- 00a v0.7 signed off (L196): §3 renamed "Design Principles for This Document" + scope routing note; §4 scope line added; §4.6 amended — Art 00 as origin of all canonical narrative (L195/L196).
+- L195 locked: Art 00 sole narrative origin — no canonical narrative may originate in a downstream artifact; Art 00 amended first, downstream artifacts reference it. Written to 00a §4.6. Governs all V1 artifacts.
+- Art 01 v2.0 signed off (L197): §6 Component Physical Forms column → "Proposed Form". PM05: 01-10 (table → Art 02a + Design Requirements column), 01-11 (scope overhaul — §8→03-init, §11/§12→downstream).
+- PM05: 00-15 added (Art 00 full narrative revision per §5 P1+P5 — wiki/encyclopedia register, first narrative mention of all elements, downstream narrative migration); 00a-75 ✅ closed (L196).
 
 **Session 35 summary (2026-05-25 — complete):**
 - **L144 locked:** Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to child tables. Governs Art 04 and 00b.
