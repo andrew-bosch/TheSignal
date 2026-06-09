@@ -106,7 +106,7 @@ ARBITER is present throughout but speaks at specific moments. Between those mome
 
 5. **Speed has consequences.** Dispatch case submission order is the tiebreaker within resolution priority tiers.
 
-6. **ARBITER executes procedures, not exceptions.** All ARBITER-facing content in this artifact is written as generalizable rules applicable uniformly across all game states within their phase. No phase-specific or context-specific exception procedures. Complexity is managed through physical tools and reference materials, not through ARBITER memorization. *00-R40.*
+6. **ARBITER executes procedures, not exceptions.** All ARBITER-facing content in this artifact is written as generalizable rules applicable uniformly across all game states within their phase. No phase-specific or context-specific exception procedures. Complexity is managed through physical tools and reference materials, not through ARBITER memorization. *Governing Rule 6.1.*
 
 ---
 
@@ -1347,7 +1347,7 @@ The ARBITER Player opens the sealed Apex envelope and pauses. ARBITER reads. The
 
 React cards fire in response to publicly visible board state changes. They are held in hand until their trigger condition is met.
 
-1. A React card may only fire on a publicly visible board state change (00-R06). It cannot fire on ARBITER-internal state changes such as the Resolution Grid.
+1. A React card may only fire on a publicly visible board state change (Governing Rule 7.2a). It cannot fire on ARBITER-internal state changes such as the Resolution Grid.
 2. When a trigger condition is met: the holding Faction Player announces *"React"*, presents the card, and states the trigger condition listed on the card. ARBITER confirms the trigger is valid and pauses the quarter procedure.
 
     2a. First to announce pauses play. ARBITER decides tiebreakers. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves.

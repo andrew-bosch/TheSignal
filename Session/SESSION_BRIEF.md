@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 74 (active) | Updated: 2026-06-09**
+**Session 75 (active) | Updated: 2026-06-09**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S73 complete. S74 opens here.
+S75 complete. S76 opens here.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -50,11 +50,13 @@ S73 complete. S74 opens here.
 
 **S74 accomplishments:** Art 00 v1.6 signed off (L194) — §5 Art 00 design principles added (5 principles: Derivability, Sustained Ambiguity, World over Mechanics, Attributable Perspective, Narrative Frame); all subsections numbered throughout (§1.1–§14.9). 00a v0.7 signed off (L196) — §3 renamed "Design Principles for This Document" + scope routing note; §4 scope line added; §4.6 amended with Narrative Origin Principle: Art 00 as sole canonical narrative source (L195). Art 01 v2.0 signed off (L197) — Component Physical Forms column → "Proposed Form"; 01-10 (table → Art 02a, add Design Requirements column) and 01-11 (scope overhaul: §8→03-init, §11/§12→downstream) flagged. PM05: 00-15 (Art 00 full narrative revision per §5 P1+P5), 01-10, 01-11, 00a-75 added.
 
-**S75 entry point:** XA-46/47/48 (rule ID sweep — 00-Rnn → n.n across all V1 artifacts; gate cleared S74). Then: 04-n28 Overture full spec → 04-n40 C28 Network replacement.
+**S75 accomplishments:** XA-47 ✅ — Art 04 §5 P19–P25 added (R21–R28 migrated from former 00a §7); P5 updated (authoritative R26 constraint note); P6 cross-ref to P19; checklist rows updated (Effect duration → P6/P19; Portrait validity → +P22); Art 04 v0.9.34. XA-48 ✅ — Art 07 §9 already had four-register content; `00a R02` source ref removed. XA-46 ✅ — ~120 rule ID substitutions across 11 files (Art 03, Art 04, Art 07, 02a, 02b, PM03, design_reference.md, gap_card_sketches, 3 memory files); zero `00-R` strings remain; PM02 + SESSION_BRIEF preserved as historical records; `00-R29` → `Design Pillar [04-n6 pending]` throughout. PM05: 04-n73 (P1–P18 restatement audit) + XA-49 (design_reference.md reset) added.
 
-**Priority order:** XA-46/47/48 (rule ID sweep) → 04-n28 (Overture, gates §11) → 04-n40 (C28 replacement) → C40B narrative → C42 per-token cost resolution.
+**S76 entry point:** XA-49 (design_reference.md reset — before card spec work) → 04-n28 (Overture full spec, gates §11 redesign) → 04-n40 (C28 Network replacement).
 
-**Also pending:** XA-46/47/48 (rule ID sweep — gate cleared S74); 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs.
+**Priority order:** XA-49 (design_reference.md reset) → 04-n28 (Overture, gates §11) → 04-n40 (C28 replacement) → C40B narrative → C42 per-token cost resolution.
+
+**Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs; 04-n73 (P1–P18 restatement audit).
 
 ---
 
@@ -107,12 +109,12 @@ S73 complete. S74 opens here.
 | Artifact | Version | Open Item |
 |----------|---------|-----------|
 | 00 — Factions, World & Narrative | 1.6 | ✅ Signed Off — S74 (L194). §5 Art 00 design principles added (5 principles). Subsections numbered §1.1–§14.9. Open: 00-09 (World Conditions panel); 00-15 (full narrative revision per §5 P1+P5). |
-| 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-72–00a-74 (rule ID sweep gate cleared). |
+| 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle documentation). |
 | 01 — Game Board: New Meridian | 2.0 | ✅ Signed Off — S74 (L197). §6 Component Physical Forms column → "Proposed Form". Open: 01-10 (table → Art 02a); 01-11 (scope overhaul §8/§11/§12). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
 | 03 — Quarter Structure & Gameplay | 3.3 | ✅ Signed Off — S68 (L189). §19 Debrief Actions step (DebriefActionCard type); §25 updated (cross-refs §28); §28 React Card Rules added (interrupt model). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
-| 04 — Action Card System | 0.9.33 | S71: C31 v1.4 (2:1 cost; boost field; Issues Resolved ✓). C40A stub → §11.8. C41A v2.0 (ElectPlayer covert choice). C41B v1.0 (modifier card; Accord Leverage). C42 v2.0 (block-bypass removed; variable threshold; modifier clearing). §5 14th checklist row (data schema validation). §6 boost field added. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). |
+| 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
@@ -167,6 +169,11 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **04-n26** | HIGH — Component interaction design pass: 12+ components needing lifecycle design before Art 02 registration | High — S65+ |
 | **04-n27** | HIGH (before accord) — Art 03 procedure gaps: 6 holes blocking Issues Resolved on multiple cards | High — S65+ |
 | **04-n28** | Art 06 Accord design — §9 signed off (L191). Overture stub in §11.8. Remainder: Overture full spec (gates §11 redesign). | 🟡 Substantially complete — S69 |
+| **XA-46** | 00a rule ID sweep — all 11 files. | ✅ S75 |
+| **XA-47** | Art 04 §5 P19–P25 added (card design constraints from 00a §7). | ✅ S75 |
+| **XA-48** | Art 07 §9 ARBITER Registers already had content. Source ref cleaned. | ✅ S75 |
+| **XA-49** | design_reference.md reset — review before Art 04 card spec work resumes. Gate: before 04-card-spec. | Open — S76 |
+| **04-n73** | Art 04 §5 P1–P18 restatement audit — identify and replace upstream duplicates. | Open — S75+ |
 
 → Full list: `V1/PM05___Active_Punch_List.md`
 

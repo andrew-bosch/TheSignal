@@ -93,7 +93,7 @@ The Chorus Portrait track shows ARBITER's current cumulative assessment of each 
 
 The track is private — kept in ARBITER's tableau, facing away from players. Factions cannot see their own Portrait position. ARBITER communicates Portrait state through Debrief observations, never through direct disclosure.
 
-ARBITER may adjust a faction's Portrait marker in response to any action taken or observed — including formal game actions, Debrief negotiations, trades, and table behavior beyond the structured phases of play (per 00a R01). The Chorus observes everything that happens at The Table.
+ARBITER may adjust a faction's Portrait marker in response to any action taken or observed — including formal game actions, Debrief negotiations, trades, and table behavior beyond the structured phases of play (per Governing Rule 5.1). The Chorus observes everything that happens at The Table.
 
 How scores are assigned and when bonuses apply is specified in Artifact 07 — ARBITER Toolkit and Artifact 10a — Victory System respectively.
 

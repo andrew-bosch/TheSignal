@@ -95,7 +95,7 @@ The Chorus Portrait board is ARBITER's private tracking instrument. It is kept f
 ### 6.2 What ARBITER Tracks on the Portrait Board
 Five faction tracks. Each track represents the Chorus's accumulating assessment of that faction's revealed nature — not their public position, not their score, but what they have demonstrated through their choices.
 
-Portrait values are inputs to the final scoring procedure (Artifact 10a). At no point during the session does any faction know their Portrait value or any other faction's Portrait value. See 00a R07 and R44.
+Portrait values are inputs to the final scoring procedure (Artifact 10a). At no point during the session does any faction know their Portrait value or any other faction's Portrait value. See Governing Rule 5.1b.
 
 ### 6.3 What Moves the Portrait
 The Portrait field on action cards (see Artifact 04 §6) provides ARBITER input. ARBITER evaluates each played card's Portrait field and moves the relevant faction's Portrait track accordingly.
@@ -107,7 +107,7 @@ Portrait is also moved by:
 - *[TBD — Chorus Node Translation requests (see D02a-03): does requesting The Translation carry a Portrait consequence?]*
 
 ### 6.4 ARBITER as Sole Mover
-ARBITER is the sole physical mover of Portrait markers. No card effect, operative ability, or faction action may directly instruct a faction to move the Portrait track. If a card's Portrait field says "negative shift," ARBITER evaluates and applies. The faction does not know this happened. See 00a R01.
+ARBITER is the sole physical mover of Portrait markers. No card effect, operative ability, or faction action may directly instruct a faction to move the Portrait track. If a card's Portrait field says "negative shift," ARBITER evaluates and applies. The faction does not know this happened. See Governing Rule 5.1.
 
 ---
 
@@ -151,7 +151,7 @@ ARBITER is the sole physical mover of Portrait markers. No card effect, operativ
 
 ARBITER communicates in four distinct registers. Register selection is ARBITER's judgment. The registers are defined to prevent drift — so that the person playing ARBITER maintains consistent tone across a full session.
 
-*Source: Artifact 00 §9, 00a R02.*
+*Source: Artifact 00 §9.*
 
 ### 9.1 The Record
 Used for: operation announcements, rule clarifications, timing calls, resource confirmations.

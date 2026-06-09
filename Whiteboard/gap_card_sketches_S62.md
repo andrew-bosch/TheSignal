@@ -162,7 +162,7 @@ Do not draft these cards until Art 06 establishes:
 1. Add 1 presence chip to `grant_deed.faction.owner` in the named district.
 2. Remove the triggering faction's structure block from the named district.
 3. Place 1 structure block for `grant_deed.faction.owner` in the named district.
-   — Step 3 governed by 00-R11: skip if `grant_deed.faction.owner` already holds a structure block there.
+   — Step 3 governed by Governing Rule 8.2: skip if `grant_deed.faction.owner` already holds a structure block there.
 
 **Consumption:** Single use. Grant Deed is discarded after firing.
 

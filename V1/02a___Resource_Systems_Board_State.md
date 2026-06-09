@@ -378,7 +378,7 @@ Any faction may request The Translation — resource conversion via ARBITER — 
 - No limit per Quarter
 - Announce to ARBITER; ARBITER states the rate in The Record register; take tokens from the Reservoir directly
 
-The Contested rate is not a balancing mechanism. It is ARBITER's response to factions bringing conflict into the Chorus Node. The canonical rate table for cross-artifact reference is this section. Timing rule: 00a R05.
+The Contested rate is not a balancing mechanism. It is ARBITER's response to factions bringing conflict into the Chorus Node. The canonical rate table for cross-artifact reference is this section. Timing rule: Governing Rule 6.1b.
 
 ---
 
@@ -388,7 +388,7 @@ The Contested rate is not a balancing mechanism. It is ARBITER's response to fac
 
 Before an operation leaves a faction's internal queue, it is a theoretical project — drafted, mapped, costed, and waiting for the executive order to move. The faction has the people. They have the plan. What they do not yet have is organizational commitment. A Dispatch Token is that commitment: the authorization that converts planned work into active production for this Quarter. At the start of each Quarter, each faction draws their allocation from **The Backlog** — the shared pool on the table holding all unissued authorizations. A faction holds its drawn tokens privately beside the tableau. The pool the factions draw from is public.
 
-Dispatch Tokens are not faction resources. They do not generate through district presence, accumulate across Quarters, or carry an affinity system. They are a per-Quarter operational capacity allocation — a count of how many covert operations a faction has the internal authorization to run this Quarter. *(Governing rule: 00a R39. Narrative grounding: Artifact 00 §14.)*
+Dispatch Tokens are not faction resources. They do not generate through district presence, accumulate across Quarters, or carry an affinity system. They are a per-Quarter operational capacity allocation — a count of how many covert operations a faction has the internal authorization to run this Quarter. *(Governing rule: Governing Rule 7.3c. Narrative grounding: Artifact 00 §14.)*
 
 ### The Backlog
 
@@ -409,7 +409,7 @@ One Dispatch Token accompanies each covert operation card placed in a dispatch c
 
 - Pass cards require no token.
 - Political acts are declared at The Table and require no token.
-- A covert operation card submitted without a token is invalid — rejected by ARBITER at Beat 0, returned to the faction, cost not spent. *(00a R39.)*
+- A covert operation card submitted without a token is invalid — rejected by ARBITER at Beat 0, returned to the faction, cost not spent. *(Governing Rule 7.3c.)*
 
 ARBITER collects all spent tokens from each Month's dispatch cases at Beat 0. At Quarter close, all collected tokens are returned to The Backlog.
 
@@ -467,7 +467,7 @@ The human faction maximum is 6 presence chips. ARBITER's permanent presence coun
 | Tied at Established / Contested (Tension marker placed) | 5:1 Translation rate — no other Node benefits available |
 | No presence | 4:1 Translation rate (standard) |
 
-**Portrait amplifier:** Each Quarter a faction holds Established at the Chorus Node, their Chorus Portrait score moves further in its current direction: +1 if currently positive, −1 if currently negative. If at exactly 0 (Ambiguous), no movement occurs. The Chorus amplifies what is already true about you. The ARBITER player moves the Portrait marker at close of Quarter per 00a R01. Full Portrait rules are in Artifact 02b.
+**Portrait amplifier:** Each Quarter a faction holds Established at the Chorus Node, their Chorus Portrait score moves further in its current direction: +1 if currently positive, −1 if currently negative. If at exactly 0 (Ambiguous), no movement occurs. The Chorus amplifies what is already true about you. The ARBITER player moves the Portrait marker at close of Quarter per Governing Rule 5.1. Full Portrait rules are in Artifact 02b.
 
 **Translation rate:** The conversion rate for The Translation scales with presence at the Chorus Node. The Node is ARBITER's district — presence earns access on ARBITER's terms; conflict there earns a consequence. Rate table and timing rule: Artifact 02a §8 (D02a-01). ARBITER states the rate in The Record register before processing any Translation request.
 
