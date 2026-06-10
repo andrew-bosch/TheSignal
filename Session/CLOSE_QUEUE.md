@@ -1,42 +1,56 @@
-## CLOSE QUEUE — Session 77
+## CLOSE QUEUE — Session 78
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 06 | Messaging System | 0.2 | 🟡 In Progress — §9 Signed Off | S69: §5 Design Principles reworked (Accords-are-public model; player-verified compliance; R40a does not apply). §9 Accord Documents overhauled and signed off (L191): §9.1–§9.10 cover Accord form, terms, formation (Beat 4 submission; Debrief execution window), compliance monitoring, breach, completion, dissolution, Portrait scale (L190), manipulation types (Lock/Alter/Transfer). All Accord forms appear as Beat 4 resolution outcomes. §6/7/8/10/11/12 marked non-canonical stubs. C09 Fund references updated (AccordCard → Overture modifier card). |
-NEW: | 06 | Messaging System | 0.3 | 🟡 In Progress — §9 Signed Off (L198) | S77: §9.4 Formation materially revised and re-signed off (L198) — blank AccordForm delivery model (ARBITER → submitting faction at Beat 4); faction drafts and places in Accord Placement Area at discretion (no timing constraint; queued for next Debrief if placed outside Debrief window); cross-Quarter persistence; physical alterations and execution Debrief-only; verbal discussion anytime; forms removed only on withdrawal, verbal decline + no-negotiation, or execution. "Per-card PS consequences" corrected to "Per Art 06 §9.9 Portrait entries." Same-Quarter submission requirement removed. S69: §5 Design Principles reworked. §9.1–§9.10 Accord governance (L190/L191). §6/7/8/10/11/12 non-canonical stubs. |
+---
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: **Last Updated:** 2026-06-09 — Session 75
-NEW: **Last Updated:** 2026-06-09 — Session 77
+OLD: **Last Updated:** 2026-06-09 — Session 77
+NEW: **Last Updated:** 2026-06-10 — Session 78
+
+---
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: - PM05: 00-15 added (Art 00 full narrative revision per §5 P1+P5 — wiki/encyclopedia register, first narrative mention of all elements, downstream narrative migration); 00a-75 ✅ closed (L196).
+AFTER: **Next:** S78 — 04-n40 (C28 Network replacement).
 CONTENT:
-### Session 75 — 2026-06-09
-- XA-47 ✅ — Art 04 §5 P19–P25 added (card design constraints migrated from 00a §7: effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. Art 04 v0.9.34.
-- XA-48 ✅ — Art 07 §9 ARBITER Registers already had four-register content. `00a R02` source ref cleaned.
-- XA-46 ✅ — ~120 rule ID substitutions across 11 files (Art 03, Art 04, Art 07, 02a, 02b, PM03, design_reference.md, gap_card_sketches, 3 memory files). Zero `00-R` strings remain. `00-R29` → `Design Pillar [04-n6 pending]` throughout.
-- PM05: 04-n73 (P1–P18 restatement audit) + XA-49 (design_reference.md reset) added.
 
-### Session 76 — 2026-06-09
-- XA-49 ✅ — design_reference.md rebuilt as master index + sub-reference system. Old monolithic file replaced with: `design_reference.md` (master, ~1K words), `design_reference_card_system.md` (card schema/rules/flags, ~2.5K words), and 9 `ref_*.md` sub-refs (world/narrative, design pillars, components, board narrative, resources, tracking, procedures, card types, taxonomy). All populated from 9 parallel agent reads. Session-open read = master + card system (~3.5K tokens); sub-refs loaded on demand.
+### Session 78 — 2026-06-10
+- C28 v2.0 "Breaking News" written (Network L1 FactionSpecific CovertOp; Beat 2 d100 threshold 50; Exposure×2; forces ARBITER to publicly reveal target faction's first Beat 3 queue entry; places VM-xx Visibility Marker on that grid card as physical reminder; no cross-beat state tracking).
+- VM-xx new ARBITER-held token — placed at Beat 2 resolution on matching Beat 3 grid card; flags public announcement before that op resolves. No board marker. PM05 04-n75 (Beat 2 d100 procedure) and 04-n76 (VM-xx registration + Beat 3 public resolution clause) added as sign-off gates.
+- C40B v1.0 "Live Coverage" written (Network PA FactionSpecific; Beat 4 d100 threshold 50; Exposure×2; Seasonal). Target faction elects each Phase A: comply (lay all held cards face-up on table; covert ops proceed) or resist (dispatch case disabled that Month). Comply once → card clears. Natural expiry: Quarter end. PM05 04-n77 (Art 03 Phase A comply/resist procedure) added as sign-off gate.
+- Art 04 §5 P26 locked (L199) — Card Narrative Test: every card must be expressible as a 1–2 sentence narrative story answering "What is actually happening in the world when this card is played?" If no coherent narrative can be constructed, the card is a design problem.
+- Card Story block added to Art 04 §5 as structural element in card specs (between Design Rationale and Design Checklist; 1–3 sentences of plain-language event narrative). 15th checklist row added (card narrative). C28 and C40B both include Card Story blocks.
+- PM05 additions: 04-n40 updated (design complete S78 — sign-off gates open); 04-n75–04-n80 added (Beat 2 d100 procedure; VM-xx registration; Phase A comply/resist procedure; Card Story structural sweep; content pass; Andy review).
+- Memory files updated: feedback_narrative_first_design.md, feedback_card_spec_conventions.md, feedback_card_design_review_workflow.md. design_reference_card_system.md updated (P26 governing rule; design flag #12; S78 timestamp).
+**Decisions locked:** L199 (Art 04 §5 P26 — Card Narrative Test; Card Story block added to spec structure).
+**Next:** S79 — C42 per-token cost resolution.
 
-### Session 77 — 2026-06-09
-- 04-n28 ✅ — Overture full spec written to Art 04 §11.8 (Modifier/Instant/All; outcome addition mechanic; ARBITER delivers blank AccordForm at Beat 4 on any host PA outcome; faction drafts and places in Accord Placement Area at discretion; no timing constraint; cross-Quarter; target faction named on form, not at Phase B). §11.7 Outcome addition row expanded with operational mechanics.
-- Art 06 §9.4 materially revised and re-signed off (L198): blank AccordForm delivery model replaces drafted-form-at-Beat-4; faction drafts at discretion; form placed in Accord Placement Area anytime after drafting (queued for next Debrief); cross-Quarter persistence (no End-of-Quarter removal); physical alterations and execution Debrief-only; verbal discussion anytime; forms removed only on withdrawal, verbal decline + no further negotiation by end of Debrief, or execution. Art 06 v0.3.
-- P08 Table an Accord, P10 Infrastructure Bond, C09 Fund, Overture: all updated to blank AccordForm delivery model. AccordOffer marker concept removed throughout. `persistence = Seasonal` corrected to `Immediate` on P08 and P10. `success` fields updated. Design Rationale, checklist rows, arbiter_notes rewritten. Outstanding Issues added to P08 and P10.
-- PM05 04-n74 added: Accord initiation cost/value review — C09 (2 Capital + threshold 50), P08 (2 native, Automatic), P10 (2 Capacity + 2 native, Automatic). AccordForm cross-Quarter persistence changes the value proposition.
-**Decisions locked:** L198 (Art 06 §9 re-signed off v0.3 — blank AccordForm delivery model; cross-Quarter persistence).
-**Next:** S78 — 04-n40 (C28 Network replacement).
+---
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | 04 | Card System | 0.9.34 |
+NEW: | 04 | Card System | 0.9.35 |
+
+---
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: S75: §5 P19–P25 added (card design constraints from 00a §7 — XA-47 ✅). XA-46 rule ID sweep applied. v0.9.34. |
+NEW: S75: §5 P19–P25 added (card design constraints from 00a §7 — XA-47 ✅). XA-46 rule ID sweep applied. v0.9.34. S77: Overture full spec written (§11.8; Modifier/Instant/All; outcome addition). §11.7 Outcome addition formalized. P08/P10/C09 updated to blank AccordForm model. S78: P26 locked L199 (Card Narrative Test). Card Story block added §5 (between Design Rationale and Design Checklist). 15th checklist row added. C28 "Breaking News" v2.0 (Network CovertOp; Beat 2 d100; VM-xx visibility marker). C40B "Live Coverage" v1.0 (Network PA; Seasonal; comply/resist hand-visibility model). v0.9.35. |
+
+---
 
 ### COMMIT
-source ~/Projects/credentials.env && git add -A && git commit -m "session 77 — Overture full spec; Art 06 §9.4 blank form model (L198); P08/P10/C09 updated" && git push
+source ~/Projects/credentials.env && cd ~/Projects/TheSignal && git add -A && git commit -m "session 78 — Breaking News, Live Coverage, P26 Card Narrative Test, Card Story block" && git push
+
+---
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
+
+---
 
 ### DELETE
 FILE: /home/abosch/Projects/TheSignal/Session/CLOSE_QUEUE.md

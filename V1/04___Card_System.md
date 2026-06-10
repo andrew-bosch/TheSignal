@@ -184,6 +184,10 @@ The following phrases are defined once and used as written across all card entri
 
 Cards do not define or qualify these phrases. *Formerly 00a R28.*
 
+**Principle 26 — Every card must be expressible as a narrative story.**
+
+Each card represents something that happens in New Meridian — a decision, a gambit, an act of power or desperation. A card passes the Narrative Story test if a player can answer *"What is actually happening in the world when this card is played?"* in one or two plain sentences. If no coherent narrative can be constructed — if the card's effect reads only as a mechanical rule with no discernible real-world analog — the card is a design problem. Narrative is not decoration applied after mechanics are settled; it is the first test of whether the mechanics are right. The story drives the card, not the reverse. *See Art 04 §5a — Narrative Anchor; Art 00 §5 P1/P5; Design Pillar 4.6b.*
+
 ---
 
 ### Design Rationale
@@ -201,6 +205,14 @@ Each card entry opens with a Design Rationale block. The Design Rationale docume
 
 ---
 
+### Card Story
+
+The Card Story block immediately follows the Design Rationale and precedes the Design Checklist. It contains 1–3 sentences of plain-language narrative answering: *"What is actually happening in the world when this card is played?"* The story should read as an event in New Meridian — not as a description of the card's mechanical effect.
+
+Design Rationale explains *why* the card is designed a particular way. Card Story tells *what happens*. The two are separate: Design Rationale addresses mechanical intent, design objectives, and callouts. Card Story is the human event. A card with a strong Design Rationale can still fail P26 — and a compelling Card Story that doesn't survive mechanical scrutiny is still a design problem. Both must hold independently.
+
+---
+
 ### Design Checklist
 
 Every card entry includes a design checklist table immediately before the Python spec, followed by a Status table. The checklist and status table together gate a card's progression through review and sign-off.
@@ -213,7 +225,7 @@ The **Artifact ref** column in each card's checklist should cite the specific se
 |--|-------------|-----------------|------------|
 | Status | | | |
 
-- **Design Pass** ✓ — checklist evaluation complete; all 14 rows assessed
+- **Design Pass** ✓ — checklist evaluation complete; all 15 rows assessed
 - **Issues Resolved** ✓ — all flagged issues addressed; blank if open issues remain
 - **Signed off** ✓ — Andy's explicit approval; record session number (e.g., ✓ S49); blank until signed
 
@@ -235,6 +247,7 @@ A card with no issues from the design pass gets ✓ in both Design Pass and Issu
 | Supported by components | Do all referenced components and cost resources exist? | Art 02a §6–§8 |
 | Supported by game procedure | Are all ARBITER and player actions implied by this card covered by Art 03 procedure? Flag any implied action not yet procedurally defined as a gap. | Art 03 |
 | Data schema validation | Are all required fields from §6.1 present in the card spec? Do field values match §6.2 data dictionary types — e.g., `affinity` is `ConditionalExpr \| None` (not a tag); `doctrine_mod` is present and correctly typed; `persistence_condition`/`persistence_effect` are None unless `persistence=Permanent`; all enum values are valid per §6.3? | Art 04 §6.1–§6.3 |
+| Card narrative | Is a Card Story block present and populated? Does it answer "What is actually happening in the world when this card is played?" in plain language — as an event in the world, not a restatement of the mechanic? Does the mechanic follow naturally from that story, or does the narrative feel retrofitted? If the story cannot be told plainly, the card should be revisited. *(P26)* | Art 04 §5 Card Story; Art 00 §5 P1/P5 |
 
 ---
 
@@ -5496,7 +5509,7 @@ P_StandingInjunction = Card(
 |------|------|
 | [C26](#c26-leak) | Leak |
 | [C27](#c27-disclosure-loop) | Disclosure Loop |
-| [C28](#c28-open-channel) | Open Channel |
+| [C28](#c28-breaking-news) | Breaking News |
 | [C29](#c29-network-cascade) | Network Cascade |
 | [C30](#c30-community-anchor) | Community Anchor |
 | [—](#network-sacrifice) | Sacrifice |
@@ -5622,70 +5635,95 @@ C27 = Card(
     portrait    = {},
     narrative   = "The act of disclosure is not only a tactic. It is a resource. The Network learned this before anyone else at this table.",
     perspectives = {Network: "We revealed something. Now we can reveal something more. The loop is already running."},
-    design_note  = "Replaces C27 Source Protection (retired S51). Source Protection was doctrinally misaligned — protecting attribution is Ghost's register, not Network's. Pairs with C26 Leak and C28 Open Channel.",
+    design_note  = "Replaces C27 Source Protection (retired S51). Source Protection was doctrinally misaligned — protecting attribution is Ghost's register, not Network's. Pairs with C26 Leak and C28 Breaking News.",
     arbiter_note = "At Beat 3 cleanup, check whether any Network Reveal card resolved successfully this round. If yes, deliver 1 Exposure to Network's resource pool. If no Reveal resolved, card takes effect but produces nothing — the slot cost was the investment.",
 )
 ```
 
 ---
 
-### C28 — OPEN CHANNEL
+### C28 — BREAKING NEWS
 [↑ Covert Operations](#network-covert-operations)
 
 #### Design Rationale
-Network's pre-emptive transparency card — submitted at Beat 2, redirects all ARBITER-to-faction communications destined for a named faction to public delivery for the rest of the round. Where C26 Leak reveals and cancels one committed operation before it fires, Open Channel opens the notification pipeline before it runs: any NotificationSlip or IntelDeliverySlip generated for the target this round is delivered to the whole table instead of privately. The Beat 2 timing is essential — must be placed before Beat 3 notifications are generated. Does not intercept Hidden Objective or Classified Directive communications (ARBITER-internal constructs, not faction-to-faction notifications). Portrait movements are ARBITER-private and not in scope.
+Network's forced-transparency Beat 2 card — submits into the Beat 2 row to force public revelation of the target faction's first committed Beat 3 operation before the round fires. The operation still resolves; it simply does so with the table informed. Exposure×2 is the price of intelligence at this scale; threshold 50 introduces a risk the table can observe and react to.
+
+Distinct from C26 Leak: Leak cancels before firing (Beat 3), with the revelation as a side effect of destruction. Breaking News reveals before firing (Beat 2), with no cancellation — the operation proceeds in public. Two different Network postures: *stop it* vs. *ensure everyone watches it happen*.
+
+Distinct from C17 Intercept: C17 delivers a private IntelDeliverySlip to Ghost — intelligence for one faction's use. Breaking News announces publicly — the whole table knows.
+
+Crit success reveals the full queue, a significant information advantage that resets all players' tactical picture before Beat 3.
+
+*Replaces C28 Open Channel (retired S68). Open Channel required ARBITER to maintain a notification redirect state from Beat 2 through Beat 3 — proactive cross-beat tracking, Governing Rule 6.1 violation. Breaking News is point-in-time: ARBITER announces at Beat 2 and places a Visibility Marker (VM-xx); no state to carry forward.*
+
+#### Card Story
+
+A Network operative submits intelligence on a target faction's committed operation — and instead of keeping it, broadcasts it. Before Beat 3 fires, the table knows what's coming. The operation proceeds; it just does so in public.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Pre-emptive transparency — redirects notification pipeline before generation; distinct from C26 (pre-execution op cancellation, S68 redesign) | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Network perspective by design — forced transparency as doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Network only; Exposure×2 for round-wide redirect; Beat 2 timing essential; HO/CD exclusion confirmed; Portrait events out of scope (ARBITER-private) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — notification pipeline redirect is Network-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Reveal/NotificationSlip — subject corrected S68 (was PrivateCommunications, not a registered component); C26/C28 overlap resolved S68 (C26 is now pre-execution cancellation, functionally distinct) | Art 04b §4, §5 |
-| Balance | ✓ | Exposure×2, Beat 2 Automatic, round-wide redirect — higher cost than C26 justified by scope; acting faction identity not announced at resolution | Art 02a §6–§7 |
-| Effect duration | ✓ | Until(round.end): redirect state active from Beat 2 resolution through end of Beat 3 notification generation; no carry-forward | — |
-| Persistence | ✓ | Until(round.end) — corrected S68; Immediate was wrong (effect must survive through Beat 3); ARBITER holds round-state note, no new physical marker required at L1 | Art 04 §6 |
-| Trigger validity | ✓ | N/A — Beat 2 placement fires on submission | — |
-| Portrait validity | ✓ | Network +1 submitter; forced transparency aligns with broadcast doctrine | Art 04 §6.2 |
+| Action fit | ✓ | Beat 2 forced public reveal before Beat 3 fires — distinct from C26 (pre-execution cancel, Beat 3, no public announcement) and C17 (private IS-xx to Ghost, Beat 2) | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Network perspective — forced transparency at the moment of commitment | Art 00 §7 |
+| Doctrine alignment | ✓ | Network only; Exposure×2; threshold 50; fizzle risk if target has no committed ops; crit reveals full queue | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — forced public reveal of committed ops is Network-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ⚠ | Information/Reveal/CovertOperation — subject = CovertOperation needs 04b validation; no registered grid-card subject type currently | Art 04b §4, §5 |
+| Balance | ✓ | Exposure×2 at threshold 50; fizzle risk on empty queue; crit is high-value (full queue exposure) — appropriate variance for Network initiative card | Art 02a §6–§7 |
+| Effect duration | ✓ | Immediate — announcement fires at Beat 2; VM-xx handles Beat 3 public resolution flag; VM-xx is transient game-state on the grid card, not a card-level persistence field | — |
+| Persistence | ✓ | Immediate — card fully resolved at Beat 2; VM-xx is physical game state managed per Art 03 procedure | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None | — |
+| Portrait validity | ✓ | Network +1 submitter — forced transparency is core doctrine; FactionSpecific card, no other portrait entries | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
-| Supported by components | ✓ | NotificationSlip and IntelDeliverySlip confirmed in scope; NotificationSlip Art 02 registration to confirm (referenced in C17 — likely registered; Outstanding Issue) | Art 02a §6–§8; Art 07 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; ARBITER notes redirect state on own tableau for round; delivers target faction's slips publicly through Beat 3 | Art 03 §9, §11 |
+| Supported by components | ⚠ | VM-xx (Visibility Marker) — pending registration in 00b §4; gate on sign-off (04-n76) | Art 02a §6–§8; Art 07 |
+| Supported by game procedure | ⚠ | Beat 2 d100 procedure not yet in Art 03 (04-n75); VM-xx Beat 3 public resolution clause not yet in Art 03 (04-n76); both gate on sign-off | Art 03 §9, §11 |
+| Data schema validation | ✓ | All §6.1 fields present; subject = CovertOperation flagged for 04b taxonomy validation | Art 04 §6.1 |
 
 #### Outstanding Issues
 
-- **NotificationSlip Art 02 registration:** Confirm registered in Art 02a or 02b (referenced in C17 success field — likely registered; verify before Issues Resolved is set).
+- **Beat 2 d100 procedure:** Art 03 Beat 2 has no dice resolution procedure — C17 Intercept has the same gap. Add general d100 resolution block to Art 03 §11 Beat 2 (PM05 04-n75). Gate on sign-off.
+- **VM-xx registration:** Visibility Marker not yet registered in 00b §4. Registration required; Art 03 Beat 3 Step 1 public resolution clause required (PM05 04-n76). Gate on sign-off.
+- **Taxonomy subject:** subject = CovertOperation — no registered grid-card subject type exists. Needs 04b validation pass.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
-
-*Retired to L2 — S68. Card requires ARBITER to hold active redirect state across beats (Beat 2 → Beat 3): Governing Rule 6.1 violation. Only valuable content (IntelToken delivery exposure) depends on C17 rich attribution output — also L2-native (PM05 04-n39). No valid L1 execution path. Network L1 replacement needed (PM05 04-n40).*
+| Status | ✓ S78 | | |
 
 ```python
 C28 = Card(
-    id=28, version="v1.1",
-    name    = "Open Channel",
-    tagline = "Force all ARBITER notifications to a named faction to be delivered publicly for the round.",
+    id=28, version="v2.0",
+    name    = "Breaking News",
+    tagline = "Force ARBITER to publicly reveal the target faction's first committed operation before Beat 3 resolves.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
-    layer   = Information, function = Reveal, subject = NotificationSlip,
-    beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
-    persistence     = Until(round.end),
-    target_district=None, target_faction=faction(named_opponent), target_object=NotificationSlip,
-    affinity=None,
-    restriction=None,
+    layer   = Information, function = Reveal, subject = CovertOperation,  # 04b validation needed
+    beat=2, resolution=d100, threshold=50, ring_mod=None, trigger=None,
+    resolution_type = "Probabilistic", outcome_type=None,
+    persistence     = Immediate,
+    target_district = None,
+    target_faction  = faction(named_opponent),
+    target_object   = None,
+    affinity        = None,
+    restriction     = "target_faction != acting_faction",
     cost        = resource.faction(acting).exposure * 2,
-    success     = game.redirect(faction(target).notifications(round=game.round, types=[NotificationSlip, IntelDeliverySlip]), destination=public),
-    successcrit=None, fail=None, failcrit=None,
+    success     = [
+        game.announce(faction(target).beat3_queue[0], fields=[name, type, targets], destination=public),
+        game.place(VM_xx, on=faction(target).beat3_queue[0]),
+    ],
+    successcrit = [
+        game.announce(faction(target).beat3_queue[:], fields=[name, type, targets], destination=public),
+        game.place(VM_xx, on=faction(target).beat3_queue[:]),
+    ],
+    fail        = None,
+    failcrit    = game.dispatch(NotificationSlip(recipient=faction(target))),
     portrait    = {Network: PortraitEntry(submitter=+1)},
-    narrative   = "Secret communications between powerful institutions are themselves a form of harm. Opening the channel is the argument.",
-    perspectives = {Network: "If it happened, it should be known. We are simply making that principle operational."},
-    design_note  = "Redesigned S68: subject corrected from PrivateCommunications (unregistered) to NotificationSlip; persistence corrected from Immediate to Until(round.end) — effect must survive through Beat 3 notification generation; C26/C28 D-04-04 overlap resolved (C26 redesigned S68 as pre-execution cancellation, functionally distinct). Scope: NotificationSlips and IntelDeliverySlips TO the target faction; excludes HO/CD (ARBITER-internal) and Portrait events (ARBITER-private).",
-    arbiter_note = "Network has opened faction X's channel this round. From Beat 2 resolution through end of Beat 3: any NotificationSlip or IntelDeliverySlip destined for faction X is delivered publicly to the table instead of privately. Note the redirect state on your tableau. Hidden Objective and Classified Directive communications are not affected. Portrait movements are not affected. Do not announce Network as the acting faction.",
+    narrative   = "The story was going to come out. We simply chose the timing.",
+    perspectives = {
+        Network: "We don't ask permission to broadcast. We decide when.",
+    },
+    design_note  = "Replaces C28 Open Channel (retired S68 — Governing Rule 6.1 cross-beat state violation). Fills Network's forced-transparency FactionSpecific slot at L1. Beat 2: ARBITER announces target's first Beat 3 queue entry to all players; VM-xx placed to flag public Beat 3 resolution. Distinct from C26 Leak (Beat 3 cancel + reveal) and C17 Intercept (private IS-xx to Ghost). Fizzle: if target has no committed Beat 3 ops at Beat 2, announce fizzle; cost spent. Second Beat 2 d100 card alongside C17 — procedure gap in Art 03 tracked in 04-n75.",
+    arbiter_note = "Network has played Breaking News targeting faction X. Roll d100 (threshold 50 + PS modifier). Success: check faction X's Beat 3 queue. If empty: announce 'No operations queued for faction X — Breaking News fizzles'; cost spent, no further effect. Otherwise: identify faction X's first entry in Beat 3 resolution order; announce to all players: card name, type, declared targets; place VM-xx on that card in the grid. VM-xx procedure at Beat 3: when this card is reached, announce it publicly, roll d100 visibly, announce outcome to table, then remove VM-xx. Do not announce Network as acting faction. Crit success: reveal and place VM-xx on ALL of faction X's Beat 3 queue entries. Fail: cost spent, no announcement. Crit fail: dispatch NotificationSlip to faction X only. Do not announce Network.",
 )
 ```
 
@@ -5895,6 +5933,7 @@ C37 = Card(
 |------|------|
 | [P13](#p13-public-disclosure) | Public Disclosure |
 | [P14](#p14-community-rally) | Community Rally |
+| [—](#network-live-coverage) | Live Coverage |
 
 ### P13 — PUBLIC DISCLOSURE
 [↑ Public Acts](#network-public-acts)
@@ -6060,62 +6099,86 @@ P14 = Card(
 
 ---
 
-### Network — FORCED DISCLOSURE *(placeholder name)*
+### Network — LIVE COVERAGE
 [↑ Public Acts](#network-public-acts)
 
-*Successor to C40 Option B. PA stub — mechanics TBD.*
-
 #### Design Rationale
-Network publicly declares that a named faction must operate with revealed submissions for the remainder of the Quarter. The declaration is the act — once made at Beat 4, the named faction is bound to submit covert operations face-up for all subsequent Months this Quarter. Network deploys institutional information leverage to force transparency on an opponent. Self-policing per Governing Rule 6.1a.
+Network's forced-transparency PA — the broadcaster turns its full institutional reach on a named faction and makes them The Story. The declaration is public and immediate: from the next Phase A, the named faction is under live coverage. They must choose each Phase A whether to cooperate (hand face-up on the table, covert ops proceed) or go dark (dispatch case disabled this Month, hand stays hidden). The scrutiny doesn't end by fighting it; it ends when the faction gives the interview.
+
+Comply for one full Phase A → card clears. The faction has been transparent enough; Network moves on. The strategic question is *when* to give the interview — a faction holding strong ops for Month 3 may choose to absorb the disability in Month 2 to protect the play, then comply in Month 3 when there's less to expose.
+
+*Note: cards laid face-up during compliance are still "in hand" for all game purposes — card counts, submittability, and eligibility are unchanged. The open hand is a visibility state, not a mechanical restriction.*
+
+*Successor to C40 Option B (Weaponized Transparency, retired S70). Replaces dispatch-case forced-reveal mechanism — hand visibility is the simpler, more narratively grounded L1 mechanism.*
+
+#### Card Story
+
+Network turns its full broadcast infrastructure on a named faction, making them The Story. Under live coverage, that faction faces a choice each Phase A: open their hand to the table and operate in full view, or go dark and forfeit covert submissions entirely. The scrutiny doesn't end by fighting it — it ends when the faction gives the interview.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | — | Forced revealed play — Network doctrine leverage applied to opponent's Dispatch | Art 00 §7 |
-| Voice fit | — | TBD | Art 00 §7 |
-| Doctrine alignment | — | TBD | Art 00 §7; Art 04 §6.5 |
-| Card type fit | — | PoliticalAct / FactionSpecific (Network) | Art 04 §6.2 |
-| Taxonomy fit | — | TBD | Art 04b §4, §5 |
-| Balance | — | TBD — cost, threshold, duration scope | Art 02a §6–§7 |
-| Effect duration | — | Seasonal — persists for remaining Months of Quarter after declaration | — |
-| Persistence | — | Seasonal | Art 04 §6 |
-| Trigger validity | — | trigger = None | — |
-| Portrait validity | — | TBD | Art 04 §6.2 |
-| Supported by zones | — | target_district = None — faction-targeted | Art 01 §6–§7 |
-| Supported by components | — | TBD — forced-reveal marker or self-policing only? | Art 02a §6–§8 |
-| Supported by game procedure | — | No Art 03 Dispatch procedure for forced-reveal PA exists. Must be written as generalizable procedure before Issues Resolved. Self-policing enforcement per Governing Rule 6.1a. | Art 03 §9 |
+| Action fit | ✓ | Unique PA effect — Seasonal hand-visibility obligation on named faction; comply/resist model with genuine decision friction per Month | Art 00 §7 |
+| Voice fit | ✓ | Network perspective (accountability as doctrine) + Directorate counter (institutional authority contested); FactionSpecific PA — two perspectives sufficient | Art 00 §7 |
+| Doctrine alignment | ✓ | Network only; Exposure×2; threshold 50; Seasonal persistence; comply-once clearing models natural media-cycle end | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PoliticalAct / FactionSpecific (Network) — public declaration of broadcast accountability; Network-exclusive institutional leverage | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ⚠ | Information / Reveal / FactionHand — FactionHand not a registered subject type; needs 04b validation | Art 04b §4, §5 |
+| Balance | ✓ | Exposure×2 at threshold 50; comply-to-clear limits maximum duration; resist penalty (covert ops disabled) is real cost; crit adds immediate PS pressure | Art 02a §6–§7 |
+| Effect duration | ✓ | Seasonal — clears at Quarter end OR when target complies once (whichever is first) | — |
+| Persistence | ✓ | Seasonal; `persistence_condition` = target complied for one Phase A; `persistence_effect` = Phase A comply/resist obligation | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None | — |
+| Portrait validity | ✓ | Network +1 submitter; FailCrit Network −1 (failed broadcast backfires — reckless accusation without traction); FactionSpecific, no other entries | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
+| Supported by components | ✓ | No new component required — open hand is a physical visibility state, not a board marker; comply/resist is self-policing per Governing Rule 6.1a | Art 02a §6–§8 |
+| Supported by game procedure | ⚠ | Art 03 Phase A procedure for Live Coverage comply/resist not yet written (PM05 04-n77). Gate on sign-off. | Art 03 §9, §11 |
+| Data schema validation | ✓ | All §6.1 fields present; FactionHand subject flagged for 04b validation | Art 04 §6.1 |
 
 #### Outstanding Issues
 
-- **Forced-reveal Dispatch procedure:** No Art 03 procedure exists for a faction required to submit covert ops face-up. Must be written as a generalizable PA effect before this card is finalized.
-- **Seasonal scope:** Does forced-reveal apply from the next Month only, or retroactively to the current Month? Clarify interaction with Beat 4 timing.
-- **Card name:** Placeholder — confirm before sign-off.
+- **Art 03 Phase A procedure:** No procedure exists in Art 03 for the Phase A comply/resist obligation. Must be written as a generalizable PA effect before Issues Resolved (PM05 04-n77). Gate on sign-off.
+- **Taxonomy subject:** subject = FactionHand — not a registered subject type. Needs 04b validation pass.
 - **Card ID:** TBD — pending PM05 04-n1 numbering pass.
-- **Cost and threshold:** TBD — probabilistic or transactional? Intel cost? PS framing?
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
-
-*Stub S70 — successor to C40 Option B. Art 03 Dispatch procedure and full PA form required before design pass.*
+| Status | ✓ S78 | | |
 
 ```python
-# STUB
-Card(
-    id=TBD,  version="v0.1",
-    name    = "Forced Disclosure",  # placeholder
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Network,
-    layer   = Information,  function = Reveal,  subject = TBD,
-    beat    = 4,
-    resolution  = TBD,
-    persistence = Seasonal,
+C40B = Card(
+    id=TBD, version="v1.0",
+    name    = "Live Coverage",
+    tagline = "Force a named faction to play with their hand visible or forfeit covert submissions, each Phase A for the remaining Months of the Quarter.",
+    type    = PoliticalAct, subtype = FactionSpecific, faction = Network,
+    layer   = Information, function = Reveal, subject = FactionHand,  # 04b validation needed
+    beat=4, resolution=d100, threshold=50, ring_mod=None, trigger=None,
+    resolution_type = "Probabilistic", outcome_type=None,
+    persistence     = Seasonal,
+    persistence_condition = "target_faction complied (open hand) for one full Phase A this Quarter → card clears at end of that Phase A; or Quarter end",
+    persistence_effect    = "Each Phase A of remaining Months: target faction elects comply (lay all held cards face-up on table; covert ops proceed normally this Phase A) or resist (dispatch case disabled this Month — no covert submissions). Comply once → card clears.",
     target_district = None,
     target_faction  = faction(named_opponent),
-    cost    = TBD,
-    success = faction(target).dispatch_mode == Revealed,  # all remaining Months this Quarter
+    target_object   = None,
+    affinity        = None,
+    restriction     = "target_faction != Network",
+    cost        = resource.faction(acting).exposure * 2,
+    success     = game.activate(LiveCoverage_obligation, target=faction(target)),
+    successcrit = (
+        game.activate(LiveCoverage_obligation, target=faction(target)),
+        faction(target).standing -= 1,
+    ),
+    fail        = None,
+    failcrit    = faction(acting).standing -= 1,
+    portrait    = {Network: PortraitEntry(submitter=+1, failcrit=-1)},
+    narrative   = "The story is already written. The only question is whether the subject chooses the cameras or the consequences.",
+    perspectives = {
+        Network:     "We are not exposing secrets. We are establishing accountability. The distinction matters to us.",
+        Directorate: "Network has appointed itself an oversight authority. The Directorate notes this. It will not be forgotten.",
+    },
+    design_note  = "Successor to C40 Option B (Weaponized Transparency, retired S70). Hand-visibility model replaces dispatch-case forced-reveal — simpler L1 execution, genuine comply/resist decision friction. Comply once → card clears (the faction gave the interview; Network moves on). Resist → covert submissions disabled that Month; card persists. Natural expiry: Quarter end. SuccessCrit: obligation activates + target −1 PS (story breaks big). FailCrit: Network −1 PS (reckless broadcast, story didn't land). Art 03 Phase A procedure required (04-n77). Subject = FactionHand — 04b validation needed.",
+    arbiter_note = "Network has declared Live Coverage against faction X. Place card in Network's active PA area, face-up; faction X announced. Effect begins next Phase A. Each Phase A while Live Coverage is active: at start of Phase A announce — 'Live Coverage is active against [Faction X]. Faction X: comply (lay all held cards face-up on your table area for Phase A — cards remain in hand; covert ops proceed) or resist (forfeit covert submissions this Month).' If faction X complies: covert submissions proceed normally; at end of Phase A, remove Live Coverage from Network's active PA area. If faction X resists: faction X does not open their dispatch case this Phase A; Live Coverage remains in play. Cards laid face-up during compliance are still counted as in hand. Network identity as declaring faction is already public (Phase B declaration).",
 )
 ```
 

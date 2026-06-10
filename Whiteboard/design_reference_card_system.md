@@ -1,6 +1,6 @@
 # Design Reference — Card System
 *Load for all card spec work: governing rules, card schema, design flags.*
-*Updated: S76.*
+*Updated: S78.*
 
 ---
 
@@ -240,6 +240,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | **Art 04 §5 P23** | Ring modifier cards target only their ring's districts | Modifier card design |
 | **Art 04 §5 P5** HARD | React conditions must be publicly observable — no hidden triggers | All React cards |
 | **Art 04 §5 P24** | Corrupt applies only to physically written/recorded values (Intel tokens, Accords) | Corrupt function cards |
+| **Art 04 §5 P26** (locked S78, L199) | Every card must be expressible as a 1–2 sentence narrative story. If "What is happening in the world when this card is played?" has no coherent answer, the card is a design problem. Narrative is the first test of whether mechanics are right. | All cards — checked via Card Story block + checklist row 15 |
 | **Design Pillar [04-n6 pending]** | Ghost may use C05 (Gather) without adjacency; all other Ghost cards require adjacency | Ghost card design |
 | **Design Pillar 4.6b** | Missing Author Vacuum — no card flavor, perspective, or authored content may assert or imply any faction knows what the message to the Chorus should say | Narrative/perspectives fields |
 | **Design Pillar 4.7b** | ARBITER Cognitive Efficiency — every rule, card effect, and procedure involving ARBITER must minimize ARBITER player cognitive load. Preference order: (1) physical objects carry state, (2) faction players self-police, (3) general procedures applied uniformly, (4) ARBITER-specific per-instance only as last resort | All cards with ARBITER-facing content |
@@ -365,3 +366,4 @@ Before writing any new card spec, check:
 9. **Card-as-condition?** → use Permanent + define `persistence_condition` + define `persistence_effect` + no board marker
 10. **New ARBITER behavior?** → define as generalizable procedure in Art 03/07 first; `arbiter_note` references, does not define (Design Pillar 4.7b + Governing Rule 6.1)
 11. **Narrative field** → Missing Author Vacuum: no flavor implies any faction knows what the message to the Chorus should say (Design Pillar 4.6b)
+12. **Card Story block** → Can you write 1–3 sentences answering "What is actually happening in the world when this card is played?" as an event in New Meridian (not a mechanical description)? If not, redesign before finalizing spec. (Art 04 §5 P26 — locked S78)

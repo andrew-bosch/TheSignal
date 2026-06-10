@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 77 (active) | Updated: 2026-06-09**
+**Session 78 (active) | Updated: 2026-06-10**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -56,9 +56,11 @@ S77 complete. S78 opens here.
 
 **S77 accomplishments:** 04-n28 ✅ — Overture full spec written to Art 04 §11.8 (Modifier/Instant/All; outcome addition; ARBITER delivers blank AccordForm at Beat 4; faction drafts and places at discretion; no timing constraint; cross-Quarter). §11.7 Outcome addition formalized. Art 06 §9.4 materially revised and re-signed off (L198): blank AccordForm delivery model; faction drafts at discretion; form placed in Accord Placement Area anytime after drafting; cross-Quarter persistence; physical alterations and execution Debrief-only; verbal discussion anytime. P08, P10, C09, Overture all updated to blank AccordForm model; AccordOffer marker concept removed throughout. PM05 04-n74 added (Accord initiation cost/value review — C09/P08/P10).
 
-**S78 entry point:** 04-n40 (C28 Network replacement).
+**S78 accomplishments:** C28 v2.0 "Breaking News" (Network L1 FactionSpecific CovertOp; Beat 2 d100 threshold 50; Exposure×2; forces ARBITER to publicly reveal target faction's first Beat 3 queue entry + places VM-xx Visibility Marker on that grid card — physical reminder; no cross-beat cognitive state). VM-xx: new ARBITER-held token registered via PM05 04-n76. C40B v1.0 "Live Coverage" (Network PA FactionSpecific; Beat 4 d100 threshold 50; Exposure×2; Seasonal; target faction elects each Phase A: comply = hand face-up, ops proceed; resist = dispatch disabled that Month; comply once → card clears). Art 04 §5 P26 locked L199 — Card Narrative Test (every card expressible as 1–2 sentence narrative story; if not, design problem). Card Story block added to Art 04 §5 and card spec structure (between Design Rationale and Design Checklist; 1–3 sentences of plain-language event narrative). 15th checklist row added. PM05: 04-n40 updated (design complete S78); 04-n75–04-n80 added (Beat 2 d100 procedure, VM-xx registration, Phase A comply/resist procedure, Card Story structural sweep, content pass, Andy review). Memory + design_reference_card_system.md updated (S78).
 
-**Priority order:** 04-n40 (C28 replacement) → C40B narrative → C42 per-token cost resolution → 04-n74 (Accord cost/balance review).
+**S79 entry point:** C42 per-token cost resolution.
+
+**Priority order:** C42 per-token cost resolution → 04-n74 (Accord cost/balance review) → C28 sign-off gates (04-n75/76) → C40B sign-off gate (04-n77).
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs; 04-n73 (P1–P18 restatement audit).
 
@@ -174,7 +176,14 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **04-n26** | HIGH — Component interaction design pass: 12+ components needing lifecycle design before Art 02 registration | High — S65+ |
 | **04-n27** | HIGH (before accord) — Art 03 procedure gaps: 6 holes blocking Issues Resolved on multiple cards | High — S65+ |
 | **04-n28** | Overture full spec written (Art 04 §11.8). §11.7 Outcome addition formalized. Art 06 §9.4 re-signed off (L198). | ✅ S77 |
+| **04-n40** | C28 Network replacement (Breaking News v2.0) — design complete S78. Gates: 04-n75 (Beat 2 d100 procedure) + 04-n76 (VM-xx + Beat 3 public resolution) must be resolved before sign-off. | 🟡 Design complete S78 — sign-off gates open |
 | **04-n74** | Accord initiation cost/value review — C09 (2 Capital + threshold 50), P08 (2 native, Automatic), P10 (2 Capacity + 2 native, Automatic). AccordForm cross-Quarter persistence changes value proposition. | Open — S77+ |
+| **04-n75** | Art 03 Beat 2 d100 procedure — C28 Breaking News is the first Beat 2 dice roll. Beat 2 resolution procedure (§11) currently handles only Automatic cards. Requires new sub-step for probabilistic resolution at Beat 2. | Open — S78 |
+| **04-n76** | VM-xx component registration (Art 00b §4) + Art 03 Beat 3 Step 1 public resolution clause. VM-xx = ARBITER-held Visibility Marker; placed on Beat 3 grid card at Beat 2; flags public announcement of op name/type/targets before dice roll. | Open — S78 |
+| **04-n77** | Art 03 Phase A procedure — Live Coverage comply/resist model requires Phase A sub-step: ARBITER checks active C40B obligations; target faction elects comply (hand face-up) or resist (dispatch disabled this Month). | Open — S78 |
+| **04-n78** | Card narrative structural sweep — add Card Story block (between Design Rationale and Design Checklist) + 15th checklist row to ALL existing cards in Art 04. | Open — S78 |
+| **04-n79** | Card narrative content pass — populate Card Story blocks for all existing cards (those receiving blocks in 04-n78). | Open — S78 |
+| **04-n80** | Andy review pass — review all Card Story blocks after 04-n79 content pass. | Open — S78 |
 | **XA-46** | 00a rule ID sweep — all 11 files. | ✅ S75 |
 | **XA-47** | Art 04 §5 P19–P25 added (card design constraints from 00a §7). | ✅ S75 |
 | **XA-48** | Art 07 §9 ARBITER Registers already had content. Source ref cleaned. | ✅ S75 |
@@ -187,6 +196,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L199** (S78): Art 04 §5 Principle 26 — Card Narrative Test locked. Every card must be expressible as a 1–2 sentence narrative story answering "What is actually happening in the world when this card is played?" If no coherent narrative can be constructed, the card is a design problem. Narrative is not decoration; it is the first test of whether mechanics are right. Card Story block added to Art 04 §5 as structural element in card specs (between Design Rationale and Design Checklist); 15th checklist row added. Cards C28 Breaking News and C40B Live Coverage include Card Story blocks. PM05 04-n78/79/80 gate full sweep.
 - **L198** (S77): Art 06 §9 re-signed off (v0.3). §9.4 Formation materially revised: blank AccordForm delivered by ARBITER to submitting faction at Beat 4; faction drafts and places in Accord Placement Area at discretion (no timing constraint; queued for next Debrief); physical alterations/execution Debrief-only; verbal discussion anytime; cross-Quarter persistence; forms removed only on withdrawal, declined+no-negotiation, or execution. Overture full spec written (Art 04 §11.8). §11.7 Outcome addition formalized. P08/P10/C09 updated to blank AccordForm model.
 - **L197** (S74): Art 01 v2.0 signed off. §6 Component Physical Forms column → "Proposed Form" (non-binding, not material spec). Open: 01-10 (table → Art 02a + Design Requirements column); 01-11 (scope overhaul — §8→03-init, §11/§12→downstream).
 - **L196** (S74): Art 00a v0.7 signed off. §3 renamed "Design Principles for This Document" + scope routing note. §4 scope line added. §4.6 amended: Art 00 as origin of all canonical narrative (L195).
