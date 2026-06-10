@@ -181,32 +181,42 @@ Ongoing obligations (e.g., resource transfers per Upkeep) are valid — they mus
 
 ### 9.4 Formation
 
-All Accords must be initiated by card submission. Accords cannot be executed at Debrief without a prior card submission in the same Quarter.
+All Accords must be initiated by card submission.
 
-All Accord forms appear in the Accord Placement Area as Beat 4 resolution outcomes, regardless of the initiating card type.
+**Delivery (Beat 4)**
 
-**Submission (Beat 4)**
-
-Three cards may initiate Accord formation:
+Three cards may initiate Accord formation. Each causes ARBITER to deliver a blank AccordForm to the submitting faction at Beat 4:
 
 | Card | How the submission is created |
 |------|-------------------------------|
-| P08 Table an Accord | Declared at Phase B; drafted form placed at Beat 4 as PA resolution outcome |
-| P10 Infrastructure Bond | Declared at Phase B; drafted form placed at Beat 4 as PA resolution outcome |
-| Overture modifier card (from C09 Fund) | Instant modifier assigned to faction's own PA; blank Accord form placed as additional Beat 4 resolution outcome — per Art 04 §11.8 |
+| P08 Table an Accord | Declared at Phase B; ARBITER delivers blank AccordForm to submitting faction at Beat 4 as PA resolution outcome |
+| P10 Infrastructure Bond | Declared at Phase B; ARBITER delivers blank AccordForm to submitting faction at Beat 4 as PA resolution outcome |
+| Overture modifier card (from C09 Fund) | Assigned to any PA at Phase B; ARBITER delivers blank AccordForm to submitting faction when host PA resolves at Beat 4 — any outcome; per Art 04 §11.8 |
 
-At Beat 4: a drafted Accord form is placed in the Accord Placement Area, terms visible to all players. The form stays on the table from this point forward — regardless of whether execution follows.
+**Drafting**
+
+After receiving the blank form, the submitting faction fills in the terms per §9.3. Once completed, the faction places the drafted form in the Accord Placement Area. This may happen at any point after drafting is complete. A form placed outside a Debrief window is queued for the next Debrief.
 
 **Execution Window (Debrief)**
 
-At Debrief, for each drafted Accord form on the table, the proposing faction may:
+At Debrief, for each drafted Accord form in the Accord Placement Area:
 
-- **Execute** — all named parties check their signature box; the Accord becomes active immediately. Per-card PS consequences apply.
-- **Negotiate** — counter-offer and counter-counter-offer are permitted; terms may be amended by mutual agreement before signing.
-- **Withdraw** — the proposing faction may freely withdraw the Accord offer. The form is erased and returned as a blank to the ARBITER supply, or discarded if non-erasable. No consequence.
-- **Decline** (by the target) — the unsigned form remains on the table as a record of the failed proposal and is removed at End of Quarter cleanup.
+- **Execute** — all named parties check their signature box; the Accord becomes active immediately. Per Art 06 §9.9 Portrait entries apply.
+- **Negotiate** — terms may be amended by mutual agreement before signing. All physical amendments to the form occur during Debrief only.
+- **Withdraw** — the proposing faction may physically remove and discard the form at any time during Debrief. No consequence.
 
-Accords can only be executed at Debrief. A drafted form that survives to End of Quarter without execution or withdrawal is removed during cleanup.
+The target faction may verbally decline. If declined and no further negotiation is pursued by either party before the end of that Debrief, the form is removed and discarded.
+
+Physical alterations to drafted forms — signing, amendments — may only occur during Debrief. Verbal discussion of terms is permitted at any time.
+
+**Persistence**
+
+Drafted Accord forms remain in the Accord Placement Area until one of the following:
+- The submitting faction physically withdraws and discards the form (no consequence).
+- The target faction verbally declines and no further negotiation is pursued by either party by the end of that Quarter's Debrief (removed and discarded at Debrief close).
+- The Accord is executed (§9.5).
+
+Drafted forms not resolved by any of the above persist across Quarters.
 
 ### 9.5 Compliance Monitoring
 
@@ -312,5 +322,5 @@ If the order of message receipt or submission is disputed, initiative order from
 
 ---
 
-*End of Artifact 06 — Messaging System v0.1 Draft Placeholder*  
+*End of Artifact 06 — Messaging System v0.3. §9 signed off (L198). §§10–13 draft stubs — non-canonical.*  
 *Core protocol design extrapolated. Accord forms, notification slips, classified directive delivery, and message slip component specs require PM01 component confirmation and Artifact 04/07/08 sign-off.*

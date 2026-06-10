@@ -1247,13 +1247,13 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Syndicate `submitter=+1`: capital-in-motion doctrine — "relationships create opportunities" (P11, P16). Directorate `submitter=−1`: using anonymous financial transfer conflicts with legitimate-process doctrine; Directorate scrutinises these transfers in others — performing one is in-doctrine hypocrisy (P11, P16). Guild: no entry — relationship investment is pragmatic, not doctrinal; absence justified. Network: no entry — analytical framing only; no doctrinal stake as actor; absence justified. Ghost: no entry — observational framing; Ghost tracks capital flows for intelligence, not as participant; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | N/A — `target_district = None`; faction-level operation, no district target. | — |
-| Supported by components | ⚠ | Capital (Art 02a §8) ✓. Overture modifier card defined as stub in Art 04 §11.8 — full spec pending §11 redesign. | Art 02a §8; Art 04 §11.8 |
-| Supported by game procedure | ⚠ | Dispatch and Beat 3 resolution ✓. Overture delivery procedure (ARBITER tableau → faction hand at Beat 3 resolution) pending §11 redesign. | Art 03 §9; Art 04 §11.8 |
+| Supported by components | ✓ | Capital (Art 02a §8) ✓. Overture modifier card full spec written — Art 04 §11.8. | Art 02a §8; Art 04 §11.8 |
+| Supported by game procedure | ⚠ | Dispatch and Beat 3 resolution ✓. Overture delivery procedure (ARBITER tableau → faction hand at Beat 3 resolution) pending Art 07 ARBITER subroutine pass. | Art 03 §9; Art 04 §11.8 |
 
 #### Outstanding Issues
 
-- **Balance reassessment pending §11 redesign:** Overture is a modifier card (not a PA) — balance value determined by modifier card taxonomy design pass. No PA slot conflict. Reassess C09 cost/threshold after §11 redesign confirms Overture's modifier value.
-- **Overture delivery procedure:** Overture delivered from ARBITER tableau to acting faction's hand at Beat 3 resolution of C09. Exact procedure (ARBITER hands card; notation) pending §11 redesign and Art 07 ARBITER subroutine pass.
+- **Balance reassessment:** Reassess C09 cost (2 Capital) and threshold (50) relative to Accord initiation value. AccordForm persists cross-Quarter (Art 06 §9.4) — blank form opportunity is more durable than previously modeled. Assess against P08 (2 native, Automatic) and P10 (2 Capacity + 2 native delivered, Automatic). Review pending 04-n74.
+- **Overture delivery procedure:** Overture delivered from ARBITER tableau to acting faction's hand at Beat 3 resolution of C09. Exact procedure (ARBITER hands card; notation) pending Art 07 ARBITER subroutine pass.
 - **Anonymous transfer case-return:** Resources delivered to target faction at Beat 3. Covert attribution preserved — acting faction not announced. Procedure pending Art 03/Art 07 pass.
 
 #### Status
@@ -2442,7 +2442,7 @@ P07 = Card(
 [↑ Public Acts](#standard-public-acts)
 
 #### Design Rationale
-The formal bilateral agreement mechanism of the standard set. Persistence = Seasonal: the card (or an AccordOffer marker) stays on the table from Beat 4 through Debrief, visible to all players. The offer cannot be taken back. Target accepts or declines at Debrief — a public decision with PS consequences either way. Directorate affinity only (Syndicate affinity removed: Syndicate manipulates Accords through C-S3 and faction-specific cards, not by proposing them publicly as a general instrument). Ghost portrait −1: Accords are commitments, which Ghost avoids structurally.
+The formal bilateral agreement mechanism of the standard set. Playing P08 at Phase B publicly declares an intent to propose an Accord with a named target faction. ARBITER delivers a blank AccordForm to the submitting faction at Beat 4. The faction drafts the terms and places the completed form in the Accord Placement Area at their discretion; formation and execution procedure per Art 06 §9.4. PS consequences apply at Debrief on acceptance or decline. Directorate affinity only (Syndicate affinity removed: Syndicate manipulates Accords through faction-specific cards, not standard proposals). Ghost portrait −1: Accords create commitments, which Ghost avoids structurally.
 
 **Design checklist:**
 
@@ -2453,14 +2453,18 @@ The formal bilateral agreement mechanism of the standard set. Persistence = Seas
 | Doctrine alignment | ✓ | Directorate affinity (−1 cost) + portrait +1: bilateral stability is Directorate institutional doctrine. Ghost −1: Accords create commitments. Syndicate affinity removed — Syndicate manipulates Accords through faction-specific cards, not standard proposals. doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PoliticalAct / Standard — BilateralAgreement outcome type | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Economy / Add / AccordAgreement | Art 04b §4 |
-| Balance | ✓ | Cost 2 native (Directorate −1). PS consequences for both accept and refusal outcomes. AccordCard created only on acceptance — open question: what are AccordCard terms? Art 06 pending | Art 02a §6–§7 |
-| Effect duration | ✓ | AccordOffer marker persists as Seasonal (through Debrief — within-Quarter per Art 04 §5 P19). AccordCard lifecycle governed by Art 06 (pending). No multi-Quarter temporary for the offer marker itself | Art 04 §5 P19; Art 06 |
-| Persistence | ✓ | Seasonal — AccordOffer marker stays through Debrief; removed after accept/decline. Correct for BilateralAgreement resolution at Debrief | Art 04 §6 |
+| Balance | ⚠ | Cost 2 native (Directorate −1). PS consequences for both accept and refusal outcomes. AccordForm persists cross-Quarter (Art 06 §9.4) — blank form value requires assessment against cost. Review pending 04-n74. | Art 02a §6–§7 |
+| Effect duration | ✓ | AccordForm delivery is Immediate. Form lifecycle and cross-Quarter persistence governed by Art 06 §9.4. | Art 04 §5 P19; Art 06 §9.4 |
+| Persistence | ✓ | Immediate — PA delivers blank AccordForm at Beat 4; form lifecycle governed by Art 06 §9.4. | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
 | Portrait validity | ✓ | Directorate +1, Ghost −1: submitter-bounded. No PS shifts in portrait fields | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone reference. N/A | Art 01 §6–§7 |
-| Supported by components | ⚠ | AccordOffer marker placed on table — component not yet defined in Art 02a. AccordCard on acceptance governed by Art 06 (pending) | Art 02a §6–§8; Art 06 |
-| Supported by game procedure | ⚠ | Beat 4 placement; Debrief acceptance/refusal. AccordCard terms and lifecycle governed by Art 06 (pending) | Art 03 §11, §19; Art 06 |
+| Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
+| Supported by game procedure | ✓ | Phase B: target faction named publicly. Beat 4: blank AccordForm delivered to submitting faction. Faction drafts and places per Art 06 §9.4. Execution at Debrief. | Art 03 Phase B; Art 06 §9.4 |
+
+#### Outstanding Issues
+
+- **Balance:** Cost 2 native (Directorate −1) vs. value of a cross-Quarter-persistent blank AccordForm. Assess relative to C09/Overture and P10. Review pending 04-n74.
 
 #### Status
 
@@ -2485,11 +2489,11 @@ P08 = Card(
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = BilateralAgreement,
-    persistence     = Seasonal,  # AccordOffer marker stays through Debrief; removed after accept/decline
+    persistence     = Immediate,  # AccordForm delivery resolves at Beat 4; form lifecycle governed by Art 06 §9.4
 
     target_district = None,
-    target_faction  = faction.opponent,
-    target_object   = None,
+    target_faction  = faction.opponent,  # named publicly at Phase B declaration
+    target_object   = AccordForm,
 
     affinity    = faction(acting) == Directorate: cost.faction(native) -= 1,
     restriction = (
@@ -2498,13 +2502,12 @@ P08 = Card(
     ),
     cost = resource.faction(acting) * 2,
 
-    success = arbiter.place(AccordOffer(terms=declared, proposer=faction(acting), target=target_faction)),
-    # P08 card persists on table as AccordOffer marker until Debrief (Seasonal)
+    success = arbiter.deliver(faction(acting), AccordForm(blank)),
+    # Faction drafts terms per Art 06 §9.3; places in Accord Placement Area at their discretion.
 
-    # BilateralAgreement resolution at Debrief:
-    # on_accept: arbiter.create(AccordCard); faction(acting).standing += 1; faction(target).standing += 1
+    # BilateralAgreement resolution at Debrief (Art 06 §9.4):
+    # on_accept: AccordForm executed (all parties sign); faction(acting).standing += 1; faction(target).standing += 1
     # on_decline: faction(target).standing -= 1; faction(acting).standing += 1
-    # AccordOffer marker removed after Debrief resolution
 
     successcrit = None,
     fail        = None,
@@ -2523,8 +2526,8 @@ P08 = Card(
         Ghost:       "Accords create obligations. We are not opposed to what they achieve — only to what they commit us to.",
         Syndicate:   "Every accord is an asset. The question is who controls the terms and what the exit costs.",
     },
-    design_note  = "Accord creation PA. Directorate affinity only (−1 cost). Persistence = Seasonal: P08 card or AccordOffer marker stays on table from Beat 4 through Debrief. Terms declared publicly at Phase B — cannot be retracted. AccordCard created on acceptance; both parties +1 PS. On decline: target −1 PS, proposer +1 PS. Ghost −1: Accords are commitments. Art 06 governs AccordCard terms and lifecycle.",
-    arbiter_note = "Phase B: terms declared publicly. Beat 4: place AccordOffer marker (or leave P08 card) on table with terms visible. Card persists until Debrief. At Debrief: target faction publicly accepts or declines. On accept: create AccordCard (terms per Art 06); both +1 PS. On decline: target −1 PS, proposer +1 PS. Remove AccordOffer marker after resolution.",
+    design_note  = "Accord initiation PA. Directorate affinity only (−1 cost). Persistence = Immediate: blank AccordForm delivered at Beat 4; form lifecycle cross-Quarter per Art 06 §9.4. Target named publicly at Phase B; terms drafted by submitter on blank form at their discretion. On acceptance: both parties +1 PS. On decline: target −1 PS, proposer +1 PS. Ghost −1: Accords are commitments. Balance review pending 04-n74.",
+    arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver blank AccordForm from ARBITER tableau supply to submitting faction. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. On accept: both +1 PS. On decline: target −1 PS, proposer +1 PS.",
 )
 ```
 
@@ -3146,7 +3149,7 @@ P09 = Card(
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-Guild's economic relationship PA. Distinct from C09 (Fund) in cost currency (Capacity vs Capital) and mechanism (AccordCard with ongoing income terms vs one-time payment). Guild invests 2 Capacity upfront and delivers 2 native resources to the target faction immediately. In return, an AccordCard is created with ongoing income terms (target pays Guild 1 Capacity per Upkeep while Accord active) — Guild recovers the initial cost over 2 rounds, then profits. This makes P10 a medium-horizon investment rather than a gift. Addresses 04-n11 (Guild↔Network neighbor cooperation): doctrine_mod noted for narrative tracking; Network is the natural partner given pentagram proximity.
+Guild's economic relationship PA. Distinct from C09 (Fund) in cost currency (Capacity vs Capital) and mechanism (ongoing income Accord vs one-time payment). Guild invests 2 Capacity upfront and delivers 2 native resources to the target faction immediately. ARBITER then delivers a blank AccordForm to Guild. Guild drafts the Infrastructure Bond terms (target pays 1 Capacity per Upkeep while Accord active) and places the completed form in the Accord Placement Area at their discretion per Art 06 §9.4. On acceptance, Guild recovers the initial cost over 2 Quarters and profits thereafter. Addresses 04-n11 (Guild↔Network neighbor cooperation): Network is the natural target given pentagram proximity.
 
 **Design checklist:**
 
@@ -3157,14 +3160,19 @@ Guild's economic relationship PA. Distinct from C09 (Fund) in cost currency (Cap
 | Doctrine alignment | ✓ | Guild investment economy: 2 Capacity upfront, 1 Capacity/Upkeep return. Restriction (Guild Established adjacent) keeps it doctrinally grounded. Portrait +1. Addresses 04-n11 (Guild↔Network neighbor cooperation) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PoliticalAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Economy / Add / AccordAgreement — the Accord is the primary artifact; resource delivery is the trigger | Art 04b §4 |
-| Balance | ⚠ | Cost 2 Capacity + 2 native delivered; income 1 Capacity/Upkeep. Net positive over 2+ Quarters. Accord terms need Art 06 confirmation | Art 02a §6–§7 |
-| Effect duration | ✓ | Resource delivery immediate; AccordCard income within-Quarter per Upkeep (Art 04 §5 P19). AccordOffer marker Seasonal through Debrief within same Quarter | Art 04 §5 P19; Art 06 |
-| Persistence | ✓ | Seasonal — AccordOffer marker stays through Debrief; removed after accept/decline | Art 04 §6 |
+| Balance | ⚠ | Cost 2 Capacity + 2 native delivered to target; income 1 Capacity/Upkeep from target. Net positive over 2+ Quarters. AccordForm persists cross-Quarter (Art 06 §9.4) — review blank form value vs. cost (04-n74). Income tracking requires Accord execution. | Art 02a §6–§7 |
+| Effect duration | ✓ | Resource delivery Immediate. AccordForm delivery Immediate; form lifecycle and cross-Quarter persistence governed by Art 06 §9.4. | Art 04 §5 P19; Art 06 §9.4 |
+| Persistence | ✓ | Immediate — resource delivery and AccordForm delivery both resolve at Beat 4; form lifecycle governed by Art 06 §9.4. | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
 | Portrait validity | ✓ | Guild +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; restriction uses Guild Established adjacency to target's presence (valid zone-based check) | Art 01 §6–§7 |
-| Supported by components | ✓ | NativeResource (target delivery, Art 02a §8); AccordOffer marker, AccordCard (Art 06 pending); Capacity × 2 cost (Art 02a §8) | Art 02a §8; Art 06 |
-| Supported by game procedure | ⚠ | Upkeep income from Accord requires Art 06 Accord lifecycle definition and Upkeep procedure confirmation | Art 03 §19; Art 06 |
+| Supported by components | ✓ | NativeResource (target delivery, Art 02a §8); AccordForm (Art 06 §9.2); Capacity × 2 cost (Art 02a §8). | Art 02a §8; Art 06 §9.2 |
+| Supported by game procedure | ⚠ | Phase B: target faction named publicly. Beat 4: 2 native delivered; blank AccordForm delivered to Guild. Guild drafts bond terms; places per Art 06 §9.4. Upkeep income tracking requires Accord execution confirmation. | Art 03 Phase B; Art 06 §9.4 |
+
+#### Outstanding Issues
+
+- **Balance:** Cost 2 Capacity + 2 native delivered to target vs. value of cross-Quarter-persistent blank AccordForm plus ongoing income. Review pending 04-n74.
+- **Upkeep income tracking:** Confirm Accord income procedure (target pays 1 Capacity/Upkeep to Guild at Upkeep Step 6 while Accord active) against Art 06 §9.4 execution model.
 
 #### Status
 
@@ -3189,7 +3197,7 @@ P10 = Card(
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = BilateralAgreement,
-    persistence     = Seasonal,  # AccordOffer marker stays through Debrief
+    persistence     = Immediate,  # resource delivery and AccordForm delivery resolve at Beat 4; form lifecycle governed by Art 06 §9.4
 
     target_district = None,
     target_faction  = faction.opponent,
@@ -3201,14 +3209,12 @@ P10 = Card(
 
     success = (
         faction(target).resource(native) += 2,  # immediate delivery
-        arbiter.place(AccordOffer(
-            terms  = "Infrastructure Bond: target faction pays Guild 1 Capacity at each Upkeep while Accord active",
-            proposer = Guild,  target = target_faction,
-        )),
+        arbiter.deliver(Guild, AccordForm(blank)),  # Guild drafts Infrastructure Bond terms per Art 06 §9.3
     ),
 
-    # BilateralAgreement resolution at Debrief:
-    # on_accept: arbiter.create(AccordCard(terms)); Guild.standing += 1; target.standing += 1
+    # BilateralAgreement resolution at Debrief (Art 06 §9.4):
+    # on_accept: AccordForm executed (all parties sign); Guild.standing += 1; target.standing += 1
+    #            track Accord income: target pays Guild 1 Capacity at each Upkeep Step 6 while Accord active
     # on_decline: Guild.standing += 1; target.standing -= 1
 
     successcrit = None,
@@ -3224,7 +3230,7 @@ P10 = Card(
         Syndicate:   "Guild packages the extraction as partnership. The initial delivery is cover. The recurring return is the structure. We recognize this.",  # opposed
     },
     design_note  = "Guild economic relationship PA. 2 Capacity cost; 2 native delivered to target immediately (good-faith investment). AccordCard on acceptance with ongoing income (1 Capacity/Upkeep from target). Net positive for Guild over 2+ rounds. Restriction: Guild must have Established adjacent to target's operations. Distinct from C09 Fund (Capital, one-time, no income return). Addresses 04-n11 (Guild↔Network neighbor cooperation); Network is natural target given pentagram proximity.",
-    arbiter_note = "Phase B: target faction named. Beat 4: deliver 2 native resources to target immediately. Place AccordOffer on table (persistent through Debrief). On acceptance: create AccordCard; Guild +1 PS, target +1 PS. Track Accord income: at each Upkeep Step 6 while Accord active, target pays Guild 1 Capacity. On decline: Guild +1 PS, target −1 PS.",
+    arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver 2 native resources to target immediately; deliver blank AccordForm from ARBITER tableau supply to Guild. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. On accept: Guild +1 PS, target +1 PS; track Accord income (target pays Guild 1 Capacity at each Upkeep Step 6 while Accord active). On decline: Guild +1 PS, target −1 PS.",
 )
 ```
 
@@ -7193,7 +7199,7 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 | Effect extension | Extend a one-round effect — permanent where applicable per Principle 11 |
 | Detection immunity | One failed detection roll does not surface the faction |
 | Reach extension | Apply a public act to a non-operational-marker district |
-| Outcome addition | Attach an additional resolution outcome to the modified action |
+| Outcome addition | Attach an additional Automatic resolution outcome to the host action. Fires when the host action resolves at its designated beat, regardless of the host action's success or failure unless card text specifies otherwise. Not a separate action; requires no Dispatch Token. |
 
 ### 11.8 Named Modifier Cards — Stubs
 
@@ -7203,16 +7209,94 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 
 #### OVERTURE
 
-*Stub — S69. Full spec deferred to modifier card taxonomy design pass.*
+*S77.*
 
-**Effect type:** Outcome addition
-**Timing:** Instant — assigned to a Public Act in dispatch
-**Beat:** 4 (resolves alongside the modified PA)
-**Effect:** When the modified PA resolves at Beat 4, ARBITER places a blank Accord form in the Accord Placement Area. Proposing faction and target faction declared at time of card assignment. All formation, execution, and dissolution procedure per Art 06 §9.4.
-**Source:** ARBITER tableau supply. Delivered to acting faction on C09 Fund success.
-**Dispatch token:** Not required — modifier card.
+#### Design Rationale
 
-*Outstanding: full card spec pending modifier card taxonomy design pass. Outcome addition is a new effect category — formalization required in §11 redesign.*
+Overture is the bridge between C09's anonymous funding gesture and formal alliance. When C09 Fund succeeds, ARBITER delivers Overture (as a modifier card) to the acting faction. In a subsequent Month or Quarter, the faction assigns Overture to any of their Public Acts at Phase B. When that PA resolves at Beat 4 — regardless of outcome — ARBITER delivers a blank AccordForm to the acting faction. The faction drafts the terms and places the completed form in the Accord Placement Area during Beat 4 resolution or Debrief. The target faction then accepts, negotiates, or declines at Debrief. Mechanically: a free Instant modifier that attaches one Accord initiation to any PA slot.
+
+**Timing constraint:** Overture cannot be used in the Month it is received. C09 resolves at Beat 3; the host PA must be declared at Phase B (before Beat 3). Overture is held to Month 2, Month 3, or a subsequent Quarter. Tradeable per §11.5.
+
+**Host PA restriction:** Cannot be assigned to P08 Table an Accord or P10 Infrastructure Bond — both already deliver a blank AccordForm at Beat 4; stacking Overture would duplicate the Accord initiation on the same PA.
+
+**Outcome addition mechanic:** Fires as an additional Automatic outcome when the host PA resolves at Beat 4, regardless of the host PA's success or failure. See §11.7.
+
+#### Design Checklist
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Modifier card attaching Accord initiation as PA outcome addition. Alliance-opening mechanic — earned through C09; formalized through PA attachment. | Art 04 §11.1; Art 06 §9.4 |
+| Voice fit | ✓ | Narrative in diplomatic register. Perspectives: TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction = All` — no alignment penalty for using Overture; doctrine weight carried by C09. | Art 04 §6.5 |
+| Card type fit | ✓ | `Modifier / Instant` — assigned at Phase B; fires when host PA resolves. Does not enter Resolution Grid as independent action. | Art 04 §11.1, §11.4 |
+| Taxonomy fit | ✓ | No Layer / Function / Subject — modifier cards excluded per §11.1. | Art 04b §5.1, §9 |
+| Balance | ✓ | `cost = None` — reward from C09 success (2 Capital + roll risk already paid). Assignment free. Accord Portrait implications governed by Art 06 §9.9. Reassess C09 threshold after §11 redesign. | Art 02a §8; Art 06 §9.9 |
+| Effect duration | ✓ | Immediate — AccordForm delivery is instantaneous. Resulting Accord's duration governed by Art 06 §9.3–§9.7 independently. | Art 04 §5 P19 |
+| Trigger validity | ✓ | Instant — fires at Beat 4 host PA resolution. §5 P5 (publicly observable trigger) does not apply to Instant modifiers. | Art 04 §5 P5; §11.1 |
+| Portrait validity | ✓ | No portrait entry for Overture assignment. Portrait from resulting Accord governed by Art 06 §9.9. | Art 04 §6.2; Art 06 §9.9 |
+| Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
+| Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in C09 `arbiter_note`; Art 07 subroutine pass to formalize. | Art 03 Phase B; Art 06 §9.4; C09 |
+| New ARBITER behavior | ✓ | Deliver-from-tableau consistent with IS-xx and existing delivery subroutines. No novel ARBITER behavior — Art 07 pass formalizes. | Design Pillar 4.7b; Governing Rule 6.1 |
+| Data schema validation | ✓ | All fields conform to §6.1/§6.2 modifier card schema. | Art 04 §6 |
+
+#### Outstanding Issues
+
+- **Perspectives:** TBD — deferred to modifier card voice pass (D-04-08)
+- **Card ID:** TBD — pending 04-n1 numbering pass
+- **Value rating (1–3):** TBD — deferred (D-04-08)
+- **C09 balance reassessment:** Flag for after §11 redesign confirms Overture's modifier value
+- **ARBITER delivery formalization:** Overture delivery (C09 → Beat 3 → acting faction hand) pending Art 07 ARBITER subroutine pass; C09 `arbiter_note` covers interim reference
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | ⚠ (Perspectives, ID, value rating) | |
+
+```python
+Overture = Card(
+    id      = TBD,  version = "v1.0",
+    name    = "Overture",
+    tagline = "Extend a formal invitation to negotiate — attached to any public act you declare.",
+    type    = Modifier,  subtype = Instant,  faction = All,
+
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    persistence     = Immediate,
+
+    target_district = None,
+    target_faction  = None,  # named on AccordForm when drafted — not declared at card assignment
+    target_object   = AccordForm,
+
+    affinity    = None,
+    restriction = host_action.type not in [P08, P10],  # avoids duplicate AccordForm on same PA
+    cost        = None,  # earned as C09 success reward; free to assign
+
+    # Outcome addition — fires at Beat 4 on host PA resolution (any outcome: success or fail)
+    success = arbiter.deliver(faction(acting), AccordForm(blank)),
+    # Faction fills form per Art 06 §9.3; places in Accord Placement Area during Beat 4 or Debrief.
+    # Art 06 §9.4 formation procedure applies from placement forward.
+
+    portrait = {},  # no entry; Art 06 §9.9 governs Portrait for resulting Accord
+
+    narrative    = "The terms don't matter yet. What matters is that the door is open.",
+    perspectives = {TBD},  # modifier card voice pass deferred to D-04-08
+    design_note  = "Outcome addition modifier: attaches Accord initiation as additional Beat 4 outcome on any PA. "
+                   "Fires on any host PA outcome — success or fail. Earned from C09 success; free to assign. "
+                   "Cannot assign to P08 or P10 (duplicate AccordForm). "
+                   "Must be held to a subsequent Month: Overture delivered at Beat 3 via C09; host PA declared at Phase B before Beat 3. "
+                   "Target faction not declared at Phase B — named on AccordForm when drafted.",
+    arbiter_note = "On host PA resolution at Beat 4: deliver one blank AccordForm from ARBITER tableau supply to acting faction. "
+                   "Faction drafts and places in Accord Placement Area at their discretion — no timing constraint. "
+                   "Proceed per Art 06 §9.4.",
+)
+```
 
 ---
 

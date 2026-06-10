@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 75 (active) | Updated: 2026-06-09**
+**Session 77 (active) | Updated: 2026-06-09**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S75 complete. S76 opens here.
+S77 complete. S78 opens here.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -52,9 +52,13 @@ S75 complete. S76 opens here.
 
 **S75 accomplishments:** XA-47 ✅ — Art 04 §5 P19–P25 added (R21–R28 migrated from former 00a §7); P5 updated (authoritative R26 constraint note); P6 cross-ref to P19; checklist rows updated (Effect duration → P6/P19; Portrait validity → +P22); Art 04 v0.9.34. XA-48 ✅ — Art 07 §9 already had four-register content; `00a R02` source ref removed. XA-46 ✅ — ~120 rule ID substitutions across 11 files (Art 03, Art 04, Art 07, 02a, 02b, PM03, design_reference.md, gap_card_sketches, 3 memory files); zero `00-R` strings remain; PM02 + SESSION_BRIEF preserved as historical records; `00-R29` → `Design Pillar [04-n6 pending]` throughout. PM05: 04-n73 (P1–P18 restatement audit) + XA-49 (design_reference.md reset) added.
 
-**S76 entry point:** XA-49 (design_reference.md reset — before card spec work) → 04-n28 (Overture full spec, gates §11 redesign) → 04-n40 (C28 Network replacement).
+**S76 accomplishments:** XA-49 ✅ — design_reference.md rebuilt as master index + sub-reference system. Old monolithic file replaced with: `design_reference.md` (master, ~1K words), `design_reference_card_system.md` (card schema/rules/flags, ~2.5K words), and 9 `ref_*.md` sub-refs (world/narrative, design pillars, components, board narrative, resources, tracking, procedures, card types, taxonomy). All populated from 9 parallel agent reads of Art 00, 00a, 00b, 01, 02a, 02b, 03, 04§1-6, 04b. Session open = master + card system (~3.5K tokens); sub-refs loaded on demand. Sub-refs treated as living documents — update in place when recurring gaps found.
 
-**Priority order:** XA-49 (design_reference.md reset) → 04-n28 (Overture, gates §11) → 04-n40 (C28 replacement) → C40B narrative → C42 per-token cost resolution.
+**S77 accomplishments:** 04-n28 ✅ — Overture full spec written to Art 04 §11.8 (Modifier/Instant/All; outcome addition; ARBITER delivers blank AccordForm at Beat 4; faction drafts and places at discretion; no timing constraint; cross-Quarter). §11.7 Outcome addition formalized. Art 06 §9.4 materially revised and re-signed off (L198): blank AccordForm delivery model; faction drafts at discretion; form placed in Accord Placement Area anytime after drafting; cross-Quarter persistence; physical alterations and execution Debrief-only; verbal discussion anytime. P08, P10, C09, Overture all updated to blank AccordForm model; AccordOffer marker concept removed throughout. PM05 04-n74 added (Accord initiation cost/value review — C09/P08/P10).
+
+**S78 entry point:** 04-n40 (C28 Network replacement).
+
+**Priority order:** 04-n40 (C28 replacement) → C40B narrative → C42 per-token cost resolution → 04-n74 (Accord cost/balance review).
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs; 04-n73 (P1–P18 restatement audit).
 
@@ -117,6 +121,7 @@ S75 complete. S76 opens here.
 | 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
+| 06 — Messaging System | 0.3 | ✅ §9 Signed Off — S77 (L198). §9.4 Formation revised: blank AccordForm delivery model; cross-Quarter persistence; Debrief-only physical alterations. Open: §§1–8, 10–13 non-canonical stubs. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
 Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
@@ -168,7 +173,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 | **04-n25** | CRITICAL — Art 04 §6 schema field gaps: `target_ring`, `pre_loss_calc`, PS-as-cost | Critical — S65 |
 | **04-n26** | HIGH — Component interaction design pass: 12+ components needing lifecycle design before Art 02 registration | High — S65+ |
 | **04-n27** | HIGH (before accord) — Art 03 procedure gaps: 6 holes blocking Issues Resolved on multiple cards | High — S65+ |
-| **04-n28** | Art 06 Accord design — §9 signed off (L191). Overture stub in §11.8. Remainder: Overture full spec (gates §11 redesign). | 🟡 Substantially complete — S69 |
+| **04-n28** | Overture full spec written (Art 04 §11.8). §11.7 Outcome addition formalized. Art 06 §9.4 re-signed off (L198). | ✅ S77 |
+| **04-n74** | Accord initiation cost/value review — C09 (2 Capital + threshold 50), P08 (2 native, Automatic), P10 (2 Capacity + 2 native, Automatic). AccordForm cross-Quarter persistence changes value proposition. | Open — S77+ |
 | **XA-46** | 00a rule ID sweep — all 11 files. | ✅ S75 |
 | **XA-47** | Art 04 §5 P19–P25 added (card design constraints from 00a §7). | ✅ S75 |
 | **XA-48** | Art 07 §9 ARBITER Registers already had content. Source ref cleaned. | ✅ S75 |
@@ -181,10 +187,10 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
+- **L198** (S77): Art 06 §9 re-signed off (v0.3). §9.4 Formation materially revised: blank AccordForm delivered by ARBITER to submitting faction at Beat 4; faction drafts and places in Accord Placement Area at discretion (no timing constraint; queued for next Debrief); physical alterations/execution Debrief-only; verbal discussion anytime; cross-Quarter persistence; forms removed only on withdrawal, declined+no-negotiation, or execution. Overture full spec written (Art 04 §11.8). §11.7 Outcome addition formalized. P08/P10/C09 updated to blank AccordForm model.
 - **L197** (S74): Art 01 v2.0 signed off. §6 Component Physical Forms column → "Proposed Form" (non-binding, not material spec). Open: 01-10 (table → Art 02a + Design Requirements column); 01-11 (scope overhaul — §8→03-init, §11/§12→downstream).
 - **L196** (S74): Art 00a v0.7 signed off. §3 renamed "Design Principles for This Document" + scope routing note. §4 scope line added. §4.6 amended: Art 00 as origin of all canonical narrative (L195).
 - **L195** (S74): Art 00 as sole canonical narrative origin. No canonical narrative may originate in a downstream artifact. Art 00 amended first; downstream artifacts reference it. Written to 00a §4.6. Governs all V1 artifacts.
-- **L194** (S74): Art 00 v1.6 signed off. §5 Art 00 design principles added (5 principles). §11 term table → 00a §3.1 pointer. Subsections numbered §1.1–§14.9.
 - **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.
 - **L184** (S63): L108 amended — 3NF requirements (6 + 7) added; component.transformable → virtual generated; action.prereq_beat_id dropped.
 - **L183** (S61): C22 Detain — detention zone on Directorate public tableau; faction Terminals may be unique per faction doctrine.
