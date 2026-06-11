@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-10 — Session 78
+**Last Updated:** 2026-06-10 — Session 81
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -760,7 +760,30 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - PM05 additions: 04-n40 updated (design complete S78 — sign-off gates open); 04-n75–04-n80 added (Beat 2 d100 procedure; VM-xx registration; Phase A comply/resist procedure; Card Story structural sweep; content pass; Andy review).
 - Memory files updated: feedback_narrative_first_design.md, feedback_card_spec_conventions.md, feedback_card_design_review_workflow.md. design_reference_card_system.md updated (P26 governing rule; design flag #12; S78 timestamp).
 **Decisions locked:** L199 (Art 04 §5 P26 — Card Narrative Test; Card Story block added to spec structure).
-**Next:** S79 — C42 per-token cost resolution.
+**Next:** S82 — Art 06 §9 / Art 03 / 00b re-sign-offs (grip) → C28 Issues Resolved + sign-off → C40B sign-off (04-n77).
+
+### Session 79 — 2026-06-10
+- C42 v2.2 — boost model finalized: base cost = faction×1 + native×1 + IntelToken; boost = same unit; threshold = 65−10×n_boost; PS scales with (1+n); successcrit = PS+(1+n_boost); fail = NotificationSlip; failcrit = Discovery + PS−(1+n_boost); modifier scope = target faction only.
+- Whiteboard boost_marker_draft_S79.md created (BM-xx draft language + Art 03 procedure sketches).
+- PM05 additions: 04-n81 (BM-xx registration), 04-n82 (Beat 0 boost procedure), 04-n83 (Beat 2/3 BM-xx resolution), 04-n84 (Discovery mechanic definition), 06-n01 (Accord term vocab + PS mechanic — gating 04-n74).
+
+**Next:** S80 — 06-n01 (Accord term vocabulary + PS mechanic redesign).
+
+### Session 80 — 2026-06-10
+- 06-n01 ✅ — Art 06 §9.3 clause vocabulary written (5 types: Prohibition-Territorial, Prohibition-Operational Marker, Prohibition-PA, Obligation-Resource Transfer, Obligation-Presence; covert ops excluded). §9.4 PS formation mechanic redesigned (execution = all parties +1 PS; decline = non-party table vote on reasonableness). Art 06 §9 pending re-sign-off (grip required).
+- PM05 additions: 04-n85 (covert add-for-opponent concept, superseded by 04-n86), 04-n86 (C01/C03 generalization — build for any faction via submitted resource color). 04-n74 unblocked.
+
+**Next:** S81 — 04-n74 (Accord initiation cost calibration).
+
+### Session 81 — 2026-06-10
+- SESSION_BRIEF corrected (S78→S81; S79/S80 accomplishments reconstructed from artifacts).
+- 04-n74 ✅ (L200, L201): P08 cost → 1 native flat, all factions (affinity removed); P10 cost → 1 Capacity + 2 native delivered to target; C09 unchanged at 2 Capital (two-action Accord route documented).
+- 04-n75 ✅: Art 03 Beat 2 d100 resolution block added (after Automatic cards; queue order; 8-step procedure; additive crits).
+- 04-n76 ✅: VM-xx registered in 00b §4 (23 entity types); Art 03 Beat 3 Step 1 item 4 added (VM-xx → public resolution).
+- Art 03 and 00b re-sign-offs pending (grip). Art 06 §9 re-sign-off pending (grip).
+- New memories: feedback_mid_session_clear.md, feedback_read_ref_files.md.
+
+**Next:** S82 — Art 06 §9 / Art 03 / 00b re-sign-offs (grip) → C28 Issues Resolved + sign-off → C40B sign-off (04-n77).
 
 **Session 35 summary (2026-05-25 — complete):**
 - **L144 locked:** Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to child tables. Governs Art 04 and 00b.

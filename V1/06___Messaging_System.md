@@ -159,13 +159,47 @@ An Accord is a written, binding agreement between two or more factions, initiate
 
 ### 9.2 Accord Form — Physical Component
 
-An Accord form (see PM01 §2 — *[TBD component: Accord forms]*) is a structured guided contract. It provides pre-printed clause types (obligation, prohibition, resource payment), fill-in-the-blank fields for faction names, districts, resources, and duration, and a signature checkbox per party. Players select from structured terms; free-form text is not permitted on the form.
+An Accord form (see PM01 §2 — *[TBD component: Accord forms]*) is a structured guided contract. Free-form text is not permitted; all entries use fill-in fields and checkboxes. The pre-printed layout is as follows:
 
-Fields:
-- **Parties** — checkboxes for each faction party to the agreement (minimum two)
-- **Terms** — one or more clauses selected from pre-printed types; fill-in fields for names, values, districts, duration
-- **Duration** — fill-in field: Quarter range, named condition, or "until game end"
-- **Signatures** — one checkbox per named party; checking the box constitutes execution
+---
+
+**ACCORD** between _____________ *(Submitting Faction A)* and _____________ *(Receiving Faction B)*
+
+**TERRITORIAL PROHIBITIONS — Influence**
+☐ Faction A will not exceed ________ *(tier)* in ________ *(district / ring)*
+☐ Faction B will not exceed ________ *(tier)* in ________ *(district / ring)*
+
+**TERRITORIAL PROHIBITIONS — Structures**
+☐ Faction A will not place a structure block in ________ *(district)*
+☐ Faction B will not place a structure block in ________ *(district)*
+
+**OPERATIONAL MARKER PROHIBITIONS**
+☐ Faction A will not place a Deployment Marker in ________ *(district / ring)*
+☐ Faction B will not place a Deployment Marker in ________ *(district / ring)*
+
+**PUBLIC ACT PROHIBITIONS**
+☐ Faction A will not submit ________ *(any public act / named PA type)* targeting Faction B
+☐ Faction B will not submit ________ *(any public act / named PA type)* targeting Faction A
+
+**RESOURCE TRANSFER OBLIGATIONS**
+☐ Faction A will transfer ________ *(qty)* ________ *(resource type)* to Faction B at Upkeep ________ *(each Quarter / Quarter N)*
+☐ Faction B will transfer ________ *(qty)* ________ *(resource type)* to Faction A at Upkeep ________ *(each Quarter / Quarter N)*
+
+**PRESENCE OBLIGATIONS — Influence**
+☐ Faction A will achieve / maintain ________ *(tier)* in ________ *(district)*
+☐ Faction B will achieve / maintain ________ *(tier)* in ________ *(district)*
+
+**PRESENCE OBLIGATIONS — Structures**
+☐ Faction A will place a structure block in ________ *(district)*
+☐ Faction B will place a structure block in ________ *(district)*
+
+**THIS ACCORD WILL BE VALID THROUGH:** ________________
+
+**ACCORD EXECUTED:**  ☐ Faction A  ☐ Faction B
+
+---
+
+*Clause fill-in vocabulary and validity criteria: §9.3. Formation and execution procedure: §9.4.*
 
 The drafted form is placed in the Accord Placement Area at Beat 4, whether or not it is ultimately executed or signed.
 
@@ -178,6 +212,41 @@ Valid Accord terms must be:
 - **Written in New Meridian language** — all terms use in-world names for places, resources, and factions.
 
 Ongoing obligations (e.g., resource transfers per Upkeep) are valid — they must be performed publicly at the named phase and are player-visible.
+
+**Clause Vocabulary**
+
+The pre-printed form is structured as a table of clause rows. Each row names one bound faction, one clause type, and the specific terms. Bilateral and mutual agreements are constructed by pairing two rows — one per party — using the same or different clause types. This allows fully asymmetric reciprocal terms: *Faction A will not exceed Established in District 7; Faction B will transfer 1 Intel Token per Quarter.*
+
+**Prohibition — Territorial**
+Binds a named faction to a board-state limit in a named district or ring, including structure placement.
+Row form: *"[Faction A] will not exceed [Present / Established] in [district name / Ring N] during [duration]."*
+Row form: *"[Faction A] will not place a structure block in [district name] during [duration]."*
+Compliance evaluated from public board state. Bound condition is a tier or a structure state.
+
+**Prohibition — Operational Marker**
+Binds a named faction from placing a Deployment Marker in a named district or ring.
+Row form: *"[Faction A] will not place a Deployment Marker in [district name / Ring N] during [duration]."*
+Compliance is evaluated from public board state — any Deployment Marker of the bound faction present in the prohibited area constitutes breach, regardless of how the marker arrived there.
+
+**Prohibition — Public Act**
+Binds a named faction from submitting specified public acts targeting a named faction.
+Row form: *"[Faction A] will not submit [any public act / named PA type] targeting [Faction B] during [Quarter range]."*
+PA declarations are public at Phase B; all players can observe compliance.
+
+**Obligation — Resource Transfer**
+Binds a named faction to transfer resources to a named faction at a specified Upkeep.
+Row form: *"[Faction A] will transfer [quantity] [resource type] to [Faction B] at Upkeep [each Quarter / Quarter N]."*
+Valid resource types: native resources; faction-specific resources (Findings, Exposure, Capital, Capacity, Mandate); Intel Tokens.
+Transfer occurs at Upkeep, visible to all players at the table. Non-payment constitutes breach.
+*Intel Token terms:* Any held Intel Token is valid for transfer regardless of age. The token's content (faction and Quarter of origin) is private to the recipient and cannot be specified or restricted within the Accord terms.
+
+**Obligation — Presence**
+Binds a named faction to achieve or maintain a board state in a named district, including structure placement.
+Row form: *"[Faction A] will achieve / maintain [influence tier] in [district name]."*
+Row form: *"[Faction A] will place a structure block in [district name]."*
+Compliance evaluated from public board state. Duration is governed by the Accord's stated validity period.
+
+**Covert operations are excluded from Accord terms.** Covert case counts and op types are ARBITER-private and cannot be bound.
 
 ### 9.4 Formation
 
@@ -218,6 +287,22 @@ Drafted Accord forms remain in the Accord Placement Area until one of the follow
 
 Drafted forms not resolved by any of the above persist across Quarters.
 
+**Public Standing Consequences (Formation)**
+
+PS consequences fire at Debrief immediately after the execution or decline decision is reached.
+
+*On execution (all parties sign):* All signing parties +1 PS.
+
+*On decline (target declines; no further negotiation before Debrief close):*
+All non-party factions at the table vote on whether the offered terms were reasonable. Parties to the Accord do not vote.
+- Majority votes reasonable: declining faction −1 PS; proposing faction no penalty.
+- Majority votes unreasonable: proposing faction −1 PS; declining faction no penalty.
+- Tie (including no non-party voters): no PS movement for either party.
+
+Reasonableness is a table judgment from the face-up drafted form. No standard is prescribed.
+
+*On withdraw (proposing faction removes form):* no PS consequence.
+
 ### 9.5 Compliance Monitoring
 
 Active Accords are face-up in the Accord Placement Area. All players may read the terms at any time. Compliance monitoring is the table's collective responsibility — any player may call a potential breach.
@@ -233,6 +318,7 @@ A breach occurs when a party fails to fulfill a term while the Accord is active.
 3. On confirmed breach: ARBITER removes the Accord form from the Accord Placement Area to the ARBITER area. Other players observe the removal.
 4. Any cards or effects attached to or acting on the Accord are released on removal.
 5. ARBITER notes a Portrait entry for the breaching faction. *(Values: ARBITER reference only — see §9.9.)*
+6. ARBITER applies −1 PS to the breaching faction. The form's removal from the Accord Placement Area is the observable signal; PS applies at the moment of removal.
 
 ### 9.7 Accord Completion
 
@@ -259,6 +345,9 @@ When an Accord's stated duration expires with no breach:
 | Per-Quarter compliance (active Accord) | All complying parties | +1 | The Record |
 | Accord completed (full duration, no breach) | All complying parties | +2 | The Record |
 | Mutual dissolution | None | — | — |
+| ARBITER-witnessed covert intent — op submitted against Accord-protected target; not publicly discovered | Submitting faction | −1 | The Record |
+
+*Covert operations that violate Accord terms but are not publicly discovered do not trigger §9.6 breach procedure and carry no PS consequence. If ARBITER observes during resolution that a submitted covert operation targeted an Accord-protected asset and the operation was not publicly discovered, ARBITER may note a Portrait entry for the submitting faction at their discretion.*
 
 ### 9.10 Accord Manipulation
 
@@ -266,7 +355,13 @@ Cards and effects may interact with active Accords. The following interaction ty
 
 **Lock** — Prevents voluntary dissolution of the named Accord until a stated condition releases it. All locks are released when the Accord is removed from the Accord Placement Area for any reason (breach, completion, or dissolution).
 
-**Alter** — Changes one or more physically written values on the Accord form (numeric values, faction names, district names, duration conditions). The alteration is made directly on the form. The Accord remains active; affected parties are notified per card text.
+**Alter** — Physically modifies one or more elements of the Accord form. The Accord remains active after alteration; affected parties are notified per card text. Three alteration types are supported:
+
+- **Terms** — change any fill-in value within a clause row: influence tier, district or ring name, resource type, resource quantity, PA type.
+- **Term removal** — strike or remove one or more clause rows entirely. The removed obligation or prohibition becomes void; remaining rows are unaffected. The Accord may become asymmetric as a result.
+- **Duration** — change the "THIS ACCORD WILL BE VALID THROUGH" field.
+
+All alterations are made physically on the form. The modified form remains face-up in the Accord Placement Area; altered content is public record. If the altering card is a covert operation, ARBITER makes the physical alteration. If the altering card is a public act, the acting faction player makes the alteration.
 
 **Transfer** — Replaces one named party in the Accord. The outgoing party is struck from the form; the incoming party is written in. All obligations and benefits transfer to the incoming party. The Accord remains active; affected parties are notified per card text.
 

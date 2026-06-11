@@ -552,7 +552,7 @@ The ARBITER Player reads all currently active board effects aloud — Situation 
 
 **Beat 2 (Month1.Week3): Conditions Set**
 
-Beat 2 is the condition-setting beat. All cards with `beat = 2` are processed before any Beat 3 operations resolve. Current Beat 2 cards: Type A/B Countermeasures, C10 Protect, C11 Fortify Structure. Cards C21, C25, C28, C34, C35 are pending design — any card with `beat = 2` is processed here when defined.
+Beat 2 is the condition-setting beat. All cards with `beat = 2` are processed before any Beat 3 operations resolve. Current Beat 2 cards: Type A/B Countermeasures, C10 Protect, C11 Fortify Structure, C17 Intercept, C28 Breaking News. Automatic cards process first in the order listed; dice-resolution cards process last.
 
 *C06 Broadcast Interference and C07 Amplify are redesigned as Seasonal public acts — see Art 04.*
 
@@ -615,6 +615,19 @@ The ARBITER Player processes the Beat 2 row of the Resolution Grid left to right
 4. Discard the target profile slip and any modifier cards submitted with Golden Parachute.
 5. Return the Golden Parachute card to Syndicate's return case.
 
+**For each dice-resolution operation in the Beat 2 row:**
+
+Processed after all Automatic Beat 2 cards. Process in queue order.
+
+1. Read the card in the current Beat 2 slot.
+2. Read the base threshold printed on the card.
+3. Apply all active modifiers per §13.
+4. Announce the final threshold aloud.
+5. Roll d100.
+6. Determine outcome: 01–05 = Crit Success (`success` + `successcrit`); 06–threshold = Success; threshold+1–95 = Fail; 96–00 = Crit Fail (`fail` + `failcrit`).
+7. Execute card-specified effects immediately. If the card specifies placing a token on a Beat 3 grid card, place it now.
+8. Return the Beat 2 operation card to the acting faction's dispatch case.
+
 ---
 
 **Beat 3 (Month1.Week4): Covert Operations Resolve**
@@ -630,6 +643,7 @@ For each card in queue order:
 1. Read the card in the current grid slot.
 2. If face-down: auto-fail. Discard all modifier cards from the stack. Return the action card to the faction. Advance to the next operation. No further steps apply to this slot.
 3. Check for Apex submission. If Apex: resolution is immediately interrupted — see Apex Activation in §22 before proceeding.
+4. Check for VM-xx on this card. If present: this operation resolves publicly. Before proceeding to Step 2, announce the card name, type, and declared targets aloud to all players. At Step 5, roll d100 visibly. At Step 6, announce the result and outcome aloud. Remove VM-xx to ARBITER supply during Step 8 cleanup.
 
 **Step 2 — Determine base difficulty.**
 

@@ -477,7 +477,7 @@ class PortraitEntry:
 | affinity | Logic | ConditionalExpr | Faction-based cost modifier — evaluated before cost expression | Face |
 | restriction | Logic | BoolExpr | Submission preconditions — card unplayable if evaluates False | Face |
 | cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid cost resources are those that can be traded or transferred (Mandate, Capital, Influence, district native resource). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
-| boost | Logic | BoostExpr | Optional variable-multiplier mechanic — player submits additional resources beyond base cost; no declaration required. ARBITER detects at Beat 0: n = (total submitted − base cost) / boost unit cost; success fires (1 + n) times at resolution. Boost unit cost may differ from base cost resource type. None = no boost mechanic. | Face |
+| boost | Logic | BoostExpr | Optional variable-multiplier mechanic — player submits additional resources beyond base cost; no declaration required. ARBITER detects at Beat 0: n = (total submitted − base cost) / boost unit cost; places n BoostMarker tokens (BM-xx) on the card's grid slot alongside the card. At Beat 2/3 resolution: effect fires (1 + BM-xx count) times; BM-xx returned to ARBITER supply at beat cleanup. For threshold-scaling cards, threshold is locked at Beat 0 using total count (1 + BM-xx). Boost unit cost may differ from base cost resource type. None = no boost mechanic. | Face |
 | success | Effects | MutationExpr | Primary effect on resolution success | Face |
 | successcrit | Effects | MutationExpr | Additive delta on critical success (roll < 5); None when Automatic | Face |
 | fail | Effects | MutationExpr | Effect on failure; None = cost spent, no additional effect | Face |
@@ -511,6 +511,9 @@ BoostExpr:           condition: CostExpr
 # No Phase B declaration — player submits resources implying n; ARBITER counts at Beat 0
 # Submitted resources must be an exact multiple of boost unit cost (no partial units)
 # Boost condition False + excess resources submitted: Beat 0 rejects as invalid cost
+# Physical: ARBITER places n BM-xx (BoostMarker) tokens on card's grid slot at Beat 0
+# Resolution (Beat 2/3): effect fires (1 + BM-xx count) times; BM-xx returned to ARBITER supply at beat cleanup
+# Threshold-scaling cards: threshold locked at Beat 0 using (1 + BM-xx count) as total n
 ```
 
 ---
@@ -1254,7 +1257,7 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 | Doctrine alignment | ✓ | `target_faction = faction.opponent` — `doctrine_mod = {Neighbor: +15, Opposed: -15}` applies. Syndicate affinity (+25) stacks — funding a Neighbor as Syndicate reaches effective threshold 90. Capital flows where doctrine is aligned; crosses resistance where it is not. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: anonymous transfer is covert; Overture preserves optionality on disclosure. Standard: all factions can fund others. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Economy` — capital transfer is NativeResource flow, correctly Economy under Art 04b §4.4. `function = Redirect`, `subject = NativeResource` — correctly scoped. | Art 04b §4, §5 |
-| Balance | ⚠ | Net capital zero at success (2 Capital spent = 2 Capital delivered). Syndicate effective threshold 75%. Crit success = +1 PS bonus. **Open:** Overture is a modifier card (not a PA) — balance value determined by modifier card taxonomy design pass. Reassess C09 balance after §11 redesign. | Art 02a §8; Art 04 §11 (pending) |
+| Balance | ✓ | Net capital zero at success (2 Capital spent = 2 Capital delivered). Overture path to AccordForm costs 2 of 4 available action slots per Quarter (C09 covert op slot + PA with Overture attached) — the slot cost is the real gate on this route, not the resource cost. Cost unchanged at 2 Capital (standard covert op cost). L201. | Art 02a §8; Art 04 §11.8 |
 | Effect duration | ✓ | Capital transfer is instantaneous. Overture modifier card lifecycle governed by Art 04 §11.8 and Art 06 §9.4. | Art 04 §11.8; Art 06 §9.4 |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` | — |
@@ -1265,7 +1268,7 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 
 #### Outstanding Issues
 
-- **Balance reassessment:** Reassess C09 cost (2 Capital) and threshold (50) relative to Accord initiation value. AccordForm persists cross-Quarter (Art 06 §9.4) — blank form opportunity is more durable than previously modeled. Assess against P08 (2 native, Automatic) and P10 (2 Capacity + 2 native delivered, Automatic). Review pending 04-n74.
+- **Overture delivery procedure:** Overture delivered from ARBITER tableau to acting faction's hand at Beat 3 resolution of C09. Exact procedure (ARBITER hands card; notation) pending Art 07 ARBITER subroutine pass.
 - **Overture delivery procedure:** Overture delivered from ARBITER tableau to acting faction's hand at Beat 3 resolution of C09. Exact procedure (ARBITER hands card; notation) pending Art 07 ARBITER subroutine pass.
 - **Anonymous transfer case-return:** Resources delivered to target faction at Beat 3. Covert attribution preserved — acting faction not announced. Procedure pending Art 03/Art 07 pass.
 
@@ -2455,7 +2458,7 @@ P07 = Card(
 [↑ Public Acts](#standard-public-acts)
 
 #### Design Rationale
-The formal bilateral agreement mechanism of the standard set. Playing P08 at Phase B publicly declares an intent to propose an Accord with a named target faction. ARBITER delivers a blank AccordForm to the submitting faction at Beat 4. The faction drafts the terms and places the completed form in the Accord Placement Area at their discretion; formation and execution procedure per Art 06 §9.4. PS consequences apply at Debrief on acceptance or decline. Directorate affinity only (Syndicate affinity removed: Syndicate manipulates Accords through faction-specific cards, not standard proposals). Ghost portrait −1: Accords create commitments, which Ghost avoids structurally.
+The formal bilateral agreement mechanism of the standard set. Playing P08 at Phase B publicly declares an intent to propose an Accord with a named target faction. ARBITER delivers a blank AccordForm to the submitting faction at Beat 4. The faction drafts the terms and places the completed form in the Accord Placement Area at their discretion; formation and execution procedure per Art 06 §9.4. PS consequences apply at Debrief on acceptance or decline. Cost is 1 native flat — the PA submission slot (3 per Quarter; draw-dependent) is the primary gate on Accord access; the resource cost signals accessible diplomacy rather than gating potential. Ghost portrait −1: Accords create commitments, which Ghost avoids structurally.
 
 **Design checklist:**
 
@@ -2463,10 +2466,10 @@ The formal bilateral agreement mechanism of the standard set. Playing P08 at Pha
 |----------|------|------|--------------|
 | Action fit | ✓ | Formal accord proposals are a core political act — every faction can and does make bilateral agreements | Art 00 §7 |
 | Voice fit | ✓ | All five perspectives distinct: Guild's pragmatic/permanence framing, Directorate's institutional mechanism preference, Network's record-and-observe stance, Ghost's obligation-aversion (not value-aversion), Syndicate's asset/exit-cost calculus | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate affinity (−1 cost) + portrait +1: bilateral stability is Directorate institutional doctrine. Ghost −1: Accords create commitments. Syndicate affinity removed — Syndicate manipulates Accords through faction-specific cards, not standard proposals. doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Directorate portrait +1: bilateral stability is Directorate institutional doctrine. Ghost −1: Accords create commitments. Syndicate affinity removed — Syndicate manipulates Accords through faction-specific cards, not standard proposals. doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PoliticalAct / Standard — BilateralAgreement outcome type | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Economy / Add / AccordAgreement | Art 04b §4 |
-| Balance | ⚠ | Cost 2 native (Directorate −1). PS consequences for both accept and refusal outcomes. AccordForm persists cross-Quarter (Art 06 §9.4) — blank form value requires assessment against cost. Review pending 04-n74. | Art 02a §6–§7 |
+| Balance | ✓ | Cost 1 native flat (all factions). PA slot is the primary gate — 3 PA slots per Quarter, card is draw-dependent. PS vote mechanic gates proposal quality. At 1 native the form price signals accessible diplomacy; the slot cost and PS mechanics provide volume and quality control. L200. | Art 02a §6–§7 |
 | Effect duration | ✓ | AccordForm delivery is Immediate. Form lifecycle and cross-Quarter persistence governed by Art 06 §9.4. | Art 04 §5 P19; Art 06 §9.4 |
 | Persistence | ✓ | Immediate — PA delivers blank AccordForm at Beat 4; form lifecycle governed by Art 06 §9.4. | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
@@ -2477,7 +2480,7 @@ The formal bilateral agreement mechanism of the standard set. Playing P08 at Pha
 
 #### Outstanding Issues
 
-- **Balance:** Cost 2 native (Directorate −1) vs. value of a cross-Quarter-persistent blank AccordForm. Assess relative to C09/Overture and P10. Review pending 04-n74.
+- **Upkeep income tracking:** n/a — no ongoing income on P08 itself (Accord income terms are player-drafted per Art 06 §9.3).
 
 #### Status
 
@@ -2508,19 +2511,17 @@ P08 = Card(
     target_faction  = faction.opponent,  # named publicly at Phase B declaration
     target_object   = AccordForm,
 
-    affinity    = faction(acting) == Directorate: cost.faction(native) -= 1,
+    affinity    = None,
     restriction = (
         target_faction != faction(acting) and
         accord(faction(acting), faction(target)).active == False
     ),
-    cost = resource.faction(acting) * 2,
+    cost = resource.faction(acting) * 1,
 
     success = arbiter.deliver(faction(acting), AccordForm(blank)),
     # Faction drafts terms per Art 06 §9.3; places in Accord Placement Area at their discretion.
 
-    # BilateralAgreement resolution at Debrief (Art 06 §9.4):
-    # on_accept: AccordForm executed (all parties sign); faction(acting).standing += 1; faction(target).standing += 1
-    # on_decline: faction(target).standing -= 1; faction(acting).standing += 1
+    # BilateralAgreement resolution at Debrief: PS consequences per Art 06 §9.4
 
     successcrit = None,
     fail        = None,
@@ -2539,8 +2540,8 @@ P08 = Card(
         Ghost:       "Accords create obligations. We are not opposed to what they achieve — only to what they commit us to.",
         Syndicate:   "Every accord is an asset. The question is who controls the terms and what the exit costs.",
     },
-    design_note  = "Accord initiation PA. Directorate affinity only (−1 cost). Persistence = Immediate: blank AccordForm delivered at Beat 4; form lifecycle cross-Quarter per Art 06 §9.4. Target named publicly at Phase B; terms drafted by submitter on blank form at their discretion. On acceptance: both parties +1 PS. On decline: target −1 PS, proposer +1 PS. Ghost −1: Accords are commitments. Balance review pending 04-n74.",
-    arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver blank AccordForm from ARBITER tableau supply to submitting faction. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. On accept: both +1 PS. On decline: target −1 PS, proposer +1 PS.",
+    design_note  = "Accord initiation PA. Cost = 1 native flat (all factions). PA slot is the primary gate: 3 PA slots per Quarter, card is draw-dependent. PS vote at decline gates proposal quality (unreasonable proposal = proposer −1 PS). Blank form is a proposal, not a contract; 1 native signals that diplomacy is accessible. L200. Ghost −1: Accords are commitments.",
+    arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver blank AccordForm from ARBITER tableau supply to submitting faction. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. PS consequences per Art 06 §9.4.",
 )
 ```
 
@@ -3162,7 +3163,7 @@ P09 = Card(
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-Guild's economic relationship PA. Distinct from C09 (Fund) in cost currency (Capacity vs Capital) and mechanism (ongoing income Accord vs one-time payment). Guild invests 2 Capacity upfront and delivers 2 native resources to the target faction immediately. ARBITER then delivers a blank AccordForm to Guild. Guild drafts the Infrastructure Bond terms (target pays 1 Capacity per Upkeep while Accord active) and places the completed form in the Accord Placement Area at their discretion per Art 06 §9.4. On acceptance, Guild recovers the initial cost over 2 Quarters and profits thereafter. Addresses 04-n11 (Guild↔Network neighbor cooperation): Network is the natural target given pentagram proximity.
+Guild's economic relationship PA. Distinct from C09 (Fund) in cost currency (Capacity vs Capital) and mechanism (ongoing income Accord vs one-time payment). Guild pays 1 Capacity (form price, equitable with P08 per L200/L201) and delivers 2 native resources to the target as a sweetener — the upfront investment that makes the Accord terms credible and acceptance worthwhile. ARBITER then delivers a blank AccordForm to Guild. Guild drafts the Infrastructure Bond terms (target pays 1 Capacity per Upkeep while Accord active) and places the completed form in the Accord Placement Area at their discretion per Art 06 §9.4. On acceptance, Guild recovers the sweetener over 2 Quarters and profits thereafter. Addresses 04-n11 (Guild↔Network neighbor cooperation): Network is the natural target given pentagram proximity.
 
 **Design checklist:**
 
@@ -3173,7 +3174,7 @@ Guild's economic relationship PA. Distinct from C09 (Fund) in cost currency (Cap
 | Doctrine alignment | ✓ | Guild investment economy: 2 Capacity upfront, 1 Capacity/Upkeep return. Restriction (Guild Established adjacent) keeps it doctrinally grounded. Portrait +1. Addresses 04-n11 (Guild↔Network neighbor cooperation) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PoliticalAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Economy / Add / AccordAgreement — the Accord is the primary artifact; resource delivery is the trigger | Art 04b §4 |
-| Balance | ⚠ | Cost 2 Capacity + 2 native delivered to target; income 1 Capacity/Upkeep from target. Net positive over 2+ Quarters. AccordForm persists cross-Quarter (Art 06 §9.4) — review blank form value vs. cost (04-n74). Income tracking requires Accord execution. | Art 02a §6–§7 |
+| Balance | ✓ | Cost 1 Capacity (form price, per L200/L201) + 2 native delivered to target (sweetener). Income 1 Capacity/Upkeep from target on Accord execution — net positive over 2+ Quarters. PA slot is the primary gate. L201. | Art 02a §6–§7 |
 | Effect duration | ✓ | Resource delivery Immediate. AccordForm delivery Immediate; form lifecycle and cross-Quarter persistence governed by Art 06 §9.4. | Art 04 §5 P19; Art 06 §9.4 |
 | Persistence | ✓ | Immediate — resource delivery and AccordForm delivery both resolve at Beat 4; form lifecycle governed by Art 06 §9.4. | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
@@ -3184,7 +3185,7 @@ Guild's economic relationship PA. Distinct from C09 (Fund) in cost currency (Cap
 
 #### Outstanding Issues
 
-- **Balance:** Cost 2 Capacity + 2 native delivered to target vs. value of cross-Quarter-persistent blank AccordForm plus ongoing income. Review pending 04-n74.
+- **Upkeep income tracking:** Confirm Accord income procedure (target pays 1 Capacity/Upkeep to Guild at Upkeep Step 6 while Accord active) against Art 06 §9.4 execution model.
 - **Upkeep income tracking:** Confirm Accord income procedure (target pays 1 Capacity/Upkeep to Guild at Upkeep Step 6 while Accord active) against Art 06 §9.4 execution model.
 
 #### Status
@@ -3218,17 +3219,16 @@ P10 = Card(
 
     affinity    = None,
     restriction = faction(Guild).influence_tier(district.any_adjacent_to(faction(target).presence)) >= Established,
-    cost        = resource.faction(Guild) * 2,  # 2 Capacity
+    cost        = resource.faction(Guild).capacity * 1  # form price → Reservoir
+              + resource.faction(Guild).native * 2,   # sweetener → delivered to target at success
 
     success = (
         faction(target).resource(native) += 2,  # immediate delivery
         arbiter.deliver(Guild, AccordForm(blank)),  # Guild drafts Infrastructure Bond terms per Art 06 §9.3
     ),
 
-    # BilateralAgreement resolution at Debrief (Art 06 §9.4):
-    # on_accept: AccordForm executed (all parties sign); Guild.standing += 1; target.standing += 1
-    #            track Accord income: target pays Guild 1 Capacity at each Upkeep Step 6 while Accord active
-    # on_decline: Guild.standing += 1; target.standing -= 1
+    # BilateralAgreement resolution at Debrief: PS consequences per Art 06 §9.4
+    # on_accept: track Accord income — target pays Guild 1 Capacity at each Upkeep Step 6 while Accord active
 
     successcrit = None,
     fail        = None,
@@ -3242,8 +3242,8 @@ P10 = Card(
         Directorate: "Guild formalizes the relationship before the need becomes urgent. The Accord terms are what the investment was always going to require. This is how structural partners communicate.",  # aligned
         Syndicate:   "Guild packages the extraction as partnership. The initial delivery is cover. The recurring return is the structure. We recognize this.",  # opposed
     },
-    design_note  = "Guild economic relationship PA. 2 Capacity cost; 2 native delivered to target immediately (good-faith investment). AccordCard on acceptance with ongoing income (1 Capacity/Upkeep from target). Net positive for Guild over 2+ rounds. Restriction: Guild must have Established adjacent to target's operations. Distinct from C09 Fund (Capital, one-time, no income return). Addresses 04-n11 (Guild↔Network neighbor cooperation); Network is natural target given pentagram proximity.",
-    arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver 2 native resources to target immediately; deliver blank AccordForm from ARBITER tableau supply to Guild. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. On accept: Guild +1 PS, target +1 PS; track Accord income (target pays Guild 1 Capacity at each Upkeep Step 6 while Accord active). On decline: Guild +1 PS, target −1 PS.",
+    design_note  = "Guild economic relationship PA. Cost: 1 Capacity (form price, per L200/L201) + 2 native delivered to target (sweetener — makes Accord terms credible). Accord on acceptance includes 1 Capacity/Upkeep income from target; net positive for Guild in 2+ Quarters. Restriction: Guild must have Established adjacent to target's operations. Distinct from C09 Fund (Capital, covert, two-action route). Distinct from P08 (bare form, no sweetener). Addresses 04-n11 (Guild↔Network neighbor cooperation).",
+    arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver 2 native resources to target immediately; deliver blank AccordForm from ARBITER tableau supply to Guild. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. PS consequences per Art 06 §9.4. On accept: track Accord income (target pays Guild 1 Capacity at each Upkeep Step 6 while Accord active).",
 )
 ```
 
@@ -5066,33 +5066,36 @@ RegulatoryFreeze = Card(
 [↑ Covert Operations](#directorate-covert-operations)
 
 #### Design Rationale
-Directorate's maximum-force territorial removal card — declared at Phase B with a specific token count (n); cost and difficulty both scale to n. The "sanctioned" framing reflects institutional authorization, not covert tradecraft: the Intel token is the authorization document. Cannot bypass countermeasures — instead, the Raid clears all modifier cards at the district at Beat 3 before removing presence tokens, trading block-bypass for a battlefield-clearing sweep. Where C22 Detain removes a deployment marker (permanently, probabilistic), Sanctioned Raid scales: remove more tokens, pay more, face a harder roll. Migrated from §8 Intel Economy block.
+Directorate's maximum-force territorial removal card. The Intel token is the authorization document; faction + native resource is the operational cost. Cannot bypass countermeasures — clears target faction's modifier cards at the district before removing presence tokens. Scales via boost: each additional unit of faction + native submitted at Phase B removes one more presence token and deepens the threshold (harder to relocate more people in a single op). PS scales symmetrically with n — forced relocation creates resentment proportional to scale; a clean large-scale op generates proportional public support. Distinct from C22 Detain (deployment marker, permanent) and C04 Undermine (one token, standard, no Intel gate).
+
+#### Card Story
+The Directorate dispatches a team to the district — no announcement, no negotiation. The intel token is the authorization document; the operation runs exactly as filed. When the team leaves, the target faction has fewer people there than it did this morning. Whether the public calls it a cleanup or a crackdown depends entirely on how cleanly it was done.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Scaled-force removal — n tokens declared at Phase B; cost and difficulty scale; modifier card clear replaces block-bypass | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Directorate perspective by design — sanctioned institutional action | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; variable threshold (75−10n) replaces fixed 25; variable cost outstanding; modifier token scope outstanding | Art 00 §7; Art 04 §6.5 |
+| Action fit | ✓ | Scaled-force removal via boost; target faction modifier card clear; PS scales with n in both directions | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Directorate perspective — sanctioned institutional action | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate only; Intel gate enforces intelligence-first doctrine; threshold = 65−10n; PS risk/reward scales with ambition | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Remove/PresenceToken — n tokens removed at Beat 3 | Art 04b §4, §5 |
-| Balance | — | Variable cost per token outstanding; threshold 75−10n; crit success Mandate recovery retained; dominant play risk TBD pending playtesting | Art 02a §6–§7 |
-| Effect duration | ✓ | Permanent: n presence tokens removed; modifier cards cleared | — |
-| Persistence | ✓ | Immediate — no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Directorate +1 submitter; PS −1 on success is game effect (not portrait) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory/Remove/PresenceToken — (1 + BM-xx) tokens removed at Beat 3 | Art 04b §4, §5 |
+| Card narrative | ✓ | Intel-authorized team clears district; public verdict (PS) scales with scope and execution quality | Art 04 §5 P26 |
+| Balance | ⚠ | Boost scaling adds new cost/PS curve — playtesting required | Art 02a §6–§7 |
+| Effect duration | ✓ | Permanent: (1 + BM-xx) presence tokens removed; target faction modifier cards cleared | — |
+| Persistence | ✓ | Immediate | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None | — |
+| Portrait validity | ✓ | Directorate +1 submitter; PS effects are game effects (not portrait) | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
-| Supported by components | — | PresenceToken as target; Mandate + IntelToken costs; per-token cost component TBD; NotificationSlip on failcrit | Art 02a §6, §8; Art 02b §7–§8 |
-| Supported by game procedure | — | Beat 0 declared count validation required (new procedure); modifier card clearing at Beat 3 — scope and sequence outstanding | Art 03 §9, §11 |
+| Supported by components | ⚠ | BM-xx not yet registered — gate: 04-n81 | Art 02a §6; Art 02b §7–§8 |
+| Supported by game procedure | ⚠ | Beat 0 boost detection (04-n82); Beat 2/3 BM-xx resolution (04-n83); Discovery definition (04-n84) — all gate sign-off | Art 03 §9, §11 |
+| Data schema validation | ✓ | boost field present; threshold-scaling noted in §6.3; affinity = Directorate | Art 04 §6.1–§6.3 |
 
 #### Outstanding Issues
 
-- **Beat 0 declared count mechanism:** Player declares n at Phase B. ARBITER validates at Beat 0: faction(target) has ≥ n presence tokens at district; Directorate has paid cost(n). n is locked at submission — not recalculated at Beat 3. Does n cap at current presence count, or can Directorate overshoot and remove whatever's available?
-- **Per-token cost increment:** Base cost is Mandate×2 + IntelToken. Variable cost per token (n × ?) is TBD. Confirm increment before Issues Resolved.
-- **Modifier card clearing scope:** "Remove all modifier cards at district(target_district)" — all factions' modifier cards at the district, or only the target faction's? Sanctioned sweep framing suggests all.
-- **Intel token faction-keying:** Spec has `IntelToken(faction=faction(target))` — confirm faction-keyed to target is correct (vs. any held token).
-- **PS penalty on success:** Retained from v1.1. Confirm PS −1 on success is locked.
+- **IntelToken as restriction:** Should IntelToken(faction=faction(target)) also appear as `restriction =` (card unplayable without it in hand) in addition to appearing in cost? Or is cost placement sufficient? Carry.
+- **Intel token faction-keying:** Confirm faction-keyed to target is correct (vs. any held token of the type).
+- **Sign-off gates:** 04-n81 (BM-xx registration), 04-n82 (Beat 0 boost procedure), 04-n83 (Beat 2/3 BM-xx resolution), 04-n84 (Discovery mechanic definition).
 
 #### Status
 
@@ -5100,36 +5103,38 @@ Directorate's maximum-force territorial removal card — declared at Phase B wit
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*v2.0 — S71: block-bypass removed; modifier card clearing added; variable threshold 75−10n; variable cost (per-token increment TBD); declared count mechanism required at Beat 0.*
+*v2.2 — S79: boost model replaces Phase B n-declaration; base cost = faction×1 + native×1 + IntelToken (Mandate×2 removed); boost = same unit; threshold = 65−10×n_boost; PS scales with (1+n) in both directions; successcrit = PS+(1+n_boost) (public endorsement of clean large-scale op); fail = NotificationSlip; failcrit = Discovery + PS−(1+n_boost); modifier scope = target faction only; 04-n81/82/83/84 gate sign-off.*
 
 ```python
 C42 = Card(
-    id=42,  version="v2.0",
+    id=42,  version="v2.2",
     name    = "Sanctioned Raid",
     tagline = "Not every operation leaves a paper trail.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
     beat=3, resolution=d100,
-    threshold = 75 - (10 * n),  # n = declared removal count (Phase B); Beat 0 validates
+    threshold = 65 - (10 * n_boost),  # n_boost = BM-xx count; locked at Beat 0
     ring_mod  = {0:-15, 1:-10, 2:0, 3:+10},
     trigger   = None,
     resolution_type = "Probabilistic", outcome_type = None,
     target_district = district.named, target_faction = faction(named_opponent), target_object = PresenceToken,
     affinity  = Directorate,
     restriction = None,
-    # cost: base + per-token increment TBD; n declared at Phase B
-    cost      = resource.faction(acting).mandate * 2 + IntelToken(faction=faction(target)) * 1,  # + (n * TBD)
-    success   = [game.remove_modifier_cards(district(target_district)),   # clear all modifier cards first
-                 game.remove(faction(target).presence_tokens, district(target_district), count=n),
-                 faction(acting).standing -= 1],
-    successcrit = resource.faction(acting).mandate += 1,
-    fail      = None,
-    failcrit  = game.dispatch(faction(target), NotificationSlip),
+    cost      = resource.faction(acting) * 1
+              + resource.district(native) * 1
+              + IntelToken(faction=faction(target)) * 1,
+    boost     = True: resource.faction(acting) * 1 + resource.district(native) * 1,
+    success   = [game.remove_modifier_cards(district(target_district), faction=faction(target)),
+                 game.remove(faction(target).presence_tokens, district(target_district), count=(1 + n_boost)),
+                 faction(acting).standing -= (1 + n_boost)],
+    successcrit = faction(acting).standing += (1 + n_boost),
+    fail      = game.dispatch(faction(target), NotificationSlip),
+    failcrit  = [Discovery, faction(acting).standing -= (1 + n_boost)],
     portrait  = {Directorate: PortraitEntry(submitter=+1)},
     narrative = "The Directorate does not ask permission. It records the action and moves on.",
     perspectives = {Directorate: "The intelligence warranted the action. The action was authorised. There is nothing further to say."},
-    design_note  = "Cannot bypass countermeasures — clears all modifier cards at district before removing presence tokens. Variable n declared at Phase B; threshold = 75−10n (harder to remove more). Per-token cost TBD. Beat 0 declared count validation required. PS −1 on success retained. See 04-n13: Network modifier card auto-triggers off Directorate sweep.",
-    arbiter_note = "Phase B: Directorate declares n (token count). Beat 0: validate faction(target) has ≥ n presence tokens; validate cost paid. Beat 3: on success — remove all modifier cards from district (all factions); remove n presence tokens from faction(target) at district; reduce Directorate PS by 1. Crit success: also return 1 Mandate. Crit fail: deliver NotificationSlip to target.",
+    design_note  = "Boost model: base cost (faction×1 + native×1 + IntelToken) covers removal of 1 token (threshold 65). Each boost unit = 1 BM-xx = 1 additional token removed, threshold −10. PS scales symmetrically with (1+n): success = −(1+n), successcrit = +(1+n), failcrit = Discovery + −(1+n). Modifier clear = target faction's cards only. See 04-n13: Network modifier card auto-triggers off Directorate sweep.",
+    arbiter_note = "Beat 0: (1) validate base cost paid; (2) n_boost = excess payment ÷ (faction×1+native×1); (3) place n_boost BM-xx on grid slot; (4) lock threshold = 65−10×n_boost; (5) confirm faction(target) has ≥ (1+n_boost) presence tokens at district — reject if not. Beat 3 success: remove target faction's modifier cards from district; remove (1+n_boost) presence tokens from faction(target); Directorate PS −(1+n_boost); remove BM-xx to supply. Crit success: PS +(1+n_boost) instead of −(1+n_boost). Fail: dispatch NotificationSlip to target. Crit fail: Discovery (Art 03 §11 Step 7b.i — 04-n84 pending definition); Directorate PS −(1+n_boost).",
 )
 ```
 

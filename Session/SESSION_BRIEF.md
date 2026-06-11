@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 78 (active) | Updated: 2026-06-10**
+**Session 81 (active) | Updated: 2026-06-10**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S77 complete. S78 opens here.
+S80 complete. S81 opens here.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -58,9 +58,15 @@ S77 complete. S78 opens here.
 
 **S78 accomplishments:** C28 v2.0 "Breaking News" (Network L1 FactionSpecific CovertOp; Beat 2 d100 threshold 50; Exposure×2; forces ARBITER to publicly reveal target faction's first Beat 3 queue entry + places VM-xx Visibility Marker on that grid card — physical reminder; no cross-beat cognitive state). VM-xx: new ARBITER-held token registered via PM05 04-n76. C40B v1.0 "Live Coverage" (Network PA FactionSpecific; Beat 4 d100 threshold 50; Exposure×2; Seasonal; target faction elects each Phase A: comply = hand face-up, ops proceed; resist = dispatch disabled that Month; comply once → card clears). Art 04 §5 P26 locked L199 — Card Narrative Test (every card expressible as 1–2 sentence narrative story; if not, design problem). Card Story block added to Art 04 §5 and card spec structure (between Design Rationale and Design Checklist; 1–3 sentences of plain-language event narrative). 15th checklist row added. PM05: 04-n40 updated (design complete S78); 04-n75–04-n80 added (Beat 2 d100 procedure, VM-xx registration, Phase A comply/resist procedure, Card Story structural sweep, content pass, Andy review). Memory + design_reference_card_system.md updated (S78).
 
-**S79 entry point:** C42 per-token cost resolution.
+**S79 accomplishments:** C42 v2.2 — boost model replaces per-token n-declaration. Base cost = faction×1 + native×1 + IntelToken (Mandate×2 removed); boost = same unit; threshold = 65−10×n_boost; PS scales with (1+n) in both directions; successcrit = PS+(1+n_boost) (public endorsement); fail = NotificationSlip; failcrit = Discovery + PS−(1+n_boost); modifier scope = target faction only. Whiteboard `boost_marker_draft_S79.md` created (BM-xx draft language + Art 03 procedure sketches). PM05 additions: 04-n81 (BM-xx registration), 04-n82 (Beat 0 boost procedure), 04-n83 (Beat 2/3 BM-xx resolution), 04-n84 (Discovery mechanic definition), 06-n01 (Accord term vocab + PS mechanic redesign — gating 04-n74).
 
-**Priority order:** C42 per-token cost resolution → 04-n74 (Accord cost/balance review) → C28 sign-off gates (04-n75/76) → C40B sign-off gate (04-n77).
+**S80 accomplishments:** 06-n01 ✅ — Art 06 §9.3 clause vocabulary written (5 types: Prohibition-Territorial, Prohibition-Operational Marker, Prohibition-PA, Obligation-Resource Transfer, Obligation-Presence; covert ops excluded). §9.4 PS formation mechanic redesigned (execution = all parties +1 PS; decline = non-party table vote on reasonableness — majority reasonable: declining faction −1 PS; majority unreasonable: proposing faction −1 PS). Art 06 §9 pending re-sign-off (Andy working remotely; no grip access). PM05 additions: 04-n85 (covert add-for-opponent concept, superseded by 04-n86), 04-n86 (C01/C03 generalization — build for any faction via submitted resource color). 04-n74 unblocked.
+
+**S81 accomplishments:** SESSION_BRIEF corrected (S78→S81; S79/S80 accomplishments reconstructed from artifacts). 04-n74 ✅ (L200, L201) — Accord initiation cost calibrated: P08 → 1 native flat (affinity removed; PA slot is the primary gate; 3 slots/Quarter, draw-dependent); P10 → 1 Capacity + 2 native delivered to target (form price equitable with P08; 2 native = sweetener enabling income clause); C09 → unchanged at 2 Capital (Overture is success bonus; effective Accord route costs 2 of 4 action slots). 04-n75 ✅ — Art 03 Beat 2 d100 resolution block added (after Automatic cards; queue order; 8-step procedure; additive crits per ref_procedures.md). 04-n76 ✅ — VM-xx registered in 00b §4; Art 03 Beat 3 Step 1 item 4 added (VM-xx present → public resolution: announce before Step 2, visible roll at Step 5, announce result at Step 6, remove at Step 8). Art 03 and 00b re-sign-offs pending (grip required). Art 06 §9 re-sign-off still pending (grip required — S80 material additions). PM05 04-n74/75/76 all ✅.
+
+**S82 entry point:** Art 06 §9 re-sign-off → Art 03 re-sign-off → 00b re-sign-off → C28 Issues Resolved + sign-off → C40B sign-off gate (04-n77).
+
+**Priority order:** Art 06 §9 / Art 03 / 00b re-sign-offs (grip, bundle together) → C28 Issues Resolved + sign-off → C40B sign-off gate (04-n77).
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs; 04-n73 (P1–P18 restatement audit).
 
@@ -196,9 +202,9 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
-- **L199** (S78): Art 04 §5 Principle 26 — Card Narrative Test locked. Every card must be expressible as a 1–2 sentence narrative story answering "What is actually happening in the world when this card is played?" If no coherent narrative can be constructed, the card is a design problem. Narrative is not decoration; it is the first test of whether mechanics are right. Card Story block added to Art 04 §5 as structural element in card specs (between Design Rationale and Design Checklist); 15th checklist row added. Cards C28 Breaking News and C40B Live Coverage include Card Story blocks. PM05 04-n78/79/80 gate full sweep.
-- **L198** (S77): Art 06 §9 re-signed off (v0.3). §9.4 Formation materially revised: blank AccordForm delivered by ARBITER to submitting faction at Beat 4; faction drafts and places in Accord Placement Area at discretion (no timing constraint; queued for next Debrief); physical alterations/execution Debrief-only; verbal discussion anytime; cross-Quarter persistence; forms removed only on withdrawal, declined+no-negotiation, or execution. Overture full spec written (Art 04 §11.8). §11.7 Outcome addition formalized. P08/P10/C09 updated to blank AccordForm model.
-- **L197** (S74): Art 01 v2.0 signed off. §6 Component Physical Forms column → "Proposed Form" (non-binding, not material spec). Open: 01-10 (table → Art 02a + Design Requirements column); 01-11 (scope overhaul — §8→03-init, §11/§12→downstream).
+- **L201** (S81): P10 Infrastructure Bond cost → 1 Capacity + 2 native delivered to target (from 2 Capacity). Form price equitable with P08 per L200 governing principle; 2 native = sweetener enabling income clause. C09 Fund unchanged at 2 Capital; effective Accord route = 2 of 4 action slots (C09 + PA with Overture). 04-n74 ✅.
+- **L200** (S81): P08 Table an Accord cost → 1 native flat, all factions (from 2 native; Directorate affinity removed). Governing principle: PA slot is the primary bottleneck (3 slots/Quarter; cards draw-dependent). Resource cost signals accessible diplomacy; PS vote mechanic gates proposal quality. Blank form is a proposal, not a contract.
+- **L199** (S78): Art 04 §5 Principle 26 — Card Narrative Test locked. Every card must be expressible as a 1–2 sentence narrative story answering "What is actually happening in the world when this card is played?" If no coherent narrative can be constructed, the card is a design problem. Card Story block added to Art 04 §5; 15th checklist row added.
 - **L196** (S74): Art 00a v0.7 signed off. §3 renamed "Design Principles for This Document" + scope routing note. §4 scope line added. §4.6 amended: Art 00 as origin of all canonical narrative (L195).
 - **L195** (S74): Art 00 as sole canonical narrative origin. No canonical narrative may originate in a downstream artifact. Art 00 amended first; downstream artifacts reference it. Written to 00a §4.6. Governs all V1 artifacts.
 - **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.
@@ -220,6 +226,9 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **Art 01 v2.0** — ✅ Signed Off S74 (L197)
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v3.3** — ✅ Signed Off S68 (L189)
+- **Art 06 §9** — ⚠ S80 material additions (§9.3 clause vocabulary; §9.4 PS mechanic) pending grip review and re-sign-off
+- **Art 03** — ⚠ S81 additions (Beat 2 d100 block; Beat 3 Step 1 VM-xx check) pending grip review and re-sign-off → v3.4
+- **00b** — ⚠ S81 VM-xx registration pending re-sign-off
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)
 
 ---
