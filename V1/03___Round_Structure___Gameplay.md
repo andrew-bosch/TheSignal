@@ -339,6 +339,22 @@ ARBITER announces: *"Placement is open."*
 
 ---
 
+**Start of Month 1**
+
+Before Phase A opens, ARBITER checks for active public acts with Phase A obligations.
+
+For each active card with a Phase A obligation:
+
+1. ARBITER announces: card name, declaring faction, target faction, and the required election.
+2. Target faction elects comply or resist.
+3. ARBITER executes per the card spec:
+   - **Comply:** apply comply effect. If the card's `persistence_condition` is now satisfied, card clears after Phase A closes.
+   - **Resist:** apply resist effect. Card remains in play. If resist disables covert dispatch: that faction skips Phase A Steps 2–4 and submits no case this Month.
+
+If no active obligations: proceed to Phase A.
+
+---
+
 ### Phase A — Covert Dispatch
 
 - *Faction Players assemble, seal and transmit their own dispatch cases.*
@@ -519,6 +535,14 @@ All submitted Intel Tokens are reset (erased) and returned to The Dossier, or di
 
 *Quarter number and faction are written on each token by ARBITER at issuance. Physical form TBD — reusable erasable medium (erased on return) or single-use paper chit (discarded on use); see PM05 03-13. Expired tokens not submitted have no payment value but may be held and traded — age is visible on the token.*
 
+**Boost Detection**
+
+For each card in the packet that has a `boost` field (value ≠ None):
+
+1. After the base cost is drained, count any excess resources remaining in the packet.
+2. Calculate n = floor(excess ÷ boost unit cost). If n > 0: place n BM-xx tokens on the card's grid slot.
+3. Drain all remaining excess to the Reservoir. No excess is returned to the faction.
+
 ---
 
 **Beat 1 (Month1.Week2): Read Board State**
@@ -660,6 +684,7 @@ Apply all active modifiers:
 - Active Situation Report effects
 - Protect modifier token (placed by ARBITER in Beat 2)
 - Ring adjacency penalty (The Mid: no adjacent Core presence; Core: no Chorus Node presence)
+- BM-xx tokens on this card's grid slot: if the card spec defines a threshold modifier per boost count, apply n × that modifier, where n = BM-xx count.
 
 **Step 4 — Calculate and declare threshold.**
 
@@ -678,6 +703,8 @@ The ARBITER Player rolls d100, or nominates a Faction Player to roll and call th
 
 **Step 7 — Apply outcome.**
 
+If BM-xx tokens are present on this card's grid slot (count = n): all outcome effects execute (1+n) times in sequence. If the outcome specifies a Notification Slip: deliver one slip only, regardless of n. BM-xx tokens are removed to ARBITER supply during Step 8 cleanup.
+
 If this operation's outcome blocks the acting faction's deployment marker conversion: The ARBITER Player flips the relevant marker to the Blocked face.
 
 **Step 7a — Succeeded.**
@@ -692,17 +719,11 @@ If the card's success outcome specifies a Notification Slip delivered to another
 
 **Step 7b — Failed.**
 
-Apply the failure conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
-
-If the card's failure outcome specifies a Notification Slip delivered to another faction: ARBITER places the pre-written Notification Slip in that faction's dispatch case.
-
-The affected Faction Player applies their own board changes.
+ARBITER applies the failure conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card's failure outcome specifies a Notification Slip: ARBITER places it in the target faction's dispatch case.
 
 **Step 7b.i — Discovered.**
 
-Apply the discovery conditions specified on the operation card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Standing marker move, apply it.
-
-The affected Faction Player applies their own board changes.
+ARBITER announces the discovery to all players: acting faction, operation name, and declared target. ARBITER advises the affected Faction Player of the board changes required per the card-specified discovery conditions. The affected Faction Player applies their own board changes as directed.
 
 **Step 8 — Clean up the grid cell.**
 
@@ -710,6 +731,7 @@ The affected Faction Player applies their own board changes.
 2. Place the appropriate Operation Resolution card in the dispatch case: Succeeded / Failed / Blocked / Discovered.
 3. Discard modifier cards from the grid cell — removed from the game.
 4. Return modifier tokens to the pool.
+5. Return any BM-xx tokens on this grid slot to ARBITER supply.
 
 *Modifier token pool location: TBD — Artifact 07.*
 
@@ -871,6 +893,20 @@ The ARBITER Player may note a significant moment at their discretion.
 
 ## 12. Month 2 — Dispatch
 
+**Start of Month 2**
+
+Before Phase A opens, ARBITER checks for active public acts with Phase A obligations.
+
+For each active card with a Phase A obligation:
+
+1. ARBITER announces: card name, declaring faction, target faction, and the required election.
+2. Target faction elects comply or resist.
+3. ARBITER executes per the card spec:
+   - **Comply:** apply comply effect. If the card's `persistence_condition` is now satisfied, card clears after Phase A closes.
+   - **Resist:** apply resist effect. Card remains in play. If resist disables covert dispatch: that faction skips Phase A Steps 2–4 and submits no case this Month.
+
+If no active obligations: proceed to Phase A.
+
 Follows the same procedure as Month 1 — Dispatch (§9), with these differences:
 
 - ARBITER announces: *"Month 2 Dispatch is open."*
@@ -901,6 +937,20 @@ Follows the same procedure as Month 1 — Resolution (§11), with these differen
 ---
 
 ## 15. Month 3 — Dispatch
+
+**Start of Month 3**
+
+Before Phase A opens, ARBITER checks for active public acts with Phase A obligations.
+
+For each active card with a Phase A obligation:
+
+1. ARBITER announces: card name, declaring faction, target faction, and the required election.
+2. Target faction elects comply or resist.
+3. ARBITER executes per the card spec:
+   - **Comply:** apply comply effect. If the card's `persistence_condition` is now satisfied, card clears after Phase A closes.
+   - **Resist:** apply resist effect. Card remains in play. If resist disables covert dispatch: that faction skips Phase A Steps 2–4 and submits no case this Month.
+
+If no active obligations: proceed to Phase A.
 
 Follows the same procedure as Month 1 — Dispatch (§9), with these differences:
 

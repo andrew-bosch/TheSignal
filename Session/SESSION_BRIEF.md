@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 81 (active) | Updated: 2026-06-10**
+**Session 82 (active) | Updated: 2026-06-10**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S80 complete. S81 opens here.
+S81 complete. S82 opens here.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -64,9 +64,13 @@ S80 complete. S81 opens here.
 
 **S81 accomplishments:** SESSION_BRIEF corrected (S78→S81; S79/S80 accomplishments reconstructed from artifacts). 04-n74 ✅ (L200, L201) — Accord initiation cost calibrated: P08 → 1 native flat (affinity removed; PA slot is the primary gate; 3 slots/Quarter, draw-dependent); P10 → 1 Capacity + 2 native delivered to target (form price equitable with P08; 2 native = sweetener enabling income clause); C09 → unchanged at 2 Capital (Overture is success bonus; effective Accord route costs 2 of 4 action slots). 04-n75 ✅ — Art 03 Beat 2 d100 resolution block added (after Automatic cards; queue order; 8-step procedure; additive crits per ref_procedures.md). 04-n76 ✅ — VM-xx registered in 00b §4; Art 03 Beat 3 Step 1 item 4 added (VM-xx present → public resolution: announce before Step 2, visible roll at Step 5, announce result at Step 6, remove at Step 8). Art 03 and 00b re-sign-offs pending (grip required). Art 06 §9 re-sign-off still pending (grip required — S80 material additions). PM05 04-n74/75/76 all ✅.
 
-**S82 entry point:** Art 06 §9 re-sign-off → Art 03 re-sign-off → 00b re-sign-off → C28 Issues Resolved + sign-off → C40B sign-off gate (04-n77).
+**S82 accomplishments:** PM05 split — 144 completed items archived to `PM05___Archive.md`; 2 all-done sections removed. Active PM05 now 559 lines / 251 open items. 04-n81 ✅ — BM-xx (BoostMarker) registered in 00b §4 (token marked "Boost"; VM-xx supply-size over-spec also removed). 04-n82 ✅ — Beat 0 Boost Detection procedure added to Art 03 (after Intel Token Freshness; floor division; no refunds). 04-n83 ✅ — BM-xx resolution added to Art 03 Beat 3: Step 3 threshold modifier clause; Step 7 all-effects multiply (1+n) / single NS-xx regardless of n; Step 8 BM-xx cleanup. 04-n84 ✅ — Discovery mechanic defined as public reveal (ARBITER announces acting faction + op name + declared target to all players); Step 7b rewritten (ARBITER applies); Step 7b.i rewritten (faction player applies own board changes as directed). 04-n77 ✅ — "Active PA Obligations" general procedure written; Start of Month 1/2/3 blocks added to §9/§12/§15 (generalizable; cross-Quarter compatible). Art 03 v3.4 additions complete — pending grip bundle re-sign-off.
 
-**Priority order:** Art 06 §9 / Art 03 / 00b re-sign-offs (grip, bundle together) → C28 Issues Resolved + sign-off → C40B sign-off gate (04-n77).
+**S83 entry point:**
+1. **04-n47** — Single determinate success outcome principle (Art 04 §5)
+2. Then: grip bundle — Art 06 §9 + Art 03 v3.4 + 00b re-sign-offs (+ 00a-72 if ready)
+3. C28 Issues Resolved + sign-off
+4. C40B sign-off
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs; 04-n73 (P1–P18 restatement audit).
 
@@ -227,8 +231,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v3.3** — ✅ Signed Off S68 (L189)
 - **Art 06 §9** — ⚠ S80 material additions (§9.3 clause vocabulary; §9.4 PS mechanic) pending grip review and re-sign-off
-- **Art 03** — ⚠ S81 additions (Beat 2 d100 block; Beat 3 Step 1 VM-xx check) pending grip review and re-sign-off → v3.4
-- **00b** — ⚠ S81 VM-xx registration pending re-sign-off
+- **Art 03** — ⚠ S81+S82 additions pending grip review and re-sign-off → v3.4
+- **00b** — ⚠ S81 VM-xx + S82 BM-xx registration pending re-sign-off
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)
 
 ---

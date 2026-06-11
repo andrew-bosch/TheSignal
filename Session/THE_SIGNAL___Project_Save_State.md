@@ -785,6 +785,17 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 
 **Next:** S82 — Art 06 §9 / Art 03 / 00b re-sign-offs (grip) → C28 Issues Resolved + sign-off → C40B sign-off (04-n77).
 
+### Session 82 — 2026-06-10
+- 04-n81 ✅: BM-xx (BoostMarker) registered in 00b §4 (24 entity types now); ARBITER-held transient token for Beat 0 detection through beat cleanup.
+- 04-n82 ✅: Art 03 Beat 0 boost detection procedure added (floor division; no refunds); BM-xx placement on grid slot when boost field active.
+- 04-n83 ✅: Art 03 Beat 2/3 BoostMarker resolution + cleanup (success effects multiply 1+n; fail/failcrit fire once; cleanup at beat end).
+- 04-n84 ✅: Discovery mechanic defined as universal Art 03 procedure — ARBITER announces faction + op + target publicly; faction identity remains public for Quarter duration.
+- 04-n77 ✅: Art 03 Phase A Live Coverage comply/resist procedure added (hand-visibility toggle; permanent until voluntarily complied or forced removal).
+- PM03 updated: 00b v0.2 → S82 status, Art 03 v3.4 status. PM05 updated: 04-n81/82/83/84/77 all marked ✅ S82.
+- Save State: S83 row appended below.
+
+**Next:** S83 — 04-n47 (Art 04 §5 single determinate success); grip bundle (Art 03 v3.4 + 00b + Art 06 §9); C28 Issues Resolved + sign-off; C40B sign-off.
+
 **Session 35 summary (2026-05-25 — complete):**
 - **L144 locked:** Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to child tables. Governs Art 04 and 00b.
 - **C15 signed off.** Affinity bonus field added (04-35 partial). Success field normalized to "+1 target district native resource." pool_copies flagged for removal (04-40).
