@@ -29,17 +29,17 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.5 | ✅ Signed off — S40 |
-| 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.3 | ✅ Signed off — S40 |
+| 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.8 | ✅ Signed off — S83 |
 
 ---
 
 ### Logical Data Model
 
-*Written specification for the game's data structures. 00b is the schema spec that Art 01/02 implement. 00c defines resource types and economic parameters; starting values are seeded by 03-init at game start.*
+*00b tracks DB migration status — what remains to be modeled for deep analysis and balance work. 00c defines resource types and economic parameters; starting values are seeded by 03-init at game start. Authoritative entity schemas in `Database/schema_reference.md`.*
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 00b | [Data Architecture](V1/00b___Data_Architecture.md) | 0.1 | ✅ Reference — Active |
+| 00b | [Analysis Readiness](V1/00b___Analysis_Readiness.md) | 0.3 | ✅ Signed off — S83 |
 | 00c | [Economy Manifest](V1/00c___Economy_Manifest.md) | 0.4 | 🔄 In progress |
 
 ---

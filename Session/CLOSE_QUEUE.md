@@ -1,52 +1,62 @@
-## CLOSE QUEUE — Session 82
+## CLOSE QUEUE — Session 83
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
+---
+
 ### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 00b | Data Architecture | 0.2 | 🔄 Updated S81 — Pending Re-sign-off | Entity registry (23 types, ID namespaces), L108 data table standard (extends 1NF), 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. S45: §3 renamed (L108 extends 1NF clarified); component_positions table spec added to §8 (formerly live_state — DB-11 unblocked); running game state derivation architecture documented (§8 — all state derives from component_positions, PM05 DB-13); IP-xx source updated to Art 07; entity/schema footers corrected. Open: DB-11 (agy DDL), DB-13 (derivation query spec). S81: VM-xx (Visibility Marker) registered (23rd entity type) — ARBITER-held transient token for Beat 2 forced-public operations; supply ~5; pending re-sign-off. |
-NEW: | 00b | Data Architecture | 0.2 | 🔄 Updated S82 — Pending Re-sign-off | Entity registry (24 types, ID namespaces), L108 data table standard (extends 1NF), 9 lookup tables (DT/RO/RG/RT/IL/PS/PB/F/VS), entity relationship map, schema reference index. S45: §3 renamed (L108 extends 1NF clarified); component_positions table spec added to §8 (formerly live_state — DB-11 unblocked); running game state derivation architecture documented (§8 — all state derives from component_positions, PM05 DB-13); IP-xx source updated to Art 07; entity/schema footers corrected. Open: DB-11 (agy DDL), DB-13 (derivation query spec). S81: VM-xx (Visibility Marker) registered (23rd entity type) — ARBITER-held transient token for Beat 2 forced-public operations; pending re-sign-off. S82: BM-xx (BoostMarker) registered (24th entity type) — ARBITER-held transient token; placed on grid slot at Beat 0 when boost payment detected; removed at beat cleanup; physical form: token marked "Boost." |
+FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
+OLD: **Last Updated:** 2026-06-10 — Session 81
+NEW: **Last Updated:** 2026-06-11 — Session 83
+
+---
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: S81: Beat 2 d100 resolution block added (after Automatic cards; queue order; 8-step procedure; additive crits per §21); Beat 2 header updated (C17/C28 listed; Automatic-first order noted); Beat 3 Step 1 item 4 added (VM-xx → public resolution: announce before Step 2, visible roll at Step 5, announce result at Step 6, remove at Step 8 cleanup). v3.4 pending re-sign-off. |
-NEW: S81: Beat 2 d100 resolution block added (after Automatic cards; queue order; 8-step procedure; additive crits per §21); Beat 2 header updated (C17/C28 listed; Automatic-first order noted); Beat 3 Step 1 item 4 added (VM-xx → public resolution: announce before Step 2, visible roll at Step 5, announce result at Step 6, remove at Step 8 cleanup). S82: Beat 0 Boost Detection procedure added (floor division; no refunds); Beat 3 Step 3 BM-xx threshold modifier clause; Beat 3 Step 7 all-effects multiply (1+n) / single NS-xx regardless of n; Beat 3 Step 8 BM-xx cleanup; Discovery (Step 7b.i) defined as public reveal — ARBITER announces acting faction + op name + target; Step 7b rewritten (ARBITER applies); Step 7b.i rewritten (faction player applies own board changes); Start of Month 1/2/3 "Active PA Obligations" blocks added (§9/§12/§15 — generalizable; cross-Quarter compatible). v3.4 pending re-sign-off. |
+OLD: **Last Updated:** 2026-05-31
+NEW: **Last Updated:** 2026-06-11
+
+---
 
 ### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
-OLD: | **04-n81** | **BM-xx BoostMarker — component registration (Art 00b §4).** Register BoostMarker (BM-xx) in Art 00b §4: ARBITER-held supply token; placed on resolution grid during covert operation resolution only (Beat 0 through beat cleanup); not visible as faction board state; physical form: small distinct token in ARBITER supply; supply size TBD (min ~10–15 at L1). Draft language in `Whiteboard/boost_marker_draft_S79.md`. 00b re-sign-off required. Blocks: 04-n82, 04-n83, C42 sign-off. | High — S79 | Open |
-NEW: | **04-n81** | **BM-xx BoostMarker — component registration (Art 00b §4).** Register BoostMarker (BM-xx) in Art 00b §4: ARBITER-held supply token; placed on resolution grid during covert operation resolution only (Beat 0 through beat cleanup); not visible as faction board state; physical form: small distinct token in ARBITER supply; supply size TBD (min ~10–15 at L1). Draft language in `Whiteboard/boost_marker_draft_S79.md`. 00b re-sign-off required. Blocks: 04-n82, 04-n83, C42 sign-off. | High — S79 | ✅ S82 |
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | 03 | while session(true): Round Structure | 3.4 | 🔄 Updated S81 — Pending Re-sign-off |
+NEW: | 03 | while session(true): Round Structure | 4.0 (structural) | ✅ Structural sign-off S83 — full sign-off pending fine-tuning |
 
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
-OLD: | **04-n82** | **Art 03 Beat 0 — boost payment detection + BM-xx placement procedure.** New Beat 0 sub-step (after cost validation, before grid placement confirmation): for each submitted card with boost field ≠ None, calculate excess payment ÷ boost unit cost = n; if valid, place n BM-xx on card's grid slot; lock threshold-scaling cards at (1 + n); apply card-specific Beat 0 validations (e.g. C42: confirm target presence count ≥ (1 + n)); reject invalid excess (not exact multiple, or boost condition False). Draft language in `Whiteboard/boost_marker_draft_S79.md`. Art 03 re-sign-off required. Gate: 04-n81 (BM-xx registration). Blocks: C42 sign-off; all boost-field card sign-offs. | High — S79 | Open |
-NEW: | **04-n82** | **Art 03 Beat 0 — boost payment detection + BM-xx placement procedure.** New Beat 0 sub-step (after cost validation, before grid placement confirmation): for each submitted card with boost field ≠ None, calculate excess payment ÷ boost unit cost = n; if valid, place n BM-xx on card's grid slot; lock threshold-scaling cards at (1 + n); apply card-specific Beat 0 validations (e.g. C42: confirm target presence count ≥ (1 + n)); reject invalid excess (not exact multiple, or boost condition False). Draft language in `Whiteboard/boost_marker_draft_S79.md`. Art 03 re-sign-off required. Gate: 04-n81 (BM-xx registration). Blocks: C42 sign-off; all boost-field card sign-offs. | High — S79 | ✅ S82 |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
-OLD: | **04-n83** | **Art 03 Beat 2/3 — BoostMarker resolution + cleanup procedure.** At resolution (Beat 2/3): after outcome determined, read BM-xx count on card's grid slot; execute success effect (1 + BM-xx count) times; fail/failcrit effects fire once regardless of BM-xx count; remove all BM-xx to ARBITER supply at beat cleanup. Draft language in `Whiteboard/boost_marker_draft_S79.md`. Art 03 re-sign-off required. Gate: 04-n81 (BM-xx registration), 04-n82 (Beat 0 procedure). Blocks: C42 sign-off; all boost-field card sign-offs. | High — S79 | Open |
-NEW: | **04-n83** | **Art 03 Beat 2/3 — BoostMarker resolution + cleanup procedure.** At resolution (Beat 2/3): after outcome determined, read BM-xx count on card's grid slot; execute success effect (1 + BM-xx count) times; fail/failcrit effects fire once regardless of BM-xx count; remove all BM-xx to ARBITER supply at beat cleanup. Draft language in `Whiteboard/boost_marker_draft_S79.md`. Art 03 re-sign-off required. Gate: 04-n81 (BM-xx registration), 04-n82 (Beat 0 procedure). Blocks: C42 sign-off; all boost-field card sign-offs. | High — S79 | ✅ S82 |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
-OLD: | **04-n84** | **Art 03 — Discovery mechanic definition.** Step 7b.i (Discovered) is a thin stub that defers all content to the card spec: "apply card-specified conditions; if announcement, ARBITER makes it; if Standing marker move, apply it." The fundamental question is unresolved: does Discovery universally mean the acting faction's identity is announced to the table, or is that always card-specified? Needed before any card can use Discovery in failcrit without spelling it out in full in arbiter_note. Define Discovery as a universal Art 03 procedure: (1) ARBITER announces: "[Acting faction] — [op name] — Discovered" to all players; (2) acting faction identity now public for remainder of Quarter (or session?); (3) card-specified effects (PS penalty, etc.) then applied per card spec. Coordinate with Art 00b notification component system (NS-xx, IS-xx). Art 03 re-sign-off required. | High — S79 | Open |
-NEW: | **04-n84** | **Art 03 — Discovery mechanic definition.** Step 7b.i (Discovered) is a thin stub that defers all content to the card spec: "apply card-specified conditions; if announcement, ARBITER makes it; if Standing marker move, apply it." The fundamental question is unresolved: does Discovery universally mean the acting faction's identity is announced to the table, or is that always card-specified? Needed before any card can use Discovery in failcrit without spelling it out in full in arbiter_note. Define Discovery as a universal Art 03 procedure: (1) ARBITER announces: "[Acting faction] — [op name] — Discovered" to all players; (2) acting faction identity now public for remainder of Quarter (or session?); (3) card-specified effects (PS penalty, etc.) then applied per card spec. Coordinate with Art 00b notification component system (NS-xx, IS-xx). Art 03 re-sign-off required. | High — S79 | ✅ S82 |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM05___Active_Punch_List.md
-OLD: | **04-n77** | **Art 03 Phase A — Live Coverage comply/resist procedure.** C40B Live Coverage creates a Seasonal obligation on the target faction: each Phase A, elect comply (lay all held cards face-up on table; covert ops proceed) or resist (dispatch case disabled this Month). No Art 03 procedure exists for this PA effect. Add a named procedure block to Art 03 §11 (or Phase A section): (1) ARBITER announces Live Coverage is active against faction X at start of Phase A; (2) faction X elects comply or resist and declares; (3) comply: cards laid face-up; covert submissions proceed; Live Coverage card removed from Network's active PA area at end of Phase A; (4) resist: faction X does not submit covert operations this Phase A; Live Coverage persists. Generalizable: procedure should support any future Seasonal/Permanent PA that creates a Phase A obligation. Art 03 re-sign-off required. Gate: C40B Live Coverage sign-off. | Open — S78 |
-NEW: | **04-n77** | **Art 03 Phase A — Live Coverage comply/resist procedure.** C40B Live Coverage creates a Seasonal obligation on the target faction: each Phase A, elect comply (lay all held cards face-up on table; covert ops proceed) or resist (dispatch case disabled this Month). No Art 03 procedure exists for this PA effect. Add a named procedure block to Art 03 §11 (or Phase A section): (1) ARBITER announces Live Coverage is active against faction X at start of Phase A; (2) faction X elects comply or resist and declares; (3) comply: cards laid face-up; covert submissions proceed; Live Coverage card removed from Network's active PA area at end of Phase A; (4) resist: faction X does not submit covert operations this Phase A; Live Coverage persists. Generalizable: procedure should support any future Seasonal/Permanent PA that creates a Phase A obligation. Art 03 re-sign-off required. Gate: C40B Live Coverage sign-off. | ✅ S82 |
+---
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: **S82** |
+AFTER: **Next:** S83 — 04-n47 (Art 04 §5 single determinate success); grip bundle (Art 03 v3.4 + 00b + Art 06 §9); C28 Issues Resolved + sign-off; C40B sign-off.
 CONTENT:
-| **S83** | TBD | 04-n47 (Art 04 §5 single determinate success outcome); grip bundle (Art 03 v3.4 + 00b + Art 06 §9 re-sign-offs); C28 Issues Resolved + sign-off; C40B sign-off |
+
+### Session 83 — 2026-06-11
+- Art 03 v4.0 structural overhaul complete — structural sign-off S83 (full sign-off pending fine-tuning/mechanics review).
+- §§12–16 deleted (covered by §9 unified monthly Beat procedure).
+- Beat 2/3 Step 0 restructured to "Identify Operation" (0.0 Apex, 0.1 VM-xx, 0.2 Base Difficulty); VM-xx conditional privacy model throughout Steps 1–2 (covert ops fully private by default).
+- Beat 4 (§9.4.4) full procedure written — Faction Player actor; Steps 0–5; sub-steps 0.0 Submit Payment/Validate (Intel Token freshness), 0.1 Apex, 0.2 VM-xx N/A, 0.3 Board State, 0.4 Base Difficulty.
+- §9.4.5 Close Month: Step 0 transient cleanup; Step 1 month advance (Month 3 → §10, else → §9.0 repeat).
+- §10 Resolve District Tension (was §17): PS mechanic — opposing faction moves PS marker; losing faction moves winning faction's PS −1 on resolution; winning faction moves losing faction's PS −1 on press; tie: each faction moves other's PS −1.
+- §11 Quarterly Debrief (was §19): §11.3.0.1 Annual Report (Q4 only).
+- §12 Quarter Close (separated from §11): §12.1 Findings Decay honor system (L2 enforcement flag); §12.3 NS-xx faction hand → ARBITER pool; §12.4 M1/Q+1 tracker advance.
+- Reference sections renumbered §21–28 → §13–19 (§25 merged into §18.1 Modifier React; §18 React Card Rules before §19 Examples & Exceptions).
+- ToC and §6 Quarter Overview updated (Beat 0–5 sub-entries + anchor links added to both).
+- Whiteboard/art03_section_map_S83.md created (complete old→new section map for external artifact sweep).
+- PM05: 03-n02 (Beat 2 modifier stack scope clarification), 03-n03 (OR card component sweep for §9.4.2.3 and §9.4.3.3) added.
+- PM03: Art 03 v4.0 row updated. Art 06 §9 signed off S83 (L205).
+
+**Next:** S84 — Art 03 fine-tuning/mechanics review → full sign-off; external artifact sweep (Whiteboard/art03_section_map_S83.md: 00a, 02b, 03a, 04, PM01, PM05).
+
+---
 
 ### COMMIT
-source ~/Projects/credentials.env && git add -A && git commit -m "session 82 — boost procedure (n81/82/83), discovery mechanic (n84), Phase A obligations (n77)" && git push
+source ~/Projects/credentials.env && cd ~/Projects/TheSignal && git add -A && git commit -m "session 83 — Art 03 structural overhaul v4.0" && git push
+
+---
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
+
+---
 
 ### DELETE
 FILE: /home/abosch/Projects/TheSignal/Session/CLOSE_QUEUE.md

@@ -1,7 +1,7 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.7 — Signed Off — S74 (§3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle added — L195/L196)  
+**Version:** 0.8 — Signed Off — S83 (§11 added — L108 Data Table Standard migrated from 00b §3)  
 **Status:** Signed Off  
 **Last Updated:** 2026-06-09  
 **Companion to:** 00 — Factions, World & Narrative Context  
@@ -51,6 +51,7 @@ Purely mechanical rules that live cleanly in their source artifact (e.g., Findin
 | §8 | [Footprint Rules](#8-footprint-rules) |
 | §9 | [Economy & Resources Rules](#9-economy--resources-rules) |
 | §10 | [Information & Privacy Rules](#10-information--privacy-rules) |
+| §11 | [Data Table Standard (L108)](#11-data-table-standard-l108) |
 
 ---
 
@@ -889,6 +890,26 @@ Rules governing privately held information: what constitutes private information
 *Source: Artifact 02b §8.*
 
 *Governs: Artifacts 02b, 07.*
+
+---
+
+## 11. Data Table Standard (L108)
+
+All data tables in THE SIGNAL artifact suite must satisfy the following five requirements (L108 — Database Translatable Data Design). Requirements 1 and 3 are standard 1NF; Requirement 4 (ID-based foreign references, no prose) enforces 3NF referential discipline; Requirements 2 and 5 are project-specific extensions.
+
+| # | Requirement | Test |
+|---|-------------|------|
+| 1 | Each column carries a single typed value — no compound cells | No cell contains "A / B" or mixed types |
+| 2 | Values from controlled vocabulary (enum) where possible | Column values are drawn from a defined set, not freeform prose |
+| 3 | Every table has an explicit primary key (ID column) | First column is always a unique ID |
+| 4 | Cross-references use ID-based keys, not prose descriptions | Foreign references name an ID (e.g., F-01), not a label (e.g., "Ghost") |
+| 5 | Null / N/A is explicit, never absent | Empty cells use N/A; omission is not a valid null |
+
+*These requirements apply to all data tables in all V1 artifacts, retroactively.*
+
+**Column type vocabulary (L123):** All schema documents in the artifact suite must declare column types using the canonical type vocabulary: **String** (short text), **Semver** (version identifier), **Integer** (non-negative count), **Enum** (controlled vocabulary), **Prose** (long-form text), **±Integer** (signed integer), **ID Reference** (foreign key to an entity ID namespace — governed by Req 4). New types require a locked decision to extend the vocabulary. Source: L121 (Art 04 §6 first application), L123 (promoted to suite-wide standard).
+
+*Governs: all V1 artifacts. Migration status tracked in 00b §5.*
 
 ---
 

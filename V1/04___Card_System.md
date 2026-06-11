@@ -188,6 +188,10 @@ Cards do not define or qualify these phrases. *Formerly 00a R28.*
 
 Each card represents something that happens in New Meridian — a decision, a gambit, an act of power or desperation. A card passes the Narrative Story test if a player can answer *"What is actually happening in the world when this card is played?"* in one or two plain sentences. If no coherent narrative can be constructed — if the card's effect reads only as a mechanical rule with no discernible real-world analog — the card is a design problem. Narrative is not decoration applied after mechanics are settled; it is the first test of whether the mechanics are right. The story drives the card, not the reverse. *See Art 04 §5a — Narrative Anchor; Art 00 §5 P1/P5; Design Pillar 4.6b.*
 
+**Principle 27 — Every card resolves to exactly one determinate outcome per resolution tier.**
+
+Each of the four resolution fields — `success`, `successcrit`, `fail`, `failcrit` — must specify exactly one outcome. Branching within any tier — `game.choose_one()` constructs, conditional player choice, or any either/or resolution — is prohibited. Each tier represents one specific event that occurred in New Meridian; unambiguous outcomes are required for ARBITER execution, narrative coherence, and compliance with the ARBITER Cognitive Efficiency principle. *Successcrit and failcrit are additive to their base outcome — they are not alternative paths.*
+
 ---
 
 ### Design Rationale
@@ -225,7 +229,7 @@ The **Artifact ref** column in each card's checklist should cite the specific se
 |--|-------------|-----------------|------------|
 | Status | | | |
 
-- **Design Pass** ✓ — checklist evaluation complete; all 15 rows assessed
+- **Design Pass** ✓ — checklist evaluation complete; all 16 rows assessed
 - **Issues Resolved** ✓ — all flagged issues addressed; blank if open issues remain
 - **Signed off** ✓ — Andy's explicit approval; record session number (e.g., ✓ S49); blank until signed
 
@@ -248,6 +252,7 @@ A card with no issues from the design pass gets ✓ in both Design Pass and Issu
 | Supported by game procedure | Are all ARBITER and player actions implied by this card covered by Art 03 procedure? Flag any implied action not yet procedurally defined as a gap. | Art 03 |
 | Data schema validation | Are all required fields from §6.1 present in the card spec? Do field values match §6.2 data dictionary types — e.g., `affinity` is `ConditionalExpr \| None` (not a tag); `doctrine_mod` is present and correctly typed; `persistence_condition`/`persistence_effect` are None unless `persistence=Permanent`; all enum values are valid per §6.3? | Art 04 §6.1–§6.3 |
 | Card narrative | Is a Card Story block present and populated? Does it answer "What is actually happening in the world when this card is played?" in plain language — as an event in the world, not a restatement of the mechanic? Does the mechanic follow naturally from that story, or does the narrative feel retrofitted? If the story cannot be told plainly, the card should be revisited. *(P26)* | Art 04 §5 Card Story; Art 00 §5 P1/P5 |
+| Outcome determinacy | Do all four resolution tiers (`success`, `successcrit`, `fail`, `failcrit`) each resolve to exactly one outcome? Is `game.choose_one()` absent from every tier? Does the card avoid conditional player choice in any resolution tier? *(P27)* | Art 04 §5 P27 |
 
 ---
 

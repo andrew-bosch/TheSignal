@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 82 (active) | Updated: 2026-06-10**
+**Session 83 (closing) | Updated: 2026-06-11**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S81 complete. S82 opens here.
+S83 complete — Art 03 structural overhaul v4.0. S84 entry point: Art 03 fine-tuning pass → full sign-off; external artifact sweep (Whiteboard/art03_section_map_S83.md).
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -66,13 +66,20 @@ S81 complete. S82 opens here.
 
 **S82 accomplishments:** PM05 split — 144 completed items archived to `PM05___Archive.md`; 2 all-done sections removed. Active PM05 now 559 lines / 251 open items. 04-n81 ✅ — BM-xx (BoostMarker) registered in 00b §4 (token marked "Boost"; VM-xx supply-size over-spec also removed). 04-n82 ✅ — Beat 0 Boost Detection procedure added to Art 03 (after Intel Token Freshness; floor division; no refunds). 04-n83 ✅ — BM-xx resolution added to Art 03 Beat 3: Step 3 threshold modifier clause; Step 7 all-effects multiply (1+n) / single NS-xx regardless of n; Step 8 BM-xx cleanup. 04-n84 ✅ — Discovery mechanic defined as public reveal (ARBITER announces acting faction + op name + declared target to all players); Step 7b rewritten (ARBITER applies); Step 7b.i rewritten (faction player applies own board changes as directed). 04-n77 ✅ — "Active PA Obligations" general procedure written; Start of Month 1/2/3 blocks added to §9/§12/§15 (generalizable; cross-Quarter compatible). Art 03 v3.4 additions complete — pending grip bundle re-sign-off.
 
-**S83 entry point:**
-1. **04-n47** — Single determinate success outcome principle (Art 04 §5)
-2. Then: grip bundle — Art 06 §9 + Art 03 v3.4 + 00b re-sign-offs (+ 00a-72 if ready)
-3. C28 Issues Resolved + sign-off
-4. C40B sign-off
+**S83 accomplishments (pre-clear):** 04-n47 ✅ — P27 (single determinate outcome per resolution tier — success/successcrit/fail/failcrit each must specify exactly one outcome; no branching in any tier; successcrit/failcrit are additive not alternative) added to Art 04 §5; 16th checklist row "Outcome determinacy" added; Design Pass count updated to 16. PM05: 04-n87–92 added (set-level play and doctrine review, one per set — Standard/Ghost/Directorate/Network/Syndicate/Guild; gates on issues resolved for that set; each gates corresponding sign-off pass). 04-n50/53/58/61/64/67 gates updated to include doctrine review items. Session entry point corrected: card sign-offs gate on §5 stability — removed C28/C40B from S83 menu.
 
-**Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 00b/04b re-sign-offs; 04-n73 (P1–P18 restatement audit).
+**S83 accomplishments (post-clear):** 00b ✅ signed off — restructured as Analysis Readiness (v0.3, L204); L108 standard migrated to 00a §11 (00a v0.8 signed off, L204). 00b filename renamed 00b___Data_Architecture.md → 00b___Analysis_Readiness.md; README + PM03 + 03a updated. L202 locked — crit is a boolean flag on RO-xx, not a standalone outcome type (§4.2.a). L203 locked — Contested is a boolean flag on IL-xx, not IL-04 (§4.3.a). 00b editorial pass: BM-xx placement timing corrected (after card situated in grid); RO Physical Component column removed; IS-xx/VM-xx/BM-xx procedural language trimmed (procedure → Art 03 §11); CA-xx L2+ note added; §3 updated to 3NF; PS-xx flagged ⭐ ready to model. PM02: L202, L203, L204. Art 03 v3.4 sign-off deferred — Beat 2 overhaul (03-n01) scheduled as separate session first.
+
+**S83 accomplishments (Art 06 sign-off):** Art 06 §9 signed off (L205, v0.4). Index anchors fixed for python-markdown shim. §9.2 form: underscore blanks → em dashes (rendering fix), ACCORD DISSOLVED row added, parenthetical placeholders italicized. §9.3 Duration clause vocabulary added (6th type). §9.5 board state as sole compliance basis added. §9.10 Transfer collapsed into Alter as Named Party subtype (four alteration types); Lock last sentence removed; notification language removed from Alter and Transfer.
+
+**S83 accomplishments (post-clear #3):** Art 03 structural overhaul v4.0 — structural sign-off S83 (full sign-off pending fine-tuning). §§12–16 deleted (unified into §9 monthly procedure). Beat 2/3 Step 0 restructured to "Identify Operation" (0.0 Apex, 0.1 VM-xx, 0.2 Base Difficulty); VM-xx conditional privacy model (covert ops fully private by default). Beat 4 (§9.4.4) full procedure written (Faction Player actor; Steps 0–5; Intel Token freshness check; Apex at 0.1; board state validation at 0.3). §9.4.5 Close Month (transient cleanup; month advance; Month 3 → §10). §10 Resolve District Tension (was §17): PS mechanic — opposing faction moves PS marker on resolution; losing faction moves winning faction's PS −1 on resolution; winning faction moves losing faction's PS −1 on press; tie: each faction moves other's PS −1. §11 Quarterly Debrief (was §19): §11.3.0.1 Annual Report (Q4 only). §12 Quarter Close (separated from §11): §12.1 Findings Decay honor system (L2 enforcement deferred); §12.3 NS-xx faction hand → ARBITER pool; §12.4 M1/Q+1 advance. Reference sections renumbered §21–28 → §13–19 (§25 merged into §18.1; §18 React Rules before §19 Examples). ToC and §6 Quarter Overview updated (Beat 0–5 sub-entries + anchor links). Whiteboard/art03_section_map_S83.md created (old→new section map for external sweep). PM05: 03-n02 (Beat 2 modifier stack scope), 03-n03 (OR card component sweep) added.
+
+**S84 entry point:**
+1. Art 03 fine-tuning/mechanics review pass (§§7–9) → full sign-off
+2. Art 03 external artifact sweep — Whiteboard/art03_section_map_S83.md (sweep: 00a, 02b, 03a, 04, PM01, PM05)
+3. Card work (C28 Breaking News, C40B Live Coverage, etc.) — after Art 03 sign-off
+
+**Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 04b re-sign-off; 04-n73 (P1–P18 restatement audit).
 
 ---
 
@@ -128,12 +135,12 @@ S81 complete. S82 opens here.
 | 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle documentation). |
 | 01 — Game Board: New Meridian | 2.0 | ✅ Signed Off — S74 (L197). §6 Component Physical Forms column → "Proposed Form". Open: 01-10 (table → Art 02a); 01-11 (scope overhaul §8/§11/§12). |
 | 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Quarter Structure & Gameplay | 3.3 | ✅ Signed Off — S68 (L189). §19 Debrief Actions step (DebriefActionCard type); §25 updated (cross-refs §28); §28 React Card Rules added (interrupt model). |
+| 03 — Quarter Structure & Gameplay | 4.0 (structural) | ✅ Structural sign-off S83 — full sign-off pending fine-tuning. §9 unified Beat procedure (Beats 2/3/4/5); §§12–16 removed; §10 Resolve District Tension; §11 Quarterly Debrief; §12 Quarter Close; reference sections renumbered §13–§19. |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
 | 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
-| 06 — Messaging System | 0.3 | ✅ §9 Signed Off — S77 (L198). §9.4 Formation revised: blank AccordForm delivery model; cross-Quarter persistence; Debrief-only physical alterations. Open: §§1–8, 10–13 non-canonical stubs. |
+| 06 — Messaging System | 0.4 | ✅ §9 Signed Off — S83 (L205). §9.3 clause vocabulary complete (6 types incl. Duration); §9.5 board state as sole compliance basis; §9.8 ACCORD DISSOLVED on form; §9.10 Transfer → Alter Named Party subtype. Open: §§1–8, 10–13 non-canonical stubs. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
 Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
@@ -229,8 +236,8 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **00a v0.7** — ✅ Signed Off S74 (L196)
 - **Art 01 v2.0** — ✅ Signed Off S74 (L197)
 - **02a v1.6** — ✅ Signed Off S42
-- **Art 03 v3.3** — ✅ Signed Off S68 (L189)
-- **Art 06 §9** — ⚠ S80 material additions (§9.3 clause vocabulary; §9.4 PS mechanic) pending grip review and re-sign-off
+- **Art 03 v4.0 (structural)** — ✅ Structural sign-off S83 — full sign-off pending fine-tuning
+- **Art 06 §9** — ✅ Signed Off S83 (L205)
 - **Art 03** — ⚠ S81+S82 additions pending grip review and re-sign-off → v3.4
 - **00b** — ⚠ S81 VM-xx + S82 BM-xx registration pending re-sign-off
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)

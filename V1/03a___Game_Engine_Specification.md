@@ -5,7 +5,7 @@
 **Status:** 🔄 In Progress — Tiers 1–3 complete; Phase procedures added (Phase_1–Phase_7); Tier 4 stub pending  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
-**Depends on:** [00b — Data Architecture](00b___Data_Architecture.md)
+**Depends on:** [00b — Analysis Readiness](00b___Analysis_Readiness.md)
 
 ---
 
