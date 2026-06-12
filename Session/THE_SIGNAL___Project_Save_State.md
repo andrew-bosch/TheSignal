@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-11 — Session 83
+**Last Updated:** 2026-06-12 — Session 85
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -812,6 +812,27 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - PM03: Art 03 v4.0 row updated. Art 06 §9 signed off S83 (L205).
 
 **Next:** S84 — Art 03 fine-tuning/mechanics review → full sign-off; external artifact sweep (Whiteboard/art03_section_map_S83.md: 00a, 02b, 03a, 04, PM01, PM05).
+
+### Session 84 — 2026-06-11
+- Art 03 rubric pass begun — entry/exit conditions added to all 17 §6 sections listed in §6 Quarter Overview.
+- §7 entry condition: Q1 = 03-init complete; Q2–Q8 = §12.4 Quarter Close complete. Entry/exit notes as italic lines, not numbered steps.
+- §9.4 container section entry/exit removed — nothing to enter/exit in the section summary.
+- §7.2.x terminology sweep: Event Card → Broadcast Effect Card; Event Zone → Situation Report Zone; session deck → Broadcast Deck (throughout §7.2.0–§7.2.6).
+
+**Next:** S85 — §9.4.0 and §9.4.1 rubric pass; CM model; Broadcast Effect Card naming; component registration.
+
+### Session 85 — 2026-06-12
+- §9.4.0 steps 0–6 restructured: Beat 1 row CM placement before case is opened; packet removal; payment validation; resource drain; grid placement; dispatch token (no token → flip face-down + discard modifier cards); repeat.
+- CM model resolved: submitted CMs placed in Beat 1 row of their lane at Beat 0; at Beat 1 each CM applies to ALL ops in grid targeting the CM's keyed faction — not lane-limited.
+- §9.4.1 fully restructured — 3 sub-steps: §9.4.1.0 Standing Board Effects (clockwise from ARBITER's left, one by one); §9.4.1.1 Broadcast Effect Cards (applied silently, without announcement); §9.4.1.2 CM Cards (Beat 1 row, lane-by-lane, left to right).
+- Situation Report two-card model confirmed: Broadcast Card (public, Situation Report Zone on Overview) + Broadcast Effect Card (hidden effects, ARBITER Tableau). Multiple Situation Reports active simultaneously.
+- Component naming adopted: Broadcast Card, Broadcast Deck, Broadcast Effect Card, Broadcast Effect Deck. DB updated: component ids 25/86/87 renamed; id=98 (Broadcast Effect Card) inserted.
+- "target slip" → "Target Profile" throughout Art 03 (9 instances, replace_all).
+- 03-init §2.8: Broadcast Deck + Broadcast Effect Deck rows added; §3.9 deck list updated. 03-init v0.1 → v0.3.
+- Art 03 v4.1 → v4.2 at close.
+- PM05: 03-n10 ✅ (Situation Report component traceability), DB-18 ✅ (Broadcast components registered), 03-n07 updated (remaining: §9.4.4 publicly played CM), DB-17 updated (remaining: other artifacts), 00a-n01 added (standing card → 00a terminology table).
+
+**Next:** S86 — Art 03 rubric pass §9.4.2 Beat 2 through §9.4.5; §§10–12; external artifact sweep; grip review → full sign-off.
 
 **Session 35 summary (2026-05-25 — complete):**
 - **L144 locked:** Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to child tables. Governs Art 04 and 00b.

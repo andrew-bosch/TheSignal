@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.0 (structural)
+**Version:** 4.2
 
-**Status:** ✅ Structural sign-off S83 — full sign-off pending fine-tuning review.  
+**Status:** Rubric pass in progress — S86 entry at §9.4.2 Beat 2. Pending grip review and full sign-off.  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -17,13 +17,14 @@
 Without a precise, ordered description of how each Quarter is structured — what happens, in what sequence, who does it, and what information is available when — no artifact describing specific actions, resolutions, or ARBITER behavior can be written consistently. This document is the skeleton that all subsequent system artifacts attach to.
 
 ### Deliverable
-The complete structure of a single Quarter of THE SIGNAL: six phases in sequence, the events within each phase in order, who performs each step, and the rules governing timing, priority, and transitions between phases.
+The main game loop of THE SIGNAL: the repeatable quarterly sequence that frames all downstream procedures. Six sections — Upkeep, Placement, three Monthly Activity loops (each containing six resolution beats), Resolve District Tension, Quarterly Debrief, and Quarter Close. For each step: who acts, what the action is, and what sequencing constraints apply. Specific procedures — card resolution, ARBITER scripts, component mechanics — live in downstream artifacts and are called from this loop.
 
 ### Success Criteria
-- ARBITER can follow the sequence of a complete Quarter from this document — knowing what happens in what order and who does it, with references to where specific mechanical details live in subsequent artifacts
-- Players know at any point in the Quarter what phase they are in, what is expected of them, and what comes next
-- The document contains no undefined terms from prior artifacts (00–02b)
-- The Quarter sequence is complete — no phase or transition is missing or ambiguous
+- The quarterly sequence is complete — every section, beat, and transition has a defined actor and a clear entry/exit condition
+- Any downstream procedure can identify its entry point in this document
+- This document frames the loop; it does not implement the subroutines — no specific card procedure, ARBITER script, or component mechanic is hardcoded here
+- Players and ARBITER can always locate themselves in the Quarter and know what comes next
+- No undefined terms from prior artifacts (00–02b)
 
 ---
 
@@ -36,17 +37,22 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 5. [Design Principles](#5-design-principles)
 6. [Quarter Overview](#6-quarter-overview)
 
-**Gameplay Procedure**
+**Quarterly Loop**
 
 7. [Upkeep](#7-upkeep)
 8. [Placement](#8-placement)
 9. [Monthly Activities](#9-monthly-activities)
-   - [Beat 0: The Cases Open](#940-beat-0-the-cases-open)
-   - [Beat 1: Read Board State](#941-beat-1-read-board-state)
-   - [Beat 2: Conditions Set](#942-beat-2-conditions-set)
-   - [Beat 3: Covert Operations Resolve](#943-beat-3-covert-operations-resolve)
-   - [Beat 4: Public Acts Resolve](#944-beat-4-public-acts-resolve)
-   - [Beat 5: Close Month](#945-close-month)
+   - [§9.0 Start of Month](#90-start-of-month)
+   - [§9.1 Covert Dispatch](#91-covert-dispatch)
+   - [§9.2 Public Declaration](#92-public-declaration)
+   - [§9.3 Countermeasures](#93-countermeasures)
+   - [§9.4 Resolution](#94-resolution)
+     - [Beat 0: The Cases Open](#940-beat-0-the-cases-open)
+     - [Beat 1: Read Board State](#941-beat-1-read-board-state)
+     - [Beat 2: Conditions Set](#942-beat-2-conditions-set)
+     - [Beat 3: Covert Operations Resolve](#943-beat-3-covert-operations-resolve)
+     - [Beat 4: Public Acts Resolve](#944-beat-4-public-acts-resolve)
+     - [Beat 5: Close Month](#945-close-month)
 10. [Resolve District Tension](#10-resolve-district-tension)
 11. [Quarterly Debrief](#11-quarterly-debrief)
 12. [Quarter Close](#12-quarter-close)
@@ -65,49 +71,58 @@ The complete structure of a single Quarter of THE SIGNAL: six phases in sequence
 
 ## 3. Game Purpose
 
-The Quarter structure is the engine of the session. It defines the rhythm of play — when information is revealed, when commitments are made, when consequences land. Every player decision happens within a specific phase with specific constraints on what they know and what they can do. The sequence is designed so that the most consequential decisions are made after the board state is known but before outcomes are resolved.
+The Quarter is the unit of consequence in THE SIGNAL. It gives the session its rhythm — a repeatable loop that moves from situational awareness to positioning to committed action to reckoning, then pauses for the table to assess what the cycle produced before the next one begins.
 
-Eight Quarters constitute a session. The session ends either at the completion of Quarter 8 or when an Apex ability resolves — whichever comes first.
+The loop's structure determines when information flows and when it locks. Every downstream system — card resolution, district contests, ARBITER judgment — operates within a moment this loop defines.
+
+Eight Quarters constitute a session. The session ends at the completion of Quarter 8 or when an Apex ability resolves — whichever comes first.
 
 ---
 
 ## 4. Narrative Function
 
-The temporal grounding of the Quarter — its real-world equivalence and its relationship to the Chorus timeline — is defined in 00a §3.1. Each Quarter carries weight proportional to what it follows; The Table is not working on a human schedule. That weight is expressed in what each Quarter action means at scale:
+The narrative function of the game loop is to give the fiction of THE SIGNAL its temporal and operational shape. A Quarter represents three months of real-world operation — long enough for faction strategies to take hold, short enough that each Quarter's outcome reshapes the terms of the next.
 
-- A structure block is not a completed building but an established operational presence — a secured facility, a contracted team, a functioning node. Three months is enough time to establish a foothold; not enough to build a headquarters.
-- Influence growth represents sustained organizational investment over a quarter — relationships cultivated, presence consolidated, community engagement maintained.
-- A Situation Report represents a significant event at the city or global scale — something meaningful enough to shape a quarter of operations, not a daily news cycle.
-- A faction operating in The Mid or Core without a foothold in the adjacent inward ring is working without local networks, cover, or intelligence — the infrastructure of operational presence. That exposure doesn't block an attempt. It makes it harder.
-- A fresh Intel Token targeting the opposing faction adds +2 to Battlefield Strength. Intelligence on your opponent — their movements, their assets, their exposed positions — is not merely informational. At the moment of contested ground, it is force.
-
-The Quarter's three active Months each carry both covert and public operations. The covert work of Month 1 and Month 2 shapes what public acts are viable by Month 3 — but all three months offer both modes of play. Factions choose how to allocate their Dispatch Tokens each month: operations sealed in a case, or acts declared openly on the board. The sequence is not arbitrary; it is how organizations actually work under pressure.
-
-The Quarter's internal structure mirrors how organizations operate under pressure: situational awareness first (Upkeep), then positioning (Placement), then three months each with covert and public acts (Month 1 → Month 2 → Month 3), then a reckoning between contested factions, then the conversation about what it all meant (Debrief).
-
-Where two factions have contested the same ground for the full Quarter, the board forces a reckoning before the Table convenes. Battlefield Strength is the Quarter's final act of consequence — decided not by cards or resources but by who committed more deeply to the district and its surroundings.
+The loop's sequence mirrors how organizations actually operate under pressure: situational awareness before commitment, action conducted across both the covert and public register, a reckoning over contested ground, then the conversation about what it meant. The structure is not arbitrary — it is the shape of how power moves.
 
 ARBITER is present throughout but speaks at specific moments. Between those moments, ARBITER watches.
+
+Full narrative grounding — what each action means at scale, faction doctrine, the Chorus timeline — is in Art 00.
 
 ---
 
 ## 5. Design Principles
 
-1. **Information flows forward, never backward.** Players learn the board state at Upkeep, then commit to each pass with what that moment offers — no prior commitment can be revised. Covert outcomes from Month 1 are available before Month 2 dispatches; covert and public outcomes from both prior months inform Month 3. The sequence is intentional: the highest-stakes commitment is always made with the most information.
+1. **One actor per step.** Each step names exactly one actor type — ARBITER or Faction Player. Steps requiring both are split. No step leaves ambiguity about who acts.
 
-2. **Commitment is irreversible.** Once a dispatch case is closed, its contents cannot be changed. Once a public act is declared on the board, it cannot be withdrawn.
+2. **Loop over procedure.** This document defines sequence and transitions. Where a subroutine exists — card resolution, ARBITER scripts, component mechanics — this document names the entry point and references the downstream artifact. No subroutine detail belongs here.
 
-3. **The board is always honest.** At every point in the Quarter, the board reflects the true current state. Only dispatch case contents and ARBITER's tableau are private.
+3. **Every exit has an entry.** Each section and beat names its successor explicitly. The loop has no implicit transitions or dead ends.
 
-4. **Players run their own economy.** Resource collection, marker placement, flag and marker updates, and structure block removal are all performed by players. ARBITER facilitates and resolves disputes.
+4. **Linearly executable by ARBITER.** Sections are ordered so ARBITER can follow them without backtracking or holding memorized state. Complexity lives in reference tools, not in memory. *(→ 00a §4.7 ARBITER Cognitive Efficiency; 00a §8 Footprint Rules)*
 
-5. **Speed has consequences.** Dispatch case submission order is the tiebreaker within resolution priority tiers.
+5. **Scope discipline.** Content that belongs to a downstream artifact is not reproduced here. A persistent stub in this document is a scope violation, not an open question — resolve it by writing the downstream artifact, not by expanding this one.
 
-6. **ARBITER executes procedures, not exceptions.** All ARBITER-facing content in this artifact is written as generalizable rules applicable uniformly across all game states within their phase. No phase-specific or context-specific exception procedures. Complexity is managed through physical tools and reference materials, not through ARBITER memorization. *Governing Rule 6.1.*
+6. **Component and state traceability.** Every component and game state touched by the loop has a traceable path — where it enters, where it changes, and where it exits. Initial entry points are defined in 03-init; the loop accounts for all subsequent transitions. *(Full validation of this principle gates on 03-init design pass.)*
+
+---
+
+### Section Review Rubric
+
+Apply to each section before sign-off:
+
+- [ ] Every step has a named actor
+- [ ] The section has a named entry point and explicitly names its successor
+- [ ] No subroutine procedure is implemented here — downstream callouts are references, not stubs
+- [ ] A player or ARBITER reading this section knows where they are in the Quarter and what comes next
+- [ ] ARBITER can execute this section without holding memorized state from prior sections beyond what is physically on the board
+- [ ] Every component introduced or modified in this section has a traceable source and destination *(gate: 03-init design pass)*
 
 ---
 
 ## 6. Quarter Overview
+
+The complete quarterly loop — six sections in sequence. Each line is an entry point; full procedures are in the sections that follow.
 
 ```
 §7 UPKEEP
@@ -144,9 +159,11 @@ Sections do not overlap. ARBITER announces the start of each section.
 
 ---
 
-## Gameplay Procedure
+## Quarterly Loop
 
 ## §7 Upkeep
+
+*Entry: Q1 — 03-init complete; Q2–Q8 — §12.4 Quarter Close complete.*
 
 ARBITER announces each step. Faction Players perform their own updates.
 
@@ -174,19 +191,19 @@ ARBITER announces: *"Situation Report."*
 
 #### §7.2.0 Step 0: Draw Broadcast Card
 
-The ARBITER Player draws the top Broadcast Card from the session deck and places it face-up in the Event Zone on The Overview.
+The ARBITER Player draws the top Broadcast Card from the Broadcast Deck and places it face-up in the Situation Report Zone on The Overview.
 
-#### §7.2.1 Step 1: Locate Event Card
+#### §7.2.1 Step 1: Locate Broadcast Effect Card
 
-The ARBITER Player locates the matching Event Card from the Event Card deck and places it on the ARBITER tableau.
+The ARBITER Player locates the matching Broadcast Effect Card from the Broadcast Effect Deck and places it on the ARBITER Tableau.
 
-#### §7.2.2 Step 2: Read Event Card
+#### §7.2.2 Step 2: Read Broadcast Effect Card
 
-The ARBITER Player reads the Event Card.
+The ARBITER Player reads the Broadcast Effect Card.
 
 #### §7.2.3 Step 3: Announce Standing Track Changes
 
-ARBITER reads the indicated narrative on the Event Card aloud.
+ARBITER reads the indicated narrative on the Broadcast Card aloud.
 
 *Do not announce difficulty modifiers or hidden mechanical effects.*
 
@@ -198,9 +215,9 @@ Each Faction Player moves their Public Standing marker as indicated by ARBITER.
 
 If the Event Card specifies a deployment marker cannot convert this Quarter: The ARBITER Player flips the affected marker(s) to the Blocked face.
 
-#### §7.2.6 Step 6: Expire Previous Event Cards
+#### §7.2.6 Step 6: Expire Previous Broadcast Effect Cards
 
-The ARBITER Player reviews all Event Cards on the ARBITER tableau and moves expired cards to the expired area.
+The ARBITER Player reviews all Broadcast Effect Cards on the ARBITER Tableau and moves expired cards to the expired area.
 
 *No tick-downs or maintenance — duration management occurred at the close of the previous Quarter.*
 
@@ -316,6 +333,8 @@ Draw from the faction modifier deck in the player's tableau.
 | 4–5 | 2 |
 | 6+ | 3 (maximum) |
 
+*The Network's virtual structure block at University Perimeter counts toward this total while Network holds any presence in that district.*
+
 ##### §7.5.3.1 Step 1: Ring Modifier Draw
 
 A ring qualifies if the faction meets all of the following conditions:
@@ -323,6 +342,8 @@ A ring qualifies if the faction meets all of the following conditions:
 - Established or higher presence in at least 1 district in that ring
 
 Draw 1 card for each qualifying ring. A faction may qualify for all three rings.
+
+*The Network's virtual structure block at University Perimeter counts toward the structure block condition for its ring while Network holds any presence in that district.*
 
 *Modifier decks (faction and ring) are not reshuffled when exhausted.*
 
@@ -339,9 +360,13 @@ After completing all draws, before Dispatch opens, a faction may trigger Burst P
 
 *Full card draw rules, deck construction, hand size, modifier card rules, and Burst Play are specified in Artifact 04 §12.*
 
+Upkeep complete. Proceed to §8 Placement.
+
 ---
 
 ## §8 Placement
+
+*Entry: §7 Upkeep complete.*
 
 Faction Players place their own markers. ARBITER enforces entry requirements.
 
@@ -362,22 +387,28 @@ Faction Players place their two deployment markers in initiative order, snake pa
 
 Before placing in each district:
 
-| Ring | Entry Requirement | Threshold Modifier |
-|------|-------------------|--------------------|
-| Baryo | None | None |
-| The Mid | None | −25 to all operations targeting this district if no presence in any adjacent Core district |
-| Core | Established or higher in an adjacent The Mid district (permanent presence chips or temporary presence from first marker this phase) | −25 to all operations targeting this district if no presence at the Chorus Node |
-| Chorus Node | Established or higher in an adjacent Core district (permanent presence chips or temporary presence from first marker this phase) | −25 to all operations targeting this district |
+| Ring | Entry Requirement |
+|------|-------------------|
+| Baryo | None |
+| The Mid | None |
+| Core | Established or higher in an adjacent The Mid district (permanent presence chips or temporary presence from first marker this phase) |
+| Chorus Node | Established or higher in an adjacent Core district (permanent presence chips or temporary presence from first marker this phase) |
+
+*Ring adjacency penalties apply during operation resolution, not placement. See §13 M-12.*
 
 ### §8.2 Step 2: Update Board State
 
 After each placement, if influence levels change: the placing Faction Player updates the relevant Control flag, Established marker, or Tension marker immediately.
 
-*A Faction Player may pass either or both placements. ARBITER redirects illegal placements.*
+*Both deployment markers must be placed each Placement phase, beginning Q1M1. Both may be placed in the same district. ARBITER redirects illegal placements.*
+
+Placement complete. Proceed to §9 Monthly Activities.
 
 ---
 
 ## §9 Monthly Activities
+
+*Entry: Month 1 — §8 Placement complete; Months 2–3 — §9.4.5 complete. Repeats three times; exit via §9.4.5 each month.*
 
 **Dispatch Token rule:** Each action requires 1 Dispatch Token. Covert operations: token placed in the dispatch case with the operation card (§9.1). Public acts: token placed on the declared card on the Overview (§9.2). A covert operation card submitted without a token is rejected by ARBITER at Beat 0 without resolution and returned to the faction. A public act declared without a token is invalid.
 
@@ -386,6 +417,8 @@ After each placement, if influence levels change: the placing Faction Player upd
 ---
 
 ### §9.0 Start of Month
+
+*Entry: §9 Monthly Activities opens (Month 1) or §9.4.5 complete (Months 2–3).*
 
 Before §9.1 Covert Dispatch opens, ARBITER checks for active public acts with Covert Dispatch obligations. If none: proceed to §9.1.
 
@@ -406,9 +439,13 @@ ARBITER executes per the card spec:
 - **Comply:** apply comply effect. If the card's `persistence_condition` is now satisfied, card clears after §9.1 closes.
 - **Resist:** apply resist effect. Card remains in play. If resist disables covert dispatch: that faction skips §9.1 Steps 1–3 and submits no case this Month.
 
+§9.0 complete. Proceed to §9.1 Covert Dispatch.
+
 ---
 
 ### §9.1 Covert Dispatch
+
+*Entry: §9.0 complete.*
 
 Faction Players assemble, seal, and transmit their own dispatch cases. The ARBITER Player keeps watch on the Dispatch Timer, announces status, and queues cases in the order received.
 
@@ -418,7 +455,7 @@ ARBITER announces: *"Dispatch is open."* The ARBITER Player starts the dispatch 
 
 #### §9.1.1 Step 1: Assemble Cases
 
-Faction Players load operation cards, Dispatch Tokens (1 per operation card), resources, target slips, and any Modifier Cards being assigned to specific operations into their cases.
+Faction Players load operation cards, Dispatch Tokens (1 per operation card), resources, Target Profiles, and any Modifier Cards being assigned to specific operations into their cases.
 
 *Modifier Cards (drawn at §7.5.3) are assigned to operations by placing each card in the case with that operation's packet. A faction may assign Modifier Cards to some, all, or none of their submitted operations. Unassigned Modifier Cards remain in the tableau modifier area and are not submitted.*
 
@@ -450,9 +487,13 @@ The ARBITER Player announces: *"Dispatch closed."*
 
 *Any case not received is treated as containing no covert operations.*
 
+§9.1 closed. Proceed to §9.2 Public Declaration.
+
 ---
 
 ### §9.2 Public Declaration
+
+*Entry: §9.1 Covert Dispatch closed.*
 
 Faction Players declare publicly, in initiative order. The ARBITER Player records declarations.
 
@@ -467,7 +508,7 @@ For each Faction Player in initiative order, one of:
 **Declare** — name the public act and place it on the board:
 
 1. Announce the public act being declared.
-2. Place the declared card face-up on the Overview in the target district, with the target slip and 1 Dispatch Token stacked on top. Resource tokens remain with the declared card — payment submitted to the Reservoir at Beat 4.
+2. Place the declared card face-up in the PA area on the Overview (in front of faction tableau), with the target profile, 1 Dispatch Token, and resource tokens on the card. Resource tokens remain with the declared card — payment submitted to the Reservoir at Beat 4.
 3. Play any modifier cards modifying the public act face-up alongside the card on the Overview.
 
 *Once placed, the card is a valid target for countermeasures (§9.3) and other public acts.*
@@ -478,9 +519,13 @@ For each Faction Player in initiative order, one of:
 
 ARBITER announces: *"Public Declaration closed."*
 
+§9.2 closed. Proceed to §9.3 Countermeasures.
+
 ---
 
 ### §9.3 Countermeasures
+
+*Entry: §9.2 Public Declaration closed.*
 
 Faction Players deploy or pass in initiative order. The ARBITER Player holds Countermeasures for application during Resolution (§9.4).
 
@@ -492,26 +537,24 @@ For each Faction Player in initiative order, one of:
 
 **Pass** — verbally declare no Countermeasure card will be played.
 
-**Deploy** — play one or more Countermeasure cards. For each card deployed:
+**Deploy** — declare "Countermeasure" and choose one play mode for each card:
 
-1. Play the card face-up in front of the Faction Player's tableau.
-2. Declare the card type and target to the ARBITER Player. Countermeasures may target:
-   - A queued covert operation in a submitted dispatch case, or
-   - A placed public act currently on the Overview.
-3. Hand the card to the ARBITER Player.
+- **Submit to ARBITER** — hand the card face-down to the ARBITER Player. Applies to all covert operations targeting your faction; ARBITER matches to all relevant operations at Beat 0 (§9.4.0.1).
+- **Play publicly** — place the card face-up in your PA area on the Overview. Applies at the appropriate resolution beat to all operations targeting your faction.
 
-*Each faction has 3 Countermeasure cards per session total across all three Monthly windows. Cards spent here are unavailable in Months 2 and 3. Full Countermeasure card rules: §17.*
+*CMs are keyed to the playing faction. CM-A voids operations; CM-B applies a −15 modifier. Full CM card rules: §17.*
 
-#### §9.3.1 Step 1: Attach Countermeasures to Targets
+*Each faction has 3 Countermeasure cards per session total across all three Monthly windows. Cards spent here are unavailable in Months 2 and 3.*
 
-The ARBITER Player places each received Countermeasure card on its declared target:
+#### §9.3.1 Step 1: Confirm Countermeasure Placement
 
-- **Targeting a covert operation:** place on the submitting faction's dispatch case.
-- **Targeting a public act:** place on the declared card on the Overview.
+**Submitted CMs:** The ARBITER Player attaches each received card to the relevant faction's dispatch case in the receive queue. ARBITER matches to all targeted operations within sealed cases at Beat 0 (§9.4.0.1).
 
-*CM matching to specific operations within sealed cases occurs at Beat 0. [flag: confirm CM attachment/matching sequence — Beat 0/Beat 1 draft]*
+**Publicly played CMs:** Already in position on the Overview. No further placement required.
 
 ARBITER announces: *"Countermeasure Window closed."*
+
+§9.3 closed. Proceed to §9.4 Resolution.
 
 ---
 
@@ -529,6 +572,8 @@ The ARBITER Player runs Resolution in six sequential beats. Faction Players rece
 
 #### §9.4.0 Beat 0: The Cases Open
 
+*Entry: §9.3 Countermeasures closed.*
+
 **Beat Summary:** ARBITER positions and opens all dispatch cases, validates payment, and builds the Resolution Grid.
 
 ##### §9.4.0.0 Step 0: Position and Open Cases
@@ -539,9 +584,13 @@ Cases are in receipt order from §9.1.3. Position each case above its assigned l
 
 From left to right, lane by lane:
 
-0. Remove the first operation packet from the case. If a Countermeasure card is attached to this case (§9.3.1): match it to its declared target operation and place the CM card in the Beat 1 row of this lane.
+0. If any Countermeasure cards are attached to this case (§9.3.1): place each in the Beat 1 row of this lane.
 
-1. For each card in the packet, validate payment:
+   *At Beat 1, each CM applies to all operations in the grid whose target profile matches the CM's keyed faction.*
+
+1. Remove the first operation packet from the case.
+
+2. For each card in the packet, validate payment:
 
    | Payment | Applies to | Resources | Card Placement |
    |---------|------------|-----------|----------------|
@@ -563,15 +612,13 @@ From left to right, lane by lane:
 
    *Quarter number and faction are written on each token by ARBITER at issuance. Physical form TBD — see PM05 03-13. Expired tokens not submitted have no payment value but may be held and traded — age is visible on the token.*
 
-2. Drain resources to the Reservoir as directed.
+3. Drain resources to the Reservoir as directed.
 
    *For each card with a `boost` field (value ≠ None): after base cost is drained, count any excess resources remaining in the packet. Calculate n = floor(excess ÷ boost unit cost). If n > 0: place n BM-xx tokens on the card's grid slot. Drain all remaining excess to the Reservoir. No excess is returned to the faction.*
 
-3. If a Dispatch Token is present with the card: set aside the token. If no Dispatch Token accompanies the card: reject without resolution. Return the operation card to the acting faction. No Operation Resolution card issued.
-
 4. Place each validated card in the grid:
    - Beat 2 card: place in the Beat 2 row of the lane being processed.
-   - Beat 3 card or Pass: place in the uppermost vacant space in the Beat 3 section of the lane. Stack bottom to top: target slip, Modifier Cards (if any), operation card (or pass). Overlap so each card beneath shows its resolution data block.
+   - Beat 3 card or Pass: place in the uppermost vacant space in the Beat 3 section of the lane. Stack bottom to top: Target Profile, Modifier Cards (if any), operation card (or pass). Overlap so each card beneath shows its resolution data block.
 
    *Cards are placed face-up or face-down per Payment Validation.*
 
@@ -594,60 +641,63 @@ From left to right, lane by lane:
 
    *Modifier cards in a stack peek out at the bottom to display their values during resolution. Modifier card physical design must support cascade orientation — value printed prominently at both top and bottom edge. (XA-22, Art 11)*
 
-5. Repeat sub-steps 0–4 for each remaining packet in the lane, then advance to the next lane. Repeat until all lanes are processed.
+5. If a Dispatch Token accompanies the card: set aside the token. If no Dispatch Token accompanies the card: flip the operation card face-down; remove attached modifier cards from the game.
 
-*If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order.*
+6. Repeat sub-steps 0–5 for each remaining packet in the lane, then advance to the next lane. Repeat until all lanes are processed.
+
+   *If card order within a case was disrupted in transit, the order ARBITER encounters the cards is the resolution order.*
 
 ##### §9.4.0.2 Step 2: Collect Dispatch Tokens
 
 Collect all Dispatch Tokens from this Month. Return to The Backlog.
 
+Beat 0 complete. Proceed to §9.4.1 Beat 1.
+
 ---
 
 #### §9.4.1 Beat 1: Read Board State
 
-**Beat Summary:** ARBITER reads active board effects aloud, processes CM cards targeting covert operations, voids operations and public acts that violate targeting restrictions, and applies conversion blocks.
+*Entry: §9.4.0 complete. Resolution Grid built; CM cards in Beat 1 rows.*
 
-##### §9.4.1.0 Step 0: Read Board State
+**Beat Summary:** ARBITER processes standing board effects one by one — clockwise from ARBITER's left — then Broadcast Effect Cards, then CM cards.
 
-The ARBITER Player reads all currently active board effects aloud — Situation Report effects, standing public acts on the Overview (including tripwires and Permanent cards placed in prior months), and any other active world effects.
+##### §9.4.1.0 Step 0: Process Standing Board Effects
 
-##### §9.4.1.1 Step 1: Process CM Cards
+Starting from ARBITER's left, proceeding clockwise around the table, process each standing card in the PA areas:
 
-*[flag: CM processing sequence and effect to be defined at Beat 2 draft — procedure here is a placeholder]*
+1. ARBITER announces the card name and active effect(s).
+2. If the card includes a **targeting restriction**: scan the Resolution Grid for covert operations targeting the restricted district or ring. For each match: place the operation card and Target Profile face-down in the acting faction's dispatch case; discard modifier cards from that stack. Scan placed public acts on the Overview for matches. For each match: return the card face-down, Target Profile, and resource tokens to the declaring faction; discard modifier cards; return the Dispatch Token to the acting faction.
 
-For each lane with a CM card in the Beat 1 row: process per card type and declared target.
+   *Modifier cards on voided operations and voided public acts are consumed without effect. Public act tokens are refunded — resources are not committed until Beat 4.*
 
-##### §9.4.1.2 Step 2: Apply Targeting Restrictions
+3. If the card includes a **conversion block**: flip affected deployment markers to the Blocked face.
 
-Targeting restrictions are effects that prevent operations in specific districts or rings.
+##### §9.4.1.1 Step 1: Process Broadcast Effect Cards
 
-1. The ARBITER Player identifies all targeting restrictions from active board state.
-2. For each targeting restriction: scan the Beat 3 rows of the Resolution Grid for covert operations targeting the restricted district or ring. For each match:
-   - Place the operation card and target slip face-down in the acting faction's dispatch case. Face-down operation cards are void.
-   - Discard any modifier cards from the grid cell — removed from the game.
+The ARBITER Player applies effects from each active Broadcast Effect Card in turn, without announcement. The table observes outcomes but is not told their source. Repeat for all active Broadcast Effect Cards.
 
-   *Modifier Cards on voided operations are consumed without effect.*
+##### §9.4.1.2 Step 2: Process CM Cards
 
-3. For each targeting restriction: scan placed public acts on the Overview targeting the restricted district or ring. For each match:
-   - Return the public act card face-down, target slip, and resource tokens to the Faction Player.
-   - Discard any modifier cards placed alongside the act — removed from the game.
-   - Return the Dispatch Token to the acting faction.
+The ARBITER Player processes the Beat 1 row lane by lane, left to right. For each lane containing a CM card:
 
-   *Public act resources are not committed until Beat 4 Submit Payment — voiding before Beat 4 refunds all tokens.*
+1. Identify the submitting faction from the CM card.
+2. Scan the Resolution Grid for all covert operation cards targeting that faction.
+3. Apply by card type:
+   - **Type A (CM-A):** Flip each targeted covert operation card face-down. Discard modifier cards from those stacks.
+   - **Type B (CM-B):** Place a −15 modifier token on each targeted covert operation card.
+4. Discard the CM card.
 
-##### §9.4.1.3 Step 3: Apply Conversion Blocks
-
-Conversion blocks prevent deployment marker conversion in specific districts or rings.
-
-1. The ARBITER Player identifies any conversion-blocking effects on active Event Cards.
-2. The ARBITER Player flips any affected deployment markers to the Blocked face.
+5. Repeat until all CM cards in the Beat 1 row(s) have been resolved.
 
 *No other board changes, track updates, or maintenance occur in this beat.*
+
+Beat 1 complete. Proceed to §9.4.2 Beat 2.
 
 ---
 
 #### §9.4.2 Beat 2: Conditions Set
+
+*Entry: §9.4.1 complete. CM cards processed; targeting restrictions and conversion blocks applied.*
 
 **Beat Summary:** ARBITER resolves all Beat 2 cards left to right, one card at a time. When all Beat 2 cards have resolved, proceed to Beat 3.
 
@@ -655,7 +705,7 @@ Conversion blocks prevent deployment marker conversion in specific districts or 
 
 *C06 Broadcast Interference and C07 Amplify are redesigned as Seasonal public acts — see Art 04.*
 
-*[flag: Deferred Effect (C11 Fortify Structure) and Resource Allocation (C28 Golden Parachute) procedures pending redesign.]*
+*[flag: Deferred Effect (C11 Fortify Structure) and Resource Allocation (C34 Golden Parachute) procedures pending redesign.]*
 
 *[flag: Type B CM cards attached to placed public acts — sweep timing TBD.]*
 
@@ -735,10 +785,9 @@ ARBITER announces the discovery to all players: acting faction, operation name, 
 
 ##### §9.4.2.3 Step 3: Clean Up Grid Cell
 
-1. Place the operation card and target slip back in the acting faction's dispatch case.
-2. Place the appropriate Operation Resolution card: Succeeded / Failed / Blocked / Discovered.
-3. Discard modifier cards from the grid cell — removed from the game.
-4. Return modifier tokens to the pool.
+1. Place the operation card and Target Profile back in the acting faction's dispatch case.
+2. Discard modifier cards from the grid cell — removed from the game.
+3. Return modifier tokens to ARBITER tableau.
 
 ##### §9.4.2.4 Step 4: ARBITER Private Tracking
 
@@ -754,11 +803,13 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 ##### §9.4.2.5 Step 5: Advance
 
-Move to the next cell right. When the Beat 2 row is complete, proceed to Beat 3.
+Move to the next cell right. When the Beat 2 row is complete: Beat 2 complete. Proceed to §9.4.3 Beat 3.
 
 ---
 
 #### §9.4.3 Beat 3: Covert Operations Resolve
+
+*Entry: §9.4.2 complete. All Beat 2 cards resolved.*
 
 **Beat Summary:** ARBITER resolves all covert operations from the Resolution Grid, row by row, left to right. When all operations have resolved, the grid is cleared and dispatch cases are returned.
 
@@ -855,11 +906,10 @@ ARBITER announces the discovery to all players: acting faction, operation name, 
 
 ##### §9.4.3.3 Step 3: Clean Up Grid Cell
 
-1. Place the operation card and target slip back in the acting faction's dispatch case.
-2. Place the appropriate Operation Resolution card: Succeeded / Failed / Blocked / Discovered.
-3. Discard modifier cards from the grid cell — removed from the game.
-4. Return modifier tokens to the pool. *[TBD — Artifact 07.]*
-5. Return any BM-xx tokens on this grid slot to ARBITER supply.
+1. Place the operation card and Target Profile back in the acting faction's dispatch case.
+2. Discard modifier cards from the grid cell — removed from the game.
+3. Return modifier tokens to ARBITER tableau.
+4. Return any BM-xx tokens on this grid slot to ARBITER supply.
 
 ##### §9.4.3.4 Step 4: ARBITER Private Tracking
 
@@ -883,19 +933,23 @@ When all Beat 3 rows have resolved, proceed to Step 6.
 
 ###### §9.4.3.6.0 Return Cases
 
-The ARBITER Player returns all dispatch cases to their owners. Each case contains: submitted covert operation cards, target slips, Operation Resolution cards (one per operation), and any Intel Tokens created for that faction this Quarter.
+The ARBITER Player returns all dispatch cases to their owners. Each case contains: submitted covert operation cards, Target Profiles, any IS-xx or NS-xx placed in this case by ARBITER during this Month's resolution, and any Intel Tokens issued to this faction this Month.
 
 *Not returned: resources (spent), Modifier cards (discarded during resolution), Countermeasure cards (removed from game when played).*
 
 ###### §9.4.3.6.1 Faction Players Read Results
 
-Faction Players read their Operation Resolution cards privately.
+Faction Players open their returned case and review contents privately.
 
 ###### §9.4.3.6.2 Proceed to Beat 4
+
+Beat 3 complete. Proceed to §9.4.4 Beat 4.
 
 ---
 
 #### §9.4.4 Beat 4: Public Acts Resolve
+
+*Entry: §9.4.3 complete. Covert operations resolved; grid cleared.*
 
 **Beat Summary:** Each Faction Player resolves their declared public acts in initiative order. Resolution is fully public — all players observe the process.
 
@@ -923,11 +977,11 @@ Reset (erase) and return all submitted Intel Tokens to The Dossier, or discard i
 
 ###### §9.4.4.0.1 Step 0.1: Apex Check
 
-If Apex: resolution is immediately interrupted — see Apex Activation before proceeding.
-
 If face-down: auto-fail. Discard all modifier cards. Return the public act card to the faction. Advance to the next Faction Player. No further steps apply.
 
-Read the public act card and target slip.
+Read the public act card and Target Profile.
+
+If Apex: resolution is immediately interrupted — see Apex Activation before proceeding.
 
 ###### §9.4.4.0.2 Step 0.2: VM-xx Check
 
@@ -1011,11 +1065,13 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 ##### §9.4.4.5 Step 5: Advance
 
-Proceed to the next public act in initiative order. When all public acts have resolved, proceed to §9.4.5 Beat 5.
+Proceed to the next public act in initiative order. When all public acts have resolved: Beat 4 complete. Proceed to §9.4.5 Close Month.
 
 ---
 
 #### §9.4.5 Close Month
+
+*Entry: §9.4.4 complete. All public acts resolved.*
 
 ##### §9.4.5.0 Step 0: Cleanup
 
@@ -1033,11 +1089,13 @@ No other board changes occur at Close Month.
 
 If this is Month 1 or Month 2: advance the Round Track pointer to the next month. Return to §9.0 Start of Month.
 
-If this is Month 3: do not advance the month pointer. Proceed to §10 Contested District Resolution. Quarter advance occurs at the end of the quarter close procedure.
+If this is Month 3: do not advance the month pointer. Proceed to §10 Resolve District Tension. Quarter advance occurs at the end of the quarter close procedure.
 
 ---
 
 ## §10 Resolve District Tension
+
+*Entry: Month 3 §9.4.5 complete.*
 
 ### §10.0 Step 0: Scan for Tension Markers
 
@@ -1124,6 +1182,8 @@ Proceed to §11 Quarterly Debrief.
 
 ## §11 Quarterly Debrief
 
+*Entry: §10 Resolve District Tension complete.*
+
 ### §11.0 Step 0: Open Debrief
 
 ARBITER announces: *"The Table is in Debrief."*
@@ -1185,13 +1245,15 @@ If Chorus Activity changed this Quarter, ARBITER incorporates it as the track mo
 
 1. When done with Debrief, a Faction Player flips their Status marker to the Ready side.
 2. When 3 of 5 Faction Players show Ready: ARBITER starts a 60-second courtesy timer: *"The majority is ready. Sixty seconds."*
-3. When the timer expires or all 5 show Ready — whichever comes first — Debrief closes. Proceed to §12.
+3. When the timer expires or all 5 show Ready — whichever comes first — Debrief closes. Proceed to §12 Quarter Close.
 
 *ARBITER observes who signals ready early, who holds out, and when. The Chorus notes this.*
 
 ---
 
 ## §12 Quarter Close
+
+*Entry: §11 Quarterly Debrief complete.*
 
 At Debrief close, in strict order:
 
@@ -1213,17 +1275,17 @@ Ghost returns the appropriate number of Findings tokens to the Reservoir and dec
 
 ARBITER assesses the Quarter and distributes rewards before the Session Timeline advances.
 
-*[TBD — design pending: fixed vs. ARBITER-discretion reward structure. Candidates: Intel Token (highest net information gain), bonus resource (Accord compliance), Situation Report reveal (world event for next Quarter).]*
+*Full procedure: Art 07 — ARBITER Toolkit (pending design).*
 
 ### §12.3 Step 3: Return Notification Slips
 
 Faction Players return all NS-xx Notification Slips from hand to the ARBITER supply pool.
 
-*[flag: sweep Operation Resolution card references in §9.4.2.3 and §9.4.3.3 — component may have been removed; verify and remove if so. PM05 03-n03.]*
-
 ### §12.4 Step 4: Advance Quarter/Month Tracker
 
 The ARBITER Player advances the Quarter/Month tracker: Quarter +1, Month reset to 1 (M1/Q+1).
+
+If Q1–Q7: proceed to §7 Upkeep, Quarter N+1.
 
 If the tracker reaches Q8 and no Apex has resolved: proceed to Session End per Art 10a — Victory System.
 
@@ -1245,7 +1307,7 @@ A d100 is produced by two ten-sided dice (d10) in two distinct colors. One color
 
 Establish which color is tens at session start. Keep consistent throughout the session.
 
-The game includes two d10 dice. If d10 dice are unavailable, any device capable of generating a random integer from 1 to 100 produces an identical result.
+If d10 dice are unavailable, any device capable of generating a random integer from 1 to 100 produces an identical result.
 
 *The d100 produces a flat uniform distribution — every result from 01 to 100 is equally likely. A threshold of 50 is a genuine 50% chance of success; a modifier of +15 shifts that probability by exactly 15 points. Probability is transparent: players can calculate exact odds before committing to an operation.*
 
@@ -1280,7 +1342,7 @@ Base difficulty is printed on the operation card or public act card. It represen
 | 01–05 | Critical Success | Always — regardless of threshold or modifiers |
 | 96–00 | Critical Fail | Always — regardless of threshold or modifiers |
 
-*If modifiers reduce the threshold to 0 or below, the roll still occurs — only a Critical Success (01–05) succeeds. If modifiers raise the threshold to 100 or above, the roll still occurs — only a Critical Fail (96–00) fails. The 5% critical floor means no committed action is truly hopeless; the 5% critical ceiling means no action is guaranteed. Critical Success and Critical Fail carry additional action-specific consequences noted on individual operation cards (Artifact 09).*
+*If modifiers reduce the threshold to 0 or below, the roll still occurs — only a Critical Success (01–05) succeeds. If modifiers raise the threshold to 100 or above, the roll still occurs — only a Critical Fail (96–00) fails. The 5% critical floor means no committed action is truly hopeless; the 5% critical ceiling means no action is guaranteed. Critical Success and Critical Fail carry additional action-specific consequences noted on individual operation cards (Artifact 04).*
 
 ---
 
@@ -1323,7 +1385,7 @@ An Apex operation may be submitted as a covert operation (resolved in Beat 3) or
 When an Apex card is encountered, the current procedure immediately suspends and subroutines to Apex resolution (Steps 2–5). If the Apex is cancelled at Step 4, the procedure resumes from the exact point it was suspended.
 
 - In Beat 3 (covert): suspension occurs when the Apex card is reached in the resolution queue. On return from a failed Apex: continue from the next operation in queue.
-- In Beat 4 (public): suspension occurs when the Apex public act is reached in initiative order. The card has been face-up on the Overview since Phase B. On return from a failed Apex: continue from the next Faction Player in initiative order.
+- In Beat 4 (public): suspension occurs when the Apex public act is reached in initiative order. The card has been face-up on the Overview since §9.2 Public Declaration. On return from a failed Apex: continue from the next Faction Player in initiative order.
 
 ARBITER announces: *"An Apex operation has been submitted. Resolution is suspended."*
 
@@ -1376,13 +1438,13 @@ All public acts, modifier cards, and board state cards carry one of four duratio
 
 ## §16 Public Act Placement Rules
 
-1. Public acts are declared during Phase B (Monthly Dispatch), in initiative order.
+1. Public acts are declared during §9.2 (Public Declaration), in initiative order.
 2. The declaring Faction Player places the card face-up on the Overview in the target district (or in the relevant zone for non-district acts).
-3. Attach the target slip and 1 Dispatch Token on top of the card. Resource tokens remain with the card — payment is submitted to the Reservoir at Beat 4.
+3. Attach the Target Profile and 1 Dispatch Token on top of the card. Resource tokens remain with the card — payment is submitted to the Reservoir at Beat 4.
 4. Modifier cards modifying the public act are placed face-up alongside the card on the Overview.
 5. Once placed, the card is a valid target for Countermeasure cards (§9.3 Countermeasures) and other public acts.
 6. Public acts cannot be withdrawn or modified after placement.
-7. ARBITER's Situation Reports are placed in the Event Zone during Upkeep (Step 3) and follow the same duration and targeting rules as faction public acts.
+7. ARBITER's Situation Reports are placed in the Event Zone during Upkeep (§7.2) and follow the same duration and targeting rules as faction public acts.
 8. A public act card remains on the board until its duration expires. Beat 4 resolution does not necessarily remove the card — duration governs removal.
    - Transient cards are removed at Beat 5 of the month in which they were played.
    - Seasonal cards remain on the board until End of Quarter.
@@ -1396,8 +1458,10 @@ All public acts, modifier cards, and board state cards carry one of four duratio
 2. Countermeasure cards are removed from the game when used — they do not return to hand or discard pile.
 3. Countermeasure cards are submitted during the Countermeasure Window each month (§9.3).
 4. A Countermeasure card may target either:
-   - A queued covert operation in a submitted dispatch case (processed at Beat 2), or
-   - A placed public act currently on the Overview (processed at Beat 2).
+   - A queued covert operation in a submitted dispatch case, or
+   - A placed public act currently on the Overview.
+
+   Type A Countermeasures (CM-A) void their target at Beat 1. Type B Countermeasures (CM-B) apply a modifier token to their target at Beat 2 (covert operations; public act timing TBD).
 5. Unused Countermeasure cards carry forward to the next Monthly window. A faction may hold all 3 through Month 3 or spend them early.
 6. Full Countermeasure card types and effects: Artifact 04 — Action Card System.
 
@@ -1407,7 +1471,7 @@ All public acts, modifier cards, and board state cards carry one of four duratio
 
 React cards fire in response to publicly visible board state changes. They are held in hand until their trigger condition is met.
 
-1. A React card may only fire on a publicly visible board state change (Governing Rule 7.2a). It cannot fire on ARBITER-internal state changes such as the Resolution Grid.
+1. A React card may only fire on a publicly visible board state change. It cannot fire on ARBITER-internal state changes such as the Resolution Grid.
 2. When a trigger condition is met: the holding Faction Player announces *"React"*, presents the card, and states the trigger condition listed on the card. ARBITER confirms the trigger is valid and pauses the quarter procedure.
 
     2a. First to announce pauses play. ARBITER decides tiebreakers. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves.
@@ -1467,13 +1531,12 @@ Ghost rolls: 18. Target is 10. Fails. The Directorate's defensive preparation ma
 
 ### Dispatch Case Return — Processing Results
 
-*End of Beat 5. The ARBITER Player returns Ghost's dispatch case.*
+*Beat 3 complete. The ARBITER Player returns Ghost's dispatch case.*
 
 Ghost finds:
-- Three covert operation cards
-- Operation Succeeded card (Gather at Data Exchange)
-- Voided card (Undermine at Financial Clearinghouse — targeting restriction)
-- Voided card (Build Structure at Government Citadel — Type A Countermeasure)
+- Gather at Data Exchange — returned face-up
+- Undermine at Financial Clearinghouse — returned face-down (voided at Beat 1; targeting restriction)
+- Build Structure at Government Citadel — returned face-down (voided at Beat 1; Type A Countermeasure)
 - One Intel Token: Faction: The Syndicate / Quarter: 5
 
 Ghost processes this privately before Debrief opens.
