@@ -3,7 +3,7 @@
 
 ---
 
-## Dice Roll Procedure (§21)
+## Dice Roll Procedure (§13)
 
 **d100:** Two d10 in two distinct colors — one designated tens, one units. Both showing 0 = 100. Color assignment established at session start, held constant.
 
@@ -38,11 +38,11 @@ Worst-case stack: partial payment + ring penalty + Discredited + Type B = −110
 
 ---
 
-## Phase B — Public Declaration Rules
+## Public Act Declaration (§9.2)
 
 1. Declarations in initiative order. Factions may pass verbally.
-2. To declare: announce the public act; place card face-up on Overview in target district; stack target slip and 1 Dispatch Token on top. Resource tokens remain with the card (not committed until Beat 4).
-3. Modifier cards modifying the act placed face-up alongside card on Overview.
+2. To declare: announce the public act; place card face-up in unresolved PA zone of Faction Resolution Grid with Target Profile and 1 Dispatch Token. Resource tokens remain with the card (not committed until Beat 4).
+3. Modifier cards placed face-up alongside in Faction Resolution Grid.
 4. Once placed: valid target for Countermeasures and other public acts. Cannot be withdrawn or modified.
 5. Resolve in initiative order at Beat 4.
 
@@ -59,48 +59,48 @@ Worst-case stack: partial payment + ring penalty + Discredited + Type B = −110
 
 ---
 
-## React Card Rules (§28)
+## React Card Rules (§18)
 
 React cards fire in response to **publicly visible board state changes only** — cannot fire on ARBITER-internal changes such as the Resolution Grid.
 
+**Timing window (§18.0.1):** Opens when a publicly visible board state change occurs. Closes at the next board state change or procedure advance — whichever comes first. Not instantaneous; a brief window is valid.
+
 **Trigger and interrupt:**
 - When trigger condition is met, holding faction announces "React," presents card, states trigger condition. ARBITER confirms validity and **pauses the quarter procedure**.
-- Trigger window is immediate — must be announced at the moment the triggering board state change occurs. Retroactive declaration is invalid; the window closes.
 - Only one React resolves at a time. A second React may only fire in response to the new board state produced after the first resolves.
 
 **Tiebreaker:** First to announce pauses play. ARBITER decides tiebreakers.
 
 **Resume:** Once React resolves, original procedure resumes from the point it was paused.
 
-**Modifier React cards:** If a modifier react card creates a persistent board state, it remains with its duration type per the Duration Taxonomy (§23).
+**Modifier React cards:** If a modifier react card creates a persistent board state, it remains with its duration type per the Duration Taxonomy (§15).
 
 ---
 
-## Debrief Procedure (§19)
+## Debrief Procedure (§11)
 
 No initiative order, no phase timer. ARBITER announces: "The Table is in Debrief."
 
-**Free actions (any order, any terms):**
+**Free actions (§11.0 — any order, any terms):**
 - Trade resources between any two factions
 - Trade Intel Tokens between any two factions (examination permitted)
 - Accept/decline/counter-propose Accord terms
 
-**ARBITER conversion:** Available during Debrief and between phases. Not during active Resolution beats.
+**Debrief Action cards (§11.1):** Any faction holding a Debrief Action card resolves in initiative order — announce → execute → ARBITER confirms → card removed from game or returned to supply per card text. Runs before Chorus Question Window.
 
-**Chorus Question window:** If Chorus Activity track has reached Question threshold AND Chorus Node is not Contested — any faction with at least Present at the Node may propose a question. Simple majority passes. ARBITER answers in The Observation register. If Node is Contested, window does not open.
+**Chorus Question window (§11.2):** If Chorus Activity track has reached Question threshold AND Chorus Node is not Contested — any faction with at least Present at the Node may propose a question. Simple majority passes. ARBITER answers in The Observation register. If Node is Contested, window does not open.
 
-**Debrief Action cards:** After Chorus Question window (or immediately if no window): any faction holding a Debrief Action card resolves in initiative order — announce → execute → ARBITER confirms → card removed.
+**Ready to Close (§11.3):** Faction Players flip Status marker to Ready when done. When 3 of 5 show Ready: ARBITER starts 60-second courtesy timer. Debrief closes when timer expires or all 5 show Ready → proceed to §11.4 ARBITER Debrief.
 
-**ARBITER's structured address (in order):**
-1. **Summary** — factual account of Quarter outcomes (The Record register)
-2. **Observation** — one or two pattern observations (The Observation register). Form A: names a Portrait State without identifying faction. Form B: names the faction with a vague adjective about Portrait contribution. Never combined.
-3. **Distribution** — Quarter-end rewards (§20)
+**ARBITER Debrief (§11.4 — in order):**
+1. **Summary (§11.4.0)** — factual account of Quarter outcomes (The Record register). Q4 only: Annual Report follows Summary.
+2. **Observation (§11.4.1)** — one observation (The Observation register). Form A: names a Portrait State without identifying faction. Form B: names the faction with a vague adjective. Never combined. Debrief closes; proceed to §12 Quarter Close.
 
-**Closing:** Faction Players flip Status marker to Ready (green) when done. When 3 of 5 show green, ARBITER starts a 60-second courtesy timer. Debrief closes when timer expires or all 5 show green.
+**Debrief Reward:** §12.2 (Quarter Close, not part of Debrief proper).
 
 ---
 
-## Battlefield Strength (§17 — Contested District Resolution)
+## Battlefield Strength (§10 — Contested District Resolution)
 
 **Triggers:** After Beat 5, ARBITER scans for Tension markers. Resolves Ring 3 inward to Ring 0.
 

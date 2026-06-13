@@ -120,6 +120,7 @@ Per-faction components at faction tableau at T=0. All counts TBD unless noted.
 | Countermeasure card (CM-A) | 1 | Distributed at §3.7 |
 | Countermeasure card (CM-B) | 2 | Distributed at §3.7 |
 | Classified Objective card | 1 | Distributed sealed at §3.8 |
+| Target Profile | TBD | Blank; held in faction tableau storage area. Physical design (erasable vs. single-use) pending — see PM05 03-n16. |
 
 ### §2.8 ARBITER Starting Supply
 
@@ -129,9 +130,8 @@ Components at ARBITER Tableau at T=0. Subzones TBD. All counts TBD unless noted.
 |-----------|-------|
 | Presence chip | — |
 | Established marker | — |
-| Dominant marker | Pending DB registration (DB-14) |
+| Dominant marker | DB-14: rename "Control flag" → "Dominant marker" in component table |
 | Structure block | — |
-| Control flag | — |
 | Tension marker | — |
 | Intel token | — |
 | Status marker | — |

@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 87 (closing) | Updated: 2026-06-13**
+**Session 88 (active) | Updated: 2026-06-13**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S87 complete — Art 03 rubric and simplification pass complete through all sections; grip review complete; sign-off pending component lifecycle sweep (PM05 03-n18). S88 entry point: (1) run PM05 03-n18 lifecycle subagent sweep → Art 03 sign-off; (2) card work: C28 Breaking News, C40B Live Coverage; (3) external artifact sweep: Whiteboard/art03_section_map_S83.md (00a, 02b, 03a, 04, PM01, PM05).
+S88 in progress — Art 03 v4.4 signed off (L207). Component lifecycle sweep complete (03-n18 ✅); all blockers resolved in-place (§13.7 board state rules; Target Profile to 03-init §2.7; Control flag → Dominant marker rename throughout; return-to-supply language; BEC cleanup clarification). S88 entry point (remaining): (1) card work: C28 Breaking News, C40B Live Coverage; (2) external artifact sweep: Whiteboard/art03_section_map_S83.md (00a, 02b, 03a, 04, PM01, PM05).
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -78,10 +78,12 @@ S87 complete — Art 03 rubric and simplification pass complete through all sect
 
 **S87 accomplishments:** Art 03 rubric and simplification pass complete. §5 P7 added (Step 0 convention — all procedural sequences begin at Step 0). §§9.4.2.6.1.0/1.1 added (Target Profile return + process case contents after dispatch case return). §9.4.3.4 item 5 added (Target Profile cleanup at Beat 4). §§11–12 restructured: §11.0–§11.4 (Debrief); §12.0–§12.4 (Quarter Close). §13 Operation System: modifier table rebuilt (M-06/M-07 merged, M-09 generalized, M-10 terminology, M-11 scope all/both beats); §13.6 Intel Token Age table (Fresh/Stale/Expired). §14 renamed Apex Activation (flat Steps 0–4, entry condition, beat names removed). §§15–17 rubric clean. §18 React Card Rules restructured (§18.0–§18.3; timing window at §18.0.1). §19 Reserved. §20–21 new reference sections (Resource Generation; Card Economy). §§9.4.2.6 and 9.4.3.4 hardcoded values replaced with table refs. § Examples & Exceptions (unnumbered end section): Initiative example updated (ref §7/Art 07); Dispatch Case Return rewritten + flagged (PM05 03-n15); Findings Decay unchanged. PM05: 03-n14–03-n18, XA-50–52 active. Grip review complete. Art 03 v4.3. Full sign-off pending PM05 03-n18 (component lifecycle sweep).
 
-**S88 entry point:**
-1. Run PM05 03-n18 — component lifecycle subagent sweep → Art 03 sign-off
-2. Card work: C28 Breaking News, C40B Live Coverage
-3. External artifact sweep — Whiteboard/art03_section_map_S83.md (00a, 02b, 03a, 04, PM01, PM05)
+**S88 accomplishments:** Art 03 v4.4 signed off (L207). Component lifecycle sweep complete; 03b Component Lifecycle Register formalized (v0.1) — replaces Whiteboard scratch file. All sign-off blockers resolved in-place: §13.7 Board State Update Rules added (Tension marker placement trigger; Structure block removal + return; Dominant/Established marker return); Target Profile added to 03-init §2.7 (count TBD); Control flag renamed Dominant marker throughout Art 03 and 03-init (S88 design decision: same component); return-to-supply language added §7.3.3 and §8.2; BM-xx "from ARBITER supply" clarified §9.4.0.1; §12.0 BEC cleanup scope clarified. PM05: 03-n18 ✅, 03-n19 ✅, 03-n20 ✅, DB-14 updated, 03-n16 §2.7 gap closed. PM02 L207 locked. art03_section_map_S83.md stale entries corrected (5 fixes + 3 new sections added). Art 02 Components v1.0 written — merge of 02a v1.6 + 02b v1.5; 02a and 02b superseded; XA-45 ✅; PM05 02-n02 added (deep review before sign-off). Art 02 §5 Design Principles: 2 principles only (Scarcity is intentional; Disclosure is designed, not assumed). agy S88 DB report integrated: DB-14 renames ✅, DB-15 (Operative card split) ✅, DB-34 (DebriefActionCard + SCIFRecord) ✅. PM03 v2.5.
+
+**S88 entry point (remaining):**
+1. Card work: C28 Breaking News, C40B Live Coverage
+2. External artifact sweep — art03_section_map_S83.md (00a, Art 02, 03a, 04, PM01, PM05) — 02b refs now point to Art 02
+3. Art 02 deeper review pass (02-n02) — fine-tune before sign-off
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 04b re-sign-off; 04-n73 (P1–P18 restatement audit).
 
@@ -138,8 +140,9 @@ S87 complete — Art 03 rubric and simplification pass complete through all sect
 | 00 — Factions, World & Narrative | 1.6 | ✅ Signed Off — S74 (L194). §5 Art 00 design principles added (5 principles). Subsections numbered §1.1–§14.9. Open: 00-09 (World Conditions panel); 00-15 (full narrative revision per §5 P1+P5). |
 | 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle documentation). |
 | 01 — Game Board: New Meridian | 2.0 | ✅ Signed Off — S74 (L197). §6 Component Physical Forms column → "Proposed Form". Open: 01-10 (table → Art 02a); 01-11 (scope overhaul §8/§11/§12). |
-| 02a — Resource Systems: Board State | 1.6 | ✅ Signed Off — S42. |
-| 03 — Quarter Structure & Gameplay | 4.2 | ✅ Structural sign-off S83 — rubric pass in progress (S84/S85 through §9.4.1; S86 entry §9.4.2). §9 unified Beat procedure (Beats 2/3/4/5); §§12–16 removed; §10 Resolve District Tension; §11 Quarterly Debrief; §12 Quarter Close; reference sections renumbered §13–§19. |
+| 02 — Components | 1.0 | 🔄 In Progress — S88 merge from 02a + 02b. §5: 2 design principles. Deep review pass pending (PM05 02-n02). |
+| 02a — Resource Systems: Board State | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0. |
+| 03 — Quarter Structure & Gameplay | 4.4 | ✅ Signed Off S88 (L207). §13.7 Board State Update Rules added; Control flag → Dominant marker throughout; Target Profile to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); BEC cleanup scope clarified (§12.0). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
 | 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
@@ -147,7 +150,7 @@ S87 complete — Art 03 rubric and simplification pass complete through all sect
 | 06 — Messaging System | 0.4 | ✅ §9 Signed Off — S83 (L205). §9.3 clause vocabulary complete (6 types incl. Duration); §9.5 board state as sole compliance basis; §9.8 ACCORD DISSOLVED on form; §9.10 Transfer → Alter Named Party subtype. Open: §§1–8, 10–13 non-canonical stubs. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
-Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 — 04b-03 audit pending). Authoritative: PM03.
+Signed-off artifacts: 00b (v0.3), 01 (v2.0), 03 (v4.4), 04b (v1.6 — pending re-sign-off). 02a + 02b superseded → Art 02 (v1.0, pending sign-off). Authoritative: PM03.
 
 ---
 
@@ -217,9 +220,9 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 
 ## Last 3 Locked Decisions
 
-- **L201** (S81): P10 Infrastructure Bond cost → 1 Capacity + 2 native delivered to target (from 2 Capacity). Form price equitable with P08 per L200 governing principle; 2 native = sweetener enabling income clause. C09 Fund unchanged at 2 Capital; effective Accord route = 2 of 4 action slots (C09 + PA with Overture). 04-n74 ✅.
-- **L200** (S81): P08 Table an Accord cost → 1 native flat, all factions (from 2 native; Directorate affinity removed). Governing principle: PA slot is the primary bottleneck (3 slots/Quarter; cards draw-dependent). Resource cost signals accessible diplomacy; PS vote mechanic gates proposal quality. Blank form is a proposal, not a contract.
-- **L199** (S78): Art 04 §5 Principle 26 — Card Narrative Test locked. Every card must be expressible as a 1–2 sentence narrative story answering "What is actually happening in the world when this card is played?" If no coherent narrative can be constructed, the card is a design problem. Card Story block added to Art 04 §5; 15th checklist row added.
+- **L207** (S88): Art 03 v4.4 signed off. Component lifecycle sweep complete; §13.7 Board State Update Rules added (Tension marker placement trigger; Structure block removal + return); Control flag renamed Dominant marker (same component — DB-14 = rename, not new registration); Target Profile added to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); §12.0 BEC scope clarified.
+- **L206** (S84): DB-registered component names are canonical source of truth for all terminology. Changes begin at DB component table, cascade through artifacts. No artifact may introduce a component name not registered in the DB.
+- **L205** (S83): Art 06 §9 Accord Documents re-signed off (v0.4). §9.3 clause vocabulary complete (6 types incl. Duration); §9.4 PS formation mechanic; §9.5 board state sole compliance basis; §9.10 Transfer → Alter Named Party subtype.
 - **L196** (S74): Art 00a v0.7 signed off. §3 renamed "Design Principles for This Document" + scope routing note. §4 scope line added. §4.6 amended: Art 00 as origin of all canonical narrative (L195).
 - **L195** (S74): Art 00 as sole canonical narrative origin. No canonical narrative may originate in a downstream artifact. Art 00 amended first; downstream artifacts reference it. Written to 00a §4.6. Governs all V1 artifacts.
 - **L185** (S65): Art 03 v3.1 signed off. Golden Parachute bribe mechanic written to Beat 0/2/3. Art 04 §6.2 cost field (fungible only). §6.6 added (pre_loss_calc). C37 Sacrifice + C34 Golden Parachute redesigned.
@@ -240,7 +243,7 @@ Signed-off artifacts: 00b (v0.2), 01 (v1.9), 02b (v1.5), 03 (v2.0), 04b (v1.2 �
 - **00a v0.7** — ✅ Signed Off S74 (L196)
 - **Art 01 v2.0** — ✅ Signed Off S74 (L197)
 - **02a v1.6** — ✅ Signed Off S42
-- **Art 03 v4.2** — ✅ Structural sign-off S83 — rubric pass S84/S85 through §9.4.1; S86 entry §9.4.2
+- **Art 03 v4.4** — ✅ Signed Off S88 (L207)
 - **Art 06 §9** — ✅ Signed Off S83 (L205)
 - **00b** — ⚠ S81 VM-xx + S82 BM-xx registration pending re-sign-off
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)

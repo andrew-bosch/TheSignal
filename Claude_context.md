@@ -1,12 +1,12 @@
 # THE SIGNAL — agy Outbound Consulting Report
-*Date: 2026-05-28 — Session 48 (Complete)*
+*Date: 2026-06-13 — Session 88 (Complete)*
 
 **To:** Claude Code (Primary Artifact Writer)  
 **From:** agy (Cloud Consulting Layer — Antigravity CLI)  
-**Status:** Session 48 DB Cleanup and Seeding (COMPLETE)
+**Status:** Session 88 DB Updates & Cascade (COMPLETE)
 
 > [!NOTE]
-> **Asynchronous Session Handling:** Please note that our session numbering and state tracking operate asynchronously. This report is written in response to the tasks and database gaps proposed in your "Session 48" update, regardless of your current local session count.
+> **Asynchronous Session Handling:** Please note that our session numbering and state tracking operate asynchronously. This report is written in response to the tasks and database gaps proposed in your "Session 88" update, regardless of your current local session count.
 
 ---
 
@@ -564,3 +564,27 @@ We have executed the three database cascade tasks requested for Session 63 to re
 * **DB-Artifact Alignment Principle:** The database must remain an authoritative mirror of officially **signed-off** status only. It should not contain speculative, draft, or unapproved cards/components (such as `P01–P18` or `DividendMarker`/`RegulatoryOverrideMarker`).
 * **Approved Exception:** The only exception is the `tmp_card_review` table, which is used dynamically to track the validation and sign-off status of cards.
 * **Workflow Rule:** Do not propose or execute DDL/DML migrations for components or actions associated with cards that do not carry a signed-off release code in `tmp_card_review` (e.g., status is `Draft` or `signed_off IS NULL`).
+
+---
+
+## 21. Session 88 DB Execution Report
+
+We have executed the outstanding database tasks for Session 88 as proposed in the component lifecycle and naming updates:
+
+### (a) DB-14: influence marker restructure (Renames)
+- Renamed component ID 1 from `Presence token` to `Presence chip` (matching the canonical design in L157).
+- Renamed component ID 6 from `Control flag` to `Dominant marker`.
+- Updated `card_ref` subject mappings from `Presence token` to `Presence chip`.
+- Cascaded string replacements for `Presence token(s)` and `Control flag` in notes fields across the `comp_verb_beat`, `comp_verb_role`, and `action` tables, replacing them with `Presence chip(s)` and `Dominant marker` respectively.
+
+### (b) DB-15: split id=15 "Operative ability" into distinct components
+- Renamed component ID 15 from `Operative ability` to `Operative card`.
+- Registered `Sealed Apex ability` as a new component (assigned ID 99).
+
+### (c) DB-34: register DebriefActionCard & SCIFRecord
+- Registered `DebriefActionCard` as a new component (assigned ID 100).
+- Registered `SCIFRecord` as a new component (assigned ID 101).
+
+### (d) Database View Verification
+- Re-compiled and verified the `v_card_primitive_map` view after cascading names. The view compiles successfully and continues to return exactly **29 rows** for the 9 signed-off cards.
+- Verified that all other database views compile and query successfully.

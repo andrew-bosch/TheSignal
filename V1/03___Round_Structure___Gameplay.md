@@ -1,7 +1,7 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.3
+**Version:** 4.4
 
 **Status:** Rubric and simplification pass complete. Grip review complete. Sign-off pending component lifecycle sweep (PM05 03-n18).  
 
@@ -245,9 +245,11 @@ For each marker showing the Blocked face: return the marker to hand without plac
 
 #### §7.3.3 Step 3: Update Board State
 
-Each Faction Player updates Control flags, Established markers, and Tension markers as influence levels shift from new presence chip placements.
+Each Faction Player updates Dominant markers, Established markers, and Tension markers as influence levels shift from new presence chip placements. Any marker removed in this update is returned to ARBITER supply. See §13.7 for placement and removal triggers.
 
-*If no markers are on the board — as is always the case at the start of Quarter 1 — this section has no effect. Proceed to §7.4.*
+*If no markers are on the board — as is always the case at the start of Quarter 1 — this section has no effect.*
+
+Proceed to §7.4.
 
 ---
 
@@ -393,7 +395,7 @@ Before placing in each district:
 
 ### §8.2 Step 2: Update Board State
 
-After each placement, if influence levels change: the placing Faction Player updates the relevant Control flag, Established marker, or Tension marker immediately.
+After each placement, if influence levels change: the placing Faction Player updates the relevant Dominant marker, Established marker, or Tension marker immediately. Any marker removed in this update is returned to ARBITER supply. See §13.7 for placement and removal triggers.
 
 *Both deployment markers must be placed each Placement phase, beginning Q1M1. Both may be placed in the same district. ARBITER redirects illegal placements.*
 
@@ -603,7 +605,7 @@ From left to right, lane by lane:
 
 3. Drain resources to the Reservoir as directed.
 
-   *For each card with a `boost` field (value ≠ None): after base cost is drained, count any excess resources remaining in the packet. Calculate n = floor(excess ÷ boost unit cost). If n > 0: place n BM-xx tokens on the card's grid slot. Drain all remaining excess to the Reservoir. No excess is returned to the faction.*
+   *For each card with a `boost` field (value ≠ None): after base cost is drained, count any excess resources remaining in the packet. Calculate n = floor(excess ÷ boost unit cost). If n > 0: retrieve n BM-xx tokens from ARBITER supply and place them on the card's grid slot. Drain all remaining excess to the Reservoir. No excess is returned to the faction.*
 
 4. Place each validated card in the grid:
    - Beat 2 card: place in the Beat 2 row of the lane being processed.
@@ -766,7 +768,7 @@ Compare roll to threshold — apply Critical Success/Fail rules per §13. If VM-
 
 ###### §9.4.2.2.0 Succeeded
 
-ARBITER applies all board changes per the card spec: presence chips, structure blocks, Control flags, Established markers, Tension markers. If VM-xx: ARBITER directs board changes aloud; the acting Faction Player physically applies them.
+ARBITER applies all board changes per the card spec: presence chips, structure blocks, Dominant markers, Established markers, Tension markers. If VM-xx: ARBITER directs board changes aloud; the acting Faction Player physically applies them.
 
 If the card specifies a Notification Slip or Intel Delivery Slip: ARBITER writes and places it in the Dispatch Packet.
 
@@ -970,7 +972,7 @@ Compare roll to threshold — apply Critical Success/Fail rules per §13.
 
 ###### §9.4.3.3.0 Succeeded
 
-Acting Faction Player makes all board changes: presence chips, structure blocks, Control flags, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
+Acting Faction Player makes all board changes: presence chips, structure blocks, Dominant markers, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
 
 If the card specifies a Notification Slip: ARBITER writes and places it in the indicated faction's dispatch case.
 
@@ -1110,7 +1112,7 @@ ARBITER checks the Dominant condition across all contesting factions:
 
 #### §10.1.5 Step 1.5: Update Board
 
-All contesting Faction Players update Control flags, Established markers, and Tension markers as influence levels shift — in the contested district and in any adjacent districts from which chips were moved. Return any removed components to ARBITER for pool return.
+All contesting Faction Players update Dominant markers, Established markers, and Tension markers as influence levels shift — in the contested district and in any adjacent districts from which chips were moved. Return any removed components to ARBITER supply.
 
 ### §10.2 Step 2: Advance
 
@@ -1203,7 +1205,7 @@ Debrief closes. Proceed to §12 Quarter Close.
 
 ### §12.0 Step 0: Seasonal Card Cleanup
 
-Each Faction Player removes all Seasonal-duration cards from their play area. ARBITER removes any remaining Seasonal cards from the Overview and board. Cards discarded or removed from game per card text. ARBITER's Situation Report Broadcast Card is removed here if its duration is Seasonal.
+Each Faction Player removes all Seasonal-duration cards from their play area. ARBITER removes any remaining Seasonal Broadcast Cards from the Situation Report Zone. Cards discarded or removed from game per card text. Broadcast Effect Cards on the ARBITER Tableau expire per §7.2.6 at the start of the next Quarter — §12.0 does not govern ARBITER Tableau cleanup.
 
 Proceed to §12.1.
 
@@ -1332,6 +1334,18 @@ Token age = current Quarter − Quarter generated (written on token by ARBITER a
 | 0–2 | Fresh | No modifier |
 | 3 | Stale | −25 threshold modifier (M-13) applied at Beat 0 (covert) or Beat 4 (public) |
 | 4+ | Expired | Counts as partial payment |
+
+### §13.7 Board State Update Rules
+
+These rules apply at every step where influence marker or structure block changes occur: §7.3.3, §8.2, §9.4.2.2.0, §9.4.3.3.0, §10.1.5, and any card-effect board change.
+
+**Tension marker placement:** Whenever a board state update results in two or more factions tied at IL-01 (Dominant) in a district, place 1 Tension marker on that district from ARBITER supply. Cross-reference: 00b §4.3 Contested flag.
+
+**Tension marker removal:** When the tie is broken by any means — chip removal, card effect, contest resolution — ARBITER removes the Tension marker and returns it to ARBITER supply.
+
+**Dominant and Established marker updates:** When a faction's influence level in a district reaches the threshold for Dominant (IL-01) or Established (IL-02), the corresponding marker is placed. When a faction's influence level falls below that threshold, the marker is removed and returned to ARBITER supply.
+
+**Structure block removal:** When a faction's influence marker count in a district drops to zero, any structure blocks belonging to that faction in that district are removed and returned to ARBITER supply.
 
 ---
 

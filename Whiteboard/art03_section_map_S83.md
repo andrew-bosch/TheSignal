@@ -30,14 +30,16 @@ Use this to find and update all cross-references to Art 03 sections in Art 00a, 
 
 | Old | Old Title | New | New Title | Notes |
 |-----|-----------|-----|-----------|-------|
-| §21 | The Operation System | §13 | The Operation System | Header only |
-| §22 | Special Conditions & Gameplay Impacts | §14 | Special Conditions | Apex → §14.1 |
+| §21 | The Operation System | §13 | The Operation System | Header only; §13.7 Board State Update Rules added S88 |
+| §22 | Special Conditions & Gameplay Impacts | §14 | Apex Activation | Renamed S87 — was "Special Conditions"; Apex is the full section, no subsection |
 | §23 | Duration Taxonomy | §15 | Duration Taxonomy | Header only |
 | §24 | Public Act Placement Rules | §16 | Public Act Placement Rules | Header only |
-| §25 | Modifier React Card Rules | §18.1 | (sub-section of React Card Rules) | Merged into §18 |
+| §25 | Modifier React Card Rules | §18 | React Card Rules | Content merged into §18; no standalone §18.1 equivalent |
 | §26 | Countermeasure Card Rules | §17 | Countermeasure Card Rules | Header only |
-| §27 | Examples & Exceptions | §19 | Examples & Exceptions | Header only |
-| §28 | React Card Rules | §18 | React Card Rules | §25 merged in as §18.1 |
+| §27 | Examples & Exceptions | § (unnumbered) | Examples & Exceptions | §19 is now Reserved (empty); Examples section is unnumbered at file end |
+| §28 | React Card Rules | §18 | React Card Rules | §25 content merged in |
+| — | — | §20 | Resource Generation Reference | New S87 — no old equivalent |
+| — | — | §21 | Card Economy Reference | New S87 — no old equivalent |
 
 ---
 
@@ -49,13 +51,14 @@ Use this to find and update all cross-references to Art 03 sections in Art 00a, 
 | Phase B | §9.2 Public Declaration | |
 | §11 Beat 0 | §9.4.0 | |
 | §11 Beat 1 | §9.4.1 | |
-| §11 Beat 2 | §9.4.2 | |
-| §11 Beat 3 | §9.4.3 | |
-| §11 Beat 4 | §9.4.4 | |
-| §11 Beat 5 / Cleanup | §9.4.5 Close Month | |
-| §11 Beat 3 Step 6 / Dispatch Case Return | §9.4.3.6 | |
+| §11 Beat 2 | §9.4.2 | Beats 2 and 3 merged into single §9.4.2 section (S84) |
+| §11 Beat 3 | §9.4.2 | Merged with Beat 2 — covert resolution covers both |
+| §11 Beat 4 | §9.4.3 | Shifted from §9.4.4 when Beats 2+3 merged (S84) |
+| §11 Beat 5 / Cleanup | §9.4.4 Close Month | Was §9.4.5 at S83; shifted to §9.4.4 (S84); §9.4.5 removed |
+| §11 Beat 3 Step 6 / Dispatch Case Return | §9.4.2.6 | Was mapped to §9.4.3.6 at S83; §9.4.3.6 is now "Advance" (PA Beat 4) |
 | Countermeasure Window (§10/§13/§16) | §9.3 | All three monthly CM windows now one section |
 | §20 Seasonal card cleanup | §12.0 | |
+| — | §13.7 | New S88 — Board State Update Rules (Tension marker + Structure block triggers) |
 
 ---
 

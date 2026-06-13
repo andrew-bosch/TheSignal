@@ -1,4 +1,4 @@
-# Reference — Resource System (02a)
+# Reference — Resource System (Art 02 §6–§9)
 *Load when: resource mechanics, generation, conversion, structure blocks, Contested districts, starting positions.*
 
 ---
