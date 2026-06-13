@@ -75,7 +75,7 @@ The State Model defines every variable in the game system — its type, visibili
 
 The physical state of the game immediately after setup and before Quarter 1 Phase 1 begins. This is not a reset — Quarter 1 is the first increment from this configuration. §4.2 "Start of Quarter" applies to Quarters 2–8 (carry-forward), not Quarter 1.
 
-**ARBITER as faction:** ARBITER (F-06) participates in the Board domain as a standard faction entry, not a special exception. At setup, F-06 holds 8 presence chips at the Chorus Node (D-22). All derived values — InfluenceLevel, ControlFlag, TensionMarker — follow normal derivation from those chips. The ARBITER Dominance Marker (Art 02a §10) is the physical component representing this placement; it replaces standard chip stacks on the board.
+**ARBITER as faction:** ARBITER (F-06) participates in the Board domain as a standard faction entry, not a special exception. At setup, F-06 holds 8 presence chips at the Chorus Node (D-22). All derived values — InfluenceLevel, ControlFlag, TensionMarker — follow normal derivation from those chips. The ARBITER Dominance Marker (Art 02 §14) is the physical component representing this placement; it replaces standard chip stacks on the board.
 
 #### Board Domain at Setup
 
@@ -84,7 +84,7 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
 | `Board.PresenceChips[D-xx][F-01..F-05]` | Per Art 01 §7 Starting Configuration | Art 01 §7 |
-| `Board.PresenceChips[D-22][F-06]` | 8 — Chorus Node only | Art 02a §10 |
+| `Board.PresenceChips[D-22][F-06]` | 8 — Chorus Node only | Art 02 §14 |
 | `Board.PresenceChips[D-xx][F-06]` where D-xx ≠ D-22 | 0 | Setup |
 | `Board.InfluenceLevel[D-xx][F-xx]` | Derived from PresenceChips per normal rules | Derived |
 | `Board.ControlFlag[D-22]` | F-06 — derived (8 chips > F-05's 1 chip; ARBITER Dominant) | Derived |
@@ -105,9 +105,9 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 | `Faction.ChorusPortrait[F-xx]` | 0 — all factions | Setup |
 | `Faction.StatusMarker[F-xx]` | Discussing — all factions | Setup |
 | `Faction.BurstPlay[F-xx]` | False — all factions | Setup |
-| `Faction.IntelTokens[F-xx]` | 0 — all factions | Art 02b |
+| `Faction.IntelTokens[F-xx]` | 0 — all factions | Art 02 |
 
-⚠ **Starting resources — open question:** Art 01 §7 "Starting Round 1 Income" projects income from Q1 Upkeep Step 5, calculated from setup chip placement. It is unclear whether factions begin the game with resources in hand (a setup grant before Q1 Upkeep), or at zero (receiving their first income during Q1 Upkeep Step 5 only). If the income table reflects only the Upkeep yield, starting value = 0. If it includes a pre-Upkeep starting grant, the income table values are the combined total. Requires resolution in Art 00 §7 or Art 02b.
+⚠ **Starting resources — open question:** Art 01 §7 "Starting Round 1 Income" projects income from Q1 Upkeep Step 5, calculated from setup chip placement. It is unclear whether factions begin the game with resources in hand (a setup grant before Q1 Upkeep), or at zero (receiving their first income during Q1 Upkeep Step 5 only). If the income table reflects only the Upkeep yield, starting value = 0. If it includes a pre-Upkeep starting grant, the income table values are the combined total. Requires resolution in Art 00 §7 or Art 02.
 
 #### Quarter Domain at Setup
 
@@ -194,7 +194,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 *`Board.InfluenceLevel` and `Board.ControlFlag` are computed views. Physical components (Control flags, Established markers, Tension markers) are player-maintained and must be synchronized immediately after every chip change.*
 
-*ARBITER (F-06) chip placement at D-22 (8 chips) makes ARBITER's Dominant status at the Chorus Node structurally permanent — no playing faction can accumulate enough chips to surpass 8 while holding other board positions. See §4.0 for setup initialization. ARBITER Dominance Marker (Art 02a §10) is the physical representation.*
+*ARBITER (F-06) chip placement at D-22 (8 chips) makes ARBITER's Dominant status at the Chorus Node structurally permanent — no playing faction can accumulate enough chips to surpass 8 while holding other board positions. See §4.0 for setup initialization. ARBITER Dominance Marker (Art 02 §14) is the physical representation.*
 
 ---
 
@@ -207,7 +207,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Faction.ChorusPortrait[F-xx]` | Integer | VS-04 | Beat 3 Step 11 (per resolved covert operation, privately); Beat 4 Step 10 (per resolved political act, privately) |
 | `Faction.StatusMarker[F-xx]` | Discussing \| Operating | VS-01 | Upkeep Step 1 (reset to Discussing) |
 | `Faction.BurstPlay[F-xx]` | Boolean | VS-01 | Upkeep Step 6 (set True on trigger — persistent for remainder of session) |
-| `Faction.IntelTokens[F-xx]` | Integer ≥ 0 | VS-02 | Beat 5 (incremented by intel tokens received from dispatch case); TBD — Art 02b §8–9 (spending, age rules, scoring) |
+| `Faction.IntelTokens[F-xx]` | Integer ≥ 0 | VS-02 | Beat 5 (incremented by intel tokens received from dispatch case); TBD — Art 02 §12 (spending, age rules, scoring) |
 
 ---
 
@@ -370,7 +370,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Faction.PublicStanding[F-xx]` — carry forward; natural drift already applied at prior Quarter close
 - `Faction.ChorusPortrait[F-xx]` — carry forward; never resets
 - `Faction.Resources[F-xx][RT-xx]` — carry forward; no reset between Quarters
-- `Faction.IntelTokens[F-xx]` — carry forward; age rules TBD (Art 02b §8–9 — decay conditions may apply at Quarter close)
+- `Faction.IntelTokens[F-xx]` — carry forward; age rules TBD (Art 02 §12 — decay conditions may apply at Quarter close)
 - `Event.ActiveCards` — carry forward; duration decremented at prior Quarter close
 
 **Invariants:**
@@ -558,7 +558,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Faction.Resources[F-xx][RT-xx]` = updated for any trades or resource conversion conducted during Debrief
 - `Event.ActiveCards` = duration decremented; expired cards moved to ARBITER tableau expired area
 - `Faction.PublicStanding[F-xx]` = natural drift applied at Quarter close for factions above 13 or below 7 (L13)
-- Findings decay check applied for F-01 (Ghost) per Art 03 §15
+- Findings decay check applied for F-01 (Ghost) per Art 03 §12.1
 
 **Invariants:**
 - All trades completed; all Accord proposals resolved (accepted, declined, or countered)
@@ -577,7 +577,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `D100()` is a uniform random integer 01–100
 - `DT-xx` defers branching detail to Tier 3 (§6)
 - `DESIGN FINDING [DF-xx]` marks an inconsistency surfaced by formalization — requires investigation
-- `district_income(d, f)` references the Art 02a §5 influence level income table — values not reproduced here
+- `district_income(d, f)` references the Art 02 §5 influence level income table — values not reproduced here
 - `D10()` is a uniform random integer 1–10
 
 ---
@@ -656,7 +656,7 @@ FOR EACH faction f ∈ Faction.All:
 FOR EACH faction f ∈ Faction.All:
   FOR EACH district d WHERE Board.PresenceChips[d][f] > 0
                          OR Board.DeploymentMarker[f][*].Location = d:
-    Faction.Resources[f][*] += district_income(d, f)   // Art 02a §5 — IL modifier × base generation
+    Faction.Resources[f][*] += district_income(d, f)   // Art 02 §5 — IL modifier × base generation
   FOR EACH structure block s AT district d OWNED BY f:
     resource_type ← f declares aloud: d.NativeResource OR f.NativeResource
     Faction.Resources[f][resource_type] += 1
@@ -731,7 +731,7 @@ FOR EACH (faction f, slot s) IN snake_order(Quarter.InitiativeOrder):
   IF d = D-22 (Chorus Node):
     REQUIRE: ∃ d2 adjacent to d WHERE d2.Ring = RG-03
              AND Board.InfluenceLevel[d2][f] ∈ {IL-01, IL-02}
-             // Additional Chorus Node entry rules: Art 02a §10
+             // Additional Chorus Node entry rules: Art 02 §14
   // RG-01 (Baryo) and RG-02 (The Mid): no entry requirement
 
   Board.DeploymentMarker[f][s] ← {Location: d, Face: Converting}
@@ -893,7 +893,7 @@ IF Chorus.ActivityTrack ≥ question_threshold
 // On 3-of-5 green: ARBITER announces and starts 60-second courtesy timer
 // Debrief closes when timer expires OR all 5 show green
 
-// Quarter close — strict sequence (Art 03 §15)
+// Quarter close — strict sequence (Art 03 §12)
 
 // 1. Findings decay — Ghost (F-01) only; applied publicly
 IF Faction.Resources[F-01][RT-01] ∈ [7, 12]:
@@ -1149,7 +1149,7 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
     CONTINUE
 
   IF cell.Card.IsApex:
-    // Interrupt — Apex Activation always ends the session (§16, DT-08, DT-09)
+    // Interrupt — Apex Activation always ends the session (§14, DT-08, DT-09)
     RUN Apex_Activation(cell, f)
     // Beat_3 does not return — session ends
 
@@ -1275,7 +1275,7 @@ FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Qua
 
   // Step 1 — Identify; Apex check
   IF act.IsApex:
-    // Interrupt — Apex Activation always ends the session (§16, DT-08, DT-09)
+    // Interrupt — Apex Activation always ends the session (§14, DT-08, DT-09)
     RUN Apex_Activation(act, f)
     // Beat_4 does not return — session ends
 
@@ -1555,7 +1555,7 @@ Each non-Apex faction submits exactly one Emergency Response. All submitted simu
 | DT-09-C | Neutral / Other | Affects board state unrelated to Apex faction (own presence, Public Standing, etc.) | No direct Board Strength impact |
 | DT-09-D | Pass | No board effect | None |
 
-**Design note (Art 03 §16):** "A faction may use their Emergency Response to assist the Apex (raising Board Strength) or oppose it (reducing Board Strength). This is load-bearing for Emergency Response design in Artifact 04 / Artifact 05."
+**Design note (Art 03 §14):** "A faction may use their Emergency Response to assist the Apex (raising Board Strength) or oppose it (reducing Board Strength). This is load-bearing for Emergency Response design in Artifact 04 / Artifact 05."
 
 ---
 
@@ -1608,7 +1608,7 @@ SESSION ENDS — proceed to Artifact 10a — Victory System
 
 Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 compliant — single-typed columns, controlled vocabulary.
 
-**Sign convention:** Positive Threshold Adjustment = threshold raised = success more likely. Negative = threshold lowered = harder. (Source: Art 03 §14.) Physical modifier tokens may express this inversely as "+N difficulty" — see [DF-02].
+**Sign convention:** Positive Threshold Adjustment = threshold raised = success more likely. Negative = threshold lowered = harder. (Source: Art 03 §13.) Physical modifier tokens may express this inversely as "+N difficulty" — see [DF-02].
 
 | ID | Category | Modifier | Scope | Applied | Instance Limit | Value Type | Threshold Adjustment |
 |----|----------|----------|-------|---------|----------------|------------|---------------------|
@@ -1625,13 +1625,13 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 | M-11 | Countermeasure | Type B — target faction assets | Covert | Beat 2 | 1 per defending faction | Fixed | −15 |
 | M-12 | District | The Mid — no adjacent Core | All | Persistent | 1 | Fixed | −25 |
 
-*Source: Art 03 §14.*
+*Source: Art 03 §13.*
 
 *M-01–M-05 are mutually exclusive — exactly one Standing modifier applies per faction per resolution, derived from `Faction.PublicStanding[f]` via the `M_standing()` helper in §5.*
 
 *M-08, M-09, M-10, M-12 variable rows are fully specified here for Fixed modifiers; variable values pending Art 04 card definitions. Balance analysis (modifier stack mathematics) is the planned Tier 4 of this artifact, blocked until all M-xx values are defined.*
 
-**Correction note:** The §7 table in v0.2 contained values from a prior design iteration (M-01: "Critical Success −25", M-02: "Critical Failure +25", etc.) that do not match Art 03 §14. Critical Success and Critical Failure are resolution rules, not modifier stack entries. The corrected table above is authoritative. All §5 Beat Procedures reference this version.
+**Correction note:** The §7 table in v0.2 contained values from a prior design iteration (M-01: "Critical Success −25", M-02: "Critical Failure +25", etc.) that do not match Art 03 §13. Critical Success and Critical Failure are resolution rules, not modifier stack entries. The corrected table above is authoritative. All §5 Beat Procedures reference this version.
 
 ---
 

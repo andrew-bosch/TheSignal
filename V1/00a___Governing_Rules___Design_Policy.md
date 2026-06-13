@@ -5,7 +5,7 @@
 **Status:** Signed Off  
 **Last Updated:** 2026-06-09  
 **Companion to:** 00 — Factions, World & Narrative Context  
-**Depends on:** 00, 01, 02a, 02b, 03, 04, 04b
+**Depends on:** 00, 01, 02, 03, 04, 04b
 
 ---
 
@@ -109,7 +109,7 @@ Each rule carries two cross-reference fields with different permanence:
 
 Copy in this document must not hardcode specific values — rates, costs, counts, thresholds — that are variable, under active consideration, or subject to future decisions. Reference the concept and point to where the canonical value is defined. If the value changes, it changes in one place. This applies to all copy in this document — rules, Narrative fields, and Mechanics fields.
 
-*Example: Income generation rules in this document reference Artifact 02a and Artifact 03 for rates — if a rate changes, it changes in one place.*
+*Example: Income generation rules in this document reference Art 02 and Artifact 03 for rates — if a rate changes, it changes in one place.*
 
 ---
 
@@ -155,29 +155,29 @@ Authoritative definitions for all in-world terms, components, and game systems u
 | Resolution | ARBITER's track | ARBITER's private measure of how clearly The Table's behavior is producing a coherent answer to the Chorus. Not visible to factions — felt through the quality of ARBITER's narration and the tone of the Chronicle. | Art 00 §9 |
 | The Overview | Game mat / full shared display | The Table's shared situational interface. MIRROR's projection — real-time holographic rendering of the state of New Meridian. ARBITER administers accuracy, not content. | Art 00 §8 |
 | Footprint | Physical board presence | Everything the faction has placed: influence markers, structure blocks, and deployment markers on The Overview. The collective term for §8 components. | Art 00 §14 |
-| The Backlog | Shared Dispatch Token pool | The queue of authorized but uncommitted operational work. All Dispatch Tokens live here when not in faction possession. Tokens drawn at Upkeep represent a faction's operational capacity for the Quarter; spent tokens return at Quarter close. | Art 00 §14, Art 02a §8a |
+| The Backlog | Shared Dispatch Token pool | The queue of authorized but uncommitted operational work. All Dispatch Tokens live here when not in faction possession. Tokens drawn at Upkeep represent a faction's operational capacity for the Quarter; spent tokens return at Quarter close. | Art 00 §14, Art 02 §9 |
 | Dispatch case | Sealed envelope or small box | Protocol for covert submission. Each faction's covert operations pass through here each Quarter. | Art 00 §14 |
-| Reservoir | Resource bank | The supply of available faction resources. *"The Reservoir does not judge what is drawn from it."* | Art 02a |
-| Public Standing track | Popularity track | Bell curve enforced by natural drift. Scale and drift thresholds: Art 02b §1. | Art 02b §1 |
-| Chorus Portrait | Portrait score | ARBITER's private assessment of faction alignment with the Chorus Question. Determines initiative and feeds the Chronicle. | Art 02b §1 |
-| Intel Token | Proof token / intel note | Physical token representing confirmed intelligence one faction holds about another. Held privately; disclosed at faction's discretion. | Art 02b §8 |
-| Presence chip | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. | Art 02a §6 |
+| Reservoir | Resource bank | The supply of available faction resources. *"The Reservoir does not judge what is drawn from it."* | Art 02 |
+| Public Standing track | Popularity track | Bell curve enforced by natural drift. Scale and drift thresholds: Art 02 §11. | Art 02 §11 |
+| Chorus Portrait | Portrait score | ARBITER's private assessment of faction alignment with the Chorus Question. Determines initiative and feeds the Chronicle. | Art 02 §10 |
+| Intel Token | Proof token / intel note | Physical token representing confirmed intelligence one faction holds about another. Held privately; disclosed at faction's discretion. | Art 02 §12 |
+| Presence chip | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. | Art 02 §6 |
 | Operational marker | Claim marker | Temporary deployment presence; counts as a presence chip during the Quarter. | Art 01 §1 |
 | Covert operation | Private action | Actions submitted face-down to the dispatch case. | Art 00 §14 |
 | Public act | Public action | Actions declared openly at the table. | Art 00 §14 |
 | Classified Directive | Hidden objective card | Per-faction sealed mission carried by operatives. Full arc objective — surfaces at session close. | Art 00 §14 |
 | Situation Report | World event card | Two-card system: public narrative + ARBITER effect card. | Art 01 §1 |
-| Countermeasure Card | Reaction card | Reactive card type. | Art 03 §10 |
+| Countermeasure Card | Reaction card | Reactive card type. | Art 03 §17 |
 | Field Operative Dossier | Agent card | The faction's single named operative — the one who can make the Apex play. | Art 00 §14 |
-| Findings (Ghost) | Ghost faction resource | The power of knowing. | Art 02a |
-| Exposure (Network) | Network faction resource | The power of being seen. | Art 02a |
-| Capital (Syndicate) | Syndicate faction resource | The power of economic control. | Art 02a |
-| Capacity (Guild) | Guild faction resource | The power of building and doing. | Art 02a |
-| Mandate (Directorate) | Directorate faction resource | The power of institutional legitimacy. | Art 02a |
-| Dominant | Majority control | A faction holds Dominant when their Holt magnitude is unambiguously higher than all others and has crossed the absolute floor. The condition of being the unambiguous leader — it subsides the moment that clarity is in question. Thresholds: Art 02a §6. | Art 00 §14, Art 02a §6 |
-| Established | Qualified presence | The district begins to organize around this faction's weight. Thresholds: Art 02a §6. | Art 02a §6 |
+| Findings (Ghost) | Ghost faction resource | The power of knowing. | Art 02 |
+| Exposure (Network) | Network faction resource | The power of being seen. | Art 02 |
+| Capital (Syndicate) | Syndicate faction resource | The power of economic control. | Art 02 |
+| Capacity (Guild) | Guild faction resource | The power of building and doing. | Art 02 |
+| Mandate (Directorate) | Directorate faction resource | The power of institutional legitimacy. | Art 02 |
+| Dominant | Majority control | A faction holds Dominant when their Holt magnitude is unambiguously higher than all others and has crossed the absolute floor. The condition of being the unambiguous leader — it subsides the moment that clarity is in question. Thresholds: Art 02 §6. | Art 00 §14, Art 02 §6 |
+| Established | Qualified presence | The district begins to organize around this faction's weight. Thresholds: Art 02 §6. | Art 02 §6 |
 | Present | Foothold | Atmospheric weight present but not yet defining. The district absorbs it. | Art 00 §14 |
-| Contested | Tied control condition | When two factions are close at the top, neither holds Dominant: the atmosphere is contested, the weight unresolved, the district in flux. Trigger: count of factions at Dominant status > 1. | Art 00 §14, Art 02a §6 |
+| Contested | Tied control condition | When two factions are close at the top, neither holds Dominant: the atmosphere is contested, the weight unresolved, the district in flux. Trigger: count of factions at Dominant status > 1. | Art 00 §14, Art 02 §6 |
 
 ---
 
@@ -333,7 +333,7 @@ These are not defaults or strong guidelines — they are invariants. They exist 
 
 A district generates its particular resource because of what it is — its infrastructure, its history, its people — not because of who holds the flag.
 
-*Source: Artifact 02a §8, PM02 L73.*
+*Source: Art 02 §8, PM02 L73.*
 
 ---
 
@@ -343,7 +343,7 @@ A district generates its particular resource because of what it is — its infra
 
 The probability system has hard floors and ceilings that no modifier can override — a best-prepared operation can fail on a stroke of bad luck, and a desperate attempt can succeed against all odds. This is not a mechanical convenience. It is a design statement about how the world works.
 
-*See also: Art 03 §12, Art 04 card design — crit ranges are hard constraints, not guidelines.*
+*See also: Art 03 §9.4, Art 04 card design — crit ranges are hard constraints, not guidelines.*
 
 ---
 
@@ -361,7 +361,7 @@ A faction reduced to its last unit of power can still walk into that room and ma
 
 The city cannot starve a faction's entire existence. It can only constrain their presence within it.
 
-*Source: Artifact 02a §8.*
+*Source: Art 02 §8.*
 
 ---
 
@@ -399,9 +399,9 @@ Rules governing the Chorus Portrait track — what it is, how it is maintained, 
 
 **Mechanics:** Portrait scores are permanent and cumulative. There is no passive drift, recovery, or forgetting. A faction cannot passively recover Portrait — new behavior adds on top of what is already recorded.
 
-*Source: Artifact 02b §5.*
+*Source: Art 02 §10.*
 
-*Governs: Artifacts 02b, 07. Corollary of 5.1.*
+*Governs: Artifacts 02, 07. Corollary of 5.1.*
 
 ---
 
@@ -416,9 +416,9 @@ Rules governing the Chorus Portrait track — what it is, how it is maintained, 
 
 **Mechanics:** Factions cannot see their own Portrait position or any other faction's position. ARBITER communicates Portrait state only through Debrief observations and the Chronicle — never through direct numerical disclosure. No card or mechanic may grant a faction read access to the Portrait track. Setup procedure: Artifact 03.
 
-*Source: Artifact 02b §6.*
+*Source: Art 02 §10.*
 
-*Governs: Artifacts 02b, 07, 09. Corollary of 5.1.*
+*Governs: Artifacts 02, 07, 09. Corollary of 5.1.*
 
 ---
 
@@ -482,9 +482,9 @@ Rules governing how the ARBITER player executes procedures and makes rulings. Al
 > *"The conversion is granted. The request was noted."*
 > — ARBITER, The Record register
 
-**Mechanics:** Resource conversion (The Translation) is available during Debrief and between phases only. It is not available during Resolution Beats 1–5. Rate defined in Artifact 03, subject to D02a-01. Procedure: Artifact 03 §12, §14.
+**Mechanics:** Resource conversion (The Translation) is available during Debrief and between phases only. It is not available during Resolution Beats 1–5. Rate defined in Artifact 03, subject to D02a-01. Procedure: Art 03 §9, §11.
 
-*Source: Artifact 03 §12, §14. Corollary of 6.1.*
+*Source: Art 03 §9, §11. Corollary of 6.1.*
 
 *Governs: Artifact 07 scripting.*
 
@@ -518,9 +518,9 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 **Mechanics:** All components, values, and states in any zone not designated private are visible to and readable by all players at all times. No mechanic may obscure or restrict access to information in a public zone. "Public zone" is defined in Artifact 01.
 
-*Source: Artifact 02b §7.*
+*Source: Art 02 §11.*
 
-*Governs: Artifacts 02b, 09. See also: 7.2a.*
+*Governs: Artifacts 02, 09. See also: 7.2a.*
 
 ---
 
@@ -537,7 +537,7 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 *Source: Artifact 03 §5.*
 
-*Governs: Artifact 03 Resolution beats; Artifacts 02a, 09.*
+*Governs: Artifact 03 Resolution beats; Artifacts 02, 09.*
 
 ---
 
@@ -549,7 +549,7 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 **Mechanics:** Presence tokens, deployment markers, structure blocks, control flags, established markers, and tension markers are visible to all players at all times. Nothing on the board surface is ever hidden. Cards and ARBITER scripts may not create mechanics that place hidden state on the board surface.
 
-*Source: Design Pillar 4.1 (00a §4.1), Artifact 01 §5, Artifact 02a §5, Artifact 03 §5.*
+*Source: Design Pillar 4.1 (00a §4.1), Artifact 01 §5, Art 02 §5, Artifact 03 §5.*
 
 *Governs: All artifacts. Corollary of 7.2. See also: 7.1.*
 
@@ -620,11 +620,11 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 **Narrative:** Internal capacity is not the same as organizational readiness. The token is the accounting of synchronization — approvals completed, commitments made. Without it, the operation exists as a plan. It does not exist as an action.
 
-**Mechanics:** Each action requires one Dispatch Token. A covert operation submitted without a token is rejected at Beat 0 — cost not spent. A public act requires a token placed on the declared card. Full procedure: Artifact 03 §9. Component definition: Artifact 02a §8.
+**Mechanics:** Each action requires one Dispatch Token. A covert operation submitted without a token is rejected at Beat 0 — cost not spent. A public act requires a token placed on the declared card. Full procedure: Artifact 03 §9. Component definition: Art 02 §9.
 
 *Source: Artifact 03 §9; PM02 L180. Corollary of 7.3.*
 
-*Governs: Artifacts 02a, 03.*
+*Governs: Artifacts 02, 03.*
 
 ---
 
@@ -647,7 +647,7 @@ Rules governing a faction's physical Footprint — the board presence components
 
 **Mechanics:** No faction may hold more than 6 presence tokens in a single district at any time. Deployment markers count toward this limit during the Quarter they are placed. No card effect or operative ability may place a token that would exceed this limit — the attempt fails regardless of other conditions.
 
-*Source: PM02 L26, Artifact 02a §6.*
+*Source: PM02 L26, Art 02 §6.*
 
 *Governs: All cards placing presence; Artifact 05.*
 
@@ -667,9 +667,9 @@ Rules governing a faction's physical Footprint — the board presence components
 
 **Mechanics:** The Chorus Node holds ARBITER's single fused piece — always present, never removed. The piece comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker, fused as one inseparable component. Because ARBITER's presence count permanently exceeds the human maximum of six, Dominant is structurally unreachable at the Chorus Node. No faction structure blocks may be placed at the Chorus Node under any game state or card effect. Component design and visual specification: Artifact 11. Placement at setup: Artifact 03.
 
-*Source: PM02 L28, Artifact 01 §8, Artifact 02a §10. Corollary of 8.1.*
+*Source: PM02 L28, Artifact 01 §8, Art 02 §14. Corollary of 8.1.*
 
-*Governs: Any card targeting the Chorus Node; Artifacts 01, 02a, 11. See also FD-01 (PM02 §5).*
+*Governs: Any card targeting the Chorus Node; Artifacts 01, 02, 11. See also FD-01 (PM02 §5).*
 
 ---
 
@@ -683,7 +683,7 @@ Rules governing a faction's physical Footprint — the board presence components
 
 **Mechanics:** A faction may not place a structure block in a district where they have no presence. Execution procedure: Artifact 03.
 
-*Source: PM02 L25, Artifact 02a §7.*
+*Source: PM02 L25, Art 02 §7.*
 
 *Governs: All cards placing structures; Artifact 03.*
 
@@ -697,7 +697,7 @@ Rules governing a faction's physical Footprint — the board presence components
 
 **Mechanics:** No card effect may place a second structure block for a faction in a district where they already have one.
 
-*Source: Artifact 02a §7. Corollary of 8.2.*
+*Source: Art 02 §7. Corollary of 8.2.*
 
 *Governs: C01, C14, P03, P09, and any future structure-placement cards.*
 
@@ -714,7 +714,7 @@ Rules governing a faction's physical Footprint — the board presence components
 
 **Mechanics:** The moment a faction reaches 0 presence tokens and 0 deployment markers in a district — by any means — all their structure blocks in that district are immediately removed. No card effect can prevent this.
 
-*Source: PM02 L25, Artifact 02a §7. Corollary of 8.2.*
+*Source: PM02 L25, Art 02 §7. Corollary of 8.2.*
 
 *Governs: All cards removing presence; Artifacts 03, 09.*
 
@@ -730,7 +730,7 @@ Rules governing a faction's physical Footprint — the board presence components
 
 **Mechanics:** Any rule, card text, or restriction that states "at least 1 presence token" or equivalent applies equally to presence tokens and deployment markers. Deployment markers count as temporary presence tokens for all purposes during the Quarter they are placed.
 
-*Source: PM02 L14, PM02 L58, Artifact 02a §6.*
+*Source: PM02 L14, PM02 L58, Art 02 §6.*
 
 *Governs: All artifacts. Global convention.*
 
@@ -749,7 +749,7 @@ Rules governing a faction's physical Footprint — the board presence components
 
 *Source: Design decision B — session 6. Corollary of 8.3.*
 
-*Governs: All cards and effects that interact with deployment markers; Artifacts 02a, 03, 04.*
+*Governs: All cards and effects that interact with deployment markers; Artifacts 02, 03, 04.*
 
 ---
 
@@ -781,9 +781,9 @@ Rules governing resource generation and the modifiers that affect it.
 
 **Mechanics:** Upkeep income is determined by passive generation rate, board presence, and structure block output only. No card, World Condition, Accord, or game state other than presence and structure output may modify upkeep income generation.
 
-*Source: Artifact 02b §7, §10, Artifact 02a §8.*
+*Source: Art 02 §8, §11, §12.*
 
-*Governs: Artifacts 02a, 02b, 03, 04, 09.*
+*Governs: Artifacts 02, 03, 04, 09.*
 
 ---
 
@@ -795,9 +795,9 @@ Rules governing resource generation and the modifiers that affect it.
 
 **Mechanics:** The Public Standing modifier shifts the difficulty target threshold on all 2d10 rolls by the stated amount. It does not affect income generation in any way.
 
-*Source: Artifact 02b §7, §10. Corollary of 9.1.*
+*Source: Art 02 §11, §12. Corollary of 9.1.*
 
-*Governs: Artifacts 02b, 03, 04, 09.*
+*Governs: Artifacts 02, 03, 04, 09.*
 
 ---
 
@@ -807,11 +807,11 @@ Rules governing resource generation and the modifiers that affect it.
 
 **Narrative:** A faction's income is what flows to them whether or not they act — the baseline the city owes them for existing in it. What they extract through operations, leverage, and tactical pressure is something else: earned in the moment, contingent on the action.
 
-**Mechanics:** Resources produced by card effects or operative actions are not subject to the upkeep income restrictions of 9.1. They do not modify income calculation and are governed by individual card Effect fields and Artifact 02b.
+**Mechanics:** Resources produced by card effects or operative actions are not subject to the upkeep income restrictions of 9.1. They do not modify income calculation and are governed by individual card Effect fields and Art 02.
 
-*Source: Artifact 02b §7, §10. Corollary of 9.1.*
+*Source: Art 02 §11, §12. Corollary of 9.1.*
 
-*Governs: Artifacts 02b, 03, 04, 09.*
+*Governs: Artifacts 02, 03, 04, 09.*
 
 ---
 
@@ -832,9 +832,9 @@ Rules governing privately held information: what constitutes private information
 
 **Mechanics:** Any private information a player holds — Intel Tokens, hand cards, modifier cards, classified directives, or any other private component — is disclosed only when the holder chooses. No card may compel disclosure. A Reveal effect creates a stake around the disclosure choice: the card defines the consequence for revealing or withholding, but the decision remains the player's.
 
-*Source: Artifact 02b §5, §8.*
+*Source: Art 02 §10, §12.*
 
-*Governs: Artifacts 02b, 04, 05, 08.*
+*Governs: Artifacts 02, 04, 05, 08.*
 
 *Pending: Consequences for voluntary strategic non-disclosure — open design question.*
 
@@ -851,9 +851,9 @@ Rules governing privately held information: what constitutes private information
 
 **Mechanics:** A faction claiming to hold a specific private component cannot ask ARBITER to confirm or deny the claim without a Reveal effect. ARBITER does not validate bluffs or threats referencing undisclosed information.
 
-*Source: Artifact 02b §8. Corollary of 10.1.*
+*Source: Art 02 §12. Corollary of 10.1.*
 
-*Governs: Artifacts 02b, 04, 07.*
+*Governs: Artifacts 02, 04, 07.*
 
 *See also: 4.7a, 4.7b.*
 
@@ -868,11 +868,11 @@ Rules governing privately held information: what constitutes private information
 > *"Twelve days of source contact in that note. Three locations, two operational windows, one name we'd been building toward for months. Thirty seconds in the shredder. You tell yourself you had to — and maybe you did. But there's no 'had to' that gives it back."*
 > — Ghost field operative, after-action debrief
 
-**Mechanics:** An intel token that has been used or discarded by its holder is removed from active play. It cannot be retrieved or referenced in any subsequent game action. The physical mechanism — disposable or erasable — is a component design decision (Artifact 11, Artifact 02b).
+**Mechanics:** An intel token that has been used or discarded by its holder is removed from active play. It cannot be retrieved or referenced in any subsequent game action. The physical mechanism — disposable or erasable — is a component design decision (Artifact 11, Art 02).
 
-*Source: Artifact 02b §8.*
+*Source: Art 02 §12.*
 
-*Governs: Artifacts 02b, 04, 09.*
+*Governs: Artifacts 02, 04, 09.*
 
 ---
 
@@ -885,11 +885,11 @@ Rules governing privately held information: what constitutes private information
 > *"The Directorate carried three notes into Quarter 5. Their doctrine calls for two. The third was a source contact they hadn't acted on. The Chorus noted the hesitation. Not the note. The hesitation."*
 > — ARBITER, The Observation
 
-**Mechanics:** Intel token holdings are subject to per-faction limits and expiry. Specific limit values and expiry definitions are balance decisions in Artifact 02b, subject to playtesting. Neither holding limits nor expiry are mechanically enforced — ARBITER handles called violations per Artifact 07.
+**Mechanics:** Intel token holdings are subject to per-faction limits and expiry. Specific limit values and expiry definitions are balance decisions in Art 02, subject to playtesting. Neither holding limits nor expiry are mechanically enforced — ARBITER handles called violations per Artifact 07.
 
-*Source: Artifact 02b §8.*
+*Source: Art 02 §12.*
 
-*Governs: Artifacts 02b, 07.*
+*Governs: Artifacts 02, 07.*
 
 ---
 
@@ -1048,5 +1048,5 @@ All data tables in THE SIGNAL artifact suite must satisfy the following five req
 ---
 
 *End of Artifact 00a — Governing Rules & Design Policy v0.5*
-*Populated from review of all V1 artifacts: 00, 01, 02a, 02b, 03, 04, 04b, PM01, PM02, PM03*
+*Populated from review of all V1 artifacts: 00, 01, 02, 03, 04, 04b, PM01, PM02, PM03*
 *31 rules across 6 sections (§5–§10). Pending re-sign-off S73 (material restructure — §4 pillar reorganization, §5 design principles moved from Art 00, section-prefixed rule numbering, §9/§10 revisions).*

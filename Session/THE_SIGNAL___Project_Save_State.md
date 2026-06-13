@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-13 — Session 88
+**Last Updated:** 2026-06-13 — Session 89
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -867,6 +867,15 @@ Eight axioms. All load-bearing. Constrains all future design. Created session 4.
 - ref_resources.md + ref_tracking.md headers updated to Art 02 section refs.
 
 **Next:** S89 — (1) Art 02 deeper review pass (02-n02); (2) C28 Breaking News, C40B Live Coverage card work; (3) art03_section_map_S83.md external artifact sweep (00a, Art 02, 03a, 04, PM01, PM05).
+
+### Session 89 — 2026-06-13
+- External artifact sweep complete (all 6 artifacts: 00a, 03a, 04, PM01, PM05 + Art 02 cross-refs). art03_section_map_S83.md deleted from Whiteboard.
+- All Art 02a/02b/02x refs updated to Art 02 throughout all artifacts.
+- All stale Art 03 section numbers updated: §11→§9.4.x (Beat-specific), §17→§10, §18 (Battlefield Strength)→§10, §19→§11 (Debrief), §22→§14, §14 (Modifier table)→§13, §25/§28→§18 (React Card Rules), §3.11→§9.4.x.
+- C01/C03 Design Checklist "Supported by game procedure": stale `Automatic resolution (§20)` ref removed from text and source column.
+- PM05 04-n95 added: controlled vocabulary for "Supported by game procedure" checklist field (enumerated legal Art 03 procedure refs required; sweep of all signed-off cards to follow once enumeration defined).
+
+**Next:** S90 — (1) C28 Breaking News, C40B Live Coverage card work; (2) Art 02 deeper review pass (02-n02).
 
 **Session 35 summary (2026-05-25 — complete):**
 - **L144 locked:** Card schema design — 1NF + snowflake. All fields atomic; compound-value fields refactored to child tables. Governs Art 04 and 00b.

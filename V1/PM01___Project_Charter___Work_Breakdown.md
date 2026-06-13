@@ -93,7 +93,7 @@ When one artifact references specific content in another artifact, the standard 
 Examples:
 - `Artifact 04 §8` — refers to Section 8 of Artifact 04
 - `Artifact 03 §12.3` — refers to Section 12, Subsection 3 of Artifact 03
-- `Artifact 02b §8–9` — refers to Sections 8 through 9 of Artifact 02b
+- `Art 02 §12` — refers to Section 12 of Art 02 (Intel Tokens)
 - `PM02 §2b` — refers to Section 2b of PM02
 
 This convention applies to all in-document references, cross-artifact references in design notes, blocking decision descriptions in PM02, and punch list source citations. It provides a stable, unambiguous pointer to specific content without reproducing it. When an artifact is restructured and section numbers change, all references to that artifact should be audited and updated — this is a non-material change and does not require re-sign-off.
@@ -148,8 +148,7 @@ The following documents must exist and be signed off before physical production 
 |----|----------|------------------|--------------------|--------|
 | 00 | Factions & World | Without narrative context, no other artifact is meaningful. Defines who the factions are, what New Meridian is, what the Chorus is, and why The Table exists. | Yes — must be first | ✅ |
 | 01 | Game Board — New Meridian | Defines the physical space of play: district layout, rings, information displayed on each district, track positions, starting configuration, and board setup procedure. | Yes | ✅ |
-| 02a | Resource Systems: Board State | Defines presence, influence, structures, and resource generation — the systems whose entire state is always visible on the board. | Yes | ✅ |
-| 02b | Resource Systems: Tracking | Defines Chorus Portrait, Public Standing, and Intel Notes — the tracking systems that run alongside the board. | Yes | ✅ |
+| 02 | Components | Defines all resource systems: presence, influence, structures, resource generation, Chorus Portrait, Public Standing, and Intel Tokens. Merged from 02a + 02b (S88). | Yes | ✅ |
 | 03 | Round Structure & Gameplay | Defines the seven-phase round, timing, initiative, the Apex trigger, and ARBITER conversion. Requires 00–02 to be meaningful. | Yes | ✅ Signed Off — Session 20 (v1.7) |
 | 04 | Action Card System | Defines all covert operations, political acts, and faction-specific actions. Requires 00–03 for context. | Yes | 🔄 In progress — C01–C15 signed off; 12 blocking decisions open (see PM02 D04-01 through D04-12) |
 | 04b | Action Taxonomy & Design Analysis | Companion to 04. Taxonomy framework, coverage gap analysis, faction design recommendations. Not a playtest-blocking artifact — reference document. | No | ✅ Active reference |
@@ -169,15 +168,15 @@ Production does not begin until relevant design artifacts are signed off. Items 
 | # | Component | In-World Name | Quantity | Source | Requires | Status | Est. Cost |
 |---|-----------|---------------|----------|--------|---------|--------|-----------|
 | 2.01 | Printed hex map | New Meridian | 1 (A1 or A0) | Print shop | 01, V01, V08 | ⬜ | $5–20 |
-| 2.02 | Influence discs | Presence tokens | 15 per faction × 5 | Poker chips | 02a | ⬜ | $15–30 |
+| 2.02 | Influence discs | Presence tokens | 15 per faction × 5 | Poker chips | 02 | ⬜ | $15–30 |
 | 2.03 | Large distinct pieces — double-sided (normal / blocked face) | Operational markers | 2 per faction × 5 | Distinct shape; must support two faces — normal and blocked (for Event Card conversion-blocking effects) | 01, 03 | ⬜ | $5–10 |
-| 2.04 | Small square chits | Structure tokens | 6 per faction × 5 | Card stock | 02a | ⬜ | $2–5 |
-| 2.05 | Resource chips | Asset tokens | 30 per type × 5 | Poker chips | 02a | ⬜ | $20–35 |
-| 2.06 | Faction chits + sticky notes | Intel notes | 4 per faction × 5 | Colored chits | 02b | ⬜ | $3–7 |
-| 2.07 | Neutral chips | Tension markers | 6 | Neutral chips | 02a | ⬜ | $1–3 |
-| 2.08 | Crown or star tokens | Control flags | 5 (1 per faction) | See D-P-01 | 02a | ⬜ | $3–7 |
+| 2.04 | Small square chits | Structure tokens | 6 per faction × 5 | Card stock | 02 | ⬜ | $2–5 |
+| 2.05 | Resource chips | Asset tokens | 30 per type × 5 | Poker chips | 02 | ⬜ | $20–35 |
+| 2.06 | Faction chits + sticky notes | Intel notes | 4 per faction × 5 | Colored chits | 02 | ⬜ | $3–7 |
+| 2.07 | Neutral chips | Tension markers | 6 | Neutral chips | 02 | ⬜ | $1–3 |
+| 2.08 | Crown or star tokens | Control flags | 5 (1 per faction) | See D-P-01 | 02 | ⬜ | $3–7 |
 | 2.08a | Fused single piece — ARBITER color | ARBITER Dominance Marker | 1 | Eight ARBITER-keyed presence tokens (white, TBD) stacked and fused, topped by ARBITER's dominance marker — same visual language as faction control flags but distinct: larger, differently keyed, or subtly off in a way that reads as *more*. All one inseparable piece. Placed at Chorus Node by ARBITER at setup. Never removed. | 00a R04, 01, 11, D-P-02 | ⬜ | $3–8 |
-| 2.08b | Small silver markers | Established markers | TBD pending Art 11 component spec — 1 per Established faction per district; up to 4–5 may coexist in a single district simultaneously. Silver material distinguishes 2nd-place presence at a glance; placed on Established faction's presence chip stack. Placed and removed by the player whose action causes the influence change. Not placed at the Chorus Node. | 02a §6/§9, L111 | ⬜ | TBD |
+| 2.08b | Small silver markers | Established markers | TBD pending Art 11 component spec — 1 per Established faction per district; up to 4–5 may coexist in a single district simultaneously. Silver material distinguishes 2nd-place presence at a glance; placed on Established faction's presence chip stack. Placed and removed by the player whose action causes the influence change. Not placed at the Chorus Node. | 02 §6/§9, L111 | ⬜ | TBD |
 | 2.09 | Ten-sided dice | — | 2 × d10 | Purchase | 03 | ⬜ | $2–5 |
 | 2.10 | Covert operation cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $8–20 |
 | 2.11 | Political act cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $5–15 |
@@ -189,14 +188,14 @@ Production does not begin until relevant design artifacts are signed off. Items 
 | 2.17 | Accord forms | Accord documents | 8 | Laminated dry-erase, 8cm × 8cm | 06 | ⬜ | $3–7 |
 | 2.18 | Pass cards | — | Per 09 spec | Print + cut | 09 | ⬜ | $1–3 |
 | 2.19 | Small boxes or envelopes | Dispatch cases | 1 per player | Purchase or make | 06 | ⬜ | $3–10 |
-| 2.20 | Laminated strips | Public Standing tracks | 1 per faction | Print + laminate | 02b, V02 | ⬜ | $3–7 |
+| 2.20 | Laminated strips | Public Standing tracks | 1 per faction | Print + laminate | 02, V02 | ⬜ | $3–7 |
 | 2.21 | Combined laminated strip | World Condition tracks | 1 | Print + laminate | 01, V04 | ⬜ | $1–3 |
 | 2.22 | Simple strip | Quarter tracker | 1 | Print + laminate | 03 | ⬜ | $1–3 |
 | 2.23 | Dry-erase grid behind screen | Chorus Portrait board | 1 | Print + laminate | 07 | ⬜ | $2–5 |
 | 2.24 | Laminated A4 mat | ARBITER working mat | 1 — general ARBITER tableau surface for Portrait board, Chronicle area, and modifier token storage. Resolution Grid is a separate component (see 2.31). | Print + laminate | 07 | ⬜ | $1–3 |
 | 2.25 | Sealed index cards | Apex envelopes | 10 (2 operatives × 5 factions) | Prepare at setup | 05 | ⬜ | $1–3 |
 | 2.26 | Pre-printed forms | Chronicle forms | 30 sheets (8 per session — 1 per Quarter) | Print | 07 | ⬜ | $2–5 |
-| 2.27 | Adhesive notes | Intel note age tracker | 1 pad | Purchase | 02b | ⬜ | $1–2 |
+| 2.27 | Adhesive notes | Intel note age tracker | 1 pad | Purchase | 02 | ⬜ | $1–2 |
 | 2.28 | Countdown device | Timer | 1 | Sand timer or phone | 03 | ⬜ | $3–10 |
 | 2.29 | Writing tools | — | Set | Purchase | — | ⬜ | $5–10 |
 | 2.30 | Laminated cards | Player quick reference cards | 1 per player | Print + laminate | V12–V18 | ⬜ | $3–7 |
@@ -285,8 +284,8 @@ Binary go/no-go. Before any playtest session is scheduled, every item in the rel
 |---|------|-------------|--------|
 | 1.01 | Artifact 00 — Factions & World — signed off | Yes | ✅ |
 | 1.02 | Artifact 01 — Game Board — signed off | Yes | ✅ |
-| 1.03 | Artifact 02a — Resource Systems: Board State — signed off | Yes | ✅ |
-| 1.04 | Artifact 02b — Resource Systems: Tracking — signed off | Yes | ✅ |
+| 1.03 | Artifact 02 — Components (merged from 02a + 02b, S88) — signed off | Yes | ✅ |
+| 1.04 | (absorbed into 1.03 — 02a + 02b merged into Art 02) | — | ✅ |
 | 1.05 | Artifact 03 — Round Structure — signed off | Yes | ✅ |
 | 1.06 | Artifact 04 — Action Card System — sufficient card set complete (S1 waiver: Common set only acceptable) | Yes (waivable) | ⬜ |
 | 1.07 | Artifact 05 — Operative & Apex System — Tier 1 operatives complete (Apex and higher tiers may be deferred) | S1 waivable | ⬜ |
@@ -323,7 +322,7 @@ Binary go/no-go. Before any playtest session is scheduled, every item in the rel
 | 3.02 | ARBITER player has read Artifact 03 (round structure) in full | ⬜ |
 | 3.03 | ARBITER player has run one dry-run of Resolution solo (Beat 3 and Beat 4) | ⬜ |
 | 3.04 | ARBITER player knows all four registers by name and can describe when each applies | ⬜ |
-| 3.05 | Translation rate table memorized or printed — Contested = 5:1, no presence = 4:1, Present = 3:1, Established = 2:1 (see 02a §8) | ⬜ |
+| 3.05 | Translation rate table memorized or printed — Contested = 5:1, no presence = 4:1, Present = 3:1, Established = 2:1 (see Art 02 §8) | ⬜ |
 | 3.06 | ARBITER player has read PRIVATE___True_State.md (private design axioms) | ⬜ |
 
 ### Category 4: Logistics

@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 88 (active) | Updated: 2026-06-13**
+**Session 89 (active) | Updated: 2026-06-13**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S88 in progress — Art 03 v4.4 signed off (L207). Component lifecycle sweep complete (03-n18 ✅); all blockers resolved in-place (§13.7 board state rules; Target Profile to 03-init §2.7; Control flag → Dominant marker rename throughout; return-to-supply language; BEC cleanup clarification). S88 entry point (remaining): (1) card work: C28 Breaking News, C40B Live Coverage; (2) external artifact sweep: Whiteboard/art03_section_map_S83.md (00a, 02b, 03a, 04, PM01, PM05).
+S89 complete — external artifact sweep finished. All cross-references updated for (a) S83 Art 03 structural overhaul (old §9–§20 → new §9 monthly procedure) and (b) S88 Art 02 merge (02a + 02b → Art 02). art03_section_map_S83.md deleted from Whiteboard.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -80,10 +80,11 @@ S88 in progress — Art 03 v4.4 signed off (L207). Component lifecycle sweep com
 
 **S88 accomplishments:** Art 03 v4.4 signed off (L207). Component lifecycle sweep complete; 03b Component Lifecycle Register formalized (v0.1) — replaces Whiteboard scratch file. All sign-off blockers resolved in-place: §13.7 Board State Update Rules added (Tension marker placement trigger; Structure block removal + return; Dominant/Established marker return); Target Profile added to 03-init §2.7 (count TBD); Control flag renamed Dominant marker throughout Art 03 and 03-init (S88 design decision: same component); return-to-supply language added §7.3.3 and §8.2; BM-xx "from ARBITER supply" clarified §9.4.0.1; §12.0 BEC cleanup scope clarified. PM05: 03-n18 ✅, 03-n19 ✅, 03-n20 ✅, DB-14 updated, 03-n16 §2.7 gap closed. PM02 L207 locked. art03_section_map_S83.md stale entries corrected (5 fixes + 3 new sections added). Art 02 Components v1.0 written — merge of 02a v1.6 + 02b v1.5; 02a and 02b superseded; XA-45 ✅; PM05 02-n02 added (deep review before sign-off). Art 02 §5 Design Principles: 2 principles only (Scarcity is intentional; Disclosure is designed, not assumed). agy S88 DB report integrated: DB-14 renames ✅, DB-15 (Operative card split) ✅, DB-34 (DebriefActionCard + SCIFRecord) ✅. PM03 v2.5.
 
-**S88 entry point (remaining):**
+**S88 accomplishments (session close / S89):** External artifact sweep complete across all 6 artifacts (00a, 03a, 04, PM01, PM05, and Art 02 cross-ref cleanup). All Art 02a/02b/02x refs updated to Art 02 throughout. All stale Art 03 section numbers updated: old §11→§9.4.x, §17→§10, §18 (Battlefield)→§10, §19→§11, §22→§14, §14 (Modifier)→§13, §25/§28→§18. C01 and C03 "Supported by game procedure" checklists: stale `Automatic resolution (§20)` ref removed; PM05 04-n95 added (controlled vocabulary for checklist procedure field). art03_section_map_S83.md deleted.
+
+**S89 entry point (remaining):**
 1. Card work: C28 Breaking News, C40B Live Coverage
-2. External artifact sweep — art03_section_map_S83.md (00a, Art 02, 03a, 04, PM01, PM05) — 02b refs now point to Art 02
-3. Art 02 deeper review pass (02-n02) — fine-tune before sign-off
+2. Art 02 deeper review pass (02-n02) — fine-tune before sign-off
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 04b re-sign-off; 04-n73 (P1–P18 restatement audit).
 
