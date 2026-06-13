@@ -38,6 +38,7 @@ All structural and environmental components placed before faction setup begins.
 | Portrait track | P6 | — | Behind ARBITER screen |
 | Faction Screen ×5 | P1–P5 | — | One per faction position |
 | Faction Terminal ×5 | P1–P5 | — | One per faction position |
+| Faction Resolution Grid ×5 | P1–P5 | — | One per faction position |
 | Backlog | Supply | — | — |
 
 ### §2.2 Faction Starting Tokens

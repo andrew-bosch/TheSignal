@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.2
+**Version:** 4.3
 
-**Status:** Rubric pass in progress — S86 entry at §9.4.2 Beat 2. Pending grip review and full sign-off.  
+**Status:** Rubric and simplification pass complete. Grip review complete. Sign-off pending component lifecycle sweep (PM05 03-n18).  
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
 
@@ -49,10 +49,9 @@ The main game loop of THE SIGNAL: the repeatable quarterly sequence that frames 
    - [§9.4 Resolution](#94-resolution)
      - [Beat 0: The Cases Open](#940-beat-0-the-cases-open)
      - [Beat 1: Read Board State](#941-beat-1-read-board-state)
-     - [Beat 2: Conditions Set](#942-beat-2-conditions-set)
-     - [Beat 3: Covert Operations Resolve](#943-beat-3-covert-operations-resolve)
-     - [Beat 4: Public Acts Resolve](#944-beat-4-public-acts-resolve)
-     - [Beat 5: Close Month](#945-close-month)
+     - [Beats 2 and 3: Covert Operations Resolve](#942-beats-2-and-3-covert-operations-resolve)
+     - [Beat 4: Public Acts Resolve](#943-beat-4-public-acts-resolve)
+     - [Close Month](#944-close-month)
 10. [Resolve District Tension](#10-resolve-district-tension)
 11. [Quarterly Debrief](#11-quarterly-debrief)
 12. [Quarter Close](#12-quarter-close)
@@ -60,12 +59,16 @@ The main game loop of THE SIGNAL: the repeatable quarterly sequence that frames 
 **Reference Material**
 
 13. [The Operation System](#13-the-operation-system)
-14. [Special Conditions](#14-special-conditions)
+14. [Apex Activation](#14-apex-activation)
 15. [Duration Taxonomy](#15-duration-taxonomy)
 16. [Public Act Placement Rules](#16-public-act-placement-rules)
 17. [Countermeasure Card Rules](#17-countermeasure-card-rules)
 18. [React Card Rules](#18-react-card-rules)
-19. [Examples & Exceptions](#19-examples--exceptions)
+19. Reserved
+20. [Resource Generation Reference](#20-resource-generation-reference)
+21. [Card Economy Reference](#21-card-economy-reference)
+
+[§ Examples & Exceptions](#examples-exceptions)
 
 ---
 
@@ -105,6 +108,8 @@ Full narrative grounding — what each action means at scale, faction doctrine, 
 
 6. **Component and state traceability.** Every component and game state touched by the loop has a traceable path — where it enters, where it changes, and where it exits. Initial entry points are defined in 03-init; the loop accounts for all subsequent transitions. *(Full validation of this principle gates on 03-init design pass.)*
 
+7. **Step 0 convention.** All procedural step sequences begin at Step 0. This applies uniformly across sections, beats, and subroutines — including Apex, React, and any referenced downstream procedures. Step 0 represents the first executable action in the sequence.
+
 ---
 
 ### Section Review Rubric
@@ -139,11 +144,10 @@ The complete quarterly loop — six sections in sequence. Each line is an entry 
   §9.4  Resolution:
     §9.4.0  Beat 0: The Cases Open
     §9.4.1  Beat 1: Read Board State
-    §9.4.2  Beat 2: Conditions Set
-    §9.4.3  Beat 3: Covert Operations Resolve
-    §9.4.4  Beat 4: Public Acts Resolve
-    §9.4.5  Close Month
-  Repeat for Months 2 and 3. Month 3 Beat 5: do not advance month — proceed to §10.
+    §9.4.2  Beats 2 and 3: Covert Operations Resolve
+    §9.4.3  Beat 4: Public Acts Resolve
+    §9.4.4  Close Month
+  Repeat for Months 2 and 3. Month 3 Close Month: do not advance month — proceed to §10.
 
 §10 RESOLVE DISTRICT TENSION
   Contested districts resolve. d10 roll-off per district. Tension markers cleared.
@@ -259,17 +263,17 @@ For each district with presence chips or deployment markers: apply influence lev
 
 #### §7.4.1 Step 1: Apply Affinity Bonus
 
-Add affinity bonus where applicable (Dominant in native resource district: +1).
+Add affinity bonus where applicable — per §20.
 
 #### §7.4.2 Step 2: Declare Structure Block Resources
 
-For each structure block: declare resource type publicly (district resource or faction native resource), collect +1.
+For each structure block: declare resource type publicly (district resource or faction native resource), collect income per §20.
 
 *If The Network has any presence at University Perimeter: The Network Faction Player declares whether Exposure or the district native resource will be collected from the virtual structure block.*
 
 #### §7.4.3 Step 3: Collect Passive Generation
 
-Add passive generation (1 unit of faction native resource, unconditional).
+Add passive generation per §20.
 
 ---
 
@@ -281,7 +285,7 @@ ARBITER announces: *"Prepare operations."*
 
 #### §7.5.0 Dispatch Token Distribution
 
-Each Faction Player collects 4 Dispatch Tokens from The Backlog.
+Each Faction Player collects Dispatch Tokens from The Backlog — per §21 Dispatch Token Allotment.
 
 *Tokens are held beside the tableau. They are spent across Months 1, 2, and 3 as the player chooses.*
 
@@ -298,19 +302,17 @@ Verify the following elements are already in position before drawing begins:
 
 ##### §7.5.2.0 Step 0: Draw Covert Cards
 
-Count covert operation cards currently in hand. Draw from personal draw deck to reach a hand of 6.
+Count covert operation cards currently in hand. Draw from personal draw deck to reach covert hand size — per §21.
 
 ##### §7.5.2.1 Step 1: Draw Public Act Cards
 
-Count public act cards currently in hand. Draw from public act draw deck to reach starting hand size.
-
-*[Open question: public act hand size under monthly play. Current default: 3. May require revision — see PM05.]*
+Count public act cards currently in hand. Draw from public act draw deck to reach public act hand size — per §21.
 
 ##### §7.5.2.2 Step 2: Place Drawn Cards
 
 Place all drawn cards in the active hand area of the tableau. Cards are held face-down and private.
 
-*Cards kept from the prior Quarter count toward hand size — a player with 2 kept covert cards draws 4 more to reach 6.*
+*Cards kept from the prior Quarter count toward hand size — a player with kept cards draws only enough to reach the hand size limit (per §21).*
 
 *Covert operation hand is drawn here only. No additional covert cards are drawn during Monthly Dispatch. Discard down if hand size exceeds maximum at any point.*
 
@@ -324,14 +326,7 @@ Draw and place modifier cards in the tableau modifier area.
 
 ##### §7.5.3.0 Step 0: Faction Modifier Draw
 
-Draw from the faction modifier deck in the player's tableau.
-
-| Structure blocks owned | Faction modifier cards drawn |
-|------------------------|------------------------------|
-| 0–1 | 0 |
-| 2–3 | 1 |
-| 4–5 | 2 |
-| 6+ | 3 (maximum) |
+Draw from the faction modifier deck in the player's tableau — per §21 Modifier Card Draw table.
 
 *The Network's virtual structure block at University Perimeter counts toward this total while Network holds any presence in that district.*
 
@@ -408,7 +403,7 @@ Placement complete. Proceed to §9 Monthly Activities.
 
 ## §9 Monthly Activities
 
-*Entry: Month 1 — §8 Placement complete; Months 2–3 — §9.4.5 complete. Repeats three times; exit via §9.4.5 each month.*
+*Entry: Month 1 — §8 Placement complete; Months 2–3 — §9.4.4 complete. Repeats three times; exit via §9.4.4 each month.*
 
 **Dispatch Token rule:** Each action requires 1 Dispatch Token. Covert operations: token placed in the dispatch case with the operation card (§9.1). Public acts: token placed on the declared card on the Overview (§9.2). A covert operation card submitted without a token is rejected by ARBITER at Beat 0 without resolution and returned to the faction. A public act declared without a token is invalid.
 
@@ -418,7 +413,7 @@ Placement complete. Proceed to §9 Monthly Activities.
 
 ### §9.0 Start of Month
 
-*Entry: §9 Monthly Activities opens (Month 1) or §9.4.5 complete (Months 2–3).*
+*Entry: §9 Monthly Activities opens (Month 1) or §9.4.4 complete (Months 2–3).*
 
 Before §9.1 Covert Dispatch opens, ARBITER checks for active public acts with Covert Dispatch obligations. If none: proceed to §9.1.
 
@@ -508,8 +503,8 @@ For each Faction Player in initiative order, one of:
 **Declare** — name the public act and place it on the board:
 
 1. Announce the public act being declared.
-2. Place the declared card face-up in the PA area on the Overview (in front of faction tableau), with the target profile, 1 Dispatch Token, and resource tokens on the card. Resource tokens remain with the declared card — payment submitted to the Reservoir at Beat 4.
-3. Play any modifier cards modifying the public act face-up alongside the card on the Overview.
+2. Place the declared card face-up in the unresolved PA zone of the Faction Resolution Grid, with the target profile, 1 Dispatch Token, and resource tokens on the card. Resource tokens remain with the declared card — payment submitted to the Reservoir at Beat 4.
+3. Play any modifier cards modifying the public act face-up alongside the card in the Faction Resolution Grid.
 
 *Once placed, the card is a valid target for countermeasures (§9.3) and other public acts.*
 
@@ -540,9 +535,9 @@ For each Faction Player in initiative order, one of:
 **Deploy** — declare "Countermeasure" and choose one play mode for each card:
 
 - **Submit to ARBITER** — hand the card face-down to the ARBITER Player. Applies to all covert operations targeting your faction; ARBITER matches to all relevant operations at Beat 0 (§9.4.0.1).
-- **Play publicly** — place the card face-up in your PA area on the Overview. Applies at the appropriate resolution beat to all operations targeting your faction.
+- **Play publicly** — place the card face-up in the CM zone of your Faction Resolution Grid. Applies at the appropriate resolution beat to all operations targeting your faction.
 
-*CMs are keyed to the playing faction. CM-A voids operations; CM-B applies a −15 modifier. Full CM card rules: §17.*
+*CMs are keyed to the playing faction. Full CM card rules: §17.*
 
 *Each faction has 3 Countermeasure cards per session total across all three Monthly windows. Cards spent here are unavailable in Months 2 and 3.*
 
@@ -550,7 +545,7 @@ For each Faction Player in initiative order, one of:
 
 **Submitted CMs:** The ARBITER Player attaches each received card to the relevant faction's dispatch case in the receive queue. ARBITER matches to all targeted operations within sealed cases at Beat 0 (§9.4.0.1).
 
-**Publicly played CMs:** Already in position on the Overview. No further placement required.
+**Publicly played CMs:** Already in position on the Faction Resolution Grid. No further placement required.
 
 ARBITER announces: *"Countermeasure Window closed."*
 
@@ -595,18 +590,12 @@ From left to right, lane by lane:
    | Payment | Applies to | Resources | Card Placement |
    |---------|------------|-----------|----------------|
    | Full | All | Drain to Reservoir | Face-up in grid |
-   | Partial | Non-Apex | Drain to Reservoir; attach −50 threshold marker to stack | Face-up in grid |
+   | Partial | Non-Apex | Drain to Reservoir; attach partial payment threshold marker (M-06) to stack | Face-up in grid |
    | Zero | Non-Apex | None to drain | Face-down in grid |
    | Any shortfall | Apex | Drain any submitted resources to Reservoir | Face-down in grid |
    | Retained | Resource-retaining cards | Validate resource count matches declared value on target profile; resources declared are placed on card — do not drain to Reservoir. Any unallocated resources are placed in target_faction's dispatch case. | Face-up in grid |
 
-   *If any Intel Token is submitted as part of payment, calculate age for each token: current Quarter number − Quarter number written on token.*
-
-   | Age | Status | Effect |
-   |-----|--------|--------|
-   | 0–2 | Fresh | No modifier |
-   | 3 | Stale | Attach −25 Intel freshness modifier to stack (M-13) |
-   | 4+ | Expired | Counts as partial payment |
+   *If any Intel Token is submitted as part of payment, calculate age for each token — per §13 Intel Token Age table.*
 
    *All submitted Intel Tokens are reset (erased) and returned to The Dossier, or discarded if single-use.*
 
@@ -630,16 +619,15 @@ From left to right, lane by lane:
    |---|--------|--------|--------|--------|--------|
    | *(case receipt order →)* | first received | | | | last received |
    | Beat 1 row (CM cards) | | | | | |
-   | Beat 2 row | | | | | |
-   | Beat 3 card 1 | | | | | |
-   | Beat 3 target 1 | | | | | |
-   | Beat 3 card 2 | | | | | |
-   | Beat 3 target 2 | | | | | |
-   | *(up to 4 pairs — Ghost)* | | | | | |
+   | Beat 2 — op | | | | | |
+   | Beat 2 — target | | | | | |
+   | Beat 3 — op | | | | | |
+   | Beat 3 — target | | | | | |
+   | *(one op+target pair per card submitted; Beat 2 + Beat 3 pairs ≤ 4 per lane — one per Dispatch Token)* | | | | | |
 
    *Beat 4 processes placed public acts on the Overview — public acts do not appear in the Resolution Grid.*
 
-   *Modifier cards in a stack peek out at the bottom to display their values during resolution. Modifier card physical design must support cascade orientation — value printed prominently at both top and bottom edge. (XA-22, Art 11)*
+   *Modifier cards are splayed beneath the operation card to display their values during resolution. Modifier card physical design must support cascade orientation — value printed prominently at both top and bottom edge. (XA-22, Art 11)*
 
 5. If a Dispatch Token accompanies the card: set aside the token. If no Dispatch Token accompanies the card: flip the operation card face-down; remove attached modifier cards from the game.
 
@@ -684,7 +672,7 @@ The ARBITER Player processes the Beat 1 row lane by lane, left to right. For eac
 2. Scan the Resolution Grid for all covert operation cards targeting that faction.
 3. Apply by card type:
    - **Type A (CM-A):** Flip each targeted covert operation card face-down. Discard modifier cards from those stacks.
-   - **Type B (CM-B):** Place a −15 modifier token on each targeted covert operation card.
+   - **Type B (CM-B):** Place a CM-B modifier token (M-11; value on token) on each targeted covert operation card.
 4. Discard the CM card.
 
 5. Repeat until all CM cards in the Beat 1 row(s) have been resolved.
@@ -695,99 +683,116 @@ Beat 1 complete. Proceed to §9.4.2 Beat 2.
 
 ---
 
-#### §9.4.2 Beat 2: Conditions Set
+#### §9.4.2 Beats 2 and 3: Covert Operations Resolve
 
 *Entry: §9.4.1 complete. CM cards processed; targeting restrictions and conversion blocks applied.*
 
-**Beat Summary:** ARBITER resolves all Beat 2 cards left to right, one card at a time. When all Beat 2 cards have resolved, proceed to Beat 3.
+**Beat Summary:** ARBITER resolves all covert operations left to right — Beat 2 row(s) first, then Beat 3 rows. When all rows have resolved, proceed to Step 6.
 
-*All Beat 2 cards carry a `beat = 2` field. All Beat 2 cards resolve before any Beat 3 operations.*
+*The ARBITER Player executes all steps in this section unless a step names a different actor.*
 
-*C06 Broadcast Interference and C07 Amplify are redesigned as Seasonal public acts — see Art 04.*
+*Beat 2 cards resolve before any Beat 3 operations. Each beat's rows are pre-cleaned by the beats before it — every face-up card reached is valid for resolution.*
 
-*[flag: Deferred Effect (C11 Fortify Structure) and Resource Allocation (C34 Golden Parachute) procedures pending redesign.]*
+*A card is only a valid target while it occupies a slot in the Resolution Grid — once resolved and returned to the Dispatch Packet, it cannot be targeted.*
 
-*[flag: Type B CM cards attached to placed public acts — sweep timing TBD.]*
+*[flag: Deferred Effect (C11 Fortify Structure) and Resource Allocation (C34 Golden Parachute) — Beat 2 procedures pending redesign.]*
 
-For each card in the Beat 2 row, left to right:
+For each card in the current row, left to right:
 
 ##### §9.4.2.0 Step 0: Identify Operation
 
-Read the card in the current Beat 2 slot.
+Read the card in the current grid slot.
 
-If face-down: no resolution. Return card to acting faction's dispatch case. Advance to next cell. No further steps apply.
+If face-down: no resolution. Advance to Step 3.
 
 ###### §9.4.2.0.0 Step 0.0: Apex Check
 
-Not applicable at Beat 2.
+If Apex: resolution is immediately interrupted — see §14 Apex Activation before proceeding.
 
 ###### §9.4.2.0.1 Step 0.1: VM-xx Check
 
-If VM-xx is attached: this operation resolves publicly. Announce the card name, type, and declared targets aloud to all players before proceeding. Remove VM-xx to ARBITER supply at Step 3.
+If VM-xx is attached: this operation resolves publicly. Announce the card name, type, and declared targets aloud to all players before proceeding.
 
 ###### §9.4.2.0.2 Step 0.2: Base Difficulty
 
 Read the base difficulty from the card spec.
 
-If automatic (no threshold roll): skip to §9.4.2.2 Step 2: Apply Outcome.
+If automatic (no threshold roll): skip to Step 2: Apply Outcome.
 
-If D100: continue to §9.4.2.1 Step 1: Die Roll.
+If D100: continue to Step 1: Die Roll.
 
 ##### §9.4.2.1 Step 1: Die Roll
 
-###### §9.4.2.1.0 Step 1.0: Apply Modifiers
+###### §9.4.2.1.0 Step 1.0: Set Threshold
 
-Apply all active modifiers:
-- Partial payment threshold marker (if attached at Beat 0)
-- Modifier Cards in cascade
-- Ring Modifier Card calculation (Art 07 — ARBITER Toolkit)
+Set the threshold slider to the base difficulty listed on the operation card.
+
+**Modifier tokens** (placed physically on the card — for each, read the modifier value, adjust the slider, and set the token aside for Step 3 cleanup):
+- Partial payment threshold marker
+- Type B Countermeasure token
+- Protect modifier token
+- BM-xx tokens: apply n × the card's specified threshold modifier (n = BM-xx count)
+
+**Modifier cards** (splayed beneath the operation card — leave in place for Step 3 discard):
+- Faction Modifier Cards: read modifier value, adjust slider.
+- Ring Modifier Cards: confirm the operation's target profile is within the card's ring constraints. If true: apply modifier value to slider. If false: no adjustment.
+
+**Board state** (environmental — read from board; adjust the slider for each that applies):
 - Public Standing modifier
 - Active board state effects (Situation Report + standing public acts)
-- Ring adjacency penalty (The Mid: no adjacent Core presence; Core: no Chorus Node presence)
+- Ring adjacency penalty
 
-###### §9.4.2.1.1 Step 1.1: Calculate Threshold
+All modifier sources captured. Slider shows the final threshold.
 
-Total the base difficulty plus all active modifier adjustments.
+###### §9.4.2.1.1 Step 1.1: Read Threshold
 
-If VM-xx: announce the final threshold aloud.
+Read the final threshold from the slider. If VM-xx: announce the threshold aloud.
 
 ###### §9.4.2.1.2 Step 1.2: Roll d100
 
-The ARBITER Player rolls d100.
-
-If VM-xx: call the die roll aloud.
+Roll d100. If VM-xx: call the die roll aloud.
 
 ###### §9.4.2.1.3 Step 1.3: Determine Outcome
 
-Compare roll to the declared threshold. Apply Critical Success/Fail rules.
-
-01–05 = Crit Success (`success` + `successcrit`); 06–threshold = Success; threshold+1–95 = Fail; 96–00 = Crit Fail (`fail` + `failcrit`).
-
-If VM-xx: announce outcome aloud.
+Compare roll to threshold — apply Critical Success/Fail rules per §13. If VM-xx: announce outcome aloud.
 
 ##### §9.4.2.2 Step 2: Apply Outcome
 
 *If VM-xx: announce the effect aloud.*
 
+*If BM-xx tokens are present (count = n): all outcome effects execute (1+n) times in sequence. If the outcome specifies a Notification Slip: deliver one slip only, regardless of n.*
+
+*If this operation's outcome blocks the acting faction's deployment marker conversion: flip the relevant marker to the Blocked face.*
+
 ###### §9.4.2.2.0 Succeeded
 
-ARBITER directs all board changes per the card spec. The acting Faction Player physically applies them.
+ARBITER applies all board changes per the card spec: presence chips, structure blocks, Control flags, Established markers, Tension markers. If VM-xx: ARBITER directs board changes aloud; the acting Faction Player physically applies them.
 
-If the card's success outcome specifies a Notification Slip or Intel Delivery Slip: ARBITER writes and places it in the indicated faction's dispatch case.
+If the card specifies a Notification Slip or Intel Delivery Slip: ARBITER writes and places it in the Dispatch Packet.
+
+*Successful covert operations do not produce Standing marker moves — the action is unobserved. Any Standing marker move occurs only as a card-specified failure or discovery condition.*
 
 ###### §9.4.2.2.1 Failed
 
-ARBITER applies the failure conditions specified on the card. If the card specifies a Notification Slip, ARBITER places it in the target faction's dispatch case.
+ARBITER applies the failure conditions specified on the card. If VM-xx: ARBITER directs board changes aloud; the acting Faction Player physically applies them. If the card specifies an announcement, ARBITER makes it. If the card specifies a Notification Slip: ARBITER writes and places it in the Dispatch Packet.
 
 ###### §9.4.2.2.1.1 Discovered
 
-ARBITER announces the discovery to all players: acting faction, operation name, and declared target. The affected Faction Player applies their own board changes as directed.
+ARBITER announces the discovery to all players: acting faction, operation name, and declared target. ARBITER advises the affected Faction Player of the board changes required per the card-specified discovery conditions. The affected Faction Player applies their own board changes as directed.
+
+*[flag: 04-n37 — formal discovery procedure block pending.]*
 
 ##### §9.4.2.3 Step 3: Clean Up Grid Cell
 
-1. Place the operation card and Target Profile back in the acting faction's dispatch case.
-2. Discard modifier cards from the grid cell — removed from the game.
-3. Return modifier tokens to ARBITER tableau.
+Complete the Dispatch Packet for the acting faction:
+1. Place the operation card in the Dispatch Packet.
+2. Place the Target Profile in the Dispatch Packet.
+3. Discard modifier cards from the grid cell — removed from the game.
+4. Return modifier tokens, BM-xx tokens, and VM-xx (if present) to ARBITER supply.
+
+###### §9.4.2.3.1 Step 3.1: Return Packet
+
+Place the completed Dispatch Packet in the acting faction's dispatch case.
 
 ##### §9.4.2.4 Step 4: ARBITER Private Tracking
 
@@ -803,299 +808,234 @@ The ARBITER Player may write a brief note if this operation produced a moment wo
 
 ##### §9.4.2.5 Step 5: Advance
 
-Move to the next cell right. When the Beat 2 row is complete: Beat 2 complete. Proceed to §9.4.3 Beat 3.
+Advance to the next grid slot, left to right, row by row within the current beat.
 
----
+**Beat 2 complete** (all Beat 2 rows resolved): move to the first slot of the first Beat 3 row and return to Step 0.
 
-#### §9.4.3 Beat 3: Covert Operations Resolve
+**Beat 3 complete** (all Beat 3 rows resolved): proceed to Step 6.
 
-*Entry: §9.4.2 complete. All Beat 2 cards resolved.*
+##### §9.4.2.6 Step 6: Return Dispatch Cases
 
-**Beat Summary:** ARBITER resolves all covert operations from the Resolution Grid, row by row, left to right. When all operations have resolved, the grid is cleared and dispatch cases are returned.
+###### §9.4.2.6.0 Return Cases
 
-*The grid is pre-cleaned by Beats 1 and 2 — every face-up card reached is a valid, unblocked operation.*
+The ARBITER Player returns all dispatch cases to their owners. Each case contains all Dispatch Packets from this Month's covert resolution, and any Intel Tokens issued to this faction this Month.
 
-*A card is only a valid target while it occupies a slot in the Resolution Grid. Once an operation resolves and its card is returned to the dispatch case, it is no longer a valid target for any action.*
+*Not returned: resources (spent), modifier cards (discarded at Step 3), Countermeasure cards (removed from game when played).*
 
-For each card in the Beat 3 rows, left to right:
-
-##### §9.4.3.0 Step 0: Identify Operation
-
-Read the card in the current grid slot.
-
-If face-down: no resolution. Discard all modifier cards from the stack. Return the action card to the acting faction's dispatch case. Advance to next cell. No further steps apply.
-
-###### §9.4.3.0.0 Step 0.0: Apex Check
-
-If Apex: resolution is immediately interrupted — see Apex Activation before proceeding.
-
-###### §9.4.3.0.1 Step 0.1: VM-xx Check
-
-If VM-xx is attached: this operation resolves publicly. Announce the card name, type, and declared targets aloud to all players before proceeding. Remove VM-xx to ARBITER supply at Step 3.
-
-###### §9.4.3.0.2 Step 0.2: Base Difficulty
-
-Read the base difficulty from the card spec.
-
-If automatic (no threshold roll): skip to §9.4.3.2 Step 2: Apply Outcome.
-
-If D100: continue to §9.4.3.1 Step 1: Die Roll.
-
-##### §9.4.3.1 Step 1: Die Roll
-
-###### §9.4.3.1.0 Step 1.0: Apply Modifiers
-
-Apply all active modifiers:
-- Partial payment threshold marker (if attached at Beat 0 or Beat 2)
-- Type B Countermeasure token (if placed in Beat 2)
-- Modifier Cards in cascade
-- Ring Modifier Card calculation (Art 07 — ARBITER Toolkit)
-- Public Standing modifier
-- Active board state effects (Situation Report + standing public acts)
-- Protect modifier token (placed by ARBITER in Beat 2)
-- Ring adjacency penalty (The Mid: no adjacent Core presence; Core: no Chorus Node presence)
-- BM-xx tokens on this card's grid slot: if the card spec defines a threshold modifier per boost count, apply n × that modifier, where n = BM-xx count.
-
-###### §9.4.3.1.1 Step 1.1: Calculate Threshold
-
-The ARBITER Player totals the base difficulty plus all active modifier adjustments.
-
-If VM-xx: announce the final threshold aloud.
-
-###### §9.4.3.1.2 Step 1.2: Roll d100
-
-The ARBITER Player rolls d100.
-
-If VM-xx: call the die roll aloud.
-
-###### §9.4.3.1.3 Step 1.3: Determine Outcome
-
-Compare roll to the declared threshold. Apply Critical Success/Fail rules.
-
-01–05 = Crit Success (`success` + `successcrit`); 06–threshold = Success; threshold+1–95 = Fail; 96–00 = Crit Fail (`fail` + `failcrit`).
-
-If VM-xx: announce outcome aloud.
-
-##### §9.4.3.2 Step 2: Apply Outcome
-
-*If VM-xx: announce the effect aloud.*
-
-*If BM-xx tokens are present on this card's grid slot (count = n): all outcome effects execute (1+n) times in sequence. If the outcome specifies a Notification Slip: deliver one slip only, regardless of n.*
-
-*If this operation's outcome blocks the acting faction's deployment marker conversion: The ARBITER Player flips the relevant marker to the Blocked face.*
-
-###### §9.4.3.2.0 Succeeded
-
-The ARBITER Player directs all board changes. The acting Faction Player physically applies them: presence chips, structure blocks, Control flags, Established markers, Tension markers.
-
-If the card's success outcome specifies an Intel Delivery Slip: ARBITER writes the specified intelligence and places it in the indicated faction's dispatch case.
-
-If the card's success outcome specifies a Notification Slip: ARBITER places it in the target faction's dispatch case.
-
-*Successful covert operations do not produce Standing marker moves — the action is unobserved. Any Standing marker move occurs only as a card-specified failure or discovery condition.*
-
-###### §9.4.3.2.1 Failed
-
-ARBITER applies the failure conditions specified on the card. If the card specifies an announcement, ARBITER makes it. If the card specifies a Notification Slip, ARBITER places it in the target faction's dispatch case.
-
-###### §9.4.3.2.1.1 Discovered
-
-ARBITER announces the discovery to all players: acting faction, operation name, and declared target. ARBITER advises the affected Faction Player of the board changes required per the card-specified discovery conditions. The affected Faction Player applies their own board changes as directed.
-
-*[flag: 04-n37 — formal discovery procedure block pending.]*
-
-##### §9.4.3.3 Step 3: Clean Up Grid Cell
-
-1. Place the operation card and Target Profile back in the acting faction's dispatch case.
-2. Discard modifier cards from the grid cell — removed from the game.
-3. Return modifier tokens to ARBITER tableau.
-4. Return any BM-xx tokens on this grid slot to ARBITER supply.
-
-##### §9.4.3.4 Step 4: ARBITER Private Tracking
-
-###### §9.4.3.4.0 Update Chorus Portrait Track
-
-The ARBITER Player privately updates the acting faction's Portrait marker on the hidden track.
-
-###### §9.4.3.4.1 Note for Chronicle (optional)
-
-The ARBITER Player may write a brief note if this operation produced a moment worth preserving.
-
-*At ARBITER's discretion. Detail in Art 07 — ARBITER Toolkit.*
-
-##### §9.4.3.5 Step 5: Advance
-
-Move to the next cell right. Carriage return to the leftmost cell of the next row when the current row is complete.
-
-When all Beat 3 rows have resolved, proceed to Step 6.
-
-##### §9.4.3.6 Step 6: Return Dispatch Cases
-
-###### §9.4.3.6.0 Return Cases
-
-The ARBITER Player returns all dispatch cases to their owners. Each case contains: submitted covert operation cards, Target Profiles, any IS-xx or NS-xx placed in this case by ARBITER during this Month's resolution, and any Intel Tokens issued to this faction this Month.
-
-*Not returned: resources (spent), Modifier cards (discarded during resolution), Countermeasure cards (removed from game when played).*
-
-###### §9.4.3.6.1 Faction Players Read Results
+###### §9.4.2.6.1 Faction Players Read Results
 
 Faction Players open their returned case and review contents privately.
 
-###### §9.4.3.6.2 Proceed to Beat 4
+###### §9.4.2.6.1.0 Target Profile Return
 
-Beat 3 complete. Proceed to §9.4.4 Beat 4.
+*[flag: procedure depends on Target Profile physical design — erasable/reusable vs. single-use — see PM05 03-n16.]*
+
+Faction Players extract used covert Target Profiles from their Dispatch Packets:
+- If reusable: erase and return to faction supply.
+- If single-use: discard or dispose per component text.
+
+###### §9.4.2.6.1.1 Process Case Contents
+
+Faction Players sort remaining case contents:
+- Used covert operation cards: place in CA discard deck.
+- Intel Tokens or resources received: place in faction supply on tableau.
+- Anything else: return to its designated location.
+
+###### §9.4.2.6.2 Proceed to Beat 4
+
+Covert resolution complete. Proceed to §9.4.3 Beat 4.
 
 ---
 
-#### §9.4.4 Beat 4: Public Acts Resolve
+#### §9.4.3 Beat 4: Public Acts Resolve
 
-*Entry: §9.4.3 complete. Covert operations resolved; grid cleared.*
+*Entry: §9.4.2 complete. Covert operations resolved; grid cleared.*
 
-**Beat Summary:** Each Faction Player resolves their declared public acts in initiative order. Resolution is fully public — all players observe the process.
+**Beat Summary:** Faction Players execute all steps unless noted. ARBITER steps are explicitly attributed.
 
 *Public acts have been on the board as valid targets since declaration in §9.2. Beat 4 fires every month.*
 
-For each public act in initiative order:
+##### §9.4.3.0 Step 0: Pre-Resolution Setup
 
-##### §9.4.4.0 Step 0: Identify Operation
+*(Executes once before the initiative loop begins.)*
 
-###### §9.4.4.0.0 Step 0.0: Submit Payment and Validate
+###### §9.4.3.0.0 Retrieve Faction Threshold Slider
 
-The acting Faction Player transfers resource tokens from the declared card stack to the Reservoir. Remove the Dispatch Token — return to the faction.
+The first Faction Player in initiative order retrieves the Faction Threshold Slider from the Overview.
 
-The ARBITER Player verifies payment against the cost printed on the card:
-- **Full payment:** ARBITER acknowledges.
-- **Partial payment:** ARBITER attaches a −50 threshold marker to the card.
-- **Zero payment:** ARBITER announces the act is invalid. The Faction Player flips the public act card face-down.
+###### §9.4.3.0.1 Apply Broadcast Card Effects
 
-If any Intel Token is submitted as part of payment, calculate token age: current Quarter − Quarter generated (written on token).
-- Age 0–2: fresh — no modifier applied.
-- Age 3: stale — attach a −25 Intel freshness modifier to the stack (M-13).
-- Age 4 or more: expired — counts as partial payment.
+ARBITER privately applies any active Broadcast Effect cards (in ARBITER's Tableau) that modify public acts.
 
-Reset (erase) and return all submitted Intel Tokens to The Dossier, or discard if single-use.
+*Public acts resolve one per player per pass in initiative order. After resolving (or passing if no PA remains), the acting player passes the Faction Threshold Slider to the next player. A player with no remaining unresolved public act passes the slider without resolving. Continue until all public acts across all factions are resolved.*
 
-###### §9.4.4.0.1 Step 0.1: Apex Check
+For each turn in initiative order:
 
-If face-down: auto-fail. Discard all modifier cards. Return the public act card to the faction. Advance to the next Faction Player. No further steps apply.
+##### §9.4.3.1 Step 1: Identify Operation
 
-Read the public act card and Target Profile.
+###### §9.4.3.1.0 Step 1.0: Submit Payment
 
-If Apex: resolution is immediately interrupted — see Apex Activation before proceeding.
+*(Acting Faction Player is holding the Faction Threshold Slider.)*
 
-###### §9.4.4.0.2 Step 0.2: VM-xx Check
+**§9.4.3.1.0.0 Transfer Tokens**
 
-Not applicable at Beat 4. All public acts resolve publicly by default.
+Acting Faction Player transfers resource tokens from the declared card stack to the Reservoir. Return the Dispatch Token to the Backlog.
 
-###### §9.4.4.0.3 Step 0.3: Validate Board State
+If the operation card or an active card effect specifies BM-xx: ARBITER retrieves BM-xx tokens from the ARBITER supply and hands them to the Acting Faction Player. Acting Faction Player places them on the card.
 
-Check that the current board state still satisfies the declared public act's play conditions. Play conditions are those required at declaration (§9.2) that may have been altered by covert operations resolving in Beats 2–3.
+**§9.4.3.1.0.1 Intel Tokens**
 
-- If conditions are met: proceed.
-- If conditions are no longer met: ARBITER announces the invalidation. The Faction Player flips the public act card face-down. Discard all modifier cards. Return the public act card to the faction. Advance to the next Faction Player. No further steps apply.
+Acting Faction Player hands all submitted Intel Tokens to ARBITER. ARBITER calculates token age and applies effects per §13 Intel Token Age table.
 
-###### §9.4.4.0.4 Step 0.4: Base Difficulty
+ARBITER resets (erases) and deposits all Intel Tokens to The Dossier, or discards if single-use.
 
-The acting Faction Player reads the base difficulty aloud from the public act card.
+**§9.4.3.1.0.2 Verify Payment**
 
-If automatic (no threshold roll): skip to §9.4.4.2 Step 2: Apply Outcome.
+ARBITER verifies total payment against the cost printed on the card:
+- Full payment: ARBITER acknowledges.
+- Partial payment: ARBITER attaches the partial payment threshold marker (M-06) to the card.
+- Zero payment: no marker applied.
 
-If D100: continue to §9.4.4.1 Step 1: Die Roll.
+Proceed to Step 1.0.3.
 
-##### §9.4.4.1 Step 1: Die Roll
+**§9.4.3.1.0.3 Route**
 
-###### §9.4.4.1.0 Step 1.0: Apply Modifiers
+If zero payment: ARBITER announces act invalid. Acting Faction Player flips the public act card face-down. Advance to Step 4.
 
-The acting Faction Player applies all active modifiers:
-- Partial payment threshold marker (if placed by ARBITER at Step 0.0)
-- Modifier Cards in cascade
-- Ring Modifier Card calculation (Art 07 — ARBITER Toolkit)
+Otherwise: continue to Step 1.1.
+
+###### §9.4.3.1.1 Step 1.1: Apex Check
+
+Acting Faction Player reads the public act card and Target Profile.
+
+If Apex: resolution is immediately interrupted — see §14 Apex Activation before proceeding.
+
+###### §9.4.3.1.2 Step 1.2: Validate Board State
+
+Acting Faction Player checks that the current board state still satisfies the declared public act's play conditions. Play conditions are those required at declaration (§9.2) that may have been altered by covert operations resolving in Beats 2–3.
+
+- If conditions are no longer met: ARBITER announces the invalidation. Acting Faction Player flips the public act card face-down. Advance to Step 4.
+
+If a public CM-A is present on the target faction's Faction Resolution Grid: Acting Faction Player flips the public act card face-down. Advance to Step 4.
+
+Otherwise: continue to Step 1.3.
+
+###### §9.4.3.1.3 Step 1.3: Base Difficulty
+
+Acting Faction Player reads the base difficulty aloud from the public act card.
+
+If automatic (no threshold roll): skip to §9.4.3.3 Step 3: Apply Outcome.
+
+If D100: continue to §9.4.3.2 Step 2: Set Threshold.
+
+##### §9.4.3.2 Step 2: Set Threshold
+
+###### §9.4.3.2.0 Step 2.0: Set Threshold Slider
+
+Set the Faction Threshold Slider to the base difficulty listed on the public act card.
+
+**Modifier tokens** (placed physically on the card — for each, read the modifier value, adjust the slider, and set the token aside for Step 4 cleanup):
+- Partial payment threshold marker
+- BM-xx tokens: apply n × the card's specified threshold modifier (n = BM-xx count)
+
+**Modifier cards** (splayed beneath the operation card — leave in place for Step 4 discard):
+- Faction Modifier Cards: read modifier value, adjust slider.
+- Ring Modifier Cards: confirm the operation's target profile is within the card's ring constraints. If true: apply modifier value to slider. If false: no adjustment.
+
+**Board state** (environmental — read from board; adjust the slider for each that applies):
 - Public Standing modifier
 - Active board state effects (Situation Report + standing public acts)
-- Ring adjacency penalty (The Mid: no adjacent Core presence; Core: no Chorus Node presence)
+- Ring adjacency penalty
+- Type B Countermeasure: if a CM-B targeting this operation is in effect, read the modifier value from the CM-B card and adjust the slider.
 
-###### §9.4.4.1.1 Step 1.1: Calculate Threshold
+All modifier sources captured. Slider shows the final threshold.
 
-The acting Faction Player totals the base difficulty plus all active modifier adjustments and announces the final threshold aloud.
+###### §9.4.3.2.1 Step 2.1: Read Threshold
 
-###### §9.4.4.1.2 Step 1.2: Roll d100
+Read the final threshold from the slider. Announce aloud.
 
-The acting Faction Player rolls d100 publicly and states the result aloud.
+###### §9.4.3.2.2 Step 2.2: Roll d100
 
-###### §9.4.4.1.3 Step 1.3: Determine Outcome
+Roll d100 publicly. State the result aloud.
 
-Compare roll to the declared threshold. Apply Critical Success/Fail rules.
+###### §9.4.3.2.3 Step 2.3: Determine Outcome
 
-01–05 = Crit Success (`success` + `successcrit`); 06–threshold = Success; threshold+1–95 = Fail; 96–00 = Crit Fail (`fail` + `failcrit`).
+Compare roll to threshold — apply Critical Success/Fail rules per §13.
 
-##### §9.4.4.2 Step 2: Apply Outcome
+##### §9.4.3.3 Step 3: Apply Outcome
 
-*If this public act's outcome blocks a deployment marker's conversion: The acting Faction Player flips the relevant marker to the Blocked face.*
+*If BM-xx tokens are present (count = n): all outcome effects execute (1+n) times in sequence. If the outcome specifies a Notification Slip: deliver one slip only, regardless of n.*
 
-###### §9.4.4.2.0 Succeeded
+*If this public act's outcome blocks the acting faction's deployment marker conversion: Acting Faction Player flips the relevant marker to the Blocked face.*
 
-The acting Faction Player makes all board changes: presence chips, structure blocks, Control flags, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
+###### §9.4.3.3.0 Succeeded
 
-If the card's success outcome specifies a Notification Slip: ARBITER writes and places it in the indicated faction's dispatch case.
+Acting Faction Player makes all board changes: presence chips, structure blocks, Control flags, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
 
-###### §9.4.4.2.1 Failed
+If the card specifies a Notification Slip: ARBITER writes and places it in the indicated faction's dispatch case.
 
-Apply the failure conditions specified on the card. If the card specifies a Standing marker move, apply it. The affected Faction Player applies their own board changes.
+###### §9.4.3.3.1 Failed
 
-If the card specifies a Notification Slip: ARBITER places it in the target faction's dispatch case.
+Acting Faction Player applies the failure conditions specified on the card. If the card specifies a Standing marker move, apply it.
 
-##### §9.4.4.3 Step 3: Clean Up
+If the card specifies a Notification Slip: ARBITER writes and places it in the target faction's dispatch case.
 
-1. Modifier cards placed alongside the public act are discarded — removed from the game.
-2. The public act card remains on the Overview per its duration type. Immediate cards only: remove from the board and discard or remove from game per card text.
+##### §9.4.3.4 Step 4: Clean Up
 
-*No pool modifier tokens are used in Beat 4. Modifier cards placed alongside a public act in §9.2 carry modifier values through resolution. Pool tokens (placed by ARBITER in Beat 2) apply to covert operations in the Resolution Grid only.*
+Acting Faction Player:
+1. Set aside modifier tokens (partial payment marker, BM-xx tokens if present) — return to ARBITER supply.
+2. Discard modifier cards splayed beneath the public act card — removed from the game.
+3. If the card is face-down (invalidated) or Immediate: remove from the Overview; return to the acting faction's PA discard deck.
+4. If the public act card is Standing Effect: move to the standing effect zone on the acting faction's Faction Resolution Grid.
+5. Return the Target Profile: if reusable, erase and return to faction supply; if single-use, discard or dispose per component text. *[flag: depends on Target Profile physical design — see PM05 03-n16.]*
 
-##### §9.4.4.4 Step 4: ARBITER Private Tracking
+##### §9.4.3.5 Step 5: ARBITER Private Tracking
 
-###### §9.4.4.4.0 Update Chorus Portrait Track
+###### §9.4.3.5.0 Update Chorus Portrait Track
 
-The ARBITER Player privately updates the acting faction's Portrait marker on the hidden track.
+ARBITER Player privately updates the acting faction's Portrait marker on the hidden track.
 
-###### §9.4.4.4.1 Note for Chronicle (optional)
+###### §9.4.3.5.1 Note for Chronicle (optional)
 
-The ARBITER Player may write a brief note if this operation produced a moment worth preserving.
+ARBITER Player may write a brief note if this operation produced a moment worth preserving.
 
 *At ARBITER's discretion. Detail in Art 07 — ARBITER Toolkit.*
 
-##### §9.4.4.5 Step 5: Advance
+##### §9.4.3.6 Step 6: Advance
 
-Proceed to the next public act in initiative order. When all public acts have resolved: Beat 4 complete. Proceed to §9.4.5 Close Month.
+Acting Faction Player passes the Faction Threshold Slider to the next Faction Player in initiative order.
+
+If the next player has no remaining unresolved public act: that player passes the slider to the following player without entering the resolution loop.
+
+When no unresolved public acts remain across all factions: the player currently holding the slider returns it to the Overview. Beat 4 complete. Proceed to §9.4.4 Close Month.
 
 ---
 
-#### §9.4.5 Close Month
+#### §9.4.4 Close Month
 
-*Entry: §9.4.4 complete. All public acts resolved.*
+*Entry: §9.4.3 complete. All public acts resolved.*
 
-##### §9.4.5.0 Step 0: Cleanup
+##### §9.4.4.0 Step 0: Cleanup
 
-###### §9.4.5.0.0 Step 0.0: Remove Transient Cards
+###### §9.4.4.0.0 Step 0.0: Remove Transient Cards
 
-Remove all Transient cards from the board — public acts, modifier cards, or any board state card with Transient duration. Cards are discarded or removed from game per card text.
+ARBITER announces: *"Close Month — remove Transient cards."*
 
-###### §9.4.5.0.1 Step 0.1: No Other Board Changes
+Each Faction Player removes all Transient-duration cards from their Faction Resolution Grid and any other play areas. Cards are discarded per card text.
 
-No other board changes occur at Close Month.
-
-##### §9.4.5.1 Step 1: Month Advance
+##### §9.4.4.1 Step 1: Month Advance
 
 *[flag: Round Track physical component — validate presence in L1.0 component list.]*
 
-If this is Month 1 or Month 2: advance the Round Track pointer to the next month. Return to §9.0 Start of Month.
-
-If this is Month 3: do not advance the month pointer. Proceed to §10 Resolve District Tension. Quarter advance occurs at the end of the quarter close procedure.
+ARBITER advances the Round Track pointer:
+- Month 1 or 2: advance to the next month. Return to §9.0 Start of Month.
+- Month 3: do not advance. Proceed to §10 Resolve District Tension. Quarter advance occurs at the end of the quarter close procedure.
 
 ---
 
 ## §10 Resolve District Tension
 
-*Entry: Month 3 §9.4.5 complete.*
+*Entry: Month 3 §9.4.4 complete.*
 
 ### §10.0 Step 0: Scan for Tension Markers
 
@@ -1113,7 +1053,7 @@ ARBITER announces: *"Contest [District Name] — declare Battlefield Strength."*
 
 #### §10.1.1 Step 1.1: Identify Contesting Factions
 
-All factions at Dominant influence in the contested district are contesting factions. More than two factions may contest a single district.
+ARBITER identifies all factions at Dominant influence in the contested district as contesting factions. More than two factions may contest a single district.
 
 #### §10.1.2 Step 1.2: Calculate and Declare Totals (simultaneously)
 
@@ -1121,33 +1061,30 @@ Each contesting Faction Player:
 1. Counts all presence chips and structure blocks in the contested district and in each adjacent district. Deployment markers count as 1 presence chip.
 2. Plays any Battlefield Modifier Cards face-up. Each card's +n bonus added to the total.
 3. Plays any fresh Intel Tokens (age 0–2) targeting an opposing faction face-up. Each token adds +2 to the total.
-4. Announces their full total aloud.
+4. Announces their full modifier total aloud.
 
-Battlefield Modifier Cards are discarded immediately — may not be replayed in this contest or any subsequent district contest this Quarter.
+Battlefield Modifier Cards are removed from the game upon use — may not be replayed in this contest or any subsequent district contest this Quarter.
 
-Intel Tokens played are reset and returned to The Dossier, or discarded if single-use.
+Intel Tokens played are handed to ARBITER. ARBITER resets (erases) and returns them to The Dossier, or discards if single-use.
 
-*Adjacency map: Art 01 §[City] — District Adjacency.*
-*Battlefield Modifier Card design: Art 04 — Action Card System.*
-*Intel Token Battlefield modifier: +2 per fresh token — L163.*
 
 #### §10.1.3 Step 1.3: Roll d10
 
-Each contesting Faction Player rolls d10 and adds it to their declared total. Announces final result aloud.
+Each contesting Faction Player rolls d10. Announces the sum of their modifier total (Step 1.2) and the d10 result aloud.
 
 #### §10.1.4 Step 1.4: Resolve Outcome
 
-Compare totals. If tied: proceed to §10.1.4.1.
+ARBITER compares totals. If tied: proceed to §10.1.4.1.
 
 ##### §10.1.4.0 Winner
 
-ARBITER announces: *"[Faction] holds [District Name]."* The winning Faction Player removes 1 presence chip belonging to a contesting faction of their choice from the contested district. Remove the Tension marker. Return chip and marker to ARBITER for pool return.
+ARBITER announces: *"[Faction] holds [District Name]."* The winning Faction Player removes 1 presence chip belonging to a contesting faction of their choice from the contested district. Return chip and Tension marker to ARBITER for pool return.
 
-The losing faction moves the winning faction's PS marker −1.
+The faction that had their presence chip removed moves the winning faction's PS marker −1.
 
 ###### §10.1.4.0.1 Will You Press?
 
-ARBITER asks the losing faction: *"[Faction] — will you press?"*
+ARBITER asks the faction that had their presence chip removed: *"[Faction] — will you press?"*
 
 If yes: proceed to §10.1.4.0.2.
 
@@ -1155,26 +1092,31 @@ If no: proceed to §10.1.5.
 
 ###### §10.1.4.0.2 Press
 
-The losing Faction Player removes 1 presence chip from an adjacent district of their choice and returns it to the pool. The winning faction moves the losing faction's PS marker −1.
+The losing Faction Player removes 1 presence chip from an adjacent district of their choice and moves it to the contested district. The winning faction moves the losing faction's PS marker −1.
 
 Return to §10.1.2.
 
 ##### §10.1.4.1 Tie
 
-Each tied Faction Player removes 1 presence chip — from the contested district or an adjacent district of their choice (no adjacent chips: must remove from the contested district) — and returns it to the pool. Each faction moves the other's PS marker −1.
+Applies when two or more factions share the highest total. No press on a tie.
 
-Check the Dominant condition:
-- One faction Dominant, the other not: settled in that faction's favor. Remove Tension marker. Proceed to §10.1.5.
-- Both remain Dominant: return to §10.1.2.
-- Neither Dominant: no dominant presence remains. Remove Tension marker. Proceed to §10.1.5.
+Each tied Faction Player removes 1 presence chip — from the contested district or an adjacent district of their choice (no adjacent chips: must remove from the contested district) — and returns it to the pool.
+
+ARBITER checks the Dominant condition across all contesting factions:
+- Exactly one faction is Dominant: settled in that faction's favor. ARBITER removes the Tension marker. Proceed to §10.1.5.
+- No faction Dominant: no dominant presence remains. ARBITER removes the Tension marker. Proceed to §10.1.5.
+- Multiple factions remain Dominant; no non-tied factions in the contest: return to §10.1.2.
+- Multiple factions remain Dominant; non-tied factions remain: tied factions step out. Remaining factions return to §10.1.2.
 
 #### §10.1.5 Step 1.5: Update Board
 
-All contesting Faction Players update Control flags, Established markers, and Tension markers as influence levels shift — in the contested district and in any adjacent districts from which chips were removed.
+All contesting Faction Players update Control flags, Established markers, and Tension markers as influence levels shift — in the contested district and in any adjacent districts from which chips were moved. Return any removed components to ARBITER for pool return.
 
 ### §10.2 Step 2: Advance
 
-If Tension markers remain on the Overview: return to §10.0.
+ARBITER checks for remaining Tension markers on the Overview.
+
+If Tension markers remain: return to §10.0.
 
 Proceed to §11 Quarterly Debrief.
 
@@ -1190,9 +1132,9 @@ ARBITER announces: *"The Table is in Debrief."*
 
 *No initiative order, no phase timer.*
 
-Free actions available throughout Debrief:
-- Trade resources between any two factions (any terms)
-- Trade Intel Tokens between any two factions (any terms, examination permitted)
+Any Faction Player may:
+- Trade resources with any other faction (any terms)
+- Trade Intel Tokens with any other faction (any terms, examination permitted)
 - Accept or decline an Accord proposal
 - Counter-propose Accord terms
 
@@ -1200,40 +1142,50 @@ ARBITER conversion available during Debrief and between phases. Not available du
 
 *Quarter 1 only — ARBITER announces: "Resource conversion is available whenever I am not actively resolving actions. The rate is determined by your presence at the Chorus Node." Rate table: Art 02a §8 (D02a-01).*
 
-### §11.1 Step 1: Chorus Question Window
-
-If the Chorus Activity track has reached the Question threshold and the Chorus Node is not Contested: any faction with at least Present influence at the Chorus Node may propose a question. Simple majority passes it. ARBITER answers in The Observation register.
-
-If the threshold has not been reached, or the Chorus Node is Contested: no window this Quarter. Proceed to §11.2.
-
-*Full rules: Art 07 — ARBITER Toolkit.*
-
-### §11.2 Step 2: Debrief Actions
+### §11.1 Step 1: Debrief Actions
 
 If any faction holds a Debrief Action card: resolve in initiative order.
 
 1. The holding Faction Player announces the card name.
 2. The Faction Player executes the card's Debrief instruction.
 3. ARBITER confirms the effect.
-4. The card is removed from the game or returned to the ARBITER pool.
+4. The holding Faction Player returns the card to ARBITER. ARBITER removes it from the game or returns it to supply per card text.
 
-If no faction holds a Debrief Action card: skip to §11.3.
+If no faction holds a Debrief Action card: skip to §11.2.
 
 *Physical form TBD.*
 
-### §11.3 Step 3: ARBITER Debrief
+### §11.2 Step 2: Chorus Question Window
+
+If the Chorus Activity track has reached the Question threshold and the Chorus Node is not Contested: any faction with at least Present influence at the Chorus Node may propose a question. Simple majority passes it; ARBITER declares the question adopted. ARBITER answers in The Observation register.
+
+If the threshold has not been reached, or the Chorus Node is Contested: no window this Quarter. Proceed to §11.3.
+
+*Full rules: Art 07 — ARBITER Toolkit.*
+
+### §11.3 Step 3: Ready to Close
+
+*[flag: majority threshold (3 of 5) assumes full 6-player configuration. Sub-6 threshold TBD — see PM01-02.]*
+
+1. When done with Debrief, a Faction Player flips their Status marker to the Ready side.
+2. When 3 of 5 Faction Players show Ready: ARBITER starts a 60-second courtesy timer: *"The majority is ready. Sixty seconds."*
+3. When the timer expires or all 5 show Ready — whichever comes first — proceed to §11.4.
+
+*ARBITER observes who signals ready early, who holds out, and when. The Chorus notes this.*
+
+### §11.4 Step 4: ARBITER Debrief
 
 ARBITER addresses The Table in three components, in order:
 
-#### §11.3.0 Summary
+#### §11.4.0 Summary
 
 Factual account of Quarter resolution outcomes. The Record register.
 
-##### §11.3.0.1 Annual Report (Q4 only)
+##### §11.4.0.1 Annual Report (Q4 only)
 
 At the close of Quarter 4, ARBITER delivers an Annual Report following the Summary: a narrative account of the full game arc to date — patterns, shifts, and consequences across Q1–Q4. The Record register. Scripted structure: Art 07 — ARBITER Toolkit.
 
-#### §11.3.1 Observation
+#### §11.4.1 Observation
 
 ARBITER delivers one observation in The Observation register — never combining both forms:
 - *Form A:* *"A faction at this table has moved into [PORTRAIT STATE]. [STATE LANGUAGE]."*
@@ -1241,13 +1193,7 @@ ARBITER delivers one observation in The Observation register — never combining
 
 If Chorus Activity changed this Quarter, ARBITER incorporates it as the track moves on the board. Scripted dialogue for each Chorus Activity level: Art 07 — ARBITER Toolkit.
 
-### §11.4 Step 4: Ready to Close
-
-1. When done with Debrief, a Faction Player flips their Status marker to the Ready side.
-2. When 3 of 5 Faction Players show Ready: ARBITER starts a 60-second courtesy timer: *"The majority is ready. Sixty seconds."*
-3. When the timer expires or all 5 show Ready — whichever comes first — Debrief closes. Proceed to §12 Quarter Close.
-
-*ARBITER observes who signals ready early, who holds out, and when. The Chorus notes this.*
+Debrief closes. Proceed to §12 Quarter Close.
 
 ---
 
@@ -1255,11 +1201,11 @@ If Chorus Activity changed this Quarter, ARBITER incorporates it as the track mo
 
 *Entry: §11 Quarterly Debrief complete.*
 
-At Debrief close, in strict order:
-
 ### §12.0 Step 0: Seasonal Card Cleanup
 
-Remove all Seasonal public acts, modifier cards, and any board state cards with Seasonal duration from the board and the Overview. Cards are discarded or removed from game per card text. ARBITER's Situation Report Broadcast Card is removed here if its duration is Seasonal.
+Each Faction Player removes all Seasonal-duration cards from their play area. ARBITER removes any remaining Seasonal cards from the Overview and board. Cards discarded or removed from game per card text. ARBITER's Situation Report Broadcast Card is removed here if its duration is Seasonal.
+
+Proceed to §12.1.
 
 ### §12.1 Step 1: Findings Decay
 
@@ -1271,19 +1217,25 @@ Ghost returns the appropriate number of Findings tokens to the Reservoir and dec
 
 *[V1: honor system — Ghost's Findings total is not publicly verifiable. Mechanical enforcement deferred to L2.]*
 
+Proceed to §12.2.
+
 ### §12.2 Step 2: Debrief Reward
 
 ARBITER assesses the Quarter and distributes rewards before the Session Timeline advances.
 
 *Full procedure: Art 07 — ARBITER Toolkit (pending design).*
 
+Proceed to §12.3.
+
 ### §12.3 Step 3: Return Notification Slips
 
-Faction Players return all NS-xx Notification Slips from hand to the ARBITER supply pool.
+Faction Players return all NS-xx Notification Slips from hand to ARBITER supply.
 
-### §12.4 Step 4: Advance Quarter/Month Tracker
+Proceed to §12.4.
 
-The ARBITER Player advances the Quarter/Month tracker: Quarter +1, Month reset to 1 (M1/Q+1).
+### §12.4 Step 4: Advance Session Timeline
+
+ARBITER advances the Session Timeline: Quarter +1, Month reset to 1 (M1/Q+1).
 
 If Q1–Q7: proceed to §7 Upkeep, Quarter N+1.
 
@@ -1301,7 +1253,7 @@ The Operation System governs resolution for all committed actions: covert operat
 
 ---
 
-### The d100 Roll
+### §13.1 The d100 Roll
 
 A d100 is produced by two ten-sided dice (d10) in two distinct colors. One color is designated as the tens digit; the other as the units digit. Together they produce a result from 01 to 100. Both dice showing 0 = 100.
 
@@ -1313,7 +1265,7 @@ If d10 dice are unavailable, any device capable of generating a random integer f
 
 ---
 
-### How to Read the Roll
+### §13.2 How to Read the Roll
 
 To succeed, the roll must land equal to or below the target threshold.
 
@@ -1321,7 +1273,7 @@ To succeed, the roll must land equal to or below the target threshold.
 
 ---
 
-### Base Difficulty
+### §13.3 Base Difficulty
 
 Base difficulty is printed on the operation card or public act card. It represents conditions for a competent operative under neutral circumstances.
 
@@ -1335,7 +1287,7 @@ Base difficulty is printed on the operation card or public act card. It represen
 
 ---
 
-### Critical Results
+### §13.4 Critical Results
 
 | Roll | Result | Condition |
 |------|--------|-----------|
@@ -1346,7 +1298,7 @@ Base difficulty is printed on the operation card or public act card. It represen
 
 ---
 
-### Difficulty Modifiers
+### §13.5 Difficulty Modifiers
 
 | ID | Category | Name | Scope | Applied | Instance Limit | Value Type | Threshold Adjustment |
 |----|----------|------|-------|---------|----------------|------------|----------------------|
@@ -1355,12 +1307,11 @@ Base difficulty is printed on the operation card or public act card. It represen
 | M-03 | Standing | Neutral | All | Persistent | 1 | Fixed | 0 |
 | M-04 | Standing | Suspect | All | Persistent | 1 | Fixed | −10 |
 | M-05 | Standing | Discredited | All | Persistent | 1 | Fixed | −20 |
-| M-06 | Payment | Partial payment marker | Covert | Beat 0 | 1 per submitted card | Fixed | −50 |
-| M-07 | Payment | Partial payment marker | Public | Beat 4 | 1 per submitted card | Fixed | −50 |
+| M-06 | Payment | Partial payment marker | All | Beat 0 (covert) / Beat 4 (public) | 1 per submitted card | Fixed | −50 |
 | M-08 | Card Effect | Modifier card | All | Pre-Resolution | Unlimited | Variable | See card |
-| M-09 | Card Effect | Protect / Defend operation | Covert | Beat 2 | 1 per Protect submitted | Variable | See card |
-| M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Event Card | Variable | See Event Card |
-| M-11 | Countermeasure | Type B — target faction assets | Covert | Beat 2 | 1 per defending faction | Fixed | −15 |
+| M-09 | Card Effect | Protect-type operation card | Covert | Beat 2 | 1 per submitted | Variable | See card |
+| M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Broadcast Effect Card | Variable | See Broadcast Effect Card |
+| M-11 | Countermeasure | Type B Countermeasure (CM-B) | All | Beat 2 / Beat 4 | 1 per defending faction | Fixed | −15 |
 | M-12 | Ring | No adjacent inward-ring presence | All | Persistent | 1 | Fixed | −25 |
 | M-13 | Intel | Stale Intel Token (age 3) | All | Beat 0 / Beat 4 | 1 per stale token | Fixed | −25 |
 
@@ -1372,48 +1323,56 @@ Base difficulty is printed on the operation card or public act card. It represen
 
 *Variable modifiers are unbounded by this table — balance analysis across all defined modifier values is maintained in Artifact 03a.*
 
+### §13.6 Intel Token Age
+
+Token age = current Quarter − Quarter generated (written on token by ARBITER at issuance).
+
+| Age | Status | Effect |
+|-----|--------|--------|
+| 0–2 | Fresh | No modifier |
+| 3 | Stale | −25 threshold modifier (M-13) applied at Beat 0 (covert) or Beat 4 (public) |
+| 4+ | Expired | Counts as partial payment |
+
 ---
 
-## §14 Special Conditions
+## §14 Apex Activation
 
-### §14.1 Apex Activation
+*Entry: called from covert or public resolution (§9.4.2.0.0 or §9.4.3.1.1).*
 
-An Apex operation may be submitted as a covert operation (resolved in Beat 3) or as a public act (resolved in Beat 4).
+An Apex operation may be submitted as a covert operation or as a public act.
 
-**Step 1 — Identify the Apex.**
+**Step 0 — Identify the Apex.**
 
-When an Apex card is encountered, the current procedure immediately suspends and subroutines to Apex resolution (Steps 2–5). If the Apex is cancelled at Step 4, the procedure resumes from the exact point it was suspended.
+When an Apex card is encountered, the current procedure immediately suspends and subroutines to Apex resolution (Steps 1–4). If the Apex is cancelled at Step 3, the procedure resumes from the exact point it was suspended.
 
-- In Beat 3 (covert): suspension occurs when the Apex card is reached in the resolution queue. On return from a failed Apex: continue from the next operation in queue.
-- In Beat 4 (public): suspension occurs when the Apex public act is reached in initiative order. The card has been face-up on the Overview since §9.2 Public Declaration. On return from a failed Apex: continue from the next Faction Player in initiative order.
+- Covert resolution: suspension occurs when the Apex card is reached in the resolution queue. On return from a failed Apex: continue from the next operation in queue.
+- Public resolution: suspension occurs when the Apex public act is reached in initiative order. The card has been face-up on the Faction Resolution Grid since §9.2 Public Declaration. On return from a failed Apex: continue from the next Faction Player in initiative order.
 
 ARBITER announces: *"An Apex operation has been submitted. Resolution is suspended."*
 
-**Step 2 — Confirm resources paid.**
+**Step 1 — Confirm resources paid.**
 
-*Covert:* Resources were confirmed at Beat 0. If this step is reached, the card was face-up and payment is already in the Reservoir.
+*Covert:* Resources were confirmed at case opening. If this step is reached, the card was face-up and payment is already in the Reservoir.
 
-*Public:* The ARBITER Player confirms resources were transferred to the Reservoir at Beat 4 Submit Payment. If payment is incomplete: Apex fails. Resources spent. Resolution resumes.
+*Public:* The ARBITER Player confirms resources were transferred to the Reservoir at Submit Payment (§9.4.3.1.0). If payment is incomplete: Apex fails. Resources spent. Resolution resumes.
 
-**Step 3 — Process Emergency Responses.**
+**Step 2 — Process Emergency Responses.**
 
-Resolution is suspended at the current position. Each non-Apex faction submits one Emergency Response. Emergency Responses are submitted simultaneously and resolved by ARBITER in initiative order. They may change board state — presence chips, structure blocks, Public Standing — before the threshold check in Step 4.
+Resolution is suspended at the current position. Each non-Apex faction submits one Emergency Response. Emergency Responses are submitted simultaneously and resolved by ARBITER in initiative order. They may change board state — presence chips, structure blocks, Public Standing — before the threshold check in Step 3.
 
-*Resources committed to submitted operations are not refunded.*
+*Emergency Response design is pending Artifact 04 / Artifact 05. Design note: Emergency Responses may be used to assist or thwart the Apex — Board Strength may increase or decrease before Step 3's threshold check.*
 
-*Emergency Response design is pending Artifact 04 / Artifact 05. Design note: Emergency Responses may be used to assist or thwart the Apex — Board Strength may increase or decrease before Step 4's threshold check.*
-
-**Step 4 — Check Board Strength threshold.**
+**Step 3 — Check Board Strength threshold.**
 
 After Emergency Responses resolve, the ARBITER Player counts the Apex faction's total presence chips and structure blocks (Board Strength). If the total does not meet the threshold specified in Artifact 05, the Apex is cancelled. Resources spent. Operative does not retire. Resolution resumes from the suspended position.
 
 *Board Strength is checked here — after all Emergency Responses — not at submission. A faction may use their Emergency Response to assist the Apex (raising Board Strength) or oppose it (reducing Board Strength). This is load-bearing for Emergency Response design in Artifact 04 / Artifact 05.*
 
-**Step 5 — Resolve Apex.**
+**Step 4 — Resolve Apex.**
 
-The ARBITER Player opens the sealed Apex envelope and pauses 5 seconds. ARBITER reads the Apex narrative card aloud. The ARBITER Player applies all public board effects and updates the Chorus Portrait track. The session ends. Proceed to Session End per Artifact 10a — Victory System.
+The ARBITER Player opens the Sealed Apex ability and pauses 5 seconds. ARBITER reads the Apex narrative card aloud. The ARBITER Player applies all public board effects and updates the Chorus Portrait track. The session ends. Proceed to Session End per Artifact 10a — Victory System.
 
-*Operations remaining in the suspended queue do not resolve. Resources committed to submitted operations are not refunded.*
+*Operations remaining in the suspended queue do not resolve.*
 
 *Full Apex rules in Artifact 05 — Operative & Apex System.*
 
@@ -1426,8 +1385,8 @@ All public acts, modifier cards, and board state cards carry one of four duratio
 | Type | Duration | Cleared |
 |------|----------|---------|
 | Immediate | Placed on the board; resolves immediately upon placement. Must move from hand to board to trigger. Cannot be returned to hand, discarded, or removed from game until placed on the board. | Per card text after resolution — removed from board (discard or remove from game) |
-| Transient | Active for this month only | Beat 5 cleanup of the month in which it was played |
-| Seasonal | Active for this Quarter | End of Quarter — §12.0 Seasonal Card Cleanup |
+| Transient | Active for this month only | Close Month of the month in which it was played |
+| Seasonal | Active for this Quarter | End of Quarter |
 | Permanent | Active until a named action or condition removes it — including a self-clearing trigger on the card | Per card text (discard or remove from game) |
 
 *ARBITER's Situation Reports carry Seasonal duration by default. Card text may specify otherwise.*
@@ -1438,32 +1397,33 @@ All public acts, modifier cards, and board state cards carry one of four duratio
 
 ## §16 Public Act Placement Rules
 
+*[flag: items 2–3 placement procedures depend on Faction Resolution Grid physical layout. Update after Art 08 design is complete — see PM05 03-n14.]*
+
 1. Public acts are declared during §9.2 (Public Declaration), in initiative order.
-2. The declaring Faction Player places the card face-up on the Overview in the target district (or in the relevant zone for non-district acts).
-3. Attach the Target Profile and 1 Dispatch Token on top of the card. Resource tokens remain with the card — payment is submitted to the Reservoir at Beat 4.
-4. Modifier cards modifying the public act are placed face-up alongside the card on the Overview.
-5. Once placed, the card is a valid target for Countermeasure cards (§9.3 Countermeasures) and other public acts.
-6. Public acts cannot be withdrawn or modified after placement.
-7. ARBITER's Situation Reports are placed in the Event Zone during Upkeep (§7.2) and follow the same duration and targeting rules as faction public acts.
-8. A public act card remains on the board until its duration expires. Beat 4 resolution does not necessarily remove the card — duration governs removal.
-   - Transient cards are removed at Beat 5 of the month in which they were played.
-   - Seasonal cards remain on the board until End of Quarter.
+2. The declaring Faction Player places the card face-up in the unresolved PA zone of their Faction Resolution Grid, with the Target Profile and 1 Dispatch Token on the card. Resource tokens remain with the card — payment is submitted to the Reservoir at public resolution.
+3. Modifier cards modifying the public act are placed face-up alongside the card in the Faction Resolution Grid.
+4. Once placed, the card is a valid target for Countermeasure cards (§9.3 Countermeasures) and other public acts.
+5. Public acts cannot be withdrawn or modified after placement.
+6. ARBITER's Situation Reports are placed in the Situation Report Zone during Upkeep (§7.2) and follow the same duration and targeting rules as faction public acts.
+7. A public act card remains in play until its duration expires. Resolution does not necessarily remove the card — duration governs removal.
+   - Transient cards are removed at Close Month of the month in which they were played.
+   - Seasonal cards remain until End of Quarter.
    - Permanent cards remain until a named action or condition removes them.
 
 ---
 
 ## §17 Countermeasure Card Rules
 
-1. Each faction receives 3 Countermeasure cards at game start. They are issued, not drawn.
+1. Each faction receives Countermeasure cards at game start — issued, not drawn. Count per 03-init §2.7.
 2. Countermeasure cards are removed from the game when used — they do not return to hand or discard pile.
-3. Countermeasure cards are submitted during the Countermeasure Window each month (§9.3).
-4. A Countermeasure card may target either:
-   - A queued covert operation in a submitted dispatch case, or
-   - A placed public act currently on the Overview.
+3. Countermeasure cards are deployed during the Countermeasure Window each month (§9.3).
+4. Countermeasure cards protect the submitting faction from all operations targeting them. Protection type depends on how the card is played:
+   - Submitted to ARBITER (§9.3.0): protects against all covert operations targeting the submitting faction.
+   - Played publicly on the Faction Resolution Grid (§9.3.0): protects against all public acts targeting the submitting faction.
 
-   Type A Countermeasures (CM-A) void their target at Beat 1. Type B Countermeasures (CM-B) apply a modifier token to their target at Beat 2 (covert operations; public act timing TBD).
-5. Unused Countermeasure cards carry forward to the next Monthly window. A faction may hold all 3 through Month 3 or spend them early.
-6. Full Countermeasure card types and effects: Artifact 04 — Action Card System.
+   CM-A voids all matching operations. CM-B adds a difficulty modifier (M-11) to all matching operations.
+5. Unused Countermeasure cards carry forward to the next Monthly window.
+6. CM-A and CM-B are the complete set of Countermeasure card types. Physical design: Artifact 04 — Action Card System.
 
 ---
 
@@ -1471,25 +1431,95 @@ All public acts, modifier cards, and board state cards carry one of four duratio
 
 React cards fire in response to publicly visible board state changes. They are held in hand until their trigger condition is met.
 
-1. A React card may only fire on a publicly visible board state change. It cannot fire on ARBITER-internal state changes such as the Resolution Grid.
-2. When a trigger condition is met: the holding Faction Player announces *"React"*, presents the card, and states the trigger condition listed on the card. ARBITER confirms the trigger is valid and pauses the quarter procedure.
+### §18.0 Fire Condition
 
-    2a. First to announce pauses play. ARBITER decides tiebreakers. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves.
+A React card may only fire on a publicly visible board state change. It cannot fire on ARBITER-internal state changes such as the covert resolution queue.
 
-    2b. A React must be announced at the moment the triggering board state change occurs. It cannot be declared retroactively — once the procedure moves past the trigger point, the window closes.
+#### §18.0.1 Timing Window
 
-3. The React card resolves per its stated effect.
-4. Once the React has resolved, the original procedure resumes from the point it paused.
+The React window opens when the triggering board state change occurs and closes when the next board state change occurs or the procedure advances. A React cannot be declared once the window has closed.
 
-### §18.1 Modifier React Cards
+### §18.1 Trigger Announcement
+
+When a trigger condition is met: the holding Faction Player announces *"React"*, presents the card, and states the trigger condition listed on the card. ARBITER confirms the trigger is valid and pauses the procedure.
+
+#### §18.1.0 Tiebreaker
+
+First to announce pauses play. ARBITER decides tiebreakers. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves.
+
+### §18.2 Resolution
+
+The React card resolves per its stated effect.
+
+#### §18.2.1 Persistent React Card Effects
 
 If a modifier react card creates a persistent board state (a card placed on the board), the card remains with its duration type per §15.
 
+### §18.3 Resume
+
+ARBITER resumes the original procedure from the point it paused.
+
 ---
 
-## §19 Examples & Exceptions
+## §19
+
+*Reserved.*
+
+---
+
+## §20 Resource Generation Reference
+
+*Values that feed §7.4 Resource Collection. Full income tables and base generation values: Art 02a §8.*
+
+### Affinity Bonus
+
+Faction holding Dominant presence in their native resource district: +1 resource of that type.
+
+### Structure Block Income
+
+Each structure block generates +1 resource per Quarter. Faction Player declares type at §7.4.2 (district resource or faction native resource).
+
+### Passive Generation
+
+Each faction generates 1 unit of their native resource each Quarter, unconditional.
+
+---
+
+## §21 Card Economy Reference
+
+*Temporary home — values migrate to Art 04 §12 when deck construction is finalized.*
+
+### Hand Sizes
+
+| Card Type | Hand Size |
+|-----------|-----------|
+| Covert operations | 6 |
+| Public acts | 3 (proposed — open question; see PM05) |
+
+### Modifier Card Draw
+
+| Structure blocks owned | Faction modifier cards drawn |
+|------------------------|------------------------------|
+| 0–1 | 0 |
+| 2–3 | 1 |
+| 4–5 | 2 |
+| 6+ | 3 (maximum) |
+
+### Dispatch Token Allotment
+
+4 per Faction Player per Quarter (§7.5.0). Tokens budgeted across three Monthly windows.
+
+*[flag: register in 03-init as a game parameter.]*
+
+---
+
+<a id="examples-exceptions"></a>
+
+## § Examples & Exceptions
 
 ### Initiative — Quarter 3
+
+*Illustrates §7.1 — full procedure: Art 07 — ARBITER Toolkit.*
 
 *The ARBITER Player reads Portrait scores:*
 
@@ -1515,13 +1545,13 @@ The Guild, highest by Portrait, goes third. No Faction Player can determine Port
 
 The ARBITER Player flips Ghost's Data Exchange marker to the Blocked face. The marker remains at Data Exchange through the end of Quarter 5.
 
-*Quarter 6 Upkeep Step 4: Ghost checks markers on the board. The Data Exchange marker shows the Blocked face. Ghost returns the marker to hand without placing a presence chip. Ghost's influence at Data Exchange does not increase.*
+*Quarter 6 §7.3 Deployment Marker Conversion: Ghost checks markers on the board. The Data Exchange marker shows the Blocked face. Ghost returns the marker to hand without placing a presence chip. Ghost's influence at Data Exchange does not increase.*
 
 ---
 
 ### Countermeasure — Type B Example
 
-*Quarter 5. The Directorate plays a Type B Countermeasure. All target thresholds against The Directorate's assets are −15.*
+*Quarter 5. The Directorate plays a Type B Countermeasure. All operations targeting The Directorate take a −15 threshold modifier (M-11).*
 
 Ghost submits a Gather at Government Citadel (no presence — Challenging base, target 01–25). Public Standing: Neutral (0). Type B modifier: −15. Modified target: 01–10.
 
@@ -1533,10 +1563,12 @@ Ghost rolls: 18. Target is 10. Fails. The Directorate's defensive preparation ma
 
 *Beat 3 complete. The ARBITER Player returns Ghost's dispatch case.*
 
-Ghost finds:
-- Gather at Data Exchange — returned face-up
-- Undermine at Financial Clearinghouse — returned face-down (voided at Beat 1; targeting restriction)
-- Build Structure at Government Citadel — returned face-down (voided at Beat 1; Type A Countermeasure)
+*[flag: result readout mechanism — how Ghost distinguishes resolved vs. voided operations — depends on Dispatch Packet and NS-xx Notification Slip physical design (Art 06). Revise this example after Art 06 is complete — see PM05 03-n15.]*
+
+Ghost retrieves their dispatch case. Contents per NS-xx Notification Slips:
+- Gather at Data Exchange — resolved
+- Undermine at Financial Clearinghouse — voided (Beat 1; targeting restriction)
+- Build Structure at Government Citadel — voided (Beat 1; Type A Countermeasure)
 - One Intel Token: Faction: The Syndicate / Quarter: 5
 
 Ghost processes this privately before Debrief opens.
@@ -1557,7 +1589,7 @@ Ghost processes this privately before Debrief opens.
 
 Three of five show green. ARBITER: *"The majority is ready. Sixty seconds."*
 
-The Network and The Directorate reach agreement with 20 seconds remaining. Both flip to green. ARBITER closes Debrief. Accord registered. Quarter closes.
+The Network and The Directorate reach agreement with 20 seconds remaining. Both flip to green. All five show Ready — proceed to §11.4. ARBITER delivers Summary and Observation. Debrief closes. Accord registered. Quarter closes.
 
 ---
 
@@ -1573,4 +1605,4 @@ The Network uses their Emergency Response to Undermine The Guild's presence at P
 
 After Emergency Responses resolve, the ARBITER Player counts The Guild's Board Strength: 11 presence chips + 4 structure blocks = 15. Threshold required: 12. Still met.
 
-The ARBITER Player opens the sealed Apex envelope and pauses. ARBITER reads. The session ends.
+The ARBITER Player opens the Sealed Apex ability and pauses. ARBITER reads. The session ends.

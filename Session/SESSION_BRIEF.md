@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 85 (closing) | Updated: 2026-06-12**
+**Session 87 (closing) | Updated: 2026-06-13**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S85 complete — Art 03 rubric pass through §9.4.1. S86 entry point: §9.4.2 Beat 2 rubric pass continuing; §§10–12; external artifact sweep (Whiteboard/art03_section_map_S83.md); grip review → full sign-off.
+S87 complete — Art 03 rubric and simplification pass complete through all sections; grip review complete; sign-off pending component lifecycle sweep (PM05 03-n18). S88 entry point: (1) run PM05 03-n18 lifecycle subagent sweep → Art 03 sign-off; (2) card work: C28 Breaking News, C40B Live Coverage; (3) external artifact sweep: Whiteboard/art03_section_map_S83.md (00a, 02b, 03a, 04, PM01, PM05).
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -76,12 +76,12 @@ S85 complete — Art 03 rubric pass through §9.4.1. S86 entry point: §9.4.2 Be
 
 **S84/S85 accomplishments:** Art 03 rubric pass — entry/exit conditions added to all 17 §6 sections. §7 entry: Q1 = 03-init complete; Q2–Q8 = §12.4 Quarter Close complete. §9.4 container entry/exit removed. §7.2.x terminology sweep: Event Card → Broadcast Effect Card; Event Zone → Situation Report Zone; session deck → Broadcast Deck. §9.4.0 restructured steps 0–6 (CM in Beat 1 row; packet handling; payment validation; drain; grid placement; dispatch token model; repeat). CM model: submitted CMs placed in Beat 1 row at Beat 0; apply to all grid ops targeting keyed faction at Beat 1. §9.4.1 restructured — §9.4.1.0 Standing Board Effects (clockwise from ARBITER's left), §9.4.1.1 Broadcast Effect Cards (silent), §9.4.1.2 CM Cards. Situation Report two-card model confirmed: Broadcast Card (public, Situation Report Zone) + Broadcast Effect Card (hidden, ARBITER Tableau). Multiple Situation Reports active simultaneously. Component naming: Broadcast Card/Deck/Broadcast Effect Card/Deck adopted; DB updated (ids 25/86/87 renamed; id=98 inserted). "target slip" → "Target Profile" throughout Art 03 (9 instances). 03-init §2.8/§3.9 updated; v0.3. Art 03 v4.2 at close. PM05: 03-n10 ✅, DB-18 ✅, 03-n07/DB-17 updated, 00a-n01 added.
 
-**S86 entry point:**
-1. Art 03 rubric pass — §9.4.2 Beat 2 through §9.4.5 Close Month
-2. Art 03 rubric pass — §§10–12; §§13–19 simplification pass
-3. Art 03 external artifact sweep — Whiteboard/art03_section_map_S83.md (00a, 02b, 03a, 04, PM01, PM05)
-4. Art 03 grip review → full sign-off
-5. Card work (C28 Breaking News, C40B Live Coverage) — after Art 03 sign-off
+**S87 accomplishments:** Art 03 rubric and simplification pass complete. §5 P7 added (Step 0 convention — all procedural sequences begin at Step 0). §§9.4.2.6.1.0/1.1 added (Target Profile return + process case contents after dispatch case return). §9.4.3.4 item 5 added (Target Profile cleanup at Beat 4). §§11–12 restructured: §11.0–§11.4 (Debrief); §12.0–§12.4 (Quarter Close). §13 Operation System: modifier table rebuilt (M-06/M-07 merged, M-09 generalized, M-10 terminology, M-11 scope all/both beats); §13.6 Intel Token Age table (Fresh/Stale/Expired). §14 renamed Apex Activation (flat Steps 0–4, entry condition, beat names removed). §§15–17 rubric clean. §18 React Card Rules restructured (§18.0–§18.3; timing window at §18.0.1). §19 Reserved. §20–21 new reference sections (Resource Generation; Card Economy). §§9.4.2.6 and 9.4.3.4 hardcoded values replaced with table refs. § Examples & Exceptions (unnumbered end section): Initiative example updated (ref §7/Art 07); Dispatch Case Return rewritten + flagged (PM05 03-n15); Findings Decay unchanged. PM05: 03-n14–03-n18, XA-50–52 active. Grip review complete. Art 03 v4.3. Full sign-off pending PM05 03-n18 (component lifecycle sweep).
+
+**S88 entry point:**
+1. Run PM05 03-n18 — component lifecycle subagent sweep → Art 03 sign-off
+2. Card work: C28 Breaking News, C40B Live Coverage
+3. External artifact sweep — Whiteboard/art03_section_map_S83.md (00a, 02b, 03a, 04, PM01, PM05)
 
 **Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 04b re-sign-off; 04-n73 (P1–P18 restatement audit).
 
