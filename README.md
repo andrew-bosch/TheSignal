@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** Art 03 v2.1 signed off S52. Art 04 in progress — C01–C15 signed off; P01–P18 in development.
+**Design milestone:** Art 03 v4.4 signed off S88 (L207). Art 04 in progress — card design pass complete through C42 + P01–P18; sign-off passes in progress per set.
 
 ---
 
@@ -28,8 +28,8 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.5 | ✅ Signed off — S40 |
-| 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.8 | ✅ Signed off — S83 |
+| 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.6 | ✅ Signed off — S74 (L194) |
+| 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.8 | ✅ Signed off — S83 (L204) |
 
 ---
 
@@ -50,9 +50,10 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 1.9 | ✅ Signed off — S44 |
-| 02a | [Components: Board State](V1/02a___Resource_Systems_Board_State.md) | 1.6 | ✅ Signed off — S42 |
-| 02b | [Components: Tracking](V1/02b___Resource_Systems_Tracking.md) | 1.5 | ✅ Signed off |
+| 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 2.0 | ✅ Signed off — S74 (L197) |
+| 02 | [Components](V1/02___Components.md) | 1.0 | 🔄 In progress — S88 merge from 02a + 02b. Deeper review pass before sign-off. |
+| 02a | [Components: Board State](V1/02a___Resource_Systems_Board_State.md) | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0 |
+| 02b | [Components: Tracking](V1/02b___Resource_Systems_Tracking.md) | 1.5 | ⛔ Superseded — S88 by Art 02 v1.0 |
 
 ---
 
@@ -62,9 +63,10 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.1 | ⬜ Stub — content currently distributed across 00c, 02a, 02b |
-| 03 | [while session(true): Round Structure](V1/03___Round_Structure___Gameplay.md) | 2.1 | ✅ Signed off — S52 |
-| 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In progress |
+| 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.3 | 🔄 In progress — component lifecycle and setup entries updated through S88 |
+| 03 | [while session(true): Quarter Structure](V1/03___Quarter_Structure___Gameplay.md) | 4.4 | ✅ Signed off — S88 (L207) |
+| 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In progress — Tier 4 stub remaining |
+| 03b | [Component Lifecycle Register](V1/03x___Component_Lifecycle.md) | 0.1 | 🔄 In progress — formalized S88; open gaps in §9 |
 
 ---
 
@@ -74,10 +76,10 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.21 | 🔄 C01–C15 ✅; P01–P18 in progress |
-| 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.5 | ✅ S48 — design analysis companion to 04 |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.36 | 🔄 In progress — full card design pass complete (C01–C42, P01–P18); set-level sign-off passes in progress |
+| 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.6 | ✅ Signed off — S48 (pending re-sign-off on S64 material addition) |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.1 | ⬜ Placeholder |
-| 06 | [Messaging System](V1/06___Messaging_System.md) | 0.2 | 🟡 In Progress — §9 Accord governance signed off |
+| 06 | [Messaging System](V1/06___Messaging_System.md) | 0.4 | 🟡 In progress — §9 Accord governance signed off S83 (L205) |
 | 07 | [ARBITER Subroutines](V1/07___ARBITER_Toolkit.md) | 0.1 | ⬜ Placeholder |
 | 08 | [Faction Player Subroutines](V1/08___Player_Toolkit.md) | 0.1 | ⬜ Placeholder |
 | 10a | [Victory: Game Exit](V1/10a___Victory_System.md) | 0.1 | ⬜ Placeholder |
@@ -101,7 +103,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | Doc | Purpose |
 |-----|---------|
 | [PM01 — Project Charter & Work Breakdown](V1/PM01___Project_Charter___Work_Breakdown.md) | Charter, WBS, Playtest Readiness Checklist, Risk Register |
-| [PM02 — Decision Log & Validation Tracker](V1/PM02___Decision_Log___Validation_Tracker.md) | Locked decisions L01–L171, open decisions, change log |
+| [PM02 — Decision Log & Validation Tracker](V1/PM02___Decision_Log___Validation_Tracker.md) | Locked decisions L01–L207, open decisions, change log |
 | [PM03 — Master Artifact Index](V1/PM03___Master_Artifact_Index.md) | Sign-off registry, dependency map — authoritative artifact status |
 | [PM04 — Glossary & Data Dictionary](V1/PM04___Glossary___Data_Dictionary.md) | In-world terms (§1), design terminology conventions (§2) |
 | [PM05 — Active Punch List](V1/PM05___Active_Punch_List.md) | Live work items, validation dashboard, playtest data |
@@ -126,6 +128,8 @@ TheSignal/
 ├── Session/      ← Session management files (save state, private design axioms)
 ├── Creative/     ← World-building source material (vignettes, characters, creative brief)
 ├── ClaudeIOS/    ← Summaries from mobile creative sessions; processed into V1
+├── Database/     ← DB schema reference (schema_reference.md) and SQL build scripts
+├── Whiteboard/   ← Scratch and in-progress design docs not yet in a canonical artifact
 ├── Retired/      ← Superseded document generations, read-only
 │   ├── Electronic/   ← Original electronic brainstorming suite (pre-paper prototype)
 │   └── Paper/        ← 1st generation paper prototype artifacts (pre-V1 baseline)
