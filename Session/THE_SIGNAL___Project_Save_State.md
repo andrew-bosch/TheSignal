@@ -1,11 +1,29 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-13 — Session 89
+**Last Updated:** 2026-06-14 — Session 89 Close
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
+
+---
+
+### Session 89 Summary (2026-06-14)
+
+**Card work:** C28 Breaking News — Issues Resolved ✓ S89 (04-n75/76 gates confirmed closed S81/82; taxonomy subject = CovertOperation soft flag for 04b; sign-off pending set-level PM05 gates). C40B Live Coverage — Issues Resolved ✓ S89 (04-n77 procedure found in Art 03 §9.0 — missed sweep reference; checklist updated from ⚠ → ✓).
+
+**Art 02 §13 stub pass:** 44 new component rows added across 7 categories (Layout & Physical Environment, Tracking Tools, Faction Private Zone, Card Types, Broadcast System, ARBITER Operational, Faction-Specific). All 104 DB-registered components now accounted for in Art 02 §13.
+
+**DB sweep (agy):** DB-35 ✅ — id=88 repurposed from Pass card → Faction Resolution Grid (actionable=0, receivable=1); DB-36 ✅ — id=102 Situation Report registered; 02-n04 ✅ — id=103 Visibility Marker, id=104 Boost Marker registered; id=22 (Chorus Portrait) retired; id=50 renamed "Chorus Portrait track" + set receivable=1; v_placement_matrix view updated; all 27 views verified.
+
+**03-init alignment:** Situation Report Zone (stale zone-as-component) → Situation Report component in Situation Report Zone (§2.1). Stale DB-14/DB-15 notes removed from §2.7/§2.8. VM-xx (id=103) and BM-xx (id=104) added to §2.8 ARBITER Starting Supply. Floor Act PA noted as standard PA card, starts in hand permanently, no discard (PM05 04-n96 added for Art 04 design pass).
+
+**Art 02 §9:** Pass card references removed ("Pass cards require no token" bullet; "only Pass cards are available" clause). Pass card retired S89.
+
+**PM05 additions:** DB-35 ✅, DB-36 ✅, 02-n03 (Art 01 → Art 02 migration pass — open), 02-n04 ✅, 03-n21 (Dispatch Token missing from 03-init setup tables — open), 03-n22 ✅ (VM-xx/BM-xx added to §2.8 inline), 04-n96 (Floor Act PA design constraints for Art 04 — open).
+
+**S90 entry point:** Art 02 full restructuring and overhaul — redesign Art 02 as definitive component bible; migrate Art 01 §4 component narratives + §6 Component Physical Forms table to Art 02; update Art 01 to geography/layout only (PM05 02-n03). Then Art 02 sign-off pass (02-n02).
 
 ---
 

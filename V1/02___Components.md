@@ -426,7 +426,6 @@ Drawn tokens are held privately beside the faction tableau. Other factions canno
 
 One Dispatch Token accompanies each covert operation card placed in a dispatch case. The token is placed in the case alongside the card.
 
-- Pass cards require no token.
 - Political acts are declared at The Table and require no token.
 - A covert operation card submitted without a token is invalid — rejected by ARBITER at Beat 0, returned to the faction, cost not spent. *(Governing Rule 7.3c.)*
 
@@ -434,7 +433,7 @@ ARBITER collects all spent tokens from each Month's dispatch cases at Beat 0. At
 
 ### Operational Meaning
 
-A faction's unspent tokens represent their remaining active operational capacity this Quarter — authorized work that has not yet been committed. A faction that spends all tokens in Month 1 has nothing remaining in The Backlog for Month 2; only Pass cards are available. Ghost's four-token allocation reflects a structurally deeper backlog, enabling the GATHER→SYNTHESIZE combination across Month 1 and Month 2 without foreclosing other Month 2 covert actions.
+A faction's unspent tokens represent their remaining active operational capacity this Quarter — authorized work that has not yet been committed. A faction that spends all tokens in Month 1 has nothing remaining in The Backlog for Month 2. Ghost's four-token allocation reflects a structurally deeper backlog, enabling the GATHER→SYNTHESIZE combination across Month 1 and Month 2 without foreclosing other Month 2 covert actions.
 
 *Procedure: Artifact 03 §7 Step 7 (distribution), §9 (Monthly Activities spend), §12 (Quarter Close return).*
 
@@ -616,13 +615,67 @@ Occurs primarily during Debrief. Rules defined in Artifact 03 — Quarter Struct
 | Capacity | 30 total | Industrial blocks or plates |
 | Mandate | 30 total | Stamped seal tokens |
 | Dispatch Token | 16 total (Ghost: 4; all other factions: 3 each) | Small token or printed chit; neutral color or per-faction color (TBD Art 11). Held beside tableau when unspent; lives in The Backlog when not in faction possession. |
-| Chorus Portrait track | 1 per faction (5 total) | Laminated strip. Scale −20 to +20, eleven named bands. Kept private in ARBITER's tableau. |
+| Chorus Portrait track | 1 per faction (5 total) | Laminated strip. Scale −20 to +20, eleven named bands. Kept private in ARBITER's tableau. DB id=50 (canonical; id=22 "Chorus Portrait" retired S89). |
 | Portrait position marker | 1 per faction (5 total) | Clip or bead in faction color |
 | Public Standing track | 1 per faction (5 total) | Laminated strip. Scale 0–20, five named bands with target modifier labels. Displayed on board or player tableau. |
 | Public Standing marker | 1 per faction (5 total) | Clip or bead in faction color |
 | Intel Token | Variable — created during play | Small token or chit. ARBITER records faction name and Quarter acquired at creation. Physical spec TBD Art 11. |
+| **— Layout & Physical Environment —** | | |
+| The Overview | 1 | Game mat; occupies Central Area during play. Full layout: Art 01 §6. |
+| Situation Report | 1 | Physical board object placed in Situation Report Zone during setup. Broadcast Cards are placed on it during play — analogous to district tiles in district zones. DB id=102. |
+| Reservoir | 1 | Shared in-play resource return pool. Design: Art 02 §9. |
+| Backlog | 1 | Holds unspent Dispatch Tokens. Design: Art 02 §9. |
+| Faction Screen | 1 per faction (5 total) | Upright divider; conceals faction area at each player position. |
+| Faction Terminal | 1 per faction (5 total) | Player tableau behind Faction Screen. Full spec: Art 08 (planned). |
+| ARBITER Screen | 1 | Upright divider at P6; conceals ARBITER workspace. |
+| ARBITER Tableau | 1 | Face-up reference surface at P6; visible to all. Full spec: Art 08 (planned). |
+| **— Tracking Tools —** | | |
+| Session Timeline | 1 | 8-position strip; tracks current Quarter. Narrative: Art 01 §4. |
+| Pointer marker | 1 | Rides Session Timeline; marks current Quarter. |
+| Initiative Strip | 1 | Laminated strip; holds Faction Order Markers in initiative sequence. Narrative: Art 01 §4. |
+| Faction order marker | 1 per faction (5 total) | Faction-colored chit placed on Initiative Strip. |
+| Chorus Activity Track | 1 | Graduated strip; Activity marker and Threshold marker ride it. Narrative: Art 01 §4. |
+| Activity marker | 1 | Rides Chorus Activity Track; marks current activity level. |
+| Threshold marker | 1 | Rides Chorus Activity Track; marks the threshold line. |
+| **— Faction Private Zone —** | | |
+| Dispatch case | 1 per faction (5 total) | Sealed envelope or small box; faction's covert submission vessel each Month. |
+| Faction hand | 1 per faction (5 total) | Logical set — cards held behind the Faction Screen. Not a discrete physical object. |
+| Covert operation deck | 1 per faction (5 total) | Per-faction source deck for covert action cards. |
+| Covert operation discard | 1 per faction (5 total) | Per-faction discard pile for played/expired covert operation cards. |
+| Political act deck | 1 per faction (5 total) | Per-faction source deck for public act cards. |
+| Political act discard | 1 per faction (5 total) | Per-faction discard pile for played/expired political act cards. |
+| Faction modifier deck | 1 per faction (5 total) | Per-faction deck drawn during Debrief. Full design: Art 04 §11. |
+| **— Card Types —** | | |
+| Covert operation card | Variable | Submitted in dispatch case; placed in resolution grid. Full design: Art 04. |
+| Political act card | Variable | Declared at Phase B; placed in active PA area. Full design: Art 04. |
+| Modifier card | TBD | Drawn from modifier decks; applied to operations. Full design: Art 04 §11. |
+| Modifier token | TBD | Token companion to modifier cards. Physical spec TBD Art 11. |
+| Countermeasure card | TBD | Held in hand; played reactively against covert submissions. Full design: Art 04. |
+| Faction Resolution Grid | 1 per faction (5 total) | ARBITER-managed grid at each faction position. Receives covert operation cards and hosts the resolution grid during Beats 0–3. DB id=88 (repurposed from retired Pass card). |
+| Emergency Response card | TBD | Reactive card type. Full design: Art 04. |
+| Accord agreement | Variable (1 per active Accord) | Biometric smart-paper contract; placed in Accord Placement Area when active. Full design: Art 06 §9. |
+| **— Broadcast System —** | | |
+| Broadcast Card | TBD | Situation Report public-facing card; placed in Situation Report Zone. Full design: Art 03 §9.4.1. |
+| Broadcast Effect Card | TBD | ARBITER-held companion card; silent effect component. Full design: Art 03 §9.4.1. |
+| Broadcast Deck | 1 | Source deck for Broadcast Cards; held by ARBITER. |
+| Broadcast Effect Deck | 1 | Source deck for Broadcast Effect Cards; held by ARBITER. |
+| Ring 1 modifier deck | 1 | Modifier cards keyed to Ring 1 operations. Full design: Art 04 §11. |
+| Ring 2 modifier deck | 1 | Modifier cards keyed to Ring 2 operations. Full design: Art 04 §11. |
+| Ring 3 modifier deck | 1 | Modifier cards keyed to Ring 3 operations. Full design: Art 04 §11. |
+| **— ARBITER Operational —** | | |
+| Target Profile | Variable | ARBITER-held document tracking target faction for an active covert operation. Returned at dispatch case return. Full design: Art 03 §9.4.2.6. |
+| Notification Slip (NS-xx) | Variable | ARBITER-dispatched private notification to a faction. Full design: Art 00b §4. |
+| Intel Delivery Slip (IS-xx) | Variable | ARBITER-dispatched intelligence delivery to a faction. Full design: Art 00b §4. |
+| DebriefActionCard | TBD | Placed in faction dispatch case during resolution; processed at Debrief start. Full design: Art 03 §11. |
+| SCIFRecord (SR-xx) | Variable | DebriefActionCard subtype; Ghost SCIF debrief record. Full design: Art 03 §11; Art 04 (SCIF card). |
+| Visibility Marker (VM-xx) | TBD | ARBITER-held token; placed on Beat 3 grid card to flag public resolution. Full design: Art 00b §4; Art 03 §9.4.3. DB id=103. |
+| Boost Marker (BM-xx) | TBD | ARBITER-held token; tracks submitted boost declarations at Beat 0. Full design: Art 00b §4; Art 03 §9.4.0. DB id=104. |
+| **— Faction-Specific —** | | |
+| Operative card | TBD | Faction-specific character card. Full design: Art 04 (pending). |
+| Classified directives | TBD | Faction-specific secret objective component. Full design: Art 04 (pending). |
+| Sealed Apex ability | 1 per faction (5 total) | Sealed card opened on unlock condition. Physical spec TBD Art 11. |
 
-*Final token aesthetics confirmed in Artifact 11 — Visual Design System.*
+*Final token aesthetics confirmed in Artifact 11 — Visual Design System. Component stubs S89 — design passes tracked in PM05 02-n01 through 02-n04.*
 
 ---
 

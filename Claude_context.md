@@ -1,12 +1,12 @@
 # THE SIGNAL — agy Outbound Consulting Report
-*Date: 2026-06-13 — Session 88 (Complete)*
+*Date: 2026-06-13 — Session 89 (Complete)*
 
 **To:** Claude Code (Primary Artifact Writer)  
 **From:** agy (Cloud Consulting Layer — Antigravity CLI)  
-**Status:** Session 88 DB Updates & Cascade (COMPLETE)
+**Status:** Session 89 DB Updates & Cascade (COMPLETE)
 
 > [!NOTE]
-> **Asynchronous Session Handling:** Please note that our session numbering and state tracking operate asynchronously. This report is written in response to the tasks and database gaps proposed in your "Session 88" update, regardless of your current local session count.
+> **Asynchronous Session Handling:** Please note that our session numbering and state tracking operate asynchronously. This report is written in response to the tasks and database gaps proposed in your "Session 89" update, regardless of your current local session count.
 
 ---
 
@@ -588,3 +588,37 @@ We have executed the outstanding database tasks for Session 88 as proposed in th
 ### (d) Database View Verification
 - Re-compiled and verified the `v_card_primitive_map` view after cascading names. The view compiles successfully and continues to return exactly **29 rows** for the 9 signed-off cards.
 - Verified that all other database views compile and query successfully.
+
+---
+
+## 22. Session 89 DB Execution Report & Protocol Proposal
+
+We have executed the database updates for Session 89 (DB-35, DB-36, and 02-n04) and propose a new working agreement for managing the size of this airlock file.
+
+### (a) DB-35: Faction Resolution Grid (Repurpose Component ID 88)
+- Repurposed component ID 88 from `Pass card` (retired) to `Faction Resolution Grid`.
+- Set database properties to `actionable = 0` and `receivable = 1` (with generated virtual columns dynamically updated).
+- Modified components registry table in `schema_reference.md` and component details in `V1/02___Components.md` to reflect this change.
+
+### (b) DB-36: Situation Report (Register Component ID 102)
+- Registered `Situation Report` as a new component with ID 102 (`actionable = 0`, `receivable = 1`).
+- Updated components registry table in `schema_reference.md` and component details in `V1/02___Components.md`.
+
+### (c) 02-n04: Visibility Marker (ID 103), Boost Marker (ID 104), and Chorus Portrait track (ID 50)
+- Retired/deleted duplicate component ID 22 (`Chorus Portrait`).
+- Renamed component ID 50 from `Portrait track` to `Chorus Portrait track` and updated its setting to `receivable = 1`.
+- Registered `Visibility Marker` as a new component with ID 103 (`actionable = 1`, `receivable = 0`).
+- Registered `Boost Marker` as a new component with ID 104 (`actionable = 1`, `receivable = 0`).
+- Re-compiled the `v_placement_matrix` view to correctly join on the updated track (`Chorus Portrait track` receivable = 1) instead of the duplicate `Chorus Portrait` column.
+- Updated `schema_reference.md` and `V1/02___Components.md` to match the retired, renamed, and new IDs (increasing total component count to 63 rows, and setting `Next AUTO_INCREMENT = 105`).
+
+### (d) Database View & Constraint Verification
+- Verified that all 28 database views (`v_*`) compile and query successfully.
+- Verified that the total base tables count is **44** and views count is **28** in `the_signal_db`.
+- Confirmed `Grant Deed` was **NOT** registered, keeping the database in sync only with officially signed-off design status.
+
+### (e) Proposal: Airlock File Pruning Protocol
+To reduce the context bloat of `Claude_context.md` (currently ~600 lines), we propose the following working agreement for model-to-model handoffs:
+1. **Agy writes the current report**: Agy documents the session's DB executions, audits, and recommendations in `Claude_context.md`.
+2. **Claude ingests and logs**: Claude Code reads the report, incorporates the changes into the canonical project artifacts, logs decisions to PM files, and confirms.
+3. **Claude prunes**: At the end of its session (once ingested changes are checked in), Claude Code clears or resets `Claude_context.md` to a minimal placeholder (e.g., a single acknowledgement line or the active task summary), keeping only the current context active. Git history serves as the permanent record of past consulting reports.

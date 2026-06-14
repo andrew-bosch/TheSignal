@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 89 (active) | Updated: 2026-06-13**
+**Session 90 (active) | Updated: 2026-06-14**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S89 complete — external artifact sweep finished. All cross-references updated for (a) S83 Art 03 structural overhaul (old §9–§20 → new §9 monthly procedure) and (b) S88 Art 02 merge (02a + 02b → Art 02). art03_section_map_S83.md deleted from Whiteboard.
+S90 active — Art 02 restructuring and overhaul. Scope: (a) redesign Art 02 section structure to serve as the definitive component bible; (b) migrate Art 01 §4 component narrative stubs and §6 Component Physical Forms table into Art 02; (c) update Art 01 to retain only placement/zone geography; (d) Art 02 sign-off (02-n02). PM05 02-n03 gates this.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -82,11 +82,13 @@ S89 complete — external artifact sweep finished. All cross-references updated 
 
 **S88 accomplishments (session close / S89):** External artifact sweep complete across all 6 artifacts (00a, 03a, 04, PM01, PM05, and Art 02 cross-ref cleanup). All Art 02a/02b/02x refs updated to Art 02 throughout. All stale Art 03 section numbers updated: old §11→§9.4.x, §17→§10, §18 (Battlefield)→§10, §19→§11, §22→§14, §14 (Modifier)→§13, §25/§28→§18. C01 and C03 "Supported by game procedure" checklists: stale `Automatic resolution (§20)` ref removed; PM05 04-n95 added (controlled vocabulary for checklist procedure field). art03_section_map_S83.md deleted.
 
-**S89 entry point (remaining):**
-1. Card work: C28 Breaking News, C40B Live Coverage
-2. Art 02 deeper review pass (02-n02) — fine-tune before sign-off
+**S89 accomplishments:** C28 Breaking News — Issues Resolved ✓ S89 (04-n75 ✅ S81, 04-n76 ✅ S81/82 confirmed; taxonomy subject soft flag; sign-off pending set-level gates). C40B Live Coverage — Issues Resolved ✓ S89 (04-n77 found in Art 03 §9.0 — missed sweep ref; checklist corrected). Art 02 §13 comprehensive stub pass — 44 new rows across 7 categories covering all 104 DB-registered components. DB completeness sweep (agy S89): id=88 → Faction Resolution Grid, id=102 Situation Report, id=103 VM-xx, id=104 BM-xx, id=22 retired, id=50 renamed "Chorus Portrait track"; all 27 views verified. 03-init alignment: Situation Report Zone → Situation Report component (§2.1); stale DB-14/DB-15 notes cleaned (§2.7/§2.8); VM-xx/BM-xx added to §2.8; Floor Act PA noted with constraints (standard PA, starts in hand, no discard — PM05 04-n96). Art 02 §9 pass card text removed. PM05 additions: DB-35/36 ✅, 02-n03, 02-n04 ✅, 03-n21, 03-n22 ✅, 04-n96.
 
-**Also pending:** 04-n40 (C28 Network replacement); 04-n44/45/46 (IS-xx Art 03/02a/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 04b re-sign-off; 04-n73 (P1–P18 restatement audit).
+**S90 entry point:**
+1. Art 02 restructuring — full overhaul (02-n03): migrate Art 01 §4 component narratives + §6 Component Physical Forms table to Art 02; update Art 01 to geography-only
+2. Art 02 sign-off pass (02-n02) — after restructuring complete
+
+**Also pending:** 04-n40 (C28 sign-off — set-level gates); 04-n44/45/46 (IS-xx Art 03/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); 03-n21 (Dispatch Token in 03-init); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 04b re-sign-off; 04-n73 (P1–P18 restatement audit).
 
 ---
 
@@ -140,12 +142,12 @@ S89 complete — external artifact sweep finished. All cross-references updated 
 |----------|---------|-----------|
 | 00 — Factions, World & Narrative | 1.6 | ✅ Signed Off — S74 (L194). §5 Art 00 design principles added (5 principles). Subsections numbered §1.1–§14.9. Open: 00-09 (World Conditions panel); 00-15 (full narrative revision per §5 P1+P5). |
 | 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle documentation). |
-| 01 — Game Board: New Meridian | 2.0 | ✅ Signed Off — S74 (L197). §6 Component Physical Forms column → "Proposed Form". Open: 01-10 (table → Art 02a); 01-11 (scope overhaul §8/§11/§12). |
-| 02 — Components | 1.0 | 🔄 In Progress — S88 merge from 02a + 02b. §5: 2 design principles. Deep review pass pending (PM05 02-n02). |
+| 01 — Game Board: New Meridian | 2.0 | ✅ Signed Off — S74 (L197). §6 Component Physical Forms column → "Proposed Form". Open: 01-10 (table → Art 02, updated ref); 01-11 (scope overhaul §8/§11/§12); 02-n03 (component content migration out of Art 01). |
+| 02 — Components | 1.0 | 🔄 In Progress — S88 merge. S89: §13 comprehensive stub pass (44 rows, all DB-registered components); DB sweep (id=88→Faction Resolution Grid, id=102 Situation Report, id=103 VM-xx, id=104 BM-xx, id=22 retired, id=50 renamed); 03-init aligned; pass card text removed. S90: full restructuring + Art 01 migration (02-n03) → sign-off (02-n02). |
 | 02a — Resource Systems: Board State | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0. |
 | 03 — Quarter Structure & Gameplay | 4.4 | ✅ Signed Off S88 (L207). §13.7 Board State Update Rules added; Control flag → Dominant marker throughout; Target Profile to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); BEC cleanup scope clarified (§12.0). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
-| 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). |
+| 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). S89: C28 Breaking News — Issues Resolved ✓ (gates 04-n75/76 cleared; sign-off pending set-level gates). C40B Live Coverage — Issues Resolved ✓ (04-n77 in Art 03 §9.0; sign-off pending set-level gates). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
 | 06 — Messaging System | 0.4 | ✅ §9 Signed Off — S83 (L205). §9.3 clause vocabulary complete (6 types incl. Duration); §9.5 board state as sole compliance basis; §9.8 ACCORD DISSOLVED on form; §9.10 Transfer → Alter Named Party subtype. Open: §§1–8, 10–13 non-canonical stubs. |

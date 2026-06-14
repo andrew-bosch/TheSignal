@@ -499,16 +499,16 @@ CREATE TABLE `state_condition_clause` (
 
 ---
 
-## 5. Component Registry (component — 57 rows as of S50)
+## 5. Component Registry (component — 63 rows as of S89)
 
 | id | name | act | xfm | rcv | vis | ori | dat |
 |----|------|-----|-----|-----|-----|-----|-----|
-| 1 | Presence token | 1 | 0 | 0 | 0 | 0 | 0 |
+| 1 | Presence chip | 1 | 0 | 0 | 0 | 0 | 0 |
 | 2 | Deployment marker | 1 | 1 | 0 | 0 | 1 | 0 |
 | 3 | Structure block | 1 | 0 | 0 | 0 | 0 | 0 |
 | 4 | District tile | 0 | 0 | 1 | 0 | 0 | 0 |
 | 5 | Established marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 6 | Control flag | 1 | 0 | 0 | 0 | 0 | 0 |
+| 6 | Dominant marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 7 | Tension marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 8 | Native resource | 1 | 0 | 0 | 0 | 0 | 0 |
 | 9 | Intel token | 1 | 1 | 0 | 1 | 0 | 1 |
@@ -517,13 +517,12 @@ CREATE TABLE `state_condition_clause` (
 | 12 | Dispatch token | 1 | 0 | 0 | 0 | 0 | 0 |
 | 13 | Covert operation | 1 | 1 | 1 | 1 | 0 | 0 |
 | 14 | Political act | 1 | 1 | 1 | 1 | 0 | 0 |
-| 15 | Operative ability | 1 | 1 | 0 | 1 | 0 | 0 |
+| 15 | Operative card | 1 | 1 | 0 | 1 | 0 | 0 |
 | 17 | Classified directives | 1 | 1 | 0 | 1 | 0 | 0 |
 | 21 | Public Standing | 0 | 0 | 1 | 0 | 0 | 0 |
-| 22 | Chorus Portrait | 0 | 0 | 1 | 0 | 0 | 0 |
 | 23 | Session Timeline | 0 | 0 | 1 | 0 | 0 | 0 |
 | 24 | Initiative strip | 0 | 0 | 1 | 0 | 0 | 0 |
-| 25 | Situation Report card | 1 | 1 | 0 | 1 | 0 | 0 |
+| 25 | Broadcast Card | 1 | 1 | 0 | 1 | 0 | 0 |
 | 26 | Faction Terminal | 0 | 0 | 1 | 0 | 0 | 0 |
 | 27 | Faction screen | 0 | 0 | 0 | 0 | 0 | 0 |
 | 28 | ARBITER screen | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -543,15 +542,15 @@ CREATE TABLE `state_condition_clause` (
 | 47 | Modifier token | 1 | 0 | 0 | 0 | 0 | 0 |
 | 48 | Target Profile | 1 | 1 | 0 | 0 | 0 | 1 |
 | 49 | Status marker | 1 | 1 | 0 | 0 | 1 | 0 |
-| 50 | Portrait track | 0 | 0 | 0 | 0 | 0 | 0 |
+| 50 | Chorus Portrait track | 0 | 0 | 1 | 0 | 0 | 0 |
 | 51 | Portrait marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 52 | Countermeasure card | 1 | 1 | 0 | 1 | 0 | 0 |
 | 53 | Ring 1 modifier deck | 1 | 0 | 1 | 0 | 0 | 0 |
 | 54 | Ring 2 modifier deck | 1 | 0 | 1 | 0 | 0 | 0 |
 | 55 | Ring 3 modifier deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 86 | Situation card deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 87 | Event card deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 88 | Pass card | 1 | 1 | 0 | 1 | 0 | 0 |
+| 86 | Broadcast Deck | 1 | 0 | 1 | 0 | 0 | 0 |
+| 87 | Broadcast Effect Deck | 1 | 0 | 1 | 0 | 0 | 0 |
+| 88 | Faction Resolution Grid | 0 | 0 | 1 | 0 | 0 | 0 |
 | 89 | Faction modifier deck | 1 | 0 | 1 | 0 | 0 | 0 |
 | 90 | Political act deck | 1 | 0 | 1 | 0 | 0 | 0 |
 | 91 | Political act discard | 1 | 0 | 1 | 0 | 0 | 0 |
@@ -561,10 +560,17 @@ CREATE TABLE `state_condition_clause` (
 | 95 | Notification Slip | 1 | 0 | 1 | 0 | 0 | 0 |
 | 96 | Intel Delivery Slip | 1 | 1 | 1 | 0 | 0 | 1 |
 | 97 | Emergency Response card | 1 | 1 | 0 | 1 | 0 | 0 |
+| 98 | Broadcast Effect Card | 0 | 0 | 0 | 0 | 0 | 0 |
+| 99 | Sealed Apex ability | 1 | 1 | 0 | 1 | 0 | 0 |
+| 100 | DebriefActionCard | 1 | 0 | 1 | 0 | 0 | 0 |
+| 101 | SCIFRecord | 1 | 1 | 1 | 0 | 0 | 1 |
+| 102 | Situation Report | 0 | 0 | 1 | 0 | 0 | 0 |
+| 103 | Visibility Marker | 1 | 0 | 0 | 0 | 0 | 0 |
+| 104 | Boost Marker | 1 | 0 | 0 | 0 | 0 | 0 |
 
 *Column key: act=actionable, xfm=transformable, rcv=receivable, vis=transform_visibility, ori=transform_orientation, dat=transform_data*  
 *IDs are non-sequential (gaps from deleted rows during schema evolution).*  
-*Next AUTO_INCREMENT = 98.*
+*Next AUTO_INCREMENT = 105.*
 
 ---
 

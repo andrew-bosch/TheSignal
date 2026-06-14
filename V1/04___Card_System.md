@@ -5685,21 +5685,19 @@ A Network operative submits intelligence on a target faction's committed operati
 | Trigger validity | ✓ | N/A — trigger = None | — |
 | Portrait validity | ✓ | Network +1 submitter — forced transparency is core doctrine; FactionSpecific card, no other portrait entries | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
-| Supported by components | ⚠ | VM-xx (Visibility Marker) — pending registration in 00b §4; gate on sign-off (04-n76) | Art 02 §6–§8; Art 07 |
-| Supported by game procedure | ⚠ | Beat 2 d100 procedure not yet in Art 03 (04-n75); VM-xx Beat 3 public resolution clause not yet in Art 03 (04-n76); both gate on sign-off | Art 03 §9, §11 |
+| Supported by components | ✓ | VM-xx registered in 00b §4 (S82, 04-n76 ✅) | Art 02 §6–§8; Art 07 |
+| Supported by game procedure | ✓ | Beat 2 d100 procedure added Art 03 §9.4 (S81, 04-n75 ✅); VM-xx Beat 3 public resolution clause added (S81, 04-n76 ✅) | Art 03 §9, §11 |
 | Data schema validation | ✓ | All §6.1 fields present; subject = CovertOperation flagged for 04b taxonomy validation | Art 04 §6.1 |
 
 #### Outstanding Issues
 
-- **Beat 2 d100 procedure:** Art 03 Beat 2 has no dice resolution procedure — C17 Intercept has the same gap. Add general d100 resolution block to Art 03 §9.4 Beat 2 (PM05 04-n75). Gate on sign-off.
-- **VM-xx registration:** Visibility Marker not yet registered in 00b §4. Registration required; Art 03 Beat 3 Step 1 public resolution clause required (PM05 04-n76). Gate on sign-off.
-- **Taxonomy subject:** subject = CovertOperation — no registered grid-card subject type exists. Needs 04b validation pass.
+- **Taxonomy subject:** subject = CovertOperation — no registered grid-card subject type exists. Needs 04b validation pass. (Non-gate — tracked in taxonomy checklist row.)
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S78 | | |
+| Status | ✓ S78 | ✓ S89 | |
 
 ```python
 C28 = Card(
@@ -6141,20 +6139,19 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 | Portrait validity | ✓ | Network +1 submitter; FailCrit Network −1 (failed broadcast backfires — reckless accusation without traction); FactionSpecific, no other entries | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component required — open hand is a physical visibility state, not a board marker; comply/resist is self-policing per Governing Rule 6.1a | Art 02 §6–§8 |
-| Supported by game procedure | ⚠ | Art 03 Phase A procedure for Live Coverage comply/resist not yet written (PM05 04-n77). Gate on sign-off. | Art 03 §9, §11 |
+| Supported by game procedure | ✓ | Art 03 §9.0 (Start of Month) provides generalizable Covert Dispatch obligation procedure — Steps 0–2 cover comply/resist for any active PA with this obligation type (04-n77 ✅) | Art 03 §9.0 |
 | Data schema validation | ✓ | All §6.1 fields present; FactionHand subject flagged for 04b validation | Art 04 §6.1 |
 
 #### Outstanding Issues
 
-- **Art 03 Phase A procedure:** No procedure exists in Art 03 for the Phase A comply/resist obligation. Must be written as a generalizable PA effect before Issues Resolved (PM05 04-n77). Gate on sign-off.
-- **Taxonomy subject:** subject = FactionHand — not a registered subject type. Needs 04b validation pass.
-- **Card ID:** TBD — pending PM05 04-n1 numbering pass.
+- **Taxonomy subject:** subject = FactionHand — not a registered subject type. Needs 04b validation pass. (Non-gate — tracked in taxonomy checklist row.)
+- **Card ID:** TBD — pending PM05 04-n1 numbering pass. (Non-gate.)
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S78 | | |
+| Status | ✓ S78 | ✓ S89 | |
 
 ```python
 C40B = Card(

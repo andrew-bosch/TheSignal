@@ -30,7 +30,7 @@ All structural and environmental components placed before faction setup begins.
 | Session Timeline | The Overview | — | Designated subzone: left side (P1/P2 adjacency) |
 | Initiative Strip | The Overview | — | Designated subzone: left side (P1/P2 adjacency) |
 | Chorus Activity Track | The Overview | — | Designated subzone: right side (P5 adjacency) |
-| Situation Report Zone | The Overview | — | Designated subzone: right side (P5 adjacency) |
+| Situation Report | Situation Report Zone | — | Physical board object; placed in Situation Report Zone. Broadcast Cards placed on it during play. |
 | Public Standing Track | The Overview | — | Designated subzone: bottom (P3 adjacency) |
 | Reservoir | The Overview | — | Designated subzone: shared resource supply (resource tokens only) |
 | ARBITER Screen | P6 | — | — |
@@ -116,7 +116,7 @@ Per-faction components at faction tableau at T=0. All counts TBD unless noted.
 | Dispatch Case | 1 | Empty at T=0 |
 | Emergency Response card | 1 | — |
 | Operative card | 1 | Distributed at §3.6 |
-| Floor Act PA card | 1 | Distributed at §3.6 |
+| Floor Act PA card | 1 | Standard PA card; distributed at §3.6; starts in hand permanently — do not discard. Full design: Art 04 (PM05 04-n96). |
 | Countermeasure card (CM-A) | 1 | Distributed at §3.7 |
 | Countermeasure card (CM-B) | 2 | Distributed at §3.7 |
 | Classified Objective card | 1 | Distributed sealed at §3.8 |
@@ -130,7 +130,7 @@ Components at ARBITER Tableau at T=0. Subzones TBD. All counts TBD unless noted.
 |-----------|-------|
 | Presence chip | — |
 | Established marker | — |
-| Dominant marker | DB-14: rename "Control flag" → "Dominant marker" in component table |
+| Dominant marker | — |
 | Structure block | — |
 | Tension marker | — |
 | Intel token | — |
@@ -140,9 +140,11 @@ Components at ARBITER Tableau at T=0. Subzones TBD. All counts TBD unless noted.
 | Notification Slip (NS-xx) | — |
 | Intel Delivery Slip (IS-xx) | — |
 | Target Profile | — |
-| Sealed Apex ability | One per operative; pending DB registration (DB-15) |
+| Sealed Apex ability | One per faction (DB id=99) |
 | Broadcast Deck | 1 deck | Situation Report Zone (designated subzone on Overview) |
 | Broadcast Effect Deck | 1 deck | ARBITER Tableau (subzone TBD) |
+| Visibility Marker (VM-xx) | TBD (DB id=103) |
+| Boost Marker (BM-xx) | TBD (DB id=104) |
 
 ---
 
