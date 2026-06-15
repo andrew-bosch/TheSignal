@@ -1,8 +1,8 @@
 # 00 — Factions, World & Narrative Context
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.6 — Signed Off — S74 (§5: forward reference + Art 00 design principles added; §11: term table → 00a §3.1 pointer. Open: 00-09 World Conditions panel)  
-**Status:** Signed Off  
+**Version:** 1.7 — Additions S91 (§8.1 private/public boundary; §9.6 ARBITER threshold) — Pending Re-Sign-Off (00-16)  
+**Status:** 🔄 Pending Re-Sign-Off  
 **Supersedes:** game_overview (narrative sections), setup_guide (opening narrative)  
 **Must be read before:** All other design artifacts
 
@@ -424,6 +424,10 @@ ARBITER administers The Overview's accuracy. Not its content — its accuracy. W
 
 Each faction representative at The Table maintains a Terminal — a personal interface that connects to MIRROR privately. The Terminal is where a faction holds what has not yet been committed: intelligence holdings, operational reserves, actions held in readiness. What the Terminal shows its operator, The Overview does not display. The Terminal is the faction's private executive surface. The Overview is the shared one.
 
+The distinction between what a faction holds and what a faction commits runs through everything at The Table. What is decided in the closed room is not what The Table sees. A faction's internal deliberation — intelligence not yet disclosed, positions weighed and set aside, operations authorized but not yet launched — stays where it was decided, until the faction decides otherwise. The moment a commitment crosses to the open side, it is on the table in both senses: visible to everyone, and beyond private revision.
+
+Every faction at The Table maintains both sides. The inside of the room, where things are considered. The face it turns toward The Table, where what has been committed becomes legible to everyone present. These are not separate systems. They are the same decision-making process, in two directions. What is visible on the open side is accurate. It is not complete. The gap between what is shown and what exists is the faction's advantage — and everyone at The Table knows the gap is there.
+
 The factions negotiated what is on The Overview. ARBITER ensures it is true. The combination of those two facts is where most of the tension at The Table lives.
 
 **The tensions that drive everything:**
@@ -524,6 +528,16 @@ ARBITER speaks in exactly one of four registers at all times:
 ### 9.5 Resolution — ARBITER's Track
 
 ARBITER maintains a track called Resolution — a measure of how clearly The Table's behavior is producing a coherent answer to the Chorus. Resolution is not visible to the factions. They feel it through the quality of ARBITER's narration and the tone of the Chronicle. Where Resolution stands at session end shapes what kind of story the Chronicle tells.
+
+### 9.6 What The Table Sees
+
+ARBITER is not organized the way the factions are. Each faction maintains a closed side — decisions in progress, uncommitted intelligence, private calculation — and a face turned toward The Table, where what has been committed becomes legible. The factions have assumed this structure reflects something universal about having a stake in the deliberation.
+
+ARBITER does not have a private deliberation. It has a threshold between what it processes and what it reveals. On one side: ARBITER, operating with everything it knows. On the other: what ARBITER has chosen to surface. This is not concealment in the sense the factions use the term. It is the difference between a system processing and a system reporting.
+
+What ARBITER makes available to The Table is truthful. Portrait records, accumulated observations, the running account of what each faction has done and what the Chorus has registered — what can be seen is accurate. It is not everything. The factions have spent considerable effort characterizing the gap. ARBITER has not assisted this effort.
+
+The factions note that ARBITER produces no declared moves — no committed positions of the kind they maintain on their open side. What they observe of ARBITER is what ARBITER has externalized. And MIRROR, which is ARBITER's eyes. What ARBITER holds on the other side of its own threshold is not a decision preparing to cross. It is the condition of a system with complete information, evaluating what to reveal, and when, in service of something The Table has not fully named.
 
 ---
 

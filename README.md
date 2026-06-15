@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** Art 03 v4.4 signed off S88 (L207). Art 04 in progress — card design pass complete through C42 + P01–P18; sign-off passes in progress per set.
+**Design milestone:** Art 03 v4.4 signed off S88 (L207). Art 02 restructured S90 — component content migrated from Art 01; Art 02 sign-off pass (02-n02) next. Art 04 in progress — card design pass complete through C42 + P01–P18; sign-off passes in progress per set.
 
 ---
 
@@ -50,10 +50,8 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 2.0 | ✅ Signed off — S74 (L197) |
-| 02 | [Components](V1/02___Components.md) | 1.0 | 🔄 In progress — S88 merge from 02a + 02b. Deeper review pass before sign-off. |
-| 02a | [Components: Board State](V1/02a___Resource_Systems_Board_State.md) | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0 |
-| 02b | [Components: Tracking](V1/02b___Resource_Systems_Tracking.md) | 1.5 | ⛔ Superseded — S88 by Art 02 v1.0 |
+| 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 2.1 | 🔄 Needs re-sign-off — S90 (component content migrated to Art 02; geography/zone-only) |
+| 02 | [Components](V1/02___Components.md) | 1.1 | 🔄 In progress — S90 restructuring complete; sign-off pass (02-n02) next |
 
 ---
 

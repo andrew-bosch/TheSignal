@@ -896,3 +896,50 @@ These four tasks come from the 04-n18 DB cascade (Art 04b §5.2 refresh — arti
 - Write all findings and design decisions to `Claude_context.md` — Claude Code picks them up next session
 - Flag any documentation gaps (ambiguous specs, missing Art 02a component entries, etc.) — do not fill them
 - DB-S63-01 through DB-S63-03 are independent — execute in any order that makes sense given what you find
+
+---
+
+## Session 90 Update — 2026-06-14
+
+**Schema state note:** DB-14 through DB-36 complete. `component` table has 63 active rows, AUTO_INCREMENT = 105. Read `~/Projects/TheSignal/Database/schema_reference.md` before querying.
+
+Three new component registrations required. Art 02 grouping taxonomy work (S90) surfaced these gaps. Execute in order; confirm with Andy at each step; write outcomes to `Claude_context.md`.
+
+---
+
+### DB-37 — Register ARBITER Covert Resolution Grid
+
+**Background:** Art 03 §9.4.0.1 describes an ARBITER-managed 5-lane resolution grid built behind the ARBITER screen each Month for covert operation resolution. This is distinct from the Faction Resolution Grid (DB:88 — public-facing, per-faction, used for PA resolution and standing effects). The ARBITER Covert Resolution Grid has never been registered in `component`. PM05 03-n23 tracks this item.
+
+**Task:**
+1. Confirm DB:88 (`Faction Resolution Grid`) is correctly registered as `actionable=0, receivable=1`.
+2. Register `ARBITER Covert Resolution Grid` as a new component. Suggested properties: `actionable=0, receivable=1` (it receives covert op cards and CMs during resolution). `transformable` is virtual — omit from INSERT.
+3. Report new component ID to `Claude_context.md`.
+
+**Do not seed role/beat primitives yet** — physical design is pending Art 07 and the grouping taxonomy work in Art 02 is still in progress.
+
+---
+
+### DB-38 — Register ARBITER Threshold Slider
+
+**Background:** Art 03 §9.4.2.1.0 references a threshold slider used by ARBITER for covert operation resolution (Beat 2/3). Range 0–100; crit ranges may be highlighted. Lives permanently in ARBITER Tableau. Possibly two physical sub-components (scale + pointer). PM05 03-n11 tracks this item.
+
+**Task:**
+1. Register `ARBITER Threshold Slider` as a new component. Suggested properties: `actionable=0, receivable=0` (it is a reference tool, not a game object that receives cards or takes game actions). `transformable` virtual — omit.
+2. If two sub-components (scale + pointer) are warranted, register both and note the parent–child relationship in `Claude_context.md` for future `components` table work. For now, a single row is acceptable with a note flagging the split.
+3. Report new component ID to `Claude_context.md`.
+
+---
+
+### DB-39 — Register Faction Threshold Slider
+
+**Background:** Art 03 §9.4.3.0.0 references a shared Faction Threshold Slider (1 per game) used during Beat 4 PA resolution. Starts in Overview open area at 03-init; passed between Faction Players in initiative order during Beat 4; returned to Overview at Beat 4 close. Range 0–100. Possibly scale + pointer. PM05 03-n12 tracks this item.
+
+**Task:**
+1. Register `Faction Threshold Slider` as a new component. Suggested properties: `actionable=0, receivable=0`. `transformable` virtual — omit.
+2. Same sub-component note as DB-38 — single row acceptable for now, flag if two-part design warranted.
+3. Report new component ID to `Claude_context.md`.
+
+---
+
+**Note for Claude Code (not an agy task):** Art 02 entry for DB:88 (Faction Resolution Grid) needs its Design Function and description corrected — current text incorrectly describes it as ARBITER-managed for covert ops. Actual role: public-facing per-faction surface for PA resolution, standing effects, and publicly-played CMs. Claude Code will correct Art 02 after agy confirms DB:88 properties.

@@ -499,7 +499,7 @@ CREATE TABLE `state_condition_clause` (
 
 ---
 
-## 5. Component Registry (component — 63 rows as of S89)
+## 5. Component Registry (component — 67 rows as of S90)
 
 | id | name | act | xfm | rcv | vis | ori | dat |
 |----|------|-----|-----|-----|-----|-----|-----|
@@ -567,10 +567,14 @@ CREATE TABLE `state_condition_clause` (
 | 102 | Situation Report | 0 | 0 | 1 | 0 | 0 | 0 |
 | 103 | Visibility Marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 104 | Boost Marker | 1 | 0 | 0 | 0 | 0 | 0 |
+| 105 | ARBITER Covert Resolution Grid | 0 | 0 | 1 | 0 | 0 | 0 |
+| 106 | ARBITER Threshold Slider | 0 | 0 | 0 | 0 | 0 | 0 |
+| 107 | Faction Threshold Slider | 0 | 0 | 0 | 0 | 0 | 0 |
+| 108 | Dispatch Packet | 1 | 0 | 1 | 0 | 0 | 0 |
 
 *Column key: act=actionable, xfm=transformable, rcv=receivable, vis=transform_visibility, ori=transform_orientation, dat=transform_data*  
 *IDs are non-sequential (gaps from deleted rows during schema evolution).*  
-*Next AUTO_INCREMENT = 105.*
+*Next AUTO_INCREMENT = 109.*
 
 ---
 

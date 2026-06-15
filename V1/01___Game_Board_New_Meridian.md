@@ -1,8 +1,8 @@
 # 01 — Game Board: New Meridian
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.0 — Signed Off — S74 (§6 Component Physical Forms added S73; "Proposed Form" column header S74. Open: 01-10 table migration → Art 02a; 01-11 scope overhaul)  
-**Status:** Signed Off  
+**Version:** 2.1 — S90 (§4 component narratives migrated to Art 02 §4; §6 Physical Forms table migrated to Art 02 §13; stale Art 02a/02b refs updated. Open: 01-11 scope overhaul)  
+**Status:** 🔄 Needs Re-Sign-Off — v2.1 material changes S90 (§4 and §6 component content migrated to Art 02)  
 **Depends on:** 00 — Factions, World & Narrative Context  
 **Supersedes:** setup_guide (board sections), board_layout (visual reference only)
 
@@ -57,41 +57,9 @@ The board serves four simultaneous functions:
 
 ## 4. Narrative Function
 
-The physical components of New Meridian are not abstract pieces — each represents a specific system, instrument, or document that ARBITER monitors and the factions contend for. This section grounds each component in the fiction.
+The physical components of New Meridian are not abstract pieces — each represents a specific system, instrument, or document that ARBITER monitors and the factions contend for.
 
-*Components with narrative in other artifacts: Reservoir, Backlog, Dispatch Tokens → Art 02a §4. Public Standing Track, Chorus Portrait Track → Art 02b §4.*
-
-### District Tiles — The Civic Grid
-
-The layout of New Meridian projected by MIRROR is not a natural map — it is a political compromise turned infrastructure. Dr. Jae-won Seo, Chief Data Architect, designed the original grid as a fluid topographic model: heat-mapped to population density, economic flow, and resource access. The Directorate Security Liaison vetoed it, demanding rigid, fixed zones defined by blast doors, riot barricades, and power-grid kill switches. The Security Liaison won. The resulting Civic Grid is brutalist and functional — it shows not what the city is, but how it can be partitioned, locked down, and violently controlled in an emergency. MIRROR projects it because it is accurate. Not to geography. To power.
-
-### Influence Level Marker — Dominance
-
-Presence on the board measures physical occupation. Dominance measures something different: administrative control. When a faction reaches Dominance in a district, MIRROR formally registers the shift — the faction now controls the traffic routing, municipal drone corridors, and utility outputs of that zone. ARBITER tracks Dominance continuously because raw presence without administrative override is temporary. Dominance is not. It is the signal that a faction has stopped occupying a district and started operating it.
-
-### Tension Markers — The Contested State
-
-New Meridian runs a city-wide surveillance mesh — biometric sensors, acoustic arrays, thermal monitoring — originally installed for predictive medical response. MIRROR repurposed it. When the system detects localized threshold breaches — acoustic signatures of violence, crowd biometric spikes, encrypted radio bursts — it flags the district on The Overview. The Tension Marker is MIRROR's notation that a district's equilibrium has broken. ARBITER does not interpret it. It records it.
-
-### Session Timeline — The Count
-
-ARBITER is not counting down. It is counting up toward a specific threshold — the point at which humanity's aggregate response to the Chorus reaches what ARBITER designates as Integration. Quarter 8 marks the moment the return channel opens, whatever position the factions hold. The factions do not know what Integration produces. They know the count. They know it does not stop.
-
-### Initiative Strip — Operational Readiness
-
-The Initiative Strip is ARBITER's real-time ranking of each faction's operational capacity — drawn from continuous inputs: supply chain throughput, operative response times, resource allocation speed, leadership decision latency. ARBITER does not share its methodology. A faction may believe it is executing at full capacity and find itself ranked last. The ranking is not punitive. It is observational. ARBITER records the order in which the city is being moved.
-
-### Chorus Activity Track — The Seismograph
-
-ARBITER added this display to MIRROR's interface without being asked. No label. No unit of measurement. No explanation. The factions named it the Seismograph — a frightened metaphor for a graphic no one understands. The Directorate insists it measures signal degradation. Ghost is certain it tracks the transmission's recursive proximity to full comprehension. The Guild argues it reflects the physical stress the signal places on New Meridian's infrastructure. Every faction has a theory; every faction presents their theory as confirmed. The only consensus is that the track reacts to what happens at the table — when operations execute, resources concentrate, or tensions escalate, the display moves. ARBITER provides no reason for the correlation. It projects the data and waits.
-
-### Accord Documents — Biometric Registry
-
-Accord Documents are biometric smart-paper. When placed face-up on the scanner beds of The Overview, MIRROR reads the signatures of the parties and registers the agreement into ARBITER's canonical record. The act of placement is binding. ARBITER does not negotiate terms. It records what was signed.
-
-### Situation Reports — Global Signal
-
-Situation Reports are not local events. They are global shockwaves — market collapses, atmospheric anomalies, intercepted diplomatic transmissions, mass migrations. They reach the table because New Meridian is not isolated; it is the point through which everything else is being filtered. The Reports remind the room that the rest of the world continues to generate signal while the factions contest the city.
+*Component narratives — District Tiles, Influence Level Marker, Tension Markers, Session Timeline, Initiative Strip, Chorus Activity Track, Accord Documents, Situation Reports, Reservoir, Backlog, Dispatch Tokens, Public Standing Track, Chorus Portrait Track — are in Art 02 §4.*
 
 ---
 
@@ -204,8 +172,8 @@ Child zone of Central Area. The designated area for shared in-play component poo
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Reservoir | Public | Art 02a §4 |
-| Backlog | Public | Art 02a §4 |
+| Reservoir | Public | Art 02 §4 |
+| Backlog | Public | Art 02 §4 |
 
 ##### Accord Placement Area
 Child zone of Central Area. The designated area where all active Accord documents are placed face-up during play. Left side of Central Area (P1/P2 side). No child zones.
@@ -213,7 +181,7 @@ Child zone of Central Area. The designated area where all active Accord document
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Accord document (active) | Public | Art 01 §4 |
+| Accord document (active) | Public | Art 02 §4 |
 
 ##### Session Timeline Area
 Child zone of Central Area. The named position for the Session Timeline component. Left side of Central Area (P1/P2 side). No child zones.
@@ -221,7 +189,7 @@ Child zone of Central Area. The named position for the Session Timeline componen
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Session Timeline track | Public | Art 01 §4 |
+| Session Timeline track | Public | Art 02 §4 |
 | Pointer marker | Public | Included with Session Timeline track |
 
 ##### Initiative Strip Area
@@ -230,7 +198,7 @@ Child zone of Central Area. The named position for the Initiative Strip componen
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Initiative strip | Public | Art 01 §4 |
+| Initiative strip | Public | Art 02 §4 |
 | Faction order markers (×5) | Public | Included with Initiative strip |
 
 ##### Chorus Activity Track Area
@@ -239,7 +207,7 @@ Child zone of Central Area. The named position for the Chorus Activity Track com
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Chorus Activity track | Public | Art 01 §4 |
+| Chorus Activity track | Public | Art 02 §4 |
 | Activity marker | Public | Included with Chorus Activity track |
 | Threshold marker | Public | Included with Chorus Activity track |
 
@@ -249,7 +217,7 @@ Child zone of Central Area. The named position where active World Event cards ac
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| World Event card (active) | Public | Art 01 §4 |
+| World Event card (active) | Public | Art 02 §4 |
 
 ##### Public Standing Track Area
 Child zone of Central Area. The named position for the Public Standing Track component. Bottom of Central Area (P3 side). No child zones.
@@ -257,10 +225,10 @@ Child zone of Central Area. The named position for the Public Standing Track com
 Components placed here:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| Public Standing track (×5, one per faction) | Public | Art 02b §4 |
+| Public Standing track (×5, one per faction) | Public | Art 02 §4 |
 | Standing marker (×5, one per faction) | Public | Included with Public Standing track |
 
-Band labels and standing tier definitions: Art 02b.
+Band labels and standing tier definitions: Art 02.
 
 ##### City
 Child zone of Central Area. The region of The Overview's surface dedicated to the New Meridian city map. 21 district zones arranged in four concentric rings around the Chorus Node. The rings are sediment layers — each one a wave of growth as the city expanded outward from the transmission source.
@@ -270,12 +238,12 @@ District zones are named locations in physical space. District tiles are the com
 The following components may be present within any district zone:
 | Component | Visibility | Narrative Reference |
 |-----------|-----------|-------------------|
-| District tile | Public | Art 01 §4 |
+| District tile | Public | Art 02 §4 |
 | Presence chip | Public | Art 00 §14 |
 | Deployment marker | Public | Art 00 §14 |
 | Structure block | Public | Art 00 §14 |
-| Influence level marker (Dominant) | Public | Art 01 §4 |
-| Tension marker | Public | Art 01 §4 |
+| Influence level marker (Dominant) | Public | Art 02 §4 |
+| Tension marker | Public | Art 02 §4 |
 
 Each district tile prints its name, resource type (background color), and base generation value. All printed information remains visible regardless of components placed on it. District placement within each ring follows geographic and narrative logic — districts that depend on one another are adjacent; districts with historical faction relationships are near each other. The map is readable as a city, because it is one. Child zones: Ring 0, Ring 1, Ring 2, Ring 3.
 
@@ -449,27 +417,7 @@ Feeds DB table: `district_adjacency`.
 
 ### Component Physical Forms
 
-Maps each canonical in-game term to its physical/real-world description. Production quantities: PM01 WBS 2.
-
-| In-Game Term | Proposed Form | Notes |
-|--------------|---------------|-------|
-| Presence chip | Small coloured disc or poker chip | One colour per faction; ARBITER uses white |
-| Deployment marker | Double-sided cardboard chit | Face-up = active; face-down = converting |
-| Operational marker | Double-sided cardboard chit | Distinct from deployment marker |
-| Structure block | Wooden cube | One colour per faction |
-| Intel Token | Small token or chit | Held privately by receiving faction; disclosed at faction's discretion — not folded or sealed |
-| Dispatch case | Sealed envelope or small box | Per-faction covert submission vessel |
-| Situation Report | Two-card set (narrative card + ARBITER effect card) | Held by ARBITER; not player-drawn |
-| Operation Resolution card | Large card or laminated sheet | One per resolution instance; held by ARBITER |
-| Status marker | Small token or disc | Used for Tension, Established flags, etc. |
-| Initiative strip | Laminated strip or card | Tracks faction initiative order per Quarter |
-| [Faction] resource token | Small wooden disc or cube; faction-coloured | Five types: Findings, Exposure, Capital, Capacity, Mandate |
-| Dispatch Token | Small token or printed chit | Held beside faction tableau when unspent. Lives in The Backlog when not in faction possession. Faction allocation and total count: Art 02a §8a. Color TBD — Art 11. |
-| Modifier card | Standard card, faction-neutral back | Value rating on face — range: Art 04 §11. |
-| Countermeasure card | Standard card, faction-back | Held in hand; reactive |
-| Pass card | Standard card, faction-back | Four variants (PS-01–PS-04); reusable |
-
-*Expand as new components are defined. Locked as PM04-04 standard.*
+*Migrated to Art 02 §13 — Physical Forms.*
 
 ---
 

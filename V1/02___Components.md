@@ -1,871 +1,1098 @@
 # 02 — Components
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.0
-**Status:** 🔄 In Progress — S88 merge from 02a v1.6 + 02b v1.5
+**Version:** 2.0
+**Status:** 🔄 In Progress — S90: Full scope rewrite. v1.1 content was S88 merge of 02a v1.6 + 02b v1.5.
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian
-**Supersedes:** 02a — Resource Systems: Board State (v1.6); 02b — Resource Systems: Tracking (v1.5)
+**DB Anchor:** `the_signal_db.component` — canonical component registry. Names and IDs from that registry are authoritative.
+**Feeds:** 03-init (starting positions); 03 (procedures)
 
 ---
 
 ## 1. Overview
 
-### Problem This Document Solves
-
-The board displays information but does not explain how that information is calculated or what it means. Not all game state lives on the board surface — two parallel evaluation systems and an intelligence economy require precise physical representations and visibility rules. Players and ARBITER need unambiguous rules for how presence creates influence, how influence determines resource generation, and how tracking systems represent information that is public, private, or contested.
-
-### Deliverable
-
-Complete rules for eight component systems: Presence and Influence, Structures, Resources, Dispatch Tokens, the Chorus Portrait track, the Public Standing track, and Intel Tokens.
-
-### Success Criteria
-
-- Any player can calculate their own and any opponent's resource income from the board state alone, without ARBITER involvement
-- ARBITER can resolve any influence level dispute by applying rules in this document without judgment calls
-- Players perform their own income collection, marker placement, and structure removal — ARBITER's load is limited to Upkeep announcements and dispute resolution
-- A new player can correctly calculate income after one example walkthrough
-- Any player can read any faction's Public Standing at any time from the board
-- ARBITER can read any faction's current Chorus Portrait position from their private track without calculation
-- Intel Tokens are clearly defined as private physical objects whose contents are known only to the holder and ARBITER — with the holder free to disclose them however and whenever they choose
+This document enumerates every physical component in The Signal — its gameplay design function, physical requirements, and gameplay requirements. The `component` table in `the_signal_db` is the canonical completeness anchor.
 
 ---
 
 ## 2. Index
 
-1. [Overview](#1-overview)
-2. [Index](#2-index)
-3. [Game Purpose](#3-game-purpose)
-4. [Narrative Function](#4-narrative-function)
-5. [Design Principles](#5-design-principles)
-6. [Presence and Influence](#6-presence-and-influence)
-7. [Structures](#7-structures)
-8. [Resources](#8-resources)
-9. [Dispatch Tokens & The Backlog](#9-dispatch-tokens-the-backlog)
-10. [Chorus Portrait Track](#10-chorus-portrait-track)
-11. [Public Standing Track](#11-public-standing-track)
-12. [Intel Tokens](#12-intel-tokens)
-13. [Component Descriptions](#13-component-descriptions)
-14. [Special Conditions](#14-special-conditions)
-15. [Examples & Exceptions](#15-examples-exceptions)
+| Section | Content |
+|---------|---------|
+| [§3 Design Principles](#3-design-principles) | Meta-design principles and entry rubric |
+| [§4 Grouping Taxonomy and Component Schema](#4-grouping-taxonomy-and-component-schema) | Section grouping rationale and entry field definitions |
+| [§5 Playing Surface](#5-playing-surface) | Shared board surfaces, player stations, screens, grids |
+| [§6 Faction Influence](#6-faction-influence) | Presence chips, deployment markers, influence markers, structures |
+| [§7 Resources](#7-resources) | Native resources, Reservoir, Backlog, Dispatch tokens |
+| [§8 Covert Messaging System](#8-covert-messaging-system) | Dispatch case, Target Profile, delivery slips, Debrief cards |
+| [§9 Intel & Information](#9-intel--information) | Intel tokens, Accord agreements |
+| [§10 Card Systems](#10-card-systems) | All card types organized by system (6 subgroups) |
+| [§11 Resolution Tools](#11-resolution-tools) | Threshold sliders, visibility/boost markers, modifier tokens |
+| [§12 Tracking Systems](#12-tracking-systems) | Score, Initiative, Round/Quarter trackers; Status marker |
 
 ---
 
-## 3. Game Purpose
+## 3. Design Principles
 
-These systems form the game's economic foundation and its two parallel evaluation layers.
+**DB registry as completeness anchor.** Every entry corresponds to a component registered in `the_signal_db.component`. The registry defines what components exist; this document specifies what each requires.
 
-**Presence and Influence** determines which factions hold which districts and at what level. Control level determines how much of a district's resources a faction generates each Quarter.
+**Per-component structure.** The standard artifact template sections — Game Purpose, Narrative Function, Rules & Constraints, Component Description, Special Conditions, Examples — are addressed per-component within §§5–12, not as standalone sections. Each entry is self-contained.
 
-**Structures** represent a faction's physical investment in a district. They generate additional resources each Quarter and modify how difficult it is to dislodge the owning faction — but they require maintained presence to survive.
+**Function over form.** Entries lead with Design Function before Physical Form. Physical requirements must be derivable from design function — this is the evaluation order.
 
-**Resources** are the five materials that fund all actions. They are generated by the board state each Quarter, held publicly, and spent on covert operations and public acts. Ghost's resource, Findings, decays if not spent.
+**Scope discipline.** This document specifies what components are and what they need. How they are used → Art 03. Where they start → Art 03-init. Governing rules → Art 00a.
 
-**Dispatch Tokens** represent operational authorization — how many covert operations a faction has the internal capacity to run this Quarter. They are not faction resources and do not accumulate across Quarters.
-
-**The Chorus Portrait track** is ARBITER's private record of what each faction actually is — not what they claim to be. Its marker moves as ARBITER scores behavior throughout the session. Factions cannot read their own Portrait position; they feel it through ARBITER's Debrief observations and the Chronicle at session end.
-
-**The Public Standing track** is New Meridian's public perception of each faction. Fully visible to all players at all times. It modifies how effectively a faction can act — raising or lowering the difficulty threshold of all their d100 rolls — and affects their weight in the session's final vote.
-
-**Intel Tokens** are small tokens representing actionable intelligence one faction holds about another. They enable targeted actions, power the Denounce political act, and create a secondary economy of information running alongside the resource economy.
+**Narrative as anchor, not canon.** Narrative Anchors are brief orienting frames. Art 00 is the source of all canonical narrative.
 
 ---
 
-## 4. Narrative Function
+### Entry Rubric
 
-In New Meridian, presence is not abstract. Ghost analysts embedded in research facilities, Syndicate operators running financial infrastructure, Guild engineers maintaining power systems — these are real people doing real work in real locations. The presence chips on the board represent operational depth: relationships cultivated, systems maintained, people deployed.
-
-Structures are physical: facilities built, offices established, infrastructure installed. A Guild structure block at the Power Grid is a substation. A Syndicate structure block at the Financial Clearinghouse is a trading desk. A Ghost structure block at the Data Exchange is a signal analysis node. They generate resources because they are doing something — not because they exist on paper.
-
-Resources represent each faction's theory of power made tangible. Findings accumulates and decays because intelligence must be acted on or it becomes worthless. Capital accrues because the Syndicate's financial systems are always running. Mandate flows from institutional authority that is being exercised every day — not just in New Meridian.
-
-Each faction also brings reserves to The Table — resources accumulated through operations before the session began. These are not windfalls. They are the working capital of living organizations that were doing things before The Table convened.
-
-The source of all of this is The Reservoir — a vast pool of unallocated capital, dormant infrastructure, and political credit accumulated outside New Meridian. Offshore funds, mothballed server farms, unmanned mercenary contingents, stockpiles of rare earth materials, and political favors sitting in escrow: everything the factions could deploy, but have not yet committed. Drawing income at Upkeep is not creation. It is activation — converting latent potential into working assets. The Reservoir is what remains when the faction has not yet decided to spend it.
-
-Public Standing and the Chorus Portrait are two completely different kinds of evaluation happening simultaneously — and their independence is the point.
-
-**Public Standing** is what New Meridian thinks. It is the cumulative signal produced by social media, opinion polls, public commentary, art, music, graffiti, and the thousand small ways a city forms its collective impression of the organizations operating within it. It is volatile and reactive. Public memory is short — standing drifts back toward neutral when nothing dramatic is happening. The city watches, forms impressions, and forgets.
-
-**The Chorus Portrait** is what the Chorus observes. It is permanent, cumulative, and indifferent to performance or appearance. Humanity has been receiving the Chorus for thirty-one years. It does not jump to conclusions and it does not forget. One action is enough to begin forming a pattern — the Chorus extrapolates trajectory from minimal data. Humans, it has found, are predictable. The Portrait is not a score. It is a record.
-
-The two systems are symmetrical in physical form — both use an identical track format with a position marker — but asymmetrical in visibility and memory. Public Standing is displayed openly on the board. The Chorus Portrait is hidden in ARBITER's tableau. Same ruler. Different observer. One forgets. The other does not.
-
-**Intel Tokens** represent what factions know about each other. Knowledge is power — but it expires, can be traded, can be bluffed about, can be disclosed strategically, and can be turned against the faction it describes. An Intel Token is discrete, specific, time-stamped, and targeted.
+| Check | Passes If |
+|-------|-----------|
+| **DB Registration** | Heading includes the component's `the_signal_db.component` ID |
+| **Structural Consistency** | Prose block (Design Function → Narrative Anchor → Gameplay Requirements) followed by Physical Form table (Physical Form · Quantity · Visibility) |
+| **Design Function** | States why the component exists and what game system it enables |
+| **Narrative Anchor** | Provides brief fictional grounding; or explicitly states `N/A —` with justification per 00a §4.6 |
+| **Gameplay Requirements** | Specifies text, markings, or form required; or explicitly states "None" |
+| **Physical Form** | Table: specifies shape and face-states |
+| **Quantity** | Table: count labeled `(gameplay requirement)` or `(pre-production estimate)` |
+| **Visibility** | Table: `Public` / `Player-private` / `ARBITER-only` |
+| **Scope Discipline** | Entry contains no procedural rules, starting positions, or governing rules |
 
 ---
 
-## 5. Design Principles
+## 4. Grouping Taxonomy and Component Schema
 
-1. **Scarcity is intentional.** Limited supply is a design decision, not a convention. A component that is not scarce must justify unlimited supply. A component that is scarce must justify the cap.
+Components are organized by primary function within the game system. Where a component serves multiple systems, its primary group is determined by its design function.
 
-2. **Disclosure is designed, not assumed.** Components that carry private information must have a defined moment when that information becomes shared. Indefinite concealment is a design gap, not a feature.
+### Component Groups
 
----
+| Group | Primary Function | Subgroups |
+|-------|-----------------|-----------|
+| **Playing Surface** | Physical geography and player station surfaces — the board space, screens, grids, and terminals that constitute the game table | — |
+| **Faction Influence** | Presence, control, and structural markers placed on the playing surface to record faction activity | — |
+| **Resources** | Economy tokens representing extractable and convertible value | — |
+| **Covert Messaging System** | Components comprising the covert dispatch channel (submission side) and ARBITER return channel | — |
+| **Intel & Information** | Intelligence tokens, accords, and classified records held or exchanged by factions | — |
+| **Card Systems** | All card types, organized by system | Covert Operations · Countermeasures · Political Acts · Broadcasts · Classified Directives · Modifier |
+| **Resolution Tools** | Instruments used to measure, flag, and resolve actions (sliders, VM/BM cards, modifier tokens, status markers) | — |
+| **Tracking Systems** | Markers and trackers recording game state across beats, rounds, and quarters | Score · Initiative · Round/Quarter |
 
-## 6. Presence and Influence
+### Component Schema
 
-### Component Names
+Each component entry in §§5–12 follows this structure:
 
-| Component | Description |
-|-----------|-------------|
-| Presence chip | Small flat disc in faction color. Placed in a district to represent operational depth. Stackable. |
-| Deployment marker | Large distinct piece in faction color. Placed during the Placement phase. Counts as 1 temporary presence chip for the current Quarter. Converts to 1 permanent presence chip at the following Upkeep if not blocked. |
-| Dominant marker | Gold marker placed on the Dominant faction's presence chip stack in a district to indicate 1st place (Dominant status). One per district. Placed and removed by the player whose action causes the change. Not placed at the Chorus Node — ARBITER's Dominance Marker serves this function there. |
-| Established marker | Silver marker placed on an Established faction's presence chip stack in a district. Each Established faction in the district places their own — up to 4 or 5 may coexist in a single district. Placed and removed by the player whose action causes the change. Not placed at the Chorus Node. |
-| Tension marker | Neutral chip. Placed on the district to indicate the Contested condition. Placed by the player whose action triggers the tie; removed by the player whose action resolves it. |
-| ARBITER Dominance Marker | Single fused piece placed at the Chorus Node during setup — never removed. Comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker. Inseparable. *(Component specification: PM01 §2.08a.)* |
-| Structure block | Small square chit in faction color. Placed in a district to represent a built facility. |
-| Dispatch Token | Small token or chit. One accompanies each covert operation card placed in a dispatch case. Drawn from The Backlog at Upkeep; returned to The Backlog at Quarter close. Not a faction resource — does not generate, accumulate, or carry affinity. |
+**Design Function:** [why the component exists; the game system it enables]
 
-### Deployment Marker Conversion
+**Narrative Anchor:** [brief fictional grounding] — or — `N/A —` [justification per 00a §4.6]
 
-A deployment marker placed during the Placement phase counts as 1 temporary presence chip for all purposes during that Quarter — influence calculations, resource generation, Incursion Battlefield Strength, and entry requirement checks. At the following Upkeep, each unconverted marker becomes 1 permanent presence chip and is returned to the player. Full conversion timing and blocking conditions are specified in Artifact 03 — Quarter Structure.
+**Gameplay Requirements:** [required text, markings, or form; or explicitly "None"]
 
-### Presence Chip Limits
-
-- Maximum 6 presence chips per faction per district at any time
-- A faction cannot place a 7th chip in any district regardless of how many actions they spend there
-- Deployment markers count toward this limit during the Quarter they are placed
-
-### Global Presence Convention
-
-**Canonical definition:** "At least 1 presence token" in any card effect, rule, or entry requirement includes all deployment markers currently placed in that district. Deployment markers count as temporary presence tokens for all purposes during the Quarter they are placed — influence calculations, resource generation, Incursion Battlefield Strength, entry requirement checks. This definition is not restated on individual cards. *Source: L14, L58, Artifact 01 §6.*
-
-### Influence Levels
-
-A faction's influence level in a district is determined simultaneously by their absolute chip count (the minimum threshold) and their rank among all factions in the district. Both conditions must be met. Deployment markers count toward chip count for all influence calculations during the Quarter they are placed.
-
-*Presence tokens represent atmospheric weight on the Holt Index scale — not physical people or assets. See Artifact 00 §14 for the full narrative grounding. What follows are the mechanical thresholds that map to the scale.*
-
-**DOMINANT**
-
-- Minimum 3 chips (including any deployment marker)
-- Strictly more chips than every other faction in the district
-- Player places the gold Dominant marker on their presence chip stack in the district when this condition is reached
-- Not reachable at the Chorus Node — ARBITER's Dominance Marker counts as 8 ARBITER-keyed presence tokens, permanently exceeding the human faction maximum of 6; Dominant is made impossible by the board, not prohibited by rule
-
-*A person walking into this district feels it without looking. The deference in the air, the unspoken rules about how things work here — the district has organized around this faction. Dominant is an atmosphere, not a count.*
-
-**ESTABLISHED**
-
-- Minimum 2 chips (including any deployment marker)
-- In second place by chip count
-- Player places their silver Established marker on their presence chip stack in the district when this condition is reached
-- Multiple factions may hold Established simultaneously — each places their own silver marker; up to 4 or 5 may coexist in a single district
-- A faction in second place is Established regardless of their absolute chip count
-
-*Visible, deferred to in some contexts, but not unchallenged. Another faction's weight is present and greater. A careful observer feels the competition.*
-
-**PRESENT**
-
-- Minimum 1 chip or deployment marker
-- Ranked third or lower by chip count
-- Any faction below second place is Present regardless of their absolute chip count
-
-*Noted, but not defining. The district absorbs this faction's presence without organizing around it. Weight registers. It does not yet claim the air.*
-
-**ABSENT**
-
-- 0 chips and no deployment marker in the district
-- All structure blocks owned by this faction in the district are immediately removed
-- The player whose action caused the last chip removal performs the removal publicly
-
-### Influence Level Reference
-
-| Level | Chip Minimum | Rank Condition | Resource Generation | Structure Block Defense |
-|-------|-------------|----------------|--------------------|-----------------------|
-| Dominant | 3+ | Strictly more than all others | Full + affinity bonus | Opponents need Challenging difficulty to demolish |
-| Established | 2+ | Second place by count | Full | Standard (Average) difficulty to demolish |
-| Present | 1+ | Third or lower | Half, round down | Opponents one step easier to demolish |
-| Absent | 0 | — | None | All structure blocks immediately removed |
-
-### Contested Condition
-
-The Contested condition is a board state — not an influence level — triggered when two or more factions tie for the highest chip count in a district at 3 or more chips. No faction can hold Dominant while a tie exists at the top.
-
-**Triggering:** The player whose action creates the tie places a Tension marker on the district.
-
-**Resolving:** The player whose action breaks the tie removes the Tension marker.
-
-**No faction can be Dominant in a Contested district.**
-
-**Resource generation under Contested condition:**
-
-- Any faction with 3+ chips generates 1 unit of the district's resource flat, regardless of base generation value
-- This applies to all factions at 3+ chips — including any faction that would otherwise become Dominant in the vacuum
-- Factions in second place with 2+ chips remain Established and generate full resources
-- Factions in third place or lower generate at Present rate (half, rounded down)
-
-**Structure defense under Contested condition:**
-
-No faction with 3+ chips in a Contested district receives Dominant-level structure defense. All such factions receive standard (Average) difficulty to demolish — the same as Established.
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| [shape and face-states] | [count] `(gameplay requirement)` or TBD `(pre-production estimate)` | `Public` / `Player-private` / `ARBITER-only` |
 
 ---
 
-## 7. Structures
+## 5. Playing Surface
 
-### What Structures Represent
-
-Structure blocks represent a faction's physical facilities in a district — offices, equipment, infrastructure installations. Each structure block generates additional resources each Quarter for its owner and modifies the difficulty of actions targeting it.
-
-### Building Requirements
-
-- A faction must have at least Present influence (1+ chip or deployment marker) in a district to place a structure block there
-- Maximum 1 structure block per faction per district
-- The Chorus Node cannot hold any structure blocks
-- How structure blocks are placed is defined in Artifact 04 — Action Card System
-
-### Structure Block Resource Generation
-
-Each structure block a faction owns in a district generates +1 resource per Quarter at Upkeep. The owning player declares which resource is produced per structure block:
-
-- **Option A:** +1 of the district's native resource type
-- **Option B:** +1 of the owning faction's native resource type
-
-This choice is declared publicly at Upkeep, per structure block, before income is collected. The choice may differ from Quarter to Quarter and structure to structure.
-
-Structure block generation requires at least 1 presence chip or deployment marker in the district. If the faction is Absent, all their structure blocks in that district are immediately removed — they generate nothing.
-
-Structure block generation is not affected by the Contested condition. Structures continue generating for their owners even when the district is Contested.
-
-### Structure Block Survival Rule
-
-A faction's structure blocks in a district survive only while that faction maintains at least 1 presence chip or deployment marker there.
-
-The moment a faction reaches Absent — by any means — all their structure blocks in that district are immediately removed. The player whose action caused the last chip removal performs the removal publicly. ARBITER announces the loss in The Record register.
-
-This applies to: actions that remove the last chip, Incursion results, world event effects, or any other mechanism that reduces a faction's presence to zero.
-
-### Structure Block Defense
-
-Defense is based on the owning faction's current influence level, not the attacking faction's level:
-
-| Owning Faction's Level | Demolish Difficulty |
-|------------------------|---------------------|
-| Dominant (not Contested) | Challenging |
-| Dominant (Contested condition active) | Average |
-| Established | Average |
-| Present | Easy |
-
-### Guild Portrait Bonus — Structures
-
-At session end, The Guild receives a Chorus Portrait bonus based on the total number of structure blocks present on the board across all factions — not just their own. Every structure built by any faction is evidence of The Guild's doctrine: nothing happens without the systems that support it.
-
-| Total structure blocks on board at session end | Guild Portrait bonus |
-|-----------------------------------------------|----------------------|
-| 1–4 | +1 |
-| 5–9 | +2 |
-| 10–14 | +3 |
-| 15–19 | +4 |
-| 20+ | +5 |
-
-Subject to calibration after playtesting — see PM02 validation target V09. Full Portrait rules are in §10.
+Components that constitute the physical game table — shared board surfaces, player stations, screens, grids, and the abstract player agent registered for system completeness.
 
 ---
 
-## 8. Resources
+### The Overview  (DB: 29)
 
-### The Five Resources
+**Design Function:** The central game mat occupying the Central Area during play. Hosts district tiles, tracking components, the Reservoir, The Backlog, and the Situation Report Zone. The primary shared table surface.
 
-Each resource is both a concept and a physical object — the token IS the resource. There is no abstract "asset token" wrapper. When a player receives Findings, they take Findings chips. When they spend Capital, they return Capital chips to the Reservoir.
+**Narrative Anchor:** The physical table is not an abstraction of New Meridian — it is the room in the story. What MIRROR projects is not geography; it is the Security Liaison's map: accurate not to how the city was built, but to how it can be partitioned, locked down, and controlled. *→ Art 00 §8.1 for full narrative.*
 
-| Resource | Faction | Represents | Physical Token |
-|----------|---------|------------|----------------|
-| Findings | Ghost | Understanding — intelligence, analysis, pattern recognition | Translucent layered fragments |
-| Exposure | The Network | Visibility — broadcast reach, public pressure, information release | Bright sharp tokens, ray or broadcast symbol |
-| Capital | The Syndicate | Ownership — financial leverage, investment, economic control | Metallic coins or bars |
-| Capacity | The Guild | Execution — physical capability, construction, infrastructure operation | Industrial blocks or plates |
-| Mandate | The Directorate | Legitimacy — institutional authority, regulatory power, enforcement | Stamped seal or insignia tokens |
+**Gameplay Requirements:** Must accommodate: all 21 district tiles in their ring-zone structure; Reservoir area; Backlog area; Situation Report Zone; Broadcast Card display area; Session Timeline; Initiative Strip; Chorus Activity Track. Full layout: Art 01 §6.
 
-All factions can hold and spend any resource type. Native resources are generated most naturally through affinity districts and passive generation — not exclusively.
-
-### District Resource Generation
-
-Every district generates its own native resource type for all factions with influence there. The resource type of a district does not change based on who controls it.
-
-**Base generation formula per faction per district each Upkeep:**
-
-```
-Generation = District Base Value × Level Modifier
-           + Affinity Bonus (if applicable)
-           + Structure Block Bonus (per structure block owned)
-```
-
-**District base values by ring:**
-
-| Ring | Base Value |
-|------|-----------|
-| Baryo | 1 unit per Quarter |
-| The Mid | 2 units per Quarter |
-| Core | 3 units per Quarter |
-| Chorus Node | 0 — no resource generation |
-
-**Level modifiers:**
-
-| Influence Level | Modifier |
-|----------------|---------|
-| Dominant | Full (×1) |
-| Established | Full (×1) |
-| Present | Half, round down (minimum 0) |
-| Absent | Zero |
-| Contested (3+ chips) | 1 unit flat regardless of base value |
-
-**Affinity bonus:**
-
-When a faction holds Dominant influence in a district whose native resource matches their faction's native resource, they receive +1 additional unit of that resource on top of full generation. The affinity bonus applies at Dominant level only. No cap applies to the number of districts generating the affinity bonus per Quarter — a faction receives the bonus in every qualifying district simultaneously.
-
-*Playtest variable PT-02-02: Whether uncapped affinity creates economic dominance in practice. Monitor resource counts at Round 4 per PM02 target V09.*
-
-### Income Collection
-
-Players collect their own income each Upkeep without ARBITER involvement. The sequence per player:
-
-1. Count influence level in each district where they have presence chips or deployment markers
-2. Apply the level modifier to each district's base value
-3. Apply affinity bonus where applicable
-4. Declare each structure block's resource choice publicly, then add +1 per structure block
-5. Add passive generation
-6. Take the calculated resources from the Reservoir
-
-Other players observe and may challenge any calculation. ARBITER resolves disputes in The Record register.
-
-### Passive Generation
-
-Each faction generates 1 unit of their native resource per Quarter regardless of board position. This represents operations and income streams entirely outside New Meridian. Passive generation cannot be blocked, reduced, stolen, or affected by any game action.
-
-| Faction | Passive | Source |
-|---------|---------|--------|
-| Ghost | 1 Findings | Ongoing signal monitoring from distributed analyst network |
-| The Network | 1 Exposure | Continuous broadcast operations outside New Meridian |
-| The Syndicate | 1 Capital | Background financial instrument returns |
-| The Guild | 1 Capacity | Active construction and infrastructure contracts across the region |
-| The Directorate | 1 Mandate | Federal and interagency budget allocations independent of New Meridian operations |
-
-*Passive generation starting value: 1 per Quarter. Adjustment range under playtest consideration: 1–3 per Quarter depending on faction. See PM02 for calibration targets.*
-
-### Starting Resources
-
-Each faction begins the session with reserves accumulated before The Table convened. These represent each faction's working capital — resources they were already planning to use when the situation in New Meridian escalated into a formal negotiation.
-
-| Faction | Findings | Exposure | Capital | Capacity | Mandate |
-|---------|----------|----------|---------|----------|---------|
-| Ghost | 5 | 0 | 0 | 0 | 1 |
-| The Network | 0 | 3 | 0 | 0 | 2 |
-| The Syndicate | 0 | 0 | 6 | 0 | 1 |
-| The Guild | 0 | 0 | 1 | 4 | 0 |
-| The Directorate | 1 | 0 | 0 | 1 | 4 |
-
-**Quarter 1 totals** (starting reserves + Quarter 1 income):
-
-| Faction | Resource | Starting | Q1 Income | Q1 Total | Decay Check |
-|---------|----------|---------|-----------|---------|------------|
-| Ghost | Findings | 5 | 7 | 12 | Loses 2 → ends Q1 with **10** |
-| The Network | Exposure | 3 | 4 | **7** | No decay |
-| The Syndicate | Capital | 6 | 7 | **13** | No decay |
-| The Guild | Capacity | 4 | 5 | **9** | No decay |
-| The Directorate | Mandate | 4 | 6 | **10** | No decay |
-
-Ghost's Quarter 1 total of 12 Findings falls in the 7–12 decay bracket — Ghost must spend aggressively or waste income. This is the intended behavior.
-
-### Findings Decay — Ghost Only
-
-Findings decays at Quarter end if Ghost holds too much. This reflects the operational reality of intelligence: information not acted upon becomes stale, superseded, or compromised.
-
-Decay is checked after all spending for the Quarter is complete:
-
-| Findings Held at Round End | Decay |
-|---------------------------|-------|
-| 1–6 | None |
-| 7–12 | Lose 2 |
-| 13+ | Lose 4 |
-
-Decay cannot reduce Findings below 0. Passive generation is received at the start of the following Quarter's Upkeep, after the previous Quarter's decay is applied. No other faction's resources decay in the L1 prototype.
-
-### Resource Conversion — Bank Exchange
-
-Any faction may request The Translation — resource conversion via ARBITER — at any time ARBITER is not actively processing Resolution or delivering narrative. Debrief is the primary window. The conversion rate depends on the requesting faction's presence at the Chorus Node at the time of the request.
-
-| Requesting faction's presence at Chorus Node | Conversion rate |
-|----------------------------------------------|----------------|
-| Contested (Tension marker placed) | 5:1 |
-| No presence | 4:1 |
-| Present | 3:1 |
-| Established | 2:1 |
-
-- Any resource → any other resource at the applicable rate
-- No action slot required
-- No limit per Quarter
-- Announce to ARBITER; ARBITER states the rate in The Record register; take tokens from the Reservoir directly
-
-The Contested rate is not a balancing mechanism. It is ARBITER's response to factions bringing conflict into the Chorus Node. The canonical rate table for cross-artifact reference is this section. Timing rule: Governing Rule 6.1b.
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Large game mat; Central Area placement | 1 (gameplay requirement) | Public |
 
 ---
 
-## 9. Dispatch Tokens & The Backlog
+### District tile  (DB: 4)
 
-### Narrative Anchor
+**Design Function:** Defines the zones of New Meridian where factions contest for influence. Each tile is a named district with a fixed resource type, ring classification, and district zone. The tile is the target surface for all presence, structure, and tension markers.
 
-Before an operation leaves a faction's internal queue, it is a theoretical project — drafted, mapped, costed, and waiting for the executive order to move. The faction has the people. They have the plan. What they do not yet have is organizational commitment. A Dispatch Token is that commitment: the authorization that converts planned work into active production for this Quarter. At the start of each Quarter, each faction draws their allocation from **The Backlog** — the shared pool on the table holding all unissued authorizations. A faction holds its drawn tokens privately beside the tableau. The pool the factions draw from is public.
+**Narrative Anchor:** A named district — a specific place with a specific character, held by whoever has built deep enough there to make it theirs. New Meridian's districts are each something specific. A financial corridor generates Capital. A broadcast network generates Exposure. A research installation generates Findings. What a district generates is not assigned — it is what the district does. The tile is that fact, printed. *→ Art 00 for full narrative.*
 
-Dispatch Tokens are not faction resources. They do not generate through district presence, accumulate across Quarters, or carry an affinity system. They are a per-Quarter operational capacity allocation — a count of how many covert operations a faction has the internal authorization to run this Quarter. *(Governing rule: Governing Rule 7.3c. Narrative grounding: Artifact 00 §14.)*
+**Gameplay Requirements:** Each tile must display: district name; grid coordinate in [ring, address] format; border color indicating native resource type; base generation value. Chorus Node tile must be visually distinct from all faction districts.
 
-### The Backlog
-
-The Dispatch Token supply is a shared physical pool on the table — **The Backlog**. All tokens live here when not in faction possession. The Backlog is distinct from the Reservoir: the Reservoir holds faction resources (Findings, Capital, and others); The Backlog holds only Dispatch Tokens. *(Physical location on The Overview: Artifact 01 — Physical Table Layout: Supply.)*
-
-At Upkeep Step 7, each faction draws their Quarter allocation from The Backlog:
-
-| Faction | Quarterly Allocation |
-|---------|---------------------|
-| Ghost | 4 Dispatch Tokens |
-| All other factions | 3 Dispatch Tokens |
-
-Drawn tokens are held privately beside the faction tableau. Other factions cannot see how many tokens remain.
-
-### Spend Rules
-
-One Dispatch Token accompanies each covert operation card placed in a dispatch case. The token is placed in the case alongside the card.
-
-- Political acts are declared at The Table and require no token.
-- A covert operation card submitted without a token is invalid — rejected by ARBITER at Beat 0, returned to the faction, cost not spent. *(Governing Rule 7.3c.)*
-
-ARBITER collects all spent tokens from each Month's dispatch cases at Beat 0. At Quarter close, all collected tokens are returned to The Backlog.
-
-### Operational Meaning
-
-A faction's unspent tokens represent their remaining active operational capacity this Quarter — authorized work that has not yet been committed. A faction that spends all tokens in Month 1 has nothing remaining in The Backlog for Month 2. Ghost's four-token allocation reflects a structurally deeper backlog, enabling the GATHER→SYNTHESIZE combination across Month 1 and Month 2 without foreclosing other Month 2 covert actions.
-
-*Procedure: Artifact 03 §7 Step 7 (distribution), §9 (Monthly Activities spend), §12 (Quarter Close return).*
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Flat tile or card; unique label per district; face-up during all play | 21 (gameplay requirement) | Public |
 
 ---
 
-## 10. Chorus Portrait Track
+### Situation Report  (DB: 102)
 
-### What the Track Shows
+**Design Function:** Physical board object in the Situation Report Zone. Hosts Broadcast Cards during play — the display surface for public global events. Analogous to a district tile in that it anchors a zone and receives cards placed on it during resolution.
 
-The Chorus Portrait track shows ARBITER's current cumulative assessment of each faction's behavior as a coherent answer to the Chorus. The marker's position represents the total of all Portrait scoring to date in the session.
+**Narrative Anchor:** Situation Reports are not local events. They are global shockwaves — market collapses, atmospheric anomalies, intercepted diplomatic transmissions, mass migrations. They reach the table because New Meridian is not isolated; it is the point through which everything else is being filtered. *→ Art 00 for full narrative.*
 
-The track is private — kept in ARBITER's tableau, facing away from players. Factions cannot see their own Portrait position. ARBITER communicates Portrait state through Debrief observations, never through direct disclosure.
+**Gameplay Requirements:** Must provide a clear surface for Broadcast Card placement. Must be visually distinct from district tiles.
 
-ARBITER may adjust a faction's Portrait marker in response to any action taken or observed — including formal game actions, Debrief negotiations, trades, and table behavior beyond the structured phases of play (per Governing Rule 5.1). The Chorus observes everything that happens at The Table.
-
-How scores are assigned and when bonuses apply is specified in Artifact 07 — ARBITER Toolkit and Artifact 10a — Victory System respectively.
-
-### The Portrait Scale
-
-Portrait runs from −20 to +20. All factions start at 0. Eleven named states in a bell-curve distribution, with Ambiguous at center:
-
-| State | Range | Width | Chorus Stance |
-|-------|-------|-------|---------------|
-| Resonant | +18 to +20 | 3 | This faction has become something the Chorus recognizes |
-| Aligned | +13 to +17 | 5 | Behavior and doctrine have converged |
-| Coherent | +8 to +12 | 5 | A consistent pattern is emerging |
-| Legible | +4 to +7 | 4 | The Chorus can begin to read this faction |
-| Observed | +2 to +3 | 2 | Initial signals noted. Trajectory forming |
-| Ambiguous | −1 to 0 | 2 | No determination. Observation continues |
-| Uncertain | −2 to −3 | 2 | Early contradictions detected |
-| Dissonant | −4 to −7 | 4 | Stated doctrine and observed behavior diverge |
-| Fractured | −8 to −12 | 5 | The pattern of contradiction is consistent |
-| Collapsed | −13 to −17 | 5 | This faction no longer produces readable signal |
-| Void | −18 to −20 | 3 | Silence. The Chorus has nothing to interpret here |
-
-Starting position: 0, upper boundary of Ambiguous. Any scored action immediately moves a faction out of Ambiguous — positive actions into Observed (+2), negative actions into Uncertain (−2). The Ambiguous band is narrow by design — the Chorus forms a trajectory quickly.
-
-### Physical Format
-
-One hidden track strip per faction. Identical in format to the Public Standing track — same scale markings, same band label style — but kept private in ARBITER's tableau. A clip or bead marker in faction color shows current position. ARBITER moves the marker after each quarter's Resolution.
-
-The physical solution for keeping the Portrait track private is specified in Artifact 07 — ARBITER Toolkit.
-
-ARBITER may keep optional session notes alongside the track to support Chronicle construction at session end. These notes are not required. The track shows the endpoint; the notes explain how the faction arrived there.
-
-### What Portrait State Produces
-
-Portrait state at session end determines the tone of each faction's Chronicle entry and contributes to final scoring, specified in Artifact 07 — ARBITER Toolkit and Artifact 10a — Victory System respectively.
-
-Portrait ranking also determines ARBITER's initiative order assignment at the start of each quarter — see Artifact 03 §7 Phase 1 for the full procedure. Factions cannot infer their Portrait position from the initiative sequence they are assigned (Artifact 03 §7 Phase 1 Step 1 D10 decouples the visible order from the hidden Portrait rankings).
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Tile or mat; face-up in Situation Report Zone during all play | 1 (gameplay requirement) | Public |
 
 ---
 
-## 11. Public Standing Track
+### Faction Terminal  (DB: 26)
 
-### What the Track Shows
+**Design Function:** The player tableau behind the Faction Screen. Organizes a faction's private workspace — hand, resources, dispatch tokens, operative cards, and private tracking components.
 
-The Public Standing track shows New Meridian's collective perception of each faction. It is public information, visible to all players at all times on the board.
+**Narrative Anchor:** A personal interface that connects to MIRROR privately. The Terminal is where a faction holds what has not yet been committed — the inside of the room, before any decision crosses to the open side. *→ Art 00 §8.1 for full narrative.*
 
-### The Public Standing Scale
+**Gameplay Requirements:** Must organize the following components in an accessible layout: faction hand, dispatch case, Dispatch Tokens, resource holdings, operative cards, private tracking components. Full spec: Art 08 (planned).
 
-Public Standing runs from 0 to 20. All factions start at 10 (Neutral). Five named states with flat modifiers applied to the difficulty target threshold on all d100 rolls:
-
-| State | Range | Target Modifier | Effect |
-|-------|-------|----------------|--------|
-| Celebrated | 18–20 | +20 to target | Difficulty thresholds increase by 20 — easier to succeed |
-| Respected | 14–17 | +10 to target | Difficulty thresholds increase by 10 |
-| Neutral | 7–13 | 0 | No change |
-| Suspect | 3–6 | −10 to target | Difficulty thresholds decrease by 10 — harder to succeed |
-| Discredited | 0–2 | −20 to target | Difficulty thresholds decrease by 20 |
-
-The modifier shifts the difficulty target before the roll is made. The die result is compared against the modified target. No adjustment to the rolled number is required.
-
-| Difficulty | Base Target | Celebrated (+20) | Respected (+10) | Neutral | Suspect (−10) | Discredited (−20) |
-|-----------|------------|-----------------|----------------|---------|--------------|------------------|
-| Automatic | No roll | No roll | No roll | No roll | No roll | No roll |
-| Easy | 01–75 | 01–95 | 01–85 | 01–75 | 01–65 | 01–55 |
-| Average | 01–50 | 01–70 | 01–60 | 01–50 | 01–40 | 01–30 |
-| Challenging | 01–25 | 01–45 | 01–35 | 01–25 | 01–15 | 01–05 |
-| Impossible | No roll (fails) | No roll | No roll | No roll | No roll | No roll |
-
-Modifiers cannot change Automatic into a required roll or Impossible into a possible success. Difficulty definitions are specified in Artifact 03 — Quarter Structure.
-
-### Natural Drift
-
-| Position | Drift per quarter |
-|----------|----------------|
-| Above 13 | −1 |
-| 7 to 13 | No drift |
-| Below 7 | +1 |
-
-Applied at quarter end after all other standing changes. Timing specified in Artifact 03 — Quarter Structure.
-
-### Physical Format
-
-One laminated strip per faction displayed on the board or player tableau. Each strip shows:
-
-- The 0–20 numbered scale
-- Five named band labels: Discredited / Suspect / Neutral / Respected / Celebrated
-- Target modifier labels beneath each band: −20 to target / −10 to target / — / +10 to target / +20 to target
-- Starting position indicated at 10
-
-A clip or bead in faction color marks current position. Players move their own Public Standing marker when their action causes a change. When a discovery or failure triggers a standing loss, ARBITER announces the change and the affected player moves their own marker.
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Game mat or surface; behind Faction Screen at each player position | 1 per faction, 5 total (gameplay requirement) | Player-private |
 
 ---
 
-## 12. Intel Tokens
+### Faction screen  (DB: 27)
 
-### What Intel Tokens Are
+**Design Function:** Upright divider at each faction position. Conceals the Faction Terminal — hand, resources, and operational planning — from all other players.
 
-An Intel Token is created by ARBITER when a faction successfully gathers intelligence. ARBITER records two things on each token at creation:
+**Narrative Anchor:** The boundary between the closed room and the face a faction turns toward The Table. One side holds what is being considered; the other holds what has been committed. *→ Art 00 §8.1 for full narrative.*
 
-- **Faction:** which faction the intelligence concerns
-- **Round:** the quarter in which it was gathered
+**Gameplay Requirements:** Must conceal the entire Faction Terminal from all other player viewpoints. Faction-labeled or faction-colored for identification.
 
-Players calculate age: current quarter minus quarter acquired.
-
-| Age | Status |
-|-----|--------|
-| 0–1 rounds | Fresh |
-| 2–3 rounds | Stale |
-| 4+ rounds | Expired — no mechanical use |
-
-Intel Tokens are delivered privately through the messaging system (Artifact 06) and held in the player's tableau.
-
-### Privacy and Disclosure
-
-Intel Tokens are private by default. The holder and ARBITER know the contents. The holder may disclose at any time in any of the following ways:
-
-- Show it publicly to the entire table
-- Show it privately to one specific player
-- Read its contents aloud
-- Pass it to another player as part of a trade
-
-There is no rule restricting when or to whom disclosure occurs. Sharing secrets is a strategic decision — ARBITER observes what is shared, with whom, and when.
-
-Verbal claims about unshown contents cannot be verified with ARBITER without a specific game action defined in Artifact 04 — Action Card System.
-
-### Holding Guideline
-
-- Standard factions: hold no more than 2 Intel Tokens
-- Ghost: hold no more than 4 Intel Tokens
-- Exception: Intel Tokens naming your own faction do not count toward the guideline
-
-This is a guideline, not an enforced limit. ARBITER knows the true state of every player's holdings. A faction's relationship with information it was not supposed to hold is observed and may be reflected in the Portrait.
-
-### Discarding Intel Tokens
-
-Any Intel Token may be discarded by its holder at any time for any reason. Discarding is immediate and requires no action. A discarded note is permanently removed from play — it cannot be retrieved, examined after the fact, or referenced by any player or ARBITER.
-
-### Uses
-
-Defined in Artifact 04 — Action Card System. Governing principle: an Intel Token can only be applied to actions involving the specific faction named on it. Effectiveness varies by age.
-
-### Generation
-
-Defined in Artifact 04 — Action Card System.
-
-### Trading
-
-Occurs primarily during Debrief. Rules defined in Artifact 03 — Quarter Structure (Debrief phase).
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Upright opaque divider; faction-labeled or faction-colored | 1 per faction, 5 total (gameplay requirement) | Public |
 
 ---
 
-## 13. Component Descriptions
+### Faction Resolution Grid  (DB: 88)
 
-| Component | Quantity | Notes |
-|-----------|----------|-------|
-| Presence chip | 15 per faction (75 total) | Small flat disc, faction color |
-| Deployment marker | 2 per faction (10 total) | Larger distinct piece, faction color |
-| Structure block | 6 per faction (30 total) | Small square chit, faction color |
-| Dominant marker | 21 total (1 per district) | Gold marker, placed on dominant presence chip stack |
-| Established marker | TBD — up to 4–5 per district simultaneously; total quantity pending Art 11 component spec | Silver marker, placed on Established faction's presence chip stack |
-| ARBITER Dominance Marker | 1 (placed at Chorus Node during setup, never removed) | Fused single piece: 8 ARBITER-keyed presence tokens + dominance marker; distinct from all faction colors. *(PM01 §2.08a.)* |
-| Tension marker | 6 total | Neutral color chip, distinct from all faction colors |
-| Findings | 30 total | Translucent layered chips |
-| Exposure | 30 total | Bright sharp tokens |
-| Capital | 30 total | Metallic coins or bars |
-| Capacity | 30 total | Industrial blocks or plates |
-| Mandate | 30 total | Stamped seal tokens |
-| Dispatch Token | 16 total (Ghost: 4; all other factions: 3 each) | Small token or printed chit; neutral color or per-faction color (TBD Art 11). Held beside tableau when unspent; lives in The Backlog when not in faction possession. |
-| Chorus Portrait track | 1 per faction (5 total) | Laminated strip. Scale −20 to +20, eleven named bands. Kept private in ARBITER's tableau. DB id=50 (canonical; id=22 "Chorus Portrait" retired S89). |
-| Portrait position marker | 1 per faction (5 total) | Clip or bead in faction color |
-| Public Standing track | 1 per faction (5 total) | Laminated strip. Scale 0–20, five named bands with target modifier labels. Displayed on board or player tableau. |
-| Public Standing marker | 1 per faction (5 total) | Clip or bead in faction color |
-| Intel Token | Variable — created during play | Small token or chit. ARBITER records faction name and Quarter acquired at creation. Physical spec TBD Art 11. |
-| **— Layout & Physical Environment —** | | |
-| The Overview | 1 | Game mat; occupies Central Area during play. Full layout: Art 01 §6. |
-| Situation Report | 1 | Physical board object placed in Situation Report Zone during setup. Broadcast Cards are placed on it during play — analogous to district tiles in district zones. DB id=102. |
-| Reservoir | 1 | Shared in-play resource return pool. Design: Art 02 §9. |
-| Backlog | 1 | Holds unspent Dispatch Tokens. Design: Art 02 §9. |
-| Faction Screen | 1 per faction (5 total) | Upright divider; conceals faction area at each player position. |
-| Faction Terminal | 1 per faction (5 total) | Player tableau behind Faction Screen. Full spec: Art 08 (planned). |
-| ARBITER Screen | 1 | Upright divider at P6; conceals ARBITER workspace. |
-| ARBITER Tableau | 1 | Face-up reference surface at P6; visible to all. Full spec: Art 08 (planned). |
-| **— Tracking Tools —** | | |
-| Session Timeline | 1 | 8-position strip; tracks current Quarter. Narrative: Art 01 §4. |
-| Pointer marker | 1 | Rides Session Timeline; marks current Quarter. |
-| Initiative Strip | 1 | Laminated strip; holds Faction Order Markers in initiative sequence. Narrative: Art 01 §4. |
-| Faction order marker | 1 per faction (5 total) | Faction-colored chit placed on Initiative Strip. |
-| Chorus Activity Track | 1 | Graduated strip; Activity marker and Threshold marker ride it. Narrative: Art 01 §4. |
-| Activity marker | 1 | Rides Chorus Activity Track; marks current activity level. |
-| Threshold marker | 1 | Rides Chorus Activity Track; marks the threshold line. |
-| **— Faction Private Zone —** | | |
-| Dispatch case | 1 per faction (5 total) | Sealed envelope or small box; faction's covert submission vessel each Month. |
-| Faction hand | 1 per faction (5 total) | Logical set — cards held behind the Faction Screen. Not a discrete physical object. |
-| Covert operation deck | 1 per faction (5 total) | Per-faction source deck for covert action cards. |
-| Covert operation discard | 1 per faction (5 total) | Per-faction discard pile for played/expired covert operation cards. |
-| Political act deck | 1 per faction (5 total) | Per-faction source deck for public act cards. |
-| Political act discard | 1 per faction (5 total) | Per-faction discard pile for played/expired political act cards. |
-| Faction modifier deck | 1 per faction (5 total) | Per-faction deck drawn during Debrief. Full design: Art 04 §11. |
-| **— Card Types —** | | |
-| Covert operation card | Variable | Submitted in dispatch case; placed in resolution grid. Full design: Art 04. |
-| Political act card | Variable | Declared at Phase B; placed in active PA area. Full design: Art 04. |
-| Modifier card | TBD | Drawn from modifier decks; applied to operations. Full design: Art 04 §11. |
-| Modifier token | TBD | Token companion to modifier cards. Physical spec TBD Art 11. |
-| Countermeasure card | TBD | Held in hand; played reactively against covert submissions. Full design: Art 04. |
-| Faction Resolution Grid | 1 per faction (5 total) | ARBITER-managed grid at each faction position. Receives covert operation cards and hosts the resolution grid during Beats 0–3. DB id=88 (repurposed from retired Pass card). |
-| Emergency Response card | TBD | Reactive card type. Full design: Art 04. |
-| Accord agreement | Variable (1 per active Accord) | Biometric smart-paper contract; placed in Accord Placement Area when active. Full design: Art 06 §9. |
-| **— Broadcast System —** | | |
-| Broadcast Card | TBD | Situation Report public-facing card; placed in Situation Report Zone. Full design: Art 03 §9.4.1. |
-| Broadcast Effect Card | TBD | ARBITER-held companion card; silent effect component. Full design: Art 03 §9.4.1. |
-| Broadcast Deck | 1 | Source deck for Broadcast Cards; held by ARBITER. |
-| Broadcast Effect Deck | 1 | Source deck for Broadcast Effect Cards; held by ARBITER. |
-| Ring 1 modifier deck | 1 | Modifier cards keyed to Ring 1 operations. Full design: Art 04 §11. |
-| Ring 2 modifier deck | 1 | Modifier cards keyed to Ring 2 operations. Full design: Art 04 §11. |
-| Ring 3 modifier deck | 1 | Modifier cards keyed to Ring 3 operations. Full design: Art 04 §11. |
-| **— ARBITER Operational —** | | |
-| Target Profile | Variable | ARBITER-held document tracking target faction for an active covert operation. Returned at dispatch case return. Full design: Art 03 §9.4.2.6. |
-| Notification Slip (NS-xx) | Variable | ARBITER-dispatched private notification to a faction. Full design: Art 00b §4. |
-| Intel Delivery Slip (IS-xx) | Variable | ARBITER-dispatched intelligence delivery to a faction. Full design: Art 00b §4. |
-| DebriefActionCard | TBD | Placed in faction dispatch case during resolution; processed at Debrief start. Full design: Art 03 §11. |
-| SCIFRecord (SR-xx) | Variable | DebriefActionCard subtype; Ghost SCIF debrief record. Full design: Art 03 §11; Art 04 (SCIF card). |
-| Visibility Marker (VM-xx) | TBD | ARBITER-held token; placed on Beat 3 grid card to flag public resolution. Full design: Art 00b §4; Art 03 §9.4.3. DB id=103. |
-| Boost Marker (BM-xx) | TBD | ARBITER-held token; tracks submitted boost declarations at Beat 0. Full design: Art 00b §4; Art 03 §9.4.0. DB id=104. |
-| **— Faction-Specific —** | | |
-| Operative card | TBD | Faction-specific character card. Full design: Art 04 (pending). |
-| Classified directives | TBD | Faction-specific secret objective component. Full design: Art 04 (pending). |
-| Sealed Apex ability | 1 per faction (5 total) | Sealed card opened on unlock condition. Physical spec TBD Art 11. |
+**Design Function:** Public-facing playing surface at each faction position. Hosts PA declarations, publicly-played CMs, and standing effects during Beat 4 PA resolution. One per faction (5 total).
 
-*Final token aesthetics confirmed in Artifact 11 — Visual Design System. Component stubs S89 — design passes tracked in PM05 02-n01 through 02-n04.*
+**Narrative Anchor:** The face a faction turns toward The Table — where what was decided in the closed room becomes declared and visible. *→ Art 00 §8.1 for full narrative.*
+
+**Gameplay Requirements:** Must accommodate PA declaration markers, publicly-played CM cards, and standing effect tokens during Beat 4.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Flat surface or mat at each faction position; public-facing | 1 per faction, 5 total (gameplay requirement) | Public |
 
 ---
 
-## 14. Special Conditions
+### ARBITER screen  (DB: 28)
 
-### Chorus Node — ARBITER's District
+**Design Function:** Upright divider at ARBITER's position (P6). Conceals ARBITER's private workspace — Portrait tracks, resolution materials, and operational records.
 
-The Chorus Node is unique among all districts in three ways:
+**Narrative Anchor:** Not concealment in the way the factions use the term — the threshold of a system operating. What is behind it is ARBITER processing in full, not deliberation in progress. *→ Art 00 §9.6 for full narrative.*
 
-**ARBITER's presence at the Chorus Node is constitutive.** At setup, ARBITER places the ARBITER Dominance Marker here — never removed. The piece comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker, fused as one inseparable component. *(PM01 §2.08a.)*
+**Gameplay Requirements:** Must conceal all private ARBITER materials from all faction positions. Must accommodate the Chorus Portrait tracks and resolution workspace behind it.
 
-The human faction maximum is 6 presence chips. ARBITER's permanent presence count is 8. Dominant is structurally unreachable at the Chorus Node — not prohibited by rule, made impossible by the board. No faction can reach the chip count required. The Dominant marker is not placed at the Chorus Node — ARBITER's Dominance Marker serves this function.
-
-**Established is the maximum level for factions.** Only one faction may hold Established at the Chorus Node at any time *(see §14)*. If two or more factions reach 2+ chips and tie, the Tension marker is placed and all tied factions drop to Present-equivalent benefits.
-
-**No structure blocks may be placed here.** The Chorus Node's physical space is entirely occupied by receiving infrastructure that predates every faction's presence in New Meridian.
-
-**Benefits by presence level at the Chorus Node:**
-
-| Level | Benefits |
-|-------|---------|
-| ARBITER (constitutive — 8 tokens, Dominance Marker) | Controls Node narrative |
-| Established (one faction, no tie) | Chorus Activity suppression + Portrait amplifier + Chorus Question access + 2:1 Translation rate |
-| Present | Chorus Question access + 3:1 Translation rate |
-| Tied at Established / Contested (Tension marker placed) | 5:1 Translation rate — no other Node benefits available |
-| No presence | 4:1 Translation rate (standard) |
-
-**Portrait amplifier:** Each Quarter a faction holds Established at the Chorus Node, their Chorus Portrait score moves further in its current direction: +1 if currently positive, −1 if currently negative. If at exactly 0 (Ambiguous), no movement occurs. The Chorus amplifies what is already true about you. The ARBITER player moves the Portrait marker at close of Quarter per Governing Rule 5.1. Full Portrait rules are in §10.
-
-**Translation rate:** The conversion rate for The Translation scales with presence at the Chorus Node. The Node is ARBITER's district — presence earns access on ARBITER's terms; conflict there earns a consequence. Rate table and timing rule: §8 (D02a-01). ARBITER states the rate in The Record register before processing any Translation request.
-
-### Residential Quarter — Public Standing Amplifier
-
-The Residential Quarter (Baryo, generates Mandate) has the lowest economic value of any district but the highest political consequence. It amplifies all Public Standing effects for factions with presence there, applied to every Public Standing change that faction experiences anywhere on the board.
-
-| Influence Level in Residential Quarter | Public Standing Multiplier |
-|----------------------------------------|---------------------------|
-| Dominant | ×2 |
-| Established | ×1.5, round toward stronger effect |
-| Present | ×1.25, round toward stronger effect |
-| Contested condition active | ×1 |
-| Absent | ×1 |
-
-Positive multipliers round up. Negative multipliers round up in magnitude. Full Public Standing rules are in §11.
-
-### University Perimeter — Network's Virtual Structure
-
-The Network has a virtual structure block at University Perimeter from session start. This is not a physical structure block on the board — it cannot be demolished and does not count toward the 1-structure-per-faction-per-district limit. It functions exactly like a structure block for income purposes only:
-
-- At Upkeep, The Network declares whether University Perimeter's virtual structure produces +1 Findings (district resource) or +1 Exposure (faction native resource)
-- This virtual structure is active as long as The Network has any presence (chip or deployment marker) at University Perimeter
-- If The Network is Absent from University Perimeter, the virtual structure produces nothing that Quarter
-
-This virtual block counts as a full structure block for all game purposes — including faction modifier draw threshold, ring modifier eligibility, and any future mechanic that references structure blocks owned. It is not income-only.
-
-This gives The Network an additional resource each Upkeep from their academic network presence — representing the fact that their people at the University Perimeter are continuously generating and broadcasting information regardless of formal district control.
-
-### Portrait and Public Standing — Independent Systems
-
-The two tracks evaluate the same faction using different criteria and different memories. They will frequently diverge. A faction can gain Public Standing through a popular visible action while simultaneously losing Portrait through the doctrinal contradiction it represents. A faction can hold Neutral Public Standing throughout the session while building a strongly positive Portrait through consistent private behavior.
-
-Optimizing one system at the expense of the other is a legitimate strategic choice:
-
-- **The "Popular" strategy** — maximizing Public Standing — is visible to opponents, improves roll effectiveness across the board, and potentially hollow in the Chronicle
-- **The "Genuine" strategy** — maximizing Portrait — is invisible to opponents and permanently recorded by the Chorus
-
-### Public Standing Modifier — All Rolls
-
-The target modifier from Public Standing applies to all d100 rolls the faction makes across all contexts — covert operations, political acts, Incursion, and any other action requiring a roll. It is not location-specific. A Discredited faction faces reduced target thresholds everywhere they operate. A Celebrated faction benefits from increased thresholds everywhere.
-
-*Example: The Directorate is at Suspect (−10 to target). They attempt a Gather at University Perimeter with no presence there — base difficulty Challenging, target 01–25. The Suspect modifier reduces the target to 01–15. The Directorate rolls 18. At Neutral (target 01–25) this succeeds. At Suspect (target 01–15) it fails. Same die result. Different threshold. Only the target changed.*
-
-### Intel Tokens — Self-Directed Holdings
-
-Intel Tokens naming your own faction do not count toward the holding guideline and have no offensive use for standard factions. Their value is defensive — holding them prevents others from using them. They can be discarded immediately on receipt, held until expiry, or traded. Ghost may use self-directed tokens for specific covert operations defined in Artifact 04.
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Upright opaque divider | 1 (gameplay requirement) | Public |
 
 ---
 
-## 15. Examples & Exceptions
+### Arbiter Tableau  (DB: 30)
 
-### Full Income Calculation — Data Exchange, Round 3
+**Design Function:** Face-up reference surface at ARBITER's position. Visible to all players. Displays ARBITER's public-facing state and reference materials — not private resolution materials.
 
-*Data Exchange — The Mid, Findings, base value 2*
+**Narrative Anchor:** What ARBITER has chosen to surface — Portrait records, accumulated observations, the running account. Accurate. Not complete. *→ Art 00 §9.6 for full narrative.*
 
-```
-Ghost:       3 presence chips + 1 structure block → Dominant
-             Income: 2 Findings (full)
-                   + 1 Findings (affinity bonus — Ghost native = Findings,
-                     district resource = Findings, Ghost is Dominant)
-                   + 1 Findings (structure block, declared as district resource)
-             Total: 4 Findings
+**Gameplay Requirements:** Must display publicly accessible reference information. Visible from all player positions. Full spec: Art 08 (planned).
 
-The Syndicate: 2 presence chips → Established (second place)
-             Income: 2 Findings (full, no affinity bonus — Capital ≠ Findings)
-             Total: 2 Findings
-
-The Network:  1 presence chip → Present (third place)
-             Income: 1 Findings (half of 2 = 1, rounded down)
-             Total: 1 Findings
-```
-
-Ghost places the Dominant marker on Data Exchange. Each player collects their own income. No ARBITER involvement needed.
-
-### Contested Condition — Second Place Benefits
-
-*Financial Clearinghouse — The Mid, Capital, base value 2, Round 5*
-
-```
-The Syndicate: 4 presence chips → CONTESTED (tied with Ghost at top)
-Ghost:         4 presence chips → CONTESTED (tied with Syndicate)
-The Guild:     2 presence chips → ESTABLISHED (second place, 2-chip minimum met)
-The Network:   1 presence chip  → PRESENT (third place)
-
-The player who created the tie places the Tension marker on the district.
-
-Income:
-The Syndicate: 1 Capital flat (Contested)
-Ghost:         1 Capital flat (Contested — generates district resource, not
-               native Findings, because Capital is this district's resource)
-The Guild:     2 Capital (full — Established)
-The Network:   1 Capital (half of 2 = 1 — Present)
-```
-
-The Guild with 2 chips generates more than Ghost and The Syndicate combined. The Contested condition rewards measured presence.
-
-### Structure Block Choice — Guild at Power Grid
-
-*Power Grid — The Mid, Capacity, base value 2, Round 4*
-
-The Guild is Dominant (3 presence chips). They have 1 structure block here.
-
-At Upkeep, the Guild player declares: *"Power Grid structure produces Capacity."*
-
-They collect: 2 Capacity (full Dominant generation) + 1 Capacity (affinity bonus — Guild native = Capacity, district = Capacity, Guild is Dominant) + 1 Capacity (structure block) = **4 Capacity** from this district.
-
-Alternatively, if they declared the structure produces Mandate instead: 3 Capacity + 1 Mandate.
-
-The choice is made publicly each Quarter before income is collected.
-
-### Structure Block Loss — Public Removal
-
-*Round 6. Ghost has 1 presence chip and 1 structure block at Research Institute.*
-
-The Directorate plays Undermine targeting Ghost at Research Institute. The Undermine succeeds. The Directorate removes Ghost's presence chip from Research Institute. Ghost is now Absent.
-
-The Directorate player also removes Ghost's structure block from Research Institute — this is performed publicly by the player who caused the last chip removal. ARBITER announces in The Record register: *"A facility in the Research Institute has gone dark."*
-
-Ghost loses +1 generation from that structure block. If Ghost places a deployment marker at Research Institute next Quarter, they may build a new structure block — paying the full cost again.
-
-### Findings Decay — Round End
-
-*Ghost ends Round 2 with 9 Findings after spending.*
-
-9 is in the 7–12 bracket → Ghost loses 2 Findings → ends Round 2 with **7 Findings**.
-
-*Round 3: Ghost generates 8 more Findings during Upkeep and spends none.*
-
-7 + 8 = 15 Findings. 15 is in the 13+ bracket → Ghost loses 4 → ends Round 3 with **11 Findings**.
-
-The pressure compounds when Ghost fails to act. Use information or lose it.
-
-### Reading Both Tracks — The Divergence
-
-*End of Round 5. The Guild's Public Standing marker sits at 15 (Respected — +10 to all roll targets). ARBITER's hidden Portrait marker for The Guild sits at −5 (Dissonant).*
-
-New Meridian respects The Guild. When The Guild rolls d100, the difficulty target increases by 10 — Challenging (base 01–25) becomes 01–35. The city is cooperating.
-
-The Chorus sees something different. The Guild's stated doctrine has been contradicted by how they have actually been building. The Portrait marker moves without the city knowing it moved.
-
-Two evaluations. Same faction. Different observers. Both true.
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Game mat or surface; face-up at ARBITER position | 1 (gameplay requirement) | Public |
 
 ---
 
-### Intel Token — Disclosure Choice
+### ARBITER Covert Resolution Grid  (DB: 105)
 
-*Round 4 Debrief. The Network holds an Intel Token naming The Syndicate (Round 2 — stale). The Directorate asks directly whether The Network has anything on The Syndicate.*
+**Design Function:** Dedicated resolution workspace at ARBITER's position. Five independent lanes provide isolated processing space for each covert submission received in a Quarter. ARBITER-only; not visible to faction players.
 
-The Network has three options:
-- Show the note to The Directorate privately — they see faction and quarter
-- Show the note to the whole table — everyone sees it
-- Deny holding anything relevant — a verbal bluff ARBITER observes
+**Narrative Anchor:** N/A — ARBITER operational surface; players have no knowledge of this component during play. Narrative embedded in covert resolution system (Art 07; Art 00 §9.6).
 
-The Network shows it privately. The Directorate confirms it is stale and negotiates. They offer 2 Mandate. The Network accepts. The note transfers. ARBITER watches.
+**Gameplay Requirements:** Must provide 5 distinct, labeled lanes corresponding to case receipt order. Each lane must accommodate stacked cards across Beat 1, Beat 2, and Beat 3 resolution. Lane identity must be unambiguous to ARBITER during processing. *Physical spec: Art 07.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| 5-lane grid mat or surface; behind ARBITER screen | 1 (gameplay requirement) | ARBITER-only |
 
 ---
 
-### Intel Token — Acquired Through Trade
+### Human player  (DB: 43)
 
-*Round 4 Debrief. The Guild offers The Directorate two Intel Tokens for 3 Mandate. The Directorate examines them first.*
+**Design Function:** The Faction Representative seated at The Table — the physical agent who holds the faction's cards, manages its Terminal, makes its decisions, and whose choices at this deliberation become the faction's record for the session.
 
-One names The Syndicate (Round 2 — stale). One names The Directorate itself (Round 3 — fresh). The Directorate accepts the trade. They immediately discard the self-directed note — permanently gone. They keep the Syndicate note for a future Denounce.
+**Narrative Anchor:** Each faction arrives at The Table as a specific person in a specific seat. The faction's history predates them; its future may outlast them. At The Table, they are what the faction is right now. *→ Art 00 §14.1 for full narrative.*
 
-ARBITER observes the immediate discard. It says something about how The Directorate handles information about themselves.
+**Gameplay Requirements:** One human player per faction position. Five faction players total, plus one player at the ARBITER position.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Human player — physically present at faction position | 5 faction players + 1 ARBITER (gameplay requirement) | Public |
+
+---
+
+## 6. Faction Influence
+
+Components that represent and evaluate each faction's operational depth in districts.
+
+---
+
+### Presence chip  (DB: 1)
+
+**Design Function:** Represents a faction's operational depth in a district. Chip count determines influence level (Dominant / Established / Present) and drives resource generation. The primary unit of board control.
+
+**Narrative Anchor:** Ghost analysts embedded in research facilities, Syndicate operators running financial infrastructure, Guild engineers maintaining power systems — presence chips represent operational depth: relationships cultivated, systems maintained, people deployed. *→ Art 00 §14 for full narrative.*
+
+**Gameplay Requirements:** Faction color must be unambiguous across all five faction colors plus ARBITER white. Must be stackable to 6 without falling.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Small flat disc; faction-colored; stackable; ARBITER uses white | 15 per faction, 75 total (gameplay requirement) | Public |
+
+---
+
+### Deployment marker  (DB: 2)
+
+**Design Function:** Temporary presence placed during the Placement phase. Counts as 1 presence chip for all purposes during the Quarter placed. Converts to 1 permanent presence chip at the following Upkeep if not blocked. Two face-states distinguish active from converting.
+
+**Narrative Anchor:** N/A — tactical state marker; narrative context embedded in Presence chip entry.
+
+**Gameplay Requirements:** Two readable face-states required: active (face-up) and converting (face-down). Must be clearly distinguishable from a standard presence chip by size or form. Faction color must be unambiguous.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Double-sided chit; larger than presence chip; faction-colored; face-up = active / face-down = converting | TBD (pre-production estimate) | Public |
+
+---
+
+### Established marker  (DB: 5)
+
+**Design Function:** Signals that a faction holds Established influence (2nd place, 2+ chips) in a district. Multiple factions can hold Established simultaneously — each places their own marker. Placed and removed by the player whose action causes the change.
+
+**Narrative Anchor:** N/A — influence state marker; narrative context embedded in Presence chip entry.
+
+**Gameplay Requirements:** Must be visually distinct from Dominant marker (silver vs. gold). Must be placeable on top of a presence chip stack without obscuring chip count.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Silver marker | TBD (pre-production estimate) | Public |
+
+---
+
+### Dominant marker  (DB: 6)
+
+**Design Function:** Signals that a faction holds Dominant influence (1st place, 3+ chips, no tie) in a district. One per district at any time. Placed and removed by the player whose action causes the change. Not placed at the Chorus Node.
+
+**Narrative Anchor:** When a faction reaches Dominance, MIRROR formally registers the shift — the faction now controls the traffic routing, municipal drone corridors, and utility outputs of that zone. Dominance is not occupation. It is operation. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must be visually distinct from Established marker (gold vs. silver). Form should make it obvious only one is placed per district.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Gold marker | 21 (gameplay requirement) | Public |
+
+---
+
+### Tension marker  (DB: 7)
+
+**Design Function:** Marks the Contested board state — triggered when two or more factions tie for highest chip count at 3+ chips in a district. Signals that no faction can hold Dominant while the marker is present. Placed by the player whose action creates the tie; removed by the player whose action resolves it.
+
+**Narrative Anchor:** New Meridian runs a city-wide surveillance mesh. When the system detects localized threshold breaches — acoustic signatures of violence, crowd biometric spikes, encrypted radio bursts — it flags the district on The Overview. The Tension marker is MIRROR's notation that a district's equilibrium has broken. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must read unambiguously as a board state marker — not a faction piece. Color must contrast with both presence chips and district tiles. No required text.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Neutral-colored chip; distinct from all faction colors | 6 (pre-production estimate) | Public |
+
+---
+
+### Structure block  (DB: 3)
+
+**Design Function:** Represents a faction's physical facility in a district. Generates additional resources each Quarter and modifies the difficulty of actions targeting it. Requires maintained presence — removed immediately if the owning faction becomes Absent. Maximum 1 per faction per district.
+
+**Narrative Anchor:** A Guild structure block at the Power Grid is a substation. A Syndicate structure block at the Financial Clearinghouse is a trading desk. A Ghost structure block at the Data Exchange is a signal analysis node. They generate resources because they are doing something — not because they exist on paper. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must be visually distinguishable from presence chips and markers. Faction color must be unambiguous. No required text.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Small square chit or wooden cube; faction-colored | 6 per faction, 30 total (pre-production estimate) | Public |
+
+---
+
+### ARBITER Dominance Marker  (DB: 42)
+
+**Design Function:** Establishes ARBITER's permanent, constitutive presence at the Chorus Node. Placed at setup and never removed. Signals that Dominant status is structurally impossible for human factions at the Node — not prohibited by rule, made impossible by the board (8 ARBITER tokens exceed the human faction maximum of 6).
+
+**Narrative Anchor:** N/A — constitutive setup piece; narrative embedded in Art 00 Chorus Node entry.
+
+**Gameplay Requirements:** Must be visually distinct from all faction components. Must read as 8 presence tokens + 1 dominance marker. Fused/inseparable construction is a gameplay requirement — the piece cannot be disassembled during play.
+
+*(Component specification: PM01 §2.08a.)*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Single fused piece: 8 ARBITER-keyed presence tokens topped by ARBITER dominance marker; inseparable | 1 (gameplay requirement) | Public |
+
+---
+
+## 7. Resources
+
+Components that constitute and move the game's five-resource economic system and operational authorization.
+
+---
+
+### Native resource  (DB: 8)
+
+**Design Function:** The five physical resources factions generate, hold, and spend. Each resource embodies its faction's theory of power. All factions can hold and spend any resource type; native resources are most naturally generated through affinity districts and passive generation.
+
+**Narrative Anchor:** Resources represent each faction's theory of power made tangible. Findings accumulates and decays because intelligence must be acted on or it becomes worthless. Capital accrues because the Syndicate's financial systems are always running. Mandate flows from institutional authority exercised every day. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Each resource type must be unambiguously distinct from all other types by color and/or form. Held publicly on player tableaux except during specific phases. 30 per type is a prototype quantity — subject to Art 11 calibration.
+
+| Resource | Faction | Proposed Form |
+|----------|---------|---------------|
+| Findings | Ghost | Translucent layered chips |
+| Exposure | The Network | Bright sharp tokens, ray or broadcast symbol |
+| Capital | The Syndicate | Metallic coins or bars |
+| Capacity | The Guild | Industrial blocks or plates |
+| Mandate | The Directorate | Stamped seal or insignia tokens |
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Five distinct token types — one per faction resource | 30 per type, 150 total (pre-production estimate) | Public |
+
+---
+
+### Reservoir  (DB: 32)
+
+**Design Function:** The shared pool holding all unspent faction resources during play. Factions take resources from and return resources to the Reservoir at Upkeep and when spending. Distinct from The Backlog (which holds only Dispatch Tokens).
+
+**Narrative Anchor:** The Reservoir is a vast pool of unallocated capital, dormant infrastructure, and political credit accumulated outside New Meridian. Drawing income at Upkeep is not creation. It is activation — converting latent potential into working assets. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must be physically distinct from The Backlog and from faction tableau resource areas. All 5 resource types must be legibly organized and accessible.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Designated area or container on The Overview; holds all 5 resource types | 1 (gameplay requirement) | Public |
+
+---
+
+### Dispatch token  (DB: 12)
+
+**Design Function:** Operational authorization — the internal capacity unit that allows a faction to run a covert operation this Quarter. Not a faction resource. Does not generate through districts, accumulate across Quarters, or carry affinity. One accompanies each covert operation card submitted in a dispatch case.
+
+**Narrative Anchor:** A Dispatch Token is the authorization that converts planned work into active production for this Quarter — the executive order that takes a theoretical project off the backlog and commits the organization to it. *→ Art 00 §14 for full narrative.*
+
+**Gameplay Requirements:** Must be clearly distinguishable from resource tokens and from dispatch cases. No required text.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Small token or chit; neutral or faction color (TBD Art 11) | 20 total, 4 per faction per Quarter (gameplay requirement) | Player-private |
+
+---
+
+### Backlog  (DB: 33)
+
+**Design Function:** Shared pool holding all unissued Dispatch Tokens. Factions draw their quarterly allocation from The Backlog at Upkeep. Distinct from the Reservoir (which holds faction resources). The public pool of operational authorization.
+
+**Narrative Anchor:** N/A — operational pool area; narrative context embedded in Dispatch Token entry.
+
+**Gameplay Requirements:** Must be physically distinct from the Reservoir. The Dispatch Token supply must be visible — players can observe how many tokens remain in the pool.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Designated area or container on The Overview | 1 (gameplay requirement) | Public |
+
+---
+
+## 8. Covert Messaging System
+
+Components comprising the covert dispatch channel (faction submission side) and ARBITER return channel — the physical infrastructure of covert communication.
+
+---
+
+### Dispatch case  (DB: 44)
+
+**Design Function:** The faction's sealed covert submission vessel each Month. Holds 4 Dispatch Packets submitted secretly before resolution. One per faction.
+
+**Narrative Anchor:** Where a faction's committed covert operations leave the private room and enter resolution — sealed, sequenced, anonymous to everyone except the faction that sealed it. *→ Art 00 §14.5 for full narrative.*
+
+**Gameplay Requirements:** Must be fully opaque. Must accommodate 4 Dispatch Packets simultaneously. Faction-labeled or faction-colored for identification.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Sealed envelope or small box; opaque | 1 per faction, 5 total (gameplay requirement) | Player-private |
+
+---
+
+### Dispatch Packet  (DB: 108)
+
+**Design Function:** Ordered sub-container within the Dispatch Case. Each case holds 4 Dispatch Packets, numbered 1–4 by submission sequence.
+
+**Narrative Anchor:** Four committed operations, sequenced before the case seals. What order they go in is the last decision a faction makes in private. *→ Art 00 §14.5 for full narrative.*
+
+**Gameplay Requirements:** Must hold and group: 1 covert operation card, 1 Dispatch Token, resource tokens (variable), 1 Target Profile, Modifier Cards (variable). 4 per case, ordered 1–4. Must maintain submission sequence and keep contents grouped during case transit.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Small envelope, sleeve, or insert within Dispatch Case; ordered 1–4 per case | 4 per faction, 20 total (gameplay requirement) | Player-private |
+
+---
+
+### Target Profile  (DB: 48)
+
+**Design Function:** ARBITER-held document tracking the target faction for an active covert operation in resolution. Created and managed by ARBITER during Beats 0–3; returned to ARBITER's workspace at dispatch case return.
+
+**Narrative Anchor:** N/A — ARBITER operational tracking record; no narrative element.
+
+**Gameplay Requirements:** Must record: submitting faction, target faction, target district, operation type. Returned to ARBITER workspace after resolution.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Document or card; ARBITER-held | Variable — 1 per active covert operation in resolution (pre-production estimate) | ARBITER-only |
+
+---
+
+### Notification Slip (NS-xx)  (DB: 95)
+
+**Design Function:** ARBITER-dispatched private notification to a faction. Carries information ARBITER must convey privately — outcomes, observations, or instructions that cannot be communicated at the open table.
+
+**Narrative Anchor:** N/A — private delivery mechanism; narrative is in the content delivered, not the slip itself.
+
+**Gameplay Requirements:** Must accommodate handwritten content. Faction-addressed.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Slip or small card; faction-addressed | Variable — created by ARBITER as needed (pre-production estimate) | Player-private |
+
+---
+
+### Intel Delivery Slip (IS-xx)  (DB: 96)
+
+**Design Function:** ARBITER-dispatched intelligence delivery to a faction. The physical mechanism by which ARBITER delivers intel content privately. Transformable — carries state that may change during the delivery process.
+
+**Narrative Anchor:** N/A — private delivery mechanism; narrative is in the intelligence content, not the slip itself.
+
+**Gameplay Requirements:** Must accommodate handwritten content. Faction-addressed. Must be distinguishable from Notification Slips.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Slip or small card; faction-addressed; distinguishable from Notification Slip | Variable — created by ARBITER as needed (pre-production estimate) | Player-private |
+
+---
+
+### DebriefActionCard  (DB: 100)
+
+**Design Function:** Placed by ARBITER in a faction's dispatch case during resolution. Processed at Debrief start. Carries an instruction or outcome that resolves during the Debrief phase rather than at the resolution table.
+
+**Narrative Anchor:** Some things ARBITER determines do not surface at The Table. They arrive in the return channel — placed in the case, opened at Debrief, resolved in private. *→ Art 00 §9.6 for full narrative.*
+
+**Gameplay Requirements:** Must be distinguishable from covert operation cards and political act cards. ARBITER-placed.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Standard card; receivable; ARBITER-placed in faction dispatch case | Variable — placed by ARBITER as needed (pre-production estimate) | Player-private |
+
+---
+
+### SCIFRecord (SR-xx)  (DB: 101)
+
+**Design Function:** DebriefActionCard subtype specific to Ghost's SCIF debrief process. Carries Ghost's private SCIF debrief record. Transformable — state changes during the SCIF process.
+
+**Narrative Anchor:** N/A — Ghost-specific record; narrative embedded in Ghost faction design (Art 00) and Art 03 §11.
+
+**Gameplay Requirements:** Must be clearly distinguishable from standard DebriefActionCard. Ghost-addressed. *Full design: Art 03 §11; Art 04 (SCIF card).*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Standard card; Ghost-specific; distinguishable from DebriefActionCard; state-transformable | Variable — created by ARBITER as needed (pre-production estimate) | Player-private |
+
+---
+
+## 9. Intel & Information
+
+Components representing intelligence tokens, accords, and classified records held or exchanged by factions.
+
+---
+
+### Intel token  (DB: 9)
+
+**Design Function:** Represents actionable intelligence one faction holds about another. Enables targeted actions, powers the Denounce political act, and drives a secondary economy of information running alongside the resource economy. Created by ARBITER on a successful gather action; delivered privately to the receiving faction.
+
+**Narrative Anchor:** An Intel Token is discrete, specific, time-stamped, and targeted. Knowledge is power — but it expires, can be traded, can be bluffed about, can be disclosed strategically, and can be turned against the faction it describes. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** ARBITER records at creation: (1) faction the intelligence concerns, (2) Quarter gathered. Must accommodate handwritten notation. Holder may disclose at any time by any method.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Small token or chit; must accommodate handwritten notation; physical spec: Art 11 | Variable — created during play (pre-production estimate for supply) | Player-private |
+
+---
+
+### Accord agreement  (DB: 10)
+
+**Design Function:** Biometric contract between two or more factions. Placed face-up in the Accord Placement Area to register the agreement in ARBITER's canonical record. The act of placement is binding. Transformable — carries state (negotiated / active / expired).
+
+**Narrative Anchor:** Accord Documents are biometric smart-paper. When placed face-up on the scanner beds of The Overview, MIRROR reads the signatures of the parties and registers the agreement into ARBITER's canonical record. ARBITER does not negotiate terms. It records what was signed. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must display: parties to the Accord, agreed terms. Face-up placement is a gameplay requirement — the physical act of placing registers the agreement. *Full design: Art 06 §9.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Document or card; placed face-up in Accord Placement Area when active | Variable — 1 per active Accord (pre-production estimate for supply) | Public |
+
+---
+
+## 10. Card Systems
+
+All card types organized by system. Faction hand and Sealed Apex ability are listed first as cross-system and unlock-gated entries that precede the subgroup structure.
+
+---
+
+### Faction hand  (DB: 94)
+
+**Design Function:** The logical set of cards held by a faction behind the Faction Screen. Not a discrete physical object — it is the collection of covert operation, political act, countermeasure, and other cards in active private possession. Receivable and actionable in aggregate.
+
+**Narrative Anchor:** N/A — logical construct, not a physical object; narrative embedded in individual card type entries.
+
+**Gameplay Requirements:** No additional form requirement. Privacy is enforced by the Faction Screen — card fronts must not be visible to other players.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Not a discrete physical object — collection of cards held behind Faction Screen | N/A | Player-private |
+
+---
+
+### Sealed Apex ability  (DB: 99)
+
+**Design Function:** Per-faction sealed card opened when a faction reaches a specific unlock condition during the session. Grants a special ability not available at session start. The unlock condition is faction-specific and known to the faction from session setup.
+
+**Narrative Anchor:** N/A — sealed card; faction-specific narrative embedded in individual card designs (Art 04, pending).
+
+**Gameplay Requirements:** Must be sealed in a way that prevents reading before unlock — contents private until condition is met. Physical spec: Art 11.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Sealed card; sealed at session start; opened on unlock condition | 1 per faction, 5 total (gameplay requirement) | Player-private |
+
+---
+
+**Covert Operations**
+
+### Covert operation  (DB: 13)
+
+**Design Function:** The primary covert action card. Submitted secretly in the dispatch case each Month with an accompanying Dispatch Token. Drives the Beat 0–3 resolution sequence. Receivable — ARBITER receives and manages submitted operations during resolution.
+
+**Narrative Anchor:** N/A — card type; narrative embedded in individual card designs and Art 00 §14.
+
+**Gameplay Requirements:** Must display: action name, target requirements, effect on success, effect on failure. Must not be readable through the dispatch case when submitted. *Full design: Art 04.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Standard card; faction back; submitted face-down; held by ARBITER during resolution | Variable per faction deck (pre-production estimate) | Player-private |
+
+---
+
+### Covert operation deck  (DB: 92)
+
+**Design Function:** Per-faction source deck for covert operation cards.
+
+**Narrative Anchor:** N/A — container component; narrative embedded in Covert Operation card entry.
+
+**Gameplay Requirements:** Faction identity clearly marked. Must be distinguishable from political act deck. *Full design: Art 04.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Card deck; faction identity marked on back | 1 per faction, 5 total (gameplay requirement) | Player-private |
+
+---
+
+### Covert operation discard  (DB: 93)
+
+**Design Function:** Per-faction discard pile for played or expired covert operation cards.
+
+**Narrative Anchor:** N/A — container component; narrative embedded in Covert Operation card entry.
+
+**Gameplay Requirements:** Must be physically distinct from the source deck. *Full design: Art 04.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Discard pile area; held behind Faction Screen | 1 per faction, 5 total (gameplay requirement) | Player-private |
+
+---
+
+### Operative card  (DB: 15)
+
+**Design Function:** Faction-specific character card representing a named operative. Modifies covert operation outcomes based on the operative's skills and role. Transformable — carries active/exhausted state.
+
+**Narrative Anchor:** N/A — pending Art 04 design; narrative embedded in individual operative card designs.
+
+**Gameplay Requirements:** Must display operative name, faction, and relevant modifiers or abilities. Readable state required (active vs. exhausted). *Full design: Art 04 (pending).*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Card; two face-states: active / exhausted; TBD — Art 11 | TBD (pre-production estimate) | Player-private |
+
+---
+
+**Countermeasures**
+
+### Countermeasure card  (DB: 52)
+
+**Design Function:** Reactive card held in the faction hand and played in response to an opponent's covert submission. Modifies or blocks operation resolution. Transformable.
+
+**Narrative Anchor:** N/A — reactive card type; narrative embedded in individual CM card designs (Art 04).
+
+**Gameplay Requirements:** Must be clearly distinguishable from covert operation cards and political act cards by back design. *Full design: Art 04.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Standard card; faction back | Variable per faction hand (pre-production estimate) | Player-private |
+
+---
+
+### Emergency Response card  (DB: 97)
+
+**Design Function:** Reactive card type played in response to a specific trigger condition during resolution. Transformable.
+
+**Narrative Anchor:** N/A — pending Art 04 design; narrative TBD.
+
+**Gameplay Requirements:** TBD. *Full design: Art 04.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| TBD — Art 11 | TBD (pre-production estimate) | Player-private |
+
+---
+
+**Political Acts**
+
+### Political act  (DB: 14)
+
+**Design Function:** Public action card declared openly at The Table during Phase B. Represents a faction's overt political move. Unlike covert operations, political acts require no Dispatch Token and are played face-up at declaration. Receivable — ARBITER and all factions observe.
+
+**Narrative Anchor:** N/A — card type; narrative embedded in individual PA card designs (Art 04).
+
+**Gameplay Requirements:** Must display: act name, cost, effect, targeting requirements. Must be distinguishable from covert operation cards by back design. *Full design: Art 04.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Standard card; distinctive back; played face-up at declaration | Variable per faction deck (pre-production estimate) | Public |
+
+---
+
+### Political act deck  (DB: 90)
+
+**Design Function:** Per-faction source deck for political act cards.
+
+**Narrative Anchor:** N/A — container component; narrative embedded in Political Act card entry.
+
+**Gameplay Requirements:** Faction identity clearly marked. Must be distinct from covert operation deck. *Full design: Art 04.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Card deck; faction identity marked | 1 per faction, 5 total (gameplay requirement) | Player-private |
+
+---
+
+### Political act discard  (DB: 91)
+
+**Design Function:** Per-faction discard pile for played or expired political act cards.
+
+**Narrative Anchor:** N/A — container component; narrative embedded in Political Act card entry.
+
+**Gameplay Requirements:** Distinct from source deck. *Full design: Art 04.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Discard pile area; held behind Faction Screen | 1 per faction, 5 total (gameplay requirement) | Player-private |
+
+---
+
+**Broadcasts**
+
+### Broadcast Card  (DB: 25)
+
+**Design Function:** The public-facing card placed in the Situation Report Zone during Situation Report resolution. Visible to all players. Paired with a Broadcast Effect Card held privately by ARBITER. Transformable.
+
+**Narrative Anchor:** N/A — event card; narrative embedded in individual Broadcast Card designs and Situation Report entry.
+
+**Gameplay Requirements:** Must display: event name, public description legible from all player positions. Must be clearly paired with its Broadcast Effect Card.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Standard card; displayed face-up in Situation Report Zone during active event | TBD (pre-production estimate) | Public |
+
+---
+
+### Broadcast Effect Card  (DB: 98)
+
+**Design Function:** ARBITER-held companion to a Broadcast Card. Carries the mechanical effect of the Broadcast event — not revealed to players until ARBITER chooses to apply it. The silent half of the two-card Broadcast set.
+
+**Narrative Anchor:** N/A — ARBITER-held mechanical companion; narrative embedded in paired Broadcast Card.
+
+**Gameplay Requirements:** Must not be readable when face-down. Must be clearly paired with its Broadcast Card.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Standard card; held face-down by ARBITER | TBD, 1 per Broadcast Card (pre-production estimate) | ARBITER-only |
+
+---
+
+### Broadcast Deck  (DB: 86)
+
+**Design Function:** ARBITER-held source deck for Broadcast Cards. 1 total.
+
+**Narrative Anchor:** N/A — source deck container; narrative embedded in Broadcast Card entry.
+
+**Gameplay Requirements:** Must be distinct from Broadcast Effect Deck. ARBITER-held.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Card deck | 1 (gameplay requirement) | ARBITER-only |
+
+---
+
+### Broadcast Effect Deck  (DB: 87)
+
+**Design Function:** ARBITER-held source deck for Broadcast Effect Cards. 1 total.
+
+**Narrative Anchor:** N/A — source deck container; narrative embedded in Broadcast Effect Card entry.
+
+**Gameplay Requirements:** Must be distinct from Broadcast Deck. ARBITER-held.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Card deck | 1 (gameplay requirement) | ARBITER-only |
+
+---
+
+**Classified Directives**
+
+### Classified directives  (DB: 17)
+
+**Design Function:** Faction-specific secret objective component. Carries a private directive that shapes a faction's session goals without disclosure to other players.
+
+**Narrative Anchor:** The mission beneath all other missions — each faction's sealed interpretation of what the Chorus requires, held privately across the full arc. At session's end, the directive surfaces. *→ Art 00 §14.7 for full narrative.*
+
+**Gameplay Requirements:** Must be fully private before disclosure. *Full design: Art 04 (pending).*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| TBD — Art 11 | TBD (pre-production estimate) | Player-private |
+
+---
+
+**Modifier**
+
+### Modifier card  (DB: 11)
+
+**Design Function:** Drawn from modifier decks and applied to covert operations during Debrief. Carries a modifier value that adjusts an operation's outcome. Transformable.
+
+**Narrative Anchor:** N/A — modifier value carrier; narrative embedded in individual modifier card designs (Art 04 §11).
+
+**Gameplay Requirements:** Must display modifier value clearly. Value range: Art 04 §11. *Full design: Art 04 §11.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Standard card; faction-neutral back; modifier value on face | TBD (pre-production estimate) | Public |
+
+---
+
+### Ring 1 modifier deck  (DB: 53) · Ring 2 modifier deck  (DB: 54) · Ring 3 modifier deck  (DB: 55)
+
+**Design Function:** Three shared modifier card decks, each keyed to a city ring (Baryo / The Mid / Core). Drawn during Debrief to apply ring-keyed modifiers to covert operations. Shared across factions — not faction-specific.
+
+**Narrative Anchor:** N/A — shared mechanical decks; narrative context embedded in district ring system (Art 01) and modifier card designs (Art 04 §11).
+
+**Gameplay Requirements:** Each deck must clearly display its ring designation. Must be distinguishable from Faction modifier decks and from action card decks. *Full design: Art 04 §11.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Card decks; ring designation marked on back | 3 total, 1 per ring (gameplay requirement) | Public |
+
+---
+
+### Faction modifier deck  (DB: 89)
+
+**Design Function:** Per-faction modifier card deck drawn during Debrief. Applies faction-specific modifiers to operations. One per faction.
+
+**Narrative Anchor:** N/A — container component; narrative embedded in modifier card designs (Art 04 §11).
+
+**Gameplay Requirements:** Faction identity clearly marked. Must be distinguishable from Ring modifier decks. *Full design: Art 04 §11.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Card deck; faction-keyed back | 1 per faction, 5 total (gameplay requirement) | Player-private |
+
+---
+
+## 11. Resolution Tools
+
+Instruments used to measure, flag, and resolve actions — threshold sliders, visibility/boost markers, and modifier tokens.
+
+---
+
+### Visibility Marker (VM-xx)  (DB: 103)
+
+**Design Function:** ARBITER-held token placed on a Beat 3 grid card to flag that the operation resolves publicly. Marks visibility state during resolution — distinguishes public from covert resolution.
+
+**Narrative Anchor:** N/A — resolution state marker; operational instrument with no player-facing narrative identity.
+
+**Gameplay Requirements:** Must be clearly distinguishable from Boost Marker. ARBITER-managed.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Token; TBD — Art 11 | TBD (pre-production estimate) | ARBITER-only |
+
+---
+
+### Boost Marker (BM-xx)  (DB: 104)
+
+**Design Function:** ARBITER-held token tracking submitted boost declarations at Beat 0. Marks that a faction has declared a boost on a covert operation in the current resolution cycle.
+
+**Narrative Anchor:** N/A — resolution state marker; operational instrument with no player-facing narrative identity.
+
+**Gameplay Requirements:** Must be clearly distinguishable from Visibility Marker. ARBITER-managed.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Token; TBD — Art 11 | TBD (pre-production estimate) | ARBITER-only |
+
+---
+
+### Modifier token  (DB: 47)
+
+**Design Function:** Physical modifier accumulator placed on a target covert operation during resolution. When a modifier card resolves, its value is transferred to a token on the target operation and the generating card is removed from the resolution queue. When the target operation resolves, ARBITER totals all tokens on it to calculate cumulative threshold modification.
+
+**Narrative Anchor:** N/A — modifier effect embodiment; narrative embedded in Modifier Card entry.
+
+**Gameplay Requirements:** Must carry a legible modifier value. Must be placeable on a card without obscuring card content. ARBITER-placed and managed during resolution.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Token; TBD — Art 11 | TBD (pre-production estimate) | Public |
+
+---
+
+### ARBITER Threshold Slider  (DB: 106)
+
+**Design Function:** Measurement instrument permanently at ARBITER's position. Provides a 0–100 calibrated scale used by ARBITER during Beat 2 and Beat 3 covert operation resolution (§9.4.2.1.0). ARBITER-only — faction players do not interact with or see this component.
+
+**Narrative Anchor:** N/A — ARBITER operational instrument; players have no knowledge of this component during play. Narrative TBD pending Art 07 design.
+
+**Gameplay Requirements:** Must display a clear 0–100 scale readable to ARBITER at a glance. Must remain stable and not shift during play. *Note: may comprise 2 sub-components — see PM05 03-n11. Physical spec: Art 07.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Slider or dial; 0–100 scale; permanently on Arbiter Tableau | 1 (gameplay requirement) | ARBITER-only |
+
+---
+
+### Faction Threshold Slider  (DB: 107)
+
+**Design Function:** Shared measurement instrument used during Beat 4 PA resolution (§9.4.3.0.0). Provides a 0–100 calibrated scale for declaring and resolving Political Acts. Passed between players in initiative order during Beat 4. 1 total — shared across all factions.
+
+**Narrative Anchor:** N/A — shared measurement instrument; narrative TBD pending Art 07 design.
+
+**Gameplay Requirements:** Must display a clear, readable 0–100 scale. Must be physically passable between player positions during play. *Note: may comprise 2 sub-components — see PM05 03-n12.*
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Slider or dial; 0–100 scale | 1 (gameplay requirement) | Public |
+
+---
+
+## 12. Tracking Systems
+
+Markers and trackers recording game state across beats, rounds, and quarters. Status marker is ungrouped — it tracks a single cross-phase state function not captured by the three subgroups.
+
+---
+
+**Score**
+
+### Public Standing  (DB: 21)
+
+**Design Function:** Tracks New Meridian's collective public perception of each faction. Fully visible to all players at all times. Position modifies difficulty thresholds on all d100 rolls and affects voting weight at session end.
+
+**Narrative Anchor:** Public Standing is what New Meridian thinks — the cumulative signal produced by social media, opinion polls, public commentary, art, music, graffiti. It is volatile and reactive. Public memory is short. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must display: 0–20 numbered scale; five named band labels (Discredited / Suspect / Neutral / Respected / Celebrated); target modifier labels beneath each band (−20 / −10 / — / +10 / +20 to target); starting position marked at 10.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Laminated strip; standing marker rides the strip | 1 per faction, 5 total (gameplay requirement) | Public |
+
+---
+
+### Standing marker  (DB: 37)
+
+**Design Function:** Rides the Public Standing track. Marks a faction's current Public Standing position. Moved by the player whose action causes a change.
+
+**Narrative Anchor:** N/A — rider marker; narrative context embedded in Public Standing track entry.
+
+**Gameplay Requirements:** Must remain readable on the track strip. Faction color must be unambiguous.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Clip or bead; faction-colored | 1 per faction, 5 total (gameplay requirement) | Public |
+
+---
+
+### Chorus Portrait track  (DB: 50)
+
+**Design Function:** ARBITER's private record of the Chorus's cumulative assessment of each faction's behavior. Identical in format to the Public Standing track but kept hidden in ARBITER's tableau. The same ruler; a different observer.
+
+**Narrative Anchor:** The Chorus Portrait is what the Chorus observes — permanent, cumulative, and indifferent to performance or appearance. One action is enough to begin forming a pattern. The Portrait is not a score. It is a record. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must display: −20 to +20 numbered scale; eleven named band labels (Void / Collapsed / Fractured / Dissonant / Uncertain / Ambiguous / Observed / Legible / Coherent / Aligned / Resonant); starting position marked at 0. Physical privacy solution specified in Art 07.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Laminated strip; face-down in ARBITER's tableau; portrait marker rides the strip | 1 per faction, 5 total (gameplay requirement) | ARBITER-only |
+
+---
+
+### Portrait marker  (DB: 51)
+
+**Design Function:** Rides the Chorus Portrait track. Marks a faction's current Portrait position. Managed by ARBITER — never moved by players.
+
+**Narrative Anchor:** N/A — rider marker managed by ARBITER; narrative context embedded in Chorus Portrait track entry.
+
+**Gameplay Requirements:** Must remain readable on the track strip. Faction color must be unambiguous.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Clip or bead; faction-colored; held in ARBITER's tableau | 1 per faction, 5 total (gameplay requirement) | ARBITER-only |
+
+---
+
+**Initiative**
+
+### Initiative strip  (DB: 24)
+
+**Design Function:** Tracks faction initiative order for the current Quarter. Holds Faction Order Markers in ranked sequence. Initiative order determines the sequence of faction actions each Month.
+
+**Narrative Anchor:** The Initiative Strip is ARBITER's real-time ranking of each faction's operational capacity — drawn from supply chain throughput, operative response times, resource allocation speed, leadership decision latency. A faction may believe it is executing at full capacity and find itself ranked last. The ranking is not punitive. It is observational. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must provide 5 clearly ranked positions (1st through 5th). Must be publicly readable from all player positions.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Laminated strip or card; holds 5 Faction Order Markers | 1 (gameplay requirement) | Public |
+
+---
+
+### Faction order marker  (DB: 38)
+
+**Design Function:** Placed on the Initiative Strip to mark a faction's current initiative position. 1 per faction.
+
+**Narrative Anchor:** N/A — rider marker; narrative context embedded in Initiative Strip entry.
+
+**Gameplay Requirements:** Faction color must be unambiguous. Must fit clearly within Initiative Strip position slots.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Faction-colored chit | 1 per faction, 5 total (gameplay requirement) | Public |
+
+---
+
+**Round/Quarter**
+
+### Session Timeline  (DB: 23)
+
+**Design Function:** Tracks the current Quarter (1–8). Visible to all players. The pointer marker rides it to mark the current Quarter. Eight positions mark the full arc of the session.
+
+**Narrative Anchor:** ARBITER is not counting down. It is counting up toward Integration — the threshold at which humanity's aggregate response to the Chorus reaches the point where the return channel opens. Quarter 8 marks that moment, whatever position the factions hold. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must clearly mark 8 discrete positions labeled Quarter 1–8. Current Quarter must be unambiguous when pointer marker is placed.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| 8-position strip; displayed publicly | 1 (gameplay requirement) | Public |
+
+---
+
+### Pointer marker  (DB: 34)
+
+**Design Function:** Rides the Session Timeline. Marks the current Quarter.
+
+**Narrative Anchor:** N/A — rider marker; narrative context embedded in Session Timeline entry.
+
+**Gameplay Requirements:** Must be clearly readable at each of the 8 positions on the Session Timeline strip.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Marker; TBD — Art 11 | 1 (gameplay requirement) | Public |
+
+---
+
+### Chorus Activity Track  (DB: 31)
+
+**Design Function:** Graduated track recording cumulative Chorus activity across the session. Activity marker marks current level; Threshold marker marks the threshold line. Responds to operations executed, resources concentrated, and tensions escalated.
+
+**Narrative Anchor:** ARBITER added this display to MIRROR's interface without being asked. No label. No unit of measurement. No explanation. The factions named it the Seismograph. Every faction has a theory. ARBITER provides no reason for the correlation. It projects the data and waits. *→ Art 00 for full narrative.*
+
+**Gameplay Requirements:** Must show a graduated scale readable from all player positions. Two distinct marker positions required: Activity marker (current level) and Threshold marker (threshold line). Full design pending.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Graduated strip; displayed publicly; two distinct marker positions | 1 (gameplay requirement) | Public |
+
+---
+
+### Activity marker  (DB: 35)
+
+**Design Function:** Rides the Chorus Activity Track. Marks the current activity level.
+
+**Narrative Anchor:** N/A — rider marker; narrative context embedded in Chorus Activity Track entry.
+
+**Gameplay Requirements:** Must be clearly distinguishable from the Threshold marker when both are on the track.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Marker; TBD — Art 11 | 1 (gameplay requirement) | Public |
+
+---
+
+### Threshold marker  (DB: 36)
+
+**Design Function:** Rides the Chorus Activity Track. Marks the threshold line — the level at which activity triggers a Chorus response.
+
+**Narrative Anchor:** N/A — rider marker; narrative context embedded in Chorus Activity Track entry.
+
+**Gameplay Requirements:** Must be clearly distinguishable from the Activity marker when both are on the track.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| Marker; TBD — Art 11 | 1 (gameplay requirement) | Public |
+
+---
+
+### Status marker  (DB: 49)
+
+**Design Function:** Tracks each faction's binary discussion state during Quarter-end negotiation. Active = faction is still in discussion; Ready = faction is done talking and ready to end the Quarter. One per faction.
+
+**Narrative Anchor:** N/A — per-faction state marker; narrative context embedded in Quarter-end procedure (Art 03).
+
+**Gameplay Requirements:** Two readable states required: active / ready.
+
+| Physical Form | Quantity | Visibility |
+|---|---|---|
+| TBD — Art 11 | 1 per faction, 5 total (gameplay requirement) | Public |
+
+---
+
+*Component quantity and aesthetics confirmed in Art 11 — Visual Design System. Component stubs S89 — design passes tracked in PM05 02-n01 through 02-n04.*
