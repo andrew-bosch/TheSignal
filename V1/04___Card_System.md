@@ -375,7 +375,7 @@ The Syndicate does not debate whether the Chorus matters. They ask who will cont
 
 ## 6. Card Data Schema
 
-*§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/Whiteboard/researchNotes_CardDesign.md`.*
+*§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/TheSignal/Whiteboard/researchNotes_CardDesign.md`.*
 
 ---
 

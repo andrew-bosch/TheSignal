@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-16 — Session 92 Close
+**Last Updated:** 2026-06-16 — Session 93 Close
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -9,17 +9,15 @@ Read this document top to bottom before doing any design work in a new session. 
 
 ---
 
+### Session 93 Summary (2026-06-16)
+
+**02-n10 ✅:** Art 02 §§5–12 — 13 imprecise `→ Art 00 for full narrative` pointers tightened with specific section numbers: DB:32→§7, DB:6→§14.2, DB:7→§14.2, Structure block→§14.3, DB:8→§7, DB:12→§14.5 (was §14), DB:9→§14.9, DB:10→§8.1, DB:21→§6.6, DB:50→§9.6, DB:24→§9, DB:23→§8, DB:31→§9.6. PM02 Change Log updated (non-material, S93). PM05 02-n25 added (District tile + Situation Report imprecise pointers — section uncertain). Whiteboard/02n10_progress_S93.md deleted.
+
+**00-16 ✅ (pre-clear):** Art 00 v1.7 signed off (L211). §8.1 tensions list → prose. Art 00 now fully signed off.
+
+**Next:** Art 02 conditional sign-off items — 02-n11 (SCIFRecord cascade), 02-n12 (Emergency Response card design), 02-n13 (Status marker narrative), DB-38 (Escalation marker cascade).
+
 ### Session 92 Summary (2026-06-16)
-
-**Art 02 02-n02 sign-off pass — §5 rubric pass complete:** 8 narrative anchor corrections across §5 (Playing Surface). Art 00 §8.1 added (faction private/public boundary — closed room / open side distinction; grounds Faction Screen, Faction Terminal, Faction Resolution Grid without naming components). Art 00 §9.6 "What The Table Sees" added (ARBITER's threshold between processing and revealing; Arbiter Tableau as externalized record; MIRROR as ARBITER's eyes). PM02 L209 locked. Art 00 v1.7 — pending re-sign-off (PM05 00-16 gates Art 02 §5 anchor sign-offs for DB:27/88/28/30).
-
-**§§6–12 rubric pass complete:** Scope discipline sweep — all "Full design: Art 03" and "Full design: Art 00b" cross-refs removed throughout Art 02 (Art 03 = procedure only; Art 00b = DB punch list, not design spec). Key individual fixes: DB:47 Modifier token Design Function written (threshold modification accumulator — placed on target operation; holds modifier value while generating card exits resolution queue; totaled at target resolution); DB:48 Target Profile target district field added to Gameplay Requirements; DB:108 Dispatch Packet procedural sentences trimmed from Design Function; DB:44/108 active narrative anchors → Art 00 §14.5; DB:100 DebriefActionCard active anchor → Art 00 §9.6; DB:17 Classified Directives active anchor → Art 00 §14.7; Dispatch token / Backlog reordered (narrative-first). DB:4 District tile anchor lead sentence restored.
-
-**New PM05:** 00-16 (Art 00 v1.7 re-sign-off), 02-n10 (11 imprecise Art 00 section pointers), 02-n11 (SCIFRecord de-registration + cascade update), 02-n12 (Emergency Response card design TBD), 02-n13 (Status marker Art 00 narrative evaluation).
-
-**Next:** Gameplay Requirements validation pass (confirm requirements = true, not just properly written) — cross-reference Art 03/04/Art 01 per component.
-
-### Session 89 Summary (2026-06-14)
 
 **Card work:** C28 Breaking News — Issues Resolved ✓ S89 (04-n75/76 gates confirmed closed S81/82; taxonomy subject = CovertOperation soft flag for 04b; sign-off pending set-level PM05 gates). C40B Live Coverage — Issues Resolved ✓ S89 (04-n77 procedure found in Art 03 §9.0 — missed sweep reference; checklist updated from ⚠ → ✓).
 

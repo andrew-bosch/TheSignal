@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 92 complete → Session 93 next | Updated: 2026-06-16**
+**Session 93 complete → Session 94 next | Updated: 2026-06-16**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,7 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S93 — Check agy DB-32 results in Claude_context.md. Review PM05 for next work priority. Key open items from Art 02 sign-off: DB-38 (Escalation marker cascade — DB + downstream), 00-16 (Art 00 re-sign-off gates §5 anchor sign-offs), 02-n10/11/12/13 (Art 02 follow-on items).
+S94 — Remaining Art 02 conditional sign-off items: 02-n11 (SCIFRecord cascade — gate: Art 04 SCIF spec must be current), 02-n12 (Emergency Response card design), 02-n13 (Status marker narrative evaluation), DB-38 (Escalation marker cascade — DB + downstream). Check PM05 for priority order before starting.
 
 **S92 accomplishments (mid-session clear #1):**
 - README.md — fixed two broken Art 03 anchor links.
@@ -68,10 +68,15 @@ S93 — Check agy DB-32 results in Claude_context.md. Review PM05 for next work 
 - **Art 02 v2.0 signed off — L210.** Conditional on PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
 - PM02 L210 locked. PM03 Art 02 status updated.
 
-**S93 entry point:**
-1. Read `Claude_context.md` — check agy DB-32 status.
-2. Review PM05 for next work priority. Priority candidates: DB-38 (Escalation marker cascade — agy DB step + artifact sweep), 00-16 (Art 00 v1.7 re-sign-off), 02-n10 (11 imprecise Art 00 section pointers).
-3. **Housekeeping pending:** Move `~/Projects/Whiteboard/` files into `~/Projects/TheSignal/Whiteboard/` — dual-whiteboard confusion; delete empty `~/Projects/Whiteboard/` after migration.
+**S93 entry point:** ✅ S93 complete.
+
+**S93 accomplishments (pre-clear):**
+- agy S92 report ingested: DB-32/33/38/S92-01/02/03 all ✅ in PM02/PM03/PM05.
+- Whiteboard migration: `~/Projects/Whiteboard/` → `~/Projects/TheSignal/Whiteboard/`; stale refs updated (PM05 04-55, Art 04 §6).
+- 00-16 ✅: Art 00 v1.7 signed off (L211). §8.1 tensions list → prose. Unblocks Art 02 anchor sign-offs DB:27/88/28/30.
+
+**S93 accomplishments (02-n10 complete):**
+- 02-n10 ✅: Art 02 §§5–12 — 13 imprecise `→ Art 00 for full narrative` pointers tightened with specific section numbers: DB:32→§7, DB:6→§14.2, DB:7→§14.2, Structure block→§14.3, DB:8→§7, DB:12→§14.5 (was §14), DB:9→§14.9, DB:10→§8.1, DB:21→§6.6, DB:50→§9.6, DB:24→§9, DB:23→§8, DB:31→§9.6. PM02 Change Log updated (non-material). PM05 02-n25 added (District tile + Situation Report imprecise pointers — section uncertain). Whiteboard/02n10_progress_S93.md deleted.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -210,10 +215,10 @@ S93 — Check agy DB-32 results in Claude_context.md. Review PM05 for next work 
 
 | Artifact | Version | Open Item |
 |----------|---------|-----------|
-| 00 — Factions, World & Narrative | 1.7 | 🔄 Pending Re-Sign-Off — S91 (00-16). §8.1 added: faction private/public boundary narrative (grounds Faction Screen, Faction Terminal, Faction Resolution Grid). §9.6 added: "What The Table Sees" — ARBITER's processing/revealing threshold (grounds ARBITER Screen, Arbiter Tableau; MIRROR as ARBITER's eyes). PM02 L209. Open: 00-09, 00-15, 00-16. |
+| 00 — Factions, World & Narrative | 1.7 | ✅ Signed Off — S93 (L211). §8.1 tensions list → prose (S93 fix). Open: 00-09, 00-15. |
 | 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle documentation). |
 | 01 — Game Board: New Meridian | 2.1 | 🔄 Needs Re-Sign-Off — S90 (02-n05). §4 component narratives migrated to Art 02 §4; §6 Physical Forms table migrated to Art 02 §13; stale refs updated; now geography/zone-only. Open: 01-11 (scope overhaul §8/§11/§12). |
-| 02 — Components | 2.0 | ✅ Signed Off — S92 (L210). §§5–12 rubric pass, metadata population, and GR validation complete across all 68 components. Open PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38. |
+| 02 — Components | 2.0 | ✅ Signed Off — S92 (L210). §§5–12 rubric pass, metadata population, and GR validation complete across all 68 components. Open PM05: 02-n11, 02-n12, 02-n13, DB-38, 02-n25. |
 | 02a — Resource Systems: Board State | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0. Moved to Retired/Paper/ S90. |
 | 03 — Quarter Structure & Gameplay | 4.4 | ✅ Signed Off S88 (L207). §13.7 Board State Update Rules added; Control flag → Dominant marker throughout; Target Profile to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); BEC cleanup scope clarified (§12.0). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
@@ -223,7 +228,7 @@ S93 — Check agy DB-32 results in Claude_context.md. Review PM05 for next work 
 | 06 — Messaging System | 0.4 | ✅ §9 Signed Off — S83 (L205). §9.3 clause vocabulary complete (6 types incl. Duration); §9.5 board state as sole compliance basis; §9.8 ACCORD DISSOLVED on form; §9.10 Transfer → Alter Named Party subtype. Open: §§1–8, 10–13 non-canonical stubs. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
-Signed-off artifacts: 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re-sign-off). 00 v1.7 pending re-sign-off (00-16). 01 v2.1 needs re-sign-off (02-n05). 02 v2.0 in progress — requirements validation pass next (02-n02). 02a + 02b superseded → Art 02; files moved to Retired/Paper/. Authoritative: PM03.
+Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re-sign-off). 01 v2.1 needs re-sign-off (02-n05). 02 v2.0 signed off (L210, conditional: 02-n11/12/13, DB-38). 02a + 02b superseded → Art 02; files moved to Retired/Paper/. Authoritative: PM03.
 
 ---
 
@@ -319,7 +324,7 @@ Signed-off artifacts: 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re-sign-off).
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v4.4** — ✅ Signed Off S88 (L207)
 - **Art 06 §9** — ✅ Signed Off S83 (L205)
-- **Art 02 v2.0** — ✅ Signed Off S92 (L210). Conditional: 00-16, 02-n10/11/12/13, DB-38.
+- **Art 02 v2.0** — ✅ Signed Off S92 (L210). Conditional: 02-n11/12/13, DB-38. (00-16 ✅ S93, 02-n10 ✅ S93)
 - **00b** — ⚠ S81 VM-xx + S82 BM-xx registration pending re-sign-off
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)
 

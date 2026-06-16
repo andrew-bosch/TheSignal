@@ -1,8 +1,8 @@
 # 00 — Factions, World & Narrative Context
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.7 — Additions S91 (§8.1 private/public boundary; §9.6 ARBITER threshold) — Pending Re-Sign-Off (00-16)  
-**Status:** 🔄 Pending Re-Sign-Off  
+**Version:** 1.7 — Signed Off S93 (L211)  
+**Status:** ✅ Signed Off  
 **Supersedes:** game_overview (narrative sections), setup_guide (opening narrative)  
 **Must be read before:** All other design artifacts
 
@@ -430,12 +430,7 @@ Every faction at The Table maintains both sides. The inside of the room, where t
 
 The factions negotiated what is on The Overview. ARBITER ensures it is true. The combination of those two facts is where most of the tension at The Table lives.
 
-**The tensions that drive everything:**
-- The Network can expose everyone
-- Ghost can invalidate the premise
-- The Guild can make execution impossible
-- The Syndicate can distort incentives
-- The Directorate can force a premature answer
+The Network can expose everyone. Ghost can invalidate the premise. The Guild can make execution impossible. The Syndicate can distort incentives. The Directorate can force a premature answer.
 
 ---
 

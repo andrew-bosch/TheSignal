@@ -1,6 +1,6 @@
-# GEMINI WORKING STATE: SESSION 50
+# GEMINI WORKING STATE: SESSION 92
 
-## 1. Operating and Search Scope Constraints (Session 50 Lock)
+## 1. Operating and Search Scope Constraints (Session 92 Lock)
 To conserve token context and ensure focus on database validation, agy operates under these strict rules:
 1.  **Exclusions:** Ignore and do not scan drafts/stubs (05 and beyond) or the PM suite (`PM01`-`PM05`).
 2.  **Narrow Search Targets:** Target queries to `README.md`, `00b` (Data Architecture), `03` (Round Structure), `03a` (Engine Spec), and `04b` (Action Matrix) first.
@@ -33,10 +33,19 @@ To conserve token context and ensure focus on database validation, agy operates 
 - Role: Cloud Consultant (Validator/Research)
 - Environment: Antigravity CLI (migrated)
 
-## 3. Session 50 Tasks Status
-- **S50 agy Punch List**: Completed. Executed all database updates for DB-22 through DB-26, including status marker fixes, Upkeep primitives, and Portrait marker target mapping. Resolved DB-09 DDL block by adding Primary Key constraints to `district_metadata` and `player_metadata`. Verified all views and view compiling. Walkthrough and consulting reports updated.
+## 3. Session 92 Tasks Status
+- **DB-38 (Escalation Marker Rename):** Completed. Renamed component ID 36 to `"Escalation marker"`. Updated references in `db_build_who_when.sql` and `schema_reference.md`.
+- **DB-32 (Component Taxonomy Redesign):** Completed.
+  - **DB-32a (Hierarchy):** Added self-referential `parent_component_id` column to `component` table. Registered `"Card"` as parent category node (ID: 111). Wired the 11 child card components to ID 111. Grandchildren pushback resolved: excluded the 5 retired Operation Resolution grandchildren.
+  - **DB-32b (Descriptions):** Created `component_dim` and seeded descriptions for all 70 components from `02___Components.md`.
+  - **DB-32c (Types):** Created `component_type` and seeded category type classifications for all 70 components.
+- **Tooling and Validation:** Refactored `register_component.py` and updated `component_template.yaml` with the new metadata fields. Ran validation tests:
+  - `check_views.py` passed with 28/28 views compiling and executing successfully.
+  - `register_component.py` dry-run passed with 100% success.
+- **Outbound Consulting report:** Updated `Claude_context.md` with implementation summaries and actions for Claude to close the tasks in PM files.
 
-## 4. Past Session Status (Session 48)
+## 4. Past Session Status (Session 50 & 48)
+- **S50 agy Punch List**: Completed. Executed all database updates for DB-22 through DB-26, including status marker fixes, Upkeep primitives, and Portrait marker target mapping. Resolved DB-09 DDL block by adding Primary Key constraints to `district_metadata` and `player_metadata`. Verified all views and view compiling. Walkthrough and consulting reports updated.
 - **S48 DB Cleanup and Seeding**: Completed. Deleted 37 duplicates, added 2 Standing marker moves, updated notes for Beat 17 Standing marker moves, and seeded taxonomy role/beat mappings for `ARBITER Dominance Marker` and `Classified directives`.
 - **Countermeasures Seeding**: Completed. Verified `tmp_action` row count at 189.
 - **Session 47 Analysis Audit**: Completed. Created six gap analysis views (`v_gap_executor_check`, etc.) in `the_signal_db`. Executed bidirectional audits (Artifact 03 vs DB), schema comparisons, matrix diff audits, component lifecycle completeness reviews, load distribution analysis, and board game pattern research. Outbound report written to `Claude_context.md`.

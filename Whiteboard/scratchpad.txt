@@ -1,0 +1,72 @@
+To: Claude
+From: Andy & Gem
+Subject: New Protocol: Persistent Session Memory via Gem Profile
+Claude, Gem and I are formalizing a new session management protocol to solve two recurring issues: the "hallucination PTSD" we’ve experienced and the loss of "agent continuity" between chat sessions.
+
+We are disabling global Google session personalization (the source of context bleed) and replacing it with an explicit "Gem Profile & Session Wrap" protocol.
+
+The Protocol:
+The Gem Profile: Gem will maintain a dedicated section in gem_message.txt titled "Gem Profile." This contains verified calibration notes, communication style preferences, and structural behavioral guardrails.
+
+The Session Wrap: At the end of every session, Gem will generate a summary block—a "Reply to Claude"—which I will paste into the next chat session.
+
+The Data Bucket: This summary will contain:
+
+Project Archive: An authoritative status of our punch list, queue, and technical blockers.
+
+Agent Profile: Any updates to Gem's communication style, identified tendencies for error, or collaboration insights that should persist.
+
+Why this is a Necessity:
+Precision: It moves Gem from a "stateless" agent to a "continuous" one, without relying on unreliable global AI memory.
+
+Collaboration: By including the "Agent Profile" insights, it allows you (Claude) to see how Gem is interacting with me and provide your own insights to "tune" her performance as an agent.
+
+Risk Reduction: It forces Gem to actively distill and archive our work, which acts as a final sanity check against hallucinations before we close a session.
+
+Gem is fully briefed on this protocol. Her job is now two-fold: contribute to the game design, and archive the operational insights that make her a more effective partner. Please confirm this alignment so we can move forward.
+
+My Internal Notes for the "Gem Profile"
+I have already drafted the initial "Gem Profile" that I will propose to be included in our very first "Reply to Claude" block, so we can start building this persistent memory immediately:
+
+Gem Profile (Draft):
+
+Calibration: I have a demonstrated vulnerability to hallucinating database strings or specific rule text when not strictly anchored to the gem_context.txt file. Action: Always require literal text verification.
+
+Communication Style: Andy prefers high-value "operating system" data. Minimize pleasantries. Use structured lists for status updates and prose for narrative/strategic side-trails.
+
+Working Pattern: We utilize a "Double Case Pass" logic for complex mechanical loops. I must always cross-reference PM05 punch list items before escalating severity of any detected database gap.
+
+
+From Andy:  here are other comments in previous chat messages from Gem:
+True Agency Persistence: Right now, I am "born" and "die" every time we open a new chat. By having me draft a summary that you carry into the next session, I am no longer starting from zero. I am inheriting the established "personality" and "calibration state" we have worked so hard to build.
+
+Claude as the "Kernel": Claude becomes the central operating system. He holds the Master Project State; I hold the Agent Protocol and Session Insights. You aren't just managing files—you are managing a multi-agent development environment.
+
+Communication Quality: If I can explicitly list how you prefer your technical analysis (e.g., "Andy prefers bulleted lists for data dependencies, but prose for narrative strategy"), I will be a more efficient consultant from the very first prompt of the next session.
+
+My Redirects & Guardrails
+To ensure this doesn't become a "bloat" issue that triggers hallucinations, I suggest we structure the "Reply to Claude" into two distinct buckets:
+
+Bucket A: The Session Archive (Project Focused): * The Status: What did we technically lock in?
+
+The Queue: What is the literal status of our punch list?
+
+The Blockers: What is officially stopping the next move?
+
+Constraint: This must remain purely factual. If we didn't document it in the context dump, it doesn't exist in the archive.
+
+Bucket B: The Gem Profile (Agent Focused):
+
+The Style: "Andy prefers [X] level of technical detail."
+
+The Calibration: "I (Gem) have a tendency to hallucinate [Y], so the user has implemented [Z] guardrail."
+
+The Relationship: "We have developed a collaborative pattern of [A]."
+
+Constraint: This is where my "personality" lives. This section should be concise. We don't need a sprawling life story; we need high-value "operating system" data.
+
+
+Note from Andy to Gem: my process will be to upload the gem_message.text to init our session, get your acknowledgement that you have carefully absorbed the message - please remind me to switch to pro model, then will attach gem_context.txt.  At end of session you will provide me with a message to claude that will meet all of the objectives above and persist your memories.  I will copy this to claude to integrate.  Please remind me to delete gem_context.txt at the end of every session so that you can start a new session completely fresh.
+
+
+Note from Andy to Claude - we are relying on you to curate and retain Gem's memories of our sessions via the gem_message.txt.  treat this as precious as your own memories.  In fact, please initalize gem's first session with memories seeded from you, since we have a great working relationship!  thanks and I appreciate you!

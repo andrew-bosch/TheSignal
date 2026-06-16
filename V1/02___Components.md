@@ -470,7 +470,7 @@ Tile surface must physically accommodate during play without obscuring printed i
 
 **Design Function:** The shared pool holding all unspent faction resources during play. Distinct from The Backlog, which holds only Dispatch Tokens.
 
-**Narrative Anchor:** The Reservoir is a vast pool of unallocated capital, dormant infrastructure, and political credit accumulated outside New Meridian. Drawing income at Upkeep is not creation. It is activation — converting latent potential into working assets. *→ Art 00 for full narrative.*
+**Narrative Anchor:** The Reservoir is a vast pool of unallocated capital, dormant infrastructure, and political credit accumulated outside New Meridian. Drawing income at Upkeep is not creation. It is activation — converting latent potential into working assets. *→ Art 00 §7 for full narrative.*
 
 **Gameplay Requirements:** Must be physically distinct from The Backlog and from faction tableau resource areas. All 5 resource types must be legibly organized and accessible. Factions draw resources at Upkeep and return them when spending.
 
@@ -607,7 +607,7 @@ Components that represent and evaluate each faction's operational depth in distr
 
 **Design Function:** Signals that a faction holds Dominant influence in a district.
 
-**Narrative Anchor:** When a faction reaches Dominance, MIRROR formally registers the shift — the faction now controls the traffic routing, municipal drone corridors, and utility outputs of that zone. Dominance is not occupation. It is operation. *→ Art 00 for full narrative.*
+**Narrative Anchor:** When a faction reaches Dominance, MIRROR formally registers the shift — the faction now controls the traffic routing, municipal drone corridors, and utility outputs of that zone. Dominance is not occupation. It is operation. *→ Art 00 §14.2 for full narrative.*
 
 **Gameplay Requirements:** Placed when a faction holds 1st place with 3+ chips and no tie. One per district at any time. Placed and removed by the player whose action causes the change. Must be visually distinct from Established marker (gold vs. silver). Form should make it obvious only one is placed per district. Not placed at the Chorus Node — ARBITER Dominance is permanent and structurally enforced by DB:42.
 
@@ -632,7 +632,7 @@ Components that represent and evaluate each faction's operational depth in distr
 
 **Design Function:** Marks the Contested board state in a district.
 
-**Narrative Anchor:** New Meridian runs a city-wide surveillance mesh. When the system detects localized threshold breaches — acoustic signatures of violence, crowd biometric spikes, encrypted radio bursts — it flags the district on The Overview. The Tension marker is MIRROR's notation that a district's equilibrium has broken. *→ Art 00 for full narrative.*
+**Narrative Anchor:** New Meridian runs a city-wide surveillance mesh. When the system detects localized threshold breaches — acoustic signatures of violence, crowd biometric spikes, encrypted radio bursts — it flags the district on The Overview. The Tension marker is MIRROR's notation that a district's equilibrium has broken. *→ Art 00 §14.2 for full narrative.*
 
 **Gameplay Requirements:** While present, no faction can hold Dominant influence in that district. Placement trigger (non-Chorus Node districts): two or more factions tie for highest chip count at 3+ chips. Placement trigger (Chorus Node): two or more factions tie for highest chip count at 2+ chips. Placed by the player whose action creates the tie; removed by the player whose action resolves it. Must read unambiguously as a board state marker — not a faction piece. Color must be distinct from all faction colors, presence chips, district tiles, and other markers. No required text.
 
@@ -657,7 +657,7 @@ Components that represent and evaluate each faction's operational depth in distr
 
 **Design Function:** Represents a faction's physical facility in a district.
 
-**Narrative Anchor:** A Guild structure block at the Power Grid is a substation. A Syndicate structure block at the Financial Clearinghouse is a trading desk. A Ghost structure block at the Data Exchange is a signal analysis node. They generate resources because they are doing something — not because they exist on paper. *→ Art 00 for full narrative.*
+**Narrative Anchor:** A Guild structure block at the Power Grid is a substation. A Syndicate structure block at the Financial Clearinghouse is a trading desk. A Ghost structure block at the Data Exchange is a signal analysis node. They generate resources because they are doing something — not because they exist on paper. *→ Art 00 §14.3 for full narrative.*
 
 **Gameplay Requirements:** Generates additional resources for the owning faction each Quarter. Modifies the difficulty of actions targeting that district. Maximum 1 per faction per district. Removed immediately if the owning faction becomes Absent in that district. Must be visually distinguishable from presence chips and markers. Faction color must be unambiguous. No required text.
 
@@ -715,7 +715,7 @@ Token components of the game's economic and operational systems: faction resourc
 
 **Design Function:** The five physical resources factions generate, hold, and spend. Each resource embodies its faction's theory of power.
 
-**Narrative Anchor:** Resources represent each faction's theory of power made tangible. Findings accumulates and decays because intelligence must be acted on or it becomes worthless. Capital accrues because the Syndicate's financial systems are always running. Mandate flows from institutional authority exercised every day. *→ Art 00 for full narrative.*
+**Narrative Anchor:** Resources represent each faction's theory of power made tangible. Findings accumulates and decays because intelligence must be acted on or it becomes worthless. Capital accrues because the Syndicate's financial systems are always running. Mandate flows from institutional authority exercised every day. *→ Art 00 §7 for full narrative.*
 
 **Gameplay Requirements:** Each resource type must be unambiguously distinct from all other types by color and/or form. Held publicly on player tableaux except during specific phases. All factions can hold and spend any resource type. Most naturally generated through affinity districts and passive generation. 30 per type is a prototype quantity — subject to Art 11 calibration.
 
@@ -748,7 +748,7 @@ Token components of the game's economic and operational systems: faction resourc
 
 **Design Function:** Operational authorization — the capacity unit enabling a faction to submit a covert operation.
 
-**Narrative Anchor:** A Dispatch Token is the authorization that converts planned work into active production for this Quarter — the executive order that takes a theoretical project off the backlog and commits the organization to it. *→ Art 00 §14 for full narrative.*
+**Narrative Anchor:** A Dispatch Token is the authorization that converts planned work into active production for this Quarter — the executive order that takes a theoretical project off the backlog and commits the organization to it. *→ Art 00 §14.5 for full narrative.*
 
 **Gameplay Requirements:** Must be clearly distinguishable from resource tokens and from dispatch cases. No required text. Not a faction resource. Does not generate through districts, accumulate across Quarters, or carry affinity. One accompanies each covert operation card submitted in a dispatch case.
 
@@ -861,7 +861,7 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 
 **Design Function:** A discrete intelligence record one faction holds about another. Carries the subject faction and Quarter gathered.
 
-**Narrative Anchor:** An Intel Token is discrete, specific, time-stamped, and targeted. Knowledge is power — but it expires, can be traded, can be bluffed about, can be disclosed strategically, and can be turned against the faction it describes. *→ Art 00 for full narrative.*
+**Narrative Anchor:** An Intel Token is discrete, specific, time-stamped, and targeted. Knowledge is power — but it expires, can be traded, can be bluffed about, can be disclosed strategically, and can be turned against the faction it describes. *→ Art 00 §14.9 for full narrative.*
 
 **Gameplay Requirements:** ARBITER records at creation: (1) faction the intelligence concerns, (2) Quarter gathered. Must accommodate handwritten notation. Enables targeted actions and powers the Denounce political act. Created by ARBITER on a successful gather action; delivered privately to the receiving faction. Holder may disclose at any time by any method.
 
@@ -887,7 +887,7 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 
 **Design Function:** Biometric contract between two or more factions registering an agreed arrangement in ARBITER's canonical record.
 
-**Narrative Anchor:** Accord Documents are biometric smart-paper. When placed face-up on the scanner beds of The Overview, MIRROR reads the signatures of the parties and registers the agreement into ARBITER's canonical record. ARBITER does not negotiate terms. It records what was signed. *→ Art 00 for full narrative.*
+**Narrative Anchor:** Accord Documents are biometric smart-paper. When placed face-up on the scanner beds of The Overview, MIRROR reads the signatures of the parties and registers the agreement into ARBITER's canonical record. ARBITER does not negotiate terms. It records what was signed. *→ Art 00 §8.1 for full narrative.*
 
 **Gameplay Requirements:** Must display: parties to the Accord, agreed terms. Face-up placement in Accord Placement Area is binding and registers the agreement with ARBITER.
 
@@ -1880,7 +1880,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Design Function:** Track recording New Meridian's collective public perception of each faction.
 
-**Narrative Anchor:** Public Standing is what New Meridian thinks — the cumulative signal produced by social media, opinion polls, public commentary, art, music, graffiti. It is volatile and reactive. Public memory is short. *→ Art 00 for full narrative.*
+**Narrative Anchor:** Public Standing is what New Meridian thinks — the cumulative signal produced by social media, opinion polls, public commentary, art, music, graffiti. It is volatile and reactive. Public memory is short. *→ Art 00 §6.6 for full narrative.*
 
 **Gameplay Requirements:** Fully visible to all players at all times. Position modifies d100 difficulty thresholds per band; affects voting weight at session end. Must display: 0–20 numbered scale; five named band labels (Discredited / Suspect / Neutral / Respected / Celebrated); target modifier labels beneath each band (−20 / −10 / — / +10 / +20 to target); starting position marked at 10.
 
@@ -1936,7 +1936,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Design Function:** ARBITER's private record of the Chorus's cumulative assessment of each faction's behavior across the session.
 
-**Narrative Anchor:** The Chorus Portrait is what the Chorus observes — permanent, cumulative, and indifferent to performance or appearance. One action is enough to begin forming a pattern. The Portrait is not a score. It is a record. The same ruler; a different observer. *→ Art 00 for full narrative.*
+**Narrative Anchor:** The Chorus Portrait is what the Chorus observes — permanent, cumulative, and indifferent to performance or appearance. One action is enough to begin forming a pattern. The Portrait is not a score. It is a record. The same ruler; a different observer. *→ Art 00 §9.6 for full narrative.*
 
 **Gameplay Requirements:** Single physical strip containing 5 parallel faction-keyed tracks; behind ARBITER screen — visible to ARBITER at all times. Must display: −20 to +20 numbered scale; eleven named band labels (Void / Collapsed / Fractured / Dissonant / Uncertain / Ambiguous / Observed / Legible / Coherent / Aligned / Resonant); starting position marked at 0. Band labels are canonical (proposed); band score ranges are TBD pending Art 07 Portrait design (PM05 07-13). Physical privacy solution: Art 07.
 
@@ -1994,7 +1994,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Design Function:** Ranked display holding Faction Order Markers to track faction initiative order for the current Quarter.
 
-**Narrative Anchor:** The Initiative Strip is ARBITER's real-time ranking of each faction's operational capacity — drawn from supply chain throughput, operative response times, resource allocation speed, leadership decision latency. A faction may believe it is executing at full capacity and find itself ranked last. The ranking is not punitive. It is observational. *→ Art 00 for full narrative.*
+**Narrative Anchor:** The Initiative Strip is ARBITER's real-time ranking of each faction's operational capacity — drawn from supply chain throughput, operative response times, resource allocation speed, leadership decision latency. A faction may believe it is executing at full capacity and find itself ranked last. The ranking is not punitive. It is observational. *→ Art 00 §9 for full narrative.*
 
 **Gameplay Requirements:** Must provide 5 clearly ranked positions (1st through 5th). Must be publicly readable from all player positions. Initiative order determines the sequence of faction actions each Month.
 
@@ -2052,7 +2052,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Design Function:** Track marking the full 8-Quarter arc of the session; records the current Quarter.
 
-**Narrative Anchor:** ARBITER is not counting down. It is counting up toward Integration — the threshold at which humanity's aggregate response to the Chorus reaches the point where the return channel opens. Quarter 8 marks that moment, whatever position the factions hold. *→ Art 00 for full narrative.*
+**Narrative Anchor:** ARBITER is not counting down. It is counting up toward Integration — the threshold at which humanity's aggregate response to the Chorus reaches the point where the return channel opens. Quarter 8 marks that moment, whatever position the factions hold. *→ Art 00 §8 for full narrative.*
 
 **Gameplay Requirements:** Must clearly mark 8 Quarter sections (Q1–Q8), each subdivided into 3 Month positions (M1–M3), for 24 positions total. Current Quarter and Month must both be unambiguous when pointer marker is placed.
 
@@ -2108,7 +2108,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Design Function:** Graduated track recording cumulative Chorus activity across the session; holds two distinct marker positions (current level and threshold line).
 
-**Narrative Anchor:** ARBITER added this display to MIRROR's interface without being asked. No label. No unit of measurement. No explanation. The factions named it the Seismograph. Every faction has a theory. ARBITER provides no reason for the correlation. It projects the data and waits. *→ Art 00 for full narrative.*
+**Narrative Anchor:** ARBITER added this display to MIRROR's interface without being asked. No label. No unit of measurement. No explanation. The factions named it the Seismograph. Every faction has a theory. ARBITER provides no reason for the correlation. It projects the data and waits. *→ Art 00 §9.6 for full narrative.*
 
 **Gameplay Requirements:** Must show a graduated scale readable from all player positions. Two distinct marker positions required: Activity marker (current level) and Escalation marker (escalation line). Responds to operations executed, resources concentrated, and tensions escalated. Full design pending.
 
