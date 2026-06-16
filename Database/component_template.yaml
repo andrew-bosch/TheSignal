@@ -7,6 +7,9 @@
 
 # ── Component identity ────────────────────────────────────────────────────────
 name: "New Component Name"
+parent_component: "Card"       # Optional parent component name (e.g. Card, Marker, Token, or null)
+description: "Detailed description of the component's design function."
+component_type: "card"         # Vocabulary: card, token, marker, block, tile, board, track, strip, screen, container, slip, slider, other
 
 # State machine flags — set to true only if the component actually uses the feature
 actionable: true            # participates in the action grammar (required for all game components)
@@ -16,17 +19,17 @@ transform_visibility: false  # can be flipped face-down/face-up (Reveal / Concea
 transform_orientation: false # can be rotated / has an A/B side (Flip verb)
 transform_data: false        # has writable data that can be changed (Corrupt verb)
 
-# ── Placement targets (Step 5: tmp_subject_target) ───────────────────────────
+# ── Placement targets (Step 5: subject_target) ───────────────────────────
 # What zones/components can this component be placed on or moved to?
 # Comment out if this component is never physically moved (Move verb = 0).
 # targets:
 #   - "Faction Terminal"
 #   - "ARBITER Tableau"
 
-# ── Verb × beat coverage (Step 2: tmp_comp_verb_beat) ────────────────────────
-# Which verbs are valid for this component, and in which beats?
+# ── Verb × phase coverage (Step 2: comp_verb_phase) ────────────────────────
+# Which verbs are valid for this component, and in which phases?
 # Verb names: Add | Remove | Reveal | Corrupt | Conceal | Flip | Move | Invoke
-# Beat names must match tmp_beat.name exactly (see schema_reference.md §3).
+# Phase names must match quarter_phase.name exactly (see schema_reference.md §3).
 verbs:
   - verb: "Add"
     beats:
@@ -42,7 +45,7 @@ verbs:
       - "Month 2 — Beat 3"
       - "Month 3 — Beat 4"
 
-# ── Role assignments (Step 3: tmp_comp_verb_role) ─────────────────────────────
+# ── Role assignments (Step 3: comp_verb_role) ─────────────────────────────
 # Who performs each verb, and in what capacity?
 # player_role: "Faction" | "ARBITER"
 # phase: "initiator" | "executor" | "fulfiller"
@@ -76,7 +79,7 @@ roles:
     player_role: "ARBITER"
     phase: "fulfiller"
 
-# ── Action primitives (Step 4: tmp_action) ────────────────────────────────────
+# ── Action primitives (Step 4: action) ────────────────────────────────────
 # The legal moves — one row per (beat, subject, verb) combination.
 # subject: "Faction" | "ARBITER"
 # trigger format: "type.subtype" or just "type" for NULL-subtype triggers

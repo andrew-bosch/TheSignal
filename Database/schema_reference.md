@@ -39,7 +39,7 @@ The most expensive session mistake: assuming `comp_verb_role.phase_id` reference
 | `prereq_id` | `action(id)` | Self-referential: prerequisite action in chain (NULL for root actions) |
 | `source_action_id` | `action(id)` | Self-referential: Copy/Invoke source chain (NULL unless Copy) |
 
-**`beat` is NOT referenced by `comp_verb_role` at all.** Beat assignments live in `comp_verb_beat`.
+**`beat` is NOT referenced by `comp_verb_role` at all.** Beat assignments live in `comp_verb_phase`.
 
 ---
 
@@ -76,7 +76,7 @@ No table should be designed without knowing which core axis it hangs from and at
 ### Full Table List
 
 **Promoted design tables (permanent schema):**
-`action`, `beat`, `comp_verb_beat`, `comp_verb_role`, `component`, `component_faction`, `component_ring`, `condition`, `condition_clause`, `function`, `function_verb`, `layer`, `player_role`, `role_phase`, `state_condition`, `state_condition_clause`, `subject_target`, `trigger_type`, `verb`, `visibility_scope`, `category` (deprecated), `type` (deprecated)
+`action`, `beat`, `comp_verb_phase`, `comp_verb_role`, `component`, `component_faction`, `component_ring`, `condition`, `condition_clause`, `function`, `function_verb`, `layer`, `player_role`, `role_phase`, `state_condition`, `state_condition_clause`, `subject_target`, `trigger_type`, `verb`, `visibility_scope`, `category` (deprecated), `type` (deprecated)
 
 **Physical manifest tables (permanent schema — active):**
 `components`, `district_metadata`, `district_adjacency`, `component_positions`, `component_valid_zones`, `factions`, `game_zones`, `player_metadata`, `resource_types`, `city_rings`, `inteltoken_metadata`, `setup_state`
@@ -93,7 +93,7 @@ No table should be designed without knowing which core axis it hangs from and at
 The action primitive model is built from three tables that answer three different questions about the same (component × verb) pair. All three must be populated for a component to be fully modeled.
 
 ```
-comp_verb_beat   — WHEN is this (component × verb) valid?
+comp_verb_phase   — WHEN is this (component × verb) valid?
                        One row per (component, verb, beat).
 
 comp_verb_role   — WHO performs this (component × verb), and in what role?
@@ -103,7 +103,7 @@ action           — WHAT is the specific legal primitive?
                        One row per (beat, subject, verb, component) root action.
 ```
 
-`comp_verb_beat` + `comp_verb_role` together define the **possibility space** — everything that could in principle be modeled. `action` is the **legal space** — what is actually legislated. The gap between them is visible via `v_unlegislated_primitives`. This relationship is locked as **L166**: taxonomy defines possibility; Art 03 defines legality. Gaps are procedure coverage signals, not errors.
+`comp_verb_phase` + `comp_verb_role` together define the **possibility space** — everything that could in principle be modeled. `action` is the **legal space** — what is actually legislated. The gap between them is visible via `v_unlegislated_primitives`. This relationship is locked as **L166**: taxonomy defines possibility; Art 03 defines legality. Gaps are procedure coverage signals, not errors.
 
 `subject_target` is a fourth table in the cascade for components that Move: it answers WHERE can this component be placed/moved to.
 
@@ -130,7 +130,7 @@ The permanent layout of `the_signal_db` is architected as a **Snowflake Schema**
 3. **`action` (The Operational Grammar):**
    * *Purpose:* The rules engine registry defining all valid physical moves, phase triggers, prerequisites, and actors (Faction/ARBITER) in the game structure.
    * *Satellite Tables:*
-     * `comp_verb_beat` and `comp_verb_role` map taxonomy design space.
+     * `comp_verb_phase` and `comp_verb_role` map taxonomy design space.
      * `trigger_type`, `state_condition`, and `state_condition_clause` define the criteria under which actions fire.
      * `action_costs` and `action_restrictions` outline the mechanical constraints governing each action execution.
 
@@ -140,12 +140,14 @@ This three-snowflake core represents the target state of the permanent schema. T
 
 | Table | Purpose | Key question answered |
 |-------|---------|----------------------|
-| `component` | Component **type** registry. One row per type (not per physical copy). State-machine flags define what can be done to that type. **Pending L169 (DB-32):** gains `parent_component_id` (self-referential FK) to enable hierarchy — "Card" as parent, specific card types as children, outcome subtypes as grandchildren. Two new dimension tables incoming: `component_dim` (description) and `component_type` (classification). | "What component types exist, and what are they capable of?" |
+| `component` | Component **type** registry. One row per type (not per physical copy). State-machine flags define what can be done to that type. Contains `parent_component_id` (self-referential FK) for hierarchy (e.g. Card -> card types). Classified by `component_type` and described in `component_dim`. | "What component types exist, and what are they capable of?" |
+| `component_dim` | Component descriptions. Contains detailed descriptions for each component type. | "What does this component type do / represent?" |
+| `component_type` | Component category classifications (e.g., card, token, marker, block, tile, etc.). | "What physical category does this component belong to?" |
 | `verb` | Physical verb vocabulary. 8 verbs covering all primitive physical actions. | "What actions can be physically performed?" |
-| `beat` | Beat and phase registry. 20 beats covering a full Quarter from Upkeep through Debrief. | "What are the named game phases, and when do they occur?" |
+| `quarter_phase` | Beat and phase registry. 20 beats covering a full Quarter from Upkeep through Debrief. | "What are the named game phases, and when do they occur?" |
 | `player_role` | Actor lookup. 2 values: Faction and ARBITER. Used as `role_id` in comp_verb_role and `subject_id` in action. | "Who are the two types of actors?" |
 | `role_phase` | Action phase lookup. 3 values: initiator / executor / fulfiller. Used as `phase_id` in comp_verb_role — **not a beat reference**. | "What role does an actor play in an action chain?" |
-| `comp_verb_beat` | Beat coverage matrix. Declares which beats a component×verb pair is in scope for. Does not specify who or how. | "At which beats is this component×verb combination valid?" |
+| `comp_verb_phase` | Beat coverage matrix. Declares which beats a component×verb pair is in scope for. Does not specify who or how. | "At which beats is this component×verb combination valid?" |
 | `comp_verb_role` | Role assignment matrix. Declares who (Faction or ARBITER) performs a component×verb action and in what phase role. Does not create primitives — only declares the design-space claim. | "Who performs this component×verb action, and as what role?" |
 | `action` | Action primitive table. Each root row is one concrete, legally modeled action: (beat + trigger + subject + verb + component). This is the intersection of design space and Art 03 legal space. | "What specific actions are legally modeled in the game?" |
 | `subject_target` | Placement target registry. Pairs a component (subject) with valid destination components (targets). Drives `Move=1` in v_comp_verb_matrix. | "Where can this component be placed or moved to?" |
@@ -169,7 +171,7 @@ The promoted model is a **design workspace** that partially overlaps with and pa
 | `component` | `components` | Complementary, not competing. `component` = component **type** registry (what types exist, what they can do — state-machine flags, verb coverage). `components` = physical **instance** manifest (every individual object in the game box — each district tile, each card, each token, each marker). Both are permanent; neither replaces the other. L169 (DB-32) adds `parent_component_id` to `component` for type hierarchy ("Card" → "Covert operation card" → outcome subtypes). `components` already has `parent_component_id` for instance grouping (e.g., individual cards grouped under their deck parent). The `master_blueprint_id` FK on `components` → `card_metadata` links physical card instances to their design blueprint. |
 | `action` | `game_actions` | Different structures. `game_actions` = flat verb/definition catalog. `action` = full operational grammar (beat, trigger, subject, verb, component, prereq chain). Migration requires 00b §8 to define the target permanent structure before any DDL. |
 | `verb` | `game_actions.action_verb` | Verbs are inline in `game_actions`; `verb` is a normalized lookup. |
-| `beat` | `beat` | Parallel tables with similar purpose. `beat` is more fully populated and has richer metadata (month, beat_num, primary_agent, description). |
+| `quarter_phase` | `beat` | Parallel tables with similar purpose. `beat` is more fully populated and has richer metadata (month, beat_num, primary_agent, description). |
 | `subject_target` | `action_valid_targets` | Overlapping purpose. `action_valid_targets` predates the promoted model and may be inconsistent with current design. |
 
 **Migration is not ready** until: Art 04b is signed off, DB-22–26 are closed, and 00b §8 is updated with the reconciled permanent schema design. See PM05 DB-14.
@@ -182,7 +184,7 @@ Views are the primary interface to the model. They transform raw table data into
 
 | View | Purpose |
 |------|---------|
-| `v_unlegislated_primitives` | Shows (beat, subject, verb, component) tuples that exist in the design space (comp_verb_beat × comp_verb_role phase_id=1) but have no matching root row in action. Primary audit tool. |
+| `v_unlegislated_primitives` | Shows (beat, subject, verb, component) tuples that exist in the design space (comp_verb_phase × comp_verb_role phase_id=1) but have no matching root row in action. Primary audit tool. |
 | `v_unlegislated_by_trigger` | Collapses v_unlegislated_primitives to (subject, verb, component) with beat_count. Answers: "what gaps exist across ALL beats?" — ignores which specific beat is missing. |
 | `v_gap_executor_check` | For each gap in v_unlegislated_by_trigger, shows who the phase_id=2 executor is. ARBITER executor = expected gap (Faction declares, ARBITER executes physically — these are structural). Faction executor = true unmodeled gap requiring a design decision. |
 | `v_component_coverage` | Every component with its primitive count. Zero on an actionable=1 component = nothing modeled for it. |
@@ -195,7 +197,7 @@ Views are the primary interface to the model. They transform raw table data into
 |------|---------|
 | `v_primitives_with_trigger` | Full human-readable primitive list: beat name, trigger type, subject, verb, component, notes. The main view for reading what's in the model. |
 | `v_primitives` | Simplified version without trigger type. |
-| `v_action_by_beat` | Primitives grouped by beat. Useful for reviewing what a specific beat contains. |
+| `v_action_by_phase` | Primitives grouped by beat. Useful for reviewing what a specific beat contains. |
 | `v_faction_primitives` | All Faction-subject root primitives. |
 | `v_arbiter_primitives` | All ARBITER-subject root primitives. |
 | `v_faction_exclusive` | Primitives where only Faction acts (no ARBITER row for the same beat/verb/component). |
@@ -210,12 +212,12 @@ Views are the primary interface to the model. They transform raw table data into
 |------|---------|
 | `v_comp_verb_matrix` | Per-component capability grid (Add / Remove / Move / Reveal / Conceal / Flip / Corrupt). **Important caveat:** Add and Remove are hardcoded to 1 for all actionable=1 components — they are NOT derived from action. Move=1 is derived from subject_target. Reveal/Conceal/Flip/Corrupt are derived from transform_ flags. The view shows design-space capability, not actual primitive coverage. |
 | `v_placement_matrix` | Which components can be placed on which receivable target components. Derived from subject_target. Columns are the 13 receivable components; rows are all actionable components. |
-| `v_beat_subject_coverage` | Per-beat primitive counts broken down by subject (Faction vs. ARBITER). Shows load ratio and under-populated beats. |
-| `v_beat_role_matrix` | Role coverage (initiator/executor/fulfiller) per beat. |
-| `v_trigger_beat_coverage` | Trigger types present in each beat. A beat with no `rule.card` or `player.*` triggers may be missing card-driven actions. |
+| `v_phase_subject_coverage` | Per-beat primitive counts broken down by subject (Faction vs. ARBITER). Shows load ratio and under-populated beats. |
+| `v_phase_role_matrix` | Role coverage (initiator/executor/fulfiller) per beat. |
+| `v_trigger_phase_coverage` | Trigger types present in each beat. A beat with no `rule.card` or `player.*` triggers may be missing card-driven actions. |
 | `v_trigger_summary` | Trigger type distribution across the full model. |
 | `v_role_matrix` | Cross-reference of roles across components and verbs. |
-| `v_beat_verb_summary` | Verb usage counts per beat. |
+| `v_phase_verb_summary` | Verb usage counts per beat. |
 | `v_fulfiller_summary` | Fulfiller role coverage across the model. |
 
 **Design-Layer Views — "How does card design connect to primitives?"**
@@ -261,7 +263,7 @@ Views are the primary interface to the model. They transform raw table data into
 | 2 | executor | Who physically performs it |
 | 3 | fulfiller | Who completes or receives the outcome |
 
-### beat (20 rows)
+### quarter_phase (20 rows)
 
 | id | name | month | beat_num | primary_agent | description |
 |----|------|-------|----------|---------------|-------------|
@@ -353,44 +355,54 @@ Views are the primary interface to the model. They transform raw table data into
 CREATE TABLE `component` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
-  `actionable` tinyint(1) NOT NULL DEFAULT 0,      -- 1 = can be acted upon in action
-  `transformable` tinyint(1) GENERATED ALWAYS AS (transform_visibility OR transform_orientation OR transform_data) VIRTUAL, -- L184: derived; never stored
-  `receivable` tinyint(1) NOT NULL DEFAULT 0,      -- 1 = can be a target in subject_target
+  `actionable` tinyint(1) NOT NULL DEFAULT 0,            -- 1 = can be acted upon in action
+  `receivable` tinyint(1) NOT NULL DEFAULT 0,            -- 1 = can be a target in subject_target
+  `transformable` tinyint(1) GENERATED ALWAYS AS (`transform_visibility` <> 0 or `transform_orientation` <> 0 or `transform_data` <> 0) VIRTUAL, -- derived; never stored
   `transform_visibility` tinyint(1) NOT NULL DEFAULT 0,  -- 1 = can be Revealed/Concealed
   `transform_orientation` tinyint(1) NOT NULL DEFAULT 0, -- 1 = can be Flipped
   `transform_data` tinyint(1) NOT NULL DEFAULT 0,        -- 1 = carries written data that can be Corrupted
-  PRIMARY KEY (`id`)
+  `parent_component_id` int(11) DEFAULT NULL,            -- self-referential FK for component hierarchy
+  PRIMARY KEY (`id`),
+  KEY `fk_component_parent` (`parent_component_id`),
+  CONSTRAINT `fk_component_parent` FOREIGN KEY (`parent_component_id`) REFERENCES `component` (`id`) ON DELETE SET NULL
 )
 ```
-*AUTO_INCREMENT=98 as of S50. Next component will receive id=98.*
+*AUTO_INCREMENT=112 as of S92. Next component will receive id=112.*
 
-**Pending schema change — L169 (DB-32):** Add `parent_component_id INT NULL` (self-referential FK → `component(id)`). Enables component hierarchy: parent nodes ("Card", "Marker", "Token") group child types ("Covert operation card", "Presence token"), which may have grandchild subtypes ("Operation Resolution — Succeeded"). Two companion tables also incoming:
-
+### component_dim
 ```sql
--- L169 additions (not yet implemented)
-ALTER TABLE component ADD COLUMN parent_component_id INT NULL REFERENCES component(id);
-
-CREATE TABLE component_dim (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  component_id INT NOT NULL REFERENCES component(id),
-  description TEXT
-);
-
-CREATE TABLE component_type (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  component_id INT NOT NULL REFERENCES component(id),
-  component_type VARCHAR(60)
-);
+CREATE TABLE `component_dim` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `component_id` int(11) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_comp_dim_component` (`component_id`),
+  CONSTRAINT `fk_comp_dim_component` FOREIGN KEY (`component_id`) REFERENCES `component` (`id`) ON DELETE CASCADE
+)
 ```
+*Purpose: stores descriptions for each component. Art 02 Design Function text is the source.*
 
-### comp_verb_beat
+### component_type
 ```sql
-CREATE TABLE `comp_verb_beat` (
+CREATE TABLE `component_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `component_id` int(11) NOT NULL,
+  `component_type` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_comp_type_component` (`component_id`),
+  CONSTRAINT `fk_comp_type_component` FOREIGN KEY (`component_id`) REFERENCES `component` (`id`) ON DELETE CASCADE
+)
+```
+*Purpose: stores category classifications (e.g. card, token, marker, block, tile, board, track, strip, screen, container, slip, slider, other).*
+
+### comp_verb_phase
+```sql
+CREATE TABLE `comp_verb_phase` (
   `component_id` int(11) NOT NULL,   -- FK → component(id)
   `verb_id` int(11) NOT NULL,        -- FK → verb(id)
-  `beat_id` int(11) NOT NULL,        -- FK → beat(id)
+  `phase_id` int(11) NOT NULL,        -- FK → beat(id)
   `notes` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`component_id`,`verb_id`,`beat_id`)
+  PRIMARY KEY (`component_id`,`verb_id`,`phase_id`)
 )
 ```
 *Purpose: declares which beats a component×verb combination is valid. Does not specify who or how — that is comp_verb_role.*
@@ -412,7 +424,7 @@ CREATE TABLE `comp_verb_role` (
 ```sql
 CREATE TABLE `action` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `beat_id` int(11) NOT NULL,                         -- FK → beat(id)
+  `phase_id` int(11) NOT NULL,                         -- FK → beat(id)
   `beat_trigger` enum('during','on_close') NOT NULL DEFAULT 'during',
   `trigger_type_id` int(11) DEFAULT NULL,             -- FK → trigger_type(id)
   `prereq_id` int(11) DEFAULT NULL,                   -- FK → action(id) self-ref; NULL = root action
@@ -533,7 +545,7 @@ CREATE TABLE `state_condition_clause` (
 | 33 | Backlog | 0 | 0 | 1 | 0 | 0 | 0 |
 | 34 | Pointer marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 35 | Activity marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 36 | Threshold marker | 1 | 0 | 0 | 0 | 0 | 0 |
+| 36 | Escalation marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 37 | Standing marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 38 | Faction order marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 42 | ARBITER Dominance Marker | 1 | 0 | 0 | 0 | 0 | 0 |
@@ -563,7 +575,6 @@ CREATE TABLE `state_condition_clause` (
 | 98 | Broadcast Effect Card | 0 | 0 | 0 | 0 | 0 | 0 |
 | 99 | Sealed Apex ability | 1 | 1 | 0 | 1 | 0 | 0 |
 | 100 | DebriefActionCard | 1 | 0 | 1 | 0 | 0 | 0 |
-| 101 | SCIFRecord | 1 | 1 | 1 | 0 | 0 | 1 |
 | 102 | Situation Report | 0 | 0 | 1 | 0 | 0 | 0 |
 | 103 | Visibility Marker | 1 | 0 | 0 | 0 | 0 | 0 |
 | 104 | Boost Marker | 1 | 0 | 0 | 0 | 0 | 0 |
@@ -571,10 +582,12 @@ CREATE TABLE `state_condition_clause` (
 | 106 | ARBITER Threshold Slider | 0 | 0 | 0 | 0 | 0 | 0 |
 | 107 | Faction Threshold Slider | 0 | 0 | 0 | 0 | 0 | 0 |
 | 108 | Dispatch Packet | 1 | 0 | 1 | 0 | 0 | 0 |
+| 109 | Broadcast Discard | 0 | 0 | 1 | 0 | 0 | 0 |
+| 110 | Broadcast Effect Discard | 0 | 0 | 1 | 0 | 0 | 0 |
 
 *Column key: act=actionable, xfm=transformable, rcv=receivable, vis=transform_visibility, ori=transform_orientation, dat=transform_data*  
 *IDs are non-sequential (gaps from deleted rows during schema evolution).*  
-*Next AUTO_INCREMENT = 109.*
+*Next AUTO_INCREMENT = 111.*
 
 ---
 
@@ -597,7 +610,7 @@ CREATE TABLE `state_condition_clause` (
 |------|----------------|
 | `v_primitives_with_trigger` | Full readable primitive list: beat, trigger_type.subtype, subject, verb, component, notes |
 | `v_primitives` | Simplified primitive list (no trigger type) |
-| `v_action_by_beat` | Actions grouped by beat |
+| `v_action_by_phase` | Actions grouped by beat |
 | `v_faction_primitives` | All Faction-subject primitives |
 | `v_arbiter_primitives` | All ARBITER-subject primitives |
 | `v_faction_exclusive` | Primitives where only Faction acts |
@@ -613,12 +626,12 @@ CREATE TABLE `state_condition_clause` (
 | `v_comp_verb_matrix` | Per-component capability grid: Add/Remove/Move/Reveal/Conceal/Flip/Corrupt. **Note: Add and Remove hardcoded to 1 for all actionable components** — not derived from action. Move=1 if component is in subject_target. Others derived from transform_ flags |
 | `v_primitive_actual_coverage` | Actual primitive counts per (component, verb) — only rows with count > 0. Use alongside v_comp_verb_matrix to see which design-space capabilities have real primitives in action |
 | `v_placement_matrix` | Which components can be placed on which receivable target components (from subject_target) |
-| `v_beat_subject_coverage` | Per-beat: verb count, component count, primitive count by subject |
-| `v_beat_role_matrix` | Role coverage per beat |
-| `v_trigger_beat_coverage` | Trigger types present in each beat |
+| `v_phase_subject_coverage` | Per-beat: verb count, component count, primitive count by subject |
+| `v_phase_role_matrix` | Role coverage per beat |
+| `v_trigger_phase_coverage` | Trigger types present in each beat |
 | `v_trigger_summary` | Trigger distribution by subject |
 | `v_role_matrix` | Role assignment matrix |
-| `v_beat_verb_summary` | Verb usage per beat |
+| `v_phase_verb_summary` | Verb usage per beat |
 | `v_fulfiller_summary` | Fulfiller role coverage |
 | `v_layer_function_coverage` | Every Faction-initiatable Function × Component with beat availability |
 
@@ -637,11 +650,11 @@ VALUES ('Component Name', 1, 0, 1, 0, 0);
 -- Next AUTO_INCREMENT = 98 as of S50
 ```
 
-### Step 2 — Seed beat coverage in comp_verb_beat
+### Step 2 — Seed beat coverage in comp_verb_phase
 One row per valid (component, verb, beat) combination.
 ```sql
 -- Countermeasure card (id=52) example:
-INSERT INTO comp_verb_beat (component_id, verb_id, beat_id) VALUES
+INSERT INTO comp_verb_phase (component_id, verb_id, phase_id) VALUES
   (52, 1,  2),   -- Add at Placement (beat 2)
   (52, 17, 4),   -- Invoke at M1 Countermeasures (beat 4)
   (52, 10, 4),   -- Reveal at M1 Countermeasures
@@ -683,7 +696,7 @@ INSERT INTO comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
 --   7=player.agreement, 8=player.verbal_statement, 9=state_condition, 10=cascade
 -- subject_id: 1=Faction, 2=ARBITER
 
-INSERT INTO action (beat_id, beat_trigger, trigger_type_id, subject_id, verb_id, component_id, notes) VALUES
+INSERT INTO action (phase_id, beat_trigger, trigger_type_id, subject_id, verb_id, component_id, notes) VALUES
   (2,  'during', 4, 2, 1,  52, 'ARBITER distributes Countermeasure cards to Factions'),
   (4,  'during', 6, 1, 10, 52, 'Faction deploys Countermeasure card face-up'),
   (4,  'during', 6, 1, 17, 52, 'Faction invokes Countermeasure card effect'),
@@ -721,7 +734,7 @@ As of S50:
 ## 9. Open Design Notes / Known Gaps
 
 - **DB-14** ✅ S50 (agy): Promoted all 20 design tables to permanent schema (dropped tmp_ prefix) and recompiled all 27 views.
-- **DB-3NF** ✅ S63 (L184): 3NF applied. `component.transformable` → VIRTUAL GENERATED (derived from transform_ flags). `action.prereq_beat_id` dropped — prereq beat resolved dynamically via `prereq_id → action.beat_id`. `v_action_chain` rewritten. L108 amended (Requirements 6–7). `card_metadata` 3NF deferred to Art 04.6.
+- **DB-3NF** ✅ S63 (L184): 3NF applied. `component.transformable` → VIRTUAL GENERATED (derived from transform_ flags). `action.prereq_beat_id` dropped — prereq beat resolved dynamically via `prereq_id → action.phase_id`. `v_action_chain` rewritten. L108 amended (Requirements 6–7). `card_metadata` 3NF deferred to Art 04.6.
 - **DB-18** (PM05): Cross-beat modifier persistence not modeled. C06/C07/C10/C11/C12 play at Beat 2 but modify Beat 3/4 — no deferred-effect mechanism in action.
 - **DB-19** (PM05): Concurrent Political acts (C09) not verified in resolution model.
 - **DB-22** ✅ S50 (agy): Upkeep primitives seeded — Faction/ARBITER Flip Status marker (ids 295/296), Faction/ARBITER Add Presence token (ids 297/298), Faction/ARBITER Remove Deployment marker (ids 299/300), ARBITER Move Situation Report card (id 301).

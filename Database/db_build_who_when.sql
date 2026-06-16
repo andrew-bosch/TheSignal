@@ -142,7 +142,7 @@ INSERT INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
 (35,1,2,1),(35,1,2,2),(35,1,2,3),
 (35,2,2,1),(35,2,2,2),(35,2,2,3),
 (35,16,2,1),(35,16,2,2),(35,16,2,3),
--- Threshold marker (36)
+-- Escalation marker (36)
 (36,1,2,1),(36,1,2,2),(36,1,2,3),
 (36,2,2,1),(36,2,2,2),(36,2,2,3),
 (36,16,2,1),(36,16,2,2),(36,16,2,3),
@@ -370,7 +370,7 @@ INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (48,10,5,'ARBITER reads Target Profile'),
 (13,16,5,'ARBITER moves operation to Resolution Grid lane'),
 (12,2,5, 'ARBITER removes invalid Token-less submissions'),
-(36,1,5, 'ARBITER places threshold marker if operation underpaid'),
+(36,1,5, 'ARBITER places escalation marker if operation underpaid'),
 (8,2,5,  'ARBITER returns resources from invalid submissions');
 
 -- Month 1 — Beat 1
@@ -390,7 +390,7 @@ INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (13,10,8,'ARBITER reveals operation card for resolution'),
 (48,13,8,'ARBITER corrupts Target Profile if directed by card effect'),
 (13,2,8, 'Operation removed from grid after resolution'),
-(36,2,8, 'Threshold marker removed after partial payment check'),
+(36,2,8, 'Escalation marker removed after partial payment check'),
 (47,2,8, 'Remaining modifier tokens returned to ARBITER Tableau'),
 (12,2,8, 'ARBITER collects Dispatch Tokens'),
 (1,1,8,  'Presence token placed on success'),(1,2,8,  'Presence token removed on success'),
@@ -414,7 +414,7 @@ INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (44,10,11,'ARBITER opens Month 2 cases'),(13,10,11,'ARBITER inspects contents'),
 (48,10,11,'ARBITER reads Target Profile'),(13,16,11,'ARBITER moves op to grid'),
-(12,2,11,'ARBITER removes invalid submissions'),(36,1,11,'ARBITER places threshold marker'),
+(12,2,11,'ARBITER removes invalid submissions'),(36,1,11,'ARBITER places escalation marker'),
 (8,2,11,'ARBITER returns resources from invalid submissions');
 
 INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
@@ -427,7 +427,7 @@ INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 
 INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (13,10,14,'ARBITER reveals Month 2 operation'),(48,13,14,'ARBITER corrupts Target Profile if directed'),
-(13,2,14,'Operation removed'),(36,2,14,'Threshold marker removed'),(47,2,14,'Modifier tokens returned'),
+(13,2,14,'Operation removed'),(36,2,14,'Escalation marker removed'),(47,2,14,'Modifier tokens returned'),
 (12,2,14,'ARBITER collects Month 2 Dispatch Tokens'),
 (1,1,14,'Presence placed'),(1,2,14,'Presence removed'),
 (3,1,14,'Structure placed'),(3,2,14,'Structure removed'),

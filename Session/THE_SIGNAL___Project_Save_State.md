@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-15 — Session 91 Close
+**Last Updated:** 2026-06-16 — Session 92 Close
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
@@ -9,7 +9,7 @@ Read this document top to bottom before doing any design work in a new session. 
 
 ---
 
-### Session 91 Summary (2026-06-15)
+### Session 92 Summary (2026-06-16)
 
 **Art 02 02-n02 sign-off pass — §5 rubric pass complete:** 8 narrative anchor corrections across §5 (Playing Surface). Art 00 §8.1 added (faction private/public boundary — closed room / open side distinction; grounds Faction Screen, Faction Terminal, Faction Resolution Grid without naming components). Art 00 §9.6 "What The Table Sees" added (ARBITER's threshold between processing and revealing; Arbiter Tableau as externalized record; MIRROR as ARBITER's eyes). PM02 L209 locked. Art 00 v1.7 — pending re-sign-off (PM05 00-16 gates Art 02 §5 anchor sign-offs for DB:27/88/28/30).
 

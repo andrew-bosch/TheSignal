@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 91 (active) | Updated: 2026-06-15**
+**Session 92 complete → Session 93 next | Updated: 2026-06-16**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,71 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S90 active — Art 02 v2.0 rewrite complete. Full scope rewrite: component enumeration doc (design function + physical requirements + gameplay requirements). 63 DB-registered components covered. Orphaned rules content parked in Whiteboard/art02_orphaned_content.md (→ PM05 02-n08). Next: Art 02 v2.0 sign-off pass (02-n02), then Art 01 re-sign-off (02-n05).
+S93 — Check agy DB-32 results in Claude_context.md. Review PM05 for next work priority. Key open items from Art 02 sign-off: DB-38 (Escalation marker cascade — DB + downstream), 00-16 (Art 00 re-sign-off gates §5 anchor sign-offs), 02-n10/11/12/13 (Art 02 follow-on items).
+
+**S92 accomplishments (mid-session clear #1):**
+- README.md — fixed two broken Art 03 anchor links.
+- Art 02 02-n02 — Gameplay Requirements validation pass, 7 issues resolved (DB:2, 11, 10, 3, 50, 1, 13).
+- Art 02 DB:4 — accommodation requirements and virtual structure block notation added.
+- Art 02 §3 — "Calculation over count" and "Procedurally auditable structure" added.
+- Art 02 §4 — per-group metadata schemas written for all 8 groups.
+- 00b §4.5, Art 07 §6.5 — Portrait band updates.
+- PM05: 00a-n04, 03-n23, 07-13 added.
+
+**S92 accomplishments (mid-session clear #2 — this clear):**
+- PM05 02-n14 added — District Tile per-faction zone layout (working assumption: organized lanes; virtual structure = faction-keyed filled square printed on tile; back-stream update pending visual design lock).
+- Art 02 §4 fully redesigned → **§4.1 Universal Component Schema**: 17 fields (2 identity + 9 universal + 6 group-specific); Physical Form table replaced by Metadata block throughout; old per-group schemas replaced by Field Registry + Data Dictionary + Group Field Summary.
+  - Key design decisions: all derivable fields dropped (lifecycle, held_by, custodian, created_by, play_beat/beat_active, economy_role, resource_source/sink, accommodates, contains, card_source) — derivable from placement_surface + movement_path + 03-init/03b; DB-37 covers view creation.
+  - Three groups with no group-specific fields: Faction Influence, Resources, Covert Messaging.
+  - `max_placement` split → `max_placement_count` (Integer) + `max_placement_ref` (ID Reference) — L108 Req 1 compliance.
+  - `starting_position` renamed → `init_value` (scale value at setup only; geographic init = 03-init territory).
+  - Type vocabulary: Prose · Integer · Enum · ID Reference · Expr (Expr flagged XA-53 for L123 extension).
+  - `placement_surface`/`movement_path` typed as Prose with defined format; normalize to junction tables in DB (DB-37).
+- Art 02 §3 Entry Rubric — updated to reference Metadata block (Physical Form table row replaced).
+- Art 02 §5 Playing Surface — all 10 entries populated with Metadata blocks (DB:29, 4, 102, 26, 27, 88, 28, 30, 105, 43).
+- PM05: DB-37 (derived component_metadata views — 6 views flagged), XA-53 (L123 Expr extension) added.
+
+**S92 accomplishments (mid-session clear #3 — this clear):**
+- Art 02 §4.1 schema: `display_component` field added (ID Reference | Playing Surface — semicolon-separated list of component.id values with dedicated labeled areas on this surface). `privacy_model` definition updated: flat surfaces = own visibility; physical dividers (screens) = privacy of concealed space.
+- Art 02 §5 Playing Surface — full sign-off review complete (all 10 entries: DB:29, 4, 102, 26, 27, 88, 28, 30, 105, 43). display_component populated; max_placement_count/ref set on all entries.
+- Art 02 §6 Faction Influence — full sign-off review complete (all 7 entries: DB:1, 2, 5, 6, 7, 3, 42).
+- **DF vs GR rubric established (locked):** Design Function = what the component IS (1–2 sentences, no mechanics). Gameplay Requirements = everything else (triggers, effects, limits, removal, visual constraints).
+- **Design decisions locked:** DB:30 = private workspace (not public-facing); DB:1, 3, 5, 6, 7 supply origin = Arbiter Tableau (DB:30); DB:5 = neutral silver shared supply (not faction-keyed); DB:7 Chorus Node trigger = 2+ chips (not 3+); DB:6 quantity = 20 (Chorus Node excluded); DB:5 quantity formula = (factions × (districts−1)) + 1 = 101; DB:7 quantity = 21.
+- Narrative anchors locked: DB:2 Deployment marker ("Whatever the doctrine requires..."); DB:5 Established marker ("They are no longer noticed because they are no longer new..."); DB:30 Arbiter Tableau ("The inside of ARBITER's awareness...").
+- PM05: 02-n16 (district metadata table DB design + Art 03 stub), 02-n17 (DB:102 Broadcast Card max placement TBD), 02-n18 (Broadcast Discard/Effect Discard registration — lifecycle gate) added; 02-n14 and 02-n15 updated.
+- Handoff notes: `Whiteboard/art02_review_handoff_S92.md` (full correction patterns, rubric, progress, §§7–12 component list with line numbers).
+
+**S92 accomplishments (mid-session clear #5 — this clear):**
+- Art 02 §§7–10 sign-off review first pass complete:
+  - §7 Resources: DB:8 (5-path movement incl. resource trade), DB:12 (copper, corrected paths), DB:32/33 moved to §5 with Playing Surface schema, DB:44/108/48/95/96/100 corrected.
+  - §8 Covert Messaging: DB:44/108/48 corrected; DB:95/96/100/101 moved out; global "ARBITER Resolution Workspace" → "Arbiter Tableau (DB:30) — resolution workspace subzone" replacement applied.
+  - §9 Intel & Information: DB:9/10 states/lifecycle/paths corrected; DB:95/96/100 added (recorded_fields schema); DB:48 recorded_fields corrected; DB:101 removed.
+  - §10 Card Systems: restructured into subgroups + §10.1 Card Containers.
+    - §10 main: **Operative** (DB:17, 15, 99, 97) → **Operations Resolution** (DB:13, 14, 11, 52) → **Broadcasts** (DB:25, 98).
+    - §10.1 Card Containers: Faction Hand (DB:94) / Covert Operation (DB:92, 93) / Political Act (DB:90, 91) / Broadcast (DB:86, 87, 109, 110) / Modifier (DB:53/54/55, 89).
+  - DB:109 (Broadcast Discard) + DB:110 (Broadcast Effect Discard) registered by agy; added to §10.1.
+  - DB:101 (SCIFRecord) de-registered by agy; 02-n11 updated (DB step complete; cascade + Art 04 section still pending).
+  - 02-n18 closed; 02-n19 added (resource exchange verification in Art 03).
+  - DF vs GR pass applied to all §§7–10 entries.
+- §10 review by Andy in Grip: pending (next after clear).
+
+**S92 accomplishments (post-clear #6 — this clear):**
+- Art 02 §§11–12 sign-off review complete (Resolution Tools + Tracking Systems).
+  - DB:103 VM-xx, DB:104 BM-xx — movement paths corrected (AT → resolution workspace → DB:105 → AT); GR expanded.
+  - DB:47 Modifier token — denominations 5/10/15; obverse positive (green) / reverse negative (red); static once placed; two placement paths (DB:105 covert / DB:88 PA).
+  - DB:106/107 threshold sliders — 0–100 in increments of 5 (20 ticks); crit zones 1–5 (green) / 96–00 (red); set to base threshold then adjusted per Art 03 §13.5.
+  - DB:50 Chorus Portrait track — single physical strip with 5 parallel faction-keyed tracks; behind ARBITER screen (not face-down).
+  - DB:36 renamed Escalation marker (DB-38 cascade to DB + downstream pending).
+  - DB:23 Session Timeline — restructured to 8Q × 3M (24 positions total).
+  - DB:38 Faction order marker — physical form = Structure Block clone, faction-colored.
+  - All markers ARBITER-managed except: PS (ARBITER or acting faction player), Status marker (faction player only).
+- **Art 02 v2.0 signed off — L210.** Conditional on PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
+- PM02 L210 locked. PM03 Art 02 status updated.
+
+**S93 entry point:**
+1. Read `Claude_context.md` — check agy DB-32 status.
+2. Review PM05 for next work priority. Priority candidates: DB-38 (Escalation marker cascade — agy DB step + artifact sweep), 00-16 (Art 00 v1.7 re-sign-off), 02-n10 (11 imprecise Art 00 section pointers).
+3. **Housekeeping pending:** Move `~/Projects/Whiteboard/` files into `~/Projects/TheSignal/Whiteboard/` — dual-whiteboard confusion; delete empty `~/Projects/Whiteboard/` after migration.
 
 **S65 accomplishments:** 04-n25 PS-as-cost ✅ and pre_loss_calc ✅ closed. Art 04 §6.2 cost field redefined (fungible resources only). Art 04 §6.6 added (Expression Parameters — pre_loss_calc). C37 Sacrifice redesigned v1.1 (cost=None; target_faction required; success=ps−2+IntelToken). C34 Golden Parachute redesigned v2.0 (bribe mechanic; variable cost; retained resources). Art 03 v3.1 signed off (L185) — Beat 0 Retained validation; Beat 2 Golden Parachute procedure; Beat 3 partial payment marker source. XA-38 closed (anchor link sweep — 38 links fixed across 11 artifacts). Network PS recovery/negation modifier card added to modifier_card_ideas.md.
 
@@ -92,10 +156,7 @@ S90 active — Art 02 v2.0 rewrite complete. Full scope rewrite: component enume
 
 **S91 accomplishments:** Art 02 02-n02 sign-off pass — §5 full rubric pass: 8 narrative anchor corrections; Art 00 §8.1 + §9.6 material additions (PM02 L209); DB:29/26/27/88/28/30 anchors written; DB:105 ARBITER CRG scope discipline fix; DB:43 Human Player full rewrite; DB:4 District tile anchor corrected (resource generation framing + lead sentence restored). §§6–12 rubric pass complete: scope discipline sweep — all "Full design: Art 03" and "Full design: Art 00b" cross-refs removed throughout (Art 03 = procedure only; Art 00b = DB punch list, not design spec); DB:108 Dispatch Packet procedural sentences trimmed; DB:47 Modifier token Design Function written (threshold modification accumulator — holds modifier value on target operation while generating card exits queue); DB:48 Target Profile target district field added; DB:44/108 active anchors → Art 00 §14.5; DB:100 DebriefActionCard active anchor → Art 00 §9.6; DB:17 Classified Directives active anchor → Art 00 §14.7; Dispatch token / Backlog reordered (narrative-first). New PM05: 00-16 (Art 00 v1.7 re-sign-off — gates §5 anchor sign-offs for DB:27/88/28/30), 02-n10 (11 imprecise Art 00 section pointers across §§6–12), 02-n11 (SCIFRecord de-registration + cascade update), 02-n12 (Emergency Response card design TBD), 02-n13 (Status marker Art 00 narrative evaluation).
 
-**S91 entry point (next session):**
-1. Art 02 02-n02 — Gameplay Requirements validation pass: confirm requirements = true for each component (not just properly written). Cross-reference Art 03/04/Art 01 per component.
-2. Art 00 00-16 re-sign-off — grip review of §8.1 and §9.6 additions; gates DB:27/88/28/30 anchor sign-offs.
-3. After 02-n02 sign-off: 02-n09 (version/PM03 sync), 02-n05 (Art 01 re-sign-off).
+**S91 entry point:** ✅ S92 in progress — see S92 entry point above.
 
 **Also pending:** 04-n40 (C28 sign-off — set-level gates); 04-n44/45/46 (IS-xx Art 03/00b updates — gate: C24 sign-off); 04-n71 (Art 03 Beat 0 boost procedure); 04-n72 (Art 03 covert ElectPlayer procedure); 04-n69/70 (schema sweep); 03-n21 (Dispatch Token in 03-init); Standing Injunction 5 open flags; agy DB-S63-01/02/03 check-in; 04b re-sign-off; 04-n73 (P1–P18 restatement audit).
 
@@ -152,7 +213,7 @@ S90 active — Art 02 v2.0 rewrite complete. Full scope rewrite: component enume
 | 00 — Factions, World & Narrative | 1.7 | 🔄 Pending Re-Sign-Off — S91 (00-16). §8.1 added: faction private/public boundary narrative (grounds Faction Screen, Faction Terminal, Faction Resolution Grid). §9.6 added: "What The Table Sees" — ARBITER's processing/revealing threshold (grounds ARBITER Screen, Arbiter Tableau; MIRROR as ARBITER's eyes). PM02 L209. Open: 00-09, 00-15, 00-16. |
 | 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle documentation). |
 | 01 — Game Board: New Meridian | 2.1 | 🔄 Needs Re-Sign-Off — S90 (02-n05). §4 component narratives migrated to Art 02 §4; §6 Physical Forms table migrated to Art 02 §13; stale refs updated; now geography/zone-only. Open: 01-11 (scope overhaul §8/§11/§12). |
-| 02 — Components | 2.0 | 🔄 In Progress — S91 §§5–12 rubric pass complete (02-n02). Scope discipline sweep done. Gameplay Requirements validation pass next. Open: 00-16 (gates §5 anchor sign-offs), 02-n10 through 02-n13. |
+| 02 — Components | 2.0 | ✅ Signed Off — S92 (L210). §§5–12 rubric pass, metadata population, and GR validation complete across all 68 components. Open PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38. |
 | 02a — Resource Systems: Board State | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0. Moved to Retired/Paper/ S90. |
 | 03 — Quarter Structure & Gameplay | 4.4 | ✅ Signed Off S88 (L207). §13.7 Board State Update Rules added; Control flag → Dominant marker throughout; Target Profile to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); BEC cleanup scope clarified (§12.0). |
 | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
@@ -232,6 +293,7 @@ Signed-off artifacts: 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re-sign-off).
 
 ## Last 3 Locked Decisions
 
+- **L210** (S92): Art 02 v2.0 signed off. §§5–12 rubric pass, metadata population, and GR validation complete across all 68 components. Conditional on PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
 - **L207** (S88): Art 03 v4.4 signed off. Component lifecycle sweep complete; §13.7 Board State Update Rules added (Tension marker placement trigger; Structure block removal + return); Control flag renamed Dominant marker (same component — DB-14 = rename, not new registration); Target Profile added to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); §12.0 BEC scope clarified.
 - **L206** (S84): DB-registered component names are canonical source of truth for all terminology. Changes begin at DB component table, cascade through artifacts. No artifact may introduce a component name not registered in the DB.
 - **L205** (S83): Art 06 §9 Accord Documents re-signed off (v0.4). §9.3 clause vocabulary complete (6 types incl. Duration); §9.4 PS formation mechanic; §9.5 board state sole compliance basis; §9.10 Transfer → Alter Named Party subtype.
@@ -257,6 +319,7 @@ Signed-off artifacts: 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re-sign-off).
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v4.4** — ✅ Signed Off S88 (L207)
 - **Art 06 §9** — ✅ Signed Off S83 (L205)
+- **Art 02 v2.0** — ✅ Signed Off S92 (L210). Conditional: 00-16, 02-n10/11/12/13, DB-38.
 - **00b** — ⚠ S81 VM-xx + S82 BM-xx registration pending re-sign-off
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)
 

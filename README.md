@@ -62,9 +62,9 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.3 | 🔄 In progress — component lifecycle and setup entries updated through S88 |
-| 03 | [while session(true): Quarter Structure](V1/03___Quarter_Structure___Gameplay.md) | 4.4 | ✅ Signed off — S88 (L207) |
+| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.4 | ✅ Signed off — S88 (L207) |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In progress — Tier 4 stub remaining |
-| 03b | [Component Lifecycle Register](V1/03x___Component_Lifecycle.md) | 0.1 | 🔄 In progress — formalized S88; open gaps in §9 |
+| 03b | [Component Lifecycle Register](V1/03b___Component_Lifecycle.md) | 0.1 | 🔄 In progress — formalized S88; open gaps in §9 |
 
 ---
 

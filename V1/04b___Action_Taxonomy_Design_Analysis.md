@@ -96,20 +96,20 @@ Session 47 formalized the physical action taxonomy into a relational model in `t
 
 | Table | Axis | Content |
 |-------|------|---------|
-| `tmp_component` | What | 51 registered physical components |
-| `tmp_verb` | How | 7 physical verbs (+ Invoke meta-verb) |
-| `tmp_beat` | When | 20 beats across the full Quarter structure |
-| `tmp_player_role` | Who | Faction / ARBITER |
-| `tmp_role_phase` | Role phase | Initiator / Executor / Fulfiller |
-| `tmp_trigger_type` | Why | 10 trigger classifications |
+| `component` | What | 51 registered physical components |
+| `verb` | How | 7 physical verbs (+ Invoke meta-verb) |
+| `quarter_phase` | When | 20 beats across the full Quarter structure |
+| `player_role` | Who | Faction / ARBITER |
+| `role_phase` | Role phase | Initiator / Executor / Fulfiller |
+| `trigger_type` | Why | 10 trigger classifications |
 
-**Junction tables** (`tmp_comp_verb_beat`, `tmp_comp_verb_role`) define valid combinations. A valid *primitive* is any row in both junction tables for the same component × verb pair — the intersection of what is possible by timing AND what is possible by role.
+**Junction tables** (`comp_verb_phase`, `comp_verb_role`) define valid combinations. A valid *primitive* is any row in both junction tables for the same component × verb pair — the intersection of what is possible by timing AND what is possible by role.
 
-**Primitives are derived** as: `tmp_comp_verb_beat × tmp_comp_verb_role (phase_id=1)`. Phase_id=1 (initiator) captures who calls for the action; the executor (phase_id=2) is tracked separately in `tmp_comp_verb_role` and is not collapsed into the primitive row. Result: **213 primitives** in `tmp_action` as of S47.
+**Primitives are derived** as: `comp_verb_phase × comp_verb_role (phase_id=1)`. Phase_id=1 (initiator) captures who calls for the action; the executor (phase_id=2) is tracked separately in `comp_verb_role` and is not collapsed into the primitive row. Result: **213 primitives** in `action` as of S47.
 
 #### Trigger Taxonomy
 
-Every primitive in `tmp_action` carries a `trigger_type_id` classifying what causes the action to fire:
+Every primitive in `action` carries a `trigger_type_id` classifying what causes the action to fire:
 
 | Type | Subtype | Definition |
 |------|---------|------------|
@@ -138,15 +138,15 @@ Every primitive in `tmp_action` carries a `trigger_type_id` classifying what cau
 
 The taxonomy defines **possibility space** — every valid combination of component × verb × beat × role that the physical game system can support. Art 03 defines **legal space** — the subset of those combinations that the rules actually permit and describe a procedure for.
 
-A primitive present in `tmp_action` with no corresponding Art 03 procedure is not a modeling error — it is an open design question. Every gap discovered through this analysis is routed to Art 03 for resolution: **permit** (write the procedure), **prohibit** (annotate as explicitly illegal), or **defer**. The two artifacts co-evolve iteratively.
+A primitive present in `action` with no corresponding Art 03 procedure is not a modeling error — it is an open design question. Every gap discovered through this analysis is routed to Art 03 for resolution: **permit** (write the procedure), **prohibit** (annotate as explicitly illegal), or **defer**. The two artifacts co-evolve iteratively.
 
 #### Gap Analysis Views
 
 Two views provide the ongoing procedure coverage audit:
 
-**`v_unlegislated_primitives`** — All (beat, subject, verb, component) combinations valid in the taxonomy but absent from `tmp_action`. 60 rows as of S47; organized by beat. Primary use: beat-by-beat procedure review.
+**`v_unlegislated_primitives`** — All (beat, subject, verb, component) combinations valid in the taxonomy but absent from `action`. 60 rows as of S47; organized by beat. Primary use: beat-by-beat procedure review.
 
-**`v_unlegislated_by_trigger`** — All (subject, verb, component) tuples with zero coverage in `tmp_action` under any trigger type or beat. 14 rows as of S47 (all Faction-initiated). Primary use: legalization decision queue — for each row: permit / prohibit / defer.
+**`v_unlegislated_by_trigger`** — All (subject, verb, component) tuples with zero coverage in `action` under any trigger type or beat. 14 rows as of S47 (all Faction-initiated). Primary use: legalization decision queue — for each row: permit / prohibit / defer.
 
 S47 identified 14 unlegislated Faction-initiated combinations:
 
@@ -169,7 +169,7 @@ S47 identified 14 unlegislated Faction-initiated combinations:
 
 *Decision column: ✅ Permit (Art 03 procedure exists or written) / ❌ Prohibit (explicitly excluded) / 🔄 Deferred*
 
-All planned views completed S47: `v_gap_executor_check`, `v_unassigned_triggers`, `v_duplicate_primitives`, `v_component_coverage`, `v_beat_subject_coverage`, `v_trigger_beat_coverage`. View `v_card_primitive_map` remains blocked — requires `tmp_card_ref` seed table.
+All planned views completed S47: `v_gap_executor_check`, `v_unassigned_triggers`, `v_duplicate_primitives`, `v_component_coverage`, `v_phase_subject_coverage`, `v_trigger_phase_coverage`. View `v_card_primitive_map` remains blocked — requires `card_ref` seed table.
 
 #### Known Seeding Gaps (S48)
 
@@ -178,9 +178,9 @@ The following are pending DB population tasks — not design gaps in the taxonom
 | Component / Beat | Gap | Note |
 |-----------------|-----|------|
 | Countermeasures beats (4, 10, 16) | 0 primitives seeded | Art 03 §10/§13/§16 defines the procedure. Pending component registration for Countermeasure card. |
-| ARBITER Dominance Marker (`tmp_component` id=42) | No `tmp_comp_verb_role` or `tmp_comp_verb_beat` entries | Present in §3.2 matrix. DB seeding queued. |
-| Classified directives (`tmp_component` id=17) | No `tmp_comp_verb_role` or `tmp_comp_verb_beat` entries | Present in §3.2 matrix. DB seeding queued. |
-| Standing marker — resolution beats | ARBITER Move absent from `tmp_action` for Beat 3 / Beat 4 | Card-triggered primitive. Beat 3: failure/discovery only (covert success produces no Standing marker move — unobserved). Beat 4: all outcomes. Seeding queued. |
+| ARBITER Dominance Marker (`component` id=42) | No `comp_verb_role` or `comp_verb_phase` entries | Present in §3.2 matrix. DB seeding queued. |
+| Classified directives (`component` id=17) | No `comp_verb_role` or `comp_verb_phase` entries | Present in §3.2 matrix. DB seeding queued. |
+| Standing marker — resolution beats | ARBITER Move absent from `action` for Beat 3 / Beat 4 | Card-triggered primitive. Beat 3: failure/discovery only (covert success produces no Standing marker move — unobserved). Beat 4: all outcomes. Seeding queued. |
 | 37 duplicate rows | Exact duplicates in resolution beats (Month 1/2 Beat 3, Month 3 Beat 4) | Seeding artifact. Deletion queued. |
 
 ---
@@ -487,7 +487,7 @@ The DB primitive model generates two gap views. See §3.3 for methodology.
 
 **`v_unlegislated_primitives`** — 60 beat-specific gaps. 46 are expected (Faction-at-Beat-3, ARBITER-executed beat); 2 are ARBITER-Move-Standing-marker-at-Beat-3 (inverse of the public-exception primitive); 12 are Faction-at-M3-Beat-4, the most interesting design space for new card effects.
 
-All planned gap views completed S47 — see §3.3 for view list and status. `v_card_primitive_map` remains blocked pending `tmp_card_ref`.
+All planned gap views completed S47 — see §3.3 for view list and status. `v_card_primitive_map` remains blocked pending `card_ref`.
 
 ---
 

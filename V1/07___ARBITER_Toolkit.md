@@ -109,6 +109,12 @@ Portrait is also moved by:
 ### 6.4 ARBITER as Sole Mover
 ARBITER is the sole physical mover of Portrait markers. No card effect, operative ability, or faction action may directly instruct a faction to move the Portrait track. If a card's Portrait field says "negative shift," ARBITER evaluates and applies. The faction does not know this happened. See Governing Rule 5.1.
 
+### 6.5 Portrait Band Labels and Score Ranges
+
+*[TBD — Portrait band design. The eleven canonical band labels and their score ranges are designed here. Labels are proposed in Art 02 §12 (Chorus Portrait track entry) and are the reference during design. Once ranges are determined, update Art 02 §12 as the canonical source. See PM05 07-13.]*
+
+Canonical band labels (from Art 02 §12, lowest to highest): Void · Collapsed · Fractured · Dissonant · Uncertain · Ambiguous · Observed · Legible · Coherent · Aligned · Resonant. Track scale: −20 to +20. Zero-line band: Ambiguous (−1 to 0, L42). Top band: Resonant (+18 to +20, L42).
+
 ---
 
 ## 7. Debrief Reward System

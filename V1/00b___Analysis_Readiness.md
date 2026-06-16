@@ -99,17 +99,23 @@ Contested is a board-state flag, not an influence level. Set when two or more fa
 
 ### 4.5 Portrait Band (PB-xx)
 
-*Score ranges defined in Art 02b §6. Exact ranges pending Art 02b re-sign-off. Band names and ordering locked.*
+*Band labels canonical (proposed) per Art 02 §12. Score ranges TBD pending Art 07 Portrait design (PM05 07-13). Art 02 §12 is authoritative once Art 07 design is complete.*
 
 | ID | Name | Score Range | Notes |
 |----|------|-------------|-------|
 | PB-01 | Resonant | +18 to +20 | L42 — compressed to width 3 to preserve ±20 track limits |
-| PB-02 | Aligned | See Art 02b §6 | — |
-| PB-03 | Ambiguous | −1 to 0 | L42 — zero line band |
-| PB-04 | Divergent | See Art 02b §6 | — |
-| PB-05 | Dissonant | See Art 02b §6 | Lowest — furthest from Chorus alignment |
+| PB-02 | Aligned | TBD — Art 07 | — |
+| PB-03 | Coherent | TBD — Art 07 | — |
+| PB-04 | Legible | TBD — Art 07 | — |
+| PB-05 | Observed | TBD — Art 07 | — |
+| PB-06 | Ambiguous | −1 to 0 | L42 — zero line band |
+| PB-07 | Uncertain | TBD — Art 07 | — |
+| PB-08 | Dissonant | TBD — Art 07 | — |
+| PB-09 | Fractured | TBD — Art 07 | — |
+| PB-10 | Collapsed | TBD — Art 07 | — |
+| PB-11 | Void | TBD — Art 07 | Lowest — furthest from Chorus alignment |
 
-*Source: Art 02b §6. Foreign key: Faction Portrait score maps to PB-xx at session end for VP calculation.*
+*Source: Art 02 §12. Foreign key: Faction Portrait score maps to PB-xx at session end for VP calculation.*
 
 ---
 
@@ -121,7 +127,7 @@ Contested is a board-state flag, not an influence level. Set when two or more fa
 | Difficulty Tier | DT-xx | 🔄 Pending migration | §4.1 |
 | Resolution Outcome | RO-xx | 🔄 Pending migration | §4.2 |
 | Influence Level | IL-xx | 🔄 Pending migration | §4.3 |
-| Portrait Band | PB-xx | 🔄 Pending migration | Ranges pending Art 02b re-sign-off |
+| Portrait Band | PB-xx | 🔄 Pending migration | 11 bands in §4.5; ranges TBD pending Art 07 Portrait design (PM05 07-13) |
 | Visibility Marker | VM-xx | 🔄 Pending migration | S81 registration |
 | BoostMarker | BM-xx | 🔄 Pending migration | S79 draft |
 | Notification Slip | NS-xx | 🔄 Pending schema | Text/format: Art 07 |

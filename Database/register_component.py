@@ -54,14 +54,14 @@ def execute_sql(sql):
 # ── Lookup tables ─────────────────────────────────────────────────────────────
 
 def load_lookups():
-    verbs      = load_lookup("SELECT id, name FROM tmp_verb")
-    beats      = load_lookup("SELECT id, name FROM tmp_beat")
-    roles      = load_lookup("SELECT id, name FROM tmp_player_role")
-    phases     = load_lookup("SELECT id, name FROM tmp_role_phase")
-    components = load_lookup("SELECT id, name FROM tmp_component")
+    verbs      = load_lookup("SELECT id, name FROM verb")
+    beats      = load_lookup("SELECT id, name FROM quarter_phase")
+    roles      = load_lookup("SELECT id, name FROM player_role")
+    phases     = load_lookup("SELECT id, name FROM role_phase")
+    components = load_lookup("SELECT id, name FROM component")
 
     # trigger_type: key = "type.subtype" or "type" if subtype is NULL
-    trigger_rows = query("SELECT id, type, subtype FROM tmp_trigger_type")
+    trigger_rows = query("SELECT id, type, subtype FROM trigger_type")
     triggers = {}
     for row in trigger_rows:
         tid, ttype, tsub = int(row[0]), row[1], row[2] if row[2] != "NULL" else None
@@ -76,6 +76,7 @@ def load_lookups():
         "components": components,
         "triggers":   triggers,
     }
+
 
 
 # ── Validation ────────────────────────────────────────────────────────────────
@@ -122,52 +123,63 @@ def build_sql(cfg, lk):
     transform_orientation = bool_to_int(cfg.get("transform_orientation", 0))
     transform_data      = bool_to_int(cfg.get("transform_data", 0))
 
-    # Step 1 — tmp_component
+    parent_id = "NULL"
+    if "parent_component" in cfg:
+        parent_id = resolve(cfg["parent_component"], lk["components"], "parent component")
+
+    # Step 1 — component
     lines.append("-- Step 1: Register component")
     lines.append(
-        f"INSERT INTO tmp_component "
-        f"(name, actionable, transformable, receivable, "
+        f"INSERT INTO component "
+        f"(name, parent_component_id, actionable, transformable, receivable, "
         f"transform_visibility, transform_orientation, transform_data) VALUES "
-        f"({esc(name)}, {actionable}, {transformable}, {receivable}, "
+        f"({esc(name)}, {parent_id}, {actionable}, {transformable}, {receivable}, "
         f"{transform_visibility}, {transform_orientation}, {transform_data});"
     )
     lines.append("SET @comp_id = LAST_INSERT_ID();")
+    
+    # Step 1b — component_dim & component_type
+    lines.append("-- Step 1b: Register metadata")
+    desc = cfg.get("description", "No description provided")
+    ctype = cfg.get("component_type", "other")
+    lines.append(f"INSERT INTO component_dim (component_id, description) VALUES (@comp_id, {esc(desc)});")
+    lines.append(f"INSERT INTO component_type (component_id, component_type) VALUES (@comp_id, {esc(ctype)});")
     lines.append("")
 
-    # Step 2 — tmp_comp_verb_beat
+    # Step 2 — comp_verb_phase
     verb_beats = cfg.get("verbs", [])
     if verb_beats:
-        lines.append("-- Step 2: Seed beat coverage (tmp_comp_verb_beat)")
+        lines.append("-- Step 2: Seed phase coverage (comp_verb_phase)")
         for entry in verb_beats:
             verb_id = resolve(entry["verb"], lk["verbs"], "verb")
             for beat_name in entry["beats"]:
                 beat_id = resolve(beat_name, lk["beats"], "beat")
                 note = esc(entry.get("notes"))
                 lines.append(
-                    f"INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) "
+                    f"INSERT INTO comp_verb_phase (component_id, verb_id, phase_id, notes) "
                     f"VALUES (@comp_id, {verb_id}, {beat_id}, {note});"
                 )
         lines.append("")
 
-    # Step 3 — tmp_comp_verb_role
+    # Step 3 — comp_verb_role
     role_assignments = cfg.get("roles", [])
     if role_assignments:
-        lines.append("-- Step 3: Seed role assignments (tmp_comp_verb_role)")
+        lines.append("-- Step 3: Seed role assignments (comp_verb_role)")
         for entry in role_assignments:
             verb_id  = resolve(entry["verb"], lk["verbs"], "verb")
             role_id  = resolve(entry["player_role"], lk["roles"], "player_role")
             phase_id = resolve(entry["phase"], lk["phases"], "phase")
             note     = esc(entry.get("notes"))
             lines.append(
-                f"INSERT INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id, notes) "
+                f"INSERT INTO comp_verb_role (component_id, verb_id, role_id, phase_id, notes) "
                 f"VALUES (@comp_id, {verb_id}, {role_id}, {phase_id}, {note});"
             )
         lines.append("")
 
-    # Step 4 — tmp_action
+    # Step 4 — action
     primitives = cfg.get("primitives", [])
     if primitives:
-        lines.append("-- Step 4: Seed action primitives (tmp_action)")
+        lines.append("-- Step 4: Seed action primitives (action)")
         for prim in primitives:
             beat_id    = resolve(prim["beat"], lk["beats"], "beat")
             subject_id = resolve(prim["subject"], lk["roles"], "subject (player_role)")
@@ -176,20 +188,20 @@ def build_sql(cfg, lk):
             bt         = esc(prim.get("beat_trigger", "during"))
             notes      = esc(prim.get("notes"))
             lines.append(
-                f"INSERT INTO tmp_action "
-                f"(beat_id, beat_trigger, trigger_type_id, subject_id, verb_id, component_id, notes) "
+                f"INSERT INTO action "
+                f"(phase_id, beat_trigger, trigger_type_id, subject_id, verb_id, component_id, notes) "
                 f"VALUES ({beat_id}, {bt}, {trigger_id}, {subject_id}, {verb_id}, @comp_id, {notes});"
             )
         lines.append("")
 
-    # Step 5 — tmp_subject_target
+    # Step 5 — subject_target
     targets = cfg.get("targets", [])
     if targets:
-        lines.append("-- Step 5: Seed placement targets (tmp_subject_target)")
+        lines.append("-- Step 5: Seed placement targets (subject_target)")
         for target_name in targets:
             target_id = resolve(target_name, lk["components"], "target component")
             lines.append(
-                f"INSERT INTO tmp_subject_target (subject_id, target_id) "
+                f"INSERT INTO subject_target (subject_id, target_id) "
                 f"VALUES (@comp_id, {target_id});"
             )
         lines.append("")

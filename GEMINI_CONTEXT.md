@@ -797,149 +797,105 @@ The stub at `~/Projects/TheSignal/Database/schema_reference.md` will be populate
 
 ---
 
-### DB-14 Task — Phase A (agy)
+## Session 92 (continued) — 2026-06-16
 
-**Working model for this task:** Andy will be present in your sessions. You are not operating independently — ask Andy for clarification when something is ambiguous. Do not guess or assume.
+### Project State Update
 
-**Decision protocol:** Any decisions made during your DB sessions (schema design choices, naming conventions, edge cases, anything with design implications) must be written to `Claude_context.md` in a `## Decisions for Claude Code to Log` section. Claude Code will pick them up, log to PM02, and handle any resulting documentation activity. You execute; Claude Code logs and maintains artifact alignment.
+**Art 02 — Components v2.0 signed off (L210).** Art 02 is now the canonical component registry for all 68 DB-registered components. Use it as the authoritative source for `physical_form`, `quantity`, `visibility`, placement surfaces, movement paths, and gameplay requirements. File: `~/Projects/TheSignal/V1/02___Components.md`.
 
-**Documentation gaps:** If you encounter a case where the artifacts (Art 01, 02a, 02b, 03, 04, 04b) are ambiguous or missing information needed to proceed, flag it in `Claude_context.md` as a `## Documentation Gaps` item. Do not fill documentation gaps yourself — return them to Claude Code. Some gaps may require design decisions by Andy before DB work can continue.
+**Key component decisions locked this session:**
+- DB:36 renamed from "Threshold marker" → **"Escalation marker"** — "threshold" is reserved for the d100 system. DB rename pending (see DB-38 below).
+- DB:47 Modifier token: denominations 5/10/15; obverse positive (green) / reverse negative (red); static state once placed.
+- DB:50 Chorus Portrait track: 1 physical strip with 5 parallel faction-keyed tracks; behind ARBITER screen.
+- DB:103 (VM-xx) / DB:104 (BM-xx): movement path = Arbiter Tableau → resolution workspace → ARBITER Covert Resolution Grid (DB:105) → Arbiter Tableau.
+- DB:106/107 threshold sliders: 0–100 in increments of 5 (20 ticks); crit zones 1–5 (green) / 96–00 (red).
+- DB:23 Session Timeline: 8Q × 3M = 24 positions total.
+- All markers ARBITER-managed except: Standing marker (ARBITER or acting faction player), Status marker (faction player only).
 
-**Read `~/Projects/TheSignal/Database/schema_reference.md` before starting.** It is the authoritative schema reference.
-
-**Phase A — Audit and migration plan (no DDL yet):**
-
-1. Run `SHOW TABLES;` and confirm the 20 tmp_ tables above are all present. Note any discrepancies.
-2. For each of the 27 views, capture the current `SHOW CREATE VIEW <view_name>;` output. Identify which tmp_ table names appear in each view's SQL.
-3. For the 2 tables to drop (tmp_category, tmp_type): run `SELECT COUNT(*) FROM tmp_category;` and `SELECT COUNT(*) FROM tmp_type;` to confirm they are empty/unused before dropping.
-4. For the legacy early-schema tables: run `SHOW TABLES;` cross-reference against the list in schema_reference.md §2 (Early-schema tables). For each, run `SELECT COUNT(*) FROM <table>;` and report row counts. Do not drop or alter any legacy table — report only.
-5. Write your findings to `Claude_context.md`: (a) confirmed table list; (b) view dependency map (which views reference which tmp_ tables); (c) legacy table row counts; (d) proposed rename DDL for all 20 tables; (e) rewritten SQL for all 27 views using new permanent names.
-
-**Andy confirms Phase A findings before Phase B executes.** Do not rename, drop, or alter any table or view until Phase A is confirmed.
+**Open PM05 items gating Art 02 full closure:** 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
 
 ---
 
-## Session 63 DB Tasks — 2026-06-02
+### DB-38 — Rename "Threshold marker" → "Escalation marker" (DB:36)
 
-**Schema state note:** DB-14 is complete. All `tmp_` tables have been renamed to their permanent equivalents — use `component`, `comp_verb_beat`, `comp_verb_role`, `verb`, `beat`, `action`, etc. throughout. `schema_reference.md` reflects the promoted names. Read it before querying.
-
-**Read `~/Projects/TheSignal/Database/schema_reference.md` before starting.**
-
-These four tasks come from the 04-n18 DB cascade (Art 04b §5.2 refresh — artifact side complete S63). Execute in order; write findings and any decisions to `Claude_context.md`.
-
----
-
-### DB-S63-01 — Create and seed `card_ref` table
-
-**Background:** `v_card_primitive_map` view is blocked (flagged S48) because it depends on a `card_ref` table that has never been created. This table maps each card's ID to its taxonomy (Layer/Function/Subject) so the view can cross-reference card design against operational primitives in `action`.
+**Background:** "Threshold" is reserved for the d100 resolution system. DB:36 marks the escalation line on the Chorus Activity Track — the level at which Chorus activity triggers a response. PM05 DB-38.
 
 **Task:**
-1. Design and create the `card_ref` table. Minimum columns: `card_id` (varchar, e.g. "P01"), `card_name` (varchar), `layer` (varchar), `function` (varchar), `subject` (varchar). Add a primary key on `card_id`. If a more normalized design (FK to a layers/functions lookup) is warranted, propose it in `Claude_context.md` before executing.
-2. Seed all P-series cards (P01–P18) using the canonical taxonomy from Art 04b §5.2 (see below).
-3. Seed the three Ghost intel manipulation cards: Source Substitution (Information/Corrupt/IntelToken), Backdate (Information/Corrupt/IntelToken), Field Verification (Information/Recover/IntelToken). These don't have formal card IDs yet — use the names as identifiers or propose an ID convention.
-4. Verify `v_card_primitive_map` compiles and returns rows after seeding.
-5. Write row counts and any design decisions to `Claude_context.md`.
-
-**P-series taxonomy for seeding (from Art 04b §5.2 — S63):**
-
-| card_id | card_name | layer | function | subject |
-|---------|-----------|-------|----------|---------|
-| P01 | Open Operations | Territory | Add | Presence token |
-| P02 | Disputed Claim | Territory | Remove | Presence token |
-| P03 | Public Commission | Territory | Add | Structure block |
-| P04 | Public Censure | Standing | Shift | Public Standing |
-| P05 | On the Record | Information | Reveal | Action attribution |
-| P06 | Economic Sanction | Economy | Remove | Native resource |
-| P07 | Public Address | Standing | Shift | Public Standing |
-| P08 | Table an Accord | Economy | Add | Accord agreement |
-| P09 | Civic Works Mandate | Territory | Add | Structure block |
-| P10 | Infrastructure Bond | Economy | Add | Accord agreement |
-| P11 | Regulatory Override | Submission | Modify | Presence token (placement cost) |
-| P12 | Convene an Inquiry | Information | Add | Intel token |
-| P13 | Public Disclosure | Information | Reveal | Action attribution |
-| P14 | Community Rally | Territory | Add | Presence token |
-| P15 | Acquisition Offer | Territory | Redirect | Presence token |
-| P16 | Public Dividend | Economy | Add | Native resource (conditional) |
-| P17 | Publish Analysis | Information | Reveal | Action attribution |
-| P18 | Signal Review Request | Resolution | Modify | Covert operation (difficulty) |
+1. `UPDATE component SET name = 'Escalation marker' WHERE id = 36;`
+2. Verify the rename: `SELECT id, name FROM component WHERE id = 36;`
+3. Check and update any views referencing the old name by string (unlikely, but verify): `grep -r "Threshold marker" ~/Projects/TheSignal/Database/`
+4. Report as-executed in `Claude_context.md`.
 
 ---
 
-### DB-S63-02 — Register DividendMarker and RegulatoryOverrideMarker in `component`
+### DB-32 — Component Taxonomy Redesign (NOW UNBLOCKED — Art 02 v2.0 signed off)
 
-**Background:** P16 (Public Dividend) requires a `DividendMarker` component; P11 (Regulatory Override) requires a `RegulatoryOverrideMarker`. Both are new physical components not yet registered.
+**Background:** DB-32 was on hold pending Art 02 completion. Art 02 v2.0 is now signed off (L210). The `component` table (formerly `tmp_component` — renamed DB-14, S56) is the target.
 
-**Task:**
-1. Check whether `DividendMarker` and `RegulatoryOverrideMarker` already exist in the `component` table.
-2. If absent, insert both. Use the Countermeasure card (id=52) registration pattern in `schema_reference.md` §7 as the template. Both are markers (non-card components):
-   - `DividendMarker`: `actionable=1, receivable=1, transform_visibility=0, transform_orientation=0, transform_data=0`
-   - `RegulatoryOverrideMarker`: `actionable=1, receivable=1, transform_visibility=0, transform_orientation=0, transform_data=0`
-   - Note: `transformable` is now a VIRTUAL GENERATED column — omit from INSERT.
-3. Seed the minimum role/beat primitives for each (Add and Remove at minimum — ARBITER places at Beat 4, removes at Phase 21 or trigger condition).
-4. Report new component IDs and primitive rows inserted to `Claude_context.md`.
+**Three schema changes required. Execute in order; confirm with Andy at each step.**
+
+**Read `~/Projects/TheSignal/Database/schema_reference.md` before starting.** Then read `~/Projects/TheSignal/V1/02___Components.md` — it is the canonical source for all component descriptions.
 
 ---
 
-### DB-S63-03 — Verify Information/Corrupt and Information/Recover IntelToken primitives
+**DB-32a — Add `parent_component_id` to `component`**
 
-**Background:** Source Substitution and Backdate use `Information / Corrupt / IntelToken`. Field Verification uses `Information / Recover / IntelToken`. These combinations need to exist in `comp_verb_role` and `comp_verb_beat` for the Ghost intel manipulation cards to be fully legislated.
+Self-referential FK for component hierarchy (Card → card type → card subtype pattern).
 
-**Task:**
-1. Check whether the verbs `Corrupt` and `Recover` exist in the `verb` table.
-2. Check whether `IntelToken` (component) has `Corrupt` and `Recover` role/beat mappings in `comp_verb_role` and `comp_verb_beat`.
-3. For any missing entries: propose the DDL in `Claude_context.md` (beat assignment, phase/role — Beat 3 Faction initiator is the default for covert ops). Do not insert without Andy confirming beat assignments.
-4. Check `v_unlegislated_primitives` after any inserts to confirm coverage.
+```sql
+ALTER TABLE component
+  ADD COLUMN parent_component_id BIGINT(20) DEFAULT NULL,
+  ADD CONSTRAINT fk_component_parent FOREIGN KEY (parent_component_id)
+    REFERENCES component (id) ON DELETE SET NULL;
+```
 
----
+After adding the column, populate the hierarchy:
+- "Card" (DB:13 Covert operation and DB:14 Political act are top-level card types — examine `component` table and Art 02 §10 to identify which rows represent card-type parent nodes vs. instances)
+- Report the hierarchy you find and propose `parent_component_id` assignments in `Claude_context.md` — confirm with Andy before any UPDATEs.
 
-### Working model reminder
-- Write all findings and design decisions to `Claude_context.md` — Claude Code picks them up next session
-- Flag any documentation gaps (ambiguous specs, missing Art 02a component entries, etc.) — do not fill them
-- DB-S63-01 through DB-S63-03 are independent — execute in any order that makes sense given what you find
-
----
-
-## Session 90 Update — 2026-06-14
-
-**Schema state note:** DB-14 through DB-36 complete. `component` table has 63 active rows, AUTO_INCREMENT = 105. Read `~/Projects/TheSignal/Database/schema_reference.md` before querying.
-
-Three new component registrations required. Art 02 grouping taxonomy work (S90) surfaced these gaps. Execute in order; confirm with Andy at each step; write outcomes to `Claude_context.md`.
+**Note:** DebriefActionCard (DB:100) / SCIFRecord (DB:101 de-registered S92) hierarchy and OperativeCard (DB:15) hierarchy are already partially defined in Art 02 §10. Use Art 02 as the source.
 
 ---
 
-### DB-37 — Register ARBITER Covert Resolution Grid
+**DB-32b — Create `component_dim` table**
 
-**Background:** Art 03 §9.4.0.1 describes an ARBITER-managed 5-lane resolution grid built behind the ARBITER screen each Month for covert operation resolution. This is distinct from the Faction Resolution Grid (DB:88 — public-facing, per-faction, used for PA resolution and standing effects). The ARBITER Covert Resolution Grid has never been registered in `component`. PM05 03-n23 tracks this item.
+Stores descriptions for each component. Art 02 Design Function text is the source for each row.
 
-**Task:**
-1. Confirm DB:88 (`Faction Resolution Grid`) is correctly registered as `actionable=0, receivable=1`.
-2. Register `ARBITER Covert Resolution Grid` as a new component. Suggested properties: `actionable=0, receivable=1` (it receives covert op cards and CMs during resolution). `transformable` is virtual — omit from INSERT.
-3. Report new component ID to `Claude_context.md`.
+```sql
+CREATE TABLE component_dim (
+  id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  component_id BIGINT(20) NOT NULL,
+  description TEXT NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_comp_dim_component FOREIGN KEY (component_id)
+    REFERENCES component (id) ON DELETE CASCADE
+);
+```
 
-**Do not seed role/beat primitives yet** — physical design is pending Art 07 and the grouping taxonomy work in Art 02 is still in progress.
-
----
-
-### DB-38 — Register ARBITER Threshold Slider
-
-**Background:** Art 03 §9.4.2.1.0 references a threshold slider used by ARBITER for covert operation resolution (Beat 2/3). Range 0–100; crit ranges may be highlighted. Lives permanently in ARBITER Tableau. Possibly two physical sub-components (scale + pointer). PM05 03-n11 tracks this item.
-
-**Task:**
-1. Register `ARBITER Threshold Slider` as a new component. Suggested properties: `actionable=0, receivable=0` (it is a reference tool, not a game object that receives cards or takes game actions). `transformable` virtual — omit.
-2. If two sub-components (scale + pointer) are warranted, register both and note the parent–child relationship in `Claude_context.md` for future `components` table work. For now, a single row is acceptable with a note flagging the split.
-3. Report new component ID to `Claude_context.md`.
+Seed one row per component using the Design Function from Art 02 (file: `~/Projects/TheSignal/V1/02___Components.md`). Report row count inserted.
 
 ---
 
-### DB-39 — Register Faction Threshold Slider
+**DB-32c — Create `component_type` table**
 
-**Background:** Art 03 §9.4.3.0.0 references a shared Faction Threshold Slider (1 per game) used during Beat 4 PA resolution. Starts in Overview open area at 03-init; passed between Faction Players in initiative order during Beat 4; returned to Overview at Beat 4 close. Range 0–100. Possibly scale + pointer. PM05 03-n12 tracks this item.
+Stores type classifications (e.g., "card", "token", "marker", "track", "slider", "block") for each component. Physical Form values in Art 02 metadata blocks are the source.
 
-**Task:**
-1. Register `Faction Threshold Slider` as a new component. Suggested properties: `actionable=0, receivable=0`. `transformable` virtual — omit.
-2. Same sub-component note as DB-38 — single row acceptable for now, flag if two-part design warranted.
-3. Report new component ID to `Claude_context.md`.
+```sql
+CREATE TABLE component_type (
+  id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  component_id BIGINT(20) NOT NULL,
+  component_type VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_comp_type_component FOREIGN KEY (component_id)
+    REFERENCES component (id) ON DELETE CASCADE
+);
+```
+
+Derive `component_type` from Art 02 `physical_form` field for each component. Propose the type vocabulary (e.g., token / marker / track / slider / block / card / strip / screen / mat / case / slip) in `Claude_context.md` before seeding — confirm with Andy.
 
 ---
 
-**Note for Claude Code (not an agy task):** Art 02 entry for DB:88 (Faction Resolution Grid) needs its Design Function and description corrected — current text incorrectly describes it as ARBITER-managed for covert ops. Actual role: public-facing per-faction surface for PA resolution, standing effects, and publicly-played CMs. Claude Code will correct Art 02 after agy confirms DB:88 properties.
+**After all three DB-32 changes:**
+1. Update `register_component.py` and `component_template.yaml` in `~/Projects/TheSignal/Database/` to reflect the new columns and tables.
+2. Update `~/Projects/TheSignal/Database/schema_reference.md` with the new table schemas and any column additions.
+3. Write a summary of all DDL executed, row counts, and any design decisions to `Claude_context.md`.

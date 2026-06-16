@@ -1,4 +1,4 @@
-# Reference — Tracking Systems: Portrait, Public Standing, Intel (Art 02 §10–§12)
+# Reference — Tracking Systems: Portrait, Public Standing, Intel (Art 02 §12)
 *Load when: Portrait or PS design, scoring questions, Intel Token mechanics, initiative order.*
 
 ---
