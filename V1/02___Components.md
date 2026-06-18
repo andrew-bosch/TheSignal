@@ -1,8 +1,8 @@
 # 02 — Components
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.0
-**Status:** 🔄 In Progress — S90: Full scope rewrite. v1.1 content was S88 merge of 02a v1.6 + 02b v1.5.
+**Version:** 2.1
+**Status:** ✅ Signed Off — S96 (L212)
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian
 **DB Anchor:** `the_signal_db.component` — canonical component registry. Names and IDs from that registry are authoritative.
 **Feeds:** 03-init (starting positions); 03 (procedures)
@@ -25,7 +25,7 @@ This document enumerates every physical component in The Signal — its gameplay
 | [§6 Faction Influence](#6-faction-influence) | Presence chips, deployment markers, influence markers, structures |
 | [§7 Resources](#7-resources) | Native resources, Reservoir, Backlog, Dispatch tokens |
 | [§8 Covert Messaging System](#8-covert-messaging-system) | Dispatch case, Target Profile, delivery slips, Debrief cards |
-| [§9 Intel & Information](#9-intel--information) | Intel tokens, Accord agreements |
+| [§9 Intel & Information](#9-intel-information) | Intel tokens, Accord agreements |
 | [§10 Card Systems](#10-card-systems) | All card types organized by system (6 subgroups) |
 | [§11 Resolution Tools](#11-resolution-tools) | Threshold sliders, visibility/boost markers, modifier tokens |
 | [§12 Tracking Systems](#12-tracking-systems) | Score, Initiative, Round/Quarter trackers; Status marker |
@@ -120,7 +120,7 @@ Universal fields appear in every entry. Group fields appear only in entries of t
 | `placement_surface` | Prose | Universal | Where this component legally resides during play; format: `Art 01 zone / component.zone.sub-zone`; semicolon-separated if multiple valid locations; `N/A` if fixed infrastructure |
 | `max_placement_count` | Integer | Universal | Maximum simultaneous instances on the component named in `max_placement_ref`; `N/A` if unbounded |
 | `max_placement_ref` | ID Reference | Universal | Component against which `max_placement_count` applies; `N/A` if unbounded |
-| `movement_path` | Prose | Universal | All legal transitions between placement positions; format: `from → to : trigger`; semicolon-separated; `N/A` if component does not move during play |
+| `movement_path` | Prose | Universal | All legal transitions between placement positions; format: `from → to : trigger`; semicolon-separated; `N/A` if component does not move during play. The `: trigger` slot names the board event or player action that causes the move — not procedural timing (beat numbers, phase names); timing belongs in Art 03. |
 | `display_fields` | Prose | Playing Surface, Card Systems | Required printed or marked information on the component face; semicolon-separated; `N/A` if none |
 | `display_component` | ID Reference | Playing Surface | Semicolon-separated list of `component.id` values with a dedicated labeled area on this surface; `N/A` if no specific components are labeled |
 | `privacy_model` | Enum(privacy) | Playing Surface | Visibility boundary this surface creates. For flat surfaces (mats, tiles), this describes the surface's own visibility. For physical dividers (screens), this describes the privacy of the space behind them — the divider itself is always visible; the enum captures what it conceals. |
@@ -574,7 +574,7 @@ Components that represent and evaluate each faction's operational depth in distr
 | `placement_surface` | District Tile (Art 01) |
 | `max_placement_count` | TBD |
 | `max_placement_ref` | District Tile (Art 01) |
-| `movement_path` | Faction Terminal (Art 08 — subzone TBD) → District Tile (Art 01) : Placement phase; District Tile (Art 01) → Faction Terminal (Art 08 — subzone TBD) : Upkeep removal |
+| `movement_path` | Faction Terminal (Art 08 — subzone TBD) → District Tile (Art 01) : faction deploys to district; District Tile (Art 01) → Faction Terminal (Art 08 — subzone TBD) : deployment expires |
 
 ---
 
@@ -740,7 +740,7 @@ Token components of the game's economic and operational systems: faction resourc
 | `placement_surface` | Reservoir (The Overview); Faction Terminal (Art 08 — subzone TBD) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | a) Reservoir (The Overview) → Faction Terminal (Art 08 — subzone TBD) : Upkeep income; b) Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Reservoir (The Overview) : PA cost; c) Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Reservoir (The Overview) : covert action cost; d) Faction Terminal (Art 08 — subzone TBD) → Faction Terminal (Art 08 — subzone TBD) : faction-to-faction transfer; e) Faction Terminal (Art 08 — subzone TBD) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Reservoir (The Overview) → Faction Terminal (Art 08 — subzone TBD) : trade at exchange rate (4:1, 3:1, or 2:1); resource type changes on return |
+| `movement_path` | a) Reservoir (The Overview) → Faction Terminal (Art 08 — subzone TBD) : income distribution; b) Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Reservoir (The Overview) : PA cost; c) Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Reservoir (The Overview) : covert action cost; d) Faction Terminal (Art 08 — subzone TBD) → Faction Terminal (Art 08 — subzone TBD) : faction-to-faction transfer; e) Faction Terminal (Art 08 — subzone TBD) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Reservoir (The Overview) → Faction Terminal (Art 08 — subzone TBD) : trade at exchange rate (4:1, 3:1, or 2:1); resource type changes on return |
 
 ---
 
@@ -765,7 +765,7 @@ Token components of the game's economic and operational systems: faction resourc
 | `placement_surface` | Backlog (The Overview); Faction Terminal (Art 08 — subzone TBD); Faction Resolution Grid (DB: 88); Dispatch Packet (DB: 108) |
 | `max_placement_count` | 4 |
 | `max_placement_ref` | Faction Terminal (Art 08 — subzone TBD) |
-| `movement_path` | a) Backlog (The Overview) → Faction Terminal (Art 08 — subzone TBD) : Upkeep draw; b) Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Backlog (The Overview) : PA cost; c) Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Backlog (The Overview) : covert action cost |
+| `movement_path` | a) Backlog (The Overview) → Faction Terminal (Art 08 — subzone TBD) : dispatch allocation; b) Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Backlog (The Overview) : PA cost; c) Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Backlog (The Overview) : covert action cost |
 
 ---
 
@@ -961,6 +961,32 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 
 ---
 
+### Grant Deed  (DB: 113)
+
+**Design Function:** ARBITER-issued title card recording a faction's capital claim on a named district. Functions as a React card: the holding faction plays it immediately when any faction places a structure block in the named district, placing their own structure block there. The deed may be traded between factions; the `owner` field is updated by the new holder and the claim transfers with the card.
+
+**Narrative Anchor:** *A filed claim is not the same as a built presence — but it changes what can be built there.*
+
+**Gameplay Requirements:** Must be writable — ARBITER fills `district` and `owner` fields at issuance. `owner` field is mutable: any faction receiving the deed by trade may overwrite it with their own name. Must be distinguishable from Intel Delivery Slips (IS-xx) and other ARBITER-issued slips. Blank supply stored in ARBITER Tableau. Multiple Grant Deeds may exist simultaneously (same or different districts). Played from holding faction's hand as a React card; consumed on trigger fire. No board marker placed by this card. Governed by GR 8.2 (structure placement). React timing: Art 03 §18. Art 04 spec: 04-n99.
+
+**Metadata:**
+| Field | Value |
+|-------|-------|
+| `db_id` | 113 |
+| `component_name` | Grant Deed |
+| `physical_form` | Standard blank card; writable (dry-erase preferred — ARBITER fills at issuance; physical form pending production design) |
+| `quantity` | Variable — ARBITER issues from tableau supply as needed (pre-production estimate) |
+| `visibility` | Player-private |
+| `states` | Blank (ARBITER Tableau) → Filled (Dispatch Case / hand) → Fired (React triggered; consumed) \| Expired (held to game end; if dry-erasable: wiped and returned blank to ARBITER Tableau; otherwise discarded — pending physical design) |
+| `faction_keyed` | No — issued to any faction by ARBITER |
+| `placement_surface` | ARBITER Tableau (DB: 30); Dispatch Packet (DB: 108); Dispatch Case (DB: 44); Faction Tableau — hand; Faction Resolution Grid (DB: 88) |
+| `max_placement_count` | N/A |
+| `max_placement_ref` | N/A |
+| `movement_path` | a) Creation: ARBITER Tableau (DB: 30) — blank supply → ARBITER Tableau (DB: 30) — resolution subzone [write `district` + `owner`] → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Tableau — hand ; b) Trade: Faction Tableau — hand → Faction Tableau — hand : faction-to-faction trade; new holder updates `owner` field; c) React (on trigger): Faction Tableau — hand → Faction Resolution Grid (DB: 88) — modifier/permanent row → effect resolves → ARBITER Tableau (DB: 30) : structure block placed in named district; erase and return blank to supply OR discard (pending physical design) |
+| `recorded_fields` | `district` (named target district); `owner` (faction currently holding the claim — mutable, updated by new holder on trade) |
+
+---
+
 ### DebriefActionCard  (DB: 100)
 
 **Design Function:** Card type carrying ARBITER-issued instructions or outcomes for processing in the Debrief phase.
@@ -982,7 +1008,7 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 | `placement_surface` | Dispatch Packet (DB: 108); Dispatch Case (DB: 44); Faction Terminal (Art 08 — subzone TBD) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) — resolution workspace subzone → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : placed in corresponding CA packet; returned via case at resolution; processed at Debrief start |
+| `movement_path` | Arbiter Tableau (DB: 30) — resolution workspace subzone → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : placed in corresponding CA packet; returned via case at resolution |
 | `recorded_fields` | Variable |
 
 ---
@@ -1180,7 +1206,7 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94); Dispatch Packet (DB:108) for covert play; ARBITER Covert Resolution Grid (DB:105) during covert resolution; Faction Resolution Grid (DB:88) for PA/react play; table surface for tension resolution |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Modifier deck (DB:53/54/55/89) → Faction Hand (DB:94) : drawn at upkeep; *Covert play:* Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Covert Resolution Grid (DB:105) : included with CO submission; follows covert path; → removed from game after resolution; *Public play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played with PA submission; follows PA path; → removed from game after resolution; *React play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played on board state trigger; may persist as standing effect; → removed from game when resolved; *Tension resolution:* Faction Hand (DB:94) → table surface (open area) : modifies district tension battle outcome; → removed from game |
+| `movement_path` | Modifier deck (DB:53/54/55/89) → Faction Hand (DB:94) : faction draws from modifier deck; *Covert play:* Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Covert Resolution Grid (DB:105) : included with CO submission; follows covert path; → removed from game after resolution; *Public play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played with PA submission; follows PA path; → removed from game after resolution; *React play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played on board state trigger; may persist as standing effect; → removed from game when resolved; *Tension resolution:* Faction Hand (DB:94) → table surface (open area) : modifies district tension battle outcome; → removed from game |
 | `back_design` | Faction-keyed (faction decks) / Ring-keyed (ring decks) |
 | `card_source` | 8 source decks: Ring 1 (DB:53) · Ring 2 (DB:54) · Ring 3 (DB:55) · Faction modifier decks ×5 (DB:89) |
 
@@ -1689,7 +1715,7 @@ Init-only decks that live external to the game area. Used at initialization only
 | `placement_surface` | Central Area (Art 01) — shared modifier supply; location TBD (Art 07/08) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — fixed at shared modifier supply; individual cards drawn per Beat 0 |
+| `movement_path` | N/A — fixed at shared modifier supply; individual cards drawn as needed |
 | `back_design` | N/A |
 | `card_source` | N/A |
 
@@ -1716,7 +1742,7 @@ Init-only decks that live external to the game area. Used at initialization only
 | `placement_surface` | Faction Terminal (Art 08 — subzone TBD) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — fixed at Faction Terminal; individual cards drawn per Beat 0 |
+| `movement_path` | N/A — fixed at Faction Terminal; individual cards drawn as needed |
 | `back_design` | N/A |
 | `card_source` | N/A |
 
@@ -1749,7 +1775,7 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 | `placement_surface` | Arbiter Tableau (DB: 30) — resolution workspace subzone / ARBITER Covert Resolution Grid (DB: 105) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) → Arbiter Tableau (DB: 30) — resolution workspace subzone → ARBITER Covert Resolution Grid (DB: 105) : placed on target operation card when public resolution triggered; ARBITER Covert Resolution Grid (DB: 105) → Arbiter Tableau (DB: 30) : removed at Beat 3 Step 8 |
+| `movement_path` | Arbiter Tableau (DB: 30) → Arbiter Tableau (DB: 30) — resolution workspace subzone → ARBITER Covert Resolution Grid (DB: 105) : placed on target operation card when public resolution triggered; ARBITER Covert Resolution Grid (DB: 105) → Arbiter Tableau (DB: 30) : public resolution concludes |
 | `function` | Flags that the associated operation resolves publicly; marks public vs. covert resolution state at Beat 3 |
 | `scale` | N/A — binary marker (present or absent) |
 | `init_value` | N/A |
@@ -1777,7 +1803,7 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 | `placement_surface` | Arbiter Tableau (DB: 30) — resolution workspace subzone / ARBITER Covert Resolution Grid (DB: 105) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) → Arbiter Tableau (DB: 30) — resolution workspace subzone : placed on submitted card when faction declares boost at Beat 0; Arbiter Tableau (DB: 30) — resolution workspace subzone → ARBITER Covert Resolution Grid (DB: 105) : moves with card when placed in resolution grid at Beat 2 or 3; ARBITER Covert Resolution Grid (DB: 105) → Arbiter Tableau (DB: 30) : removed after operation resolves |
+| `movement_path` | Arbiter Tableau (DB: 30) → Arbiter Tableau (DB: 30) — resolution workspace subzone : placed on submitted card when faction submits boost resources; Arbiter Tableau (DB: 30) — resolution workspace subzone → ARBITER Covert Resolution Grid (DB: 105) : moves with card when placed in resolution grid; ARBITER Covert Resolution Grid (DB: 105) → Arbiter Tableau (DB: 30) : removed after operation resolves |
 | `function` | Tracks that a faction has declared a boost on the associated covert operation in the current resolution cycle |
 | `scale` | N/A — binary marker (present or absent) |
 | `init_value` | N/A |
@@ -1861,7 +1887,7 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 | `placement_surface` | The Overview (DB: 29) — open area / Player positions (in use) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | The Overview (DB: 29) → Player position : initiative player takes control at start of Beat 4 PA resolution; Player position → Player position : passed in initiative order for each PA resolution; Player position → The Overview (DB: 29) : returned after all PA resolution complete |
+| `movement_path` | The Overview (DB: 29) → Player position : initiative player takes control at PA resolution start; Player position → Player position : passed in initiative order for each PA resolution; Player position → The Overview (DB: 29) : returned after all PA resolution complete |
 | `function` | Set to the base threshold value of the PA card being resolved; adjusted up or down by modifier tokens, modifier cards, and other modifier types (Art 03 §13.5); passed in initiative order between faction players during Beat 4 |
 | `scale` | 0–100 in increments of 5 (20 ticks) |
 | `init_value` | Base threshold value of the PA card being resolved (set per PA declaration) |
@@ -2039,7 +2065,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | `placement_surface` | Initiative strip (DB: 24) |
 | `max_placement_count` | 1 |
 | `max_placement_ref` | Initiative strip (DB: 24) |
-| `movement_path` | Initiative strip position → adjacent position : initiative reorder at Upkeep or via action |
+| `movement_path` | Initiative strip position → adjacent position : initiative reorder action or initiative setup |
 | `function` | Marks a faction's current initiative position on the Initiative Strip |
 | `scale` | N/A — rider marker |
 | `init_value` | Set at initialization per Art 03-init §2 |
@@ -2097,7 +2123,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | `placement_surface` | Session Timeline (DB: 23) |
 | `max_placement_count` | 1 |
 | `max_placement_ref` | Session Timeline (DB: 23) |
-| `movement_path` | Session Timeline position M1 → M2 → M3 → next Quarter M1 : advances at end of each Month |
+| `movement_path` | Session Timeline position M1 → M2 → M3 → next Quarter M1 : Month concludes |
 | `function` | Marks the current Quarter and Month position on the Session Timeline |
 | `scale` | N/A — rider marker |
 | `init_value` | Q1 M1 |
@@ -2209,7 +2235,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | `placement_surface` | Faction position (placement TBD — Art 03/08) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — state changes between Active and Ready during Quarter-end negotiation |
+| `movement_path` | N/A — state changes between Active and Ready; transitions triggered by negotiation outcome |
 | `function` | Tracks each faction's binary readiness state during Quarter-end negotiation (Active = in discussion; Ready = done talking / ready to end Quarter) |
 | `scale` | N/A — binary state |
 | `init_value` | Active |

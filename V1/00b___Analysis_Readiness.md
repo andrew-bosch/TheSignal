@@ -4,7 +4,7 @@
 **Version:** 0.3
 **Status:** ✅ Signed Off — S45 (restructured S83)
 
-**Purpose:** The game system needs to be fully modeled in the DB to enable deep analysis and computational balance work. This document tracks what remains to be migrated. `Database/schema_reference.md` is the authoritative source for migrated entities. This document provides: (1) a pointer to the L108 standard (§3); (2) lookup tables for entities not yet in the DB (§4); (3) the migration punchlist (§5).
+**Purpose:** The game system needs to be fully modeled in the DB to enable deep analysis and computational balance work. This document tracks what remains to be migrated. `Database/schema_reference.md` is the authoritative source for migrated entities. This document provides: (1) a pointer to the L108 standard (§3); (2) the migration punchlist (§4).
 
 **Relationship to source artifacts:** Source artifacts remain the canonical design documents. Game-purpose definitions live in source artifacts; this document tracks migration status only.
 
@@ -17,10 +17,9 @@
 1. [Overview](#1--data-architecture)
 2. [Index](#2-index)
 3. [L108 Data Table Standard](#3-l108-data-table-standard-extends-3nf)
-4. [Lookup Tables Pending Migration](#4-lookup-tables-pending-migration)
-5. [Migration Punchlist](#5-migration-punchlist)
-6. [Entity Relationships](#6-entity-relationships)
-7. [Design Notes](#7-design-notes)
+4. [Migration Punchlist](#4-migration-punchlist)
+5. [Entity Relationships](#5-entity-relationships)
+6. [Design Notes](#6-design-notes)
 
 ---
 
@@ -30,125 +29,21 @@ See **00a §11** for the full L108 standard and column type vocabulary. Complian
 
 ---
 
-## 4. Lookup Tables Pending Migration
+## 4. Migration Punchlist
 
-### 4.1 Difficulty Tier (DT-xx)
+All component types (VM-xx, BM-xx, NS-xx, IS-xx, CA-xx, Operative, Modifier Card, Broadcast Card, Countermeasure Card, Emergency Response) are registered in the DB `component` table. Art 02 is the canonical component design list; `schema_reference.md` is the authoritative DB source.
 
-| ID | Name | Base Threshold | Notes |
-|----|------|----------------|-------|
-| DT-01 | Easy | 75 | 75% base probability of success |
-| DT-02 | Average | 50 | 50% base probability of success |
-| DT-03 | Challenging | 25 | 25% base probability of success |
-
-*Automatic and Impossible are not base difficulty values (L101). They may appear as explicit card text only.*
-
-*Source: Art 03 §13. Foreign key: C-xx.Difficulty → DT-xx.ID; P-xx.Difficulty → DT-xx.ID*
+**Lookup tables pending DB migration:** Difficulty Tier (DT-xx), Resolution Outcome (RO-xx), Influence Level (IL-xx), Public Standing Tier (PS-xx), and Portrait Band (PB-xx) are canonically defined in Art 03 reference sections (PS-xx/PB-xx also in Art 07). These tables must be migrated to the DB before game modeling analysis can proceed — probability calculations, balance modeling, and outcome queries all depend on them. No action until tables are finalized in Art 03. Covered by PM05 02-n08.
 
 ---
 
-### 4.2 Resolution Outcome (RO-xx)
-
-| ID | Name | Trigger |
-|----|------|---------|
-| RO-01 | Succeeded | Roll ≤ threshold; success conditions apply |
-| RO-02 | Failed | Roll > threshold; failure conditions apply |
-| RO-03 | Voided | Operation removed in Beat 1 or Beat 2 before resolution — targeting restriction or Type A Countermeasure |
-| RO-04 | Discovered | Roll outcome triggers discovery condition on card |
-| RO-05 | Auto-failed | Face-down card — no roll made; zero or shortfall payment |
-
-*Source: Art 03 §12 Beats 1–4. Foreign key: C-xx references RO-xx in card failure/discovery fields.*
-
-**4.2.a Crit Flag**
-
-Critical rolls set a `crit: true` modifier alongside the base RO-xx outcome — crit is not a standalone outcome type. Critical Success (01–05): RO-01 + crit flag — success effects and crit delta both execute. Critical Fail (96–00): RO-02 + crit flag — fail effects and crit delta both execute. (L202)
-
----
-
-### 4.3 Influence Level (IL-xx)
-
-| ID | Name | Chip Threshold | Notes |
-|----|------|----------------|-------|
-| IL-01 | Dominant | 3+ chips, strictly more than all others | Max 1 faction per district |
-| IL-02 | Established | 2+ chips AND second-highest count | — |
-| IL-03 | Present | 1+ chip | Minimum meaningful presence |
-| IL-05 | None | 0 chips | No presence |
-
-*Source: Art 02a §6. Chorus Node exception: Dominant structurally unreachable due to ARBITER Dominance Marker (02a §10).*
-
-**4.3.a Contested Flag**
-
-Contested is a board-state flag, not an influence level. Set when two or more factions are tied for the highest chip count and are both temporarily set to IL-01. `contested: true` is applied to the affected district alongside those factions' IL-01 values. Condition cannot persist beyond Month 3 resolution. (L203)
-
----
-
-### 4.4 Public Standing Tier (PS-xx)
-
-*⭐ Ready to model in DB.*
-
-| ID | Name | Track Range | Modifier ID | Drift Rule |
-|----|------|-------------|-------------|------------|
-| PS-01 | Celebrated | 17–20 | M-01 | Natural drift: −1 per Quarter above 13 (L13) |
-| PS-02 | Respected | 13–16 | M-02 | Natural drift: −1 per Quarter above 13 (L13) |
-| PS-03 | Neutral | 7–12 | M-03 | No natural drift |
-| PS-04 | Suspect | 3–6 | M-04 | Natural drift: +1 per Quarter below 7 (L13) |
-| PS-05 | Discredited | 0–2 | M-05 | Natural drift: +1 per Quarter below 7 (L13) |
-
-*Source: Art 02b §7. Starting position: 10 / Neutral (L48). Foreign key: PS-xx.ModifierID → M-xx.ID*
-
----
-
-### 4.5 Portrait Band (PB-xx)
-
-*Band labels canonical (proposed) per Art 02 §12. Score ranges TBD pending Art 07 Portrait design (PM05 07-13). Art 02 §12 is authoritative once Art 07 design is complete.*
-
-| ID | Name | Score Range | Notes |
-|----|------|-------------|-------|
-| PB-01 | Resonant | +18 to +20 | L42 — compressed to width 3 to preserve ±20 track limits |
-| PB-02 | Aligned | TBD — Art 07 | — |
-| PB-03 | Coherent | TBD — Art 07 | — |
-| PB-04 | Legible | TBD — Art 07 | — |
-| PB-05 | Observed | TBD — Art 07 | — |
-| PB-06 | Ambiguous | −1 to 0 | L42 — zero line band |
-| PB-07 | Uncertain | TBD — Art 07 | — |
-| PB-08 | Dissonant | TBD — Art 07 | — |
-| PB-09 | Fractured | TBD — Art 07 | — |
-| PB-10 | Collapsed | TBD — Art 07 | — |
-| PB-11 | Void | TBD — Art 07 | Lowest — furthest from Chorus alignment |
-
-*Source: Art 02 §12. Foreign key: Faction Portrait score maps to PB-xx at session end for VP calculation.*
-
----
-
-## 5. Migration Punchlist
-
-| Entity | ID Prefix | Status | Notes |
-|--------|-----------|--------|-------|
-| Public Standing Tier | PS-xx | ⭐ Ready to model | §4.4 |
-| Difficulty Tier | DT-xx | 🔄 Pending migration | §4.1 |
-| Resolution Outcome | RO-xx | 🔄 Pending migration | §4.2 |
-| Influence Level | IL-xx | 🔄 Pending migration | §4.3 |
-| Portrait Band | PB-xx | 🔄 Pending migration | 11 bands in §4.5; ranges TBD pending Art 07 Portrait design (PM05 07-13) |
-| Visibility Marker | VM-xx | 🔄 Pending migration | S81 registration |
-| BoostMarker | BM-xx | 🔄 Pending migration | S79 draft |
-| Notification Slip | NS-xx | 🔄 Pending schema | Text/format: Art 07 |
-| Intel Delivery Slip | IS-xx | 🔄 Pending schema | Content fields: Art 07 |
-| Case (Dispatch Case) | CA-xx | 🔄 Verify in DB | May be covered by game_zones |
-| Operative | O-xx | ⬜ Pending design | Art 05 not started |
-| Initiative Pattern | IP-xx | ⬜ Pending design | Procedure in Art 07 |
-| Modifier Card | MC-xx | ⬜ Pending design | D04-08 / D04-07 |
-| Event Card | EC-xx | ⬜ Pending design | Art 07 / Art 09 |
-| Countermeasure Card | CC-xx | ⬜ Pending design | Art 04 / Art 09 |
-| Emergency Response | ER-xx | ⬜ Pending design | Art 04 / Art 05 |
-
----
-
-## 6. Entity Relationships
+## 5. Entity Relationships
 
 See `Database/schema_reference.md §2.5` for the full entity relationship map and FK semantics.
 
 ---
 
-## 7. Design Notes
+## 6. Design Notes
 
 **Initiative Pattern (IP-xx):** Initiative procedure migrated to Art 07 (PM05 03-11). Schema to be defined there — ID column (IP-01 through IP-10) and full table structure pending Art 07 draft.
 

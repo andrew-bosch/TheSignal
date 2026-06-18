@@ -1,6 +1,6 @@
-# GEMINI WORKING STATE: SESSION 92
+# GEMINI WORKING STATE: SESSION 96
 
-## 1. Operating and Search Scope Constraints (Session 92 Lock)
+## 1. Operating and Search Scope Constraints (Session 96 Lock)
 To conserve token context and ensure focus on database validation, agy operates under these strict rules:
 1.  **Exclusions:** Ignore and do not scan drafts/stubs (05 and beyond) or the PM suite (`PM01`-`PM05`).
 2.  **Narrow Search Targets:** Target queries to `README.md`, `00b` (Data Architecture), `03` (Round Structure), `03a` (Engine Spec), and `04b` (Action Matrix) first.
@@ -33,22 +33,22 @@ To conserve token context and ensure focus on database validation, agy operates 
 - Role: Cloud Consultant (Validator/Research)
 - Environment: Antigravity CLI (migrated)
 
-## 3. Session 92 Tasks Status
-- **DB-38 (Escalation Marker Rename):** Completed. Renamed component ID 36 to `"Escalation marker"`. Updated references in `db_build_who_when.sql` and `schema_reference.md`.
-- **DB-32 (Component Taxonomy Redesign):** Completed.
-  - **DB-32a (Hierarchy):** Added self-referential `parent_component_id` column to `component` table. Registered `"Card"` as parent category node (ID: 111). Wired the 11 child card components to ID 111. Grandchildren pushback resolved: excluded the 5 retired Operation Resolution grandchildren.
-  - **DB-32b (Descriptions):** Created `component_dim` and seeded descriptions for all 70 components from `02___Components.md`.
-  - **DB-32c (Types):** Created `component_type` and seeded category type classifications for all 70 components.
-- **Tooling and Validation:** Refactored `register_component.py` and updated `component_template.yaml` with the new metadata fields. Ran validation tests:
-  - `check_views.py` passed with 28/28 views compiling and executing successfully.
-  - `register_component.py` dry-run passed with 100% success.
-- **Outbound Consulting report:** Updated `Claude_context.md` with implementation summaries and actions for Claude to close the tasks in PM files.
+## 3. Session 96 Tasks Status
+- **Grant Deed Component Registration (PM05 04-n26):** Completed.
+  - Successfully registered `Grant Deed` in `component` table as ID `113`.
+  - Mapped child relationship under `parent_component_id = 111` ("Card").
+  - Seeded descriptions in `component_dim` ("ARBITER-issued title card recording Faction's capital claim...") and classifications in `component_type` ("card").
+  - Seeded verb/phase coverages and role assignments in `comp_verb_phase` and `comp_verb_role`.
+  - Seeded 12 action primitives in `action` and 4 target links in `subject_target`.
+  - Checked `component_faction` and verified there are zero rows mapping component 113 to any faction (fully compliant with the neutral `faction_keyed = No` specification).
+- **Tooling Fixes:**
+  - Patched `Database/register_component.py` to remove the virtual generated `transformable` column from generated `INSERT INTO component` queries, preventing strict-mode syntax errors.
+  - Corrected component target CamelCase for `"Arbiter Tableau"` and resolved duplicate role assignments under `comp_verb_role`.
+- **Housekeeping:** Cleared completed tasks from `GEMINI_CONTEXT.md` to prevent context bloat.
 
-## 4. Past Session Status (Session 50 & 48)
-- **S50 agy Punch List**: Completed. Executed all database updates for DB-22 through DB-26, including status marker fixes, Upkeep primitives, and Portrait marker target mapping. Resolved DB-09 DDL block by adding Primary Key constraints to `district_metadata` and `player_metadata`. Verified all views and view compiling. Walkthrough and consulting reports updated.
-- **S48 DB Cleanup and Seeding**: Completed. Deleted 37 duplicates, added 2 Standing marker moves, updated notes for Beat 17 Standing marker moves, and seeded taxonomy role/beat mappings for `ARBITER Dominance Marker` and `Classified directives`.
-- **Countermeasures Seeding**: Completed. Verified `tmp_action` row count at 189.
-- **Session 47 Analysis Audit**: Completed. Created six gap analysis views (`v_gap_executor_check`, etc.) in `the_signal_db`. Executed bidirectional audits (Artifact 03 vs DB), schema comparisons, matrix diff audits, component lifecycle completeness reviews, load distribution analysis, and board game pattern research. Outbound report written to `Claude_context.md`.
+## 4. Past Session Status (Session 92 & 50)
+- **S92 Tasks**: Completed rename of component 36 to `"Escalation marker"` (**DB-38**). Implemented component taxonomy redesign (**DB-32**), adding `parent_component_id` to `component` table and creating/seeding `component_dim` and `component_type` tables (70 rows each). Handled pushback for 5 Operation Resolution grandchildren. Updated registry tools and documentation.
+- **S50 agy Punch List**: Completed. Executed all database updates for DB-22 through DB-26. Resolved DB-09 DDL block by adding Primary Key constraints to `district_metadata` and `player_metadata`. Verified all views and view compiling.
 
 ## 5. Current Investigations
 ### 1. The Ring Numbering Discrepancy
@@ -83,4 +83,12 @@ To conserve token context and ensure focus on database validation, agy operates 
 - **DB-05:** Migrated native resource columns in `district_metadata` and `player_metadata` (Session 37).
 - **DB-07:** Added check constraint to `inteltoken_metadata.inteltoken_quarter_id` (Session 37).
 - **DB-11:** Renamed `live_state` to `component_positions`, renamed `anchored_to_component_id` to `on_component_id` (nullable), and added `on_game_zone_id` (Session 43).
-- **DB-16 (tmp_component updates):** Populated missing physical components (The Overview, Arbiter Tableau, Chorus Activity Track, Reservoir, Backlog, and markers) in the `tmp_component` table and updated "Operational marker" to "Deployment marker" (Session 46/47).
+- **DB-16 (tmp_component updates):** Populated missing physical components in the `tmp_component` table and updated "Operational marker" to "Deployment marker" (Session 46/47).
+
+## 7. Session File Location Index
+- **Airlock Report:** `~/Projects/TheSignal/Claude_context.md`
+- **Working State:** `~/Projects/TheSignal/Session/GEMINI_STATE.md`
+- **Session Brief:** `~/Projects/TheSignal/Session/SESSION_BRIEF.md`
+- **Schema Reference:** `~/Projects/TheSignal/Database/schema_reference.md`
+- **Registry Python Script:** `~/Projects/TheSignal/Database/register_component.py`
+- **YAML Component Template:** `~/Projects/TheSignal/Database/component_template.yaml`

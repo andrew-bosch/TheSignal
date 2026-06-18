@@ -28,7 +28,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.6 | ✅ Signed off — S74 (L194) |
+| 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.7 | ✅ Signed off — S93 (L211) |
 | 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.8 | ✅ Signed off — S83 (L204) |
 
 ---
@@ -51,7 +51,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 2.1 | 🔄 Needs re-sign-off — S90 (component content migrated to Art 02; geography/zone-only) |
-| 02 | [Components](V1/02___Components.md) | 1.1 | 🔄 In progress — S90 restructuring complete; sign-off pass (02-n02) next |
+| 02 | [Components](V1/02___Components.md) | 2.1 | ✅ Signed off — S96 (L212) |
 
 ---
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.36 | 🔄 In progress — full card design pass complete (C01–C42, P01–P18); set-level sign-off passes in progress |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.37 | 🔄 In progress — full card design pass complete (C01–C42, P01–P18); set-level sign-off passes in progress |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.6 | ✅ Signed off — S48 (pending re-sign-off on S64 material addition) |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.1 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.4 | 🟡 In progress — §9 Accord governance signed off S83 (L205) |

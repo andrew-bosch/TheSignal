@@ -215,4 +215,20 @@ Confirmed at Art 03 §12.1. No action needed.
 
 ---
 
+## 11. Resolution Outcome (RO-xx) → Art 03 §13
+
+*(Was in 00b §4.2 — moved here S96. Implicit in Art 03 §9.4 procedures but never enumerated as a formal reference table. Add to Art 03 §13 alongside §13.3 Base Difficulty.)*
+
+| ID | Name | Trigger |
+|----|------|---------|
+| RO-01 | Succeeded | Roll ≤ threshold; success conditions apply |
+| RO-02 | Failed | Roll > threshold; failure conditions apply |
+| RO-03 | Voided | Operation removed in Beat 1 or Beat 2 before resolution — targeting restriction or Type A Countermeasure |
+| RO-04 | Discovered | Roll outcome triggers discovery condition on card |
+| RO-05 | Auto-failed | Face-down card — no roll made; zero or shortfall payment |
+
+**Crit Flag:** Critical rolls set a `crit: true` modifier alongside the base RO-xx outcome — crit is not a standalone outcome type. Critical Success (01–05): RO-01 + crit flag. Critical Fail (96–00): RO-02 + crit flag. (L202)
+
+---
+
 *Created S90. Delete once content migrated to destination artifacts and dead pointers in Art 03 updated.*

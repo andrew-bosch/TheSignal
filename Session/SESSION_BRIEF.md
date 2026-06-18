@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 95 active | Updated: 2026-06-17**
+**Session 96 active | Updated: 2026-06-18**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -10,19 +10,19 @@ Read full files only when deep work requires it.
 
 ### Priority Order (locked S94)
 
-**Tier 1 — Complete Art 02 conditional sign-off**
-- 02-n11: ✅ S94 — Art 04 §12a Debrief Action Cards written (DA-xx, DA-01 SCIFRecord); SCIF card checklist updated (SR-xx → DA-01, Issues Resolved ✓). Andy review complete S95.
-- 02-n12: ✅ S94 — Art 02 entry complete (S92 rubric pass did the work; PM05 was stale). Faction-specific effects + Art 04 specs deferred to 05-n01 (gates on Art 05).
+**Tier 1 — Complete Art 02 conditional sign-off** ✅ S96 — Art 02 v2.1 signed off (L212). All L210 conditions met.
 
-**Tier 2 — Art 04 card design → leads into 00a-72**
-- Schema gates: 04-n33 ✅ S94 · 04-n32 ✅ S95 · 04-n70 ✅ S95 (findings in `Whiteboard/04n70_findings_S95.md`; fix pass ✅ S95)
-- 04-n97 opened S95 (boost=None sweep — PM05) · 04-n98 opened S95 (on_accept/on_decline sweep — PM05)
-- Card design work by set (Standard → Ghost → Network → Directorate → Syndicate → Guild)
+**Tier 2 — Art 04 card design → leads into 00a-72** ← CURRENT
+- Schema gates: 04-n33 ✅ S94 · 04-n32 ✅ S95 · 04-n70 ✅ S95
+- **Step 1 — Automated sweeps:** 04-n97 (boost=None sweep) · 04-n98 (on_accept/on_decline sweep — add None to all non-ElectPlayer cards)
+- **Step 2 — Art 04b refresh (04b-12 → 04b-19):** 04b-12 (component registration pass — Art 04 card suite, primarily 02-n20) → 04b-13 (§3 Physical Action Taxonomy) → 04b-14 (§4 stale/irrelevant decisions audit) → 04b-15 (§5 Card Taxonomy Index sync) → 04b-16 (§6 Coverage Analysis) → 04b-17 (§7 Faction Coverage Matrix) → 04b-18 (§8 Design Recommendations, incl. Guild) → 04b-19 (re-sign-off v1.7)
+- **Step 3 — Card design by set:** Standard → Ghost → Network → Directorate → Syndicate → Guild
 - Card Story content pass (04-n79) + Andy review (04-n80)
 - 04-n71 (Beat 0 boost procedure), 04-n72 (Beat 3 covert ElectPlayer) — Art 03 additions that unblock card sign-offs
 - 00a-72 re-sign-off follows naturally once card design is substantially settled (00a-73 + 00a-74 follow immediately)
 
 **Tier 3+ — Art 03 refinement, Art 01 overhaul, downstream**
+- 02-n08 (orphaned Art 02 content → Art 03 migration; gate cleared S94 — Art 03 re-sign-off required)
 - 03-n01 (Beat 2 overhaul), 03-n02 (modifier stack clarification)
 - 01-n02 (Art 01 overhaul — gate: 00a-72 first)
 - Everything in BLOCKED BY sections
@@ -264,10 +264,10 @@ Read full files only when deep work requires it.
 | 00 — Factions, World & Narrative | 1.7 | ✅ Signed Off — S93 (L211). §8.1 tensions list → prose (S93 fix). Open: 00-09, 00-15. |
 | 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle documentation). |
 | 01 — Game Board: New Meridian | 2.1 | 🔄 Needs Re-Sign-Off — S90 (02-n05). §4 component narratives migrated to Art 02 §4; §6 Physical Forms table migrated to Art 02 §13; stale refs updated; now geography/zone-only. Open: 01-11 (scope overhaul §8/§11/§12). |
-| 02 — Components | 2.0 | ✅ Signed Off — S92 (L210). §§5–12 rubric pass, metadata population, and GR validation complete across all 68 components. Open PM05: 02-n11, 02-n12, 02-n13, DB-38, 02-n25. |
+| 02 — Components | 2.1 | ✅ Signed Off — S96 (L212). Grant Deed (DB:113) added §9; §4.1 movement_path field definition clarified; 13 movement_path timing violations corrected §§5–12. Open PM05: 02-n07, 02-n17, 02-n20, 02-n21, 02-n22. |
 | 02a — Resource Systems: Board State | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0. Moved to Retired/Paper/ S90. |
 | 03 — Quarter Structure & Gameplay | 4.4 | ✅ Signed Off S88 (L207). §13.7 Board State Update Rules added; Control flag → Dominant marker throughout; Target Profile to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); BEC cleanup scope clarified (§12.0). |
-| 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
+| 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48 — pending re-sign-off v1.7. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). Refresh sequence queued S96: 04b-12 through 04b-19 (component registration → §§3–8 → re-sign-off v1.7). |
 | 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). S89: C28 Breaking News — Issues Resolved ✓ (gates 04-n75/76 cleared; sign-off pending set-level gates). C40B Live Coverage — Issues Resolved ✓ (04-n77 in Art 03 §9.0; sign-off pending set-level gates). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
@@ -344,6 +344,7 @@ Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re
 
 ## Last 3 Locked Decisions
 
+- **L212** (S96): Art 02 v2.1 signed off. Grant Deed (DB:113) added §9; §4.1 movement_path field definition clarified (board event trigger, not timing); 13 movement_path timing violations corrected §§5–12. Open PM05: 02-n07, 02-n17, 02-n20, 02-n21, 02-n22.
 - **L210** (S92): Art 02 v2.0 signed off. §§5–12 rubric pass, metadata population, and GR validation complete across all 68 components. Conditional on PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
 - **L207** (S88): Art 03 v4.4 signed off. Component lifecycle sweep complete; §13.7 Board State Update Rules added (Tension marker placement trigger; Structure block removal + return); Control flag renamed Dominant marker (same component — DB-14 = rename, not new registration); Target Profile added to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); §12.0 BEC scope clarified.
 - **L206** (S84): DB-registered component names are canonical source of truth for all terminology. Changes begin at DB component table, cascade through artifacts. No artifact may introduce a component name not registered in the DB.
@@ -370,8 +371,9 @@ Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re
 - **02a v1.6** — ✅ Signed Off S42
 - **Art 03 v4.4** — ✅ Signed Off S88 (L207)
 - **Art 06 §9** — ✅ Signed Off S83 (L205)
-- **Art 02 v2.0** — ✅ Signed Off S92 (L210). Conditional: 02-n11/12/13, DB-38. (00-16 ✅ S93, 02-n10 ✅ S93)
+- **Art 02 v2.1** — ✅ Signed Off S96 (L212). Open: 02-n07, 02-n17, 02-n20, 02-n21, 02-n22.
 - **00b** — ⚠ S81 VM-xx + S82 BM-xx registration pending re-sign-off
+- **Art 04b v1.7** — ⚠ Pending re-sign-off — 04b-12 through 04b-19 queued S96 (gate: 04b-12 through 04b-18 complete)
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)
 
 ---

@@ -17,7 +17,7 @@
 C39 (Absolute Compromise) can remove active Type A and Protect/Fortify plays; cannot target Type B. Full Countermeasure design pending D-04-12.
 
 **Modifier** — Alters parameters of a host action. No independent game-state primitives. Effect categories: difficulty reduction, cost reduction, effect extension, detection immunity, reach extension, outcome addition. Two timing sub-types:
-- **React:** fires automatically when a named publicly-observable condition is met
+- **React:** fires automatically when a named publicly-observable board state change occurs. Procedural authority: Art 03 §18. First registered example: Grant Deed (DB:113). Note: §6.3 CardType enum has no "React" value yet — schema question open in 04-n99.
 - **Instant:** played actively during a defined window
 Maximum 1 modifier card per action submitted. Excluded from taxonomy.
 

@@ -1,13 +1,34 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-17 — Session 95 Close
+**Last Updated:** 2026-06-18 — Session 96 Close
 
 ### Generated: 2026-05-31 (session 55 complete) — supersedes session 53 save state.
 
 Read this document top to bottom before doing any design work in a new session. It is intended to give a fresh session full project context with no prior knowledge required.
 
 ---
+
+### Session 96 Summary (2026-06-18)
+
+**Focus:** Art 02 final entries and v2.1 sign-off; PM05 04b pre-card-design refresh sequence.
+
+**Key work:**
+- Ingested agy S96 report — Grant Deed (DB:113) registered. Art 02 §9 entry written and corrected: faction-agnostic (not Syndicate-specific), dry-erase preferred, mutable `owner` field, tradeable between factions.
+- Art 02 §3 rubric review: 3 scope violations corrected in Grant Deed entry (GR mechanics removed, PM05 ref removed, `visibility` bare enum, `quantity` labeled). Subheader cleaned.
+- Art 02 §4.1 `movement_path` field definition clarified: trigger slot = board event or player action (NOT beat numbers or phase names); timing belongs in Art 03.
+- Full movement_path timing sweep: 13 violations corrected across all components in §§5–12.
+- PM05 04-n99 added: Grant Deed Art 04 React card spec (schema questions A–D gated on 04-n27).
+- PM05 04-n26 Grant Deed: ✅ S96 (Art 02 entry + DB:113).
+- PM05 04b-12 through 04b-19 added: full Art 04b refresh sequence (component registration → §§3–8 → re-sign-off) as prerequisite to resuming card design.
+- SESSION_BRIEF Tier 2 updated: Step 1 (automated sweeps 04-n97/98) → Step 2 (04b-12 through 04b-19 refresh) → Step 3 (card design by set).
+- Art 03 §18 confirmed sufficient procedural authority for React trigger window; no new GR needed in 00a now (04-n27 flagged for future eval when §18 design is complete).
+
+**Decisions locked:** L212 — Art 02 v2.1 signed off.
+
+**Artifacts updated:** Art 02 (v2.1, L212); PM02 (L212 added); PM03 (Art 02 row updated); PM05 (04-n99, 04b-12 through 04b-19 added; 04-n26 Grant Deed ✅).
+
+**Next:** Automated sweeps (04-n97 boost=None, 04-n98 on_accept/on_decline) → Art 04b refresh (04b-12 → 04b-19) → Card design by set.
 
 ### Session 95 Summary (2026-06-17)
 

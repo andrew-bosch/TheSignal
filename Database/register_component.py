@@ -131,9 +131,9 @@ def build_sql(cfg, lk):
     lines.append("-- Step 1: Register component")
     lines.append(
         f"INSERT INTO component "
-        f"(name, parent_component_id, actionable, transformable, receivable, "
+        f"(name, parent_component_id, actionable, receivable, "
         f"transform_visibility, transform_orientation, transform_data) VALUES "
-        f"({esc(name)}, {parent_id}, {actionable}, {transformable}, {receivable}, "
+        f"({esc(name)}, {parent_id}, {actionable}, {receivable}, "
         f"{transform_visibility}, {transform_orientation}, {transform_data});"
     )
     lines.append("SET @comp_id = LAST_INSERT_ID();")
