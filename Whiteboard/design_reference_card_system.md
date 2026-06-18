@@ -1,6 +1,6 @@
 # Design Reference — Card System
 *Load for all card spec work: governing rules, card schema, design flags.*
-*Updated: S78.*
+*Updated: S95.*
 
 ---
 
@@ -317,8 +317,11 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 **Effects**
 `success` · `successcrit` (additive delta on crit) · `fail` · `failcrit` (additive delta on crit)
 
+**ElectPlayer Effects** *(ElectPlayer outcome_type only — None on all other cards)*
+`on_accept: MutationExpr | None` · `on_decline: MutationExpr | None`
+
 **Portrait**
-`portrait: dict[Faction, PortraitEntry]` — entries: `flat` · `submitter` · `where` · `modifier` · `mod_where`
+`portrait: dict[Faction, PortraitEntry]` — valid params: `flat` · `submitter` · `where` · `modifier` · `mod_where` — `failcrit=` is NOT a valid PortraitEntry parameter
 
 **Narrative**
 `narrative` · `perspectives` · `design_note` · `arbiter_note`
@@ -350,6 +353,8 @@ Permanent public acts that create ongoing board conditions use the card-on-board
 
 *Examples: Regulatory Downgrade, Regulatory Freeze, Standing Injunction, Entry/Exit Controls*
 
+**Seasonal persistence with timed effects** uses a different mechanism: `persistence_condition`/`persistence_effect` are None; the timed effect is encoded as `game.world_condition()` in the `success` field. This is not in conflict with the Permanent pattern — they serve different durations. Example: P16 Public Dividend (DividendMarker world_condition in success).
+
 ---
 
 ## Design Flags for New Card Proposals
@@ -367,3 +372,4 @@ Before writing any new card spec, check:
 10. **New ARBITER behavior?** → define as generalizable procedure in Art 03/07 first; `arbiter_note` references, does not define (Design Pillar 4.7b + Governing Rule 6.1)
 11. **Narrative field** → Missing Author Vacuum: no flavor implies any faction knows what the message to the Chorus should say (Design Pillar 4.6b)
 12. **Card Story block** → Can you write 1–3 sentences answering "What is actually happening in the world when this card is played?" as an event in New Meridian (not a mechanical description)? If not, redesign before finalizing spec. (Art 04 §5 P26 — locked S78)
+13. **Arbiter notes** → Prefer structured spec fields (`success`/`fail`/`on_accept`/`on_decline`) over prose in `arbiter_note`. `arbiter_note` should reference existing Art 03/07 procedures, not encode effects that belong in spec fields.

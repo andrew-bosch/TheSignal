@@ -40,6 +40,7 @@ All structural and environmental components placed before faction setup begins.
 | Faction Terminal ×5 | P1–P5 | — | One per faction position |
 | Faction Resolution Grid ×5 | P1–P5 | — | One per faction position |
 | Backlog | Supply | — | — |
+| Dispatch Token ×20 | Backlog | — | 4 per faction; all 20 tokens begin in Backlog at setup (Art 02 §7, Art 03 §21) |
 
 ### §2.2 Faction Starting Tokens
 

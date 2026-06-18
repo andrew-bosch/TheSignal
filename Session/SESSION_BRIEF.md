@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 93 complete → Session 94 next | Updated: 2026-06-16**
+**Session 95 active | Updated: 2026-06-17**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,7 +7,29 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
-S94 — Remaining Art 02 conditional sign-off items: 02-n11 (SCIFRecord cascade — gate: Art 04 SCIF spec must be current), 02-n12 (Emergency Response card design), 02-n13 (Status marker narrative evaluation), DB-38 (Escalation marker cascade — DB + downstream). Check PM05 for priority order before starting.
+
+### Priority Order (locked S94)
+
+**Tier 1 — Complete Art 02 conditional sign-off**
+- 02-n11: ✅ S94 — Art 04 §12a Debrief Action Cards written (DA-xx, DA-01 SCIFRecord); SCIF card checklist updated (SR-xx → DA-01, Issues Resolved ✓). Andy review complete S95.
+- 02-n12: ✅ S94 — Art 02 entry complete (S92 rubric pass did the work; PM05 was stale). Faction-specific effects + Art 04 specs deferred to 05-n01 (gates on Art 05).
+
+**Tier 2 — Art 04 card design → leads into 00a-72**
+- Schema gates: 04-n33 ✅ S94 · 04-n32 ✅ S95 · 04-n70 ✅ S95 (findings in `Whiteboard/04n70_findings_S95.md`; fix pass ✅ S95)
+- 04-n97 opened S95 (boost=None sweep — PM05) · 04-n98 opened S95 (on_accept/on_decline sweep — PM05)
+- Card design work by set (Standard → Ghost → Network → Directorate → Syndicate → Guild)
+- Card Story content pass (04-n79) + Andy review (04-n80)
+- 04-n71 (Beat 0 boost procedure), 04-n72 (Beat 3 covert ElectPlayer) — Art 03 additions that unblock card sign-offs
+- 00a-72 re-sign-off follows naturally once card design is substantially settled (00a-73 + 00a-74 follow immediately)
+
+**Tier 3+ — Art 03 refinement, Art 01 overhaul, downstream**
+- 03-n01 (Beat 2 overhaul), 03-n02 (modifier stack clarification)
+- 01-n02 (Art 01 overhaul — gate: 00a-72 first)
+- Everything in BLOCKED BY sections
+
+**Checkpoint:** Reprioritize after Tier 2 complete.
+
+*Note: DB-38 ✅ S92. 02-n13 ✅ S94. 03-n21 ✅ S94. Tier 1 fully clear S94 — all L210 conditions met.* Check PM05 for priority order before starting.
 
 **S92 accomplishments (mid-session clear #1):**
 - README.md — fixed two broken Art 03 anchor links.
@@ -67,6 +89,30 @@ S94 — Remaining Art 02 conditional sign-off items: 02-n11 (SCIFRecord cascade 
   - All markers ARBITER-managed except: PS (ARBITER or acting faction player), Status marker (faction player only).
 - **Art 02 v2.0 signed off — L210.** Conditional on PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
 - PM02 L210 locked. PM03 Art 02 status updated.
+
+**S95 accomplishments:**
+- 04-n70 fix pass ✅ — all 8 categories complete. Schema violations: C39/C23 `faction=None→All`; C36/C42/C38/C41 `affinity=None` (faction names were invalid); P05 `threshold=35`; P13 threshold dynamic; C16 `resolution=Automatic`. Missing persistence triples: 9 cards (Ghost stubs: Station/Full Take/SCIF/Flip/Signals Analysis; C37; LandTitle; HostileTakeover; AccordTransfer). Spec/checklist: C09 dup removed, C19 checklist corrected, C41 arbiter_note faction corrected, Directorate nav fixes (RegulatoryDowngrade/Freeze moved covert→PA index). Notation: C37 `public_standing→standing`, Overture `perspectives={}`. Structural: C41/P15 ElectPlayer effects moved from comments to structured `on_accept`/`on_decline`. EntryExitControls `persistence_effect` added (condition was correct, effect was absent). P16 DividendMarker `world_condition()` formalized.
+- §6.1 Card class: `on_accept: MutationExpr | None` + `on_decline: MutationExpr | None` fields added (ElectPlayer outcome_type only; None on all other cards). §6.2 Data Dictionary updated.
+- Design decisions (S95): (1) minimize/eliminate arbiter_notes — prefer structured spec fields; (2) PortraitEntry `failcrit=` is invalid — valid params only: `flat/submitter/where/modifier/mod_where`; (3) on_accept/on_decline as schema elements for ElectPlayer; (4) persistence model: Permanent cards use `persistence_condition`/`persistence_effect`; Seasonal cards with timed effects use `world_condition()` in `success` — different mechanisms for different durations, not in conflict.
+- PM05: 04-n70 ✅ S95, 04-n98 added (on_accept/on_decline sweep — add `None` to all non-ElectPlayer cards).
+
+**S94 accomplishments (pre-clear #3 — this clear):**
+- 02-n11 (step 3) ✅ — Art 04 §12a Debrief Action Cards written. DA-xx identifier convention established; DA-01 SCIFRecord fields and Debrief procedure written. SCIF card checklist updated: Taxonomy fit and Supported by components updated (SR-xx → DA-01, registrations confirmed); Supported by game procedure → ✓ (Art 03 §11 present since S68); arbiter_note updated; Outstanding Issues reduced to balance playtest flag; Issues Resolved ✓ S94. PM05 02-n11 ✅ S94.
+
+**S94 accomplishments (pre-clear #2 — this clear):**
+- 02-n13 ✅ — Status marker (DB:49) Narrative Anchor corrected: `N/A — mechanical readiness indicator; no in-world narrative element.` (Art 03 is procedure, not narrative context; no Art 00 grounding warranted.)
+- 03-n21 ✅ — Dispatch Token row added to 03-init §2.1: ×20 / Backlog / 4 per faction (Art 02 §7, Art 03 §21 authoritative). Note: PM05 stated 16 (Ghost:4; others:3 each) — stale; corrected in PM05.
+- 02-n11 (step 2) ✅ — SR-xx cascade: stale `SR-xx subtype` parenthetical removed from Art 02 Arbiter Tableau (DB:30) Gameplay Requirements. Only outstanding: action (3) add Debrief Action Cards section to Art 04 (material).
+- DB-31 (artifact sweep) ✅ — 00b: no tmp_component refs; XA-43/44 PM05 descriptions updated (tmp_component → `component` table; tmp_comp_verb_role/beat → comp_verb_phase); Art 04 A-04-05 assessment note updated. DB-side audit assigned to agy.
+- SESSION_BRIEF: DB-38 corrected (was ✅ S92; stale in current focus list).
+
+**S94 accomplishments (pre-clear #1):**
+- PM05 sweep scan: identified 04-n30, 04-n31, 04-n78, 04-n69, NP1-01, 04-n35 as unsupervised candidates.
+- NP1-01 ✅: threshold field already uses bare integers; resolved by Python spec redesign. PM05 closed.
+- 04-n30 ✅ + 04-n31 ✅ + 04-n78 ✅ + 04-n69 ✅: Art 04 4-sweep via `tools/art04_sweep.py`. 7623 → 8142 lines (+519). 61 persistence pairs added; 79 Card Story blocks inserted (3 already present untouched); 79 Data schema validation rows added; 81 Card narrative rows added. PM05 all four closed.
+- 04-n35 left as-is: correctly blocked — faction variant design pass, not a schema field issue.
+- Remaining automated: 03-n21 (Dispatch Token in 03-init §2.1), DB-31 artifact side (tmp_component → component in 00b §4 + PM05).
+- S94 design items still pending: 02-n11, 02-n12, 02-n13.
 
 **S93 entry point:** ✅ S93 complete.
 

@@ -388,7 +388,7 @@ Tile surface must physically accommodate during play without obscuring printed i
 
 **Narrative Anchor:** The inside of ARBITER's awareness — where the full picture sits before any of it becomes signal. The table sees what ARBITER surfaces. This is what ARBITER sees. *→ Art 00 §9.6 for full narrative.*
 
-**Gameplay Requirements:** Must accommodate: Broadcast Card supply; Broadcast Deck and discard; Broadcast Effect Deck and discard; active Broadcast Effect Card(s); blank Intel tokens; blank Accord agreements; Presence chips (supply); Established markers (supply); Dominant markers (supply); Tension markers (supply); Structure blocks (supply); Notification Slips (NS-xx); blank Intel Delivery Slips (IS-xx); Debrief Action Cards (blanks; SR-xx subtype); Visibility Markers (VM-xx); Boost Markers (BM-xx); Modifier tokens; ARBITER Threshold Slider; Chorus Portrait tracks.
+**Gameplay Requirements:** Must accommodate: Broadcast Card supply; Broadcast Deck and discard; Broadcast Effect Deck and discard; active Broadcast Effect Card(s); blank Intel tokens; blank Accord agreements; Presence chips (supply); Established markers (supply); Dominant markers (supply); Tension markers (supply); Structure blocks (supply); Notification Slips (NS-xx); blank Intel Delivery Slips (IS-xx); Debrief Action Cards (blanks); Visibility Markers (VM-xx); Boost Markers (BM-xx); Modifier tokens; ARBITER Threshold Slider; Chorus Portrait tracks.
 
 **Metadata:**
 | Field | Value |
@@ -2192,7 +2192,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Design Function:** Two-state marker tracking each faction's discussion status during Quarter-end negotiation.
 
-**Narrative Anchor:** N/A — per-faction state marker; narrative context embedded in Quarter-end procedure (Art 03).
+**Narrative Anchor:** N/A — mechanical readiness indicator; no in-world narrative element.
 
 **Gameplay Requirements:** Two readable states required: Active (faction still in discussion) / Ready (faction done talking, ready to end Quarter). Faction player-managed — each faction player changes their own marker state.
 
