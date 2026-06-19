@@ -34,154 +34,10 @@ Card definitions live in Artifact 04. This document does not reproduce card cont
 
 ## 3. Physical Action Taxonomy
 
-Every game action in The Signal resolves as a sequence of one or more physical primitives — discrete operations a human hand can perform on a game component. This section defines those primitives and their valid subjects: the seven physical verbs and the components each one can act on.
+*Relocated S97. Content now lives in its canonical home:*
 
-### 3.1 Physical Action Verbs
-
-| Verb | Primitive | Definition |
-|------|-----------|------------|
-| **Add** | Place | A component enters active play from supply or off-board |
-| **Remove** | Remove | A component exits active play to supply or off-board |
-| **Move** | Remove + Place | A component relocates from one on-board location to another |
-| **Reveal** | Transform | A component's face or contents become visible to named recipients |
-| **Conceal** | Transform | A component is placed or returned face-down or closed |
-| **Flip** | Transform | A component's physical orientation is changed — not an information state change |
-| **Corrupt** | Transform | A physically written or recorded value on a component is altered |
-
-*Every game action is a sequence of one or more of these primitives: Remove → Transform? → Place. The human hand is the implicit intermediary — not modeled.*
-
----
-
-### 3.2 Component × Verb Matrix
-
-| Component | Add | Remove | Move | Reveal | Conceal | Flip | Corrupt |
-|-----------|-----|--------|------|--------|---------|------|---------|
-| Accord agreement | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
-| Activity marker | ✓ | ✓ | ✓ | — | — | — | — |
-| ARBITER Dominance Marker | ✓ | ✓ | ✓ | — | — | — | — |
-| Classified directives | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Control flag | ✓ | ✓ | ✓ | — | — | — | — |
-| Covert operation | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Deployment marker | ✓ | ✓ | ✓ | — | — | ✓ | — |
-| Dispatch case | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Dispatch token | ✓ | ✓ | ✓ | — | — | — | — |
-| Established marker | ✓ | ✓ | ✓ | — | — | — | — |
-| Faction order marker | ✓ | ✓ | ✓ | — | — | — | — |
-| Intel token | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
-| Modifier card | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Modifier token | ✓ | ✓ | ✓ | — | — | — | — |
-| Native resource | ✓ | ✓ | ✓ | — | — | — | — |
-| Operative ability | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Pointer marker | ✓ | ✓ | ✓ | — | — | — | — |
-| Political act | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Presence token | ✓ | ✓ | ✓ | — | — | — | — |
-| Situation Report card | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Standing marker | ✓ | ✓ | ✓ | — | — | — | — |
-| Structure block | ✓ | ✓ | ✓ | — | — | — | — |
-| Target Profile | ✓ | ✓ | ✓ | — | — | — | ✓ |
-| Tension marker | ✓ | ✓ | ✓ | — | — | — | — |
-| Threshold marker | ✓ | ✓ | ✓ | — | — | — | — |
-
-*Source: `the_signal_db.v_comp_verb_matrix`. Art 07 and Art 08 components extend this table — update DB first, regenerate from view. Game Layers (Territory / Economy / Information / Submission / Resolution / Standing) are a card design context layer — see §4 and §5.*
-
----
-
-### 3.3 Primitive Action Model — Database-Backed Analysis (S47)
-
-#### Methodology
-
-Session 47 formalized the physical action taxonomy into a relational model in `the_signal_db`. The model answers three questions simultaneously: **what** can be acted on, **when** it can be acted on, and **who** can act on it. Each axis is a separate dimension table; legal actions are the intersection.
-
-**Dimension tables:**
-
-| Table | Axis | Content |
-|-------|------|---------|
-| `component` | What | 51 registered physical components |
-| `verb` | How | 7 physical verbs (+ Invoke meta-verb) |
-| `quarter_phase` | When | 20 beats across the full Quarter structure |
-| `player_role` | Who | Faction / ARBITER |
-| `role_phase` | Role phase | Initiator / Executor / Fulfiller |
-| `trigger_type` | Why | 10 trigger classifications |
-
-**Junction tables** (`comp_verb_phase`, `comp_verb_role`) define valid combinations. A valid *primitive* is any row in both junction tables for the same component × verb pair — the intersection of what is possible by timing AND what is possible by role.
-
-**Primitives are derived** as: `comp_verb_phase × comp_verb_role (phase_id=1)`. Phase_id=1 (initiator) captures who calls for the action; the executor (phase_id=2) is tracked separately in `comp_verb_role` and is not collapsed into the primitive row. Result: **213 primitives** in `action` as of S47.
-
-#### Trigger Taxonomy
-
-Every primitive in `action` carries a `trigger_type_id` classifying what causes the action to fire:
-
-| Type | Subtype | Definition |
-|------|---------|------------|
-| phase | open | Action fires at beat entry |
-| phase | during | Action is valid throughout a beat window |
-| phase | closed | Action fires at beat transition |
-| rule | card | Card text mandates the action |
-| rule | resolution | Quarter resolution procedure mandates the action |
-| player | introduce_card | Player submits or declares a card |
-| player | agreement | Bilateral consent (trade, Accord) |
-| player | verbal_statement | Player declaration with game effect |
-| state_condition | — | Compound board/game state check |
-| cascade | — | Prior action must have occurred (prereq_id) |
-
-**S47 trigger distribution (primitives only):**
-
-| Trigger | ARBITER | Faction |
-|---------|---------|---------|
-| phase.during | 56 | 15 |
-| rule.card | 117 | 3 |
-| rule.resolution | 1 | 4 |
-| player.introduce_card | — | 14 |
-| player.agreement | — | 3 |
-
-#### Governing Principle (L166)
-
-The taxonomy defines **possibility space** — every valid combination of component × verb × beat × role that the physical game system can support. Art 03 defines **legal space** — the subset of those combinations that the rules actually permit and describe a procedure for.
-
-A primitive present in `action` with no corresponding Art 03 procedure is not a modeling error — it is an open design question. Every gap discovered through this analysis is routed to Art 03 for resolution: **permit** (write the procedure), **prohibit** (annotate as explicitly illegal), or **defer**. The two artifacts co-evolve iteratively.
-
-#### Gap Analysis Views
-
-Two views provide the ongoing procedure coverage audit:
-
-**`v_unlegislated_primitives`** — All (beat, subject, verb, component) combinations valid in the taxonomy but absent from `action`. 60 rows as of S47; organized by beat. Primary use: beat-by-beat procedure review.
-
-**`v_unlegislated_by_trigger`** — All (subject, verb, component) tuples with zero coverage in `action` under any trigger type or beat. 14 rows as of S47 (all Faction-initiated). Primary use: legalization decision queue — for each row: permit / prohibit / defer.
-
-S47 identified 14 unlegislated Faction-initiated combinations:
-
-| Subject | Verb | Component | Beats | Decision |
-|---------|------|-----------|-------|----------|
-| Faction | Add | Intel token | 2 | 🔄 |
-| Faction | Add | Political act | 2 | 🔄 |
-| Faction | Add | Presence token | 3 | 🔄 |
-| Faction | Add | Structure block | 3 | 🔄 |
-| Faction | Conceal | Intel token | 2 | 🔄 |
-| Faction | Corrupt | Accord agreement | 2 | 🔄 |
-| Faction | Corrupt | Intel token | 2 | 🔄 |
-| Faction | Corrupt | Target Profile | 2 | 🔄 |
-| Faction | Remove | Accord agreement | 2 | 🔄 |
-| Faction | Remove | Deployment marker | 2 | 🔄 |
-| Faction | Remove | Intel token | 2 | 🔄 |
-| Faction | Remove | Structure block | 2 | 🔄 |
-| Faction | Reveal | Accord agreement | 1 | 🔄 |
-| Faction | Reveal | Intel token | 2 | 🔄 |
-
-*Decision column: ✅ Permit (Art 03 procedure exists or written) / ❌ Prohibit (explicitly excluded) / 🔄 Deferred*
-
-All planned views completed S47: `v_gap_executor_check`, `v_unassigned_triggers`, `v_duplicate_primitives`, `v_component_coverage`, `v_phase_subject_coverage`, `v_trigger_phase_coverage`. View `v_card_primitive_map` remains blocked — requires `card_ref` seed table.
-
-#### Known Seeding Gaps (S48)
-
-The following are pending DB population tasks — not design gaps in the taxonomy.
-
-| Component / Beat | Gap | Note |
-|-----------------|-----|------|
-| Countermeasures beats (4, 10, 16) | 0 primitives seeded | Art 03 §10/§13/§16 defines the procedure. Pending component registration for Countermeasure card. |
-| ARBITER Dominance Marker (`component` id=42) | No `comp_verb_role` or `comp_verb_phase` entries | Present in §3.2 matrix. DB seeding queued. |
-| Classified directives (`component` id=17) | No `comp_verb_role` or `comp_verb_phase` entries | Present in §3.2 matrix. DB seeding queued. |
-| Standing marker — resolution beats | ARBITER Move absent from `action` for Beat 3 / Beat 4 | Card-triggered primitive. Beat 3: failure/discovery only (covert success produces no Standing marker move — unobserved). Beat 4: all outcomes. Seeding queued. |
-| 37 duplicate rows | Exact duplicates in resolution beats (Month 1/2 Beat 3, Month 3 Beat 4) | Seeding artifact. Deletion queued. |
+- **§3.1 Physical Action Verbs + §3.2 Component × Verb Matrix** → Art 02 §13. Art 02 is the component source of truth; the DB view `v_comp_verb_matrix` is the analytical aggregate.
+- **§3.3 Primitive Action Model & Legalization Analysis** → Art 03 §22. Art 03 is the legality source of truth; DB views `v_unlegislated_primitives` and `v_unlegislated_by_trigger` are the ongoing coverage audit.
 
 ---
 
@@ -189,7 +45,7 @@ The following are pending DB population tasks — not design gaps in the taxonom
 
 The physical action taxonomy (§3) defines what can happen to components. The card design layer defines *which game system a card affects* — independent of which physical verbs execute the effect. These are the decisions that produced the Layer — Function — Subject framework used in §5.
 
-*Naming note: the six divisions in this section are called **Layers**. The existing L2-L5 expansion implementation terminology also uses "layer" — that terminology requires renaming to avoid collision. See PM05 04b-10.*
+*Naming note: the six divisions in this section are called **Layers**. The expansion tier terminology was renamed from "Layer N" to "Tier N" across all artifacts (XA-37, S49). No collision risk remains.*
 
 ### 4.1 Layers define game systems, not action types
 
@@ -204,7 +60,7 @@ Layers are game-design partitions — not narrative concepts, not phase concepts
 
 | Layer | Visibility | Governs |
 |-------|-----------|---------|
-| **Territory** | Public | The influence landscape: presence tokens, structures, control flags, spatial markers |
+| **Territory** | Public | The influence landscape: Presence chips, structures, Dominant markers, spatial markers |
 | **Economy** | Public | Quantitative holdings: native resources, card counts, Accord existence |
 | **Information** | Private → Public | Qualitative content: token content, written records, attribution, reconnaissance |
 | **Submission** | Split (covert = private, political = public) | What enters the resolution queue: costs, eligibility, blocks, scope |
@@ -236,7 +92,7 @@ A card that adds an Intel token to the pool (C05 Gather) is an Information card 
 
 ### 4.5 Accord is a known-narrow Economy subset
 
-Whether an Accord exists between two factions is a public, countable fact → Economy. The recorded terms of an Accord are Information. Accord as a category is mechanically narrow in the current design; the Economy classification holds, but Accord-specific design space may warrant dedicated attention in future passes.
+Whether an Accord exists between two factions is a public, countable fact → Economy. The recorded terms of an Accord are Information. Accord-specific design space has expanded materially since this decision was written: Art 06 §9 (signed off L191/L198/L205) defines a full clause vocabulary (six types including Lock, Alter, Transfer, Duration, Prohibition, Obligation) and a card-driven formation and manipulation model. The Economy classification for Accord existence still holds; the design space is no longer narrow.
 
 ### 4.6 Protect distributes to the target's layer
 
@@ -246,10 +102,10 @@ A Protect card belongs to the layer of its protected target — it is not a cros
 |------|----------------|-------|--------|
 | C10 Protect | Covert operation difficulty | Resolution | ✅ Signed off |
 | C11 Fortify Structure | Structure block | Territory | ✅ Signed off |
-| C18 Identity Blind | Action attribution | Information | 📝 Pending development |
-| C19 Deep Cover | Action attribution (permanent) | Information | 📝 Pending development |
-| C23 Evidence Preservation | Written record | Information | 📝 Pending development |
-| C34 Golden Parachute | Native resource | Economy | 📝 Pending development |
+| ~~C18 Identity Blind~~ | ~~Action attribution~~ | ~~Information~~ | 🚫 Retired — redesigned S68. C18 is now **Dossier Breach** (Information — Reveal — IntelDeliverySlip). No longer a Protect card. |
+| C19 Deep Cover | ~~Action attribution (permanent)~~ | Information | 📝 Design pass complete (v1.1) — redesigned S51. Taxonomy changed: now **Information — Remove — IntelToken** (permanently removes Ghost attribution record from rival's Intel token). See §5.2. Issues not yet resolved. |
+| ~~C23 Evidence Preservation~~ | ~~Written record~~ | ~~Information~~ | 🚫 Retired — redesigned S68. C23 is now **Tort Interference** (Standard CovertOperation; locks a named Accord against voluntary dissolution). No longer a Protect card — taxonomy: Economy — Block — Accord agreement. |
+| C34 Golden Parachute | Native resource | Economy | 📝 Design pass complete (v2.0, L185) — bribe mechanic; variable Capital declared at Dispatch; nullification is conditional on target's submitted ops. Issues resolved. Pending sign-off. |
 
 ### 4.7 Submission and Resolution are distinct layers
 
@@ -264,7 +120,7 @@ A card that blocks an operation from being submitted (C21 Invoke Jurisdiction, C
 
 Public Standing and Portrait tracks record resolution outcomes across the session — they function as consequence registers. However, they are also independently affectable: cards can shift track values directly, independent of any underlying action resolving. This dual role (output register + independently affectable surface) warrants a dedicated layer.
 
-Portrait is ARBITER-controlled (L84, 00a R01). Player-facing Standing cards affect Public Standing only.
+Portrait is ARBITER-controlled (L84, 00a §5.1). Player-facing Standing cards affect Public Standing only.
 
 ### 4.9 React, Instant, and interrupt effects
 
@@ -276,7 +132,7 @@ In the taxonomy, React/Instant/interrupt is a *timing classification*, not a Lay
 - An Instant card that blocks a submission in-flight → Submission — Block — [target]
 - An interrupt that reveals attribution when triggered → Information — Reveal — Action attribution
 
-Because timing is a separate axis, React / Instant / interrupt cards are classified by their effect, not their trigger. The full mechanic treatment — trigger conditions, stack behavior, observability requirements — is in §10.
+Because timing is a separate axis, React / Instant / interrupt cards are classified by their effect, not their trigger. The full mechanic treatment — trigger conditions, stack behavior, observability requirements — is in Art 03 §18 (React Card Rules).
 
 ### 4.10 Corrupt applies only to physically written or recorded values
 
@@ -286,9 +142,9 @@ Corrupt is classified in the Information layer. Scope is strict: applies only to
 
 Convert (changing ownership of a board element) and Transfer (moving resources between factions) are both instances of Redirect. Convert is Territory — Redirect. Transfer is Economy — Redirect.
 
-### 4.12 No persistent temporary cross-round effects
+### 4.12 No multi-Quarter temporary effects
 
-All card effects are either immediate (this Quarter only) or permanent (rest of session). No card creates a state that expires after a defined number of Quarters.
+Card effects use exactly one of four valid duration types: **Immediate** (resolved at beat; no lingering marker), **Transient** (removed at end of current Month), **Seasonal** (removed at end of current Quarter / Phase 21), or **Permanent** (persists for the remainder of the session until a named action or condition removes it). No card creates a state that expires after a defined number of Quarters. *Locked: Art 04 §5 P6 and P19 (formerly 00a R21). See Art 00a §3.1 — canonical duration definitions.*
 
 ### 4.13 Design note — Paper vs Electronic ARBITER knowledge gap
 
@@ -360,33 +216,55 @@ React and Instant are timing sub-functions within the Modifier card type — the
 | C14 | Construction Crew | ✅ | Submission | Remove Restriction | Covert operation (presence requirement) | — |
 | C15 | Infrastructure Yield | ✅ | Economy | Add | Native resource | Add |
 | C16 | Pattern Match | ✅ | Submission | Copy | Covert operation (full) | Invoke |
-| C17 | Intercept | 📝 | Information | Reveal | Covert operation — named faction | Reveal |
-| C18 | Identity Blind | 📝 | Information | Protect | Action attribution | Conceal |
-| C19 | Deep Cover | 📝 | Information | Protect (permanent) | Action attribution | Conceal |
+| C17 | Intercept | 📝 | Information | Reveal | CovertOperation | Reveal |
+| C18 | Dossier Breach | 📝 | Information | Reveal | IntelDeliverySlip | Reveal |
+| C19 | Deep Cover | 📝 | Information | Remove | IntelToken | Remove |
 | C20 | Misdirection | 📝 | Information | Add | Intel token (corrupt content) | Add + Corrupt |
 | C21 | Invoke Jurisdiction | 📝 | Submission | Block | Covert operation (C01, C03) | — |
 | C22 | Detain | 📝 | Territory | Remove (permanent) | Deployment marker | Remove |
-| C23 | Evidence Preservation | 📝 | Information | Protect (permanent) | Written record | — |
-| C24 | Surveillance Placement | 📝 | Information | Add (permanent) | Intel token | Add |
-| C25 | Sealed Border | 📝 | Submission | Block | Covert operation (presence placement) | — |
-| C26 | Leak | 📝 | Information | Reveal | Action attribution | Reveal |
-| C27 | Source Protection | 📝 | Information | Protect | Action attribution | — |
-| C28 | Open Channel | 📝 | Information | Reveal | Private communications | Reveal |
-| C29 | Network Cascade | 📝 | Submission | Modify | Covert operation (scope) | — |
+| C23 | Tort Interference | 📝 | Information | Corrupt | Accord | Corrupt |
+| C24 | Surveillance Placement | 📝 | Information | Reveal | CovertOperation | Reveal |
+| C25 | Tactical Redirection | 📝 | Territory | Move | PresenceToken | Move |
+| C26 | Leak | 📝 | Information | Reveal | District | Reveal |
+| C27 | Disclosure Loop | 📝 | Economy | Add | Exposure | Add |
+| C28 | Breaking News | 📝 | Information | Reveal | CovertOperation | Reveal |
+| C29 | Network Cascade | 📝 | Submission | Modify | PoliticalAct | — |
 | C30 | Community Anchor | 📝 | Territory | Add | Presence token | Add |
 | C31 | Leveraged Acquisition | 📝 | Economy | Add | Native resource | Add |
 | C32 | Short the Market | 📝 | Economy | Remove | Native resource | Remove |
 | C33 | Hostile Acquisition | 📝 | Territory | Redirect | Structure block | Move |
 | C34 | Golden Parachute | 📝 | Economy | Protect | Native resource | — |
 | C35 | Regulatory Capture | 📝 | Submission | Block | Named action type | — |
+| C36 | Synthesize | 📝 | Economy | Add | IntelToken | Add |
+| C37 | Sacrifice | 📝 | Economy | Add | IntelToken | Add |
+| C38 | Parasitic | 📝 | Economy | Add | IntelToken | Add |
+| C39 | Absolute Compromise | 📝 | Submission | Block | CovertOperation | — |
+| C40B | Live Coverage | 📝 | Information | Reveal | FactionHand | Reveal |
+| C41 | Corporate Blackmail | 📝 | Economy | Redirect | NativeResource | Move |
+| C42 | Sanctioned Raid | 📝 | Territory | Remove | PresenceToken | Remove |
 | — | Source Substitution | 📝 | Information | Corrupt | Intel token | Corrupt |
 | — | Backdate | 📝 | Information | Corrupt | Intel token | Corrupt |
 | — | Field Verification | 📝 | Information | Recover | Intel token | — |
+| — | Labor Contract | 📝 | Economy | Recover | NativeResource | Add |
+| — | Station | 📝 | Information | Add | IntelToken | Add |
+| — | Full Take | 📝 | Information | Add | IntelToken | Add |
+| — | SCIF | 📝 | Information | Add | DebriefActionCard | Add |
+| — | Flip | 📝 | Economy | Add | FactionNativeResource | Add |
+| — | Signals Analysis | 📝 | Information | Reveal | ClassifiedDirective | Reveal |
+| — | Entry/Exit Controls | 📝 | Territory | Block | DeploymentMarker | — |
+| — | Regulatory Downgrade | 📝 | Territory | Modify | InfluenceTier | — |
+| — | Regulatory Freeze | 📝 | Territory | Block | InfluenceTier | — |
+| — | Land Title | 📝 | Territory | Add | StructureBlock | Add |
+| — | Hostile Takeover | 📝 | Territory | Add | PresenceToken | Add |
+| — | Accord Transfer | 📝 | Economy | Redirect | AccordCard | Move |
 | — | Disinformation Campaign | 📝 | Standing | Shift | Public Standing | Move |
 | — | Standing Injunction | 📝 | Submission | Block | Political act | — |
 | — | Disprove | 📝 | Economy | Remove | Intel token | Remove |
 | — | Intel Extraction | 📝 | Economy | Redirect | Intel token | Move |
 | — | Modifier Raid | 📝 | Economy | Redirect | Modifier card | Move |
+| C40A | Reputational Strike | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — |
+| — | Accord Leverage | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — |
+| — | Overture | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — |
 | P01 | Open Operations | 📝 | Territory | Add | Presence token | Add |
 | P02 | Disputed Claim | 📝 | Territory | Remove | Presence token | Remove |
 | P03 | Public Commission | 📝 | Territory | Add | Structure block | Add |
@@ -397,7 +275,7 @@ React and Instant are timing sub-functions within the Modifier card type — the
 | P08 | Table an Accord | 📝 | Economy | Add | Accord agreement | Add |
 | P09 | Civic Works Mandate | 📝 | Territory | Add | Structure block | Add |
 | P10 | Infrastructure Bond | 📝 | Economy | Add | Accord agreement | Add |
-| P11 | Regulatory Override | 📝 | Submission | Modify | Presence token (placement cost) | — |
+| P11 | Regulatory Override | ⛔ BLOCKED | — | — | Cost modification is not a physical verb; "cost" is not a component attribute. Card targets action cost for all Add·PresenceChip operations — requires new component + ARBITER overhead. Needs redesign. See PM05 04-n99. | — |
 | P12 | Convene an Inquiry | 📝 | Information | Add | Intel token | Add |
 | P13 | Public Disclosure | 📝 | Information | Reveal | Action attribution | Reveal |
 | P14 | Community Rally | 📝 | Territory | Add | Presence token | Add |
@@ -605,4 +483,4 @@ The following card types are excluded from the Layer — Function — Subject ta
 
 ---
 
-*End of Artifact 04b — Action Taxonomy & Design Analysis v1.5*
+*End of Artifact 04b — Action Taxonomy & Design Analysis v1.6*

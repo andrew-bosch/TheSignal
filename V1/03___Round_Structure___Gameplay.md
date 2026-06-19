@@ -1620,3 +1620,102 @@ The Network uses their Emergency Response to Undermine The Guild's presence at P
 After Emergency Responses resolve, the ARBITER Player counts The Guild's Board Strength: 11 presence chips + 4 structure blocks = 15. Threshold required: 12. Still met.
 
 The ARBITER Player opens the Sealed Apex ability and pauses. ARBITER reads. The session ends.
+
+
+---
+
+## §22 Primitive Action Model — Taxonomy Reference
+
+*Relocated from Art 04b §3.3 (S97). Physical possibility space defined in Art 02 §13. This section is the legality source of truth for subject × verb × component combinations. Subject × verb × component legality table to be built as a focused design pass (PM05 03-n24).*
+
+### Methodology
+
+Session 47 formalized the physical action taxonomy into a relational model in `the_signal_db`. The model answers three questions simultaneously: **what** can be acted on, **when** it can be acted on, and **who** can act on it. Each axis is a separate dimension table; legal actions are the intersection.
+
+**Dimension tables:**
+
+| Table | Axis | Content |
+|-------|------|---------|
+| `component` | What | 76 registered physical components |
+| `verb` | How | 7 physical verbs (+ Invoke meta-verb) |
+| `quarter_phase` | When | 20 beats across the full Quarter structure |
+| `player_role` | Who | Faction / ARBITER |
+| `role_phase` | Role phase | Initiator / Executor / Fulfiller |
+| `trigger_type` | Why | 10 trigger classifications |
+
+**Junction tables** (`comp_verb_phase`, `comp_verb_role`) define valid combinations. A valid *primitive* is any row in both junction tables for the same component × verb pair — the intersection of what is possible by timing AND what is possible by role.
+
+**Primitives are derived** as: `comp_verb_phase × comp_verb_role (phase_id=1)`. Phase_id=1 (initiator) captures who calls for the action; the executor (phase_id=2) is tracked separately in `comp_verb_role` and is not collapsed into the primitive row. Result: **225 primitives** in `action` as of S97.
+
+### Trigger Taxonomy
+
+Every primitive in `action` carries a `trigger_type_id` classifying what causes the action to fire:
+
+| Type | Subtype | Definition |
+|------|---------|------------|
+| phase | open | Action fires at beat entry |
+| phase | during | Action is valid throughout a beat window |
+| phase | closed | Action fires at beat transition |
+| rule | card | Card text mandates the action |
+| rule | resolution | Quarter resolution procedure mandates the action |
+| player | introduce_card | Player submits or declares a card |
+| player | agreement | Bilateral consent (trade, Accord) |
+| player | verbal_statement | Player declaration with game effect |
+| state_condition | — | Compound board/game state check |
+| cascade | — | Prior action must have occurred (prereq_id) |
+
+**S97 trigger distribution (primitives only):**
+
+| Trigger | ARBITER | Faction |
+|---------|---------|---------|
+| phase.during | 59 | 16 |
+| rule.card | 91 | 3 |
+| rule.resolution | 4 | 7 |
+| player.introduce_card | 0 | 25 |
+| player.agreement | 0 | 5 |
+
+### Governing Principle
+
+The taxonomy defines **possibility space** — every valid combination of component × verb × beat × role that the physical game system can support. Art 03 defines **legal space** — the subset of those combinations that the rules actually permit and describe a procedure for.
+
+A primitive present in `action` with no corresponding Art 03 procedure is not a modeling error — it is an open design question. Every gap discovered through this analysis is routed to Art 03 for resolution: **permit** (write the procedure), **prohibit** (annotate as explicitly illegal), or **defer**. The two artifacts co-evolve iteratively.
+
+### Gap Analysis Views
+
+Two views provide the ongoing procedure coverage audit:
+
+**`v_unlegislated_primitives`** — All (beat, subject, verb, component) combinations valid in the taxonomy but absent from `action`. 74 rows as of S97 (post DB-39 seeding); organized by beat. Primary use: beat-by-beat procedure review.
+
+**`v_unlegislated_by_trigger`** — All (subject, verb, component) tuples with zero coverage in `action` under any trigger type or beat. 14 rows as of S97 (post DB-39 seeding): all ARBITER-initiated; zero Faction-initiated gaps remain. Primary use: legalization decision queue — for each row: permit / prohibit / defer.
+
+S97 — 19 Faction-initiated combinations decided:
+
+| Subject | Verb | Component | Decision | Basis |
+|---------|------|-----------|----------|-------|
+| Faction | Add | Intel token | ❌ | Prohibited — faction cannot place intel tokens directly; ARBITER-only delivery |
+| Faction | Add | Political act | ✅ | Art 03 §9.4.0 PA submission — DB seeding gap |
+| Faction | Add | Structure block | ✅ | Art 03 §13.7 board state update — DB seeding gap |
+| Faction | Conceal | Intel token | ✅ | Voluntary — faction may reveal (hold up/show) then re-place in private terminal |
+| Faction | Corrupt | Accord agreement | ✅ | Art 06 §9.10 — DB seeding gap |
+| Faction | Corrupt | Intel token | ✅ | Permitted — DB seeding gap |
+| Faction | Corrupt | Target Profile | ✅ | Permitted — DB seeding gap |
+| Faction | Invoke | Political act | ✅ | Art 03 §9.4.0 — Invoke = play card; DB seeding gap |
+| Faction | Move | Accord agreement | ❌ | Prohibited — no valid destination; withdrawal uses Remove |
+| Faction | Move | Presence chip | ✅ | Art 03 §7/§8 district movement — DB seeding gap |
+| Faction | Move | Structure block | ❌ | Prohibited — narrative: cannot relocate; must tear down then rebuild |
+| Faction | Remove | Accord agreement | ✅ | Art 06 §9 Debrief dissolution — DB seeding gap |
+| Faction | Remove | Intel token | ✅ | Permitted — faction may remove from terminal and hand to ARBITER for disposal |
+| Faction | Remove | Modifier card | ✅ | Art 03 §13 modifier exits queue after use — DB seeding gap |
+| Faction | Remove | Structure block | ✅ | Permitted — board state trigger: when faction influence = 0, structure block removed simultaneously |
+| Faction | Reveal | Accord agreement | ✅ | Permitted — when moved from Faction Terminal to Accord Placement Area; private → public |
+| Faction | Reveal | Classified directives | ✅ | Permitted as voluntary player action only — no card or game procedure may trigger this |
+| Faction | Reveal | Intel token | ✅ | Permitted — faction may show obverse/reverse to any player at any time |
+| Faction | Reveal | Modifier card | ✅ | Art 03 §9.4.1.2 played face-up — DB seeding gap |
+
+*Decision column: ✅ Permit / ❌ Prohibit. All 19 decided S97.*
+
+All planned views completed S47: `v_gap_executor_check`, `v_unassigned_triggers`, `v_duplicate_primitives`, `v_component_coverage`, `v_phase_subject_coverage`, `v_trigger_phase_coverage`. View `v_card_primitive_map` remains blocked — requires `card_ref` seed table.
+
+### Known Seeding Gaps
+
+All gaps resolved as of S97. Countermeasure card fully seeded (Placement/Countermeasures/Beat 2 beats, all three months). Standing marker ARBITER Move present on all resolution beats (Beat 3 M1/M2, Beat 4 M3). Duplicate row count reduced from 37 to 1 — residual tracked in DB; no action required at artifact level.

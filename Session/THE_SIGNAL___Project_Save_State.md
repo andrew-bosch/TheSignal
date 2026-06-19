@@ -30,6 +30,25 @@ Read this document top to bottom before doing any design work in a new session. 
 
 **Next:** Automated sweeps (04-n97 boost=None, 04-n98 on_accept/on_decline) → Art 04b refresh (04b-12 → 04b-19) → Card design by set.
 
+### Session 97 Summary (2026-06-18)
+
+**Focus:** agy airlock ingestion (5 component registrations); Art 02 §13 Physical Action Verb Coverage added; Art 03 §22 Primitive Action Model & Legalization Analysis added; Art 04b §3 taxonomy relocation; legalization pass (19 Faction-initiated combinations).
+
+**Key work:**
+- agy airlock ingested: DB:114–118 (5 component registrations) → Art 02 §10.1 stubs + card_source fields updated (02-n20 ✅).
+- S97 legalization pass: 19 Faction-initiated action combinations analyzed; 16 permit / 3 prohibit decisions locked in legalization table (Art 03 §22.2); triggers identified; all decisions grounded in narrative policy per Design Pillar 6.
+- Art 02 §13 Physical Action Verb Coverage added (§13.1 verb definitions + §13.2 48-row Component × Verb Matrix; relocated from Art 04b §3.1–§3.2). Art 02 is the component source of truth for verb coverage; DB view `v_comp_verb_matrix` is the analytical aggregate. PM05 02-n26 added (Priority 1 — re-sign-off required).
+- Art 03 §22 Primitive Action Model & Legalization Analysis added (methodology, trigger taxonomy, gap analysis views, 19-decision S97 legalization table; relocated from Art 04b §3.3). Art 03 is the legality source of truth for subject × verb × component combinations. PM05 03-n24 added (Priority 1 — re-sign-off required).
+- Art 04b §3 Physical Action Taxonomy relocated (§3.1+§3.2 → Art 02 §13; §3.3 → Art 03 §22; §3 is now pointer section only). 04b-12 ✅ / 04b-13 ✅ / 04b-14 ✅ / 04b-15 ✅. 04b-16/17/18/19 queued — gate: Art 02 §13 corrections (02-n26).
+- ref_taxonomy.md updated (verb list sync + v_comp_verb_matrix view pointer added).
+- SESSION_BRIEF updated S97 (all three architecture decision items in Tier 2 Step 2).
+
+**Decisions locked:** None (all decisions during legalization pass documented in Art 03 §22.2 table; no L-decision created as design rationale is case-by-case).
+
+**Artifacts updated:** Art 02 (§13 Physical Action Verb Coverage added, v2.1 status updated to 🔄 Needs Re-Sign-Off, PM05 02-n26 Priority 1); Art 03 (§22 Primitive Action Model & Legalization Analysis added, v4.4 status updated to 🔄 Needs Re-Sign-Off, PM05 03-n24 Priority 1); Art 04b (v1.6 Pending Re-sign-off, §3 relocated/pointer, 04b-12 through 04b-15 marked ✅); PM03 (Art 02, Art 03, Art 04b rows updated); PM05 (02-n26, 03-n24, 04b-16/17/18/19 added); ref_taxonomy.md (verb list + view pointer).
+
+**Next:** Art 02 §13 corrections + schema integration (02-n26 Priority 1) → Art 03 §22 legalization table finalization → Art 04b remaining refresh (04b-16 through 04b-19).
+
 ### Session 95 Summary (2026-06-17)
 
 **04-n70 fix pass ✅:** All 8 categories from `Whiteboard/04n70_findings_S95.md` addressed in Art 04. Schema violations: C39/C23 `faction=None→All`; C36/C42/C38/C41 `affinity=None` (faction names are not valid ConditionalExpr values); P05 `threshold=35` (was None); P13 threshold dynamic expression; C16 `resolution=Automatic` (Prediction not in enum); EntryExitControls `persistence_effect` added (condition was correct — inverted finding was wrong). Missing persistence triples: 9 cards (Ghost stubs: Station/Full Take/SCIF/Flip/Signals Analysis; C37 Sacrifice; LandTitle; HostileTakeover; AccordTransfer). Spec/checklist: C09 dup removed; C19 checklist corrected; C41 arbiter_note faction (Directorate→Syndicate); Directorate RegulatoryDowngrade/Freeze nav fix (moved from covert→PA index). Notation: C37 `public_standing→standing`; Overture `perspectives={}`. Structural: C41/P15 ElectPlayer effects moved from comments to structured `on_accept`/`on_decline`. P16 DividendMarker `world_condition()` formalized in success field.

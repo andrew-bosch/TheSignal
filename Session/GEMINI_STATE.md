@@ -1,6 +1,6 @@
-# GEMINI WORKING STATE: SESSION 96
+# GEMINI WORKING STATE: SESSION 97
 
-## 1. Operating and Search Scope Constraints (Session 96 Lock)
+## 1. Operating and Search Scope Constraints (Session 97 Lock)
 To conserve token context and ensure focus on database validation, agy operates under these strict rules:
 1.  **Exclusions:** Ignore and do not scan drafts/stubs (05 and beyond) or the PM suite (`PM01`-`PM05`).
 2.  **Narrow Search Targets:** Target queries to `README.md`, `00b` (Data Architecture), `03` (Round Structure), `03a` (Engine Spec), and `04b` (Action Matrix) first.
@@ -33,14 +33,24 @@ To conserve token context and ensure focus on database validation, agy operates 
 - Role: Cloud Consultant (Validator/Research)
 - Environment: Antigravity CLI (migrated)
 
-## 3. Session 96 Tasks Status
-- **Grant Deed Component Registration (PM05 04-n26):** Completed.
-  - Successfully registered `Grant Deed` in `component` table as ID `113`.
+## 3. Session 97 Tasks Status
+- **DB-39 Seeding (S97 Legalization Pass):** Completed.
+  - Seeded 39 action primitive rows in the `action` table for 16 newly permitted Faction-initiated combinations.
+  - Verified view compile success (all 28 OK). Unlegislated primitives count dropped from 113 to 74 (0 Faction-initiated gaps remain).
+  - Wrote completion report and punch list instructions to `Claude_context.md`.
+- **5 Init-Only Deck Components Registration (PM05 02-n20):** Completed.
+  - Registered the 5 passive decks in the `component`, `component_dim`, and `component_type` tables.
+  - Assigned IDs: Covert Operation Card Set (114), Political Act Card Set (115), Operative Pool (116), Apex Ability Pool (117), Classified Directives Pool (118).
+  - Wrote assigned IDs and Grant Deed (change Syndicate -> Faction) instructions to `Claude_context.md` for Claude Code.
+- **Art 04b §3 Review & Update Specification (PM05 04b-13 / 04b-14):** Completed.
+  - Queried database metrics (76 total components, 225 primitives, updated unlegislated view counts).
+  - Generated the full 48-row component × verb matrix from the `v_comp_verb_matrix` view.
+  - Wrote the complete Section 3 replacement specification to `Claude_context.md` for Claude Code.
+- **Grant Deed Component Registration (PM05 04-n26):** Completed (Session 96).
+  - Registered `Grant Deed` in `component` table as ID `113`.
   - Mapped child relationship under `parent_component_id = 111` ("Card").
-  - Seeded descriptions in `component_dim` ("ARBITER-issued title card recording Faction's capital claim...") and classifications in `component_type` ("card").
-  - Seeded verb/phase coverages and role assignments in `comp_verb_phase` and `comp_verb_role`.
-  - Seeded 12 action primitives in `action` and 4 target links in `subject_target`.
-  - Checked `component_faction` and verified there are zero rows mapping component 113 to any faction (fully compliant with the neutral `faction_keyed = No` specification).
+  - Seeded descriptions in `component_dim`, classifications in `component_type`, verb/phase coverages and role assignments.
+  - Checked `component_faction` and verified there are zero rows (faction-neutral).
 - **Tooling Fixes:**
   - Patched `Database/register_component.py` to remove the virtual generated `transformable` column from generated `INSERT INTO component` queries, preventing strict-mode syntax errors.
   - Corrected component target CamelCase for `"Arbiter Tableau"` and resolved duplicate role assignments under `comp_verb_role`.

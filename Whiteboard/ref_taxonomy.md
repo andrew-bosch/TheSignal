@@ -1,9 +1,11 @@
 # Reference — Action Taxonomy (Art 04b)
 *Load when: assigning Layer/Function/Subject to new cards, taxonomy disputes, 04b audit work.*
 
+**S97 Architecture:** Physical verb definitions + Component × Verb Matrix → **Art 02 §13** (component source of truth). Primitive Action Model + Legalization Analysis → **Art 03 §22** (legality source of truth). Art 04b §3 is now a pointer only.
+
 ---
 
-## 7 Physical Verb Primitives (§3.1)
+## 7 Physical Verb Primitives (Art 02 §13.1)
 
 | Verb | DB Primitive | Definition |
 |------|-------------|------------|

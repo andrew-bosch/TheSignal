@@ -1044,7 +1044,7 @@ Individual action and event cards — the operational content of card-based game
 | `max_placement_ref` | Faction Hand (DB:94) |
 | `movement_path` | Init-only deck (external) → Faction Hand (DB:94) : one selected at initialization; remaining variants → returned to storage; Faction Hand (DB:94) → public disclosure : at session end |
 | `back_design` | Faction-keyed and operative-keyed |
-| `card_source` | Init-only deck (external to game area; companion deck component pending — PM05 02-n20) |
+| `card_source` | Classified Directives Pool (DB:118) — init only; external to game area |
 
 ---
 
@@ -1069,9 +1069,9 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94); Faction Resolution Grid (DB:88) when played |
 | `max_placement_count` | 1 per faction player |
 | `max_placement_ref` | Faction Hand (DB:94) |
-| `movement_path` | Init-only deck (external) → Faction Hand (DB:94) : selected at init; *Resolution asset mode:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played directly; Faction Resolution Grid → Faction Hand (DB:94) : returned after resolution; *Covert act mode:* Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Arbiter Tableau (DB:30) : ARBITER opens case and packet; Arbiter Tableau → Faction Resolution Grid (DB:88) : placed in resolution grid; Faction Resolution Grid → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Faction Hand (DB:94) : returned after resolution |
+| `movement_path` | Operative Pool (DB:116) → Faction Hand (DB:94) : selected at init; *Resolution asset mode:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played directly; Faction Resolution Grid → Faction Hand (DB:94) : returned after resolution; *Covert act mode:* Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Arbiter Tableau (DB:30) : ARBITER opens case and packet; Arbiter Tableau → Faction Resolution Grid (DB:88) : placed in resolution grid; Faction Resolution Grid → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Faction Hand (DB:94) : returned after resolution |
 | `back_design` | Faction-keyed and operative-keyed |
-| `card_source` | Init-only deck (companion deck — TBD, PM05 02-n20) |
+| `card_source` | Operative Pool (DB:116) — init only |
 
 ---
 
@@ -1096,9 +1096,9 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94) |
 | `max_placement_count` | 1 |
 | `max_placement_ref` | Faction Hand (DB:94) |
-| `movement_path` | Init-only deck (external) → Faction Hand (DB:94) : provided at initialization (sealed); Faction Hand (DB:94) : held sealed until DB:15 4th action trigger; → public presentation : opened and revealed per Art 03 §14 on trigger |
+| `movement_path` | Apex Ability Pool (DB:117) → Faction Hand (DB:94) : provided at initialization (sealed); Faction Hand (DB:94) : held sealed until DB:15 4th action trigger; → public presentation : opened and revealed per Art 03 §14 on trigger |
 | `back_design` | Faction-keyed |
-| `card_source` | Init-only deck (companion deck — TBD, PM05 02-n20) |
+| `card_source` | Apex Ability Pool (DB:117) — init only |
 
 ---
 
@@ -1152,9 +1152,9 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94); Dispatch Packet (DB:108); ARBITER Covert Resolution Grid (DB:105) |
 | `max_placement_count` | 6 (in hand) |
 | `max_placement_ref` | Faction Hand (DB:94) |
-| `movement_path` | CO init deck (external) → Faction Hand (DB:94) : selected subset at init; forms Covert operation deck (DB:92); Covert operation deck (DB:92) → Faction Hand (DB:94) : drawn to hand; Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Covert Resolution Grid (DB:105) : ARBITER opens case and packet, places card in grid; ARBITER Covert Resolution Grid (DB:105) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Faction Hand (DB:94) → Covert operation discard (DB:93) : post-resolution |
+| `movement_path` | Covert Operation Card Set (DB:114) → Faction Hand (DB:94) : selected subset at init; forms Covert operation deck (DB:92); Covert operation deck (DB:92) → Faction Hand (DB:94) : drawn to hand; Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Covert Resolution Grid (DB:105) : ARBITER opens case and packet, places card in grid; ARBITER Covert Resolution Grid (DB:105) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Faction Hand (DB:94) → Covert operation discard (DB:93) : post-resolution |
 | `back_design` | Faction-keyed |
-| `card_source` | CO init deck (external) → Covert operation deck (DB:92) — subset selected at init (PM05 02-n20) |
+| `card_source` | Covert Operation Card Set (DB:114) → Covert operation deck (DB:92) — subset selected at init |
 
 ---
 
@@ -1179,9 +1179,9 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94); Faction Resolution Grid (DB:88) |
 | `max_placement_count` | 4 in hand (3 drawn + 1 Floor Act — returns to hand per card spec) |
 | `max_placement_ref` | Faction Hand (DB:94) |
-| `movement_path` | PA init deck (external) → Faction Hand (DB:94) : selected subset at init; forms Political act deck (DB:90); Political act deck (DB:90) → Faction Hand (DB:94) : drawn to hand; Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : public declaration (face-up); Faction Resolution Grid (DB:88) → Political act discard (DB:91) : after resolution |
+| `movement_path` | Political Act Card Set (DB:115) → Faction Hand (DB:94) : selected subset at init; forms Political act deck (DB:90); Political act deck (DB:90) → Faction Hand (DB:94) : drawn to hand; Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : public declaration (face-up); Faction Resolution Grid (DB:88) → Political act discard (DB:91) : after resolution |
 | `back_design` | Faction-keyed |
-| `card_source` | PA init deck (external) → Political act deck (DB:90) — subset selected at init (PM05 02-n20) |
+| `card_source` | Political Act Card Set (DB:115) → Political act deck (DB:90) — subset selected at init |
 
 ---
 
@@ -1387,7 +1387,7 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 ---
 
-### Covert operation init deck  (TBD — pending registration)
+### Covert Operation Card Set  (DB: 114)
 
 **Design Function:** Full faction-specific set of Covert Operation cards from which the faction player selects their in-play deck (DB:92) at initialization.
 
@@ -1398,8 +1398,8 @@ Card containers organized by card type: source decks, discard piles, and player 
 **Metadata:**
 | Field | Value |
 |-------|-------|
-| `db_id` | TBD (pending registration — PM05 02-n20) |
-| `component_name` | TBD |
+| `db_id` | 114 |
+| `component_name` | Covert Operation Card Set |
 | `physical_form` | Card deck; faction identity marked on back |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private (init only) |
@@ -1470,7 +1470,7 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 ---
 
-### Political act init deck  (TBD — pending registration)
+### Political Act Card Set  (DB: 115)
 
 **Design Function:** Full faction-specific set of Political Act cards from which the faction player selects their in-play deck (DB:90) at initialization.
 
@@ -1481,8 +1481,8 @@ Card containers organized by card type: source decks, discard piles, and player 
 **Metadata:**
 | Field | Value |
 |-------|-------|
-| `db_id` | TBD (pending registration — PM05 02-n20) |
-| `component_name` | TBD |
+| `db_id` | 115 |
+| `component_name` | Political Act Card Set |
 | `physical_form` | Card deck; faction identity marked on back |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private (init only) |
@@ -1609,9 +1609,9 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 **Init-Only Decks (Variant Pools)**
 
-Init-only decks that live external to the game area. Used at initialization only — faction player selects or draws one card from the deck; remaining variants returned to storage. Component names and DB ids pending registration (PM05 02-n20).
+Init-only decks that live external to the game area. Used at initialization only — faction player selects or draws one card from the deck; remaining variants returned to storage.
 
-### Operative card init deck  (TBD — pending registration)
+### Operative Pool  (DB: 116)
 
 **Design Function:** Full set of Operative card variants for a faction. Faction player selects or draws one at initialization to assign their operative for the arc.
 
@@ -1622,8 +1622,8 @@ Init-only decks that live external to the game area. Used at initialization only
 **Metadata:**
 | Field | Value |
 |-------|-------|
-| `db_id` | TBD (pending registration — PM05 02-n20) |
-| `component_name` | TBD |
+| `db_id` | 116 |
+| `component_name` | Operative Pool |
 | `physical_form` | TBD — Art 11 |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private (init only) |
@@ -1638,7 +1638,7 @@ Init-only decks that live external to the game area. Used at initialization only
 
 ---
 
-### Classified directives init deck  (TBD — pending registration)
+### Classified Directives Pool  (DB: 118)
 
 **Design Function:** Full set of Classified Directive variants for a faction, keyed by operative. Faction player selects or draws one at initialization matched to their chosen operative.
 
@@ -1649,8 +1649,8 @@ Init-only decks that live external to the game area. Used at initialization only
 **Metadata:**
 | Field | Value |
 |-------|-------|
-| `db_id` | TBD (pending registration — PM05 02-n20) |
-| `component_name` | TBD |
+| `db_id` | 118 |
+| `component_name` | Classified Directives Pool |
 | `physical_form` | TBD — Art 11 |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private (init only) |
@@ -1665,7 +1665,7 @@ Init-only decks that live external to the game area. Used at initialization only
 
 ---
 
-### Sealed Apex init deck  (TBD — pending registration)
+### Apex Ability Pool  (DB: 117)
 
 **Design Function:** Full set of Sealed Apex ability variants for a faction. Faction player selects or draws one at initialization.
 
@@ -1676,8 +1676,8 @@ Init-only decks that live external to the game area. Used at initialization only
 **Metadata:**
 | Field | Value |
 |-------|-------|
-| `db_id` | TBD (pending registration — PM05 02-n20) |
-| `component_name` | TBD |
+| `db_id` | 117 |
+| `component_name` | Apex Ability Pool |
 | `physical_form` | TBD — Art 11 |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private (init only) |
@@ -2243,3 +2243,79 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 ---
 
 *Component quantity and aesthetics confirmed in Art 11 — Visual Design System. Component stubs S89 — design passes tracked in PM05 02-n01 through 02-n04.*
+
+
+---
+
+## 13. Physical Action Verb Coverage
+
+*Relocated from Art 04b §3.1–3.2 (S97). This section is the component source of truth for physical action verb coverage. Pending integration into individual component schema entries as `applicable_verbs` field (PM05 02-n26). Art 07 and Art 08 components extend the matrix — update DB first, regenerate from view `v_comp_verb_matrix`.*
+
+### 13.1 Physical Action Verbs
+
+| Verb | Primitive | Definition |
+|------|-----------|------------|
+| **Add** | Place | A component enters active play from supply or off-board |
+| **Remove** | Remove | A component exits active play to supply or off-board |
+| **Move** | Remove + Place | A component relocates from one on-board location to another |
+| **Reveal** | Transform | A component's face or contents become visible to named recipients |
+| **Conceal** | Transform | A component is placed or returned face-down or closed |
+| **Flip** | Transform | A component's physical orientation is changed — not an information state change |
+| **Corrupt** | Transform | A physically written or recorded value on a component is altered |
+
+*Every game action is a sequence of one or more of these primitives: Remove → Transform? → Place. The human hand is the implicit intermediary — not modeled.*
+
+### 13.2 Component × Verb Matrix
+
+| Component | Add | Remove | Move | Reveal | Conceal | Flip | Corrupt |
+|-----------|-----|--------|------|--------|---------|------|---------|
+| Accord agreement | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| Activity marker | ✓ | ✓ | ✓ | — | — | — | — |
+| ARBITER Dominance Marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Boost Marker | ✓ | ✓ | — | — | — | — | — |
+| Broadcast Card | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Broadcast Deck | ✓ | ✓ | — | — | — | — | — |
+| Broadcast Effect Deck | ✓ | ✓ | — | — | — | — | — |
+| Classified directives | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Countermeasure card | ✓ | ✓ | — | ✓ | ✓ | — | — |
+| Covert operation | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Covert operation deck | ✓ | ✓ | — | — | — | — | — |
+| Covert operation discard | ✓ | ✓ | — | — | — | — | — |
+| DebriefActionCard | ✓ | ✓ | — | ✓ | — | — | — |
+| Deployment marker | ✓ | ✓ | ✓ | — | — | ✓ | — |
+| Dispatch case | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Dispatch Packet | ✓ | ✓ | — | — | — | — | — |
+| Dispatch token | ✓ | ✓ | ✓ | — | — | — | — |
+| Dominant marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Emergency Response card | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Escalation marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Established marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Faction hand | ✓ | ✓ | — | ✓ | — | — | — |
+| Faction modifier deck | ✓ | ✓ | — | — | — | — | — |
+| Faction order marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Grant Deed | ✓ | ✓ | ✓ | ✓ | — | — | ✓ |
+| Intel Delivery Slip | ✓ | ✓ | ✓ | ✓ | — | — | ✓ |
+| Intel token | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| Modifier card | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Modifier token | ✓ | ✓ | ✓ | — | — | — | — |
+| Native resource | ✓ | ✓ | ✓ | — | — | — | — |
+| Notification Slip | ✓ | ✓ | ✓ | ✓ | — | — | — |
+| Operative card | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Pointer marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Political act | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Political act deck | ✓ | ✓ | — | — | — | — | — |
+| Political act discard | ✓ | ✓ | — | — | — | — | — |
+| Portrait marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Presence chip | ✓ | ✓ | ✓ | — | — | — | — |
+| Ring 1 modifier deck | ✓ | ✓ | — | — | — | — | — |
+| Ring 2 modifier deck | ✓ | ✓ | — | — | — | — | — |
+| Ring 3 modifier deck | ✓ | ✓ | — | — | — | — | — |
+| Sealed Apex ability | ✓ | ✓ | — | ✓ | ✓ | — | — |
+| Standing marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Status marker | ✓ | ✓ | — | — | — | ✓ | — |
+| Structure block | ✓ | ✓ | ✓ | — | — | — | — |
+| Target Profile | ✓ | ✓ | ✓ | ✓ | — | — | ✓ |
+| Tension marker | ✓ | ✓ | ✓ | — | — | — | — |
+| Visibility Marker | ✓ | ✓ | — | — | — | — | — |
+
+*Source: `the_signal_db.v_comp_verb_matrix` (S97 regeneration) with design-level corrections applied S97 (Faction hand · Reveal; DebriefActionCard · Reveal; Grant Deed · Reveal; Intel Delivery Slip · Reveal; Notification Slip · Reveal; Target Profile · Reveal). DB seeding for these additions queued (DB-40). Matrix reflects physical possibility space — legal constraints defined in Art 03 §22. Pending corrections and full schema integration: PM05 02-n26.*

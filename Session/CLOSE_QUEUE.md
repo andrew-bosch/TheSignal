@@ -1,81 +1,29 @@
-## CLOSE QUEUE — Session 96
+## CLOSE QUEUE — Session 97
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | 02 | Components | 2.1 | ✅ Signed Off — S96 (L212). S96: Grant Deed (DB:113) added §9; §4.1 movement_path field definition clarified (board event trigger, not timing); 13 movement_path timing violations corrected §§5–12. Open PM05: 02-n07, 02-n17, 02-n20, 02-n21, 02-n22. | S88 merge from 02a v1.6 + 02b v1.5.
+NEW: | 02 | Components | 2.1 | 🔄 Needs Re-Sign-Off — S97: §13 Physical Action Verb Coverage added (§13.1 verb definitions + §13.2 48-row Component × Verb Matrix; relocated from Art 04b §3.1–3.2). Art 02 is the component source of truth for verb coverage; DB view `v_comp_verb_matrix` is the analytical aggregate. Re-sign-off required (PM05 02-n26 Priority 1). Open PM05: 02-n07, 02-n17, 02-n21, 02-n22, 02-n25, 02-n26. Prior: S96 (L212) — Grant Deed (DB:113) added §9; movement_path corrections. | S88 merge from 02a v1.6 + 02b v1.5.
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | 03 | while session(true): Round Structure | 4.4 | ✅ Signed Off S88 (L207) |
+NEW: | 03 | while session(true): Round Structure | 4.4 | 🔄 Needs Re-Sign-Off — S97: §22 Primitive Action Model & Legalization Analysis added (methodology, trigger taxonomy, gap analysis views, 19-decision S97 legalization table; relocated from Art 04b §3.3). Art 03 is the legality source of truth for subject × verb × component combinations. Re-sign-off required (PM05 03-n24 Priority 1). Prior: S88 (L207). |
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
+OLD: | 04b | Action Taxonomy & Design Analysis | 1.6 | 🔄 Pending Re-sign-off — S64 | Companion to 04.
+NEW: | 04b | Action Taxonomy & Design Analysis | 1.6 | 🔄 Pending Re-sign-off v1.7 — S97: §3 Physical Action Taxonomy relocated (§3.1+§3.2 → Art 02 §13; §3.3 → Art 03 §22; §3 is now pointer section). 04b-12 ✅ S97 · 04b-13 ✅ S97 · 04b-14 ✅ S97 · 04b-15 ✅ S97. 04b-16/17/18/19 queued — gate: Art 02 §13 corrections (02-n26). | Companion to 04.
+
+### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: **Last Updated:** 2026-06-17 — Session 95 Close
-NEW: **Last Updated:** 2026-06-18 — Session 96 Close
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: ### Session 95 Summary (2026-06-17)
-NEW: ### Session 96 Summary (2026-06-18)
-
-**Focus:** Art 02 final entries and v2.1 sign-off; PM05 04b pre-card-design refresh sequence.
-
-**Key work:**
-- Ingested agy S96 report — Grant Deed (DB:113) registered. Art 02 §9 entry written and corrected: faction-agnostic (not Syndicate-specific), dry-erase preferred, mutable `owner` field, tradeable between factions.
-- Art 02 §3 rubric review: 3 scope violations corrected in Grant Deed entry (GR mechanics removed, PM05 ref removed, `visibility` bare enum, `quantity` labeled). Subheader cleaned.
-- Art 02 §4.1 `movement_path` field definition clarified: trigger slot = board event or player action (NOT beat numbers or phase names); timing belongs in Art 03.
-- Full movement_path timing sweep: 13 violations corrected across all components in §§5–12.
-- PM05 04-n99 added: Grant Deed Art 04 React card spec (schema questions A–D gated on 04-n27).
-- PM05 04-n26 Grant Deed: ✅ S96 (Art 02 entry + DB:113).
-- PM05 04b-12 through 04b-19 added: full Art 04b refresh sequence (component registration → §§3–8 → re-sign-off) as prerequisite to resuming card design.
-- SESSION_BRIEF Tier 2 updated: Step 1 (automated sweeps 04-n97/98) → Step 2 (04b-12 through 04b-19 refresh) → Step 3 (card design by set).
-- Art 03 §18 confirmed sufficient procedural authority for React trigger window; no new GR needed in 00a now (04-n27 flagged for future eval when §18 design is complete).
-
-**Decisions locked:** L212 — Art 02 v2.1 signed off.
-
-**Artifacts updated:** Art 02 (v2.1, L212); PM02 (L212 added); PM03 (Art 02 row updated); PM05 (04-n99, 04b-12 through 04b-19 added; 04-n26 Grant Deed ✅).
-
-**Next:** Automated sweeps (04-n97 boost=None, 04-n98 on_accept/on_decline) → Art 04b refresh (04b-12 → 04b-19) → Card design by set.
-
-### Session 95 Summary (2026-06-17)
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/README.md
-OLD: | 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.6 | ✅ Signed off — S74 (L194) |
-NEW: | 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.7 | ✅ Signed off — S93 (L211) |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/README.md
-OLD: | 02 | [Components](V1/02___Components.md) | 1.1 | 🔄 In progress — S90 restructuring complete; sign-off pass (02-n02) next |
-NEW: | 02 | [Components](V1/02___Components.md) | 2.1 | ✅ Signed off — S96 (L212) |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/README.md
-OLD: | 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.36 | 🔄 In progress — full card design pass complete (C01–C42, P01–P18); set-level sign-off passes in progress |
-NEW: | 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.37 | 🔄 In progress — full card design pass complete (C01–C42, P01–P18); set-level sign-off passes in progress |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Whiteboard/ref_card_types.md
-OLD: - **React:** fires automatically when a named publicly-observable condition is met
-NEW: - **React:** fires automatically when a named publicly-observable board state change occurs. Procedural authority: Art 03 §18. First registered example: Grant Deed (DB:113). Note: §6.3 CardType enum has no "React" value yet — schema question open in 04-n99.
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/SESSION_BRIEF.md
-OLD: - Schema gates: 04-n33 ✅ S94 · 04-n32 ✅ S95 · 04-n70 ✅ S95 (findings in `Whiteboard/04n70_findings_S95.md`; fix pass ✅ S95)
-NEW: - Schema gates: 04-n33 ✅ S94 · 04-n32 ✅ S95 · 04-n70 ✅ S95
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/SESSION_BRIEF.md
-OLD: | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). 04-63 flagged (stale C27 §4.6 entry). |
-NEW: | 04b — Action Taxonomy | 1.6 | ✅ Signed Off — S48 — pending re-sign-off v1.7. S64: §5.2 +5 rows (Disinformation Campaign, Standing Injunction, Disprove, Intel Extraction, Modifier Raid). Refresh sequence queued S96: 04b-12 through 04b-19 (component registration → §§3–8 → re-sign-off v1.7). |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/Session/SESSION_BRIEF.md
-OLD: - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)
-NEW: - **Art 04b v1.7** — ⚠ Pending re-sign-off — 04b-12 through 04b-19 queued S96 (gate: 04b-12 through 04b-18 complete)
-- **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)
-
-### DELETE
-FILE: /home/abosch/Projects/TheSignal/Whiteboard/task.md
-
-### DELETE
-FILE: /home/abosch/Projects/TheSignal/Whiteboard/04n70_findings_S95.md
+AFTER: | S96 |
+CONTENT:
+| S97 | 2026-06-18 | agy airlock ingested (5 component registrations: DB:114–118); 02-n20 ✅; Art 02 §10.1 stubs + card_source fields updated. S97 legalization pass: 19 Faction-initiated combinations decided (16 permit / 3 prohibit). 04b-12 ✅ / 04b-13 ✅ / 04b-14 ✅ / 04b-15 ✅. DB-39 ✅ (39 rows seeded post-legalization). Architecture decision: Art 04b §3 Physical Action Taxonomy relocated — §3.1+§3.2 → Art 02 §13 (component source of truth); §3.3 → Art 03 §22 (legality source of truth); §3 now pointer only. PM05 02-n26 + 03-n24 added (Priority 1 — both require re-sign-off). PM02 architecture entry added. ref_taxonomy.md updated. SESSION_BRIEF updated S97. Next: Art 02 §13 corrections + schema integration (02-n26). |
 
 ### COMMIT
-source ~/Projects/credentials.env && git add -A && git commit -m "session 96 — Art 02 v2.1 signed off (L212); Grant Deed (DB:113) added; movement_path field definition clarified; 13 timing violations corrected; PM05 04b refresh sequence queued" && git push
+source ~/Projects/credentials.env && git add -A && git commit -m "session 97 — action taxonomy architecture: §3 → Art 02 §13 / Art 03 §22; 04b-12–15 ✅; legalization pass (19 combos); 02-n26 + 03-n24 Priority 1" && git push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
@@ -84,7 +32,7 @@ source ~/Projects/credentials.env && git add -A && git commit -m "session 96 —
 FILE: /home/abosch/Projects/TheSignal/Claude_context.md
 CONTENT:
 # THE SIGNAL — agy Outbound Consulting Report
-*Pruned after Session 96. Git history is the archive. Active tasks queued via GEMINI_CONTEXT.md.*
+*Pruned after Session 97. Git history is the archive. Active tasks queued via GEMINI_CONTEXT.md.*
 
 ### DELETE
 FILE: /home/abosch/Projects/TheSignal/Session/CLOSE_QUEUE.md

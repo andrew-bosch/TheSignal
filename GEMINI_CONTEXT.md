@@ -815,3 +815,24 @@ The stub at `~/Projects/TheSignal/Database/schema_reference.md` will be populate
 **Open PM05 items gating Art 02 full closure:** 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
 
 
+
+---
+
+## Session 96 Close — 2026-06-18
+
+### 02-n20 — Register 5 Init-Only Deck Components (PM05 02-n20)
+
+**Art 02 v2.1 signed off S96 (L212).** Art 02 §10.1 has 5 stub entries with no DB IDs — these are the source decks and variant pools from which faction in-play decks are drawn at initialization. Component names confirmed by Andy S96.
+
+**Task:** Register the following 5 components in the `component` table. For each: set `component_type = 'deck'`, `actionable = 0`, `receivable = 0`. Do not seed verb/phase mappings — these are passive containers, not action targets. Report the assigned IDs in `Claude_context.md`.
+
+| Name | Purpose | Notes |
+|------|---------|-------|
+| `Covert Operation Card Set` | Full faction-specific CO card pool; player selects subset at init to form DB:92 (Covert Operation Deck) | Faction-specific — one per faction |
+| `Political Act Card Set` | Full faction-specific PA card pool; player selects subset at init to form DB:90 (Political Act Deck) | Faction-specific — one per faction |
+| `Operative Pool` | Variant pool for DB:15 (Operative); player selects one matched to their operative at init | Shared or faction-specific TBD |
+| `Apex Ability Pool` | Variant pool for DB:99 (Sealed Apex); player draws one at init | ARBITER-managed |
+| `Classified Directives Pool` | Variant pool for DB:17 (Classified Directives); player draws one at init | Faction-specific |
+**After registering:** Write the 5 assigned IDs to `Claude_context.md` — Claude Code will update Art 02 §10.1 stub entries with the confirmed IDs next session.
+
+**Reference:** Art 02 §10.1 (`~/Projects/TheSignal/V1/02___Components.md`) — Card Containers section; the 5 stubs currently read "DB: TBD — pending 02-n20". PM05 02-n20 for full context.
