@@ -162,6 +162,7 @@ Authoritative definitions for all in-world terms, components, and game systems u
 | Chorus Portrait | Portrait score | ARBITER's private assessment of faction alignment with the Chorus Question. Determines initiative and feeds the Chronicle. | Art 02 §10 |
 | Intel Token | Proof token / intel note | Physical token representing confirmed intelligence one faction holds about another. Held privately; disclosed at faction's discretion. | Art 02 §12 |
 | Presence chip | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. | Art 02 §6 |
+| Integration | Arc endpoint / Quarter 8 threshold | The threshold the 8-Quarter arc is structured around: the moment the Chorus protocol designates as significant, at which the factions' aggregate response may reach the condition required to open the return channel. Humans are aware of the threshold — the deliberation was built around it. What Integration actually entails is not documented in the protocol. | Art 00 §14.10 |
 | Operational marker | Claim marker | Temporary deployment presence; counts as a presence chip during the Quarter. | Art 01 §1 |
 | Covert operation | Private action | Actions submitted face-down to the dispatch case. | Art 00 §14 |
 | Public act | Public action | Actions declared openly at the table. | Art 00 §14 |

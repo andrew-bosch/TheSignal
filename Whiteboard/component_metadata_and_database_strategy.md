@@ -183,8 +183,21 @@ These tables are waiting on downstream design documents and should remain as des
 
 ---
 
-## 3. Next Steps & Recommendations
+## 3. Decisions Made (S98) — Andy + Claude
 
-1. **Confirm Metadata Option:** Choose Option A (Hybrid Wide Table) or Option B (Aspect Tables) for `component_metadata`.
-2. **Write Parser and Seeder:** Write a Python parser similar to `register_component.py` that reads the markdown files in `V1/02___Components.md`, extracts the `Metadata:` block from each component, and writes it directly to the new tables.
-3. **Execute Phase 1 DDL:** Run the migrations for the 4 static lookup tables (`public_standing_tier`, etc.) to complete the static rules schema.
+**Metadata architecture: Option A confirmed (L130).** `component_metadata` as a single hybrid wide table — no junction tables.
+
+**`component_movement_path` dropped.** Movement path entries in Art 02 carry procedural context from Art 03 — this belongs in artifact prose, not in the DB. The DB does not model procedures.
+
+**`component_placement_surface` dropped.** `subject_target` is already the authoritative record of all valid placement/movement targets for each component. 34 subject_target rows were inserted S98 (see DB-41, DB-42 in PM05). No redundant junction table needed.
+
+**`trigger` is a reserved word in MariaDB.** Avoid it in all column and table names in any DDL.
+
+**DB state after S98:** 77 components registered, max id=119 (d10 added S98), AUTO_INCREMENT=120. Flag corrections applied to ~20 components. Schema reference updated.
+
+## 4. Next Steps
+
+1. **DB-42:** Create `component_metadata` DDL (Option A, no junction tables) + Python seeder from Art 02 §4.1 metadata blocks. Gate: 02-n26 re-sign-off.
+2. **DB-43:** Execute Phase 1 static lookup table DDL + seeding (`public_standing_tier`, `difficulty_tier`, `resolution_outcome`, `influence_level`). No gate — design-ready now.
+3. **DB-41:** Seed `comp_verb_phase` and `comp_verb_role` for S98 verb additions (d10, Modifier token Flip, container Reveal/Conceal, Threshold Slider Corrupt). Gate: 02-n26 re-sign-off.
+4. **DB-37 (revised):** After DB-42 seeded, create derived views from `component_metadata` + `subject_target`. Drop views originally scoped to movement_path data.

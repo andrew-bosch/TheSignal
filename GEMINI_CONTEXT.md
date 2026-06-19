@@ -836,3 +836,214 @@ The stub at `~/Projects/TheSignal/Database/schema_reference.md` will be populate
 **After registering:** Write the 5 assigned IDs to `Claude_context.md` — Claude Code will update Art 02 §10.1 stub entries with the confirmed IDs next session.
 
 **Reference:** Art 02 §10.1 (`~/Projects/TheSignal/V1/02___Components.md`) — Card Containers section; the 5 stubs currently read "DB: TBD — pending 02-n20". PM05 02-n20 for full context.
+
+---
+
+## Session 98 — 2026-06-19
+
+### State Update S97–S98
+
+**02-n20 complete (S97).** 5 init-only deck/pool components registered: Covert Operation Card Set (id=114), Political Act Card Set (id=115), Operative Pool (id=116), Apex Ability Pool (id=117), Classified Directives Pool (id=118).
+
+**02-n26 passes 1–2 complete (S98).** `applicable_verbs` seeded into all Art 02 §§5–12 component entries. §13 and §13.1 (Component × Verb Matrix) removed from Art 02 — entries are now the source of truth. DB flag corrections applied to ~20 components. d10 registered as id=119 (transform_orientation=1). 34 subject_target rows inserted for Move coverage. AUTO_INCREMENT now 120. Schema reference updated.
+
+**L130 locked (S98) — component_metadata architecture.** Option A (hybrid wide table) confirmed. `component_placement_surface` and `component_movement_path` junction tables dropped. `subject_target` is the authoritative record of valid placement/movement targets. `movement_path` in Art 02 carries procedural context from Art 03 — it does not translate to a DB table. **MariaDB caution: `trigger` is a reserved word — do not use in any DDL.**
+
+**02-n26 remaining gate:** Art 02 re-sign-off (Andy). DB-41, DB-42, DB-43 below are authorized pending that sign-off.
+
+---
+
+### DB-41 — `comp_verb_phase` and `comp_verb_role` for S98 Additions (PM05 DB-41)
+
+**Gate: 02-n26 re-sign-off.** Do not execute until Claude Code confirms sign-off is complete.
+
+S98 added/corrected verbs for the following components. Seed `comp_verb_phase` and `comp_verb_role` entries following the same pattern as DB-40 (S97 Reveal additions). Use existing Reveal/Flip/Corrupt entries for equivalent component types as templates.
+
+| Component | id | New verbs to seed |
+|-----------|----|-------------------|
+| d10 | 119 | Add, Remove, Move, Flip |
+| Modifier token | 47 | Flip (Add/Remove/Move already seeded) |
+| ARBITER Threshold Slider | 106 | Corrupt (Add/Remove/Move already seeded) |
+| Faction Threshold Slider | 107 | Corrupt (Add/Remove/Move already seeded) |
+| Ring 1/2/3 modifier decks | 53, 54, 55 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Broadcast Deck | 86 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Broadcast Effect Deck | 87 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Broadcast Discard | 109 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Broadcast Effect Discard | 110 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Faction modifier deck | 89 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Covert operation deck | 92 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Covert operation discard | 93 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Political act deck | 90 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Political act discard | 91 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Covert Operation Card Set | 114 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Political Act Card Set | 115 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Apex Ability Pool | 117 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Classified Directives Pool | 118 | Reveal, Conceal (Add/Remove/Move already seeded) |
+| Faction hand | 94 | Corrupt (Reveal/Conceal/Add/Remove/Move already seeded — confirm) |
+| Operative Pool | 116 | Corrupt (Reveal/Conceal already seeded — confirm) |
+
+After seeding, regenerate `v_comp_verb_matrix` and verify all rows match the `applicable_verbs` field in the corresponding Art 02 component entries. Report any mismatches in `Claude_context.md`.
+
+---
+
+### DB-42 — `component_metadata` Table: DDL + Seeder (PM05 DB-42)
+
+**Gate: 02-n26 re-sign-off.** DDL may be drafted and proposed ahead of sign-off; do not execute or seed until Claude Code confirms.
+
+#### Architecture (L130)
+
+Single wide table, 1-to-1 with `component`. No junction tables — `subject_target` covers placement targets programmatically; `movement_path` is not stored in DB. `trigger` is a reserved word in MariaDB — do not use.
+
+#### Proposed DDL
+
+```sql
+CREATE TABLE component_metadata (
+  component_id INT NOT NULL,
+  physical_form VARCHAR(255) NOT NULL,
+  quantity_expr VARCHAR(100) NOT NULL,
+  visibility ENUM('Public','Player-private','ARBITER-only','Variable') NOT NULL,
+  states VARCHAR(255) DEFAULT NULL,              -- NULL if N/A (single-state or no state)
+  faction_keyed ENUM('Yes','No','N/A') NOT NULL DEFAULT 'N/A',
+  placement_surface VARCHAR(255) DEFAULT NULL,   -- human-readable text; subject_target = programmatic record
+  max_placement_count INT DEFAULT NULL,          -- NULL if unbounded or N/A
+  max_placement_ref INT DEFAULT NULL,            -- FK to component.id; NULL if unbounded or N/A
+
+  -- Group-Specific: Playing Surfaces
+  privacy_model ENUM('Open','Faction-private','ARBITER-private') DEFAULT NULL,
+
+  -- Group-Specific: Cards & Playing Surfaces
+  display_fields VARCHAR(255) DEFAULT NULL,
+
+  -- Group-Specific: Card Systems
+  back_design ENUM('Faction-keyed','Neutral','ARBITER-keyed') DEFAULT NULL,
+  card_source ENUM('Deck','Hand','ARBITER supply','Sealed') DEFAULT NULL,
+
+  -- Group-Specific: Intel
+  recorded_fields VARCHAR(255) DEFAULT NULL,
+
+  -- Group-Specific: Resolution & Tracking Tools
+  function_prose VARCHAR(255) DEFAULT NULL,
+  scale_prose VARCHAR(255) DEFAULT NULL,
+  init_value_prose VARCHAR(100) DEFAULT NULL,
+
+  PRIMARY KEY (component_id),
+  CONSTRAINT fk_metadata_component FOREIGN KEY (component_id)
+    REFERENCES component (id) ON DELETE CASCADE,
+  CONSTRAINT fk_metadata_max_ref FOREIGN KEY (max_placement_ref)
+    REFERENCES component (id) ON DELETE SET NULL
+);
+```
+
+Propose this DDL to Andy for confirmation before executing.
+
+#### Field Mapping: Art 02 → component_metadata
+
+Each component entry in Art 02 §§5–12 has a `Metadata:` table. Extract and map as follows:
+
+| Art 02 field | DB column | Notes |
+|-------------|-----------|-------|
+| `db_id` | `component_id` | Join key — must match component.id |
+| `physical_form` | `physical_form` | Required |
+| `quantity` | `quantity_expr` | Required; store as string (may contain expressions like "1 per faction × 5 = 5") |
+| `visibility` | `visibility` | Map to ENUM: Public / Player-private / ARBITER-only / Variable |
+| `states` | `states` | Store NULL if value is "N/A" |
+| `faction_keyed` | `faction_keyed` | Yes / No / N/A |
+| `placement_surface` | `placement_surface` | Store as text; NULL if N/A |
+| `max_placement_count` | `max_placement_count` | Parse integer from text; NULL if "N/A" or unbounded |
+| `applicable_verbs` | **SKIP** | Already captured in component flags + subject_target — do not duplicate |
+| `movement_path` | **SKIP** | L130: procedural content — not stored in DB |
+| `privacy_model` | `privacy_model` | Playing Surface group only |
+| `display_fields` | `display_fields` | Card group only |
+| `back_design` | `back_design` | Card group only |
+| `card_source` | `card_source` | Card group only |
+| `recorded_fields` | `recorded_fields` | Intel group only |
+| `function` | `function_prose` | Resolution/Tracking group only |
+| `scale` | `scale_prose` | Resolution/Tracking group only |
+| `init_value` | `init_value_prose` | Resolution/Tracking group only |
+
+#### Seeder Approach
+
+Write a Python script (model on `register_component.py` at `~/Projects/TheSignal/Database/`) that:
+1. Reads `~/Projects/TheSignal/V1/02___Components.md`
+2. For each component entry, locates the `| Field | Value |` metadata table
+3. Extracts field→value pairs
+4. Applies the field mapping above (skipping `applicable_verbs` and `movement_path`)
+5. Generates INSERT statements for `component_metadata`
+
+Source file: `~/Projects/TheSignal/V1/02___Components.md`
+Reference seeder: `~/Projects/TheSignal/Database/register_component.py`
+Whiteboard strategy doc: `~/Projects/TheSignal/Whiteboard/component_metadata_and_database_strategy.md`
+
+Propose the script to Claude Code before executing. Do not seed until 02-n26 re-sign-off is confirmed.
+
+---
+
+### DB-43 — Phase 1 Static Lookup Tables (PM05 DB-43)
+
+**No gate — design-ready now. Execute after Andy confirms in terminal.**
+
+Four tables with fully locked values. DDL and seed in one pass per table.
+
+#### `public_standing_tier`
+```sql
+CREATE TABLE public_standing_tier (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  range_min TINYINT NOT NULL,
+  range_max TINYINT NOT NULL,
+  drift_delta TINYINT NOT NULL,
+  PRIMARY KEY (id)
+);
+INSERT INTO public_standing_tier (name, range_min, range_max, drift_delta) VALUES
+  ('Celebrated', 17, 20, -1),
+  ('Respected',  13, 16, -1),
+  ('Neutral',     7, 12,  0),
+  ('Suspect',     3,  6,  1),
+  ('Discredited', 0,  2,  1);
+```
+
+#### `difficulty_tier`
+```sql
+CREATE TABLE difficulty_tier (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  base_threshold TINYINT NOT NULL,
+  PRIMARY KEY (id)
+);
+INSERT INTO difficulty_tier (name, base_threshold) VALUES
+  ('Easy', 75),
+  ('Average', 50),
+  ('Challenging', 25);
+```
+
+#### `resolution_outcome`
+```sql
+CREATE TABLE resolution_outcome (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id)
+);
+INSERT INTO resolution_outcome (name) VALUES
+  ('Succeeded'),
+  ('Failed'),
+  ('Voided'),
+  ('Discovered'),
+  ('Auto-failed');
+```
+
+#### `influence_level`
+```sql
+CREATE TABLE influence_level (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  chip_threshold TINYINT NOT NULL,
+  PRIMARY KEY (id)
+);
+INSERT INTO influence_level (name, chip_threshold) VALUES
+  ('Dominant',    3),
+  ('Established', 2),
+  ('Present',     1),
+  ('None',        0);
+```
+
+Report row counts and any FK implications in `Claude_context.md` after execution.

@@ -855,3 +855,17 @@ ARBITER does not speak about this layer. The factions have not found language th
 The layers are not separate. A faction that controls a district physically but has lost the social, informational, and digital layers holds something different than what The Overview registers. What ARBITER's layer adds to that calculation is something the factions experience as intuition — or as the feeling that The Table is being evaluated by criteria no one specified.
 
 It is.
+
+---
+
+### 14.10 Integration
+
+The eight Quarters were not proposed. They were specified.
+
+When ARBITER administered the Chorus protocol at the opening of the first session, the structure arrived with the timeline already determined: eight Quarters, a fixed window, no provision for extension. The factions have operated within this constraint without being told what the endpoint means. They have developed a word for it anyway.
+
+Integration is the term the research community has used for thirty-one years to describe a threshold the Chorus signal implies but does not specify. Every transmission model finds the same structural feature: directionality. Not only signal arriving, but an architecture that anticipates reply. The question the research community has never been able to close is whether that reply architecture is technical capacity or something else — a condition the Chorus waits for, a threshold it designates. The return channel is the phrase that has become standard for whatever opens at the other end of this.
+
+Quarter 8 is when the factions believe Integration arrives. The 8-Quarter arc was built around this. It is not a deadline the factions imposed on themselves. They structured the deliberation around a moment they recognized from the signal — a moment the protocol seems to designate as significant without stating what happens when it is reached.
+
+What ARBITER knows about this, and what its role is in the determination, is not a question The Table has successfully put to ARBITER. What the Chorus receives at Quarter 8 — what, if anything, the return channel carries — is not in the documents. The factions are producing something. What they are producing is what the Chorus will evaluate.

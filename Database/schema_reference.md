@@ -367,7 +367,7 @@ CREATE TABLE `component` (
   CONSTRAINT `fk_component_parent` FOREIGN KEY (`parent_component_id`) REFERENCES `component` (`id`) ON DELETE SET NULL
 )
 ```
-*AUTO_INCREMENT=112 as of S92. Next component will receive id=112.*
+*AUTO_INCREMENT=120 as of S98. 77 registered components (max id=119 — d10 added S98). Next component will receive id=120.*
 
 ### component_dim
 ```sql
