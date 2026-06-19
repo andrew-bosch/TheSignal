@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.7
+**Version:** 4.8
 
-**Status:** Signed off S102 (L216).
+**Status:** Signed off S102 (L216). S103: §24 Resolution State Reference added (03-n25); RO-xx codes removed throughout; targeting restriction procedure updated to face-down model (unifying all Voided states).
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02 — Components
 
@@ -69,6 +69,7 @@ The main game loop of THE SIGNAL: the repeatable quarterly sequence that frames 
 21. [Card Economy Reference](#21-card-economy-reference)
 22. [Board State Update Rules](#22-board-state-update-rules)
 23. [Public Standing Scale](#23-public-standing-scale)
+24. [Resolution State Reference](#24-resolution-state-reference)
 
 **Appendices**
 
@@ -663,9 +664,9 @@ Beat 0 complete. Proceed to §9.4.1 Beat 1.
 Starting from ARBITER's left, proceeding clockwise around the table, process each standing card in the PA areas:
 
 1. ARBITER announces the card name and active effect(s).
-2. If the card includes a **targeting restriction**: scan the Resolution Grid for covert operations targeting the restricted district or ring. For each match: place the operation card and Target Profile face-down in the acting faction's dispatch case; discard modifier cards from that stack. Scan placed public acts on the Overview for matches. For each match: return the card face-down, Target Profile, and resource tokens to the declaring faction; discard modifier cards; return the Dispatch Token to the acting faction.
+2. If the card includes a **targeting restriction**: scan the Resolution Grid for covert operations targeting the restricted district or ring. For each match: flip the operation card face-down; discard modifier cards from that stack. Scan placed public acts on the Overview for matches. For each match: return the card face-down, Target Profile, and resource tokens to the declaring faction; discard modifier cards; return the Dispatch Token to the acting faction.
 
-   *Modifier cards on voided operations and voided public acts are consumed without effect. Public act tokens are refunded — resources are not committed until Beat 4.*
+   *Modifier cards on face-down covert operations and cancelled public acts are consumed without effect. Public act tokens are refunded — resources are not committed until Beat 4.*
 
 3. If the card includes a **conversion block**: flip affected deployment markers to the Blocked face.
 
@@ -1280,8 +1281,8 @@ To succeed, the roll must land equal to or below the target threshold. The thres
 
 | Outcome | Condition |
 |---------|-----------|
-| Succeeded (RO-01) | Roll ≤ threshold |
-| Failed (RO-02) | Roll > threshold |
+| Succeeded | Roll ≤ threshold |
+| Failed | Roll > threshold |
 | Critical Success | Roll 01–05 — always, regardless of threshold or modifiers |
 | Critical Fail | Roll 96–00 — always, regardless of threshold or modifiers |
 
@@ -1594,6 +1595,32 @@ Public Standing (PS) runs from 0 to 20. All factions start at 10. Difficulty mod
 | Discredited | 0–2 | +1 |
 
 *Drift applied at §12.0 Quarter Close after all other PS changes.*
+
+---
+
+## §24 Resolution State Reference
+
+Every committed action resolves to one of three states.
+
+| State | When |
+|-------|------|
+| Succeeded | Roll ≤ threshold, or Critical Success (01–05) |
+| Failed | Roll > threshold, or Critical Failure (96–00) |
+| Voided | Card is face-down at resolution: targeting restriction, Type A Countermeasure, zero payment, or no Dispatch Token |
+
+Critical Success (01–05) and Critical Failure (96–00) apply additional card-specified effects alongside the base Succeeded or Failed state.
+
+Voided cards do not roll. No card effects apply. The operation card and Target Profile return to the acting faction's dispatch case; no resolution card is placed.
+
+**Resolution Effects**
+
+A resolution effect fires alongside a state rather than producing a separate state. Currently one is defined:
+
+**Discovered** — fires when a Failed operation meets a card-specified discovery condition (Critical Failure, or roll within a card-specified range). ARBITER announces: acting faction, operation name, declared target. Card-specified discovery consequences apply. See §9.4.2.2.1.1.
+
+*The outcome is Failed. Discovered is an additional consequence, not a parallel state.*
+
+*Other resolution effects (Detected, Exposed, and others) may be defined in future card design passes.*
 
 ---
 

@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 102 complete | Updated: 2026-06-19**
+**Session 103 complete (mid-session clear) | Updated: 2026-06-19**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,22 +8,26 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-### Priority Order (S102) ← CURRENT
+### Priority Order (S103) ← CURRENT
 
-**Tier 1 — Art 03 ✅ S102**
-- Art 03 v4.7 ✅ (L216) — § Primitive Action Model appendix restructured (governing principle surfaced; S97/S101 decision tables removed; DB is source of truth). Index anchor fixed. Inline flags removed.
-- agy task queued (GEMINI_CONTEXT.md): v_unlegislated_primitives pass — 6 ❌ prohibit (junction table cleanup), 4 ✅ permits, 14 seeding gaps.
-- **Next: 03-n25** — Generalized Resolution Effects reference section. Gate note: PM05 gates on "card design pass to identify all effect types" — treat as informational for now; draft from known effects (Discovered + any others in Art 04). Likely §24 or appendix position in Art 03.
-
-**Tier 2 — Art 04b refresh** (Art 03 signed off ✅ — check 02-n26 gate status before starting)
+**Tier 1 — Art 04b refresh** (Art 03 stable ✅ — check 02-n26 gate status before starting)
 - 04b-16 → 04b-17 → 04b-18 → 04b-19 (re-sign-off v1.7).
 
-**Tier 3+ — Deferred**
+**Tier 2+ — Deferred**
 - 03-n01 (Beat 2 overhaul) — dedicated session
 - Card design pass (gate: 00a-72 + Art 03 stable)
 - 01-n02 (Art 01 overhaul — gate: 00a-72 first)
 
-*Note: Art 00 v1.7 needs re-sign-off (§14.10 Integration added S99). Art 02 v2.2 ✅ S98 (L213).*
+*Note: Art 00 v1.7 needs re-sign-off (§14.10 Integration added S99). Art 02 v2.2 ✅ S98 (L213). Art 03 v4.8 — re-sign-off needed (S103 changes: §24 added, RO-xx removed, targeting restriction procedure updated).*
+
+**S103 accomplishments (mid-session clear):**
+- 03-n25 ✅ — §24 Resolution State Reference added to Art 03. Three states: Succeeded / Failed / Voided. Discovered defined as resolution effect (fires alongside Failed, not a parallel state). RO-xx codes removed from Art 03 and 03a throughout. Targeting restriction procedure (§9.4.1.0) updated to flip face-down in grid — unifying all Voided cases under single Beat 3 Step 1 handler. DB resolution_outcome pruned to 3 rows (Discovered and Auto-failed dropped). Art 03 v4.8.
+
+### Priority Order (S102) ← PREV
+
+**Tier 1 — Art 03 ✅ S102**
+- Art 03 v4.7 ✅ (L216) — § Primitive Action Model appendix restructured (governing principle surfaced; S97/S101 decision tables removed; DB is source of truth). Index anchor fixed. Inline flags removed.
+- agy task queued (GEMINI_CONTEXT.md): v_unlegislated_primitives pass — 6 ❌ prohibit (junction table cleanup), 4 ✅ permits, 14 seeding gaps.
 
 **S102 accomplishments:**
 - Art 03 § Primitive Action Model appendix restructured: governing principle surfaced, S97/S101 decision tables removed (DB is source of truth), coherent section flow. Index anchor fixed. Status block trimmed. Inline flag removed from § Examples.
@@ -325,7 +329,7 @@ Read full files only when deep work requires it.
 | 01 — Game Board: New Meridian | 2.1 | 🔄 Needs Re-Sign-Off — S90 (02-n05). §4 component narratives migrated to Art 02 §4; §6 Physical Forms table migrated to Art 02 §13; stale refs updated; now geography/zone-only. Open: 01-11 (scope overhaul §8/§11/§12). |
 | 02 — Components | 2.2 | ✅ Signed Off — S98 (L213). S97–S98: applicable_verbs seeded into all §§5–12 entries; §13 matrix removed; d10 (DB:119) added §11; ARBITER Dominance Marker Flip corrected; DB-42 seeded (74 rows). S99: DB sync header note added; 02-n07 ✅. Open PM05: 02-n17, 02-n21, 02-n22, 02-n25. |
 | 02a — Resource Systems: Board State | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0. Moved to Retired/Paper/ S90. |
-| 03 — Quarter Structure & Gameplay | 4.7 | ✅ Signed Off — S102 (L216). § Primitive Action Model appendix restructured; DB is source of truth. Open PM05: 03-n25. |
+| 03 — Quarter Structure & Gameplay | 4.8 | 🔄 Needs Re-Sign-Off — S103. §24 Resolution State Reference added; RO-xx codes removed throughout; targeting restriction → face-down model. Prior: ✅ S102 (L216). Open PM05: none. |
 | 04b — Action Taxonomy | 1.6 | 🔄 Pending Re-sign-off v1.7. S97: §3 Physical Action Taxonomy relocated — §3.1+§3.2 → Art 02 §13; §3.3 → Art 03 §22; §3 is now a pointer section. 04b-12 ✅ · 04b-13 ✅ · 04b-14 ✅ · 04b-15 ✅ S97. 04b-16/17/18/19 queued — gate: Art 02 §13 corrections (02-n26) first. |
 | 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). S89: C28 Breaking News — Issues Resolved ✓ (gates 04-n75/76 cleared; sign-off pending set-level gates). C40B Live Coverage — Issues Resolved ✓ (04-n77 in Art 03 §9.0; sign-off pending set-level gates). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |

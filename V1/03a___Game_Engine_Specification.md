@@ -312,7 +312,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Case[F-xx].Packet[n].Target` | D-xx \| RG-xx | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned → VS-02) |
 | `Case[F-xx].Packet[n].CovertCard` | C-xx \| Pass \| None | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned → VS-02) |
 | `Case[F-xx].Packet[n].ModifierCards` | List of MC-xx | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned → VS-02) |
-| `Case[F-xx].Packet[n].ARBITERResponseCards` | List of RO-xx — resolution cards placed by ARBITER | VS-04 | Beat 3 Step 10 / Beat 4 Step 9 (ARBITER loads); Beat 5 (returned → VS-02) |
+| `Case[F-xx].Packet[n].ARBITERResponseCards` | List of resolution cards (Succeeded / Failed) placed by ARBITER | VS-04 | Beat 3 Step 10 / Beat 4 Step 9 (ARBITER loads); Beat 5 (returned → VS-02) |
 | `Case[F-xx].Packet[n].IntelTokens` | List of ARBITER-placed intel tokens | VS-04 | Beat 3–4 (ARBITER loads, per card text or ARBITER discretion); Beat 5 (returned → VS-02); TBD — Art 07 |
 
 *`SequenceID` establishes packet order within the case — the order in which the faction submitted their operations during Phase 3 Dispatch. This order determines lane assignment in the Resolution Grid (Beat 0 Step 2).*
@@ -331,7 +331,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 *— **Political Act Declaration Area**: each faction's tableau zone — populated at Phase 4 Declaration, resolved in Beat 4, cleared at Beat 5. Declared acts are VS-01 (public) from the moment of Declaration.*
 
-*`Grid.ResolvedCells` spans both areas — it accumulates RO-xx outcomes for covert operations (Beat 3) and political acts (Beat 4).*
+*`Grid.ResolvedCells` spans both areas — it accumulates resolution outcomes (Succeeded / Failed / Voided) for covert operations (Beat 3) and political acts (Beat 4). Face-down cards are recorded as Voided; resolved cards record Succeeded or Failed.*
 
 **ARBITER Resolution Area** — VS-04
 
@@ -341,7 +341,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Grid.Lane[F-xx].Beat3Queue` | Ordered list of GridCell | VS-04 | Beat 0 (built from dispatch case); Beat 1 (cells removed — restriction blocked); Beat 2 (cells removed — CM blocked; modifier tokens added) |
 | `Grid.ActiveModifierTokens` | Map of GridCell → List of M-xx | VS-04 | Beat 0 (M-06 partial payment marker attached); Beat 2 (M-11 Type B token placed); Beat 3 Step 4 (consumed in threshold calculation, returned to pool at Step 10) |
 | `Grid.ProtectModifiers` | Map of GridCell → modifier value | VS-04 | Beat 2 (noted from Protect operations for Beat 3 application) |
-| `Grid.ResolvedCells` | List of {GridCell × RO-xx} | VS-04 → VS-02 (after Beat 5 dispatch case return) | Beat 3 Step 10 (per resolved covert op); Beat 4 Step 9 (per resolved political act) |
+| `Grid.ResolvedCells` | List of {GridCell × outcome} where outcome ∈ {Succeeded, Failed, Voided} | VS-04 → VS-02 (after Beat 5 dispatch case return) | Beat 3 Step 10 (per covert op); Beat 4 Step 9 (per political act) |
 | `Grid.ResolutionQueue` | Ordered list of GridCell positions | VS-04 | Beat 0 (established by case receipt order — first action per lane, then second actions per lane, repeating) |
 
 *GridCell = {Lane: F-xx, Row: Beat2 \| Beat3[position], Card: C-xx \| CC-xx \| Pass, Face: Up \| Down, Target: D-xx \| RG-xx \| F-xx \| N/A}*
@@ -472,12 +472,12 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 #### Beat 1 End — Restrictions Applied
 
 **Outputs:**
-- `Grid.Lane[F-xx].Beat3Queue` = operations targeting restricted D-xx or RG-xx removed; placed in dispatch case with RO-03 (Voided)
+- `Grid.Lane[F-xx].Beat3Queue` = operations targeting restricted D-xx or RG-xx flipped face-down in grid; recorded as Voided in Grid.ResolvedCells
 - `Board.DeploymentMarker[F-xx][1|2]` = markers in conversion-blocked districts or rings flipped to Blocked face
 - Political acts targeting restricted D-xx or RG-xx: cancelled — card returned to faction; resource tokens returned (not spent)
 
 **Invariants:**
-- No card remaining in any Beat3Queue targets a district or ring under an active targeting restriction
+- No face-up card remaining in any Beat3Queue targets a district or ring under an active targeting restriction
 - No deployment marker in a conversion-blocked district or ring shows Converting face
 - Cancelled political act resource tokens are returned — not in Reservoir
 
@@ -486,7 +486,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 #### Beat 2 End — Ground Shifts
 
 **Outputs:**
-- `Grid.Lane[F-xx].Beat3Queue` = operations targeting Type A-named districts removed; placed in dispatch case with RO-03 (Voided)
+- `Grid.Lane[F-xx].Beat3Queue` = operations targeting Type A-named districts flipped face-down in grid; recorded as Voided in Grid.ResolvedCells
 - `Board.DeploymentMarker[F-xx][1|2]` = markers in Type A-named districts flipped to Blocked face
 - `Grid.ActiveModifierTokens` = M-11 Type B modifier tokens (−15) placed on operations targeting defending faction's assets
 - `Grid.ProtectModifiers` = Protect operation defensive modifiers noted for Beat 3 application
@@ -507,15 +507,15 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Board.DeploymentMarker[F-xx][1|2]` = markers blocked by covert op outcomes flipped to Blocked face
 - `Faction.PublicStanding[F-xx]` = updated for failure/discovery conditions
 - `Faction.ChorusPortrait[F-xx]` = privately updated per Beat 3 Step 11 for each resolved operation
-- `Grid.ResolvedCells` = each cell marked with RO-xx; dispatch case updated with resolution card per op
+- `Grid.ResolvedCells` = each cell marked with outcome (Succeeded / Failed / Voided)
 - `Card.Covert.Hand[F-xx]` = resolved cards returned to faction (per card text)
 - `Grid.ActiveModifierTokens` = all tokens returned to pool
 
 **Invariants:**
-- `Grid.Lane[F-xx].Beat3Queue` is empty for all lanes — every card resolved (RO-01–RO-05) or previously removed (Beat 1/2)
+- `Grid.Lane[F-xx].Beat3Queue` is empty for all lanes — every card resolved or face-down (Beat 0–2)
 - All board changes from covert resolutions are physically applied
 - Portrait track updated but hidden — no faction knows their current score from this beat
-- Each faction's dispatch case contains one RO-xx resolution card per submitted covert operation
+- Each faction's dispatch case contains one resolution card (Succeeded / Failed) per covert operation that resolved; face-down (Voided) operations return with no resolution card
 
 ---
 
@@ -541,7 +541,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 
 **Outputs:**
 - Dispatch cases returned to faction owners
-- `Grid.ResolvedCells` outcomes (RO-xx per operation) visible to each faction via their dispatch case
+- `Grid.ResolvedCells` outcomes (Succeeded / Failed / Voided per operation) visible to each faction via their dispatch case
 - `Faction.IntelTokens[F-xx]` = incremented by any intel tokens ARBITER loaded into the faction's dispatch case
 - ARBITER Player's Quarter-level notes recorded for Debrief
 
@@ -908,7 +908,7 @@ ELSE IF Faction.Resources[F-01][RT-01] ≥ 13:
 
 // 3. Operation Resolution cards collected
 FOR EACH faction f ∈ Faction.All:
-  COLLECT RO-xx resolution cards from f → ARBITER Player  // reusable; reset for next Quarter
+  COLLECT resolution cards (Succeeded / Failed) from f → ARBITER Player  // reusable; reset for next Quarter
 
 // 4. Event duration decrement
 FOR EACH card ∈ Event.ActiveCards:
@@ -1016,20 +1016,16 @@ PROCEDURE:
 restrictions ← targeting restriction effects from Event.ActiveCards
 conversion_blocks ← conversion-blocking effects from Event.ActiveCards
 
-// Step 2 — Remove restricted covert operations
+// Step 2 — Flip restricted covert operations face-down
 FOR EACH restriction r ∈ restrictions:
   FOR EACH lane ∈ Grid.Lanes:
     FOR EACH cell ∈ Grid.Lane[lane].Beat3Queue:
       IF cell.Target ∈ r.RestrictedDistricts OR cell.Target ∈ r.RestrictedRings:
-        REMOVE cell from Grid.Lane[lane].Beat3Queue
-        INSERT {cell.ID, RO-03} → Grid.ResolvedCells
-        PLACE operation card + target slip → dispatch_case[lane.Faction]
-        PLACE Voided resolution card → dispatch_case[lane.Faction]
+        cell.Face ← Down
+        INSERT {cell.ID, Voided} → Grid.ResolvedCells
         DISCARD modifier cards from cell — removed from game
         // No resource refund — resources were drained at Beat 0
-
-// DF-01 RESOLVED (L112, Session 22): "Operation Failed" (Beat 1) and "Operation Blocked"
-// (Beat 2) unified as "Voided" (RO-03). Art 03 and 00b updated. See §8.
+        // Card remains in queue; Beat 3 Step 1 face-down check returns it to dispatch case
 
 // Step 3 — Cancel restricted political acts
 FOR EACH restriction r ∈ restrictions:
@@ -1050,8 +1046,8 @@ FOR EACH block b ∈ conversion_blocks:
         Board.DeploymentMarker[f][slot].Face ← Blocked
 
 STATE MUTATIONS:
-  Grid.Lane[F-xx].Beat3Queue ← restriction removals
-  Grid.ResolvedCells ← RO-03 (Voided) entries for restricted covert ops
+  Grid.Lane[F-xx].Beat3Queue cells ← Face = Down for restriction-blocked ops
+  Grid.ResolvedCells ← Voided entries for restricted covert ops
   Board.DeploymentMarker[F-xx][1|2].Face ← Blocked (conversion-blocked districts/rings)
 ```
 
@@ -1073,13 +1069,12 @@ FOR EACH lane ∈ Grid.Lanes WHERE Grid.Lane[lane].Beat2Slot.Type = TypeA:
   FOR EACH target_lane ∈ Grid.Lanes:
     FOR EACH cell ∈ Grid.Lane[target_lane].Beat3Queue:
       IF cell.Target = named_district:
-        REMOVE cell from Grid.Lane[target_lane].Beat3Queue
-        INSERT {cell.ID, RO-03} → Grid.ResolvedCells
-        PLACE operation card + target slip → dispatch_case[target_lane.Faction]
-        PLACE Voided resolution card → dispatch_case[target_lane.Faction]
+        cell.Face ← Down
+        INSERT {cell.ID, Voided} → Grid.ResolvedCells
         DISCARD modifier cards — removed from game
         RETURN modifier tokens (M-06 if attached) → pool
         // Resources committed to blocked ops are NOT refunded — attempt was made
+        // Card remains in queue; Beat 3 Step 1 face-down check returns it to dispatch case
   FOR EACH faction f ∈ Faction.All:
     FOR EACH slot ∈ [1, 2]:
       IF Board.DeploymentMarker[f][slot].Location = named_district:
@@ -1106,8 +1101,8 @@ FOR EACH lane ∈ Grid.Lanes:
   Grid.Lane[lane].Beat2Slot ← None  // CC-xx cards processed; removed from game
 
 STATE MUTATIONS:
-  Grid.Lane[F-xx].Beat3Queue ← Type A removals
-  Grid.ResolvedCells ← RO-03 (Voided) entries for Type A voided ops
+  Grid.Lane[F-xx].Beat3Queue cells ← Face = Down for Type A blocked ops
+  Grid.ResolvedCells ← Voided entries for Type A blocked ops
   Grid.ActiveModifierTokens ← M-11 tokens on Type B targeted ops
   Grid.ProtectModifiers ← Protect defensive modifier values
   Grid.Lane[F-xx].Beat2Slot ← cleared
@@ -1142,9 +1137,8 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
   IF cell.Card = Pass: CONTINUE  // No resolution; advance
 
   IF cell.Face = Down:
-    INSERT {cell.ID, RO-05} → Grid.ResolvedCells
     PLACE operation card + target slip → dispatch_case[f]
-    // No resolution card for auto-fail — card returned, no roll made
+    // No resolution card — card returned, no roll made; Voided already recorded at Beat 1/2
     DISCARD modifier cards from stack — removed from game
     CONTINUE
 
@@ -1178,20 +1172,20 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
 
   // Step 6 — Determine outcome (formal resolution check)
   IF roll ∈ [01, 05]:
-    outcome ← RO-01  // Critical Success — always, regardless of threshold
+    outcome ← Succeeded  // Critical Success — always, regardless of threshold
     crit_success ← True; crit_failure ← False
   ELSE IF roll ∈ [96, 100]:
-    outcome ← RO-02  // Critical Failure — always, regardless of threshold
+    outcome ← Failed  // Critical Failure — always, regardless of threshold
     crit_success ← False; crit_failure ← True
   ELSE IF roll ≤ threshold:
-    outcome ← RO-01  // Succeeded  (roll ∈ [06, threshold])
+    outcome ← Succeeded  // roll ∈ [06, threshold]
     crit_success ← False; crit_failure ← False
   ELSE:
-    outcome ← RO-02  // Failed  (roll ∈ [threshold+1, 95])
+    outcome ← Failed  // roll ∈ [threshold+1, 95]
     crit_success ← False; crit_failure ← False
 
   // Step 7 — Apply results
-  IF outcome = RO-01:
+  IF outcome = Succeeded:
     ARBITER directs; acting Faction Player applies:
       Board.PresenceChips[cell.Target][f] ← per card text
       Board.StructureBlocks[cell.Target][f] ← per card text
@@ -1202,20 +1196,19 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
       Board.DeploymentMarker[f][*].Face ← Blocked
 
   // Step 8 — Failure conditions (per card text)
-  IF outcome = RO-02:
+  IF outcome = Failed:
     APPLY failure conditions from card text
     Faction.PublicStanding[f] ← adjusted per card text
 
-  // Step 9 — Discovery conditions (per card text)
-  IF card text specifies discovery condition:
+  // Step 9 — Discovery effect (per card text; fires alongside Failed — does not change recorded outcome)
+  IF outcome = Failed AND card text specifies discovery condition:
     IF crit_failure = True OR roll ∈ card.DiscoveryRange:
-      outcome ← RO-04  // Discovered — overrides RO-02
-      APPLY discovery conditions from card text
+      APPLY discovery conditions from card text  // See §9.4.2.2.1.1
 
   // Step 10 — Clean up grid cell
   INSERT {cell.ID, outcome} → Grid.ResolvedCells
   PLACE operation card + target slip → dispatch_case[f]
-  PLACE resolution card (Succeeded / Failed / Discovered) → dispatch_case[f]
+  PLACE resolution card (Succeeded / Failed) → dispatch_case[f]
   DISCARD modifier cards from cell — removed from game
   RETURN Grid.ActiveModifierTokens[cell.ID] → pool
   Card.Covert.Hand[f] ← per card text (return to hand or discard)
@@ -1226,7 +1219,7 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
 END FOR
 
 STATE MUTATIONS:
-  Grid.ResolvedCells ← RO-01, RO-02, RO-04, RO-05 per op
+  Grid.ResolvedCells ← Succeeded, Failed, or Voided per op
   Board.PresenceChips ← success outcomes
   Board.StructureBlocks ← success outcomes
   Board.InfluenceLevel ← recalculated (derived)
@@ -1280,7 +1273,7 @@ FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Qua
     // Beat_4 does not return — session ends
 
   IF act.Face = Down:
-    INSERT {act.ID, RO-05} → Grid.ResolvedCells
+    INSERT {act.ID, Voided} → Grid.ResolvedCells
     DISCARD modifier cards — removed from game
     RETURN political act card → Faction Player
     CONTINUE
@@ -1307,13 +1300,13 @@ FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Qua
   roll ← D100()
 
   // Step 6 — Determine outcome
-  IF roll ∈ [01, 05]:    outcome ← RO-01  // Critical Success
-  ELSE IF roll ∈ [96, 100]: outcome ← RO-02  // Critical Failure
-  ELSE IF roll ≤ threshold: outcome ← RO-01  // Succeeded
-  ELSE:                   outcome ← RO-02  // Failed
+  IF roll ∈ [01, 05]:    outcome ← Succeeded  // Critical Success
+  ELSE IF roll ∈ [96, 100]: outcome ← Failed  // Critical Failure
+  ELSE IF roll ≤ threshold: outcome ← Succeeded
+  ELSE:                   outcome ← Failed
 
   // Step 7 — Apply results
-  IF outcome = RO-01:
+  IF outcome = Succeeded:
     Faction Player applies board changes:
       Board.PresenceChips[act.Target][f] ← per card text
       Board.StructureBlocks[act.Target][f] ← per card text
@@ -1324,7 +1317,7 @@ FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Qua
       Board.DeploymentMarker[f][*].Face ← Blocked
 
   // Step 8 — Failure conditions (per card text)
-  IF outcome = RO-02:
+  IF outcome = Failed:
     APPLY failure conditions from card text
     Faction.PublicStanding[f] ← adjusted per card text
 
@@ -1346,7 +1339,7 @@ STATE MUTATIONS:
   Grid.Political[F-xx].PartialPaymentMarker ← M-07 where applicable; cleared after resolution
   Grid.Political[F-xx].DeclaredCard ← None (cleared per resolution)
   Grid.Political[F-xx].ModifierCards ← [] (cleared; removed from game)
-  Grid.ResolvedCells ← RO-01, RO-02, RO-05 per act
+  Grid.ResolvedCells ← Succeeded, Failed, or Voided per act
   Board.PresenceChips ← success outcomes
   Board.StructureBlocks ← success outcomes
   Board.InfluenceLevel ← recalculated (derived)
@@ -1434,7 +1427,7 @@ Applied per non-Apex operation card during Beat_0 Step 2. Face determines whethe
 | DT-01-B | Partial | 0 < actual_payment < card_cost | Up | Yes (−50) | Yes — submitted amount |
 | DT-01-C | None | actual_payment = 0 | Down | No | None |
 
-**Face = Down consequence (DT-01-C):** Card reaches Beat_3 as auto-fail (RO-05). No roll is made. Operation card and target slip returned to dispatch case. No resolution card placed.
+**Face = Down consequence (DT-01-C):** Card reaches Beat_3 as Voided — no roll made. Operation card and target slip returned to dispatch case. No resolution card placed.
 
 ---
 
@@ -1448,7 +1441,7 @@ Applied when `card.IsApex = True` during Beat_0 Step 2. Differs from DT-01: part
 | DT-02-B | Partial | 0 < actual_payment < card_cost | Down | No | Yes — submitted amount |
 | DT-02-C | None | actual_payment = 0 | Down | No | None |
 
-**Face = Down consequence on Apex (DT-02-B, DT-02-C):** Treated as auto-fail (RO-05) at Beat_3 or as invalid act (RO-05) at Beat_4 Submit Payment. Resources drained are not refunded. Apex_Activation() does not trigger.
+**Face = Down consequence on Apex (DT-02-B, DT-02-C):** Treated as Voided at Beat_3 or as invalid act at Beat_4 Submit Payment. Resources drained are not refunded. Apex_Activation() does not trigger.
 
 ---
 
@@ -1458,7 +1451,7 @@ Applied at Beat_3 Step 6 and Beat_4 Step 6 whenever `roll ∈ [01, 05]`. Overrid
 
 | ID | Roll Range | Threshold | Outcome | crit_success | crit_failure |
 |----|------------|-----------|---------|-------------|-------------|
-| DT-03-A | 01–05 | Any | RO-01 (Critical Success) | True | False |
+| DT-03-A | 01–05 | Any | Succeeded (Critical Success) | True | False |
 
 **Card text interaction:** Critical Success may trigger bonus effects specified in card text. No other resolution path sets `crit_success = True`. Discovery conditions do not trigger on DT-03-A.
 
@@ -1466,13 +1459,13 @@ Applied at Beat_3 Step 6 and Beat_4 Step 6 whenever `roll ∈ [01, 05]`. Overrid
 
 ### DT-04 — Critical Failure Override (Roll 96–100)
 
-Applied at Beat_3 Step 6 and Beat_4 Step 6 whenever `roll ∈ [96, 100]`. Overrides threshold regardless of value. Discovery conditions may further override RO-02 to RO-04 at Beat_3 Step 9.
+Applied at Beat_3 Step 6 and Beat_4 Step 6 whenever `roll ∈ [96, 100]`. Overrides threshold regardless of value. Discovery effect may additionally fire at Beat_3 Step 9 if card specifies a discovery condition.
 
-| ID | Roll Range | Threshold | Initial Outcome | crit_failure | Discovery Override Available |
-|----|------------|-----------|-----------------|-------------|------------------------------|
-| DT-04-A | 96–100 | Any | RO-02 (Critical Failure) | True | Yes — if card specifies discovery condition |
+| ID | Roll Range | Threshold | Outcome | crit_failure | Discovery Effect Available |
+|----|------------|-----------|---------|-------------|---------------------------|
+| DT-04-A | 96–100 | Any | Failed (Critical Failure) | True | Yes — if card specifies discovery condition |
 
-**Discovery override path (Beat_3 only):** If `card.DiscoveryCondition` is specified and `crit_failure = True`, outcome becomes RO-04 (Discovered) at Step 9, overriding RO-02. Discovery override does not apply to political acts (Beat_4).
+**Discovery effect path (Beat_3 only):** If `card.DiscoveryCondition` is specified and `crit_failure = True`, the Discovered resolution effect fires at Step 9 alongside the Failed outcome. Outcome remains Failed — discovery is an additional effect, not a separate state. Does not apply to political acts (Beat_4).
 
 ---
 
@@ -1486,7 +1479,7 @@ Applied during Beat_4 Submit Payment phase for each declared political act (excl
 | DT-05-B | Partial | 0 < actual_payment < card_cost | Up (unchanged) | Yes (−50) | "Additional difficulty" |
 | DT-05-C | None | actual_payment = 0 | Down | No | "Act invalid" |
 
-**Face = Down consequence (DT-05-C):** When reached in resolution phase, act is auto-fail (RO-05). Political act card returned to Faction Player; modifier cards discarded; no roll made.
+**Face = Down consequence (DT-05-C):** When reached in resolution phase, act is Voided — no roll made. Political act card returned to Faction Player; modifier cards discarded.
 
 **Stacking note (DT-05-B):** Modifier cards staked on a partial-payment act remain in play and apply to the threshold. M-07 stacks additively with all other applicable modifiers.
 
@@ -1649,7 +1642,7 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 | ID | Section | Finding | Action Required |
 |----|---------|---------|-----------------|
-| DF-01 | Beat_1/2 | ✅ Resolved — Session 22 (L112). Art 03 Beat 1 used "Operation Failed"; Beat 2 used "Operation Blocked." Both unified as **"Voided"** (RO-03). Verb form chosen: past participle implies ARBITER action without naming cause. Art 03 Beat 1/2, Beat 5 example, and 00b RO-03 all updated. | — |
+| DF-01 | Beat_1/2 | ✅ Resolved — Session 22 (L112). Art 03 Beat 1 used "Operation Failed"; Beat 2 used "Operation Blocked." Both unified as **Voided**. **Superseded S103:** RO-xx codes removed from all artifacts; Voided now covers all face-down states (targeting restriction, Type A CM, zero payment, no Dispatch Token). Targeting restriction procedure updated to flip face-down in grid rather than remove to dispatch case — Beat 3 Step 1 handles all face-down cleanup uniformly. | — |
 | DF-02 | Beat_4, §7 | ✅ Resolved — Session 22 (L113). Threshold convention adopted throughout. Art 03 beat prose updated: "+50 difficulty marker" → "−50 threshold marker" in Beat 0 table and Beat 4 prose. Rationale: threshold framing is positively oriented — players think "I need to roll under 69," not "I have a 31% chance to fail." All references now use threshold-subtractive sign convention matching the modifier table (M-06/M-07 = −50). | — |
 | DF-03 | §4.1 Faction Domain | ✅ Resolved — Session 22. `Faction.Resources[F-xx][RT-xx]` Mutates At split into five distinct entries: Upkeep Step 5 (income); Beat 0 (covert payment drain); Phase 4 Declaration (tokens → Grid.Political.ResourceStake); Beat 4 Submit Payment (ResourceStake → Reservoir); Beat 3/4 failure conditions (card text penalties); Debrief (trades, conversion). | — |
 | DF-04 | §4, §5 | ✅ Resolved — Session 22. (a) Case (CA-xx) added to 00b §4 entity registry and §6 schema status — indexed via F-xx in Tier 1, CA-xx prefix anticipates Tier 2+. (b) Packet and (c) GridCell noted in 00b §4 as internal 03a modeling types (no persistent IDs; not registered entities). (d) IP-xx already registered in 00b §4 and §6 — ID column will be added to Art 03 §7 table at Art 03 sign-off. | — |
