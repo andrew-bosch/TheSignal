@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 100 active | Updated: 2026-06-19**
+**Session 102 complete | Updated: 2026-06-19**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,22 +8,34 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-### Priority Order (S100) ← CURRENT
+### Priority Order (S102) ← CURRENT
 
-**Tier 1 — Art 03 grip review + re-sign-off** ← START HERE
-- DB fix ✅ S100. 02-n08 ✅ S100. Art 03 v4.5 complete.
-- **Next: Andy grip review.** Key new sections: §19 (Influence Level), §22 (Board State), §23 (Public Standing), §20 (Resource Gen), §7.4 (University Perimeter rule). On sign-off: write PM02 locked decision, update PM03, close.
-- **Then: Primitive Action Model session** (§ Primitive Action Model appendix — 03-n24 work). Read appendix fresh in next session.
+**Tier 1 — Art 03 ✅ S102**
+- Art 03 v4.7 ✅ (L216) — § Primitive Action Model appendix restructured (governing principle surfaced; S97/S101 decision tables removed; DB is source of truth). Index anchor fixed. Inline flags removed.
+- agy task queued (GEMINI_CONTEXT.md): v_unlegislated_primitives pass — 6 ❌ prohibit (junction table cleanup), 4 ✅ permits, 14 seeding gaps.
+- **Next: 03-n25** — Generalized Resolution Effects reference section. Gate note: PM05 gates on "card design pass to identify all effect types" — treat as informational for now; draft from known effects (Discovered + any others in Art 04). Likely §24 or appendix position in Art 03.
 
-**Tier 2 — Art 04b refresh** (downstream — after Art 03 signs off)
-- 04b-16 → 04b-17 → 04b-18 → 04b-19 (re-sign-off v1.7). Gate: Art 03 sign-off.
+**Tier 2 — Art 04b refresh** (Art 03 signed off ✅ — check 02-n26 gate status before starting)
+- 04b-16 → 04b-17 → 04b-18 → 04b-19 (re-sign-off v1.7).
 
 **Tier 3+ — Deferred**
-- 03-n01 (Beat 2 overhaul), 03-n24 (§22 legality table) — dedicated sessions
+- 03-n01 (Beat 2 overhaul) — dedicated session
 - Card design pass (gate: 00a-72 + Art 03 stable)
 - 01-n02 (Art 01 overhaul — gate: 00a-72 first)
 
 *Note: Art 00 v1.7 needs re-sign-off (§14.10 Integration added S99). Art 02 v2.2 ✅ S98 (L213).*
+
+**S102 accomplishments:**
+- Art 03 § Primitive Action Model appendix restructured: governing principle surfaced, S97/S101 decision tables removed (DB is source of truth), coherent section flow. Index anchor fixed. Status block trimmed. Inline flag removed from § Examples.
+- v_unlegislated_primitives legalization pass (52 rows): 6 ❌ prohibit, 4 ✅ permit, 14 seeding gaps, remainder §22 seeding tasks — agy task queued in GEMINI_CONTEXT.md.
+- Art 03 v4.7 ✅ signed off (L216).
+
+### Priority Order (S101) ← PREV
+
+**Tier 1 — Art 03 ✅ S101**
+- Art 03 v4.5 ✅ (L214) — 02-n08 migration. Art 03 v4.6 ✅ (L215) — 03-n24 Primitive Action Model legality table.
+- agy seeding of 11 permitted combinations ✅ complete (Claude_context.md S101 report).
+- 03-n25 queued.
 
 **S100 accomplishments:**
 - DB fix ✅ — `public_standing_tier`: Celebrated 18–20, Respected 14–17, Neutral 7–13.
@@ -313,7 +325,7 @@ Read full files only when deep work requires it.
 | 01 — Game Board: New Meridian | 2.1 | 🔄 Needs Re-Sign-Off — S90 (02-n05). §4 component narratives migrated to Art 02 §4; §6 Physical Forms table migrated to Art 02 §13; stale refs updated; now geography/zone-only. Open: 01-11 (scope overhaul §8/§11/§12). |
 | 02 — Components | 2.2 | ✅ Signed Off — S98 (L213). S97–S98: applicable_verbs seeded into all §§5–12 entries; §13 matrix removed; d10 (DB:119) added §11; ARBITER Dominance Marker Flip corrected; DB-42 seeded (74 rows). S99: DB sync header note added; 02-n07 ✅. Open PM05: 02-n17, 02-n21, 02-n22, 02-n25. |
 | 02a — Resource Systems: Board State | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0. Moved to Retired/Paper/ S90. |
-| 03 — Quarter Structure & Gameplay | 4.4 | 🔄 Needs Re-Sign-Off — S97: §22 Primitive Action Model & Legalization Analysis added (methodology, trigger taxonomy, gap analysis views, 19-decision S97 legalization table; relocated from Art 04b §3.3; Art 03 is now the legality source of truth). Open PM05: **03-n24 (Priority 1)**. |
+| 03 — Quarter Structure & Gameplay | 4.7 | ✅ Signed Off — S102 (L216). § Primitive Action Model appendix restructured; DB is source of truth. Open PM05: 03-n25. |
 | 04b — Action Taxonomy | 1.6 | 🔄 Pending Re-sign-off v1.7. S97: §3 Physical Action Taxonomy relocated — §3.1+§3.2 → Art 02 §13; §3.3 → Art 03 §22; §3 is now a pointer section. 04b-12 ✅ · 04b-13 ✅ · 04b-14 ✅ · 04b-15 ✅ S97. 04b-16/17/18/19 queued — gate: Art 02 §13 corrections (02-n26) first. |
 | 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). S89: C28 Breaking News — Issues Resolved ✓ (gates 04-n75/76 cleared; sign-off pending set-level gates). C40B Live Coverage — Issues Resolved ✓ (04-n77 in Art 03 §9.0; sign-off pending set-level gates). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
@@ -321,7 +333,7 @@ Read full files only when deep work requires it.
 | 06 — Messaging System | 0.4 | ✅ §9 Signed Off — S83 (L205). §9.3 clause vocabulary complete (6 types incl. Duration); §9.5 board state as sole compliance basis; §9.8 ACCORD DISSOLVED on form; §9.10 Transfer → Alter Named Party subtype. Open: §§1–8, 10–13 non-canonical stubs. |
 | 07 — ARBITER Toolkit | 0.1 | Initiative procedure (03-11) + initial draft pending. |
 
-Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re-sign-off). 01 v2.1 needs re-sign-off (02-n05). 02 v2.0 signed off (L210, conditional: 02-n11/12/13, DB-38). 02a + 02b superseded → Art 02; files moved to Retired/Paper/. Authoritative: PM03.
+Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.7), 04b (v1.6 — pending re-sign-off). 01 v2.1 needs re-sign-off (02-n05). 02 v2.2 signed off (L213). 02a + 02b superseded → Art 02; files moved to Retired/Paper/. Authoritative: PM03.
 
 ---
 
@@ -391,6 +403,7 @@ Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re
 
 ## Last 3 Locked Decisions
 
+- **L216** (S102): Art 03 v4.7 signed off. § Primitive Action Model appendix restructured — governing principle surfaced; S97/S101 decision tables removed (DB is source of truth); coherent section flow. v_unlegislated_primitives pass: 6 ❌ prohibit (junction table cleanup), 4 ✅ permit, 14 seeding gaps — agy task queued.
 - **L213** (S98): Art 02 v2.2 signed off. S97–S98: applicable_verbs seeded into all §§5–12 entries; §13 Physical Action Verb Coverage matrix removed (entries are now source of truth); d10 (DB:119) added §11; ARBITER Dominance Marker Flip corrected (transform_orientation reverted); component_metadata seeded (DB-42, 74 rows, Option A).
 - **L130** (S98): component_metadata DB architecture — Option A hybrid wide table; no junction tables; subject_target is authoritative for placement; movement_path stays in Art 02/03 prose; `trigger` is a reserved word in MariaDB (field renamed).
 - **L212** (S96): Art 02 v2.1 signed off. Grant Deed (DB:113) added §9; §4.1 movement_path field definition clarified (board event trigger, not timing); 13 movement_path timing violations corrected §§5–12. Open PM05: 02-n07, 02-n17, 02-n20, 02-n21, 02-n22.
@@ -422,7 +435,8 @@ Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.4), 04b (v1.6 — pending re
 - **Art 06 §9** — ✅ Signed Off S83 (L205)
 - **Art 00 v1.7** — 🔄 Needs Re-Sign-Off S99 (§14.10 Integration added — material). Prior sign-off: L211 S93.
 - **Art 02 v2.2** — ✅ Signed Off S98 (L213).
-- **Art 03 v4.4** — 🔄 Needs Re-Sign-Off S97 (§22 added — 03-n24 Priority 1). Prior sign-off: L207 S88.
+- **Art 03 v4.5** — ✅ Signed Off S101 (L214).
+- **Art 03 v4.7** — ✅ Signed Off S102 (L216).
 - **00b** — ⚠ S81 VM-xx + S82 BM-xx registration pending re-sign-off
 - **Art 04b v1.7** — ⚠ Pending re-sign-off — 04b-16 through 04b-19 queued (gate: Art 02 §13 corrections first)
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)

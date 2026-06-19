@@ -1,6 +1,6 @@
-# GEMINI WORKING STATE: SESSION 97
+# GEMINI WORKING STATE: SESSION 102
 
-## 1. Operating and Search Scope Constraints (Session 97 Lock)
+## 1. Operating and Search Scope Constraints (Session 102 Lock)
 To conserve token context and ensure focus on database validation, agy operates under these strict rules:
 1.  **Exclusions:** Ignore and do not scan drafts/stubs (05 and beyond) or the PM suite (`PM01`-`PM05`).
 2.  **Narrow Search Targets:** Target queries to `README.md`, `00b` (Data Architecture), `03` (Round Structure), `03a` (Engine Spec), and `04b` (Action Matrix) first.
@@ -33,23 +33,21 @@ To conserve token context and ensure focus on database validation, agy operates 
 - Role: Cloud Consultant (Validator/Research)
 - Environment: Antigravity CLI (migrated)
 
-## 3. Session 98 Tasks Status
-- **DB-43 Seeding (Phase 1 Lookups):** Completed.
-  - Created and seeded `public_standing_tier` (5 rows), `difficulty_tier` (3 rows), `resolution_outcome` (5 rows), and `influence_level` (4 rows).
-- **DB-42 Seeding (component_metadata):** Completed.
-  - Created table `component_metadata` using Option A (hybrid wide table) with TEXT columns to support large string values.
-  - Parsed `02___Components.md` and successfully seeded 74 rows of metadata using `seed_component_metadata.py`.
-- **DB-41 Seeding (Verb Additions):** Completed.
-  - Executed `seed_comp_verbs.py` to seed comp_verb_phase and comp_verb_role entries for d10 (119), Modifier token (47) Flip, Sliders (106, 107), card containers, Faction hand (94), and Operative Pool (116).
-  - Also seeded missing DB-40 Reveal additions: DebriefActionCard (100), Intel Delivery Slip (96), Notification Slip (95), Grant Deed (113).
-  - Updated transform flags in `component` table for components 42, 108, 48, 95, 96.
-  - Added missing `subject_target` records for components 49, 98, 108.
-  - Verified view matrix: **0 mismatches** found across all actionable components. All 28 views compile successfully.
-- **Outbound Report:** Logged all execution results, counts, and schemas to `Claude_context.md`.
+## 3. Session 102 Tasks Status
+- **DB View Cleanup Script (Session 101):** Executed `Database/seed_comp_cleanup.sql` successfully.
+- **DB View Seeding & Prohibited Cleanup Script (Session 102):** Executed `Database/seed_comp_cleanup_3.sql` successfully.
+  - Prohibited combinations cleaned from `comp_verb_phase` and `comp_verb_role`.
+  - Missing phase associations for permitted combinations registered in `comp_verb_phase`.
+  - 36 action records successfully seeded across all monthly/debrief phases in `action`.
+- **Verification of views:**
+  - `v_unlegislated_by_trigger` count: **0 rows** (successfully resolved to zero gaps).
+  - `v_unlegislated_primitives` count: **0 rows** (successfully resolved to zero gaps).
+- **GEMINI_CONTEXT.md Pruning:** Completed. All tasks and seed task sections from Session 32 through Session 102 have been pruned.
+- **Outbound Report:** Logged all execution results, counts, and confirmation in `Claude_context.md`.
 
-## 4. Past Session Status (Session 92 & 50)
-- **S92 Tasks**: Completed rename of component 36 to `"Escalation marker"` (**DB-38**). Implemented component taxonomy redesign (**DB-32**), adding `parent_component_id` to `component` table and creating/seeding `component_dim` and `component_type` tables (70 rows each). Handled pushback for 5 Operation Resolution grandchildren. Updated registry tools and documentation.
-- **S50 agy Punch List**: Completed. Executed all database updates for DB-22 through DB-26. Resolved DB-09 DDL block by adding Primary Key constraints to `district_metadata` and `player_metadata`. Verified all views and view compiling.
+## 4. Past Session Status (Session 98 & 92)
+- **S98 Tasks**: Completed Lookup and component metadata seeding.
+- **S92 Tasks**: Completed rename of component 36 to `"Escalation marker"` (**DB-38**). Implemented component taxonomy redesign.
 
 ## 5. Current Investigations
 ### 1. The Ring Numbering Discrepancy
@@ -63,20 +61,6 @@ To conserve token context and ensure focus on database validation, agy operates 
 
 ### 3. C13 Anomaly
 - Confirmed: `Resolution: d100` paired with `Resolution Type: Transactional`. 
-- Every other `Transactional` card is `Automatic`.
-- Every other `d100` card is `Probabilistic`.
-
-### 4. Card System Audit (C16–C35, P01–P18)
-- **Ghost (C16–C20):** High-complexity mechanics. C16 (Pattern Match) is a unique "Prediction" card (no roll). C18/C19 flagged for duplication.
-- **Directorate (C21–C25):** Focus on "Blocking" (C21, C25) and "Permanent State" (C22, C23, C24).
-- **Network (C26–C30):** Focus on disclosure. C27 (Source Protection) flagged as doctrinally misaligned.
-- **Syndicate (C31–C35):** Resource-heavy. C31 (Leveraged Acquisition) gain without presence. C33 (Hostile Acquisition) flips color.
-- **Political Acts (P01–P18):** All Beat 4. Categories and affinities verified. P01–P08 standard, P09–P18 faction-specific.
-
-### 5. Data Right-Sizing
-- Need to convert `BIGINT(20)` to `INT` or `SMALLINT` for Pi hardware.
-- `current_value` on tracks (0-20) can be `TINYINT`.
-- `component_id` may still need `BIGINT` if the serial registry is massive.
 
 ## 6. Completed DB Execution Tasks
 - **DB-03:** Created `inteltoken_metadata` (Session 36).
