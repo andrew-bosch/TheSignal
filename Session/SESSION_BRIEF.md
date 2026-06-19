@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 99 active | Updated: 2026-06-19**
+**Session 100 active | Updated: 2026-06-19**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,9 +8,40 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-### Priority Order (S99) ← CURRENT
+### Priority Order (S100) ← CURRENT
 
-**Tier 1 — Art 03 migration + re-sign-off** ← START HERE
+**Tier 1 — Art 03 grip review + re-sign-off** ← START HERE
+- DB fix ✅ S100. 02-n08 ✅ S100. Art 03 v4.5 complete.
+- **Next: Andy grip review.** Key new sections: §19 (Influence Level), §22 (Board State), §23 (Public Standing), §20 (Resource Gen), §7.4 (University Perimeter rule). On sign-off: write PM02 locked decision, update PM03, close.
+- **Then: Primitive Action Model session** (§ Primitive Action Model appendix — 03-n24 work). Read appendix fresh in next session.
+
+**Tier 2 — Art 04b refresh** (downstream — after Art 03 signs off)
+- 04b-16 → 04b-17 → 04b-18 → 04b-19 (re-sign-off v1.7). Gate: Art 03 sign-off.
+
+**Tier 3+ — Deferred**
+- 03-n01 (Beat 2 overhaul), 03-n24 (§22 legality table) — dedicated sessions
+- Card design pass (gate: 00a-72 + Art 03 stable)
+- 01-n02 (Art 01 overhaul — gate: 00a-72 first)
+
+*Note: Art 00 v1.7 needs re-sign-off (§14.10 Integration added S99). Art 02 v2.2 ✅ S98 (L213).*
+
+**S100 accomplishments:**
+- DB fix ✅ — `public_standing_tier`: Celebrated 18–20, Respected 14–17, Neutral 7–13.
+- 02-n08 ✅ — Art 03 v4.5. `Whiteboard/art02_orphaned_content.md` deleted. Full structural pass:
+  - §7.4: University Perimeter virtual structure definitional rule added.
+  - §11.0/§1145: dead pointer → inline pointer to §19.1.
+  - §13: trimmed to operation-system scope. §13.2 merged with former §13.4 (succeed/fail + crit in one table). §13.3–§13.5 renumbered. RO-01/02 in §13.2. Former §13.7/§13.8/§13.9 removed from §13.
+  - §19 Influence Level Reference: §19.0 thresholds + §19.1 Chorus Node Benefits & The Translation (merged — single table with Benefits + Translation rate columns).
+  - §20 Resource Generation Reference: ring base values + IL generation by level + affinity + structure + passive.
+  - §22 Board State Update Rules (moved from §13.7).
+  - §23 Public Standing Scale (moved from §13.8; band/range/drift table only; modifier → §13.4 ref).
+  - Appendices section added; Primitive Action Model + Examples & Exceptions moved under it.
+  - Index updated throughout.
+- PM05: 02-n08 ✅, 02-n27 added (Residential Quarter PS multiplier — placement deferred), 03-n25 added (generalized resolution effects reference section — Discovered pattern).
+
+### Priority Order (S99) ← PREV
+
+**Tier 1 — Art 03 migration + re-sign-off**
 - **DB fix first:** `UPDATE public_standing_tier` — set Celebrated 18–20, Respected 14–17, Neutral 7–13 (whiteboard canonical per S99 decision; three UPDATEs).
 - **02-n08 migration** (whiteboard `art02_orphaned_content.md` → Art 03):
   - §19 "Reserved" → "Influence Level Reference" (IL thresholds, resource gen by IL, Chorus Node benefits table). "Absent" → "None" throughout.

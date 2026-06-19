@@ -1,11 +1,11 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.4
+**Version:** 4.5
 
-**Status:** Rubric and simplification pass complete. Grip review complete. Sign-off pending component lifecycle sweep (PM05 03-n18).  
+**Status:** S100: §19 Influence Level Reference added; §22 Board State Update Rules added; §23 Public Standing Scale added; §20 ring base values added; dead pointers §20/§1145 resolved; §7.4 University Perimeter definitional rule added; RO-01/02 added to §13.2; §13 trimmed to operation-system scope only; Appendices section established. Re-sign-off pending (02-n08 ✅).
 
-**Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking  
+**Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02 — Components
 
 **Supersedes:** round_structure (retired artifact)
 
@@ -64,10 +64,15 @@ The main game loop of THE SIGNAL: the repeatable quarterly sequence that frames 
 16. [Public Act Placement Rules](#16-public-act-placement-rules)
 17. [Countermeasure Card Rules](#17-countermeasure-card-rules)
 18. [React Card Rules](#18-react-card-rules)
-19. Reserved
+19. [Influence Level Reference](#19-influence-level-reference)
 20. [Resource Generation Reference](#20-resource-generation-reference)
 21. [Card Economy Reference](#21-card-economy-reference)
+22. [Board State Update Rules](#22-board-state-update-rules)
+23. [Public Standing Scale](#23-public-standing-scale)
 
+**Appendices**
+
+[§ Primitive Action Model](#-primitive-action-model--taxonomy-reference)
 [§ Examples & Exceptions](#examples-exceptions)
 
 ---
@@ -245,7 +250,7 @@ For each marker showing the Blocked face: return the marker to hand without plac
 
 #### §7.3.3 Step 3: Update Board State
 
-Each Faction Player updates Dominant markers, Established markers, and Tension markers as influence levels shift from new presence chip placements. Any marker removed in this update is returned to ARBITER supply. See §13.7 for placement and removal triggers.
+Each Faction Player updates Dominant markers, Established markers, and Tension markers as influence levels shift from new presence chip placements. Any marker removed in this update is returned to ARBITER supply. See §22 for placement and removal triggers.
 
 *If no markers are on the board — as is always the case at the start of Quarter 1 — this section has no effect.*
 
@@ -258,6 +263,8 @@ Proceed to §7.4.
 ARBITER announces: *"Collect income."*
 
 Each Faction Player simultaneously calculates and collects their own resources. Other Faction Players observe and may challenge calculations. ARBITER resolves disputes in The Record register.
+
+**The Network — University Perimeter Virtual Structure:** The Network faction has a virtual structure block at University Perimeter from session start. It cannot be demolished and does not count toward the one-structure-per-faction-per-district limit. It functions as a structure block for all game purposes — income, modifier card draw threshold, ring modifier eligibility, and any mechanic referencing owned structure blocks. It generates income only while The Network has any presence (chip or deployment marker) at University Perimeter; if The Network holds no presence there, the virtual structure produces nothing that Quarter.
 
 #### §7.4.0 Step 0: Calculate District Income
 
@@ -395,7 +402,7 @@ Before placing in each district:
 
 ### §8.2 Step 2: Update Board State
 
-After each placement, if influence levels change: the placing Faction Player updates the relevant Dominant marker, Established marker, or Tension marker immediately. Any marker removed in this update is returned to ARBITER supply. See §13.7 for placement and removal triggers.
+After each placement, if influence levels change: the placing Faction Player updates the relevant Dominant marker, Established marker, or Tension marker immediately. Any marker removed in this update is returned to ARBITER supply. See §22 for placement and removal triggers.
 
 *Both deployment markers must be placed each Placement phase, beginning Q1M1. Both may be placed in the same district. ARBITER redirects illegal placements.*
 
@@ -1142,7 +1149,7 @@ Any Faction Player may:
 
 ARBITER conversion available during Debrief and between phases. Not available during active resolution beats (Beats 0–5) or while ARBITER is processing board changes. Requests during resolution are served after the current beat completes.
 
-*Quarter 1 only — ARBITER announces: "Resource conversion is available whenever I am not actively resolving actions. The rate is determined by your presence at the Chorus Node." Rate table: Art 02a §8 (D02a-01).*
+*Quarter 1 only — ARBITER announces: "Resource conversion is available whenever I am not actively resolving actions. The rate is determined by your presence at the Chorus Node." Rate table: §19.1 — Chorus Node Benefits & The Translation.*
 
 ### §11.1 Step 1: Debrief Actions
 
@@ -1269,9 +1276,16 @@ If d10 dice are unavailable, any device capable of generating a random integer f
 
 ### §13.2 How to Read the Roll
 
-To succeed, the roll must land equal to or below the target threshold.
+To succeed, the roll must land equal to or below the target threshold. The threshold is the probability of success expressed as a percentage.
 
-*The threshold is the probability of success expressed as a percentage — a threshold of 75 means a 75% chance of success.*
+| Outcome | Condition |
+|---------|-----------|
+| Succeeded (RO-01) | Roll ≤ threshold |
+| Failed (RO-02) | Roll > threshold |
+| Critical Success | Roll 01–05 — always, regardless of threshold or modifiers |
+| Critical Fail | Roll 96–00 — always, regardless of threshold or modifiers |
+
+*If modifiers reduce the threshold to 0 or below, the roll still occurs — only a Critical Success (01–05) succeeds. If modifiers raise the threshold to 100 or above, the roll still occurs — only a Critical Fail (96–00) fails. The 5% critical floor means no committed action is truly hopeless; the 5% critical ceiling means no action is guaranteed. Critical Success and Critical Fail carry additional action-specific consequences noted on individual operation cards (Artifact 04).*
 
 ---
 
@@ -1289,18 +1303,7 @@ Base difficulty is printed on the operation card or public act card. It represen
 
 ---
 
-### §13.4 Critical Results
-
-| Roll | Result | Condition |
-|------|--------|-----------|
-| 01–05 | Critical Success | Always — regardless of threshold or modifiers |
-| 96–00 | Critical Fail | Always — regardless of threshold or modifiers |
-
-*If modifiers reduce the threshold to 0 or below, the roll still occurs — only a Critical Success (01–05) succeeds. If modifiers raise the threshold to 100 or above, the roll still occurs — only a Critical Fail (96–00) fails. The 5% critical floor means no committed action is truly hopeless; the 5% critical ceiling means no action is guaranteed. Critical Success and Critical Fail carry additional action-specific consequences noted on individual operation cards (Artifact 04).*
-
----
-
-### §13.5 Difficulty Modifiers
+### §13.4 Difficulty Modifiers
 
 | ID | Category | Name | Scope | Applied | Instance Limit | Value Type | Threshold Adjustment |
 |----|----------|------|-------|---------|----------------|------------|----------------------|
@@ -1325,7 +1328,7 @@ Base difficulty is printed on the operation card or public act card. It represen
 
 *Variable modifiers are unbounded by this table — balance analysis across all defined modifier values is maintained in Artifact 03a.*
 
-### §13.6 Intel Token Age
+### §13.5 Intel Token Age
 
 Token age = current Quarter − Quarter generated (written on token by ARBITER at issuance).
 
@@ -1334,18 +1337,6 @@ Token age = current Quarter − Quarter generated (written on token by ARBITER a
 | 0–2 | Fresh | No modifier |
 | 3 | Stale | −25 threshold modifier (M-13) applied at Beat 0 (covert) or Beat 4 (public) |
 | 4+ | Expired | Counts as partial payment |
-
-### §13.7 Board State Update Rules
-
-These rules apply at every step where influence marker or structure block changes occur: §7.3.3, §8.2, §9.4.2.2.0, §9.4.3.3.0, §10.1.5, and any card-effect board change.
-
-**Tension marker placement:** Whenever a board state update results in two or more factions tied at IL-01 (Dominant) in a district, place 1 Tension marker on that district from ARBITER supply. Cross-reference: 00b §4.3 Contested flag.
-
-**Tension marker removal:** When the tie is broken by any means — chip removal, card effect, contest resolution — ARBITER removes the Tension marker and returns it to ARBITER supply.
-
-**Dominant and Established marker updates:** When a faction's influence level in a district reaches the threshold for Dominant (IL-01) or Established (IL-02), the corresponding marker is placed. When a faction's influence level falls below that threshold, the marker is removed and returned to ARBITER supply.
-
-**Structure block removal:** When a faction's influence marker count in a district drops to zero, any structure blocks belonging to that faction in that district are removed and returned to ARBITER supply.
 
 ---
 
@@ -1475,15 +1466,64 @@ ARBITER resumes the original procedure from the point it paused.
 
 ---
 
-## §19
+## §19 Influence Level Reference
 
-*Reserved.*
+### §19.0 Influence Level Thresholds
+
+| Level | Chip minimum | Rank condition |
+|-------|-------------|----------------|
+| Dominant | 3+ | Strictly more chips than all others in district |
+| Established | 2+ | Second place by chip count |
+| Present | 1+ | Third place or lower by chip count |
+| None | 0 | No chips or deployment markers |
+
+- Maximum 6 presence chips per faction per district at any time.
+- Deployment markers count toward chip count and toward the 6-chip limit during the Quarter placed.
+- Multiple factions may hold Established simultaneously; up to 4–5 may coexist in a district.
+- A faction at None immediately loses all structure blocks in that district. The player who caused the last chip removal removes them publicly.
+
+### §19.1 Chorus Node Benefits & The Translation
+
+| Presence level at Chorus Node | Benefits | Translation rate |
+|-------------------------------|---------|-----------------|
+| ARBITER (constitutive — 8 tokens, Dominance Marker) | Controls Node narrative | — |
+| Established (one faction, no tie) | Chorus Activity suppression + Portrait amplifier + Chorus Question access | 2:1 |
+| Present | Chorus Question access | 3:1 |
+| Tied at Established / Contested (Tension marker placed) | No other Node benefits | 5:1 |
+| None | — | 4:1 |
+
+**The Translation:** Any resource converts to any other at the applicable rate. No action slot required. No limit per Quarter. Announce to ARBITER; ARBITER states the rate in The Record register; take tokens from the Reservoir directly. Timing: ARBITER must not be actively processing a resolution beat or delivering narrative. *The Contested rate is not a balancing mechanism — it is ARBITER's response to factions bringing conflict into the Chorus Node.*
+
+**Portrait amplifier:** Each Quarter a faction holds Established at the Chorus Node, their Chorus Portrait score moves further in its current direction — +1 if currently positive, −1 if currently negative. At exactly 0 (Ambiguous), no movement. ARBITER moves the Portrait marker at Quarter close (§12).
+
+**Dominant is structurally unreachable at the Chorus Node.** ARBITER's permanent presence is 8 tokens; faction maximum is 6. The Dominant marker is not placed at the Chorus Node. Only one faction may hold Established at the Chorus Node at a time — if two or more factions reach 2+ chips and tie, the Tension marker is placed and all tied factions drop to Present-equivalent benefits.
+
+**No structure blocks at the Chorus Node.** The Node's space is entirely occupied by receiving infrastructure that predates every faction's presence.
 
 ---
 
 ## §20 Resource Generation Reference
 
-*Values that feed §7.4 Resource Collection. Full income tables and base generation values: Art 02a §8.*
+*Values that feed §7.4 Resource Collection.*
+
+### Ring Base Values
+
+| Ring | Base resource value per Quarter |
+|------|---------------------------------|
+| Baryo | 1 unit |
+| The Mid | 2 units |
+| Core | 3 units |
+| Chorus Node | 0 — no resource generation |
+
+### Resource Generation by Influence Level
+
+| Level | Generation |
+|-------|-----------|
+| Dominant | Full (×1) |
+| Established | Full (×1) |
+| Present | Half, round down (minimum 0) |
+| None | Zero |
+| Contested (3+ chips, tied) | 1 unit flat regardless of base value |
 
 ### Affinity Bonus
 
@@ -1526,6 +1566,38 @@ Each faction generates 1 unit of their native resource each Quarter, uncondition
 *[flag: register in 03-init as a game parameter.]*
 
 ---
+
+## §22 Board State Update Rules
+
+These rules apply at every step where influence marker or structure block changes occur: §7.3.3, §8.2, §9.4.2.2.0, §9.4.3.3.0, §10.1.5, and any card-effect board change.
+
+**Tension marker placement:** Whenever a board state update results in two or more factions tied at IL-01 (Dominant) in a district, place 1 Tension marker on that district from ARBITER supply. Cross-reference: 00b §4.3 Contested flag.
+
+**Tension marker removal:** When the tie is broken by any means — chip removal, card effect, contest resolution — ARBITER removes the Tension marker and returns it to ARBITER supply.
+
+**Dominant and Established marker updates:** When a faction's influence level in a district reaches the threshold for Dominant (IL-01) or Established (IL-02), the corresponding marker is placed. When a faction's influence level falls below that threshold, the marker is removed and returned to ARBITER supply.
+
+**Structure block removal:** When a faction's influence marker count in a district drops to zero, any structure blocks belonging to that faction in that district are removed and returned to ARBITER supply.
+
+---
+
+## §23 Public Standing Scale
+
+Public Standing (PS) runs from 0 to 20. All factions start at 10. Difficulty modifiers by band: §13.4 (M-01–M-05).
+
+| Band | Range | PS drift per Quarter |
+|------|-------|----------------------|
+| Celebrated | 18–20 | −1 |
+| Respected | 14–17 | −1 |
+| Neutral | 7–13 | 0 |
+| Suspect | 3–6 | +1 |
+| Discredited | 0–2 | +1 |
+
+*Drift applied at §12.0 Quarter Close after all other PS changes.*
+
+---
+
+## Appendices
 
 <a id="examples-exceptions"></a>
 
@@ -1624,7 +1696,7 @@ The ARBITER Player opens the Sealed Apex ability and pauses. ARBITER reads. The 
 
 ---
 
-## §22 Primitive Action Model — Taxonomy Reference
+## § Primitive Action Model — Taxonomy Reference
 
 *Relocated from Art 04b §3.3 (S97). Physical possibility space defined in Art 02 §13. This section is the legality source of truth for subject × verb × component combinations. Subject × verb × component legality table to be built as a focused design pass (PM05 03-n24).*
 
@@ -1694,7 +1766,7 @@ S97 — 19 Faction-initiated combinations decided:
 |---------|------|-----------|----------|-------|
 | Faction | Add | Intel token | ❌ | Prohibited — faction cannot place intel tokens directly; ARBITER-only delivery |
 | Faction | Add | Political act | ✅ | Art 03 §9.4.0 PA submission — DB seeding gap |
-| Faction | Add | Structure block | ✅ | Art 03 §13.7 board state update — DB seeding gap |
+| Faction | Add | Structure block | ✅ | Art 03 §22 board state update — DB seeding gap |
 | Faction | Conceal | Intel token | ✅ | Voluntary — faction may reveal (hold up/show) then re-place in private terminal |
 | Faction | Corrupt | Accord agreement | ✅ | Art 06 §9.10 — DB seeding gap |
 | Faction | Corrupt | Intel token | ✅ | Permitted — DB seeding gap |
