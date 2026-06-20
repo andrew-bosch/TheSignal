@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 106 complete | S107 next | Updated: 2026-06-19**
+**Session 107 complete | S108 next | Updated: 2026-06-20**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,21 +8,58 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-### Priority Order (S107) ← CURRENT
+### Priority Order (S108) ← CURRENT
 
-**Tier 1 — Art 04b full audit against 00a** (Andy: "we missed that audit")
-- Full sweep of Art 04b taxonomy functions/verbs against 00a governing rules
-- S106 found: Recover violates 7.2b. Full audit required before more card design.
+**Tier 1 — Art 04b v1.8 re-sign-off (04b-21)**
+Gates before sign-off:
+- §5.2 card IDs: 21 cards have `—` in card ID column — assign [FAC].[TYPE].n IDs
+- §6.1 cleanup: remove retired gaps (Recover rows) and fulfilled gaps (cards now addressed); show only valid unaddressed gaps
 
 **Tier 2 — Syndicate gaps** (deferred from S106)
-- Information|Corrupt|AccordAgreement
-- Information|Reveal|IntelTokensHeld
-- Accord Transfer sign-off
+- Information|Corrupt|AccordAgreement — STD.CA.11 Tort Interference covers Accord terms; Syndicate-specific numeric alteration still a gap
+- Information|Reveal|IntelTokensHeld — count disclosure + purchase offer mechanic
+- Accord Transfer: taxonomy corrected to Economy|Corrupt|AccordCard (L227); sign-off deferred pending Art 06
 
-**Tier 3 — Art 04 spec fixes (04-n103)**
-- GUI.CA.2: function Recover → Add
-- GUI.CA.6: function Recover → Add; card_id/variable assignment
-- Field Verification: BLOCKED flag + G-ext id (7.2b violation)
+**Tier 3 — Art 04 spec fixes**
+- 04-n103: GUI.CA.2 Recover→Add; GUI.CA.6 Recover→Add + card_id; Field Verification BLOCKED; **Backdate BLOCKED** (L222 — added S107)
+- 04-n104: Regulatory Downgrade BLOCKED + Regulatory Freeze BLOCKED (L223 — InfluenceTier not targetable + 9.1)
+- 04-n105: DIR.CA.2 Detain function field Remove → Move in Art 04 Python spec
+
+---
+
+### S107 Accomplishments
+
+**Art 04b full audit against 00a — ✅ Complete**
+Six rulings locked (L222–L227), Art 04b bumped to v1.8 draft:
+- **L222** — Backdate 🚫 BLOCKED: Intel token location constraint (private terminal unreachable) + 7.2b (round-number = committed validity state)
+- **L223** — Regulatory Downgrade 🚫 BLOCKED: InfluenceTier not a targetable component (derived from token counts); 9.1 prohibits direct income modification. Regulatory Freeze 🚫 BLOCKED: same subject violation + Block function targets actions not derived states
+- **L224** — Conceal retired from function vocabulary: system behavior (dispatch case / terminal / screen), not a card-triggered function
+- **L225** — ARBITER-reveal outside 10.1: ARBITER discloses from own domain; portrait track only prohibited target
+- **L226** — DIR.CA.2 Detain retaxonomized Territory|Remove → Territory|Move (game.move() to Detention zone; Remove = return to supply)
+- **L227** — Accord Transfer retaxonomized Economy|Redirect → Economy|Corrupt (party-name replacement = written-record alteration per §4.10)
+
+**Files updated S107:**
+- Art 04b v1.8: §4.10, §4.13 (new), §5.1, §5.2 (5 card annotations), §6.1, §7 matrix, §8.2, §8.4
+- design_reference_card_system.md: 7.2b, 7.2a, 10.1, 9.1 (expanded), §4.10 location constraint added to Key Governing Rules
+- ref_taxonomy.md: Recover + Conceal retired from function table; Corrupt scope + location constraint updated
+- PM02: L222–L227 locked
+- PM05: 04-n103 updated, 04-n104/04-n105/04b-21 added
+
+**Audit clean (no violations):** All Add, Remove (5 types), Redirect, Protect, Block, Copy, Shift|PS, all Reveal (taxonomy level), Source Substitution, Enhanced Scrutiny, Construction Crew, Tort Interference, Intel Extraction, Detain (8.3a compliant)
+
+**Last 3 locked decisions:** L227 (Accord Transfer → Corrupt) · L226 (Detain → Move) · L225 (ARBITER-reveal outside 10.1)
+
+**Pending sign-offs:** Art 04b v1.8 (04b-21, gates above)
+
+---
+
+### Priority Order (S107) ← PREV
+
+**Tier 1 — Art 04b full audit against 00a** ✅ Complete — see S107 Accomplishments above.
+
+**Tier 2 — Syndicate gaps** (deferred to S108)
+
+**Tier 3 — Art 04 spec fixes (04-n103)** (deferred to S108 Tier 3, expanded with 04-n104/04-n105)
 
 ---
 

@@ -13,7 +13,7 @@
 | Remove | Remove | Component exits active play to supply or off-board |
 | Move | Remove + Place | Component relocates from one on-board location to another |
 | Reveal | Transform | Component face/contents become visible to named recipients |
-| Conceal | Transform | Component placed or returned face-down or closed |
+| Conceal | Transform | Component placed or returned face-down or closed *(physical system behavior — dispatch case, faction terminal, ARBITER screen; not a card-triggered function — L224)* |
 | Flip | Transform | Physical orientation changed — not an information state change |
 | Corrupt | Transform | A physically written or recorded value is altered |
 
@@ -43,13 +43,13 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 | Add | Brings new element into active play from supply | Add |
 | Remove | Takes element out of active play | Remove |
 | Redirect | Changes ownership, destination, or allegiance | Move |
-| Recover | Returns spent/removed/degraded element to active play | Add |
+| ~~Recover~~ | **Retired S106 (04b-20)** — reducible to Add + React context; 7.2b prohibits retroactive board state reversal | — |
 | Modify | Alters cost, value, or attribute without changing fundamental state | — (abstract constraint) |
 | Protect | Preserves current state against a named change | — (meta-constraint) |
 | Block | Prevents another action from being initiated or resolving | — (meta-constraint) |
 | Copy | Duplicates another action's effect chain with new initiating subject | Invoke |
 | Reveal | Makes hidden information visible to named audience | Reveal |
-| Conceal | Places information or attribution into hidden state | Conceal |
+| ~~Conceal~~ | **Retired S107 (L224)** — system behavior, not a card function; 7.2a prohibits hidden board state | — |
 | Shift | Moves a track value (Public Standing, Portrait) up or down | Move |
 | Corrupt | Alters a physically written or recorded value | Corrupt |
 
@@ -73,7 +73,9 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 | Public Standing | Standing |
 | DebriefActionCard | Information |
 
-Corrupt targets are strictly: Intel tokens · Accord agreements · Target Profile. Only components with physically written values in the paper prototype.
+Corrupt targets are strictly: Intel token faction-name field (location constraint applies) · Accord agreement terms · Accord named party (L227) · Target Profile. Only components with physically written values in the paper prototype.
+
+**Intel token location constraint (L222):** Tokens are valid Corrupt targets ONLY when publicly placed (on a Public Act as payment, Beat 0–4). Tokens in faction terminal or ARBITER terminal are not reachable. Round-number field is additionally prohibited by 7.2b.
 
 ---
 
@@ -91,6 +93,7 @@ Key assignment rules:
 3. **Protect** assigns to the layer of the protected target.
 4. React/Instant/interrupt is timing only — the card still carries its own Layer/Function/Subject.
 5. Modifier cards and Pass cards are excluded from taxonomy entirely.
-6. Corrupt applies only to physically written/recorded values. Invalid targets: printed card text, marker positions, Chronicle.
+6. Corrupt applies only to physically written/recorded values. Invalid targets: printed card text, marker positions, Chronicle, Intel token round-number field (7.2b). Intel tokens must be in public-placement window to be reachable (L222).
+6b. InfluenceTier is not a targetable component — it is derived from token counts. Only board state changes (add/remove tokens) affect tier (L223).
 7. Portrait is ARBITER-sole-mover — player cards affect Public Standing only (Standing/Shift/PublicStanding).
 8. No persistent temporary cross-round effects — effects are either immediate (this Quarter) or permanent (rest of session).
