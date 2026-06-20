@@ -87,7 +87,7 @@ Corrupt targets are strictly: Intel tokens · Accord agreements · Target Profil
 
 Key assignment rules:
 1. Same physical verb can serve different Layers — assign Layer by design intent, not by verb.
-2. **Dual-aspect components:** count = Economy; content = Information. Assign by dominant design intent (e.g., C05 Gather adds an Intel token but intent is intelligence acquisition → Information/Add/IntelToken).
+2. **Dual-aspect components:** count = Economy; content = Information. Assign by dominant design intent (e.g., STD.CA.5 Gather adds an Intel token but intent is intelligence acquisition → Information/Add/IntelToken).
 3. **Protect** assigns to the layer of the protected target.
 4. React/Instant/interrupt is timing only — the card still carries its own Layer/Function/Subject.
 5. Modifier cards and Pass cards are excluded from taxonomy entirely.

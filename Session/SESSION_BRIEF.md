@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 104 complete | Updated: 2026-06-19**
+**Session 106 complete | S107 next | Updated: 2026-06-19**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,60 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-### Priority Order (S104) ← CURRENT
+### Priority Order (S107) ← CURRENT
+
+**Tier 1 — Art 04b full audit against 00a** (Andy: "we missed that audit")
+- Full sweep of Art 04b taxonomy functions/verbs against 00a governing rules
+- S106 found: Recover violates 7.2b. Full audit required before more card design.
+
+**Tier 2 — Syndicate gaps** (deferred from S106)
+- Information|Corrupt|AccordAgreement
+- Information|Reveal|IntelTokensHeld
+- Accord Transfer sign-off
+
+**Tier 3 — Art 04 spec fixes (04-n103)**
+- GUI.CA.2: function Recover → Add
+- GUI.CA.6: function Recover → Add; card_id/variable assignment
+- Field Verification: BLOCKED flag + G-ext id (7.2b violation)
+
+---
+
+### Priority Order (S106) ← PREV
+
+**S106 accomplishments:**
+- DIR.CA.6 Institutional Audit ✅ — Economy|Add|Mandate. Ring Permanent count yield; chip count > 1 restriction.
+- DIR.CA.7 Institutional Brief ✅ — Standing|Shift|PublicStanding. Same ring Permanent count architecture as CA.6.
+- DIR.CA.8 Enhanced Scrutiny ✅ — Resolution|Modify|Difficulty. Beat 2 Automatic; −15 Modifier tokens on all Beat 3 rows in target district.
+- NET.CA.7 Ground Signal ✅ — Standing|Shift|PublicStanding. IL ≤ Established restriction; successcrit = +1 chip + +1 PS.
+- NET.MOD.1 Signal Break ✅ — Territory|Add|PresenceToken React Modifier. Trigger = PA success causing board state change. Exposure×1; d100 threshold 50.
+- GUI.MOD.1 Return to Site stub — Territory|Add|PresenceToken React (formerly Territory|Recover|PresenceToken).
+- GUI.CA.6 Labor Contract — card_id GUI.CA.6 assigned (L219).
+- **Recover function retired from Art 04b** (04b-20 ✅ — 00a 7.2b: committed board states cannot be nullified):
+  - GUI.CA.2 Materials Acquisition: Recover → Add (taxonomy); Art 04 spec fix pending 04-n103
+  - GUI.CA.6 Labor Contract: Recover → Add; Art 04 spec fix pending 04-n103
+  - Field Verification: BLOCKED — arbiter.update(token.quarter) violates 7.2b; fundamental redesign required (04-n103)
+  - L218 annotated in PM02 as consequence of 7.2b, not standalone decision
+- PM05: 04-n102 (Modifier card schema), 04-n103 (Recover Art 04 spec fixes), 04b-20 ✅
+- Art 04 v0.9.41 Draft. 04b §4/§5.2/§6/§7/§8.3/§8.5 updated.
+
+**Tier 1 (S106) — Card design pass** (all gates cleared)
+- Art 03 ✅ v4.8 (L217, S104) · 00a ✅ v0.8 (S83) · ID-04 ✅ (L221, S105)
+- Card design pass: Standard → faction sets
+- PM05: 04-n50–04-n67 (set-level milestones) · 04-n87–04-n92 (doctrine review)
+
+**Tier 2+ — Deferred**
+- 03-n01 (Beat 2 overhaul) — dedicated session
+- 01-n02 (Art 01 overhaul)
+
+### Priority Order (S105) ← PREV
+
+**S105 accomplishments:**
+- ID-01 through ID-05 + ID-SCHEMA ✅ — agy completed between sessions (reported in Claude_context.md)
+- ID-04 ✅ — Full renumber complete: [FAC].[TYPE].n format applied across Art 04 (678 substitutions), Art 04b (201 substitutions), card_ref DB (27 rows), and ref_*.md / design_reference_card_system.md. 3 dot-ref lines in Art 04 preserved (L6286/L6950/L6979 — pseudocode variable refs). card_id field added to Art 04 §6.1/§6.2. Art 04b §9 Pass card entry removed (retired).
+- Art 04b v1.7 ✅ signed off — L221. §§6/7/8 are living sections; updated as gap cards are designed, not a re-sign-off gate.
+- Decision: Art 04 card set files remain monolithic until CA/PA design pass is complete; split to per-faction sub-files after design stabilizes.
+
+### Priority Order (S104) ← PREV
 
 **Tier 1 (S105) — Card renumber pass + 04b-19 sign-off**
 1. Check Claude_context.md — verify agy completed ID-01/02/03, ID-05, ID-SCHEMA between sessions
@@ -22,8 +75,8 @@ Read full files only when deep work requires it.
 
 **S104 accomplishments:**
 - Art 03 v4.8 ✅ signed off (L217) — §24 Resolution State Reference (three states: Succeeded / Failed / Voided; Discovered fires alongside Failed, not parallel). RO-xx removed throughout Art 03. §9.4.1.0 targeting restriction updated to flip face-down (unifying all Voided cases under §9.4.2.0 Step 0 handler). Open: 03a-n01 (3 residual RO-xx refs in 03a, lines 1038/1363/1370 — non-material, separate artifact)
-- Art 04b v1.7 content complete: 04b-16 ✅ (§6 refresh — gaps updated, §6.2 stale rows replaced, §6.3 stale counts removed / Art 03 §22 pointer corrected), 04b-17 ✅ (§7 matrix rebuilt from Art 04 data — C17/C24 misclassification fixed, C42/C25/C36–C38/C41 added), 04b-18 ✅ (§8.1–§8.4 updated to current card states; §8.5 Guild added). 04b-19 sign-off gated on ID-04 (§7 IDs must be updated before Andy can validate)
-- L218: Territory|Recover|StructureBlock not possible — demolition is permanent; rebuild = Territory|Add (C01). §6.1 N/A; §8.5 Guild rec removed
+- Art 04b v1.7 content complete: 04b-16 ✅ (§6 refresh — gaps updated, §6.2 stale rows replaced, §6.3 stale counts removed / Art 03 §22 pointer corrected), 04b-17 ✅ (§7 matrix rebuilt from Art 04 data — STD.CA.2/DIR.CA.3 misclassification fixed, DIR.CA.5/DIR.CA.4/GHO.CA.6–SYN.CA.6/SYN.CA.7 added), 04b-18 ✅ (§8.1–§8.4 updated to current card states; §8.5 Guild added). 04b-19 sign-off gated on ID-04 (§7 IDs must be updated before Andy can validate)
+- L218: Territory|Recover|StructureBlock not possible — demolition is permanent; rebuild = Territory|Add (STD.CA.1). §6.1 N/A; §8.5 Guild rec removed
 - L219: Card ID schema locked — [FAC].[TYPE].n; varchar(15). 20-deck inventory; STD = 5 physical copies; ARB.BCAST/BCEV only ARBITER cards; ARB instruments not cards. Full schema in PM02
 - L220: DB script idempotency convention locked — INSERT IGNORE, portable session patches, archive/ subfolder for originals
 - ID-01 through ID-05 + ID-SCHEMA queued in PM05 and GEMINI_CONTEXT.md for agy between sessions
@@ -345,12 +398,12 @@ Read full files only when deep work requires it.
 | Artifact | Version | Open Item |
 |----------|---------|-----------|
 | 00 — Factions, World & Narrative | 1.7 | 🔄 Needs Re-Sign-Off — S99: §14.10 Integration added (material — new narrative anchor). Prior: ✅ S93 (L211). Open: 00-09, 00-15, 00-16 (re-sign-off). |
-| 00a — Governing Rules & Design Policy | 0.7 | ✅ Signed Off — S74 (L196). §3 renamed + scope routing note; §4 scope line; §4.6 Narrative Origin Principle (L195). 31 rules. Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle documentation). |
+| 00a — Governing Rules & Design Policy | 0.8 | ✅ Signed Off — S83. L108 standard migrated to §11; 00b restructured. Prior: S74 (L196) v0.7 — §3/§4 scope additions; Narrative Origin Principle (L195). Open: 00a-73 (7.3b revision), 00a-74 (Source/Governs audit), 00a-75 (Derivability principle), 00a-76 (Action Space Governance rule). |
 | 01 — Game Board: New Meridian | 2.1 | 🔄 Needs Re-Sign-Off — S90 (02-n05). §4 component narratives migrated to Art 02 §4; §6 Physical Forms table migrated to Art 02 §13; stale refs updated; now geography/zone-only. Open: 01-11 (scope overhaul §8/§11/§12). |
 | 02 — Components | 2.2 | ✅ Signed Off — S98 (L213). S97–S98: applicable_verbs seeded into all §§5–12 entries; §13 matrix removed; d10 (DB:119) added §11; ARBITER Dominance Marker Flip corrected; DB-42 seeded (74 rows). S99: DB sync header note added; 02-n07 ✅. Open PM05: 02-n17, 02-n21, 02-n22, 02-n25. |
 | 02a — Resource Systems: Board State | 1.6 | ⛔ Superseded — S88 by Art 02 v1.0. Moved to Retired/Paper/ S90. |
-| 03 — Quarter Structure & Gameplay | 4.8 | 🔄 Needs Re-Sign-Off — S103. §24 Resolution State Reference added; RO-xx codes removed throughout; targeting restriction → face-down model. Prior: ✅ S102 (L216). Open PM05: none. |
-| 04b — Action Taxonomy | 1.6 | 🔄 Pending Re-sign-off v1.7. S97: §3 Physical Action Taxonomy relocated — §3.1+§3.2 → Art 02 §13; §3.3 → Art 03 §22; §3 is now a pointer section. 04b-12 ✅ · 04b-13 ✅ · 04b-14 ✅ · 04b-15 ✅ S97. 04b-16/17/18/19 queued — gate: Art 02 §13 corrections (02-n26) first. |
+| 03 — Quarter Structure & Gameplay | 4.8 | ✅ Signed Off — S104 (L217). §24 Resolution State Reference: three states (Succeeded/Failed/Voided); Discovered alongside Failed; RO-xx removed; targeting restriction → face-down model. Open PM05: 03a-n01 (3 residual RO-xx refs in 03a, lines 1038/1363/1370 — non-material). |
+| 04b — Action Taxonomy | 1.7 | ✅ Signed Off S105 (L221). ID-04 renumber applied (all C/P IDs → [FAC].[TYPE].n). §9 Pass card entry removed. §§6/7/8 living — update as gap cards are designed. |
 | 04 — Action Card System | 0.9.34 | S75: §5 P19–P25 added (card design constraints migrated from 00a §7 — effect duration types, partial payment, crit cost, portrait card property, ring modifier scope, corrupt scope, standard language). P5 updated (authoritative R26 constraint). P6 cross-ref P19. Checklist rows updated. XA-46 rule ID sweep applied. S71: C31 v1.4. C41A v2.0. C41B v1.0. C42 v2.0. §6 boost field. Signals Analysis BLOCKED (Art 06.x). C17 ⚠ re-sign-off pending (04-n50). S89: C28 Breaking News — Issues Resolved ✓ (gates 04-n75/76 cleared; sign-off pending set-level gates). C40B Live Coverage — Issues Resolved ✓ (04-n77 in Art 03 §9.0; sign-off pending set-level gates). |
 | 00c — Economy Manifest | 0.4 | §8, §9 stubs only. |
 | 03a — Game Engine Specification | 0.98 | Tier 4 stub remaining. XA-37 pending (strip "Layer N —" prefixes from section headings). |
@@ -427,9 +480,9 @@ Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.7), 04b (v1.6 — pending re
 
 ## Last 3 Locked Decisions
 
-- **L216** (S102): Art 03 v4.7 signed off. § Primitive Action Model appendix restructured — governing principle surfaced; S97/S101 decision tables removed (DB is source of truth); coherent section flow. v_unlegislated_primitives pass: 6 ❌ prohibit (junction table cleanup), 4 ✅ permit, 14 seeding gaps — agy task queued.
-- **L213** (S98): Art 02 v2.2 signed off. S97–S98: applicable_verbs seeded into all §§5–12 entries; §13 Physical Action Verb Coverage matrix removed (entries are now source of truth); d10 (DB:119) added §11; ARBITER Dominance Marker Flip corrected (transform_orientation reverted); component_metadata seeded (DB-42, 74 rows, Option A).
-- **L130** (S98): component_metadata DB architecture — Option A hybrid wide table; no junction tables; subject_target is authoritative for placement; movement_path stays in Art 02/03 prose; `trigger` is a reserved word in MariaDB (field renamed).
+- **L221** (S105): Art 04b v1.7 signed off. ID-04 renumber complete — [FAC].[TYPE].n format applied across Art 04, Art 04b, card_ref DB, and ref files. card_id field added to Art 04 §6.1/§6.2. §9 Pass card entry removed. §§6/7/8 living sections — updated as gap cards are designed, not re-sign-off gates.
+- **L220** (S104): DB script idempotency convention locked — INSERT IGNORE, portable session patches, archive/ subfolder for originals.
+- **L219** (S104): Card ID schema locked — [FAC].[TYPE].n; varchar(15). 20-deck inventory. Full schema in PM02.
 - **L212** (S96): Art 02 v2.1 signed off. Grant Deed (DB:113) added §9; §4.1 movement_path field definition clarified (board event trigger, not timing); 13 movement_path timing violations corrected §§5–12. Open PM05: 02-n07, 02-n17, 02-n20, 02-n21, 02-n22.
 - **L210** (S92): Art 02 v2.0 signed off. §§5–12 rubric pass, metadata population, and GR validation complete across all 68 components. Conditional on PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
 - **L207** (S88): Art 03 v4.4 signed off. Component lifecycle sweep complete; §13.7 Board State Update Rules added (Tension marker placement trigger; Structure block removal + return); Control flag renamed Dominant marker (same component — DB-14 = rename, not new registration); Target Profile added to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); §12.0 BEC scope clarified.
@@ -462,7 +515,7 @@ Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.7), 04b (v1.6 — pending re
 - **Art 03 v4.5** — ✅ Signed Off S101 (L214).
 - **Art 03 v4.7** — ✅ Signed Off S102 (L216).
 - **00b** — ⚠ S81 VM-xx + S82 BM-xx registration pending re-sign-off
-- **Art 04b v1.7** — ⚠ Pending re-sign-off — 04b-16 through 04b-19 queued (gate: Art 02 §13 corrections first)
+- **Art 04b v1.7** — ✅ Signed Off S105 (L221)
 - **C17** — ⚠ v1.1 pending re-sign-off (beat=2 correction S70 — tracked 04-n50)
 
 ---

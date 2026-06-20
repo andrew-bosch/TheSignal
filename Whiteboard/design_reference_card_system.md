@@ -55,7 +55,7 @@
 |------|-------------|
 | Beat 0 | ARBITER opens cases: validates each op (token present, payment present); builds Resolution Grid; Beat 2 cards placed in Beat 2 row; Beat 3 cards placed in Beat 3 rows; invalid ops returned |
 | Beat 1 | Read Board State: SitRep effects applied as standing public acts; targeting restrictions scanned; covert ops in restricted districts voided |
-| Beat 2 | Conditions Set: Beat 2 row processed L→R (Type A/B Countermeasures, Protect, Fortify Structure, C24); public acts can still be voided before Beat 4 payment |
+| Beat 2 | Conditions Set: Beat 2 row processed L→R (Type A/B Countermeasures, Protect, Fortify Structure, DIR.CA.3); public acts can still be voided before Beat 4 payment |
 | Beat 3 | Covert operations resolve: dice rolled per §12; outcomes applied; Portrait fires |
 | Beat 4 | Public acts resolve: payment submitted to Reservoir; outcome applied; initiative order |
 | Beat 5 | Post-resolution cleanup; Battlefield Strength if Contested |
@@ -114,7 +114,7 @@
 | Dispatch Token | 1 per covert op in case; drawn from Backlog at Upkeep; Ghost draws 4, others draw 3 |
 | Modifier cards (faction + ring) | Drawn at Upkeep; assigned to ops in case or held; unassigned stay in modifier area |
 | SCIFRecord (SR-xx) | DebriefActionCard type; sits in ARBITER tableau. Fields: `quarter \| target_faction \| draw_ring1/2/3 \| draw_faction`. Filled by ARBITER at Debrief when Ghost SCIF resolves; delivered to Ghost case. |
-| IntelDeliverySlip (IS-xx) | Private ARBITER-to-faction slip; never seen by other factions. Delivered at Beat 2 (C24 column read) or Beat 3 (C18 row read); contains grid data scoped to delivery conditions. |
+| IntelDeliverySlip (IS-xx) | Private ARBITER-to-faction slip; never seen by other factions. Delivered at Beat 2 (DIR.CA.3 column read) or Beat 3 (GHO.CA.3 row read); contains grid data scoped to delivery conditions. |
 
 ### Resources
 
@@ -221,12 +221,12 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | Rule | Summary | Applies To |
 |------|---------|-----------|
 | **Governing Rule 8.1** HARD | Max 6 presence per faction per district; deployment markers count | All presence-placing cards |
-| **Governing Rule 8.2** HARD | Max 1 structure block per faction per district | C01, C14, P03, P09 + new |
+| **Governing Rule 8.2** HARD | Max 1 structure block per faction per district | STD.CA.1, GUI.CA.4, STD.PA.3, GUI.PA.1 + new |
 | **Governing Rule 8.2b** HARD | Structures lost immediately on Absent; no card can prevent | All presence-removing cards |
 | **Governing Rule 8.3** | "At least 1 presence token" includes deployment markers | All cards |
 | **Governing Rule 8.3a** | Deployment markers never removed — always moved | All cards targeting markers |
 | **Governing Rule 8.3b** | No faction is eliminated | All |
-| **Governing Rule 8.1a** HARD | No structures at Chorus Node | C01, C14 + new build cards |
+| **Governing Rule 8.1a** HARD | No structures at Chorus Node | STD.CA.1, GUI.CA.4 + new build cards |
 | **Design Pillar 4.8c** | Floor Act always available (1 native resource); cannot be blocked | Public act design |
 | **Design Pillar 4.8d** HARD | Passive generation (+1 native/Quarter) cannot be blocked or reduced | Resource cards |
 | **Design Pillar 4.8a** | District resource type never changes | District-targeting cards |
@@ -241,7 +241,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | **Art 04 §5 P5** HARD | React conditions must be publicly observable — no hidden triggers | All React cards |
 | **Art 04 §5 P24** | Corrupt applies only to physically written/recorded values (Intel tokens, Accords) | Corrupt function cards |
 | **Art 04 §5 P26** (locked S78, L199) | Every card must be expressible as a 1–2 sentence narrative story. If "What is happening in the world when this card is played?" has no coherent answer, the card is a design problem. Narrative is the first test of whether mechanics are right. | All cards — checked via Card Story block + checklist row 15 |
-| **Design Pillar [04-n6 pending]** | Ghost may use C05 (Gather) without adjacency; all other Ghost cards require adjacency | Ghost card design |
+| **Design Pillar [04-n6 pending]** | Ghost may use STD.CA.5 (Gather) without adjacency; all other Ghost cards require adjacency | Ghost card design |
 | **Design Pillar 4.6b** | Missing Author Vacuum — no card flavor, perspective, or authored content may assert or imply any faction knows what the message to the Chorus should say | Narrative/perspectives fields |
 | **Design Pillar 4.7b** | ARBITER Cognitive Efficiency — every rule, card effect, and procedure involving ARBITER must minimize ARBITER player cognitive load. Preference order: (1) physical objects carry state, (2) faction players self-police, (3) general procedures applied uniformly, (4) ARBITER-specific per-instance only as last resort | All cards with ARBITER-facing content |
 | **Governing Rule 7.3a** HARD | Phases don't overlap; no revisiting prior phases | Timing rules |
@@ -353,7 +353,7 @@ Permanent public acts that create ongoing board conditions use the card-on-board
 
 *Examples: Regulatory Downgrade, Regulatory Freeze, Standing Injunction, Entry/Exit Controls*
 
-**Seasonal persistence with timed effects** uses a different mechanism: `persistence_condition`/`persistence_effect` are None; the timed effect is encoded as `game.world_condition()` in the `success` field. This is not in conflict with the Permanent pattern — they serve different durations. Example: P16 Public Dividend (DividendMarker world_condition in success).
+**Seasonal persistence with timed effects** uses a different mechanism: `persistence_condition`/`persistence_effect` are None; the timed effect is encoded as `game.world_condition()` in the `success` field. This is not in conflict with the Permanent pattern — they serve different durations. Example: SYN.PA.2 Public Dividend (DividendMarker world_condition in success).
 
 ---
 
