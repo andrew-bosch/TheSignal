@@ -1,9 +1,9 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.8 — Signed Off — S83 (§11 added — L108 Data Table Standard migrated from 00b §3)  
+**Version:** 0.9 — Signed Off — S108 (GR 10.1b added — ARBITER disclosure exception to §10.1)  
 **Status:** Signed Off  
-**Last Updated:** 2026-06-09  
+**Last Updated:** 2026-06-20  
 **Companion to:** 00 — Factions, World & Narrative Context  
 **Depends on:** 00, 01, 02, 03, 04, 04b
 
@@ -860,6 +860,29 @@ Rules governing privately held information: what constitutes private information
 
 ---
 
+#### 10.1b — ARBITER Disclosure is Outside the Discretional Model
+
+**Rule:** ARBITER may reveal any content from its own domain — Intel Tokens, covert operations, dispatch contents, Broadcast Effect Cards, and board state — without triggering 10.1's discretional framework. No faction may invoke 10.1 to prevent ARBITER from completing a prescribed reveal. Portrait is the sole exception: no ARBITER procedure ever discloses Portrait position.
+
+**Narrative:**
+
+> *"When ARBITER spoke, we stopped waiting to find out if anyone would tell us. ARBITER told us. That was different."*
+> — Guild representative, session debrief
+
+ARBITER does not hold information the way factions do. The Chorus already knows everything in New Meridian. The Witness does not trade information. It announces when the record becomes material.
+
+**Mechanics:** ARBITER-initiated disclosure — via card resolution, Art 07 procedure, or round structure — is not subject to 10.1's stakes framework: 10.1 governs what factions choose to share with each other, not what ARBITER announces. ARBITER holds information because the game requires a mechanism to surface hidden state without making that surfacing a faction act — it is the only entity that can do this while preserving the covert structure. Portrait position is never disclosed by any ARBITER procedure (Art 00a §5.1); this carveout is absolute.
+
+*Source: Corollary of 10.1.*
+
+*Governs: Artifacts 03, 04, 07.*
+
+*Cross-ref: Art 04b §4.8.*
+
+*See also: 4.7, §5.1.*
+
+---
+
 #### 10.2 — Intel Tokens Leave Play When Spent
 
 **Rule:** Spent or discarded intel tokens leave active play.
@@ -947,6 +970,7 @@ All data tables in THE SIGNAL artifact suite must satisfy the following five req
 | 9.1b | Card and action resource generation is not upkeep income; three-source restriction does not apply | §9 |
 | 10.1 | Disclosure is discretional; no card may compel it; Reveal effects create stakes, not compulsion | §10 |
 | 10.1a | Verbal claims about undisclosed information cannot be verified by ARBITER | §10 |
+| 10.1b | ARBITER disclosure is outside the discretional model; ARBITER-initiated reveals are not subject to 10.1 stakes; Portrait excepted | §10 |
 | 10.2 | Spent or discarded intel tokens leave active play | §10 |
 | 10.3 | Intel token holdings are subject to per-faction limits and expiry | §10 |
 

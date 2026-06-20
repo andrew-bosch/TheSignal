@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 107 complete | S108 next | Updated: 2026-06-20**
+**Session 108 complete | S109 next | Updated: 2026-06-20**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,22 +8,52 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-### Priority Order (S108) ← CURRENT
+### S108 Accomplishments ✅
 
-**Tier 1 — Art 04b v1.8 re-sign-off (04b-21)**
-Gates before sign-off:
-- §5.2 card IDs: 21 cards have `—` in card ID column — assign [FAC].[TYPE].n IDs
-- §6.1 cleanup: remove retired gaps (Recover rows) and fulfilled gaps (cards now addressed); show only valid unaddressed gaps
+**Art 04b v1.8 — signed off (04b-21 ✅)**
+
+§4 full audit — historical noise dropped; taxonomy definitions moved to §5.1; three governing rules added as design grounds:
+- §4.14 — GR 7.2b (committed board states final)
+- §4.15 — GR 10.1 (Reveal creates stake, not compulsion)
+- §4.16 — GR 9.1 (income untouchable)
+- §4.8 rewritten as GR 10.1b corollary (ARBITER is information authority)
+
+§5.1 additions: Valid Layer × Function Combinations matrix (60 cells, 17 invalid); Visibility column in Layer table; React/Instant/Interrupt paragraph
+
+§5.2: sorted ascending by card ID; Visibility column added (derived from Layer); BLOCKED card taxonomy filled (GHO.CA.13/14, DIR.PA.1/4/5)
+
+§8.1 Ghost: BLOCKED redesign guidance; 4 new PA/React design seeds added (GHO.PA.3–6); GHO.PA.4 Public Threat Assessment mechanic locked — targets BroadcastEffectCard (DB:98) via ARBITER reveal (GR 10.1b); Broadcast Card / Broadcast Effect Card two-component model documented
+
+§8.2 Directorate: BLOCKED redesign guidance added (DIR.PA.4/5, DIR.PA.1)
+
+Sign-off scope policy locked: §4/§5 material changes require re-sign-off; §6–9 working sections do not.
+
+**Art 04 spec fixes ✅ (04-n103, 04-n104, 04-n105 closed)**
+- GUI.CA.2 + GUI.CA.6: `function = Recover` → `function = Add`; GUI.CA.6 variable named
+- Backdate 🚫 + Field Verification 🚫: BLOCKED in section headers, status tables, Outstanding Issues
+- Regulatory Downgrade 🚫 + Regulatory Freeze 🚫: BLOCKED with dual-constraint rationale
+- DIR.CA.2 Detain: `function = Remove` → `function = Move` (Python + checklist)
+
+**Art 00a v0.9 — GR 10.1b signed off (04b-22 ✅)**
+- GR 10.1b added to §10: ARBITER disclosure outside discretional model; Governs: 03, 04, 07
+- Art 04b §4.8 footnote cleaned; Appendix A updated
+
+**Last 3 locked decisions:** GR 10.1b (Art 00a §10.1b — ARBITER-reveal exception formalized) · Broadcast Card/BEC two-component split documented (DB:25/98) · Art 04b §4/§5 sign-off scope policy
+
+### Priority Order (S109) ← CURRENT
+
+**Tier 1 — Ghost PA card design pass**
+- GHO.PA.3 Declassified Records: expired Intel token cost mechanic — Art 03 §18 treatment needed before spec
+- GHO.PA.4 Public Threat Assessment: BroadcastEffectCard via ARBITER reveal — gate: BC/BEC linking mechanism; Art 03 procedure for ARBITER BEC application
+- GHO.PA.5 Clarify Misinformation: React/Instant vs. corrupted Intel token — Beat timing gate
+- GHO.PA.6 Agency Recruitment Fair: Territory|Add|PresenceToken — district-type tag vs. named-list decision
 
 **Tier 2 — Syndicate gaps** (deferred from S106)
-- Information|Corrupt|AccordAgreement — STD.CA.11 Tort Interference covers Accord terms; Syndicate-specific numeric alteration still a gap
+- Information|Corrupt|AccordAgreement — Syndicate-specific numeric alteration still a gap
 - Information|Reveal|IntelTokensHeld — count disclosure + purchase offer mechanic
-- Accord Transfer: taxonomy corrected to Economy|Corrupt|AccordCard (L227); sign-off deferred pending Art 06
+- Accord Transfer: Economy|Corrupt|AccordCard (L227); sign-off deferred pending Art 06
 
-**Tier 3 — Art 04 spec fixes**
-- 04-n103: GUI.CA.2 Recover→Add; GUI.CA.6 Recover→Add + card_id; Field Verification BLOCKED; **Backdate BLOCKED** (L222 — added S107)
-- 04-n104: Regulatory Downgrade BLOCKED + Regulatory Freeze BLOCKED (L223 — InfluenceTier not targetable + 9.1)
-- 04-n105: DIR.CA.2 Detain function field Remove → Move in Art 04 Python spec
+**Tier 3 — Art 00a 04b-22** ✅ S108 complete
 
 ---
 

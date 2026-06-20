@@ -2,7 +2,7 @@
 ## THE SIGNAL P1 — Paper Prototype
 
 **Version:** 1.8  
-**Status:** 📝 Draft — S107 audit (L222–L227); re-sign-off required  
+**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off.  
 **Last Updated:** 2026-06-20  
 **Companion to:** 04 — Action Card System  
 **Purpose:** Preserve the taxonomy framework, development decisions, coverage analysis, and faction design recommendations that govern Artifact 04 and all future card design passes.
@@ -56,28 +56,6 @@ The distinction matters because the same physical verb can serve different desig
 
 Layers are game-design partitions — not narrative concepts, not phase concepts. They describe what the game is tracking and what cards can affect.
 
-### 4.2 The six game layers
-
-| Layer | Visibility | Governs |
-|-------|-----------|---------|
-| **Territory** | Public | The influence landscape: Presence chips, structures, Dominant markers, spatial markers |
-| **Economy** | Public | Quantitative holdings: native resources, card counts, Accord existence |
-| **Information** | Private → Public | Qualitative content: token content, written records, attribution, reconnaissance |
-| **Submission** | Split (covert = private, political = public) | What enters the resolution queue: costs, eligibility, blocks, scope |
-| **Resolution** | Split by phase | The d100 system: threshold, modifier stack, difficulty, Battlefield Strength, outcome scale |
-| **Standing** | Split (Public Standing = public, Portrait = private) | Reputation tracks as affectable consequence registers |
-
-### 4.3 Cross-Category is retired
-
-The original four categories (Board / Resource / Action / Cross-Category) used Cross-Category as a catch-all for information revelation, reputation shifts, and protection effects. When a catch-all grows to cover ~30% of the card set, it is a signal that the underlying partitioning is incomplete.
-
-The six layers resolve this explicitly:
-- Information effects (Reveal, Conceal, attribution Protect, Corrupt) → Information layer
-- Reputation-track effects → Standing layer
-- Protect effects → layer of the protected target (§4.6)
-
-Cross-Category has no entry in the Layer field. All cards have a primary layer assignment.
-
 ### 4.4 Dual-aspect components
 
 Some components have both quantitative and qualitative properties. The count of a component is an Economy property; the content or recorded state of a component is an Information property. These are separate, independently affectable properties:
@@ -90,77 +68,47 @@ Some components have both quantitative and qualitative properties. The count of 
 
 A card that adds an Intel token to the pool (STD.CA.5 Gather) is an Information card — the dominant design intent is intelligence acquisition, not resource accumulation. Token count is an Economy property of a held asset; card layer is classified by what the card's primary effect serves. A card that reveals the content of a token is an Information card. A card that introduces a token with falsified content (GHO.CA.5 Misdirection) is an Information card — the qualitative deception is the primary design intent, even though the Add primitive is also executed.
 
-### 4.5 Accord is a known-narrow Economy subset
+### 4.5 Protect distributes to the target's layer
 
-Whether an Accord exists between two factions is a public, countable fact → Economy. The recorded terms of an Accord are Information. Accord-specific design space has expanded materially since this decision was written: Art 06 §9 (signed off L191/L198/L205) defines a full clause vocabulary (six types including Lock, Alter, Transfer, Duration, Prohibition, Obligation) and a card-driven formation and manipulation model. The Economy classification for Accord existence still holds; the design space is no longer narrow.
+A Protect card belongs to the layer of its protected target — it is not a cross-layer function.
 
-### 4.6 Protect distributes to the target's layer
-
-A Protect card belongs to the layer of its protected target — it is not a cross-layer function. The principle is established; individual card assignments below are pending full card development except where noted.
-
-| Card | Protected target | Layer | Status |
-|------|----------------|-------|--------|
-| STD.CA.10 Protect | Covert operation difficulty | Resolution | ✅ Signed off |
-| GUI.CA.1 Fortify Structure | Structure block | Territory | ✅ Signed off |
-| ~~GHO.CA.3 Identity Blind~~ | ~~Action attribution~~ | ~~Information~~ | 🚫 Retired — redesigned S68. GHO.CA.3 is now **Dossier Breach** (Information — Reveal — IntelDeliverySlip). No longer a Protect card. |
-| GHO.CA.4 Deep Cover | ~~Action attribution (permanent)~~ | Information | 📝 Design pass complete (v1.1) — redesigned S51. Taxonomy changed: now **Information — Remove — IntelToken** (permanently removes Ghost attribution record from rival's Intel token). See §5.2. Issues not yet resolved. |
-| ~~STD.CA.11 Evidence Preservation~~ | ~~Written record~~ | ~~Information~~ | 🚫 Retired — redesigned S68. STD.CA.11 is now **Tort Interference** (Standard CovertOperation; locks a named Accord against voluntary dissolution). No longer a Protect card — taxonomy: Economy — Block — Accord agreement. |
-| SYN.CA.4 Golden Parachute | Native resource | Economy | 📝 Design pass complete (v2.0, L185) — bribe mechanic; variable Capital declared at Dispatch; nullification is conditional on target's submitted ops. Issues resolved. Pending sign-off. |
-
-### 4.7 Submission and Resolution are distinct layers
-
-The original Action category covered blocking submissions, modifying costs, adjusting difficulty, and changing scope — two separate systems:
-
-- **Submission** governs what enters the queue: costs, eligibility restrictions, blocks, operational scope
-- **Resolution** governs how the queue resolves: the d100 threshold, difficulty, modifier application, outcome scale
-
-A card that blocks an operation from being submitted (DIR.CA.1 Invoke Jurisdiction, DIR.CA.4 Sealed Border) is a Submission card. A card that changes the difficulty of an operation in the queue (GHO.PA.2 Signal Review Request) is a Resolution card.
-
-### 4.8 Standing is an affectable consequence register
-
-Public Standing and Portrait tracks record resolution outcomes across the session — they function as consequence registers. However, they are also independently affectable: cards can shift track values directly, independent of any underlying action resolving. This dual role (output register + independently affectable surface) warrants a dedicated layer.
-
-Portrait is ARBITER-controlled (L84, 00a §5.1). Player-facing Standing cards affect Public Standing only.
-
-### 4.9 React, Instant, and interrupt effects
-
-React, Instant, and interrupt effects are an intentional play mechanic — trigger-based cards that fire automatically on publicly observable conditions. These mechanics are valid and in full scope for the game.
-
-In the taxonomy, React/Instant/interrupt is a *timing classification*, not a Layer or Function. A card using this mechanic carries its own Layer — Function — Subject for its primary effect; the timing mechanism describes *when* the effect fires, not *what* it affects. These mechanics can appear across all layers:
-
-- A card adds resources triggered by an opponent's resolved action → Economy — Add — Native resource (GUI.CA.2) [Recover retired S106 — reducible to Add + temporal context; see 04b-20]
-- An Instant card that blocks a submission in-flight → Submission — Block — [target]
-- An interrupt that reveals attribution when triggered → Information — Reveal — Action attribution
-
-Because timing is a separate axis, React / Instant / interrupt cards are classified by their effect, not their trigger. The full mechanic treatment — trigger conditions, stack behavior, observability requirements — is in Art 03 §18 (React Card Rules).
-
-### 4.10 Corrupt applies only to physically written or recorded values
+### 4.6 Corrupt applies only to physically written or recorded values
 
 Corrupt is classified in the Information layer. Scope is strict: applies only to values physically written or tracked in the paper prototype. Valid targets: Intel tokens (faction name only — see location constraint below), Accord agreements (terms written on document; named party on Accord form — L227), Target Profile (content within an operation bundle inside the dispatch case). Invalid: printed card text, marker positions (tracked by physical position, not written value), Chronicle (ARBITER narrative — not a mechanical game element), round-number field on Intel tokens (see below).
 
 **Intel token location constraint (L222):** Intel tokens reside in the faction terminal (private zone — unreachable by an opposing card) or the ARBITER terminal (write-only by ARBITER). The only window where an opposing faction's Intel token is publicly accessible is when placed on a Public Act as payment (Beat 0 through Beat 4 PA resolution). Only tokens in that public-placement window are valid Corrupt targets. Own-faction modification of privately held tokens constitutes falsification of game state and is prohibited. Round-number field is additionally blocked by 7.2b: round number records the token's committed validity state (when it was created); altering it retroactively modifies that committed state.
 
-### 4.11 Redirect unifies Convert and Transfer
+### 4.7 No multi-Quarter temporary effects
 
-Convert (changing ownership of a board element) and Transfer (moving resources between factions) are both instances of Redirect. Convert is Territory — Redirect. Transfer is Economy — Redirect.
+Card effects use exactly one of four valid duration types: **Immediate** (resolved at beat; no lingering marker), **Transient** (removed at end of current Month), **Seasonal** (removed at end of current Quarter / Phase 21), or **Permanent** (persists for the remainder of the session until a named action or condition removes it). No card creates a state that expires after a defined number of Quarters. (Art 04 §5 P19; Art 00a §3.1)
 
-### 4.12 No multi-Quarter temporary effects
+### 4.8 ARBITER is the information authority — corollary to GR 10.1
 
-Card effects use exactly one of four valid duration types: **Immediate** (resolved at beat; no lingering marker), **Transient** (removed at end of current Month), **Seasonal** (removed at end of current Quarter / Phase 21), or **Permanent** (persists for the remainder of the session until a named action or condition removes it). No card creates a state that expires after a defined number of Quarters. *Locked: Art 04 §5 P6 and P19 (formerly 00a R21). See Art 00a §3.1 — canonical duration definitions.*
+The game contains hidden information: Intel tokens in private terminals, covert operations in sealed dispatch cases, modifier assignments, the covert resolution grid. Faction players must receive controlled disclosures of hidden state during play — SitRep reads, IntelDeliverySlips, SCIF results, Beat 3 grid entries. ARBITER is the only entity that can surface hidden information while preserving the covert structure: it controls what gets revealed, to whom, and when. Without ARBITER disclosure, the hidden information model has no legal output channel.
 
-### 4.13 ARBITER-reveal is outside 10.1 (L225)
+This is why ARBITER-reveal is outside GR 10.1. GR 10.1 protects faction players from being forced to expose what they strategically hold. ARBITER holds nothing strategically — it is not a participant competing for informational advantage. Its disclosure is the game's information system functioning. Narratively: ARBITER is The Witness. Its disclosure is The Signal surfacing what it already sees. Compelling another player's disclosure is a faction act; ARBITER surfacing its own knowledge is a game function.
 
-ARBITER may reveal any content from its own domain — the covert resolution grid, target profiles, modifier cards in the Beat 3 queue, tableau contents — without triggering 10.1's stake model. ARBITER's disclosure is an exercise of its own knowledge as the game's information authority, not a compulsion of a faction player's disclosure choice. The target faction is not making a disclosure decision when ARBITER reads from its own domain.
+**Portrait is the sole carveout** (Art 00a §5.1): Portrait is ARBITER-controlled and is never disclosed as a product of any card, script, or ARBITER procedure. The Witness reads the track; it does not broadcast it.
 
-Portrait track is the only prohibited ARBITER reveal target (00a §5.1 — Portrait is ARBITER-controlled and never disclosed as a product of any card or script).
+*(Art 00a GR 10.1b)*
 
-10.1's stake model applies only to cards that compel or incentivize a faction player to reveal information they hold privately.
+### 4.14 Committed board states are final (GR 7.2b)
 
-### 4.14 Design note — Paper vs Electronic ARBITER knowledge gap
+No card, Accord, World Condition, or ARBITER script may retroactively nullify or modify a committed board state. "Committed" means the state existed at resolution — the dice rolled, the effect applied, the token placed. Whatever followed is downstream of that state, not a revision of it.
 
-In the paper prototype, ARBITER knows what happened (actions taken, board state, resolved effects) but does not know what is being considered (cards held, options available, choices not made). This is consistent with ARBITER's narrative character — ARBITER reads signals that have entered the causal chain; intent before action is not yet signal.
+This constraint eliminates the Recover function in its original sense (restoring a prior board state) and blocks any mechanic whose primary effect is reaching backward in the causal chain. Recover was retired S106 on this basis. GHO.CA.13 Backdate and GHO.CA.14 Field Verification are BLOCKED because both alter values that record committed states (round-number field on Intel tokens).
 
-In the electronic version, ARBITER would have access to hand contents and could generate Chronicles that include patterns of restraint alongside patterns of action. The unchosen path is also story. Flag for PM04 — Future Phases.
+### 4.15 Reveal creates a stake, not a compulsion (GR 10.1)
+
+The Reveal function does not force a player to disclose. It creates a consequence for the holder's choice — reveal and gain the benefit (or avoid the penalty), withhold and accept the alternative. The decision belongs to the player; the card sets the stakes. Any card where the Reveal effect fires without the holder's choice is a 10.1 violation regardless of framing.
+
+See §4.13 for the ARBITER-reveal carveout.
+
+### 4.16 Income generation is untouchable (GR 9.1)
+
+Upkeep income flows from presence and structure output only. No card may directly modify a faction's income generation — neither to suppress it nor to amplify it beyond the board state. InfluenceTier is not a targetable component; it is derived from token counts, not written or placed independently. A card can affect income only by changing the underlying board state (adding or removing tokens), which changes the tier, which changes income naturally.
+
+This distinguishes Economy — Remove — Native resource (removing tokens from a faction's current holdings) from income suppression (preventing tokens from generating at Upkeep). The former is permissible; the latter is not. DIR.PA.4 Regulatory Downgrade and DIR.PA.5 Regulatory Freeze are BLOCKED on this basis.
 
 ---
 
@@ -170,16 +118,16 @@ In the electronic version, ARBITER would have access to hand contents and could 
 
 ### 5.1 Column Definitions
 
-**Layer** — which game system does this card affect? See §4.2 for visibility and full scope definitions.
+**Layer** — which game system does this card affect?
 
-| Layer | Scope |
-|-------|-------|
-| Territory | The influence landscape: presence tokens, structures, control flags, spatial markers |
-| Economy | Quantitative holdings: native resources, token counts, card counts, Accord existence |
-| Information | Qualitative content: token content, written records, attribution, reconnaissance |
-| Submission | What enters the resolution queue: costs, eligibility, blocks, scope |
-| Resolution | The d100 system: threshold, modifier stack, difficulty, outcome scale |
-| Standing | Reputation tracks: Public Standing and Portrait |
+| Layer | Visibility | Scope |
+|-------|-----------|-------|
+| Territory | Public | The influence landscape: presence tokens, structures, Dominant markers, spatial markers |
+| Economy | Public | Quantitative holdings: native resources, token counts, card counts, Accord existence |
+| Information | Private → Public | Qualitative content: token content, written records, attribution, reconnaissance |
+| Submission | Split (covert = private, political = public) | What enters the resolution queue: costs, eligibility restrictions, blocks, operational scope. Cards that affect whether and how an action reaches resolution — before the dice roll. |
+| Resolution | Split by phase | The d100 system: threshold, difficulty, modifier stack, Battlefield Strength, outcome scale. Cards that alter how the queue resolves — at or during the dice roll, not the submission of the action. |
+| Standing | Split (Public Standing = public, Portrait = private) | Reputation tracks as affectable consequence registers |
 
 **Function** — what does the card do to its subject?
 
@@ -187,7 +135,7 @@ In the electronic version, ARBITER would have access to hand contents and could 
 |----------|------------|--------------------------|
 | Add | Brings a new element into active play from supply or off-board | Add |
 | Remove | Takes an element out of active play | Remove |
-| Redirect | Changes ownership, destination, or allegiance of an element | Move |
+| Redirect | Changes ownership, destination, or allegiance of an element. Subsumes prior vocabulary: ownership change of a board element = Convert (Territory — Redirect); cross-faction resource movement = Transfer (Economy — Redirect). | Move |
 | Modify | Alters a cost, value, or attribute without changing the element's fundamental state | — (abstract constraint) |
 | Protect | Preserves the current state of a target against a named change | — (meta-constraint) |
 | Block | Prevents another action from being initiated or resolving | — (meta-constraint) |
@@ -201,97 +149,118 @@ In the electronic version, ARBITER would have access to hand contents and could 
 
 **Modifier Card Scope** — Modifier cards are excluded from Layer — Function — Subject taxonomy (§9). They do not produce game-state primitives; they alter the parameters of primitives initiated by taxonomy cards. Their design space spans all six layers — any valid action from any layer can be the host action for a Modifier. The design question is not "which layer?" but "what host action does this require, and what parameter does it change?" Parameters a Modifier can alter include difficulty, cost, threshold, scope, outcome, timing, or validity of the host action.
 
-React and Instant are timing sub-functions within the Modifier card type — they describe when a Modifier fires, not what it does. React fires automatically when a named publicly-observable condition is met (Art 04 §5 Principle 5); Instant is played actively during a defined window. Both are specified in Artifact 04 card specs. A Timing column may be added to §5.2 when the full modifier timing model is locked.
+**React, Instant, and Interrupt** — timing sub-functions within the Modifier card type that describe *when* a Modifier fires, not *what* it affects. Timing is a separate classification axis from Layer and Function: a Modifier is classified by its primary effect, not its trigger. Because Modifiers can target host actions from any layer, React/Instant/interrupt effects can appear across all layers — for example, Economy — Add — Native resource triggered by an opponent's resolved action (GUI.CA.2); Submission — Block on an Instant played in-flight; Information — Reveal triggered on attribution. React triggers must be publicly observable (Art 04 §5 P5). Full mechanic treatment — trigger conditions, stack behavior, observability requirements — is in Art 03 §18. A Timing column may be added to §5.2 when the full modifier timing model is locked.
+
+**Valid Layer × Function Combinations** — `—` indicates a combination prohibited by governing rule or physical constraint. All other cells represent valid design space regardless of whether a card currently exists.
+
+| Layer | Visibility | Add | Remove | Redirect | Modify | Protect | Block | Copy | Reveal | Shift | Corrupt |
+|-------|-----------|-----|--------|---------|--------|---------|-------|------|--------|-------|---------|
+| Territory | Public | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — |
+| Economy | Public | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ |
+| Information | Private → Public | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| Submission | Split | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| Resolution | Split by phase | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Standing | Split | — | — | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | — |
+
+*Invalid cells (—):*
+- *Territory and Economy | Reveal: layer is fully public — no hidden state for a card to surface*
+- *Territory | Corrupt: component positions are tracked by physical placement, not written values (§4.9)*
+- *Resolution | Corrupt: no physically written or recorded values in the resolution system (§4.9)*
+- *Standing | Add / Remove: subsumed by Shift — the Standing modification primitive*
+- *Standing | Reveal: PS is public; Portrait is the sole prohibited reveal target — never surfaced by card effect (GR 10.1b)*
+- *Standing | Corrupt: track positions are physical markers, not written values (§4.9)*
+- *All non-Standing | Shift: Shift applies only to Standing track values*
 
 ### 5.2 Card Index
 
 *Status key: ✅ Signed off — canonical, use for gap analysis. 📝 Draft — designed but not signed off. ⬜ Not yet designed. 🚫 Retired.*
 
-| Card ID | Name | Status | Layer | Function | Subject | Primitive Verb(s) |
-|---------|------|--------|-------|----------|---------|-------------------|
-| STD.CA.1 | Build Structure | ✅ | Territory | Add | Structure block | Add |
-| STD.CA.2 | Demolish | ✅ | Territory | Remove | Structure block | Remove |
-| STD.CA.3 | Campaign | ✅ | Territory | Add | Presence token | Add |
-| STD.CA.4 | Undermine | ✅ | Territory | Remove | Presence token | Remove |
-| STD.CA.5 | Gather | ✅ | Information | Add | Intel token | Add |
-| STD.CA.6 | Broadcast Interference | ✅ | Submission | Modify | Political act (cost) | — |
-| STD.CA.7 | Amplify | ✅ | Resolution | Modify | Political act (outcome scale) | — |
-| STD.CA.8 | Buy Influence | ✅ | Territory | Add | Presence token | Add |
-| STD.CA.9 | Fund | ✅ | Economy | Redirect | Native resource | Move |
-| STD.CA.10 | Protect | ✅ | Resolution | Protect | Covert operation (difficulty) | — |
-| GUI.CA.1 | Fortify Structure | ✅ | Territory | Protect | Structure block | — |
-| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Add | Native resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
-| GUI.CA.3 | Foundation Rights | ✅ | Territory | Add | Presence token | Add |
-| GUI.CA.4 | Construction Crew | ✅ | Submission | Remove Restriction | Covert operation (presence requirement) | — |
-| GUI.CA.5 | Infrastructure Yield | ✅ | Economy | Add | Native resource | Add |
-| GHO.CA.1 | Pattern Match | ✅ | Submission | Copy | Covert operation (full) | Invoke |
-| GHO.CA.2 | Intercept | 📝 | Information | Reveal | CovertOperation | Reveal |
-| GHO.CA.3 | Dossier Breach | 📝 | Information | Reveal | IntelDeliverySlip | Reveal |
-| GHO.CA.4 | Deep Cover | 📝 | Information | Remove | IntelToken | Remove |
-| GHO.CA.5 | Misdirection | 📝 | Information | Add | Intel token (corrupt content) | Add + Corrupt |
-| DIR.CA.1 | Invoke Jurisdiction | 📝 | Submission | Block | Covert operation (STD.CA.1, STD.CA.3) | — |
-| DIR.CA.2 | Detain | 📝 | Territory | Move | Deployment marker | Move | *(taxonomy corrected S107 L226: success operation is game.move() to Detention zone; Remove was incorrect — Remove = return to supply; Detention zone is an active play area on Directorate's tableau. Art 04 spec function field correction tracked under 04-n105)* |
-| STD.CA.11 | Tort Interference | 📝 | Information | Corrupt | Accord | Corrupt |
-| DIR.CA.3 | Surveillance Placement | 📝 | Information | Reveal | CovertOperation | Reveal |
-| DIR.CA.4 | Tactical Redirection | 📝 | Territory | Move | PresenceToken | Move |
-| NET.CA.1 | Leak | 📝 | Information | Reveal | District | Reveal |
-| NET.CA.2 | Disclosure Loop | 📝 | Economy | Add | Exposure | Add |
-| NET.CA.3 | Breaking News | 📝 | Information | Reveal | CovertOperation | Reveal |
-| NET.CA.4 | Network Cascade | 📝 | Submission | Modify | PoliticalAct | — |
-| NET.CA.5 | Community Anchor | 📝 | Territory | Add | Presence token | Add |
-| SYN.CA.1 | Leveraged Acquisition | 📝 | Economy | Add | Native resource | Add |
-| SYN.CA.2 | Short the Market | 📝 | Economy | Remove | Native resource | Remove |
-| SYN.CA.3 | Hostile Acquisition | 📝 | Territory | Redirect | Structure block | Move |
-| SYN.CA.4 | Golden Parachute | 📝 | Economy | Protect | Native resource | — |
-| SYN.CA.5 | Regulatory Capture | 📝 | Submission | Block | Named action type | — |
-| GHO.CA.6 | Synthesize | 📝 | Economy | Add | IntelToken | Add |
-| NET.CA.6 | Sacrifice | 📝 | Economy | Add | IntelToken | Add |
-| SYN.CA.6 | Parasitic | 📝 | Economy | Add | IntelToken | Add |
-| STD.CA.12 | Absolute Compromise | 📝 | Submission | Block | CovertOperation | — |
-| NET.PA.3 | Live Coverage | 📝 | Information | Reveal | FactionHand | Reveal |
-| SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Redirect | NativeResource | Move |
-| DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Remove | PresenceToken | Remove |
-| — | Source Substitution | 📝 | Information | Corrupt | Intel token | Corrupt |
-| — | Backdate | 🚫 BLOCKED | Information | — | — | — | *L222: (1) Location constraint — Intel token in private terminal zone unreachable by opposing card; only publicly placed tokens (PA payment window) are valid Corrupt targets. (2) 7.2b — round-number records committed validity state; altering it is retroactive modification. §4.10 revised. Art 04 spec: BLOCKED pending redesign (04-n103).* |
-| — | Field Verification | 🚫 BLOCKED | Information | — | Intel token | — | *7.2b violation: mechanic alters committed token age field retroactively. Fundamental redesign required. G-ext id retired. Art 04 spec: BLOCKED pending redesign (04-n103).* |
-| GUI.CA.6 | Labor Contract | 📝 | Economy | Add | NativeResource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
-| — | Station | 📝 | Information | Add | IntelToken | Add |
-| — | Full Take | 📝 | Information | Add | IntelToken | Add |
-| — | SCIF | 📝 | Information | Add | DebriefActionCard | Add |
-| — | Flip | 📝 | Economy | Add | FactionNativeResource | Add |
-| — | Signals Analysis | 📝 | Information | Reveal | ClassifiedDirective | Reveal |
-| — | Entry/Exit Controls | 📝 | Territory | Block | DeploymentMarker | — |
-| — | Regulatory Downgrade | 🚫 BLOCKED | Territory | — | — | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
-| — | Regulatory Freeze | 🚫 BLOCKED | Territory | — | — | — | *L223: Same subject violation — InfluenceTier not a targetable component. Additionally, Block targets actions (not derived states); Block\|InfluenceTier is a subject mismatch. Fundamental redesign required (04-n104).* |
-| — | Land Title | 📝 | Territory | Add | StructureBlock | Add |
-| — | Hostile Takeover | 📝 | Territory | Add | PresenceToken | Add |
-| — | Accord Transfer | 📝 | Economy | Corrupt | AccordCard | Corrupt | *(taxonomy corrected S107 L227: party-name replacement is physical alteration of written record on Accord form — Corrupt, not Redirect. Blocked on Art 06 for implementation details.)* |
-| — | Disinformation Campaign | 📝 | Standing | Shift | Public Standing | Move |
-| — | Standing Injunction | 📝 | Submission | Block | Political act | — |
-| — | Disprove | 📝 | Economy | Remove | Intel token | Remove |
-| — | Intel Extraction | 📝 | Economy | Redirect | Intel token | Move |
-| — | Modifier Raid | 📝 | Economy | Redirect | Modifier card | Move |
-| C40A | Reputational Strike | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — |
-| — | Accord Leverage | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — |
-| — | Overture | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — |
-| STD.PA.1 | Open Operations | 📝 | Territory | Add | Presence token | Add |
-| STD.PA.2 | Disputed Claim | 📝 | Territory | Remove | Presence token | Remove |
-| STD.PA.3 | Public Commission | 📝 | Territory | Add | Structure block | Add |
-| STD.PA.4 | Public Censure | 📝 | Standing | Shift | Public Standing (−) | Move |
-| STD.PA.5 | On the Record | 📝 | Information | Reveal | Action attribution | Reveal |
-| STD.PA.6 | Economic Sanction | 📝 | Economy | Remove | Native resource | Remove |
-| STD.PA.7 | Public Address | 📝 | Standing | Shift | Public Standing (+) | Move |
-| STD.PA.8 | Table an Accord | 📝 | Economy | Add | Accord agreement | Add |
-| GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Add | Structure block | Add |
-| GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Add | Accord agreement | Add |
-| DIR.PA.1 | Regulatory Override | ⛔ BLOCKED | — | — | Cost modification is not a physical verb; "cost" is not a component attribute. Card targets action cost for all Add·PresenceChip operations — requires new component + ARBITER overhead. Needs redesign. See PM05 04-n99. | — |
-| DIR.PA.2 | Convene an Inquiry | 📝 | Information | Add | Intel token | Add |
-| NET.PA.1 | Public Disclosure | 📝 | Information | Reveal | Action attribution | Reveal |
-| NET.PA.2 | Community Rally | 📝 | Territory | Add | Presence token | Add |
-| SYN.PA.1 | Acquisition Offer | 📝 | Territory | Redirect | Presence token | Move |
-| SYN.PA.2 | Public Dividend | 📝 | Economy | Add | Native resource (conditional) | Add |
-| GHO.PA.1 | Publish Analysis | 📝 | Information | Reveal | Action attribution | Reveal |
-| GHO.PA.2 | Signal Review Request | 📝 | Resolution | Modify | Covert operation (difficulty) | — |
+| Card ID | Name | Status | Layer | Visibility | Function | Subject | Primitive Verb(s) |
+|---------|------|--------|-------|------|----------|---------|-------------------|
+| DIR.CA.1 | Invoke Jurisdiction | 📝 | Submission | Split | Block | Covert operation (STD.CA.1, STD.CA.3) | — |
+| DIR.CA.2 | Detain | 📝 | Territory | Public | Move | Deployment marker | Move | *(taxonomy corrected S107 L226: success operation is game.move() to Detention zone; Remove was incorrect — Remove = return to supply; Detention zone is an active play area on Directorate's tableau. Art 04 spec function field correction tracked under 04-n105)* |
+| DIR.CA.3 | Surveillance Placement | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
+| DIR.CA.4 | Tactical Redirection | 📝 | Territory | Public | Move | PresenceToken | Move |
+| DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Public | Remove | PresenceToken | Remove |
+| DIR.PA.1 | Regulatory Override | ⛔ BLOCKED | Submission | Split | Modify | PoliticalAct (add·PresenceChip cost) | — | Cost modification is not a physical verb; "cost" is not a component attribute. Card targets action cost for all Add·PresenceChip operations — requires new component + ARBITER overhead. Needs redesign. See PM05 04-n99. |
+| DIR.PA.2 | Convene an Inquiry | 📝 | Information | Private → Public | Add | Intel token | Add |
+| DIR.PA.3 | Entry/Exit Controls | 📝 | Territory | Public | Block | DeploymentMarker | — |
+| DIR.PA.4 | Regulatory Downgrade | 🚫 BLOCKED | Territory | Public | Modify | InfluenceTier (derived — not targetable) | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
+| DIR.PA.5 | Regulatory Freeze | 🚫 BLOCKED | Territory | Public | Block | InfluenceTier (derived — not targetable) | — | *L223: Same subject violation — InfluenceTier not a targetable component. Additionally, Block targets actions (not derived states); Block\|InfluenceTier is a subject mismatch. Fundamental redesign required (04-n104).* |
+| DIR.PA.6 | Standing Injunction | 📝 | Submission | Split | Block | Political act | — |
+| GHO.CA.1 | Pattern Match | ✅ | Submission | Split | Copy | Covert operation (full) | Invoke |
+| GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
+| GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | IntelDeliverySlip | Reveal |
+| GHO.CA.4 | Deep Cover | 📝 | Information | Private → Public | Remove | IntelToken | Remove |
+| GHO.CA.5 | Misdirection | 📝 | Information | Private → Public | Add | Intel token (corrupt content) | Add + Corrupt |
+| GHO.CA.6 | Synthesize | 📝 | Economy | Public | Add | IntelToken | Add |
+| GHO.CA.7 | Station | 📝 | Information | Private → Public | Add | IntelToken | Add |
+| GHO.CA.8 | Full Take | 📝 | Information | Private → Public | Add | IntelToken | Add |
+| GHO.CA.9 | SCIF | 📝 | Information | Private → Public | Add | DebriefActionCard | Add |
+| GHO.CA.10 | Flip | 📝 | Economy | Public | Add | FactionNativeResource | Add |
+| GHO.CA.11 | Signals Analysis | 📝 | Information | Private → Public | Reveal | ClassifiedDirective | Reveal |
+| GHO.CA.12 | Source Substitution | 📝 | Information | Private → Public | Corrupt | Intel token | Corrupt |
+| GHO.CA.13 | Backdate | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel token (round-number field) | Corrupt | *L222: (1) Location constraint — Intel token in private terminal zone unreachable by opposing card; only publicly placed tokens (PA payment window) are valid Corrupt targets. (2) 7.2b — round-number records committed validity state; altering it is retroactive modification. §4.10 revised. Art 04 spec: BLOCKED pending redesign (04-n103).* |
+| GHO.CA.14 | Field Verification | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel token (age field) | Corrupt | *7.2b violation: mechanic alters committed token age field retroactively. Fundamental redesign required. G-ext id retired. Art 04 spec: BLOCKED pending redesign (04-n103).* |
+| GHO.PA.1 | Publish Analysis | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
+| GHO.PA.2 | Signal Review Request | 📝 | Resolution | Split by phase | Modify | Covert operation (difficulty) | — |
+| GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure block | — |
+| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
+| GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence token | Add |
+| GUI.CA.4 | Construction Crew | ✅ | Submission | Split | Remove Restriction | Covert operation (presence requirement) | — |
+| GUI.CA.5 | Infrastructure Yield | ✅ | Economy | Public | Add | Native resource | Add |
+| GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | NativeResource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
+| GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Public | Add | Structure block | Add |
+| GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Public | Add | Accord agreement | Add |
+| NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
+| NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
+| NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
+| NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | PoliticalAct | — |
+| NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence token | Add |
+| NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | IntelToken | Add |
+| NET.MOD.1 | Signal Break | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| NET.MOD.2 | Reputational Strike | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
+| NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence token | Add |
+| NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | FactionHand | Reveal |
+| STD.CA.1 | Build Structure | ✅ | Territory | Public | Add | Structure block | Add |
+| STD.CA.2 | Demolish | ✅ | Territory | Public | Remove | Structure block | Remove |
+| STD.CA.3 | Campaign | ✅ | Territory | Public | Add | Presence token | Add |
+| STD.CA.4 | Undermine | ✅ | Territory | Public | Remove | Presence token | Remove |
+| STD.CA.5 | Gather | ✅ | Information | Private → Public | Add | Intel token | Add |
+| STD.CA.6 | Broadcast Interference | ✅ | Submission | Split | Modify | Political act (cost) | — |
+| STD.CA.7 | Amplify | ✅ | Resolution | Split by phase | Modify | Political act (outcome scale) | — |
+| STD.CA.8 | Buy Influence | ✅ | Territory | Public | Add | Presence token | Add |
+| STD.CA.9 | Fund | ✅ | Economy | Public | Redirect | Native resource | Move |
+| STD.CA.10 | Protect | ✅ | Resolution | Split by phase | Protect | Covert operation (difficulty) | — |
+| STD.CA.11 | Tort Interference | 📝 | Information | Private → Public | Corrupt | Accord | Corrupt |
+| STD.CA.12 | Absolute Compromise | 📝 | Submission | Split | Block | CovertOperation | — |
+| STD.CA.13 | Disinformation Campaign | 📝 | Standing | Split | Shift | Public Standing | Move |
+| STD.CA.14 | Disprove | 📝 | Economy | Public | Remove | Intel token | Remove |
+| STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel token | Move |
+| STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier card | Move |
+| STD.MOD.1 | Overture | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence token | Add |
+| STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence token | Remove |
+| STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure block | Add |
+| STD.PA.4 | Public Censure | 📝 | Standing | Split | Shift | Public Standing (−) | Move |
+| STD.PA.5 | On the Record | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
+| STD.PA.6 | Economic Sanction | 📝 | Economy | Public | Remove | Native resource | Remove |
+| STD.PA.7 | Public Address | 📝 | Standing | Split | Shift | Public Standing (+) | Move |
+| STD.PA.8 | Table an Accord | 📝 | Economy | Public | Add | Accord agreement | Add |
+| SYN.CA.1 | Leveraged Acquisition | 📝 | Economy | Public | Add | Native resource | Add |
+| SYN.CA.2 | Short the Market | 📝 | Economy | Public | Remove | Native resource | Remove |
+| SYN.CA.3 | Hostile Acquisition | 📝 | Territory | Public | Redirect | Structure block | Move |
+| SYN.CA.4 | Golden Parachute | 📝 | Economy | Public | Protect | Native resource | — |
+| SYN.CA.5 | Regulatory Capture | 📝 | Submission | Split | Block | Named action type | — |
+| SYN.CA.6 | Parasitic | 📝 | Economy | Public | Add | IntelToken | Add |
+| SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Public | Redirect | NativeResource | Move |
+| SYN.CA.8 | Land Title | 📝 | Territory | Public | Add | StructureBlock | Add |
+| SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | PresenceToken | Add |
+| SYN.CA.10 | Accord Transfer | 📝 | Economy | Public | Corrupt | AccordCard | Corrupt | *(taxonomy corrected S107 L227: party-name replacement is physical alteration of written record on Accord form — Corrupt, not Redirect. Blocked on Art 06 for implementation details.)* |
+| SYN.MOD.1 | Accord Leverage | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence token | Move |
+| SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native resource (conditional) | Add |
 
 ---
 
@@ -308,19 +277,14 @@ The following combinations exist in the taxonomy but have no current card. Layer
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
 | Redirect | Changes ownership, destination, or allegiance of an element | Structure | Low | Transfer structure faction — SYN.CA.3 partially covers |
-| ~~Recover~~ | **Retired S106** (04b-20) — reducible to Add + React context; 7.2b violation for removed-from-game elements | Presence token | — | Guild candidate redesigned as GUI.MOD.1 Territory\|Add\|PresenceToken React. |
-| ~~Recover~~ | **Retired S106** | Structure | N/A | Consequence of 00a 7.2b — committed board states cannot be nullified. Demolished structures are gone; reconstruction = Territory — Add — Structure block (STD.CA.1). |
 
 **Layer: Economy** — *Quantitative holdings: native resources, token counts, card counts, Accord existence*
 
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
-| Remove | Takes an element out of active play | Intel token | Low | Strip opponent Intel tokens. Addressed: Disprove (📝) |
 | Remove | Takes an element out of active play | Modifier card | Medium | Strip opponent modifier cards |
 | Remove | Takes an element out of active play | Accord agreement | High | Break Accord covertly — important missing mechanic |
-| ~~Recover~~ | **Retired S106** — spent modifier card re-acquisition is Add from supply, not Recover; 7.2b applies | Modifier card | — | Not a valid design target. |
 | Redirect | Changes ownership, destination, or allegiance of an element | Accord agreement | High | "Small print" mechanic — Syndicate doctrine. **Unaddressed (L227):** Accord Transfer reclassified as Economy\|Corrupt\|AccordCard — party-name replacement is written-value corruption, not ownership redirect. Economy\|Redirect\|AccordAgreement remains an open coverage gap. |
-| Redirect | Changes ownership, destination, or allegiance of an element | Modifier card | Low | Partially covered by trade rules |
 
 **Layer: Submission** — *What enters the resolution queue: costs, eligibility, blocks, scope*
 
@@ -333,20 +297,13 @@ The following combinations exist in the taxonomy but have no current card. Layer
 
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
-| Reveal | Makes hidden information visible to a named audience | Faction hand | High | `Faction hand` (id=94) registered S48. Covered: Modifier card ✅, Countermeasure card ✅. Pre-submission cards (Political act, Covert operation) not in play at intelligence beats — hand-targeting mechanic applies uniformly to all held types. Addressed: NET.PA.3 Live Coverage (📝). See ⚠️ below |
-| Reveal | Makes hidden information visible to a named audience | Classified directives | Low | Very high impact — use carefully. Addressed: Signals Analysis (📝) |
 | Reveal | Makes hidden information visible to a named audience | Modifier cards held | Medium | Disclose individual modifier card contents |
 | Reveal | Makes hidden information visible to a named audience | Named faction only | High | Targeted disclosure — Ghost intelligence delivery. ⚠️ Target-scope/filter system needed |
-| Corrupt | Alters a physically written or recorded value on a component | Intel token | High | Falsify Intel token content. Location constraint (L222): token must be in public-placement window (on PA as payment) — private terminal tokens unreachable. Addressed: Source Substitution (📝, faction-name field only); Backdate (🚫 BLOCKED L222 — round-number additionally prohibited by 7.2b). |
-| Corrupt | Alters a physically written or recorded value on a component | Accord agreement (terms) | High | Alter Accord terms — Syndicate doctrine. Addressed: STD.CA.11 Tort Interference (📝). |
-| Corrupt | Alters a physically written or recorded value on a component | AccordCard (named party) | High | Replace named party on Accord form — Syndicate doctrine. Addressed: Accord Transfer (📝, pending Art 06 — L227). |
+| Corrupt | Alters a physically written or recorded value on a component | Intel token | High | Falsify Intel token content. Location constraint (L222): token must be in public-placement window (on PA as payment) — private terminal tokens unreachable. Partially addressed: Source Substitution (📝, faction-name field only); Backdate (🚫 BLOCKED L222 — round-number additionally prohibited by 7.2b). Full-field arbitrary corruption remains an open gap. |
 
 **Layer: Standing** — *Reputation tracks: Public Standing and Portrait*
 
-| Function | Definition | Subject | Priority | Notes |
-|---|---|---|---|---|
-| Shift | Moves a track value up or down | ~~Chorus Portrait (primary covert)~~ | — | **Retired (L84, 00a R01).** ARBITER sole mover of Portrait. Ghost doctrine gap: new primary covert effect needed — see PM05 04-11 |
-| Shift | Moves a track value up or down | Public Standing (primary covert) | High | Standing as primary covert effect — Network doctrine. Addressed: Disinformation Campaign (📝) |
+*All open gaps addressed or retired as of S108.*
 
 ---
 
@@ -378,13 +335,14 @@ Live view results are in the DB — query directly for current state. Results ca
 
 ## 7. Faction Coverage Matrix
 
-*Rebuilt S104 from Art 04 card data. Standard column = faction=All cards and Political Acts (P-prefix). Faction columns = faction-specific cards only.*
+*Rebuilt S104 from Art 04 card data; targeted update S108 for newly IDed cards. Standard column = faction=All cards and Political Acts (P-prefix). Faction columns = faction-specific cards only.*
 
 | Layer | Function | Subject | Standard | Guild | Ghost | Directorate | Network | Syndicate |
 |-------|----------|---------|----------|-------|-------|-------------|---------|-----------|
 | **Territory** | | | | | | | | |
-| | Add | Presence token | STD.CA.3, STD.CA.8 | GUI.CA.3 | — | — | NET.CA.5 | — |
-| | Add | Structure block | STD.CA.1 | — | — | — | — | — |
+| | Add | Presence token | STD.CA.3, STD.CA.8 | GUI.CA.3 | — | — | NET.CA.5 | SYN.CA.9 |
+| | Add | Structure block | STD.CA.1 | — | — | — | — | SYN.CA.8 |
+| | Block | Deployment marker | — | — | — | DIR.PA.3 | — | — |
 | | Remove | Presence token | STD.CA.4 | — | — | DIR.CA.5 | — | — |
 | | Move | Deployment marker | — | — | — | DIR.CA.2 | — | — |
 | | Remove | Structure block | STD.CA.2 | — | — | — | — | — |
@@ -397,27 +355,32 @@ Live view results are in the DB — query directly for current state. Results ca
 | | Add | Intel token | — | — | GHO.CA.6 | — | NET.CA.6 | SYN.CA.6 |
 | | Add | Accord agreement | STD.PA.8, GUI.PA.2 | — | — | — | — | — |
 | | Add | Exposure | — | — | — | — | NET.CA.2 | — |
+| | Add | FactionNativeResource | — | — | GHO.CA.10 | — | — | — |
 | | Remove | Native resource | STD.PA.6 | — | — | — | — | SYN.CA.2 |
-| | Remove | Intel token | — | — | — | — | — | — |
+| | Remove | Intel token | STD.CA.14 | — | — | — | — | — |
 | | Remove | Accord agreement | — | — | — | — | — | — |
 | | Redirect | Native resource | STD.CA.9 | — | — | — | — | SYN.CA.7 |
+| | Redirect | Intel token | STD.CA.15 | — | — | — | — | — |
+| | Redirect | Modifier card | STD.CA.16 | — | — | — | — | — |
 | | Redirect | Accord agreement | — | — | — | — | — | — |
-| | Corrupt | AccordCard (named party) | — | — | — | — | — | AccordTransfer (📝) |
+| | Corrupt | AccordCard (named party) | — | — | — | — | — | SYN.CA.10 |
 | | Protect | Native resource | — | — | — | — | — | SYN.CA.4 |
 | **Information** | | | | | | | | |
-| | Add | Intel token | STD.CA.5, DIR.PA.2 | — | GHO.CA.5 | — | — | — |
+| | Add | Intel token | STD.CA.5, DIR.PA.2 | — | GHO.CA.5, GHO.CA.7, GHO.CA.8 | — | — | — |
+| | Add | DebriefActionCard | — | — | GHO.CA.9 | — | — | — |
 | | Reveal | CovertOperation | — | — | GHO.CA.2 | DIR.CA.3 | NET.CA.3 | — |
 | | Reveal | IntelDeliverySlip | — | — | GHO.CA.3 | — | — | — |
 | | Reveal | District | — | — | — | — | NET.CA.1 | — |
 | | Reveal | FactionHand | — | — | — | — | NET.PA.3 | — |
 | | Reveal | Action attribution | STD.PA.5, NET.PA.1, GHO.PA.1 | — | — | — | — | — |
+| | Reveal | ClassifiedDirective | — | — | GHO.CA.11 | — | — | — |
 | | Remove | Intel token | — | — | GHO.CA.4 | — | — | — |
 | | Corrupt | Accord | STD.CA.11 | — | — | — | — | — |
-| | Corrupt | Intel token | — | — | — | — | — | — |
+| | Corrupt | Intel token | — | — | GHO.CA.12 | — | — | — |
 | **Submission** | | | | | | | | |
 | | Block | CovertOperation | STD.CA.12 | — | — | DIR.CA.1 | — | — |
 | | Block | Named action type | — | — | — | — | — | SYN.CA.5 |
-| | Block | Political act | — | — | — | DIR.PA.1 ⛔ | — | — |
+| | Block | Political act | — | — | — | DIR.PA.1 ⛔, DIR.PA.6 | — | — |
 | | Modify | Political act | STD.CA.6 | — | — | — | NET.CA.4 | — |
 | | Copy | CovertOperation | — | — | GHO.CA.1 | — | — | — |
 | | Remove Restriction | CovertOperation | — | GUI.CA.4 | — | — | — | — |
@@ -426,7 +389,7 @@ Live view results are in the DB — query directly for current state. Results ca
 | | Modify | Difficulty | GHO.PA.2 | — | — | DIR.CA.8 | — | — |
 | | Protect | CovertOperation | STD.CA.10 | — | — | — | — | — |
 | **Standing** | | | | | | | | |
-| | Shift | Public Standing | STD.PA.4, STD.PA.7 | — | — | DIR.CA.7 | NET.CA.7 | — |
+| | Shift | Public Standing | STD.CA.13, STD.PA.4, STD.PA.7 | — | — | DIR.CA.7 | NET.CA.7 | — |
 
 ---
 
@@ -436,15 +399,24 @@ These recommendations inform the redesign decisions D-04-02 through D-04-05 in A
 
 ### 8.1 Ghost — Priority redesign targets
 
-Current Ghost set (S104): GHO.CA.1 (Submission|Copy|CovertOp), GHO.CA.2 (Information|Reveal|CovertOp), GHO.CA.3 (Information|Reveal|IntelDeliverySlip), GHO.CA.4 (Information|Remove|IntelToken), GHO.CA.5 (Information|Add|IntelToken), GHO.CA.6 (Economy|Add|IntelToken). Attribution-protection duplication resolved by redesign; Ghost's suite now spans generation (GHO.CA.5), interception (GHO.CA.2), delivery tracking (GHO.CA.3), and removal (GHO.CA.4) — doctrinally coherent. Portrait pathway remains closed (L84, 00a R01); see PM05 04-11.
+Current Ghost set (S108): GHO.CA.1 (Submission|Copy|CovertOp), GHO.CA.2 (Information|Reveal|CovertOp), GHO.CA.3 (Information|Reveal|IntelDeliverySlip), GHO.CA.4 (Information|Remove|IntelToken), GHO.CA.5 (Information|Add|IntelToken), GHO.CA.6 (Economy|Add|IntelToken), GHO.CA.7 Station (Information|Add|IntelToken), GHO.CA.8 Full Take (Information|Add|IntelToken), GHO.CA.9 SCIF (Information|Add|DebriefActionCard), GHO.CA.10 Flip (Economy|Add|FactionNativeResource), GHO.CA.11 Signals Analysis (Information|Reveal|ClassifiedDirective), GHO.CA.12 Source Substitution (Information|Corrupt|IntelToken), GHO.CA.13 Backdate (🚫 BLOCKED L222+7.2b), GHO.CA.14 Field Verification (🚫 BLOCKED 7.2b). Ghost now has the deepest Information suite of any faction — generation, interception, disclosure, delivery tracking, removal, and corruption all represented. Two design space entries remain blocked pending fundamental redesign (04-n103). Portrait pathway remains closed (L84, 00a R01); see PM05 04-11.
 
 **High priority:**
 1. **Information — Reveal — Named faction:** Ghost delivers targeted intelligence to a specific faction privately rather than the whole table. *Targeted intelligence disclosure that strengthens relationships without public exposure.* ⚠️ Target-scope/filter system needed before this can be specified.
 2. **Submission — Copy — Subset:** Ghost should have a partial copy card — copy only the target (apply your own operation to the same district as named faction) without replicating the full cost and effect. ⚠️ Partial-copy mechanism needed in action model.
 
+**Blocked — redesign required:**
+3. **GHO.CA.13 Backdate / GHO.CA.14 Field Verification** — both target Intel token provenance fields (Information|Corrupt|Intel token): Backdate aimed at the round-number field (when the token was committed); Field Verification aimed at the age/validity field. Both blocked by 7.2b — those fields record committed facts and cannot be retroactively altered. Design intent: manipulation of token temporal provenance — making intelligence appear more or less current than it is. Valid redesign path: alteration of committed provenance fields is permanently closed. The mechanic must be additive — plant a new token that mimics a different temporal signature, or affect how token age is read (e.g., a modifier shifting the effective staleness threshold for a target faction) rather than altering the token itself. Both cards require fundamental redesign; specs blocked at Art 04 (04-n103).
+
+**New PA/React design targets (S108):**
+4. **GHO.PA.3 Declassified Records** — tentative taxonomy: Information|Remove|IntelToken (expired). Ghost spends expired Intel tokens as an alternative cost currency. Non-standard cost mechanic; requires Art 03 §18 treatment before spec can be written. Design question: does expired-token cost replace standard cost entirely, supplement it, or unlock a discounted play? Open gate before spec.
+5. **GHO.PA.4 Public Threat Assessment** — taxonomy: Information|Reveal|BroadcastEffectCard. Two-component model: Broadcast Card (DB:25) = publicly shown narrative (table-visible); Broadcast Effect Card (DB:98) = mechanically applied effects, ARBITER-private tableau, linked to BC. Ghost names a Broadcast Card (the public selector); ARBITER reveals the linked Broadcast Effect Card to all players. Consistent with GR 10.1b — ARBITER discloses content from its own domain; Ghost creates the trigger but does not perform the reveal. Broadcast effect IS hidden; card has clear mechanical bite. Ready for design pass when Ghost PA session opens.
+6. **GHO.PA.5 Clarify Misinformation** — tentative taxonomy: Information|Remove|IntelToken (corrupted). React/Instant; triggers when an Intel token is corrupted; Ghost removes the corrupted token. Narrative: the agency publicly corrects the record the moment disinformation enters circulation. Design question: react window timing relative to token corruption — Beat 2 trigger vs. Beat 3 resolution. Art 03 §18 treatment required before spec.
+7. **GHO.PA.6 Agency Recruitment Fair** — tentative taxonomy: Territory|Add|PresenceToken. Public-facing Ghost territorial action. Narrative: the agency operates in the open — career fairs, public outreach, visible institutional presence. Design question: district-type restriction mechanism (district-type tag vs. named-district list). Tag approach preferred — named lists create maintenance overhead and fragility as the district map evolves.
+
 ### 8.2 Directorate — Priority redesign targets
 
-Current Directorate set (S104): DIR.CA.1 (Submission|Block|CovertOp), DIR.CA.2 (Territory|Move|DeploymentMarker — taxonomy corrected S107 L226), DIR.CA.3 (Information|Reveal|CovertOp), DIR.CA.4 (Territory|Move|PresenceToken), DIR.CA.5 (Territory|Remove|PresenceToken). Submission|Block concentration resolved — DIR.CA.4's redesign removed the second Block card. Effective Block count: DIR.CA.1 only; DIR.PA.1 (⛔ BLOCKED, PM05 04-n99) unresolved.
+Current Directorate set (S108): DIR.CA.1 (Submission|Block|CovertOp), DIR.CA.2 (Territory|Move|DeploymentMarker — taxonomy corrected S107 L226), DIR.CA.3 (Information|Reveal|CovertOp), DIR.CA.4 (Territory|Move|PresenceToken), DIR.CA.5 (Territory|Remove|PresenceToken), DIR.CA.6 (Economy|Add|NativeResource ✅ S106), DIR.CA.7 (Standing|Shift|PublicStanding ✅ S106), DIR.CA.8 (Resolution|Modify|Difficulty ✅ S106), DIR.PA.3 Entry/Exit Controls (Territory|Block|DeploymentMarker), DIR.PA.4 Regulatory Downgrade (🚫 BLOCKED L223), DIR.PA.5 Regulatory Freeze (🚫 BLOCKED L223), DIR.PA.6 Standing Injunction (Submission|Block|PoliticalAct). Effective Block count: DIR.CA.1 (CovertOp), DIR.PA.6 (PoliticalAct). DIR.PA.1 (⛔ BLOCKED, PM05 04-n99) unresolved.
 
 **High priority:**
 1. **Economy — Add — Native resource (Mandate):** ✅ DIR.CA.6 Institutional Audit (S106). Beat 3 d100 threshold 50; yield = count of active Directorate Permanents in target ring; restriction chip count > 1.
@@ -452,6 +424,10 @@ Current Directorate set (S104): DIR.CA.1 (Submission|Block|CovertOp), DIR.CA.2 (
 
 **Medium priority:**
 3. **Resolution — Modify — Difficulty (increasing, against all factions):** ✅ DIR.CA.8 Enhanced Scrutiny (S106). Beat 2 Automatic; ARBITER places −15 Modifier tokens on each Beat 3 row targeting district; all factions including Directorate.
+
+**Blocked — redesign required:**
+4. **DIR.PA.4 Regulatory Downgrade / DIR.PA.5 Regulatory Freeze** — both target InfluenceTier (Territory|Modify and Territory|Block respectively). Blocked: InfluenceTier is a derived state (calculated from token counts), not a placed component; GR 9.1 prohibits direct income modification by card. Design intent: economic suppression — reduce or freeze a rival's territorial income. Valid redesign path: income suppression must work through board state. Territory|Remove|PresenceToken is the permitted approach — token removal reduces tier, which reduces income naturally. A PA version (public, political character) would be distinct from DIR.CA.5 Sanctioned Raid (covert). Design the pair together; specs blocked at Art 04 (04-n104).
+5. **DIR.PA.1 Regulatory Override** — attempted Submission|Modify|PoliticalAct (add·PresenceChip cost) — a district-wide cost increase on presence operations for all factions. Blocked: "cost" is not a physical component attribute; no board object represents operation cost. Valid redesign path: requires a physical regulatory burden component placed on districts that ARBITER reads when processing operations — a new component design question touching Art 02 (registration), Art 03 (procedure for applying modifier), and Art 07 (ARBITER overhead). Prerequisite to redesign: define the component and Art 03 procedure. PM05 04-n99.
 
 ### 8.3 Network — Priority redesign targets
 
@@ -466,13 +442,13 @@ Current Network set (S104): NET.CA.1 (Information|Reveal|District), NET.CA.2 (Ec
 
 ### 8.4 Syndicate — Priority redesign targets
 
-Current Syndicate set (S104): SYN.CA.1 (Economy|Add|NativeResource), SYN.CA.2 (Economy|Remove|NativeResource), SYN.CA.3 (Territory|Redirect|StructureBlock), SYN.CA.4 (Economy|Protect|NativeResource), SYN.CA.5 (Submission|Block|NamedActionType), SYN.CA.6 (Economy|Add|IntelToken), SYN.CA.7 (Economy|Redirect|NativeResource). Economy depth is Syndicate's defining characteristic — 5 of 7 cards are Economy layer. SYN.CA.6 provides an intel foothold within the Economy layer; Syndicate still has no direct Information-layer capability.
+Current Syndicate set (S108): SYN.CA.1 (Economy|Add|NativeResource), SYN.CA.2 (Economy|Remove|NativeResource), SYN.CA.3 (Territory|Redirect|StructureBlock), SYN.CA.4 (Economy|Protect|NativeResource), SYN.CA.5 (Submission|Block|NamedActionType), SYN.CA.6 (Economy|Add|IntelToken), SYN.CA.7 (Economy|Redirect|NativeResource), SYN.CA.8 Land Title (Territory|Add|StructureBlock), SYN.CA.9 Hostile Takeover (Territory|Add|PresenceToken), SYN.CA.10 Accord Transfer (Economy|Corrupt|AccordCard — pending Art 06). Economy depth remains Syndicate's defining characteristic; SYN.CA.8/9 add a meaningful Territory foothold. SYN.CA.6 provides an intel foothold within the Economy layer; Syndicate still has no direct Information-layer capability.
 
 **High priority:**
 1. **Information — Corrupt — Accord agreement:** Alter the recorded terms of an existing Accord. *"The Syndicate may alter one numeric value in any registered Accord — changing a resource amount, duration, or threshold. The alteration is physically made to the Accord document. Both parties notified in case."* Requires ARBITER to manage Accord document integrity.
 2. **Economy — Redirect — Accord agreement:** The "small print" mechanic. **Unaddressed (L227):** Accord Transfer reclassified as Economy|Corrupt|AccordCard — party-name replacement is alteration of a written record on the Accord form, not a redirect of ownership. Economy|Redirect|AccordAgreement remains an open coverage gap — no card addresses the mechanic of transferring Accord *obligations* between factions as a redirect operation.
-3. **Economy — Corrupt — AccordCard (named party):** ✅ Addressed by Accord Transfer (📝, L227 — pending Art 06 implementation).
-3. **Information — Reveal — Intel tokens held:** Economic intelligence. *"The Syndicate names a faction. ARBITER announces the count (not content) of Intel tokens that faction holds. The Syndicate may offer to purchase one token from the named faction at 3 Capital — the named faction may accept or decline."*
+3. **Economy — Corrupt — AccordCard (named party):** ✅ SYN.CA.10 Accord Transfer (L227 — pending Art 06 implementation).
+4. **Information — Reveal — Intel tokens held:** Economic intelligence. *"The Syndicate names a faction. ARBITER announces the count (not content) of Intel tokens that faction holds. The Syndicate may offer to purchase one token from the named faction at 3 Capital — the named faction may accept or decline."*
 
 ### 8.5 Guild — Priority design targets
 

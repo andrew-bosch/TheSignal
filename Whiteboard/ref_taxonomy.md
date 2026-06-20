@@ -72,6 +72,8 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 | Written record | Information |
 | Public Standing | Standing |
 | DebriefActionCard | Information |
+| BroadcastCard (DB:25) | Information / Submission — public narrative half of the Broadcast two-component pair; used as selector when targeting the linked BEC |
+| BroadcastEffectCard (DB:98) — ARBITER tableau, private | Information — mechanically applied effects; subject of GR 10.1b-domain Reveal (e.g., GHO.PA.4); linked by ID to its Broadcast Card |
 
 Corrupt targets are strictly: Intel token faction-name field (location constraint applies) · Accord agreement terms · Accord named party (L227) · Target Profile. Only components with physically written values in the paper prototype.
 

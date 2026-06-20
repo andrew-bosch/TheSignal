@@ -2887,7 +2887,7 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 | Voice fit | ✓ | Three perspectives (Guild, Syndicate, Ghost) — FactionSpecific card; acceptable. Syndicate's "we simply call it by a different name" and Ghost's "already told us what it knows" both provide doctrinal depth. | Art 00 §7 |
 | Doctrine alignment | ✓ | `target_faction = faction.opponent`, `doctrine_mod = None` — explicit design choice. Recovery amount mirrors STD.CA.2's cost regardless of doctrinal distance; the Guild gets paid the same whoever demolished. Correct. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: observation and positioning is covert; payment materializes via case mechanism. FactionSpecific (Guild): treating demolition as a Guild service is uniquely Guild doctrine. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | `layer = Economy` — recovering NativeResource is capital flow, correctly Economy under Art 04b §4.4. `function = Recover`, `subject = NativeResource` — correctly scoped. | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | `layer = Economy` — returning NativeResource is capital flow, correctly Economy under Art 04b §4.4. `function = Add`, `subject = NativeResource` — Recover retired S106 (04b-20); trigger-context Add is the correct primitive. | Art 04b §4, §5 |
 | Balance | ✓ | Zero resource cost; action slot is the only cost. Trigger-contingent — wrong read wastes slot with no other penalty. First qualifying Demolish from named faction only. | Art 02 §8 |
 | Effect duration | ✓ | Instantaneous: resources delivered once when trigger fires. No persistent state. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
@@ -2917,7 +2917,7 @@ GUI.CA.2 = Card(
     tagline = "Recover the costs of demolition as subcontract payment.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-    layer    = Economy,  function = Recover,  subject = NativeResource,
+    layer    = Economy,  function = Add,  subject = NativeResource,
 
     beat            = 2,
     resolution      = Automatic,
@@ -3247,7 +3247,7 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 | Voice fit | ✓ | Faction-specific; limited perspectives in current spec — full voice set expected (confirm complete in code block) | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild only; zero resource cost (slot IS the bet); payout 2 Capacity mirrors STD.CA.1.cost — self-calibrating on balance pass; Beat 2 positional wager fits the "bet on opponent building" play style | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — Guild's passive revenue model | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Recover/NativeResource — Recover returns resources based on triggered event; STD.CA.3 exclusion confirmed locked S59 | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — Recover retired S106 (04b-20); trigger-context Add is the correct primitive; STD.CA.3 exclusion confirmed locked S59 | Art 04b §4, §5 |
 | Balance | ✓ | Payout 2 Capacity mirrors STD.CA.1.cost — self-calibrating | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: Capacity delivered at Beat 3 when trigger fires | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
@@ -3272,13 +3272,13 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 *Draft S59 — design pass pending*
 
 ```python
-Card(
+GUI.CA.6 = Card(
     id=TBD,  version="v1.0",  # ID pending PM05 04-n1
     name    = "Labor Contract",
     tagline = "Collect subcontract payment when a faction develops district infrastructure.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-    layer    = Economy,  function = Recover,  subject = NativeResource,
+    layer    = Economy,  function = Add,  subject = NativeResource,
 
     beat            = 2,
     resolution      = Automatic,
@@ -4541,7 +4541,7 @@ SourceSubstitution = Card(
 
 ---
 
-### Ghost — BACKDATE
+### Ghost — BACKDATE 🚫 BLOCKED
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
@@ -4576,12 +4576,13 @@ Standard equivalent: PM05 04-n15.
 
 - **Token writable fields:** Intel token component must support two writable fields (faction name + quarter). Confirm component design in Art 02.
 - **Plant mode delivery protocol:** Same as Source Substitution — discreet delivery to target terminal during Beat 3 cleanup; procedure not yet defined in Art 03/07.
+- **🚫 BLOCKED (S107, L222):** Two permanent constraints. (1) Location: Intel token in private terminal zone is not reachable by opposing card. (2) GR 7.2b: the quarter field records when the token was committed — a committed fact; retroactive alteration violates the finality principle. The provenance-field approach is permanently closed. Fundamental redesign required; design path must be additive. Cross-ref: Art 04b §8.1 item 3, PM05 04-n103.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | 🚫 BLOCKED | — | — |
 
 ```python
 Backdate = Card(
@@ -4641,7 +4642,7 @@ Backdate = Card(
 
 ---
 
-### Ghost — FIELD VERIFICATION
+### Ghost — FIELD VERIFICATION 🚫 BLOCKED
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
@@ -4672,11 +4673,13 @@ Standard equivalent: PM05 04-n15 (hired investigator reopening cold case — sam
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
+- **🚫 BLOCKED (S107, L222):** GR 7.2b — the quarter field records when the token was committed; updating it to the current Quarter alters a committed provenance field. The field-update approach is permanently closed. Fundamental redesign required. Cross-ref: Art 04b §8.1 item 3, PM05 04-n103.
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | 🚫 BLOCKED | — | — |
 
 ```python
 FieldVerification = Card(
@@ -5045,7 +5048,7 @@ Directorate's permanent removal card — eliminates a faction's deployment marke
 | Voice fit | ✓ | Faction-specific; single Directorate perspective by design — detention as institutional process | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate only; Intel token restriction forces prior intelligence collection; ChorusNode exclusion respects ARBITER marker's special status; L183 Detention zone on Directorate public tableau | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — permanent removal is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Remove/DeploymentMarker — permanent per Principle 11; marker moved to Detention zone (Governing Rule 8.3a compliant) | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | Territory/Move/DeploymentMarker — marker moved to Detention zone (Governing Rule 8.3a compliant); function corrected S107 L226 (Remove → Move; success block uses game.move(), not game.remove()) | Art 04b §4, §5 |
 | Balance | ✓ | Mandate×3, threshold 50, permanent removal — highest Directorate covert cost; successcrit Mandate recovery outstanding (Outstanding Issue) | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent: marker remains in Detention for remainder of session | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
@@ -5076,7 +5079,7 @@ DIR.CA.2 = Card(
     name    = "Detain",
     tagline = "Permanently remove a faction's deployment marker from a district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
-    layer   = Territory,  function = Remove,  subject = DeploymentMarker,
+    layer   = Territory,  function = Move,  subject = DeploymentMarker,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
     trigger=None,
     resolution_type="Probabilistic", outcome_type=None,
@@ -5334,7 +5337,7 @@ DIR.CA.4 = Card(
 
 ---
 
-### Directorate — REGULATORY DOWNGRADE
+### Directorate — REGULATORY DOWNGRADE 🚫 BLOCKED
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
@@ -5367,12 +5370,13 @@ Directorate's active tier suppression play — declared publicly at Phase B, res
 
 - **Win-condition scope:** Resource generation tier penalty only — actual presence count governs control tier for Dominance/Established win-condition calculations. Needs explicit statement in Art 03 Upkeep Step 5 procedure or Art 07 reference. Tracks under 04-n27.
 - **Freeze interaction:** If Downgrade and Freeze are both active on the same faction/district simultaneously, combined effect is: one tier down for resource gen + blocked from tier advancement. Needs explicit procedure note confirming coexistence is valid and no additional interaction applies.
+- **🚫 BLOCKED (S107, L223):** Two permanent constraints. (1) InfluenceTier is derived state (calculated from token counts), not a placed component — it cannot be directly targeted by a card. (2) GR 9.1 prohibits direct income modification by card. Both are permanent. Fundamental redesign required: income suppression must work through board state — Territory|Remove|PresenceToken is the valid path (token removal reduces tier, which reduces income naturally). Cross-ref: Art 04b §8.2 item 4, PM05 04-n104.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | 🚫 BLOCKED | — | — |
 
 *Redesigned S67 — v2.0. CovertOperation → PublicAct. TierPenaltyMarker removed; card-as-condition pattern.*
 
@@ -5424,7 +5428,7 @@ RegulatoryDowngrade = Card(
 
 ---
 
-### Directorate — REGULATORY FREEZE
+### Directorate — REGULATORY FREEZE 🚫 BLOCKED
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
@@ -5455,13 +5459,13 @@ Preventive tier suppression — lighter than Regulatory Downgrade but cheaper. W
 
 #### Outstanding Issues
 
-None.
+- **🚫 BLOCKED (S107, L223):** Two permanent constraints. (1) InfluenceTier is derived state (not a placed component) — Block function targets actions, not derived states; Block|InfluenceTier is a subject mismatch. (2) Same subject violation as Regulatory Downgrade: InfluenceTier is not a targetable component. Fundamental redesign required. Redesign pair with Regulatory Downgrade — both address income suppression intent through board state manipulation. Cross-ref: Art 04b §8.2 item 4, PM05 04-n104.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | 🚫 BLOCKED | — | — |
 
 *Redesigned S67 — v2.0. CovertOperation → PublicAct. TierFreezeMarker removed; card-as-condition pattern. Self-policing per Governing Rule 6.1a.*
 
