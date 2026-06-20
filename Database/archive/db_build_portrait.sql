@@ -1,5 +1,3 @@
--- NON-IDEMPOTENT: Contains TRUNCATE TABLE (data destructive operation).
-
 -- ============================================================
 -- db_build_portrait.sql  —  THE SIGNAL: Portrait system
 -- Session 47
@@ -21,7 +19,7 @@
 -- ============================================================
 -- 1. COMPONENTS
 -- ============================================================
-INSERT IGNORE INTO tmp_component
+INSERT INTO tmp_component
   (id, name, actionable, transformable, receivable,
    transform_visibility, transform_orientation, transform_data)
 VALUES
@@ -32,7 +30,7 @@ ON DUPLICATE KEY UPDATE name = name;
 -- ============================================================
 -- 2. COMP-VERB-BEAT  (verb 16 = Move)
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, beat_id, verb_id, notes)
+INSERT INTO tmp_comp_verb_beat (component_id, beat_id, verb_id, notes)
 VALUES
   (51, 8,  16, 'ARBITER moves Portrait marker per M1 Beat 3 card effect'),
   (51, 14, 16, 'ARBITER moves Portrait marker per M2 Beat 3 card effect'),
@@ -43,7 +41,7 @@ ON DUPLICATE KEY UPDATE notes = notes;
 -- ============================================================
 -- 3. COMP-VERB-ROLE  (ARBITER-only: initiator + executor)
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, phase_id, role_id, notes)
+INSERT INTO tmp_comp_verb_role (component_id, verb_id, phase_id, role_id, notes)
 VALUES
   (51, 16, 1, 2, 'ARBITER initiates Portrait marker Move'),   -- initiator
   (51, 16, 2, 2, 'ARBITER executes Portrait marker Move')     -- executor
@@ -53,7 +51,7 @@ ON DUPLICATE KEY UPDATE notes = notes;
 -- 4. PRIMITIVES — inserted directly into tmp_action
 --    trigger_type_id = 4 (rule.card) — card text mandates ARBITER to move
 -- ============================================================
-INSERT IGNORE INTO tmp_action
+INSERT INTO tmp_action
   (beat_id, beat_trigger, prereq_id, prereq_beat_id,
    subject_id, verb_id, component_id, trigger_type_id, notes)
 VALUES

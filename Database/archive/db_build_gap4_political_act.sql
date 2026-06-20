@@ -13,7 +13,7 @@
 -- ============================================================
 -- 1. TAXONOMY — ARBITER as initiator for Add on Political act
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, phase_id, role_id, notes)
+INSERT INTO tmp_comp_verb_role (component_id, verb_id, phase_id, role_id, notes)
 VALUES
   (14, 1, 1, 2, 'ARBITER adds Political act per card effect (C09 free Accord)')
 ON DUPLICATE KEY UPDATE notes = notes;
@@ -21,7 +21,7 @@ ON DUPLICATE KEY UPDATE notes = notes;
 -- ============================================================
 -- 2. TAXONOMY — beat coverage
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, beat_id, verb_id, notes)
+INSERT INTO tmp_comp_verb_beat (component_id, beat_id, verb_id, notes)
 VALUES
   (14, 8,  1, 'ARBITER adds Political act per M1 Beat 3 card effect (C09)'),
   (14, 14, 1, 'ARBITER adds Political act per M2 Beat 3 card effect (C09)')
@@ -31,7 +31,7 @@ ON DUPLICATE KEY UPDATE notes = notes;
 -- 3. PRIMITIVES
 --    trigger_type_id = 4 (rule.card)
 -- ============================================================
-INSERT IGNORE INTO tmp_action
+INSERT INTO tmp_action
   (beat_id, beat_trigger, prereq_id, prereq_beat_id,
    subject_id, verb_id, component_id, trigger_type_id, notes)
 VALUES

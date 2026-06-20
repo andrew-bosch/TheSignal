@@ -25,7 +25,7 @@
 -- ============================================================
 -- 1. NEW VERB: Invoke
 -- ============================================================
-INSERT IGNORE INTO tmp_verb (id, name)
+INSERT INTO tmp_verb (id, name)
 VALUES (17, 'Invoke')
 ON DUPLICATE KEY UPDATE name = name;
 
@@ -54,7 +54,7 @@ ALTER TABLE tmp_action
 --    resolves to whatever card is being copied.
 --    source_action_id=NULL at design time; populated by game engine.
 -- ============================================================
-INSERT IGNORE INTO tmp_action
+INSERT INTO tmp_action
   (beat_id, beat_trigger, prereq_id, prereq_beat_id,
    source_action_id, subject_id, verb_id, component_id,
    trigger_type_id, notes)

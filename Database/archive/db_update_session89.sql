@@ -11,7 +11,7 @@ SET name = 'Faction Resolution Grid',
 WHERE id = 88;
 
 -- DB-36: register Situation Report (id=102)
-INSERT IGNORE INTO component (id, name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
+INSERT INTO component (id, name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
 VALUES (102, 'Situation Report', 0, 1, 0, 0, 0);
 
 COMMIT;

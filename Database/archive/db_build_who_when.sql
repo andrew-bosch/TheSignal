@@ -1,5 +1,3 @@
--- NON-IDEMPOTENT: Contains DROP TABLE (schema/data destructive operation).
-
 -- ============================================================
 -- THE SIGNAL — Taxonomy Dimension Build: Who × When (v2)
 -- Session 47
@@ -44,7 +42,7 @@ CREATE TABLE tmp_player_role (
   name        VARCHAR(30)  NOT NULL,
   description VARCHAR(200) NOT NULL
 );
-INSERT IGNORE INTO tmp_player_role (name, description) VALUES
+INSERT INTO tmp_player_role (name, description) VALUES
   ('Faction', 'A human faction player — initiates via card play or procedural rules'),
   ('ARBITER', 'The ARBITER player — acts as game engine (neutral processing) or as character');
 
@@ -53,7 +51,7 @@ CREATE TABLE tmp_role_phase (
   name        VARCHAR(20)  NOT NULL,
   description VARCHAR(200) NOT NULL
 );
-INSERT IGNORE INTO tmp_role_phase (name, description) VALUES
+INSERT INTO tmp_role_phase (name, description) VALUES
   ('initiator', 'Who calls for the action — commits the card, triggers the request, or issues the directive'),
   ('executor',  'Who physically performs the operation — moves the component, alters the value, places the piece'),
   ('fulfiller', 'Who validates, adjudicates, and closes the action — determines outcome and confirms board state');
@@ -67,7 +65,7 @@ CREATE TABLE tmp_beat (
   primary_agent VARCHAR(30)  NOT NULL COMMENT 'Faction | ARBITER | Both',
   description   VARCHAR(200) NOT NULL
 );
-INSERT IGNORE INTO tmp_beat VALUES
+INSERT INTO tmp_beat VALUES
 ( 1, 'Upkeep',                      NULL, NULL, 'Both',    'World updates, resources, tokens, initiative, Situation Reports'),
 ( 2, 'Placement',                   NULL, NULL, 'Both',    'Deployment markers placed; entry requirements enforced; influence levels updated'),
 ( 3, 'Month 1 — Dispatch',          'M1', NULL, 'Faction', 'Operations assembled, sealed, submitted with Dispatch Tokens'),
@@ -135,7 +133,7 @@ CREATE TABLE tmp_comp_verb_beat (
 -- Track/system markers and ARBITER-managed documents.
 -- No Faction role at any phase.
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
+INSERT INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
 -- Pointer marker (34): Add, Remove, Move
 (34,1,2,1),(34,1,2,2),(34,1,2,3),
 (34,2,2,1),(34,2,2,2),(34,2,2,3),
@@ -168,7 +166,7 @@ INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id)
 -- Standard player action: Faction calls for it and does it;
 -- ARBITER validates and confirms.
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
+INSERT INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
 -- Covert operation (13): Add (submitted to case), Conceal (case sealed)
 (13,1,1,1),(13,1,1,2),(13,1,2,3),
 (13,14,1,1),(13,14,1,2),(13,14,2,3),
@@ -199,7 +197,7 @@ INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id)
 -- Faction triggers via card; ARBITER physically performs and closes.
 -- The "interface zone" — Faction authority, ARBITER execution.
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
+INSERT INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
 -- Target Profile (48): Corrupt (faction card directs; ARBITER alters written value)
 (48,13,1,1),(48,13,2,2),(48,13,2,3),
 -- Intel token (9): Reveal (faction card like C26 directs; ARBITER announces)
@@ -219,7 +217,7 @@ INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id)
 -- GROUP D: ARBITER init + exec + fulfill (ARBITER game engine actions)
 -- Faction has no role at any phase.
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
+INSERT INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
 -- Covert operation (13): Move (ARBITER sorts to grid), Remove, Reveal
 (13,16,2,1),(13,16,2,2),(13,16,2,3),
 (13,2,2,1),(13,2,2,2),(13,2,2,3),
@@ -255,7 +253,7 @@ INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id)
 -- Faction-only throughout: pass decisions, Conceal of own cards,
 -- bilateral Debrief free actions.
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
+INSERT INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
 -- Political act (14): Conceal (pass — faction holds face-down; no ARBITER role)
 (14,14,1,1),(14,14,1,2),(14,14,1,3),
 -- Operative ability (15): Conceal (faction hides own operative; self-managed)
@@ -270,7 +268,7 @@ INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id)
 -- ARBITER fulfills in-round.
 -- Represents contested board state — either role can trigger.
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id, notes) VALUES
+INSERT INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id, notes) VALUES
 -- Presence token (1): Add, Remove, Move
 (1,1,1,1,'Faction plays card to add presence'),(1,1,1,2,NULL),(1,1,2,3,NULL),
 (1,1,2,1,'ARBITER adds per rule consequence'),(1,1,2,2,NULL),
@@ -333,7 +331,7 @@ INSERT IGNORE INTO tmp_comp_verb_role (component_id, verb_id, role_id, phase_id,
 -- ============================================================
 
 -- Phase 1 — Upkeep
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (38,16,1,'ARBITER determines initiative; updates Faction order marker'),
 (25,1,1, 'ARBITER draws Situation Report / Broadcast Card'),
 (25,10,1,'ARBITER places Broadcast Card face-up in Event Zone'),
@@ -345,7 +343,7 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (11,14,1,'Modifier Cards held privately in tableau modifier area');
 
 -- Phase 2 — Placement
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (2,1,2,  'Faction Player places deployment marker on chosen district'),
 (2,16,2, 'ARBITER redirects illegal placement'),
 (5,1,2,  'Faction updates Established marker if influence threshold reached'),
@@ -356,7 +354,7 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (7,2,2,  'Tension marker removed if contest resolves during Placement');
 
 -- Month 1 — Dispatch
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (13,1,3, 'Faction loads covert operation into dispatch case'),
 (11,1,3, 'Faction loads assigned Modifier Card into case with operation'),
 (48,1,3, 'Faction loads Target Profile slip into case'),
@@ -366,7 +364,7 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (44,16,3,'Faction transmits sealed case to ARBITER receive queue');
 
 -- Month 1 — Beat 0
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (44,10,5,'ARBITER opens dispatch cases'),
 (13,10,5,'ARBITER inspects case contents for validity'),
 (48,10,5,'ARBITER reads Target Profile'),
@@ -376,11 +374,11 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (8,2,5,  'ARBITER returns resources from invalid submissions');
 
 -- Month 1 — Beat 1
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (13,2,6, 'ARBITER removes operations violating active restrictions');
 
 -- Month 1 — Beat 2
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (11,10,7,'ARBITER reveals modifier card from Resolution Grid'),
 (11,2,7, 'Modifier card removed after application'),
 (47,1,7, 'ARBITER places modifier token on target operation'),
@@ -388,7 +386,7 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (13,10,7,'Target operation revealed for modifier application');
 
 -- Month 1 — Beat 3
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (13,10,8,'ARBITER reveals operation card for resolution'),
 (48,13,8,'ARBITER corrupts Target Profile if directed by card effect'),
 (13,2,8, 'Operation removed from grid after resolution'),
@@ -407,27 +405,27 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (8,1,8,  'Native resource gained'),(8,2,8,  'Native resource removed');
 
 -- Month 2 — same patterns as Month 1 (beat_ids 9-14 map to phases 9-14)
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (13,1,9,(SELECT notes FROM (SELECT notes FROM tmp_comp_verb_beat WHERE component_id=13 AND verb_id=1 AND beat_id=3) t)),
 (11,1,9,'Faction loads Modifier Card (Month 2)'),(48,1,9,'Faction loads Target Profile (Month 2)'),
 (12,1,9,'Faction places Dispatch Token (Month 2)'),(8,2,9,'Faction loads resource payment'),
 (44,14,9,'Faction seals dispatch case (Month 2)'),(44,16,9,'Faction transmits case (Month 2)');
 
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (44,10,11,'ARBITER opens Month 2 cases'),(13,10,11,'ARBITER inspects contents'),
 (48,10,11,'ARBITER reads Target Profile'),(13,16,11,'ARBITER moves op to grid'),
 (12,2,11,'ARBITER removes invalid submissions'),(36,1,11,'ARBITER places escalation marker'),
 (8,2,11,'ARBITER returns resources from invalid submissions');
 
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (13,2,12,'ARBITER removes Month 2 ops violating restrictions');
 
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (11,10,13,'ARBITER reveals Month 2 modifier card'),(11,2,13,'Modifier card removed'),
 (47,1,13,'ARBITER places modifier token'),(47,2,13,'Modifier token removed'),
 (13,10,13,'Target operation revealed for modifier application');
 
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (13,10,14,'ARBITER reveals Month 2 operation'),(48,13,14,'ARBITER corrupts Target Profile if directed'),
 (13,2,14,'Operation removed'),(36,2,14,'Escalation marker removed'),(47,2,14,'Modifier tokens returned'),
 (12,2,14,'ARBITER collects Month 2 Dispatch Tokens'),
@@ -443,12 +441,12 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (8,1,14,'Resource gained'),(8,2,14,'Resource removed');
 
 -- Month 3 — Declaration
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (14,10,15,'Faction declares political act face-up'),
 (14,14,15,'Faction holds political act (pass)');
 
 -- Month 3 — Beat 4
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (14,10,17,'Political act revealed for resolution'),(14,2,17,'Political act removed after resolution'),
 (1,1,17,'Presence placed'),(1,2,17,'Presence removed'),
 (3,1,17,'Structure placed'),(8,1,17,'Resource added'),(8,2,17,'Resource spent'),
@@ -459,7 +457,7 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (7,1,17,'Tension placed'),(7,2,17,'Tension removed');
 
 -- Month 3 — Beat 5
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (37,16,18,'Faction updates Standing markers per ARBITER Portrait announcement'),
 (25,1,18,'ARBITER draws next Situation Report card'),(25,10,18,'Situation Report revealed'),
 (34,16,18,'ARBITER advances Session Timeline pointer'),
@@ -467,14 +465,14 @@ INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VA
 (13,2,18,'Resolution Grid cleared'),(14,2,18,'Political act slots cleared');
 
 -- Battlefield Strength
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (7,2,19, 'Tension markers removed from resolved contested districts'),
 (1,2,19, 'Presence tokens removed from losing faction'),
 (6,16,19,'Control flag moved to winning faction'),
 (5,16,19,'Established marker updated after resolution');
 
 -- Debrief
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
+INSERT INTO tmp_comp_verb_beat (component_id, verb_id, beat_id, notes) VALUES
 (8,16,20, 'Resource traded bilaterally — no ARBITER adjudication'),
 (9,16,20, 'Intel token traded bilaterally — examination permitted'),
 (10,1,20, 'Accord proposed or counter-proposed'),

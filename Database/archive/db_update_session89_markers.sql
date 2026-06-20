@@ -10,11 +10,11 @@ SET name = 'Chorus Portrait track',
 WHERE id = 50;
 
 -- Register Visibility Marker (id=103)
-INSERT IGNORE INTO component (id, name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
+INSERT INTO component (id, name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
 VALUES (103, 'Visibility Marker', 1, 0, 0, 0, 0);
 
 -- Register Boost Marker (id=104)
-INSERT IGNORE INTO component (id, name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
+INSERT INTO component (id, name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
 VALUES (104, 'Boost Marker', 1, 0, 0, 0, 0);
 
 -- Recreate v_placement_matrix view with updated component names and columns

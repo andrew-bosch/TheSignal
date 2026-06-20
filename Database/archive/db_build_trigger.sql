@@ -1,5 +1,3 @@
--- NON-IDEMPOTENT: Contains DROP TABLE (schema/data destructive operation).
-
 -- ============================================================
 -- db_build_trigger.sql  —  THE SIGNAL: trigger taxonomy
 -- Session 47
@@ -35,7 +33,7 @@ CREATE TABLE tmp_trigger_type (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT IGNORE INTO tmp_trigger_type (id, type, subtype, notes) VALUES
+INSERT INTO tmp_trigger_type (id, type, subtype, notes) VALUES
 (1,  'phase',     'open',            'Action fires when a beat opens (entry event)'),
 (2,  'phase',     'during',          'Action is valid throughout a beat window'),
 (3,  'phase',     'closed',          'Action fires when a beat closes (transition gate)'),
@@ -79,7 +77,7 @@ CREATE TABLE tmp_state_condition_clause (
 -- ============================================================
 -- STATUS MARKER — must exist before condition clauses reference it
 -- ============================================================
-INSERT IGNORE INTO tmp_component
+INSERT INTO tmp_component
   (id, name, actionable, transformable, receivable,
    transform_visibility, transform_orientation, transform_data)
 VALUES
@@ -91,19 +89,19 @@ ON DUPLICATE KEY UPDATE name=name;
 -- ============================================================
 
 -- Condition: All faction Status markers = Ready (triggers Debrief close)
-INSERT IGNORE INTO tmp_state_condition (id, description, logic_operator, notes) VALUES
+INSERT INTO tmp_state_condition (id, description, logic_operator, notes) VALUES
 (1, 'All faction Status markers = Ready (green)', 'AND',
    'Gate for Debrief close. ARBITER closes Debrief when all players have flipped to Ready. Art 03 Debrief.');
 
-INSERT IGNORE INTO tmp_state_condition_clause (condition_id, component_id, state_key, operator, value, clause_notes) VALUES
+INSERT INTO tmp_state_condition_clause (condition_id, component_id, state_key, operator, value, clause_notes) VALUES
 (1, 49, 'flip_state', 'ALL', 'Ready', 'Every faction player''s Status marker must show Ready face — one instance per active faction');
 
 -- Condition: At least one faction Status marker = Discussing (Debrief still open)
-INSERT IGNORE INTO tmp_state_condition (id, description, logic_operator, notes) VALUES
+INSERT INTO tmp_state_condition (id, description, logic_operator, notes) VALUES
 (2, 'Any faction Status marker = Discussing (yellow)', 'OR',
    'Debrief remains open while any faction is still discussing.');
 
-INSERT IGNORE INTO tmp_state_condition_clause (condition_id, component_id, state_key, operator, value, clause_notes) VALUES
+INSERT INTO tmp_state_condition_clause (condition_id, component_id, state_key, operator, value, clause_notes) VALUES
 (2, 49, 'flip_state', 'ANY', 'Discussing', 'Any Status marker on Discussing face = Debrief window stays open');
 
 -- ============================================================

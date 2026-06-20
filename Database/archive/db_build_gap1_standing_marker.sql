@@ -13,7 +13,7 @@
 -- ============================================================
 -- 1. TAXONOMY — add beat coverage
 -- ============================================================
-INSERT IGNORE INTO tmp_comp_verb_beat (component_id, beat_id, verb_id, notes)
+INSERT INTO tmp_comp_verb_beat (component_id, beat_id, verb_id, notes)
 VALUES
   (37, 8,  16, 'Faction publicly moves Standing marker per M1 Beat 3 card effect'),
   (37, 14, 16, 'Faction publicly moves Standing marker per M2 Beat 3 card effect')
@@ -23,7 +23,7 @@ ON DUPLICATE KEY UPDATE notes = notes;
 -- 2. PRIMITIVES — Faction subject (Beat 3 exception)
 --    trigger_type_id = 4 (rule.card)
 -- ============================================================
-INSERT IGNORE INTO tmp_action
+INSERT INTO tmp_action
   (beat_id, beat_trigger, prereq_id, prereq_beat_id,
    subject_id, verb_id, component_id, trigger_type_id, notes)
 VALUES

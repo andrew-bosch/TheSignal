@@ -1,5 +1,3 @@
--- NON-IDEMPOTENT: Contains DROP TABLE (schema/data destructive operation).
-
 -- ============================================================
 -- db_build_action.sql
 -- THE SIGNAL — tmp_action table + dispatch case seed
@@ -65,7 +63,7 @@ CREATE TABLE tmp_action (
 -- Verb IDs: Add=1, Remove=2, Reveal=10
 -- ============================================================
 
-INSERT IGNORE INTO tmp_action
+INSERT INTO tmp_action
   (beat_id, beat_trigger, prereq_id, prereq_beat_id, subject_id, verb_id,
    component_id, destination_component_id, destination_zone_id, notes)
 VALUES

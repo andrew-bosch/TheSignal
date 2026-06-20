@@ -6,13 +6,13 @@ UPDATE component SET name = 'Dominant marker' WHERE id = 6;
 UPDATE component SET name = 'Operative card' WHERE id = 15;
 
 -- Register new components (DB-15, DB-34)
-INSERT IGNORE INTO component (name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
+INSERT INTO component (name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
 VALUES ('Sealed Apex ability', 1, 0, 1, 0, 0);
 
-INSERT IGNORE INTO component (name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
+INSERT INTO component (name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
 VALUES ('DebriefActionCard', 1, 1, 0, 0, 0);
 
-INSERT IGNORE INTO component (name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
+INSERT INTO component (name, actionable, receivable, transform_visibility, transform_orientation, transform_data)
 VALUES ('SCIFRecord', 1, 1, 0, 0, 1);
 
 -- Update card_ref references (Presence token -> Presence chip)

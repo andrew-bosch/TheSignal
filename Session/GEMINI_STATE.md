@@ -1,9 +1,9 @@
-# GEMINI WORKING STATE: SESSION 102
+# GEMINI WORKING STATE: SESSION 104
 
-## 1. Operating and Search Scope Constraints (Session 102 Lock)
+## 1. Operating and Search Scope Constraints (Session 104 Lock)
 To conserve token context and ensure focus on database validation, agy operates under these strict rules:
 1.  **Exclusions:** Ignore and do not scan drafts/stubs (05 and beyond) or the PM suite (`PM01`-`PM05`).
-2.  **Narrow Search Targets:** Target queries to `README.md`, `00b` (Data Architecture), `03` (Round Structure), `03a` (Engine Spec), and `04b` (Action Matrix) first.
+2.  **Narrow Search Targets:** Target queries to `README.md`, `00b` (Data Architecture), `03` (Round Structure), `03a` (Game Engine Spec), and `04b` (Action Matrix) first.
 3.  **Search Escalation:**
     - Level 1: Core narrow set.
     - Level 2: Expand only to signed-off V1 artifacts (00–04b).
@@ -15,7 +15,7 @@ To conserve token context and ensure focus on database validation, agy operates 
 *   **Structured output:** Use tables for audits/analysis; keep prose dense with no padding.
 *   **Do not summarize:** Deliver complete inventories (no representative examples), flag all instances of X.
 *   **Verify work:** Double-check claims, quotes, rule numbers, and file references against source files before submitting.
-*   **Flag uncertainty explicitly:** Cite sources with caveats (e.g., *"I believe I saw X in Y — recommend Claude verify before actioning"*); never fabricate details.
+*   **Flag uncertainty explicitly:** Cite sources with caveats; never fabricate details.
 *   **Complete the task:** Deliver full output in a single pass without stopping halfway.
 
 ### Working with Andy
@@ -33,21 +33,18 @@ To conserve token context and ensure focus on database validation, agy operates 
 - Role: Cloud Consultant (Validator/Research)
 - Environment: Antigravity CLI (migrated)
 
-## 3. Session 102 Tasks Status
-- **DB View Cleanup Script (Session 101):** Executed `Database/seed_comp_cleanup.sql` successfully.
-- **DB View Seeding & Prohibited Cleanup Script (Session 102):** Executed `Database/seed_comp_cleanup_3.sql` successfully.
-  - Prohibited combinations cleaned from `comp_verb_phase` and `comp_verb_role`.
-  - Missing phase associations for permitted combinations registered in `comp_verb_phase`.
-  - 36 action records successfully seeded across all monthly/debrief phases in `action`.
-- **Verification of views:**
-  - `v_unlegislated_by_trigger` count: **0 rows** (successfully resolved to zero gaps).
-  - `v_unlegislated_primitives` count: **0 rows** (successfully resolved to zero gaps).
-- **GEMINI_CONTEXT.md Pruning:** Completed. All tasks and seed task sections from Session 32 through Session 102 have been pruned.
-- **Outbound Report:** Logged all execution results, counts, and confirmation in `Claude_context.md`.
+## 3. Session 104 Tasks Status
+- **ID-01 (Delete G-ext):** Deleted retired G-ext rows from `card_ref`.
+- **ID-02 (Reclassify DebriefActionCard & Grant Deed):** Set `parent_component_id` to `NULL` for components 100 and 113.
+- **ID-03 (Add Faction Associations):** Added Ghost, Network, Syndicate, Guild, and Directorate rows for components 116, 117, and 118 in `component_faction`.
+- **ID-05 (Idempotency Sweep):** Converted 23 sql/sh scripts in `Database/` to idempotent versions and moved original copies to `Database/archive/`.
+- **ID-SCHEMA (Document L219 Taxonomy):** Documented card ID format conventions in `schema_reference.md`.
+- **Matrix Verification:** Ran `verify_matrix.py` post-execution. Successfully checked 57 components; found **0 mismatches** against `V1/02___Components.md`.
 
-## 4. Past Session Status (Session 98 & 92)
-- **S98 Tasks**: Completed Lookup and component metadata seeding.
-- **S92 Tasks**: Completed rename of component 36 to `"Escalation marker"` (**DB-38**). Implemented component taxonomy redesign.
+## 4. Past Session Status (Session 102 & 98)
+- **S102 Tasks**: Seeding phase/role cleanup (36 action records). `v_unlegislated_primitives` resolved to 0.
+- **S98 Tasks**: Lookup and component metadata seeding.
+- **S92 Tasks**: Component 36 renamed to "Escalation marker". Component taxonomy redesign implemented.
 
 ## 5. Current Investigations
 ### 1. The Ring Numbering Discrepancy
@@ -63,17 +60,14 @@ To conserve token context and ensure focus on database validation, agy operates 
 - Confirmed: `Resolution: d100` paired with `Resolution Type: Transactional`. 
 
 ## 6. Completed DB Execution Tasks
-- **DB-03:** Created `inteltoken_metadata` (Session 36).
-- **DB-04:** Created `resource_types` and patched `factions` columns (Session 37).
-- **DB-05:** Migrated native resource columns in `district_metadata` and `player_metadata` (Session 37).
-- **DB-07:** Added check constraint to `inteltoken_metadata.inteltoken_quarter_id` (Session 37).
-- **DB-11:** Renamed `live_state` to `component_positions`, renamed `anchored_to_component_id` to `on_component_id` (nullable), and added `on_game_zone_id` (Session 43).
-- **DB-16 (tmp_component updates):** Populated missing physical components in the `tmp_component` table and updated "Operational marker" to "Deployment marker" (Session 46/47).
+- **ID-01, ID-02, ID-03:** Executed patch script `Database/db_update_session104.sql` (Session 104).
+- **DB View Cleanup Script:** Executed `Database/seed_comp_cleanup.sql` (Session 101).
+- **DB View Seeding & Prohibited Cleanup Script:** Executed `Database/seed_comp_cleanup_3.sql` (Session 102).
 
 ## 7. Session File Location Index
 - **Airlock Report:** `~/Projects/TheSignal/Claude_context.md`
 - **Working State:** `~/Projects/TheSignal/Session/GEMINI_STATE.md`
-- **Session Brief:** `~/Projects/TheSignal/Session/SESSION_BRIEF.md`
+- **Session Patch:** `~/Projects/TheSignal/Database/db_update_session104.sql`
 - **Schema Reference:** `~/Projects/TheSignal/Database/schema_reference.md`
 - **Registry Python Script:** `~/Projects/TheSignal/Database/register_component.py`
 - **YAML Component Template:** `~/Projects/TheSignal/Database/component_template.yaml`

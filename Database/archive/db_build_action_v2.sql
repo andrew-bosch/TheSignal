@@ -1,5 +1,3 @@
--- NON-IDEMPOTENT: Contains TRUNCATE TABLE (data destructive operation).
-
 -- ============================================================
 -- db_build_action_v2.sql  —  THE SIGNAL: primitive action library
 -- Session 47
@@ -24,7 +22,7 @@ SET FOREIGN_KEY_CHECKS=1;
 -- PHASE 1: Primitive actions
 -- Derived from tmp_comp_verb_beat × tmp_comp_verb_role (initiators only)
 -- ============================================================
-INSERT IGNORE INTO tmp_action
+INSERT INTO tmp_action
   (beat_id, beat_trigger, prereq_id, prereq_beat_id,
    subject_id, verb_id, component_id, notes)
 SELECT

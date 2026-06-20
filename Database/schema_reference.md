@@ -450,6 +450,39 @@ CREATE TABLE `subject_target` (
 ```
 *No declared FKs. Used by v_comp_verb_matrix to determine Move=1 for a component.*
 
+### card_ref
+```sql
+CREATE TABLE card_ref (
+    card_id VARCHAR(15) NOT NULL,
+    card_name VARCHAR(100) NOT NULL,
+    layer VARCHAR(50) NOT NULL,
+    function VARCHAR(50) NOT NULL,
+    subject VARCHAR(100) NOT NULL,
+    PRIMARY KEY (card_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+*Stores standard card references. Used for mapping card definitions to verbs/components via views.*
+
+**card_ref.card_id format — L219**
+
+Format: `[FAC].[TYPE].n`
+
+| Code | Meaning |
+|------|---------|
+| FAC | Faction/owner: GHO, NET, SYN, GUI, DIR, STD, ARB, RNG |
+| TYPE | Deck/pool code: CA, PA, MOD, OPR, APEX, CDIR, ER, CMA, CMB, BCAST, BCEV |
+| n | Sequential integer within FAC+TYPE |
+
+Special cases:
+- `STD` = Standard (faction=All) — one spec, five physical copies (one per faction deck of matching type)
+- `RNG` ring decks use format `RNG.[1/2/3].n` — ring number replaces TYPE slot
+- `[FAC].ER` — Emergency Response has no sequence number; one card per faction IS the deck
+- `STD.CMA.1` / `STD.CMB.1` — Countermeasure cards; one spec each, faction copies (1× CMA, 2× CMB per faction)
+- ARBITER card taxonomy = BCAST and BCEV only; ARB domain documents (Accord, Notif Slip, Grant Deed, DebriefActionCard) are NOT cards and have no card_id
+
+`varchar(15)` constraint: all IDs must fit within 15 characters. `ARB.BCEV.99` = 11 chars (safe). Verify any new ID type fits before adding.
+
+
 ### trigger_type
 ```sql
 CREATE TABLE `trigger_type` (
@@ -511,83 +544,95 @@ CREATE TABLE `state_condition_clause` (
 
 ---
 
-## 5. Component Registry (component — 67 rows as of S90)
+## 5. Component Registry (component — 77 active rows as of S104)
 
-| id | name | act | xfm | rcv | vis | ori | dat |
-|----|------|-----|-----|-----|-----|-----|-----|
-| 1 | Presence chip | 1 | 0 | 0 | 0 | 0 | 0 |
-| 2 | Deployment marker | 1 | 1 | 0 | 0 | 1 | 0 |
-| 3 | Structure block | 1 | 0 | 0 | 0 | 0 | 0 |
-| 4 | District tile | 0 | 0 | 1 | 0 | 0 | 0 |
-| 5 | Established marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 6 | Dominant marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 7 | Tension marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 8 | Native resource | 1 | 0 | 0 | 0 | 0 | 0 |
-| 9 | Intel token | 1 | 1 | 0 | 1 | 0 | 1 |
-| 10 | Accord agreement | 1 | 1 | 0 | 1 | 0 | 1 |
-| 11 | Modifier card | 1 | 1 | 0 | 1 | 0 | 0 |
-| 12 | Dispatch token | 1 | 0 | 0 | 0 | 0 | 0 |
-| 13 | Covert operation | 1 | 1 | 1 | 1 | 0 | 0 |
-| 14 | Political act | 1 | 1 | 1 | 1 | 0 | 0 |
-| 15 | Operative card | 1 | 1 | 0 | 1 | 0 | 0 |
-| 17 | Classified directives | 1 | 1 | 0 | 1 | 0 | 0 |
-| 21 | Public Standing | 0 | 0 | 1 | 0 | 0 | 0 |
-| 23 | Session Timeline | 0 | 0 | 1 | 0 | 0 | 0 |
-| 24 | Initiative strip | 0 | 0 | 1 | 0 | 0 | 0 |
-| 25 | Broadcast Card | 1 | 1 | 0 | 1 | 0 | 0 |
-| 26 | Faction Terminal | 0 | 0 | 1 | 0 | 0 | 0 |
-| 27 | Faction screen | 0 | 0 | 0 | 0 | 0 | 0 |
-| 28 | ARBITER screen | 0 | 0 | 0 | 0 | 0 | 0 |
-| 29 | The Overview | 0 | 0 | 1 | 0 | 0 | 0 |
-| 30 | Arbiter Tableau | 0 | 0 | 1 | 0 | 0 | 0 |
-| 31 | Chorus Activity Track | 0 | 0 | 1 | 0 | 0 | 0 |
-| 32 | Reservoir | 0 | 0 | 1 | 0 | 0 | 0 |
-| 33 | Backlog | 0 | 0 | 1 | 0 | 0 | 0 |
-| 34 | Pointer marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 35 | Activity marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 36 | Escalation marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 37 | Standing marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 38 | Faction order marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 42 | ARBITER Dominance Marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 43 | Human player | 0 | 0 | 0 | 0 | 0 | 0 |
-| 44 | Dispatch case | 1 | 1 | 1 | 1 | 0 | 0 |
-| 47 | Modifier token | 1 | 0 | 0 | 0 | 0 | 0 |
-| 48 | Target Profile | 1 | 1 | 0 | 0 | 0 | 1 |
-| 49 | Status marker | 1 | 1 | 0 | 0 | 1 | 0 |
-| 50 | Chorus Portrait track | 0 | 0 | 1 | 0 | 0 | 0 |
-| 51 | Portrait marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 52 | Countermeasure card | 1 | 1 | 0 | 1 | 0 | 0 |
-| 53 | Ring 1 modifier deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 54 | Ring 2 modifier deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 55 | Ring 3 modifier deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 86 | Broadcast Deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 87 | Broadcast Effect Deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 88 | Faction Resolution Grid | 0 | 0 | 1 | 0 | 0 | 0 |
-| 89 | Faction modifier deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 90 | Political act deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 91 | Political act discard | 1 | 0 | 1 | 0 | 0 | 0 |
-| 92 | Covert operation deck | 1 | 0 | 1 | 0 | 0 | 0 |
-| 93 | Covert operation discard | 1 | 0 | 1 | 0 | 0 | 0 |
-| 94 | Faction hand | 1 | 0 | 1 | 0 | 0 | 0 |
-| 95 | Notification Slip | 1 | 0 | 1 | 0 | 0 | 0 |
-| 96 | Intel Delivery Slip | 1 | 1 | 1 | 0 | 0 | 1 |
-| 97 | Emergency Response card | 1 | 1 | 0 | 1 | 0 | 0 |
-| 98 | Broadcast Effect Card | 0 | 0 | 0 | 0 | 0 | 0 |
-| 99 | Sealed Apex ability | 1 | 1 | 0 | 1 | 0 | 0 |
-| 100 | DebriefActionCard | 1 | 0 | 1 | 0 | 0 | 0 |
-| 102 | Situation Report | 0 | 0 | 1 | 0 | 0 | 0 |
-| 103 | Visibility Marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 104 | Boost Marker | 1 | 0 | 0 | 0 | 0 | 0 |
-| 105 | ARBITER Covert Resolution Grid | 0 | 0 | 1 | 0 | 0 | 0 |
-| 106 | ARBITER Threshold Slider | 0 | 0 | 0 | 0 | 0 | 0 |
-| 107 | Faction Threshold Slider | 0 | 0 | 0 | 0 | 0 | 0 |
-| 108 | Dispatch Packet | 1 | 0 | 1 | 0 | 0 | 0 |
-| 109 | Broadcast Discard | 0 | 0 | 1 | 0 | 0 | 0 |
-| 110 | Broadcast Effect Discard | 0 | 0 | 1 | 0 | 0 | 0 |
+| id | name | act | xfm | rcv | vis | ori | dat | par |
+|----|------|-----|-----|-----|-----|-----|-----|-----|
+| 1 | Presence chip | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 2 | Deployment marker | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
+| 3 | Structure block | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 4 | District tile | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 5 | Established marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 6 | Dominant marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 7 | Tension marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 8 | Native resource | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 9 | Intel token | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
+| 10 | Accord agreement | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
+| 11 | Modifier card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 12 | Dispatch token | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 13 | Covert operation | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
+| 14 | Political act | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
+| 15 | Operative card | 1 | 1 | 0 | 1 | 0 | 1 | 111 |
+| 17 | Classified directives | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 21 | Public Standing | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 23 | Session Timeline | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 24 | Initiative strip | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 25 | Broadcast Card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 26 | Faction Terminal | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 27 | Faction screen | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 28 | ARBITER screen | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 29 | The Overview | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 30 | Arbiter Tableau | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 31 | Chorus Activity Track | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 32 | Reservoir | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 33 | Backlog | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 34 | Pointer marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 35 | Activity marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 36 | Escalation marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 37 | Standing marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 38 | Faction order marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 42 | ARBITER Dominance Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 43 | Human player | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 44 | Dispatch case | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 47 | Modifier token | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
+| 48 | Target Profile | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
+| 49 | Status marker | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
+| 50 | Chorus Portrait track | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 51 | Portrait marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 52 | Countermeasure card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 53 | Ring 1 modifier deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 54 | Ring 2 modifier deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 55 | Ring 3 modifier deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 86 | Broadcast Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 87 | Broadcast Effect Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 88 | Faction Resolution Grid | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 89 | Faction modifier deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 90 | Political act deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 91 | Political act discard | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 92 | Covert operation deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 93 | Covert operation discard | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 94 | Faction hand | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
+| 95 | Notification Slip | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 96 | Intel Delivery Slip | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
+| 97 | Emergency Response card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 98 | Broadcast Effect Card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 99 | Sealed Apex ability | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 100 | DebriefActionCard | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
+| 102 | Situation Report | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 103 | Visibility Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 104 | Boost Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 105 | ARBITER Covert Resolution Grid | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 106 | ARBITER Threshold Slider | 1 | 1 | 0 | 0 | 0 | 1 | NULL |
+| 107 | Faction Threshold Slider | 1 | 1 | 0 | 0 | 0 | 1 | NULL |
+| 108 | Dispatch Packet | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 109 | Broadcast Discard | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 110 | Broadcast Effect Discard | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 111 | Card | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 113 | Grant Deed | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
+| 114 | Covert Operation Card Set | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
+| 115 | Political Act Card Set | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
+| 116 | Operative Pool | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
+| 117 | Apex Ability Pool | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
+| 118 | Classified Directives Pool | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
+| 119 | d10 | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
 
-*Column key: act=actionable, xfm=transformable, rcv=receivable, vis=transform_visibility, ori=transform_orientation, dat=transform_data*  
+*Column key: act=actionable, xfm=transformable, rcv=receivable, vis=transform_visibility, ori=transform_orientation, dat=transform_data, par=parent_component_id*  
 *IDs are non-sequential (gaps from deleted rows during schema evolution).*  
-*Next AUTO_INCREMENT = 111.*
+*Next AUTO_INCREMENT = 120.*
+
+*Note on ids 100 and 113:* `DebriefActionCard` (100) and `Grant Deed` (113) are physical game documents (ARBITER domain), not card-type components, and thus have `parent_component_id = NULL` (they do not belong to the `Card` hierarchy).
+*Note on ids 116, 117, and 118:* `Operative Pool` (116), `Apex Ability Pool` (117), and `Classified Directives Pool` (118) are faction-specific components (one instance per faction) rather than board-level or non-faction components.
+
 
 ---
 

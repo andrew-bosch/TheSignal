@@ -1,9 +1,9 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.6  
-**Status:** ✅ Signed Off — S48  
-**Last Updated:** 2026-05-29  
+**Version:** 1.7  
+**Status:** ✅ Signed Off — S104  
+**Last Updated:** 2026-06-19  
 **Companion to:** 04 — Action Card System  
 **Purpose:** Preserve the taxonomy framework, development decisions, coverage analysis, and faction design recommendations that govern Artifact 04 and all future card design passes.
 
@@ -300,17 +300,17 @@ The following combinations exist in the taxonomy but have no current card. Layer
 |---|---|---|---|---|
 | Redirect | Changes ownership, destination, or allegiance of an element | Structure | Low | Transfer structure faction — C33 partially covers |
 | Recover | Returns a spent, removed, or degraded element to active play | Presence token | Medium | Return removed tokens — Guild candidate |
-| Recover | Returns a spent, removed, or degraded element to active play | Structure | High | Reconstruct demolished structure — strong Guild card |
+| Recover | Returns a spent, removed, or degraded element to active play | Structure | N/A | **Not possible (L218).** Demolished structures are gone permanently. Reconstruction uses Territory — Add — Structure block (C01), not Recover. |
 
 **Layer: Economy** — *Quantitative holdings: native resources, token counts, card counts, Accord existence*
 
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
-| Remove | Takes an element out of active play | Intel token | Low | Strip opponent Intel tokens |
+| Remove | Takes an element out of active play | Intel token | Low | Strip opponent Intel tokens. Addressed: Disprove (📝) |
 | Remove | Takes an element out of active play | Modifier card | Medium | Strip opponent modifier cards |
 | Remove | Takes an element out of active play | Accord agreement | High | Break Accord covertly — important missing mechanic |
 | Recover | Returns a spent, removed, or degraded element to active play | Modifier card | Low | Return spent modifier card |
-| Redirect | Changes ownership, destination, or allegiance of an element | Accord agreement | High | "Small print" mechanic — Syndicate doctrine |
+| Redirect | Changes ownership, destination, or allegiance of an element | Accord agreement | High | "Small print" mechanic — Syndicate doctrine. Addressed: Accord Transfer (📝) |
 | Redirect | Changes ownership, destination, or allegiance of an element | Modifier card | Low | Partially covered by trade rules |
 
 **Layer: Submission** — *What enters the resolution queue: costs, eligibility, blocks, scope*
@@ -324,19 +324,19 @@ The following combinations exist in the taxonomy but have no current card. Layer
 
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
-| Reveal | Makes hidden information visible to a named audience | Faction hand | High | `Faction hand` (id=94) registered S48. Covered: Modifier card ✅, Countermeasure card ✅. Pre-submission cards (Political act, Covert operation) not in play at intelligence beats — hand-targeting mechanic applies uniformly to all held types. See ⚠️ below |
-| Reveal | Makes hidden information visible to a named audience | Classified directives | Low | Very high impact — use carefully |
+| Reveal | Makes hidden information visible to a named audience | Faction hand | High | `Faction hand` (id=94) registered S48. Covered: Modifier card ✅, Countermeasure card ✅. Pre-submission cards (Political act, Covert operation) not in play at intelligence beats — hand-targeting mechanic applies uniformly to all held types. Addressed: C40B Live Coverage (📝). See ⚠️ below |
+| Reveal | Makes hidden information visible to a named audience | Classified directives | Low | Very high impact — use carefully. Addressed: Signals Analysis (📝) |
 | Reveal | Makes hidden information visible to a named audience | Modifier cards held | Medium | Disclose individual modifier card contents |
 | Reveal | Makes hidden information visible to a named audience | Named faction only | High | Targeted disclosure — Ghost intelligence delivery. ⚠️ Target-scope/filter system needed |
-| Corrupt | Alters a physically written or recorded value on a component | Intel token | High | Falsify Intel token content |
-| Corrupt | Alters a physically written or recorded value on a component | Accord agreement | High | Alter Accord terms — Syndicate doctrine |
+| Corrupt | Alters a physically written or recorded value on a component | Intel token | High | Falsify Intel token content. Addressed: Source Substitution, Backdate (📝) |
+| Corrupt | Alters a physically written or recorded value on a component | Accord agreement | High | Alter Accord terms — Syndicate doctrine. Addressed: C23 Tort Interference (📝) |
 
 **Layer: Standing** — *Reputation tracks: Public Standing and Portrait*
 
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
 | Shift | Moves a track value up or down | ~~Chorus Portrait (primary covert)~~ | — | **Retired (L84, 00a R01).** ARBITER sole mover of Portrait. Ghost doctrine gap: new primary covert effect needed — see PM05 04-11 |
-| Shift | Moves a track value up or down | Public Standing (primary covert) | High | Standing as primary covert effect — Network doctrine |
+| Shift | Moves a track value up or down | Public Standing (primary covert) | High | Standing as primary covert effect — Network doctrine. Addressed: Disinformation Campaign (📝) |
 
 ---
 
@@ -350,73 +350,72 @@ The following combinations exist in the taxonomy but have no current card. Layer
 
 | Layer | Function | Subject | Cards | Issue |
 |-------|----------|--------|-------|-------|
-| Territory | Add | Presence token | C03, C08, C13, C30, P01 | 5 cards — differentiation critical |
-| Submission | Block | Various | C21, C25, P07, P11 | 4 Block cards — C21/C25 target covert operations, P07 any procedural, P11 political act; Function concentration across all four |
-| Information | Protect | Action attribution | C18, C19, C27 | 3 cards, 2 same faction, same function |
-| Information | Reveal | Various | C26, P05, P13 (action attribution); C28 (private communications) | 4 Reveal cards — 3 share the same subject (action attribution); consolidation candidates |
+| Territory | Add | Presence token | C03, C08, C13, C30, P01 | 5 cards — Standard (×2), Guild, Network, Political Act. All five must remain mechanically distinct; differentiation is by cost, restriction, and doctrine alignment. |
+| Information | Reveal | CovertOperation | C17, C24, C28 | 3 faction cards (Ghost, Directorate, Network). Subject is identical across all three; differentiation falls entirely to trigger conditions, target restrictions, and disclosure scope in card specs. |
+| Information | Reveal | (all subjects) | C17, C18, C24, C26, C28, C40B | 6 Reveal cards; Ghost holds 2, Network holds 3, Directorate holds 1. Reveal is the most concentrated function in the Information layer. Standard has no faction Reveal cards — only Political Acts (P05, P13, P17). |
 
 ### 6.3 DB-Backed Gap Analysis (S47)
 
-*Supersedes §6.1 as the authoritative gap source. §6.1 retains historical value as a card design ideation list using the Layer/Function framework. §6.3 is derived directly from the primitive model and is the operative reference for legalization decisions.*
+The DB primitive model generates two gap views that serve as the operative legalization audit tools. Methodology and decision tracking live in Art 03 §22 (Physical Action Taxonomy appendix) — that is the canonical location for view definitions and legalization status.
 
-The DB primitive model generates two gap views. See §3.3 for methodology.
+**`v_unlegislated_by_trigger`** — Faction-initiated (subject, verb, component) tuples with no legalization ruling. Each row requires a permit / prohibit / defer decision before the corresponding Art 03 procedure can be written or explicitly closed.
 
-**`v_unlegislated_by_trigger`** — 14 unlegislated Faction-initiated (subject, verb, component) tuples. Reproduced in §3.3 with decision tracking. Each row requires a permit / prohibit / defer ruling before the corresponding Art 03 procedure can be written or explicitly closed.
+**`v_unlegislated_primitives`** — Beat-specific gaps. The Faction-at-M3-Beat-4 subset is the most actionable design space for new card effects.
 
-**`v_unlegislated_primitives`** — 60 beat-specific gaps. 46 are expected (Faction-at-Beat-3, ARBITER-executed beat); 2 are ARBITER-Move-Standing-marker-at-Beat-3 (inverse of the public-exception primitive); 12 are Faction-at-M3-Beat-4, the most interesting design space for new card effects.
-
-All planned gap views completed S47 — see §3.3 for view list and status. `v_card_primitive_map` remains blocked pending `card_ref`.
+Live view results are in the DB — query directly for current state. Results captured here as of S47 are superseded and not maintained; do not use as a gap reference.
 
 ---
 
 ## 7. Faction Coverage Matrix
 
+*Rebuilt S104 from Art 04 card data. Standard column = faction=All cards and Political Acts (P-prefix). Faction columns = faction-specific cards only.*
+
 | Layer | Function | Subject | Standard | Guild | Ghost | Directorate | Network | Syndicate |
-|-------|----------|--------|----------|-------|-------|-------------|---------|-----------|
+|-------|----------|---------|----------|-------|-------|-------------|---------|-----------|
 | **Territory** | | | | | | | | |
 | | Add | Presence token | C03, C08 | C13 | — | — | C30 | — |
-| | Add | Structure | C01 | — | — | — | — | — |
-| | Remove | Presence token | C04 | — | — | — | — | — |
+| | Add | Structure block | C01 | — | — | — | — | — |
+| | Remove | Presence token | C04 | — | — | C42 | — | — |
 | | Remove | Deployment marker | — | — | — | C22 | — | — |
-| | Remove | Structure | C02 | — | — | — | — | — |
+| | Remove | Structure block | C02 | — | — | — | — | — |
+| | Move | Presence token | — | — | — | C25 | — | — |
 | | Redirect | Presence token | P15 | — | — | — | — | — |
-| | Redirect | Structure | — | — | — | — | — | C33 |
+| | Redirect | Structure block | — | — | — | — | — | C33 |
 | | Protect | Structure block | — | C11 | — | — | — | — |
 | | Recover | Presence token | — | — | — | — | — | — |
-| | Recover | Structure | — | — | — | — | — | — |
 | **Economy** | | | | | | | | |
-| | Add | Native resource | — | C15 | — | — | — | C31 |
-| | Add | Intel token | C05 | — | — | C24 | P12 | — |
-| | Add | Accord agreement | P08 | — | — | — | — | — |
+| | Add | Native resource | P16 | C15 | — | — | — | C31 |
+| | Add | Intel token | — | — | C36 | — | C37 | C38 |
+| | Add | Accord agreement | P08, P10 | — | — | — | — | — |
+| | Add | Exposure | — | — | — | — | C27 | — |
 | | Remove | Native resource | P06 | — | — | — | — | C32 |
+| | Remove | Intel token | — | — | — | — | — | — |
 | | Remove | Accord agreement | — | — | — | — | — | — |
 | | Recover | Native resource | — | C12 | — | — | — | — |
-| | Recover | Intel token | — | — | C17 | — | — | — |
-| | Redirect | Native resource | C09 | — | — | — | — | — |
+| | Redirect | Native resource | C09 | — | — | — | — | C41 |
 | | Redirect | Accord agreement | — | — | — | — | — | — |
 | | Protect | Native resource | — | — | — | — | — | C34 |
 | **Information** | | | | | | | | |
-| | Reveal | Action attribution | P05, P13 | — | — | — | C26, C28 | — |
-| | Reveal | Written record | P14 | — | — | — | — | — |
-| | Reveal | Named faction | — | — | — | — | — | — |
-| | Protect | Action attribution | — | — | C18, C19 | — | C27 | — |
-| | Protect | Written record | — | — | C23 | — | — | — |
-| | Add | Intel token (corrupt content) | — | — | C20 | — | — | — |
+| | Add | Intel token | C05, P12 | — | C20 | — | — | — |
+| | Reveal | CovertOperation | — | — | C17 | C24 | C28 | — |
+| | Reveal | IntelDeliverySlip | — | — | C18 | — | — | — |
+| | Reveal | District | — | — | — | — | C26 | — |
+| | Reveal | FactionHand | — | — | — | — | C40B | — |
+| | Reveal | Action attribution | P05, P13, P17 | — | — | — | — | — |
+| | Remove | Intel token | — | — | C19 | — | — | — |
+| | Corrupt | Accord | C23 | — | — | — | — | — |
 | | Corrupt | Intel token | — | — | — | — | — | — |
-| | Corrupt | Accord agreement | — | — | — | — | — | — |
 | **Submission** | | | | | | | | |
-| | Block | Covert operation | — | — | — | C21, C25 | — | — |
+| | Block | CovertOperation | C39 | — | — | C21 | — | — |
 | | Block | Named action type | — | — | — | — | — | C35 |
-| | Block | Political act | P07 | — | — | P11 | — | — |
-| | Modify | Cost | C06 | — | — | — | — | P16 |
-| | Modify | Scope | — | — | — | — | C29 | — |
-| | Copy | Full action | — | — | C16 | — | — | — |
-| | Copy | Subset | — | — | — | — | — | — |
-| | Remove Restriction | Presence | — | C14 | — | — | — | — |
+| | Block | Political act | — | — | — | P11 ⛔ | — | — |
+| | Modify | Political act | C06 | — | — | — | C29 | — |
+| | Copy | CovertOperation | — | — | C16 | — | — | — |
+| | Remove Restriction | CovertOperation | — | C14 | — | — | — | — |
 | **Resolution** | | | | | | | | |
 | | Modify | Outcome scale | C07 | — | — | — | — | — |
-| | Modify | Difficulty | — | — | — | — | — | P18 |
-| | Protect | Covert operation (difficulty) | C10 | — | — | — | — | — |
+| | Modify | Difficulty | P18 | — | — | — | — | — |
+| | Protect | CovertOperation | C10 | — | — | — | — | — |
 | **Standing** | | | | | | | | |
 | | Shift | Public Standing | P04, P07 | — | — | — | — | — |
 
@@ -428,19 +427,18 @@ These recommendations inform the redesign decisions D-04-02 through D-04-05 in A
 
 ### 8.1 Ghost — Priority redesign targets
 
-Current Ghost set (C16–C20) is doctrinally coherent but mechanically narrow. Two cards duplicate the same function (Information — Protect — Action attribution). Ghost lacks a primary covert effect that isn't attribution-protection — the Portrait avenue is closed (L84, 00a R01); see PM05 04-11.
+Current Ghost set (S104): C16 (Submission|Copy|CovertOp), C17 (Information|Reveal|CovertOp), C18 (Information|Reveal|IntelDeliverySlip), C19 (Information|Remove|IntelToken), C20 (Information|Add|IntelToken), C36 (Economy|Add|IntelToken). Attribution-protection duplication resolved by redesign; Ghost's suite now spans generation (C20), interception (C17), delivery tracking (C18), and removal (C19) — doctrinally coherent. Portrait pathway remains closed (L84, 00a R01); see PM05 04-11.
 
 **High priority:**
-1. **Information — Reveal — Named faction:** Ghost delivers targeted intelligence to a specific faction privately rather than the whole table. *Targeted intelligence disclosure that strengthens relationships without public exposure.*
-2. **Submission — Copy — Subset:** Ghost should have a partial copy card — copy only the target (apply your own operation to the same district as named faction) without replicating the full cost and effect.
-3. **Replace C18 Identity Blind:** Both C18 and C19 are Information — Protect — Action attribution. C19's permanent effect is stronger and more interesting. C18 could be replaced with Economy — Add — Intel token (generate intelligence through analysis without physical presence — Findings spent, Intel token received, no adjacency restriction).
+1. **Information — Reveal — Named faction:** Ghost delivers targeted intelligence to a specific faction privately rather than the whole table. *Targeted intelligence disclosure that strengthens relationships without public exposure.* ⚠️ Target-scope/filter system needed before this can be specified.
+2. **Submission — Copy — Subset:** Ghost should have a partial copy card — copy only the target (apply your own operation to the same district as named faction) without replicating the full cost and effect. ⚠️ Partial-copy mechanism needed in action model.
 
 ### 8.2 Directorate — Priority redesign targets
 
-Directorate is over-indexed on Submission — Block: C21, C25 (covert), P07, P11 (political) — four Block cards.
+Current Directorate set (S104): C21 (Submission|Block|CovertOp), C22 (Territory|Remove|DeploymentMarker), C24 (Information|Reveal|CovertOp), C25 (Territory|Move|PresenceToken), C42 (Territory|Remove|PresenceToken). Submission|Block concentration resolved — C25's redesign removed the second Block card. Effective Block count: C21 only; P11 (⛔ BLOCKED, PM05 04-n99) unresolved.
 
 **High priority:**
-1. **Replace C25 Sealed Border with Resource — Add — Native resource (Mandate):** Institutional authority generates Mandate when exercised and respected. *"When The Directorate issues an instruction that is complied with this round — no faction contests a Directive, no faction enters a sealed district — Mandate is generated as institutional validation."*
+1. **Economy — Add — Native resource (Mandate):** Institutional authority should generate resources when exercised without opposition. *"When The Directorate issues an instruction that is complied with this round — no faction contests a Directive, no faction enters a sealed district — Mandate is generated as institutional validation."* C25's redesign removed the prior Economy vehicle; this gap remains open.
 2. **Standing — Shift — Public Standing (primary covert):** The Directorate managing public perception through institutional channels. A covert card that shifts Public Standing positively when an institutional action succeeds.
 
 **Medium priority:**
@@ -448,24 +446,33 @@ Directorate is over-indexed on Submission — Block: C21, C25 (covert), P07, P11
 
 ### 8.3 Network — Priority redesign targets
 
-Network has duplicate Reveal cards and a doctrinal contradiction in C27.
+Current Network set (S104): C26 (Information|Reveal|District), C27 (Economy|Add|Exposure), C28 (Information|Reveal|CovertOp), C29 (Submission|Modify|PoliticalAct), C30 (Territory|Add|PresenceToken), C37 (Economy|Add|IntelToken), C40B (Information|Reveal|FactionHand). C27's redesign to Economy|Add|Exposure resolved the prior doctrinal contradiction. Network now holds three Reveal cards (C26, C28, C40B) across distinct subjects — mechanical differentiation between them must be enforced in card specs.
 
 **High priority:**
-1. **Replace C27 Source Protection with Economy — Add — Exposure:** The Network generating Exposure through information activity. *"When The Network successfully Reveals information this round, gain 1 Exposure — the act of disclosure generates the resource that enables further disclosure."* Creates positive feedback loop consistent with Network doctrine.
-2. **Standing — Shift — Public Standing (primary covert):** Network managing city-wide public perception through covert information operations. *"Targeted community outreach in a named district shifts Public Standing based on the district's current control state."*
-3. **Territory — Add — Presence token (React trigger: political act success):** Network responding to opponent public actions. *"When any faction's political act succeeds this round, The Network may trigger — placing 1 presence token in the district where the political act resolved."* Timing trigger handled in card spec; primary effect is Territory — Add.
+1. **Standing — Shift — Public Standing (primary covert):** Network managing city-wide public perception through covert information operations. *"Targeted community outreach in a named district shifts Public Standing based on the district's current control state."*
+2. **Territory — Add — Presence token (React trigger):** Network responding to opponent public actions. *"When any faction's political act succeeds this round, The Network may trigger — placing 1 presence token in the district where the political act resolved."* Primary taxonomy: Territory|Add|PresenceToken; React is a trigger modifier only.
 
 **Medium priority:**
-4. **Consolidate C26 and C28:** Both are Information — Reveal with different scopes (Action attribution vs Private communications). Consider whether both are needed or one broader Reveal card covers the design space.
+3. **Consolidate C26 and C28:** C26 reveals District-level data; C28 reveals CovertOperation. Subjects are distinct — if both are retained, card specs must enforce clear mechanical differentiation; if consolidated, the broader subject scope needs defining.
 
 ### 8.4 Syndicate — Priority redesign targets
 
-Syndicate has excellent Economy coverage but zero information capability despite being an economic intelligence operation.
+Current Syndicate set (S104): C31 (Economy|Add|NativeResource), C32 (Economy|Remove|NativeResource), C33 (Territory|Redirect|StructureBlock), C34 (Economy|Protect|NativeResource), C35 (Submission|Block|NamedActionType), C38 (Economy|Add|IntelToken), C41 (Economy|Redirect|NativeResource). Economy depth is Syndicate's defining characteristic — 5 of 7 cards are Economy layer. C38 provides an intel foothold within the Economy layer; Syndicate still has no direct Information-layer capability.
 
 **High priority:**
 1. **Information — Corrupt — Accord agreement:** Alter the recorded terms of an existing Accord. *"The Syndicate may alter one numeric value in any registered Accord — changing a resource amount, duration, or threshold. The alteration is physically made to the Accord document. Both parties notified in case."* Requires ARBITER to manage Accord document integrity.
-2. **Economy — Redirect — Accord agreement:** The "small print" mechanic. *"The Syndicate transfers an existing Accord's obligations from one faction to another. The receiving faction is privately notified — they may accept or contest at the start of the next round."*
+2. **Economy — Redirect — Accord agreement:** The "small print" mechanic. *"The Syndicate transfers an existing Accord's obligations from one faction to another. The receiving faction is privately notified — they may accept or contest at the start of the next round."* Addressed by Accord Transfer (📝) — pending sign-off.
 3. **Information — Reveal — Intel tokens held:** Economic intelligence. *"The Syndicate names a faction. ARBITER announces the count (not content) of Intel tokens that faction holds. The Syndicate may offer to purchase one token from the named faction at 3 Capital — the named faction may accept or decline."*
+
+### 8.5 Guild — Priority design targets
+
+Current Guild set (S104): C11 (Territory|Protect|StructureBlock), C12 (Economy|Recover|NativeResource), C13 (Territory|Add|PresenceToken), C14 (Submission|RemoveRestriction|CovertOp), C15 (Economy|Add|NativeResource). Standard C01 (Build Structure) carries a Guild affinity waiving the district-native cost. Territory and Economy coverage is strong — aligned with Guild doctrine of permanence and structural investment. Guild was not flagged for redesign in the original §8 because its card set was coherent; this section addresses coverage gaps only.
+
+**High priority:**
+1. **Territory — Recover — Presence token:** Return ousted Guild presence without a fresh deployment. *"Guild doctrine holds that established communities don't abandon positions — they return."* Per §6.1.
+
+**Low priority:**
+2. **Information — Any:** Guild has zero information capability. Doctrinally consistent — Guild is visible and structural, not intelligence-oriented. Structural reconnaissance (knowing what's built where) could give Guild an intel-adjacent capability without contradicting doctrine. Not a priority until Territory|Recover|PresenceToken is designed.
 
 ---
 
@@ -483,4 +490,4 @@ The following card types are excluded from the Layer — Function — Subject ta
 
 ---
 
-*End of Artifact 04b — Action Taxonomy & Design Analysis v1.6*
+*End of Artifact 04b — Action Taxonomy & Design Analysis v1.7*

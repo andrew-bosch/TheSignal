@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 103 complete (mid-session clear) | Updated: 2026-06-19**
+**Session 104 complete | Updated: 2026-06-19**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -8,7 +8,27 @@ Read full files only when deep work requires it.
 
 ## Current Focus
 
-### Priority Order (S103) ← CURRENT
+### Priority Order (S104) ← CURRENT
+
+**Tier 1 (S105) — Card renumber pass + 04b-19 sign-off**
+1. Check Claude_context.md — verify agy completed ID-01/02/03, ID-05, ID-SCHEMA between sessions
+2. ID-04: Full renumber — (a) add card ID taxonomy definition to Art 04 §6 data dictionary, (b) establish canonical ordering per deck type, (c) renumber all cards across Art 04, Art 04b §5.2/§7, and card_ref
+3. 04b-19: Art 04b v1.7 sign-off (gated on ID-04 complete)
+
+**Tier 2+ — Deferred**
+- 03-n01 (Beat 2 overhaul) — dedicated session
+- Card design pass (gate: 00a-72 + Art 03 stable + ID-04 complete)
+- 01-n02 (Art 01 overhaul — gate: 00a-72 first)
+
+**S104 accomplishments:**
+- Art 03 v4.8 ✅ signed off (L217) — §24 Resolution State Reference (three states: Succeeded / Failed / Voided; Discovered fires alongside Failed, not parallel). RO-xx removed throughout Art 03. §9.4.1.0 targeting restriction updated to flip face-down (unifying all Voided cases under §9.4.2.0 Step 0 handler). Open: 03a-n01 (3 residual RO-xx refs in 03a, lines 1038/1363/1370 — non-material, separate artifact)
+- Art 04b v1.7 content complete: 04b-16 ✅ (§6 refresh — gaps updated, §6.2 stale rows replaced, §6.3 stale counts removed / Art 03 §22 pointer corrected), 04b-17 ✅ (§7 matrix rebuilt from Art 04 data — C17/C24 misclassification fixed, C42/C25/C36–C38/C41 added), 04b-18 ✅ (§8.1–§8.4 updated to current card states; §8.5 Guild added). 04b-19 sign-off gated on ID-04 (§7 IDs must be updated before Andy can validate)
+- L218: Territory|Recover|StructureBlock not possible — demolition is permanent; rebuild = Territory|Add (C01). §6.1 N/A; §8.5 Guild rec removed
+- L219: Card ID schema locked — [FAC].[TYPE].n; varchar(15). 20-deck inventory; STD = 5 physical copies; ARB.BCAST/BCEV only ARBITER cards; ARB instruments not cards. Full schema in PM02
+- L220: DB script idempotency convention locked — INSERT IGNORE, portable session patches, archive/ subfolder for originals
+- ID-01 through ID-05 + ID-SCHEMA queued in PM05 and GEMINI_CONTEXT.md for agy between sessions
+
+### Priority Order (S103) ← PREV
 
 **Tier 1 — Art 04b refresh** (Art 03 stable ✅ — check 02-n26 gate status before starting)
 - 04b-16 → 04b-17 → 04b-18 → 04b-19 (re-sign-off v1.7).

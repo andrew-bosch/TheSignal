@@ -1,5 +1,3 @@
--- NON-IDEMPOTENT: Contains DROP TABLE (schema/data destructive operation).
-
 -- Recreate card_ref table
 DROP TABLE IF EXISTS card_ref;
 CREATE TABLE card_ref (
@@ -12,7 +10,7 @@ CREATE TABLE card_ref (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Seed ONLY officially signed-off standard cards
-INSERT IGNORE INTO card_ref (card_id, card_name, layer, function, subject) VALUES
+INSERT INTO card_ref (card_id, card_name, layer, function, subject) VALUES
 ('C01', 'Build Structure', 'Territory', 'Add', 'Structure block'),
 ('C02', 'Demolish', 'Territory', 'Remove', 'Structure block'),
 ('C03', 'Campaign', 'Territory', 'Add', 'Presence token'),

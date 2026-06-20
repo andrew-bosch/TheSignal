@@ -1,5 +1,3 @@
--- NON-IDEMPOTENT: Rollbacks are inherently non-idempotent.
-
 START TRANSACTION;
 
 -- Delete actions associated with the markers

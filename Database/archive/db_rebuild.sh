@@ -1,7 +1,4 @@
 #!/bin/bash
-# NON-IDEMPOTENT: Rebuild script drops and recreates tables, destroying existing data.
-# Warning: Reviews tmp_ table logic which is now stale.
-
 # ============================================================
 # db_rebuild.sh
 # THE SIGNAL — Full wipe and rebuild of tmp_ workspace tables

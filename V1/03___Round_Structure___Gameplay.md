@@ -3,7 +3,7 @@
 
 **Version:** 4.8
 
-**Status:** Signed off S102 (L216). S103: §24 Resolution State Reference added (03-n25); RO-xx codes removed throughout; targeting restriction procedure updated to face-down model (unifying all Voided states).
+**Status:** Signed off S104 (L217). Prior: Signed off S102 (L216). S103: §24 Resolution State Reference added (03-n25); RO-xx codes removed throughout; targeting restriction procedure updated to face-down model (unifying all Voided states).
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02 — Components
 
