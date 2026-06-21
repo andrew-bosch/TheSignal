@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.8
+**Version:** 4.10
 
-**Status:** Signed off S104 (L217). Prior: Signed off S102 (L216). S103: §24 Resolution State Reference added (03-n25); RO-xx codes removed throughout; targeting restriction procedure updated to face-down model (unifying all Voided states).
+**Status:** Signed off S110 (L232). Prior: Signed off S104 (L217). S109–S110: VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02 — Components
 
@@ -513,7 +513,7 @@ For each Faction Player in initiative order, one of:
 **Declare** — name the public act and place it on the board:
 
 1. Announce the public act being declared.
-2. Place the declared card face-up in the unresolved PA zone of the Faction Resolution Grid, with the target profile, 1 Dispatch Token, and resource tokens on the card. Resource tokens remain with the declared card — payment submitted to the Reservoir at Beat 4.
+2. Place the declared card face-up in the unresolved PA zone of the Faction Resolution Grid, with 1 Dispatch Token and resource tokens on the card. Place the Target Profile face-down on the card. Resource tokens remain with the declared card — payment submitted to the Reservoir at Beat 4.
 3. Play any modifier cards modifying the public act face-up alongside the card in the Faction Resolution Grid.
 
 *Once placed, the card is a valid target for countermeasures (§9.3) and other public acts.*
@@ -672,7 +672,7 @@ Starting from ARBITER's left, proceeding clockwise around the table, process eac
 
 ##### §9.4.1.1 Step 1: Process Broadcast Effect Cards
 
-The ARBITER Player applies effects from each active Broadcast Effect Card in turn, without announcement. The table observes outcomes but is not told their source. Repeat for all active Broadcast Effect Cards.
+For each active Broadcast Effect Card in ARBITER Tableau: ARBITER applies effects privately. If VM-xx is attached: ARBITER resolves publicly — reads effects aloud to all players; removes VM-xx.
 
 ##### §9.4.1.2 Step 2: Process CM Cards
 
@@ -778,6 +778,8 @@ Compare roll to threshold — apply Critical Success/Fail rules per §13. If VM-
 
 ARBITER applies all board changes per the card spec: presence chips, structure blocks, Dominant markers, Established markers, Tension markers. If VM-xx: ARBITER directs board changes aloud; the acting Faction Player physically applies them.
 
+If the outcome specifies VM-xx placement on another card in the Resolution Grid: ARBITER retrieves VM-xx from supply and places it on that card.
+
 If the card specifies a Notification Slip or Intel Delivery Slip: ARBITER writes and places it in the Dispatch Packet.
 
 *Successful covert operations do not produce Standing marker moves — the action is unobserved. Any Standing marker move occurs only as a card-specified failure or discovery condition.*
@@ -873,9 +875,7 @@ Covert resolution complete. Proceed to §9.4.3 Beat 4.
 
 The first Faction Player in initiative order retrieves the Faction Threshold Slider from the Overview.
 
-###### §9.4.3.0.1 Apply Broadcast Card Effects
-
-ARBITER privately applies any active Broadcast Effect cards (in ARBITER's Tableau) that modify public acts.
+###### §9.4.3.0.1 Initiative Loop
 
 *Public acts resolve one per player per pass in initiative order. After resolving (or passing if no PA remains), the acting player passes the Faction Threshold Slider to the next player. A player with no remaining unresolved public act passes the slider without resolving. Continue until all public acts across all factions are resolved.*
 
@@ -890,6 +890,8 @@ For each turn in initiative order:
 **§9.4.3.1.0.0 Transfer Tokens**
 
 Acting Faction Player transfers resource tokens from the declared card stack to the Reservoir. Return the Dispatch Token to the Backlog.
+
+For each public act with a `boost` field (value ≠ None): after base cost is transferred, count any submitted boost resources of the specified type. Calculate n = floor(count ÷ boost unit cost). If n > 0: ARBITER retrieves n BM-xx tokens from supply and places them on the card. Boost resources are processed normally — native resources drain to the Reservoir; Intel tokens are handled per §9.4.3.1.0.1.
 
 If the operation card or an active card effect specifies BM-xx: ARBITER retrieves BM-xx tokens from the ARBITER supply and hands them to the Acting Faction Player. Acting Faction Player places them on the card.
 
@@ -916,7 +918,7 @@ Otherwise: continue to Step 1.1.
 
 ###### §9.4.3.1.1 Step 1.1: Apex Check
 
-Acting Faction Player reads the public act card and Target Profile.
+Acting Faction Player flips the Target Profile face-up. Reads the public act card and Target Profile.
 
 If Apex: resolution is immediately interrupted — see §14 Apex Activation before proceeding.
 
@@ -930,7 +932,13 @@ If a public CM-A is present on the target faction's Faction Resolution Grid: Act
 
 Otherwise: continue to Step 1.3.
 
-###### §9.4.3.1.3 Step 1.3: Base Difficulty
+###### §9.4.3.1.3 Step 1.3: Apply BEC Modifiers
+
+For each active Broadcast Effect Card in ARBITER Tableau that modifies public acts: ARBITER applies effects privately. If VM-xx is attached: ARBITER resolves publicly — reads effects aloud to all players; removes VM-xx.
+
+Continue to Step 1.4.
+
+###### §9.4.3.1.4 Step 1.4: Base Difficulty
 
 Acting Faction Player reads the base difficulty aloud from the public act card.
 
@@ -983,6 +991,9 @@ Compare roll to threshold — apply Critical Success/Fail rules per §13.
 Acting Faction Player makes all board changes: presence chips, structure blocks, Dominant markers, Established markers, Tension markers. If the card specifies a Standing marker move, apply it.
 
 If the card specifies a Notification Slip: ARBITER writes and places it in the indicated faction's dispatch case.
+
+If the outcome specifies VM-xx placement: ARBITER retrieves VM-xx from supply and places it on the specified target.
+
 
 ###### §9.4.3.3.1 Failed
 

@@ -1,47 +1,65 @@
-## CLOSE QUEUE — Session 108
+## CLOSE QUEUE — Session 110
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
+FILE: /home/abosch/Projects/TheSignal/README.md
+OLD: **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
+**Active design layer:** `/V1`  
+**Design milestone:** Art 03 v4.4 signed off S88 (L207). Art 02 restructured S90 — component content migrated from Art 01; Art 02 sign-off pass (02-n02) next. Art 04 in progress — card design pass complete through C42 + P01–P18; sign-off passes in progress per set.
+NEW: **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
+**Active design layer:** `/V1`  
+**Design milestone:** Art 03 v4.10 signed off S110 (L232). Art 02 v2.3 signed off S109 (L231). Art 04 in progress — Ghost PA/React design pass complete (GHO.PA.1–5 + GHO.MOD.1); Syndicate gaps next.
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/README.md
+OLD: | 03 | [while session(true): Quarter Structure](<V1/03___Round_Structure___Gameplay.md>) | 4.8 | ✅ Signed off — S104 (L217) |
+NEW: | 03 | [while session(true): Quarter Structure](<V1/03___Round_Structure___Gameplay.md>) | 4.10 | ✅ Signed off — S110 (L232). S109–S110: Art 02 DB:48 target-object field (L231); VM-xx lifecycle formalised; §9.2.0 Target Profile placed face-down at PA declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check. |
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/README.md
+OLD: | 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.37 | 🔄 In progress — full card design pass complete (C01–C42, P01–P18); set-level sign-off passes in progress |
+NEW: | 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.42 | 🔄 In progress — Ghost PA/React design pass complete (GHO.PA.1–5, GHO.MOD.1); set-level sign-off passes in progress |
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/Whiteboard/ref_procedures.md
+OLD: 2. To declare: announce the public act; place card face-up in unresolved PA zone of Faction Resolution Grid with Target Profile and 1 Dispatch Token. Resource tokens remain with the card (not committed until Beat 4).
+NEW: 2. To declare: announce the public act; place card face-up in unresolved PA zone of Faction Resolution Grid with 1 Dispatch Token and resource tokens. Place Target Profile **face-down** on the card. Resource tokens remain with the card (not committed until Beat 4).
+
+### EDIT
+FILE: /home/abosch/Projects/TheSignal/Whiteboard/ref_procedures.md
+OLD: 2. **Apex check / face-down check:** Face-down cards auto-fail.
+NEW: 2. **Apex Check (§9.4.3.1.1):** Acting Faction Player flips Target Profile face-up; reads public act card and Target Profile. Face-down PA cards auto-fail (do not flip — they remain face-down and go directly to fail outcome).
+
+### EDIT
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: **Last Updated:** 2026-06-20 — Session 107 Close
-NEW: **Last Updated:** 2026-06-20 — Session 108 Close
+OLD: **Last Updated:** 2026-06-20 — Session 108 Close
+NEW: **Last Updated:** 2026-06-20 — Session 110 Close
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: **Last Updated:** 2026-06-20 — Session 108 Close
+AFTER: **Last Updated:** 2026-06-20 — Session 110 Close
 CONTENT:
-### Session 108 Summary (2026-06-20)
+### Session 109–110 Summary (2026-06-20)
 
-**Focus:** Art 04b v1.8 §4/§5 structural audit; Art 04 spec fixes (04-n103/104/105); Art 00a GR 10.1b formalization; Ghost PA/React design seeds.
+**Focus:** Ghost PA/React design pass (GHO.PA.3–5 + GHO.MOD.1); Art 03 v4.10 procedural changes (Target Profile face-down model + VM-xx lifecycle).
 
 **Key work:**
-- Art 04b v1.8 signed off (04b-21 ✅). §4 audited — historical noise dropped; taxonomy definitions moved to §5.1; GR 7.2b/9.1/10.1 added as design grounds (§4.14–4.16); §4.8 rewritten as GR 10.1b corollary. §5.1: Valid Layer × Function matrix (60 cells, 17 invalid), Visibility column, React/Instant/Interrupt paragraph. §5.2: sorted ascending by card ID; Visibility column; BLOCKED card taxonomy filled (GHO.CA.13/14, DIR.PA.1/4/5). §8.1 Ghost: BLOCKED guidance + 4 new PA/React design seeds (GHO.PA.3–6); BroadcastEffectCard (DB:98) mechanic locked for GHO.PA.4. Sign-off scope policy: §4/§5 = re-sign-off required; §6–9 = working sections, no re-sign-off.
-- Art 04 spec fixes ✅: GUI.CA.2/CA.6 Recover→Add; GUI.CA.6 variable named; Backdate + Field Verification marked 🚫 BLOCKED; Regulatory Downgrade + Regulatory Freeze marked 🚫 BLOCKED; DIR.CA.2 Detain Remove→Move (04-n103/104/105 closed).
-- Art 00a v0.9 signed off (04b-22 ✅): GR 10.1b added to §10 (ARBITER disclosure outside discretional model; Portrait sole exception; Governs: 03, 04, 07). Art 04b §4.8 footnote cleaned.
+- **GHO.PA.3 Declassified Records** ✅ (S109) — Information|Remove|IntelToken (expired). Boost model: expired tokens → BM-xx multiplier ×(1+n). Art 03 §9.4.3.1.0.0 boost detection sub-step added.
+- **GHO.PA.4 Public Threat Assessment** ✅ (S109) — Information|Reveal|BroadcastEffectCard. Automatic; GR 10.1b obligates ARBITER reveal. Art 02 DB:48 target-object field added. Art 03 §9.4.3.3.0 / §9.4.3.1.3 clauses added.
+- **GHO.MOD.1 Clarify Misinformation** ✅ (S110) — Redesigned from GHO.PA.5 seed → ModifierCard/React. Information|Remove|IntelToken. Trigger: any PA placed with Intel token at §9.2.0. Prediction resolution — Ghost declares faction named on token; correct → PA cancelled, resources drained to Reservoir, Ghost +1 PS. Intelligence-gated: Target Profile face-down at §9.2.0 means Ghost must have prior SIGINT to fire reliably.
+- **GHO.PA.5 Agency Recruitment Fair** ✅ (S110) — Territory|Add|PresenceToken. Renumbered from PA.6 (PA.5 slot vacated by MOD.1 redesign). Cost: 1 Findings. Restriction: district.resource_type == Findings (University Perimeter, Data Exchange, Research Institute, Chorus Research). Success: +2 chips. Successcrit +1 PS / Failcrit −1 PS. Ring3 +10 / Ring1 −15.
+- **Art 03 v4.10 signed off** (L232, S110) — §9.2.0 Target Profile placed face-down at PA declaration; §9.4.3.1.1 (Apex Check) Target Profile flipped face-up. VM-xx lifecycle formalised: §9.4.1.1 BEC step extended; §9.4.2.2.0 VM-xx placement clause; §9.4.3.1.3 per-PA BEC check; §9.4.3.3.0 generic VM-xx placement. STD.PA.4 + STD.PA.5 arbiter_notes corrected (Phase B → §9.2.0/§9.4.3.1.1). Folded into existing L232 sign-off.
+- **Art 02 v2.3 signed off** (L231, S109) — DB:48 Target Profile target-object field added.
+- Art 04b §5.2/§7/§8.1 updated: GHO.PA.5 + GHO.MOD.1 added to coverage table and matrix.
 
-**Decisions locked:** GR 10.1b (Art 00a §10.1b — ARBITER-reveal outside discretional framework) · Broadcast Card/BEC two-component split (DB:25/98) documented in ref_taxonomy.md · Art 04b §4/§5 sign-off scope policy.
+**Decisions locked:** L232 (Art 03 v4.10 — Target Profile face-down + VM-xx lifecycle) · L231 (Art 02 v2.3 — Target Profile target-object field)
 
-**Artifacts updated:** Art 00a (v0.9 ✅); Art 04b (v1.8 ✅ locked); Art 04 (spec fixes — no version bump); PM03; PM05 (04b-21/22 ✅, 04-n103/104/105 ✅); SESSION_BRIEF; design_reference_card_system.md (GR 10.1b added); ref_taxonomy.md (BroadcastCard/BEC added); memories updated.
+**Artifacts updated:** Art 03 (v4.10 ✅ L232) · Art 02 (v2.3 ✅ L231) · Art 04 (v0.9.42) · Art 04b (§5.2/§7/§8.1) · ref_procedures.md · README
 
-**Next (S109 Tier 1):** Ghost PA card design pass (GHO.PA.3–6) — design gates: Declassified Records cost mechanic (Art 03 §18), Public Threat Assessment BC/BEC linking + Art 03 procedure, Clarify Misinformation Beat timing, Agency Recruitment Fair district-type tag.
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | Governing Rules & Design Policy | 0.8 | ✅ Signed Off — S83 | 46 rules
-NEW: | Governing Rules & Design Policy | 0.9 | ✅ Signed Off — S108 | S108: GR 10.1b added to §10 (ARBITER disclosure outside discretional model; Governs: 03, 04, 07). 46 rules
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | Action Taxonomy & Design Analysis | 1.8 | 📝 Draft — S107 audit (L222–L227); re-sign-off required (04b-21, gates: §5.2 card IDs clean + §6.1 cleanup) | Companion to 04.
-NEW: | Action Taxonomy & Design Analysis | 1.8 | ✅ Signed Off — S108 | S108: §4 audit (GRs 7.2b/9.1/10.1 added as §4.14-16; §4.8 rewritten as GR 10.1b corollary); §5.1 Valid L×F matrix + Visibility + React/Instant/Interrupt; §5.2 sorted + Visibility + BLOCKED taxonomy filled; §8.1 Ghost design seeds (GHO.PA.3–6) + BEC mechanic; §8.2 Directorate BLOCKED guidance; 04b-21/22 closed. Sign-off scope: §4/§5 material = re-sign-off; §6–9 working sections = no re-sign-off. Companion to 04.
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: S95: 04-n70 schema validation fix pass complete — 8 categories addressed.
-NEW: S108: Spec fixes — GUI.CA.2/CA.6 Recover→Add; GUI.CA.6 variable named; Backdate + Field Verification + Regulatory Downgrade + Regulatory Freeze marked 🚫 BLOCKED; Detain Remove→Move. 04-n103/104/105 ✅. S95: 04-n70 schema validation fix pass complete — 8 categories addressed.
+**Next (S111 Tier 1):** Syndicate gaps — Information|Corrupt|AccordAgreement · Information|Reveal|IntelTokensHeld · Accord Transfer (L227, gate: Art 06)
 
 ### COMMIT
-source ~/Projects/credentials.env && git add -A && git commit -m "session 108 — Art 04b v1.8 locked; GR 10.1b; Art 04 spec fixes" && git push
+source ~/Projects/credentials.env && git -C ~/Projects/TheSignal add -A && git -C ~/Projects/TheSignal commit -m "session 110 — Ghost PA/React design pass complete (GHO.PA.3–5, GHO.MOD.1); Art 03 v4.10" && git -C ~/Projects/TheSignal push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh

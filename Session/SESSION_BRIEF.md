@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 108 complete | S109 next | Updated: 2026-06-20**
+**Session 110 complete | S111 next | Updated: 2026-06-20**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,6 +7,44 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
+
+### S109–S110 Accomplishments ✅
+
+**Ghost PA/React design pass — complete (Tier 1)**
+
+- **GHO.PA.3 Declassified Records** ✅ S109 — Information|Remove|IntelToken (expired). Boost model: expired Intel tokens → BM-xx ×(1+n). Art 03 boost sub-step added §9.4.3.1.0.0.
+- **GHO.PA.4 Public Threat Assessment** ✅ S109 — Information|Reveal|BroadcastEffectCard. Automatic; GR 10.1b obligates ARBITER reveal. Art 02 DB:48 target-object field added; Art 03 §9.4.3.3.0 / §9.4.3.1.3 added.
+- **GHO.MOD.1 Clarify Misinformation** ✅ S110 — Redesigned from GHO.PA.5 seed → ModifierCard/React. Information|Remove|IntelToken. Trigger: any faction places PA with Intel token at §9.2.0. Prediction resolution — Ghost declares faction on token; correct = PA cancelled + resources drained to Reservoir + Ghost +1 PS. Intelligence-gated by Target Profile face-down rule.
+- **GHO.PA.5 Agency Recruitment Fair** ✅ S110 (renumbered from PA.6 — PA.5 slot vacated by MOD.1 redesign) — Territory|Add|PresenceToken. Cost: 1 Findings. Restriction: district.resource_type == Findings (4 districts). Success: +2 chips. Successcrit: +1 PS. Failcrit: −1 PS. Ring3 +10 / Ring1 −15.
+
+**Art 03 v4.10 signed off — L232 (S110)**
+- §9.2.0: Target Profile placed **face-down** at PA declaration
+- §9.4.3.1.1 (Apex Check): Target Profile flipped face-up — intelligence gate for GHO.MOD.1
+- VM-xx lifecycle formalised: §9.4.1.1 / §9.4.3.1.3 / §9.4.2.2.0 / §9.4.3.3.0
+- STD.PA.4 + STD.PA.5 arbiter_notes updated: Phase B stale refs → §9.2.0/§9.4.3.1.1
+
+**Art 02 v2.3 signed off — L231 (S109)**
+- DB:48 Target Profile recorded_fields + Gameplay Requirements expanded: target object (named component) added as valid field type
+
+**Last 3 locked decisions:** L232 (Art 03 v4.10 — Target Profile face-down + VM-xx lifecycle) · L231 (Art 02 v2.3 — Target Profile target-object field) · L230 (Art 04b §4/§5 sign-off scope policy)
+
+**Pending sign-offs:** Ghost card set — 04-n50 (gates: 04-n54 design pass complete + 04-n55 issues resolved + 04-n88 doctrine review)
+
+**Artifacts updated S109–S110:** Art 03 (v4.10 ✅ L232) · Art 02 (v2.3 ✅ L231, S109) · Art 04 (v0.9.42 — GHO.PA.3–5 + GHO.MOD.1 design passes) · Art 04b (§5.2/§7/§8.1 updated)
+
+### Priority Order (S111) ← CURRENT
+
+**Tier 1 — Syndicate gaps** (deferred from S106)
+- Information|Corrupt|AccordAgreement — Syndicate-specific numeric alteration of Accord terms; no card exists
+- Information|Reveal|IntelTokensHeld — count disclosure + purchase offer mechanic
+- Accord Transfer: Economy|Corrupt|AccordCard (L227); sign-off deferred pending Art 06
+
+**Tier 2 — Ghost card design pass continuation**
+- GHO.CA.7 Station / GHO.CA.8 Full Take / GHO.CA.9 SCIF / GHO.CA.10 Flip / GHO.CA.12 Source Substitution — design passes needed
+- GHO.CA.13/14 Backdate/Field Verification — BLOCKED, fundamental redesign required
+- GHO.CA.11 Signals Analysis — BLOCKED pending Art 06.x Classified Directive procedure
+
+---
 
 ### S108 Accomplishments ✅
 
@@ -40,20 +78,12 @@ Sign-off scope policy locked: §4/§5 material changes require re-sign-off; §6�
 
 **Last 3 locked decisions:** GR 10.1b (Art 00a §10.1b — ARBITER-reveal exception formalized) · Broadcast Card/BEC two-component split documented (DB:25/98) · Art 04b §4/§5 sign-off scope policy
 
-### Priority Order (S109) ← CURRENT
+### Priority Order (S109) ← PREV
 
-**Tier 1 — Ghost PA card design pass**
-- GHO.PA.3 Declassified Records: expired Intel token cost mechanic — Art 03 §18 treatment needed before spec
-- GHO.PA.4 Public Threat Assessment: BroadcastEffectCard via ARBITER reveal — gate: BC/BEC linking mechanism; Art 03 procedure for ARBITER BEC application
-- GHO.PA.5 Clarify Misinformation: React/Instant vs. corrupted Intel token — Beat timing gate
-- GHO.PA.6 Agency Recruitment Fair: Territory|Add|PresenceToken — district-type tag vs. named-list decision
+**Tier 1 — Ghost PA card design pass** ✅ complete S109/S110
+- GHO.PA.3 Declassified Records ✅ · GHO.PA.4 Public Threat Assessment ✅ · GHO.MOD.1 Clarify Misinformation ✅ · GHO.PA.5 Agency Recruitment Fair ✅
 
-**Tier 2 — Syndicate gaps** (deferred from S106)
-- Information|Corrupt|AccordAgreement — Syndicate-specific numeric alteration still a gap
-- Information|Reveal|IntelTokensHeld — count disclosure + purchase offer mechanic
-- Accord Transfer: Economy|Corrupt|AccordCard (L227); sign-off deferred pending Art 06
-
-**Tier 3 — Art 00a 04b-22** ✅ S108 complete
+**Tier 2 — Syndicate gaps** → S111 Tier 1
 
 ---
 

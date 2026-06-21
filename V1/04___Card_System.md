@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.41 Draft  
+**Version:** 0.9.42 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-19  
+**Last Updated:** 2026-06-20  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -2370,8 +2370,8 @@ STD.PA.4 = Card(
         Ghost:       "Public censure creates public attention. We note that the accusation traces back to whoever filed it.",
         Syndicate:   "Censure is leverage applied publicly. The question is always: what does the target do next?",
     },
-    design_note  = "PS attack card of the standard set. Base threshold 35 — demanding. Fresh Intel token (optional, submitted at Phase B, spent regardless of outcome) provides +15 threshold. Network/Directorate −1 cost each. Fail/failcrit PS penalties punish reckless censure. Ghost −1 portrait: public accusation = self-exposure. PS shifts in success/fail are game effects, not Portrait (DIR.PA.2).",
-    arbiter_note = "At Phase B: acting faction names target faction. If Intel token submitted, ARBITER holds it. Beat 4: threshold = 35 + 15 if Fresh Intel submitted. On success: target −2 PS, acting +1 PS; Intel token spent. On fail: acting −1 PS; Intel token still spent. On failcrit: acting −2 PS.",
+    design_note  = "PS attack card of the standard set. Base threshold 35 — demanding. Fresh Intel token (optional, placed on PA at §9.2.0, spent regardless of outcome) provides +15 threshold. Network/Directorate −1 cost each. Fail/failcrit PS penalties punish reckless censure. Ghost −1 portrait: public accusation = self-exposure. PS shifts in success/fail are game effects, not Portrait (DIR.PA.2).",
+    arbiter_note = "At §9.2.0: acting faction places PA with Target Profile face-down; Intel token (if submitted) placed on card. At §9.4.3.1.1: flip Target Profile face-up; note target faction. Beat 4: threshold = 35 + 15 if Fresh Intel token on card. On success: target −2 PS, acting +1 PS; Intel token spent. On fail: acting −1 PS; Intel token still spent. On failcrit: acting −2 PS.",
 )
 ```
 
@@ -2468,7 +2468,7 @@ STD.PA.5 = Card(
         Syndicate:   "Attribution is leverage. The question is always: what is the information worth on the table versus in hand?",
     },
     design_note  = "Standard information-attribution PA. Restriction requires Fresh or Stale token — Expired excluded (too degraded to constitute usable attribution evidence). Token spent regardless of outcome. Threshold from token age (Fresh = 50, Stale = 35) + Network +10. Ghost portrait −2: attributing any faction's covert op violates Ghost's belief that operational anonymity protects the intelligence discipline of the whole table — the highest negative portrait value in the set.",
-    arbiter_note = "Intel token submitted at Phase B. Verify token age: Fresh or Stale satisfies restriction; Expired does not. Beat 4: threshold = age-based (50 Fresh / 35 Stale) + 10 if Network. On success: announce '[Acting faction] attributes [op type, quarter] to [target faction].' Target −2 PS, acting +2 PS. Token spent. On fail: acting −1 PS. Token spent regardless.",
+    arbiter_note = "At §9.2.0: Intel token placed on PA card with Target Profile face-down. At §9.4.3.1.1: flip Target Profile face-up; verify token age — Fresh or Stale satisfies restriction; Expired does not. Beat 4: threshold = age-based (50 Fresh / 35 Stale) + 10 if Network. On success: announce '[Acting faction] attributes [op type, quarter] to [target faction].' Target −2 PS, acting +2 PS. Token spent. On fail: acting −1 PS. Token spent regardless.",
 )
 ```
 
@@ -4743,6 +4743,9 @@ FieldVerification = Card(
 |------|------|
 | [GHO.PA.1](#p17-publish-analysis) | Publish Analysis |
 | [GHO.PA.2](#p18-signal-review-request) | Signal Review Request |
+| [GHO.PA.3](#ghopa3--declassified-records) | Declassified Records |
+| [GHO.PA.4](#ghopa4--public-threat-assessment) | Public Threat Assessment |
+| [GHO.PA.5](#ghopa5--agency-recruitment-fair) | Agency Recruitment Fair |
 
 ### GHO.PA.1 — PUBLISH ANALYSIS
 [↑ Public Acts](#ghost-public-acts)
@@ -4930,6 +4933,273 @@ GHO.PA.2 = Card(
     },
     design_note  = "Ghost operational pressure PA. Uses institutional scrutiny (ARBITER) to apply −15 threshold to target faction's covert ops in named district next Month. No PS gain for Ghost — the channel is a tool. Ghost adjacency (Design Pillar [04-n6 pending]): must have presence in adjacent district. Persistence = Transient: GHO.PA.2 card face-up on table + district marker until Beat 5 of next Month. Multiple P18s from different Months can stack. Distinct from GHO.PA.1 (attribution) — GHO.PA.2 creates ongoing pressure without disclosure.",
     arbiter_note = "Beat 4: place GHO.PA.2 card face-up on table with marker on target district. Apply −15 threshold penalty to all covert operations submitted by target faction in target district next Month (Beat 3). Card expires Beat 5 that Month — announce removal, return card to Ghost. Multiple GHO.PA.2 cards on same district from different Months stack (each tracked independently). Ghost adjacency enforced at Beat 0.",
+)
+```
+
+---
+
+### GHO.PA.3 — DECLASSIFIED RECORDS
+[↑ Public Acts](#ghost-public-acts)
+
+#### Design Rationale
+Declassified Records converts accumulated expired Intel tokens into Public Standing through formal public disclosure. The base card (+1 PS, threshold 50, cost 1 Findings) is playable on its own; the boost mechanic is the amplifier. Each expired token submitted adds one BM-xx marker — the standard BM-xx mechanism then multiplies all effects by (1+n). Three expired tokens turns a +1 PS play into +4 PS, and the failcrit into −4 PS. The design rewards multi-Quarter Intel discipline: Ghost factions that run intelligence operations over time without spending their tokens covertly build a deferred credibility reserve. The restriction (at least 1 expired token) keeps the card grounded narratively — Ghost releases *something*; a blank disclosure is not this card. The Faction Player may optionally give a brief in-character account of what records are being released; this is not a procedure step.
+
+#### Card Story
+Ghost submits the case files in order — sequential, dated, attributed. The records are expired. The intelligence is cold. The point is that Ghost kept them, and kept them clean, and is releasing them now because the moment is right. Each file laid on the table is a demonstration that the agency did the work while others were reacting.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Formal release of archived intelligence as institutional credibility play — information is power, including cold information released on Ghost's terms | Art 00 §7 |
+| Voice fit | ✓ | Ghost on-doctrine; Directorate (aligned): sequenced formal disclosure is the proper channel; Network (opposed): "publish when you have it" conflicts with Ghost's timing discipline | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Patience and sequenced disclosure are Ghost doctrine. Portrait +1 submitter. | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Information / Remove / IntelToken — expired qualifier handled via restriction + boost field | Art 04b §4 |
+| Balance | ✓ | Base: 1 Findings, +1 PS at threshold 50. Boost: each expired token ×(1+n). Risk scales with depth — failcrit = −(1+n) PS | Art 02 §6–§7 |
+| Effect duration | ✓ | PS shift immediate | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None | — |
+| Portrait validity | ✓ | Ghost +1 submitter-bounded | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — tokens are held, not placed | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken expired (Art 02 §9); BM-xx (Art 02 §12); Findings × 1 (Art 02 §8) | Art 02 §8–§9, §12 |
+| Supported by game procedure | ✓ | BM-xx at Beat 4: boost detection added §9.4.3.1.0.0 (S109); threshold at §9.4.3.2.0; effect multiplication at §9.4.3.3 | Art 03 §9.4.3 |
+| Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Story block above | Art 04 §5 P26 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | | |
+
+```python
+GHO.PA.3 = Card(
+    id="GHO.PA.3",  version="v1.0",
+    name    = "Declassified Records",
+    tagline = "Release expired intelligence as institutional record — each file compounds the disclosure.",
+    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Ghost,
+
+    layer    = Information,  function = Remove,  subject = IntelToken,
+
+    beat            = 4,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_taxonomy = None,
+
+    affinity    = None,
+    restriction = count(intel_token(holder=Ghost, status=Expired)) >= 1,
+    cost        = resource.faction(Ghost).findings * 1,
+    boost       = intel_token(holder=Ghost, status=Expired),  # 1 expired token = 1 BM-xx; BM-xx ×(1+n) all effects at §9.4.3.3
+
+    success     = faction(Ghost).standing.add(1),
+    successcrit = faction(Ghost).standing.add(1),  # +1 PS additional delta; also ×(1+n) via BM-xx
+    fail        = None,
+    failcrit    = faction(Ghost).standing.remove(1),  # delta from fail; also ×(1+n) via BM-xx
+
+    on_accept  = None,
+    on_decline = None,
+
+    portrait   = {Ghost: PortraitEntry(submitter=+1)},
+
+    narrative    = "Ghost does not release because it ran out of options. Ghost releases because it chose this moment, these records, and this account. The archive is not empty — this is a selection.",
+    perspectives = {
+        Ghost:       "The tokens are expired. The operations they document are closed. We are not losing intelligence by releasing this — we are spending it correctly.",
+        Directorate: "Ghost held these until the moment suited them. The records are verified. The disclosure is formal. This is how intelligence should enter the public domain.",
+        Network:     "Ghost sat on this for three Quarters and then picked their moment. We published when we had it. Ghost published when it helped Ghost.",
+    },
+    design_note  = "Base success = +1 PS; successcrit = +1 PS additional. Boost = expired Intel tokens (status=Expired, holder=Ghost); each submitted token = 1 BM-xx at §9.4.3.1.0.0. BM-xx ×(1+n) multiplies all effects: n tokens → +(1+n) PS on success; +(1+n)+1 PS on successcrit (success + crit both multiplied); −(1+n) PS on failcrit. Restriction ensures at least 1 expired token present (narrative grounding). Faction Player may optionally narrate what records are being declassified — this is not a procedure step.",
+    arbiter_note = "Phase B: Ghost declares expired tokens (status=Expired) being submitted as boost — record count as n. Beat 4 §9.4.3.1.0.0: place n BM-xx on card; expired tokens deposited to Dossier at §9.4.3.1.0.1. §9.4.3.3: effects ×(1+n). Success: Ghost +(1+n) PS. Successcrit: Ghost +(1+n) PS success + +(1+n) PS crit delta = +(2+2n) PS total. Fail: no effect. Failcrit: Ghost −(1+n) PS.",
+)
+```
+
+---
+
+### GHO.PA.4 — PUBLIC THREAT ASSESSMENT
+[↑ Public Acts](#ghost-public-acts)
+
+#### Design Rationale
+Ghost forces ARBITER to publicly reveal a Broadcast Effect Card. The Broadcast Card (public face) is already visible in the Situation Report Zone — Ghost is naming the thing the table can already see. The BEC (mechanical face, ARBITER Tableau) is what Ghost is extracting. GR 10.1b obligates ARBITER to disclose from its own domain when a valid trigger is submitted, so resolution is Automatic. The +1 PS reflects that forcing institutional transparency is itself a credibility act. BC/BEC linking is already established at §7.2.1 — no new mechanism required. The named BC is recorded on the Target Profile at Phase B (target object field, S109).
+
+#### Card Story
+Ghost files the request before Beat 4. The Broadcast Card has been face-up all Quarter — its name, its narrative, its presence. What Ghost is asking for is the other half. ARBITER opens the file. The table reads the effect for the first time. Ghost already knew what to ask.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Forcing disclosure of hidden mechanical effects — Ghost doctrine: information asymmetry is a threat to be corrected | Art 00 §7 |
+| Voice fit | ✓ | Ghost on-doctrine; Directorate (aligned): formal disclosure through proper channel; Network (opposed): "we'd have published it sooner" | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Disclosure from institutional authority is on-doctrine. Portrait +1 submitter. | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Information / Reveal / BroadcastEffectCard — GR 10.1b governs; ARBITER performs the reveal | Art 04b §4 |
+| Balance | ✓ | Automatic. Cost: 1 Findings + PA slot. Reward: table-wide BEC information + +1 PS. Limiter: requires active BC. | Art 02 §6–§7 |
+| Effect duration | ✓ | Reveal immediate; PS immediate; BEC stays in Tableau | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate — BEC returned to Tableau; mechanical effects continue per §9.4.1.1 / §9.4.3.0.1 | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None | — |
+| Portrait validity | ✓ | Ghost +1 submitter-bounded | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None; target_object = BroadcastCard (Situation Report Zone) | Art 01 §6–§7 |
+| Supported by components | ✓ | BroadcastCard (DB:25, Art 02 §10); BroadcastEffectCard (DB:98, Art 02 §10); Target Profile target-object field (DB:48, Art 02 §8 — S109); Findings × 1 (Art 02 §8) | Art 02 §8, §10 |
+| Supported by game procedure | ✓ | §7.2.1 establishes BC/BEC link at setup. §9.4.3.3.0 VM-xx placement clause; §9.4.3.1.3 BEC public resolution step (S110). | Art 03 §7.2.1, §9.4.3.1.3, §9.4.3.3 |
+| Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Story block above | Art 04 §5 P26 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | | |
+
+```python
+GHO.PA.4 = Card(
+    id="GHO.PA.4",  version="v1.0",
+    name    = "Public Threat Assessment",
+    tagline = "Name a Situation Report. ARBITER opens the file.",
+    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Ghost,
+
+    layer    = Information,  function = Reveal,  subject = BroadcastEffectCard,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = BroadcastCard.named,  # declared at Phase B on Target Profile; must be active in Situation Report Zone
+    target_taxonomy = None,
+
+    affinity    = None,
+    restriction = count(broadcast_card(zone=SituationReportZone, status=Active)) >= 1,
+    cost        = resource.faction(Ghost).findings * 1,
+    boost       = None,
+
+    success = (
+        arbiter.place_vm(broadcast_effect_card(linked_to=target_object)),
+        faction(Ghost).standing.add(1),
+    ),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+
+    on_accept  = None,
+    on_decline = None,
+
+    portrait   = {Ghost: PortraitEntry(submitter=+1)},
+
+    narrative    = "Ghost does not wait to find out what the Situation Report means. Ghost asks ARBITER, on the record, in front of everyone.",
+    perspectives = {
+        Ghost:       "The broadcast is public. The effect is not. That asymmetry is not information — it's concealment. We are correcting the record.",
+        Directorate: "Ghost has formalized the disclosure request. ARBITER complied. The effect was known to us already, but now it is known to everyone. We note this.",
+        Network:     "We would have published that two weeks ago if we had it. Ghost had the institutional standing to ask. That's the difference.",
+    },
+    design_note  = "Automatic — GR 10.1b obligates ARBITER to disclose from own domain when a valid trigger is submitted. Ghost names a Broadcast Card at Phase B (recorded on Target Profile target-object field); ARBITER places VM-xx on the linked BEC at §9.4.3.3.0. BEC resolves publicly at §9.4.3.1.3 when the next PA in initiative order is reached, or at §9.4.1.1 next Quarter if Ghost plays last. BC/BEC link established at §7.2.1; no new mechanism required. +1 PS: forcing institutional transparency is a credibility act. Portrait +1: disclosure from institutional authority is on-doctrine.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### GHO.PA.5 — AGENCY RECRUITMENT FAIR
+[↑ Public Acts](#ghost-public-acts)
+
+#### Design Rationale
+Ghost's only territory PA — operates entirely in the open, targeting districts where the analytical workforce already lives. Career fairs, public outreach, visible institutional presence. Distinct from STD.CA.3 Campaign (covert, +1 chip, any district): this is public (+2 chips, declared at Phase B, React-able), costs Ghost's own resource, and is restricted to the 4 Findings-generating districts where Ghost's doctrine is most legible. PA slot + 1 Findings justifies the +2 chip output. Ring modifier: easier in Baryo (University Perimeter — Ghost's natural Baryo anchor), harder in Core (Chorus Research — high-prestige, contested institutional space). Successcrit +1 PS: a well-attended fair is a public credibility event. Failcrit −1 PS: low turnout in public is an embarrassment. Ghost adjacency (Design Pillar [04-n6 pending]) applies — no ghost-in-place ops without a foothold nearby.
+
+#### Card Story
+Ghost files the act at Phase B. A table. A banner. Printed materials no other faction would bother preparing. The researchers in this district have been watching Ghost operate for two Quarters — they know what the work is. By Beat 4 the conversations have happened. Ghost has presence now, not just access. The district noted the distinction.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Ghost operating in public in knowledge districts — recruitment = institutional legitimacy, not covert expansion | Art 00 §7 |
+| Voice fit | ✓ | Ghost-specific; Directorate (aligned) watches but doesn't interfere — this is procedure, not threat; Network (opposed) notes Ghost is building in the open what they normally build in the shadows | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | "Understanding must precede action" — public presence in research districts is Ghost anchoring where understanding is produced; Portrait +1 submitter | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory \| Add \| PresenceToken — places Ghost presence chips in target district | Art 04b §4 |
+| Balance | ✓ | 1 Findings + PA slot → +2 chips; restricted to 4 districts, public/React-able, adjacency required | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — chips placed on board are permanent board state (not a Permanent card) | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate — card fully resolved at Beat 4; chips remain per normal board rules | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None | — |
+| Portrait validity | ✓ | Ghost +1 submitter-bounded | Art 04 §6.2 |
+| Supported by zones | ✓ | Findings districts (University Perimeter, Data Exchange, Research Institute, Chorus Research) — all valid board zones | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken (Art 02 §6); Findings × 1 (Art 02 §8); max 6 chips/faction/district enforced at game.add() (GR 8.1) | Art 02 §6, §8 |
+| Supported by game procedure | ✓ | Beat 4 PA resolution; game.add() for presence chips; GR 8.1 chip cap | Art 03 §9.4 |
+| Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Story block above | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | success = exactly one outcome; successcrit = additive delta; fail = None; failcrit = additive delta | Art 04 §5 P27 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | | |
+
+```python
+GHO.PA.5 = Card(
+    id="GHO.PA.5",  version="v1.0",
+    name    = "Agency Recruitment Fair",
+    tagline = "The agency operates in the open. The interested are watching.",
+    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Ghost,
+
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+
+    beat            = 4,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = {Ring3: +10, Ring1: -15},
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = district.any(resource_type=Findings),
+    target_faction  = None,
+    target_object   = None,
+    target_taxonomy = None,
+
+    affinity    = None,
+    restriction = district.resource_type == Findings,  # adjacency per Design Pillar [04-n6 pending]
+    cost        = resource.faction(Ghost).findings * 1,
+    boost       = None,
+
+    success     = game.add(PresenceToken, to=target_district, count=2),
+    successcrit = faction(Ghost).standing.add(1),
+    fail        = None,
+    failcrit    = faction(Ghost).standing.sub(1),
+
+    on_accept  = None,
+    on_decline = None,
+
+    portrait   = {Ghost: PortraitEntry(submitter=+1)},
+
+    narrative    = None,  # pending D-04-08
+    perspectives = None,  # pending D-04-08
+    design_note  = "Ghost's only territory PA. Adds 2 presence chips in a Findings-generating district (University Perimeter, Data Exchange, Research Institute, Chorus Research — 4 districts). PA slot + 1 Findings cost justifies +2 output over STD.CA.3 Campaign's covert +1; public declaration means opponents see the target at Phase B and can React. Ring modifier: easier in Baryo (University Perimeter, familiar academic ground), harder in Core (Chorus Research, contested institutional space). Successcrit +1 PS: a well-attended fair is a public credibility event. Failcrit −1 PS: low turnout is a public embarrassment. Ghost adjacency (Design Pillar [04-n6 pending]) applies at Beat 0. card_id = GHO.PA.5.",
+    arbiter_note = "Restriction check at Beat 0: confirm target district resource_type = Findings AND Ghost has presence in an adjacent district (Design Pillar [04-n6 pending]). On success: place 2 Ghost presence chips in target district (enforce GR 8.1 max 6). On successcrit: additionally move Ghost's PS marker +1. On failcrit: move Ghost's PS marker −1. Cost (1 Findings) submitted to Reservoir regardless of outcome.",
 )
 ```
 
@@ -8483,6 +8753,92 @@ GUI.MOD.1 = Card(
     success = faction(acting).presence_chips(district(target)).add(1),
     successcrit = TBD,  fail = None,  failcrit = TBD,
     portrait = {Guild: PortraitEntry(submitter=+1)},
+)
+```
+
+---
+
+#### CLARIFY MISINFORMATION
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S110. Ghost Modifier/React — fires at §9.2.0 on any PA placed with an Intel token. Ghost must name the faction on the token; ARBITER validates. Note: §9 excludes Modifier cards from the taxonomy matrix; Layer/Function/Subject fields below describe the card's effect category for spec clarity only.*
+
+**Design Rationale:** Ghost's counter-attribution React. When any faction places a PA with an Intel token in the Faction Resolution Grid at §9.2.0, Ghost may announce React and declare the faction they believe is named on that token. ARBITER checks the token's faction field. If Ghost's declaration matches: the Intel token is removed, the PA is cancelled, all resource tokens on the PA drain to the Reservoir (no refund), and Ghost gains +1 PS. If Ghost is wrong: card consumed, no effect, PA proceeds.
+
+The intelligence test is genuine: because Target Profiles are placed face-down at §9.2.0 (revealing at §9.4.3.1.1), and Intel token content is always ARBITER-private, Ghost cannot guess from publicly visible information. Prior intelligence work is required — SIGINT taps, Source Substitution plant mode, or other intelligence that revealed the token's faction field. The chain play is: plant or observe the token → hold React → fire when the attribution PA is declared.
+
+Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Ghost's doctrine across all factions. Clarify Misinformation makes that doctrine actionable: Ghost can mechanically suppress any attribution they have intelligence on. Works against corrupted tokens (planted by Ghost via Source Substitution) and legitimate ones alike — Ghost believes no covert attribution belongs on the public record.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Counter-attribution at PA placement — Ghost doctrine: operational anonymity across the full table | Art 00 §7 |
+| Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08) | Art 00 §9 |
+| Doctrine alignment | ✓ | Ghost +1 portrait: publicly demonstrating intelligence superiority while suppressing attribution is Ghost doctrine at peak visibility. FactionSpecific — no other portraits | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | ModifierCard / React / FactionSpecific (Ghost) — trigger is publicly visible board state change (PA placement at §9.2.0) per §18.0 | Art 04 §6.2; Art 03 §18 |
+| Taxonomy fit | ✓ | Modifier cards excluded from matrix per §11.1 — Layer/Function/Subject = None. Spec clarity: Information / Remove / IntelToken | Art 04b §9; Art 04 §11.1 |
+| Balance | ✓ | No activation cost — card consumed on fire. Requires prior intelligence to use reliably. Misfire wastes the card. Strongly rewards GHO Source Substitution plant chain | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — PA cancellation and PS shift at §9.2.0 trigger | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate — no lingering board state marker | Art 04 §6 |
+| Trigger validity | ✓ | Any PA with Intel token placed at §9.2.0 — publicly visible board state change (§18.0). React window closes when §9.2.0 advances to next faction's declaration | Art 03 §18.0; Art 03 §9.2.0 |
+| Portrait validity | ✓ | Ghost submitter=+1 — submitter-bounded. Suppressing attribution from position of intelligence knowledge is Ghost on-doctrine | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference. N/A | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken (on placed PA card in Resolution Grid; Art 02 §6); PS shift (Art 02 §11) | Art 02 §6, §11 |
+| Supported by game procedure | ✓ | React per §18. Trigger at §9.2.0. Target Profile face-down at §9.2.0 (per §9.2.0 procedure — intelligence test is genuine). Ghost Source Substitution provides corruption mechanism. | Art 03 §18; Art 03 §9.2.0; Art 04 GHO — Source Substitution |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+
+**Outstanding Issues:**
+- **Card name:** "Clarify Misinformation" — pending voice pass (D-04-08). Card suppresses attribution whether true or false; name reflects Ghost's doctrine that any public attribution distorts understanding.
+- **Card ID:** GHO.MOD.1 — pending 04-n1 numbering pass.
+- **Modifier card schema:** Full spec pending modifier card design pass (04-n4). Fields below use established conventions.
+
+**Status:** Design pass complete — S110. Issues Resolved and sign-off pending 04-n4 schema pass.
+
+```python
+GHO.MOD.1 = Card(
+    id=TBD,  card_id="GHO.MOD.1",  version="v1.0",
+    name    = "Clarify Misinformation",
+    tagline = "Name the faction on the Intel token. If correct: the attribution ends here.",
+    type    = ModifierCard,  subtype = React,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    # Spec clarity: Information / Remove / IntelToken
+
+    trigger = faction(opponent).places(PA, with=IntelToken(any), at=§9.2.0),
+    beat    = None,  # React — fires at §9.2.0, not in initiative
+    resolution = Prediction,  # Ghost declares faction named on token; ARBITER validates
+    threshold  = None,
+    ring_mod   = None,  doctrine_mod = None,  resolution_type = "Conditional",
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = IntelToken(on=target_PA),
+    target_taxonomy = None,
+    affinity    = None,
+    restriction = None,
+    cost        = None,  # card consumed on fire (success or misfire)
+
+    success = (
+        arbiter.remove(IntelToken, from=target_PA),
+        arbiter.cancel(target_PA),   # flip face-down; drain all resource tokens to Reservoir
+        faction(Ghost).standing.add(1),
+    ),
+    successcrit = None,
+    fail        = None,   # card consumed; no board effect; PA proceeds normally
+    failcrit    = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait = {Ghost: PortraitEntry(submitter=+1)},
+
+    narrative    = None,  # pending 04-n79
+    perspectives = None,  # pending D-04-08
+
+    design_note  = "Counter-attribution React payoff for Ghost's intelligence chain. Fires when any faction places a PA with Intel token at §9.2.0. Ghost announces React and declares the faction they believe is on the token. ARBITER checks (Prediction resolution). Match → token removed, PA cancelled (resources drained to Reservoir, no refund), Ghost +1 PS. No match → card consumed, PA proceeds. Intelligence-gated: Target Profile face-down at §9.2.0 means Ghost cannot derive the target from visible information — requires prior SIGINT or Source Substitution plant mode. Works against corrupted and legitimate tokens alike — Ghost doctrine: no attribution belongs on the public record. card_id = GHO.MOD.1.",
+    arbiter_note = "React at §9.2.0 when opponent places any PA with an Intel token. Ghost announces React; states the faction they believe is named on the token's faction field. Pause §9.2.0 declaration sequence. Check token faction field (do not reveal to table). If Ghost's declared faction matches token: React succeeds — remove token; flip PA face-down (cancelled); drain all resource tokens from PA card to Reservoir; Ghost +1 PS; resume §9.2.0. If no match: React misfires — consume Clarify Misinformation card; no board effect; resume §9.2.0; placed PA proceeds normally.",
 )
 ```
 

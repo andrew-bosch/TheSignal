@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** Art 03 v4.4 signed off S88 (L207). Art 02 restructured S90 — component content migrated from Art 01; Art 02 sign-off pass (02-n02) next. Art 04 in progress — card design pass complete through C42 + P01–P18; sign-off passes in progress per set.
+**Design milestone:** Art 03 v4.10 signed off S110 (L232). Art 02 v2.3 signed off S109 (L231). Art 04 in progress — Ghost PA/React design pass complete (GHO.PA.1–5 + GHO.MOD.1); Syndicate gaps next.
 
 ---
 
@@ -62,7 +62,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.3 | 🔄 In progress — component lifecycle and setup entries updated through S88 |
-| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.4 | ✅ Signed off — S88 (L207) |
+| 03 | [while session(true): Quarter Structure](<V1/03___Round_Structure___Gameplay.md>) | 4.10 | ✅ Signed off — S110 (L232). S109–S110: Art 02 DB:48 target-object field (L231); VM-xx lifecycle formalised; §9.2.0 Target Profile placed face-down at PA declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check. |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.98 | 🔄 In progress — Tier 4 stub remaining |
 | 03b | [Component Lifecycle Register](V1/03b___Component_Lifecycle.md) | 0.1 | 🔄 In progress — formalized S88; open gaps in §9 |
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.37 | 🔄 In progress — full card design pass complete (C01–C42, P01–P18); set-level sign-off passes in progress |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.42 | 🔄 In progress — Ghost PA/React design pass complete (GHO.PA.1–5, GHO.MOD.1); set-level sign-off passes in progress |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 1.6 | ✅ Signed off — S48 (pending re-sign-off on S64 material addition) |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.1 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.4 | 🟡 In progress — §9 Accord governance signed off S83 (L205) |

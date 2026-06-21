@@ -204,6 +204,10 @@ This distinguishes Economy — Remove — Native resource (removing tokens from 
 | GHO.CA.14 | Field Verification | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel token (age field) | Corrupt | *7.2b violation: mechanic alters committed token age field retroactively. Fundamental redesign required. G-ext id retired. Art 04 spec: BLOCKED pending redesign (04-n103).* |
 | GHO.PA.1 | Publish Analysis | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
 | GHO.PA.2 | Signal Review Request | 📝 | Resolution | Split by phase | Modify | Covert operation (difficulty) | — |
+| GHO.PA.3 | Declassified Records | 📝 | Information | Public | Remove | Intel token (expired) | Remove |
+| GHO.PA.4 | Public Threat Assessment | 📝 | Information | Private → Public | Reveal | Broadcast Effect Card | Reveal |
+| GHO.PA.5 | Agency Recruitment Fair | 📝 | Territory | Public | Add | PresenceToken | Add |
+| GHO.MOD.1 | Clarify Misinformation | 📝 | Information | Public | Remove | IntelToken | Remove | *ModifierCard/React — taxonomy excluded from §11.1 per modifier card rules (S110)* |
 | GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure block | — |
 | GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
 | GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence token | Add |
@@ -340,7 +344,7 @@ Live view results are in the DB — query directly for current state. Results ca
 | Layer | Function | Subject | Standard | Guild | Ghost | Directorate | Network | Syndicate |
 |-------|----------|---------|----------|-------|-------|-------------|---------|-----------|
 | **Territory** | | | | | | | | |
-| | Add | Presence token | STD.CA.3, STD.CA.8 | GUI.CA.3 | — | — | NET.CA.5 | SYN.CA.9 |
+| | Add | Presence token | STD.CA.3, STD.CA.8 | GUI.CA.3 | GHO.PA.5 | — | NET.CA.5, NET.MOD.1 | SYN.CA.9 |
 | | Add | Structure block | STD.CA.1 | — | — | — | — | SYN.CA.8 |
 | | Block | Deployment marker | — | — | — | DIR.PA.3 | — | — |
 | | Remove | Presence token | STD.CA.4 | — | — | DIR.CA.5 | — | — |
@@ -374,7 +378,7 @@ Live view results are in the DB — query directly for current state. Results ca
 | | Reveal | FactionHand | — | — | — | — | NET.PA.3 | — |
 | | Reveal | Action attribution | STD.PA.5, NET.PA.1, GHO.PA.1 | — | — | — | — | — |
 | | Reveal | ClassifiedDirective | — | — | GHO.CA.11 | — | — | — |
-| | Remove | Intel token | — | — | GHO.CA.4 | — | — | — |
+| | Remove | Intel token | — | — | GHO.CA.4, GHO.PA.3, GHO.MOD.1 | — | — | — |
 | | Corrupt | Accord | STD.CA.11 | — | — | — | — | — |
 | | Corrupt | Intel token | — | — | GHO.CA.12 | — | — | — |
 | **Submission** | | | | | | | | |
@@ -409,10 +413,10 @@ Current Ghost set (S108): GHO.CA.1 (Submission|Copy|CovertOp), GHO.CA.2 (Informa
 3. **GHO.CA.13 Backdate / GHO.CA.14 Field Verification** — both target Intel token provenance fields (Information|Corrupt|Intel token): Backdate aimed at the round-number field (when the token was committed); Field Verification aimed at the age/validity field. Both blocked by 7.2b — those fields record committed facts and cannot be retroactively altered. Design intent: manipulation of token temporal provenance — making intelligence appear more or less current than it is. Valid redesign path: alteration of committed provenance fields is permanently closed. The mechanic must be additive — plant a new token that mimics a different temporal signature, or affect how token age is read (e.g., a modifier shifting the effective staleness threshold for a target faction) rather than altering the token itself. Both cards require fundamental redesign; specs blocked at Art 04 (04-n103).
 
 **New PA/React design targets (S108):**
-4. **GHO.PA.3 Declassified Records** — tentative taxonomy: Information|Remove|IntelToken (expired). Ghost spends expired Intel tokens as an alternative cost currency. Non-standard cost mechanic; requires Art 03 §18 treatment before spec can be written. Design question: does expired-token cost replace standard cost entirely, supplement it, or unlock a discounted play? Open gate before spec.
-5. **GHO.PA.4 Public Threat Assessment** — taxonomy: Information|Reveal|BroadcastEffectCard. Two-component model: Broadcast Card (DB:25) = publicly shown narrative (table-visible); Broadcast Effect Card (DB:98) = mechanically applied effects, ARBITER-private tableau, linked to BC. Ghost names a Broadcast Card (the public selector); ARBITER reveals the linked Broadcast Effect Card to all players. Consistent with GR 10.1b — ARBITER discloses content from its own domain; Ghost creates the trigger but does not perform the reveal. Broadcast effect IS hidden; card has clear mechanical bite. Ready for design pass when Ghost PA session opens.
-6. **GHO.PA.5 Clarify Misinformation** — tentative taxonomy: Information|Remove|IntelToken (corrupted). React/Instant; triggers when an Intel token is corrupted; Ghost removes the corrupted token. Narrative: the agency publicly corrects the record the moment disinformation enters circulation. Design question: react window timing relative to token corruption — Beat 2 trigger vs. Beat 3 resolution. Art 03 §18 treatment required before spec.
-7. **GHO.PA.6 Agency Recruitment Fair** — tentative taxonomy: Territory|Add|PresenceToken. Public-facing Ghost territorial action. Narrative: the agency operates in the open — career fairs, public outreach, visible institutional presence. Design question: district-type restriction mechanism (district-type tag vs. named-district list). Tag approach preferred — named lists create maintenance overhead and fragility as the district map evolves.
+4. **GHO.PA.3 Declassified Records** — ✅ Design pass S109. Taxonomy: Information|Remove|IntelToken (expired). Cost: 1 Findings. Restriction: hold ≥1 expired Intel token. Boost: expired Intel tokens (each = 1 BM-xx at Beat 4 §9.4.3.1.0.0); BM-xx multiplies all effects ×(1+n). Success: +1 PS; successcrit: +1 PS additional; failcrit: −1 PS. Art 03 boost detection sub-step added §9.4.3.1.0.0 (S109). See Art 04 GHO.PA.3.
+5. **GHO.PA.4 Public Threat Assessment** — ✅ Design pass S109. Taxonomy: Information|Reveal|BroadcastEffectCard. Automatic. Cost: 1 Findings. Restriction: ≥1 active BC in Situation Report Zone. Target object: named BC (recorded on Target Profile — target-object field added S109). Success: ARBITER reveals linked BEC to all players, returns to Tableau; Ghost +1 PS. BC/BEC link via §7.2.1 — no new mechanism required. Art 03 §9.4.3.3.0 clause added (S109). Art 02 DB:48 target-object field added (S109). See Art 04 GHO.PA.4.
+6. **GHO.PA.5 → GHO.MOD.1 Clarify Misinformation** — ✅ Design pass S110. Redesigned as ModifierCard/React (Modifier deck, not PA deck). Taxonomy: Information|Remove|IntelToken. Trigger: any faction places PA with Intel token at §9.2.0. Ghost declares faction named on token (Prediction resolution); ARBITER checks privately. Match: token removed, PA cancelled, resources drained to Reservoir, Ghost +1 PS. No match: card consumed, PA proceeds. Intelligence-gated: Target Profile face-down at §9.2.0 (Art 03 v4.10). See Art 04 §11.8 GHO.MOD.1.
+7. **GHO.PA.5 Agency Recruitment Fair** — ✅ Design pass S110. Taxonomy: Territory|Add|PresenceToken. Cost: 1 Findings. Restriction: district.resource_type == Findings (University Perimeter, Data Exchange, Research Institute, Chorus Research — 4 districts); adjacency per Design Pillar [04-n6 pending]. Beat 4, d100 threshold 50. Ring mod: Ring3 +10, Ring1 −15. Success: +2 PresenceTokens; successcrit: +1 PS; failcrit: −1 PS. Ghost's only territory PA — operates in the open in knowledge districts. See Art 04 GHO.PA.5.
 
 ### 8.2 Directorate — Priority redesign targets
 

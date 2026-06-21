@@ -41,7 +41,7 @@ Worst-case stack: partial payment + ring penalty + Discredited + Type B = −110
 ## Public Act Declaration (§9.2)
 
 1. Declarations in initiative order. Factions may pass verbally.
-2. To declare: announce the public act; place card face-up in unresolved PA zone of Faction Resolution Grid with Target Profile and 1 Dispatch Token. Resource tokens remain with the card (not committed until Beat 4).
+2. To declare: announce the public act; place card face-up in unresolved PA zone of Faction Resolution Grid with 1 Dispatch Token and resource tokens. Place Target Profile **face-down** on the card. Resource tokens remain with the card (not committed until Beat 4).
 3. Modifier cards placed face-up alongside in Faction Resolution Grid.
 4. Once placed: valid target for Countermeasures and other public acts. Cannot be withdrawn or modified.
 5. Resolve in initiative order at Beat 4.
@@ -51,7 +51,7 @@ Worst-case stack: partial payment + ring penalty + Discredited + Type B = −110
 ## Public Act Resolution — Beat 4 Key Steps
 
 1. **Submit Payment:** Initiative order — resource tokens transferred to Reservoir; Dispatch Token returned. Full payment acknowledged; partial payment gets −50 threshold marker; zero payment = invalid (card flipped face-down, auto-fails).
-2. **Apex check / face-down check:** Face-down cards auto-fail.
+2. **Apex Check (§9.4.3.1.1):** Acting Faction Player flips Target Profile face-up; reads public act card and Target Profile. Face-down PA cards auto-fail (do not flip — they remain face-down and go directly to fail outcome).
 3. **Validate board state conditions:** If conditions required at Phase B declaration no longer met (altered by Beat 3 outcomes) — ARBITER announces invalidation, card returned.
 4–8. Acting faction reads base difficulty, applies all modifiers, declares threshold aloud, rolls publicly, compares to threshold.
 9. **Apply outcome:** Acting faction makes all board changes.
