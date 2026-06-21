@@ -429,6 +429,10 @@ Updated after each playtest session.
 
 ## Section 4 — Change Log
 
+**L234** (S111): SYN.PA.3 Data Acquisition — consideration non-fulfillment ruling. Consideration is a verbal offer written on Target Profile declared-parameters line; not held in escrow. If Syndicate cannot deliver declared consideration at sub-case A (trade), exchange fails and card stays Permanent. Bluff mechanic is intentional — Syndicate bears public failure risk. Ruling: sub-case A fails → card stays Permanent.
+
+**L233** (S111): Art 02 Components v2.4 signed off. Target Profile (DB:48) Gameplay Requirements and `recorded_fields` expanded to include declared parameters (free-form text — additional blank line for card-specific declarations). Enables SYN.CA.11 Redline and future cards requiring field declarations beyond faction, district, or object. Art 02 v2.3 → v2.4.
+
 **L232** (S110): Art 03 — Quarter Structure & Gameplay v4.10 signed off. VM-xx lifecycle formalised: §9.4.1.1 BEC step extended with VM-xx check (if VM-xx: resolve publicly, read aloud, remove VM-xx); §9.4.2.2.0 VM-xx placement clause added (card outcome may specify VM-xx placement on another grid card); §9.4.3.0.1 renamed Initiative Loop (BEC application content removed — moved to new per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language — per-PA BEC check within Beat 4 initiative loop); §9.4.3.1.4 Base Difficulty (renumbered from §9.4.3.1.3); §9.4.3.3.0 generic VM-xx placement clause added; specific BEC reveal clause removed (superseded by VM-xx model). GHO.PA.4 `success=` updated to `arbiter.place_vm(BEC)` accordingly. §9.2.0 Target Profile placed face-down at PA declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step (gates GHO.MOD.1 intelligence test). Art 03 v4.8 → v4.10.
 
 **L231** (S109): Art 02 Components v2.3 signed off. Target Profile (DB:48) `recorded_fields` and Gameplay Requirements expanded to include target object (named component — e.g., Broadcast Card) as a valid field type. Enables PA cards (e.g., GHO.PA.4) that target game objects rather than factions or districts. Art 02 v2.2 → v2.3.

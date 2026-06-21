@@ -261,10 +261,12 @@ This distinguishes Economy — Remove — Native resource (removing tokens from 
 | SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Public | Redirect | NativeResource | Move |
 | SYN.CA.8 | Land Title | 📝 | Territory | Public | Add | StructureBlock | Add |
 | SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | PresenceToken | Add |
-| SYN.CA.10 | Accord Transfer | 📝 | Economy | Public | Corrupt | AccordCard | Corrupt | *(taxonomy corrected S107 L227: party-name replacement is physical alteration of written record on Accord form — Corrupt, not Redirect. Blocked on Art 06 for implementation details.)* |
+| SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | AccordCard | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
+| SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | AccordAgreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
 | SYN.MOD.1 | Accord Leverage | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
 | SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence token | Move |
 | SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native resource (conditional) | Add |
+| SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | IntelTokensHeld | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
 
 ---
 
@@ -446,7 +448,7 @@ Current Network set (S104): NET.CA.1 (Information|Reveal|District), NET.CA.2 (Ec
 
 ### 8.4 Syndicate — Priority redesign targets
 
-Current Syndicate set (S108): SYN.CA.1 (Economy|Add|NativeResource), SYN.CA.2 (Economy|Remove|NativeResource), SYN.CA.3 (Territory|Redirect|StructureBlock), SYN.CA.4 (Economy|Protect|NativeResource), SYN.CA.5 (Submission|Block|NamedActionType), SYN.CA.6 (Economy|Add|IntelToken), SYN.CA.7 (Economy|Redirect|NativeResource), SYN.CA.8 Land Title (Territory|Add|StructureBlock), SYN.CA.9 Hostile Takeover (Territory|Add|PresenceToken), SYN.CA.10 Accord Transfer (Economy|Corrupt|AccordCard — pending Art 06). Economy depth remains Syndicate's defining characteristic; SYN.CA.8/9 add a meaningful Territory foothold. SYN.CA.6 provides an intel foothold within the Economy layer; Syndicate still has no direct Information-layer capability.
+Current Syndicate set (S111): SYN.CA.1 (Economy|Add|NativeResource), SYN.CA.2 (Economy|Remove|NativeResource), SYN.CA.3 (Territory|Redirect|StructureBlock), SYN.CA.4 (Economy|Protect|NativeResource), SYN.CA.5 (Submission|Block|NamedActionType), SYN.CA.6 (Economy|Add|IntelToken), SYN.CA.7 (Economy|Redirect|NativeResource), SYN.CA.8 Land Title (Territory|Add|StructureBlock), SYN.CA.9 Hostile Takeover (Territory|Add|PresenceToken), SYN.CA.10 Accord Transfer (Economy|Corrupt|AccordCard), SYN.CA.11 Redline (Information|Corrupt|AccordAgreement), SYN.PA.3 Data Acquisition (Information|Reveal|IntelTokensHeld). Economy depth remains Syndicate's defining characteristic; SYN.CA.8/9 add a meaningful Territory foothold. SYN.CA.10/11 complete the Accord manipulation suite (who is bound; what the terms say). SYN.CA.11 and SYN.PA.3 give Syndicate its first direct Information-layer capability.
 
 **High priority:**
 1. **Information — Corrupt — Accord agreement:** Alter the recorded terms of an existing Accord. *"The Syndicate may alter one numeric value in any registered Accord — changing a resource amount, duration, or threshold. The alteration is physically made to the Accord document. Both parties notified in case."* Requires ARBITER to manage Accord document integrity.

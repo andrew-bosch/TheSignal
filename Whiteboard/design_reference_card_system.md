@@ -310,6 +310,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | `target_faction` | FactionExpr \| None | None = no faction target |
 | `target_object` | ObjectExpr \| None | None = no object target |
 | `target_taxonomy` | TaxonomyExpr \| None | Targets a class of actions; declared at Phase B alongside target_faction; None = no taxonomy target |
+| `declared_params` | DeclaredParamsExpr \| None | Faction-declared free-form parameters written on TP declared-parameters line at §9.2 or Phase A — e.g., N tokens + consideration (SYN.PA.3), clause + new value (SYN.CA.11), incoming party (SYN.CA.10); None = no declaration required. Art 02 v2.4 / L233. Full §6.1 addition pending 04-n106. |
 
 **Logic**
 | Field | Type | Notes |

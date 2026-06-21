@@ -7322,9 +7322,10 @@ NET.PA.3 = Card(
 | [SYN.CA.5](#c35-regulatory-capture) | Regulatory Capture |
 | [—](#syndicate-land-title) | Land Title |
 | [—](#syndicate-hostile-takeover) | Hostile Takeover |
-| [—](#syndicate-accord-transfer) | Accord Transfer |
+| [SYN.CA.10](#syn-ca-10--accord-transfer) | Accord Transfer |
 | [—](#syndicate-parasitic) | Parasitic |
 | [—](#syndicate-corporate-blackmail) | Corporate Blackmail |
+| [SYN.CA.11](#syn-ca-11--redline) | Redline |
 
 ### SYN.CA.1 — LEVERAGED ACQUISITION
 [↑ Covert Operations](#syndicate-covert-operations)
@@ -7880,84 +7881,129 @@ HostileTakeover = Card(
 
 ---
 
-### Syndicate — ACCORD TRANSFER
+### SYN.CA.10 — ACCORD TRANSFER
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate's accord manipulation card — the mechanism by which the Syndicate turns every bilateral agreement into a potential asset. Replaces one party in an active Accord with Syndicate itself or a named third faction, without either original party's consent. The "fine print" doctrine: Syndicate controls the paper, not the relationship. Cost is low (Capital×3, Automatic) relative to effect, reflecting that Syndicate's expertise is in legal-financial restructuring, not brute force. Pool copy = 1 singleton: accord manipulation is rare and high-stakes. The card is blocked on Art 06 (Accord mechanic) — the full spec cannot be finalized until Accord registration and transfer procedures are defined.
+Syndicate's party-substitution card — the mechanism by which every bilateral agreement becomes a potential Syndicate asset. Replaces one named party in an active Accord with any faction (including Syndicate itself), without either party's consent. ARBITER makes the physical alteration on the Accord form and announces the change publicly at Beat 3. On crit success, the incoming party gains a renegotiation right: one numeric term of their choosing is altered at the table. This gives the involuntarily inserted party a single concession — the transfer comes with a term adjustment. Completes the Accord manipulation suite with SYN.CA.11 Redline (Terms). Supersedes gap concept SECONDARY OBLIGATIONS.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A form that has been in the Accord Placement Area since Debrief is quietly updated between beats. ARBITER announces the change at Beat 3 resolution. The parties to the original agreement have already moved on.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Accord party replacement without consent — "fine print" doctrine; Syndicate controls the paper; blocked on Art 06 but mechanic direction locked | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — restructuring as legal-financial power | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; Capital×3; singleton; no consent required by design; incoming party scope outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — accord manipulation is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Redirect/AccordCard — blocked on Art 06 (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | Capital×3; balance assessment pending Art 06 Accord value understanding | Art 02 §6–§7 |
-| Effect duration | ✓ | Permanent: accord party assignment changed in ARBITER record | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Syndicate +1 submitter; accord restructuring aligns with capital control doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — operates on ARBITER record | Art 01 §6–§7 |
-| Supported by components | ✓ | AccordCard as target — blocked on Art 06 (Outstanding Issue) | Art 02 §6–§8; Art 06 (pending) |
-| Supported by game procedure | ✓ | Beat 3 Automatic; ARBITER updates record; both affected factions notified; blocked on Art 06 (Outstanding Issue) | Art 03 §9, §11; Art 06 (pending) |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Action fit | ✓ | Accord party replacement without consent; fills Economy\|Corrupt\|AccordCard Syndicate gap; distinct from SYN.CA.11 (Terms) and SYN.CA.3 (StructureBlock redirect); supersedes SECONDARY OBLIGATIONS gap | Art 00 §7 |
+| Voice fit | ✓ | FactionSpecific Syndicate; full perspectives block; "restructured who holds it" is on-voice | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only; Capital(3); no consent required (confirmed — Art 06 §9.10 signed off L205); Syndicate may be outgoing or incoming party | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Economy\|Corrupt\|AccordCard — party names on Accord form are written records; replacement is a Corrupt operation on the document (taxonomy corrected S107 L227 from Redirect) | Art 04b §4, §5 |
+| Balance | ⚠ | d100 threshold 50 with high-impact consent-free effect; crit renegotiation right for incoming party adds table interaction; flag for doctrine review | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent board state change (Accord form altered, stays active); card itself is Immediate | — |
+| Persistence | ✓ | Immediate — no lingering card-as-condition | Art 04 §6 |
+| Portrait validity | ✓ | flat entries only; submitter-bounded; no direct Portrait track shift in effect fields | Art 04 §6.2 |
+| Supported by zones | ✓ | Accord Placement Area (Art 01); Target Profile in Dispatch Case (covert path) | Art 01 §6–§7 |
+| Supported by components | ✓ | AccordCard/AccordForm (Art 06 §9); Target Profile DB:48 with declared_params (Art 02 v2.4 — L233); Dispatch Case (Art 02) | Art 02; Art 06 §9 |
+| Supported by game procedure | ✓ | Beat 3 covert d100; Art 06 §9.10 Alter/Named Party governs physical alteration; Art 06 §9.10 Alter/Terms governs crit term change (incoming party elects at table); ARBITER announces success publicly | Art 03 §9, §11; Art 06 §9.10 |
+| Data schema validation | ✓ | All fields per §6.1/§6.2 | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Four paths (success / crit success / fail / failcrit) each has exactly one outcome | Art 04 §5 P27 |
 
 #### Outstanding Issues
 
-- **Blocked on Art 06:** Full spec cannot be finalized until Art 06 Accord mechanic defines AccordCard structure, party roles, obligations vs benefits, and what constitutes a transferable term. This card is a design placeholder — mechanic direction is locked but implementation details depend on Art 06.
-- **"ARBITER record" is not a registered component (S69):** The arbiter_note and design_note reference updating a named Accord in the "ARBITER record" — this is not a registered component. Art 06 §9 establishes that the Accord form placed in the Accord Placement Area is the physical record. Party replacement under Transfer (§9.10) is a physical alteration to the Accord form — outgoing party struck, incoming party written in. Spec language must be updated to reflect this on Art 06 completion.
-- **Who can be named as incoming party:** Can Syndicate assign the accord to any faction, including ones not currently party to any accord? Or only factions already in the game's active accord network? Confirm restriction scope.
-- **Consent mechanics:** "Neither party's consent required" — confirm this is intentional (Syndicate's doctrinal power) and that there is no counter-card available to block Accord Transfer in the same Beat.
-- **SECONDARY OBLIGATIONS overlap:** The gap concept in the file describes a similar mechanic (obligations-only transfer). Confirm whether Accord Transfer supersedes SECONDARY OBLIGATIONS or if they are two distinct cards.
+- **Balance:** Threshold 50 with consent-free, permanent Accord restructuring is high-impact. Crit renegotiation right for incoming party is untested — could create unexpected table dynamics. Flag for doctrine review.
+- **Incoming party renegotiation constraint:** On crit success, incoming party may alter "any" numeric term — no restriction stated on which clause or by how much. Consider whether to bound the new value (e.g., within clause-type vocabulary per Art 06 §9.3) or leave fully free. Non-blocking — Art 06 §9.3 clause vocabulary applies implicitly.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ⚠ | |
 
-*Draft S59 — design pass pending. Blocked on Art 06 Accord mechanic.*
+*v0.1 — S111: full design pass replacing S59 stub. Art 06 §9.10 signed off (L205); taxonomy corrected (L227). Issues Resolved pending balance doctrine review.*
 
 ```python
-AccordTransfer = Card(
-    id=TBD,  version="v1.0",
-    name    = "Accord Transfer",
-    tagline = "Replace one party in an active Accord — without their consent.",
-    type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = Economy,  function = Redirect,  subject = AccordCard,
-    beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None,
-    trigger=None,
-    resolution_type="Transactional", outcome_type=None,
-    persistence     = Immediate,
+SYN.CA.10 = Card(
+    card_id  = "SYN.CA.10",  version = "v0.1",
+    name     = "Accord Transfer",
+    tagline  = "All terms remain binding. The signatories have been updated.",
+    type     = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
+
+    layer    = Economy,  function = Corrupt,  subject = AccordCard,
+
+    beat         = 3,
+    resolution   = d100,
+    threshold    = 50,
+    ring_mod     = None,
+    doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = faction(outgoing_party),
+    target_object   = AccordCard(state=active, party=target_faction),
+    declared_params = (
+        incoming_party = faction(any),
+        # written on TP declared-parameters line at Phase A
+        # may be Syndicate (self-insertion or self-exit) or any other faction not
+        # already a named party on the target Accord
+    ),
+
+    affinity    = None,
+    restriction = (
+        target_object.state == active
+        AND target_faction in target_object.parties
+        AND declared_params.incoming_party not in target_object.parties
+    ),
+    cost     = Capital(3),
+    boost    = None,
+
+    success = target_object.alter(
+        type     = NamedParty,
+        outgoing = target_faction,
+        incoming = declared_params.incoming_party,
+    ),
+    # ARBITER strikes outgoing_party on Accord form; writes incoming_party.
+    # All obligations and benefits transfer. Accord remains active.
+    # ARBITER announces to table: "[Outgoing] replaced by [Incoming] on [Accord]."
+    # Art 06 §9.10 Alter/Named Party. No consent required from either party.
+
+    successcrit = faction(declared_params.incoming_party).player.elect(
+        target_object.alter(type=Terms, clause=any_numeric, new_value=player_chosen_int),
+    ),
+    # delta only: named party change (from success) + incoming party elects one
+    # numeric term alteration at the table immediately after ARBITER announcement.
+    # Incoming party names the clause row and states the new integer value;
+    # ARBITER makes the physical alteration per Art 06 §9.10 Alter/Terms.
+
+    fail        = None,
+    failcrit    = faction(acting).standing -= 2,
+    # no Accord change; cost spent; acting faction announced publicly (Discovery)
+
+    on_accept  = None,
+    on_decline = None,
+
+    persistence           = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
-    target_district=None, target_faction=None, target_object=AccordCard,
-    target_taxonomy=None,
-    affinity=None,
-    restriction = (
-        game.accord.active(named_accord) == True
-        AND faction(named_outgoing) != Syndicate
-        AND faction(named_outgoing) in accord(named_accord).parties
-    ),
-    cost        = resource.faction(acting).capital * 3,
-    success     = game.transfer_party(
-        accord(named_accord),
-        outgoing=faction(named_outgoing),
-        incoming=faction(named_incoming),  # Syndicate or named third faction
-    ),
-    successcrit=None, fail=None, failcrit=None,
-    portrait    = {Syndicate: PortraitEntry(submitter=+1)},
-    narrative   = "The Syndicate does not need to be at the table to own the agreement. They wrote the paper.",
-    perspectives = {Syndicate: "The accord has been restructured. The original parties will be notified. Their feelings about it are noted."},
-    design_note  = "Blocked on Art 06 Accord mechanic. Replaces one party in any active named Accord — neither original party's consent required. Syndicate may insert itself or name a third faction as the incoming party. Both original parties notified by ARBITER case dispatch. Supersedes gap concept SECONDARY OBLIGATIONS (which was obligations-only) — confirm at Art 06 design pass.",
-    arbiter_note = "At resolution: update named Accord in ARBITER record, replacing named outgoing party with named incoming party. All terms (obligations and benefits) transfer to incoming party. Dispatch case notifications to both original parties: '[Accord name] party assignment has been amended.' New party takes effect immediately.",
+
+    portrait = {
+        Syndicate:   PortraitEntry(flat=+1),
+        Network:     PortraitEntry(flat=-1),
+        Directorate: PortraitEntry(flat=-1),
+    },
+
+    narrative = "The form in the Accord Placement Area is updated. The parties to the original agreement learn about it at the same time as everyone else.",
+
+    perspectives = {
+        Syndicate:   "The agreement was always an asset. We've restructured who holds it.",
+        Ghost:       "The Accord changed hands without a handshake. The power to do that is worth understanding.",
+        Network:     "A binding agreement — restructured by someone who wasn't party to it, without notice. This is what unaccountable capital does.",
+        Directorate: "A covert restructuring of a binding agreement. The incoming party is now bound. Noted.",
+        Guild:       "Agreements don't restructure themselves. Someone just demonstrated they can override the process.",
+    },
+
+    design_note  = "Completes the Accord manipulation suite with SYN.CA.11 Redline: CA.10 controls who is bound; CA.11 controls what the terms say. Economy|Corrupt|AccordCard — party names on the Accord form are written records; replacement is a Corrupt operation. ARBITER makes the physical alteration at Beat 3 per Art 06 §9.10 and announces publicly (the change is public; the acting faction remains covert). No consent required from either party (Art 06 §9.10, L205). Outgoing_party may be Syndicate (self-exit, forcing obligations onto incoming party). Incoming_party may be Syndicate (self-insertion to acquire another faction's Accord position). Restriction: incoming_party not already a named party on the same Accord. Crit success: incoming party — the involuntarily inserted faction — elects one numeric term change at the table; gives them a single renegotiation concession. Supersedes SECONDARY OBLIGATIONS gap concept.",
+    arbiter_note = "Phase A: acting faction writes on TP declared-parameters line: incoming party. Beat 0: verify restriction — outgoing party is named on target Accord; incoming party is not. Beat 3: roll d100. On success (≤50): locate Accord form in Accord Placement Area; strike outgoing party name; write incoming party name; announce to table: '[Outgoing] replaced by [Incoming] on [Accord]. All terms now bind [Incoming].' On crit success (01–05): apply named party change as above; then address incoming party player: 'You may alter one numeric term in this Accord — name the clause and state the new value.' Apply declared change per Art 06 §9.10 Alter/Terms. On fail: no effect; cost spent. On failcrit (96–00): no Accord change; announce acting faction publicly; apply Syndicate −2 PS.",
 )
 ```
 
@@ -8211,6 +8257,109 @@ Card(
 
 ---
 
+### SYN.CA.11 — REDLINE
+[↑ Covert Operations](#syndicate-covert-operations)
+
+#### Design Rationale
+Syndicate quietly alters a numeric or ordinal fill-in value in an active Accord — a resource quantity, an influence tier, a Quarter deadline — while the form sits face-up in the Accord Placement Area. The effect is public (the altered form is visible to all players) but the actor is covert (ARBITER makes the physical change without identifying the submitting faction). Completes the Syndicate Accord manipulation suite: SYN.CA.10 Accord Transfer changes a named party; SYN.CA.11 Redline changes what the terms say. Fills the Information|Corrupt|AccordAgreement gap identified in Art 04b §8.3. Distinct from Accord Leverage modifier card (which forces acceptance of a draft, not alteration of an active one).
+
+#### Card Story
+A Syndicate operative approaches the Accord Placement Area during a recess. They adjust a number in one clause — a quantity, a tier, a deadline. The revision goes unquestioned. By the time anyone re-reads the terms carefully, the original number is simply what everyone thought they agreed to.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Information-layer Accord alteration; Syndicate "small print" doctrine; fills Information\|Corrupt\|AccordAgreement gap (Art 04b §8.3); distinct from SYN.CA.10 (named-party alteration) and Accord Leverage modifier (forced acceptance of draft) | Art 00 §7 |
+| Voice fit | ✓ | FactionSpecific Syndicate; single Syndicate perspective; full perspectives block documented | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only; Capital×2; covert; altering written agreements for positional advantage = Capital doctrine ("control comes from positioning early") | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Corrupt/AccordAgreement — Accord clause fill-in values are physically written records; valid Corrupt target per §4.10/P24 | Art 04b §4, §5 |
+| Balance | ✓ | Capital×2; threshold 50 (Average); restriction = active Accord present only; failcrit = Discovery; prospective clause alteration scales with Accord significance | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — one-time physical alteration; no persistent game-state marker; Accord persists with altered terms under its own lifecycle | — |
+| Persistence | ✓ | Immediate — alteration committed at Beat 3; no persistence tracking required | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None; restriction gates on active Accord count checked at Beat 0 | — |
+| Portrait validity | ✓ | flat entries only; submitter-bounded (Syndicate, Network, Directorate); no direct Portrait track shift in effect fields (DIR.PA.2); failcrit = Discovery (not a portrait entry) | Art 04 §6.2 |
+| Supported by zones | ✓ | Accord Placement Area registered zone (Art 06 §9.5) | Art 01 §6–§7 |
+| Supported by components | ✓ | AccordAgreement face-up in Accord Placement Area (Art 06 §9); Target Profile declared-parameters blank line added Art 02 §8 (S111) | Art 02 §6–§8; Art 06 §9 |
+| Supported by game procedure | ✓ | Alter/Terms covert procedure: Art 06 §9.10 (covert op → ARBITER makes physical alteration); no new Art 03 step required | Art 06 §9.10 |
+| Data schema validation | ✓ | All fields populated per §6.1/§6.2 | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | One outcome per tier; no branching; successcrit additive on success; failcrit additive on fail | Art 04 §5 P27 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | ✓ | |
+
+*v0.1 — S111: new card, fills Information\|Corrupt\|AccordAgreement gap. Art 02 §8 Target Profile declared-parameters field added (S111).*
+
+```python
+SYN.CA.11 = Card(
+    card_id  = "SYN.CA.11",
+    version  = "v0.1",
+    name     = "Redline",
+    tagline  = "The numbers that matter are the ones no one double-checked.",
+    type     = CovertOperation,
+    subtype  = FactionSpecific,
+    faction  = Syndicate,
+
+    layer    = Information,
+    function = Corrupt,
+    subject  = AccordAgreement,
+
+    beat         = 3,
+    resolution   = d100,
+    threshold    = 50,
+    ring_mod     = None,
+    doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = AccordAgreement(state=active, clause_contains=numeric_fill_in),
+
+    affinity    = None,
+    restriction = AccordAgreement.count(state=active) >= 1,
+    cost        = Capital(2),
+    boost       = None,
+
+    success     = target_object.alter(type=Terms, clause=declared_clause,
+                                      new_value=declared_value),
+    successcrit = standing += 1,
+    fail        = None,
+    failcrit    = Discovery,
+
+    on_accept  = None,
+    on_decline = None,
+
+    persistence           = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    portrait = {
+        Syndicate:   PortraitEntry(flat=+1),
+        Network:     PortraitEntry(flat=-1),
+        Directorate: PortraitEntry(flat=-1),
+    },
+
+    narrative = "The document in the placement area is a public record. It has always been a public record. The number in the third clause has always been that number. If it seems different from what you remember — you're probably misremembering.",
+
+    perspectives = {
+        Syndicate:   "Leverage doesn't expire. It just changes shape.",
+        Ghost:       "We noticed the discrepancy. We are still determining whether it was us, them, or the original terms.",
+        Network:     "Someone revised the Accord. No one is claiming it. That's the story.",
+        Directorate: "The written record is the law. We will find out who changed this.",
+        Guild:       "We build to the spec we signed. If the spec changed, we need to know now.",
+    },
+
+    design_note  = "Syndicate's only Information-layer covert op. Effect is public (form changes) but actor is covert — unique table dynamic. Valid clause targets: fill-in values that are numeric or ordinal (resource quantity, influence tier, Quarter number). Prohibited: clause rows with only named entries (district name, PA type) — not numeric alterations. declared_clause and declared_value sourced from Target Profile declared-parameters line.",
+    arbiter_note = "Acting faction declares at Phase A: (a) target Accord by named parties, (b) clause row to alter, (c) replacement value — all written on Target Profile declared-parameters line. On success at Beat 3: locate declared Accord form in Accord Placement Area; apply Alter/Terms per Art 06 §9.10 — write new value; acting faction identity not disclosed. If declared Accord has been removed before Beat 3 resolution, treat as fail. Alteration resolves in submission order; subsequent Beat 3 ops see altered terms.",
+)
+```
+
+---
+
 
 ---
 
@@ -8221,6 +8370,7 @@ Card(
 |------|------|
 | [SYN.PA.1](#p15-acquisition-offer) | Acquisition Offer |
 | [SYN.PA.2](#p16-public-dividend) | Public Dividend |
+| [SYN.PA.3](#syn-pa-3--data-acquisition) | Data Acquisition |
 
 ### SYN.PA.1 — ACQUISITION OFFER
 [↑ Public Acts](#syndicate-public-acts)
@@ -8411,6 +8561,142 @@ SYN.PA.2 = Card(
     },
     design_note  = "Persistent economic leverage PA. 2 Capital placed as physical escrow under DividendMarker on district. At next Upkeep Step 5: Dominant faction claims it. If no Dominant (Contested or all Absent): marker stays, recheck next Upkeep. Quarter end: Syndicate recovers unclaimed escrow. Voluntary withdrawal: 1 Mandate public declaration. DividendMarker is a new component — Art 02 registration required.",
     arbiter_note = "Beat 4: place DividendMarker on district with 2 Capital tokens as physical escrow. Syndicate +1 PS. At each Upkeep Step 5 while marker present: check for Dominant in district. If Dominant: transfer 2 Capital to that faction; remove marker. If Contested or Absent: marker remains for next Upkeep. Phase 21: return unclaimed escrow to Syndicate. Voluntary withdrawal: Syndicate declares to ARBITER, pays 1 Mandate; escrow returned.",
+)
+```
+
+---
+
+### SYN.PA.3 — DATA ACQUISITION
+[↑ Public Acts](#syndicate-public-acts)
+
+#### Design Rationale
+Syndicate publicly demands a target faction's Intel Token count and offers to purchase them. The demand is a guess — N is committed at §9.2 Public Declaration. ElectPlayer resolves publicly at Beat 4 — target faction responds at the table. Three resolution paths: (1) trade — N tokens transfer to Syndicate, card discards; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. As Permanent, the card acts as a standing React: the first time target faction places a PA with a non-blank Target Profile at §9.2, Syndicate replaces that Target Profile with one they fill in, then card discards. If target avoids targeted PAs for the rest of the Quarter, the card expires — the threat IS the constraint. Verbal offer is unenforceable; the coercive frame is intentional: this is extortion with a commercial label.
+
+Narrative logic for the decline effect: declining a Syndicate offer in public does not end the relationship — it shifts the leverage. The Syndicate has already demonstrated they know approximately what the target is holding. Refusing to deal signals that the intel position is worth protecting. Syndicate's response: *fine — then we determine how you use it publicly.* The next targeted public act belongs to them. "Control comes from positioning early" — the decline transfers that positioning from the information layer to the target's submission layer.
+
+#### Card Story
+A Syndicate representative rises at Beat 4 and addresses the table: "We believe you hold [N] intelligence assets. We are prepared to acquire them at our stated consideration. You may accept our terms, demonstrate you cannot meet them, or decline." The table waits for the answer.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Public coercion for intel count disclosure; fills Information\|Reveal\|IntelTokensHeld Syndicate gap; distinct from covert intel gathering (GHO.CA.x); PA-layer — act is the declaration, not the knowledge | Art 00 §7 |
+| Voice fit | ✓ | FactionSpecific Syndicate; full perspectives block; verbal offer framing is on-voice | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only; Capital(1) cost; intel count as transactional commodity; "control comes from positioning early" — Permanent React transfers positional leverage on decline | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Reveal/IntelTokensHeld — surfacing private count via public ElectPlayer; count is information content (not token board position = Economy) | Art 04b §4, §5 |
+| Balance | ⚠ | Permanent React potency (PA Target Profile corruption) untested — flag for doctrine review | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent on decline path; accept/cannot-meet paths discard at Beat 4; React fires once then card discards; Quarter-end expiry if React never fires | — |
+| Persistence | ✓ | Permanent model applied correctly; persistence_condition clear; card-as-condition sits in Syndicate PA area face-up | Art 04 §6 |
+| Trigger validity | ✓ | React trigger: PA with non-blank Target Profile placed at §9.2 Public Declaration — publicly observable (P5) | Art 04 §5 P5 |
+| Portrait validity | ✓ | flat entries only; submitter-bounded (Syndicate, Network, Directorate); no direct Portrait track shift in effect fields; Automatic resolution — no failcrit | Art 04 §6.2 |
+| Supported by zones | ✓ | Faction Resolution Grid (Art 01/02); faction terminal (Intel Tokens held behind screen — faction-private) | Art 01 §6–§7 |
+| Supported by components | ✓ | Intel Token (Art 02 §9); Target Profile with declared-parameters line (Art 02 v2.4 — S111); Faction Resolution Grid (Art 02 §5) | Art 02 §5, §8, §9 |
+| Supported by game procedure | ✓ | Beat 4 ElectPlayer: publicly resolved at table — target declares trade, show, or decline openly; standard PA resolution (Art 03 §9.4). React framework (Art 03 §18) covers Permanent persistence_effect; table enforces React timing; no new procedure needed | Art 03 §9.4; §18 |
+| Data schema validation | ✓ | All fields populated per §6.1/§6.2 | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Three paths (accept / cannot-meet / decline) — each has exactly one outcome; no branching within paths; Permanent React fires once then discards | Art 04 §5 P27 |
+
+#### Outstanding Issues
+
+- **Balance:** Permanent React effect (Target Profile replacement on next targeted PA) has no playtesting baseline. Monitor in doctrine review (04-n88).
+- **Consideration non-fulfillment (design note — non-blocking):** Consideration is a verbal offer written on the TP declared-parameters line; it is not held in escrow. If Syndicate cannot deliver at sub-case A, the exchange fails and the card stays Permanent. Bluff mechanic is intentional — Syndicate bears public failure risk. Ruling: sub-case A fails → card stays Permanent (L234).
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | ⚠ | |
+
+*v0.1 — S111: new card, fills Information\|Reveal\|IntelTokensHeld gap. Permanent React model. Issues Resolved pending doctrine review (04-n88).*
+
+```python
+SYN.PA.3 = Card(
+    card_id  = "SYN.PA.3",
+    version  = "v0.1",
+    name     = "Data Acquisition",
+    tagline  = "We know approximately what you're holding. We're giving you the chance to make this a transaction.",
+    type     = PublicAct,
+    subtype  = FactionSpecific,
+    faction  = Syndicate,
+
+    layer    = Information,
+    function = Reveal,
+    subject  = IntelTokensHeld,
+
+    beat         = 4,
+    resolution   = Automatic,
+    threshold    = None,
+    ring_mod     = None,
+    doctrine_mod = None,
+    outcome_type = ElectPlayer,
+
+    target_district = None,
+    target_faction  = faction(any, not=Syndicate),
+    target_object   = IntelTokensHeld(count=N_declared),
+    declared_params = (
+        N             = int,                         # tokens requested
+        consideration = verbaloffer(faction(acting)), # free-text: Capital | ModifierCard(named) | any combination
+        # both written on TP declared-parameters line at §9.2 Public Declaration
+    ),
+
+    affinity    = None,
+    restriction = None,
+    cost        = Capital(1),
+    boost       = None,
+
+    on_accept  = (
+        # sub-case A — trade: bilateral exchange
+        consideration.move(faction(acting), faction(target)),          # Syndicate pays
+        IntelToken(N_declared).move(faction(target).terminal,
+                                    faction(acting).terminal),         # target pays
+        # if Syndicate cannot fulfill consideration: exchange fails; card stays Permanent
+        # card → PA discard only if both transfers complete
+
+        # sub-case B — show: target voluntarily reveals all held Intel Tokens face-down;
+        # count visible, content private; no transfer; tokens returned to terminal
+        # card → PA discard (information goal met)
+    ),
+
+    on_decline = faction(acting).standing -= 2,
+    # full refusal — no reveal, no trade; card → Permanent; stays in Syndicate PA area
+
+    persistence           = Permanent,
+    persistence_condition = NOT (Quarter.ended OR react_fired OR terms_accepted),
+    # applies on decline path only; sub-case A (completed) and sub-case B both discard at Beat 4
+    # terms_accepted: target completes trade OR reveals all tokens face-down (count public)
+    # at any point while card is active — either clears card
+
+    persistence_effect    = React(
+        trigger = faction(target).PA(target_profile != None).placed_at(§9_2_0),
+        effect  = target_profile.replace(Syndicate.written),
+        on_fire = SYN_PA_3 → faction_PA_discard,
+    ),
+    # While Permanent: when target faction places any PA with non-blank Target Profile
+    # at §9.2 Public Declaration (§9.2.0), card fires as React — Syndicate immediately
+    # replaces that Target Profile with one they fill in. SYN.PA.3 → PA discard.
+    # Table enforces; no ARBITER tracking required.
+    # If target submits no PA with Target Profile this Quarter: card expires Quarter end.
+    # PAs without Target Profile (e.g., Floor Act) do not trigger — React does not fire.
+
+    portrait = {
+        Syndicate:   PortraitEntry(flat=+1),
+        Network:     PortraitEntry(flat=-1),
+        Directorate: PortraitEntry(flat=-1),
+    },
+
+    narrative = "The offer is made in public, which is unusual for the Syndicate. They prefer quiet transactions. This one is designed to be loud.",
+
+    perspectives = {
+        Syndicate:   "Intelligence is a commodity. We're establishing the market price and giving them the chance to sell at it.",
+        Ghost:       "The offer is a probe. The response — whatever form it takes — is the data.",
+        Network:     "This is how private information becomes public leverage. This is exactly what we exist to counter.",
+        Directorate: "A public extortion offer dressed as commerce. We note the terms and the response.",
+        Guild:       "Whatever they're buying, they think they need it. That tells us something about their position.",
+    },
+
+    design_note  = "Three resolution paths at Beat 4 ElectPlayer: (1) trade — bilateral exchange: consideration moves Syndicate→target, N tokens move target→Syndicate; card discards only if both transfers complete; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards — information goal met; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. Sub-cases 1 (completed) and 2 both satisfy the card; only 3 triggers the stake. Non-fulfillment edge case (sub-case A, Syndicate cannot deliver consideration): exchange fails; card stays Permanent — Syndicate set the terms and failed to meet them. Bluff mechanic is intentional: consideration is a verbal offer written on TP declared-parameters line, not held in escrow; Syndicate bears public failure risk. Show path: target voluntarily reveals count — not compelled, consistent with GR 10.1 (ElectPlayer creates stake; choice is player's). PERMANENT PHASE is fully table-enforced: card is face-up in Syndicate PA area; table observes when target places a PA with Target Profile at §9.2.0 and allows Syndicate to replace it (React); table observes if target accepts at any point (trade or show) and card is cleared. No ARBITER involvement required at any stage — Beat 4 ElectPlayer is public; Permanent card is table-enforced. Target may accept at any time to clear the card. Threat is the constraint: target must deal with Syndicate or avoid targeted PAs for the rest of the Quarter. N and consideration declared at §9.2 on TP declared-parameters line (Art 02 v2.4).",
 )
 ```
 

@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 110 complete | S111 next | Updated: 2026-06-20**
+**Session 111 complete | S112 next | Updated: 2026-06-21**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -7,6 +7,37 @@ Read full files only when deep work requires it.
 ---
 
 ## Current Focus
+
+### S111 Accomplishments ✅
+
+**Syndicate gap cards — all three complete (Tier 1)**
+
+- **SYN.CA.11 Redline** ✅ — Information|Corrupt|AccordAgreement. d100 threshold 50. Alters numeric/ordinal fill-in on active Accord form; ARBITER makes physical alteration per Art 06 §9.10 Alter/Terms. declared_params: clause + new value (TP declared-parameters line). Design Pass ✓ / Issues Resolved ✓.
+- **SYN.PA.3 Data Acquisition** ✅ — Information|Reveal|IntelTokensHeld. ElectPlayer Beat 4. declared_params: N (tokens requested) + consideration (verbal offer — free text). Three paths: trade (bilateral exchange, card discards) / show (reveal all tokens face-down, card discards) / decline (Syndicate −2 PS, card → Permanent). Permanent React: when target places PA with Target Profile at §9.2.0, Syndicate replaces it; card discards. Table-enforced. L234: consideration non-fulfillment → card stays Permanent (bluff mechanic intentional). Design Pass ✓ / Issues Resolved ⚠ (balance 04-n88).
+- **SYN.CA.10 Accord Transfer** ✅ — Economy|Corrupt|AccordCard. d100 threshold 50. Replaces named party on active Accord form; ARBITER announces publicly at Beat 3. Crit success: incoming party elects one numeric term change at table. No consent required (Art 06 §9.10 L205). Outgoing/incoming party may be Syndicate. Design Pass ✓ / Issues Resolved ⚠ (balance review).
+
+**Art 02 v2.4 signed off — L233 (S111)**
+- DB:48 Target Profile declared parameters field added (free-form text — additional blank line)
+- Enables SYN.CA.11, SYN.CA.10, and future declaration-requiring cards
+
+**PM05 04-n106 added:** Art 04 §6 declared_params field + card sweep (gate: none)
+
+**Last 3 locked decisions:** L234 (SYN.PA.3 — consideration non-fulfillment → card stays Permanent) · L233 (Art 02 v2.4 — Target Profile declared parameters) · L232 (Art 03 v4.10 — Target Profile face-down + VM-xx lifecycle)
+
+**Pending sign-offs:** Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Design Pass ✓ — Issues Resolved ⚠ (04-n88 doctrine review gate)
+
+**Artifacts updated S111:** Art 02 (v2.4 ✅ L233) · Art 04 (v0.9.42 — SYN.CA.10/11/PA.3 design passes) · Art 04b (§5.2 +SYN.CA.11/PA.3; §8 Syndicate summary updated) · PM02 (L233–L234) · PM03 (Art 02/04 rows) · PM05 (04-n106)
+
+### Priority Order (S112) ← CURRENT
+
+**Tier 1 — Ghost covert op design pass continuation**
+- GHO.CA.7 Station · GHO.CA.8 Full Take · GHO.CA.9 SCIF · GHO.CA.10 Flip · GHO.CA.12 Source Substitution — design passes needed
+- GHO.CA.13/14 Backdate/Field Verification — BLOCKED, fundamental redesign required
+- GHO.CA.11 Signals Analysis — BLOCKED pending Art 06.x Classified Directive procedure
+
+**Tier 2 — Syndicate card set issues resolution** (gate: 04-n88 doctrine review)
+
+---
 
 ### S109–S110 Accomplishments ✅
 
@@ -26,23 +57,9 @@ Read full files only when deep work requires it.
 **Art 02 v2.3 signed off — L231 (S109)**
 - DB:48 Target Profile recorded_fields + Gameplay Requirements expanded: target object (named component) added as valid field type
 
-**Last 3 locked decisions:** L232 (Art 03 v4.10 — Target Profile face-down + VM-xx lifecycle) · L231 (Art 02 v2.3 — Target Profile target-object field) · L230 (Art 04b §4/§5 sign-off scope policy)
+**Last 3 locked decisions (S109–S110):** L232 (Art 03 v4.10) · L231 (Art 02 v2.3) · L230 (Art 04b §4/§5 sign-off scope policy)
 
-**Pending sign-offs:** Ghost card set — 04-n50 (gates: 04-n54 design pass complete + 04-n55 issues resolved + 04-n88 doctrine review)
-
-**Artifacts updated S109–S110:** Art 03 (v4.10 ✅ L232) · Art 02 (v2.3 ✅ L231, S109) · Art 04 (v0.9.42 — GHO.PA.3–5 + GHO.MOD.1 design passes) · Art 04b (§5.2/§7/§8.1 updated)
-
-### Priority Order (S111) ← CURRENT
-
-**Tier 1 — Syndicate gaps** (deferred from S106)
-- Information|Corrupt|AccordAgreement — Syndicate-specific numeric alteration of Accord terms; no card exists
-- Information|Reveal|IntelTokensHeld — count disclosure + purchase offer mechanic
-- Accord Transfer: Economy|Corrupt|AccordCard (L227); sign-off deferred pending Art 06
-
-**Tier 2 — Ghost card design pass continuation**
-- GHO.CA.7 Station / GHO.CA.8 Full Take / GHO.CA.9 SCIF / GHO.CA.10 Flip / GHO.CA.12 Source Substitution — design passes needed
-- GHO.CA.13/14 Backdate/Field Verification — BLOCKED, fundamental redesign required
-- GHO.CA.11 Signals Analysis — BLOCKED pending Art 06.x Classified Directive procedure
+**Artifacts updated S109–S110:** Art 03 (v4.10 ✅ L232) · Art 02 (v2.3 ✅ L231) · Art 04 (v0.9.41) · Art 04b (§5.2/§7/§8.1 updated)
 
 ---
 

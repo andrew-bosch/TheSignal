@@ -1,8 +1,8 @@
 # 02 — Components
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.3
-**Status:** ✅ Signed Off — S109 (L231)
+**Version:** 2.4
+**Status:** ✅ Signed Off — S111 (L233)
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian
 **DB Anchor:** `the_signal_db.component` — canonical component registry. Names and IDs from that registry are authoritative.
 **DB Sync:** Changes to component schema design or any component entry fields must be coordinated with corresponding DB updates. Art 02 and `the_signal_db` must remain in sync.
@@ -877,7 +877,7 @@ Physical infrastructure of the covert dispatch and return channel — submission
 
 **Narrative Anchor:** N/A — operational tracking record; no narrative element.
 
-**Gameplay Requirements:** Must record one or more of: target faction, target district, target object (named component — e.g., Broadcast Card), operation type. Completed by the submitting faction before submission. Erased or disposed of after use — physical design pending Art 08.
+**Gameplay Requirements:** Must record one or more of: target faction, target district, target object (named component — e.g., Broadcast Card), operation type, declared parameters (free-form text — additional blank line for card-specific declarations, e.g., target clause and new value for SYN.CA.11 Redline). Completed by the submitting faction before submission. Erased or disposed of after use — physical design pending Art 08.
 
 **Metadata:**
 | Field | Value |
@@ -894,7 +894,7 @@ Physical infrastructure of the covert dispatch and return channel — submission
 | `max_placement_ref` | N/A |
 | `movement_path` | a) Covert: Faction Terminal (blank) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → ARBITER Covert Resolution Grid (DB: 105) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal : covert op resolution; b) PA: Faction Terminal (blank) → Faction Resolution Grid (DB: 88) → Faction Terminal : PA or standing effects resolution |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal; Corrupt |
-| `recorded_fields` | One or more of: target faction; target district; target object (named component — e.g., Broadcast Card); operation type |
+| `recorded_fields` | One or more of: target faction; target district; target object (named component — e.g., Broadcast Card); operation type; declared parameters (free-form text — additional blank line for card-specific declarations) |
 
 ---
 
