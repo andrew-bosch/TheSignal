@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.42 Draft  
+**Version:** 0.9.43 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-06-20  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -3544,13 +3544,13 @@ GUI.PA.2 = Card(
 | [GHO.CA.3](#c18-dossier-breach) | Dossier Breach |
 | [GHO.CA.4](#c19-deep-cover) | Deep Cover |
 | [GHO.CA.5](#c20-misdirection) | Misdirection |
-| [—](#ghost-station) | Station |
-| [—](#ghost-full-take) | Full Take |
-| [—](#ghost-scif) | SCIF |
-| [—](#ghost-flip) | Flip |
+| [GHO.CA.7](#ghost-station) | Station |
+| [GHO.CA.8](#ghost-full-take) | Full Take |
+| [GHO.CA.9](#ghost-scif) | SCIF |
+| [GHO.CA.10](#ghost-flip) | Flip |
 | [—](#ghost-signals-analysis) | Signals Analysis |
 | [—](#ghost-synthesize) | Synthesize |
-| [—](#ghost-source-substitution) | Source Substitution |
+| [GHO.CA.12](#ghost-source-substitution) | Source Substitution |
 | [—](#ghost-backdate) | Backdate |
 | [—](#ghost-field-verification) | Field Verification |
 
@@ -3930,10 +3930,10 @@ GHO.CA.5 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost's dedicated faction-specific gather platform. Distinct from STD.CA.5 Gather (standard, adjacency-exempt, 1 token yield) by higher yield (2 tokens on success) at higher cost (2 Findings). STD.CA.5 is Ghost's remote general-purpose sweep; Station is a deployed collection platform sustaining coverage against a named faction over a Quarter. Two deck copies make Station Ghost's primary Intel generation card. No adjacency restriction — consistent with GHO.CA.1-GHO.CA.5 pattern; Design Pillar [04-n6 pending] clarification is a separate item (PM05 04-n6).
+Ghost's dedicated faction-specific gather platform. Distinct from STD.CA.5 Gather (standard, adjacency-exempt, 1 token yield) by higher yield (2 tokens on success) at higher cost (2 Findings). STD.CA.5 is Ghost's remote general-purpose sweep; Station is a deployed collection platform sustaining coverage against a named faction over a Quarter. Two deck copies make Station Ghost's primary Intel generation card. Threshold 55 — above STD.CA.5 base (50), reflecting Station's reliability as a sustained platform. Adjacency restriction applies per 04-n6 direction: a deployed node requires physical proximity, unlike Ghost's analytical ops (GHO.CA.1–5).
 
 #### Card Story
-⚠ Story pending 04-n79.
+Ghost installs a passive collection node in the target faction's operational district. A sweep goes looking; Station waits. By Quarter's end, the target has brought everything past it at least once.
 
 **Design checklist:**
 
@@ -3941,36 +3941,35 @@ Ghost's dedicated faction-specific gather platform. Distinct from STD.CA.5 Gathe
 |----------|------|------|--------------|
 | Action fit | ✓ | Dedicated gather platform — Ghost's high-yield intelligence collection card; distinct from STD.CA.5 (standard, 1 token) by sustained multi-token output | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Ghost perspective by design — Station as deployed platform, not remote sweep | Art 00 §7 |
-| Doctrine alignment | ✓ | Ghost only; 2 Findings cost for 2-token yield reflects sustained collection investment; threshold 45 vs STD.CA.5 50 — offset for higher cost (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Ghost only; 2 Findings cost for 2-token yield reflects sustained collection investment; threshold 55 — above STD.CA.5 base (50), Station is a reliable sustained platform | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — Ghost's primary Intel generation card beyond standard STD.CA.5 | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Information/Add/IntelToken — same taxonomy as STD.CA.5; faction-specific variant with higher yield | Art 04b §4, §5 |
-| Balance | ✓ | Threshold 45, cost 2 Findings, yield 2 tokens — calibration vs STD.CA.5 outstanding (Outstanding Issue) | Art 02 §6–§7 |
+| Balance | ✓ | Threshold 55, cost 2 Findings, yield 2 tokens — calibrated above STD.CA.5 base; deferred full balance validation to playtest | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: Intel tokens dispatched at Beat 3; durable resource, no card-level duration | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
 | Portrait validity | ✓ | Ghost +1 submitter — collection operations align with Ghost intelligence doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.any; no adjacency restriction per Design Pillar [04-n6 pending] outstanding (Outstanding Issue) | Art 01 §6–§7 |
+| Supported by zones | ✓ | Adjacency restriction applied per 04-n6 direction — deployed collection node requires Ghost presence in target district or adjacent; no exemption (unlike analytical ops) | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (Art 02 §12); Findings cost; no new components | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 3 d100 resolution; tokens dispatched to Ghost case on success; failcrit NotificationSlip per standard | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ✓ | 04-n70 ✅ S95 | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story written S112 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
-- **Threshold calibration:** 45 vs STD.CA.5's 50 — offset for higher cost and no adjacency exemption. Confirm during balance pass.
-- **Design Pillar [04-n6 pending] clarification:** no adjacency restriction applied; pending PM05 04-n6 rule clarification.
+None.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
 
-*Draft S59 — design pass pending*
+*Issues Resolved S112*
 
 ```python
-Card(
-    id=TBD,  version="v1.0",  # ID pending PM05 04-n1
+GHO.CA.7 = Card(
+    card_id = "GHO.CA.7",  version = "v1.1",
     name    = "Station",
     tagline = "Deploy a sustained intelligence collection platform against a named faction.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -3979,7 +3978,7 @@ Card(
 
     beat            = 3,
     resolution      = d100,
-    threshold       = 45,
+    threshold       = 55,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
     trigger         = None,
@@ -3993,10 +3992,10 @@ Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
-    affinity    = None,
-    restriction = None,
-    cost        = resource.faction(acting).findings * 2,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = district(self|adjacent).faction(acting).presence > 0,
+    cost            = resource.faction(acting).findings * 2,
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * 2,
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),  # +1 = 3 total
@@ -4007,7 +4006,7 @@ Card(
 
     narrative    = "Every asset leaves a signal. Ghost listens until the signal becomes a pattern.",
     perspectives = {Ghost: "A station does not move. It waits until the target walks past it again."},
-    design_note  = "Ghost's dedicated gather platform. Higher yield than STD.CA.5 (2 tokens vs 1 on success) at double Findings cost. No adjacency restriction — consistent with GHO.CA.1-GHO.CA.5 pattern; Design Pillar [04-n6 pending] refinement pending. Cards stack: STD.CA.5 and Station may both target same faction in same Quarter.",
+    design_note  = "Ghost's dedicated gather platform. Higher yield than STD.CA.5 (2 tokens vs 1 on success) at double Findings cost. Threshold 55 calibrated above STD.CA.5 base (50) — Station is a reliable sustained platform. Adjacency restriction per 04-n6: deployed node requires Ghost presence in target district or adjacent. Cards stack: STD.CA.5 and Station may both target same faction in same Quarter.",
 )
 ```
 
@@ -4017,10 +4016,10 @@ Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Burst gather for pre-loading multi-Quarter intelligence sequences. Single copy representing a total-collection operation: Ghost declares n Findings at submission, receives 2n Intel tokens on success (3n on crit). The slot commitment plus n Findings is the bet — fail returns nothing. Variable cost makes the card self-scaling: a small Full Take (n=1) is conservative; a large Full Take (n=3+) pre-loads an entire SCIF/Flip sequence. Reserved for mid-to-late game plays when Ghost has Findings reserves to invest. Singleton enforces scarcity.
+Burst gather for pre-loading multi-Quarter intelligence sequences. Single copy representing a total-collection operation: Ghost declares n Findings at submission, receives 2n Intel tokens on success (3n on crit). The slot commitment plus n Findings is the bet — fail returns nothing. Variable cost makes the card self-scaling: a small Full Take (n=1) is conservative; a large Full Take (n=3+) pre-loads an entire SCIF/Flip sequence. Reserved for mid-to-late game plays when Ghost has Findings reserves to invest. Singleton enforces scarcity. Threshold 40 is intentional: variable cost and fail=nothing are the risk floor; low threshold is the compensating upside. Adjacency restriction applies per 04-n6 direction — field collection op requires Ghost presence in target district or adjacent.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Ghost counts the Findings and commits: all of it against one target, declared before the case is sealed. The return is proportional. The loss, if it comes, is total — investment gone, target notified.
 
 **Design checklist:**
 
@@ -4028,37 +4027,35 @@ Burst gather for pre-loading multi-Quarter intelligence sequences. Single copy r
 |----------|------|------|--------------|
 | Action fit | ✓ | Burst intelligence collection — pre-loads multi-Quarter sequences (SCIF, Flip, Signals Analysis); singleton scarcity enforces mid-to-late game use | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Ghost perspective by design — maximum-yield operation as Ghost doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Ghost only; variable cost scales with investment; singleton forces strategic commitment; no adjacency restriction consistent with GHO.CA.1-GHO.CA.5 pattern | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Ghost only; variable cost scales with investment; singleton forces strategic commitment; adjacency restriction applied per 04-n6 | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — burst intelligence platform; no Standard equivalent | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Information/Add/IntelToken — higher-yield variant of Station/STD.CA.5 pattern | Art 04b §4, §5 |
-| Balance | ✓ | Variable cost n × 2 yield (3n crit) — singleton scarcity limits use; Intel holding guideline (4, not HARD) tolerates high-n plays per Outstanding Issue; fail = nothing is the correct floor | Art 02 §6–§7 |
+| Balance | ✓ | Variable cost n × 2 yield (3n crit) — singleton scarcity limits use; Intel holding guideline (4, not HARD) tolerates high-n plays; fail=nothing is the correct floor; threshold 40 confirmed | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: Intel tokens dispatched at Beat 3; durable resource, no card-level duration | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
 | Portrait validity | ✓ | Ghost +1 submitter — maximum-yield collection aligns with Ghost intelligence doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.any; no adjacency restriction per Design Pillar [04-n6 pending] outstanding | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken (Art 02 §12); Findings cost; variable n Beat 0 validation outstanding (Outstanding Issue) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 0: ARBITER records declared n, validates n Findings present (Art 04 §5 P20) — procedure confirmation outstanding (Outstanding Issue) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by zones | ✓ | Adjacency restriction applied per 04-n6 — field collection op requires Ghost presence in target district or adjacent | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken (Art 02 §12); Findings cost; n validated at Beat 0 via arbiter_note (Art 04 §5 P20) | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Beat 0: arbiter_note specifies ARBITER records declared n and validates Findings present; Beat 3 resolution per Art 03 §9, §11 | Art 03 §9, §11 |
+| Data schema validation | ✓ | 04-n70 ✅ S95 | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story written S112 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
-- **Variable cost validation:** ARBITER must record declared n at Beat 0 and verify n Findings physically present. Confirm Art 03 Beat 0 procedure covers this or flag for addition.
-- **Intel holding guideline:** high-n Full Take may produce tokens exceeding the 4-token guideline. Guideline is not HARD — excess noted, not blocked. Confirm intent.
-- **Design Pillar [04-n6 pending] clarification:** no adjacency restriction applied; pending PM05 04-n6.
+None.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
 
-*Draft S59 — design pass pending*
+*Issues Resolved S112*
 
 ```python
-Card(
-    id=TBD,  version="v1.0",  # ID pending PM05 04-n1
+GHO.CA.8 = Card(
+    card_id = "GHO.CA.8",  version = "v1.1",
     name    = "Full Take",
     tagline = "Saturate collection against a single target — maximum yield from a single operation.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4081,10 +4078,10 @@ Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
-    affinity    = None,
-    restriction = None,
-    cost        = resource.faction(acting).findings * n,  # n declared at submission; n >= 1; all n Findings physically present (Art 04 §5 P20)
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = district(self|adjacent).faction(acting).presence > 0,
+    cost            = resource.faction(acting).findings * n,  # n declared at submission; n >= 1; all n Findings physically present (Art 04 §5 P20)
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (n * 2),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * n,   # +n = 3n total
@@ -4095,7 +4092,7 @@ Card(
 
     narrative    = "Some intelligence is gathered patiently. Some is taken all at once.",
     perspectives = {Ghost: "The take was complete. Everything they transmitted this Quarter. We have it."},
-    design_note  = "Singleton. Variable cost: Ghost declares n at submission; cost = n Findings; success = 2n Intel tokens; crit success = 3n. Fail = nothing. ARBITER validates n Findings present at Beat 0. NOT Deep Cover — GHO.CA.4 is Deep Cover. Intel holding guideline is 4 (not HARD); high-n plays may exceed guideline.",
+    design_note  = "Singleton. Variable cost: Ghost declares n at submission; cost = n Findings; success = 2n Intel tokens; crit success = 3n. Fail = nothing. Threshold 40 confirmed — variable cost and fail=nothing are sufficient risk; low threshold is the compensating upside. Adjacency restriction per 04-n6. Intel holding guideline is 4 (not HARD); high-n plays may exceed guideline.",
     arbiter_note = "At Beat 0: record declared n; validate n Findings present in case. At Beat 3: success = dispatch 2n IntelToken(faction=target) to Ghost's case; crit success = dispatch 3n; fail = nothing; crit fail = NotificationSlip to target.",
 )
 ```
@@ -4109,7 +4106,7 @@ Card(
 Converts existing faction-keyed Intel into future modifier capability. Spends one Intel token; ARBITER records the target faction's current structure block count in a SCIF Record card placed in Ghost's Dispatch Case. At Debrief, Ghost draws modifier cards equal to that count. Ghost is always building next Quarter's hand rather than spending this one. Yield scales with target development: SCIF against a lightly-built faction early game is modest; against a heavily-built Directorate or Guild late game it fills Ghost's modifier hand. The deferred payoff creates a planning horizon that no other faction can directly interrupt.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Ghost cashes one piece of intelligence for something more durable. ARBITER records how deeply the target has built — and next Quarter, that depth becomes Ghost's tactical hand.
 
 **Design checklist:**
 
@@ -4128,8 +4125,8 @@ Converts existing faction-keyed Intel into future modifier capability. Spends on
 | Supported by zones | ✓ | target_district = None — faction-targeted operation; no district required | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken cost; DebriefActionCard (type, DB:100) / SCIFRecord (DA-01) — registered in 00b §4 and Art 02 §13 | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | SCIFRecord instantiated at Beat 3 (Art 03 §9.4); Debrief draw procedure in Art 03 §11; DA-01 fields and procedure in Art 04 §12a | Art 03 §9, §11; Art 04 §12a |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ✓ | 04-n70 ✅ S95 | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story written S112 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
@@ -4142,8 +4139,8 @@ Converts existing faction-keyed Intel into future modifier capability. Spends on
 | Status | ✓ | ✓ S94 | |
 
 ```python
-Card(
-    id=TBD,  version="v1.0",  # ID pending PM05 04-n1
+GHO.CA.9 = Card(
+    card_id = "GHO.CA.9",  version = "v1.1",
     name    = "SCIF",
     tagline = "Turn intelligence into operational assets.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4191,10 +4188,10 @@ Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Economic arm of Ghost's intelligence pipeline. One faction-keyed Intel token consumed; ARBITER places 2 of the target faction's native resource in Ghost's Dispatch Case at Beat 3. Resources return at month-end with normal case contents — no deferred procedure required. Flip is the unlock for Ghost's higher-tier cards, which carry a secondary cost of Flip-acquired faction resources (the "target faction's assets turned against them" design direction, per GHO.CA.2 model). Layer is Economy per L175: primary effect is resource acquisition despite the Intel gating.
+Economic arm of Ghost's intelligence pipeline. One faction-keyed Intel token consumed; ARBITER places 2 of the target faction's native resource in Ghost's Dispatch Case at Beat 3. Resources return at month-end with normal case contents — no deferred procedure required. Flip is the unlock for Ghost's higher-tier cards, which carry a secondary cost of Flip-acquired faction resources (the "target faction's assets turned against them" design direction, per GHO.CA.2 model). Layer is Economy per L175: primary effect is resource acquisition despite the Intel gating. Copy model confirmed: target's resource pool is not reduced. Quantity 2 confirmed as working value; final calibration deferred to playtest. Adjacency restriction applies per 04-n6 — field collection op requires Ghost presence in target district or adjacent.
 
 #### Card Story
-⚠ Story pending 04-n79.
+One Intel token, two of their resources. The target's reserves are untouched — Ghost didn't take from them. Ghost learned where the tap was.
 
 **Design checklist:**
 
@@ -4202,37 +4199,35 @@ Economic arm of Ghost's intelligence pipeline. One faction-keyed Intel token con
 |----------|------|------|--------------|
 | Action fit | ✓ | Economic arm of Ghost's intelligence pipeline — converts faction-keyed Intel into target faction's native resource; unlock for higher-tier Ghost cards | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Ghost perspective by design — resource redirection as intelligence exploitation | Art 00 §7 |
-| Doctrine alignment | ✓ | Ghost only; IntelToken cost enforces intelligence pipeline dependency; resource quantity placeholder pending Art 00c calibration (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Ghost only; IntelToken cost enforces intelligence pipeline dependency; quantity 2 confirmed (playtest calibration) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence-gated resource acquisition is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Add/FactionNativeResource — Layer = Economy per L175; primary effect is resource acquisition despite Intel gating (Outstanding Issue for taxonomy review) | Art 04b §4, §5 |
-| Balance | ✓ | Quantity 2 is a placeholder — calibrate against Art 00c; target does NOT lose resources (copy, not transfer — Outstanding Issue for confirmation) | Art 02 §6–§7 |
+| Taxonomy fit | ✓ | Economy/Add/FactionNativeResource — Layer = Economy per L175 confirmed; copy model, not transfer | Art 04b §4, §5 |
+| Balance | ✓ | Quantity 2 confirmed as working value; playtest calibration item. Copy model confirmed — target pool unchanged | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: resources dispatched at Beat 3; available at month-end via normal case return (Art 04 §5 P19 compliant) | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — Automatic resolution | — |
 | Portrait validity | ✓ | Ghost +1 submitter — resource acquisition via intelligence pipeline aligns with Ghost doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.any | Art 01 §6–§7 |
+| Supported by zones | ✓ | Adjacency restriction applied per 04-n6 — field collection op requires Ghost presence in target district or adjacent | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken cost; target faction native resource type delivered to case; no new components | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Resources in Dispatch Case returned at month-end per normal procedure — no new Art 03 step required | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ✓ | 04-n70 ✅ S95 | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story written S112 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
-- **Resource quantity:** 2 is a placeholder. Adjust after Art 00c economy calibration.
-- **Target does not lose resources:** Flip is a copy/redirect, not a transfer. Target faction's resource pool is not reduced. Confirm this is the intended model.
-- **Layer = Economy:** Primary effect is resource acquisition; gated by Intel token. Per L175 correct, but confirm during taxonomy review.
+None.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
 
-*Draft S59 — design pass pending*
+*Issues Resolved S112*
 
 ```python
-Card(
-    id=TBD,  version="v1.0",  # ID pending PM05 04-n1
+GHO.CA.10 = Card(
+    card_id = "GHO.CA.10",  version = "v1.1",
     name    = "Flip",
     tagline = "Redirect a target faction's operational resources through Ghost supply channels.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4255,10 +4250,13 @@ Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
-    affinity    = None,
-    restriction = faction(acting).intel_tokens(faction=faction(target)) >= 1,
-    cost        = IntelToken(faction=faction(target)) * 1,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = (
+        faction(acting).intel_tokens(faction=faction(target)) >= 1 and
+        district(self|adjacent).faction(acting).presence > 0
+    ),
+    cost            = IntelToken(faction=faction(target)) * 1,
 
     success     = game.dispatch(faction(acting), resource.faction(target).native * 2),
     successcrit = None,
@@ -4269,7 +4267,7 @@ Card(
 
     narrative    = "Ghost does not steal. Ghost redirects what was already in motion.",
     perspectives = {Ghost: "Their resource. Our pipeline. They built something worth taking."},
-    design_note  = "Layer=Economy per L175 — primary effect is resource acquisition despite intelligence gating. Resources dispatched to Ghost's Dispatch Case at Beat 3; returned to Ghost at month-end with normal case contents. Target faction does NOT lose resources. Quantity 2 is a design placeholder — calibrate against Art 00c. Higher-tier Ghost cards carry secondary cost = faction(target).native consumed on play (GHO.CA.2 model).",
+    design_note  = "Layer=Economy per L175 — primary effect is resource acquisition despite intelligence gating. Copy model confirmed: target faction does NOT lose resources. Quantity 2 confirmed working value; final calibration deferred to playtest. Adjacency restriction per 04-n6 (combined with Intel token restriction). Resources dispatched to Ghost's Dispatch Case at Beat 3; returned at month-end. Higher-tier Ghost cards carry secondary cost = faction(target).native consumed on play (GHO.CA.2 model).",
     arbiter_note = "At Beat 3: consume IntelToken(faction=target) from Ghost's case. Dispatch 2 units of target faction's native resource type to Ghost's Dispatch Case. Target faction's resource pool is not reduced. Resources available to Ghost at month-end with normal case return.",
 )
 ```
@@ -4445,97 +4443,89 @@ GHO.CA.6 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Intelligence falsification — alter the faction field on a held Intel token. Ghost submits the token in their dispatch case with a written instructions slip naming the new faction and the return destination (self or a named target faction). On success ARBITER makes the physical alteration and either returns the token to Ghost's case (keep mode) or discreetly delivers it to the named faction's terminal (plant mode). The planted version is a trap: the receiving faction holds an Intel token they believe is valid, which may cause them to play STD.PA.4, STD.PA.5, or NET.PA.1 against the wrong target. Fail destroys the token — botched falsification leaves unusable evidence. Fail crit leaves traces: ARBITER dispatches a NotificationSlip to the faction originally named on the token, signalling that someone attempted to manipulate a record referencing them. Ghost adjacency applies in plant mode (you must be near where the operation is being attributed). Keep mode is a self-operation on a held asset — no adjacency required.
+Pure utility card — re-keys a held Intel token from its current faction attribution to a different faction. Ghost submits a token in their dispatch case; ARBITER alters the faction field and returns it. Quarter field unchanged; freshness carries over. Cost is the CA slot — no Findings spent. The tradeoff is opportunity cost: spending a covert action on re-keying rather than direct collection. Primary use: Ghost accumulates tokens on accessible targets but needs tokens keyed to specific factions to unlock higher-tier plays (SCIF, Flip, Intercept all require faction-matched tokens). Automatic — no dice, no risk.
 
-Standard equivalent: PM05 04-n15 (hired data specialist version — higher cost, lower threshold).
+Standard equivalent: PM05 04-n15.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Ghost submits a token from their case. ARBITER alters the name on it. The token returns — it now says what Ghost needs it to say.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Intelligence record falsification is Ghost's deepest operational mode — the pipeline endpoint that converts gathered intel into active deception | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — falsification as operational doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Ghost only; keep/plant dual mode reflects Ghost's operational flexibility; IntelToken restriction enforces prior collection dependency | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence manipulation is Ghost-exclusive by Principle 17; standard equivalent flagged PM05 04-n15 | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Corrupt/IntelToken (faction field) | Art 04b §4 |
-| Balance | ✓ | 2 Findings + token cost is substantial; token destroyed on fail — real risk; plant mode threat value exists even without direct use | Art 02 §6–§7 |
-| Effect duration | ✓ | Immediate: token altered and returned/planted at Beat 3; fail destroys token at Beat 3 | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None; restriction enforces Intel token presence | — |
-| Portrait validity | ✓ | Ghost +1: submitter-bounded; intelligence manipulation is core Ghost doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None; plant mode adjacency (Design Pillar [04-n6 pending]) applies only in plant mode — no zone restriction for keep mode | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken as both cost and target; instructions slip in case (written); no new physical components | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Plant mode delivery protocol and instructions slip format outstanding (Outstanding Issues) | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Action fit | ✓ | Token re-keying enables Ghost's intelligence pipeline — converts available tokens into faction-matched currency for higher-tier plays | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Ghost perspective — record alteration as operational routine | Art 00 §7 |
+| Doctrine alignment | ✓ | Ghost only; no Findings cost — CA slot is the gate; Automatic reflects Ghost's precision (no chance of failure on a technical alteration) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence record manipulation is Ghost-exclusive; standard equivalent flagged PM05 04-n15 | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Corrupt/IntelToken — alters the faction field on an existing token; Corrupt is correct (field modification of an existing component) | Art 04b §4 |
+| Balance | ✓ | Cost = CA slot only; Automatic resolution; restriction = must hold a token. Opportunity cost is the constraint | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate: token altered and returned at Beat 3; no lingering game-state marker | — |
+| Persistence | ✓ | Immediate — card fully resolved at resolution beat | Art 04 §6 |
+| Trigger validity | ✓ | N/A — Automatic; trigger = None | — |
+| Portrait validity | ✓ | Ghost +1 submitter — intelligence manipulation is core Ghost doctrine | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — no district involvement; token is held asset, faction-targeted re-key only | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken as target_object; no new physical components; quarter field preserved | Art 02 §12 |
+| Supported by game procedure | ✓ | Token submitted in case; ARBITER alters faction field at Beat 3; returns to Ghost case — covered by standard Beat 3 cleanup | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 ✅ S95 | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story written S112 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
-- **Plant mode delivery protocol:** Discreet delivery to target terminal during Beat 3 cleanup — procedure not yet defined in Art 03/07.
-- **Instructions slip format:** Confirm written slip vs. verbal declaration at Phase A for keep/plant mode and target faction name.
+None.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | ✓ | ✓ | |
+
+*Redesigned S112 — plant mode retired; Automatic resolution; cost = CA slot*
 
 ```python
-SourceSubstitution = Card(
-    id      = "Ghost-ext-TBD",  version = "v1.0",
+GHO.CA.12 = Card(
+    card_id = "GHO.CA.12",  version = "v1.0",
     name    = "Source Substitution",
-    tagline = "Falsify the faction record on a held Intel token — keep for future use or plant on a target.",
+    tagline = "Alter the faction attribution on a held Intel token.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
 
     layer    = Information,  function = Corrupt,  subject = IntelToken,
 
     beat            = 3,
-    resolution      = d100,
-    threshold       = 45,
+    resolution      = Automatic,
+    threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
     trigger         = None,
-    resolution_type = "Deceptive",
+    resolution_type = "Transactional",
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
 
-    target_district = None,  # plant mode: adjacency to target faction's operations (Design Pillar [04-n6 pending])
-    target_faction  = faction.any_or_none,  # None = keep mode; named faction = plant mode; declared at Phase A
-    target_object   = intel_token.held,     # token submitted in dispatch case
+    target_district = None,
+    target_faction  = faction.opponent,
+    target_object   = IntelToken(held, faction(acting)),
 
-    target_taxonomy=None,
-    affinity    = None,
-    restriction = faction(Ghost).holds_intel_token(count=1),
-    cost        = resource.faction(Ghost).findings * 2 + intel_token.held * 1,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = faction(acting).intel_tokens() >= 1,
+    cost            = None,
 
-    # Instructions slip in case: [new faction name] | [return: self / named faction]
-    success = (
-        arbiter.corrupt(intel_token.held, field=faction_name, value=declared_new_faction),
-        if target_faction == None:
-            arbiter.return_to_case(intel_token),         # keep mode
-        else:
-            arbiter.deliver_discreet(intel_token, target_faction),  # plant mode
-    ),
+    success     = arbiter.corrupt(target_object, field=faction_name, value=faction(target)),
     successcrit = None,
-    fail        = arbiter.destroy(intel_token),
-    failcrit    = (
-        arbiter.destroy(intel_token),
-        arbiter.dispatch(NotificationSlip, recipient=intel_token.original_faction),
-    ),
+    fail        = None,
+    failcrit    = None,
+
+    on_accept  = None,
+    on_decline = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
 
-    narrative    = "The record says what Ghost needs it to say. The question is where the record ends up.",
-    perspectives = {
-        Ghost: "The attribution is wrong. It will stay wrong. What happens next depends on who reads it.",
-    },
-    design_note  = "Intelligence falsification — faction field only. Keep mode: Ghost retains the altered token for future attribution plays. Plant mode: token delivered discreetly to target faction's terminal at Beat 3 cleanup; target holds a token they believe is valid. Fail destroys token. Failcrit additionally alerts the originally-named faction via NotificationSlip. Ghost adjacency applies only in plant mode (Design Pillar [04-n6 pending]). Standard equivalent flagged PM05 04-n15.",
-    arbiter_note = "Phase A: Ghost declares keep or plant mode and named faction (if plant). Token submitted in case with written instructions slip. Beat 3: d100 vs 45. On success: alter faction name field on token per slip. Keep: return token in case. Plant: deliver token discreetly to target faction's terminal during Beat 3 cleanup — do not announce. On fail: destroy token. On failcrit: destroy token AND dispatch NotificationSlip to the faction originally named on the token.",
+    narrative    = "The record says what Ghost needs it to say.",
+    perspectives = {Ghost: "The attribution is wrong. It will stay wrong. What matters is what Ghost does with it next."},
+    design_note  = "Re-keys an Intel token's faction field to faction(target). Quarter field unchanged — freshness carries over. Cost = CA slot (no Findings). Automatic — no dice, no risk. Token is target_object: submitted in case alongside card, returned after alteration. Standard equivalent: PM05 04-n15.",
+    arbiter_note = "Token submitted in Ghost's case alongside card. At Beat 3: alter faction_name field on token to faction(target); return altered token to Ghost's case. No announcement.",
 )
 ```
 

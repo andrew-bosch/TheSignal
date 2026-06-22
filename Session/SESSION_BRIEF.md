@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 111 complete | S112 next | Updated: 2026-06-21**
+**Session 112 complete | S113 next | Updated: 2026-06-21**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -28,14 +28,29 @@ Read full files only when deep work requires it.
 
 **Artifacts updated S111:** Art 02 (v2.4 ✅ L233) · Art 04 (v0.9.42 — SYN.CA.10/11/PA.3 design passes) · Art 04b (§5.2 +SYN.CA.11/PA.3; §8 Syndicate summary updated) · PM02 (L233–L234) · PM03 (Art 02/04 rows) · PM05 (04-n106)
 
-### Priority Order (S112) ← CURRENT
+### S112 Accomplishments ✅
 
-**Tier 1 — Ghost covert op design pass continuation**
-- GHO.CA.7 Station · GHO.CA.8 Full Take · GHO.CA.9 SCIF · GHO.CA.10 Flip · GHO.CA.12 Source Substitution — design passes needed
-- GHO.CA.13/14 Backdate/Field Verification — BLOCKED, fundamental redesign required
-- GHO.CA.11 Signals Analysis — BLOCKED pending Art 06.x Classified Directive procedure
+**Ghost CA design pass — GHO.CA.7/8/9/10/12 complete**
 
-**Tier 2 — Syndicate card set issues resolution** (gate: 04-n88 doctrine review)
+- **GHO.CA.7 Station** ✅ — Information|Add|IntelToken. d100 threshold 55. Sustained collection platform; 2 tokens on success / +1 on successcrit. 04-n6 adjacency restriction added. Issues Resolved ✓ S112.
+- **GHO.CA.8 Full Take** ✅ — Information|Add|IntelToken. d100 threshold 40. Variable cost n×Findings → n×2 tokens on success. 04-n6 adjacency restriction added. Issues Resolved ✓ S112.
+- **GHO.CA.9 SCIF** ✅ — Cleanup pass S112 (Issues Resolved was ✓ S94). Faction-targeted; no district target; no adjacency restriction. Card Story updated.
+- **GHO.CA.10 Flip** ✅ — Information|Reveal|IntelToken. Automatic. Spend 1 Intel token (target-keyed) → gain 2 of target's native resources (copy model — target pool untouched). 04-n6 adjacency restriction added. Issues Resolved ✓ S112.
+- **GHO.CA.12 Source Substitution** ✅ — REDESIGNED S112. Information|Corrupt|IntelToken. Automatic. Cost = CA slot only. Alters faction_name field on held token; ARBITER returns altered token to Ghost's case. Plant mode retired (Intel tokens are valid premium currency regardless of faction field; planting doesn't trap recipient). Issues Resolved ✓ S112.
+
+**PM05 04-n6:** Field collection ops resolved — adjacency restriction added to Station / Full Take / Flip. SCIF (faction-targeted, no district) and Source Substitution (analytical/Automatic) correctly excluded. Remaining: 00a rule text update + design_reference.md update.
+
+**Artifacts updated S112:** Art 04 (v0.9.43 — GHO.CA.7/8/9/10/12 design passes) · PM05 (04-n6 updated)
+
+**BLOCKED:** GHO.CA.11 Signals Analysis (Art 06.x Classified Directive) · GHO.CA.13/14 Backdate/Field Verification (fundamental redesign required)
+
+### Priority Order (S113) ← CURRENT
+
+**Tier 1 — Syndicate issues resolution + Ghost CA sign-off prep**
+- Syndicate card set: issues resolution (gate: 04-n88 doctrine review)
+- Ghost CA set: sign-off pass (gate: 04-n87 doctrine review + all CA Issues Resolved)
+
+**Tier 2 — 04-n6 remaining:** 00a adjacency rule text + design_reference.md update (Ghost field collection vs. analytical ops distinction)
 
 ---
 
