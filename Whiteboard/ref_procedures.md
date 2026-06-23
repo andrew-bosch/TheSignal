@@ -1,5 +1,92 @@
 # Reference — Game Procedures (Art 03)
-*Load when: procedure gaps, React card design, Debrief rules, Battlefield Strength, dice mechanics, PA resolution.*
+*Load when: quarter loop, resolution grids, procedure gaps, React card design, Debrief rules, Battlefield Strength, dice mechanics, PA resolution.*
+
+---
+
+## Quarter Loop
+
+The repeatable quarterly sequence. Six sections in order — ARBITER announces each.
+
+```
+§7 UPKEEP
+  World updates. Resources collected. Tokens distributed. Initiative set.
+
+§8 PLACEMENT
+  Deployment markers placed. Entry requirements enforced.
+
+§9 MONTHLY ACTIVITIES  ×3
+  §9.0  Start of Month — PA obligations checked.
+  §9.1  Covert Dispatch — cases assembled, sealed, transmitted to ARBITER.
+  §9.2  Public Declaration — public acts declared in initiative order; placed face-up on Overview.
+  §9.3  Countermeasures — CM cards submitted; target queued covert ops or placed public acts.
+  §9.4  Resolution:
+    §9.4.0  Beat 0: The Cases Open
+    §9.4.1  Beat 1: Read Board State
+    §9.4.2  Beats 2–3: Covert Operations Resolve
+    §9.4.3  Beat 4: Public Acts Resolve
+    §9.4.4  Close Month
+  Repeat for Months 2 and 3. Month 3: proceed to §10 instead of repeating.
+
+§10 RESOLVE DISTRICT TENSION
+  Contested districts resolve. d10 roll-off per district. Tension markers cleared.
+
+§11 QUARTERLY DEBRIEF
+  Table reflects. ARBITER delivers Summary, Observation. Ready-to-close mechanic.
+
+§12 QUARTER CLOSE
+  Seasonal cleanup. Findings decay. Debrief reward. NS-xx returned. Trackers advanced.
+```
+
+Sections do not overlap. ARBITER announces the start of each.
+
+---
+
+## Resolution Grids
+
+Two distinct grids operate during Monthly Activities. Never conflate them.
+
+### ARBITER Resolution Grid (covert domain)
+
+Built fresh at Beat 0; cleared at end of Beat 3. Entirely ARBITER-private — factions never see contents; not a valid card-effect target.
+
+**Structure:** One lane per faction (6 lanes). Each lane has rows for Beat 1 (CM cards — DB:52), Beat 2 (op + target pair), Beat 3 (op + target pair). Up to 4 op-target pairs per lane (one per Dispatch Token).
+
+**How it fills — Beat 0:** ARBITER opens each case; verifies Dispatch Token present. Each operation card placed in the Beat 2 or Beat 3 row of its faction lane per the card's `beat` field. Target Profile (DB:48) stacked under the operation card. CM cards (DB:52) from §9.3 placed in the Beat 1 row of the targeted faction's lane.
+
+**Beat 1:** CM cards processed lane by lane. Each CM applies to all operations in the grid targeting its keyed faction.
+
+**Beats 2–3:** Row-first processing — all Beat 2 pairs resolve before any Beat 3 pair begins. Within each row: round-robin by case receipt order (submission speed sets initiative, not faction standing order).
+
+**Cards exit:** Operation cards discard or persist per duration type. Target Profiles (DB:48) returned to faction. Grid cleared at end of Beat 3.
+
+---
+
+### Faction Resolution Grid (PA domain)
+
+Built at §9.2; processed at Beat 4. Visible to all players.
+
+**How it fills — §9.2:** Declaring faction places PA card face-up with 1 Dispatch Token and native resource tokens (DB:8, DB:12). Intel tokens (DB:9) submitted as cost payment or information modifiers are also placed face-down on the card at this time. Target Profile (DB:48) placed face-down on the card. Once placed: valid target for countermeasures and other public acts; cannot be withdrawn.
+
+**Beat 4:** PAs resolve in initiative order:
+1. Submit payment — native resources (DB:8, DB:12) and/or Intel tokens (DB:9) transferred to Reservoir; Dispatch Token returned. Partial payment: −50 modifier placed. Zero payment: card flipped face-down, skips to cleanup (no fail outcome fires).
+2. Apex Check — Target Profile (DB:48) flipped face-up; ARBITER reads card against profile.
+3. Board state validation — conditions required at §9.2 must still hold; if not, ARBITER announces invalidation and returns card.
+4. Apply modifier stack, declare threshold, roll publicly, apply outcome.
+
+**Cards exit by duration:**
+| Duration | Exits when |
+|----------|-----------|
+| Immediate | Removed right after Beat 4 resolution |
+| Seasonal | Cleared at §12 Quarter Close |
+| Permanent | Cleared only by specific trigger or faction action (00a §8.3a) |
+
+Seasonal and Permanent cards remaining on the grid are collectively **Standing effects** — visible to all players; valid targets for countermeasures and public acts for as long as they remain.
+
+---
+
+### Primitive Actions — verb legality
+
+To check whether a verb is legal for a given component, query the database. `applicable_verbs` in each Art 02 component entry is the source of truth. Do not read Art 02 for this; run the query.
 
 ---
 
@@ -40,7 +127,7 @@ Worst-case stack: partial payment + ring penalty + Discredited + Type B = −110
 
 ## Monthly Phase Sequence
 
-Each Month: **§9.1 Covert Dispatch** → **§9.2 Public Declaration** → **§9.3 Countermeasures** → **§9.4 Resolution (Beats 0–5)**. These are the canonical Art 03 names — never "Dispatch A/B/C" or "Phase A/B/C."
+Each Month: **§9.1 Covert Dispatch** → **§9.2 Public Declaration** → **§9.3 Countermeasures** → **§9.4 Resolution (Beats 0–4)**. These are the canonical Art 03 names — never "Dispatch A/B/C" or "Phase A/B/C."
 
 **§9.1 Covert Dispatch:** Factions assemble dispatch cases (operation card + Dispatch Token + cost resources), seal, and transmit to ARBITER. Cases are ARBITER-domain from this point. Factions name their target faction (and any declared parameters) on the Target Profile inside the case.
 
@@ -66,9 +153,9 @@ Each Month: **§9.1 Covert Dispatch** → **§9.2 Public Declaration** → **§9
 
 ## Public Act Resolution — Beat 4 Key Steps
 
-1. **Submit Payment:** Initiative order — resource tokens transferred to Reservoir; Dispatch Token returned. Full payment acknowledged; partial payment gets −50 threshold marker; zero payment = invalid (card flipped face-down, auto-fails).
+1. **Submit Payment:** Initiative order — resource tokens transferred to Reservoir; Dispatch Token returned. Full payment acknowledged; partial payment gets −50 threshold marker; zero payment = invalid (card flipped face-down — skips directly to cleanup; no fail outcome fires).
 2. **Apex Check (§9.4.3.1.1):** Acting Faction Player flips Target Profile face-up; reads public act card and Target Profile. Face-down PA cards auto-fail (do not flip — they remain face-down and go directly to fail outcome).
-3. **Validate board state conditions:** If conditions required at Phase B declaration no longer met (altered by Beat 3 outcomes) — ARBITER announces invalidation, card returned.
+3. **Validate board state conditions:** If conditions required at §9.2 Public Declaration no longer met (altered by Beat 3 outcomes) — ARBITER announces invalidation, card returned.
 4–8. Acting faction reads base difficulty, applies all modifiers, declares threshold aloud, rolls publicly, compares to threshold.
 9. **Apply outcome:** Acting faction makes all board changes.
 10. **Clean up:** Modifier cards discarded. Card remains per its duration type — Immediate cards only are removed immediately.
@@ -118,7 +205,7 @@ No initiative order, no phase timer. ARBITER announces: "The Table is in Debrief
 
 ## Battlefield Strength (§10 — Contested District Resolution)
 
-**Triggers:** After Beat 5, ARBITER scans for Tension markers. Resolves Ring 3 inward to Ring 0.
+**Triggers:** After Month 3 §9.4.4 Close Month, ARBITER scans for Tension markers. Resolves Ring 3 inward to Ring 0.
 
 **Calculation:** Each contesting faction simultaneously counts:
 - All presence chips + structure blocks in contested district AND each adjacent district (deployment markers = 1 presence chip)

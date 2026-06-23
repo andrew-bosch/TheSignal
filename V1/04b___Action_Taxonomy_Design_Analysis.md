@@ -182,7 +182,7 @@ This distinguishes Economy — Remove — Native resource (removing tokens from 
 | DIR.CA.3 | Surveillance Placement | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
 | DIR.CA.4 | Tactical Redirection | 📝 | Territory | Public | Move | PresenceToken | Move |
 | DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Public | Remove | PresenceToken | Remove |
-| DIR.PA.1 | Regulatory Override | ⛔ BLOCKED | Submission | Split | Modify | PoliticalAct (add·PresenceChip cost) | — | Cost modification is not a physical verb; "cost" is not a component attribute. Card targets action cost for all Add·PresenceChip operations — requires new component + ARBITER overhead. Needs redesign. See PM05 04-n99. |
+| DIR.PA.1 | Regulatory Override | ⛔ BLOCKED | Submission | Split | Modify | PublicAct (add·PresenceChip cost) | — | Cost modification is not a physical verb; "cost" is not a component attribute. Card targets action cost for all Add·PresenceChip operations — requires new component + ARBITER overhead. Needs redesign. See PM05 04-n99. |
 | DIR.PA.2 | Convene an Inquiry | 📝 | Information | Private → Public | Add | Intel token | Add |
 | DIR.PA.3 | Entry/Exit Controls | 📝 | Territory | Public | Block | DeploymentMarker | — |
 | DIR.PA.4 | Regulatory Downgrade | 🚫 BLOCKED | Territory | Public | Modify | InfluenceTier (derived — not targetable) | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
@@ -219,7 +219,7 @@ This distinguishes Economy — Remove — Native resource (removing tokens from 
 | NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
 | NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
 | NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
-| NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | PoliticalAct | — |
+| NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | PublicAct | — |
 | NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence token | Add |
 | NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | IntelToken | Add |
 | NET.MOD.1 | Signal Break | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
@@ -422,7 +422,7 @@ Current Ghost set (S108): GHO.CA.1 (Submission|Copy|CovertOp), GHO.CA.2 (Informa
 
 ### 8.2 Directorate — Priority redesign targets
 
-Current Directorate set (S108): DIR.CA.1 (Submission|Block|CovertOp), DIR.CA.2 (Territory|Move|DeploymentMarker — taxonomy corrected S107 L226), DIR.CA.3 (Information|Reveal|CovertOp), DIR.CA.4 (Territory|Move|PresenceToken), DIR.CA.5 (Territory|Remove|PresenceToken), DIR.CA.6 (Economy|Add|NativeResource ✅ S106), DIR.CA.7 (Standing|Shift|PublicStanding ✅ S106), DIR.CA.8 (Resolution|Modify|Difficulty ✅ S106), DIR.PA.3 Entry/Exit Controls (Territory|Block|DeploymentMarker), DIR.PA.4 Regulatory Downgrade (🚫 BLOCKED L223), DIR.PA.5 Regulatory Freeze (🚫 BLOCKED L223), DIR.PA.6 Standing Injunction (Submission|Block|PoliticalAct). Effective Block count: DIR.CA.1 (CovertOp), DIR.PA.6 (PoliticalAct). DIR.PA.1 (⛔ BLOCKED, PM05 04-n99) unresolved.
+Current Directorate set (S108): DIR.CA.1 (Submission|Block|CovertOp), DIR.CA.2 (Territory|Move|DeploymentMarker — taxonomy corrected S107 L226), DIR.CA.3 (Information|Reveal|CovertOp), DIR.CA.4 (Territory|Move|PresenceToken), DIR.CA.5 (Territory|Remove|PresenceToken), DIR.CA.6 (Economy|Add|NativeResource ✅ S106), DIR.CA.7 (Standing|Shift|PublicStanding ✅ S106), DIR.CA.8 (Resolution|Modify|Difficulty ✅ S106), DIR.PA.3 Entry/Exit Controls (Territory|Block|DeploymentMarker), DIR.PA.4 Regulatory Downgrade (🚫 BLOCKED L223), DIR.PA.5 Regulatory Freeze (🚫 BLOCKED L223), DIR.PA.6 Standing Injunction (Submission|Block|PublicAct). Effective Block count: DIR.CA.1 (CovertOp), DIR.PA.6 (PublicAct). DIR.PA.1 (⛔ BLOCKED, PM05 04-n99) unresolved.
 
 **High priority:**
 1. **Economy — Add — Native resource (Mandate):** ✅ DIR.CA.6 Institutional Audit (S106). Beat 3 d100 threshold 50; yield = count of active Directorate Permanents in target ring; restriction chip count > 1.
@@ -433,11 +433,11 @@ Current Directorate set (S108): DIR.CA.1 (Submission|Block|CovertOp), DIR.CA.2 (
 
 **Blocked — redesign required:**
 4. **DIR.PA.4 Regulatory Downgrade / DIR.PA.5 Regulatory Freeze** — both target InfluenceTier (Territory|Modify and Territory|Block respectively). Blocked: InfluenceTier is a derived state (calculated from token counts), not a placed component; GR 9.1 prohibits direct income modification by card. Design intent: economic suppression — reduce or freeze a rival's territorial income. Valid redesign path: income suppression must work through board state. Territory|Remove|PresenceToken is the permitted approach — token removal reduces tier, which reduces income naturally. A PA version (public, political character) would be distinct from DIR.CA.5 Sanctioned Raid (covert). Design the pair together; specs blocked at Art 04 (04-n104).
-5. **DIR.PA.1 Regulatory Override** — attempted Submission|Modify|PoliticalAct (add·PresenceChip cost) — a district-wide cost increase on presence operations for all factions. Blocked: "cost" is not a physical component attribute; no board object represents operation cost. Valid redesign path: requires a physical regulatory burden component placed on districts that ARBITER reads when processing operations — a new component design question touching Art 02 (registration), Art 03 (procedure for applying modifier), and Art 07 (ARBITER overhead). Prerequisite to redesign: define the component and Art 03 procedure. PM05 04-n99.
+5. **DIR.PA.1 Regulatory Override** — attempted Submission|Modify|PublicAct (add·PresenceChip cost) — a district-wide cost increase on presence operations for all factions. Blocked: "cost" is not a physical component attribute; no board object represents operation cost. Valid redesign path: requires a physical regulatory burden component placed on districts that ARBITER reads when processing operations — a new component design question touching Art 02 (registration), Art 03 (procedure for applying modifier), and Art 07 (ARBITER overhead). Prerequisite to redesign: define the component and Art 03 procedure. PM05 04-n99.
 
 ### 8.3 Network — Priority redesign targets
 
-Current Network set (S104): NET.CA.1 (Information|Reveal|District), NET.CA.2 (Economy|Add|Exposure), NET.CA.3 (Information|Reveal|CovertOp), NET.CA.4 (Submission|Modify|PoliticalAct), NET.CA.5 (Territory|Add|PresenceToken), NET.CA.6 (Economy|Add|IntelToken), NET.PA.3 (Information|Reveal|FactionHand). NET.CA.2's redesign to Economy|Add|Exposure resolved the prior doctrinal contradiction. Network now holds three Reveal cards (NET.CA.1, NET.CA.3, NET.PA.3) across distinct subjects — mechanical differentiation between them must be enforced in card specs.
+Current Network set (S104): NET.CA.1 (Information|Reveal|District), NET.CA.2 (Economy|Add|Exposure), NET.CA.3 (Information|Reveal|CovertOp), NET.CA.4 (Submission|Modify|PublicAct), NET.CA.5 (Territory|Add|PresenceToken), NET.CA.6 (Economy|Add|IntelToken), NET.PA.3 (Information|Reveal|FactionHand). NET.CA.2's redesign to Economy|Add|Exposure resolved the prior doctrinal contradiction. Network now holds three Reveal cards (NET.CA.1, NET.CA.3, NET.PA.3) across distinct subjects — mechanical differentiation between them must be enforced in card specs.
 
 **High priority:**
 1. **Standing — Shift — Public Standing (primary covert):** ✅ NET.CA.7 Ground Signal (S106). Beat 3 d100 threshold 50; success +1 PS; restriction IL ≤ Established (Dominant excluded — no outreach needed); successcrit +1 chip in target district + +1 PS additional. Doctrinal grounding: existing street presence made legible without announcement.

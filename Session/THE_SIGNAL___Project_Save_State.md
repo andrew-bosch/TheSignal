@@ -263,6 +263,16 @@ Read this document top to bottom before doing any design work in a new session. 
 
 ## Session Log
 
+### Session 114 — 2026-06-22
+**Focus:** Ref audit review (S113 overnight batch not yet available) · card_status DB table built
+**Accomplishments:**
+- card_status table created in the_signal_db: 95 cards seeded from Art 04 v0.9.44 across all 6 factions. Replaces stale tmp_card_review.
+- Direction set: card set audits (04-n87–04-n92) before any card sign-offs (Andy's decision).
+- Memory added: feedback_card_status_sync.md — DB must stay in sync with Art 04 card work.
+- SESSION_BRIEF updated; Priority Order updated to S115.
+**Artifacts changed:** DB (card_status table created) · SESSION_BRIEF (S114 close)
+**Next:** Tier 1 = review ref_audit_overnight_results.md at boot · Tier 2 = card set audits starting Standard (04-n87)
+
 ### Session 57 — 2026-06-01
 **Focus:** DB-14 Phase B confirmation; Art 00 §7 redesign + re-sign-off v1.6; Art 00a 00-R30 (Missing Author Vacuum); True State §1/§3/§4/§10 updates; Art 04 P16 added (portrait entries submitter-bounded); C01–C10 full 5-faction portrait sweep; C01/C02/C03/C04/C05/C06/C07/C08/C10 signed off; C09 portrait + dependency cleanup; C10 −45 affinity locked (L179). Ghost faction mechanics concept noted for playstyle summary.
 **Decisions locked:** L177 (Missing Author Vacuum governing rule), L178 (P16 portrait submitter-bounded), L179 (C10 −45 affinity narratively justified).

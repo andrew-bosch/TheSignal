@@ -429,6 +429,8 @@ Updated after each playtest session.
 
 ## Section 4 — Change Log
 
+**L235** (S114): `CardType` enum value renamed `PoliticalAct` → `PublicAct` across Art 04, Art 04b, and Whiteboard references. Public Acts are not necessarily political in nature — the defining characteristic is visibility (declared publicly at §9.2), not political framing. 74 substitutions in Art 04; full sweep in Art 04b and Whiteboard gap_card_sketches. `CardType` enum in §6.3 updated. 04-n107 queued for comprehensive agy card spec audit.
+
 **L234** (S111): SYN.PA.3 Data Acquisition — consideration non-fulfillment ruling. Consideration is a verbal offer written on Target Profile declared-parameters line; not held in escrow. If Syndicate cannot deliver declared consideration at sub-case A (trade), exchange fails and card stays Permanent. Bluff mechanic is intentional — Syndicate bears public failure risk. Ruling: sub-case A fails → card stays Permanent.
 
 **L233** (S111): Art 02 Components v2.4 signed off. Target Profile (DB:48) Gameplay Requirements and `recorded_fields` expanded to include declared parameters (free-form text — additional blank line for card-specific declarations). Enables SYN.CA.11 Redline and future cards requiring field declarations beyond faction, district, or object. Art 02 v2.3 → v2.4.

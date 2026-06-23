@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 113 complete | S114 next | Updated: 2026-06-22**
+**Session 114 in progress | Updated: 2026-06-22**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -58,18 +58,43 @@ Read full files only when deep work requires it.
 
 **Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88 doctrine review gate)
 
-### Priority Order (S114) ← CURRENT
+### S114 Accomplishments (in progress)
 
-**Tier 1 — Ref file audit application**
-- Apply `Whiteboard/ref_audit_results_S113.md` findings to all 4 priority ref files (ref_tracking.md, ref_components.md, ref_procedures.md, design_reference_card_system.md)
-- Apply overnight batch results (`Whiteboard/ref_audit_overnight_results.md`) to remaining 6 ref files
+**Ref audit — ref_audit_results_S113.md reviewed and applied**
 
-**Tier 2 — Ghost CA issues resolution (continue)**
-- GHO.CA.5 Misdirection: redesign (`content=false` is not a valid IntelToken state — new mechanism needed)
-- GHO.CA.6 Synthesize: update token keying to target faction per Target Profile
+- **`PoliticalAct` → `PublicAct` enum rename** — L235 locked. 74 substitutions Art 04; Art 04b + gap_card_sketches swept. Public Acts are defined by visibility (§9.2 declaration), not political nature.
+- **PM05 04-n107 added** — agy task: comprehensive card spec audit against §6.1 schema and §6.3 enums.
+- **ref_procedures.md** — 4 errors fixed (Beat 5→4, Phase B→§9.2, auto-fail language, Battlefield timing). New sections added: Quarter Loop (Art 03 §6 structure) + Resolution Grids (ARBITER covert grid + Faction Resolution Grid — fill/process/exit per beat, DB IDs, Standing effects definition, Primitive Actions DB pointer).
+- **ref_tracking.md** — Portrait bands flagged provisional (07-13); "portrait drives initiative" corrected to accurate d10 table description (PM05 03-11 cross-ref); "first action exits Ambiguous" restored as scale property + Portrait movement sources expanded (card fields / ARBITER discretion / roleplay observations); IntelToken Blank state added (4-state lifecycle); §10.1 broadened to all private components; §10.1a "specific game action" → "Reveal effect"; §10.2 spent-token consumption added; §10.3 holding limits flagged as balance/playtest; FRG cross-faction targeting reframed as structural observation (not a governing rule).
+- **ref_components.md** — CC-xx / ER-xx "not yet designed" removed (fully signed off in Art 02); NS-xx delivery condition corrected (targeted, not fail-only); VS-xx removed (field, not component); CA-xx lifecycle fixed (Beat 5 removed; "per Quarter" → monthly reset at Beat 0); Pending section cleaned.
+- **Memory saved** — `feedback_ref_sync_discipline.md`: audit ref files after every artifact version bump; any time Andy explains a rule in chat = ref needs update.
+
+**card_status DB table created** — 95 cards seeded from Art 04 v0.9.44 across all 6 factions. Schema: card_id, name, faction, card_type, blocked, design_pass, issues_resolved, issues_note, signed_off, art04_line, notes. Replaces stale tmp_card_review. Memory: feedback_card_status_sync.md — update DB immediately on any card add/change.
+
+**Direction set:** Card set audits (04-n87–04-n92) before any card sign-offs. Andy's call.
+
+**Overnight batch:** `ref_audit_overnight_results.md` expected ~2am June 23. Review at next boot.
+
+**Last 3 locked decisions:** L235 (PublicAct enum rename) · GHO.CA.4 redesign mechanism (S113) · 04-n6 closure (S113)
+
+**Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
+### Priority Order (S115) ← CURRENT
+
+**Tier 1 — Overnight batch review**
+- `Whiteboard/ref_audit_overnight_results.md` — available after 2am June 23; review at next boot
+
+**Tier 2 — Card set audits (04-n87–04-n92)**
+- Andy's direction: audits before any card sign-offs
+- Use `card_status` DB table for tracking (query per faction)
+- Suggest starting with Standard (04-n87) — most IR ✓, shared toolkit baseline
+- Ghost (04-n88) likely second — current working context
+
+**Tier 3 — Ghost CA issues resolution** (after or alongside Ghost audit)
 - GHO.CA.4: sign-off (Andy)
+- GHO.CA.5 Misdirection: redesign (`content=false` not a valid IntelToken state)
+- GHO.CA.6 Synthesize: update token keying to target faction per Target Profile
 - GHO.PA.3/4/5: mark Issues Resolved ✓
-- Close 04-n87 and 04-n88 in PM05
 
 ---
 

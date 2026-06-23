@@ -520,7 +520,7 @@ class PSFraming:
 ### 6.3 Enum Vocabularies
 
 ```
-CardType:     CovertOperation | PoliticalAct | Pass | Countermeasure | Modifier | EmergencyResponse
+CardType:     CovertOperation | PublicAct | Pass | Countermeasure | Modifier | EmergencyResponse
 Subtype:      Standard | FactionSpecific
 Faction:      All | Ghost | Network | Syndicate | Guild | Directorate
 Layer:        Territory | Economy | Information | Submission | Resolution | Standing
@@ -1086,14 +1086,14 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 | Voice fit | ✓ | Tagline clear and grounded. Five perspectives doctrinally distinct: Guild (operational delays), Directorate (jurisdictional note), Network (strategic noise), Ghost (analytical cover), Syndicate (market inefficiency). | Art 00 §7 |
 | Doctrine alignment | ✓ | Network is the primary aligned faction — signal disruption as tactical information control. Ghost benefits doctrinally (analytical cover). Directorate opposed — covert disruption conflicts with their institutional-authority doctrine. No opponent target → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: disruption mechanism is hidden even if cost increase is observable at Beat 4. Standard: all factions can disrupt broadcast infrastructure. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | `layer = Submission` — modifies cost of a PA (submission-phase property). `function = Modify`, `subject = PoliticalAct` — correctly scoped and narrow. | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | `layer = Submission` — modifies cost of a PA (submission-phase property). `function = Modify`, `subject = PublicAct` — correctly scoped and narrow. | Art 04b §4, §5 |
 | Balance | ✓ | Beat 2 positional wager. Cost 2 Exposure (1 for Network via affinity). Raises PA cost +1 native — meaningful deterrence, not a hard block. No fail state. | Art 03 §9.4 |
 | Effect duration | ✓ | Single-round: arms at Beat 2, applies at Beat 4, does not persist. Appropriate for a tactical cost modifier. | Art 03 §10 |
 | Persistence | ✓ | Immediate — Beat 2 carry; applied at Beat 4 via Resolution Grid; no game-state marker persists beyond round | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` — Automatic at Beat 2. | — |
 | Portrait validity | ✓ | Network `submitter=+1`: tactical information control — primary aligned faction (DIR.PA.1, SYN.PA.2). Ghost `submitter=+1`: interference creates analytical cover, consistent with Ghost's low-profile doctrine (DIR.PA.1, SYN.PA.2). Directorate `submitter=−1`: covert disruption undermines institutional legitimacy; Directorate's tool is regulatory authority, not anonymous interference (DIR.PA.1, SYN.PA.2). Guild: no entry — operational delays are a cost, not a doctrinal signal; absence justified. Syndicate: no entry — market inefficiency is an opportunity, not a doctrinal stake; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. No presence restriction — broadcast effect is ambient to the district. | Art 01 §6 |
-| Supported by components | ✓ | PoliticalAct as target type; Exposure resource as cost. Both defined. | Art 02 §8; Art 04b §5 |
+| Supported by components | ✓ | PublicAct as target type; Exposure resource as cost. Both defined. | Art 02 §8; Art 04b §5 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (§9); placed in Beat 2 row at Resolution Grid setup (§9.4.0); moved to Beat 4 carry row during Beat 2 processing (§9.4.2); arming and effect applied at Beat 4 (§10). | Art 03 §9, §9.4, §10 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
@@ -1111,7 +1111,7 @@ STD.CA.6 = Card(
     tagline = "Disrupt public communications in a district, dampening public activity.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
 
-    layer    = Submission,  function = Modify,  subject = PoliticalAct,
+    layer    = Submission,  function = Modify,  subject = PublicAct,
 
     beat            = 2,
     resolution      = Automatic,
@@ -1127,14 +1127,14 @@ STD.CA.6 = Card(
 
     target_district = district.any,
     target_faction  = None,
-    target_object   = PoliticalAct,
+    target_object   = PublicAct,
 
     target_taxonomy=None,
     affinity    = faction(acting) == Network: cost.resource.exposure -= 1,
     restriction = None,
     cost        = resource.faction(acting).exposure * 2,
 
-    success     = game.ops(beat=4, type=PoliticalAct, at=district(target)).cost.native += 1,
+    success     = game.ops(beat=4, type=PublicAct, at=district(target)).cost.native += 1,
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -1175,14 +1175,14 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 | Voice fit | ✓ | Ghost's perspective is the sharpest. All five are doctrinally distinct — opposition, authority-sufficiency, tactical use, suppression logic, leverage framing. | Art 00 §7 |
 | Doctrine alignment | ✓ | Amplifying public messaging strongly serves Network doctrine; strongly opposes Ghost (volume = exposure risk). Both captured via portrait entries. Self-targeted → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: amplification mechanism is hidden. Standard: all factions can amplify their messaging covertly. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | `layer = Resolution` — scales the outcome (standing_impact) of a PA; Art 04b §4.2 "outcome scale" is a Resolution property. `function = Modify`, `subject = PoliticalAct`. Note: `resolution_type = "Transactional"` may be a misnomer — card fizzles if no PA is submitted (same positional-wager behavior as STD.CA.6). Minor schema inconsistency, not blocking. | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | `layer = Resolution` — scales the outcome (standing_impact) of a PA; Art 04b §4.2 "outcome scale" is a Resolution property. `function = Modify`, `subject = PublicAct`. Note: `resolution_type = "Transactional"` may be a misnomer — card fizzles if no PA is submitted (same positional-wager behavior as STD.CA.6). Minor schema inconsistency, not blocking. | Art 04b §4, §5 |
 | Balance | ✓ | Symmetric multiplier: both success (+×2) and failure (−×2) scale. Prevents risk-free use. Fizzle (Exposure spent, no PA) ensures Beat 2 commitment is real. | Art 02 §11 |
 | Effect duration | ✓ | Single-round: arms at Beat 2, applies at Beat 4, does not persist. | Art 03 §10 |
 | Persistence | ✓ | Immediate — Beat 2 carry; applied at Beat 4 via Resolution Grid; no game-state marker persists beyond round | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` — Automatic at Beat 2. | — |
 | Portrait validity | ✓ | Network `submitter=+1`: amplifying public messaging is core Network doctrine (DIR.PA.1, SYN.PA.2). Ghost `submitter=−1`: amplification = attention = exposure risk — "volume attracts attention, attention ends operations" (DIR.PA.1, SYN.PA.2). Guild: no entry — "let our structures speak"; amplification is a substitute for physical evidence, not a doctrinal tool; absence justified. Directorate: no entry — institutional authority doesn't require amplification; tactical use only; absence justified. Syndicate: no entry — leverage framing is opportunistic, not doctrinal; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | N/A — `target_district = None`; card operates on acting faction's own PA submission, not a district. | — |
-| Supported by components | ✓ | PoliticalAct as target; Exposure as cost; `standing_impact` for outcome (Art 02 §11). | Art 02 §8; Art 02 §11; Art 04b §5 |
+| Supported by components | ✓ | PublicAct as target; Exposure as cost; `standing_impact` for outcome (Art 02 §11). | Art 02 §8; Art 02 §11; Art 04b §5 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (§9); placed in Beat 2 row at Resolution Grid setup (§11 Beat 0); moved to Beat 4 carry row during Beat 2 processing (§11 Beat 2); `standing_impact` multiplier applied at Beat 4 (§17). | Art 03 §9, §11, §17 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
@@ -1200,7 +1200,7 @@ STD.CA.7 = Card(
     tagline = "Boost the Public Standing impact of your own public act this round.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
 
-    layer    = Resolution,  function = Modify,  subject = PoliticalAct,
+    layer    = Resolution,  function = Modify,  subject = PublicAct,
 
     beat            = 2,
     resolution      = Automatic,
@@ -1216,14 +1216,14 @@ STD.CA.7 = Card(
 
     target_district = None,
     target_faction  = faction.acting,
-    target_object   = PoliticalAct,
+    target_object   = PublicAct,
 
     target_taxonomy=None,
     affinity    = faction(acting) == Network: cost.resource.exposure -= 1,
     restriction = None,
     cost        = resource.faction(acting).exposure * 2,
 
-    success     = faction(acting).op(beat=4, type=PoliticalAct).standing_impact *= 2,
+    success     = faction(acting).op(beat=4, type=PublicAct).standing_impact *= 2,
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -2016,7 +2016,7 @@ Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outc
 | Action fit | ✓ | Public territorial declaration is a core political act in New Meridian — every faction makes formal presence claims | Art 00 §7 |
 | Voice fit | ✓ | Five distinct perspectives: Guild grounds it in the build, Directorate in the record, Network in confirmation, Ghost in commitment-cost, Syndicate in sequencing | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate affinity (cost = 0) + portrait +1. Ghost portrait −1. Others no entry — justified | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / Standard — all factions make public presence claims; universally useful | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / Standard — all factions make public presence claims; universally useful | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Add / PresenceToken — unambiguous | Art 04b §4 |
 | Balance | ✓ | Same cost as STD.CA.3; Automatic vs. d100/50; +PS. Trade is visibility, not resources | Art 02 §6–§7 |
 | Effect duration | ✓ | Presence tokens are Permanent board state; card persistence = Immediate | Art 04 §5 P19 |
@@ -2040,7 +2040,7 @@ STD.PA.1 = Card(
     id="STD.PA.1",  version="v1.0",
     name    = "Open Operations",
     tagline = "Formally declare your operational presence in a district.",
-    type    = PoliticalAct,  subtype = Standard,  faction = All,
+    type    = PublicAct,  subtype = Standard,  faction = All,
 
     layer    = Territory,  function = Add,  subject = PresenceToken,
 
@@ -2106,7 +2106,7 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 | Action fit | ✓ | Formal territorial challenges are institutionally grounded in New Meridian | Art 00 §7 |
 | Voice fit | ✓ | All five perspectives credible and distinct: Guild's reluctance-but-will-defend, Directorate's formal-mechanism preference, Network's public-accountability, Ghost's attention-cost framing, Syndicate's leverage reading | Art 00 §7 |
 | Doctrine alignment | ✓ | Network +10 threshold + portrait +1; Directorate +10 threshold + portrait +1 — formal dispute mechanisms align with both doctrines. Ghost portrait −1: public confrontation conflicts with concealment. doctrine_mod captures target relationship | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / Standard — all factions contest territory | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / Standard — all factions contest territory | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Remove / PresenceToken — target is a PresenceToken being removed | Art 04b §4 |
 | Balance | ✓ | Same cost as STD.CA.4; slightly better threshold; PS effects add risk on fail. Contested marker fires on tie — procedural | Art 02 §6–§7 |
 | Effect duration | ✓ | Presence token removal is a permanent state change; card persistence = Immediate | Art 04 §5 P19 |
@@ -2130,7 +2130,7 @@ STD.PA.2 = Card(
     id="STD.PA.2",  version="v1.0",
     name    = "Disputed Claim",
     tagline = "Formally challenge another faction's presence in a district.",
-    type    = PoliticalAct,  subtype = Standard,  faction = All,
+    type    = PublicAct,  subtype = Standard,  faction = All,
 
     layer    = Territory,  function = Remove,  subject = PresenceToken,
 
@@ -2205,7 +2205,7 @@ Public counterpart to STD.CA.1 (Build Structure). Same cost; unlike STD.CA.1, th
 | Action fit | ✓ | Public construction is a core territorial act — all factions build where the strategy demands it | Art 00 §7 |
 | Voice fit | ✓ | All five perspectives distinct and credible: Guild's open permanence, Directorate's mandate/record framing, Network's observation of public statements, Ghost's accountability-cost, Syndicate's visible-portion-of-investment framing | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild affinity (district native = 0) + portrait +1 — maximally on-doctrine (permanence through building). Ghost −1: permanent public structure conflicts with concealment. Others: no doctrinal stake in public construction | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / Standard — structure building is universally available; Guild affinity appropriate but not exclusive | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / Standard — structure building is universally available; Guild affinity appropriate but not exclusive | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Add / StructureBlock | Art 04b §4 |
 | Balance | ✓ | Same cost as STD.CA.1; Automatic vs d100; PS +1. Trade: visibility for certainty. Guild effectively pays 1 native (affinity waives district native) | Art 02 §6–§7 |
 | Effect duration | ✓ | StructureBlock = Permanent board state; card persistence = Immediate | Art 04 §5 P19 |
@@ -2229,7 +2229,7 @@ STD.PA.3 = Card(
     id="STD.PA.3",  version="v1.0",
     name    = "Public Commission",
     tagline = "Publicly announce and fund construction of a structure in a district.",
-    type    = PoliticalAct,  subtype = Standard,  faction = All,
+    type    = PublicAct,  subtype = Standard,  faction = All,
 
     layer    = Territory,  function = Add,  subject = StructureBlock,
 
@@ -2298,7 +2298,7 @@ The PS attack card of the standard set. A formal public accusation carries both 
 | Action fit | ✓ | Formal accusations are a core political act — all factions can and do make them | Art 00 §7 |
 | Voice fit | ✓ | All five perspectives credible: Guild's evidence-based restraint, Directorate's formal mechanism framing, Network's public-fact stance, Ghost's attention-trace surveillance read, Syndicate's public-leverage calculation | Art 00 §7 |
 | Doctrine alignment | ✓ | Network −1 cost + portrait +1; Directorate −1 cost + portrait +1 — formal accusation aligns with institutional/broadcast doctrines. Ghost −1 portrait: public accusation = self-exposure. Intel token affinity is doctrinally neutral. No target_faction → doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / Standard | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / Standard | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Standing / Shift / PublicStanding | Art 04b §4 |
 | Balance | ✓ | Base threshold 35 is demanding; Intel token affinity rewards preparation. Fail/failcrit PS penalties create real downside | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
@@ -2322,7 +2322,7 @@ STD.PA.4 = Card(
     id="STD.PA.4",  version="v1.0",
     name    = "Public Censure",
     tagline = "Formally accuse another faction of conduct contrary to the city's interest.",
-    type    = PoliticalAct,  subtype = Standard,  faction = All,
+    type    = PublicAct,  subtype = Standard,  faction = All,
 
     layer    = Standing,  function = Shift,  subject = PublicStanding,
 
@@ -2393,7 +2393,7 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 | Action fit | ✓ | Public attribution of covert operations is a core political act — creates accountability where covert ops sought deniability | Art 00 §7 |
 | Voice fit | ✓ | All five perspectives distinct: Guild's evidence-responsibility framing, Directorate's institutional/conditional support, Network's right-to-know, Ghost's doctrine of operational privacy (principle not preference), Syndicate's leverage-timing calculation | Art 00 §7 |
 | Doctrine alignment | ✓ | Network portrait +1: broadcasting attribution is doctrinal. Ghost portrait −2 (highest negative in set): attributing any faction's op violates Ghost's belief that operational anonymity protects the whole table's intelligence discipline. Others: no doctrinal stake in the attribution mechanism itself | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / Standard — any faction can attribute | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / Standard — any faction can attribute | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Information / Reveal / ActionAttribution | Art 04b §4 |
 | Balance | ✓ | Token cost + resource cost; token age tiers threshold (Fresh 50, Stale 35); Expired excluded. Fail: self-PS loss (false or botched attribution). High success PS reward reflects the significance of public attribution | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
@@ -2417,7 +2417,7 @@ STD.PA.5 = Card(
     id="STD.PA.5",  version="v1.0",
     name    = "On the Record",
     tagline = "Formally attribute a recent covert action to a named faction before the city.",
-    type    = PoliticalAct,  subtype = Standard,  faction = All,
+    type    = PublicAct,  subtype = Standard,  faction = All,
 
     layer    = Information,  function = Reveal,  subject = ActionAttribution,
 
@@ -2490,7 +2490,7 @@ The economic attack card of the standard PA set. PS is intentionally reversed fr
 | Action fit | ✓ | Economic sanctions are a legitimate public instrument — all factions can apply financial pressure | Art 00 §7 |
 | Voice fit | ✓ | All five perspectives distinct: Guild's last-resort restraint, Directorate's formal instrument framing, Network's neutral observation, Ghost's collateral-attention awareness, Syndicate's capital-discipline framing | Art 00 §7 |
 | Doctrine alignment | ✓ | Syndicate +15 threshold + portrait +1: Capital leverage doctrine aligns with economic pressure. Guild portrait −1: economic weapons conflict with permanence-through-building doctrine. doctrine_mod accounts for target relationship | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / Standard | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / Standard | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Economy / Remove / NativeResource | Art 04b §4 |
 | Balance | ✓ | Acting faction absorbs −1 PS on success as the cost of the aggressor position. Threshold 40 + Syndicate +15. Value = resource denial (up to 2 native, floor = 0), not PS gain | Art 02 §6–§7 |
 | Effect duration | ✓ | Resource removal and PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
@@ -2514,7 +2514,7 @@ STD.PA.6 = Card(
     id="STD.PA.6",  version="v1.0",
     name    = "Economic Sanction",
     tagline = "Publicly impose economic pressure on a faction, forcing resource loss.",
-    type    = PoliticalAct,  subtype = Standard,  faction = All,
+    type    = PublicAct,  subtype = Standard,  faction = All,
 
     layer    = Economy,  function = Remove,  subject = NativeResource,
 
@@ -2584,7 +2584,7 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 | Action fit | ✓ | Public statements and rallies are universal political acts | Art 00 §7 |
 | Voice fit | ✓ | All five perspectives distinct: Guild's building-primary-but-does-speak, Directorate's institutional communication expectation, Network's terse "this is what we do", Ghost's analytical surveillance framing of own public acts, Syndicate's investment/return calculation | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate +1, Network +1: institutional communication and broadcasting are both core doctrinal expressions. Ghost −1: public address = attention = exposure risk. Others: no strong doctrinal alignment with the act itself | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / Standard | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / Standard | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Standing / Shift / PublicStanding — +2 PS is a relative position change, not an unconditional grant | Art 04b §4 |
 | Balance | ✓ | 1 native for +2 PS with presence restriction. Cheap but not free; presence requirement prevents abuse | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shift is immediate; card persistence = Immediate | Art 04 §5 P19 |
@@ -2608,7 +2608,7 @@ STD.PA.7 = Card(
     id="STD.PA.7",  version="v1.0",
     name    = "Public Address",
     tagline = "Rally public support in a district where you operate.",
-    type    = PoliticalAct,  subtype = Standard,  faction = All,
+    type    = PublicAct,  subtype = Standard,  faction = All,
 
     layer    = Standing,  function = Shift,  subject = PublicStanding,
 
@@ -2675,7 +2675,7 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 | Action fit | ✓ | Formal accord proposals are a core political act — every faction can and does make bilateral agreements | Art 00 §7 |
 | Voice fit | ✓ | All five perspectives distinct: Guild's pragmatic/permanence framing, Directorate's institutional mechanism preference, Network's record-and-observe stance, Ghost's obligation-aversion (not value-aversion), Syndicate's asset/exit-cost calculus | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate portrait +1: bilateral stability is Directorate institutional doctrine. Ghost −1: Accords create commitments. Syndicate affinity removed — Syndicate manipulates Accords through faction-specific cards, not standard proposals. doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / Standard — BilateralAgreement outcome type | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / Standard — BilateralAgreement outcome type | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Economy / Add / AccordAgreement | Art 04b §4 |
 | Balance | ✓ | Cost 1 native flat (all factions). PA slot is the primary gate — 3 PA slots per Quarter, card is draw-dependent. PS vote mechanic gates proposal quality. At 1 native the form price signals accessible diplomacy; the slot cost and PS mechanics provide volume and quality control. L200. | Art 02 §6–§7 |
 | Effect duration | ✓ | AccordForm delivery is Immediate. Form lifecycle and cross-Quarter persistence governed by Art 06 §9.4. | Art 04 §5 P19; Art 06 §9.4 |
@@ -2703,7 +2703,7 @@ STD.PA.8 = Card(
     id="STD.PA.8",  version="v1.0",
     name    = "Table an Accord",
     tagline = "Formally propose a binding agreement with another faction, placed on the public record.",
-    type    = PoliticalAct,  subtype = Standard,  faction = All,
+    type    = PublicAct,  subtype = Standard,  faction = All,
 
     layer    = Economy,  function = Add,  subject = AccordAgreement,
 
@@ -3348,7 +3348,7 @@ Guild's prestige structure PA — a simultaneous double build in two named distr
 | Action fit | ✓ | Simultaneous dual construction is Guild's maximum public commitment | Art 00 §7 |
 | Voice fit | ✓ | Guild on-doctrine; Network (aligned): public commitment scale; Ghost (opposed): acting before the question is answered | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Guild-exclusive: 4 Capacity cost, district native waived for both districts, portrait +2 (double structure = doctrinal maximum). Directly serves permanence doctrine. No target_faction → doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Add / StructureBlock — two targets | Art 04b §4 |
 | Balance | ⚠ | Cost 4 Capacity; both district natives waived (Guild). PS +3. Single slot for two structures is efficient — balance review after playtesting | Art 02 §6–§7 |
 | Effect duration | ✓ | StructureBlocks = Permanent board state; card persistence = Immediate | Art 04 §5 P19 |
@@ -3372,7 +3372,7 @@ GUI.PA.1 = Card(
     id="GUI.PA.1",  version="v1.0",
     name    = "Civic Works Mandate",
     tagline = "Declare a public infrastructure program across two districts simultaneously.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Guild,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
 
     layer    = Territory,  function = Add,  subject = StructureBlock,
 
@@ -3442,7 +3442,7 @@ Guild's economic relationship PA. Distinct from STD.CA.9 (Fund) in cost currency
 | Action fit | ✓ | Guild public investment in another faction's territory is narratively grounded — infrastructure serves both | Art 00 §7 |
 | Voice fit | ✓ | Guild on-doctrine; Directorate (aligned): structural partnership recognition; Syndicate (opposed): extraction reframed as partnership | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Guild investment economy: 2 Capacity upfront, 1 Capacity/Upkeep return. Restriction (Guild Established adjacent) keeps it doctrinally grounded. Portrait +1. Addresses 04-n11 (Guild↔Network neighbor cooperation) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Economy / Add / AccordAgreement — the Accord is the primary artifact; resource delivery is the trigger | Art 04b §4 |
 | Balance | ✓ | Cost 1 Capacity (form price, per L200/L201) + 2 native delivered to target (sweetener). Income 1 Capacity/Upkeep from target on Accord execution — net positive over 2+ Quarters. PA slot is the primary gate. L201. | Art 02 §6–§7 |
 | Effect duration | ✓ | Resource delivery Immediate. AccordForm delivery Immediate; form lifecycle and cross-Quarter persistence governed by Art 06 §9.4. | Art 04 §5 P19; Art 06 §9.4 |
@@ -3471,7 +3471,7 @@ GUI.PA.2 = Card(
     id="GUI.PA.2",  version="v1.0",
     name    = "Infrastructure Bond",
     tagline = "Publicly extend Guild infrastructure investment to another faction, establishing a formal economic relationship.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Guild,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
 
     layer    = Economy,  function = Add,  subject = AccordAgreement,
 
@@ -4756,7 +4756,7 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 | Action fit | ✓ | Ghost publishing curated analysis is a calculated, rare public act — the cost enforces rarity | Art 00 §7 |
 | Voice fit | ✓ | Ghost on-doctrine; Directorate (aligned): verified, sequenced disclosure; Network (opposed): held both when one was enough | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | "Understanding must precede action" — Ghost publishes only when two tokens confirm both attributions. Portrait +1: calculated disclosure from position of knowledge. 3 Findings cost reflects that public disclosure is doctrinally expensive for Ghost | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Ghost) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Information / Reveal / ActionAttribution (multi-target) | Art 04b §4 |
 | Balance | ✓ | 3 Findings + 2 Intel tokens; Automatic; two targets −2 PS each; Ghost +2 PS. High cost, high yield. Token acquisition is the natural limiter | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
@@ -4780,7 +4780,7 @@ GHO.PA.1 = Card(
     id="GHO.PA.1",  version="v1.0",
     name    = "Publish Analysis",
     tagline = "Release curated intelligence simultaneously attributing operations to two factions — a calculated, costly disclosure.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Ghost,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
 
     layer    = Information,  function = Reveal,  subject = ActionAttribution,
 
@@ -4855,7 +4855,7 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 | Action fit | ✓ | Ghost using institutional accountability to enforce operational scrutiny is on-doctrine and narratively grounded | Art 00 §7 |
 | Voice fit | ✓ | Ghost on-doctrine; Syndicate (aligned): institutional tool with no exposure cost; Guild (opposed): bureaucratic delay vs. direct action | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Ghost uses the institutional channel as a tool, not a stage — no PS gain. Adjacency requirement grounds the card in Ghost's operational footprint. Portrait +1: submitter-bounded | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Ghost) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Resolution / Modify / CovertOperation (difficulty) | Art 04b §4 |
 | Balance | ✓ | 2 Findings; −15 threshold (meaningful but not absolute block); Transient. Ghost adjacency limits targeting range | Art 02 §6–§7 |
 | Effect duration | ✓ | Threshold modifier is Transient (until Beat 5 of next Month — within-Quarter). No multi-Quarter duration | Art 04 §5 P19 |
@@ -4879,7 +4879,7 @@ GHO.PA.2 = Card(
     id="GHO.PA.2",  version="v1.0",
     name    = "Signal Review Request",
     tagline = "Formally request institutional scrutiny on a faction's next covert operation in a named district.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Ghost,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
 
     layer    = Resolution,  function = Modify,  subject = CovertOperation,
 
@@ -4947,7 +4947,7 @@ Ghost submits the case files in order — sequential, dated, attributed. The rec
 | Action fit | ✓ | Formal release of archived intelligence as institutional credibility play — information is power, including cold information released on Ghost's terms | Art 00 §7 |
 | Voice fit | ✓ | Ghost on-doctrine; Directorate (aligned): sequenced formal disclosure is the proper channel; Network (opposed): "publish when you have it" conflicts with Ghost's timing discipline | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Patience and sequenced disclosure are Ghost doctrine. Portrait +1 submitter. | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Ghost) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Information / Remove / IntelToken — expired qualifier handled via restriction + boost field | Art 04b §4 |
 | Balance | ✓ | Base: 1 Findings, +1 PS at threshold 50. Boost: each expired token ×(1+n). Risk scales with depth — failcrit = −(1+n) PS | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shift immediate | Art 04 §5 P19 |
@@ -4971,7 +4971,7 @@ GHO.PA.3 = Card(
     id="GHO.PA.3",  version="v1.0",
     name    = "Declassified Records",
     tagline = "Release expired intelligence as institutional record — each file compounds the disclosure.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Ghost,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
 
     layer    = Information,  function = Remove,  subject = IntelToken,
 
@@ -5036,7 +5036,7 @@ Ghost files the request before Beat 4. The Broadcast Card has been face-up all Q
 | Action fit | ✓ | Forcing disclosure of hidden mechanical effects — Ghost doctrine: information asymmetry is a threat to be corrected | Art 00 §7 |
 | Voice fit | ✓ | Ghost on-doctrine; Directorate (aligned): formal disclosure through proper channel; Network (opposed): "we'd have published it sooner" | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Disclosure from institutional authority is on-doctrine. Portrait +1 submitter. | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Ghost) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Information / Reveal / BroadcastEffectCard — GR 10.1b governs; ARBITER performs the reveal | Art 04b §4 |
 | Balance | ✓ | Automatic. Cost: 1 Findings + PA slot. Reward: table-wide BEC information + +1 PS. Limiter: requires active BC. | Art 02 §6–§7 |
 | Effect duration | ✓ | Reveal immediate; PS immediate; BEC stays in Tableau | Art 04 §5 P19 |
@@ -5060,7 +5060,7 @@ GHO.PA.4 = Card(
     id="GHO.PA.4",  version="v1.0",
     name    = "Public Threat Assessment",
     tagline = "Name a Situation Report. ARBITER opens the file.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Ghost,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
 
     layer    = Information,  function = Reveal,  subject = BroadcastEffectCard,
 
@@ -5128,7 +5128,7 @@ Ghost files the act at Phase B. A table. A banner. Printed materials no other fa
 | Action fit | ✓ | Ghost operating in public in knowledge districts — recruitment = institutional legitimacy, not covert expansion | Art 00 §7 |
 | Voice fit | ✓ | Ghost-specific; Directorate (aligned) watches but doesn't interfere — this is procedure, not threat; Network (opposed) notes Ghost is building in the open what they normally build in the shadows | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | "Understanding must precede action" — public presence in research districts is Ghost anchoring where understanding is produced; Portrait +1 submitter | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Ghost) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory \| Add \| PresenceToken — places Ghost presence chips in target district | Art 04b §4 |
 | Balance | ✓ | 1 Findings + PA slot → +2 chips; restricted to 4 districts, public/React-able, adjacency required | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — chips placed on board are permanent board state (not a Permanent card) | Art 04 §5 P19 |
@@ -5153,7 +5153,7 @@ GHO.PA.5 = Card(
     id="GHO.PA.5",  version="v1.0",
     name    = "Agency Recruitment Fair",
     tagline = "The agency operates in the open. The interested are watching.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Ghost,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
 
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
@@ -6118,7 +6118,7 @@ Directorate's district-level regulatory control PA. All non-Directorate presence
 | Action fit | ✓ | Directorate regulatory authority over district operations is core to their institutional doctrine | Art 00 §7 |
 | Voice fit | ✓ | Directorate on-doctrine; Ghost (aligned): observe who stops crossing; Network (opposed): regulation as toll | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Directorate institutional regulatory authority: Mandate × 2 cost, Established restriction (jurisdictional legitimacy), PS +1. Shapes all other factions' territorial economics in the district. Directly serves Directorate control doctrine | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Modify / PresenceToken — modifies the cost of PresenceToken placement actions | Art 04b §4 |
 | Balance | ⚠ | Seasonal scope at 2 Mandate is strong — affects all remaining Months of Quarter. Single district only. Balance subject to playtesting | Art 02 §6–§7 |
 | Effect duration | ✓ | World condition is Seasonal (within-Quarter, cleared at Phase 21 or Directorate Absent). No multi-Quarter duration. Consistent with Art 04 §5 P19 | Art 04 §5 P19 |
@@ -6142,7 +6142,7 @@ DIR.PA.1 = Card(
     id="DIR.PA.1",  version="v1.0",
     name    = "Regulatory Override",
     tagline = "Declare a district under Directorate oversight, raising the cost of all non-Directorate presence operations.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Directorate,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
 
     layer    = Territory,  function = Modify,  subject = PresenceToken,
 
@@ -6215,7 +6215,7 @@ Directorate's institutional intelligence-gathering PA. No formal restriction —
 | Action fit | ✓ | Institutional investigation via ARBITER is Directorate's mode of intelligence — not covert fieldwork | Art 00 §7 |
 | Voice fit | ✓ | Directorate on-doctrine; Guild (aligned): institutional process produces verifiable record; Syndicate (opposed): operating margin is what the record cannot reach | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Directorate commissions ARBITER investigation (not covert fieldwork): 3 Mandate, yield contingent on prior STD.PA.4/STD.PA.5 groundwork. Creates two-step sequence incentive (STD.PA.4/STD.PA.5 → DIR.PA.2). Portrait +1: submitter-bounded | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Information / Add / IntelToken | Art 04b §4 |
 | Balance | ✓ | 3 Mandate cost is high. Yield 0–2 tokens depending on prior STD.PA.4/STD.PA.5 outcomes. Expensive gamble without groundwork; reliable payoff when chain is set up | Art 02 §6–§7 |
 | Effect duration | ✓ | IntelToken delivery and PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
@@ -6239,7 +6239,7 @@ DIR.PA.2 = Card(
     id="DIR.PA.2",  version="v1.0",
     name    = "Convene an Inquiry",
     tagline = "Commission an ARBITER-mediated institutional investigation into a faction's recent operations.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Directorate,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
 
     layer    = Information,  function = Add,  subject = IntelToken,
 
@@ -6308,7 +6308,7 @@ Directorate's persistent territorial control tool — a district-level board con
 | Action fit | ✓ | District-level movement control — displaces markers immediately; blocks future placement; distinct from DIR.CA.1 (card-type block) and DIR.CA.4 (repositioning) | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Directorate perspective — regulatory authority as territorial infrastructure | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate only; Mandate×3 for permanent district lock; Established restriction (jurisdictional legitimacy requires institutional presence) | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Directorate) — district-level movement authority is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) — district-level movement authority is Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Territory/Block/DeploymentMarker — hard block on placement is the function | Art 04b §4, §5 |
 | Balance | ✓ | Mandate×3, permanent district lock, PS −1 — cost TBD playtesting | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent — persists until counter-acted or persistence_condition fails | — |
@@ -6340,7 +6340,7 @@ EntryExitControls = Card(
     id=TBD,  version="v2.0",
     name    = "Entry/Exit Controls",
     tagline = "Designate a district as a controlled zone — displacing non-Directorate deployment markers and blocking future placement.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Directorate,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Block,  subject = DeploymentMarker,
     beat=4,  resolution=Automatic,  threshold=None,  ring_mod=None,
     trigger=None,
@@ -6414,7 +6414,7 @@ None.
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ | |
 
-*Redesigned S67 — v2.0. PoliticalAct → PublicAct. InjunctionMarker removed; card-as-condition pattern. Seasonal → Permanent with dual clearing condition (trigger OR Phase 21). Dispatch Token consumed on trigger per Governing Rule 7.3. target_taxonomy field introduced (§6.1/§6.2). Self-policing per Governing Rule 6.1a.*
+*Redesigned S67 — v2.0. PublicAct → PublicAct. InjunctionMarker removed; card-as-condition pattern. Seasonal → Permanent with dual clearing condition (trigger OR Phase 21). Dispatch Token consumed on trigger per Governing Rule 7.3. target_taxonomy field introduced (§6.1/§6.2). Self-policing per Governing Rule 6.1a.*
 
 ```python
 P_StandingInjunction = Card(
@@ -6742,14 +6742,14 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 | Voice fit | ✓ | Faction-specific; single Network perspective by design — signal propagation as operational reality | Art 00 §7 |
 | Doctrine alignment | ✓ | Network only; requires STD.CA.6 same round (restriction); Exposure×2; Beat 2 Automatic — both disruption effects land before Beat 4 PA resolution | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — signal propagation is Network-exclusive two-card mechanic | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Submission/Modify/PoliticalAct — extends STD.CA.6's PA cost increase to adjacent district | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | Submission/Modify/PublicAct — extends STD.CA.6's PA cost increase to adjacent district | Art 04b §4, §5 |
 | Balance | ✓ | Exposure×2 for adjacency extension; total combo cost outstanding calibration noted; STD.CA.6 dependency limits use | Art 02 §6–§7 |
 | Effect duration | ✓ | One round: PA cost increase applies this round's Beat 4 PA phase only | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | STD.CA.6 submission as restriction prerequisite; submission ordering and void-on-STD.CA.6-cancel outstanding (Outstanding Issues) | — |
 | Portrait validity | ✓ | Network +1 submitter; signal extension aligns with broadcast doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = adjacent to STD.CA.6.target_district; dependency resolution outstanding (Outstanding Issue) | Art 01 §6–§7 |
-| Supported by components | ✓ | PoliticalAct as target_object; Exposure cost; no new components | Art 02 §6–§8; Art 04b §5 |
+| Supported by components | ✓ | PublicAct as target_object; Exposure cost; no new components | Art 02 §6–§8; Art 04b §5 |
 | Supported by game procedure | ✓ | Beat 2 Automatic; PA cost increase at Beat 4; STD.CA.6 submission ordering outstanding (Outstanding Issue) | Art 03 §9, §9.4, §10 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
@@ -6773,13 +6773,13 @@ NET.CA.4 = Card(
     name    = "Network Cascade",
     tagline = "Extend Broadcast Interference to an adjacent district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
-    layer   = Submission,  function = Modify,  subject = PoliticalAct,
+    layer   = Submission,  function = Modify,  subject = PublicAct,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
-    target_district=district.adjacent(C06.target_district), target_faction=None, target_object=PoliticalAct,
+    target_district=district.adjacent(C06.target_district), target_faction=None, target_object=PublicAct,
     target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).submitted(STD.CA.6, round=game.round) == True,
@@ -7043,7 +7043,7 @@ Network's signature information-attack PA — a coordinated release of all subst
 | Action fit | ✓ | Coordinated multi-attribution broadcast is Network's highest-expression public act | Art 00 §7 |
 | Voice fit | ✓ | Network on-doctrine; Guild (aligned): disclosure makes attribution permanent; Ghost (opposed): sequenced release vs. full dump | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Maximum-expression Network broadcast: all held Intel tokens spent; Exposure × 2 (Network's resource). Network +2 PS on success. Intel token scarcity (Ghost pipeline or covert gathering) is the natural ceiling on doctrine | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Network) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Information / Reveal / ActionAttribution | Art 04b §4 |
 | Balance | ⚠ | Threshold scales with token count (30 + 10n). Damage scales per token (−2 PS each on success, −1 on fail). High cost (2 Exposure + all tokens). Intel tokens are scarce (require Ghost cooperation or covert gathering) — natural limiter | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
@@ -7067,7 +7067,7 @@ NET.PA.1 = Card(
     id="NET.PA.1",  version="v1.0",
     name    = "Public Disclosure",
     tagline = "Network broadcasts all substantiated intelligence about a faction's operations in a single coordinated release.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Network,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
 
     layer    = Information,  function = Reveal,  subject = ActionAttribution,
 
@@ -7134,7 +7134,7 @@ Network's broadcast-derived presence PA — scaling territorial expansion built 
 | Action fit | ✓ | Broadcast-derived community presence growth is Network's primary win-condition mechanism | Art 00 §7 |
 | Voice fit | ✓ | Network on-doctrine; Syndicate (aligned): acquisition-free consolidation; Directorate (opposed): unregulated expansion | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Network deepens existing foothold (Established+) — consolidation, not expansion. Scaling Exposure cost (Network's resource). Portrait +1. Directly serves Network's community-relationship territorial doctrine | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Network) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Add / PresenceToken | Art 04b §4 |
 | Balance | ✓ | Scales: 2 Exposure (1 district), 3 Exposure (2), 4 Exposure (3 max). Restricted to Established+ (not expansion). Partial resolution if some districts fail restriction | Art 02 §6–§7 |
 | Effect duration | ✓ | PresenceToken placement = Permanent board state; card persistence = Immediate | Art 04 §5 P19 |
@@ -7158,7 +7158,7 @@ NET.PA.2 = Card(
     id="NET.PA.2",  version="v1.0",
     name    = "Community Rally",
     tagline = "Mobilize communities across Network's established presence network.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Network,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
 
     layer    = Territory,  function = Add,  subject = PresenceToken,
 
@@ -7230,7 +7230,7 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 | Action fit | ✓ | Unique PA effect — Seasonal hand-visibility obligation on named faction; comply/resist model with genuine decision friction per Month | Art 00 §7 |
 | Voice fit | ✓ | Network perspective (accountability as doctrine) + Directorate counter (institutional authority contested); FactionSpecific PA — two perspectives sufficient | Art 00 §7 |
 | Doctrine alignment | ✓ | Network only; Exposure×2; threshold 50; Seasonal persistence; comply-once clearing models natural media-cycle end | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Network) — public declaration of broadcast accountability; Network-exclusive institutional leverage | Art 04 §6.2; Art 04b §5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) — public declaration of broadcast accountability; Network-exclusive institutional leverage | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ⚠ | Information / Reveal / FactionHand — FactionHand not a registered subject type; needs 04b validation | Art 04b §4, §5 |
 | Balance | ✓ | Exposure×2 at threshold 50; comply-to-clear limits maximum duration; resist penalty (covert ops disabled) is real cost; crit adds immediate PS pressure | Art 02 §6–§7 |
 | Effect duration | ✓ | Seasonal — clears at Quarter end OR when target complies once (whichever is first) | — |
@@ -7259,7 +7259,7 @@ NET.PA.3 = Card(
     id=TBD, version="v1.0",
     name    = "Live Coverage",
     tagline = "Force a named faction to play with their hand visible or forfeit covert submissions, each Phase A for the remaining Months of the Quarter.",
-    type    = PoliticalAct, subtype = FactionSpecific, faction = Network,
+    type    = PublicAct, subtype = FactionSpecific, faction = Network,
     layer   = Information, function = Reveal, subject = FactionHand,  # 04b validation needed
     beat=4, resolution=d100, threshold=50, ring_mod=None, doctrine_mod=None, trigger=None,
     resolution_type = "Probabilistic", outcome_type=None,
@@ -8381,7 +8381,7 @@ Syndicate's public territorial acquisition PA — the counterpart to SYN.CA.3 Ho
 | Action fit | ✓ | Public buyout offers are core Syndicate doctrine — acquire, not take | Art 00 §7 |
 | Voice fit | ✓ | Syndicate on-doctrine; Network (aligned): public offer creates public record; Guild (opposed): presence is built, not bought | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Syndicate acquire-not-take doctrine: public offer before forced action. Scaling cost (n × 2 Capital) rewards the target. PS on decline (+1 Syndicate, −1 target) incentivizes acceptance. Portrait +1. Legitimizes acquisition mode vs SYN.CA.3 Hostile's coercive mode | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Syndicate) / ElectPlayer | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Syndicate) / ElectPlayer | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Redirect / PresenceToken | Art 04b §4 |
 | Balance | ✓ | 1 Capital offer fee (non-refundable) + 2n conditional. Scaling cost makes Dominant buyout expensive (12 Capital). Beat 4 resolution (not Debrief) | Art 02 §6–§7 |
 | Effect duration | ✓ | PresenceToken transfer is immediate at Beat 4 acceptance; card persistence = Immediate | Art 04 §5 P19 |
@@ -8405,7 +8405,7 @@ SYN.PA.1 = Card(
     id="SYN.PA.1",  version="v1.0",
     name    = "Acquisition Offer",
     tagline = "Publicly offer to purchase another faction's presence position in a district.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Syndicate,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
 
     layer    = Territory,  function = Redirect,  subject = PresenceToken,
 
@@ -8480,7 +8480,7 @@ Syndicate's political leverage PA. Places a Capital-valued marker on a named dis
 | Action fit | ✓ | Capital-as-political-leverage is core Syndicate doctrine | Art 00 §7 |
 | Voice fit | ✓ | Syndicate on-doctrine; Ghost (aligned): deferred mechanism patience; Directorate (opposed): unregulated shadow investment | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Capital-as-leverage: 2 Capital escrow shapes table behavior without direct action. PS +1 at Beat 4. Voluntary withdrawal (1 Mandate) as diplomatic instrument. Portfolio +1: submitter-bounded | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PoliticalAct / FactionSpecific (Syndicate) | Art 04 §6.2 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Syndicate) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Economy / Add / NativeResource (deferred, conditional on Dominant at Upkeep) — note: payout resource is Capital; subject label may need schema pass clarification | Art 04b §4 |
 | Balance | ✓ | 2 Capital cost + PS +1; 2 Capital at risk if another faction claims Dominant. Maximum loss: 2 Capital + 1 Mandate (withdrawal) | Art 02 §6–§7 |
 | Effect duration | ✓ | DividendMarker payout at Upkeep Step 5 — within-Quarter. Seasonal persistence. Phase 21 escrow return if unclaimed. No multi-Quarter effect | Art 04 §5 P19 |
@@ -8504,7 +8504,7 @@ SYN.PA.2 = Card(
     id="SYN.PA.2",  version="v1.0",
     name    = "Public Dividend",
     tagline = "Declare a public capital investment in a district — rewarding whoever holds Dominance at next Upkeep.",
-    type    = PoliticalAct,  subtype = FactionSpecific,  faction = Syndicate,
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
 
     layer    = Economy,  function = Add,  subject = NativeResource,
 
