@@ -78,3 +78,13 @@
 **Privacy and disclosure:** Private by default. Holder may disclose publicly, privately to one player, verbally, or via trade. Verbal claims about undisclosed tokens cannot be verified without a specific game action.
 
 **Discard:** Any token may be discarded at any time, immediately, permanently — cannot be retrieved or examined afterward. ARBITER observes discards; may be Portrait-relevant.
+
+**IntelToken field structure:** A token records exactly two things: (1) the faction it concerns, (2) the quarter it was gathered. No other fields exist. `content`, `content=false`, `value`, `verified`, and similar are NOT valid IntelToken states or fields — there is no such thing as a false IntelToken or a content-flagged token.
+
+**Privacy and card targeting — 00a §10.1:** IntelTokens in a faction's private pool are privately held information. No card may compel disclosure or removal of privately held tokens — this is categorically prohibited by 00a §10.1. ARBITER reaching into a faction's private domain to retrieve or remove a token is also prohibited (10.1b covers only ARBITER-initiated disclosure of ARBITER-domain content; it does not authorize card-directed retrieval from faction private pools).
+
+**Only valid cross-faction IntelToken target:** An IntelToken submitted by a faction on a PA in the **Faction Resolution Grid** (§9.2 Public Declaration). Once submitted, the token is in ARBITER's procedural domain — no longer privately held — and is a valid target for card effects at Beat 3 (before Beat 4 processes the PA). This is the only location where another faction's IntelToken can be targeted by a card. Tokens held in private pools cannot be targeted by any card effect.
+
+**Two resolution grid domains (never conflate):**
+- **Faction Resolution Grid** — where PAs are submitted (§9.2); factions place their PA cards face-up here with resources and IntelTokens; Target Profile placed face-down. IntelTokens here are ARBITER-domain at Beat 3.
+- **ARBITER covert grid** — where covert dispatch cases are assembled (§9.1); entirely ARBITER-domain; never a valid card effect target.

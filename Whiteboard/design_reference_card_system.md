@@ -273,12 +273,25 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 
 *Condensed field reference. Full definitions: Art 04 §6.1–§6.3.*
 
+**Schema first-pass discipline:** Before drafting any card spec, read §6.1–§6.3 and verify: all required fields are present, all enum values are valid. Do not draft and correct later — catch at spec time. The design checklist "Data schema validation" row confirms this was done; it should pass on first draft, not be deferred.
+
+**Easy-to-miss required fields:** `card_id` · `doctrine_mod` · `boost` · `ps_framing` — all must appear in the spec (as `None` if not used). Omitting them is a schema error.
+
+**resolution_type vocabulary (str, not enum):** Use `"Probabilistic"` for d100 cards. Use `"Transactional"` for Automatic cards only. Do not use `"Positional wager"` unless matching an established pattern.
+
+**fail=None means "No effect, cost spent."** Do not write the string `"No effect."` in the spec field — use `None`.
+
+**Private information gate (00a §10.1):** No card may target privately held information — IntelTokens in a faction's pool, hand cards, directives. Cards cannot reach into a faction's private domain. The ONLY valid cross-faction IntelToken target is one submitted on a PA in the Faction Resolution Grid (§9.2). See ref_tracking.md for full targeting rules.
+
+---
+
 ### Field Groups
 
 **Identity**
 | Field | Type | Notes |
 |-------|------|-------|
-| `id` | str | Format: [type prefix][sequence number] |
+| `card_id` | CardID | Canonical ID — `[FAC].[TYPE].n` per L219; e.g., `"GHO.CA.4"` |
+| `id` | str | Legacy sequence integer (e.g., `id=19`); preserved for traceability |
 | `version` | Semver | Per-card; v[major].[minor] |
 | `name` | str | In-world name — not a mechanical label |
 | `tagline` | str | One-line in-world description |
@@ -329,6 +342,9 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 **Portrait**
 `portrait: dict[Faction, PortraitEntry]` — valid params: `flat` · `submitter` · `where` · `modifier` · `mod_where` — `failcrit=` is NOT a valid PortraitEntry parameter
 
+**Public Standing**
+`ps_framing: PSFraming | None` — required field; `None` = card produces no PS shift. Do not omit.
+
 **Narrative**
 `narrative` · `perspectives` · `design_note` · `arbiter_note`
 
@@ -338,6 +354,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 CardType:    CovertOperation | PublicAct | Pass | Countermeasure | Modifier | EmergencyResponse
 Subtype:     Standard | FactionSpecific
 Faction:     All | Ghost | Network | Syndicate | Guild | Directorate
+Resolution:  d100 | Automatic   ← NOT "Dice" — d100 is the exact enum value
 Persistence: Immediate | Transient | Seasonal | Permanent
 Layer:       Territory | Economy | Information | Submission | Resolution | Standing
 Function:    → Art 04b §4 / ref_taxonomy.md
@@ -369,7 +386,7 @@ Before writing any new card spec, check:
 1. **Duration** — one of: Immediate / Transient / Seasonal / Permanent (Art 04 §5 P19)
 2. **Resource payment** — full proceeds at stated difficulty; partial incurs threshold penalty; zero voids the action (Art 04 §5 P20)
 3. **Deployment marker target?** → it moves, doesn't remove (Governing Rule 8.3a)
-4. **Ghost adjacency?** → only C05 is exempt (Design Pillar [04-n6 pending])
+4. **Ghost adjacency?** → field collection ops (Station/Full Take/Flip) require Ghost presence in district adjacent to target; analytical ops (GHO.CA.1–5, SCIF, Source Substitution) have no adjacency restriction; STD.CA.5 grants analytical adjacency exemption. See design_reference.md Ghost op classification.
 5. **React trigger** — is it publicly observable? (Art 04 §5 P5)
 6. **Passive generation?** → not allowed (Design Pillar 4.8d)
 7. **Chorus Node** — no structures ever (Governing Rule 8.1a)

@@ -38,6 +38,22 @@ Worst-case stack: partial payment + ring penalty + Discredited + Type B = −110
 
 ---
 
+## Monthly Phase Sequence
+
+Each Month: **§9.1 Covert Dispatch** → **§9.2 Public Declaration** → **§9.3 Countermeasures** → **§9.4 Resolution (Beats 0–5)**. These are the canonical Art 03 names — never "Dispatch A/B/C" or "Phase A/B/C."
+
+**§9.1 Covert Dispatch:** Factions assemble dispatch cases (operation card + Dispatch Token + cost resources), seal, and transmit to ARBITER. Cases are ARBITER-domain from this point. Factions name their target faction (and any declared parameters) on the Target Profile inside the case.
+
+**§9.2 Public Declaration:** Factions declare PAs in initiative order — card placed face-up in Faction Resolution Grid with Dispatch Token and resource tokens. Target Profile placed **face-down** on the card. IntelTokens may be submitted here as cost payment or as modifiers. Once placed, card is a valid countermeasure target and cannot be withdrawn.
+
+**§9.3 Countermeasures:** Factions deploy or pass in initiative order. CM cards may target queued covert ops or placed PAs.
+
+**Two resolution grid domains — never conflate:**
+- **Faction Resolution Grid** — PA domain; created at §9.2; visible to all players (cards face-up, Target Profiles face-down). IntelTokens submitted here are in ARBITER's procedural domain at Beat 3, NOT in the faction's private pool.
+- **ARBITER covert grid** — covert op domain; assembled at §9.1 Beat 0; entirely ARBITER-private. Never a valid card-effect target.
+
+---
+
 ## Public Act Declaration (§9.2)
 
 1. Declarations in initiative order. Factions may pass verbally.

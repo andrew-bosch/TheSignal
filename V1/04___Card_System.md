@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.43 Draft  
+**Version:** 0.9.44 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-06-20  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -92,7 +92,7 @@ Effects either resolve permanently (persisting for the remainder of the session)
 
 **Principle 7 — Faction-specific cards are doctrinally exclusive.**
 
-Every faction-specific card must pass two tests: mechanical (only this faction would do this — the effect cannot be justified by another faction's doctrine) and narrative (only this faction would say it this way — the card text sounds like no other faction). If either test fails, the card belongs to no one. Traceable to Artifact 00 §7. *Design Pillar [04-n6 pending].*
+Every faction-specific card must pass two tests: mechanical (only this faction would do this — the effect cannot be justified by another faction's doctrine) and narrative (only this faction would say it this way — the card text sounds like no other faction). If either test fails, the card belongs to no one. Traceable to Artifact 00 §7.
 
 **Principle 8 — Every card carries multiple voices in tension.**
 
@@ -3791,7 +3791,7 @@ GHO.CA.3 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost's operational security card — intelligence denial rather than intelligence collection. Permanently removes attribution from a prior Ghost operation, making it untraceably covert. Low cost (1 Finding) reflects that Ghost is tidying the record, not breaking new ground; the hard work was the original operation. The `prior_op` restriction ensures Deep Cover cannot be used preemptively — attribution must exist (and be Ghost's) for removal to fire. Permanent per Principle 11.
+Ghost's intelligence interdiction card — operational disruption rather than evidence destruction. At §9.1 Covert Dispatch, Ghost names a target faction and pays 1 unit of that faction's native resource (the operational prerequisite — Ghost must already be embedded in the target's systems). At Beat 3, ARBITER checks the first PA in the target faction's Faction Resolution Grid queue: if an IntelToken is submitted on it, Ghost removes it before Beat 4 processes the PA. Two disruption outcomes depending on how the token was used: if it was the PA's cost payment, the PA is voided; if it was a modifier, the PA loses that modifier and resolves blind. Threshold 25 (Challenging) reflects the difficulty of locating and intercepting live intelligence before a public act proceeds. Redesigned S113: prior design (S68) targeted rival-held private IntelTokens — violated 00a §10.1 (ARBITER reaching into a faction's private domain). Faction Resolution Grid is the only valid targeting location for another faction's IntelToken.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -3800,25 +3800,21 @@ Ghost's operational security card — intelligence denial rather than intelligen
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Operational security card — permanent attribution removal is Ghost's signature intelligence denial capability; distinct from GHO.CA.3 (reads plans) and STD.CA.5 (gathers intel) | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — concealment as doctrine, not tactic | Art 00 §7 |
-| Doctrine alignment | ✓ | Ghost only; 1 Finding cost reflects tidying the record, not new groundwork; prior_op restriction prevents preemptive use — attribution must exist first | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — permanent protection is Ghost-exclusive per Principle 11 | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Remove/IntelToken — permanently removes Ghost-faction IntelToken from named rival's pool | Art 04b §4, §5 |
-| Balance | ✓ | 1 Finding, Automatic, permanent — low cost appropriate; restriction (must have prior attributed op) is the real gate; permanent effect justified by Ghost doctrine | Art 02 §6–§7 |
-| Effect duration | ✓ | Permanent: attribution removal is irreversible per Principle 11 | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None; restriction enforces prior-op existence | — |
-| Portrait validity | ✓ | No portrait entry — Ghost concealment doctrine: even performing Deep Cover leaves no doctrinal signal; absence confirmed intentional (Outstanding Issue) | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — operates on action attribution record; no district context | Art 01 §6–§7 |
-| Supported by components | ✓ | ActionAttribution as target_object — component registration outstanding (Outstanding Issue) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | ARBITER removes attribution permanently from record; procedure outstanding (Outstanding Issue) | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Action fit | ✓ | Intelligence interdiction — Ghost removes a rival's submitted IntelToken from the Faction Resolution Grid before Beat 4; voids PA or strips modifier depending on how token was used; distinct from GHO.CA.3 (reads plans) and STD.CA.5 (gathers intel) | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Ghost perspective — interdiction as doctrine, not tactic | Art 00 §7 |
+| Doctrine alignment | ✓ | Cost = 1 native resource of target faction — Ghost must be embedded in the target's operational systems; threshold 25 reflects difficulty of live intelligence interdiction; targets the intelligence that was meant to precede the rival's action | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence interdiction is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information / Remove / IntelToken — IntelToken submitted on PA in Faction Resolution Grid is the only valid cross-faction IntelToken target (00a §10.1); confirmed S113 | Art 04b §4, §5 |
+| Balance | ✓ | 1 native resource (target faction), threshold 25 — cost requires prior economic embedding; Challenging roll is the difficulty gate; disruption ceiling (PA void) is high-stakes but gated behind both cost and roll | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate: token removed at Beat 3; PA outcome resolved at Beat 4 | — |
+| Persistence | ✓ | Immediate — card fully resolved at Beat 3; no lingering game-state marker | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None; Beat 3 timing is default for covert ops | — |
+| Portrait validity | ✓ | No portrait entry — Ghost interdicting live intelligence is tradecraft, not doctrine; absence intentional (confirmed S113) | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — operates on Faction Resolution Grid, not a district | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken as target_object — component registered; Faction Resolution Grid is ARBITER-maintained procedure | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | §9.1 names target at Covert Dispatch; Beat 3 ARBITER checks first PA in target's Faction Resolution Grid queue; Beat 4 PA resolves without token (or is voided) | Art 03 §9.1, §9.4.2, §9.4.3; Art 07 |
+| Data schema validation | ✓ | Validated S113: card_id, doctrine_mod, boost, ps_framing added; resolution=d100, resolution_type=Probabilistic, fail=None corrected | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-
-#### Outstanding Issues
-
-- **Empty portrait:** No portrait entry. Confirm intentional — Ghost concealment doctrine means even performing Deep Cover leaves no doctrinal signal.
 
 #### Status
 
@@ -3826,32 +3822,39 @@ Ghost's operational security card — intelligence denial rather than intelligen
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*S51 redesign — design pass pending*
+*S113 redesign — Issues Resolved pending sign-off review*
 
 ```python
 GHO.CA.4 = Card(
-    id=19,  version="v1.1",
+    card_id = "GHO.CA.4",
+    id=19,  version="v1.2",
     name    = "Deep Cover",
-    tagline = "Permanently destroy a rival's intelligence file on Ghost.",
+    tagline = "Intercept and destroy the intelligence behind a rival's public act.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Remove,  subject = IntelToken,
-    beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
-    persistence     = Immediate,
+    beat=3, resolution=d100, threshold=25, ring_mod=None, doctrine_mod=None, trigger=None,
+    resolution_type="Probabilistic", outcome_type=None,
+    persistence           = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
-    target_district=None, target_faction=faction(named_opponent), target_object=IntelToken(faction=Ghost, holder=faction(target)),
+    target_district=None,
+    target_faction=faction(named_opponent),  # declared at §9.1 Covert Dispatch
+    target_object=IntelToken(submitted_on=faction(target).resolution_grid.pa_queue[0]),
     target_taxonomy=None,
     affinity=None,
-    restriction = None,
-    cost        = resource.faction(acting).findings * 1,
-    success     = game.remove(IntelToken(faction=Ghost, holder=faction(target)), permanent=True),
-    successcrit=None, fail=None, failcrit=None,
+    restriction=None,  # target condition evaluated at Beat 3 — see arbiter_note
+    cost=resource.faction(target).native * 1,
+    boost=None,
+    success  = game.remove(target_object),
+    # If token was PA cost payment: PA is voided (auto-fail at Beat 4, Dispatch Token returned)
+    # If token was PA modifier: PA loses modifier, resolves at Beat 4 without it
+    successcrit=None,  fail=None,  failcrit=None,
     portrait    = {},
-    narrative   = "Good cover does not expire at the end of the week.",
-    perspectives = {Ghost: "It did not happen. This is not a lie. It is a permanent correction to an incomplete record."},
-    design_note  = "Evidence destruction — Ghost permanently removes an IntelToken referencing Ghost from a named rival's pool. Redesigned S68: original remove_attribution() assumed ARBITER ledger (Governing Rule 6.1 violation); narrowed to IntelToken as the only surviving physical attribution object. Ghost's own tokens are freely discardable; this card's value is exclusively against rival-held tokens.",
-    arbiter_note = "ARBITER retrieves and permanently removes one IntelToken(faction=Ghost) from the named faction's pool at Beat 3. Act is visible to all players. If no such token exists, operation has no effect — resources spent.",
+    ps_framing  = None,
+    narrative   = "The act has no foundation once the intelligence beneath it is removed.",
+    perspectives = {Ghost: "They submitted their evidence expecting it to do what evidence does. We made sure it did not arrive."},
+    design_note  = "Cost is 1 native resource of the target faction — Ghost must already hold it, meaning prior economic embedding in the target's operations. This is the operational prerequisite, not a doctrinal gate (doctrine_mod=None). The Faction Resolution Grid is the only location where another faction's IntelToken is a valid card target (00a §10.1); privately held tokens are untouchable. Two disruption tiers: token as cost voids the PA; token as modifier strips it. Both are significant; the ceiling (PA void) is the rare case where the target committed their token as payment.",
+    arbiter_note = "At §9.1: Ghost names target faction. At Beat 3: (1) confirm Ghost holds 1 unit of target faction's native resource — if not, case is invalid, return to Ghost, no effect. (2) Check first PA in target faction's Faction Resolution Grid queue for a submitted IntelToken. If none present: announce 'no valid target,' operation has no effect, cost spent, no roll. (3) If IntelToken present: collect cost, roll d100 vs. 25 (+/− PS modifier). On success: remove IntelToken (recycle or dispose per component physical design). If token was cost payment, mark PA as voided — at Beat 4 it auto-fails; Dispatch Token returned to target faction. If token was a modifier, PA continues at Beat 4 without it. On fail: no effect.",
 )
 ```
 
@@ -4556,7 +4559,7 @@ Standard equivalent: PM05 04-n15.
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None; restriction enforces Intel token presence | — |
 | Portrait validity | ✓ | Ghost +1: submitter-bounded | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None; plant mode adjacency (Design Pillar [04-n6 pending]) applies only in plant mode | Art 01 §6–§7 |
+| Supported by zones | ✓ | target_district = None — faction-targeted; no adjacency restriction. Plant mode retired S112. Card 🚫 BLOCKED (L222). | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken as both cost and target; requires two writable fields (faction + quarter) outstanding (Outstanding Issue); instructions slip in case | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Plant mode delivery protocol same as Source Substitution — outstanding (Outstanding Issue) | Art 02 §6–§8; Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
@@ -4840,7 +4843,7 @@ GHO.PA.1 = Card(
 [↑ Public Acts](#ghost-public-acts)
 
 #### Design Rationale
-Ghost uses institutional channels to apply operational pressure on a named faction. The effect is a −15 threshold penalty on that faction's covert operations in the named district next Month (Transient). Ghost gains no PS — this is a tool, not a stage. Ghost adjacency requirement (Design Pillar [04-n6 pending]) applies to all Ghost cards except STD.CA.5. Persistence = Transient: the GHO.PA.2 card stays face-up on the table with a marker on the target district until Beat 5 of next Month, serving as the active condition indicator. ARBITER removes the card and returns it to Ghost at Beat 5.
+Ghost uses institutional channels to apply operational pressure on a named faction. The effect is a −15 threshold penalty on that faction's covert operations in the named district next Month (Transient). Ghost gains no PS — this is a tool, not a stage. Ghost adjacency applies — Ghost must have presence in a district adjacent to the target. Persistence = Transient: the GHO.PA.2 card stays face-up on the table with a marker on the target district until Beat 5 of next Month, serving as the active condition indicator. ARBITER removes the card and returns it to Ghost at Beat 5.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -4851,7 +4854,7 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 |----------|------|------|--------------|
 | Action fit | ✓ | Ghost using institutional accountability to enforce operational scrutiny is on-doctrine and narratively grounded | Art 00 §7 |
 | Voice fit | ✓ | Ghost on-doctrine; Syndicate (aligned): institutional tool with no exposure cost; Guild (opposed): bureaucratic delay vs. direct action | Art 00 §7, §9 |
-| Doctrine alignment | ✓ | Ghost uses the institutional channel as a tool, not a stage — no PS gain. Adjacency requirement (Design Pillar [04-n6 pending]) grounds the card in Ghost's operational footprint. Portrait +1: submitter-bounded | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Ghost uses the institutional channel as a tool, not a stage — no PS gain. Adjacency requirement grounds the card in Ghost's operational footprint. Portrait +1: submitter-bounded | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PoliticalAct / FactionSpecific (Ghost) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Resolution / Modify / CovertOperation (difficulty) | Art 04b §4 |
 | Balance | ✓ | 2 Findings; −15 threshold (meaningful but not absolute block); Transient. Ghost adjacency limits targeting range | Art 02 §6–§7 |
@@ -4859,7 +4862,7 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 | Persistence | ✓ | Transient — card stays face-up on table with district marker until Beat 5 next Month | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
 | Portrait validity | ✓ | Ghost +1: submitter-bounded | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.any — valid zone; restriction uses Ghost presence in adjacent district (valid zone condition per Design Pillar [04-n6 pending]) | Art 01 §6–§7 |
+| Supported by zones | ✓ | target_district = district.any — valid zone; restriction: Ghost presence in district adjacent to target | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component — threshold modifier is a world condition tracked by ARBITER; Findings × 2 cost (Art 02 §8) | Art 02 §8 |
 | Supported by game procedure | ✓ | Physical tracking: GHO.PA.2 card face-up + district marker; ARBITER removes at Beat 5 next Month | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
@@ -4898,7 +4901,7 @@ GHO.PA.2 = Card(
 
     target_taxonomy=None,
     affinity    = None,
-    restriction = faction(Ghost).presence(district.adjacent_to(target_district)) > 0,  # Design Pillar [04-n6 pending]
+    restriction = faction(Ghost).presence(district.adjacent_to(target_district)) > 0,
     cost        = resource.faction(Ghost).findings * 2,
 
     success = game.world_condition(
@@ -4921,7 +4924,7 @@ GHO.PA.2 = Card(
         Syndicate: "Ghost asks ARBITER to enforce the review. No exposure, no escalation, no record beyond the request itself. We recognize the structure. The target carries the friction. Ghost carries nothing.",  # aligned
         Guild:     "Ghost routes the pressure through ARBITER rather than holding the position itself. The district gets harder to operate in. Nothing is built. Ghost calls this strategy. Guild calls it avoidance.",  # opposed
     },
-    design_note  = "Ghost operational pressure PA. Uses institutional scrutiny (ARBITER) to apply −15 threshold to target faction's covert ops in named district next Month. No PS gain for Ghost — the channel is a tool. Ghost adjacency (Design Pillar [04-n6 pending]): must have presence in adjacent district. Persistence = Transient: GHO.PA.2 card face-up on table + district marker until Beat 5 of next Month. Multiple P18s from different Months can stack. Distinct from GHO.PA.1 (attribution) — GHO.PA.2 creates ongoing pressure without disclosure.",
+    design_note  = "Ghost operational pressure PA. Uses institutional scrutiny (ARBITER) to apply −15 threshold to target faction's covert ops in named district next Month. No PS gain for Ghost — the channel is a tool. Ghost adjacency: must have presence in district adjacent to target. Persistence = Transient: GHO.PA.2 card face-up on table + district marker until Beat 5 of next Month. Multiple P18s from different Months can stack. Distinct from GHO.PA.1 (attribution) — GHO.PA.2 creates ongoing pressure without disclosure.",
     arbiter_note = "Beat 4: place GHO.PA.2 card face-up on table with marker on target district. Apply −15 threshold penalty to all covert operations submitted by target faction in target district next Month (Beat 3). Card expires Beat 5 that Month — announce removal, return card to Ghost. Multiple GHO.PA.2 cards on same district from different Months stack (each tracked independently). Ghost adjacency enforced at Beat 0.",
 )
 ```
@@ -5113,7 +5116,7 @@ GHO.PA.4 = Card(
 [↑ Public Acts](#ghost-public-acts)
 
 #### Design Rationale
-Ghost's only territory PA — operates entirely in the open, targeting districts where the analytical workforce already lives. Career fairs, public outreach, visible institutional presence. Distinct from STD.CA.3 Campaign (covert, +1 chip, any district): this is public (+2 chips, declared at Phase B, React-able), costs Ghost's own resource, and is restricted to the 4 Findings-generating districts where Ghost's doctrine is most legible. PA slot + 1 Findings justifies the +2 chip output. Ring modifier: easier in Baryo (University Perimeter — Ghost's natural Baryo anchor), harder in Core (Chorus Research — high-prestige, contested institutional space). Successcrit +1 PS: a well-attended fair is a public credibility event. Failcrit −1 PS: low turnout in public is an embarrassment. Ghost adjacency (Design Pillar [04-n6 pending]) applies — no ghost-in-place ops without a foothold nearby.
+Ghost's only territory PA — operates entirely in the open, targeting districts where the analytical workforce already lives. Career fairs, public outreach, visible institutional presence. Distinct from STD.CA.3 Campaign (covert, +1 chip, any district): this is public (+2 chips, declared at Phase B, React-able), costs Ghost's own resource, and is restricted to the 4 Findings-generating districts where Ghost's doctrine is most legible. PA slot + 1 Findings justifies the +2 chip output. Ring modifier: easier in Baryo (University Perimeter — Ghost's natural Baryo anchor), harder in Core (Chorus Research — high-prestige, contested institutional space). Successcrit +1 PS: a well-attended fair is a public credibility event. Failcrit −1 PS: low turnout in public is an embarrassment. Ghost adjacency applies — must have presence in a district adjacent to the target Findings district.
 
 #### Card Story
 Ghost files the act at Phase B. A table. A banner. Printed materials no other faction would bother preparing. The researchers in this district have been watching Ghost operate for two Quarters — they know what the work is. By Beat 4 the conversations have happened. Ghost has presence now, not just access. The district noted the distinction.
@@ -5172,7 +5175,7 @@ GHO.PA.5 = Card(
     target_taxonomy = None,
 
     affinity    = None,
-    restriction = district.resource_type == Findings,  # adjacency per Design Pillar [04-n6 pending]
+    restriction = district.resource_type == Findings and faction(Ghost).presence(district.adjacent_to(target_district)) > 0,
     cost        = resource.faction(Ghost).findings * 1,
     boost       = None,
 
@@ -5188,8 +5191,8 @@ GHO.PA.5 = Card(
 
     narrative    = None,  # pending D-04-08
     perspectives = None,  # pending D-04-08
-    design_note  = "Ghost's only territory PA. Adds 2 presence chips in a Findings-generating district (University Perimeter, Data Exchange, Research Institute, Chorus Research — 4 districts). PA slot + 1 Findings cost justifies +2 output over STD.CA.3 Campaign's covert +1; public declaration means opponents see the target at Phase B and can React. Ring modifier: easier in Baryo (University Perimeter, familiar academic ground), harder in Core (Chorus Research, contested institutional space). Successcrit +1 PS: a well-attended fair is a public credibility event. Failcrit −1 PS: low turnout is a public embarrassment. Ghost adjacency (Design Pillar [04-n6 pending]) applies at Beat 0. card_id = GHO.PA.5.",
-    arbiter_note = "Restriction check at Beat 0: confirm target district resource_type = Findings AND Ghost has presence in an adjacent district (Design Pillar [04-n6 pending]). On success: place 2 Ghost presence chips in target district (enforce GR 8.1 max 6). On successcrit: additionally move Ghost's PS marker +1. On failcrit: move Ghost's PS marker −1. Cost (1 Findings) submitted to Reservoir regardless of outcome.",
+    design_note  = "Ghost's only territory PA. Adds 2 presence chips in a Findings-generating district (University Perimeter, Data Exchange, Research Institute, Chorus Research — 4 districts). PA slot + 1 Findings cost justifies +2 output over STD.CA.3 Campaign's covert +1; public declaration means opponents see the target at Phase B and can React. Ring modifier: easier in Baryo (University Perimeter, familiar academic ground), harder in Core (Chorus Research, contested institutional space). Successcrit +1 PS: a well-attended fair is a public credibility event. Failcrit −1 PS: low turnout is a public embarrassment. Ghost adjacency applies at Beat 0. card_id = GHO.PA.5.",
+    arbiter_note = "Restriction check at Beat 0: confirm target district resource_type = Findings AND Ghost has presence in a district adjacent to target. On success: place 2 Ghost presence chips in target district (enforce GR 8.1 max 6). On successcrit: additionally move Ghost's PS marker +1. On failcrit: move Ghost's PS marker −1. Cost (1 Findings) submitted to Reservoir regardless of outcome.",
 )
 ```
 

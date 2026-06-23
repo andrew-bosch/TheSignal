@@ -22,6 +22,8 @@
 
 **Doctrinal ring:** Ghost — Directorate — Guild — Network — Syndicate — (back to Ghost). Adjacent = closer philosophically. `doctrine_mod`: neighbor +15, opposed −15.
 
+**Ghost op classification:** Ghost covert ops divide into two classes. *Field collection ops* (Station, Full Take, Flip) deploy physical infrastructure in a district — carry `restriction: district(self|adjacent).faction(acting).presence > 0`. *Analytical ops* (GHO.CA.1–5, SCIF, Source Substitution) process existing information — no adjacency restriction. STD.CA.5 grants Ghost an adjacency exemption (remote analytical reach).
+
 ---
 
 ## Sub-References — Load on Demand
@@ -64,7 +66,7 @@
 
 ## Quarter Structure (Summary)
 
-Upkeep → Placement (2 markers, snake order) → Month 1/2/3 [Dispatch A (Covert) → B (PA declaration) → C (Countermeasures) → Resolution Beats 0–5] → Debrief → End of Quarter.
+Upkeep → Placement (2 markers, snake order) → Month 1/2/3 [§9.1 Covert Dispatch → §9.2 Public Declaration → §9.3 Countermeasures → Resolution Beats 0–5] → Debrief → End of Quarter.
 
 **Beats:** 0 = cases open/grid built · 1 = read board state/SitRep · 2 = conditions set (Beat 2 cards) · 3 = covert ops resolve · 4 = PAs resolve · 5 = cleanup/Battlefield Strength if Contested.
 
