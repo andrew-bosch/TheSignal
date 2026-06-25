@@ -10,9 +10,9 @@
 
 **Future state:** Becomes the primary playtesting tuning tool at Tier 1 playtest. At Tier 2+, feeds directly into the code engine's balance configuration layer.
 
-**Depends on:** 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking; 03 — Round Structure & Gameplay; 04 — Card System (§5 blocked pending completion)
+**Depends on:** 02 — Components; 03 — Round Structure & Gameplay; 04 — Card System (§5 blocked pending completion)
 
-**Source versions:** 02a v1.4; 02b v1.5; 03 v1.7; 04 pending (§5 not populated)
+**Source versions:** 02 v2.4; 03 v1.7; 04 pending (§5 not populated)
 
 ---
 
@@ -34,7 +34,7 @@
 
 ### Starting Resources per Faction
 
-*Source: Art 02a §8*
+*Source: Art 02 §7*
 
 | Faction | Findings | Exposure | Capital | Capacity | Mandate |
 |---------|----------|----------|---------|----------|---------|
@@ -46,7 +46,7 @@
 
 ### Round 1 Totals (Starting + Round 1 Income)
 
-*Source: Art 02a §8*
+*Source: Art 02 §7*
 
 | Faction | Resource | Starting | R1 Income | R1 Total | Decay Check |
 |---------|----------|---------|-----------|---------|------------|
@@ -58,7 +58,7 @@
 
 ### Component Quantities
 
-*Source: Art 02a §9*
+*Source: Art 02 §13*
 
 | Component | Quantity |
 |-----------|----------|
@@ -77,7 +77,7 @@
 
 ### Tracking Scales
 
-*Source: Art 02b §6–§7*
+*Source: Art 02 §12*
 
 | Track | Scale | Starting Value | Notes |
 |-------|-------|----------------|-------|
@@ -90,7 +90,7 @@
 
 ### District Base Values by Ring
 
-*Source: Art 02a §8*
+*Source: Art 02 §7*
 
 | Ring | Base Value per Quarter |
 |------|----------------------|
@@ -101,7 +101,7 @@
 
 ### Generation Formula
 
-*Source: Art 02a §8*
+*Source: Art 02 §7*
 
 ```
 Generation = District Base Value × Level Modifier
@@ -112,7 +112,7 @@ Generation = District Base Value × Level Modifier
 
 ### Level Modifiers
 
-*Source: Art 02a §6, §8*
+*Source: Art 02 §6, §7*
 
 | Influence Level | Modifier |
 |----------------|---------|
@@ -124,7 +124,7 @@ Generation = District Base Value × Level Modifier
 
 ### Affinity Bonus
 
-*Source: Art 02a §8*
+*Source: Art 02 §7*
 
 +1 unit of native resource when a faction holds **Dominant** in a district whose native resource matches the faction's native resource. Dominant only. No per-session cap — applies in every qualifying district simultaneously.
 
@@ -132,7 +132,7 @@ Generation = District Base Value × Level Modifier
 
 ### Structure Block Bonus
 
-*Source: Art 02a §7*
+*Source: Art 02 §6*
 
 +1 per structure block owned, per quarter at Upkeep. Owner declares at Upkeep which resource the block produces:
 
@@ -143,7 +143,7 @@ Choice is public, declared per block, may change each quarter. Requires at least
 
 ### Passive Generation
 
-*Source: Art 02a §8*
+*Source: Art 02 §7*
 
 1 unit of native resource per faction per quarter. Cannot be blocked, reduced, or affected by any game action.
 
@@ -159,7 +159,7 @@ Choice is public, declared per block, may change each quarter. Requires at least
 
 ### Findings Decay — Ghost Only
 
-*Source: Art 02a §8*
+*Source: Art 02 §7*
 
 Checked after all spending at quarter end.
 
@@ -173,7 +173,7 @@ Cannot reduce below 0. No other faction's resources decay in L1.
 
 ### Public Standing — Natural Drift
 
-*Source: Art 02b §7*
+*Source: Art 02 §12*
 
 Applied at quarter end after all other standing changes.
 
@@ -185,7 +185,7 @@ Applied at quarter end after all other standing changes.
 
 ### Bank Exchange — The Translation
 
-*Source: Art 02a §8*
+*Source: Art 02 §7*
 
 Any resource → any resource. No action slot required. No quarterly limit. Rate scales with requesting faction's presence at the Chorus Node at time of request.
 
@@ -198,7 +198,7 @@ Any resource → any resource. No action slot required. No quarterly limit. Rate
 
 ### Chorus Node Presence Benefits
 
-*Source: Art 02a §10*
+*Source: Art 02 §6*
 
 | Level | Economic Benefits |
 |-------|------------------|
@@ -209,7 +209,7 @@ Any resource → any resource. No action slot required. No quarterly limit. Rate
 
 ### Guild Portrait Bonus — Total Structures on Board
 
-*Source: Art 02a §7*
+*Source: Art 02 §6*
 
 | Total Structure Blocks on Board at Session End | Guild Portrait Bonus |
 |-----------------------------------------------|----------------------|
@@ -223,7 +223,7 @@ Any resource → any resource. No action slot required. No quarterly limit. Rate
 
 ### Residential Quarter — Public Standing Multiplier
 
-*Source: Art 02a §10*
+*Source: Art 02 §6*
 
 Amplifies all Public Standing changes for factions with presence in the Residential Quarter (Baryo, native: Mandate).
 
@@ -289,7 +289,7 @@ Amplifies all Public Standing changes for factions with presence in the Resident
 
 ### Public Standing — Roll Threshold Modifier Reference
 
-*Source: Art 02b §7*
+*Source: Art 02 §12*
 
 | State | Range | Threshold Modifier | Effect on Rolls |
 |-------|-------|-------------------|----------------|

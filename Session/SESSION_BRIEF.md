@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 114 in progress | Updated: 2026-06-22**
+**Session 117 complete | Updated: 2026-06-24**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -58,7 +58,26 @@ Read full files only when deep work requires it.
 
 **Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88 doctrine review gate)
 
-### S114 Accomplishments (in progress)
+### S115 Accomplishments (in progress)
+
+**Overnight ref audit — all 6 ref files fixed (ref_audit_overnight_results.md)**
+
+- **ref_design_pillars.md** — 9 missing pillars added (4.6b–4.8d: Missing Author Vacuum, ARBITER Design Principles 4.7/4.7a/4.7b, Guaranteed Effects 4.8/4.8a–4.8d). Duplicate 4.6 entry collapsed. 4.3 + 4.5 missing sentences restored.
+- **ref_resources.md** — DT cost corrected: CAs and PAs both require 1 Dispatch Token (Andy confirmed S115). Passive gen deferred — Art 00c unreliable (memory saved: feedback_00c_reliability.md).
+- **ref_taxonomy.md** — 6 high-severity fixes: §4.2 citation → §5.1; "control flags" → "Dominant markers"; Submission/Resolution scope boundary clauses added; Recover retirement rationale corrected to GR 7.2b; duration types expanded (Immediate/Transient/Seasonal/Permanent); §4.8 + §4.15 + §4.16 governing rules added; Layer × Function validity matrix added. Art 04b §4.9 stale citations fixed → §4.6 (all 3 instances).
+- **ref_card_types.md** — 8 high-severity fixes: source header corrected (§1–§5 → §5, §6, §11); crit ranges corrected (01–05 / 96–00 at 5% each — Art 03 canonical); ring_mod direction convention added; EmergencyResponse updated (§14.1 content noted, stub caveat); Countermeasure Type B flagged as open outstanding issue; post-Burst trade exception added (§11 draft); outcome addition detail added (§11 draft); P26 + P27 added to §5 overview; Required Card Entry Blocks section added (Design Rationale + Card Story).
+- **ref_board_narrative.md** — Residential Quarter (DB:3, Ring 3, Mandate, 5 adjacencies) added; adjacency model section added (DB pointer, ring entry rules, M-12).
+- **ref_world_narrative.md** — Cross-faction consensus fact added ("Something is sending it. Something that has noticed us." Art 00 §6.1); ARBITER "not neutral" expanded ("not a referee, not a facilitator, not neutral; fair but not necessarily aligned with human success" Art 00 §9).
+
+**Art 04 §6.2 corrected** — crit range expressions `roll < 5` → `roll ≤ 5` / `roll ≥ 95` → `roll ≥ 96` (Art 03 §13 is canonical — 01–05 / 96–00).
+
+**Key clarifications S115:** Art 04 §5/§6 solid · §7 getting there · §8+ draft/stub. Art 00c stale — not a reliable source.
+
+**Last 3 locked decisions:** L235 (PublicAct enum rename) · GHO.CA.4 redesign mechanism (S113) · 04-n6 closure (S113)
+
+**Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
+### S114 Accomplishments ✅
 
 **Ref audit — ref_audit_results_S113.md reviewed and applied**
 
@@ -79,18 +98,57 @@ Read full files only when deep work requires it.
 
 **Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
 
-### Priority Order (S115) ← CURRENT
+### S116 Accomplishments ✅
 
-**Tier 1 — Overnight batch review**
-- `Whiteboard/ref_audit_overnight_results.md` — available after 2am June 23; review at next boot
+**Art 04b v1.9 — cleanup pass**
+- §5.2 Card Index relocated → Art 04 §8
+- §7 Faction Coverage Matrix relocated → Art 04 §9
+- §8 completed items purged: Ghost items 4–7 (GHO.PA.3/4/MOD.1/PA.5 ✅), Directorate items 1–3 (DIR.CA.6/7/8 ✅), Network items 1–2 (NET.CA.7 ✅, Signal Break ✅), Syndicate items 1/3/4 (SYN.CA.11/CA.10/PA.3 ✅); remaining items renumbered
+- §8.4 Economy|Redirect|AccordAgreement gap removed as stale (L227 resolved; design ruling: Redirect does not apply to Accords)
+- §6 stale Economy|Redirect|AccordAgreement row removed
+- §2 index updated; version 1.8 → 1.9
 
-**Tier 2 — Card set audits (04-n87–04-n92)**
-- Andy's direction: audits before any card sign-offs
-- Use `card_status` DB table for tracking (query per faction)
-- Suggest starting with Standard (04-n87) — most IR ✓, shared toolkit baseline
+**Art 04 v0.9.45 — §8 and §9 added**
+- New §8 Card Taxonomy Index (from Art 04b §5.2) — full 95-card table
+- New §9 Faction Coverage Matrix (from Art 04b §7) — faction PA column errors corrected (SYN.PA.1, SYN.PA.2, DIR.PA.2, NET.PA.1, GHO.PA.1, GHO.PA.2 moved to correct faction columns); NET.MOD.1 removed (modifier excluded from taxonomy); missing cards added (STD.PA.1/2/3, GUI.PA.1, NET.PA.2, GHO.PA.4, SYN.CA.11, SYN.PA.3)
+- §2 index updated
+
+**DB check:** Economy|Redirect|AccordAgreement already covered by existing action records in legalization model — no gap view changes needed
+
+**Artifacts updated S116:** Art 04 (v0.9.45) · Art 04b (v1.9)
+
+**Last 3 locked decisions (S116):** Redirect does not apply to Accords (L227 closure) · GHO.CA.4 redesign mechanism (S113) · L235 (PublicAct enum rename)
+
+**Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
+### S117 Accomplishments ✅
+
+**DB prep for card set audits — card_status taxonomy + card_subject_map**
+
+- **card_status extended** — 4 new columns: `layer` / `function` / `subject` (VARCHAR) / `beat` (INT). All nullable. Taxonomy seeded from Art 04 §8; 77 of 95 cards have spec-accurate values (Python parser against full card specs); 18 stubs/BLOCKED have §8-level accuracy only.
+- **Beat semantics:** Resolution beat, not submission beat. 27 CA beat=2 (early-intervention: block/protect/modify/interfere), 35 CA beat=3 (standard covert grid), 27 PA beat=4, 6 MOD/DA NULL.
+- **Data corrections S117:** 15 NULL card_ids backfilled (pre-ID-04 renumber); 3 card_type bugs fixed (Regulatory Downgrade/Freeze CA→PA, Accord Leverage CA→MOD).
+- **component renames:** id=1 "Presence chip" → "Presence token" · id=14 "Political act" → "Public act".
+- **card_subject_map created** — 25 rows bridging Art 04 PascalCase taxonomy subjects to component table (component_id). Enables joins from card_status into all 27 gap views.
+- **§9 Coverage Matrix** — now DB-derivable as live pivot from card_status (`WHERE blocked=0`); no longer a separately maintained table.
+- **schema_reference.md updated** — all S117 changes documented (card_status schema + beat semantics, card_subject_map with full row table, component renames, §9 note, row counts).
+
+**Carried to cleanup sweep:** §8 DIR.PA.1 index entry wrong (§8 says Submission|Block|PublicAct; spec says Territory|Modify|PresenceToken) · §9 GHO.PA.2 subject label grouping error.
+
+**Artifacts updated S117:** DB (card_status columns + card_subject_map + component renames) · schema_reference.md
+
+**Last 3 locked decisions:** L235 (PublicAct enum rename) · GHO.CA.4 redesign mechanism (S113) · 04-n6 closure (S113)
+
+**Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
+### Priority Order (S118) ← NEXT
+
+**Tier 1 — Card set audits (04-n87–04-n92)**
+- card_status now has taxonomy — use for audit queries
+- Start with Standard (04-n87) — most IR ✓, shared toolkit baseline
 - Ghost (04-n88) likely second — current working context
 
-**Tier 3 — Ghost CA issues resolution** (after or alongside Ghost audit)
+**Tier 2 — Ghost CA issues resolution** (after or alongside Ghost audit)
 - GHO.CA.4: sign-off (Andy)
 - GHO.CA.5 Misdirection: redesign (`content=false` not a valid IntelToken state)
 - GHO.CA.6 Synthesize: update token keying to target faction per Target Profile

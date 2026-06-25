@@ -4,7 +4,7 @@
 **Version:** 0.1 Draft — Placeholder  
 **Status:** ⬜ Not Started — Requires upstream decisions before design can begin  
 **Last Updated:** 2026-05-15  
-**Depends on:** 00 — Factions & World; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking; 03 — Round Structure; 05 — Operative & Apex System  
+**Depends on:** 00 — Factions & World; 02 — Components; 03 — Round Structure; 05 — Operative & Apex System  
 **Integrated into:** 10 — Game Manuals (summary); defined authoritatively here  
 **Supersedes:** (no retired predecessor — victory system defined for first time in V1 artifact set)
 
@@ -118,7 +118,7 @@ In both cases, proceed immediately to scoring.
 
 | Condition | VP | Notes |
 |-----------|-----|-------|
-| Established status in a district at session end | [TBD] per district | Per Artifact 02a — Established = dominant presence |
+| Established status in a district at session end | [TBD] per district | Per Art 02 §6 — Established presence |
 | Present status in a district at session end | [TBD] per district | |
 | Structure in a district at session end | [TBD] per structure | |
 | Majority presence in a ring at session end | [TBD] | *[TBD — define ring majority threshold]* |

@@ -1,5 +1,5 @@
 # the_signal_db — Schema Reference
-**Status:** Complete — populated S50 (2026-05-29)  
+**Status:** Complete — populated S50 (2026-05-29) · updated S117 (2026-06-24)  
 **Priority:** DB-29 (PM05)
 
 ---
@@ -83,6 +83,9 @@ No table should be designed without knowing which core axis it hangs from and at
 
 **Early-schema tables (predates promoted model — being replaced via DB-14):**
 `action_costs`, `action_restrictions`, `action_valid_targets`, `allocation_types`, `beat`, `card_faction_modifiers`, `card_metadata`, `card_subtypes`, `card_types`, `district_connections`, `game_actions`
+
+**Design tracking tables (card design workspace — S117):**
+`card_status`, `card_subject_map`
 
 ---
 
@@ -483,6 +486,88 @@ Special cases:
 `varchar(15)` constraint: all IDs must fit within 15 characters. `ARB.BCEV.99` = 11 chars (safe). Verify any new ID type fits before adding.
 
 
+### card_status (95 cards as of S117)
+```sql
+CREATE TABLE `card_status` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `card_id` VARCHAR(15),           -- [FAC].[TYPE].n format; backfilled S117 (was NULL for pre-ID-04 cards)
+  `name` VARCHAR(100),
+  `faction` VARCHAR(20),
+  `card_type` VARCHAR(10),          -- CA | PA | MOD | DA
+  `blocked` TINYINT(1) DEFAULT 0,
+  `design_pass` TINYINT(1) DEFAULT 0,
+  `issues_resolved` TINYINT(1) DEFAULT 0,
+  `issues_note` TEXT,
+  `signed_off` TINYINT(1) DEFAULT 0,
+  `art04_line` INT,
+  `notes` TEXT,
+  `layer` VARCHAR(30) NULL,         -- Art 04 §8 taxonomy layer (PascalCase) — added S117
+  `function` VARCHAR(30) NULL,      -- Art 04 §8 taxonomy function (PascalCase) — added S117
+  `subject` VARCHAR(50) NULL,       -- Art 04 §8 taxonomy subject (PascalCase, component name only) — added S117
+  `beat` INT NULL                   -- Resolution beat: 2=early-intervention CA, 3=standard covert grid CA, 4=PA — added S117
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+
+**card_status — taxonomy field notes (S117):**
+- `layer` / `function` / `subject` use PascalCase Art 04 names (not DB component table names). Join to `component` via `card_subject_map`.
+- `beat` is the **resolution beat**, not submission beat. CA cards resolve on beat 2 (early-intervention: block/protect/modify/interfere cards) or beat 3 (standard covert grid). PA cards resolve on beat 4. MOD/DA cards have NULL beat.
+- 77 of 95 cards have spec-accurate values (parsed from full card specs). 18 cards (stubs / BLOCKED / pre-renumber) have §8-level accuracy only.
+- 5 blocked cards (GHO.CA.13/14, DIR.PA.4/5, GUI.MOD.1) carry taxonomy in DB but are excluded from §9-equivalent coverage queries — use `WHERE blocked=0`.
+- S117 also corrected 3 `card_type` bugs: Regulatory Downgrade (CA→PA), Regulatory Freeze (CA→PA), Accord Leverage (CA→MOD).
+
+**beat distribution (S117):** 27 CA beat=2 · 35 CA beat=3 · 27 PA beat=4 · 6 MOD/DA NULL
+
+### card_subject_map (S117)
+```sql
+CREATE TABLE `card_subject_map` (
+  `subject`      VARCHAR(50) PRIMARY KEY,  -- PascalCase Art 04 taxonomy subject name
+  `component_id` INT NULL,                 -- FK → component(id); NULL for non-component subjects
+  FOREIGN KEY (`component_id`) REFERENCES `component`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+
+Bridge table linking Art 04 taxonomy subject vocabulary (PascalCase) to the `component` table (spaced lowercase). Enables joins from `card_status` into all 27 gap views via `component_id`.
+
+**25 rows seeded:**
+
+| subject | component_id | component name |
+|---------|-------------|----------------|
+| Accord | 10 | Accord agreement |
+| AccordAgreement | 10 | Accord agreement |
+| AccordCard | 10 | Accord agreement |
+| BroadcastEffectCard | 98 | Broadcast Effect Card |
+| ClassifiedDirective | 17 | Classified directives |
+| CovertOperation | 13 | Covert operation |
+| DebriefActionCard | 100 | DebriefActionCard |
+| ModifierCard | 11 | Modifier card |
+| PublicAct | 14 | Public act |
+| DeploymentMarker | 2 | Deployment marker |
+| PresenceToken | 1 | Presence token |
+| StructureBlock | 3 | Structure block |
+| District | 4 | District tile |
+| IntelDeliverySlip | 96 | Intel Delivery Slip |
+| IntelToken | 9 | Intel token |
+| IntelTokensHeld | 9 | Intel token |
+| Exposure | 8 | Native resource |
+| FactionNativeResource | 8 | Native resource |
+| NativeResource | 8 | Native resource |
+| FactionHand | 94 | Faction hand |
+| PublicStanding | 21 | Public Standing |
+| ActionAttribution | NULL | (who did what — not a component) |
+| Difficulty | NULL | (modifier attribute — not a component) |
+| InfluenceTier | NULL | (game state value — not a component) |
+| NamedActionType | NULL | (card spec field — not a component) |
+
+**Sample join to gap views:**
+```sql
+-- Which cards have subjects with no legislated primitives for their function verb?
+SELECT cs.card_id, cs.name, cs.function, cs.subject, v.beat_name, v.verb_name
+FROM card_status cs
+JOIN card_subject_map csm ON cs.subject = csm.subject
+JOIN v_unlegislated_primitives v ON csm.component_id = v.component_id
+WHERE cs.blocked = 0 AND csm.component_id IS NOT NULL;
+```
+
 ### trigger_type
 ```sql
 CREATE TABLE `trigger_type` (
@@ -544,11 +629,11 @@ CREATE TABLE `state_condition_clause` (
 
 ---
 
-## 5. Component Registry (component — 77 active rows as of S104)
+## 5. Component Registry (component — 77 active rows as of S104; id=1 and id=14 renamed S117)
 
 | id | name | act | xfm | rcv | vis | ori | dat | par |
 |----|------|-----|-----|-----|-----|-----|-----|-----|
-| 1 | Presence chip | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 1 | Presence token | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
 | 2 | Deployment marker | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
 | 3 | Structure block | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
 | 4 | District tile | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
@@ -561,7 +646,7 @@ CREATE TABLE `state_condition_clause` (
 | 11 | Modifier card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
 | 12 | Dispatch token | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
 | 13 | Covert operation | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
-| 14 | Political act | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
+| 14 | Public act | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
 | 15 | Operative card | 1 | 1 | 0 | 1 | 0 | 1 | 111 |
 | 17 | Classified directives | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
 | 21 | Public Standing | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
@@ -680,6 +765,8 @@ CREATE TABLE `state_condition_clause` (
 | `v_fulfiller_summary` | Fulfiller role coverage |
 | `v_layer_function_coverage` | Every Faction-initiatable Function × Component with beat availability |
 
+**§9 Faction Coverage Matrix — DB-derivable (S117):** Art 04 §9 is now a live query, not a maintained markdown table. Pivot `card_status` by faction × layer × function × subject (with `blocked=0`) to reproduce it. The `card_status` taxonomy columns are the canonical source; §9 in Art 04 is the documentation snapshot.
+
 ---
 
 ## 7. Canonical Component Registration Pattern
@@ -765,14 +852,18 @@ INSERT INTO subject_target (subject_id, target_id) VALUES
 
 ## 8. Row Counts
 
-As of S50:
+As of S50 (unchanged unless noted):
 - `action`: **213 total rows, all root actions (prereq_id IS NULL)**
-- `component`: **58 rows, next AUTO_INCREMENT = 98**
+- `component`: **77 rows, next AUTO_INCREMENT = 120** *(updated — S104 was 77 rows; S117 renamed id=1 and id=14)*
 - `beat`: **20 rows** (fixed set — not AUTO_INCREMENT)
 - `verb`: **8 rows** (id gaps from deprecated verbs)
 - `trigger_type`: **10 rows**
 - `function`: **12 rows**
 - `layer`: **6 rows**
+
+As of S117 (new):
+- `card_status`: **95 rows** (77 with spec-accurate taxonomy; 18 at §8-level accuracy)
+- `card_subject_map`: **25 rows** (21 mapped to component_id; 4 NULL for non-component subjects)
 
 ---
 
@@ -799,4 +890,4 @@ This file is at `~/Projects/TheSignal/Database/` alongside all SQL build scripts
 
 ---
 
-*Populated S50 — 2026-05-29. Update when schema changes are executed.*
+*Populated S50 — 2026-05-29. Updated S117 — 2026-06-24: added card_status taxonomy columns (layer/function/subject/beat), new card_subject_map table, component renames (id=1 Presence token, id=14 Public act), §9 DB-derivable note.*

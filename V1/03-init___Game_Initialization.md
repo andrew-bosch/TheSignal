@@ -3,7 +3,7 @@
 
 **Version:** 0.3 — Draft S84
 **Status:** In progress — gaps surface during Art 03 rubric pass
-**Depends on:** 01 — Game Board: New Meridian; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking; 00c — Economy Manifest (pending); Art 04 §12 (card decks, pending)
+**Depends on:** 01 — Game Board: New Meridian; 02 — Components; 00c — Economy Manifest (pending); Art 04 §12 (card decks, pending)
 **Called by:** 03 — at session start, before Quarter 1
 
 ---

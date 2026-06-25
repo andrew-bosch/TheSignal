@@ -1,8 +1,8 @@
 # 01 — Game Board: New Meridian
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.1 — S90 (§4 component narratives migrated to Art 02 §4; §6 Physical Forms table migrated to Art 02 §13; stale Art 02a/02b refs updated. Open: 01-11 scope overhaul)  
-**Status:** 🔄 Needs Re-Sign-Off — v2.1 material changes S90 (§4 and §6 component content migrated to Art 02)  
+**Version:** 2.1 — S90 (§4 Narrative Function and §6 Physical Forms migrated to Art 02; geography/zone-only). S114 (agy): DB-driven geography metadata blocks added, procedural content moved to Whiteboard — pending review and re-sign-off.  
+**Status:** 🔄 Needs Re-Sign-Off  
 **Depends on:** 00 — Factions, World & Narrative Context  
 **Supersedes:** setup_guide (board sections), board_layout (visual reference only)
 
@@ -11,16 +11,15 @@
 ## 1. Overview
 
 ### Problem This Document Solves
-The game operates across two distinct physical spaces: the shared table where all public information is displayed, and each faction's private zone where Terminal contents remain concealed. Without a fully specified layout for both, no other artifact can define where actions target, where resources generate, where presence is tracked, or what information is visible to whom. This document defines the complete physical environment — every table zone, every component placement, every district, every track — in sufficient detail that visual design and physical production can proceed without ambiguity.
+The game operates across two distinct physical spaces: the shared table where all public information is displayed, and each faction's private zone where Terminal contents remain concealed. Without a fully specified layout for both, no other artifact can define where actions target, where resources generate, or how adjacency is calculated. This document defines the complete physical environment — every table zone and every district — in sufficient detail that visual design and database configuration can proceed without ambiguity.
 
 ### Deliverable
-A complete specification of the physical game environment: the table zone structure (ARBITER area, faction areas, central play surface, and supply), The Overview mat with its district map, Ring Modifier decks, information tracks, and Situation Report zone; MIRROR and faction Terminal placement and access rules; and the starting configuration that opens every session.
+A complete specification of the physical game environment: the table zone structure (ARBITER area, faction areas, central play surface, and supply) and the district map (Ring 0 to 3). All dynamic component placement mapping is handled by [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md) and all initialization states reside in [03-init___Game_Initialization.md](file:///home/abosch/Projects/TheSignal/V1/03-init___Game_Initialization.md).
 
 ### Success Criteria
-- Any player can look at The Overview mid-session and calculate every faction's current resource income without assistance
-- ARBITER can manage all board-state changes from their position without needing to touch faction areas
-- The board's visual organization reflects the narrative geography of New Meridian — the Chorus Node at the top, the city spreading outward and downward
-- A visual designer can produce a complete layout wireframe from this document alone without ambiguity
+- Any player can inspect the board layout and map boundaries to calculate adjacency relationships.
+- The board's visual organization reflects the narrative geography of New Meridian — the Chorus Node at the top, the city spreading outward and downward.
+- A visual designer can produce a complete layout wireframe from this document alone without ambiguity.
 
 ---
 
@@ -31,7 +30,12 @@ A complete specification of the physical game environment: the table zone struct
 3. [Game Purpose](#3-game-purpose)
 4. [Narrative Function](#4-narrative-function)
 5. [Design Principles](#5-design-principles)
-6. [Physical Environment — Zones and Components](#6-physical-environment-zones-and-components)
+6. [Physical Environment — Zones and Districts](#6-physical-environment-zones-and-districts)
+   - [§6.1 Universal Schemas](#61-universal-schemas)
+   - [§6.2 Zone Hierarchy Reference](#62-zone-hierarchy-reference)
+   - [§6.3 Detailed Zone Specifications](#63-detailed-zone-specifications)
+   - [§6.4 Detailed District Specifications](#64-detailed-district-specifications)
+   - [§6.5 District Adjacency Map](#65-district-adjacency-map)
 7. [Rules & Constraints](#7-rules-constraints)
 8. [Starting Configuration](#8-starting-configuration)
 9. [Faction Player Tableau](#9-faction-player-tableau)
@@ -45,266 +49,527 @@ A complete specification of the physical game environment: the table zone struct
 
 The board serves four simultaneous functions:
 
-**Economic ledger:** All resource generation is readable from The Overview. Presence tokens, influence levels, and structure tokens together determine every faction's income each round. No hidden calculations required.
+**Economic ledger:** All resource generation is readable from the district attributes. Presence levels, influence tiers, and structures together determine faction income each round, mapped to the static values defined in this geography.
 
-**Territorial record:** The current state of contested and controlled districts is always visible. Any player can assess the balance of power at a glance.
+**Territorial record:** The map coordinates and connections define the geography over which factions contest control.
 
-**Information display:** All shared tracks — World Conditions, the Session Timeline, initiative order, active Situation Report cards, Public Standing, active Accords — are displayed on or adjacent to The Overview and updated in real time.
+**Information display:** The board provides the physical zones where shared tracks and decks are placed.
 
-**Narrative stage:** The physical game table is not an abstraction of New Meridian — it is a recreation of the actual setting where The Table convenes. Faction Representatives gather around the same surface, in the same configuration, that exists in the fiction: a private chamber at the Chorus Node, MIRROR projecting The Overview at the center of the table, each Representative's Terminal at their seat, the ARBITER screen separating authority from process. When players take their positions, they are not playing characters who attend The Table — they are inhabiting those seats. The district map, the track placements, the screen positions — all of it corresponds to a real place in the fiction. The session begins where the story already is.
+**Narrative stage:** The physical game table is a recreation of the actual setting where The Table convenes. Faction Representatives gather around the same surface that exists in the fiction: a private chamber at the Chorus Node, each seat corresponding to a player position, and the ARBITER screen separating authority from process.
 
 ---
 
 ## 4. Narrative Function
 
-The physical components of New Meridian are not abstract pieces — each represents a specific system, instrument, or document that ARBITER monitors and the factions contend for.
+The physical zones of New Meridian represent specific facilities, administrative regions, and networks that the factions contend for.
 
-*Component narratives — District Tiles, Influence Level Marker, Tension Markers, Session Timeline, Initiative Strip, Chorus Activity Track, Accord Documents, Situation Reports, Reservoir, Backlog, Dispatch Tokens, Public Standing Track, Chorus Portrait Track — are in Art 02 §4.*
+*Component narratives — District Tiles, Influence Level Marker, Tension Markers, Session Timeline, Initiative Strip, Chorus Activity Track, Accord Documents, Situation Reports, Reservoir, Backlog, Dispatch Tokens, Public Standing Track, Chorus Portrait Track — are in [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md) §4.*
 
 ---
 
 ## 5. Design Principles
 
-1. **The Overview is truth.** All presence tokens, operational markers, structure tokens, and influence level markers on The Overview are visible to all players at all times. No board state on the shared surface is ever hidden.
+1. **Geography creates consequences.** A district's ring determines its resource generation value. A district's neighbors determine operational marker placement eligibility and battlefield strength calculations. Position on the map is never arbitrary.
 
-2. **Geography creates consequences.** A district's ring determines its resource generation value. A district's neighbors contribute to Battlefield Strength calculations and determine operational marker placement eligibility. Position on the map is never arbitrary.
+2. **The center is always relevant.** The Chorus Node's strategic incentives ensure it remains a contested objective throughout the session, despite its lack of resource output.
 
-3. **The center is always relevant.** The Chorus Node's strategic incentives — Chorus Activity suppression, Chorus Portrait amplifier, Chorus Question access, Translation rate scaling — ensure it remains a contested objective throughout the session regardless of its lack of resource output.
+3. **Rings are not equal.** Sprawl districts are accessible and low-value. Infrastructure districts are the economic engine of the mid-game. Core districts are high-value and require commitment to enter. This creates natural strategic progression across a session.
 
-4. **Rings are not equal.** Sprawl districts are accessible and low-value. Infrastructure districts are the economic engine of the mid-game. Core districts are high-value and require commitment to enter. This creates natural strategic progression across a session.
+4. **Resource type is immediately readable.** Each resource type has a distinct background color applied to its district. A player can identify the resource type of any district across the table without reading text.
 
-5. **Resource type is immediately readable.** Each resource type has a distinct background color applied to the district. A player can identify the resource type of any district across the table without reading text.
-
-6. **The Overview must be readable at speed.** During Resolution, ARBITER makes board changes quickly. Component shapes, colors, and placement conventions must allow ARBITER to update the board state without pausing to interpret what they are looking at.
-
-7. **The Terminal is private.** What a Faction Representative holds, plans, and knows is concealed behind their faction screen. The Overview does not display Terminal contents. The tension between public commitment and private capability is a designed feature of the game.
+5. **The Terminal area is private.** What a Faction Representative holds, plans, and knows is concealed behind their faction screen. The board geography separates private player spaces from the public Central Area.
 
 ---
 
-## 6. Physical Environment — Zones and Components
+## 6. Physical Environment — Zones and Districts
 
 ![Table Layout — Zone Diagram](table_layout_v1.png)
 
-*Zone diagram: P6 (ARBITER) at head of table; P1–P5 (Faction Players) arranged around remaining sides; Central Area at center with Supply zone; Game Box adjacent off-table; Chair 1–6 outside Table perimeter.*
+*Zone diagram (Non-Canonical / Stale): P6 (ARBITER) at head of table; P1–P5 (Faction Players) arranged around remaining sides; Central Area at center; Game Box adjacent off-table; Chair 1–6 outside Table perimeter. Center table and supply zones are sketched but not canonical.*
 
-![Component Layout](component_layout_v1.png)
+![Center Table Wireframe](component_layout_v1.png)
 
-*Component layout: The Overview (game mat) placed in Central Area; district tiles arranged in Ring 0–3 arcs; Supply zone (Reservoir, Backlog) near P6; Session Timeline and Initiative Strip left side; Chorus Activity Track and Situation Report Area right side; Public Standing Track bottom; Faction Tableaux in P1–P6 positions.*
+*Center table wireframe (Non-Canonical): Illustrates detailed layout of subzones in the center table area (public tracks, ring deck locations, broadcast card placement area, reservoir, and backlog). P6 (ARBITER Area) subzones are stubs and pending design in Art 07.*
 
-**Zone vs. Component — Core Distinction**
+![New Meridian Map Layout](NM_Overlay.svg)
 
-A **zone** is a named location in physical space. Zones are infrastructure: the table surface, the seat positions, the areas of the mat. A zone exists whether or not anything occupies it. Zones form a self-referential hierarchy tracked in game_zones (zone_id, zone_name, parent_zone_id).
+*District layout diagram: concentric Ring 0–3 geography mapping the 21 districts of New Meridian, overlaid with their spatial connections and boundaries.*
 
-A **component** is a portable physical object. Everything in the game box is a component: the game mat, district tiles, tokens, cards, screens. Components are placed within zones during setup and play, and returned to the box at session end. Component location is tracked in live_state (zone_id → the zone it occupies; on_component_id → the component it rests on, if any).
+### 6.1 Universal Schemas
 
-A component and a zone may share the same physical footprint without being the same thing. The game mat (The Overview) fills Central Area during play — but Central Area is a zone that exists when the mat is packed away, and The Overview is a component that can be picked up and placed elsewhere. They are separate entities in the data model.
+To maintain synchronization with `the_signal_db`, all physical areas (zones) and map regions (districts) are defined using standardized metadata schemas.
 
-**Zone hierarchy — complete reference**
+#### 6.1.1 Zone Schema
+Feeds the `game_zones` database table.
+* `db_id`: Integer (Primary Key)
+* `zone_id`: String (Unique identifier, e.g. `zone_table`)
+* `zone_name`: String (Display name)
+* `parent_zone_id`: String (FK reference to parent `zone_id`, or `None` if root)
+* `visibility`: Enum (`Public` | `Private` | `Mixed`)
 
-| Zone | Parent | Notes |
-|------|--------|-------|
-| Game Box | — | No children |
-| Chair 1–6 | — | No children |
-| Table | — | |
+#### 6.1.2 District Schema
+Feeds the `district_metadata` database table.
+* `db_id`: Integer (Primary Key, matches district number 1–21)
+* `district_name`: String (Display name)
+* `ring`: Enum (`Ring 0` | `Ring 1` | `Ring 2` | `Ring 3`)
+* `resource_type`: Enum (`Mandate` | `Findings` | `Capital` | `Capacity` | `Exposure` | `None`)
+* `base_generation_value`: Integer (Base resources produced per Quarter: 0 to 3)
+* `hex_color`: String (Aesthetic CSS hex code, or `None` if N/A)
+
+---
+
+### 6.2 Zone Hierarchy Reference
+
+| Zone | Parent | Description / Type |
+|------|--------|---------------------|
+| Game Box | None | Out of play component storage |
+| Chairs | None | Seating positions outside Table perimeter |
+| Table | None | Main playing surface |
 | P1–P5 | Table | Faction player positions |
-| P6 | Table | ARBITER |
-| Central Area | Table | |
-| Supply | Central Area | |
-| Accord Placement Area | Central Area | |
-| Session Timeline Area | Central Area | |
-| Initiative Strip Area | Central Area | |
-| Chorus Activity Track Area | Central Area | |
-| Situation Report Area | Central Area | |
-| Public Standing Track Area | Central Area | |
-| City | Central Area | District map region on The Overview |
+| P6 | Table | ARBITER area |
+| Central Area | Table | Shared center play surface |
+| Supply | Central Area | Shared supply zone |
+| Accord Placement Area | Central Area | Shared active Accord documents zone |
+| Session Timeline Area | Central Area | Timeline track zone |
+| Initiative Strip Area | Central Area | Initiative strip zone |
+| Chorus Activity Track Area | Central Area | Chorus activity track zone |
+| Situation Report Area | Central Area | Situation report card zone |
+| Public Standing Track Area | Central Area | Public standing track zone |
+| City | Central Area | Map region on the Overview |
 | Ring 0 | City | Chorus Node ring |
 | Ring 1 | City | Core ring |
 | Ring 2 | City | The Mid ring |
 | Ring 3 | City | Baryo ring |
-| Ring 1 Modifier Area | Ring 1 | Left of Ring 1 arc |
-| Ring 2 Modifier Area | Ring 2 | Left of Ring 2 arc |
-| Ring 3 Modifier Area | Ring 3 | Left of Ring 3 arc |
-| Chorus Node | Ring 0 | District zone |
-| Government Citadel | Ring 1 | District zone |
-| Military Installation | Ring 1 | District zone |
-| Chorus Research | Ring 1 | District zone |
-| Financial Sanctum | Ring 1 | District zone |
-| Power Grid | Ring 2 | District zone |
-| Financial Clearinghouse | Ring 2 | District zone |
-| Data Exchange | Ring 2 | District zone |
-| Communications Hub | Ring 2 | District zone |
-| Logistics Center | Ring 2 | District zone |
-| Research Institute | Ring 2 | District zone |
-| Regulatory District | Ring 2 | District zone |
-| Industrial Fringe | Ring 3 | District zone |
-| Transit Hub | Ring 3 | District zone |
-| Civic Center | Ring 3 | District zone |
-| Residential Quarter | Ring 3 | District zone |
-| University Perimeter | Ring 3 | District zone |
-| Media District | Ring 3 | District zone |
-| Broadcast Tower | Ring 3 | District zone |
-| Observation Post | Ring 3 | District zone |
-| Commercial Strip | Ring 3 | District zone |
+| Ring 1 Modifier Area | Ring 1 | Modifier deck zone for Ring 1 |
+| Ring 2 Modifier Area | Ring 2 | Modifier deck zone for Ring 2 |
+| Ring 3 Modifier Area | Ring 3 | Modifier deck zone for Ring 3 |
 
-### Game Box
-Out of game. Components not yet in play. Kept adjacent to the table; serves as the source for all supply during setup and the return point for removed components. No child zones.
+---
 
-### Chair 1–6
-Six individual seat positions. Each is a discrete zone with no child zones. Chair positions correspond to player positions: Chair 6 = ARBITER (P6); Chair 1–5 = Faction Players (P1–P5).
+### 6.3 Detailed Zone Specifications
 
-The human player is a named game entity tracked as a component in the data model — not a physical piece, but a seated participant whose location is their assigned chair (L155). Their zone_id at setup is their Chair zone. This is the only entity whose zone_id is a Chair zone rather than a Table zone.
+#### Game Box
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 1 |
+  | `zone_id` | `zone_game_box` |
+  | `zone_name` | Game Box |
+  | `parent_zone_id` | `None` |
+  | `visibility` | `Private` |
 
-### Table
-The shared playing surface. All active play occurs here. Direct children: Central Area, P1–P6. P6 = ARBITER (head of table); P1–P5 = Faction Players.
+#### Chairs
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 2 |
+  | `zone_id` | `zone_chairs` |
+  | `zone_name` | Chairs |
+  | `parent_zone_id` | `None` |
+  | `visibility` | `Public` |
+* **Description:** Represents seat positions Chair 1–6. Chair 6 is assigned to the ARBITER (P6); Chairs 1–5 correspond to Faction Players (P1–P5).
 
-#### P1–P5 — Faction Player Areas
-One area per faction player, arranged around the sides of the table. Components at each position: Faction Screen (upright divider — creates a concealed area behind it); Faction Terminal (player tableau, sits on the table behind the screen); cards in hand and held resources behind the screen. Deployed components and active resources in front of the screen are visible to all players.
+#### Table
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 3 |
+  | `zone_id` | `zone_table` |
+  | `zone_name` | Table |
+  | `parent_zone_id` | `None` |
+  | `visibility` | `Public` |
+* **Description:** The physical table surface.
 
-#### P6 — ARBITER
-The head of the table. Components at this position: ARBITER Screen (upright divider — creates a concealed area on the table surface behind it, not visible to faction players); ARBITER Tableau (face-up reference surface in front of the screen, visible to all).
+#### Faction Player Areas (P1–P5)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 4 |
+  | `zone_id` | `zone_p1_area` to `zone_p5_area` |
+  | `zone_name` | Faction Player Areas |
+  | `parent_zone_id` | `zone_table` |
+  | `visibility` | `Mixed` |
+* **Description:** Private and public tablespace at each player position. The space behind each Faction Screen is private/concealed; the space in front of each screen is public.
+
+#### ARBITER Area (P6)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 5 |
+  | `zone_id` | `zone_p6_area` |
+  | `zone_name` | ARBITER Area |
+  | `parent_zone_id` | `zone_table` |
+  | `visibility` | `Mixed` |
+* **Description:** The head of the table. The space behind the ARBITER Screen is private/concealed; the space in front is public.
 
 #### Central Area
-Child zone of Table. The shared play surface at the center of the table. The game mat (The Overview) is a component placed here during setup — it occupies the same footprint as Central Area, but is portable and returned to the Game Box at session end. The zone exists independent of the component. Child zones: Supply, Accord Placement Area, Session Timeline Area, Initiative Strip Area, Chorus Activity Track Area, Situation Report Area, Public Standing Track Area, City.
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 6 |
+  | `zone_id` | `zone_central_area` |
+  | `zone_name` | Central Area |
+  | `parent_zone_id` | `zone_table` |
+  | `visibility` | `Public` |
+* **Description:** Shared center play surface holding the game board mat (The Overview).
 
-##### Supply
-Child zone of Central Area. The designated area for shared in-play component pools — The Reservoir, The Backlog, and other shared supply. Positioned near the P6 (ARBITER) end of Central Area. No child zones.
+#### Supply
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 7 |
+  | `zone_id` | `zone_supply` |
+  | `zone_name` | Supply |
+  | `parent_zone_id` | `zone_central_area` |
+  | `visibility` | `Public` |
 
-Components placed here:
-| Component | Visibility | Narrative Reference |
-|-----------|-----------|-------------------|
-| Reservoir | Public | Art 02 §4 |
-| Backlog | Public | Art 02 §4 |
+#### Accord Placement Area
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 8 |
+  | `zone_id` | `zone_accord_area` |
+  | `zone_name` | Accord Placement Area |
+  | `parent_zone_id` | `zone_central_area` |
+  | `visibility` | `Public` |
 
-##### Accord Placement Area
-Child zone of Central Area. The designated area where all active Accord documents are placed face-up during play. Left side of Central Area (P1/P2 side). No child zones.
+#### Session Timeline Area
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 9 |
+  | `zone_id` | `zone_session_timeline` |
+  | `zone_name` | Session Timeline Area |
+  | `parent_zone_id` | `zone_central_area` |
+  | `visibility` | `Public` |
 
-Components placed here:
-| Component | Visibility | Narrative Reference |
-|-----------|-----------|-------------------|
-| Accord document (active) | Public | Art 02 §4 |
+#### Initiative Strip Area
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 10 |
+  | `zone_id` | `zone_initiative_strip` |
+  | `zone_name` | Initiative Strip Area |
+  | `parent_zone_id` | `zone_central_area` |
+  | `visibility` | `Public` |
 
-##### Session Timeline Area
-Child zone of Central Area. The named position for the Session Timeline component. Left side of Central Area (P1/P2 side). No child zones.
+#### Chorus Activity Track Area
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 11 |
+  | `zone_id` | `zone_chorus_activity` |
+  | `zone_name` | Chorus Activity Track Area |
+  | `parent_zone_id` | `zone_central_area` |
+  | `visibility` | `Public` |
 
-Components placed here:
-| Component | Visibility | Narrative Reference |
-|-----------|-----------|-------------------|
-| Session Timeline track | Public | Art 02 §4 |
-| Pointer marker | Public | Included with Session Timeline track |
+#### Situation Report Area
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 12 |
+  | `zone_id` | `zone_situation_report` |
+  | `zone_name` | Situation Report Area |
+  | `parent_zone_id` | `zone_central_area` |
+  | `visibility` | `Public` |
 
-##### Initiative Strip Area
-Child zone of Central Area. The named position for the Initiative Strip component. Left side of Central Area (P1/P2 side). No child zones.
+#### Public Standing Track Area
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 13 |
+  | `zone_id` | `zone_public_standing` |
+  | `zone_name` | Public Standing Track Area |
+  | `parent_zone_id` | `zone_central_area` |
+  | `visibility` | `Public` |
 
-Components placed here:
-| Component | Visibility | Narrative Reference |
-|-----------|-----------|-------------------|
-| Initiative strip | Public | Art 02 §4 |
-| Faction order markers (×5) | Public | Included with Initiative strip |
+#### City
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 14 |
+  | `zone_id` | `zone_city` |
+  | `zone_name` | City |
+  | `parent_zone_id` | `zone_central_area` |
+  | `visibility` | `Public` |
+* **Description:** Represents the organic half-circle city map on the Overview. Concentric rings branch outwards from Ring 0 to Ring 3.
 
-##### Chorus Activity Track Area
-Child zone of Central Area. The named position for the Chorus Activity Track component. Right side of Central Area (P5 side). No child zones.
+#### Rings (Ring 0 to Ring 3)
+* **Metadata:**
+  | Ring Zone | `db_id` | `zone_id` | `parent_zone_id` | `visibility` |
+  |-----------|---------|-----------|------------------|--------------|
+  | Ring 0 | 15 | `zone_ring_0` | `zone_city` | `Public` |
+  | Ring 1 | 16 | `zone_ring_1` | `zone_city` | `Public` |
+  | Ring 2 | 17 | `zone_ring_2` | `zone_city` | `Public` |
+  | Ring 3 | 18 | `zone_ring_3` | `zone_city` | `Public` |
 
-Components placed here:
-| Component | Visibility | Narrative Reference |
-|-----------|-----------|-------------------|
-| Chorus Activity track | Public | Art 02 §4 |
-| Activity marker | Public | Included with Chorus Activity track |
-| Threshold marker | Public | Included with Chorus Activity track |
+#### Modifier Areas (Rings 1 to 3)
+* **Metadata:**
+  | Modifier Zone | `db_id` | `zone_id` | `parent_zone_id` | `visibility` |
+  |---------------|---------|-----------|------------------|--------------|
+  | Ring 1 Modifier Area | 19 | `zone_ring_1_modifier` | `zone_ring_1` | `Public` |
+  | Ring 2 Modifier Area | 20 | `zone_ring_2_modifier` | `zone_ring_2` | `Public` |
+  | Ring 3 Modifier Area | 21 | `zone_ring_3_modifier` | `zone_ring_3` | `Public` |
 
-##### Situation Report Area
-Child zone of Central Area. The named position where active World Event cards accumulate. Right side of Central Area (P5 side). No child zones.
+---
 
-Components placed here:
-| Component | Visibility | Narrative Reference |
-|-----------|-----------|-------------------|
-| World Event card (active) | Public | Art 02 §4 |
+### 6.4 Detailed District Specifications
 
-##### Public Standing Track Area
-Child zone of Central Area. The named position for the Public Standing Track component. Bottom of Central Area (P3 side). No child zones.
+All 21 districts of New Meridian function as child zones of their respective rings.
 
-Components placed here:
-| Component | Visibility | Narrative Reference |
-|-----------|-----------|-------------------|
-| Public Standing track (×5, one per faction) | Public | Art 02 §4 |
-| Standing marker (×5, one per faction) | Public | Included with Public Standing track |
+#### Ring 0 — Origin
+##### Chorus Node (DB: 21)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 21 |
+  | `district_name` | Chorus Node |
+  | `ring` | Ring 0 |
+  | `resource_type` | None |
+  | `base_generation_value` | 0 |
+  | `hex_color` | None |
+* **Narrative Description:** The center of the city. Source of the Signal and focus of high-level faction translation operations.
 
-Band labels and standing tier definitions: Art 02.
+---
 
-##### City
-Child zone of Central Area. The region of The Overview's surface dedicated to the New Meridian city map. 21 district zones arranged in four concentric rings around the Chorus Node. The rings are sediment layers — each one a wave of growth as the city expanded outward from the transmission source.
+#### Ring 1 — Core
+Concentric core ring directly surrounding the Chorus Node.
 
-District zones are named locations in physical space. District tiles are the components that occupy them. A district tile is placed within its corresponding district zone at setup; the zone defines where it goes, the tile is the portable object that holds that position.
+##### Government Citadel (DB: 17)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 17 |
+  | `district_name` | Government Citadel |
+  | `ring` | Ring 1 |
+  | `resource_type` | Mandate |
+  | `base_generation_value` | 3 |
+  | `hex_color` | `#3a6ea8` |
 
-The following components may be present within any district zone:
-| Component | Visibility | Narrative Reference |
-|-----------|-----------|-------------------|
-| District tile | Public | Art 02 §4 |
-| Presence chip | Public | Art 00 §14 |
-| Deployment marker | Public | Art 00 §14 |
-| Structure block | Public | Art 00 §14 |
-| Influence level marker (Dominant) | Public | Art 02 §4 |
-| Tension marker | Public | Art 02 §4 |
+##### Military Installation (DB: 18)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 18 |
+  | `district_name` | Military Installation |
+  | `ring` | Ring 1 |
+  | `resource_type` | Mandate |
+  | `base_generation_value` | 3 |
+  | `hex_color` | `#3a6ea8` |
 
-Each district tile prints its name, resource type (background color), and base generation value. All printed information remains visible regardless of components placed on it. District placement within each ring follows geographic and narrative logic — districts that depend on one another are adjacent; districts with historical faction relationships are near each other. The map is readable as a city, because it is one. Child zones: Ring 0, Ring 1, Ring 2, Ring 3.
+##### Chorus Research (DB: 19)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 19 |
+  | `district_name` | Chorus Research |
+  | `ring` | Ring 1 |
+  | `resource_type` | Findings |
+  | `base_generation_value` | 3 |
+  | `hex_color` | `#6a9978` |
 
-###### Ring 0 — Chorus Node
-Child zone of City. The single zone at the origin point of the city map. No Ring Modifier Deck — modifier decks apply to Rings 1–3 only. Child zone: Chorus Node.
+##### Financial Sanctum (DB: 20)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 20 |
+  | `district_name` | Financial Sanctum |
+  | `ring` | Ring 1 |
+  | `resource_type` | Capital |
+  | `base_generation_value` | 3 |
+  | `hex_color` | `#c9a84c` |
 
-| # | District Zone | Resource | Color | Narrative Placement |
-|---|--------------|----------|-------|---------------------|
-| 21 | Chorus Node | None | — | The origin point of everything. Placed at the top center of the map. All other districts grow from here. |
+---
 
-###### Ring 1 — Core
-Child zone of City. The innermost ring of districts, immediately surrounding the Chorus Node. Base generation: 3 per Quarter. Child zones: Ring 1 Modifier Area, Government Citadel, Military Installation, Chorus Research, Financial Sanctum.
+#### Ring 2 — The Mid
+The administrative and industrial working systems of the city.
 
-**Ring 1 Modifier Area** — child zone of Ring 1. Named position for the Ring 1 Modifier Deck component. Positioned to the left of the Ring 1 arc label (as oriented in component_layout_v1.png).
+##### Power Grid (DB: 10)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 10 |
+  | `district_name` | Power Grid |
+  | `ring` | Ring 2 |
+  | `resource_type` | Capacity |
+  | `base_generation_value` | 2 |
+  | `hex_color` | `#d4622a` |
 
-| # | District Zone | Resource | Color | Narrative Placement |
-|---|--------------|----------|-------|---------------------|
-| 17 | Government Citadel | Mandate | #3a6ea8 | West of center below the Node. The first permanent institution established after the readings were classified. Directorate presence here predates the city. |
-| 18 | Military Installation | Mandate | #3a6ea8 | Far west of Core, adjacent to Government Citadel. Built to secure the Node perimeter. Positioned at the edge of the Core ring facing outward — a barrier between the city and the source. |
-| 19 | Chorus Research | Findings | #6a9978 | East of center below the Node, adjacent to the Node itself. The primary scientific facility. Built as close to the Node as physically possible. |
-| 20 | Financial Sanctum | Capital | #c9a84c | Far east of Core. Arrived after the research institutions — capital follows significance. Positioned at the edge of the Core ring facing outward toward the financial infrastructure below. |
+##### Financial Clearinghouse (DB: 11)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 11 |
+  | `district_name` | Financial Clearinghouse |
+  | `ring` | Ring 2 |
+  | `resource_type` | Capital |
+  | `base_generation_value` | 2 |
+  | `hex_color` | `#c9a84c` |
 
-###### Ring 2 — The Mid
-Child zone of City. The working layer of the city, surrounding the Core. Base generation: 2 per Quarter. Child zones: Ring 2 Modifier Area, Power Grid, Financial Clearinghouse, Data Exchange, Communications Hub, Logistics Center, Research Institute, Regulatory District.
+##### Data Exchange (DB: 12)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 12 |
+  | `district_name` | Data Exchange |
+  | `ring` | Ring 2 |
+  | `resource_type` | Findings |
+  | `base_generation_value` | 2 |
+  | `hex_color` | `#6a9978` |
 
-**Ring 2 Modifier Area** — child zone of Ring 2. Named position for the Ring 2 Modifier Deck component. Positioned to the left of the Ring 2 arc label.
+##### Communications Hub (DB: 13)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 13 |
+  | `district_name` | Communications Hub |
+  | `ring` | Ring 2 |
+  | `resource_type` | Exposure |
+  | `base_generation_value` | 2 |
+  | `hex_color` | `#39d353` |
 
-| # | District Zone | Resource | Color | Narrative Placement |
-|---|--------------|----------|-------|---------------------|
-| 10 | Power Grid | Capacity | #d4622a | West side, adjacent to Military Installation. The Guild built the power systems that run the entire Node complex. Positioned close to the Directorate's military presence — the working relationship between them is geographic. |
-| 11 | Financial Clearinghouse | Capital | #c9a84c | East side, below Financial Sanctum. The Syndicate's primary operational anchor. Positioned on the east side to mirror the Financial Sanctum above it — capital accumulates along the eastern corridor. |
-| 12 | Data Exchange | Findings | #6a9978 | Center, below Chorus Research. The data infrastructure that processes everything coming from the Node. Ghost's analytical networks run through here. |
-| 13 | Communications Hub | Exposure | #39d353 | Center-east, adjacent to Data Exchange. The broadcast and relay infrastructure. The Network's established foothold in The Mid — information generated in the Data Exchange flows east through here. |
-| 14 | Logistics Center | Capacity | #d4622a | West-center, adjacent to Power Grid. Supply chain and distribution infrastructure supporting the Guild's operations. Positioned between the Power Grid and the Baryo's Industrial Fringe. |
-| 15 | Research Institute | Findings | #6a9978 | Center-west, adjacent to Data Exchange and Chorus Research. Secondary research facility — overflow from the Core's research capacity, populated as the Chorus study expanded beyond what the Core could hold. |
-| 16 | Regulatory District | Mandate | #3a6ea8 | Far west, adjacent to Power Grid. The Directorate's administrative presence in The Mid — where institutional authority extends into the city's working systems. |
+##### Logistics Center (DB: 14)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 14 |
+  | `district_name` | Logistics Center |
+  | `ring` | Ring 2 |
+  | `resource_type` | Capacity |
+  | `base_generation_value` | 2 |
+  | `hex_color` | `#d4622a` |
 
-###### Ring 3 — Baryo
-Child zone of City. The populated outer arc of the city. Base generation: 1 per Quarter. Child zones: Ring 3 Modifier Area, Industrial Fringe, Transit Hub, Civic Center, Residential Quarter, University Perimeter, Media District, Broadcast Tower, Observation Post, Commercial Strip.
+##### Research Institute (DB: 15)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 15 |
+  | `district_name` | Research Institute |
+  | `ring` | Ring 2 |
+  | `resource_type` | Findings |
+  | `base_generation_value` | 2 |
+  | `hex_color` | `#6a9978` |
 
-**Ring 3 Modifier Area** — child zone of Ring 3. Named position for the Ring 3 Modifier Deck component. Positioned to the left of the Ring 3 arc label.
+##### Regulatory District (DB: 16)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 16 |
+  | `district_name` | Regulatory District |
+  | `ring` | Ring 2 |
+  | `resource_type` | Mandate |
+  | `base_generation_value` | 2 |
+  | `hex_color` | `#3a6ea8` |
 
-| # | District Zone | Resource | Color | Narrative Placement |
-|---|--------------|----------|-------|---------------------|
-| 4 | Industrial Fringe | Capacity | #d4622a | Far west, adjacent to Logistics Center. Where manufacturing and heavy construction happens. The Guild's Baryo foothold — the outer edge of their operational territory. |
-| 6 | Transit Hub | Capacity | #d4622a | West-center, adjacent to Industrial Fringe and Logistics Center. Transportation infrastructure connecting the Baryo to The Mid. Strategically placed between Guild-adjacent districts. |
-| 7 | Civic Center | Mandate | #3a6ea8 | Center-west, adjacent to Regulatory District. Public-facing institutional presence — local government offices, civic services. The Directorate's most visible presence in the civilian population. |
-| 3 | Residential Quarter | Mandate | #3a6ea8 | Center, the most populated district. Adjacent to Civic Center and University Perimeter. Where most of New Meridian's residents live. Amplifies Public Standing effects — see §11. |
-| 1 | University Perimeter | Findings | #6a9978 | Center, adjacent to Residential Quarter. Academic and research community. Ghost and The Network both began building here — it sits between the intellectual and communications corridors of the city. |
-| 2 | Media District | Exposure | #39d353 | Center-east, adjacent to University Perimeter and Communications Hub. The Network's primary anchor. Positioned at the junction of the academic and communications corridors — where research becomes broadcast. |
-| 8 | Broadcast Tower | Exposure | #39d353 | East, adjacent to Media District. Secondary broadcast infrastructure, extending The Network's reach toward the city's eastern edge. |
-| 9 | Observation Post | Exposure | #39d353 | Far east, at the outer edge of the arc. A media monitoring and public intelligence facility at the city's boundary — where New Meridian watches itself being watched by the outside world. |
-| 5 | Commercial Strip | Capital | #c9a84c | Far east, adjacent to Observation Post. Commercial and retail infrastructure. The Syndicate's Baryo presence — positioned at the eastern edge where commerce follows media and information. |
+---
 
-###### District Adjacency Map
+#### Ring 3 — Baryo
+The outermost layer of populated city sectors.
 
-Canonical adjacency reference for all 21 district zones. Each row defines a directional relationship between an origin district and an adjacent district. All adjacencies are currently bidirectional (Allow_ingress and Allow_egress both TRUE). This table is the source of truth for Entry Rule A/B calculations (§7) and Battlefield Strength scope (03-12).
+##### Industrial Fringe (DB: 4)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 4 |
+  | `district_name` | Industrial Fringe |
+  | `ring` | Ring 3 |
+  | `resource_type` | Capacity |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#d4622a` |
 
-*Note: Two rows in source data contained typo "RIng3" — corrected to "Ring3" below.*
+##### Transit Hub (DB: 6)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 6 |
+  | `district_name` | Transit Hub |
+  | `ring` | Ring 3 |
+  | `resource_type` | Capacity |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#d4622a` |
 
-Feeds DB table: `district_adjacency`.
+##### Civic Center (DB: 7)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 7 |
+  | `district_name` | Civic Center |
+  | `ring` | Ring 3 |
+  | `resource_type` | Mandate |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#3a6ea8` |
+
+##### Residential Quarter (DB: 3)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 3 |
+  | `district_name` | Residential Quarter |
+  | `ring` | Ring 3 |
+  | `resource_type` | Mandate |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#3a6ea8` |
+
+##### University Perimeter (DB: 1)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 1 |
+  | `district_name` | University Perimeter |
+  | `ring` | Ring 3 |
+  | `resource_type` | Findings |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#6a9978` |
+
+##### Media District (DB: 2)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 2 |
+  | `district_name` | Media District |
+  | `ring` | Ring 3 |
+  | `resource_type` | Exposure |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#39d353` |
+
+##### Broadcast Tower (DB: 8)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 8 |
+  | `district_name` | Broadcast Tower |
+  | `ring` | Ring 3 |
+  | `resource_type` | Exposure |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#39d353` |
+
+##### Observation Post (DB: 9)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 9 |
+  | `district_name` | Observation Post |
+  | `ring` | Ring 3 |
+  | `resource_type` | Exposure |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#39d353` |
+
+##### Commercial Strip (DB: 5)
+* **Metadata:**
+  | Field | Value |
+  |-------|-------|
+  | `db_id` | 5 |
+  | `district_name` | Commercial Strip |
+  | `ring` | Ring 3 |
+  | `resource_type` | Capital |
+  | `base_generation_value` | 1 |
+  | `hex_color` | `#c9a84c` |
+
+---
+
+### 6.5 District Adjacency Map
+
+Canonical adjacency reference for all 21 districts. Feeds the `district_adjacency` table in `the_signal_db`.
 
 | Ring | Origin # | Origin District | Adjacent # | Adjacent Ring | Allow Ingress | Allow Egress |
 |------|---------|----------------|-----------|--------------|--------------|-------------|
@@ -415,240 +680,56 @@ Feeds DB table: `district_adjacency`.
 
 ---
 
-### Component Physical Forms
-
-*Migrated to Art 02 §13 — Physical Forms.*
-
----
-
 ## 7. Rules & Constraints
 
 ### Board Shape and Orientation
-
 New Meridian is printed as an organic, non-hexagonal map in an inverted arc (half-circle) shape. The Chorus Node is placed at the top center. Districts radiate outward and downward — Core districts immediately below the Node, The Mid below that, Baryo at the outer edges.
 
-District shapes are organic rather than geometric — they represent actual city districts, not abstract game spaces. Borders between adjacent districts are clearly marked. Each district is large enough to accommodate up to 6 presence tokens, 2 operational markers, and 1 structure token per faction without becoming unreadable.
-
-Resource type is conveyed through background color. The resource icon and district name are printed on each district. Base generation value is printed as a number. All of this information is always visible regardless of tokens placed on the district.
+District shapes are organic rather than geometric — they represent actual city districts, not abstract game spaces. Borders between adjacent districts are clearly marked. Faction color must be readable on districts.
 
 ### Ring Structure and Entry Requirements
+The board's concentric ring layout enforces movement, ingress, and egress rules during play, as detailed in [ref_special_district_and_ring_rules.md](file:///home/abosch/Projects/TheSignal/Whiteboard/ref_special_district_and_ring_rules.md) §1:
+- **Baryo (Ring 3):** 9 districts. Base Resource Yield: 1 unit per Quarter. Free entry during placement.
+- **The Mid (Ring 2):** 7 districts. Base Resource Yield: 2 units per Quarter. Restricted entry (subject to adjacency and the Ring Adjacency Penalty, M-12).
+- **Core (Ring 1):** 4 districts. Base Resource Yield: 3 units per Quarter. Restricted entry (requires Established or Dominant presence in adjacent Ring 2 district during placement).
+- **Chorus Node (Ring 0):** 1 district. Base Resource Yield: None. Excluded from normal adjacency rules (placement requires Established or Dominant presence in adjacent Ring 1 district).
 
-| Ring | Districts | Base Generation |
-|------|-----------|----------------|
-| Baryo | 9 | 1 per round |
-| The Mid | 7 | 2 per round |
-| Core | 4 | 3 per round |
-| Chorus Node | 1 | None |
+### District Static Display Requirements
+Every district on the board must display the following static attributes:
+1. **District name:** Printed text.
+2. **Ring:** Visual border weight or position in arc.
+3. **Resource type:** Background color.
+4. **Base generation value:** Printed number.
+5. **Special rules:** Print a distinct icon on specialized districts (Chorus Node, Residential Quarter).
 
-**Entry Rule A — Free entry from inner ring:**
-If a faction is Established or Dominant in any district on a more inner ring that is adjacent to the target district, they may place an operational marker in the target district freely during the Placement phase. No difficulty penalty applies.
-
-**Entry Rule B — Outer ring entry without inner adjacency:**
-If a faction has no Established or Dominant presence on any adjacent district from a more inner ring, all operations targeting that district suffer a Challenging difficulty penalty. This applies regardless of whether the faction has Present-level presence or an operational marker in the district.
-
-**Second marker and temporary presence:**
-Operational markers count as temporary presence tokens for all purposes during the quarter they are placed, including entry requirement calculations. *This is the canonical global definition — operational markers are presence tokens for all purposes during their placement quarter. Not restated on individual cards. See 02a §6 Global Presence Convention.* A faction's first marker placed during the Placement phase may create or improve their influence level in a district. Their second marker placed later in the same Placement phase may reference that temporary influence when evaluating entry requirements. A faction that places their first marker to establish temporary Established presence in a Baryo district may use that presence to freely place their second marker in an adjacent district in The Mid.
-
-**Entry rule does not restrict operational marker placement in Baryo.** Any faction may place either or both operational markers in any Baryo district at any time, regardless of prior presence.
-
-**Entry to the Chorus Node:**
-The Chorus Node ignores Entry Rules A and B entirely. Regardless of adjacency, ring relationship, or any other condition, placing an operational marker at the Chorus Node requires that the placing faction already holds **Established or Dominant** presence in at least one Core district adjacent to the Node — either through permanent presence tokens or through temporary presence created by an operational marker placed earlier in the same Placement phase.
-
-This means the minimum path to the Chorus Node in a single Placement phase is:
-1. Place first operational marker in an adjacent Core district where the faction has at least 1 permanent presence token (creating temporary Established presence if the marker brings them to 2 effective tokens with no competing faction at higher count)
-2. Place second operational marker at the Chorus Node, referencing the Established status just created
-
-If a faction has no permanent presence tokens in any adjacent Core district, they cannot reach the Chorus Node in that Placement phase regardless of what their first marker does — a single marker alone creates only Present-level temporary presence (1 token equivalent), which does not satisfy the Established requirement.
-
-### District Information Requirements
-
-Every district on the board must simultaneously display:
-
-| Information | Display Method | Visible To |
-|-------------|---------------|------------|
-| District name | Printed text on district | All |
-| Ring | Visual treatment — border weight, or position in arc | All |
-| Resource type | Background color of district | All |
-| Base generation value | Printed number on district | All |
-| Faction presence tokens | Physical tokens placed on district | All |
-| Influence level | Dominant marker on controlling faction's stack; Tension marker on district | All |
-| Structures present | Structure tokens on district (distinct shape from presence tokens) | All |
-| Operational markers this round | Large distinct pieces placed during Placement phase | All |
-| Special rules | Distinct icon printed on district (Chorus Node, Residential Quarter) | All |
+*Dynamic game state (such as faction presence, control tier markers, structures, and active operations) is displayed using components placed on the districts, as specified in [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md).*
 
 ---
 
 ## 8. Starting Configuration
 
-Zone names and component names below are FK references — zone_id → game_zones, on_component_id → components, faction → factions. on_game_zone_id is omitted where NULL for all rows in a table.
-
-### Fixed Setup
-
-All structural and environmental components placed before play begins.
-
-| Component | Zone | on_component_id | Notes |
-|-----------|------|----------------|-------|
-| The Overview (game mat) | Central Area | — | Placed at center |
-| District tile ×21 | Central Area | The Overview | All 21 placed on the mat |
-| Ring Modifier Deck ×3 | Central Area | The Overview | One per ring (Rings 1–3); adjacent to respective ring |
-| Session Timeline | Central Area | — | Left side (P1/P2 adjacency) |
-| Initiative Strip | Central Area | — | Left side (P1/P2 adjacency) |
-| Chorus Activity Track | Central Area | — | Right side (P5 adjacency) |
-| Situation Report Zone | Central Area | — | Right side (P5 adjacency) |
-| Public Standing Track | Central Area | — | Bottom (P3 adjacency) |
-| ARBITER Screen | P6 | — | — |
-| ARBITER Tableau | P6 | — | — |
-| Faction Screen ×5 | P1–P5 | — | One per faction position |
-| Faction Terminal ×5 | P1–P5 | — | One per faction position |
-| Reservoir | Supply | — | — |
-| Backlog | Supply | — | — |
-| Human player ×6 | Chair 1–6 | — | One per position; named game entity (L155) |
-
-### Faction Starting Tokens
-
-District tiles are placed on The Overview at setup — see Fixed Setup. Only districts with starting tokens are listed.
-
-| Component | District Tile | Faction | Count | Influence Level |
-|-----------|----------------|---------|-------|----------------|
-| Presence chip | University Perimeter | Ghost | 1 | Present |
-| Presence chip | University Perimeter | Network | 1 | Present |
-| Presence chip | Media District | Network | 2 | Established |
-| Presence chip | Industrial Fringe | Guild | 1 | Present |
-| Presence chip | Commercial Strip | Syndicate | 1 | Present |
-| Presence chip | Civic Center | Directorate | 1 | Present |
-| Presence chip | Broadcast Tower | Network | 1 | Present |
-| Presence chip | Power Grid | Guild | 3 | Dominant ★ |
-| Presence chip | Financial Clearinghouse | Syndicate | 3 | Dominant ★ |
-| Presence chip | Data Exchange | Ghost | 2 | Established |
-| Presence chip | Communications Hub | Network | 2 | Established |
-| Presence chip | Logistics Center | Guild | 1 | Present |
-| Presence chip | Research Institute | Ghost | 1 | Present |
-| Presence chip | Regulatory District | Directorate | 1 | Present |
-| Presence chip | Government Citadel | Directorate | 1 | Present |
-| Presence chip | Military Installation | Directorate | 2 | Established |
-| Presence chip | Chorus Research | Ghost | 2 | Established |
-| Presence chip | Financial Sanctum | Syndicate | 2 | Established |
-| Presence chip | Chorus Node | Directorate | 1 | Present |
-| Influence marker (Dominant) | Power Grid | Guild | 1 | ★ placed at setup |
-| Influence marker (Dominant) | Financial Clearinghouse | Syndicate | 1 | ★ placed at setup |
-
-### Track Starting Values
-
-These markers are placed on the track and strip components listed in Fixed Setup.
-
-| Component | Component | Value at Setup |
-|-----------|-----------|----------------|
-| Pointer marker | Session Timeline | Quarter 1 |
-| Activity marker | Chorus Activity Track | TBD |
-| Threshold marker | Chorus Activity Track | 6 (default) |
-| Standing marker ×5 | Public Standing Track | 10 (each faction) |
-| Faction order markers ×5 | Initiative Strip | Set by ARBITER at Q1 start |
+All starting positions, initial resource counts, and setup procedures are defined in [03-init___Game_Initialization.md](file:///home/abosch/Projects/TheSignal/V1/03-init___Game_Initialization.md).
 
 ---
 
 ## 9. Faction Player Tableau
 
-*TBD — physical component placement and layout to be specified after Art 07 and Art 08 are refined.*
+All faction tableau components and terminal layouts are defined in [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md) and [08___Player_Toolkit.md](file:///home/abosch/Projects/TheSignal/V1/08___Player_Toolkit.md).
 
 ---
 
 ## 10. ARBITER Tableau
 
-*TBD — physical component placement and layout to be specified after Art 07 and Art 08 are refined.*
-
-Pending items:
-- **Chorus Portrait Amplifier:** Portrait marker placement on ARBITER Tableau + Chorus Node procedure — Art 08 §[TBD].
+All ARBITER tableau components and screen layouts are defined in [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md) and [07___ARBITER_Toolkit.md](file:///home/abosch/Projects/TheSignal/V1/07___ARBITER_Toolkit.md).
 
 ---
 
 ## 11. Special Conditions & Gameplay Impacts
 
-### Residential Quarter — Public Standing Amplifier
-
-Residential Quarter generates 1 Mandate at Dominant control — the lowest economic return of any district. Its strategic value is entirely political.
-
-All global Public Standing effects for factions with presence in Residential Quarter are multiplied based on that faction's influence level there. This applies to every Public Standing change that faction experiences anywhere on the board, for as long as they maintain presence.
-
-| Influence Level | Multiplier |
-|----------------|-----------|
-| Dominant | ×2 |
-| Established | ×1.5 (round toward stronger effect) |
-| Present | ×1.25 (round toward stronger effect) |
-| Contested | ×1 |
-| Absent | ×1 |
-
-Positive multipliers round up. Negative multipliers round up in magnitude (further from zero). Factions with positive Public Standing trajectories want Residential presence. Factions with Discovery risk want to avoid it.
-
-### University Perimeter — Network Resource Conversion
-
-University Perimeter generates Findings for all factions. The Network may freely convert any Findings generated here into Exposure at a 1:1 rate during resource distribution. This conversion is automatic if Network chooses it — no action cost, no resource cost. It reflects The Network's operational reality: information gathered at academic institutions is immediately broadcast rather than held as intelligence. No other faction may make this conversion. No other district offers resource conversion of any kind.
-
-### Chorus Node — Strategic and Narrative Value Only
-
-The Chorus Node generates no resources. No structures may be built here. Its value is strategic and narrative:
-
-**Chorus Activity Suppression:** Any faction with Established or higher influence at the Chorus Node reduces Chorus Activity track advancement from Situation Reports by half (round down) each round. Present-level presence does not suppress. Contested does not suppress.
-
-**Chorus Portrait Amplifier:** ARBITER Tableau procedure — see §10 [ARBITER Tableau, TBD] and Art 08 §[TBD].
-
-**Chorus Question Access:** Only factions with at least Present influence (including operational marker) at the Chorus Node may propose a Chorus Question when the window opens. Not available when the Chorus Node is Contested — the window does not open that quarter.
-
-**Translation Rate:** The conversion rate for The Translation (resource conversion via ARBITER) scales with the requesting faction's presence at the Chorus Node: Established = 2:1, Present = 3:1, no presence = 4:1 (standard), Contested = 5:1. The Contested rate is ARBITER's response to factions bringing conflict into the Chorus Node. Rate table: Artifact 02a §8 (D02a-01).
-
-**Narrative Significance:** Presence at the Chorus Node is the clearest signal that a faction intends to shape humanity's answer. ARBITER notes it. The Chronicle reflects it.
-
-### Contested Districts
-
-A district is Contested when two or more factions are tied for the highest presence token count at 3 or more tokens each — meaning multiple factions simultaneously qualify for Dominant. Because Dominant requires strictly more tokens than all others, no faction holds Dominant in a Contested district.
-
-**No faction can be Dominant in a Contested district.**
-
-ARBITER places a Tension marker (neutral chip) on the district when this state arises and removes it the moment one faction pulls strictly ahead.
-
-**Resource generation in a Contested district:**
-
-Any faction with 3 or more tokens in a Contested district generates 1 unit flat regardless of that district's base generation value. This applies to all factions at 3+ tokens — including any faction that would otherwise become Dominant in the power vacuum created by the tie.
-
-Factions below the 3-token threshold are governed by their normal influence level:
-- The faction in second place by token count with 2+ tokens is Established and generates full resources — even while higher-count factions are Contested above them
-- Factions in third place or lower generate at their normal Present rate
-
-**Structure protection in a Contested district:**
-
-No faction receives Dominant-level structure protection (Challenging difficulty to demolish) while the district is Contested. All factions with 3+ tokens in a Contested district receive standard (Average) demolish difficulty against their structures.
-
-Full influence level rules and all Contested examples are specified in Artifact 02a — Resource Systems: Board State.
+All district-specific gameplay rules and active procedural outcomes have been moved to [ref_special_district_and_ring_rules.md](file:///home/abosch/Projects/TheSignal/Whiteboard/ref_special_district_and_ring_rules.md) §2.
 
 ---
 
 ## 12. Examples & Exceptions
 
-### Entry Requirements — Second Marker Using First Marker's Temporary Presence
-
-Quarter 3 Placement phase. The Network has no permanent presence in The Mid. During the Placement phase, The Network places their first operational marker in Communications Hub (The Mid). This marker counts as 1 temporary presence token — The Network now has 1 effective presence token in Communications Hub, making them Present there temporarily.
-
-The Network places their second operational marker in Data Exchange (The Mid), which is adjacent to Communications Hub. Entry Rule A asks: is The Network Established or Dominant in any adjacent inner-ring district? No — Communications Hub is The Mid, the same ring as Data Exchange, not more inner. Entry Rule B applies: Challenging difficulty on operations targeting Data Exchange.
-
-However: if The Network had placed their first marker in Chorus Research (Core) — adjacent to Data Exchange — that would satisfy Entry Rule A for the Data Exchange placement. The temporary presence in a Core district (more inner ring) adjacent to The Mid target would allow free placement of the second marker.
-
-### Contested Condition — Second Place Benefits
-
-Quarter 5. Ghost and The Syndicate both have 4 presence tokens at Data Exchange. The Guild has 2 presence tokens at Data Exchange.
-
-Ghost and The Syndicate are tied at 4 tokens — both qualify for Dominant but neither can hold it. Tension marker is placed. Both generate 1 Findings flat.
-
-The Guild has 2 tokens — second place by count, 2-token minimum met. The Guild is Established. The Guild generates full Data Exchange value: 2 Findings.
-
-The Guild, with only 2 tokens, is the most productive faction in Data Exchange while Ghost and Syndicate fight. This state persists until one of the tied factions gains a token.
-
-### Chorus Node — Reaching It in a Single Placement Phase
-
-The Chorus Node requires Established or Dominant presence in an adjacent Core district — temporary presence counts, but only if it reaches Established level.
-
-**Condition that makes this possible:** A faction has at least 1 permanent presence token in an adjacent Core district before the Placement phase begins. Placing their first operational marker in that district brings their effective token count to 2. If no other faction has 2 or more tokens there, that faction is temporarily Established. Their second marker may now be placed at the Chorus Node.
-
-**Example:** Quarter 4 Placement. The Guild has 1 permanent presence token in Government Citadel (Core), placed in a prior Quarter. During Placement, The Guild places their first operational marker in Government Citadel — their effective count rises to 2 tokens. The Directorate has only 1 token there. The Guild is temporarily Established in Government Citadel. Government Citadel is adjacent to the Chorus Node. The Guild places their second operational marker at the Chorus Node. Entry requirement satisfied.
-
-At Upkeep, both markers convert to permanent tokens if not blocked — giving The Guild 2 permanent tokens in Government Citadel and 1 at the Chorus Node.
-
-**Condition that prevents this:** If The Guild had no permanent tokens in any adjacent Core district before Placement, their first marker would create only 1 effective token — Present level only. Present does not satisfy the Chorus Node entry requirement. The second marker cannot go to the Chorus Node that phase regardless of adjacency.
+All gameplay examples and exceptions have been consolidated in [ref_special_district_and_ring_rules.md](file:///home/abosch/Projects/TheSignal/Whiteboard/ref_special_district_and_ring_rules.md) §3.

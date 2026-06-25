@@ -4,7 +4,7 @@
 **Version:** 0.1 Draft — Placeholder  
 **Status:** 🔄 Draft — Blocked by Artifact 04 completion  
 **Last Updated:** 2026-05-15  
-**Depends on:** 04 — Action Card System; 03 — Round Structure & Gameplay; 02a — Resource Systems: Board State  
+**Depends on:** 04 — Action Card System; 03 — Round Structure & Gameplay; 02 — Components  
 **Supersedes:** l1_operatives (retired artifact), apex_system (retired artifact)
 
 ---

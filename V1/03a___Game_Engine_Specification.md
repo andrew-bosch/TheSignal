@@ -79,16 +79,16 @@ The physical state of the game immediately after setup and before Quarter 1 Phas
 
 #### Board Domain at Setup
 
-Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) added: 8 chips at D-22 only, 0 elsewhere.
+Presence chip placement per [03-init___Game_Initialization.md](file:///home/abosch/Projects/TheSignal/V1/03-init___Game_Initialization.md) §2.2 Faction Starting Tokens. F-06 (ARBITER) added: 8 chips at D-22 only, 0 elsewhere.
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
-| `Board.PresenceChips[D-xx][F-01..F-05]` | Per Art 01 §7 Starting Configuration | Art 01 §7 |
+| `Board.PresenceChips[D-xx][F-01..F-05]` | Per 03-init §2.2 starting presence | 03-init §2.2 |
 | `Board.PresenceChips[D-22][F-06]` | 8 — Chorus Node only | Art 02 §14 |
 | `Board.PresenceChips[D-xx][F-06]` where D-xx ≠ D-22 | 0 | Setup |
 | `Board.InfluenceLevel[D-xx][F-xx]` | Derived from PresenceChips per normal rules | Derived |
 | `Board.ControlFlag[D-22]` | F-06 — derived (8 chips > F-05's 1 chip; ARBITER Dominant) | Derived |
-| `Board.ControlFlag[D-xx]` where D-xx ≠ D-22 | Per Art 01 §7 Starting Level notations | Derived |
+| `Board.ControlFlag[D-xx]` where D-xx ≠ D-22 | Derived from 03-init §2.2 influence levels | Derived |
 | `Board.TensionMarker[D-xx]` | False — no Contested conditions exist at setup chip counts | Derived |
 | `Board.StructureBlocks[D-xx][F-xx]` | 0 — all districts, all factions | Setup |
 | `Board.DeploymentMarker[F-xx][1\|2]` | {Location: Hand, Face: N/A} — all factions | Setup |
@@ -99,7 +99,7 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
-| `Faction.Resources[F-xx][RT-xx]` | ⚠ Open question — see note below | Art 00 §7, Art 01 §7 |
+| `Faction.Resources[F-xx][RT-xx]` | Per 03-init §2.6 starting resource grant | Art 00 §7, 03-init §2.6 |
 | `Faction.PublicStanding[F-01..F-05]` | 10 (PS-03 — Neutral) | L48 |
 | `Faction.PublicStanding[F-06]` | TBD — Art 07 | Art 07 |
 | `Faction.ChorusPortrait[F-xx]` | 0 — all factions | Setup |
@@ -107,7 +107,7 @@ Presence chip placement per Art 01 §7 Starting Configuration. F-06 (ARBITER) ad
 | `Faction.BurstPlay[F-xx]` | False — all factions | Setup |
 | `Faction.IntelTokens[F-xx]` | 0 — all factions | Art 02 |
 
-⚠ **Starting resources — open question:** Art 01 §7 "Starting Round 1 Income" projects income from Q1 Upkeep Step 5, calculated from setup chip placement. It is unclear whether factions begin the game with resources in hand (a setup grant before Q1 Upkeep), or at zero (receiving their first income during Q1 Upkeep Step 5 only). If the income table reflects only the Upkeep yield, starting value = 0. If it includes a pre-Upkeep starting grant, the income table values are the combined total. Requires resolution in Art 00 §7 or Art 02.
+⚠ **Starting resources — open question:** 03-init §2.6 starting resource grant defines what resources factions hold at session start. It is unclear whether factions receive an additional setup grant before Q1 Upkeep, or if these are the absolute initial resources. Requires resolution in Art 00 §7 or Art 02.
 
 #### Quarter Domain at Setup
 

@@ -732,7 +732,7 @@ A presence token represents one unit on that scale — not a person, not an asse
 
 Dominant status is something else. It is comparative, not absolute — a faction holds Dominant when their Holt magnitude is unambiguously higher than all others in the district and has crossed the floor below which influence cannot yet claim the air. That floor is three. Below three, the weight is present but not yet defining. Above three and clearly ahead, the district feels it as dominant. When two factions are close, neither holds it: the atmosphere is contested, the weight unresolved, the district in flux. Once one faction pulls clearly ahead, influence consolidates. Dominant is not a fixed count. It is the condition of being the unambiguous leader — and it subsides the moment that clarity is in question.
 
-*Mechanics: Artifact 02a §6.*
+*Mechanics: Artifact 02 §6.*
 
 ---
 
@@ -744,7 +744,7 @@ What the mark represents in the world behind The Overview varies by faction and 
 
 The fact is public. The nature is not. That separation — what The Overview surfaces and what it does not — is not incidental. It is what makes structure blocks legible to everyone at The Table and meaningful only to the faction that placed them. The Holt Index measures how much a faction fills a district. The structure block is what The Overview shows when a faction has decided the district is worth filling.
 
-*Mechanics: Artifact 02a §7.*
+*Mechanics: Artifact 02 §6.*
 
 ---
 
@@ -760,7 +760,7 @@ A deployment ends in a district. The people behind it do not stop. The trucks mo
 
 Not every deployment disappears cleanly. A festival leaves a neighborhood with a memory of who threw it. A project perimeter that went up and came down changed what the block looks like. Broadcast equipment that occupied a corner for three weeks changed which voices the regulars started hearing. At the close of each quarter, The Overview updates — and some of what was marked as temporary engagement has become something else: a shift in the district's atmospheric reading that The Overview now records as presence. The deployment ended. What it left behind did not.
 
-*Mechanics: Artifact 02a §6, 00a R13.*
+*Mechanics: Artifact 02 §6, 00a R13.*
 
 ---
 

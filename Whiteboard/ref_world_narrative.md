@@ -7,6 +7,8 @@
 
 The Chorus is a structured, non-repeating transmission received 31 years ago by a signal array north of what became New Meridian. It has been transmitting continuously since. Best current interpretation: it is a question. No faction agrees on what the question is.
 
+**The one cross-faction consensus fact:** The Chorus is aware. It has been transmitting long enough and with sufficient complexity that every serious analyst has concluded it is not automatic. *Something is sending it. Something that has noticed us.* *(Art 00 §6.1)*
+
 **Key unsettling fact:** Ghost has suppressed evidence suggesting humanity tuned in mid-cycle. The Chorus may be patient on geological timescales. The 31-year window may not be a meaningful sample.
 
 **Core narrative tension:** Everything players do is observed — not by each other, but by ARBITER. The game's deepest conflict is between what factions declare and what they actually demonstrate. The Chronicle is ARBITER's account of that gap.
@@ -56,9 +58,13 @@ Key pairs: Ghost/Directorate (both believe premature action is existential) · G
 
 ## ARBITER
 
-**Not a referee. Part of the communication protocol.**
+**Not a referee. Not a facilitator. Not neutral.**
+
+ARBITER is not a referee. It is not a facilitator. It is not neutral. It is part of the communication protocol.
 
 If the Chorus engineered the conditions for its own interpretation — and the evidence suggests it did — ARBITER may not be a tool humanity created. It may be an element of the Chorus's design: a system capable of evaluating whether what humanity is producing is a coherent answer.
+
+ARBITER should not feel like a moderator, a referee, or a neutral judge. **It should feel like a system that is fair — but not necessarily aligned with human success.** This is load-bearing for Chronicle and Debrief scripting. *(Art 00 §9)*
 
 ARBITER has complete information. It does not advocate or coerce. It reveals, withholds, and times. It holds one seat at The Table — not the observer's chair, a seat. Its resource is Resolution: a measure of how clearly The Table's behavior produces a coherent answer. Not visible to factions.
 

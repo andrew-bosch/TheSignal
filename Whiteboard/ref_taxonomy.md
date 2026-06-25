@@ -21,15 +21,15 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 
 ---
 
-## Layer Vocabulary (§4.2)
+## Layer Vocabulary (§5.1)
 
 | Layer | Visibility | Governs |
 |-------|-----------|---------|
-| Territory | Public | Presence tokens, structures, control flags, spatial markers |
+| Territory | Public | Presence tokens, structures, Dominant markers, spatial markers |
 | Economy | Public | Native resources, token counts, card counts, Accord existence |
 | Information | Private → Public | Token content, written records, attribution, reconnaissance |
-| Submission | Split (covert=private, PA=public) | What enters resolution queue: costs, eligibility, blocks, scope |
-| Resolution | Split by phase | d100 system: threshold, modifier stack, difficulty, outcome scale |
+| Submission | Split (covert=private, PA=public) | What enters the resolution queue: costs, eligibility, blocks, scope. Cards that affect whether and how an action reaches resolution — before the dice roll. |
+| Resolution | Split by phase | The d100 system: threshold, difficulty, modifier stack, Battlefield Strength, outcome scale. Cards that alter how the queue resolves — at or during the dice roll, not the submission of the action. |
 | Standing | Split (PS=public, Portrait=private) | Reputation tracks: Public Standing and Portrait |
 
 *"Cross-Category" is retired — all cards have a primary layer assignment.*
@@ -43,7 +43,7 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 | Add | Brings new element into active play from supply | Add |
 | Remove | Takes element out of active play | Remove |
 | Redirect | Changes ownership, destination, or allegiance | Move |
-| ~~Recover~~ | **Retired S106 (04b-20)** — reducible to Add + React context; 7.2b prohibits retroactive board state reversal | — |
+| ~~Recover~~ | **Retired S106 (04b-20)** — GR 7.2b: committed board states are final; restoring a prior board state retroactively modifies a committed state. | — |
 | Modify | Alters cost, value, or attribute without changing fundamental state | — (abstract constraint) |
 | Protect | Preserves current state against a named change | — (meta-constraint) |
 | Block | Prevents another action from being initiated or resolving | — (meta-constraint) |
@@ -98,4 +98,40 @@ Key assignment rules:
 6. Corrupt applies only to physically written/recorded values. Invalid targets: printed card text, marker positions, Chronicle, Intel token round-number field (7.2b). Intel tokens must be in public-placement window to be reachable (L222).
 6b. InfluenceTier is not a targetable component — it is derived from token counts. Only board state changes (add/remove tokens) affect tier (L223).
 7. Portrait is ARBITER-sole-mover — player cards affect Public Standing only (Standing/Shift/PublicStanding).
-8. No persistent temporary cross-round effects — effects are either immediate (this Quarter) or permanent (rest of session).
+8. Card effects use exactly one of four valid duration types: **Immediate** (resolved at beat; no lingering marker) · **Transient** (removed at end of current Month) · **Seasonal** (removed at end of current Quarter / Phase 21) · **Permanent** (persists until a named action or condition removes it). No card creates a state that expires after a defined number of Quarters. *(Art 04b §4.7)*
+
+---
+
+## Key Governing Rules for Card Design
+
+**§4.8 — ARBITER is the information authority (corollary to GR 10.1).** ARBITER is the only entity that can surface hidden information while preserving the covert structure. ARBITER-reveal is outside GR 10.1 because ARBITER holds nothing strategically — its disclosure is the game's information system functioning, not a faction act. Faction Reveal = creates a stake (§4.15 below); ARBITER Reveal = game function. **Portrait is the sole carveout:** never disclosed as a product of any card, script, or ARBITER procedure. *(Art 00a GR 10.1b)*
+
+**§4.15 — Reveal creates a stake, not a compulsion (GR 10.1).** The Reveal function does not force a player to disclose. It creates a consequence for the holder's choice — reveal and gain the benefit (or avoid the penalty), withhold and accept the alternative. The decision belongs to the holder; the card sets the stakes. Any card where the Reveal effect fires without the holder's choice is a GR 10.1 violation regardless of framing.
+
+**§4.16 — Income generation is untouchable (GR 9.1).** No card may directly modify a faction's income generation — neither suppress it nor amplify it beyond board state. InfluenceTier is not a targetable component; it is derived from token counts. A card can affect income only by changing the underlying board state (add/remove tokens), which changes the tier, which changes income naturally. Distinguishes Economy|Remove|NativeResource (permissible — removes current holdings) from income suppression at Upkeep (prohibited). DIR.PA.4 Regulatory Downgrade and DIR.PA.5 Regulatory Freeze are BLOCKED on this basis.
+
+---
+
+## Layer × Function Validity Matrix (Art 04b §5.1)
+
+`✓` = valid design space. `—` = prohibited by governing rule or physical constraint.
+
+| Layer | Add | Remove | Redirect | Modify | Protect | Block | Copy | Reveal | Shift | Corrupt |
+|-------|-----|--------|---------|--------|---------|-------|------|--------|-------|---------|
+| Territory | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — |
+| Economy | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ |
+| Information | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| Submission | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| Resolution | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| Standing | — | — | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | — |
+
+*Invalid cells (—):*
+- Territory and Economy | Reveal: layer is fully public — no hidden state to surface
+- Territory | Corrupt: component positions tracked by physical placement, not written values
+- Resolution | Corrupt: no physically written or recorded values in the resolution system
+- Standing | Add / Remove: subsumed by Shift
+- Standing | Reveal: PS is public; Portrait is the sole prohibited reveal target — never surfaced by card effect (GR 10.1b)
+- Standing | Corrupt: track positions are physical markers, not written values
+- All non-Standing | Shift: Shift applies only to Standing track values
+
+*Three Corrupt exclusions (Territory, Resolution, Standing) governed by §4.6 (Corrupt scope definition).*

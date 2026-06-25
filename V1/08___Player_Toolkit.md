@@ -4,7 +4,7 @@
 **Version:** 0.1 Draft — Placeholder  
 **Status:** 🔄 Draft — Partially defined, pending Artifact 04 and 05 completion  
 **Last Updated:** 2026-05-15  
-**Depends on:** 00 — Factions & World; 02a — Resource Systems: Board State; 02b — Resource Systems: Tracking; 04 — Action Card System; 05 — Operative & Apex System  
+**Depends on:** 00 — Factions & World; 02 — Components; 04 — Action Card System; 05 — Operative & Apex System  
 **Supersedes:** player_guide (retired artifact), hidden_objectives (classified directive sections, retired)
 
 ---
@@ -213,7 +213,7 @@ Each faction has a faction reference card — a double-sided condensed reference
 5. Select covert operations deck (see §8.1).
 6. Confirm political acts deck (see §8.1).
 7. Confirm Pass cards (4) are with your hand.
-8. Place faction markers on Public Standing track at starting position ([TBD — confirm starting position with Artifact 02b]).
+8. Place faction markers on Public Standing track at starting position ([TBD — confirm starting position with Art 02 §12]).
 9. Place starting presence tokens in starting districts per §7.
 10. Place starting structures in starting districts per §7.
 11. Confirm Chorus Node has ARBITER Dominance Marker in place (ARBITER confirms).

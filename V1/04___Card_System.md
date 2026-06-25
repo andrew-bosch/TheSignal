@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.44 Draft  
+**Version:** 0.9.45 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-20  
+**Last Updated:** 2026-06-24  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -25,6 +25,8 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §5a | [Faction Playstyle Reference](#5a-faction-playstyle-reference) |
 | §6 | [Card Data Schema](#6-card-data-schema) |
 | §7 | [Card Specifications](#7-card-specifications) |
+| §8 | [Card Taxonomy Index](#8-card-taxonomy-index) |
+| §9 | [Faction Coverage Matrix](#9-faction-coverage-matrix) |
 | §11 | [Rules & Constraints — Modifier Cards](#11-rules-constraints-modifier-cards) |
 | §12 | [Rules & Constraints — Pass Cards](#12-rules-constraints-pass-cards) |
 | §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
@@ -375,7 +377,7 @@ The Syndicate does not debate whether the Chorus matters. They ask who will cont
 
 ## 6. Card Data Schema
 
-*§6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/TheSignal/Whiteboard/researchNotes_CardDesign.md`.*
+*Art 04 §6 schema informed by a card game data structure gap analysis conducted sessions 23–24. Research notes (non-artifact): `Projects/TheSignal/Whiteboard/researchNotes_CardDesign.md`.*
 
 ---
 
@@ -503,9 +505,9 @@ class PSFraming:
 | cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid cost resources are those that can be traded or transferred (Mandate, Capital, Influence, district native resource). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
 | boost | Logic | BoostExpr | Optional variable-multiplier mechanic — player submits additional resources beyond base cost; no declaration required. ARBITER detects at Beat 0: n = (total submitted − base cost) / boost unit cost; places n BoostMarker tokens (BM-xx) on the card's grid slot alongside the card. At Beat 2/3 resolution: effect fires (1 + BM-xx count) times; BM-xx returned to ARBITER supply at beat cleanup. For threshold-scaling cards, threshold is locked at Beat 0 using total count (1 + BM-xx). Boost unit cost may differ from base cost resource type. None = no boost mechanic. | Face |
 | success | Effects | MutationExpr | Primary effect on resolution success | Face |
-| successcrit | Effects | MutationExpr | Additive delta on critical success (roll < 5); None when Automatic | Face |
+| successcrit | Effects | MutationExpr | Additive delta on critical success (roll ≤ 5, i.e. 01–05); None when Automatic | Face |
 | fail | Effects | MutationExpr | Effect on failure; None = cost spent, no additional effect | Face |
-| failcrit | Effects | MutationExpr | Additive delta on critical failure (roll ≥ 95); None when Automatic | Face |
+| failcrit | Effects | MutationExpr | Additive delta on critical failure (roll ≥ 96, i.e. 96–00); None when Automatic | Face |
 | on_accept | Effects | MutationExpr | ElectPlayer outcome type only — effect applied when target accepts the offer at resolution; None when outcome_type ≠ ElectPlayer | Face |
 | on_decline | Effects | MutationExpr | ElectPlayer outcome type only — effect applied when target declines the offer at resolution; None when outcome_type ≠ ElectPlayer | Face |
 | portrait | Portrait | dict[Faction, PortraitEntry] | Per-faction portrait scoring — evaluated by ARBITER; analyzed in DB | TBD |
@@ -645,8 +647,8 @@ Territory-control foundation card. Construction is publicly visible — the cove
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Guild `submitter=+1`: permanence doctrine — core alignment (DIR.PA.1, SYN.PA.2). Ghost `submitter=−1`: structure is a permanent visible commitment; Ghost doctrine is concealment, not construction (DIR.PA.1, SYN.PA.2). Directorate: no entry — builds pragmatically ("if it serves the mandate"); instrumental, not doctrinal. Network: no entry — presence-building via community relationships (STD.CA.3), not structures; observational stance confirms absence. Syndicate: no entry — doctrine is acquisition and capital flow; "who captures it" is observer framing, not builder framing. No direct Portrait track shift in effect fields (DIR.PA.2). All entries submitter-bounded (SYN.PA.2). | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any` — valid. Ring entry implicit via presence requirement in restriction. | Art 01 §6–§7 |
-| Supported by components | ✓ | StructureBlock (§7); presence token / deployment marker in restriction (§6); faction native + district native cost (§8). | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Submitted in Dispatch (§9); Beat 3 Resolution Grid (§9.4). ARBITER places Structure Block at Beat 3 outcome. Guild affinity evaluated at dispatch. | Art 03 §9, §9.4 |
+| Supported by components | ✓ | StructureBlock (Art 02 §6); presence token / deployment marker in restriction (Art 02 §6); faction native + district native cost (Art 02 §7). | Art 02 §6–§7 |
+| Supported by game procedure | ✓ | Submitted in Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4). ARBITER places Structure Block at Beat 3 outcome. Guild affinity evaluated at dispatch. | Art 03 §9, §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -736,8 +738,8 @@ Territory disruption card — the destructive mirror of STD.CA.1. Structure remo
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Guild `submitter=−1`: demolition against permanence doctrine — "we do not unmake" (DIR.PA.1, SYN.PA.2). Network `submitter=+1`: counter-entrenchment doctrine — removing infrastructure of control is on-doctrine (DIR.PA.1, SYN.PA.2). Directorate `submitter=−1`: structures represent institutional investment; doctrinal reluctance parallels STD.CA.4 (DIR.PA.1, SYN.PA.2). Ghost: no entry — analytical observer, not demolition-as-doctrine; absence justified. Syndicate: no entry — pragmatic asset-management framing, no doctrinal signal; absence justified. `failcrit standing -= 1` is Public Standing (Art 02), not Portrait — DIR.PA.2 clear. | Art 04 §6.2; Art 02 §11 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction uses self-or-adjacent presence — adjacency model required; district_adjacency confirmed (DB-09 ✅ S50). | Art 01 §6–§7 |
-| Supported by components | ✓ | StructureBlock target (§7); presence in restriction (§6); dual cost (§8); failcrit `standing -= 1` (Art 02 §11). | Art 02 §6–§8; Art 02 §11 |
-| Supported by game procedure | ✓ | Dispatch (§9); Beat 3 Resolution Grid (§11); d100 threshold 50 with ring_mod. ARBITER removes Structure Block on success; standing loss on crit fail — Beat 3 outcome steps. | Art 03 §9, §11 |
+| Supported by components | ✓ | StructureBlock target (Art 02 §6); presence in restriction (Art 02 §6); dual cost (§8); failcrit `standing -= 1` (Art 02 §11). | Art 02 §6–§8; Art 02 §11 |
+| Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with ring_mod. ARBITER removes Structure Block on success; standing loss on crit fail — Beat 3 outcome steps. | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -828,8 +830,8 @@ Presence-deepening card — a deliberate structural parallel to STD.CA.1. To Cam
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Network `submitter=+1`: relational growth is doctrinally core (DIR.PA.1, SYN.PA.2). Guild: no entry — STD.CA.1/structural investment is Guild's primary presence signal; Campaign is available but not doctrinally distinct; absence justified. Directorate: no entry — presence-building is instrumental ("where the mandate requires it"), not doctrinal; absence justified. Ghost: no entry — "presence creates exposure" frames expansion as calculated exception, not doctrinal endorsement; absence justified. Syndicate: no entry — community presence-building is not Syndicate's mode; capital and acquisition is; absence justified. No direct Portrait track shift in effect fields (DIR.PA.2). | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Ring entry implicit via presence restriction. | Art 01 §6–§7 |
-| Supported by components | ✓ | PresenceToken (§6); faction native + district native cost (§8). | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Dispatch (§9); Beat 3 Resolution Grid (§9.4). ARBITER places PresenceToken on success. Network affinity evaluated at dispatch. | Art 03 §9, §9.4 |
+| Supported by components | ✓ | PresenceToken (Art 02 §6); faction native + district native cost (Art 02 §7). | Art 02 §6, §7 |
+| Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4). ARBITER places PresenceToken on success. Network affinity evaluated at dispatch. | Art 03 §9, §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -913,8 +915,8 @@ Presence-disruption card — the destructive mirror of STD.CA.3, following the s
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Guild `submitter=−1`: undermining presence is doctrinally incongruent — "we do not erase what others have built" (DIR.PA.1, SYN.PA.2). Directorate `submitter=−1, where=faction(target) != Network`: covert erosion conflicts with governance doctrine; exception when targeting Network — framed as "public safety," no doctrinal conflict; `where=` constrains by target identity, not outcome (DIR.PA.1, SYN.PA.2). Network `submitter=+1`: counter-entrenchment doctrine — eroding entrenched presence is on-doctrine (DIR.PA.1, SYN.PA.2). Ghost: no entry — "disruption without intelligence purpose is noise"; presence disruption is not Ghost's primary mode; absence justified. Syndicate: no entry — pragmatic observer framing, no doctrinal stake in presence disruption; absence justified. `failcrit standing -= 1` is Public Standing (Art 02), not Portrait — DIR.PA.2 clear. | Art 04 §6.2; Art 02 §11 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction requires self-or-adjacent presence AND target has presence > 0. Adjacency model required. | Art 01 §6–§7 |
-| Supported by components | ✓ | PresenceToken in restriction and as target (§6); dual cost (§8); failcrit `standing -= 1` (Art 02 §11). | Art 02 §6, §8; Art 02 §11 |
-| Supported by game procedure | ✓ | Dispatch (§9); Beat 3 Resolution Grid (§11); d100 threshold 50 with ring_mod. ARBITER removes PresenceToken on success; double on crit success; standing loss on crit fail — Beat 3 outcome steps. | Art 03 §9, §11 |
+| Supported by components | ✓ | PresenceToken in restriction and as target (Art 02 §6); dual cost (Art 02 §7); failcrit `standing -= 1` (Art 02 §11). | Art 02 §6, §7; Art 02 §11 |
+| Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with ring_mod. ARBITER removes PresenceToken on success; double on crit success; standing loss on crit fail — Beat 3 outcome steps. | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -999,14 +1001,14 @@ Universal intelligence card — the baseline for the Information layer. Observat
 | Doctrine alignment | ✓ | `target_faction = faction.opponent` set; `doctrine_mod = None` — explicit choice. Intelligence-gathering effectiveness doesn't vary by doctrinal relationship. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | Standard: all factions gather intelligence. CovertOperation: observation is covert. Ghost adjacency exemption is a doctrinal exception to the restriction, not a subtype change. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Information` — intelligence-gathering generates IntelToken; dominant design intent is information acquisition, consistent with Art 04b §4.4. `doctrine_mod = None` — correct, doctrinal proximity does not affect intel-gathering effectiveness. | Art 04b §4 |
-| Balance | ✓ | Single faction-native cost — cheapest intel card. Ghost effective threshold 75 (50+25 affinity). Crit success = 2 tokens total (additive). Crit fail NotificationSlip creates real operational risk. | Art 02 §8; Art 02 §12 |
+| Balance | ✓ | Single faction-native cost — cheapest intel card. Ghost effective threshold 75 (50+25 affinity). Crit success = 2 tokens total (additive). Crit fail NotificationSlip creates real operational risk. | Art 02 §7, §8, §9 |
 | Effect duration | ✓ | No duration — Intel Token is a durable resource that persists until spent. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Ghost `submitter=+1`: intelligence-gathering is core doctrine — "this is what we are here for" (DIR.PA.1, SYN.PA.2). Network: no entry — intel is a tool for Network, not their primary mode; relational growth and communication are doctrinal (absence justified). Guild: no entry — pragmatic use only; "we gather when we need to build smarter" (absence justified). Directorate: no entry — prefers formal collection; covert gathering is a tool, not a belief (absence justified). Syndicate: no entry — transactional framing, no doctrinal signal (absence justified). `failcrit` dispatches NotificationSlip — game effect, not Portrait shift (DIR.PA.2 clear). | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: presence in self-or-adjacent OR Ghost exemption. | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken (Art 02 §12); faction native cost (Art 02 §8); failcrit NotificationSlip (Art 02 — subtype definition pending 02a-11). | Art 02 §8; Art 02 §12 |
-| Supported by game procedure | ✓ | Dispatch (§9); Beat 3 Resolution Grid (§11); d100 threshold 50 with Ghost affinity. ARBITER delivers IntelToken on success, NotificationSlip to target on crit fail — Art 03 Beat 3 outcome steps (per L170; Art 07 ref is stale). | Art 03 §9, §11 |
+| Supported by components | ✓ | IntelToken (Art 02 §9); faction native cost (Art 02 §7); failcrit NotificationSlip (Art 02 §8 — subtype definition pending). | Art 02 §7, §8, §9 |
+| Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with Ghost affinity. ARBITER delivers IntelToken on success, NotificationSlip to target on crit fail — Art 03 Beat 3 outcome steps (per L170; Art 07 ref is stale). | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -1094,7 +1096,7 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 | Portrait validity | ✓ | Network `submitter=+1`: tactical information control — primary aligned faction (DIR.PA.1, SYN.PA.2). Ghost `submitter=+1`: interference creates analytical cover, consistent with Ghost's low-profile doctrine (DIR.PA.1, SYN.PA.2). Directorate `submitter=−1`: covert disruption undermines institutional legitimacy; Directorate's tool is regulatory authority, not anonymous interference (DIR.PA.1, SYN.PA.2). Guild: no entry — operational delays are a cost, not a doctrinal signal; absence justified. Syndicate: no entry — market inefficiency is an opportunity, not a doctrinal stake; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. No presence restriction — broadcast effect is ambient to the district. | Art 01 §6 |
 | Supported by components | ✓ | PublicAct as target type; Exposure resource as cost. Both defined. | Art 02 §8; Art 04b §5 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); placed in Beat 2 row at Resolution Grid setup (§9.4.0); moved to Beat 4 carry row during Beat 2 processing (§9.4.2); arming and effect applied at Beat 4 (§10). | Art 03 §9, §9.4, §10 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); moved to Beat 4 carry row during Beat 2 processing (Art 03 §9.4.2); arming and effect applied at Beat 4 (Art 03 §9.4.3). | Art 03 §9, §9.4, §10 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -1183,7 +1185,7 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 | Portrait validity | ✓ | Network `submitter=+1`: amplifying public messaging is core Network doctrine (DIR.PA.1, SYN.PA.2). Ghost `submitter=−1`: amplification = attention = exposure risk — "volume attracts attention, attention ends operations" (DIR.PA.1, SYN.PA.2). Guild: no entry — "let our structures speak"; amplification is a substitute for physical evidence, not a doctrinal tool; absence justified. Directorate: no entry — institutional authority doesn't require amplification; tactical use only; absence justified. Syndicate: no entry — leverage framing is opportunistic, not doctrinal; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | N/A — `target_district = None`; card operates on acting faction's own PA submission, not a district. | — |
 | Supported by components | ✓ | PublicAct as target; Exposure as cost; `standing_impact` for outcome (Art 02 §11). | Art 02 §8; Art 02 §11; Art 04b §5 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); placed in Beat 2 row at Resolution Grid setup (§11 Beat 0); moved to Beat 4 carry row during Beat 2 processing (§11 Beat 2); `standing_impact` multiplier applied at Beat 4 (§17). | Art 03 §9, §11, §17 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0 Beat 0); moved to Beat 4 carry row during Beat 2 processing (Art 03 §9.4.2 Beat 2); `standing_impact` multiplier applied at Beat 4 (Art 03 §17). | Art 03 §9, §11, §17 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -1271,7 +1273,7 @@ Economy-bypasses-Territory card — the only Standard CovertOperation with no re
 | Portrait validity | ✓ | Guild `submitter=−1`: bought presence undermines earned-presence model (DIR.PA.1, SYN.PA.2). Directorate `submitter=−1`: purchasing influence bypasses legitimate institutional process (DIR.PA.1, SYN.PA.2). Network `submitter=−1`: capital-as-power is exactly what Network opposes (DIR.PA.1, SYN.PA.2). Ghost `submitter=−1`: bought presence is noisy — "draws the wrong kind of attention"; against low-profile doctrine (DIR.PA.1, SYN.PA.2). Syndicate `submitter=+1`: capital doctrine — "determines which doors exist" (DIR.PA.1, SYN.PA.2). All five entries present; four opposing, one aligned — STD.CA.8 is Syndicate's card by design. | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. No presence restriction — capital bypasses standard entry requirement. | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken (Art 02 §6); Capital cost (Art 02 §8); failcrit PS −2 (Art 02 §11). | Art 02 §6, §8; Art 02 §11 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); placed in Beat 3 row of Resolution Grid (§11 Beat 0); d100 threshold 50 with ring_mod and affinity; resolved at Beat 3 (§11 Beat 3). | Art 03 §9, §11 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 3 row of Resolution Grid (Art 03 §9.4.0 Beat 0); d100 threshold 50 with ring_mod and affinity; resolved at Beat 3 (Art 03 §9.4.2 Beat 3). | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -1458,7 +1460,7 @@ Defensive Beat 2 positional wager — the only Standard card that explicitly pro
 | Portrait validity | ✓ | Guild `submitter=+1`: protecting built assets is non-optional doctrine — "we protect what we build" (DIR.PA.1, SYN.PA.2). Directorate `submitter=+1`: institutional assets require active defense — resourced accordingly (DIR.PA.1, SYN.PA.2). Ghost `submitter=−1`: active fortification conflicts with concealment doctrine — "best protection is not being found" (DIR.PA.1, SYN.PA.2). Network: no entry — "we protect our people first; infrastructure is secondary"; situational use, not doctrinal; absence justified. Syndicate: no entry — rational asset-value framing, no doctrinal stake in fortification; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: acting presence in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken (restriction); district native cost (Art 02 §8); threshold reduction applied to Beat 3 ops targeting acting assets. | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); placed in Beat 2 row at Resolution Grid setup (§9.4.0); threshold reduction applied at Beat 3 resolution (§9.4.3). Note: Art 03 §20 M-09 refs in prior version are stale (pre-S52 reorg). | Art 03 §9, §9.4 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); threshold reduction applied at Beat 3 resolution (Art 03 §9.4.3). Note: Art 03 §20 M-09 refs in prior version are stale (pre-S52 reorg). | Art 03 §9, §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -1530,7 +1532,7 @@ STD.CA.10 = Card(
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
-Standard counter-counter card — the only card available to all factions that removes a Beat 2 Block or Protect operation before it can apply. Addresses the problem that committed defensive plays (Invoke Jurisdiction, Regulatory Capture, Fortify Structure, Protect) otherwise have no counter in the same round. Intel token cost makes this a premium play — factions must hold Intel specifically to access this capability, reinforcing Intel as a cross-faction strategic resource. Cannot target Type B Countermeasures (faction defense layers) or Hidden Objectives — only active Beat 2 Board Conditions. Positioned here from §8 where it was misplaced: STD.CA.12 is subtype=Standard (all factions), not FactionSpecific.
+Standard counter-counter card — the only card available to all factions that removes a Beat 2 Block or Protect operation before it can apply. Addresses the problem that committed defensive plays (Invoke Jurisdiction, Regulatory Capture, Fortify Structure, Protect) otherwise have no counter in the same round. Intel token cost makes this a premium play — factions must hold Intel specifically to access this capability, reinforcing Intel as a cross-faction strategic resource. Cannot target Type B Countermeasures (faction defense layers) or Hidden Objectives — only active Beat 2 Board Conditions. Positioned here from Art 04 §8 (retired) where it was misplaced: STD.CA.12 is subtype=Standard (all factions), not FactionSpecific.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1567,7 +1569,7 @@ Standard counter-counter card — the only card available to all factions that r
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Migrated from §8 Intel Economy block to Standard Covert section S59. Pre-convention flat format — full schema pass pending (04-47).*
+*Migrated from Art 04 §8 (retired) Intel Economy block to Standard Covert section S59. Pre-convention flat format — full schema pass pending (04-47).*
 
 ```python
 STD.CA.12 = Card(
@@ -1591,7 +1593,7 @@ STD.CA.12 = Card(
     portrait    = {},
     narrative   = "There are no walls. There are only varying degrees of access.",
     perspectives = {},
-    design_note  = "Cannot target Type B Countermeasures (faction defense) — only Type A (District Block) and Protect/Fortify ops. Intel token consumed is any held token. Migrated from §8 Intel Economy block — Standard subtype confirmed.",
+    design_note  = "Cannot target Type B Countermeasures (faction defense) — only Type A (District Block) and Protect/Fortify ops. Intel token consumed is any held token. Migrated from Art 02 §8 Intel Economy block — Standard subtype confirmed.",
     arbiter_note = "At Beat 2 resolution: discard named Beat 2 Block or Protect card from target district. Resources committed to that card by its submitting faction are not refunded. Operations the card would have blocked or protected proceed without that modifier.",
 )
 ```
@@ -2370,8 +2372,8 @@ STD.PA.4 = Card(
         Ghost:       "Public censure creates public attention. We note that the accusation traces back to whoever filed it.",
         Syndicate:   "Censure is leverage applied publicly. The question is always: what does the target do next?",
     },
-    design_note  = "PS attack card of the standard set. Base threshold 35 — demanding. Fresh Intel token (optional, placed on PA at §9.2.0, spent regardless of outcome) provides +15 threshold. Network/Directorate −1 cost each. Fail/failcrit PS penalties punish reckless censure. Ghost −1 portrait: public accusation = self-exposure. PS shifts in success/fail are game effects, not Portrait (DIR.PA.2).",
-    arbiter_note = "At §9.2.0: acting faction places PA with Target Profile face-down; Intel token (if submitted) placed on card. At §9.4.3.1.1: flip Target Profile face-up; note target faction. Beat 4: threshold = 35 + 15 if Fresh Intel token on card. On success: target −2 PS, acting +1 PS; Intel token spent. On fail: acting −1 PS; Intel token still spent. On failcrit: acting −2 PS.",
+    design_note  = "PS attack card of the standard set. Base threshold 35 — demanding. Fresh Intel token (optional, placed on PA at Art 03 §9.2.0, spent regardless of outcome) provides +15 threshold. Network/Directorate −1 cost each. Fail/failcrit PS penalties punish reckless censure. Ghost −1 portrait: public accusation = self-exposure. PS shifts in success/fail are game effects, not Portrait (DIR.PA.2).",
+    arbiter_note = "At Art 03 §9.2.0: acting faction places PA with Target Profile face-down; Intel token (if submitted) placed on card. At Art 03 §9.4.3.1.1: flip Target Profile face-up; note target faction. Beat 4: threshold = 35 + 15 if Fresh Intel token on card. On success: target −2 PS, acting +1 PS; Intel token spent. On fail: acting −1 PS; Intel token still spent. On failcrit: acting −2 PS.",
 )
 ```
 
@@ -2468,7 +2470,7 @@ STD.PA.5 = Card(
         Syndicate:   "Attribution is leverage. The question is always: what is the information worth on the table versus in hand?",
     },
     design_note  = "Standard information-attribution PA. Restriction requires Fresh or Stale token — Expired excluded (too degraded to constitute usable attribution evidence). Token spent regardless of outcome. Threshold from token age (Fresh = 50, Stale = 35) + Network +10. Ghost portrait −2: attributing any faction's covert op violates Ghost's belief that operational anonymity protects the intelligence discipline of the whole table — the highest negative portrait value in the set.",
-    arbiter_note = "At §9.2.0: Intel token placed on PA card with Target Profile face-down. At §9.4.3.1.1: flip Target Profile face-up; verify token age — Fresh or Stale satisfies restriction; Expired does not. Beat 4: threshold = age-based (50 Fresh / 35 Stale) + 10 if Network. On success: announce '[Acting faction] attributes [op type, quarter] to [target faction].' Target −2 PS, acting +2 PS. Token spent. On fail: acting −1 PS. Token spent regardless.",
+    arbiter_note = "At Art 03 §9.2.0: Intel token placed on PA card with Target Profile face-down. At Art 03 §9.4.3.1.1: flip Target Profile face-up; verify token age — Fresh or Stale satisfies restriction; Expired does not. Beat 4: threshold = age-based (50 Fresh / 35 Stale) + 10 if Network. On success: announce '[Acting faction] attributes [op type, quarter] to [target faction].' Target −2 PS, acting +2 PS. Token spent. On fail: acting −1 PS. Token spent regardless.",
 )
 ```
 
@@ -2807,14 +2809,14 @@ Guild-exclusive structural defense card. The hardest counter to STD.CA.2 Demolis
 | Portrait validity | ✓ | Guild `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). Guild's structural-investment doctrine grounds the affinity. | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: Guild structure in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | StructureBlock (restriction + immunity target); Capacity cost. | Art 02 §7, §8 |
-| Supported by game procedure | ⚠ | Submitted at Dispatch (§9); Beat 2 row (§11 Beat 0); immunity flag applied at Beat 3 when STD.CA.2 Demolish resolves (§11 Beat 3). **Open:** §11 Beat 2 covers Countermeasures and Protect only — no procedure defined for Fortify Structure immunity flag. Gap in Art 03. | Art 03 §9, §11 |
+| Supported by game procedure | ⚠ | Submitted at Dispatch (Art 03 §9.1); Beat 2 row (Art 03 §9.4.0 Beat 0); immunity flag applied at Beat 3 when STD.CA.2 Demolish resolves (Art 03 §9.4.2 Beat 3). **Open:** Art 03 §9.4.2 Beat 2 covers Countermeasures and Protect only — no procedure defined for Fortify Structure immunity flag. Gap in Art 03. | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
 - **Art 03 §9.4 procedure gap:** §11 Beat 2 section does not include a procedure for applying the Fortify Structure immunity flag. Extension required before GUI.CA.1 can be fully procedurally supported.
-- **Arbiter note:** ARBITER retains awareness after Beat 2 opens. Immunity applied when STD.CA.2 Demolish resolves in Beat 3. Verify §11 Beat 2 extension covers this step.
+- **Arbiter note:** ARBITER retains awareness after Beat 2 opens. Immunity applied when STD.CA.2 Demolish resolves in Beat 3. Verify Art 03 §9.4.2 Beat 2 extension covers this step.
 
 #### Status
 
@@ -2895,7 +2897,7 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 | Portrait validity | ✓ | Guild `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). | Art 04 §6.2 |
 | Supported by zones | N/A | `target_district = None` — trigger monitors named opponent globally, not district-specific. | — |
 | Supported by components | ✓ | NativeResource (Art 02 §8); STD.CA.2 Demolish as trigger source. | Art 02 §8; Art 04 (STD.CA.2) |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); placed in Beat 2 row (§11 Beat 0); trigger fires when named faction completes STD.CA.2 at Beat 3 (§11 Beat 3); delivery via ARBITER case (Art 07). | Art 03 §9, §11; Art 07 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row (Art 03 §9.4.0 Beat 0); trigger fires when named faction completes STD.CA.2 at Beat 3 (Art 03 §9.4.2 Beat 3); delivery via ARBITER case (Art 07). | Art 03 §9, §11; Art 07 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -2986,7 +2988,7 @@ Guild-exclusive first-entry card for unclaimed districts. Unclaimed territory ha
 | Portrait validity | ✓ | Guild `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). `failcrit` dispatches IntelToken to Directorate — game effect, not Portrait shift (DIR.PA.2 clear). | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: total presence == 0 (unclaimed only). | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken (success); StructureBlock (crit success); Capacity cost; IntelToken to Directorate on crit fail. | Art 02 §6, §7, §8; Art 02 §12 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); Beat 3 row (§11 Beat 0); d100 threshold 25 with ring_mod; ARBITER silent IntelToken delivery to Directorate on crit fail (§11 Beat 3; Art 07). | Art 03 §9, §11; Art 07 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); d100 threshold 25 with ring_mod; ARBITER silent IntelToken delivery to Directorate on crit fail (Art 03 §9.4.2 Beat 3; Art 07). | Art 03 §9, §11; Art 07 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -3075,7 +3077,7 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 | Portrait validity | ✓ | Guild `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). `failcrit` delivers IntelToken/native to opponents — game effects, not Portrait shifts (DIR.PA.2 clear). | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: no existing Guild structure in target district. Ring mods apply normally. | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken + StructureBlock on success; Capacity cost; IntelToken to Ghost + district native to Syndicate on crit fail. | Art 02 §6, §7, §8; Art 02 §12 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); Beat 3 row (§11 Beat 0); d100 threshold 65 with ring_mod; ARBITER delivers crit fail rewards to Ghost and Syndicate (§11 Beat 3; Art 07). | Art 03 §9, §11; Art 07 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); d100 threshold 65 with ring_mod; ARBITER delivers crit fail rewards to Ghost and Syndicate (Art 03 §9.4.2 Beat 3; Art 07). | Art 03 §9, §11; Art 07 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -3168,7 +3170,7 @@ Guild-exclusive passive income card — the economic expression of territorial c
 | Portrait validity | ✓ | Guild `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: Guild must hold Established or Dominant control tier in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | NativeResource (Art 02 §8); control_tier states Established/Dominant (Art 02 §6). | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); Beat 3 row (§11 Beat 0); Automatic resolution at Beat 3 (§11 Beat 3). | Art 03 §9, §11 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); Automatic resolution at Beat 3 (Art 03 §9.4.2 Beat 3). | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -3579,7 +3581,7 @@ Ghost-exclusive intelligence-into-action card — the only card with Prediction 
 | Portrait validity | ✓ | Ghost `submitter=+1, modifier=+1, mod_where=game.outcome == Success`. `submitter=+1` fires on play (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). **Open:** `modifier=+1` AND/OR semantics — confirm `submitter` always fires on play AND `modifier` additionally fires on Success (not independent of submitter activation). | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. No presence restriction — Ghost intelligence operations unrestricted by zone. | Art 01 §6 |
 | Supported by components | ✓ | Findings cost (Art 02 §8); CovertOperation as copy target; copied op's components governed by that op's spec. | Art 02 §8; Art 04b §5 |
-| Supported by game procedure | ⚠ | Submitted at Dispatch (§9); Beat 3 row (§11 Beat 0). **Open:** Prediction resolution not defined in Art 03 — §11 covers Automatic and d100 only. Procedure gap: Art 03 extension required for Prediction resolution type. | Art 03 §9, §11 |
+| Supported by game procedure | ⚠ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0). **Open:** Prediction resolution not defined in Art 03 — §11 covers Automatic and d100 only. Procedure gap: Art 03 extension required for Prediction resolution type. | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -3667,7 +3669,7 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 | Portrait validity | ✓ | Ghost `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). `failcrit = standing -= 2` is a PS shift (not Portrait — DIR.PA.2 clear). | Art 04 §6.2; Art 02 §11 |
 | Supported by zones | N/A | `target_district = None` — Intercept operates on submitted ops in the Resolution Grid, not a specific district. | — |
 | Supported by components | ✓ | IntelToken cost; Findings cost; IntelDeliverySlip (success); IntelToken (crit success); NotificationSlip (fail); PS −2 (failcrit). | Art 02 §8; Art 02 §11, §8 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (§9); resolves Beat 2; reads Beat 3 grid column; d100 threshold 50; ARBITER delivers IS-xx via case (Art 07). Art 03 §9.4 Beat 2 Step 7a covers IS-xx delivery; Step 7b covers NotificationSlip; Step 7b.i covers failcrit. | Art 03 §9, §11; Art 07 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); resolves Beat 2; reads Beat 3 grid column; d100 threshold 50; ARBITER delivers IS-xx via case (Art 07). Art 03 §9.4 Beat 2 Step 7a covers IS-xx delivery; Step 7b covers NotificationSlip; Step 7b.i covers failcrit. | Art 03 §9, §11; Art 07 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -3791,7 +3793,7 @@ GHO.CA.3 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost's intelligence interdiction card — operational disruption rather than evidence destruction. At §9.1 Covert Dispatch, Ghost names a target faction and pays 1 unit of that faction's native resource (the operational prerequisite — Ghost must already be embedded in the target's systems). At Beat 3, ARBITER checks the first PA in the target faction's Faction Resolution Grid queue: if an IntelToken is submitted on it, Ghost removes it before Beat 4 processes the PA. Two disruption outcomes depending on how the token was used: if it was the PA's cost payment, the PA is voided; if it was a modifier, the PA loses that modifier and resolves blind. Threshold 25 (Challenging) reflects the difficulty of locating and intercepting live intelligence before a public act proceeds. Redesigned S113: prior design (S68) targeted rival-held private IntelTokens — violated 00a §10.1 (ARBITER reaching into a faction's private domain). Faction Resolution Grid is the only valid targeting location for another faction's IntelToken.
+Ghost's intelligence interdiction card — operational disruption rather than evidence destruction. At Art 03 §9.1 Covert Dispatch, Ghost names a target faction and pays 1 unit of that faction's native resource (the operational prerequisite — Ghost must already be embedded in the target's systems). At Beat 3, ARBITER checks the first PA in the target faction's Faction Resolution Grid queue: if an IntelToken is submitted on it, Ghost removes it before Beat 4 processes the PA. Two disruption outcomes depending on how the token was used: if it was the PA's cost payment, the PA is voided; if it was a modifier, the PA loses that modifier and resolves blind. Threshold 25 (Challenging) reflects the difficulty of locating and intercepting live intelligence before a public act proceeds. Redesigned S113: prior design (S68) targeted rival-held private IntelTokens — violated 00a Art 02 §10.1 (ARBITER reaching into a faction's private domain). Faction Resolution Grid is the only valid targeting location for another faction's IntelToken.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -3804,7 +3806,7 @@ Ghost's intelligence interdiction card — operational disruption rather than ev
 | Voice fit | ✓ | Faction-specific; single Ghost perspective — interdiction as doctrine, not tactic | Art 00 §7 |
 | Doctrine alignment | ✓ | Cost = 1 native resource of target faction — Ghost must be embedded in the target's operational systems; threshold 25 reflects difficulty of live intelligence interdiction; targets the intelligence that was meant to precede the rival's action | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence interdiction is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information / Remove / IntelToken — IntelToken submitted on PA in Faction Resolution Grid is the only valid cross-faction IntelToken target (00a §10.1); confirmed S113 | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | Information / Remove / IntelToken — IntelToken submitted on PA in Faction Resolution Grid is the only valid cross-faction IntelToken target (00a Art 02 §10.1); confirmed S113 | Art 04b §4, §5 |
 | Balance | ✓ | 1 native resource (target faction), threshold 25 — cost requires prior economic embedding; Challenging roll is the difficulty gate; disruption ceiling (PA void) is high-stakes but gated behind both cost and roll | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: token removed at Beat 3; PA outcome resolved at Beat 4 | — |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 3; no lingering game-state marker | Art 04 §6 |
@@ -3812,7 +3814,7 @@ Ghost's intelligence interdiction card — operational disruption rather than ev
 | Portrait validity | ✓ | No portrait entry — Ghost interdicting live intelligence is tradecraft, not doctrine; absence intentional (confirmed S113) | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — operates on Faction Resolution Grid, not a district | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken as target_object — component registered; Faction Resolution Grid is ARBITER-maintained procedure | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | §9.1 names target at Covert Dispatch; Beat 3 ARBITER checks first PA in target's Faction Resolution Grid queue; Beat 4 PA resolves without token (or is voided) | Art 03 §9.1, §9.4.2, §9.4.3; Art 07 |
+| Supported by game procedure | ✓ | Art 03 §9.1 names target at Covert Dispatch; Beat 3 ARBITER checks first PA in target's Faction Resolution Grid queue; Beat 4 PA resolves without token (or is voided) | Art 03 §9.1, §9.4.2, §9.4.3; Art 07 |
 | Data schema validation | ✓ | Validated S113: card_id, doctrine_mod, boost, ps_framing added; resolution=d100, resolution_type=Probabilistic, fail=None corrected | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -3838,7 +3840,7 @@ GHO.CA.4 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=None,
-    target_faction=faction(named_opponent),  # declared at §9.1 Covert Dispatch
+    target_faction=faction(named_opponent),  # declared at Art 03 §9.1 Covert Dispatch
     target_object=IntelToken(submitted_on=faction(target).resolution_grid.pa_queue[0]),
     target_taxonomy=None,
     affinity=None,
@@ -3853,8 +3855,8 @@ GHO.CA.4 = Card(
     ps_framing  = None,
     narrative   = "The act has no foundation once the intelligence beneath it is removed.",
     perspectives = {Ghost: "They submitted their evidence expecting it to do what evidence does. We made sure it did not arrive."},
-    design_note  = "Cost is 1 native resource of the target faction — Ghost must already hold it, meaning prior economic embedding in the target's operations. This is the operational prerequisite, not a doctrinal gate (doctrine_mod=None). The Faction Resolution Grid is the only location where another faction's IntelToken is a valid card target (00a §10.1); privately held tokens are untouchable. Two disruption tiers: token as cost voids the PA; token as modifier strips it. Both are significant; the ceiling (PA void) is the rare case where the target committed their token as payment.",
-    arbiter_note = "At §9.1: Ghost names target faction. At Beat 3: (1) confirm Ghost holds 1 unit of target faction's native resource — if not, case is invalid, return to Ghost, no effect. (2) Check first PA in target faction's Faction Resolution Grid queue for a submitted IntelToken. If none present: announce 'no valid target,' operation has no effect, cost spent, no roll. (3) If IntelToken present: collect cost, roll d100 vs. 25 (+/− PS modifier). On success: remove IntelToken (recycle or dispose per component physical design). If token was cost payment, mark PA as voided — at Beat 4 it auto-fails; Dispatch Token returned to target faction. If token was a modifier, PA continues at Beat 4 without it. On fail: no effect.",
+    design_note  = "Cost is 1 native resource of the target faction — Ghost must already hold it, meaning prior economic embedding in the target's operations. This is the operational prerequisite, not a doctrinal gate (doctrine_mod=None). The Faction Resolution Grid is the only location where another faction's IntelToken is a valid card target (00a Art 02 §10.1); privately held tokens are untouchable. Two disruption tiers: token as cost voids the PA; token as modifier strips it. Both are significant; the ceiling (PA void) is the rare case where the target committed their token as payment.",
+    arbiter_note = "At Art 03 §9.1: Ghost names target faction. At Beat 3: (1) confirm Ghost holds 1 unit of target faction's native resource — if not, case is invalid, return to Ghost, no effect. (2) Check first PA in target faction's Faction Resolution Grid queue for a submitted IntelToken. If none present: announce 'no valid target,' operation has no effect, cost spent, no roll. (3) If IntelToken present: collect cost, roll d100 vs. 25 (+/− PS modifier). On success: remove IntelToken (recycle or dispose per component physical design). If token was cost payment, mark PA as voided — at Beat 4 it auto-fails; Dispatch Token returned to target faction. If token was a modifier, PA continues at Beat 4 without it. On fail: no effect.",
 )
 ```
 
@@ -4411,7 +4413,7 @@ Ghost's intelligence amplification card — converts one held Intel token into t
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Migrated from §8 Intel Economy block to Ghost extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
+*Migrated from Art 04 §8 (retired) Intel Economy block to Ghost extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
 
 ```python
 GHO.CA.6 = Card(
@@ -4956,7 +4958,7 @@ Ghost submits the case files in order — sequential, dated, attributed. The rec
 | Portrait validity | ✓ | Ghost +1 submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — tokens are held, not placed | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken expired (Art 02 §9); BM-xx (Art 02 §12); Findings × 1 (Art 02 §8) | Art 02 §8–§9, §12 |
-| Supported by game procedure | ✓ | BM-xx at Beat 4: boost detection added §9.4.3.1.0.0 (S109); threshold at §9.4.3.2.0; effect multiplication at §9.4.3.3 | Art 03 §9.4.3 |
+| Supported by game procedure | ✓ | BM-xx at Beat 4: boost detection added Art 03 §9.4.3.1.0.0 (S109); threshold at Art 03 §9.4.3.2.0; effect multiplication at Art 03 §9.4.3.3 | Art 03 §9.4.3 |
 | Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
 
@@ -4995,7 +4997,7 @@ GHO.PA.3 = Card(
     affinity    = None,
     restriction = count(intel_token(holder=Ghost, status=Expired)) >= 1,
     cost        = resource.faction(Ghost).findings * 1,
-    boost       = intel_token(holder=Ghost, status=Expired),  # 1 expired token = 1 BM-xx; BM-xx ×(1+n) all effects at §9.4.3.3
+    boost       = intel_token(holder=Ghost, status=Expired),  # 1 expired token = 1 BM-xx; BM-xx ×(1+n) all effects at Art 03 §9.4.3.3
 
     success     = faction(Ghost).standing.add(1),
     successcrit = faction(Ghost).standing.add(1),  # +1 PS additional delta; also ×(1+n) via BM-xx
@@ -5013,8 +5015,8 @@ GHO.PA.3 = Card(
         Directorate: "Ghost held these until the moment suited them. The records are verified. The disclosure is formal. This is how intelligence should enter the public domain.",
         Network:     "Ghost sat on this for three Quarters and then picked their moment. We published when we had it. Ghost published when it helped Ghost.",
     },
-    design_note  = "Base success = +1 PS; successcrit = +1 PS additional. Boost = expired Intel tokens (status=Expired, holder=Ghost); each submitted token = 1 BM-xx at §9.4.3.1.0.0. BM-xx ×(1+n) multiplies all effects: n tokens → +(1+n) PS on success; +(1+n)+1 PS on successcrit (success + crit both multiplied); −(1+n) PS on failcrit. Restriction ensures at least 1 expired token present (narrative grounding). Faction Player may optionally narrate what records are being declassified — this is not a procedure step.",
-    arbiter_note = "Phase B: Ghost declares expired tokens (status=Expired) being submitted as boost — record count as n. Beat 4 §9.4.3.1.0.0: place n BM-xx on card; expired tokens deposited to Dossier at §9.4.3.1.0.1. §9.4.3.3: effects ×(1+n). Success: Ghost +(1+n) PS. Successcrit: Ghost +(1+n) PS success + +(1+n) PS crit delta = +(2+2n) PS total. Fail: no effect. Failcrit: Ghost −(1+n) PS.",
+    design_note  = "Base success = +1 PS; successcrit = +1 PS additional. Boost = expired Intel tokens (status=Expired, holder=Ghost); each submitted token = 1 BM-xx at Art 02 §9.4.3.1.0.0. BM-xx ×(1+n) multiplies all effects: n tokens → +(1+n) PS on success; +(1+n)+1 PS on successcrit (success + crit both multiplied); −(1+n) PS on failcrit. Restriction ensures at least 1 expired token present (narrative grounding). Faction Player may optionally narrate what records are being declassified — this is not a procedure step.",
+    arbiter_note = "Phase B: Ghost declares expired tokens (status=Expired) being submitted as boost — record count as n. Beat 4 Art 03 §9.4.3.1.0.0: place n BM-xx on card; expired tokens deposited to Dossier at Art 02 §9.4.3.1.0.1. Art 03 §9.4.3.3: effects ×(1+n). Success: Ghost +(1+n) PS. Successcrit: Ghost +(1+n) PS success + +(1+n) PS crit delta = +(2+2n) PS total. Fail: no effect. Failcrit: Ghost −(1+n) PS.",
 )
 ```
 
@@ -5024,7 +5026,7 @@ GHO.PA.3 = Card(
 [↑ Public Acts](#ghost-public-acts)
 
 #### Design Rationale
-Ghost forces ARBITER to publicly reveal a Broadcast Effect Card. The Broadcast Card (public face) is already visible in the Situation Report Zone — Ghost is naming the thing the table can already see. The BEC (mechanical face, ARBITER Tableau) is what Ghost is extracting. GR 10.1b obligates ARBITER to disclose from its own domain when a valid trigger is submitted, so resolution is Automatic. The +1 PS reflects that forcing institutional transparency is itself a credibility act. BC/BEC linking is already established at §7.2.1 — no new mechanism required. The named BC is recorded on the Target Profile at Phase B (target object field, S109).
+Ghost forces ARBITER to publicly reveal a Broadcast Effect Card. The Broadcast Card (public face) is already visible in the Situation Report Zone — Ghost is naming the thing the table can already see. The BEC (mechanical face, ARBITER Tableau) is what Ghost is extracting. GR 10.1b obligates ARBITER to disclose from its own domain when a valid trigger is submitted, so resolution is Automatic. The +1 PS reflects that forcing institutional transparency is itself a credibility act. BC/BEC linking is already established at Art 02 §7.2.1 — no new mechanism required. The named BC is recorded on the Target Profile at Phase B (target object field, S109).
 
 #### Card Story
 Ghost files the request before Beat 4. The Broadcast Card has been face-up all Quarter — its name, its narrative, its presence. What Ghost is asking for is the other half. ARBITER opens the file. The table reads the effect for the first time. Ghost already knew what to ask.
@@ -5040,12 +5042,12 @@ Ghost files the request before Beat 4. The Broadcast Card has been face-up all Q
 | Taxonomy fit | ✓ | Information / Reveal / BroadcastEffectCard — GR 10.1b governs; ARBITER performs the reveal | Art 04b §4 |
 | Balance | ✓ | Automatic. Cost: 1 Findings + PA slot. Reward: table-wide BEC information + +1 PS. Limiter: requires active BC. | Art 02 §6–§7 |
 | Effect duration | ✓ | Reveal immediate; PS immediate; BEC stays in Tableau | Art 04 §5 P19 |
-| Persistence | ✓ | Immediate — BEC returned to Tableau; mechanical effects continue per §9.4.1.1 / §9.4.3.0.1 | Art 04 §6 |
+| Persistence | ✓ | Immediate — BEC returned to Tableau; mechanical effects continue per Art 03 §9.4.1.1 / Art 03 §9.4.3.0.1 | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None | — |
 | Portrait validity | ✓ | Ghost +1 submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None; target_object = BroadcastCard (Situation Report Zone) | Art 01 §6–§7 |
 | Supported by components | ✓ | BroadcastCard (DB:25, Art 02 §10); BroadcastEffectCard (DB:98, Art 02 §10); Target Profile target-object field (DB:48, Art 02 §8 — S109); Findings × 1 (Art 02 §8) | Art 02 §8, §10 |
-| Supported by game procedure | ✓ | §7.2.1 establishes BC/BEC link at setup. §9.4.3.3.0 VM-xx placement clause; §9.4.3.1.3 BEC public resolution step (S110). | Art 03 §7.2.1, §9.4.3.1.3, §9.4.3.3 |
+| Supported by game procedure | ✓ | §7.2.1 establishes BC/BEC link at setup. Art 03 §9.4.3.3.0 VM-xx placement clause; Art 03 §9.4.3.1.3 BEC public resolution step (S110). | Art 03 §7.2.1, §9.4.3.1.3, §9.4.3.3 |
 | Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
 
@@ -5105,7 +5107,7 @@ GHO.PA.4 = Card(
         Directorate: "Ghost has formalized the disclosure request. ARBITER complied. The effect was known to us already, but now it is known to everyone. We note this.",
         Network:     "We would have published that two weeks ago if we had it. Ghost had the institutional standing to ask. That's the difference.",
     },
-    design_note  = "Automatic — GR 10.1b obligates ARBITER to disclose from own domain when a valid trigger is submitted. Ghost names a Broadcast Card at Phase B (recorded on Target Profile target-object field); ARBITER places VM-xx on the linked BEC at §9.4.3.3.0. BEC resolves publicly at §9.4.3.1.3 when the next PA in initiative order is reached, or at §9.4.1.1 next Quarter if Ghost plays last. BC/BEC link established at §7.2.1; no new mechanism required. +1 PS: forcing institutional transparency is a credibility act. Portrait +1: disclosure from institutional authority is on-doctrine.",
+    design_note  = "Automatic — GR 10.1b obligates ARBITER to disclose from own domain when a valid trigger is submitted. Ghost names a Broadcast Card at Phase B (recorded on Target Profile target-object field); ARBITER places VM-xx on the linked BEC at Art 03 §9.4.3.3.0. BEC resolves publicly at Art 03 §9.4.3.1.3 when the next PA in initiative order is reached, or at Art 03 §9.4.1.1 next Quarter if Ghost plays last. BC/BEC link established at Art 02 §7.2.1; no new mechanism required. +1 PS: forcing institutional transparency is a credibility act. Portrait +1: disclosure from institutional authority is on-doctrine.",
     arbiter_note = None,
 )
 ```
@@ -5422,8 +5424,8 @@ STD.CA.11 = Card(
     layer   = Information,  function = Corrupt,  subject = Accord,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
-    persistence     = Until(game.end OR Accord(named).breach_by_party),
-    persistence_condition = None,
+    persistence     = Permanent,
+    persistence_condition = not (game.end OR Accord(named).breach_by_party),
     persistence_effect    = None,
     target_district=None, target_faction=None, target_object=Accord(executed, on_table),
     target_taxonomy=None,
@@ -5943,7 +5945,7 @@ DIR.CA.6 = Card(
 [↑ Covert Operations](#directorate-covert-operations)
 
 #### Design Rationale
-Directorate's covert Standing card — fills the Standing|Shift gap identified in §8.2. The mechanism is grounded in the same architecture as DIR.CA.6: target a district with operational footprint, count active Permanents in that ring, yield scales accordingly. The covert operation circulates the institutional record from the target ring through closed channels — demonstrated compliance with active directives creates a public confidence signal without disclosing authorship. The public receives the signal (stability, competence, maintained order) without knowing the Directorate arranged it. This resolves the PS legitimacy question: the mechanism is covert; the outcome enters public perception through the channels the Permanents already occupy. PS yield = 0 if no Permanents active in ring — players should verify ring Permanent count before submitting.
+Directorate's covert Standing card — fills the Standing|Shift gap identified in Art 04b §8.2. The mechanism is grounded in the same architecture as DIR.CA.6: target a district with operational footprint, count active Permanents in that ring, yield scales accordingly. The covert operation circulates the institutional record from the target ring through closed channels — demonstrated compliance with active directives creates a public confidence signal without disclosing authorship. The public receives the signal (stability, competence, maintained order) without knowing the Directorate arranged it. This resolves the PS legitimacy question: the mechanism is covert; the outcome enters public perception through the channels the Permanents already occupy. PS yield = 0 if no Permanents active in ring — players should verify ring Permanent count before submitting.
 
 #### Card Story
 Before any version of events could circulate, the Directorate's closed channels had already carried a different one. Active directives in this ring, maintained restrictions, a clean procedural record. The population receives signals they cannot source. The public confidence reading improves.
@@ -6906,7 +6908,7 @@ Network's credibility-to-Intel conversion card. Reflects the Network doctrine th
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ | |
 
-*Migrated from §8 Intel Economy block to Network extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
+*Migrated from Art 04 §8 (retired) Intel Economy block to Network extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
 
 ```python
 NET.CA.6 = Card(
@@ -6948,7 +6950,7 @@ NET.CA.6 = Card(
 [↑ Covert Operations](#network-covert-operations)
 
 #### Design Rationale
-Network's public standing card — fills the Standing|Shift gap identified in §8.3. Available only when Network IL is ≤ Established in the target district: at Dominant, the street already knows who Network is; outreach adds nothing. The card activates Network's existing chip presence to generate a legible public signal — the people carrying the message are already part of the district's daily traffic. No new infrastructure, no announcement. On a successcrit the signal lands hard enough to convert: +1 chip placed in target district alongside additional +1 PS.
+Network's public standing card — fills the Standing|Shift gap identified in Art 04b §8.3. Available only when Network IL is ≤ Established in the target district: at Dominant, the street already knows who Network is; outreach adds nothing. The card activates Network's existing chip presence to generate a legible public signal — the people carrying the message are already part of the district's daily traffic. No new infrastructure, no announcement. On a successcrit the signal lands hard enough to convert: +1 chip placed in target district alongside additional +1 PS.
 
 #### Card Story
 The message doesn't travel because Network announced it. It travels because Network is already there.
@@ -8563,7 +8565,7 @@ SYN.PA.2 = Card(
 [↑ Public Acts](#syndicate-public-acts)
 
 #### Design Rationale
-Syndicate publicly demands a target faction's Intel Token count and offers to purchase them. The demand is a guess — N is committed at §9.2 Public Declaration. ElectPlayer resolves publicly at Beat 4 — target faction responds at the table. Three resolution paths: (1) trade — N tokens transfer to Syndicate, card discards; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. As Permanent, the card acts as a standing React: the first time target faction places a PA with a non-blank Target Profile at §9.2, Syndicate replaces that Target Profile with one they fill in, then card discards. If target avoids targeted PAs for the rest of the Quarter, the card expires — the threat IS the constraint. Verbal offer is unenforceable; the coercive frame is intentional: this is extortion with a commercial label.
+Syndicate publicly demands a target faction's Intel Token count and offers to purchase them. The demand is a guess — N is committed at Art 03 §9.2 Public Declaration. ElectPlayer resolves publicly at Beat 4 — target faction responds at the table. Three resolution paths: (1) trade — N tokens transfer to Syndicate, card discards; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. As Permanent, the card acts as a standing React: the first time target faction places a PA with a non-blank Target Profile at Art 03 §9.2, Syndicate replaces that Target Profile with one they fill in, then card discards. If target avoids targeted PAs for the rest of the Quarter, the card expires — the threat IS the constraint. Verbal offer is unenforceable; the coercive frame is intentional: this is extortion with a commercial label.
 
 Narrative logic for the decline effect: declining a Syndicate offer in public does not end the relationship — it shifts the leverage. The Syndicate has already demonstrated they know approximately what the target is holding. Refusing to deal signals that the intel position is worth protecting. Syndicate's response: *fine — then we determine how you use it publicly.* The next targeted public act belongs to them. "Control comes from positioning early" — the decline transfers that positioning from the information layer to the target's submission layer.
 
@@ -8582,7 +8584,7 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 | Balance | ⚠ | Permanent React potency (PA Target Profile corruption) untested — flag for doctrine review | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent on decline path; accept/cannot-meet paths discard at Beat 4; React fires once then card discards; Quarter-end expiry if React never fires | — |
 | Persistence | ✓ | Permanent model applied correctly; persistence_condition clear; card-as-condition sits in Syndicate PA area face-up | Art 04 §6 |
-| Trigger validity | ✓ | React trigger: PA with non-blank Target Profile placed at §9.2 Public Declaration — publicly observable (P5) | Art 04 §5 P5 |
+| Trigger validity | ✓ | React trigger: PA with non-blank Target Profile placed at Art 03 §9.2 Public Declaration — publicly observable (P5) | Art 04 §5 P5 |
 | Portrait validity | ✓ | flat entries only; submitter-bounded (Syndicate, Network, Directorate); no direct Portrait track shift in effect fields; Automatic resolution — no failcrit | Art 04 §6.2 |
 | Supported by zones | ✓ | Faction Resolution Grid (Art 01/02); faction terminal (Intel Tokens held behind screen — faction-private) | Art 01 §6–§7 |
 | Supported by components | ✓ | Intel Token (Art 02 §9); Target Profile with declared-parameters line (Art 02 v2.4 — S111); Faction Resolution Grid (Art 02 §5) | Art 02 §5, §8, §9 |
@@ -8631,7 +8633,7 @@ SYN.PA.3 = Card(
     declared_params = (
         N             = int,                         # tokens requested
         consideration = verbaloffer(faction(acting)), # free-text: Capital | ModifierCard(named) | any combination
-        # both written on TP declared-parameters line at §9.2 Public Declaration
+        # both written on TP declared-parameters line at Art 03 §9.2 Public Declaration
     ),
 
     affinity    = None,
@@ -8662,12 +8664,12 @@ SYN.PA.3 = Card(
     # at any point while card is active — either clears card
 
     persistence_effect    = React(
-        trigger = faction(target).PA(target_profile != None).placed_at(§9_2_0),
+        trigger = faction(target).PA(target_profile != None).placed_at("Art 03 §9.2.0"),
         effect  = target_profile.replace(Syndicate.written),
         on_fire = SYN_PA_3 → faction_PA_discard,
     ),
     # While Permanent: when target faction places any PA with non-blank Target Profile
-    # at §9.2 Public Declaration (§9.2.0), card fires as React — Syndicate immediately
+    # at Art 03 §9.2 Public Declaration (Art 03 §9.2.0), card fires as React — Syndicate immediately
     # replaces that Target Profile with one they fill in. SYN.PA.3 → PA discard.
     # Table enforces; no ARBITER tracking required.
     # If target submits no PA with Target Profile this Quarter: card expires Quarter end.
@@ -8689,12 +8691,173 @@ SYN.PA.3 = Card(
         Guild:       "Whatever they're buying, they think they need it. That tells us something about their position.",
     },
 
-    design_note  = "Three resolution paths at Beat 4 ElectPlayer: (1) trade — bilateral exchange: consideration moves Syndicate→target, N tokens move target→Syndicate; card discards only if both transfers complete; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards — information goal met; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. Sub-cases 1 (completed) and 2 both satisfy the card; only 3 triggers the stake. Non-fulfillment edge case (sub-case A, Syndicate cannot deliver consideration): exchange fails; card stays Permanent — Syndicate set the terms and failed to meet them. Bluff mechanic is intentional: consideration is a verbal offer written on TP declared-parameters line, not held in escrow; Syndicate bears public failure risk. Show path: target voluntarily reveals count — not compelled, consistent with GR 10.1 (ElectPlayer creates stake; choice is player's). PERMANENT PHASE is fully table-enforced: card is face-up in Syndicate PA area; table observes when target places a PA with Target Profile at §9.2.0 and allows Syndicate to replace it (React); table observes if target accepts at any point (trade or show) and card is cleared. No ARBITER involvement required at any stage — Beat 4 ElectPlayer is public; Permanent card is table-enforced. Target may accept at any time to clear the card. Threat is the constraint: target must deal with Syndicate or avoid targeted PAs for the rest of the Quarter. N and consideration declared at §9.2 on TP declared-parameters line (Art 02 v2.4).",
+    design_note  = "Three resolution paths at Beat 4 ElectPlayer: (1) trade — bilateral exchange: consideration moves Syndicate→target, N tokens move target→Syndicate; card discards only if both transfers complete; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards — information goal met; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. Sub-cases 1 (completed) and 2 both satisfy the card; only 3 triggers the stake. Non-fulfillment edge case (sub-case A, Syndicate cannot deliver consideration): exchange fails; card stays Permanent — Syndicate set the terms and failed to meet them. Bluff mechanic is intentional: consideration is a verbal offer written on TP declared-parameters line, not held in escrow; Syndicate bears public failure risk. Show path: target voluntarily reveals count — not compelled, consistent with GR 10.1 (ElectPlayer creates stake; choice is player's). PERMANENT PHASE is fully table-enforced: card is face-up in Syndicate PA area; table observes when target places a PA with Target Profile at Art 03 §9.2.0 and allows Syndicate to replace it (React); table observes if target accepts at any point (trade or show) and card is cleared. No ARBITER involvement required at any stage — Beat 4 ElectPlayer is public; Permanent card is table-enforced. Target may accept at any time to clear the card. Threat is the constraint: target must deal with Syndicate or avoid targeted PAs for the rest of the Quarter. N and consideration declared at Art 03 §9.2 on TP declared-parameters line (Art 02 v2.4).",
 )
 ```
 
 ---
 
+
+---
+
+## 8. Card Taxonomy Index
+
+*Column definitions and Layer × Function validity matrix in Art 04b §5.1. Status key: ✅ Signed off — canonical, use for gap analysis. 📝 Draft — designed but not signed off. ⬜ Not yet designed. 🚫 Retired.*
+
+| Card ID | Name | Status | Layer | Visibility | Function | Subject | Primitive Verb(s) |
+|---------|------|--------|-------|------|----------|---------|-------------------|
+| DIR.CA.1 | Invoke Jurisdiction | 📝 | Submission | Split | Block | Covert operation (STD.CA.1, STD.CA.3) | — |
+| DIR.CA.2 | Detain | 📝 | Territory | Public | Move | Deployment marker | Move | *(taxonomy corrected S107 L226: success operation is game.move() to Detention zone; Remove was incorrect — Remove = return to supply; Detention zone is an active play area on Directorate's tableau. Art 04 spec function field correction tracked under 04-n105)* |
+| DIR.CA.3 | Surveillance Placement | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
+| DIR.CA.4 | Tactical Redirection | 📝 | Territory | Public | Move | PresenceToken | Move |
+| DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Public | Remove | PresenceToken | Remove |
+| DIR.PA.1 | Regulatory Override | ⛔ BLOCKED | Submission | Split | Modify | PublicAct (add·PresenceChip cost) | — | Cost modification is not a physical verb; "cost" is not a component attribute. Card targets action cost for all Add·PresenceChip operations — requires new component + ARBITER overhead. Needs redesign. See PM05 04-n99. |
+| DIR.PA.2 | Convene an Inquiry | 📝 | Information | Private → Public | Add | Intel token | Add |
+| DIR.PA.3 | Entry/Exit Controls | 📝 | Territory | Public | Block | DeploymentMarker | — |
+| DIR.PA.4 | Regulatory Downgrade | 🚫 BLOCKED | Territory | Public | Modify | InfluenceTier (derived — not targetable) | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
+| DIR.PA.5 | Regulatory Freeze | 🚫 BLOCKED | Territory | Public | Block | InfluenceTier (derived — not targetable) | — | *L223: Same subject violation — InfluenceTier not a targetable component. Additionally, Block targets actions (not derived states); Block\|InfluenceTier is a subject mismatch. Fundamental redesign required (04-n104).* |
+| DIR.PA.6 | Standing Injunction | 📝 | Submission | Split | Block | Political act | — |
+| GHO.CA.1 | Pattern Match | ✅ | Submission | Split | Copy | Covert operation (full) | Invoke |
+| GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
+| GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | IntelDeliverySlip | Reveal |
+| GHO.CA.4 | Deep Cover | 📝 | Information | Private → Public | Remove | IntelToken | Remove |
+| GHO.CA.5 | Misdirection | 📝 | Information | Private → Public | Add | Intel token (corrupt content) | Add + Corrupt |
+| GHO.CA.6 | Synthesize | 📝 | Economy | Public | Add | IntelToken | Add |
+| GHO.CA.7 | Station | 📝 | Information | Private → Public | Add | IntelToken | Add |
+| GHO.CA.8 | Full Take | 📝 | Information | Private → Public | Add | IntelToken | Add |
+| GHO.CA.9 | SCIF | 📝 | Information | Private → Public | Add | DebriefActionCard | Add |
+| GHO.CA.10 | Flip | 📝 | Economy | Public | Add | FactionNativeResource | Add |
+| GHO.CA.11 | Signals Analysis | 📝 | Information | Private → Public | Reveal | ClassifiedDirective | Reveal |
+| GHO.CA.12 | Source Substitution | 📝 | Information | Private → Public | Corrupt | Intel token | Corrupt |
+| GHO.CA.13 | Backdate | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel token (round-number field) | Corrupt | *L222: (1) Location constraint — Intel token in private terminal zone unreachable by opposing card; only publicly placed tokens (PA payment window) are valid Corrupt targets. (2) 7.2b — round-number records committed validity state; altering it is retroactive modification. §4.10 revised. Art 04 spec: BLOCKED pending redesign (04-n103).* |
+| GHO.CA.14 | Field Verification | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel token (age field) | Corrupt | *7.2b violation: mechanic alters committed token age field retroactively. Fundamental redesign required. G-ext id retired. Art 04 spec: BLOCKED pending redesign (04-n103).* |
+| GHO.PA.1 | Publish Analysis | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
+| GHO.PA.2 | Signal Review Request | 📝 | Resolution | Split by phase | Modify | Covert operation (difficulty) | — |
+| GHO.PA.3 | Declassified Records | 📝 | Information | Public | Remove | Intel token (expired) | Remove |
+| GHO.PA.4 | Public Threat Assessment | 📝 | Information | Private → Public | Reveal | Broadcast Effect Card | Reveal |
+| GHO.PA.5 | Agency Recruitment Fair | 📝 | Territory | Public | Add | PresenceToken | Add |
+| GHO.MOD.1 | Clarify Misinformation | 📝 | Information | Public | Remove | IntelToken | Remove | *ModifierCard/React — taxonomy excluded from §11.1 per modifier card rules (S110)* |
+| GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure block | — |
+| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
+| GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence token | Add |
+| GUI.CA.4 | Construction Crew | ✅ | Submission | Split | Remove Restriction | Covert operation (presence requirement) | — |
+| GUI.CA.5 | Infrastructure Yield | ✅ | Economy | Public | Add | Native resource | Add |
+| GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | NativeResource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
+| GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Public | Add | Structure block | Add |
+| GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Public | Add | Accord agreement | Add |
+| NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
+| NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
+| NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
+| NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | PublicAct | — |
+| NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence token | Add |
+| NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | IntelToken | Add |
+| NET.MOD.1 | Signal Break | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| NET.MOD.2 | Reputational Strike | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
+| NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence token | Add |
+| NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | FactionHand | Reveal |
+| STD.CA.1 | Build Structure | ✅ | Territory | Public | Add | Structure block | Add |
+| STD.CA.2 | Demolish | ✅ | Territory | Public | Remove | Structure block | Remove |
+| STD.CA.3 | Campaign | ✅ | Territory | Public | Add | Presence token | Add |
+| STD.CA.4 | Undermine | ✅ | Territory | Public | Remove | Presence token | Remove |
+| STD.CA.5 | Gather | ✅ | Information | Private → Public | Add | Intel token | Add |
+| STD.CA.6 | Broadcast Interference | ✅ | Submission | Split | Modify | Political act (cost) | — |
+| STD.CA.7 | Amplify | ✅ | Resolution | Split by phase | Modify | Political act (outcome scale) | — |
+| STD.CA.8 | Buy Influence | ✅ | Territory | Public | Add | Presence token | Add |
+| STD.CA.9 | Fund | ✅ | Economy | Public | Redirect | Native resource | Move |
+| STD.CA.10 | Protect | ✅ | Resolution | Split by phase | Protect | Covert operation (difficulty) | — |
+| STD.CA.11 | Tort Interference | 📝 | Information | Private → Public | Corrupt | Accord | Corrupt |
+| STD.CA.12 | Absolute Compromise | 📝 | Submission | Split | Block | CovertOperation | — |
+| STD.CA.13 | Disinformation Campaign | 📝 | Standing | Split | Shift | Public Standing | Move |
+| STD.CA.14 | Disprove | 📝 | Economy | Public | Remove | Intel token | Remove |
+| STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel token | Move |
+| STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier card | Move |
+| STD.MOD.1 | Overture | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence token | Add |
+| STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence token | Remove |
+| STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure block | Add |
+| STD.PA.4 | Public Censure | 📝 | Standing | Split | Shift | Public Standing (−) | Move |
+| STD.PA.5 | On the Record | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
+| STD.PA.6 | Economic Sanction | 📝 | Economy | Public | Remove | Native resource | Remove |
+| STD.PA.7 | Public Address | 📝 | Standing | Split | Shift | Public Standing (+) | Move |
+| STD.PA.8 | Table an Accord | 📝 | Economy | Public | Add | Accord agreement | Add |
+| SYN.CA.1 | Leveraged Acquisition | 📝 | Economy | Public | Add | Native resource | Add |
+| SYN.CA.2 | Short the Market | 📝 | Economy | Public | Remove | Native resource | Remove |
+| SYN.CA.3 | Hostile Acquisition | 📝 | Territory | Public | Redirect | Structure block | Move |
+| SYN.CA.4 | Golden Parachute | 📝 | Economy | Public | Protect | Native resource | — |
+| SYN.CA.5 | Regulatory Capture | 📝 | Submission | Split | Block | Named action type | — |
+| SYN.CA.6 | Parasitic | 📝 | Economy | Public | Add | IntelToken | Add |
+| SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Public | Redirect | NativeResource | Move |
+| SYN.CA.8 | Land Title | 📝 | Territory | Public | Add | StructureBlock | Add |
+| SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | PresenceToken | Add |
+| SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | AccordCard | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
+| SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | AccordAgreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
+| SYN.MOD.1 | Accord Leverage | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence token | Move |
+| SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native resource (conditional) | Add |
+| SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | IntelTokensHeld | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
+
+---
+
+## 9. Faction Coverage Matrix
+
+*Standard column = faction=All cards and Political Acts (P-prefix). Faction columns = faction-specific cards only.*
+
+| Layer | Function | Subject | Standard | Guild | Ghost | Directorate | Network | Syndicate |
+|-------|----------|---------|----------|-------|-------|-------------|---------|-----------|
+| **Territory** | | | | | | | | |
+| | Add | Presence token | STD.CA.3, STD.CA.8, STD.PA.1 | GUI.CA.3 | GHO.PA.5 | — | NET.CA.5, NET.PA.2 | SYN.CA.9 |
+| | Add | Structure block | STD.CA.1, STD.PA.3 | GUI.PA.1 | — | — | — | SYN.CA.8 |
+| | Block | Deployment marker | — | — | — | DIR.PA.3 | — | — |
+| | Remove | Presence token | STD.CA.4, STD.PA.2 | — | — | DIR.CA.5 | — | — |
+| | Move | Deployment marker | — | — | — | DIR.CA.2 | — | — |
+| | Remove | Structure block | STD.CA.2 | — | — | — | — | — |
+| | Move | Presence token | — | — | — | DIR.CA.4 | — | — |
+| | Redirect | Presence token | — | — | — | — | — | SYN.PA.1 |
+| | Redirect | Structure block | — | — | — | — | — | SYN.CA.3 |
+| | Protect | Structure block | — | GUI.CA.1 | — | — | — | — |
+| **Economy** | | | | | | | | |
+| | Add | Native resource | — | GUI.CA.2, GUI.CA.5, GUI.CA.6 | — | DIR.CA.6 | — | SYN.CA.1, SYN.PA.2 |
+| | Add | Intel token | — | — | GHO.CA.6 | — | NET.CA.6 | SYN.CA.6 |
+| | Add | Accord agreement | STD.PA.8, GUI.PA.2 | — | — | — | — | — |
+| | Add | Exposure | — | — | — | — | NET.CA.2 | — |
+| | Add | FactionNativeResource | — | — | GHO.CA.10 | — | — | — |
+| | Remove | Native resource | STD.PA.6 | — | — | — | — | SYN.CA.2 |
+| | Remove | Intel token | STD.CA.14 | — | — | — | — | — |
+| | Remove | Accord agreement | — | — | — | — | — | — |
+| | Redirect | Native resource | STD.CA.9 | — | — | — | — | SYN.CA.7 |
+| | Redirect | Intel token | STD.CA.15 | — | — | — | — | — |
+| | Redirect | Modifier card | STD.CA.16 | — | — | — | — | — |
+| | Redirect | Accord agreement | — | — | — | — | — | — |
+| | Corrupt | AccordCard (named party) | — | — | — | — | — | SYN.CA.10 |
+| | Protect | Native resource | — | — | — | — | — | SYN.CA.4 |
+| **Information** | | | | | | | | |
+| | Add | Intel token | STD.CA.5 | — | GHO.CA.5, GHO.CA.7, GHO.CA.8 | DIR.PA.2 | — | — |
+| | Add | DebriefActionCard | — | — | GHO.CA.9 | — | — | — |
+| | Reveal | CovertOperation | — | — | GHO.CA.2 | DIR.CA.3 | NET.CA.3 | — |
+| | Reveal | IntelDeliverySlip | — | — | GHO.CA.3 | — | — | — |
+| | Reveal | District | — | — | — | — | NET.CA.1 | — |
+| | Reveal | FactionHand | — | — | — | — | NET.PA.3 | — |
+| | Reveal | Action attribution | STD.PA.5 | — | GHO.PA.1 | — | NET.PA.1 | — |
+| | Reveal | ClassifiedDirective | — | — | GHO.CA.11 | — | — | — |
+| | Reveal | BroadcastEffectCard | — | — | GHO.PA.4 | — | — | — |
+| | Reveal | IntelTokensHeld | — | — | — | — | — | SYN.PA.3 |
+| | Remove | Intel token | — | — | GHO.CA.4, GHO.PA.3, GHO.MOD.1 | — | — | — |
+| | Corrupt | Accord | STD.CA.11 | — | — | — | — | SYN.CA.11 |
+| | Corrupt | Intel token | — | — | GHO.CA.12 | — | — | — |
+| **Submission** | | | | | | | | |
+| | Block | CovertOperation | STD.CA.12 | — | — | DIR.CA.1 | — | — |
+| | Block | Named action type | — | — | — | — | — | SYN.CA.5 |
+| | Block | Political act | — | — | — | DIR.PA.1 ⛔, DIR.PA.6 | — | — |
+| | Modify | Political act | STD.CA.6 | — | — | — | NET.CA.4 | — |
+| | Copy | CovertOperation | — | — | GHO.CA.1 | — | — | — |
+| | Remove Restriction | CovertOperation | — | GUI.CA.4 | — | — | — | — |
+| **Resolution** | | | | | | | | |
+| | Modify | Outcome scale | STD.CA.7 | — | — | — | — | — |
+| | Modify | Difficulty | — | — | GHO.PA.2 | DIR.CA.8 | — | — |
+| | Protect | CovertOperation | STD.CA.10 | — | — | — | — | — |
+| **Standing** | | | | | | | | |
+| | Shift | Public Standing | STD.CA.13, STD.PA.4, STD.PA.7 | — | — | DIR.CA.7 | NET.CA.7 | — |
 
 ---
 
@@ -8791,7 +8954,7 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 
 Overture is the bridge between STD.CA.9's anonymous funding gesture and formal alliance. When STD.CA.9 Fund succeeds, ARBITER delivers Overture (as a modifier card) to the acting faction. In a subsequent Month or Quarter, the faction assigns Overture to any of their Public Acts at Phase B. When that PA resolves at Beat 4 — regardless of outcome — ARBITER delivers a blank AccordForm to the acting faction. The faction drafts the terms and places the completed form in the Accord Placement Area during Beat 4 resolution or Debrief. The target faction then accepts, negotiates, or declines at Debrief. Mechanically: a free Instant modifier that attaches one Accord initiation to any PA slot.
 
-**Timing constraint:** Overture cannot be used in the Month it is received. STD.CA.9 resolves at Beat 3; the host PA must be declared at Phase B (before Beat 3). Overture is held to Month 2, Month 3, or a subsequent Quarter. Tradeable per §11.5.
+**Timing constraint:** Overture cannot be used in the Month it is received. STD.CA.9 resolves at Beat 3; the host PA must be declared at Phase B (before Beat 3). Overture is held to Month 2, Month 3, or a subsequent Quarter. Tradeable per Art 03 §11.5.
 
 **Host PA restriction:** Cannot be assigned to STD.PA.8 Table an Accord or GUI.PA.2 Infrastructure Bond — both already deliver a blank AccordForm at Beat 4; stacking Overture would duplicate the Accord initiation on the same PA.
 
@@ -8808,7 +8971,7 @@ Overture is the bridge between STD.CA.9's anonymous funding gesture and formal a
 | Taxonomy fit | ✓ | No Layer / Function / Subject — modifier cards excluded per §11.1. | Art 04b §5.1, §9 |
 | Balance | ✓ | `cost = None` — reward from STD.CA.9 success (2 Capital + roll risk already paid). Assignment free. Accord Portrait implications governed by Art 06 §9.9. Reassess STD.CA.9 threshold after §11 redesign. | Art 02 §8; Art 06 §9.9 |
 | Effect duration | ✓ | Immediate — AccordForm delivery is instantaneous. Resulting Accord's duration governed by Art 06 §9.3–§9.7 independently. | Art 04 §5 P19 |
-| Trigger validity | ✓ | Instant — fires at Beat 4 host PA resolution. §5 P5 (publicly observable trigger) does not apply to Instant modifiers. | Art 04 §5 P5; §11.1 |
+| Trigger validity | ✓ | Instant — fires at Beat 4 host PA resolution. Art 03 §5 P5 (publicly observable trigger) does not apply to Instant modifiers. | Art 04 §5 P5; §11.1 |
 | Portrait validity | ✓ | No portrait entry for Overture assignment. Portrait from resulting Accord governed by Art 06 §9.9. | Art 04 §6.2; Art 06 §9.9 |
 | Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
 | Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in STD.CA.9 `arbiter_note`; Art 07 subroutine pass to formalize. | Art 03 Phase B; Art 06 §9.4; STD.CA.9 |
@@ -8938,7 +9101,7 @@ Card(
 #### SIGNAL BREAK
 [↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
 
-*S106. Network React Modifier — Territory|Add|PresenceToken. Successor B to Weaponized Transparency (retired S70, 04-n47/04-n48). Note: §9 excludes Modifier cards from the taxonomy matrix; Layer/Function/Subject fields below describe the card's effect category for spec clarity only.*
+*S106. Network React Modifier — Territory|Add|PresenceToken. Successor B to Weaponized Transparency (retired S70, 04-n47/04-n48). Note: Art 04b §9 excludes Modifier cards from the taxonomy matrix; Layer/Function/Subject fields below describe the card's effect category for spec clarity only.*
 
 **Design Rationale:** Network's opportunistic presence card. Fires when any PA success causes a board state change (influence chip or structure block placed or removed) in a district. The act of change is publicly observable — qualifying trigger. Network announces Signal Break and rolls d100. On success: 1 Network chip placed in the changed district. The card does not require Network to have existing presence; the PA's visibility is the only entry condition. On successcrit: additional +1 PS — the signal lands publicly as well as physically. Failcrit: −1 PS — the insertion attempt is noticed and goes badly.
 
@@ -9011,7 +9174,7 @@ NET.MOD.1 = Card(
 **Design Rationale:** Guild's React presence card — when a Guild chip is removed from a district, Guild may immediately respond by placing a chip back. "Established communities don't abandon positions — they return." The return is reflexive, not planned. Trigger is the chip removal itself (publicly observable resolved action). No structure dependency — structure may be simultaneously removed when chips hit 0, so the trigger window must not require it.
 
 **Outstanding Issues:**
-- **00a-77:** Taxonomy validity — if "Recover" is reclassified as Add+React context, this card's Layer|Function|Subject = Territory|Add|PresenceToken. Pending 00a §7.2 review.
+- **00a-77:** Taxonomy validity — if "Recover" is reclassified as Add+React context, this card's Layer|Function|Subject = Territory|Add|PresenceToken. Pending 00a Art 02 §7.2 review.
 - **04-n102:** Modifier card schema — full spec pending.
 - **Trigger scope:** Confirm whether trigger fires on any chip removal (STD.CA.4, DIR.CA.5, any chip-removing effect) or only on specific action types.
 - **card_id:** GUI.MOD.1 (first Guild Modifier card).
@@ -9040,11 +9203,11 @@ GUI.MOD.1 = Card(
 #### CLARIFY MISINFORMATION
 [↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
 
-*S110. Ghost Modifier/React — fires at §9.2.0 on any PA placed with an Intel token. Ghost must name the faction on the token; ARBITER validates. Note: §9 excludes Modifier cards from the taxonomy matrix; Layer/Function/Subject fields below describe the card's effect category for spec clarity only.*
+*S110. Ghost Modifier/React — fires at Art 03 §9.2.0 on any PA placed with an Intel token. Ghost must name the faction on the token; ARBITER validates. Note: Art 02 §9 excludes Modifier cards from the taxonomy matrix; Layer/Function/Subject fields below describe the card's effect category for spec clarity only.*
 
-**Design Rationale:** Ghost's counter-attribution React. When any faction places a PA with an Intel token in the Faction Resolution Grid at §9.2.0, Ghost may announce React and declare the faction they believe is named on that token. ARBITER checks the token's faction field. If Ghost's declaration matches: the Intel token is removed, the PA is cancelled, all resource tokens on the PA drain to the Reservoir (no refund), and Ghost gains +1 PS. If Ghost is wrong: card consumed, no effect, PA proceeds.
+**Design Rationale:** Ghost's counter-attribution React. When any faction places a PA with an Intel token in the Faction Resolution Grid at Art 03 §9.2.0, Ghost may announce React and declare the faction they believe is named on that token. ARBITER checks the token's faction field. If Ghost's declaration matches: the Intel token is removed, the PA is cancelled, all resource tokens on the PA drain to the Reservoir (no refund), and Ghost gains +1 PS. If Ghost is wrong: card consumed, no effect, PA proceeds.
 
-The intelligence test is genuine: because Target Profiles are placed face-down at §9.2.0 (revealing at §9.4.3.1.1), and Intel token content is always ARBITER-private, Ghost cannot guess from publicly visible information. Prior intelligence work is required — SIGINT taps, Source Substitution plant mode, or other intelligence that revealed the token's faction field. The chain play is: plant or observe the token → hold React → fire when the attribution PA is declared.
+The intelligence test is genuine: because Target Profiles are placed face-down at Art 03 §9.2.0 (revealing at Art 03 §9.4.3.1.1), and Intel token content is always ARBITER-private, Ghost cannot guess from publicly visible information. Prior intelligence work is required — SIGINT taps, Source Substitution plant mode, or other intelligence that revealed the token's faction field. The chain play is: plant or observe the token → hold React → fire when the attribution PA is declared.
 
 Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Ghost's doctrine across all factions. Clarify Misinformation makes that doctrine actionable: Ghost can mechanically suppress any attribution they have intelligence on. Works against corrupted tokens (planted by Ghost via Source Substitution) and legitimate ones alike — Ghost believes no covert attribution belongs on the public record.
 
@@ -9058,16 +9221,16 @@ Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Gho
 | Action fit | ✓ | Counter-attribution at PA placement — Ghost doctrine: operational anonymity across the full table | Art 00 §7 |
 | Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08) | Art 00 §9 |
 | Doctrine alignment | ✓ | Ghost +1 portrait: publicly demonstrating intelligence superiority while suppressing attribution is Ghost doctrine at peak visibility. FactionSpecific — no other portraits | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | ModifierCard / React / FactionSpecific (Ghost) — trigger is publicly visible board state change (PA placement at §9.2.0) per §18.0 | Art 04 §6.2; Art 03 §18 |
+| Card type fit | ✓ | ModifierCard / React / FactionSpecific (Ghost) — trigger is publicly visible board state change (PA placement at Art 03 §9.2.0) per Art 03 §18.0 | Art 04 §6.2; Art 03 §18 |
 | Taxonomy fit | ✓ | Modifier cards excluded from matrix per §11.1 — Layer/Function/Subject = None. Spec clarity: Information / Remove / IntelToken | Art 04b §9; Art 04 §11.1 |
 | Balance | ✓ | No activation cost — card consumed on fire. Requires prior intelligence to use reliably. Misfire wastes the card. Strongly rewards GHO Source Substitution plant chain | Art 02 §6–§7 |
-| Effect duration | ✓ | Immediate — PA cancellation and PS shift at §9.2.0 trigger | Art 04 §5 P19 |
+| Effect duration | ✓ | Immediate — PA cancellation and PS shift at Art 03 §9.2.0 trigger | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — no lingering board state marker | Art 04 §6 |
-| Trigger validity | ✓ | Any PA with Intel token placed at §9.2.0 — publicly visible board state change (§18.0). React window closes when §9.2.0 advances to next faction's declaration | Art 03 §18.0; Art 03 §9.2.0 |
+| Trigger validity | ✓ | Any PA with Intel token placed at Art 03 §9.2.0 — publicly visible board state change (Art 02 §18.0). React window closes when Art 03 §9.2.0 advances to next faction's declaration | Art 03 §18.0; Art 03 §9.2.0 |
 | Portrait validity | ✓ | Ghost submitter=+1 — submitter-bounded. Suppressing attribution from position of intelligence knowledge is Ghost on-doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (on placed PA card in Resolution Grid; Art 02 §6); PS shift (Art 02 §11) | Art 02 §6, §11 |
-| Supported by game procedure | ✓ | React per §18. Trigger at §9.2.0. Target Profile face-down at §9.2.0 (per §9.2.0 procedure — intelligence test is genuine). Ghost Source Substitution provides corruption mechanism. | Art 03 §18; Art 03 §9.2.0; Art 04 GHO — Source Substitution |
+| Supported by game procedure | ✓ | React per Art 03 §18. Trigger at Art 03 §9.2.0. Target Profile face-down at Art 03 §9.2.0 (per Art 03 §9.2.0 procedure — intelligence test is genuine). Ghost Source Substitution provides corruption mechanism. | Art 03 §18; Art 03 §9.2.0; Art 04 GHO — Source Substitution |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -9087,8 +9250,8 @@ GHO.MOD.1 = Card(
     layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
     # Spec clarity: Information / Remove / IntelToken
 
-    trigger = faction(opponent).places(PA, with=IntelToken(any), at=§9.2.0),
-    beat    = None,  # React — fires at §9.2.0, not in initiative
+    trigger = faction(opponent).places(PA, with=IntelToken(any), at=Art 03 §9.2.0),
+    beat    = None,  # React — fires at Art 03 §9.2.0, not in initiative
     resolution = Prediction,  # Ghost declares faction named on token; ARBITER validates
     threshold  = None,
     ring_mod   = None,  doctrine_mod = None,  resolution_type = "Conditional",
@@ -9116,8 +9279,8 @@ GHO.MOD.1 = Card(
     narrative    = None,  # pending 04-n79
     perspectives = None,  # pending D-04-08
 
-    design_note  = "Counter-attribution React payoff for Ghost's intelligence chain. Fires when any faction places a PA with Intel token at §9.2.0. Ghost announces React and declares the faction they believe is on the token. ARBITER checks (Prediction resolution). Match → token removed, PA cancelled (resources drained to Reservoir, no refund), Ghost +1 PS. No match → card consumed, PA proceeds. Intelligence-gated: Target Profile face-down at §9.2.0 means Ghost cannot derive the target from visible information — requires prior SIGINT or Source Substitution plant mode. Works against corrupted and legitimate tokens alike — Ghost doctrine: no attribution belongs on the public record. card_id = GHO.MOD.1.",
-    arbiter_note = "React at §9.2.0 when opponent places any PA with an Intel token. Ghost announces React; states the faction they believe is named on the token's faction field. Pause §9.2.0 declaration sequence. Check token faction field (do not reveal to table). If Ghost's declared faction matches token: React succeeds — remove token; flip PA face-down (cancelled); drain all resource tokens from PA card to Reservoir; Ghost +1 PS; resume §9.2.0. If no match: React misfires — consume Clarify Misinformation card; no board effect; resume §9.2.0; placed PA proceeds normally.",
+    design_note  = "Counter-attribution React payoff for Ghost's intelligence chain. Fires when any faction places a PA with Intel token at Art 02 §9.2.0. Ghost announces React and declares the faction they believe is on the token. ARBITER checks (Prediction resolution). Match → token removed, PA cancelled (resources drained to Reservoir, no refund), Ghost +1 PS. No match → card consumed, PA proceeds. Intelligence-gated: Target Profile face-down at Art 03 §9.2.0 means Ghost cannot derive the target from visible information — requires prior SIGINT or Source Substitution plant mode. Works against corrupted and legitimate tokens alike — Ghost doctrine: no attribution belongs on the public record. card_id = GHO.MOD.1.",
+    arbiter_note = "React at Art 03 §9.2.0 when opponent places any PA with an Intel token. Ghost announces React; states the faction they believe is named on the token's faction field. Pause Art 03 §9.2.0 declaration sequence. Check token faction field (do not reveal to table). If Ghost's declared faction matches token: React succeeds — remove token; flip PA face-down (cancelled); drain all resource tokens from PA card to Reservoir; Ghost +1 PS; resume Art 03 §9.2.0. If no match: React misfires — consume Clarify Misinformation card; no board effect; resume Art 03 §9.2.0; placed PA proceeds normally.",
 )
 ```
 
@@ -9127,7 +9290,7 @@ GHO.MOD.1 = Card(
 
 ## 12a. Debrief Action Cards
 
-ARBITER-issued cards placed in a faction's Dispatch Case during operation resolution. Not player-submitted; not drawn from a deck. Carry a single instruction that fires at the start of §11 Debrief. Physical form: disposable slip or reusable erasable card — design direction pending Art 11. Component: DB:100 (DebriefActionCard).
+ARBITER-issued cards placed in a faction's Dispatch Case during operation resolution. Not player-submitted; not drawn from a deck. Carry a single instruction that fires at the start of Art 03 §11 Debrief. Physical form: disposable slip or reusable erasable card — design direction pending Art 11. Component: DB:100 (DebriefActionCard).
 
 Debrief Action Cards are distinguished from all other card types by source and timing: created by ARBITER as a consequence of resolved operation; no faction player submits or draws them.
 
@@ -9141,7 +9304,7 @@ Debrief Action Cards use the **DA-xx** identifier prefix, assigned sequentially 
 
 ### 12a.2 DA-01 — SCIFRecord
 
-Produced by Ghost SCIF card on successful Beat 3 resolution (see §7.2 Ghost — SCIF). ARBITER places one completed SCIFRecord in Ghost's Dispatch Case at Beat 3 instantiation.
+Produced by Ghost SCIF card on successful Beat 3 resolution (see Art 03 §7.2 Ghost — SCIF). ARBITER places one completed SCIFRecord in Ghost's Dispatch Case at Beat 3 instantiation.
 
 **Fields:**
 

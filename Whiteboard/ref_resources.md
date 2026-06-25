@@ -70,7 +70,7 @@ Ghost starts Q1 with 12 Findings (5 reserves + 7 income) and loses 2 immediately
 
 ## Dispatch Tokens — Capacity, Not Resource
 
-Not resources. Per-Quarter operational capacity drawn from The Backlog (shared public pool). Ghost: 4 · All others: 3. One token per covert operation placed in dispatch case. Pass and political acts require none. Tokens return to The Backlog at Quarter close — they do not accumulate. A faction that burns all tokens in Month 1 can only Pass in Month 2.
+Not resources. Per-Quarter operational capacity drawn from The Backlog (shared public pool). Ghost: 4 · All others: 3. Covert operations and public acts each cost 1 token. Pass requires none. Tokens return to The Backlog at Quarter close — they do not accumulate. A faction that burns all tokens in Month 1 can only Pass in Month 2.
 
 ---
 
