@@ -1,7 +1,7 @@
 # 00 — Factions, World & Narrative Context
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.7 — Signed Off S93 (L211)  
+**Version:** 1.8 — Signed Off S93 (L211)  
 **Status:** ✅ Signed Off  
 **Supersedes:** game_overview (narrative sections), setup_guide (opening narrative)  
 **Must be read before:** All other design artifacts
@@ -61,7 +61,7 @@ THE SIGNAL is a game about what humanity reveals about itself when the stakes ar
 
 The Chorus is not a threat. It is not a gift. It is a question — and the five factions at The Table are, collectively and despite themselves, the answer humanity is producing.
 
-Everything players do — every covert operation, every public act, every accord honored or broken — is observed. Not by each other. By ARBITER. And through ARBITER, by the Chorus itself.
+Everything players do — every Covert Operation, every Public Act, every accord honored or broken — is observed. Not by each other. By ARBITER. And through ARBITER, by the Chorus itself.
 
 The game's deepest tension is not between factions. It is between what factions declare and what they do. The Chronicle reveals that gap. Players should leave the table wondering not just who prevailed, but what their faction's behavior said about them — and whether the answer they collectively produced was worthy of the question.
 
@@ -738,11 +738,11 @@ Dominant status is something else. It is comparative, not absolute — a faction
 
 ### 14.3 Structure Blocks
 
-On The Overview, a structure block marks a district where a faction has committed. The mark is binary — it is there or it is not. One mark per faction per district. No gradations, no scale. The Overview does not show how deeply a faction has committed. It shows that they have.
+On The Overview, a Structure Block marks a district where a faction has committed. The mark is binary — it is there or it is not. One mark per faction per district. No gradations, no scale. The Overview does not show how deeply a faction has committed. It shows that they have.
 
 What the mark represents in the world behind The Overview varies by faction and is not surfaced on the display. Ghost's structure in a district might be a single closet with the right hardware in it — a transmission hub that appears on no schematic and in no public record. The Syndicate's footprint might span a cluster of food carts and storefronts. The Guild's includes a site office and a union hall. The Directorate's has a plaque on the door. None of this is in The Overview. What The Overview shows is the same for all of them: this faction has committed to this district. Something is here.
 
-The fact is public. The nature is not. That separation — what The Overview surfaces and what it does not — is not incidental. It is what makes structure blocks legible to everyone at The Table and meaningful only to the faction that placed them. The Holt Index measures how much a faction fills a district. The structure block is what The Overview shows when a faction has decided the district is worth filling.
+The fact is public. The nature is not. That separation — what The Overview surfaces and what it does not — is not incidental. It is what makes Structure Blocks legible to everyone at The Table and meaningful only to the faction that placed them. The Holt Index measures how much a faction fills a district. The Structure Block is what The Overview shows when a faction has decided the district is worth filling.
 
 *Mechanics: Artifact 02 §6.*
 
@@ -750,7 +750,7 @@ The fact is public. The nature is not. That separation — what The Overview sur
 
 ### 14.4 Deployment Markers
 
-On The Overview, a deployment marker signals active engagement — a faction turning one of its public faces directly toward a district. Where presence tokens show the ambient weight that has built up over time, a deployment marker shows something happening now.
+On The Overview, a Deployment Marker signals active engagement — a faction turning one of its public faces directly toward a district. Where presence tokens show the ambient weight that has built up over time, a Deployment Marker shows something happening now.
 
 The city notices. Festival flyers appear on corner poles overnight. A convoy of Guild equipment arrives at a project perimeter. Network broadcast trucks park along the main road. Directorate vehicles — official, marked, deliberate — make their presence known on the primary boulevard. The Syndicate opens a pop-up market in the central square. Even Ghost's deployments have a visible register to those paying attention: a neighborhood that develops new foot traffic patterns, familiar faces that stop being familiar.
 
@@ -770,13 +770,13 @@ Before an operation reaches the world, it has to clear the faction's own machine
 
 Every faction runs internal systems — authorization layers, resource allocation, scheduling, sign-off chains — that an intention must pass through before it becomes an action. A plan that cannot be resourced and cleared internally never gets submitted. Not because the idea was wrong, but because the internal capital required to set it in motion — the approvals, the coordination, the negotiation — was not in place.
 
-Each quarter, each faction draws its allocation from the shared pool — The Backlog. The tokens are not a currency. They are a count: this many authorized operations can move from planning to active this quarter. Everything in The Backlog is cleared and waiting. A token placed in the dispatch case moves an operation from waiting to active — the organization has committed, the case is sealed, the world is about to find out.
+Each quarter, each faction draws its allocation from the shared pool — The Backlog. The tokens are not a currency. They are a count: this many authorized operations can move from planning to active this quarter. Everything in The Backlog is cleared and waiting. A token placed in the Dispatch Case moves an operation from waiting to active — the organization has committed, the case is sealed, the world is about to find out.
 
 A faction that deploys all its tokens in Month 1 has activated everything it had authorized for the quarter. Nothing remains in the backlog. Month 2 becomes whatever can be done without organizational authority behind it — passes, patience, watching what others set in motion. A deeper backlog means more active operations per quarter. Some factions are built for that volume. Others work differently.
 
 What clearing the internal threshold requires depends on the faction. Ghost's authorization process runs through compartmentalized layers — clearance for an operation the operation itself may never fully see. Ghost also runs a deeper backlog: more authorized operational capacity per quarter, by design. The Directorate's machinery is institutional — a directive without the right sign-off chain does not exist in the world the Directorate operates in. The Guild scopes deliverables — crews confirmed, materials committed — before anything moves. The Syndicate aligns through terms rather than hierarchy; once the internal deal is done, the capacity is unlocked. The Network's internal clearance is editorial: what gets launched has to have a complete shape in the room before it reaches any audience.
 
-The dispatch case is where the world receives the action. The Backlog is where the faction kept it until the organization was ready to send it.
+The Dispatch Case is where the world receives the action. The Backlog is where the faction kept it until the organization was ready to send it.
 
 *Mechanics: Artifact 03 §7 Step 7.*
 
@@ -784,7 +784,7 @@ The dispatch case is where the world receives the action. The Backlog is where t
 
 ### 14.6 What a Card Is
 
-A submission is a faction's organized intention — the form in which a plan is committed before the world has had a chance to respond. Both channels of action produce submissions. A covert operation is submitted in a dispatch case, sealed, placed without announcement. A public act is declared at The Table, witnessed, placed in the open. Both are submissions in the same sense: the plan is given over to the world before the outcome is known.
+A submission is a faction's organized intention — the form in which a plan is committed before the world has had a chance to respond. Both channels of action produce submissions. A Covert Operation is submitted in a Dispatch Case, sealed, placed without announcement. A Public Act is declared at The Table, witnessed, placed in the open. Both are submissions in the same sense: the plan is given over to the world before the outcome is known.
 
 What this looks like inside each faction depends on how they organize intentions.
 
@@ -820,7 +820,7 @@ At session's end, the directive surfaces. What a faction built across the full d
 
 ### 14.8 Field Operative Dossier
 
-Each faction has assets. Resources, presence, operational capacity. Most of what happens at The Table is those assets in motion — deployments, covert operations, accords, and the slow accumulation of standing across New Meridian's districts.
+Each faction has assets. Resources, presence, operational capacity. Most of what happens at The Table is those assets in motion — deployments, Covert Operations, accords, and the slow accumulation of standing across New Meridian's districts.
 
 And then there is one person.
 

@@ -1,7 +1,7 @@
 # 06 — Messaging System
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.4 — §9 Signed Off (L205)  
+**Version:** 0.5 — §9 Signed Off (L205)  
 **Status:** 🟡 In Progress — §9 signed off; §§1–8, 10–13 non-canonical stubs  
 **Last Updated:** 2026-06-11  
 **Depends on:** 04 — Action Card System; 03 — Round Structure & Gameplay; 07 — ARBITER Toolkit  
@@ -18,7 +18,7 @@ Without a messaging system, hidden information becomes either unmanageable or un
 
 ### Deliverable
 Complete specifications for:
-- The dispatch case (physical covert operation submission)
+- The Dispatch Case (physical Covert Operation submission)
 - Faction-to-faction private communication protocols
 - ARBITER-to-faction private notification procedures
 - Accord documents (formal negotiated agreements)
@@ -55,7 +55,7 @@ Complete specifications for:
 
 The messaging system is the physical layer of the game's information architecture. It enforces the design principle that information has timing — that players cannot know what others have committed to until the moment of revelation.
 
-The dispatch case, the Accord form, the private notification slip — these are not administrative conveniences. They are the mechanisms that make the game honest. Without them, the game devolves into negotiation theater with no binding commitments and no enforceable privacy.
+The Dispatch Case, the Accord form, the private Notification Slip — these are not administrative conveniences. They are the mechanisms that make the game honest. Without them, the game devolves into negotiation theater with no binding commitments and no enforceable privacy.
 
 ---
 
@@ -63,7 +63,7 @@ The dispatch case, the Accord form, the private notification slip — these are 
 
 New Meridian's factions do not conduct their business in the open. Meetings happen. Documents are signed. Dispatches are sent to operatives before the world knows the plan. ARBITER receives and holds all of it — not because ARBITER needs to — but because The Table agreed that ARBITER would.
 
-A dispatch case is a physical commitment. The operative is in the field. The operation is running. What ARBITER opens during Resolution is not a hypothetical — it happened.
+A Dispatch Case is a physical commitment. The operative is in the field. The operation is running. What ARBITER opens during Resolution is not a hypothetical — it happened.
 
 An Accord is a document. It bears the faction's identifier. When an Accord is broken, ARBITER does not simply note the violation — ARBITER can produce the original document. There is a record. The Chorus has seen it. What that means for the faction's Portrait is something only ARBITER knows.
 
@@ -90,18 +90,18 @@ An Accord is a document. It bears the faction's identifier. When an Accord is br
 > ⚠ *Draft Stub — Non-Canonical. This section was written prior to the current design framework and has not been reviewed against signed-off artifacts. Content is placeholder only and should not be treated as established procedure.*
 
 ### 6.1 What the Dispatch Case Is
-The dispatch case (in-world name: dispatch case; physical component: recipe box — see PM01 §2) is each faction's private submission container. Each faction has one dispatch case; ARBITER has one. All cases are identical in appearance to prevent identification.
+The Dispatch Case (in-world name: Dispatch Case; physical component: recipe box — see PM01 §2) is each faction's private submission container. Each faction has one Dispatch Case; ARBITER has one. All cases are identical in appearance to prevent identification.
 
 ### 6.2 Submission Protocol
 During **Phase 3 (Dispatch)**:
-1. Each faction privately places their covert operation card(s) face-down into their dispatch case, along with any modifier cards they are submitting for the operation.
-2. Required resources are placed in the dispatch case alongside the card(s).
-3. The faction closes their dispatch case.
+1. Each faction privately places their Covert Operation Card(s) face-down into their Dispatch Case, along with any Modifier Cards they are submitting for the operation.
+2. Required resources are placed in the Dispatch Case alongside the card(s).
+3. The faction closes their Dispatch Case.
 4. All closed cases are presented to ARBITER simultaneously (or in initiative order — *[TBD: confirm with Artifact 03 Phase 3 procedure]*).
 
 ### 6.3 ARBITER's Opening Procedure
 During **Phase 6 (Resolution)**:
-1. ARBITER opens each dispatch case in initiative order.
+1. ARBITER opens each Dispatch Case in initiative order.
 2. ARBITER reads the submitted card(s) and resolves effects.
 3. Resources submitted are collected by ARBITER (or returned if the operation fails — *[TBD: confirm with Artifact 04 failure handling]*).
 4. Opened case contents are revealed to the table at the moment of resolution.
@@ -110,7 +110,7 @@ During **Phase 6 (Resolution)**:
 *[TBD — what happens if a faction submits insufficient resources, an invalid target, or conflicting cards? Recommend: ARBITER determines resolution per Artifact 07 resolution beats. Operation may be voided or partially resolved.]*
 
 ### 6.5 Pass Cards
-A faction submitting a Pass card places it face-down in the dispatch case. No resources accompany a Pass. When ARBITER opens a Pass submission, there is no announcement — ARBITER simply sets the case aside. *[TBD — confirm with Artifact 04 §12 Pass Card rules.]*
+A faction submitting a Pass card places it face-down in the Dispatch Case. No resources accompany a Pass. When ARBITER opens a Pass submission, there is no announcement — ARBITER simply sets the case aside. *[TBD — confirm with Artifact 04 §12 Pass Card rules.]*
 
 ---
 
@@ -135,16 +135,16 @@ Factions may write false information in private messages. ARBITER does not verif
 
 > ⚠ *Draft Stub — Non-Canonical. This section was written prior to the current design framework and has not been reviewed against signed-off artifacts. Content is placeholder only and should not be treated as established procedure.*
 
-ARBITER communicates with individual factions via private notification slips. A notification slip is placed face-down in front of the receiving faction. The faction reads it privately and places it in their hand.
+ARBITER communicates with individual factions via private Notification Slips. A Notification Slip is placed face-down in front of the receiving faction. The faction reads it privately and places it in their hand.
 
 ### 8.1 When ARBITER Sends Notifications
-- When a covert operation targets a faction and that faction is entitled to know they were targeted (*[TBD — confirm with Artifact 04 per-card resolution rules]*)
+- When a Covert Operation targets a faction and that faction is entitled to know they were targeted (*[TBD — confirm with Artifact 04 per-card resolution rules]*)
 - When an operative enters cooldown or a condition changes that only ARBITER tracks
 - When a classified directive condition is met
 - When ARBITER determines a Portrait-relevant event has occurred *[TBD — confirm scope with 00a R07 and R31]*
 
 ### 8.2 Notification Content
-Notification slips are written in the narrative registers defined in Artifact 07. ARBITER does not use mechanical language in notification slips. *[See Artifact 07 §[TBD] — Narrative Registers.]*
+Notification Slips are written in the narrative registers defined in Artifact 07. ARBITER does not use mechanical language in Notification Slips. *[See Artifact 07 §[TBD] — Narrative Registers.]*
 
 ### 8.3 Notification Confidentiality
 No faction may demand to read another faction's notification. Factions may reveal notification content voluntarily. ARBITER does not confirm or deny the existence of notifications to other factions.
@@ -170,16 +170,16 @@ An Accord form (see PM01 §2 — [TBD component: Accord forms]) is a structured 
 ☐ Faction B will not exceed ———————— *(tier)* in ———————— *(district / ring)*
 
 **TERRITORIAL PROHIBITIONS — Structures**
-☐ Faction A will not place a structure block in ———————— *(district)*
-☐ Faction B will not place a structure block in ———————— *(district)*
+☐ Faction A will not place a Structure Block in ———————— *(district)*
+☐ Faction B will not place a Structure Block in ———————— *(district)*
 
 **OPERATIONAL MARKER PROHIBITIONS**
 ☐ Faction A will not place a Deployment Marker in ———————— *(district / ring)*
 ☐ Faction B will not place a Deployment Marker in ———————— *(district / ring)*
 
 **PUBLIC ACT PROHIBITIONS**
-☐ Faction A will not submit ———————— *(any public act / named PA type)* targeting Faction B
-☐ Faction B will not submit ———————— *(any public act / named PA type)* targeting Faction A
+☐ Faction A will not submit ———————— *(any Public Act / named PA type)* targeting Faction B
+☐ Faction B will not submit ———————— *(any Public Act / named PA type)* targeting Faction A
 
 **RESOURCE TRANSFER OBLIGATIONS**
 ☐ Faction A will transfer ———————— *(qty)* ———————— *(resource type)* to Faction B at Upkeep ———————— *(each Quarter / Quarter N)*
@@ -190,8 +190,8 @@ An Accord form (see PM01 §2 — [TBD component: Accord forms]) is a structured 
 ☐ Faction B will achieve / maintain ———————— *(tier)* in ———————— *(district)*
 
 **PRESENCE OBLIGATIONS — Structures**
-☐ Faction A will place a structure block in ———————— *(district)*
-☐ Faction B will place a structure block in ———————— *(district)*
+☐ Faction A will place a Structure Block in ———————— *(district)*
+☐ Faction B will place a Structure Block in ———————— *(district)*
 
 **THIS ACCORD WILL BE VALID THROUGH:** *(quarter or condition)*
 
@@ -210,7 +210,7 @@ The drafted form is placed in the Accord Placement Area at Beat 4, whether or no
 Valid Accord terms must be:
 
 - **Specific** — name the bound factions, the actions or restrictions, and the duration.
-- **Player-verifiable** — any player at the table must be able to evaluate compliance from the public board state alone. Terms requiring ARBITER private knowledge are not valid. *(Example: "Faction A will not place a Structure Block in District 7" — valid. "Faction A will not submit more than two covert operations" — not valid; case count is ARBITER-private.)*
+- **Player-verifiable** — any player at the table must be able to evaluate compliance from the public board state alone. Terms requiring ARBITER private knowledge are not valid. *(Example: "Faction A will not place a Structure Block in District 7" — valid. "Faction A will not submit more than two Covert Operations" — not valid; case count is ARBITER-private.)*
 - **Written in New Meridian language** — all terms use in-world names for places, resources, and factions.
 
 Ongoing obligations (e.g., resource transfers per Upkeep) are valid — they must be performed publicly at the named phase and are player-visible.
@@ -222,7 +222,7 @@ The pre-printed form is structured as a table of clause rows. Each row names one
 **Prohibition — Territorial**
 Binds a named faction to a board-state limit in a named district or ring, including structure placement.
 Row form: *"[Faction A] will not exceed [Present / Established] in [district name / Ring N] during [duration]."*
-Row form: *"[Faction A] will not place a structure block in [district name] during [duration]."*
+Row form: *"[Faction A] will not place a Structure Block in [district name] during [duration]."*
 Compliance evaluated from public board state. Bound condition is a tier or a structure state.
 
 **Prohibition — Operational Marker**
@@ -231,28 +231,28 @@ Row form: *"[Faction A] will not place a Deployment Marker in [district name / R
 Compliance is evaluated from public board state — any Deployment Marker of the bound faction present in the prohibited area constitutes breach, regardless of how the marker arrived there.
 
 **Prohibition — Public Act**
-Binds a named faction from submitting specified public acts targeting a named faction.
-Row form: *"[Faction A] will not submit [any public act / named PA type] targeting [Faction B] during [Quarter range]."*
+Binds a named faction from submitting specified Public Acts targeting a named faction.
+Row form: *"[Faction A] will not submit [any Public Act / named PA type] targeting [Faction B] during [Quarter range]."*
 PA declarations are public at Phase B; all players can observe compliance.
 
 **Obligation — Resource Transfer**
 Binds a named faction to transfer resources to a named faction at a specified Upkeep.
 Row form: *"[Faction A] will transfer [quantity] [resource type] to [Faction B] at Upkeep [each Quarter / Quarter N]."*
-Valid resource types: native resources; faction-specific resources (Findings, Exposure, Capital, Capacity, Mandate); Intel Tokens.
+Valid resource types: Native Resources; faction-specific resources (Findings, Exposure, Capital, Capacity, Mandate); Intel Tokens.
 Transfer occurs at Upkeep, visible to all players at the table. Non-payment constitutes breach.
 *Intel Token terms:* Any held Intel Token is valid for transfer regardless of age. The token's content (faction and Quarter of origin) is private to the recipient and cannot be specified or restricted within the Accord terms.
 
 **Obligation — Presence**
 Binds a named faction to achieve or maintain a board state in a named district, including structure placement.
 Row form: *"[Faction A] will achieve / maintain [influence tier] in [district name]."*
-Row form: *"[Faction A] will place a structure block in [district name]."*
+Row form: *"[Faction A] will place a Structure Block in [district name]."*
 Compliance evaluated from public board state. Duration is governed by the Accord's stated validity period.
 
 **Duration**
 Sets the validity period of the Accord. Either a named Quarter or a stated board-state condition that any player can evaluate without ARBITER private knowledge.
 Row form: *"This Accord will be valid through [Quarter N / stated condition]."*
 
-**Covert operations are excluded from Accord terms.** Covert case counts and op types are ARBITER-private and cannot be bound.
+**Covert Operations are excluded from Accord terms.** Covert case counts and op types are ARBITER-private and cannot be bound.
 
 ### 9.4 Formation
 
@@ -266,7 +266,7 @@ Three cards may initiate Accord formation. Each causes ARBITER to deliver a blan
 |------|-------------------------------|
 | P08 Table an Accord | Declared at Phase B; ARBITER delivers blank AccordForm to submitting faction at Beat 4 as PA resolution outcome |
 | P10 Infrastructure Bond | Declared at Phase B; ARBITER delivers blank AccordForm to submitting faction at Beat 4 as PA resolution outcome |
-| Overture modifier card (from C09 Fund) | Assigned to any PA at Phase B; ARBITER delivers blank AccordForm to submitting faction when host PA resolves at Beat 4 — any outcome; per Art 04 §11.8 |
+| Overture Modifier Card (from C09 Fund) | Assigned to any PA at Phase B; ARBITER delivers blank AccordForm to submitting faction when host PA resolves at Beat 4 — any outcome; per Art 04 §11.8 |
 
 **Drafting**
 
@@ -355,7 +355,7 @@ When an Accord's stated duration expires with no breach:
 | Mutual dissolution | None | — | — |
 | ARBITER-witnessed covert intent — op submitted against Accord-protected target; not publicly discovered | Submitting faction | −1 | The Record |
 
-*Covert operations that violate Accord terms but are not publicly discovered do not trigger §9.6 breach procedure and carry no PS consequence. If ARBITER observes during resolution that a submitted covert operation targeted an Accord-protected asset and the operation was not publicly discovered, ARBITER may note a Portrait entry for the submitting faction at their discretion.*
+*Covert Operations that violate Accord terms but are not publicly discovered do not trigger §9.6 breach procedure and carry no PS consequence. If ARBITER observes during resolution that a submitted Covert Operation targeted an Accord-protected asset and the operation was not publicly discovered, ARBITER may note a Portrait entry for the submitting faction at their discretion.*
 
 ### 9.10 Accord Manipulation
 
@@ -370,7 +370,7 @@ Cards and effects may interact with active Accords. The following interaction ty
 - **Duration** — change the "THIS ACCORD WILL BE VALID THROUGH" field.
 - **Named Party** — replace one named party. The outgoing party is struck from the form; the incoming party is written in. All obligations and benefits transfer to the incoming party.
 
-All alterations are made physically on the form. The modified form remains face-up in the Accord Placement Area; altered content is public record. If the altering card is a covert operation, ARBITER makes the physical alteration. If the altering card is a public act, the acting faction player makes the alteration.
+All alterations are made physically on the form. The modified form remains face-up in the Accord Placement Area; altered content is public record. If the altering card is a Covert Operation, ARBITER makes the physical alteration. If the altering card is a Public Act, the acting faction player makes the alteration.
 
 ---
 
@@ -399,7 +399,7 @@ At end of session scoring (Artifact 10a), each faction reveals their classified 
 If factions dispute what an Accord says, ARBITER produces the original document. ARBITER's reading of the written text is final.
 
 ### 11.2 Forged Messages
-A faction may claim to show another faction a notification from ARBITER. *[TBD — L1 recommendation: ARBITER notification slips use a standard form that factions cannot replicate; ARBITER's slips are distinguishable from faction-authored messages. Prevents forgery. Confirm with PM01 component design.]*
+A faction may claim to show another faction a notification from ARBITER. *[TBD — L1 recommendation: ARBITER Notification Slips use a standard form that factions cannot replicate; ARBITER's slips are distinguishable from faction-authored messages. Prevents forgery. Confirm with PM01 component design.]*
 
 ### 11.3 Timing Disputes
 If the order of message receipt or submission is disputed, initiative order from Phase 2 resolves it. ARBITER's record of receipt order is authoritative.
@@ -425,4 +425,4 @@ If the order of message receipt or submission is disputed, initiative order from
 ---
 
 *End of Artifact 06 — Messaging System v0.3. §9 signed off (L198). §§10–13 draft stubs — non-canonical.*  
-*Core protocol design extrapolated. Accord forms, notification slips, classified directive delivery, and message slip component specs require PM01 component confirmation and Artifact 04/07/08 sign-off.*
+*Core protocol design extrapolated. Accord forms, Notification Slips, classified directive delivery, and message slip component specs require PM01 component confirmation and Artifact 04/07/08 sign-off.*

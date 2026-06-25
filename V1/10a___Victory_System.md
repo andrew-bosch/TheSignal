@@ -1,7 +1,7 @@
 # 10a — Victory System
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1 Draft — Placeholder  
+**Version:** 0.2 — Placeholder  
 **Status:** ⬜ Not Started — Requires upstream decisions before design can begin  
 **Last Updated:** 2026-05-15  
 **Depends on:** 00 — Factions & World; 02 — Components; 03 — Round Structure; 05 — Operative & Apex System  
@@ -15,7 +15,7 @@
 ### Problem This Document Solves
 The game ends in one of two ways: at the completion of Round 8, or when an Apex ability resolves and triggers session end. In either case, someone wins. This document defines what winning means, how it is measured, and in what order the scoring sequence is resolved.
 
-Victory in THE SIGNAL is not purely additive. The board state, the Chorus Portrait, classified directives, and a final vote all feed into the result. The complexity is intentional: a faction that dominated the board may lose to a faction that played a quieter game with greater narrative alignment.
+Victory in THE SIGNAL is not purely additive. The board state, the Chorus Portrait, Classified Directives, and a final vote all feed into the result. The complexity is intentional: a faction that dominated the board may lose to a faction that played a quieter game with greater narrative alignment.
 
 ### Deliverable
 - Definition of all victory point sources
@@ -72,7 +72,7 @@ What ARBITER does with the vote result — what the Chorus makes of it — is be
 
 The two victory paths are the two sides of a question the game lets players explore but does not answer for them. This principle is not stated to players. It governs how the victory system is designed.
 
-**VP path** = human-agency theory. The factions are authors. The Chorus is the occasion. What the factions achieved — board control, resources, classified directives, vote outcome — is the measure of the session. Winning by VP is a claim: *we determined what happened*.
+**VP path** = human-agency theory. The factions are authors. The Chorus is the occasion. What the factions achieved — board control, resources, Classified Directives, vote outcome — is the measure of the session. Winning by VP is a claim: *we determined what happened*.
 
 **Portrait path** = Chorus-agency theory. The factions were being evaluated throughout. What the Chorus recorded — their Portrait — is not what they controlled; it is what they revealed. Winning by Portrait is not achievement. It is recognition by something that was already watching.
 
@@ -88,7 +88,7 @@ Every element of the victory system should be consistent with this — that both
 
 ## 5. Design Principles
 
-1. **Winning is multidimensional.** Board control, resource accumulation, Chorus Portrait, classified directives, and the vote all feed the final result. No single dimension dominates.
+1. **Winning is multidimensional.** Board control, resource accumulation, Chorus Portrait, Classified Directives, and the vote all feed the final result. No single dimension dominates.
 
 2. **The vote produces a result independent of VP.** The faction that wins the vote may not have the highest VP total. Both outcomes are recorded. In the game's fiction, the vote result is what happened — regardless of which faction "won" by points.
 
@@ -127,8 +127,8 @@ In both cases, proceed immediately to scoring.
 
 | Condition | VP | Notes |
 |-----------|-----|-------|
-| Excess native resource held at session end | [TBD] per token (or ratio) | *[TBD — recommend diminishing returns to prevent pure hoarding strategy]* |
-| Cross-faction resources held (via Translation) | *[TBD — may not award VP for non-native resources]* | |
+| Excess Native Resource held at session end | [TBD] per token (or ratio) | *[TBD — recommend diminishing returns to prevent pure hoarding strategy]* |
+| Cross-faction resources held (via Translation) | *[TBD — may not award VP for non-Native Resources]* | |
 
 ### 7.3 Operatives
 
@@ -194,7 +194,7 @@ Scoring is performed in the following order. ARBITER administers.
 4. **Count board control VP.** ARBITER and players survey the board together. District status (Established/Present), structures, and ring majorities are counted.
 5. **Count resource VP.** Each faction declares their resource holdings. ARBITER confirms against starting state and known transactions.
 6. **Count operative VP.** ARBITER confirms operative deployment status.
-7. **Reveal classified directives.** All factions reveal simultaneously. ARBITER verifies each objective and awards VP.
+7. **Reveal Classified Directives.** All factions reveal simultaneously. ARBITER verifies each objective and awards VP.
 8. **Count Accord VP.** ARBITER references Chronicle. Active Accords status is confirmed.
 9. **Count Public Standing VP.** Board positions are read.
 10. **Calculate totals.** Each faction totals their VP from all sources.

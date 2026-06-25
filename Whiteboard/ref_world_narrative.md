@@ -21,7 +21,7 @@ The Chorus is a structured, non-repeating transmission received 31 years ago by 
 
 A city of ~800,000 exactly 31 years old — assembled fast, from everywhere, for a reason classified for 30 of those years. No historical analogue: every cuisine, every language, no centuries behind it. The Core was built first; the Mid followed; Baryo grew without a plan. At center: the Chorus Node — the original detection installation, expanded over three decades.
 
-**The Chorus Papers** (18 months ago): classified documents leaked; containment failed within a week. This forced The Table into existence. The Directorate's public standing dropped sharply; Network membership surged. The Table convened 60 days after the Papers dropped.
+**The Chorus Papers** (18 months ago): classified documents leaked; containment failed within a week. This forced The Table into existence. The Directorate's Public Standing dropped sharply; Network membership surged. The Table convened 60 days after the Papers dropped.
 
 ---
 

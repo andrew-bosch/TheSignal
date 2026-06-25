@@ -1,35 +1,33 @@
-## CLOSE QUEUE — Session 117
+## CLOSE QUEUE — Session 118
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: **Last Updated:** 2026-06-21 — Session 112 Close
-NEW: **Last Updated:** 2026-06-24 — Session 117 Close
+OLD: **Last Updated:** 2026-06-24 — Session 117 Close
+NEW: **Last Updated:** 2026-06-25 — Session 118 Close
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: **Last Updated:** 2026-06-24 — Session 117 Close
+AFTER: ### Session 117 Summary (2026-06-24)
 CONTENT:
+### Session 118 Summary (2026-06-25)
 
-### Session 117 Summary (2026-06-24)
-
-**Focus:** DB prep for card set audits — card_status taxonomy columns + card_subject_map bridge table.
+**Focus:** Full component naming standardisation sweep — DB canonical Title Case + stale renames across all artifacts and ref files.
 
 **Key work:**
-- **card_status extended** — 4 new columns: `layer` / `function` / `subject` (VARCHAR) / `beat` (INT, NULL). Taxonomy seeded from Art 04 §8; 77 of 95 cards have spec-accurate values (Python parser vs. full card specs); 18 stubs/BLOCKED have §8-level accuracy only.
-- **Beat semantics locked:** Resolution beat, not submission beat. 27 CA=2 (early-intervention: block/protect/modify/interfere), 35 CA=3 (standard covert grid), 27 PA=4, 6 MOD/DA=NULL.
-- **Data corrections:** 15 NULL card_ids backfilled (pre-ID-04 renumber); 3 card_type bugs fixed (Regulatory Downgrade/Freeze CA→PA, Accord Leverage CA→MOD).
-- **component table renames:** id=1 "Presence chip" → "Presence token" · id=14 "Political act" → "Public act".
-- **card_subject_map created** — 25-row bridge table (subject PascalCase → component_id); enables joins from card_status into all 27 gap views via component table.
-- **§9 Coverage Matrix** — now DB-derivable as live pivot from card_status (WHERE blocked=0); no longer a separately maintained table.
-- **schema_reference.md updated** — all S117 changes documented.
+- **Art 04 v0.9.47:** §8 DIR.PA.1 corrected (Territory|Modify|PresenceToken); §9 GHO.PA.2 regrouped (Resolution|Modify|Covert Operation); §8/§9 subject sweep to DB Title Case (~124 cells). PM05 04-n99 DIR.PA.1 ✅ closed.
+- **DB `component` table:** 46 records updated to Title Case ("Presence chip" → "Presence Token", "Political act" → "Public Act", "Accord agreement" → "Accord Agreement", "Arbiter Tableau" → "ARBITER Tableau", etc.).
+- **Art 02 v2.5:** Full sweep — headings, component_name metadata, body prose. Stale renames applied (Presence chip, Political act family).
+- **All V1 artifacts swept (20 files):** Art 00 (v1.8) · Art 00a (v0.10) · Art 01 (v2.2) · Art 03 (v4.11) · Art 03-init (v0.4) · Art 03a (v0.99) · Art 03b (v0.2) · Art 04b (v2.0) · Art 05–11 (→ v0.2) · PM02 (v4.1) · PM04 (v0.9). Parallel agent deployment — all clean, zero residuals.
+- **Whiteboard ref_*.md + design_reference.md + schema_reference.md:** 14 files, 13 changed. schema_reference.md heaviest (54 term types).
+- **L236 locked (PM02):** DB `component.name` = canonical source of truth; Title Case rule; Python spec pseudo-PascalCase exempt.
+- **PM04 L109 updated:** DB authority + Title Case rules added; stale rows removed (Operational marker, Operation Resolution card, Pass card).
+- **Grip fix:** Wide table CSS via local API shim (grip_local_api.py) — container max-width removed.
 
-**Carried to cleanup:** §8 DIR.PA.1 index entry wrong (Submission|Block|PublicAct vs. spec Territory|Modify|PresenceToken) · §9 GHO.PA.2 subject label grouping error.
-
-**Artifacts updated:** DB (card_status columns + card_subject_map + component renames) · schema_reference.md · SESSION_BRIEF
+**Artifacts updated S118:** DB · Art 02 (v2.5) · Art 04 (v0.9.47) · Art 00 (v1.8) · Art 00a (v0.10) · Art 01 (v2.2) · Art 03 (v4.11) · Art 03-init (v0.4) · Art 03a (v0.99) · Art 03b (v0.2) · Art 04b (v2.0) · Art 05–11 · PM02 (v4.1) · PM03 · PM04 (v0.9) · All Whiteboard ref_*.md
 
 ### COMMIT
-source ~/Projects/credentials.env && cd ~/Projects/TheSignal && git add -A && git commit -m "session 117 — DB prep: card_status taxonomy + card_subject_map" && git push
+source ~/Projects/credentials.env && git -C ~/Projects/TheSignal add -A && git -C ~/Projects/TheSignal commit -m "session 118 — component naming Title Case sweep + L236" && git -C ~/Projects/TheSignal push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh

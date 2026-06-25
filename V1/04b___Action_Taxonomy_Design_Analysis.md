@@ -1,7 +1,7 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.9  
+**Version:** 2.0  
 **Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed.  
 **Last Updated:** 2026-06-24  
 **Companion to:** 04 — Action Card System  
@@ -62,11 +62,11 @@ Some components have both quantitative and qualitative properties. The count of 
 
 | Component | Economy property | Information property |
 |-----------|----------------|-------------------|
-| Intel token | Count held by faction | Content written on token |
-| Modifier card | Count held | What modifiers the card carries |
-| Accord agreement | Whether an Accord exists | Recorded terms and obligations |
+| Intel Token | Count held by faction | Content written on token |
+| Modifier Card | Count held | What modifiers the card carries |
+| Accord Agreement | Whether an Accord exists | Recorded terms and obligations |
 
-A card that adds an Intel token to the pool (STD.CA.5 Gather) is an Information card — the dominant design intent is intelligence acquisition, not resource accumulation. Token count is an Economy property of a held asset; card layer is classified by what the card's primary effect serves. A card that reveals the content of a token is an Information card. A card that introduces a token with falsified content (GHO.CA.5 Misdirection) is an Information card — the qualitative deception is the primary design intent, even though the Add primitive is also executed.
+A card that adds an Intel Token to the pool (STD.CA.5 Gather) is an Information card — the dominant design intent is intelligence acquisition, not resource accumulation. Token count is an Economy property of a held asset; card layer is classified by what the card's primary effect serves. A card that reveals the content of a token is an Information card. A card that introduces a token with falsified content (GHO.CA.5 Misdirection) is an Information card — the qualitative deception is the primary design intent, even though the Add primitive is also executed.
 
 ### 4.5 Protect distributes to the target's layer
 
@@ -74,9 +74,9 @@ A Protect card belongs to the layer of its protected target — it is not a cros
 
 ### 4.6 Corrupt applies only to physically written or recorded values
 
-Corrupt is classified in the Information layer. Scope is strict: applies only to values physically written or tracked in the paper prototype. Valid targets: Intel tokens (faction name only — see location constraint below), Accord agreements (terms written on document; named party on Accord form — L227), Target Profile (content within an operation bundle inside the dispatch case). Invalid: printed card text, marker positions (tracked by physical position, not written value), Chronicle (ARBITER narrative — not a mechanical game element), round-number field on Intel tokens (see below).
+Corrupt is classified in the Information layer. Scope is strict: applies only to values physically written or tracked in the paper prototype. Valid targets: Intel Tokens (faction name only — see location constraint below), Accord Agreements (terms written on document; named party on Accord form — L227), Target Profile (content within an operation bundle inside the Dispatch Case). Invalid: printed card text, marker positions (tracked by physical position, not written value), Chronicle (ARBITER narrative — not a mechanical game element), round-number field on Intel Tokens (see below).
 
-**Intel token location constraint (L222):** Intel tokens reside in the faction terminal (private zone — unreachable by an opposing card) or the ARBITER terminal (write-only by ARBITER). The only window where an opposing faction's Intel token is publicly accessible is when placed on a Public Act as payment (Beat 0 through Beat 4 PA resolution). Only tokens in that public-placement window are valid Corrupt targets. Own-faction modification of privately held tokens constitutes falsification of game state and is prohibited. Round-number field is additionally blocked by 7.2b: round number records the token's committed validity state (when it was created); altering it retroactively modifies that committed state.
+**Intel Token location constraint (L222):** Intel Tokens reside in the Faction Terminal (private zone — unreachable by an opposing card) or the ARBITER terminal (write-only by ARBITER). The only window where an opposing faction's Intel Token is publicly accessible is when placed on a Public Act as payment (Beat 0 through Beat 4 PA resolution). Only tokens in that public-placement window are valid Corrupt targets. Own-faction modification of privately held tokens constitutes falsification of game state and is prohibited. Round-number field is additionally blocked by 7.2b: round number records the token's committed validity state (when it was created); altering it retroactively modifies that committed state.
 
 ### 4.7 No multi-Quarter temporary effects
 
@@ -84,7 +84,7 @@ Card effects use exactly one of four valid duration types: **Immediate** (resolv
 
 ### 4.8 ARBITER is the information authority — corollary to GR 10.1
 
-The game contains hidden information: Intel tokens in private terminals, covert operations in sealed dispatch cases, modifier assignments, the covert resolution grid. Faction players must receive controlled disclosures of hidden state during play — SitRep reads, IntelDeliverySlips, SCIF results, Beat 3 grid entries. ARBITER is the only entity that can surface hidden information while preserving the covert structure: it controls what gets revealed, to whom, and when. Without ARBITER disclosure, the hidden information model has no legal output channel.
+The game contains hidden information: Intel Tokens in private terminals, Covert Operations in sealed Dispatch Cases, modifier assignments, the covert resolution grid. Faction players must receive controlled disclosures of hidden state during play — SitRep reads, IntelDeliverySlips, SCIF results, Beat 3 grid entries. ARBITER is the only entity that can surface hidden information while preserving the covert structure: it controls what gets revealed, to whom, and when. Without ARBITER disclosure, the hidden information model has no legal output channel.
 
 This is why ARBITER-reveal is outside GR 10.1. GR 10.1 protects faction players from being forced to expose what they strategically hold. ARBITER holds nothing strategically — it is not a participant competing for informational advantage. Its disclosure is the game's information system functioning. Narratively: ARBITER is The Witness. Its disclosure is The Signal surfacing what it already sees. Compelling another player's disclosure is a faction act; ARBITER surfacing its own knowledge is a game function.
 
@@ -96,7 +96,7 @@ This is why ARBITER-reveal is outside GR 10.1. GR 10.1 protects faction players 
 
 No card, Accord, World Condition, or ARBITER script may retroactively nullify or modify a committed board state. "Committed" means the state existed at resolution — the dice rolled, the effect applied, the token placed. Whatever followed is downstream of that state, not a revision of it.
 
-This constraint eliminates the Recover function in its original sense (restoring a prior board state) and blocks any mechanic whose primary effect is reaching backward in the causal chain. Recover was retired S106 on this basis. GHO.CA.13 Backdate and GHO.CA.14 Field Verification are BLOCKED because both alter values that record committed states (round-number field on Intel tokens).
+This constraint eliminates the Recover function in its original sense (restoring a prior board state) and blocks any mechanic whose primary effect is reaching backward in the causal chain. Recover was retired S106 on this basis. GHO.CA.13 Backdate and GHO.CA.14 Field Verification are BLOCKED because both alter values that record committed states (round-number field on Intel Tokens).
 
 ### 4.15 Reveal creates a stake, not a compulsion (GR 10.1)
 
@@ -108,7 +108,7 @@ See §4.13 for the ARBITER-reveal carveout.
 
 Upkeep income flows from presence and structure output only. No card may directly modify a faction's income generation — neither to suppress it nor to amplify it beyond the board state. InfluenceTier is not a targetable component; it is derived from token counts, not written or placed independently. A card can affect income only by changing the underlying board state (adding or removing tokens), which changes the tier, which changes income naturally.
 
-This distinguishes Economy — Remove — Native resource (removing tokens from a faction's current holdings) from income suppression (preventing tokens from generating at Upkeep). The former is permissible; the latter is not. DIR.PA.4 Regulatory Downgrade and DIR.PA.5 Regulatory Freeze are BLOCKED on this basis.
+This distinguishes Economy — Remove — Native Resource (removing tokens from a faction's current holdings) from income suppression (preventing tokens from generating at Upkeep). The former is permissible; the latter is not. DIR.PA.4 Regulatory Downgrade and DIR.PA.5 Regulatory Freeze are BLOCKED on this basis.
 
 ---
 
@@ -122,8 +122,8 @@ This distinguishes Economy — Remove — Native resource (removing tokens from 
 
 | Layer | Visibility | Scope |
 |-------|-----------|-------|
-| Territory | Public | The influence landscape: presence tokens, structures, Dominant markers, spatial markers |
-| Economy | Public | Quantitative holdings: native resources, token counts, card counts, Accord existence |
+| Territory | Public | The influence landscape: presence tokens, structures, Dominant Markers, spatial markers |
+| Economy | Public | Quantitative holdings: Native Resources, token counts, card counts, Accord existence |
 | Information | Private → Public | Qualitative content: token content, written records, attribution, reconnaissance |
 | Submission | Split (covert = private, political = public) | What enters the resolution queue: costs, eligibility restrictions, blocks, operational scope. Cards that affect whether and how an action reaches resolution — before the dice roll. |
 | Resolution | Split by phase | The d100 system: threshold, difficulty, modifier stack, Battlefield Strength, outcome scale. Cards that alter how the queue resolves — at or during the dice roll, not the submission of the action. |
@@ -141,15 +141,15 @@ This distinguishes Economy — Remove — Native resource (removing tokens from 
 | Block | Prevents another action from being initiated or resolving | — (meta-constraint) |
 | Copy | Duplicates another action's effect chain with a new initiating subject | Invoke |
 | Reveal | Makes hidden information visible to a named audience | Reveal |
-| ~~Conceal~~ | **Retired S107 (L224)** — Concealment is a structural system behavior implemented by physical game components (dispatch case, faction terminal, ARBITER screen). It is not a card-triggerable function. 7.2a prohibits hidden state on board surface. Attribution concealment for covert ops is structural by default (all covert ops are anonymous until Discovered). No card Conceal function will be designed. | — |
+| ~~Conceal~~ | **Retired S107 (L224)** — Concealment is a structural system behavior implemented by physical game components (Dispatch Case, Faction Terminal, ARBITER Screen). It is not a card-triggerable function. 7.2a prohibits hidden state on board surface. Attribution concealment for covert ops is structural by default (all covert ops are anonymous until Discovered). No card Conceal function will be designed. | — |
 | Shift | Moves a track value (Portrait, Public Standing) up or down | Move |
 | Corrupt | Alters a physically written or recorded value on a component | Corrupt |
 
 **Primitive Verb(s)** — the physical verb(s) from §3.1 that execute this card's effect on a component. `—` indicates the card operates as a constraint or modifier on another action rather than directly executing a physical primitive. This is the bridge between the card design layer and the physical action model.
 
-**Modifier Card Scope** — Modifier cards are excluded from Layer — Function — Subject taxonomy (§9). They do not produce game-state primitives; they alter the parameters of primitives initiated by taxonomy cards. Their design space spans all six layers — any valid action from any layer can be the host action for a Modifier. The design question is not "which layer?" but "what host action does this require, and what parameter does it change?" Parameters a Modifier can alter include difficulty, cost, threshold, scope, outcome, timing, or validity of the host action.
+**Modifier Card Scope** — Modifier Cards are excluded from Layer — Function — Subject taxonomy (§9). They do not produce game-state primitives; they alter the parameters of primitives initiated by taxonomy cards. Their design space spans all six layers — any valid action from any layer can be the host action for a Modifier. The design question is not "which layer?" but "what host action does this require, and what parameter does it change?" Parameters a Modifier can alter include difficulty, cost, threshold, scope, outcome, timing, or validity of the host action.
 
-**React, Instant, and Interrupt** — timing sub-functions within the Modifier card type that describe *when* a Modifier fires, not *what* it affects. Timing is a separate classification axis from Layer and Function: a Modifier is classified by its primary effect, not its trigger. Because Modifiers can target host actions from any layer, React/Instant/interrupt effects can appear across all layers — for example, Economy — Add — Native resource triggered by an opponent's resolved action (GUI.CA.2); Submission — Block on an Instant played in-flight; Information — Reveal triggered on attribution. React triggers must be publicly observable (Art 04 §5 P5). Full mechanic treatment — trigger conditions, stack behavior, observability requirements — is in Art 03 §18. A Timing column may be added to §5.2 when the full modifier timing model is locked.
+**React, Instant, and Interrupt** — timing sub-functions within the Modifier Card type that describe *when* a Modifier fires, not *what* it affects. Timing is a separate classification axis from Layer and Function: a Modifier is classified by its primary effect, not its trigger. Because Modifiers can target host actions from any layer, React/Instant/interrupt effects can appear across all layers — for example, Economy — Add — Native Resource triggered by an opponent's resolved action (GUI.CA.2); Submission — Block on an Instant played in-flight; Information — Reveal triggered on attribution. React triggers must be publicly observable (Art 04 §5 P5). Full mechanic treatment — trigger conditions, stack behavior, observability requirements — is in Art 03 §18. A Timing column may be added to §5.2 when the full modifier timing model is locked.
 
 **Valid Layer × Function Combinations** — `—` indicates a combination prohibited by governing rule or physical constraint. All other cells represent valid design space regardless of whether a card currently exists.
 
@@ -191,27 +191,27 @@ The following combinations exist in the taxonomy but have no current card. Layer
 |---|---|---|---|---|
 | Redirect | Changes ownership, destination, or allegiance of an element | Structure | Low | Transfer structure faction — SYN.CA.3 partially covers |
 
-**Layer: Economy** — *Quantitative holdings: native resources, token counts, card counts, Accord existence*
+**Layer: Economy** — *Quantitative holdings: Native Resources, token counts, card counts, Accord existence*
 
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
-| Remove | Takes an element out of active play | Modifier card | Medium | Strip opponent modifier cards |
-| Remove | Takes an element out of active play | Accord agreement | High | Break Accord covertly — important missing mechanic |
+| Remove | Takes an element out of active play | Modifier Card | Medium | Strip opponent Modifier Cards |
+| Remove | Takes an element out of active play | Accord Agreement | High | Break Accord covertly — important missing mechanic |
 
 **Layer: Submission** — *What enters the resolution queue: costs, eligibility, blocks, scope*
 
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
-| Copy | Duplicates another action's effect chain with a new initiating subject | Political act | Low | Copy opponent political act |
+| Copy | Duplicates another action's effect chain with a new initiating subject | Public Act | Low | Copy opponent Public Act |
 | Copy | Duplicates another action's effect chain with a new initiating subject | Subset only | Medium | Copy target or effect only — Ghost doctrine. ⚠️ Partial-copy mechanism needed in action model |
 
 **Layer: Information** — *Qualitative content: token content, written records, attribution, reconnaissance*
 
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
-| Reveal | Makes hidden information visible to a named audience | Modifier cards held | Medium | Disclose individual modifier card contents |
+| Reveal | Makes hidden information visible to a named audience | Modifier Cards held | Medium | Disclose individual Modifier Card contents |
 | Reveal | Makes hidden information visible to a named audience | Named faction only | High | Targeted disclosure — Ghost intelligence delivery. ⚠️ Target-scope/filter system needed |
-| Corrupt | Alters a physically written or recorded value on a component | Intel token | High | Falsify Intel token content. Location constraint (L222): token must be in public-placement window (on PA as payment) — private terminal tokens unreachable. Partially addressed: Source Substitution (📝, faction-name field only); Backdate (🚫 BLOCKED L222 — round-number additionally prohibited by 7.2b). Full-field arbitrary corruption remains an open gap. |
+| Corrupt | Alters a physically written or recorded value on a component | Intel Token | High | Falsify Intel Token content. Location constraint (L222): token must be in public-placement window (on PA as payment) — private terminal tokens unreachable. Partially addressed: Source Substitution (📝, faction-name field only); Backdate (🚫 BLOCKED L222 — round-number additionally prohibited by 7.2b). Full-field arbitrary corruption remains an open gap. |
 
 **Layer: Standing** — *Reputation tracks: Public Standing and Portrait*
 
@@ -223,7 +223,7 @@ The following combinations exist in the taxonomy but have no current card. Layer
 
 *⚠️ Two subjects require schema extension before primitives can be modeled: **Named faction only** (target-scope/filter system) and **Subset only** (partial-copy mechanism).*
 
-*🔬 **Research flag (S48 — agy):** Established card games (Netrunner, espionage genre) use a distinct **Inspect** function — private read of a face-down card without making it public. Currently merged into `Reveal` (which implies public disclosure). If Inspect is added to §5.1, candidate gaps: Information | Inspect | Intel token; Information | Inspect | Covert operation. Flag for §5.1 review before actioning.*
+*🔬 **Research flag (S48 — agy):** Established card games (Netrunner, espionage genre) use a distinct **Inspect** function — private read of a face-down card without making it public. Currently merged into `Reveal` (which implies public disclosure). If Inspect is added to §5.1, candidate gaps: Information | Inspect | Intel Token; Information | Inspect | Covert Operation. Flag for §5.1 review before actioning.*
 
 ### 6.2 Overrepresented combinations
 
@@ -257,14 +257,14 @@ These recommendations inform the redesign decisions D-04-02 through D-04-05 in A
 
 ### 8.1 Ghost — Priority redesign targets
 
-Current Ghost set (S108): GHO.CA.1 (Submission|Copy|CovertOp), GHO.CA.2 (Information|Reveal|CovertOp), GHO.CA.3 (Information|Reveal|IntelDeliverySlip), GHO.CA.4 (Information|Remove|IntelToken), GHO.CA.5 (Information|Add|IntelToken), GHO.CA.6 (Economy|Add|IntelToken), GHO.CA.7 Station (Information|Add|IntelToken), GHO.CA.8 Full Take (Information|Add|IntelToken), GHO.CA.9 SCIF (Information|Add|DebriefActionCard), GHO.CA.10 Flip (Economy|Add|FactionNativeResource), GHO.CA.11 Signals Analysis (Information|Reveal|ClassifiedDirective), GHO.CA.12 Source Substitution (Information|Corrupt|IntelToken), GHO.CA.13 Backdate (🚫 BLOCKED L222+7.2b), GHO.CA.14 Field Verification (🚫 BLOCKED 7.2b). Ghost now has the deepest Information suite of any faction — generation, interception, disclosure, delivery tracking, removal, and corruption all represented. Two design space entries remain blocked pending fundamental redesign (04-n103). Portrait pathway remains closed (L84, 00a R01); see PM05 04-11.
+Current Ghost set (S108): GHO.CA.1 (Submission|Copy|CovertOp), GHO.CA.2 (Information|Reveal|CovertOp), GHO.CA.3 (Information|Reveal|IntelDeliverySlip), GHO.CA.4 (Information|Remove|IntelToken), GHO.CA.5 (Information|Add|IntelToken), GHO.CA.6 (Economy|Add|IntelToken), GHO.CA.7 Station (Information|Add|IntelToken), GHO.CA.8 Full Take (Information|Add|IntelToken), GHO.CA.9 SCIF (Information|Add|Debrief Action Card), GHO.CA.10 Flip (Economy|Add|FactionNativeResource), GHO.CA.11 Signals Analysis (Information|Reveal|ClassifiedDirective), GHO.CA.12 Source Substitution (Information|Corrupt|IntelToken), GHO.CA.13 Backdate (🚫 BLOCKED L222+7.2b), GHO.CA.14 Field Verification (🚫 BLOCKED 7.2b). Ghost now has the deepest Information suite of any faction — generation, interception, disclosure, delivery tracking, removal, and corruption all represented. Two design space entries remain blocked pending fundamental redesign (04-n103). Portrait pathway remains closed (L84, 00a R01); see PM05 04-11.
 
 **High priority:**
 1. **Information — Reveal — Named faction:** Ghost delivers targeted intelligence to a specific faction privately rather than the whole table. *Targeted intelligence disclosure that strengthens relationships without public exposure.* ⚠️ Target-scope/filter system needed before this can be specified.
 2. **Submission — Copy — Subset:** Ghost should have a partial copy card — copy only the target (apply your own operation to the same district as named faction) without replicating the full cost and effect. ⚠️ Partial-copy mechanism needed in action model.
 
 **Blocked — redesign required:**
-3. **GHO.CA.13 Backdate / GHO.CA.14 Field Verification** — both target Intel token provenance fields (Information|Corrupt|Intel token): Backdate aimed at the round-number field (when the token was committed); Field Verification aimed at the age/validity field. Both blocked by 7.2b — those fields record committed facts and cannot be retroactively altered. Design intent: manipulation of token temporal provenance — making intelligence appear more or less current than it is. Valid redesign path: alteration of committed provenance fields is permanently closed. The mechanic must be additive — plant a new token that mimics a different temporal signature, or affect how token age is read (e.g., a modifier shifting the effective staleness threshold for a target faction) rather than altering the token itself. Both cards require fundamental redesign; specs blocked at Art 04 (04-n103).
+3. **GHO.CA.13 Backdate / GHO.CA.14 Field Verification** — both target Intel Token provenance fields (Information|Corrupt|Intel Token): Backdate aimed at the round-number field (when the token was committed); Field Verification aimed at the age/validity field. Both blocked by 7.2b — those fields record committed facts and cannot be retroactively altered. Design intent: manipulation of token temporal provenance — making intelligence appear more or less current than it is. Valid redesign path: alteration of committed provenance fields is permanently closed. The mechanic must be additive — plant a new token that mimics a different temporal signature, or affect how token age is read (e.g., a modifier shifting the effective staleness threshold for a target faction) rather than altering the token itself. Both cards require fundamental redesign; specs blocked at Art 04 (04-n103).
 
 ### 8.2 Directorate — Priority redesign targets
 
@@ -301,9 +301,9 @@ Current Guild set (S106): GUI.CA.1 (Territory|Protect|StructureBlock), GUI.CA.2 
 
 The following card types are excluded from the Layer — Function — Subject taxonomy. They are not game-state actions targeting a specific game layer — they are meta-actions or structural components that operate on the play procedure rather than the game state.
 
-**Modifier cards** — Excluded. Modifier cards modify the parameters of an action rather than targeting a game layer directly. They may be played as interrupts during battle, triggered as React (firing automatically when a named publicly-observable condition is met — not submitted in the standard action sequence), or used to fund a burst play. Their effect — whether against a card, a board state, a resource, or any valid react/instant target — is mediated by the action or condition they modify. React is a timing sub-function within the Modifier card type, not a standalone card type. Modifier cards carry no Layer — Function — Subject fields.
+**Modifier Cards** — Excluded. Modifier Cards modify the parameters of an action rather than targeting a game layer directly. They may be played as interrupts during battle, triggered as React (firing automatically when a named publicly-observable condition is met — not submitted in the standard action sequence), or used to fund a burst play. Their effect — whether against a card, a board state, a resource, or any valid react/instant target — is mediated by the action or condition they modify. React is a timing sub-function within the Modifier Card type, not a standalone card type. Modifier Cards carry no Layer — Function — Subject fields.
 
-**Emergency Response cards** — Excluded. Trigger-based, pre-staged cards with fixed effects. Not submitted in dispatch cases or declared in the standard action sequence. The penultimate action available to a faction before Apex fires.
+**Emergency Response cards** — Excluded. Trigger-based, pre-staged cards with fixed effects. Not submitted in Dispatch Cases or declared in the standard action sequence. The penultimate action available to a faction before Apex fires.
 
 *Source: Session 28 design note. Consistent with L115 (Art 04 owns all card design; card type determines scope, not taxonomy category).*
 

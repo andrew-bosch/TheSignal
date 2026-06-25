@@ -12,13 +12,13 @@ The repeatable quarterly sequence. Six sections in order — ARBITER announces e
   World updates. Resources collected. Tokens distributed. Initiative set.
 
 §8 PLACEMENT
-  Deployment markers placed. Entry requirements enforced.
+  Deployment Markers placed. Entry requirements enforced.
 
 §9 MONTHLY ACTIVITIES  ×3
   §9.0  Start of Month — PA obligations checked.
   §9.1  Covert Dispatch — cases assembled, sealed, transmitted to ARBITER.
-  §9.2  Public Declaration — public acts declared in initiative order; placed face-up on Overview.
-  §9.3  Countermeasures — CM cards submitted; target queued covert ops or placed public acts.
+  §9.2  Public Declaration — Public Acts declared in initiative order; placed face-up on Overview.
+  §9.3  Countermeasures — CM cards submitted; target queued covert ops or placed Public Acts.
   §9.4  Resolution:
     §9.4.0  Beat 0: The Cases Open
     §9.4.1  Beat 1: Read Board State
@@ -28,7 +28,7 @@ The repeatable quarterly sequence. Six sections in order — ARBITER announces e
   Repeat for Months 2 and 3. Month 3: proceed to §10 instead of repeating.
 
 §10 RESOLVE DISTRICT TENSION
-  Contested districts resolve. d10 roll-off per district. Tension markers cleared.
+  Contested districts resolve. d10 roll-off per district. Tension Markers cleared.
 
 §11 QUARTERLY DEBRIEF
   Table reflects. ARBITER delivers Summary, Observation. Ready-to-close mechanic.
@@ -65,10 +65,10 @@ Built fresh at Beat 0; cleared at end of Beat 3. Entirely ARBITER-private — fa
 
 Built at §9.2; processed at Beat 4. Visible to all players.
 
-**How it fills — §9.2:** Declaring faction places PA card face-up with 1 Dispatch Token and native resource tokens (DB:8, DB:12). Intel tokens (DB:9) submitted as cost payment or information modifiers are also placed face-down on the card at this time. Target Profile (DB:48) placed face-down on the card. Once placed: valid target for countermeasures and other public acts; cannot be withdrawn.
+**How it fills — §9.2:** Declaring faction places PA card face-up with 1 Dispatch Token and Native Resource tokens (DB:8, DB:12). Intel Tokens (DB:9) submitted as cost payment or information modifiers are also placed face-down on the card at this time. Target Profile (DB:48) placed face-down on the card. Once placed: valid target for countermeasures and other Public Acts; cannot be withdrawn.
 
 **Beat 4:** PAs resolve in initiative order:
-1. Submit payment — native resources (DB:8, DB:12) and/or Intel tokens (DB:9) transferred to Reservoir; Dispatch Token returned. Partial payment: −50 modifier placed. Zero payment: card flipped face-down, skips to cleanup (no fail outcome fires).
+1. Submit payment — Native Resources (DB:8, DB:12) and/or Intel Tokens (DB:9) transferred to Reservoir; Dispatch Token returned. Partial payment: −50 modifier placed. Zero payment: card flipped face-down, skips to cleanup (no fail outcome fires).
 2. Apex Check — Target Profile (DB:48) flipped face-up; ARBITER reads card against profile.
 3. Board state validation — conditions required at §9.2 must still hold; if not, ARBITER announces invalidation and returns card.
 4. Apply modifier stack, declare threshold, roll publicly, apply outcome.
@@ -80,7 +80,7 @@ Built at §9.2; processed at Beat 4. Visible to all players.
 | Seasonal | Cleared at §12 Quarter Close |
 | Permanent | Cleared only by specific trigger or faction action (00a §8.3a) |
 
-Seasonal and Permanent cards remaining on the grid are collectively **Standing effects** — visible to all players; valid targets for countermeasures and public acts for as long as they remain.
+Seasonal and Permanent cards remaining on the grid are collectively **Standing effects** — visible to all players; valid targets for countermeasures and Public Acts for as long as they remain.
 
 ---
 
@@ -114,7 +114,7 @@ If threshold ≤ 0: only 01–05 succeeds. If threshold ≥ 100: only 96–00 fa
 |----------|--------|
 | Public Standing (Celebrated/Respected/Neutral/Suspect/Discredited) | +20/+10/0/−10/−20 |
 | Partial payment | −50 |
-| Modifier card | variable |
+| Modifier Card | variable |
 | Protect token | variable |
 | Type B Countermeasure | −15 |
 | Ring adjacency penalty (no Core presence for Mid target) | −25 |
@@ -129,7 +129,7 @@ Worst-case stack: partial payment + ring penalty + Discredited + Type B = −110
 
 Each Month: **§9.1 Covert Dispatch** → **§9.2 Public Declaration** → **§9.3 Countermeasures** → **§9.4 Resolution (Beats 0–4)**. These are the canonical Art 03 names — never "Dispatch A/B/C" or "Phase A/B/C."
 
-**§9.1 Covert Dispatch:** Factions assemble dispatch cases (operation card + Dispatch Token + cost resources), seal, and transmit to ARBITER. Cases are ARBITER-domain from this point. Factions name their target faction (and any declared parameters) on the Target Profile inside the case.
+**§9.1 Covert Dispatch:** Factions assemble Dispatch Cases (operation card + Dispatch Token + cost resources), seal, and transmit to ARBITER. Cases are ARBITER-domain from this point. Factions name their target faction (and any declared parameters) on the Target Profile inside the case.
 
 **§9.2 Public Declaration:** Factions declare PAs in initiative order — card placed face-up in Faction Resolution Grid with Dispatch Token and resource tokens. Target Profile placed **face-down** on the card. IntelTokens may be submitted here as cost payment or as modifiers. Once placed, card is a valid countermeasure target and cannot be withdrawn.
 
@@ -144,9 +144,9 @@ Each Month: **§9.1 Covert Dispatch** → **§9.2 Public Declaration** → **§9
 ## Public Act Declaration (§9.2)
 
 1. Declarations in initiative order. Factions may pass verbally.
-2. To declare: announce the public act; place card face-up in unresolved PA zone of Faction Resolution Grid with 1 Dispatch Token and resource tokens. Place Target Profile **face-down** on the card. Resource tokens remain with the card (not committed until Beat 4).
-3. Modifier cards placed face-up alongside in Faction Resolution Grid.
-4. Once placed: valid target for Countermeasures and other public acts. Cannot be withdrawn or modified.
+2. To declare: announce the Public Act; place card face-up in unresolved PA zone of Faction Resolution Grid with 1 Dispatch Token and resource tokens. Place Target Profile **face-down** on the card. Resource tokens remain with the card (not committed until Beat 4).
+3. Modifier Cards placed face-up alongside in Faction Resolution Grid.
+4. Once placed: valid target for Countermeasures and other Public Acts. Cannot be withdrawn or modified.
 5. Resolve in initiative order at Beat 4.
 
 ---
@@ -154,11 +154,11 @@ Each Month: **§9.1 Covert Dispatch** → **§9.2 Public Declaration** → **§9
 ## Public Act Resolution — Beat 4 Key Steps
 
 1. **Submit Payment:** Initiative order — resource tokens transferred to Reservoir; Dispatch Token returned. Full payment acknowledged; partial payment gets −50 threshold marker; zero payment = invalid (card flipped face-down — skips directly to cleanup; no fail outcome fires).
-2. **Apex Check (§9.4.3.1.1):** Acting Faction Player flips Target Profile face-up; reads public act card and Target Profile. Face-down PA cards auto-fail (do not flip — they remain face-down and go directly to fail outcome).
+2. **Apex Check (§9.4.3.1.1):** Acting Faction Player flips Target Profile face-up; reads Public Act Card and Target Profile. Face-down PA cards auto-fail (do not flip — they remain face-down and go directly to fail outcome).
 3. **Validate board state conditions:** If conditions required at §9.2 Public Declaration no longer met (altered by Beat 3 outcomes) — ARBITER announces invalidation, card returned.
 4–8. Acting faction reads base difficulty, applies all modifiers, declares threshold aloud, rolls publicly, compares to threshold.
 9. **Apply outcome:** Acting faction makes all board changes.
-10. **Clean up:** Modifier cards discarded. Card remains per its duration type — Immediate cards only are removed immediately.
+10. **Clean up:** Modifier Cards discarded. Card remains per its duration type — Immediate cards only are removed immediately.
 
 ---
 
@@ -193,7 +193,7 @@ No initiative order, no phase timer. ARBITER announces: "The Table is in Debrief
 
 **Chorus Question window (§11.2):** If Chorus Activity track has reached Question threshold AND Chorus Node is not Contested — any faction with at least Present at the Node may propose a question. Simple majority passes. ARBITER answers in The Observation register. If Node is Contested, window does not open.
 
-**Ready to Close (§11.3):** Faction Players flip Status marker to Ready when done. When 3 of 5 show Ready: ARBITER starts 60-second courtesy timer. Debrief closes when timer expires or all 5 show Ready → proceed to §11.4 ARBITER Debrief.
+**Ready to Close (§11.3):** Faction Players flip Status Marker to Ready when done. When 3 of 5 show Ready: ARBITER starts 60-second courtesy timer. Debrief closes when timer expires or all 5 show Ready → proceed to §11.4 ARBITER Debrief.
 
 **ARBITER Debrief (§11.4 — in order):**
 1. **Summary (§11.4.0)** — factual account of Quarter outcomes (The Record register). Q4 only: Annual Report follows Summary.
@@ -205,17 +205,17 @@ No initiative order, no phase timer. ARBITER announces: "The Table is in Debrief
 
 ## Battlefield Strength (§10 — Contested District Resolution)
 
-**Triggers:** After Month 3 §9.4.4 Close Month, ARBITER scans for Tension markers. Resolves Ring 3 inward to Ring 0.
+**Triggers:** After Month 3 §9.4.4 Close Month, ARBITER scans for Tension Markers. Resolves Ring 3 inward to Ring 0.
 
 **Calculation:** Each contesting faction simultaneously counts:
-- All presence chips + structure blocks in contested district AND each adjacent district (deployment markers = 1 presence chip)
+- All Presence Tokens + Structure Blocks in contested district AND each adjacent district (Deployment Markers = 1 Presence Token)
 - Plus Battlefield Modifier Cards played face-up (+n per card; discarded immediately)
 - Plus +2 per Fresh Intel Token (age 0–2) targeting opposing faction (tokens spent on use)
 
 Each faction rolls a d10, adds to declared total. Highest total wins.
 
-**Outcome:** Winner removes 1 presence chip belonging to any contesting faction from contested district; removes Tension marker. Loser may **press** (spend 1 chip from adjacent district to re-run from Step 3 with updated counts).
+**Outcome:** Winner removes 1 Presence Token belonging to any contesting faction from contested district; removes Tension Marker. Loser may **press** (spend 1 chip from adjacent district to re-run from Step 3 with updated counts).
 
-**Tie:** Each tied faction removes 1 chip. If one drops below Dominant and other holds — that faction wins. If both drop below Dominant — no winner, Tension marker removed. No continuation after a tie.
+**Tie:** Each tied faction removes 1 chip. If one drops below Dominant and other holds — that faction wins. If both drop below Dominant — no winner, Tension Marker removed. No continuation after a tie.
 
-Board update: all control flags, Established markers, and Tension markers updated in contested district and any adjacent districts from which chips were removed.
+Board update: all control flags, Established Markers, and Tension Markers updated in contested district and any adjacent districts from which chips were removed.

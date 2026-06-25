@@ -58,7 +58,7 @@
 | Suspect | 3–6 | −10 |
 | Discredited | 0–2 | −20 |
 
-**Threshold mechanics:** Modifier shifts the difficulty target before the roll. Example: Challenging base = 01–25. Celebrated (+20) makes it 01–45; Discredited (−20) makes it 01–05. Applies to all d100 rolls the faction makes — covert operations, public acts, Incursion, everything. Not location-specific.
+**Threshold mechanics:** Modifier shifts the difficulty target before the roll. Example: Challenging base = 01–25. Celebrated (+20) makes it 01–45; Discredited (−20) makes it 01–05. Applies to all d100 rolls the faction makes — Covert Operations, Public Acts, Incursion, everything. Not location-specific.
 
 **Natural drift:** Applied at Quarter end after all other changes:
 - Above 13 → −1 per Quarter
@@ -90,10 +90,10 @@
 
 **IntelToken field structure:** A token records exactly two things: (1) the faction it concerns, (2) the quarter it was gathered. No other fields exist. `content`, `content=false`, `value`, `verified`, and similar are NOT valid IntelToken states or fields — there is no such thing as a false IntelToken or a content-flagged token.
 
-**Privacy and card targeting — 00a §10.1:** Applies to ALL private components (hand cards, modifier cards, directives, IntelTokens, etc.) — not IntelTokens only. No card may compel disclosure or removal of any privately held component. ARBITER reaching into a faction's private domain is also prohibited (10.1b covers only ARBITER-initiated disclosure of ARBITER-domain content; it does not authorize card-directed retrieval from faction private pools).
+**Privacy and card targeting — 00a §10.1:** Applies to ALL private components (hand cards, Modifier Cards, directives, IntelTokens, etc.) — not IntelTokens only. No card may compel disclosure or removal of any privately held component. ARBITER reaching into a faction's private domain is also prohibited (10.1b covers only ARBITER-initiated disclosure of ARBITER-domain content; it does not authorize card-directed retrieval from faction private pools).
 
 **IntelToken targeting — design observation:** An IntelToken submitted by a faction on a PA in the Faction Resolution Grid (DB:88) at §9.2 is no longer privately held — it is in ARBITER's procedural domain and is a valid card effect target at Beat 3 (before Beat 4 processes the PA). This is the only location where an opposing faction's IntelToken can be reached. This is a structural consequence of the §9.2 submission model, not a named governing rule in Art 00a.
 
 **Two resolution grid domains (never conflate):**
 - **Faction Resolution Grid** — where PAs are submitted (§9.2); factions place their PA cards face-up here with resources and IntelTokens; Target Profile placed face-down. IntelTokens here are ARBITER-domain at Beat 3.
-- **ARBITER covert grid** — where covert dispatch cases are assembled (§9.1); entirely ARBITER-domain; never a valid card effect target.
+- **ARBITER covert grid** — where covert Dispatch Cases are assembled (§9.1); entirely ARBITER-domain; never a valid card effect target.

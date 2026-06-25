@@ -1,7 +1,7 @@
 # 09 — Card Production Spec
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1 Draft — Placeholder  
+**Version:** 0.2 — Placeholder  
 **Status:** ⬜ Not Started — Blocked by Artifact 04 completion  
 **Last Updated:** 2026-05-15  
 **Depends on:** 04 — Card System; 04b — Action Taxonomy & Design Analysis; 05 — Operative & Apex System  
@@ -18,13 +18,13 @@ Artifact 09 does not define rules. It does not argue for design decisions. It co
 
 ### Deliverable
 Complete production-ready card specifications for:
-- All covert operations (standard C01–C10 and faction-specific C11–C35)
-- All political acts (standard P01–P08 and faction-specific P09–P18)
-- Modifier cards (player tableau and ring-specific decks)
+- All Covert Operations (standard C01–C10 and faction-specific C11–C35)
+- All Public Acts (standard P01–P08 and faction-specific P09–P18)
+- Modifier Cards (player tableau and ring-specific decks)
 - Pass cards
 - Emergency Response cards (one per faction)
-- Operative cards (Tier 1, Tier 2, Founding Figures)
-- Classified directives (one per faction)
+- Operative Cards (Tier 1, Tier 2, Founding Figures)
+- Classified Directives (one per faction)
 - Situation Reports (world event cards)
 
 ### Success Criteria
@@ -99,8 +99,8 @@ The 20-field card data structure is defined in Artifact 04 §6. This document us
 | Target | Valid targets for this card |
 | Effect — Success | What happens when the operation succeeds |
 | Effect — Failure | What happens when the operation fails |
-| Modifier Cap | Maximum modifier cards allowed |
-| Counter Eligible | Whether Countermeasure cards can be played against this |
+| Modifier Cap | Maximum Modifier Cards allowed |
+| Counter Eligible | Whether Countermeasure Cards can be played against this |
 | Countermeasure Response | Effect if successfully countered |
 | Taxonomy | Category — Function — Target (per 04b) |
 | Portrait | ARBITER-facing input [hidden from players — see 00a R30a] |
@@ -160,8 +160,8 @@ Card entries will be populated here in full 20-field format after Artifact 04 si
 
 *[BLOCKED — Artifact 04 §11 must be signed off.]*
 
-Modifier cards have two populations:
-- **Player tableau modifiers:** faction-specific, drawn from each faction's modifier deck
+Modifier Cards have two populations:
+- **Player tableau modifiers:** faction-specific, drawn from each faction's Modifier Deck
 - **Ring-specific modifiers:** board-location modifiers drawn from the relevant ring's deck
 
 Full card entries in 20-field format after Artifact 04 §11 sign-off.
@@ -181,7 +181,7 @@ Full card entries in 20-field format after Artifact 04 §11 sign-off.
 | Card Faction | Universal |
 | Beat | Phase 3 (Dispatch) or Phase 4 (Declaration) |
 | Primary Cost | None |
-| Effect | No operation submitted / no political act declared this quarter |
+| Effect | No operation submitted / no Public Act declared this quarter |
 | Portrait | None |
 | Flavor Text | *[TBD]* |
 

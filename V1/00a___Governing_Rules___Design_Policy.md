@@ -1,7 +1,7 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9 — Signed Off — S108 (GR 10.1b added — ARBITER disclosure exception to §10.1)  
+**Version:** 0.10 — Signed Off — S108 (GR 10.1b added — ARBITER disclosure exception to §10.1)  
 **Status:** Signed Off  
 **Last Updated:** 2026-06-20  
 **Companion to:** 00 — Factions, World & Narrative Context  
@@ -121,7 +121,7 @@ No term may appear in this document without its narrative grounding having been 
 
 ### Copy Design Principle — In-Game Terms in Narrative Fields
 
-All Narrative fields in this document use the canonical in-game terms defined in §3.1. Where game-mechanical language would use a functional descriptor, the Narrative field uses the in-world term — "Quarter" not "round," "Public Standing" not "popularity track," "Presence chip" not "influence token." The canonical term list is the reference.
+All Narrative fields in this document use the canonical in-game terms defined in §3.1. Where game-mechanical language would use a functional descriptor, the Narrative field uses the in-world term — "Quarter" not "round," "Public Standing" not "popularity track," "Presence Token" not "influence token." The canonical term list is the reference.
 
 ---
 
@@ -154,18 +154,18 @@ Authoritative definitions for all in-world terms, components, and game systems u
 | The Chronicle | End-of-session narrative account | ARBITER's written record of the session, narrated in The Witness register. Where Resolution stands at session end shapes what kind of story it tells. | Art 00 §9 |
 | Resolution | ARBITER's track | ARBITER's private measure of how clearly The Table's behavior is producing a coherent answer to the Chorus. Not visible to factions — felt through the quality of ARBITER's narration and the tone of the Chronicle. | Art 00 §9 |
 | The Overview | Game mat / full shared display | The Table's shared situational interface. MIRROR's projection — real-time holographic rendering of the state of New Meridian. ARBITER administers accuracy, not content. | Art 00 §8 |
-| Footprint | Physical board presence | Everything the faction has placed: influence markers, structure blocks, and deployment markers on The Overview. The collective term for §8 components. | Art 00 §14 |
+| Footprint | Physical board presence | Everything the faction has placed: influence markers, Structure Blocks, and Deployment Markers on The Overview. The collective term for §8 components. | Art 00 §14 |
 | The Backlog | Shared Dispatch Token pool | The queue of authorized but uncommitted operational work. All Dispatch Tokens live here when not in faction possession. Tokens drawn at Upkeep represent a faction's operational capacity for the Quarter; spent tokens return at Quarter close. | Art 00 §14, Art 02 §9 |
-| Dispatch case | Sealed envelope or small box | Protocol for covert submission. Each faction's covert operations pass through here each Quarter. | Art 00 §14 |
+| Dispatch Case | Sealed envelope or small box | Protocol for covert submission. Each faction's Covert Operations pass through here each Quarter. | Art 00 §14 |
 | Reservoir | Resource bank | The supply of available faction resources. *"The Reservoir does not judge what is drawn from it."* | Art 02 |
 | Public Standing track | Popularity track | Bell curve enforced by natural drift. Scale and drift thresholds: Art 02 §11. | Art 02 §11 |
 | Chorus Portrait | Portrait score | ARBITER's private assessment of faction alignment with the Chorus Question. Determines initiative and feeds the Chronicle. | Art 02 §10 |
 | Intel Token | Proof token / intel note | Physical token representing confirmed intelligence one faction holds about another. Held privately; disclosed at faction's discretion. | Art 02 §12 |
-| Presence chip | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. | Art 02 §6 |
+| Presence Token | Influence token | The felt weight of faction power in a district. Ambient weight, deference in the air, unspoken rules. | Art 02 §6 |
 | Integration | Arc endpoint / Quarter 8 threshold | The threshold the 8-Quarter arc is structured around: the moment the Chorus protocol designates as significant, at which the factions' aggregate response may reach the condition required to open the return channel. Humans are aware of the threshold — the deliberation was built around it. What Integration actually entails is not documented in the protocol. | Art 00 §14.10 |
-| Operational marker | Claim marker | Temporary deployment presence; counts as a presence chip during the Quarter. | Art 01 §1 |
-| Covert operation | Private action | Actions submitted face-down to the dispatch case. | Art 00 §14 |
-| Public act | Public action | Actions declared openly at the table. | Art 00 §14 |
+| Operational marker | Claim marker | Temporary deployment presence; counts as a Presence Token during the Quarter. | Art 01 §1 |
+| Covert Operation | Private action | Actions submitted face-down to the Dispatch Case. | Art 00 §14 |
+| Public Act | Public Action | Actions declared openly at the table. | Art 00 §14 |
 | Classified Directive | Hidden objective card | Per-faction sealed mission carried by operatives. Full arc objective — surfaces at session close. | Art 00 §14 |
 | Situation Report | World event card | Two-card system: public narrative + ARBITER effect card. | Art 01 §1 |
 | Countermeasure Card | Reaction card | Reactive card type. | Art 03 §17 |
@@ -196,7 +196,7 @@ Authoritative definitions for all in-world terms, components, and game systems u
 
 **No hidden state on The Overview. Everything shared is visible there.**
 
-What factions conceal lives in their Terminals, their hands, and their dispatch cases — never on the shared display.
+What factions conceal lives in their Terminals, their hands, and their Dispatch Cases — never on the shared display.
 
 ---
 
@@ -204,7 +204,7 @@ What factions conceal lives in their Terminals, their hands, and their dispatch 
 
 **Secrecy exists but only temporarily. The game moves toward disclosure.**
 
-Covert operations may be discovered. Intelligence tokens age and expire. Hidden directives are revealed at session end.
+Covert Operations may be discovered. Intelligence tokens age and expire. Hidden directives are revealed at session end.
 
 ---
 
@@ -275,7 +275,7 @@ The factions fight over medium, timing, ownership, and access. The moment any fa
 
 **Two distinct identities must be kept terminologically separate across all project artifacts.**
 
-**ARBITER** — the in-world entity. The Chorus's instrument. The presence at The Table with four registers, a hidden agenda, and an ongoing relationship with the factions. ARBITER does not learn from the dispatch cases — everything that happens in New Meridian is already known to ARBITER. In a technology-enhanced version of the game, ARBITER is the system.
+**ARBITER** — the in-world entity. The Chorus's instrument. The presence at The Table with four registers, a hidden agenda, and an ongoing relationship with the factions. ARBITER does not learn from the Dispatch Cases — everything that happens in New Meridian is already known to ARBITER. In a technology-enhanced version of the game, ARBITER is the system.
 
 **The ARBITER player** — the human performing ARBITER's role in the paper prototype. Operates in two modes: as ARBITER (embodying the entity, delivering notifications) and as game engine (rolling dice, applying difficulty, stating outcomes — functions automated in a technology-enhanced implementation).
 
@@ -381,7 +381,7 @@ Rules governing the Chorus Portrait track — what it is, how it is maintained, 
 > *"Watch ARBITER long enough and you start noticing the pauses. Something happens at the table and ARBITER goes very still. You never find out what it means."*
 > — Network field observer, session log
 
-**Mechanics:** ARBITER is the sole mover of the Portrait marker. No other participant moves it under any circumstance. Portrait movement is not a player-visible game outcome — no card Effect field may reference it as such.
+**Mechanics:** ARBITER is the sole mover of the Portrait Marker. No other participant moves it under any circumstance. Portrait movement is not a player-visible game outcome — no card Effect field may reference it as such.
 
 *Source: PM02 L84. Derived from Artifact 00 §9.*
 
@@ -452,7 +452,7 @@ Rules governing how the ARBITER player executes procedures and makes rulings. Al
 
 **Rule:** ARBITER executes general procedures, not card-specific instructions. All ARBITER-facing content in the game must map to defined, generalizable procedures that apply uniformly across all game states in their category — derivable from a reference document, without per-card notes or per-beat tracking tables. Physical tools (card UI, reference mats, threshold calculators, splaying conventions) carry the complexity; ARBITER carries the judgment.
 
-**Narrative:** ARBITER is a human player, not a computer. The game must protect that experience. An ARBITER maintaining per-card notes, per-beat tracking tables, and card-specific exception procedures is not playing — they are administering.
+**Narrative:** ARBITER is a Human Player, not a computer. The game must protect that experience. An ARBITER maintaining per-card notes, per-beat tracking tables, and card-specific exception procedures is not playing — they are administering.
 
 *Source: PM02 L187. Implementation of: Design Pillar 4.7a.*
 
@@ -548,7 +548,7 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 **Narrative:** Physical presence in a city cannot be hidden. A structure exists. Deployed operatives are in the streets. No one can have an invisible building.
 
-**Mechanics:** Presence tokens, deployment markers, structure blocks, control flags, established markers, and tension markers are visible to all players at all times. Nothing on the board surface is ever hidden. Cards and ARBITER scripts may not create mechanics that place hidden state on the board surface.
+**Mechanics:** Presence tokens, Deployment Markers, Structure Blocks, control flags, Established Markers, and Tension Markers are visible to all players at all times. Nothing on the board surface is ever hidden. Cards and ARBITER scripts may not create mechanics that place hidden state on the board surface.
 
 *Source: Design Pillar 4.1 (00a §4.1), Artifact 01 §5, Art 02 §5, Artifact 03 §5.*
 
@@ -572,14 +572,14 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 #### 7.3 — Commitment is Irreversible
 
-**Rule:** Commitment is irreversible. A closed dispatch case, a declared public act, a submitted resource — once committed, these are facts in the world. They cannot be recalled, modified, or undone.
+**Rule:** Commitment is irreversible. A closed Dispatch Case, a declared Public Act, a submitted resource — once committed, these are facts in the world. They cannot be recalled, modified, or undone.
 
 **Narrative:** A Dispatch Case, a declared act, a spent resource — these are facts that exist in the world now. The world does not allow uncausing. There is no taking it back, no reconsidering, no polite withdrawal. The Table moves. What was done was done.
 
 > *"The moment you close that case, you've done it. There is no 'I changed my mind.'"*
 > — Syndicate operations lead, training brief
 
-**Mechanics:** A closed dispatch case cannot be opened or modified. A declared public act cannot be withdrawn or changed. Submitted resources cannot be reclaimed.
+**Mechanics:** A closed Dispatch Case cannot be opened or modified. A declared Public Act cannot be withdrawn or changed. Submitted resources cannot be reclaimed.
 
 *Source: Artifact 03 Principle 2.*
 
@@ -607,7 +607,7 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 **Narrative:** Decisiveness is a form of power. A faction that commits first shapes what comes after. A faction that hesitates has ceded something to the one that did not.
 
-**Mechanics:** When multiple operations in the same beat are otherwise equal in priority, they resolve in the order their dispatch cases were submitted. This applies within Beat 3 and within Beat 4.
+**Mechanics:** When multiple operations in the same beat are otherwise equal in priority, they resolve in the order their Dispatch Cases were submitted. This applies within Beat 3 and within Beat 4.
 
 *Source: PM02 L16, Artifact 03 §9. Corollary of 7.3.*
 
@@ -617,11 +617,11 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 #### 7.3c — Dispatch Token Required
 
-**Rule:** Each action — covert operation or public act — requires exactly one Dispatch Token. The token is the instrument of commitment. Submission without a Dispatch Token is invalid: the action does not resolve and the cost is not spent.
+**Rule:** Each action — Covert Operation or Public Act — requires exactly one Dispatch Token. The token is the instrument of commitment. Submission without a Dispatch Token is invalid: the action does not resolve and the cost is not spent.
 
 **Narrative:** Internal capacity is not the same as organizational readiness. The token is the accounting of synchronization — approvals completed, commitments made. Without it, the operation exists as a plan. It does not exist as an action.
 
-**Mechanics:** Each action requires one Dispatch Token. A covert operation submitted without a token is rejected at Beat 0 — cost not spent. A public act requires a token placed on the declared card. Full procedure: Artifact 03 §9. Component definition: Art 02 §9.
+**Mechanics:** Each action requires one Dispatch Token. A Covert Operation submitted without a token is rejected at Beat 0 — cost not spent. A Public Act requires a token placed on the declared card. Full procedure: Artifact 03 §9. Component definition: Art 02 §9.
 
 *Source: Artifact 03 §9; PM02 L180. Corollary of 7.3.*
 
@@ -631,7 +631,7 @@ Rules governing the board's relationship to physical reality, and the irreversib
 
 ## 8. Footprint Rules
 
-Rules governing a faction's physical Footprint — the board presence components (influence markers, structure blocks, and deployment markers) that represent their active presence in New Meridian. Organized by component type. Canonical definitions: 00a §3.1.
+Rules governing a faction's physical Footprint — the board presence components (influence markers, Structure Blocks, and Deployment Markers) that represent their active presence in New Meridian. Organized by component type. Canonical definitions: 00a §3.1.
 
 ---
 
@@ -646,7 +646,7 @@ Rules governing a faction's physical Footprint — the board presence components
 > *"You can fill a room so full of your people it collapses. Doesn't make it yours. Makes it something else."*
 > — Directorate district coordinator, field notes
 
-**Mechanics:** No faction may hold more than 6 presence tokens in a single district at any time. Deployment markers count toward this limit during the Quarter they are placed. No card effect or operative ability may place a token that would exceed this limit — the attempt fails regardless of other conditions.
+**Mechanics:** No faction may hold more than 6 presence tokens in a single district at any time. Deployment Markers count toward this limit during the Quarter they are placed. No card effect or operative ability may place a token that would exceed this limit — the attempt fails regardless of other conditions.
 
 *Source: PM02 L26, Art 02 §6.*
 
@@ -666,7 +666,7 @@ Rules governing a faction's physical Footprint — the board presence components
 > *"We filed a construction permit for the Node perimeter six times. Sixth time, the permit office said the space was already occupied. There's nothing there. Just ARBITER's piece, and whatever is underneath it."*
 > — Guild administrative record, permit log
 
-**Mechanics:** The Chorus Node holds ARBITER's single fused piece — always present, never removed. The piece comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker, fused as one inseparable component. Because ARBITER's presence count permanently exceeds the human maximum of six, Dominant is structurally unreachable at the Chorus Node. No faction structure blocks may be placed at the Chorus Node under any game state or card effect. Component design and visual specification: Artifact 11. Placement at setup: Artifact 03.
+**Mechanics:** The Chorus Node holds ARBITER's single fused piece — always present, never removed. The piece comprises eight ARBITER-keyed presence tokens topped by ARBITER's dominance marker, fused as one inseparable component. Because ARBITER's presence count permanently exceeds the human maximum of six, Dominant is structurally unreachable at the Chorus Node. No faction Structure Blocks may be placed at the Chorus Node under any game state or card effect. Component design and visual specification: Artifact 11. Placement at setup: Artifact 03.
 
 *Source: PM02 L28, Artifact 01 §8, Art 02 §14. Corollary of 8.1.*
 
@@ -678,11 +678,11 @@ Rules governing a faction's physical Footprint — the board presence components
 
 #### 8.2 — Presence Required for Structure Placement
 
-**Rule:** A faction must hold at least 1 presence token in a district to place or retain a structure block there.
+**Rule:** A faction must hold at least 1 presence token in a district to place or retain a Structure Block there.
 
-**Narrative:** Commitment requires someone to sustain it. A structure block records that a faction is invested in this district. When the last of their people leave, the commitment does not persist — because the commitment itself does not persist. The building may remain. The Overview records something else.
+**Narrative:** Commitment requires someone to sustain it. A Structure Block records that a faction is invested in this district. When the last of their people leave, the commitment does not persist — because the commitment itself does not persist. The building may remain. The Overview records something else.
 
-**Mechanics:** A faction may not place a structure block in a district where they have no presence. Execution procedure: Artifact 03.
+**Mechanics:** A faction may not place a Structure Block in a district where they have no presence. Execution procedure: Artifact 03.
 
 *Source: PM02 L25, Art 02 §7.*
 
@@ -692,11 +692,11 @@ Rules governing a faction's physical Footprint — the board presence components
 
 #### 8.2a — Maximum One Structure Block Per District
 
-**Rule:** No faction may hold more than 1 structure block in a single district at any time.
+**Rule:** No faction may hold more than 1 Structure Block in a single district at any time.
 
-**Narrative:** A faction's investment in a district is binary: the structure block is present or it is not. A second block cannot deepen a commitment already declared. The fact of commitment cannot be stated twice in the same district.
+**Narrative:** A faction's investment in a district is binary: the Structure Block is present or it is not. A second block cannot deepen a commitment already declared. The fact of commitment cannot be stated twice in the same district.
 
-**Mechanics:** No card effect may place a second structure block for a faction in a district where they already have one.
+**Mechanics:** No card effect may place a second Structure Block for a faction in a district where they already have one.
 
 *Source: Art 02 §7. Corollary of 8.2.*
 
@@ -706,14 +706,14 @@ Rules governing a faction's physical Footprint — the board presence components
 
 #### 8.2b — Structure Blocks Lost on Absence
 
-**Rule:** Structure blocks are lost immediately when a faction goes Absent.
+**Rule:** Structure Blocks are lost immediately when a faction goes Absent.
 
 **Narrative:**
 
 > *"The moment Ghost left the Data Exchange, the building was just a building."*
 > — Guild infrastructure report, Quarter 4
 
-**Mechanics:** The moment a faction reaches 0 presence tokens and 0 deployment markers in a district — by any means — all their structure blocks in that district are immediately removed. No card effect can prevent this.
+**Mechanics:** The moment a faction reaches 0 presence tokens and 0 Deployment Markers in a district — by any means — all their Structure Blocks in that district are immediately removed. No card effect can prevent this.
 
 *Source: PM02 L25, Art 02 §7. Corollary of 8.2.*
 
@@ -725,11 +725,11 @@ Rules governing a faction's physical Footprint — the board presence components
 
 #### 8.3 — Deployment Markers Count as Presence
 
-**Rule:** Deployment markers count as temporary presence tokens.
+**Rule:** Deployment Markers count as temporary presence tokens.
 
-**Narrative:** A faction in motion is still a faction present. Where presence tokens represent ambient weight that fills a district over time, a deployment marker is the faction actively engaging there. The distinction between a token and a marker is administrative; the presence is the same.
+**Narrative:** A faction in motion is still a faction present. Where presence tokens represent ambient weight that fills a district over time, a Deployment Marker is the faction actively engaging there. The distinction between a token and a marker is administrative; the presence is the same.
 
-**Mechanics:** Any rule, card text, or restriction that states "at least 1 presence token" or equivalent applies equally to presence tokens and deployment markers. Deployment markers count as temporary presence tokens for all purposes during the Quarter they are placed.
+**Mechanics:** Any rule, card text, or restriction that states "at least 1 presence token" or equivalent applies equally to presence tokens and Deployment Markers. Deployment Markers count as temporary presence tokens for all purposes during the Quarter they are placed.
 
 *Source: PM02 L14, PM02 L58, Art 02 §6.*
 
@@ -739,18 +739,18 @@ Rules governing a faction's physical Footprint — the board presence components
 
 #### 8.3a — Displaced Markers Must Be Immediately Repositioned
 
-**Rule:** A deployment marker displaced from a district must be immediately repositioned to another valid district. A faction always retains operational presence on the board.
+**Rule:** A Deployment Marker displaced from a district must be immediately repositioned to another valid district. A faction always retains operational presence on the board.
 
 **Narrative:** A faction is an idea. The Overview does not show a faction without deployments. It shows a faction whose deployments have moved.
 
 > *"Nothing on the board for two quarters. Audience response: irrelevant, finished, gone. Actual status: still seated, still speaking."*
 > — The Network, Signal Coverage broadcast, Quarter 6
 
-**Mechanics:** When an effect displaces a deployment marker, it is removed from its current district and immediately placed in another valid district in accordance with the effect.
+**Mechanics:** When an effect displaces a Deployment Marker, it is removed from its current district and immediately placed in another valid district in accordance with the effect.
 
 *Source: Design decision B — session 6. Corollary of 8.3.*
 
-*Governs: All cards and effects that interact with deployment markers; Artifacts 02, 03, 04.*
+*Governs: All cards and effects that interact with Deployment Markers; Artifacts 02, 03, 04.*
 
 ---
 
@@ -760,7 +760,7 @@ Rules governing a faction's physical Footprint — the board presence components
 
 **Narrative:** The factions are not organizations — they are ideas. A faction that loses all physical presence in New Meridian has lost the argument for now. They have not lost the right to keep making it.
 
-**Mechanics:** A faction that loses all accumulated presence is not eliminated. Deployment markers remain in play per 8.3a. Their voice, doctrine, and participation in The Table continue. They lose all resource generation derived from board presence; base generation continues. All strategic effects tied to board presence are suspended. The Chronicle records their decline.
+**Mechanics:** A faction that loses all accumulated presence is not eliminated. Deployment Markers remain in play per 8.3a. Their voice, doctrine, and participation in The Table continue. They lose all resource generation derived from board presence; base generation continues. All strategic effects tied to board presence are suspended. The Chronicle records their decline.
 
 *Source: Artifact 00 §13. Corollary of 8.3a.*
 
@@ -776,11 +776,11 @@ Rules governing resource generation and the modifiers that affect it.
 
 #### 9.1 — Three Sources of Income Only
 
-**Rule:** A faction's upkeep income derives from three sources only: passive generation, district presence, and structure block output. No other game state modifies upkeep income generation.
+**Rule:** A faction's upkeep income derives from three sources only: passive generation, district presence, and Structure Block output. No other game state modifies upkeep income generation.
 
 **Narrative:** Each faction has reach beyond New Meridian — contracts in other cities, broadcasts that continue regardless of what happens at The Table, operations no one knows about. Public Standing, Portrait, Accord status, and all other game outcomes do not reach those sources.
 
-**Mechanics:** Upkeep income is determined by passive generation rate, board presence, and structure block output only. No card, World Condition, Accord, or game state other than presence and structure output may modify upkeep income generation.
+**Mechanics:** Upkeep income is determined by passive generation rate, board presence, and Structure Block output only. No card, World Condition, Accord, or game state other than presence and structure output may modify upkeep income generation.
 
 *Source: Art 02 §8, §11, §12.*
 
@@ -831,7 +831,7 @@ Rules governing privately held information: what constitutes private information
 > *"What I know and what I tell you are two different things. That's not a threat. That's The Table."*
 > — Ghost Table representative, open session
 
-**Mechanics:** Any private information a player holds — Intel Tokens, hand cards, modifier cards, classified directives, or any other private component — is disclosed only when the holder chooses. No card may compel disclosure. A Reveal effect creates a stake around the disclosure choice: the card defines the consequence for revealing or withholding, but the decision remains the player's.
+**Mechanics:** Any private information a player holds — Intel Tokens, hand cards, Modifier Cards, Classified Directives, or any other private component — is disclosed only when the holder chooses. No card may compel disclosure. A Reveal effect creates a stake around the disclosure choice: the card defines the consequence for revealing or withholding, but the decision remains the player's.
 
 *Source: Art 02 §10, §12.*
 
@@ -862,7 +862,7 @@ Rules governing privately held information: what constitutes private information
 
 #### 10.1b — ARBITER Disclosure is Outside the Discretional Model
 
-**Rule:** ARBITER may reveal any content from its own domain — Intel Tokens, covert operations, dispatch contents, Broadcast Effect Cards, and board state — without triggering 10.1's discretional framework. No faction may invoke 10.1 to prevent ARBITER from completing a prescribed reveal. Portrait is the sole exception: no ARBITER procedure ever discloses Portrait position.
+**Rule:** ARBITER may reveal any content from its own domain — Intel Tokens, Covert Operations, dispatch contents, Broadcast Effect Cards, and board state — without triggering 10.1's discretional framework. No faction may invoke 10.1 to prevent ARBITER from completing a prescribed reveal. Portrait is the sole exception: no ARBITER procedure ever discloses Portrait position.
 
 **Narrative:**
 
@@ -885,14 +885,14 @@ ARBITER does not hold information the way factions do. The Chorus already knows 
 
 #### 10.2 — Intel Tokens Leave Play When Spent
 
-**Rule:** Spent or discarded intel tokens leave active play.
+**Rule:** Spent or discarded Intel Tokens leave active play.
 
 **Narrative:**
 
 > *"Twelve days of source contact in that note. Three locations, two operational windows, one name we'd been building toward for months. Thirty seconds in the shredder. You tell yourself you had to — and maybe you did. But there's no 'had to' that gives it back."*
 > — Ghost field operative, after-action debrief
 
-**Mechanics:** An intel token that has been used or discarded by its holder is removed from active play. It cannot be retrieved or referenced in any subsequent game action. The physical mechanism — disposable or erasable — is a component design decision (Artifact 11, Art 02).
+**Mechanics:** An Intel Token that has been used or discarded by its holder is removed from active play. It cannot be retrieved or referenced in any subsequent game action. The physical mechanism — disposable or erasable — is a component design decision (Artifact 11, Art 02).
 
 *Source: Art 02 §12.*
 
@@ -902,14 +902,14 @@ ARBITER does not hold information the way factions do. The Chorus already knows 
 
 #### 10.3 — Intel Token Holdings Have Limits and Expiry
 
-**Rule:** Intel token holdings are subject to per-faction limits. Held tokens expire — expired tokens are invalid or less effective when spent.
+**Rule:** Intel Token holdings are subject to per-faction limits. Held tokens expire — expired tokens are invalid or less effective when spent.
 
 **Narrative:**
 
 > *"The Directorate carried three notes into Quarter 5. Their doctrine calls for two. The third was a source contact they hadn't acted on. The Chorus noted the hesitation. Not the note. The hesitation."*
 > — ARBITER, The Observation
 
-**Mechanics:** Intel token holdings are subject to per-faction limits and expiry. Specific limit values and expiry definitions are balance decisions in Art 02, subject to playtesting. Neither holding limits nor expiry are mechanically enforced — ARBITER handles called violations per Artifact 07.
+**Mechanics:** Intel Token holdings are subject to per-faction limits and expiry. Specific limit values and expiry definitions are balance decisions in Art 02, subject to playtesting. Neither holding limits nor expiry are mechanically enforced — ARBITER handles called violations per Artifact 07.
 
 *Source: Art 02 §12.*
 
@@ -959,11 +959,11 @@ All data tables in THE SIGNAL artifact suite must satisfy the following five req
 | 7.3c | Each action requires one Dispatch Token — the instrument of commitment | §7 |
 | 8.1 | Max 6 presence tokens per faction per district | §8 |
 | 8.1a | ARBITER holds permanent dominant presence at Chorus Node; no faction structures there | §8 |
-| 8.2 | Faction must have presence to place or retain a structure block | §8 |
-| 8.2a | Max 1 structure block per faction per district | §8 |
-| 8.2b | Structure blocks lost immediately when faction goes Absent | §8 |
-| 8.3 | Deployment markers count as temporary presence tokens | §8 |
-| 8.3a | Displaced deployment markers must be immediately repositioned to another valid district | §8 |
+| 8.2 | Faction must have presence to place or retain a Structure Block | §8 |
+| 8.2a | Max 1 Structure Block per faction per district | §8 |
+| 8.2b | Structure Blocks lost immediately when faction goes Absent | §8 |
+| 8.3 | Deployment Markers count as temporary presence tokens | §8 |
+| 8.3a | Displaced Deployment Markers must be immediately repositioned to another valid district | §8 |
 | 8.3b | No faction is eliminated from The Table | §8 |
 | 9.1 | Upkeep income derives from three sources only: passive, district presence, structure output | §9 |
 | 9.1a | Public Standing modifies action difficulty, not upkeep income | §9 |
@@ -971,8 +971,8 @@ All data tables in THE SIGNAL artifact suite must satisfy the following five req
 | 10.1 | Disclosure is discretional; no card may compel it; Reveal effects create stakes, not compulsion | §10 |
 | 10.1a | Verbal claims about undisclosed information cannot be verified by ARBITER | §10 |
 | 10.1b | ARBITER disclosure is outside the discretional model; ARBITER-initiated reveals are not subject to 10.1 stakes; Portrait excepted | §10 |
-| 10.2 | Spent or discarded intel tokens leave active play | §10 |
-| 10.3 | Intel token holdings are subject to per-faction limits and expiry | §10 |
+| 10.2 | Spent or discarded Intel Tokens leave active play | §10 |
+| 10.3 | Intel Token holdings are subject to per-faction limits and expiry | §10 |
 
 ---
 
@@ -1068,7 +1068,7 @@ All data tables in THE SIGNAL artifact suite must satisfy the following five req
 *Pending sweep: PM05 XA-xx (cross-reference update across all V1 artifacts).*
 *Pending: Art 07 stub for ARBITER registers (formerly R02/R03 narrative content).*
 *Pending: Art 04 Card Design Principles section (formerly §7 content — R21–R28, R24a).*
-*Pending: Art 03 — confirm R18 content (structure block declaration) already coded in upkeep procedure.*
+*Pending: Art 03 — confirm R18 content (Structure Block declaration) already coded in upkeep procedure.*
 
 ---
 

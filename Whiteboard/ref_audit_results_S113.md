@@ -13,7 +13,7 @@
 ### Missing content
 - **IntelToken Blank state** — Art 02 lists 4 states: Blank / Fresh / Stale / Expired. Ref covers only 3 (starts at creation, skips Blank pre-creation state).
 - **Movement path lifecycle** — Art 02 distinguishes covert spend vs. public spend as distinct paths. Ref conflates under "Use."
-- **§10.1 scope** — rule applies to ALL private components (hand cards, modifier cards, directives, etc.), not only IntelTokens. Ref scopes it only to IntelTokens.
+- **§10.1 scope** — rule applies to ALL private components (hand cards, Modifier Cards, directives, etc.), not only IntelTokens. Ref scopes it only to IntelTokens.
 - **§10.1a precision** — ref says "without a specific game action"; source (Art 00a §10.1a) says "without a Reveal effect." Tighten to Reveal effect.
 - **§10.2 gap** — covers tokens spent via action resolution as well as discarded. Ref only covers voluntary discard.
 - **§10.3 gaps** — (a) holding limits (max 2 / Ghost max 4) are flagged as "balance decisions subject to playtesting" in Art 00a; ref presents them as locked; (b) limits are not mechanically enforced — ARBITER handles called violations per Art 07; ref omits this.
@@ -33,7 +33,7 @@
 **66 of 70 components have zero coverage.** The ref covers lifecycle notes for 4 components (Dispatch Case, NS-xx, IS-xx, Broadcast Card pair) — none completely. No component has full field coverage.
 
 ### Stale "not yet designed" entries (these ARE designed in Art 02)
-- **CC-xx / Countermeasure card (DB:52)** — fully signed off. CM-A / CM-B model, 15 total, full schema. Ref says "not yet designed."
+- **CC-xx / Countermeasure Card (DB:52)** — fully signed off. CM-A / CM-B model, 15 total, full schema. Ref says "not yet designed."
 - **ER-xx / Emergency Response card (DB:97)** — fully signed off. Ref says "not yet designed."
 - **NS-xx / IS-xx / CA-xx** — all have full Art 02 schema entries. Ref flags all as "schema pending."
 - **VS-xx** — not a component. Visibility is a field on each component, not a registered component type. Stale ref artifact; remove.
@@ -44,18 +44,18 @@
 
 ### Legality and targeting rules: zero coverage
 Art 02 delegates legality to Art 03 §22; ref does not bridge this gap or point card designers there. Key targeting facts missing from ref:
-- Presence chip: max 6/district/faction; verbs Add/Remove/Move only
-- Structure block: max 1/faction/district; removed on Absence; verbs Add/Remove/Move only
-- Intel token: 4 states (Blank/Fresh/Stale/Expired); Corrupt verb applicable; faction-to-faction trade path
+- Presence Token: max 6/district/faction; verbs Add/Remove/Move only
+- Structure Block: max 1/faction/district; removed on Absence; verbs Add/Remove/Move only
+- Intel Token: 4 states (Blank/Fresh/Stale/Expired); Corrupt verb applicable; faction-to-faction trade path
 - Target Profile (DB:48): Corrupt verb applicable — declared parameters can be altered; entirely absent from ref
-- Modifier token (DB:47): Flip verb changes sign (positive/negative); absent from ref
-- Modifier card (DB:11): 4 play modes with distinct paths; removed from game on use; absent from ref
-- Countermeasure card (DB:52): CM-A blocks all actions; CM-B adds modifier; covert play path differs from standard dispatch; absent from ref
+- Modifier Token (DB:47): Flip verb changes sign (positive/negative); absent from ref
+- Modifier Card (DB:11): 4 play modes with distinct paths; removed from game on use; absent from ref
+- Countermeasure Card (DB:52): CM-A blocks all actions; CM-B adds modifier; covert play path differs from standard dispatch; absent from ref
 - Grant Deed (DB:113): React card, mutable owner field, consumed on fire; entirely absent from ref
 - Boost Marker (DB:104) / Visibility Marker (DB:103): ARBITER-only resolution markers; absent from ref
 
 ### Priority components with zero ref coverage (most relevant to card design)
-Intel token · Modifier card · Modifier token · Boost Marker · Visibility Marker · Countermeasure card · Grant Deed · Target Profile · Structure block · Presence chip
+Intel Token · Modifier Card · Modifier Token · Boost Marker · Visibility Marker · Countermeasure Card · Grant Deed · Target Profile · Structure Block · Presence Token
 
 ---
 

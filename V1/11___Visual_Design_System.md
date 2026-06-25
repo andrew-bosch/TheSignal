@@ -1,7 +1,7 @@
 # 11 — Visual Design System
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1 Draft — Placeholder  
+**Version:** 0.2 — Placeholder  
 **Status:** ⬜ Not Started — Blocked by Artifact 04 completion; can begin independently  
 **Last Updated:** 2026-05-15  
 **Depends on:** 00 — Factions & World (faction identities); PM01 §2 (component list); PM03 §1 (narrative language)  
@@ -137,7 +137,7 @@ White is chosen because:
 ### 7.2 ARBITER Dominance Marker (PM01 §2.08a)
 The ARBITER Dominance Marker is a single fused piece placed at the Chorus Node at setup. It consists of:
 - 8 ARBITER-keyed presence tokens (white, fused into a stack) 
-- ARBITER dominance marker on top — same visual language as faction control flags but **reads as *more***: larger, slightly different proportions, differently weighted
+- ARBITER Dominance Marker on top — same visual language as faction control flags but **reads as *more***: larger, slightly different proportions, differently weighted
 
 **Design intent:** When a player looks at the Chorus Node, they should feel something before they understand it intellectually. The marker is not threatening. It is *established*. The Chorus Node has had something in it for longer than any faction has existed.
 
@@ -146,7 +146,7 @@ The ARBITER Dominance Marker is a single fused piece placed at the Chorus Node a
 *[TBD — D-P-02 visual design decision required before this section is final. Consider: does the fused marker need a visual reference to the Chorus (sine wave, transmission pattern) or does its scale alone carry the meaning?]*
 
 ### 7.3 ARBITER's Written Materials
-ARBITER's notification slips, Accord forms, and Chronicle forms use:
+ARBITER's Notification Slips, Accord forms, and Chronicle forms use:
 - A distinct header or border marking that identifies them as ARBITER documents
 - *[TBD — consider: a simple printed top border in ARBITER white/neutral with "ARBITER DISPATCH" or in-world equivalent. Should be visually distinct from faction-authored message slips but not elaborate.]*
 
@@ -244,7 +244,7 @@ The Portrait field is **not present on the player-facing card face**. It appears
 ### 11.3 Card Type Color Coding
 - Covert Operations: *[TBD — dark border? Suggest: dark background on type indicator]*
 - Political Acts: *[TBD — lighter / open border? Suggest: open background on type indicator]*
-- Modifier cards: *[TBD]*
+- Modifier Cards: *[TBD]*
 - Pass cards: Neutral / no faction color
 - Emergency Response: *[TBD — suggest: distinct border style, sealed appearance]*
 
@@ -287,7 +287,7 @@ The Portrait field is **not present on the player-facing card face**. It appears
 - All cards (V07, per Artifact 09 card content) — standard playing card stock or index cards
 - Faction boards (V09) — letter-size printable
 - All quick reference cards (V12–V18) — half-letter or index card size
-- Situation Report cards, classified directives, Accord forms, notification slips
+- Situation Report cards, Classified Directives, Accord forms, Notification Slips
 - Chronicle forms
 
 ### 13.2 What Must Be Sourced
@@ -295,7 +295,7 @@ The Portrait field is **not present on the player-facing card face**. It appears
 - Operational markers / structures (colored wooden cubes)
 - Dominance markers (faction control flags — *[TBD: sourcing or fabrication method]*)
 - ARBITER Dominance Marker (fused piece — hand-assembled per §7.2)
-- Dispatch cases (recipe boxes — one per faction + ARBITER)
+- Dispatch Cases (recipe boxes — one per faction + ARBITER)
 - Dice (2d10)
 - Resource tokens (asset tokens per faction type)
 

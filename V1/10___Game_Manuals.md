@@ -1,7 +1,7 @@
 # 10 — Game Manuals
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1 Draft — Placeholder  
+**Version:** 0.2 — Placeholder  
 **Status:** 🔄 Draft — Structure defined, content pending upstream artifacts  
 **Last Updated:** 2026-05-15  
 **Depends on:** All Artifacts 00–09 (Game Manuals are the synthesis layer)  
@@ -90,7 +90,7 @@ One-page narrative introduction. Describes the Chorus, New Meridian, and The Tab
 ### 6.2 Your Faction
 Brief faction summaries — each faction in half a page. Includes:
 - Faction name and in-world identity
-- Native resource (name and what it represents narratively)
+- Native Resource (name and what it represents narratively)
 - Faction's theory of what the right response to the Chorus is
 - What this faction is willing to do that the others are not
 
@@ -106,7 +106,7 @@ Brief faction summaries — each faction in half a page. Includes:
 Summary of the six phases from a faction player's perspective. Emphasizes what the player does in each phase, not the full procedural detail.
 
 ### 6.5 Your Cards
-How to read a card. What each field means. How covert operations work. How political acts work. How modifier cards work.
+How to read a card. What each field means. How Covert Operations work. How Public Acts work. How Modifier Cards work.
 
 ### 6.6 Your Operatives
 What operatives are. How to deploy them. What Apex means and when it becomes relevant.
@@ -141,7 +141,7 @@ Setup tasks. Portrait board initialization. Classified directive preparation. AR
 For each of the six phases: what ARBITER does, what ARBITER says, what ARBITER watches for.
 
 ### 7.4 Resolution Procedure
-Step-by-step dispatch case opening and operation resolution. Quick reference for common operation types.
+Step-by-step Dispatch Case opening and operation resolution. Quick reference for common operation types.
 
 ### 7.5 The Three Registers
 Condensed version of Artifact 07 §9. Includes example phrases for each register. Reminder: ARBITER does not editorialize.
@@ -203,7 +203,7 @@ Before setup begins, confirm all components are present (see §9 Components List
 7. ARBITER places ARBITER Dominance Marker at Chorus Node.  
    *(The ARBITER Dominance Marker is a single fused piece. It is placed once and never removed. See PM01 §2.08a.)*
 8. ARBITER prepares Chronicle forms (8 rounds).
-9. ARBITER prepares classified directives — one per faction, sealed.
+9. ARBITER prepares Classified Directives — one per faction, sealed.
 10. ARBITER confirms script pack and Accord forms are available.
 
 ### 8.4 Faction Setup
@@ -212,9 +212,9 @@ For each faction (in any order):
 12. ARBITER distributes starting assets per Artifact 08 §7.
 13. Faction places starting presence tokens in starting districts.
 14. Faction places starting structures in starting districts (if any).
-15. Faction places Public Standing marker at starting position on shared track.
-16. Faction assembles covert operations deck (see Artifact 08 §8.1).
-17. Faction confirms political acts deck.
+15. Faction places Public Standing Marker at starting position on shared track.
+16. Faction assembles Covert Operations deck (see Artifact 08 §8.1).
+17. Faction confirms Public Acts deck.
 18. Faction receives Emergency Response card (sealed) and places in designated slot.
 19. Faction receives classified directive (sealed) from ARBITER and reads privately.
 
@@ -247,7 +247,7 @@ For each faction (in any order):
 | Presence tokens (faction color) | [TBD] | [TBD] | Recommend minimum 20 per faction |
 | Dominance marker (faction flag) | 1 | 5 | Faction color; distinct from ARBITER marker |
 | Operational markers (structures) | [TBD] | [TBD] | Faction color |
-| Public Standing marker | 1 | 5 | Faction color |
+| Public Standing Marker | 1 | 5 | Faction color |
 | Faction reference card | 1 | 5 | V09 |
 
 ### ARBITER Components
@@ -256,26 +256,26 @@ For each faction (in any order):
 |-----------|----------|-------|
 | ARBITER Dominance Marker (fused) | 1 | 8 fused presence tokens (white) + oversized dominance marker; single piece placed at Chorus Node at setup; never removed. PM01 §2.08a |
 | Chorus Portrait board | 1 | ARBITER private; visual design TBD (D-P-02) |
-| Dispatch case (recipe box) | 6 | 5 faction + 1 ARBITER |
+| Dispatch Case (recipe box) | 6 | 5 faction + 1 ARBITER |
 | Chronicle forms | 8+ | Pre-printed; one per quarter |
 | Accord forms | [TBD] | Recommend 20 per session kit |
-| Notification slips | [TBD] | Recommend 40 per session kit |
+| Notification Slips | [TBD] | Recommend 40 per session kit |
 | Message slips (blank) | [TBD] | Faction-to-faction communication |
 
 ### Card Components
 
 | Component | Quantity | Notes |
 |-----------|----------|-------|
-| Covert operation cards (standard) | 10 | C01–C10; shared pool |
-| Covert operation cards (faction-specific) | 5 per faction = 25 total | C11–C35 |
-| Political act cards (standard) | 8 | P01–P08; shared pool |
-| Political act cards (faction-specific) | 2 per faction = 10 total | P09–P18 |
-| Modifier cards (player tableau) | [TBD] | Faction-specific decks |
-| Modifier cards (ring-specific) | [TBD] | By ring |
+| Covert Operation Cards (standard) | 10 | C01–C10; shared pool |
+| Covert Operation Cards (faction-specific) | 5 per faction = 25 total | C11–C35 |
+| Public Act Cards (standard) | 8 | P01–P08; shared pool |
+| Public Act Cards (faction-specific) | 2 per faction = 10 total | P09–P18 |
+| Modifier Cards (player tableau) | [TBD] | Faction-specific decks |
+| Modifier Cards (ring-specific) | [TBD] | By ring |
 | Pass cards | 4 per faction = 20 total | Universal design |
 | Emergency Response cards | 1 per faction = 5 total | Faction-specific; sealed at setup |
-| Operative cards (Tier 1) | [TBD] | Per faction |
-| Operative cards (Tier 2) | [TBD] | Per faction |
+| Operative Cards (Tier 1) | [TBD] | Per faction |
+| Operative Cards (Tier 2) | [TBD] | Per faction |
 | Founding Figure cards | 1 per faction = 5 total | Tier 3 / Apex |
 | Classified directive cards | 1 per faction = 5 total | Sealed envelopes |
 | Situation Report deck | [TBD] | Recommend 16+ unique cards |
@@ -299,7 +299,7 @@ For each faction (in any order):
 
 ### Shopping List Notes
 
-*[TBD — sourcing guidance for physical prototype construction. Candidates: index cards (cards), poker chips (presence tokens), colored cubes (structures), recipe box / index card box (dispatch case), standard notebook (Chronicle). Full sourcing list after component counts are confirmed.]*
+*[TBD — sourcing guidance for physical prototype construction. Candidates: index cards (cards), poker chips (presence tokens), colored cubes (structures), recipe box / index card box (Dispatch Case), standard notebook (Chronicle). Full sourcing list after component counts are confirmed.]*
 
 ---
 
@@ -311,7 +311,7 @@ For each faction (in any order):
 
 ## 11. Examples & Exceptions
 
-*[TBD — include one worked example of a full quarter in the Player Guide: all six phases, with a concrete board state, showing one covert operation and one political act, ARBITER resolution, and Debrief.]*
+*[TBD — include one worked example of a full quarter in the Player Guide: all six phases, with a concrete board state, showing one Covert Operation and one Public Act, ARBITER resolution, and Debrief.]*
 
 ---
 

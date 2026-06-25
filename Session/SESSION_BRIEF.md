@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 117 complete | Updated: 2026-06-24**
+**Session 118 complete | Updated: 2026-06-25**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read full files only when deep work requires it.
@@ -121,6 +121,26 @@ Read full files only when deep work requires it.
 
 **Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
 
+### S118 Accomplishments ✅
+
+**Full component naming standardisation — DB canonical Title Case sweep**
+
+- **DB `component` table:** 46 records updated to Title Case (e.g. "presence chip" → "Presence Token", "Accord agreement" → "Accord Agreement", "Arbiter Tableau" → "ARBITER Tableau", "Political act" family → "Public Act" cascade).
+- **Art 02 v2.5:** Comprehensive sweep — all headings, `component_name` metadata fields, and body prose updated to DB canonical names. "Presence chip" and "Political act" stale renames applied throughout.
+- **Art 04 v0.9.47:** §8 DIR.PA.1 corrected (Submission|Block|PublicAct → Territory|Modify|PresenceToken); §9 GHO.PA.2 moved to Resolution|Modify|Covert Operation row; §8/§9 full subject sweep to DB Title Case (~124 cells total).
+- **All V1 artifacts swept (20 files):** Art 00–11, PM02–04 — Title Case + stale renames applied via parallel agent deployment.
+- **Whiteboard ref_*.md + design_reference.md + schema_reference.md (14 files):** Same sweep applied; schema_reference.md had 54 term types changed.
+- **PM05 04-n99:** DIR.PA.1 redesign complete ✅ closed.
+- **L236 locked:** DB `component.name` is canonical source of truth for all component names; Title Case rule formalised; Python spec pseudo-PascalCase exempt.
+- **PM04 L109 updated:** Title Case + DB authority clauses added; stale table rows removed (Operational marker, Operation Resolution card, Pass card retired from table).
+- **Grip fix:** Wide table CSS injected via local API shim (`grip_local_api.py`) — container max-width removed.
+
+**Artifacts updated S118:** DB · Art 02 (v2.5) · Art 04 (v0.9.47) · Art 00 (v1.8) · Art 00a (v0.10) · Art 01 (v2.2) · Art 03 (v4.11) · Art 03-init (v0.4) · Art 03a (v0.99) · Art 03b (v0.2) · Art 04b (v2.0) · Art 05–11 · PM02 (v4.1) · PM03 · PM04 (v0.9) · All Whiteboard ref_*.md
+
+**Last 3 locked decisions:** L236 (component naming standard — DB canonical + Title Case) · L235 (PublicAct enum rename) · L234 (SYN.PA.3 consideration non-fulfillment)
+
+**Pending sign-offs carried:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
 ### S117 Accomplishments ✅
 
 **DB prep for card set audits — card_status taxonomy + card_subject_map**
@@ -141,7 +161,26 @@ Read full files only when deep work requires it.
 
 **Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
 
-### Priority Order (S118) ← NEXT
+### Priority Order (S119) ← NEXT
+
+**Tier 1 — STD + GHO action card analysis**
+- Read full STD and GHO card set specs (Art 04)
+- Identify gaps: missing cards, taxonomy holes, doctrinal alignment mismatches vs. Art 04b §8
+- Surface doctrinal questions: does each faction's card set express its pentagram doctrine position?
+- Use card_status DB views as analysis scaffold (layer/function/subject/beat taxonomy now seeded)
+- Output: structured gap list + doctrinal questions for Andy review
+
+**Tier 2 — Card set audits (04-n87–04-n92)** (carry from S118)
+- card_status taxonomy now seeded — use for audit queries
+- Start with Standard (04-n87); Ghost (04-n88) likely second given current context
+
+**Tier 3 — Ghost CA issues resolution** (carry from S117/S118)
+- GHO.CA.4: sign-off (Andy's call)
+- GHO.CA.5 Misdirection: redesign (`content=false` not a valid Intel Token state)
+- GHO.CA.6 Synthesize: update token keying to target faction per Target Profile
+- GHO.PA.3/4/5: mark Issues Resolved ✓
+
+### Priority Order (S118) ← PREV
 
 **Tier 1 — Card set audits (04-n87–04-n92)**
 - card_status now has taxonomy — use for audit queries
@@ -711,9 +750,9 @@ Signed-off artifacts: 00 (v1.7), 00b (v0.3), 03 (v4.7), 04b (v1.6 — pending re
 
 ## Last 3 Locked Decisions
 
-- **L221** (S105): Art 04b v1.7 signed off. ID-04 renumber complete — [FAC].[TYPE].n format applied across Art 04, Art 04b, card_ref DB, and ref files. card_id field added to Art 04 §6.1/§6.2. §9 Pass card entry removed. §§6/7/8 living sections — updated as gap cards are designed, not re-sign-off gates.
-- **L220** (S104): DB script idempotency convention locked — INSERT IGNORE, portable session patches, archive/ subfolder for originals.
-- **L219** (S104): Card ID schema locked — [FAC].[TYPE].n; varchar(15). 20-deck inventory. Full schema in PM02.
+- **L236** (S118): Component Naming Standard — `the_signal_db.component.name` is canonical source of truth for all component names. Title Case rule: first letter of each word capitalised, matching DB exactly. DB wins if artifact disagrees. Exempt: Python spec pseudo-PascalCase. S118 sweep: 46 DB records + all V1 artifacts + Whiteboard ref_*.md standardised. → PM04 L109. Art 02 v2.4 → v2.5.
+- **L235** (S114): `CardType` enum renamed `PoliticalAct` → `PublicAct`. Visibility (declared publicly at §9.2) is the defining characteristic, not political framing. 74 substitutions in Art 04; full sweep in Art 04b and Whiteboard.
+- **L234** (S111): SYN.PA.3 Data Acquisition — consideration non-fulfillment ruling. Consideration is a verbal offer on Target Profile declared-parameters line; not held in escrow. Sub-case A failure → card stays Permanent. Bluff mechanic intentional.
 - **L212** (S96): Art 02 v2.1 signed off. Grant Deed (DB:113) added §9; §4.1 movement_path field definition clarified (board event trigger, not timing); 13 movement_path timing violations corrected §§5–12. Open PM05: 02-n07, 02-n17, 02-n20, 02-n21, 02-n22.
 - **L210** (S92): Art 02 v2.0 signed off. §§5–12 rubric pass, metadata population, and GR validation complete across all 68 components. Conditional on PM05: 00-16, 02-n10, 02-n11, 02-n12, 02-n13, DB-38.
 - **L207** (S88): Art 03 v4.4 signed off. Component lifecycle sweep complete; §13.7 Board State Update Rules added (Tension marker placement trigger; Structure block removal + return); Control flag renamed Dominant marker (same component — DB-14 = rename, not new registration); Target Profile added to 03-init §2.7; return-to-supply language (§7.3.3, §8.2); §12.0 BEC scope clarified.

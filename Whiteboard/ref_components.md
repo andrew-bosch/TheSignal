@@ -13,11 +13,11 @@ Schema index for the entire game system. Registers every named entity, assigns I
 
 | ID Prefix | Entity | Physical Form | Notes |
 |-----------|--------|---------------|-------|
-| CA-xx | Dispatch Case | Physical container | Holds op cards, Target Profile (DB:48), resource tokens (DB:8, DB:12), Intel tokens (DB:9) submitted at §9.1. One per Faction Player — same physical object resets each month at Beat 0 (ARBITER opens and processes contents). |
-| NS-xx | Notification Slip | Pre-printed ARBITER slip | Fixed text: "A covert operation was conducted against your interests this round." Delivered to target faction when they are targeted by a covert op — not conditional on the op failing. No faction identified; no op type disclosed. Full schema in Art 02. |
+| CA-xx | Dispatch Case | Physical container | Holds op cards, Target Profile (DB:48), resource tokens (DB:8, DB:12), Intel Tokens (DB:9) submitted at §9.1. One per Faction Player — same physical object resets each month at Beat 0 (ARBITER opens and processes contents). |
+| NS-xx | Notification Slip | Pre-printed ARBITER slip | Fixed text: "A Covert Operation was conducted against your interests this round." Delivered to target faction when they are targeted by a covert op — not conditional on the op failing. No faction identified; no op type disclosed. Full schema in Art 02. |
 | O-xx | Operative | Not yet designed | Faction operative records, tiers T1/T2/T3/Apex. Art 05 not yet designed. |
-| EC-xx | Broadcast Card / Broadcast Effect Card | Dual-card | Broadcast Card (DB:25) public, Situation Report Zone; Broadcast Effect Card (DB:98) ARBITER-only, Arbiter Tableau. Linked at §7.2.1. Full schema in Art 02. DB: 25/86/87/98. |
-| CC-xx | Countermeasure Card (DB:52) | Card | Fully signed off (Art 02). CM-A: blocks all covert operations targeting keyed faction; CM-B: adds modifier to targeted op. 15 total; submitted at §9.3. Full schema in Art 02. |
+| EC-xx | Broadcast Card / Broadcast Effect Card | Dual-card | Broadcast Card (DB:25) public, Situation Report Zone; Broadcast Effect Card (DB:98) ARBITER-only, ARBITER Tableau. Linked at §7.2.1. Full schema in Art 02. DB: 25/86/87/98. |
+| CC-xx | Countermeasure Card (DB:52) | Card | Fully signed off (Art 02). CM-A: blocks all Covert Operations targeting keyed faction; CM-B: adds modifier to targeted op. 15 total; submitted at §9.3. Full schema in Art 02. |
 | ER-xx | Emergency Response Card (DB:97) | Card | Fully signed off (Art 02). Faction-specific. Full schema in Art 02. |
 
 *IS-xx (IntelDeliverySlip) registered here as authoritative source.*

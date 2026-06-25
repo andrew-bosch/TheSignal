@@ -1,7 +1,7 @@
 # 05 — Operative & Apex System
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1 Draft — Placeholder  
+**Version:** 0.2 — Placeholder  
 **Status:** 🔄 Draft — Blocked by Artifact 04 completion  
 **Last Updated:** 2026-05-15  
 **Depends on:** 04 — Action Card System; 03 — Round Structure & Gameplay; 02 — Components  
@@ -17,7 +17,7 @@ Faction cards represent doctrine at scale — what the organization does. Operat
 The Apex trigger is the mechanism by which an operative's sealed power is unlocked — and, if resolved, ends the session early. It is the highest-stakes moment in the game.
 
 ### Deliverable
-A complete system definition for all operative cards across five factions (Tier 1–3), the Apex trigger and resolution procedure, Founding Figure operatives, cooldown rules, and emergency response card integration.
+A complete system definition for all Operative Cards across five factions (Tier 1–3), the Apex trigger and resolution procedure, Founding Figure operatives, cooldown rules, and Emergency Response Card integration.
 
 ### Success Criteria
 - ARBITER can determine at any moment which operatives are in play, on cooldown, and eligible for Apex
@@ -59,7 +59,7 @@ The Apex mechanic exists because some operatives reach a threshold of commitment
 
 One quarter — one round — is enough time for a person to become significant. The Table is not populated by anonymous representatives. Behind every faction are individuals who have staked their reputations, their resources, and in some cases their safety on what happens in New Meridian.
 
-An operative card is not a game token. It is a person. When they are placed, they are in the field. When they are on cooldown, they are recovering, reassessing, or lying low. When they are activated at Apex, something unprecedented is happening — something New Meridian will not forget.
+An Operative Card is not a game token. It is a person. When they are placed, they are in the field. When they are on cooldown, they are recovering, reassessing, or lying low. When they are activated at Apex, something unprecedented is happening — something New Meridian will not forget.
 
 Each faction's Founding Figure represents the idea made human: the person who most completely embodies what the faction believes and why the stakes are what they are.
 
@@ -108,7 +108,7 @@ Each faction's Founding Figure represents the idea made human: the person who mo
 - Operatives are deployed during **Phase 2 (Placement)** by paying their Deploy Cost.
 - Each faction begins the session with no operatives in play.
 - Operatives occupy a dedicated operative zone on the player's faction board.
-- An operative in play may be **activated** during **Phase 3 (Dispatch)** by including a designated activation notice in the dispatch case, OR during **Phase 4 (Declaration)** if the operative's ability is a political act.
+- An operative in play may be **activated** during **Phase 3 (Dispatch)** by including a designated activation notice in the Dispatch Case, OR during **Phase 4 (Declaration)** if the operative's ability is a Public Act.
 - Each operative may be activated once per round unless their card states otherwise.
 - Tier 3 (Founding Figure) deployment requires: [TBD — board state conditions per faction].
 
@@ -118,7 +118,7 @@ Each faction's Founding Figure represents the idea made human: the person who mo
 
 After activation, an operative enters **cooldown** for a number of rounds equal to their Cooldown value.
 
-- A marker is placed on the operative card indicating cooldown status.
+- A marker is placed on the Operative Card indicating cooldown status.
 - At the start of each Upkeep phase, all cooldown markers advance one step.
 - An operative at zero cooldown is **available** — they may be activated again.
 - A Founding Figure on cooldown **cannot** be used for an Apex trigger.
@@ -133,7 +133,7 @@ After activation, an operative enters **cooldown** for a number of rounds equal 
 ### Ghost — The Researchers' Collective
 Ghost Tier 1 operatives are field analysts: people who observe, document, and extract intelligence in environments where attention is dangerous. Their abilities center on information asymmetry — knowing things others do not.
 
-- **GHO-OP-01:** *[Name TBD]* — Analyst embedded in target district. Active ability: draw one intel token from the district's supply; opponent receives no notification. Cooldown: 1 round.
+- **GHO-OP-01:** *[Name TBD]* — Analyst embedded in target district. Active ability: draw one Intel Token from the district's supply; opponent receives no notification. Cooldown: 1 round.
 - **GHO-OP-02:** *[Name TBD]* — Counterintelligence specialist. Active ability: [TBD — counter-surveillance / intel denial].
 
 ### Network — The Signal Collective
@@ -193,7 +193,7 @@ An Apex trigger may be declared by a faction when ALL of the following are true:
 3. They have the Apex Cost resources available.
 
 ### 12.2 Trigger Declaration
-- Apex is declared publicly during **Phase 4 (Declaration)** before other political acts.
+- Apex is declared publicly during **Phase 4 (Declaration)** before other Public Acts.
 - The declaring faction pays the Apex Cost immediately.
 - ARBITER acknowledges the declaration and announces to The Table that Apex resolution will occur at end of Phase 6 Resolution.
 
@@ -239,9 +239,9 @@ If two factions meet their Apex conditions simultaneously: *[TBD — recommend A
 
 ## 15. Examples & Exceptions
 
-*[TBD — populate after operative card designs are finalized.]*
+*[TBD — populate after Operative Card designs are finalized.]*
 
 ---
 
 *End of Artifact 05 — Operative & Apex System v0.1 Draft Placeholder*  
-*Blocked by Artifact 04 completion. All operative card content is placeholder — do not finalize until 04 is signed off.*
+*Blocked by Artifact 04 completion. All Operative Card content is placeholder — do not finalize until 04 is signed off.*

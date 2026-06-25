@@ -1,7 +1,7 @@
 # PM04 — Glossary & Data Dictionary
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.8
+**Version:** 0.9
 **Status:** 🔄 Updated — Active
 **Last Updated:** 2026-05-26
 **Supersedes:** PM04 v0.3
@@ -41,19 +41,19 @@ All documentation uses in-world narrative terms. Each mechanical term is defined
 | Board space | District | 01 §1 |
 | Game mat / full shared display | The Overview | 00 §8 |
 | Game board / district map (within The Overview) | New Meridian | 01 §1 |
-| Influence token | Presence chip | 02a §6 |
+| Influence token | Presence Token | 02a §6 |
 | Claim marker | Operational marker | 01 §1 |
-| Recipe box | Dispatch case | 06 §1 |
+| Recipe box | Dispatch Case | 06 §1 |
 | Popularity track | Public Standing track | 02b §1 |
 | Portrait score | Chorus Portrait | 02b §1 |
 | Proof token | Intel Token | 02b §8 |
-| Modifier card | Operational intelligence card (L06) — in-world name under review (D04-07 open) | 04 §11 |
-| Counter card | Countermeasure card | 04 §14.2 |
-| Private action | Covert operation | 04 §1 |
-| Public action | Political act | 04 §1 |
+| Modifier Card | Operational intelligence card (L06) — in-world name under review (D04-07 open) | 04 §11 |
+| Counter card | Countermeasure Card | 04 §14.2 |
+| Private action | Covert Operation | 04 §1 |
+| Public Action | Public Act | 04 §1 |
 | Hidden objective | Classified directive | 05 §1 |
-| Operative card | Field operative dossier | 05 §1 |
-| World event card | Situation report | 01 §1 |
+| Operative Card | Field operative dossier | 05 §1 |
+| World event card | Situation Report | 01 §1 |
 
 | Round (game term) | Quarter (three months of real-world time) | 00a §3.1 |
 
@@ -72,7 +72,7 @@ Five distinct voices appear in design artifacts and player-facing materials. Eac
 | **The Narrator** | All "Narrative:" fields in design artifacts. Expository prose that describes the world as it is. Identity deliberately unresolvable — see note below. | Plain prose, no attribution, no special formatting | Precise, observational, neither warm nor cold. The reader cannot determine if this is a human chronicler or ARBITER in an expository mode. Both readings must remain valid. |
 | **Character quote** | Flavor in Narrative fields — operative, faction member, citizen, witness. Grounds a rule or world-fact in a specific human moment. | `> *"Quote."*` followed by `> — Role, Faction` on next line | Serif pull quote, attributed |
 | **ARBITER vocalized** | Spoken aloud at the table — resolution announcements, Translation script, Apex acknowledgment, Debrief. | `> *"Text."*` (blockquote, italic, no attribution) | ARBITER voice style — the register carries the speaker |
-| **ARBITER written** | Delivered on paper — notification slips, Chronicle entries, Accord confirmations, dispatch language. | Fenced code block | Monospace / typewriter / dispatch aesthetic |
+| **ARBITER written** | Delivered on paper — Notification Slips, Chronicle entries, Accord confirmations, dispatch language. | Fenced code block | Monospace / typewriter / dispatch aesthetic |
 | **Faction voice** | Faction-specific documents, opening monologues, internal communications. Each faction has a distinct voice. | Per faction voice guide (Artifact 00 §12) | Differentiated by faction doctrine and emotional register |
 
 **The Narrator — design principle (locked, PM02 FD-05):**
@@ -160,26 +160,32 @@ Any reference table that holds multiple data types in a single column uses a lea
 
 Every physical game component must be referred to by its canonical in-game term in all artifacts. Bare or generic terms — chip, token, card, block, marker, strip, slip, case — without a qualifying name are non-compliant.
 
-**Canonical terms (authoritative):**
+**Rules (S118 — L236 update):**
 
-| Canonical Term | Non-Compliant Variants |
-|----------------|------------------------|
-| Presence chip | token, influence token, presence token |
-| Deployment marker | marker, claim marker |
-| Operational marker | marker, temporary marker |
-| Structure block | block, building block |
+- **Canonical source:** `the_signal_db.component.name` is the authoritative name for every component. If an artifact and the DB disagree, the DB wins.
+- **Title Case:** Component names use Title Case — first letter of each word capitalised — matching `component.name` exactly (e.g., "Presence Token", "Covert Operation Deck", "ARBITER Tableau").
+- **Exempt:** Python spec pseudo-PascalCase in card spec code blocks (e.g., `PresenceToken` in `applicable_verbs`) is acceptable; body prose and headings are not exempt.
+- **Bare qualifiers:** Bare generic terms (chip, token, card, etc.) without a qualifying name remain non-compliant in artifact body text; acceptable in PM or design-note context.
+
+**Illustrative non-compliant variants (DB is authoritative — this table is not exhaustive):**
+
+| Canonical Term (DB) | Non-Compliant Variants |
+|---------------------|------------------------|
+| Presence Token | presence chip, token, influence token |
+| Deployment Marker | marker, claim marker |
+| Structure Block | block, building block |
 | Intel Token | note, slip, proof token, intel note, intelligence token |
-| Dispatch case | case, box, envelope, recipe box |
+| Dispatch Case | case, box, envelope, recipe box |
 | Situation Report | event card, world event card |
-| Operation Resolution card | resolution card, card |
-| Status marker | marker, tracking marker |
-| Initiative strip | strip |
-| [Faction] resource token | token, asset token, resource |
-| Modifier card | modifier, mod card |
-| Countermeasure card | counter card |
-| Pass card | pass |
+| Status Marker | marker, tracking marker |
+| Initiative Strip | strip |
+| Native Resource | resource token, faction resource token, asset token |
+| Modifier Card | modifier, mod card |
+| Countermeasure Card | counter card |
+| Public Act | political act, public action |
+| Covert Operation | covert op, CO |
 
-*Locked as L109. First applied as a systematic cleanup pass (XA-29). Bare qualifiers in PM or design-note context (not artifact body text) are acceptable.*
+*Locked as L109. First applied as a systematic cleanup pass (XA-29). Updated S118 (L236): DB canonical source rule + Title Case rule added; stale table rows removed (Operational marker, Operation Resolution card, Pass card retired).*
 
 ---
 

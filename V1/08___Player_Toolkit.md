@@ -1,7 +1,7 @@
 # 08 — Player Toolkit
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1 Draft — Placeholder  
+**Version:** 0.2 — Placeholder  
 **Status:** 🔄 Draft — Partially defined, pending Artifact 04 and 05 completion  
 **Last Updated:** 2026-05-15  
 **Depends on:** 00 — Factions & World; 02 — Components; 04 — Action Card System; 05 — Operative & Apex System  
@@ -71,7 +71,7 @@ Starting assets are not arbitrary. They reflect what each faction is. A faction 
 
 2. **The faction board is a reference, not a scoreboard.** Players track their own resources and operatives. The faction board's primary function is organization and rule reference — not record-keeping that ARBITER maintains separately.
 
-3. **Classified directives are private and permanent.** A faction may not trade, transfer, or replace their classified directive. They may reveal it voluntarily. They may not claim to have a different one.
+3. **Classified Directives are private and permanent.** A faction may not trade, transfer, or replace their classified directive. They may reveal it voluntarily. They may not claim to have a different one.
 
 4. **Deck selection is a pre-session commitment.** A faction's card deck is selected before the session begins and does not change during play. This selection is the first asymmetric decision a player makes.
 
@@ -86,7 +86,7 @@ Each faction has one faction board. The faction board has the following zones:
 | Zone | Contents | Notes |
 |------|----------|-------|
 | Resource track | Current asset token count by type | Player-maintained |
-| Operative zone | Deployed operative cards | Organized by tier |
+| Operative zone | Deployed Operative Cards | Organized by tier |
 | Cooldown zone | Operatives on cooldown, with markers | |
 | Hand zone | Current card hand | Face-down |
 | Classified directive slot | Sealed directive card | Face-down until revealed |
@@ -120,7 +120,7 @@ Starting assets are distributed by ARBITER at setup from the Reservoir.
 - **Guild** begins with Capacity and a structure — the builders arrived with something already built.
 - **Directorate** begins with Mandate and institutional placements in civic districts (Ring [TBD] priority).
 
-*[TBD — also define: starting card hand size (likely zero — hands are built from deck selection during setup); starting intel token count (likely faction-specific).]*
+*[TBD — also define: starting card hand size (likely zero — hands are built from deck selection during setup); starting Intel Token count (likely faction-specific).]*
 
 ---
 
@@ -137,16 +137,16 @@ Before the session begins, each faction assembles their card decks:
 **Political Acts Deck:**
 - All 8 Standard Political Acts are available to every faction.
 - Each faction includes both of their faction-specific Political Acts.
-- Combined deck size: [TBD] cards. *[TBD — political acts may be available-always rather than drawn.]*
+- Combined deck size: [TBD] cards. *[TBD — Public Acts may be available-always rather than drawn.]*
 
 ### 8.2 Modifier Cards
-Modifier cards are not part of either deck. They are drawn during play per rules defined in Artifact 04 §11.
+Modifier Cards are not part of either deck. They are drawn during play per rules defined in Artifact 04 §11.
 
 ### 8.3 Hand Size
-*[TBD — confirm with Artifact 04. Extrapolated: each faction draws [TBD] covert operation cards at the start of each quarter (Upkeep phase). Maximum hand size [TBD]. Excess cards are discarded or held per Artifact 04 rules.]*
+*[TBD — confirm with Artifact 04. Extrapolated: each faction draws [TBD] Covert Operation Cards at the start of each quarter (Upkeep phase). Maximum hand size [TBD]. Excess cards are discarded or held per Artifact 04 rules.]*
 
 ### 8.4 Pass Cards
-Each faction has 4 Pass cards. They are held outside the deck and may be submitted at any time in place of an operation or political act. See Artifact 04 §12.
+Each faction has 4 Pass cards. They are held outside the deck and may be submitted at any time in place of an operation or Public Act. See Artifact 04 §12.
 
 ### 8.5 Emergency Response Card
 Each faction has 1 Emergency Response card. It is held outside the deck and sealed until an Apex trigger is declared. See Artifact 05 §13.
@@ -168,7 +168,7 @@ Each classified directive contains:
 - *[TBD — are directives faction-locked or randomly distributed? Recommend: faction-locked in L1. Random distribution is a layer expansion candidate.]*
 
 Sample directive categories (by faction, extrapolated):
-- **Ghost:** intelligence-based objectives (hold X intel tokens at session end; be the first to target [specific faction] with a Surveillance operation)
+- **Ghost:** intelligence-based objectives (hold X Intel Tokens at session end; be the first to target [specific faction] with a Surveillance operation)
 - **Network:** exposure-based objectives (have presence in X districts at session end; maintain Public Standing above [threshold] for X consecutive rounds)
 - **Syndicate:** economic objectives (hold X Capital at session end; complete X Translations via ARBITER)
 - **Guild:** construction objectives (place X structures by quarter [Y]; hold Established status in [ring] at session end)
@@ -192,7 +192,7 @@ Each faction has a faction reference card — a double-sided condensed reference
 
 **Side B — Faction Summary**
 - Faction name and narrative identity (one sentence)
-- Native resource type and its narrative meaning
+- Native Resource type and its narrative meaning
 - Faction ability (if any — *[TBD: do factions have a passive ability? Recommend: yes, one per faction, defined here]*)
 - Starting asset summary
 - Classified directive reminder (blank — player writes their directive objective on this line)
@@ -210,8 +210,8 @@ Each faction has a faction reference card — a double-sided condensed reference
 2. Receive starting assets from ARBITER (per §7 above).
 3. Receive classified directive from ARBITER — sealed. Read privately.
 4. Receive Emergency Response card — sealed. Do not open until Apex trigger.
-5. Select covert operations deck (see §8.1).
-6. Confirm political acts deck (see §8.1).
+5. Select Covert Operations deck (see §8.1).
+6. Confirm Public Acts deck (see §8.1).
 7. Confirm Pass cards (4) are with your hand.
 8. Place faction markers on Public Standing track at starting position ([TBD — confirm starting position with Art 02 §12]).
 9. Place starting presence tokens in starting districts per §7.
@@ -232,7 +232,7 @@ Each faction has a faction reference card — a double-sided condensed reference
 
 ## 13. Examples & Exceptions
 
-*[TBD — populate after 04 and 05 complete. Key scenarios: deck selection edge cases, directive dispute, emergency response card mistimed play.]*
+*[TBD — populate after 04 and 05 complete. Key scenarios: deck selection edge cases, directive dispute, Emergency Response Card mistimed play.]*
 
 ---
 

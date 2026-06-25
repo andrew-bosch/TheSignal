@@ -1,7 +1,7 @@
 # 02 — Components
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.4
+**Version:** 2.5
 **Status:** ✅ Signed Off — S111 (L233)
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian
 **DB Anchor:** `the_signal_db.component` — canonical component registry. Names and IDs from that registry are authoritative.
@@ -23,13 +23,13 @@ This document enumerates every physical component in The Signal — its gameplay
 | [§3 Design Principles](#3-design-principles) | Meta-design principles and entry rubric |
 | [§4 Grouping Taxonomy and Component Schema](#4-grouping-taxonomy-and-component-schema) | Section grouping rationale and entry field definitions |
 | [§5 Playing Surface](#5-playing-surface) | Shared board surfaces, player stations, screens, grids |
-| [§6 Faction Influence](#6-faction-influence) | Presence chips, deployment markers, influence markers, structures |
-| [§7 Resources](#7-resources) | Native resources, Reservoir, Backlog, Dispatch tokens |
-| [§8 Covert Messaging System](#8-covert-messaging-system) | Dispatch case, Target Profile, delivery slips, Debrief cards |
-| [§9 Intel & Information](#9-intel-information) | Intel tokens, Accord agreements |
+| [§6 Faction Influence](#6-faction-influence) | Presence Tokens, Deployment Markers, influence markers, structures |
+| [§7 Resources](#7-resources) | Native Resources, Reservoir, Backlog, Dispatch Tokens |
+| [§8 Covert Messaging System](#8-covert-messaging-system) | Dispatch Case, Target Profile, Intel Delivery Slips, Notification Slips, Debrief Action Cards |
+| [§9 Intel & Information](#9-intel-information) | Intel Tokens, Accord Agreements |
 | [§10 Card Systems](#10-card-systems) | All card types organized by system (6 subgroups) |
-| [§11 Resolution Tools](#11-resolution-tools) | Threshold sliders, visibility/boost markers, modifier tokens |
-| [§12 Tracking Systems](#12-tracking-systems) | Score, Initiative, Round/Quarter trackers; Status marker |
+| [§11 Resolution Tools](#11-resolution-tools) | Threshold Sliders, Visibility/Boost Markers, Modifier Tokens |
+| [§12 Tracking Systems](#12-tracking-systems) | Score, Initiative, Round/Quarter trackers; Status Marker |
 
 ---
 
@@ -84,7 +84,7 @@ Components are organized by primary function within the game system. Where a com
 | **Covert Messaging System** | Components comprising the covert dispatch channel (submission side) and ARBITER return channel | — |
 | **Intel & Information** | Intelligence tokens, accords, and classified records held or exchanged by factions | — |
 | **Card Systems** | All card types, organized by system | Covert Operations · Countermeasures · Political Acts · Broadcasts · Classified Directives · Modifier |
-| **Resolution Tools** | Instruments used to measure, flag, and resolve actions (sliders, VM/BM cards, modifier tokens, status markers) | — |
+| **Resolution Tools** | Instruments used to measure, flag, and resolve actions (sliders, VM/BM cards, Modifier Tokens, Status Markers) | — |
 | **Tracking Systems** | Markers and trackers recording game state across beats, rounds, and quarters | Score · Initiative · Round/Quarter |
 
 ### §4.1 — Universal Component Schema
@@ -209,11 +209,11 @@ Components that constitute the physical game table — shared board surfaces, pl
 
 ### The Overview  (DB: 29)
 
-**Design Function:** The central game mat occupying the Central Area during play. Hosts district tiles, tracking components, the Reservoir, The Backlog, and the Situation Report Zone. The primary shared table surface.
+**Design Function:** The central game mat occupying the Central Area during play. Hosts District Tiles, tracking components, the Reservoir, The Backlog, and the Situation Report Zone. The primary shared table surface.
 
 **Narrative Anchor:** The physical table is not an abstraction of New Meridian — it is the room in the story. What MIRROR projects is not geography; it is the Security Liaison's map: accurate not to how the city was built, but to how it can be partitioned, locked down, and controlled. *→ Art 00 §8.1 for full narrative.*
 
-**Gameplay Requirements:** Must accommodate: all 21 district tiles in their ring-zone structure; Reservoir area; Backlog area; Situation Report Zone; Broadcast Card display area; Session Timeline; Initiative Strip; Chorus Activity Track. Full layout: Art 01 §6.
+**Gameplay Requirements:** Must accommodate: all 21 District Tiles in their ring-zone structure; Reservoir area; Backlog area; Situation Report Zone; Broadcast Card display area; Session Timeline; Initiative Strip; Chorus Activity Track. Full layout: Art 01 §6.
 
 **Metadata:**
 | Field | Value |
@@ -230,27 +230,27 @@ Components that constitute the physical game table — shared board surfaces, pl
 | `max_placement_ref` | Central Area (Art 01) |
 | `movement_path` | N/A — fixed infrastructure |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
-| `display_fields` | Ring and zone delineations; labeled areas for Reservoir, Backlog, Situation Report Zone, Session Timeline, Initiative Strip, Chorus Activity Track; Ring 1 modifier deck area; Ring 2 modifier deck area; Ring 3 modifier deck area; Faction Threshold Slider area |
+| `display_fields` | Ring and zone delineations; labeled areas for Reservoir, Backlog, Situation Report Zone, Session Timeline, Initiative Strip, Chorus Activity Track; Ring 1 Modifier Deck area; Ring 2 Modifier Deck area; Ring 3 Modifier Deck area; Faction Threshold Slider area |
 | `display_component` | 32; 33; 25; 23; 24; 31; 53; 54; 55; 107 |
 | `privacy_model` | Open |
 
 ---
 
-### District tile  (DB: 4)
+### District Tile  (DB: 4)
 
-**Design Function:** Defines the zones of New Meridian where factions contest for influence. Each tile is a named district with a fixed resource type, ring classification, and district zone. The tile is the target surface for all presence, structure, and tension markers.
+**Design Function:** Defines the zones of New Meridian where factions contest for influence. Each tile is a named district with a fixed resource type, ring classification, and district zone. The tile is the target surface for all presence, structure, and Tension Markers.
 
 **Narrative Anchor:** A named district — a specific place with a specific character, held by whoever has built deep enough there to make it theirs. New Meridian's districts are each something specific. A financial corridor generates Capital. A broadcast network generates Exposure. A research installation generates Findings. What a district generates is not assigned — it is what the district does. The tile is that fact, printed. *→ Art 00 for full narrative.*
 
-**Gameplay Requirements:** Each tile must display: district name; grid coordinate in [ring, address] format; native resource type (border color or equivalent); base generation value; 5 faction-keyed structure block areas printed in one of three states — outline (accepts block), outline-with-X (blocked), filled (virtual structure; counts as structure, no physical block placed); state configuration per district metadata table (Art 03). Chorus Node tile must be visually distinct from all faction districts.
+**Gameplay Requirements:** Each tile must display: district name; grid coordinate in [ring, address] format; Native Resource type (border color or equivalent); base generation value; 5 faction-keyed Structure Block areas printed in one of three states — outline (accepts block), outline-with-X (blocked), filled (virtual structure; counts as structure, no physical block placed); state configuration per district metadata table (Art 03). Chorus Node tile must be visually distinct from all faction districts.
 
-Tile surface must physically accommodate during play without obscuring printed information: up to 5 presence chip stacks (1 per faction, up to 6 chips each); up to 5 deployment markers (1 per faction); up to 5 Established markers (simultaneous); 1 Dominant marker (exclusive with Tension marker); 1 Tension marker (exclusive with Dominant marker); up to 5 Structure blocks (1 per faction).
+Tile surface must physically accommodate during play without obscuring printed information: up to 5 Presence Token stacks (1 per faction, up to 6 chips each); up to 5 Deployment Markers (1 per faction); up to 5 Established Markers (simultaneous); 1 Dominant Marker (exclusive with Tension Marker); 1 Tension Marker (exclusive with Dominant Marker); up to 5 Structure Blocks (1 per faction).
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 4 |
-| `component_name` | District tile |
+| `component_name` | District Tile |
 | `physical_form` | Flat tile or card; unique label per district; single face; face-up during all play |
 | `quantity` | 21 (gameplay requirement) |
 | `visibility` | Public |
@@ -261,7 +261,7 @@ Tile surface must physically accommodate during play without obscuring printed i
 | `max_placement_ref` | District Zone (Art 01) |
 | `movement_path` | N/A — fixed at setup |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
-| `display_fields` | District name; grid coordinate [ring, address]; native resource type (border color or symbol); base generation value; 5 faction-keyed presence chip areas; 5 faction-keyed deployment marker areas; 5 faction-keyed structure block areas (per faction: outline = accepts physical block; outline-with-X = blocked; filled square = virtual structure, counts as structure, no block placed — configuration per district metadata table, Art 03); 1 tension marker area (visual design: Art 11) |
+| `display_fields` | District name; grid coordinate [ring, address]; Native Resource type (border color or symbol); base generation value; 5 faction-keyed Presence Token areas; 5 faction-keyed Deployment Marker areas; 5 faction-keyed Structure Block areas (per faction: outline = accepts physical block; outline-with-X = blocked; filled square = virtual structure, counts as structure, no block placed — configuration per district metadata table, Art 03); 1 Tension Marker area (visual design: Art 11) |
 | `display_component` | 1; 2; 3; 7 |
 | `privacy_model` | Open |
 
@@ -269,11 +269,11 @@ Tile surface must physically accommodate during play without obscuring printed i
 
 ### Situation Report  (DB: 102)
 
-**Design Function:** Physical board object in the Situation Report Zone. Hosts Broadcast Cards during play — the display surface for public global events. Analogous to a district tile in that it anchors a zone and receives cards placed on it during resolution.
+**Design Function:** Physical board object in the Situation Report Zone. Hosts Broadcast Cards during play — the display surface for public global events. Analogous to a District Tile in that it anchors a zone and receives cards placed on it during resolution.
 
 **Narrative Anchor:** Situation Reports are not local events. They are global shockwaves — market collapses, atmospheric anomalies, intercepted diplomatic transmissions, mass migrations. They reach the table because New Meridian is not isolated; it is the point through which everything else is being filtered. *→ Art 00 for full narrative.*
 
-**Gameplay Requirements:** Must provide a clear surface for Broadcast Card placement; must accommodate multiple simultaneous Broadcast Cards (max count TBD — pending Broadcast Card design). Must be visually distinct from district tiles.
+**Gameplay Requirements:** Must provide a clear surface for Broadcast Card placement; must accommodate multiple simultaneous Broadcast Cards (max count TBD — pending Broadcast Card design). Must be visually distinct from District Tiles.
 
 **Metadata:**
 | Field | Value |
@@ -290,7 +290,7 @@ Tile surface must physically accommodate during play without obscuring printed i
 | `max_placement_ref` | Situation Report Zone (Art 01) |
 | `movement_path` | N/A — fixed infrastructure |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
-| `display_fields` | Zone designation label; Broadcast Card placement area; visually distinct from district tiles |
+| `display_fields` | Zone designation label; Broadcast Card placement area; visually distinct from District Tiles |
 | `display_component` | 25 |
 | `privacy_model` | Open |
 
@@ -298,11 +298,11 @@ Tile surface must physically accommodate during play without obscuring printed i
 
 ### Faction Terminal  (DB: 26)
 
-**Design Function:** The player tableau behind the Faction Screen. Organizes a faction's private workspace — hand, resources, dispatch tokens, operative cards, and private tracking components.
+**Design Function:** The player tableau behind the Faction Screen. Organizes a faction's private workspace — hand, resources, Dispatch Tokens, Operative Cards, and private tracking components.
 
 **Narrative Anchor:** A personal interface that connects to MIRROR privately. The Terminal is where a faction holds what has not yet been committed — the inside of the room, before any decision crosses to the open side. *→ Art 00 §8.1 for full narrative.*
 
-**Gameplay Requirements:** Must organize the following components in an accessible layout: faction hand, dispatch case, Dispatch Tokens, resource holdings, operative cards, private tracking components. Full spec: Art 08 (planned).
+**Gameplay Requirements:** Must organize the following components in an accessible layout: Faction Hand, Dispatch Case, Dispatch Tokens, resource holdings, Operative Cards, private tracking components. Full spec: Art 08 (planned).
 
 **Metadata:**
 | Field | Value |
@@ -319,13 +319,13 @@ Tile surface must physically accommodate during play without obscuring printed i
 | `max_placement_ref` | Faction Zone (Art 01) |
 | `movement_path` | N/A — fixed at setup |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
-| `display_fields` | Faction identifier; labeled zones for: faction hand; Dispatch Case; resource holdings; Dispatch Tokens; Operative cards; Intel tokens; CO deck (draw and discard); PA deck (draw and discard); Faction modifier deck; Emergency Response card; Classified Directives; Sealed Apex; Debrief Action Card; Intel Delivery Slip; Notification Slip; Target Profile (blanks) |
+| `display_fields` | Faction identifier; labeled zones for: Faction Hand; Dispatch Case; resource holdings; Dispatch Tokens; Operative Cards; Intel Tokens; CO deck (draw and discard); PA deck (draw and discard); Faction Modifier Deck; Emergency Response Card; Classified Directives; Sealed Apex; Debrief Action Card; Intel Delivery Slip; Notification Slip; Target Profile (blanks) |
 | `display_component` | 94; 44; 8; 12; 15; 9; 92; 93; 90; 91; 89; 97; 17; 99; 100; 96; 95; 48 |
 | `privacy_model` | Faction-private |
 
 ---
 
-### Faction screen  (DB: 27)
+### Faction Screen  (DB: 27)
 
 **Design Function:** Upright divider at each faction position. Conceals the Faction Terminal — hand, resources, and operational planning — from all other players.
 
@@ -337,7 +337,7 @@ Tile surface must physically accommodate during play without obscuring printed i
 | Field | Value |
 |-------|-------|
 | `db_id` | 27 |
-| `component_name` | Faction screen |
+| `component_name` | Faction Screen |
 | `physical_form` | Upright opaque divider; faction-labeled or faction-colored |
 | `quantity` | 1 per faction × 5 factions = 5 (gameplay requirement) |
 | `visibility` | Public |
@@ -360,7 +360,7 @@ Tile surface must physically accommodate during play without obscuring printed i
 
 **Narrative Anchor:** The face a faction turns toward The Table — where what was decided in the closed room becomes declared and visible. *→ Art 00 §8.1 for full narrative.*
 
-**Gameplay Requirements:** Must accommodate: PA Declaration lanes (up to 4) — each holding PA card, Dispatch Token, Target Profile, submitted resources; CM cards (up to 3, front row); standing effects area (TBD max ~7, back row, symmetric); Status marker area. Resources placed in PA lanes as cost drain to the Reservoir on resolution.
+**Gameplay Requirements:** Must accommodate: PA Declaration lanes (up to 4) — each holding PA card, Dispatch Token, Target Profile, submitted resources; CM cards (up to 3, front row); standing effects area (TBD max ~7, back row, symmetric); Status Marker area. Resources placed in PA lanes as cost drain to the Reservoir on resolution.
 
 **Metadata:**
 | Field | Value |
@@ -377,25 +377,25 @@ Tile surface must physically accommodate during play without obscuring printed i
 | `max_placement_ref` | Faction Zone (Art 01) |
 | `movement_path` | N/A — fixed at setup |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
-| `display_fields` | Faction identifier; PA Declaration lanes (up to 4): each lane accommodates PA card, Dispatch Token, Target Profile, submitted resources; CM Card area (up to 3 cards, front row); Standing effects area (TBD max ~7, back row, symmetric); Status marker area; Layout: front row = CM cards + active PA lanes; row 2 = Target Profile + Dispatch Token per lane; row 3 = submitted resources per lane; back row = standing effects |
+| `display_fields` | Faction identifier; PA Declaration lanes (up to 4): each lane accommodates PA card, Dispatch Token, Target Profile, submitted resources; CM Card area (up to 3 cards, front row); Standing effects area (TBD max ~7, back row, symmetric); Status Marker area; Layout: front row = CM cards + active PA lanes; row 2 = Target Profile + Dispatch Token per lane; row 3 = submitted resources per lane; back row = standing effects |
 | `display_component` | 14; 52; 12; 48; 8; 49; TBD (standing effects components — Art 08) |
 | `privacy_model` | Open |
 
 ---
 
-### ARBITER screen  (DB: 28)
+### ARBITER Screen  (DB: 28)
 
 **Design Function:** Upright divider at ARBITER's position (P6). Conceals ARBITER's private workspace — Portrait tracks, resolution materials, and operational records. Private side may carry printed reference tables and other ARBITER-relevant material.
 
 **Narrative Anchor:** Not concealment in the way the factions use the term — the threshold of a system operating. What is behind it is ARBITER processing in full, not deliberation in progress. *→ Art 00 §9.6 for full narrative.*
 
-**Gameplay Requirements:** Must conceal all private ARBITER materials from all faction positions. Must accommodate the Chorus Portrait tracks and resolution workspace behind it.
+**Gameplay Requirements:** Must conceal all private ARBITER materials from all faction positions. Must accommodate the Chorus Portrait Tracks and resolution workspace behind it.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 28 |
-| `component_name` | ARBITER screen |
+| `component_name` | ARBITER Screen |
 | `physical_form` | Upright opaque divider |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | Public |
@@ -412,30 +412,30 @@ Tile surface must physically accommodate during play without obscuring printed i
 
 ---
 
-### Arbiter Tableau  (DB: 30)
+### ARBITER Tableau  (DB: 30)
 
-**Design Function:** ARBITER's private operational workspace, positioned behind the ARBITER screen. Organizes component supplies, reference decks, tracking surfaces, and active game state materials available to ARBITER during play.
+**Design Function:** ARBITER's private operational workspace, positioned behind the ARBITER Screen. Organizes component supplies, reference decks, tracking surfaces, and active game state materials available to ARBITER during play.
 
 **Narrative Anchor:** The inside of ARBITER's awareness — where the full picture sits before any of it becomes signal. The table sees what ARBITER surfaces. This is what ARBITER sees. *→ Art 00 §9.6 for full narrative.*
 
-**Gameplay Requirements:** Must accommodate: Broadcast Card supply; Broadcast Deck and discard; Broadcast Effect Deck and discard; active Broadcast Effect Card(s); blank Intel tokens; blank Accord agreements; Presence chips (supply); Established markers (supply); Dominant markers (supply); Tension markers (supply); Structure blocks (supply); Notification Slips (NS-xx); blank Intel Delivery Slips (IS-xx); Debrief Action Cards (blanks); Visibility Markers (VM-xx); Boost Markers (BM-xx); Modifier tokens; ARBITER Threshold Slider; Chorus Portrait tracks.
+**Gameplay Requirements:** Must accommodate: Broadcast Card supply; Broadcast Deck and discard; Broadcast Effect Deck and discard; active Broadcast Effect Card(s); blank Intel Tokens; blank Accord Agreements; Presence Tokens (supply); Established Markers (supply); Dominant Markers (supply); Tension Markers (supply); Structure Blocks (supply); Notification Slips (NS-xx); blank Intel Delivery Slips (IS-xx); Debrief Action Cards (blanks); Visibility Markers (VM-xx); Boost Markers (BM-xx); Modifier Tokens; ARBITER Threshold Slider; Chorus Portrait Tracks.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 30 |
-| `component_name` | Arbiter Tableau |
-| `physical_form` | Game mat or surface; flat; single face; behind ARBITER screen |
+| `component_name` | ARBITER Tableau |
+| `physical_form` | Game mat or surface; flat; single face; behind ARBITER Screen |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | ARBITER Zone (Art 01) — behind ARBITER screen |
+| `placement_surface` | ARBITER Zone (Art 01) — behind ARBITER Screen |
 | `max_placement_count` | 1 |
 | `max_placement_ref` | ARBITER Zone (Art 01) |
 | `movement_path` | N/A — fixed at setup |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
-| `display_fields` | Labeled areas for: Broadcast Card supply; Broadcast Deck; Broadcast Deck discard; Broadcast Effect Deck; Broadcast Effect Deck discard; active Broadcast Effect Card(s); blank Intel tokens; blank Accord agreements; Presence chips (supply); Established markers (supply); Dominant markers (supply); Tension markers (supply); Structure blocks (supply); Notification Slips (NS-xx); blank Intel Delivery Slips (IS-xx); Debrief Action Cards (blanks); Visibility Markers (VM-xx); Boost Markers (BM-xx); Modifier tokens; ARBITER Threshold Slider; Chorus Portrait tracks |
+| `display_fields` | Labeled areas for: Broadcast Card supply; Broadcast Deck; Broadcast Deck discard; Broadcast Effect Deck; Broadcast Effect Deck discard; active Broadcast Effect Card(s); blank Intel Tokens; blank Accord Agreements; Presence Tokens (supply); Established Markers (supply); Dominant Markers (supply); Tension Markers (supply); Structure Blocks (supply); Notification Slips (NS-xx); blank Intel Delivery Slips (IS-xx); Debrief Action Cards (blanks); Visibility Markers (VM-xx); Boost Markers (BM-xx); Modifier Tokens; ARBITER Threshold Slider; Chorus Portrait Tracks |
 | `display_component` | 25; 86; TBD (Broadcast Discard — unregistered); 87; TBD (Broadcast Effect Discard — unregistered); 98; 9; 10; 1; 5; 6; 7; 3; 95; 96; 100; 103; 104; 47; 106; 50 |
 | `privacy_model` | ARBITER-private |
 
@@ -454,12 +454,12 @@ Tile surface must physically accommodate during play without obscuring printed i
 |-------|-------|
 | `db_id` | 105 |
 | `component_name` | ARBITER Covert Resolution Grid |
-| `physical_form` | 5-lane grid mat or surface; behind ARBITER screen |
+| `physical_form` | 5-lane grid mat or surface; behind ARBITER Screen |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | ARBITER Zone (Art 01) — behind ARBITER screen |
+| `placement_surface` | ARBITER Zone (Art 01) — behind ARBITER Screen |
 | `max_placement_count` | 1 |
 | `max_placement_ref` | ARBITER Zone (Art 01) |
 | `movement_path` | N/A — fixed infrastructure |
@@ -470,20 +470,20 @@ Tile surface must physically accommodate during play without obscuring printed i
 
 ---
 
-### Human player  (DB: 43)
+### Human Player  (DB: 43)
 
 **Design Function:** The Faction Representative seated at The Table — the physical agent who holds the faction's cards, manages its Terminal, makes its decisions, and whose choices at this deliberation become the faction's record for the session.
 
 **Narrative Anchor:** Each faction arrives at The Table as a specific person in a specific seat. The faction's history predates them; its future may outlast them. At The Table, they are what the faction is right now. *→ Art 00 §14.1 for full narrative.*
 
-**Gameplay Requirements:** One human player per faction position. Five faction players total, plus one player at the ARBITER position. Human players are the physical actors for all component movement during play.
+**Gameplay Requirements:** One Human Player per faction position. Five faction players total, plus one player at the ARBITER position. Human Players are the physical actors for all component movement during play.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 43 |
-| `component_name` | Human player |
-| `physical_form` | Human player — physically present at assigned position |
+| `component_name` | Human Player |
+| `physical_form` | Human Player — physically present at assigned position |
 | `quantity` | 6 (gameplay requirement) — 5 faction players + 1 ARBITER player |
 | `visibility` | Public |
 | `states` | N/A |
@@ -563,11 +563,11 @@ Components that represent and evaluate each faction's operational depth in distr
 
 ---
 
-### Presence chip  (DB: 1)
+### Presence Token  (DB: 1)
 
 **Design Function:** Represents a faction's operational depth in a district.
 
-**Narrative Anchor:** Ghost analysts embedded in research facilities, Syndicate operators running financial infrastructure, Guild engineers maintaining power systems — presence chips represent operational depth: relationships cultivated, systems maintained, people deployed. *→ Art 00 §14 for full narrative.*
+**Narrative Anchor:** Ghost analysts embedded in research facilities, Syndicate operators running financial infrastructure, Guild engineers maintaining power systems — Presence Tokens represent operational depth: relationships cultivated, systems maintained, people deployed. *→ Art 00 §14 for full narrative.*
 
 **Gameplay Requirements:** Chip count determines influence level (Dominant / Established / Present) and drives resource generation. Faction color must be unambiguous across all five faction colors plus ARBITER white. Must be stackable to 6 without falling.
 
@@ -575,7 +575,7 @@ Components that represent and evaluate each faction's operational depth in distr
 | Field | Value |
 |-------|-------|
 | `db_id` | 1 |
-| `component_name` | Presence chip |
+| `component_name` | Presence Token |
 | `physical_form` | Small flat disc; faction-colored; stackable; uniform — both faces identical; ARBITER uses white |
 | `quantity` | 6 per district × 21 districts = 126 per faction; 5 factions = 630 total (gameplay requirement) |
 | `visibility` | Public |
@@ -584,25 +584,25 @@ Components that represent and evaluate each faction's operational depth in distr
 | `placement_surface` | District Tile (Art 01) |
 | `max_placement_count` | 6 |
 | `max_placement_ref` | District Tile (Art 01) |
-| `movement_path` | Arbiter Tableau (DB:30) → District Tile (Art 01) : placement; District Tile (Art 01) → Arbiter Tableau (DB:30) : removal |
+| `movement_path` | ARBITER Tableau (DB:30) → District Tile (Art 01) : placement; District Tile (Art 01) → ARBITER Tableau (DB:30) : removal |
 | `applicable_verbs` | Add; Remove; Move |
 
 ---
 
-### Deployment marker  (DB: 2)
+### Deployment Marker  (DB: 2)
 
 **Design Function:** Temporary presence marker placed during the Placement phase.
 
 **Narrative Anchor:** Whatever the doctrine requires — a job fair in the Baryo, a rally in the Core, a demonstration outside the Financial Clearinghouse. The faction is not yet installed. It is present, making the case. The marker is where the argument is being made right now. *→ Art 00 §14 for full narrative.*
 
-**Gameplay Requirements:** Counts as 1 presence chip for all purposes during the Quarter placed. Binary state: Converting (face-up) — marker creates +1 presence chip in its district at Upkeep (Quarter > 1) before being removed; Blocked (face-down) — marker does not create a presence chip at Upkeep and is returned to hand. Two readable face-states required. Must be clearly distinguishable from a standard presence chip by size or form. Faction color must be unambiguous.
+**Gameplay Requirements:** Counts as 1 Presence Token for all purposes during the Quarter placed. Binary state: Converting (face-up) — marker creates +1 Presence Token in its district at Upkeep (Quarter > 1) before being removed; Blocked (face-down) — marker does not create a Presence Token at Upkeep and is returned to hand. Two readable face-states required. Must be clearly distinguishable from a standard Presence Token by size or form. Faction color must be unambiguous.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 2 |
-| `component_name` | Deployment marker |
-| `physical_form` | Double-sided chit; larger than presence chip; faction-colored; face-up = Converting / face-down = Blocked |
+| `component_name` | Deployment Marker |
+| `physical_form` | Double-sided chit; larger than Presence Token; faction-colored; face-up = Converting / face-down = Blocked |
 | `quantity` | TBD (pre-production estimate) |
 | `visibility` | Public |
 | `states` | Converting (face-up) / Blocked (face-down) |
@@ -615,19 +615,19 @@ Components that represent and evaluate each faction's operational depth in distr
 
 ---
 
-### Established marker  (DB: 5)
+### Established Marker  (DB: 5)
 
 **Design Function:** Signals that a faction holds Established influence in a district.
 
 **Narrative Anchor:** They are no longer noticed because they are no longer new. The faction's people move through the district without friction — known at the checkpoint, accounted for in the scheduling, factored into the calculation. Not in control. Present enough that control is the next conversation. *→ Art 00 §14 for full narrative.*
 
-**Gameplay Requirements:** Placed when a faction holds 2nd place with 2+ chips in a district. Multiple factions can hold Established simultaneously — each places their own marker. Placed and removed by the player whose action causes the change. Must be visually distinct from Dominant marker (silver vs. gold). Must be placeable on top of a presence chip stack without obscuring chip count. Quantity driven by maximum simultaneous board state: up to 5 factions can hold Established across all 20 non-Chorus Node districts; Chorus Node permits only 1 Established marker (ARBITER Dominance is permanent; human factions cannot reach Dominant there).
+**Gameplay Requirements:** Placed when a faction holds 2nd place with 2+ chips in a district. Multiple factions can hold Established simultaneously — each places their own marker. Placed and removed by the player whose action causes the change. Must be visually distinct from Dominant Marker (silver vs. gold). Must be placeable on top of a Presence Token stack without obscuring chip count. Quantity driven by maximum simultaneous board state: up to 5 factions can hold Established across all 20 non-Chorus Node districts; Chorus Node permits only 1 Established Marker (ARBITER Dominance is permanent; human factions cannot reach Dominant there).
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 5 |
-| `component_name` | Established marker |
+| `component_name` | Established Marker |
 | `physical_form` | Silver marker; uniform — both faces identical |
 | `quantity` | (factions × (districts − 1)) + 1 = (5 × 20) + 1 = 101 (gameplay requirement) |
 | `visibility` | Public |
@@ -636,24 +636,24 @@ Components that represent and evaluate each faction's operational depth in distr
 | `placement_surface` | District Tile (Art 01) |
 | `max_placement_count` | 5 |
 | `max_placement_ref` | District Tile (Art 01) |
-| `movement_path` | Arbiter Tableau (DB:30) → District Tile (Art 01) : Established influence achieved; District Tile (Art 01) → Arbiter Tableau (DB:30) : Established influence lost |
+| `movement_path` | ARBITER Tableau (DB:30) → District Tile (Art 01) : Established influence achieved; District Tile (Art 01) → ARBITER Tableau (DB:30) : Established influence lost |
 | `applicable_verbs` | Add; Remove; Move |
 
 ---
 
-### Dominant marker  (DB: 6)
+### Dominant Marker  (DB: 6)
 
 **Design Function:** Signals that a faction holds Dominant influence in a district.
 
 **Narrative Anchor:** When a faction reaches Dominance, MIRROR formally registers the shift — the faction now controls the traffic routing, municipal drone corridors, and utility outputs of that zone. Dominance is not occupation. It is operation. *→ Art 00 §14.2 for full narrative.*
 
-**Gameplay Requirements:** Placed when a faction holds 1st place with 3+ chips and no tie. One per district at any time. Placed and removed by the player whose action causes the change. Must be visually distinct from Established marker (gold vs. silver). Form should make it obvious only one is placed per district. Not placed at the Chorus Node — ARBITER Dominance is permanent and structurally enforced by DB:42.
+**Gameplay Requirements:** Placed when a faction holds 1st place with 3+ chips and no tie. One per district at any time. Placed and removed by the player whose action causes the change. Must be visually distinct from Established Marker (gold vs. silver). Form should make it obvious only one is placed per district. Not placed at the Chorus Node — ARBITER Dominance is permanent and structurally enforced by DB:42.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 6 |
-| `component_name` | Dominant marker |
+| `component_name` | Dominant Marker |
 | `physical_form` | Gold marker; uniform — both faces identical |
 | `quantity` | 1 per district × 20 districts = 20 (gameplay requirement; Chorus Node excluded) |
 | `visibility` | Public |
@@ -662,25 +662,25 @@ Components that represent and evaluate each faction's operational depth in distr
 | `placement_surface` | District Tile (Art 01) — excludes Chorus Node |
 | `max_placement_count` | 1 |
 | `max_placement_ref` | District Tile (Art 01) |
-| `movement_path` | Arbiter Tableau (DB:30) → District Tile (Art 01) : Dominant control achieved; District Tile (Art 01) → Arbiter Tableau (DB:30) : control lost or superseded |
+| `movement_path` | ARBITER Tableau (DB:30) → District Tile (Art 01) : Dominant control achieved; District Tile (Art 01) → ARBITER Tableau (DB:30) : control lost or superseded |
 | `applicable_verbs` | Add; Remove; Move |
 
 ---
 
-### Tension marker  (DB: 7)
+### Tension Marker  (DB: 7)
 
 **Design Function:** Marks the Contested board state in a district.
 
-**Narrative Anchor:** New Meridian runs a city-wide surveillance mesh. When the system detects localized threshold breaches — acoustic signatures of violence, crowd biometric spikes, encrypted radio bursts — it flags the district on The Overview. The Tension marker is MIRROR's notation that a district's equilibrium has broken. *→ Art 00 §14.2 for full narrative.*
+**Narrative Anchor:** New Meridian runs a city-wide surveillance mesh. When the system detects localized threshold breaches — acoustic signatures of violence, crowd biometric spikes, encrypted radio bursts — it flags the district on The Overview. The Tension Marker is MIRROR's notation that a district's equilibrium has broken. *→ Art 00 §14.2 for full narrative.*
 
-**Gameplay Requirements:** While present, no faction can hold Dominant influence in that district. Placement trigger (non-Chorus Node districts): two or more factions tie for highest chip count at 3+ chips. Placement trigger (Chorus Node): two or more factions tie for highest chip count at 2+ chips. Placed by the player whose action creates the tie; removed by the player whose action resolves it. Must read unambiguously as a board state marker — not a faction piece. Color must be distinct from all faction colors, presence chips, district tiles, and other markers. No required text.
+**Gameplay Requirements:** While present, no faction can hold Dominant influence in that district. Placement trigger (non-Chorus Node districts): two or more factions tie for highest chip count at 3+ chips. Placement trigger (Chorus Node): two or more factions tie for highest chip count at 2+ chips. Placed by the player whose action creates the tie; removed by the player whose action resolves it. Must read unambiguously as a board state marker — not a faction piece. Color must be distinct from all faction colors, Presence Tokens, District Tiles, and other markers. No required text.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 7 |
-| `component_name` | Tension marker |
-| `physical_form` | Chip; color distinct from all faction colors, presence chips, district tiles, and other markers; uniform — both faces identical |
+| `component_name` | Tension Marker |
+| `physical_form` | Chip; color distinct from all faction colors, Presence Tokens, District Tiles, and other markers; uniform — both faces identical |
 | `quantity` | 1 per district × 21 districts = 21 (gameplay requirement) |
 | `visibility` | Public |
 | `states` | N/A |
@@ -688,24 +688,24 @@ Components that represent and evaluate each faction's operational depth in distr
 | `placement_surface` | District Tile (Art 01) |
 | `max_placement_count` | 1 |
 | `max_placement_ref` | District Tile (Art 01) |
-| `movement_path` | Arbiter Tableau (DB:30) → District Tile (Art 01) : Contested state triggered; District Tile (Art 01) → Arbiter Tableau (DB:30) : Contested state resolved |
+| `movement_path` | ARBITER Tableau (DB:30) → District Tile (Art 01) : Contested state triggered; District Tile (Art 01) → ARBITER Tableau (DB:30) : Contested state resolved |
 | `applicable_verbs` | Add; Remove; Move |
 
 ---
 
-### Structure block  (DB: 3)
+### Structure Block  (DB: 3)
 
 **Design Function:** Represents a faction's physical facility in a district.
 
-**Narrative Anchor:** A Guild structure block at the Power Grid is a substation. A Syndicate structure block at the Financial Clearinghouse is a trading desk. A Ghost structure block at the Data Exchange is a signal analysis node. They generate resources because they are doing something — not because they exist on paper. *→ Art 00 §14.3 for full narrative.*
+**Narrative Anchor:** A Guild Structure Block at the Power Grid is a substation. A Syndicate Structure Block at the Financial Clearinghouse is a trading desk. A Ghost Structure Block at the Data Exchange is a signal analysis node. They generate resources because they are doing something — not because they exist on paper. *→ Art 00 §14.3 for full narrative.*
 
-**Gameplay Requirements:** Generates additional resources for the owning faction each Quarter. Modifies the difficulty of actions targeting that district. Maximum 1 per faction per district. Removed immediately if the owning faction becomes Absent in that district. Must be visually distinguishable from presence chips and markers. Faction color must be unambiguous. No required text.
+**Gameplay Requirements:** Generates additional resources for the owning faction each Quarter. Modifies the difficulty of actions targeting that district. Maximum 1 per faction per district. Removed immediately if the owning faction becomes Absent in that district. Must be visually distinguishable from Presence Tokens and markers. Faction color must be unambiguous. No required text.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 3 |
-| `component_name` | Structure block |
+| `component_name` | Structure Block |
 | `physical_form` | Small square chit or wooden cube; faction-colored; uniform — both faces identical |
 | `quantity` | 1 per faction per district × 21 districts = 21 per faction; 21 per faction × 5 factions = 105 total (gameplay requirement) |
 | `visibility` | Public |
@@ -714,7 +714,7 @@ Components that represent and evaluate each faction's operational depth in distr
 | `placement_surface` | District Tile (Art 01) |
 | `max_placement_count` | 1 |
 | `max_placement_ref` | District Tile (Art 01) |
-| `movement_path` | Arbiter Tableau (DB:30) → District Tile (Art 01) : structure placement action; District Tile (Art 01) → Arbiter Tableau (DB:30) : removed on faction Absence |
+| `movement_path` | ARBITER Tableau (DB:30) → District Tile (Art 01) : structure placement action; District Tile (Art 01) → ARBITER Tableau (DB:30) : removed on faction Absence |
 | `applicable_verbs` | Add; Remove; Move |
 
 ---
@@ -734,7 +734,7 @@ Components that represent and evaluate each faction's operational depth in distr
 |-------|-------|
 | `db_id` | 42 |
 | `component_name` | ARBITER Dominance Marker |
-| `physical_form` | Single fused piece: 8 ARBITER-keyed presence tokens topped by ARBITER dominance marker; inseparable |
+| `physical_form` | Single fused piece: 8 ARBITER-keyed presence tokens topped by ARBITER Dominance Marker; inseparable |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | Public |
 | `states` | N/A |
@@ -753,7 +753,7 @@ Token components of the game's economic and operational systems: faction resourc
 
 ---
 
-### Native resource  (DB: 8)
+### Native Resource  (DB: 8)
 
 **Design Function:** The five physical resources factions generate, hold, and spend. Each resource embodies its faction's theory of power.
 
@@ -773,7 +773,7 @@ Token components of the game's economic and operational systems: faction resourc
 | Field | Value |
 |-------|-------|
 | `db_id` | 8 |
-| `component_name` | Native resource |
+| `component_name` | Native Resource |
 | `physical_form` | Five distinct token types — one per faction resource; faction-distinct form per type (see variant table above); uniform — both faces identical; any printed markings must appear on both faces |
 | `quantity` | 30 per type, 150 total (pre-production estimate) |
 | `visibility` | Public |
@@ -782,24 +782,24 @@ Token components of the game's economic and operational systems: faction resourc
 | `placement_surface` | Reservoir (The Overview); Faction Terminal (Art 08 — subzone TBD) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | a) Reservoir (The Overview) → Faction Terminal (Art 08 — subzone TBD) : income distribution; b) Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Reservoir (The Overview) : PA cost; c) Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Reservoir (The Overview) : covert action cost; d) Faction Terminal (Art 08 — subzone TBD) → Faction Terminal (Art 08 — subzone TBD) : faction-to-faction transfer; e) Faction Terminal (Art 08 — subzone TBD) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Reservoir (The Overview) → Faction Terminal (Art 08 — subzone TBD) : trade at exchange rate (4:1, 3:1, or 2:1); resource type changes on return |
+| `movement_path` | a) Reservoir (The Overview) → Faction Terminal (Art 08 — subzone TBD) : income distribution; b) Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Reservoir (The Overview) : PA cost; c) Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → ARBITER Tableau (DB: 30) — resolution workspace subzone → Reservoir (The Overview) : covert action cost; d) Faction Terminal (Art 08 — subzone TBD) → Faction Terminal (Art 08 — subzone TBD) : faction-to-faction transfer; e) Faction Terminal (Art 08 — subzone TBD) → ARBITER Tableau (DB: 30) — resolution workspace subzone → Reservoir (The Overview) → Faction Terminal (Art 08 — subzone TBD) : trade at exchange rate (4:1, 3:1, or 2:1); resource type changes on return |
 | `applicable_verbs` | Add; Remove; Move |
 
 ---
 
-### Dispatch token  (DB: 12)
+### Dispatch Token  (DB: 12)
 
-**Design Function:** Operational authorization — the capacity unit enabling a faction to submit a covert operation.
+**Design Function:** Operational authorization — the capacity unit enabling a faction to submit a Covert Operation.
 
 **Narrative Anchor:** A Dispatch Token is the authorization that converts planned work into active production for this Quarter — the executive order that takes a theoretical project off the backlog and commits the organization to it. *→ Art 00 §14.5 for full narrative.*
 
-**Gameplay Requirements:** Must be clearly distinguishable from resource tokens and from dispatch cases. No required text. Not a faction resource. Does not generate through districts, accumulate across Quarters, or carry affinity. One accompanies each covert operation card submitted in a dispatch case.
+**Gameplay Requirements:** Must be clearly distinguishable from resource tokens and from Dispatch Cases. No required text. Not a faction resource. Does not generate through districts, accumulate across Quarters, or carry affinity. One accompanies each Covert Operation Card submitted in a Dispatch Case.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 12 |
-| `component_name` | Dispatch token |
+| `component_name` | Dispatch Token |
 | `physical_form` | Small token or chit; copper; uniform — both faces identical |
 | `quantity` | 4 per faction × 5 factions = 20 total (gameplay requirement); 4 allocated per faction per Quarter |
 | `visibility` | Public (in Backlog or Faction Resolution Grid); private (in Dispatch Packet) |
@@ -808,7 +808,7 @@ Token components of the game's economic and operational systems: faction resourc
 | `placement_surface` | Backlog (The Overview); Faction Terminal (Art 08 — subzone TBD); Faction Resolution Grid (DB: 88); Dispatch Packet (DB: 108) |
 | `max_placement_count` | 4 |
 | `max_placement_ref` | Faction Terminal (Art 08 — subzone TBD) |
-| `movement_path` | a) Backlog (The Overview) → Faction Terminal (Art 08 — subzone TBD) : dispatch allocation; b) Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Backlog (The Overview) : PA cost; c) Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Arbiter Tableau (DB: 30) — resolution workspace subzone → Backlog (The Overview) : covert action cost |
+| `movement_path` | a) Backlog (The Overview) → Faction Terminal (Art 08 — subzone TBD) : dispatch allocation; b) Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Backlog (The Overview) : PA cost; c) Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → ARBITER Tableau (DB: 30) — resolution workspace subzone → Backlog (The Overview) : covert action cost |
 | `applicable_verbs` | Add; Remove; Move |
 
 ---
@@ -819,11 +819,11 @@ Physical infrastructure of the covert dispatch and return channel — submission
 
 ---
 
-### Dispatch case  (DB: 44)
+### Dispatch Case  (DB: 44)
 
-**Design Function:** The faction's sealed covert submission vessel — the channel through which committed covert operations pass to ARBITER.
+**Design Function:** The faction's sealed covert submission vessel — the channel through which committed Covert Operations pass to ARBITER.
 
-**Narrative Anchor:** Where a faction's committed covert operations leave the private room and enter resolution — sealed, sequenced, anonymous to everyone except the faction that sealed it. *→ Art 00 §14.5 for full narrative.*
+**Narrative Anchor:** Where a faction's committed Covert Operations leave the private room and enter resolution — sealed, sequenced, anonymous to everyone except the faction that sealed it. *→ Art 00 §14.5 for full narrative.*
 
 **Gameplay Requirements:** Must be fully opaque. Must accommodate 4 Dispatch Packets simultaneously. Faction-labeled or faction-colored for identification. One case submitted per faction per Month.
 
@@ -831,7 +831,7 @@ Physical infrastructure of the covert dispatch and return channel — submission
 | Field | Value |
 |-------|-------|
 | `db_id` | 44 |
-| `component_name` | Dispatch case |
+| `component_name` | Dispatch Case |
 | `physical_form` | Sealed envelope or small box; opaque |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private |
@@ -847,11 +847,11 @@ Physical infrastructure of the covert dispatch and return channel — submission
 
 ### Dispatch Packet  (DB: 108)
 
-**Design Function:** Ordered sub-container within the Dispatch Case. Groups a single covert operation and its accompanying components for submission.
+**Design Function:** Ordered sub-container within the Dispatch Case. Groups a single Covert Operation and its accompanying components for submission.
 
 **Narrative Anchor:** Four committed operations, sequenced before the case seals. What order they go in is the last decision a faction makes in private. *→ Art 00 §14.5 for full narrative.*
 
-**Gameplay Requirements:** Must hold and group: 1 covert operation card, 1 Dispatch Token, resource tokens (variable), 1 Target Profile, Modifier Cards (variable). 4 per case, ordered 1–4. Must maintain submission sequence and keep contents grouped during case transit.
+**Gameplay Requirements:** Must hold and group: 1 Covert Operation Card, 1 Dispatch Token, resource tokens (variable), 1 Target Profile, Modifier Cards (variable). 4 per case, ordered 1–4. Must maintain submission sequence and keep contents grouped during case transit.
 
 **Metadata:**
 | Field | Value |
@@ -873,7 +873,7 @@ Physical infrastructure of the covert dispatch and return channel — submission
 
 ### Target Profile  (DB: 48)
 
-**Design Function:** Tracking document completed by a faction to identify the target of a covert operation or public act. Used by ARBITER during resolution.
+**Design Function:** Tracking document completed by a faction to identify the target of a Covert Operation or Public Act. Used by ARBITER during resolution.
 
 **Narrative Anchor:** N/A — operational tracking record; no narrative element.
 
@@ -904,34 +904,34 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 
 ---
 
-### Intel token  (DB: 9)
+### Intel Token  (DB: 9)
 
 **Design Function:** A discrete intelligence record one faction holds about another. Carries the subject faction and Quarter gathered.
 
 **Narrative Anchor:** An Intel Token is discrete, specific, time-stamped, and targeted. Knowledge is power — but it expires, can be traded, can be bluffed about, can be disclosed strategically, and can be turned against the faction it describes. *→ Art 00 §14.9 for full narrative.*
 
-**Gameplay Requirements:** ARBITER records at creation: (1) faction the intelligence concerns, (2) Quarter gathered. Must accommodate handwritten notation. Enables targeted actions and powers the Denounce political act. Created by ARBITER on a successful gather action; delivered privately to the receiving faction. Holder may disclose at any time by any method.
+**Gameplay Requirements:** ARBITER records at creation: (1) faction the intelligence concerns, (2) Quarter gathered. Must accommodate handwritten notation. Enables targeted actions and powers the Denounce Public Act. Created by ARBITER on a successful gather action; delivered privately to the receiving faction. Holder may disclose at any time by any method.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 9 |
-| `component_name` | Intel token |
+| `component_name` | Intel Token |
 | `physical_form` | Small token or chit; obverse: printed "Intel" label; reverse: printed field labels "Quarter ____ \| Faction ____" with blank lines for handwritten content (ARBITER fills at creation); physical spec: Art 11 |
 | `quantity` | Variable — created during play (pre-production estimate for supply) |
 | `visibility` | Player-private |
 | `states` | Blank; Fresh; Stale; Expired (per Art 03 §13.6) |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB: 30); Dispatch Packet (DB: 108); Dispatch Case (DB: 44); Faction Terminal (Art 08 — subzone TBD); Faction Resolution Grid (DB: 88) |
+| `placement_surface` | ARBITER Tableau (DB: 30); Dispatch Packet (DB: 108); Dispatch Case (DB: 44); Faction Terminal (Art 08 — subzone TBD); Faction Resolution Grid (DB: 88) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | a) Receipt: Arbiter Tableau (DB: 30) [blank] → resolution workspace subzone [written] → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : gather action delivery; b) Covert spend: Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Arbiter Tableau (DB: 30) — resolution workspace subzone [erased or discarded] → Arbiter Tableau (DB: 30) if recycled : covert action spend; c) Public spend: Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → Arbiter Tableau (DB: 30) — resolution workspace subzone [erased or discarded] → Arbiter Tableau (DB: 30) if recycled : PA spend; d) Faction Terminal (Art 08 — subzone TBD) → Faction Terminal (Art 08 — subzone TBD) : faction-to-faction trade |
+| `movement_path` | a) Receipt: ARBITER Tableau (DB: 30) [blank] → resolution workspace subzone [written] → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : gather action delivery; b) Covert spend: Faction Terminal (Art 08 — subzone TBD) → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → ARBITER Tableau (DB: 30) — resolution workspace subzone [erased or discarded] → ARBITER Tableau (DB: 30) if recycled : covert action spend; c) Public spend: Faction Terminal (Art 08 — subzone TBD) → Faction Resolution Grid (DB: 88) → ARBITER Tableau (DB: 30) — resolution workspace subzone [erased or discarded] → ARBITER Tableau (DB: 30) if recycled : PA spend; d) Faction Terminal (Art 08 — subzone TBD) → Faction Terminal (Art 08 — subzone TBD) : faction-to-faction trade |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal; Corrupt |
 | `recorded_fields` | Faction the intelligence concerns; Quarter gathered (handwritten by ARBITER at creation) |
 
 ---
 
-### Accord agreement  (DB: 10)
+### Accord Agreement  (DB: 10)
 
 **Design Function:** Biometric contract between two or more factions registering an agreed arrangement in ARBITER's canonical record.
 
@@ -943,16 +943,16 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 | Field | Value |
 |-------|-------|
 | `db_id` | 10 |
-| `component_name` | Accord agreement |
+| `component_name` | Accord Agreement |
 | `physical_form` | Document or card; obverse: printed Accord form fields (Art 06 §9); reverse: blank; placed face-up in Accord Placement Area when active |
 | `quantity` | Variable — 1 per active Accord (pre-production estimate for supply) |
 | `visibility` | Player-private (Blank; Draft — at Faction Terminal); public (Active/Executed — at Accord Placement Area) |
 | `states` | Blank; Active (Draft); Active (Executed); Breach / Dissolved |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB: 30); Faction Terminal (Art 08 — subzone TBD); Accord Placement Area (Art 01) |
+| `placement_surface` | ARBITER Tableau (DB: 30); Faction Terminal (Art 08 — subzone TBD); Accord Placement Area (Art 01) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | a) Arbiter Tableau (DB: 30) → Faction Terminal (Art 08 — subzone TBD) : ARBITER delivers blank form; b) Faction Terminal (Art 08 — subzone TBD) → Accord Placement Area (Art 01) : faction places drafted Accord [Draft → Executed state change at Accord Placement Area]; c) Accord Placement Area (Art 01) → Arbiter Tableau (DB: 30) : Breach or Dissolution |
+| `movement_path` | a) ARBITER Tableau (DB: 30) → Faction Terminal (Art 08 — subzone TBD) : ARBITER delivers blank form; b) Faction Terminal (Art 08 — subzone TBD) → Accord Placement Area (Art 01) : faction places drafted Accord [Draft → Executed state change at Accord Placement Area]; c) Accord Placement Area (Art 01) → ARBITER Tableau (DB: 30) : Breach or Dissolution |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal; Corrupt |
 | `recorded_fields` | Full field set defined in Art 06 §9 |
 
@@ -960,7 +960,7 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 
 ### Notification Slip (NS-xx)  (DB: 95)
 
-**Design Function:** Pre-printed ARBITER notification slip delivered privately to a faction when a covert operation targeted their assets. Content is fixed: "An operation targeting your assets occurred."
+**Design Function:** Pre-printed ARBITER Notification Slip delivered privately to a faction when a Covert Operation targeted their assets. Content is fixed: "An operation targeting your assets occurred."
 
 **Narrative Anchor:** N/A — private delivery mechanism; narrative is in the event, not the slip itself.
 
@@ -976,10 +976,10 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 | `visibility` | Player-private |
 | `states` | N/A |
 | `faction_keyed` | Yes |
-| `placement_surface` | Arbiter Tableau (DB: 30) — resolution workspace subzone; Dispatch Case (DB: 44) after delivery |
+| `placement_surface` | ARBITER Tableau (DB: 30) — resolution workspace subzone; Dispatch Case (DB: 44) after delivery |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) — resolution workspace subzone → Dispatch Case (DB: 44) : ARBITER delivery; Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : faction receipt |
+| `movement_path` | ARBITER Tableau (DB: 30) — resolution workspace subzone → Dispatch Case (DB: 44) : ARBITER delivery; Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : faction receipt |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
 | `recorded_fields` | Hardcoded — "An operation targeting your assets occurred." |
 
@@ -1006,15 +1006,15 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 | `placement_surface` | Dispatch Packet (DB: 108); Dispatch Case (DB: 44); Faction Terminal (Art 08 — subzone TBD) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) — resolution workspace subzone → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : placed in corresponding CA packet; returned via case at resolution |
+| `movement_path` | ARBITER Tableau (DB: 30) — resolution workspace subzone → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : placed in corresponding CA packet; returned via case at resolution |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal; Corrupt |
-| `recorded_fields` | Recipient faction; Quarter/Month of delivery; Submitting faction; Covert operation; Target faction; Target district; Operation type; Boost Marker present (Y/N); Modifier token total (+/− n) — handwritten by ARBITER at delivery |
+| `recorded_fields` | Recipient faction; Quarter/Month of delivery; Submitting faction; Covert Operation; Target faction; Target district; Operation type; Boost Marker present (Y/N); Modifier Token total (+/− n) — handwritten by ARBITER at delivery |
 
 ---
 
 ### Grant Deed  (DB: 113)
 
-**Design Function:** ARBITER-issued title card recording a faction's capital claim on a named district. Functions as a React card: the holding faction plays it immediately when any faction places a structure block in the named district, placing their own structure block there. The deed may be traded between factions; the `owner` field is updated by the new holder and the claim transfers with the card.
+**Design Function:** ARBITER-issued title card recording a faction's capital claim on a named district. Functions as a React card: the holding faction plays it immediately when any faction places a Structure Block in the named district, placing their own Structure Block there. The deed may be traded between factions; the `owner` field is updated by the new holder and the claim transfers with the card.
 
 **Narrative Anchor:** *A filed claim is not the same as a built presence — but it changes what can be built there.*
 
@@ -1033,25 +1033,25 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 | `placement_surface` | ARBITER Tableau (DB: 30); Dispatch Packet (DB: 108); Dispatch Case (DB: 44); Faction Tableau — hand; Faction Resolution Grid (DB: 88) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | a) Creation: ARBITER Tableau (DB: 30) — blank supply → ARBITER Tableau (DB: 30) — resolution subzone [write `district` + `owner`] → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Tableau — hand ; b) Trade: Faction Tableau — hand → Faction Tableau — hand : faction-to-faction trade; new holder updates `owner` field; c) React (on trigger): Faction Tableau — hand → Faction Resolution Grid (DB: 88) — modifier/permanent row → effect resolves → ARBITER Tableau (DB: 30) : structure block placed in named district; erase and return blank to supply OR discard (pending physical design) |
+| `movement_path` | a) Creation: ARBITER Tableau (DB: 30) — blank supply → ARBITER Tableau (DB: 30) — resolution subzone [write `district` + `owner`] → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Tableau — hand ; b) Trade: Faction Tableau — hand → Faction Tableau — hand : faction-to-faction trade; new holder updates `owner` field; c) React (on trigger): Faction Tableau — hand → Faction Resolution Grid (DB: 88) — modifier/permanent row → effect resolves → ARBITER Tableau (DB: 30) : Structure Block placed in named district; erase and return blank to supply OR discard (pending physical design) |
 | `recorded_fields` | `district` (named target district); `owner` (faction currently holding the claim — mutable, updated by new holder on trade) |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal; Corrupt |
 
 ---
 
-### DebriefActionCard  (DB: 100)
+### Debrief Action Card  (DB: 100)
 
 **Design Function:** Card type carrying ARBITER-issued instructions or outcomes for processing in the Debrief phase.
 
 **Narrative Anchor:** Some things ARBITER determines do not surface at The Table. They arrive in the return channel — placed in the case, opened at Debrief, resolved in private. *→ Art 00 §9.6 for full narrative.*
 
-**Gameplay Requirements:** Must be distinguishable from covert operation cards and political act cards. Placed by ARBITER in a faction's dispatch case during resolution. Processed at Debrief start.
+**Gameplay Requirements:** Must be distinguishable from Covert Operation cards and Public Act cards. Placed by ARBITER in a faction's Dispatch Case during resolution. Processed at Debrief start.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 100 |
-| `component_name` | DebriefActionCard |
+| `component_name` | Debrief Action Card |
 | `physical_form` | Standard card; obverse: printed field labels (variable — ARBITER fills at issuance); reverse: blank |
 | `quantity` | Variable — placed by ARBITER as needed (pre-production estimate) |
 | `visibility` | Player-private |
@@ -1060,7 +1060,7 @@ Components carrying recorded content — intelligence, agreements, and ARBITER-d
 | `placement_surface` | Dispatch Packet (DB: 108); Dispatch Case (DB: 44); Faction Terminal (Art 08 — subzone TBD) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) — resolution workspace subzone → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : placed in corresponding CA packet; returned via case at resolution |
+| `movement_path` | ARBITER Tableau (DB: 30) — resolution workspace subzone → Dispatch Packet (DB: 108) → Dispatch Case (DB: 44) → Faction Terminal (Art 08 — subzone TBD) : placed in corresponding CA packet; returned via case at resolution |
 | `recorded_fields` | Variable |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal; Corrupt |
 
@@ -1074,19 +1074,19 @@ Individual action and event cards — the operational content of card-based game
 
 **Operative**
 
-### Classified directives  (DB: 17)
+### Classified Directives  (DB: 17)
 
 **Design Function:** A faction-specific directive tied to the faction's operative. Multiple versions exist per operative; the faction player selects or draws one at initialization. The chosen directive is held privately for the duration of the arc.
 
-**Narrative Anchor:** The mission beneath all other missions — not the Chorus's directive, but the operative's own: the private ambition pursued beneath every public act. At session's end, the agenda surfaces. *→ Art 00 §14.7 for full narrative.*
+**Narrative Anchor:** The mission beneath all other missions — not the Chorus's directive, but the operative's own: the private ambition pursued beneath every Public Act. At session's end, the agenda surfaces. *→ Art 00 §14.7 for full narrative.*
 
-**Gameplay Requirements:** Distributed at game initialization from a faction-specific init-only deck (external to the game area; companion deck component pending registration — PM05 02-n20). Multiple directive variants exist per operative; faction player selects or draws one matched to their chosen or randomly drawn operative (selection mechanic TBD — Art 05); remaining directives returned to storage. Private to the faction player; must not be disclosed before session end. ARBITER may receive a companion tracking card at initialization (component not yet registered — TBD Art 05); if present, ARBITER monitors progress privately. Revealed publicly at session end. Success condition measured against board state or private component counts — examples: total Modifier cards held, Modifier cards by deck, Intel Tokens, native resources, Intel Delivery Slips. Full mechanics TBD — Art 05.
+**Gameplay Requirements:** Distributed at game initialization from a faction-specific init-only deck (external to the game area; companion deck component pending registration — PM05 02-n20). Multiple directive variants exist per operative; faction player selects or draws one matched to their chosen or randomly drawn operative (selection mechanic TBD — Art 05); remaining directives returned to storage. Private to the faction player; must not be disclosed before session end. ARBITER may receive a companion tracking card at initialization (component not yet registered — TBD Art 05); if present, ARBITER monitors progress privately. Revealed publicly at session end. Success condition measured against board state or private component counts — examples: total Modifier Cards held, Modifier Cards by deck, Intel Tokens, Native Resources, Intel Delivery Slips. Full mechanics TBD — Art 05.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 17 |
-| `component_name` | Classified directives |
+| `component_name` | Classified Directives |
 | `physical_form` | Standard card (TBD — Art 11); obverse: directive content (faction/operative-specific, pre-printed); reverse: faction- and operative-keyed back |
 | `quantity` | TBD — multiple variants per operative (Art 05) |
 | `visibility` | Player-private |
@@ -1102,19 +1102,19 @@ Individual action and event cards — the operational content of card-based game
 
 ---
 
-### Operative card  (DB: 15)
+### Operative Card  (DB: 15)
 
 **Design Function:** The faction's named operative — a personal asset card that can be played on the Faction Resolution Grid directly or as a covert act. Usage is tracked directly on the card; each use enhances the operative's effect and escalates toward an Apex trigger.
 
-**Narrative Anchor:** Each faction enters the deliberation with one named Field Operative — not a resource, not a deployment, but a person prepared for the Apex: the moment The Table stops calculating what the Chorus expects and chooses, instead, to answer freely. The operative is the one who makes that play; what they spend is total and unrepeatable. *→ Art 00 §14.8 for full narrative. Individual operative card designs carry operative-specific narrative.*
+**Narrative Anchor:** Each faction enters the deliberation with one named Field Operative — not a resource, not a deployment, but a person prepared for the Apex: the moment The Table stops calculating what the Chorus expects and chooses, instead, to answer freely. The operative is the one who makes that play; what they spend is total and unrepeatable. *→ Art 00 §14.8 for full narrative. Individual Operative Card designs carry operative-specific narrative.*
 
-**Gameplay Requirements:** Selected from a faction-specific init-only variant pool deck at initialization (selection mechanic TBD — Art 05). Two play modes: (1) played directly onto the Faction Resolution Grid (DB:88) as a resolution asset; (2) played as a covert act via the standard dispatch procedure. Returned to hand after resolution in either mode — not discarded. Usage tracked by writing directly on the card; each use has a distinct cost and an enhanced effect. On the 4th use, if all criteria are met, the Apex triggers — DB:99 Sealed Apex ability revealed and activated. Full mechanics TBD — Art 04/05.
+**Gameplay Requirements:** Selected from a faction-specific init-only variant pool deck at initialization (selection mechanic TBD — Art 05). Two play modes: (1) played directly onto the Faction Resolution Grid (DB:88) as a resolution asset; (2) played as a covert act via the standard dispatch procedure. Returned to hand after resolution in either mode — not discarded. Usage tracked by writing directly on the card; each use has a distinct cost and an enhanced effect. On the 4th use, if all criteria are met, the Apex triggers — DB:99 Sealed Apex Ability revealed and activated. Full mechanics TBD — Art 04/05.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 15 |
-| `component_name` | Operative card |
+| `component_name` | Operative Card |
 | `physical_form` | Standard card; obverse: operative content (printed) + writable usage tracking fields; reverse: faction- and operative-keyed back (TBD — Art 11) |
 | `quantity` | TBD — one per faction player (selected at init) |
 | `visibility` | Player-private |
@@ -1123,26 +1123,26 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94); Faction Resolution Grid (DB:88) when played |
 | `max_placement_count` | 1 per faction player |
 | `max_placement_ref` | Faction Hand (DB:94) |
-| `movement_path` | Operative Pool (DB:116) → Faction Hand (DB:94) : selected at init; *Resolution asset mode:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played directly; Faction Resolution Grid → Faction Hand (DB:94) : returned after resolution; *Covert act mode:* Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Arbiter Tableau (DB:30) : ARBITER opens case and packet; Arbiter Tableau → Faction Resolution Grid (DB:88) : placed in resolution grid; Faction Resolution Grid → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Faction Hand (DB:94) : returned after resolution |
+| `movement_path` | Operative Pool (DB:116) → Faction Hand (DB:94) : selected at init; *Resolution asset mode:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played directly; Faction Resolution Grid → Faction Hand (DB:94) : returned after resolution; *Covert act mode:* Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Tableau (DB:30) : ARBITER opens case and packet; ARBITER Tableau → Faction Resolution Grid (DB:88) : placed in resolution grid; Faction Resolution Grid → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Faction Hand (DB:94) : returned after resolution |
 | `back_design` | Faction-keyed and operative-keyed |
 | `card_source` | Operative Pool (DB:116) — init only |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal; Corrupt |
 
 ---
 
-### Sealed Apex ability  (DB: 99)
+### Sealed Apex Ability  (DB: 99)
 
 **Design Function:** Per-faction sealed card unlocked when the faction's operative completes their 4th action and all Apex criteria are met. Contents remain private until triggered; presented publicly on activation. Successfully playing this card triggers the end of game sequence.
 
 **Narrative Anchor:** The Apex is the final act of the answer window — the moment The Table stops calculating what the Chorus expects and chooses, instead, to answer freely. Not a positioning move. A declaration. What the Chorus makes of it, on whatever terms it actually holds, the Chronicle cannot know — only that it happened: humanity, given the chance to answer correctly, chose instead to answer freely. *→ Art 00 §14.8 for full narrative.*
 
-**Gameplay Requirements:** Provided to Faction Terminal at initialization; remains sealed until trigger. Trigger: DB:15 Operative card takes its 4th action with all Apex criteria validated. On trigger: opened, unlocked, and presented publicly per Art 03 §14 (Apex Activation procedure). Masking component required to prevent reading before unlock — design TBD Art 05. Full rules and card design TBD Art 05.
+**Gameplay Requirements:** Provided to Faction Terminal at initialization; remains sealed until trigger. Trigger: DB:15 Operative Card takes its 4th action with all Apex criteria validated. On trigger: opened, unlocked, and presented publicly per Art 03 §14 (Apex Activation procedure). Masking component required to prevent reading before unlock — design TBD Art 05. Full rules and card design TBD Art 05.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 99 |
-| `component_name` | Sealed Apex ability |
+| `component_name` | Sealed Apex Ability |
 | `physical_form` | Sealed card; masking component TBD Art 05; TBD — Art 11 |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private (sealed) / Public (on trigger) |
@@ -1158,7 +1158,7 @@ Individual action and event cards — the operational content of card-based game
 
 ---
 
-### Emergency Response card  (DB: 97)
+### Emergency Response Card  (DB: 97)
 
 **Design Function:** A unique faction card held at the Faction Terminal from initialization. When any operative moves to complete their 4th action, every faction has the opportunity to play their Emergency Response ahead of the Apex unlock — potentially helping or hindering the trigger. Full rules TBD — Art 05.
 
@@ -1170,7 +1170,7 @@ Individual action and event cards — the operational content of card-based game
 | Field | Value |
 |-------|-------|
 | `db_id` | 97 |
-| `component_name` | Emergency Response card |
+| `component_name` | Emergency Response Card |
 | `physical_form` | Standard card (TBD — Art 11); obverse: response content (faction-specific, pre-printed); reverse: faction-keyed back |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private (at terminal) / Public (when played) |
@@ -1188,19 +1188,19 @@ Individual action and event cards — the operational content of card-based game
 
 **Operations Resolution**
 
-### Covert operation  (DB: 13)
+### Covert Operation  (DB: 13)
 
 **Design Function:** The primary covert action card. The operative instruction a faction submits for resolution each Month.
 
-**Narrative Anchor:** A covert operation is submitted in a dispatch case — sealed, placed without announcement, given over to ARBITER before the world has had a chance to respond. Each faction has its own form: Ghost submits operation orders, the Syndicate submits terms, the Guild submits work orders. What every submission shares is that it exists before the action — the plan committed before the result is known. *→ Art 00 §14.6 for full narrative.*
+**Narrative Anchor:** A Covert Operation is submitted in a Dispatch Case — sealed, placed without announcement, given over to ARBITER before the world has had a chance to respond. Each faction has its own form: Ghost submits operation orders, the Syndicate submits terms, the Guild submits work orders. What every submission shares is that it exists before the action — the plan committed before the result is known. *→ Art 00 §14.6 for full narrative.*
 
-**Gameplay Requirements:** Must display: action name, cost, resolution threshold, target requirements, effect on success, effect on failure, and burst indicator (recognizable at Beat 0 so ARBITER can apply BM-xx to downstream cards in the resolution grid). Must not be readable through the dispatch case when submitted. Submitted secretly each Month via Dispatch Packet and Dispatch Case. Drives the Beat 0–3 resolution sequence. Receivable — ARBITER receives and manages submitted operations during resolution.
+**Gameplay Requirements:** Must display: action name, cost, resolution threshold, target requirements, effect on success, effect on failure, and burst indicator (recognizable at Beat 0 so ARBITER can apply BM-xx to downstream cards in the resolution grid). Must not be readable through the Dispatch Case when submitted. Submitted secretly each Month via Dispatch Packet and Dispatch Case. Drives the Beat 0–3 resolution sequence. Receivable — ARBITER receives and manages submitted operations during resolution.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 13 |
-| `component_name` | Covert operation |
+| `component_name` | Covert Operation |
 | `physical_form` | Standard card; faction back; submitted face-down; held by ARBITER during resolution |
 | `quantity` | Variable per faction deck (pre-production estimate) |
 | `visibility` | Player-private in hand; ARBITER-only during resolution |
@@ -1209,26 +1209,26 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94); Dispatch Packet (DB:108); ARBITER Covert Resolution Grid (DB:105) |
 | `max_placement_count` | 6 (in hand) |
 | `max_placement_ref` | Faction Hand (DB:94) |
-| `movement_path` | Covert Operation Card Set (DB:114) → Faction Hand (DB:94) : selected subset at init; forms Covert operation deck (DB:92); Covert operation deck (DB:92) → Faction Hand (DB:94) : drawn to hand; Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Covert Resolution Grid (DB:105) : ARBITER opens case and packet, places card in grid; ARBITER Covert Resolution Grid (DB:105) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Faction Hand (DB:94) → Covert operation discard (DB:93) : post-resolution |
+| `movement_path` | Covert Operation Card Set (DB:114) → Faction Hand (DB:94) : selected subset at init; forms Covert Operation Deck (DB:92); Covert Operation Deck (DB:92) → Faction Hand (DB:94) : drawn to hand; Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Covert Resolution Grid (DB:105) : ARBITER opens case and packet, places card in grid; ARBITER Covert Resolution Grid (DB:105) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → Faction Hand (DB:94) → Covert Operation Discard (DB:93) : post-resolution |
 | `back_design` | Faction-keyed |
-| `card_source` | Covert Operation Card Set (DB:114) → Covert operation deck (DB:92) — subset selected at init |
+| `card_source` | Covert Operation Card Set (DB:114) → Covert Operation Deck (DB:92) — subset selected at init |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
 
 ---
 
-### Political act  (DB: 14)
+### Public Act  (DB: 14)
 
 **Design Function:** Public action card representing a faction's overt political move.
 
-**Narrative Anchor:** A public act is declared at The Table — witnessed, placed in the open, the faction's intention made visible at the moment of commitment. Both covert and public submissions authorize an attempt, not a guaranteed outcome; the difference is who observes the commitment being made. *→ Art 00 §14.6 for full narrative.*
+**Narrative Anchor:** A Public Act is declared at The Table — witnessed, placed in the open, the faction's intention made visible at the moment of commitment. Both covert and public submissions authorize an attempt, not a guaranteed outcome; the difference is who observes the commitment being made. *→ Art 00 §14.6 for full narrative.*
 
-**Gameplay Requirements:** Must display: act name, cost, effect, targeting requirements. Must be distinguishable from covert operation cards by back design. Declared openly at The Table during Phase B; played face-up at declaration. Requires no Dispatch Token. Receivable — ARBITER and all factions observe.
+**Gameplay Requirements:** Must display: act name, cost, effect, targeting requirements. Must be distinguishable from Covert Operation cards by back design. Declared openly at The Table during Phase B; played face-up at declaration. Requires no Dispatch Token. Receivable — ARBITER and all factions observe.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 14 |
-| `component_name` | Political act |
+| `component_name` | Public Act |
 | `physical_form` | Standard card; distinctive back; played face-up at declaration |
 | `quantity` | Variable per faction deck (pre-production estimate) |
 | `visibility` | Player-private in hand; Public when declared |
@@ -1237,42 +1237,42 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94); Faction Resolution Grid (DB:88) |
 | `max_placement_count` | 4 in hand (3 drawn + 1 Floor Act — returns to hand per card spec) |
 | `max_placement_ref` | Faction Hand (DB:94) |
-| `movement_path` | Political Act Card Set (DB:115) → Faction Hand (DB:94) : selected subset at init; forms Political act deck (DB:90); Political act deck (DB:90) → Faction Hand (DB:94) : drawn to hand; Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : public declaration (face-up); Faction Resolution Grid (DB:88) → Political act discard (DB:91) : after resolution |
+| `movement_path` | Public Act Card Set (DB:115) → Faction Hand (DB:94) : selected subset at init; forms Public Act Deck (DB:90); Public Act Deck (DB:90) → Faction Hand (DB:94) : drawn to hand; Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : public declaration (face-up); Faction Resolution Grid (DB:88) → Public Act Discard (DB:91) : after resolution |
 | `back_design` | Faction-keyed |
-| `card_source` | Political Act Card Set (DB:115) → Political act deck (DB:90) — subset selected at init |
+| `card_source` | Public Act Card Set (DB:115) → Public Act Deck (DB:90) — subset selected at init |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
 
 ---
 
-### Modifier card  (DB: 11)
+### Modifier Card  (DB: 11)
 
-**Design Function:** Represents assets, equipment, and specialized tactics employed by the card's source — each ring and faction produces unique modifier cards reflecting the operational capabilities of that area. Drawn at upkeep; supports covert operations, public acts, react plays, and district tension resolution. Removed from game after use in all modes.
+**Design Function:** Represents assets, equipment, and specialized tactics employed by the card's source — each ring and faction produces unique Modifier Cards reflecting the operational capabilities of that area. Drawn at upkeep; supports Covert Operations, Public Acts, react plays, and district tension resolution. Removed from game after use in all modes.
 
-**Narrative Anchor:** Each ring and faction produces its own assets, equipment, and tactics — the material conditions of a district, or the operational culture of a faction, expressed as support for the operations underway. A modifier card is that resource in motion. *→ Art 00 §14.6 (addition pending — PM05 02-n23).*
+**Narrative Anchor:** Each ring and faction produces its own assets, equipment, and tactics — the material conditions of a district, or the operational culture of a faction, expressed as support for the operations underway. A Modifier Card is that resource in motion. *→ Art 00 §14.6 (addition pending — PM05 02-n23).*
 
-**Gameplay Requirements:** Sourced from 8 decks: Ring 1 (DB:53), Ring 2 (DB:54), Ring 3 (DB:55), and 5 faction modifier decks (DB:89). Ring deck cards are ring-keyed; faction deck cards are faction-keyed. Drawn at upkeep from the applicable deck to Faction Terminal. Four play modes: (1) Covert support — included with CO submission, follows covert path to ARBITER resolution, removed from game after resolution; (2) Public play — played with PA submission, follows PA path to Faction Resolution Grid, removed from game after resolution; (3) React — played on board state trigger from Faction Terminal to Faction Resolution Grid; may persist as a standing effect before resolution; removed from game when resolved; (4) Tension resolution — played from Faction Terminal to open table area to modify district tension battle outcome; removed from game immediately after. Full card design and value range: Art 04 §11.
+**Gameplay Requirements:** Sourced from 8 decks: Ring 1 (DB:53), Ring 2 (DB:54), Ring 3 (DB:55), and 5 Faction Modifier Decks (DB:89). Ring deck cards are ring-keyed; faction deck cards are faction-keyed. Drawn at upkeep from the applicable deck to Faction Terminal. Four play modes: (1) Covert support — included with CO submission, follows covert path to ARBITER resolution, removed from game after resolution; (2) Public play — played with PA submission, follows PA path to Faction Resolution Grid, removed from game after resolution; (3) React — played on board state trigger from Faction Terminal to Faction Resolution Grid; may persist as a standing effect before resolution; removed from game when resolved; (4) Tension resolution — played from Faction Terminal to open table area to modify district tension battle outcome; removed from game immediately after. Full card design and value range: Art 04 §11.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 11 |
-| `component_name` | Modifier card |
+| `component_name` | Modifier Card |
 | `physical_form` | Standard card; faction-keyed back (faction decks) or ring-keyed back (ring decks) |
 | `quantity` | TBD — varies per deck (pre-production estimate) |
 | `visibility` | Player-private at terminal; ARBITER-only during covert resolution; Public when played in all other modes |
 | `states` | In hand / Played (removed from game) |
-| `faction_keyed` | Faction-keyed (faction modifier decks DB:89) / Ring-keyed (ring modifier decks DB:53/54/55) |
+| `faction_keyed` | Faction-keyed (Faction Modifier Decks DB:89) / Ring-keyed (ring Modifier Decks DB:53/54/55) |
 | `placement_surface` | Faction Hand (DB:94); Dispatch Packet (DB:108) for covert play; ARBITER Covert Resolution Grid (DB:105) during covert resolution; Faction Resolution Grid (DB:88) for PA/react play; table surface for tension resolution |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Modifier deck (DB:53/54/55/89) → Faction Hand (DB:94) : faction draws from modifier deck; *Covert play:* Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Covert Resolution Grid (DB:105) : included with CO submission; follows covert path; → removed from game after resolution; *Public play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played with PA submission; follows PA path; → removed from game after resolution; *React play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played on board state trigger; may persist as standing effect; → removed from game when resolved; *Tension resolution:* Faction Hand (DB:94) → table surface (open area) : modifies district tension battle outcome; → removed from game |
+| `movement_path` | Modifier Deck (DB:53/54/55/89) → Faction Hand (DB:94) : faction draws from Modifier Deck; *Covert play:* Faction Hand (DB:94) → Dispatch Packet (DB:108) → Dispatch Case (DB:44) → ARBITER Covert Resolution Grid (DB:105) : included with CO submission; follows covert path; → removed from game after resolution; *Public play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played with PA submission; follows PA path; → removed from game after resolution; *React play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : played on board state trigger; may persist as standing effect; → removed from game when resolved; *Tension resolution:* Faction Hand (DB:94) → table surface (open area) : modifies district tension battle outcome; → removed from game |
 | `back_design` | Faction-keyed (faction decks) / Ring-keyed (ring decks) |
-| `card_source` | 8 source decks: Ring 1 (DB:53) · Ring 2 (DB:54) · Ring 3 (DB:55) · Faction modifier decks ×5 (DB:89) |
+| `card_source` | 8 source decks: Ring 1 (DB:53) · Ring 2 (DB:54) · Ring 3 (DB:55) · Faction Modifier Decks ×5 (DB:89) |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
 
 ---
 
-### Countermeasure card  (DB: 52)
+### Countermeasure Card  (DB: 52)
 
 **Design Function:** A reactive card type issued at initialization in a fixed set of three per faction — one CM-A and two CM-B. CM-A blocks all actions against the faction for the month played; CM-B adds a modifier to all actions against the faction for the month played. Played covertly or publicly; removed from game after use.
 
@@ -1284,7 +1284,7 @@ Individual action and event cards — the operational content of card-based game
 | Field | Value |
 |-------|-------|
 | `db_id` | 52 |
-| `component_name` | Countermeasure card |
+| `component_name` | Countermeasure Card |
 | `physical_form` | Standard card; neutral back; two subtypes (CM-A, CM-B) |
 | `quantity` | 5 CM-A + 10 CM-B = 15 total (gameplay requirement; identical within subtype) |
 | `visibility` | Player-private at terminal; Public when played |
@@ -1293,7 +1293,7 @@ Individual action and event cards — the operational content of card-based game
 | `placement_surface` | Faction Hand (DB:94); top of Dispatch Case (DB:44) when played covertly; Faction Resolution Grid (DB:88) when played publicly |
 | `max_placement_count` | 3 in hand (1 CM-A + 2 CM-B) |
 | `max_placement_ref` | Faction Hand (DB:94) |
-| `movement_path` | Game initialization → Faction Hand (DB:94) : issued as fixed set (1 CM-A + 2 CM-B per faction); *Covert play:* Faction Hand (DB:94) → top of Dispatch Case (DB:44) → Arbiter Tableau (DB:30) : ARBITER resolves → removed from game; *Public play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : declared openly → removed from game |
+| `movement_path` | Game initialization → Faction Hand (DB:94) : issued as fixed set (1 CM-A + 2 CM-B per faction); *Covert play:* Faction Hand (DB:94) → top of Dispatch Case (DB:44) → ARBITER Tableau (DB:30) : ARBITER resolves → removed from game; *Public play:* Faction Hand (DB:94) → Faction Resolution Grid (DB:88) : declared openly → removed from game |
 | `back_design` | Neutral |
 | `card_source` | Provided at initialization (fixed set: 1 CM-A + 2 CM-B per faction; no source deck) |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
@@ -1320,12 +1320,12 @@ Individual action and event cards — the operational content of card-based game
 | `visibility` | Public |
 | `states` | Active (in Situation Report Zone) / Resolved (in discard) |
 | `faction_keyed` | No |
-| `placement_surface` | Situation Report Zone (Art 01); Broadcast Deck (DB:86) and Broadcast Discard (DB:109) — both at Arbiter Tableau (DB:30), subzone TBD Art 07 |
+| `placement_surface` | Situation Report Zone (Art 01); Broadcast Deck (DB:86) and Broadcast Discard (DB:109) — both at ARBITER Tableau (DB:30), subzone TBD Art 07 |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
 | `movement_path` | Broadcast Deck (DB:86) → Situation Report Zone (Art 01) : Situation Report resolution; Situation Report Zone → Broadcast Discard (DB:109) : after event resolves |
 | `back_design` | Neutral |
-| `card_source` | Broadcast Deck (DB:86) — Arbiter Tableau (DB:30), subzone TBD Art 07 |
+| `card_source` | Broadcast Deck (DB:86) — ARBITER Tableau (DB:30), subzone TBD Art 07 |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
 
 ---
@@ -1348,12 +1348,12 @@ Individual action and event cards — the operational content of card-based game
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | Broadcast Effect Deck (DB:87) and Broadcast Effect Discard (DB:110) — both at Arbiter Tableau (DB:30), subzone TBD Art 07 |
+| `placement_surface` | Broadcast Effect Deck (DB:87) and Broadcast Effect Discard (DB:110) — both at ARBITER Tableau (DB:30), subzone TBD Art 07 |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Broadcast Effect Deck (DB:87) → Arbiter Tableau (DB:30) — subzone TBD Art 07 : drawn paired with Broadcast Card; Arbiter Tableau (DB:30) — subzone TBD Art 07 → Broadcast Effect Discard (DB:110) : after event resolves |
+| `movement_path` | Broadcast Effect Deck (DB:87) → ARBITER Tableau (DB:30) — subzone TBD Art 07 : drawn paired with Broadcast Card; ARBITER Tableau (DB:30) — subzone TBD Art 07 → Broadcast Effect Discard (DB:110) : after event resolves |
 | `back_design` | ARBITER-keyed |
-| `card_source` | Broadcast Effect Deck (DB:87) — Arbiter Tableau (DB:30), subzone TBD Art 07 |
+| `card_source` | Broadcast Effect Deck (DB:87) — ARBITER Tableau (DB:30), subzone TBD Art 07 |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
 
 ---
@@ -1367,7 +1367,7 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 **Faction Hand**
 
-### Faction hand  (DB: 94)
+### Faction Hand  (DB: 94)
 
 **Design Function:** The logical set of cards held by a faction behind the Faction Screen. Not a discrete physical object — the collection of all cards in active private possession.
 
@@ -1379,7 +1379,7 @@ Card containers organized by card type: source decks, discard piles, and player 
 | Field | Value |
 |-------|-------|
 | `db_id` | 94 |
-| `component_name` | Faction hand |
+| `component_name` | Faction Hand |
 | `physical_form` | Not a discrete physical object — collection of cards held behind Faction Screen |
 | `quantity` | N/A |
 | `visibility` | Player-private |
@@ -1397,19 +1397,19 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 **Covert Operation**
 
-### Covert operation deck  (DB: 92)
+### Covert Operation Deck  (DB: 92)
 
-**Design Function:** Per-faction source deck for covert operation cards.
+**Design Function:** Per-faction source deck for Covert Operation cards.
 
 **Narrative Anchor:** N/A — container component; narrative embedded in Covert Operation card entry.
 
-**Gameplay Requirements:** Faction identity clearly marked. Must be distinguishable from political act deck.
+**Gameplay Requirements:** Faction identity clearly marked. Must be distinguishable from Public Act Deck.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 92 |
-| `component_name` | Covert operation deck |
+| `component_name` | Covert Operation Deck |
 | `physical_form` | Card deck; faction identity marked on back |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private |
@@ -1425,9 +1425,9 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 ---
 
-### Covert operation discard  (DB: 93)
+### Covert Operation Discard  (DB: 93)
 
-**Design Function:** Per-faction discard pile for played or expired covert operation cards.
+**Design Function:** Per-faction discard pile for played or expired Covert Operation cards.
 
 **Narrative Anchor:** N/A — container component; narrative embedded in Covert Operation card entry.
 
@@ -1437,7 +1437,7 @@ Card containers organized by card type: source decks, discard piles, and player 
 | Field | Value |
 |-------|-------|
 | `db_id` | 93 |
-| `component_name` | Covert operation discard |
+| `component_name` | Covert Operation Discard |
 | `physical_form` | Discard pile area; held behind Faction Screen |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private |
@@ -1483,19 +1483,19 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 **Political Act**
 
-### Political act deck  (DB: 90)
+### Public Act Deck  (DB: 90)
 
-**Design Function:** Per-faction source deck for political act cards.
+**Design Function:** Per-faction source deck for Public Act cards.
 
 **Narrative Anchor:** N/A — container component; narrative embedded in Political Act card entry.
 
-**Gameplay Requirements:** Faction identity clearly marked. Must be distinct from covert operation deck.
+**Gameplay Requirements:** Faction identity clearly marked. Must be distinct from Covert Operation Deck.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 90 |
-| `component_name` | Political act deck |
+| `component_name` | Public Act Deck |
 | `physical_form` | Card deck; faction identity marked |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private |
@@ -1511,9 +1511,9 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 ---
 
-### Political act discard  (DB: 91)
+### Public Act Discard  (DB: 91)
 
-**Design Function:** Per-faction discard pile for played or expired political act cards.
+**Design Function:** Per-faction discard pile for played or expired Public Act cards.
 
 **Narrative Anchor:** N/A — container component; narrative embedded in Political Act card entry.
 
@@ -1523,7 +1523,7 @@ Card containers organized by card type: source decks, discard piles, and player 
 | Field | Value |
 |-------|-------|
 | `db_id` | 91 |
-| `component_name` | Political act discard |
+| `component_name` | Public Act Discard |
 | `physical_form` | Discard pile area; held behind Faction Screen |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private |
@@ -1539,7 +1539,7 @@ Card containers organized by card type: source decks, discard piles, and player 
 
 ---
 
-### Political Act Card Set  (DB: 115)
+### Public Act Card Set  (DB: 115)
 
 **Design Function:** Full faction-specific set of Political Act cards from which the faction player selects their in-play deck (DB:90) at initialization.
 
@@ -1551,7 +1551,7 @@ Card containers organized by card type: source decks, discard piles, and player 
 | Field | Value |
 |-------|-------|
 | `db_id` | 115 |
-| `component_name` | Political Act Card Set |
+| `component_name` | Public Act Card Set |
 | `physical_form` | Card deck; faction identity marked on back |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private (init only) |
@@ -1587,10 +1587,10 @@ Card containers organized by card type: source decks, discard piles, and player 
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB:30) — subzone TBD Art 07 |
+| `placement_surface` | ARBITER Tableau (DB:30) — subzone TBD Art 07 |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — fixed at Arbiter Tableau (DB:30) — subzone TBD Art 07 |
+| `movement_path` | N/A — fixed at ARBITER Tableau (DB:30) — subzone TBD Art 07 |
 | `back_design` | N/A |
 | `card_source` | N/A |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
@@ -1615,10 +1615,10 @@ Card containers organized by card type: source decks, discard piles, and player 
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB:30) — subzone TBD Art 07 |
+| `placement_surface` | ARBITER Tableau (DB:30) — subzone TBD Art 07 |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — fixed at Arbiter Tableau (DB:30) — subzone TBD Art 07 |
+| `movement_path` | N/A — fixed at ARBITER Tableau (DB:30) — subzone TBD Art 07 |
 | `back_design` | N/A |
 | `card_source` | N/A |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
@@ -1643,10 +1643,10 @@ Card containers organized by card type: source decks, discard piles, and player 
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB:30) — subzone TBD Art 07 |
+| `placement_surface` | ARBITER Tableau (DB:30) — subzone TBD Art 07 |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — fixed at Arbiter Tableau (DB:30) — subzone TBD Art 07; receives cards from Situation Report Zone after event resolves |
+| `movement_path` | N/A — fixed at ARBITER Tableau (DB:30) — subzone TBD Art 07; receives cards from Situation Report Zone after event resolves |
 | `back_design` | N/A |
 | `card_source` | N/A |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
@@ -1671,10 +1671,10 @@ Card containers organized by card type: source decks, discard piles, and player 
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB:30) — subzone TBD Art 07 |
+| `placement_surface` | ARBITER Tableau (DB:30) — subzone TBD Art 07 |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — fixed at Arbiter Tableau (DB:30) — subzone TBD Art 07; receives cards from resolution workspace after event resolves |
+| `movement_path` | N/A — fixed at ARBITER Tableau (DB:30) — subzone TBD Art 07; receives cards from resolution workspace after event resolves |
 | `back_design` | N/A |
 | `card_source` | N/A |
 | `applicable_verbs` | Add; Remove; Move; Reveal; Conceal |
@@ -1687,9 +1687,9 @@ Init-only decks that live external to the game area. Used at initialization only
 
 ### Operative Pool  (DB: 116)
 
-**Design Function:** Full set of Operative card variants for a faction. Faction player selects or draws one at initialization to assign their operative for the arc.
+**Design Function:** Full set of Operative Card variants for a faction. Faction player selects or draws one at initialization to assign their operative for the arc.
 
-**Narrative Anchor:** N/A — container component; narrative embedded in Operative card entry (DB:15).
+**Narrative Anchor:** N/A — container component; narrative embedded in Operative Card entry (DB:15).
 
 **Gameplay Requirements:** Multiple variants per faction; one selected at initialization (selection mechanic TBD — Art 05); remaining variants returned to storage. External to game area during play.
 
@@ -1743,9 +1743,9 @@ Init-only decks that live external to the game area. Used at initialization only
 
 ### Apex Ability Pool  (DB: 117)
 
-**Design Function:** Full set of Sealed Apex ability variants for a faction. Faction player selects or draws one at initialization.
+**Design Function:** Full set of Sealed Apex Ability variants for a faction. Faction player selects or draws one at initialization.
 
-**Narrative Anchor:** N/A — container component; narrative embedded in Sealed Apex ability entry (DB:99).
+**Narrative Anchor:** N/A — container component; narrative embedded in Sealed Apex Ability entry (DB:99).
 
 **Gameplay Requirements:** Multiple variants per faction; one selected at initialization (selection mechanic TBD — Art 05); remaining variants returned to storage. External to game area during play.
 
@@ -1771,19 +1771,19 @@ Init-only decks that live external to the game area. Used at initialization only
 
 **Modifier**
 
-### Ring 1 modifier deck  (DB: 53) · Ring 2 modifier deck  (DB: 54) · Ring 3 modifier deck  (DB: 55)
+### Ring 1 Modifier Deck  (DB: 53) · Ring 2 Modifier Deck  (DB: 54) · Ring 3 Modifier Deck  (DB: 55)
 
-**Design Function:** Three shared modifier card decks, each keyed to a city ring (Baryo / The Mid / Core). Drawn during Debrief to apply ring-keyed modifiers to covert operations. Shared across factions — not faction-specific.
+**Design Function:** Three shared Modifier Card decks, each keyed to a city ring (Baryo / The Mid / Core). Drawn during Debrief to apply ring-keyed modifiers to Covert Operations. Shared across factions — not faction-specific.
 
-**Narrative Anchor:** N/A — shared mechanical decks; narrative context embedded in district ring system (Art 01) and modifier card designs (Art 04 §11).
+**Narrative Anchor:** N/A — shared mechanical decks; narrative context embedded in district ring system (Art 01) and Modifier Card designs (Art 04 §11).
 
-**Gameplay Requirements:** Each deck must clearly display its ring designation. Must be distinguishable from Faction modifier decks and from action card decks.
+**Gameplay Requirements:** Each deck must clearly display its ring designation. Must be distinguishable from Faction Modifier Decks and from action card decks.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 53 · 54 · 55 |
-| `component_name` | Ring 1 modifier deck · Ring 2 modifier deck · Ring 3 modifier deck |
+| `component_name` | Ring 1 Modifier Deck · Ring 2 Modifier Deck · Ring 3 Modifier Deck |
 | `physical_form` | Card decks; ring designation marked on back |
 | `quantity` | 1 per ring × 3 rings = 3 total (gameplay requirement) |
 | `visibility` | Public |
@@ -1799,19 +1799,19 @@ Init-only decks that live external to the game area. Used at initialization only
 
 ---
 
-### Faction modifier deck  (DB: 89)
+### Faction Modifier Deck  (DB: 89)
 
-**Design Function:** Per-faction modifier card deck drawn during Debrief. Applies faction-specific modifiers to operations. One per faction.
+**Design Function:** Per-faction Modifier Card deck drawn during Debrief. Applies faction-specific modifiers to operations. One per faction.
 
-**Narrative Anchor:** N/A — container component; narrative embedded in modifier card designs (Art 04 §11).
+**Narrative Anchor:** N/A — container component; narrative embedded in Modifier Card designs (Art 04 §11).
 
-**Gameplay Requirements:** Faction identity clearly marked. Must be distinguishable from Ring modifier decks.
+**Gameplay Requirements:** Faction identity clearly marked. Must be distinguishable from Ring Modifier Decks.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 89 |
-| `component_name` | Faction modifier deck |
+| `component_name` | Faction Modifier Deck |
 | `physical_form` | Card deck; faction-keyed back |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Player-private |
@@ -1829,13 +1829,13 @@ Init-only decks that live external to the game area. Used at initialization only
 
 ## 11. Resolution Tools
 
-Instruments used to measure, flag, and resolve actions — threshold sliders, visibility/boost markers, and modifier tokens.
+Instruments used to measure, flag, and resolve actions — threshold sliders, visibility/Boost Markers, and Modifier Tokens.
 
 ---
 
 ### Visibility Marker (VM-xx)  (DB: 103)
 
-**Design Function:** ARBITER-held token marking that an associated covert operation resolves publicly.
+**Design Function:** ARBITER-held token marking that an associated Covert Operation resolves publicly.
 
 **Narrative Anchor:** N/A — resolution state marker; operational instrument with no player-facing narrative identity.
 
@@ -1851,10 +1851,10 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB: 30) — resolution workspace subzone / ARBITER Covert Resolution Grid (DB: 105) |
+| `placement_surface` | ARBITER Tableau (DB: 30) — resolution workspace subzone / ARBITER Covert Resolution Grid (DB: 105) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) → Arbiter Tableau (DB: 30) — resolution workspace subzone → ARBITER Covert Resolution Grid (DB: 105) : placed on target operation card when public resolution triggered; ARBITER Covert Resolution Grid (DB: 105) → Arbiter Tableau (DB: 30) : public resolution concludes |
+| `movement_path` | ARBITER Tableau (DB: 30) → ARBITER Tableau (DB: 30) — resolution workspace subzone → ARBITER Covert Resolution Grid (DB: 105) : placed on target operation card when public resolution triggered; ARBITER Covert Resolution Grid (DB: 105) → ARBITER Tableau (DB: 30) : public resolution concludes |
 | `function` | Flags that the associated operation resolves publicly; marks public vs. covert resolution state at Beat 3 |
 | `scale` | N/A — binary marker (present or absent) |
 | `init_value` | N/A |
@@ -1864,7 +1864,7 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 
 ### Boost Marker (BM-xx)  (DB: 104)
 
-**Design Function:** ARBITER-held token marking an active boost declaration on a covert operation.
+**Design Function:** ARBITER-held token marking an active boost declaration on a Covert Operation.
 
 **Narrative Anchor:** N/A — resolution state marker; operational instrument with no player-facing narrative identity.
 
@@ -1880,30 +1880,30 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB: 30) — resolution workspace subzone / ARBITER Covert Resolution Grid (DB: 105) |
+| `placement_surface` | ARBITER Tableau (DB: 30) — resolution workspace subzone / ARBITER Covert Resolution Grid (DB: 105) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) → Arbiter Tableau (DB: 30) — resolution workspace subzone : placed on submitted card when faction submits boost resources; Arbiter Tableau (DB: 30) — resolution workspace subzone → ARBITER Covert Resolution Grid (DB: 105) : moves with card when placed in resolution grid; ARBITER Covert Resolution Grid (DB: 105) → Arbiter Tableau (DB: 30) : removed after operation resolves |
-| `function` | Tracks that a faction has declared a boost on the associated covert operation in the current resolution cycle |
+| `movement_path` | ARBITER Tableau (DB: 30) → ARBITER Tableau (DB: 30) — resolution workspace subzone : placed on submitted card when faction submits boost resources; ARBITER Tableau (DB: 30) — resolution workspace subzone → ARBITER Covert Resolution Grid (DB: 105) : moves with card when placed in resolution grid; ARBITER Covert Resolution Grid (DB: 105) → ARBITER Tableau (DB: 30) : removed after operation resolves |
+| `function` | Tracks that a faction has declared a boost on the associated Covert Operation in the current resolution cycle |
 | `scale` | N/A — binary marker (present or absent) |
 | `init_value` | N/A |
 | `applicable_verbs` | Add; Remove; Move |
 
 ---
 
-### Modifier token  (DB: 47)
+### Modifier Token  (DB: 47)
 
-**Design Function:** Token holding the numeric modifier value contributed by a resolved modifier card on a target covert operation during resolution.
+**Design Function:** Token holding the numeric modifier value contributed by a resolved Modifier Card on a target Covert Operation during resolution.
 
 **Narrative Anchor:** N/A — modifier effect embodiment; narrative embedded in Modifier Card entry.
 
-**Gameplay Requirements:** Denominations 5, 10, 15. Obverse face (positive value) color-keyed green; reverse face (negative value) color-keyed red. Must be placeable on a card without obscuring card content. Starts in Arbiter Tableau. Placed by ARBITER when a modifier card resolves — modifier card exits the resolution queue, its value recorded on the token and placed on the affected card. Covert modifier resolution: placed on the affected card in the ARBITER Covert Resolution Grid (DB: 105); returned to Arbiter Tableau after covert operation resolves. PA modifier resolution: placed on the affected card in the Faction Resolution Grid (DB: 88); returned to Arbiter Tableau after PA resolves. ARBITER totals all modifier tokens on an operation to calculate cumulative threshold modification. ARBITER-managed.
+**Gameplay Requirements:** Denominations 5, 10, 15. Obverse face (positive value) color-keyed green; reverse face (negative value) color-keyed red. Must be placeable on a card without obscuring card content. Starts in ARBITER Tableau. Placed by ARBITER when a Modifier Card resolves — Modifier Card exits the resolution queue, its value recorded on the token and placed on the affected card. Covert modifier resolution: placed on the affected card in the ARBITER Covert Resolution Grid (DB: 105); returned to ARBITER Tableau after Covert Operation resolves. PA modifier resolution: placed on the affected card in the Faction Resolution Grid (DB: 88); returned to ARBITER Tableau after PA resolves. ARBITER totals all Modifier Tokens on an operation to calculate cumulative threshold modification. ARBITER-managed.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 47 |
-| `component_name` | Modifier token |
+| `component_name` | Modifier Token |
 | `physical_form` | Token; denominations 5, 10, 15; obverse positive (green) / reverse negative (red) |
 | `quantity` | TBD (pre-production estimate) |
 | `visibility` | Variable — ARBITER-only during covert resolution (DB: 105); Public during PA resolution (DB: 88) |
@@ -1912,9 +1912,9 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 | `placement_surface` | ARBITER Covert Resolution Grid (DB: 105) / Faction Resolution Grid (DB: 88) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) → ARBITER Covert Resolution Grid (DB: 105) : placed on affected card when covert modifier resolves; ARBITER Covert Resolution Grid (DB: 105) → Arbiter Tableau (DB: 30) : removed after covert operation resolves \| Arbiter Tableau (DB: 30) → Faction Resolution Grid (DB: 88) : placed on affected card when PA modifier resolves; Faction Resolution Grid (DB: 88) → Arbiter Tableau (DB: 30) : removed after PA resolves |
-| `function` | Accumulates modifier values on a target covert operation during resolution; ARBITER totals all tokens on the operation to calculate cumulative threshold modification |
-| `scale` | N/A — value is set at transfer from modifier card; not a graduated scale |
+| `movement_path` | ARBITER Tableau (DB: 30) → ARBITER Covert Resolution Grid (DB: 105) : placed on affected card when covert modifier resolves; ARBITER Covert Resolution Grid (DB: 105) → ARBITER Tableau (DB: 30) : removed after Covert Operation resolves \| ARBITER Tableau (DB: 30) → Faction Resolution Grid (DB: 88) : placed on affected card when PA modifier resolves; Faction Resolution Grid (DB: 88) → ARBITER Tableau (DB: 30) : removed after PA resolves |
+| `function` | Accumulates modifier values on a target Covert Operation during resolution; ARBITER totals all tokens on the operation to calculate cumulative threshold modification |
+| `scale` | N/A — value is set at transfer from Modifier Card; not a graduated scale |
 | `init_value` | N/A |
 | `applicable_verbs` | Add; Remove; Move; Flip |
 
@@ -1922,27 +1922,27 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 
 ### ARBITER Threshold Slider  (DB: 106)
 
-**Design Function:** Calibrated 0–100 measurement instrument at ARBITER's position for setting and reading covert operation difficulty thresholds.
+**Design Function:** Calibrated 0–100 measurement instrument at ARBITER's position for setting and reading Covert Operation difficulty thresholds.
 
 **Narrative Anchor:** N/A — ARBITER operational instrument; players have no knowledge of this component during play. Narrative TBD pending Art 07 design.
 
-**Gameplay Requirements:** Must display a clear 0–100 scale readable to ARBITER at a glance. Crit success zone (1–5) highlighted green; crit fail zone (96–00) highlighted red. Must hold position when set or adjusted. ARBITER sets slider to the base threshold of the operation card at the start of each resolution instance; slider is then adjusted up or down per modifier tokens, modifier cards, and other modifier types (Art 03 §13.5). *Note: may comprise 2 sub-components — see PM05 03-n11. Physical spec: Art 07.*
+**Gameplay Requirements:** Must display a clear 0–100 scale readable to ARBITER at a glance. Crit success zone (1–5) highlighted green; crit fail zone (96–00) highlighted red. Must hold position when set or adjusted. ARBITER sets slider to the base threshold of the operation card at the start of each resolution instance; slider is then adjusted up or down per Modifier Tokens, Modifier Cards, and other modifier types (Art 03 §13.5). *Note: may comprise 2 sub-components — see PM05 03-n11. Physical spec: Art 07.*
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 106 |
 | `component_name` | ARBITER Threshold Slider |
-| `physical_form` | Slider or dial; 0–100 scale; increments of 5 (20 ticks); crit success zone 1–5 (green highlight); crit fail zone 96–00 (red highlight); permanently on Arbiter Tableau |
+| `physical_form` | Slider or dial; 0–100 scale; increments of 5 (20 ticks); crit success zone 1–5 (green highlight); crit fail zone 96–00 (red highlight); permanently on ARBITER Tableau |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | N/A |
-| `placement_surface` | Arbiter Tableau (DB: 30) — permanent |
+| `placement_surface` | ARBITER Tableau (DB: 30) — permanent |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — permanently at Arbiter Tableau; slider position adjusted by ARBITER during resolution |
-| `function` | Set to the base threshold value of the operation card at resolution start; adjusted up or down by modifier tokens, modifier cards, and other modifier types (Art 03 §13.5) |
+| `movement_path` | N/A — permanently at ARBITER Tableau; slider position adjusted by ARBITER during resolution |
+| `function` | Set to the base threshold value of the operation card at resolution start; adjusted up or down by Modifier Tokens, Modifier Cards, and other modifier types (Art 03 §13.5) |
 | `scale` | 0–100 in increments of 5 (20 ticks) |
 | `init_value` | Base threshold value of the operation card being resolved (set per resolution instance) |
 | `applicable_verbs` | Add; Remove; Move; Corrupt |
@@ -1971,7 +1971,7 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
 | `movement_path` | The Overview (DB: 29) → Player position : initiative player takes control at PA resolution start; Player position → Player position : passed in initiative order for each PA resolution; Player position → The Overview (DB: 29) : returned after all PA resolution complete |
-| `function` | Set to the base threshold value of the PA card being resolved; adjusted up or down by modifier tokens, modifier cards, and other modifier types (Art 03 §13.5); passed in initiative order between faction players during Beat 4 |
+| `function` | Set to the base threshold value of the PA card being resolved; adjusted up or down by Modifier Tokens, Modifier Cards, and other modifier types (Art 03 §13.5); passed in initiative order between faction players during Beat 4 |
 | `scale` | 0–100 in increments of 5 (20 ticks) |
 | `init_value` | Base threshold value of the PA card being resolved (set per PA declaration) |
 | `applicable_verbs` | Add; Remove; Move; Corrupt |
@@ -1982,7 +1982,7 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 
 **Design Function:** Standard 10-sided die used as a percentile pair for threshold resolution. Two dice rolled together — one tens digit, one units digit — produce a d100 result (01–100; 00 = 100).
 
-**Narrative Anchor:** N/A — resolution instrument; narrative embedded in covert operation resolution sequence (Art 03 §13, §13.5).
+**Narrative Anchor:** N/A — resolution instrument; narrative embedded in Covert Operation resolution sequence (Art 03 §13, §13.5).
 
 **Gameplay Requirements:** Used in pairs for all d100 threshold resolution events. Each die in a pair is a different color — which color represents units and which represents tens is agreed upon by all players at game setup and held constant for the arc. ARBITER-rolled during covert resolution; rolled at The Overview when VM-xx is present (public resolution). Minimum 1 pair required; additional pairs per simultaneous resolution count TBD (Art 03).
 
@@ -1996,10 +1996,10 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 | `visibility` | Variable — ARBITER-only during covert resolution; Public during public resolution (VM-xx active) |
 | `states` | N/A |
 | `faction_keyed` | No |
-| `placement_surface` | Arbiter Tableau (DB: 30) — resolution workspace; The Overview (DB: 29) during public resolution |
+| `placement_surface` | ARBITER Tableau (DB: 30) — resolution workspace; The Overview (DB: 29) during public resolution |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | Arbiter Tableau (DB: 30) — supply → Arbiter Tableau (DB: 30) — resolution workspace : rolled for threshold resolution; → The Overview (DB: 29) : public resolution (VM-xx active); → Arbiter Tableau (DB: 30) — supply : returned after resolution |
+| `movement_path` | ARBITER Tableau (DB: 30) — supply → ARBITER Tableau (DB: 30) — resolution workspace : rolled for threshold resolution; → The Overview (DB: 29) : public resolution (VM-xx active); → ARBITER Tableau (DB: 30) — supply : returned after resolution |
 | `function` | Generates d100 result for threshold resolution (Art 03 §13.5); rolled as a pair — tens die + units die = 01–100 (00 = 100) |
 | `scale` | 0–9 per die; pair reads 01–100 (00 = 100) |
 | `init_value` | N/A — rolled fresh per resolution instance |
@@ -2009,7 +2009,7 @@ Instruments used to measure, flag, and resolve actions — threshold sliders, vi
 
 ## 12. Tracking Systems
 
-Markers and trackers recording game state across beats, rounds, and quarters. Status marker is ungrouped — it tracks a single cross-phase state function not captured by the three subgroups.
+Markers and trackers recording game state across beats, rounds, and quarters. Status Marker is ungrouped — it tracks a single cross-phase state function not captured by the three subgroups.
 
 ---
 
@@ -2044,7 +2044,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 ---
 
-### Standing marker  (DB: 37)
+### Standing Marker  (DB: 37)
 
 **Design Function:** Rider marker tracking a faction's current position on the Public Standing track.
 
@@ -2056,7 +2056,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | Field | Value |
 |-------|-------|
 | `db_id` | 37 |
-| `component_name` | Standing marker |
+| `component_name` | Standing Marker |
 | `physical_form` | Clip or bead; faction-colored |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Public |
@@ -2073,40 +2073,40 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 ---
 
-### Chorus Portrait track  (DB: 50)
+### Chorus Portrait Track  (DB: 50)
 
 **Design Function:** ARBITER's private record of the Chorus's cumulative assessment of each faction's behavior across the session.
 
 **Narrative Anchor:** The Chorus Portrait is what the Chorus observes — permanent, cumulative, and indifferent to performance or appearance. One action is enough to begin forming a pattern. The Portrait is not a score. It is a record. The same ruler; a different observer. *→ Art 00 §9.6 for full narrative.*
 
-**Gameplay Requirements:** Single physical strip containing 5 parallel faction-keyed tracks; behind ARBITER screen — visible to ARBITER at all times. Must display: −20 to +20 numbered scale; eleven named band labels (Void / Collapsed / Fractured / Dissonant / Uncertain / Ambiguous / Observed / Legible / Coherent / Aligned / Resonant); starting position marked at 0. Band labels are canonical (proposed); band score ranges are TBD pending Art 07 Portrait design (PM05 07-13). Physical privacy solution: Art 07.
+**Gameplay Requirements:** Single physical strip containing 5 parallel faction-keyed tracks; behind ARBITER Screen — visible to ARBITER at all times. Must display: −20 to +20 numbered scale; eleven named band labels (Void / Collapsed / Fractured / Dissonant / Uncertain / Ambiguous / Observed / Legible / Coherent / Aligned / Resonant); starting position marked at 0. Band labels are canonical (proposed); band score ranges are TBD pending Art 07 Portrait design (PM05 07-13). Physical privacy solution: Art 07.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 50 |
-| `component_name` | Chorus Portrait track |
-| `physical_form` | Laminated strip; 5 parallel faction-keyed tracks on one physical component; behind ARBITER screen |
+| `component_name` | Chorus Portrait Track |
+| `physical_form` | Laminated strip; 5 parallel faction-keyed tracks on one physical component; behind ARBITER Screen |
 | `quantity` | 1 physical component (5 parallel faction tracks; registered as 5 DB components) |
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | Yes |
-| `placement_surface` | Arbiter Tableau (DB: 30) |
+| `placement_surface` | ARBITER Tableau (DB: 30) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
 | `movement_path` | N/A — fixed in ARBITER Tableau; marker rides the strip |
 | `function` | Records the Chorus's cumulative assessment of each faction's behavior; inputs to final scoring procedure (Art 10a); ARBITER-only |
 | `scale` | −20 to +20 (eleven named bands: Void · Collapsed · Fractured · Dissonant · Uncertain · Ambiguous · Observed · Legible · Coherent · Aligned · Resonant; band score ranges TBD — PM05 07-13) |
 | `init_value` | 0 |
-| `applicable_verbs` | N/A — printed zone on Arbiter Tableau; not a separable physical component |
+| `applicable_verbs` | N/A — printed zone on ARBITER Tableau; not a separable physical component |
 
 ---
 
-### Portrait marker  (DB: 51)
+### Portrait Marker  (DB: 51)
 
-**Design Function:** Rider marker tracking a faction's current position on the Chorus Portrait track.
+**Design Function:** Rider marker tracking a faction's current position on the Chorus Portrait Track.
 
-**Narrative Anchor:** N/A — rider marker managed by ARBITER; narrative context embedded in Chorus Portrait track entry.
+**Narrative Anchor:** N/A — rider marker managed by ARBITER; narrative context embedded in Chorus Portrait Track entry.
 
 **Gameplay Requirements:** Must remain readable on the track strip. Faction color must be unambiguous. ARBITER-managed — never moved by players.
 
@@ -2114,17 +2114,17 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | Field | Value |
 |-------|-------|
 | `db_id` | 51 |
-| `component_name` | Portrait marker |
+| `component_name` | Portrait Marker |
 | `physical_form` | Clip or bead; faction-colored; held in ARBITER's tableau |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | ARBITER-only |
 | `states` | N/A |
 | `faction_keyed` | Yes |
-| `placement_surface` | Chorus Portrait track (DB: 50) |
+| `placement_surface` | Chorus Portrait Track (DB: 50) |
 | `max_placement_count` | 1 |
-| `max_placement_ref` | Chorus Portrait track (DB: 50) |
-| `movement_path` | Chorus Portrait track position → adjacent position : ARBITER moves per Portrait field on card, Accord violation, or Apex trigger |
-| `function` | Marks a faction's current Portrait position on the Chorus Portrait track |
+| `max_placement_ref` | Chorus Portrait Track (DB: 50) |
+| `movement_path` | Chorus Portrait Track position → adjacent position : ARBITER moves per Portrait field on card, Accord violation, or Apex trigger |
+| `function` | Marks a faction's current Portrait position on the Chorus Portrait Track |
 | `scale` | N/A — rider marker |
 | `init_value` | 0 (starting position on −20 to +20 scale) |
 | `applicable_verbs` | Add; Remove; Move |
@@ -2133,7 +2133,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Initiative**
 
-### Initiative strip  (DB: 24)
+### Initiative Strip  (DB: 24)
 
 **Design Function:** Ranked display holding Faction Order Markers to track faction initiative order for the current Quarter.
 
@@ -2145,7 +2145,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | Field | Value |
 |-------|-------|
 | `db_id` | 24 |
-| `component_name` | Initiative strip |
+| `component_name` | Initiative Strip |
 | `physical_form` | Laminated strip or card |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | Public |
@@ -2162,7 +2162,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 ---
 
-### Faction order marker  (DB: 38)
+### Faction Order Marker  (DB: 38)
 
 **Design Function:** Rider marker tracking a faction's current ranked position on the Initiative Strip.
 
@@ -2174,16 +2174,16 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | Field | Value |
 |-------|-------|
 | `db_id` | 38 |
-| `component_name` | Faction order marker |
+| `component_name` | Faction Order Marker |
 | `physical_form` | Wooden block; same physical form as Structure Block (DB: 4); faction-colored |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Public |
 | `states` | N/A |
 | `faction_keyed` | Yes |
-| `placement_surface` | Initiative strip (DB: 24) |
+| `placement_surface` | Initiative Strip (DB: 24) |
 | `max_placement_count` | 1 |
-| `max_placement_ref` | Initiative strip (DB: 24) |
-| `movement_path` | Initiative strip position → adjacent position : initiative reorder action or initiative setup |
+| `max_placement_ref` | Initiative Strip (DB: 24) |
+| `movement_path` | Initiative Strip position → adjacent position : initiative reorder action or initiative setup |
 | `function` | Marks a faction's current initiative position on the Initiative Strip |
 | `scale` | N/A — rider marker |
 | `init_value` | Set at initialization per Art 03-init §2 |
@@ -2199,7 +2199,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Narrative Anchor:** ARBITER is not counting down. It is counting up toward Integration — the threshold at which humanity's aggregate response to the Chorus reaches the point where the return channel opens. Quarter 8 marks that moment, whatever position the factions hold. *→ Art 00 §8 for full narrative.*
 
-**Gameplay Requirements:** Must clearly mark 8 Quarter sections (Q1–Q8), each subdivided into 3 Month positions (M1–M3), for 24 positions total. Current Quarter and Month must both be unambiguous when pointer marker is placed.
+**Gameplay Requirements:** Must clearly mark 8 Quarter sections (Q1–Q8), each subdivided into 3 Month positions (M1–M3), for 24 positions total. Current Quarter and Month must both be unambiguous when Pointer Marker is placed.
 
 **Metadata:**
 | Field | Value |
@@ -2214,7 +2214,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | `placement_surface` | Session Timeline Area (Art 01) |
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
-| `movement_path` | N/A — fixed at Session Timeline Area; pointer marker advances through Month positions within each Quarter, then to next Quarter |
+| `movement_path` | N/A — fixed at Session Timeline Area; Pointer Marker advances through Month positions within each Quarter, then to next Quarter |
 | `function` | Tracks the current Quarter (Q1–Q8) and Month (M1–M3) across the session; pointer advances at end of each Month |
 | `scale` | Q1–Q8 × M1–M3 (24 positions: 8 quarters, 3 months each; months repeat per quarter) |
 | `init_value` | Q1 M1 |
@@ -2222,7 +2222,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 ---
 
-### Pointer marker  (DB: 34)
+### Pointer Marker  (DB: 34)
 
 **Design Function:** Rides the Session Timeline. Marks the current Quarter.
 
@@ -2234,7 +2234,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | Field | Value |
 |-------|-------|
 | `db_id` | 34 |
-| `component_name` | Pointer marker |
+| `component_name` | Pointer Marker |
 | `physical_form` | Marker; uniform — both faces identical; TBD — Art 11 |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | Public |
@@ -2257,7 +2257,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 **Narrative Anchor:** ARBITER added this display to MIRROR's interface without being asked. No label. No unit of measurement. No explanation. The factions named it the Seismograph. Every faction has a theory. ARBITER provides no reason for the correlation. It projects the data and waits. *→ Art 00 §9.6 for full narrative.*
 
-**Gameplay Requirements:** Must show a graduated scale readable from all player positions. Two distinct marker positions required: Activity marker (current level) and Escalation marker (escalation line). Responds to operations executed, resources concentrated, and tensions escalated. Full design pending.
+**Gameplay Requirements:** Must show a graduated scale readable from all player positions. Two distinct marker positions required: Activity Marker (current level) and Escalation Marker (escalation line). Responds to operations executed, resources concentrated, and tensions escalated. Full design pending.
 
 **Metadata:**
 | Field | Value |
@@ -2273,26 +2273,26 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | `max_placement_count` | N/A |
 | `max_placement_ref` | N/A |
 | `movement_path` | N/A — fixed at Chorus Activity Track Area |
-| `function` | Records cumulative Chorus activity across the session; activity marker tracks current level; escalation marker marks the escalation line for Chorus response |
+| `function` | Records cumulative Chorus activity across the session; Activity Marker tracks current level; Escalation Marker marks the escalation line for Chorus response |
 | `scale` | TBD (full design pending — Art 07) |
 | `init_value` | 0 |
 | `applicable_verbs` | N/A — printed zone on The Overview; not a separable physical component |
 
 ---
 
-### Activity marker  (DB: 35)
+### Activity Marker  (DB: 35)
 
 **Design Function:** Rides the Chorus Activity Track. Marks the current activity level.
 
 **Narrative Anchor:** N/A — rider marker; narrative context embedded in Chorus Activity Track entry.
 
-**Gameplay Requirements:** Must be clearly distinguishable from the Escalation marker when both are on the track. ARBITER-managed.
+**Gameplay Requirements:** Must be clearly distinguishable from the Escalation Marker when both are on the track. ARBITER-managed.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 35 |
-| `component_name` | Activity marker |
+| `component_name` | Activity Marker |
 | `physical_form` | Marker; uniform — both faces identical; TBD — Art 11 |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | Public |
@@ -2309,19 +2309,19 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 ---
 
-### Escalation marker  (DB: 36)
+### Escalation Marker  (DB: 36)
 
 **Design Function:** Rides the Chorus Activity Track. Marks the escalation line — the level at which Chorus activity triggers a Chorus response.
 
 **Narrative Anchor:** N/A — rider marker; narrative context embedded in Chorus Activity Track entry.
 
-**Gameplay Requirements:** Must be clearly distinguishable from the Activity marker when both are on the track. ARBITER-managed.
+**Gameplay Requirements:** Must be clearly distinguishable from the Activity Marker when both are on the track. ARBITER-managed.
 
 **Metadata:**
 | Field | Value |
 |-------|-------|
 | `db_id` | 36 |
-| `component_name` | Escalation marker |
+| `component_name` | Escalation Marker |
 | `physical_form` | Marker; uniform — both faces identical; TBD — Art 11 |
 | `quantity` | 1 (gameplay requirement) |
 | `visibility` | Public |
@@ -2338,7 +2338,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 
 ---
 
-### Status marker  (DB: 49)
+### Status Marker  (DB: 49)
 
 **Design Function:** Two-state marker tracking each faction's discussion status during Quarter-end negotiation.
 
@@ -2350,7 +2350,7 @@ Markers and trackers recording game state across beats, rounds, and quarters. St
 | Field | Value |
 |-------|-------|
 | `db_id` | 49 |
-| `component_name` | Status marker |
+| `component_name` | Status Marker |
 | `physical_form` | Two-state flip marker (Active / Ready); TBD — Art 11 |
 | `quantity` | 1 per faction × 5 factions = 5 total (gameplay requirement) |
 | `visibility` | Public |

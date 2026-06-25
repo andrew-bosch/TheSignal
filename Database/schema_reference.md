@@ -49,8 +49,8 @@ The schema is a snowflake. Three tables are the center registry:
 
 | Core table | Axis | What it registers |
 |------------|------|-------------------|
-| `components` | **What** | Every physical object in the game — one row per instance (district tile, card, token, marker, deck, screen) |
-| `game_zones` | **Where** | Every named location — districts, tableau areas, dispatch cases, the Reservoir, the Dossier |
+| `components` | **What** | Every physical object in the game — one row per instance (District Tile, card, token, marker, deck, screen) |
+| `game_zones` | **Where** | Every named location — districts, tableau areas, Dispatch Cases, the Reservoir, the Dossier |
 | `game_actions` | **Verb** | Every action — the grammar of physical interaction (evolving into `action`) |
 
 Every other table in the schema is one of:
@@ -70,7 +70,7 @@ No table should be designed without knowing which core axis it hangs from and at
 
 **Permanent manifest and early-schema tables** — Two distinct categories:
 
-- **Physical manifest tables** (`components`, `district_metadata`, `district_adjacency`, `component_positions`, `factions`, `game_zones`, etc.) — Canonical registries of every physical object and location in the game. `components` is the master Bill of Materials: every district tile, every individual card, every token, every marker — one row per physical thing. Currently seeded with 21 district tiles; grows to encompass the full game component set. These are permanent-schema tables, not legacy placeholders.
+- **Physical manifest tables** (`components`, `district_metadata`, `district_adjacency`, `component_positions`, `factions`, `game_zones`, etc.) — Canonical registries of every physical object and location in the game. `components` is the master Bill of Materials: every District Tile, every individual card, every token, every marker — one row per physical thing. Currently seeded with 21 District Tiles; grows to encompass the full game component set. These are permanent-schema tables, not legacy placeholders.
 - **Early-schema tables** (`action_costs`, `action_restrictions`, `action_valid_targets`, `game_actions`, `beat`, `card_metadata`, `card_types`, `card_subtypes`, etc.) — Predated the promoted design workspace. Structurally inconsistent with current design; reconciled via DB-14.
 
 ### Full Table List
@@ -120,7 +120,7 @@ The permanent layout of `the_signal_db` is architected as a **Snowflake Schema**
      * `components` self-references via `parent_component_id` to handle hierarchical nesting.
      * `component` (formerly `component`) acts as the Component Type registry (defining operational properties, transform flags, and capabilities).
      * `district_metadata` extends `components` with district narrative/ring/resource values.
-     * `card_metadata` extends `components` with blueprint parameters for coverts and political acts.
+     * `card_metadata` extends `components` with blueprint parameters for coverts and Public Acts.
      * `component_positions` (formerly `live_state`) tracks instance locations.
 
 2. **`game_zones` (The Spatial Grid):**
@@ -171,7 +171,7 @@ The promoted model is a **design workspace** that partially overlaps with and pa
 
 | Promoted table | Legacy counterpart | Relationship |
 |-----------|-------------------|--------------|
-| `component` | `components` | Complementary, not competing. `component` = component **type** registry (what types exist, what they can do — state-machine flags, verb coverage). `components` = physical **instance** manifest (every individual object in the game box — each district tile, each card, each token, each marker). Both are permanent; neither replaces the other. L169 (DB-32) adds `parent_component_id` to `component` for type hierarchy ("Card" → "Covert operation card" → outcome subtypes). `components` already has `parent_component_id` for instance grouping (e.g., individual cards grouped under their deck parent). The `master_blueprint_id` FK on `components` → `card_metadata` links physical card instances to their design blueprint. |
+| `component` | `components` | Complementary, not competing. `component` = component **type** registry (what types exist, what they can do — state-machine flags, verb coverage). `components` = physical **instance** manifest (every individual object in the game box — each District Tile, each card, each token, each marker). Both are permanent; neither replaces the other. L169 (DB-32) adds `parent_component_id` to `component` for type hierarchy ("Card" → "Covert Operation Card" → outcome subtypes). `components` already has `parent_component_id` for instance grouping (e.g., individual cards grouped under their deck parent). The `master_blueprint_id` FK on `components` → `card_metadata` links physical card instances to their design blueprint. |
 | `action` | `game_actions` | Different structures. `game_actions` = flat verb/definition catalog. `action` = full operational grammar (beat, trigger, subject, verb, component, prereq chain). Migration requires 00b §8 to define the target permanent structure before any DDL. |
 | `verb` | `game_actions.action_verb` | Verbs are inline in `game_actions`; `verb` is a normalized lookup. |
 | `quarter_phase` | `beat` | Parallel tables with similar purpose. `beat` is more fully populated and has richer metadata (month, beat_num, primary_agent, description). |
@@ -271,24 +271,24 @@ Views are the primary interface to the model. They transform raw table data into
 | id | name | month | beat_num | primary_agent | description |
 |----|------|-------|----------|---------------|-------------|
 | 1 | Upkeep | NULL | NULL | Both | World updates, resources, tokens, initiative, Situation Reports |
-| 2 | Placement | NULL | NULL | Both | Deployment markers placed; entry requirements enforced; influence levels updated |
+| 2 | Placement | NULL | NULL | Both | Deployment Markers placed; entry requirements enforced; influence levels updated |
 | 3 | Month 1 — Dispatch | M1 | NULL | Faction | Operations assembled, sealed, submitted with Dispatch Tokens |
-| 4 | Month 1 — Countermeasures | M1 | NULL | Faction | Countermeasure cards deployed; handed to ARBITER for Month 1 application |
+| 4 | Month 1 — Countermeasures | M1 | NULL | Faction | Countermeasure Cards deployed; handed to ARBITER for Month 1 application |
 | 5 | Month 1 — Beat 0 | M1 | 0 | Both | The Cases Open: ARBITER opens cases, sorts grid; factions validate submissions |
 | 6 | Month 1 — Beat 1 | M1 | 1 | ARBITER | Check Active Restrictions: ARBITER removes ops violating restriction cards |
-| 7 | Month 1 — Beat 2 | M1 | 2 | Both | The Ground Shifts: modifier cards resolve; ARBITER places modifier tokens |
+| 7 | Month 1 — Beat 2 | M1 | 2 | Both | The Ground Shifts: Modifier Cards resolve; ARBITER places Modifier Tokens |
 | 8 | Month 1 — Beat 3 | M1 | 3 | ARBITER | Covert Operations Resolve: ARBITER resolves each op; board effects applied |
 | 9 | Month 2 — Dispatch | M2 | NULL | Faction | Second covert pass; remaining Dispatch Tokens used |
-| 10 | Month 2 — Countermeasures | M2 | NULL | Faction | Countermeasure cards deployed for Month 2 |
+| 10 | Month 2 — Countermeasures | M2 | NULL | Faction | Countermeasure Cards deployed for Month 2 |
 | 11 | Month 2 — Beat 0 | M2 | 0 | Both | The Cases Open: Month 2 grid sorted |
 | 12 | Month 2 — Beat 1 | M2 | 1 | ARBITER | Check Active Restrictions: Month 2 grid audited |
 | 13 | Month 2 — Beat 2 | M2 | 2 | Both | The Ground Shifts: Month 2 modifier pass |
 | 14 | Month 2 — Beat 3 | M2 | 3 | ARBITER | Covert Operations Resolve: Month 2 operations resolved |
-| 15 | Month 3 — Declaration | M3 | NULL | Both | Political acts declared face-up in initiative order |
-| 16 | Month 3 — Countermeasures | M3 | NULL | Faction | Countermeasure cards deployed for Month 3 |
+| 15 | Month 3 — Declaration | M3 | NULL | Both | Public Acts declared face-up in initiative order |
+| 16 | Month 3 — Countermeasures | M3 | NULL | Faction | Countermeasure Cards deployed for Month 3 |
 | 17 | Month 3 — Beat 4 | M3 | 4 | Both | Political Acts Resolve: declared acts resolved; board and resource effects applied |
 | 18 | Month 3 — Beat 5 | M3 | 5 | ARBITER | The Table Speaks: ARBITER updates Portrait, Chronicle, Session Timeline, Chorus Activity |
-| 19 | Battlefield Strength | NULL | NULL | ARBITER | Contested districts resolved; d10 roll-off; Tension markers cleared |
+| 19 | Battlefield Strength | NULL | NULL | ARBITER | Contested districts resolved; d10 roll-off; Tension Markers cleared |
 | 20 | Debrief | NULL | NULL | Both | Resource and Intel trades; ARBITER Debrief observation; Chorus Question window |
 
 ### layer (6 rows)
@@ -480,8 +480,8 @@ Special cases:
 - `STD` = Standard (faction=All) — one spec, five physical copies (one per faction deck of matching type)
 - `RNG` ring decks use format `RNG.[1/2/3].n` — ring number replaces TYPE slot
 - `[FAC].ER` — Emergency Response has no sequence number; one card per faction IS the deck
-- `STD.CMA.1` / `STD.CMB.1` — Countermeasure cards; one spec each, faction copies (1× CMA, 2× CMB per faction)
-- ARBITER card taxonomy = BCAST and BCEV only; ARB domain documents (Accord, Notif Slip, Grant Deed, DebriefActionCard) are NOT cards and have no card_id
+- `STD.CMA.1` / `STD.CMB.1` — Countermeasure Cards; one spec each, faction copies (1× CMA, 2× CMB per faction)
+- ARBITER card taxonomy = BCAST and BCEV only; ARB domain documents (Accord, Notif Slip, Grant Deed, Debrief Action Card) are NOT cards and have no card_id
 
 `varchar(15)` constraint: all IDs must fit within 15 characters. `ARB.BCEV.99` = 11 chars (safe). Verify any new ID type fits before adding.
 
@@ -532,26 +532,26 @@ Bridge table linking Art 04 taxonomy subject vocabulary (PascalCase) to the `com
 
 | subject | component_id | component name |
 |---------|-------------|----------------|
-| Accord | 10 | Accord agreement |
-| AccordAgreement | 10 | Accord agreement |
-| AccordCard | 10 | Accord agreement |
+| Accord | 10 | Accord Agreement |
+| AccordAgreement | 10 | Accord Agreement |
+| AccordCard | 10 | Accord Agreement |
 | BroadcastEffectCard | 98 | Broadcast Effect Card |
-| ClassifiedDirective | 17 | Classified directives |
-| CovertOperation | 13 | Covert operation |
-| DebriefActionCard | 100 | DebriefActionCard |
-| ModifierCard | 11 | Modifier card |
-| PublicAct | 14 | Public act |
-| DeploymentMarker | 2 | Deployment marker |
+| ClassifiedDirective | 17 | Classified Directives |
+| CovertOperation | 13 | Covert Operation |
+| Debrief Action Card | 100 | Debrief Action Card |
+| ModifierCard | 11 | Modifier Card |
+| PublicAct | 14 | Public Act |
+| DeploymentMarker | 2 | Deployment Marker |
 | PresenceToken | 1 | Presence token |
-| StructureBlock | 3 | Structure block |
-| District | 4 | District tile |
+| StructureBlock | 3 | Structure Block |
+| District | 4 | District Tile |
 | IntelDeliverySlip | 96 | Intel Delivery Slip |
-| IntelToken | 9 | Intel token |
-| IntelTokensHeld | 9 | Intel token |
-| Exposure | 8 | Native resource |
-| FactionNativeResource | 8 | Native resource |
-| NativeResource | 8 | Native resource |
-| FactionHand | 94 | Faction hand |
+| IntelToken | 9 | Intel Token |
+| IntelTokensHeld | 9 | Intel Token |
+| Exposure | 8 | Native Resource |
+| FactionNativeResource | 8 | Native Resource |
+| NativeResource | 8 | Native Resource |
+| FactionHand | 94 | Faction Hand |
 | PublicStanding | 21 | Public Standing |
 | ActionAttribution | NULL | (who did what — not a component) |
 | Difficulty | NULL | (modifier attribute — not a component) |
@@ -634,65 +634,65 @@ CREATE TABLE `state_condition_clause` (
 | id | name | act | xfm | rcv | vis | ori | dat | par |
 |----|------|-----|-----|-----|-----|-----|-----|-----|
 | 1 | Presence token | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 2 | Deployment marker | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
-| 3 | Structure block | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 4 | District tile | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
-| 5 | Established marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 6 | Dominant marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 7 | Tension marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 8 | Native resource | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 9 | Intel token | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
-| 10 | Accord agreement | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
-| 11 | Modifier card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
-| 12 | Dispatch token | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 13 | Covert operation | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
-| 14 | Public act | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
-| 15 | Operative card | 1 | 1 | 0 | 1 | 0 | 1 | 111 |
-| 17 | Classified directives | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 2 | Deployment Marker | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
+| 3 | Structure Block | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 4 | District Tile | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 5 | Established Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 6 | Dominant Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 7 | Tension Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 8 | Native Resource | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 9 | Intel Token | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
+| 10 | Accord Agreement | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
+| 11 | Modifier Card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 12 | Dispatch Token | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 13 | Covert Operation | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
+| 14 | Public Act | 1 | 1 | 1 | 1 | 0 | 0 | 111 |
+| 15 | Operative Card | 1 | 1 | 0 | 1 | 0 | 1 | 111 |
+| 17 | Classified Directives | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
 | 21 | Public Standing | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
 | 23 | Session Timeline | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
-| 24 | Initiative strip | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 24 | Initiative Strip | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
 | 25 | Broadcast Card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
 | 26 | Faction Terminal | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
-| 27 | Faction screen | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 28 | ARBITER screen | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 27 | Faction Screen | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 28 | ARBITER Screen | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
 | 29 | The Overview | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
-| 30 | Arbiter Tableau | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
+| 30 | ARBITER Tableau | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
 | 31 | Chorus Activity Track | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
 | 32 | Reservoir | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
 | 33 | Backlog | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
-| 34 | Pointer marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 35 | Activity marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 36 | Escalation marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 37 | Standing marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 38 | Faction order marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 34 | Pointer Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 35 | Activity Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 36 | Escalation Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 37 | Standing Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 38 | Faction Order Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
 | 42 | ARBITER Dominance Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 43 | Human player | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 44 | Dispatch case | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
-| 47 | Modifier token | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
+| 43 | Human Player | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 44 | Dispatch Case | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 47 | Modifier Token | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
 | 48 | Target Profile | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
-| 49 | Status marker | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
+| 49 | Status Marker | 1 | 1 | 0 | 0 | 1 | 0 | NULL |
 | 50 | Chorus Portrait track | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
-| 51 | Portrait marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
-| 52 | Countermeasure card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
-| 53 | Ring 1 modifier deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
-| 54 | Ring 2 modifier deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
-| 55 | Ring 3 modifier deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 51 | Portrait Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
+| 52 | Countermeasure Card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
+| 53 | Ring 1 Modifier Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 54 | Ring 2 Modifier Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 55 | Ring 3 Modifier Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
 | 86 | Broadcast Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
 | 87 | Broadcast Effect Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
 | 88 | Faction Resolution Grid | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
-| 89 | Faction modifier deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
-| 90 | Political act deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
-| 91 | Political act discard | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
-| 92 | Covert operation deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
-| 93 | Covert operation discard | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
-| 94 | Faction hand | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
+| 89 | Faction Modifier Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 90 | Public Act Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 91 | Public Act Discard | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 92 | Covert Operation Deck | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 93 | Covert Operation Discard | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
+| 94 | Faction Hand | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
 | 95 | Notification Slip | 1 | 1 | 1 | 1 | 0 | 0 | NULL |
 | 96 | Intel Delivery Slip | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
 | 97 | Emergency Response card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
 | 98 | Broadcast Effect Card | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
 | 99 | Sealed Apex ability | 1 | 1 | 0 | 1 | 0 | 0 | 111 |
-| 100 | DebriefActionCard | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
+| 100 | Debrief Action Card | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
 | 102 | Situation Report | 0 | 0 | 1 | 0 | 0 | 0 | NULL |
 | 103 | Visibility Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
 | 104 | Boost Marker | 1 | 0 | 0 | 0 | 0 | 0 | NULL |
@@ -705,7 +705,7 @@ CREATE TABLE `state_condition_clause` (
 | 111 | Card | 0 | 0 | 0 | 0 | 0 | 0 | NULL |
 | 113 | Grant Deed | 1 | 1 | 1 | 1 | 0 | 1 | NULL |
 | 114 | Covert Operation Card Set | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
-| 115 | Political Act Card Set | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
+| 115 | Public Act Card Set | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
 | 116 | Operative Pool | 1 | 1 | 0 | 1 | 0 | 1 | NULL |
 | 117 | Apex Ability Pool | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
 | 118 | Classified Directives Pool | 1 | 1 | 0 | 1 | 0 | 0 | NULL |
@@ -715,7 +715,7 @@ CREATE TABLE `state_condition_clause` (
 *IDs are non-sequential (gaps from deleted rows during schema evolution).*  
 *Next AUTO_INCREMENT = 120.*
 
-*Note on ids 100 and 113:* `DebriefActionCard` (100) and `Grant Deed` (113) are physical game documents (ARBITER domain), not card-type components, and thus have `parent_component_id = NULL` (they do not belong to the `Card` hierarchy).
+*Note on ids 100 and 113:* `Debrief Action Card` (100) and `Grant Deed` (113) are physical game documents (ARBITER domain), not card-type components, and thus have `parent_component_id = NULL` (they do not belong to the `Card` hierarchy).
 *Note on ids 116, 117, and 118:* `Operative Pool` (116), `Apex Ability Pool` (117), and `Classified Directives Pool` (118) are faction-specific components (one instance per faction) rather than board-level or non-faction components.
 
 
@@ -771,7 +771,7 @@ CREATE TABLE `state_condition_clause` (
 
 ## 7. Canonical Component Registration Pattern
 
-Use **Countermeasure card (id=52)** as the reference. Full 4-table cascade required for every new component.
+Use **Countermeasure Card (id=52)** as the reference. Full 4-table cascade required for every new component.
 
 ### Step 1 — Register in component
 ```sql
@@ -785,7 +785,7 @@ VALUES ('Component Name', 1, 0, 1, 0, 0);
 ### Step 2 — Seed beat coverage in comp_verb_phase
 One row per valid (component, verb, beat) combination.
 ```sql
--- Countermeasure card (id=52) example:
+-- Countermeasure Card (id=52) example:
 INSERT INTO comp_verb_phase (component_id, verb_id, phase_id) VALUES
   (52, 1,  2),   -- Add at Placement (beat 2)
   (52, 17, 4),   -- Invoke at M1 Countermeasures (beat 4)
@@ -805,7 +805,7 @@ INSERT INTO comp_verb_phase (component_id, verb_id, phase_id) VALUES
 ### Step 3 — Seed role assignments in comp_verb_role
 **⚠ role_id → player_role (1=Faction, 2=ARBITER); phase_id → role_phase (1=initiator, 2=executor, 3=fulfiller)**
 ```sql
--- Countermeasure card (id=52) example:
+-- Countermeasure Card (id=52) example:
 INSERT INTO comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
   (52, 1,  2, 1),  -- Add: ARBITER initiator
   (52, 1,  2, 2),  -- Add: ARBITER executor
@@ -829,23 +829,23 @@ INSERT INTO comp_verb_role (component_id, verb_id, role_id, phase_id) VALUES
 -- subject_id: 1=Faction, 2=ARBITER
 
 INSERT INTO action (phase_id, beat_trigger, trigger_type_id, subject_id, verb_id, component_id, notes) VALUES
-  (2,  'during', 4, 2, 1,  52, 'ARBITER distributes Countermeasure cards to Factions'),
-  (4,  'during', 6, 1, 10, 52, 'Faction deploys Countermeasure card face-up'),
-  (4,  'during', 6, 1, 17, 52, 'Faction invokes Countermeasure card effect'),
-  (7,  'during', 4, 2, 2,  52, 'ARBITER discards Countermeasure card after resolution'),
-  (10, 'during', 6, 1, 10, 52, 'Faction deploys Countermeasure card face-up'),
-  (10, 'during', 6, 1, 17, 52, 'Faction invokes Countermeasure card effect'),
-  (13, 'during', 4, 2, 2,  52, 'ARBITER discards Countermeasure card after resolution'),
-  (16, 'during', 6, 1, 10, 52, 'Faction deploys Countermeasure card face-up'),
-  (16, 'during', 6, 1, 17, 52, 'Faction invokes Countermeasure card effect'),
-  (17, 'during', 4, 2, 2,  52, 'ARBITER discards Countermeasure card after resolution');
+  (2,  'during', 4, 2, 1,  52, 'ARBITER distributes Countermeasure Cards to Factions'),
+  (4,  'during', 6, 1, 10, 52, 'Faction deploys Countermeasure Card face-up'),
+  (4,  'during', 6, 1, 17, 52, 'Faction invokes Countermeasure Card effect'),
+  (7,  'during', 4, 2, 2,  52, 'ARBITER discards Countermeasure Card after resolution'),
+  (10, 'during', 6, 1, 10, 52, 'Faction deploys Countermeasure Card face-up'),
+  (10, 'during', 6, 1, 17, 52, 'Faction invokes Countermeasure Card effect'),
+  (13, 'during', 4, 2, 2,  52, 'ARBITER discards Countermeasure Card after resolution'),
+  (16, 'during', 6, 1, 10, 52, 'Faction deploys Countermeasure Card face-up'),
+  (16, 'during', 6, 1, 17, 52, 'Faction invokes Countermeasure Card effect'),
+  (17, 'during', 4, 2, 2,  52, 'ARBITER discards Countermeasure Card after resolution');
 ```
 
 ### Step 5 — Seed placement targets in subject_target
 ```sql
 INSERT INTO subject_target (subject_id, target_id) VALUES
-  (52, 30),  -- Countermeasure card → Arbiter Tableau (id=30)
-  (52, 26);  -- Countermeasure card → Faction Terminal (id=26)
+  (52, 30),  -- Countermeasure Card → ARBITER Tableau (id=30)
+  (52, 26);  -- Countermeasure Card → Faction Terminal (id=26)
 ```
 
 ---
@@ -872,12 +872,12 @@ As of S117 (new):
 - **DB-14** ✅ S50 (agy): Promoted all 20 design tables to permanent schema (dropped tmp_ prefix) and recompiled all 27 views.
 - **DB-3NF** ✅ S63 (L184): 3NF applied. `component.transformable` → VIRTUAL GENERATED (derived from transform_ flags). `action.prereq_beat_id` dropped — prereq beat resolved dynamically via `prereq_id → action.phase_id`. `v_action_chain` rewritten. L108 amended (Requirements 6–7). `card_metadata` 3NF deferred to Art 04.6.
 - **DB-18** (PM05): Cross-beat modifier persistence not modeled. C06/C07/C10/C11/C12 play at Beat 2 but modify Beat 3/4 — no deferred-effect mechanism in action.
-- **DB-19** (PM05): Concurrent Political acts (C09) not verified in resolution model.
-- **DB-22** ✅ S50 (agy): Upkeep primitives seeded — Faction/ARBITER Flip Status marker (ids 295/296), Faction/ARBITER Add Presence token (ids 297/298), Faction/ARBITER Remove Deployment marker (ids 299/300), ARBITER Move Situation Report card (id 301).
-- **DB-23** ✅ S50 (agy): Status marker `transform_data` corrected to 0. Debrief Flip Status marker FK corrected to component id=49.
-- **DB-24** ✅ S50 (agy): Portrait marker (id=51) registered in subject_target. Move primitives seeded.
-- **DB-25** ✅ S50 (agy): Design-confirmed — Situation Report cards move to expired area (not removed); Target Profiles returned in dispatch case. No Remove primitive needed per Art 03.
-- **DB-26** ✅ S50 (agy): Move role permissions verified against Art 03. Political act, Situation Report card, Target Profile resolved.
+- **DB-19** (PM05): Concurrent Public Acts (C09) not verified in resolution model.
+- **DB-22** ✅ S50 (agy): Upkeep primitives seeded — Faction/ARBITER Flip Status Marker (ids 295/296), Faction/ARBITER Add Presence token (ids 297/298), Faction/ARBITER Remove Deployment Marker (ids 299/300), ARBITER Move Situation Report card (id 301).
+- **DB-23** ✅ S50 (agy): Status Marker `transform_data` corrected to 0. Debrief Flip Status Marker FK corrected to component id=49.
+- **DB-24** ✅ S50 (agy): Portrait Marker (id=51) registered in subject_target. Move primitives seeded.
+- **DB-25** ✅ S50 (agy): Design-confirmed — Situation Report cards move to expired area (not removed); Target Profiles returned in Dispatch Case. No Remove primitive needed per Art 03.
+- **DB-26** ✅ S50 (agy): Move role permissions verified against Art 03. Public Act, Situation Report card, Target Profile resolved.
 - **DB-09** ✅ S50 (agy): district_adjacency created and fully seeded — 21 district components in `components`, 21 rows in `district_metadata`, 104 bidirectional adjacency rows. PKs enforced on district_metadata and player_metadata.
 - **category / type**: Deprecated. Drop and rebuild after Art 04b sign-off (DB-16).
 - **destination_component_id / destination_zone_id** in action: Unpopulated — destination currently encoded in notes text only.
@@ -890,4 +890,4 @@ This file is at `~/Projects/TheSignal/Database/` alongside all SQL build scripts
 
 ---
 
-*Populated S50 — 2026-05-29. Updated S117 — 2026-06-24: added card_status taxonomy columns (layer/function/subject/beat), new card_subject_map table, component renames (id=1 Presence token, id=14 Public act), §9 DB-derivable note.*
+*Populated S50 — 2026-05-29. Updated S117 — 2026-06-24: added card_status taxonomy columns (layer/function/subject/beat), new card_subject_map table, component renames (id=1 Presence token, id=14 Public Act), §9 DB-derivable note.*

@@ -1,6 +1,6 @@
 # 03b — Component Lifecycle Register
 
-**Version:** 0.1
+**Version:** 0.2
 **Status:** In Progress — S88 initial formalization from Whiteboard/component_lifecycle_S88.md
 **Depends on:** 02 (component design descriptions), 03-init (setup counts/zones), 03 (procedures), 00b (DB registry)
 
@@ -42,12 +42,12 @@ Placed at 03-init §3.2. Never removed during play.
 | Component | 03-init Source | Notes |
 |-----------|---------------|-------|
 | The Overview (game mat) | §2.1 | Permanent infrastructure. |
-| District tile ×21 | §2.1 | Permanent. Never moved. |
+| District Tile ×21 | §2.1 | Permanent. Never moved. |
 | Ring Modifier Deck ×3 | §2.1 | Cards drawn each Quarter (§7.5.3.1); discarded when used. Deck not reshuffled when exhausted. |
 | Session Timeline | §2.1 | Pointer advances at §9.4.4.1 (month) and §12.4 (Quarter). |
-| Initiative Strip | §2.1 | Faction order markers reordered at §7.1 each Quarter. |
+| Initiative Strip | §2.1 | Faction Order Markers reordered at §7.1 each Quarter. |
 | Chorus Activity Track | §2.1 | Markers updated per ARBITER script and §11.2. |
-| Public Standing Track | §2.1 | Standing markers move at §7.2.4 and per card outcomes throughout. |
+| Public Standing Track | §2.1 | Standing Markers move at §7.2.4 and per card outcomes throughout. |
 | Reservoir | §2.1 | Universal resource token pool. Tokens flow in/out throughout play; see Section 8. |
 | ARBITER Screen | §2.1 (P6) | Permanent. Never moves. |
 | ARBITER Tableau | §2.1 (P6) | Zone. Components placed here during play. |
@@ -74,11 +74,11 @@ Placed at 03-init §3.2. Never removed during play.
 
 | State | When | Section |
 |-------|------|---------|
-| In faction hand | T=0 | §2.7 |
+| In Faction Hand | T=0 | §2.7 |
 | Placed on board (Converting face) | §8 Placement | §8.0 |
 | Flipped to Blocked face | Broadcast Card effect, targeting restriction, or card-specified fail | §7.2.5, §9.4.1.0, §9.4.2.2, §9.4.3.3 |
 | Persists on board | Across §9–§12 and into next Quarter | — |
-| Converting → presence chip placed; marker returned to hand | §7.3.1 of following Quarter | §7.3.1 |
+| Converting → Presence Token placed; marker returned to hand | §7.3.1 of following Quarter | §7.3.1 |
 | Blocked → returned to hand without chip | §7.3.2 of following Quarter | §7.3.2 |
 
 ### Dispatch Case ×1
@@ -101,7 +101,7 @@ Placed at 03-init §3.2. Never removed during play.
 
 | State | When | Section |
 |-------|------|---------|
-| In faction terminal | T=0 (via §3.6) | §2.7 |
+| In Faction Terminal | T=0 (via §3.6) | §2.7 |
 | Submitted to ARBITER (Apex only) | §14 Step 2 | §14 |
 | Return / refresh after Apex failure | Pending Art 04/05 design | §14 |
 | Apex success: session ends | §14 Step 4 | — |
@@ -110,7 +110,7 @@ Placed at 03-init §3.2. Never removed during play.
 
 | State | When | Section |
 |-------|------|---------|
-| In faction terminal | T=0 (via §3.6) | §2.7 |
+| In Faction Terminal | T=0 (via §3.6) | §2.7 |
 | Submitted as Apex covert op | §9.1 — in Dispatch Packet | §14 |
 | Apex cancelled: operative retained | §14 Step 3 | §14 |
 | Apex success: session ends; operative retires | §14 Step 4 | — |
@@ -119,19 +119,19 @@ Placed at 03-init §3.2. Never removed during play.
 
 | State | When | Section |
 |-------|------|---------|
-| In faction terminal | T=0 (via §3.6) | §2.7 |
+| In Faction Terminal | T=0 (via §3.6) | §2.7 |
 | Follows PA card lifecycle | §9.2 → §9.4.3 | See PA Cards (Section 5) |
 
 ### Countermeasure Card (CM-A ×1, CM-B ×2)
 
 | State | When | Section |
 |-------|------|---------|
-| In faction terminal CM area | T=0 (via §3.7; issued, not drawn) | §2.7, §3.7 |
+| In Faction Terminal CM area | T=0 (via §3.7; issued, not drawn) | §2.7, §3.7 |
 | Deployed to ARBITER (covert) or played publicly (PA) | §9.3.0 per Monthly window | §9.3 |
-| Submitted CM: attached to dispatch case; matched at Beat 0 | §9.3.1, §9.4.0.1 item 0 | — |
+| Submitted CM: attached to Dispatch Case; matched at Beat 0 | §9.3.1, §9.4.0.1 item 0 | — |
 | Publicly played CM: in CM zone of Faction Resolution Grid | §9.3.1 | — |
 | CM-A applied at Beat 1 (covert) or Beat 4 (PA invalidation) | §9.4.1.2, §9.4.3.1.2 | — |
-| CM-B: modifier token placed on targeted ops | §9.4.1.2 | — |
+| CM-B: Modifier Token placed on targeted ops | §9.4.1.2 | — |
 | CM card discarded after processing — removed from game | §9.4.1.2 item 4 | §17.2 |
 | Unused: carry forward to next Monthly window | — | §17.5 |
 
@@ -151,7 +151,7 @@ Placed at 03-init §3.2. Never removed during play.
 | Blank, in faction tableau storage | T=0 | §2.7 (count TBD — PM05 03-n16) |
 | Filled with target info before dispatch / declaration | Before §9.1 or §9.2 | — |
 | Placed with covert op in Dispatch Packet | §9.1.1 | §9.1 |
-| Placed with public act on Faction Resolution Grid | §9.2 | §9.2 |
+| Placed with Public Act on Faction Resolution Grid | §9.2 | §9.2 |
 | Used in resolution: ARBITER reads targeting info | §9.4.0.1, §9.4.2, §9.4.3 | — |
 | Returned to faction via Dispatch Case (covert) | §9.4.2.6 | — |
 | Extracted from packet by faction player | §9.4.2.6.1.0 | — |
@@ -187,7 +187,7 @@ Placed at 03-init §3.2. Never removed during play.
 
 ### Dominant Marker
 
-*Canonical name confirmed S88. DB-14 = rename "Control flag" → "Dominant marker" in component table.*
+*Canonical name confirmed S88. DB-14 = rename "Control flag" → "Dominant Marker" in component table.*
 
 | State | When | Section |
 |-------|------|---------|
@@ -229,7 +229,7 @@ Placed at 03-init §3.2. Never removed during play.
 | Submitted with covert op: placed in Dispatch Packet | §9.1.1 | — |
 | Age calculated at Beat 0 (covert) | §9.4.0.1 | §13.6 |
 | Reset (erased) and returned to The Dossier; or discarded if single-use | §9.4.0.1 | — |
-| Submitted with public act: handed to ARBITER at Beat 4 | §9.4.3.1.0.1 | — |
+| Submitted with Public Act: handed to ARBITER at Beat 4 | §9.4.3.1.0.1 | — |
 | Age calculated; reset and returned | §9.4.3.1.0.1 | §13.6 |
 | Played in district contest | §10.1.2 — handed to ARBITER; reset; returned | §10.1.2 |
 
@@ -265,7 +265,7 @@ Placed at 03-init §3.2. Never removed during play.
 |-------|------|---------|
 | In ARBITER supply | T=0 | §2.8 |
 | Retrieved from ARBITER supply; n tokens placed on covert op grid slot | Beat 0: n = floor(excess ÷ boost unit cost) | §9.4.0.1 |
-| Retrieved from ARBITER supply; placed on public act | Beat 4 | §9.4.3.1.0.0 |
+| Retrieved from ARBITER supply; placed on Public Act | Beat 4 | §9.4.3.1.0.0 |
 | Applied: threshold modified; effects × (1+n) | §9.4.2.1.0, §9.4.2.2; §9.4.3.2.0, §9.4.3.3 | §13.5 |
 | One NS-xx delivered regardless of n | §9.4.2.2, §9.4.3.3 | — |
 | Returned to ARBITER supply | §9.4.2.3 Step 3 item 4 (covert), §9.4.3.4 Step 1 (PA) | — |
@@ -347,8 +347,8 @@ Placed at 03-init §3.2. Never removed during play.
 | In ARBITER supply | T=0 | §2.8 |
 | Delivered via Dispatch Packet on card success | Per card spec | §9.4.2.2.0 |
 | Returned to faction inside Dispatch Case | §9.4.2.6 | — |
-| Moves to faction hand at case unpack | §9.4.2.6.1.1 | — |
-| Held in faction hand until Debrief | — | — |
+| Moves to Faction Hand at case unpack | §9.4.2.6.1.1 | — |
+| Held in Faction Hand until Debrief | — | — |
 | Resolved at §11.1: announced + executed + handed to ARBITER | §11.1 | — |
 | Removed from game or returned to ARBITER supply per card text | §11.1 | — |
 
@@ -375,14 +375,14 @@ Placed at 03-init §3.2. Never removed during play.
 
 ## 5. Card Types (Drawn from Decks)
 
-**General principle:** Faction-held assets (cards in hand, modifier cards, resources, Intel Tokens, IS-xx) persist across Quarters and Months. Only components with an explicit exit step leave faction possession at a defined moment.
+**General principle:** Faction-held assets (cards in hand, Modifier Cards, resources, Intel Tokens, IS-xx) persist across Quarters and Months. Only components with an explicit exit step leave faction possession at a defined moment.
 
 ### Covert Operation Card
 
 | State | When | Section |
 |-------|------|---------|
 | In draw deck | Setup / after reshuffle | §3.9 |
-| Drawn to faction hand | §7.5.2.0 each Quarter | §7.5 |
+| Drawn to Faction Hand | §7.5.2.0 each Quarter | §7.5 |
 | Deck exhausted mid-draw: shuffle discard → new draw deck → continue | §7.5.2.0 | §7.5.2 |
 | Placed in Dispatch Packet | §9.1.1 | §9.1 |
 | Placed face-up or face-down in Resolution Grid | §9.4.0.1 | — |
@@ -396,7 +396,7 @@ Placed at 03-init §3.2. Never removed during play.
 | State | When | Section |
 |-------|------|---------|
 | In draw deck | Setup / after reshuffle | §3.9 |
-| Drawn to faction hand | §7.5.2.1 each Quarter | §7.5 |
+| Drawn to Faction Hand | §7.5.2.1 each Quarter | §7.5 |
 | Declared: placed face-up on Faction Resolution Grid with Target Profile + Dispatch Token + resources | §9.2 | §9.2 |
 | Resolved: Beat 4 | §9.4.3 | — |
 | Cleared per duration: | | |
@@ -439,11 +439,11 @@ Placed at 03-init §3.2. Never removed during play.
 
 | Component | Track | Key Movements |
 |-----------|-------|---------------|
-| Standing marker ×5 | Public Standing Track | Placed at 10 (T=0, §2.5). Moves per §7.2.4, card outcomes at §9.4.2.2, §9.4.3.3. |
-| Portrait marker ×5 | Portrait Track (hidden) | Placed at 0 (T=0, §2.5). Moves at §9.4.2.4.0, §9.4.3.5.0. ARBITER-only. |
-| Faction order markers ×5 | Initiative Strip | Adjacent at T=0 (§2.5). Order set at §7.1 each Quarter. |
-| Pointer marker | Session Timeline | Q1M1 at T=0 (§2.5). Advances at §9.4.4.1 (month) and §12.4 (Quarter). |
-| Activity marker | Chorus Activity Track | Position 1 at T=0 (§2.5). Updated per ARBITER script and §11.2. |
+| Standing Marker ×5 | Public Standing Track | Placed at 10 (T=0, §2.5). Moves per §7.2.4, card outcomes at §9.4.2.2, §9.4.3.3. |
+| Portrait Marker ×5 | Portrait Track (hidden) | Placed at 0 (T=0, §2.5). Moves at §9.4.2.4.0, §9.4.3.5.0. ARBITER-only. |
+| Faction Order Markers ×5 | Initiative Strip | Adjacent at T=0 (§2.5). Order set at §7.1 each Quarter. |
+| Pointer Marker | Session Timeline | Q1M1 at T=0 (§2.5). Advances at §9.4.4.1 (month) and §12.4 (Quarter). |
+| Activity Marker | Chorus Activity Track | Position 1 at T=0 (§2.5). Updated per ARBITER script and §11.2. |
 | Threshold marker | Chorus Activity Track | Position 6 at T=0 (§2.5). Default for Chorus Question Window. |
 
 ---
@@ -459,7 +459,7 @@ All faction resource types (Findings, Exposure, Capital, Capacity, Mandate). Tok
 | Collected as income each Quarter | §7.4 | §7.4 |
 | Carried forward across Quarters and Months | — | General faction-asset principle |
 | Spent (drained to Reservoir) — covert ops | §9.4.0.1 Beat 0 | §9.4.0.1 |
-| Spent — public acts | §9.4.3.1.0.0 Beat 4 | §9.4.3.1.0.0 |
+| Spent — Public Acts | §9.4.3.1.0.0 Beat 4 | §9.4.3.1.0.0 |
 | Retained (resource-retaining cards) | §9.4.0.1: placed on card, not drained | §9.4.0.1 |
 | Traded between factions | §11.0 Debrief | §11.0 |
 | Findings Decay — Ghost only | §12.1: returns Findings to Reservoir per bracket | §12.1 |
@@ -470,16 +470,16 @@ All faction resource types (Findings, Exposure, Capital, Capacity, Mandate). Tok
 
 | ID | Gap | Severity | Status |
 |----|-----|----------|--------|
-| GAP-5 / S88 | Established/Dominant marker return language in §7.3.3, §8.2 | Resolved | Fixed S88 |
-| GAP-1 / S88 | Tension marker placement trigger undefined | Resolved | §13.7 added S88 |
-| GAP-2/3 / S88 | Structure block removal + return rule missing | Resolved | §13.7 added S88 |
+| GAP-5 / S88 | Established/Dominant Marker return language in §7.3.3, §8.2 | Resolved | Fixed S88 |
+| GAP-1 / S88 | Tension Marker placement trigger undefined | Resolved | §13.7 added S88 |
+| GAP-2/3 / S88 | Structure Block removal + return rule missing | Resolved | §13.7 added S88 |
 | GAP-4 / S88 | Target Profile missing from 03-init §2.7 | Resolved | Added S88 |
 | 03-n06 | Dispatch Packet physical spec | Open | PM05 03-n06 |
 | 03-n11 | ARBITER Threshold Slider — register + add to 03-init | Open | PM05 03-n11 |
 | 03-n12 | Faction Threshold Slider — register + add to 03-init | Open | PM05 03-n12 |
 | 03-n16 | Target Profile cleanup procedure (physical design TBD) | Open | PM05 03-n16 |
 | XA-07 | Status Marker distribution step missing | Open | PM05 XA-07 |
-| DB-14 | Dominant marker rename in component table | Open | PM05 DB-14 (agy) |
+| DB-14 | Dominant Marker rename in component table | Open | PM05 DB-14 (agy) |
 | DB-15 | Split id=15 into Operative Card + Sealed Apex Ability | Open | PM05 DB-15 |
 
 ---

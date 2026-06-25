@@ -8,7 +8,7 @@
 The New Meridian city map is divided into concentric rings (Baryo, The Mid, Core, Chorus Node). Ring relationship determines entry requirements during placement and resolution difficulty.
 
 ### Entry Rule A — Free Entry from Inner Ring
-If a faction is Established or Dominant (either permanently via presence chips, or temporarily via an operational marker placed earlier in the same Placement phase) in any district on a more inner ring that is adjacent to the target district, they may place operational markers in that target district during the Placement phase without penalty.
+If a faction is Established or Dominant (either permanently via Presence Tokens, or temporarily via an operational marker placed earlier in the same Placement phase) in any district on a more inner ring that is adjacent to the target district, they may place operational markers in that target district during the Placement phase without penalty.
 
 ### Entry Rule B — Outer Ring Entry Adjacency Penalty (M-12)
 If a faction has no Established or Dominant presence (permanent or temporary) on any adjacent district from a more inner ring, all operations targeting that district suffer a persistent **−25 threshold modifier** (M-12 Ring Adjacency Penalty). This penalty applies regardless of whether the faction already has Present-level presence or an operational marker in the target district.
@@ -38,8 +38,8 @@ The following districts have unique narrative features that translate to active 
 
 ### Chorus Node (Unique Geography & Ingress Rules)
 * **Resource Yield:** None.
-* **Structure Constraints:** No structure blocks may be built in the Chorus Node.
-* **Control Constraints:** Dominant influence is unreachable at the Chorus Node (the ARBITER screen has a permanent 8-token dominance marker; faction maximum is 6 presence).
+* **Structure Constraints:** No Structure Blocks may be built in the Chorus Node.
+* **Control Constraints:** Dominant influence is unreachable at the Chorus Node (the ARBITER Screen has a permanent 8-token dominance marker; faction maximum is 6 presence).
 * **Ingress Rule:** Placing an operational marker at the Chorus Node ignores normal Entry Rules A and B. Instead, it strictly requires the placing faction to already hold **Established or Dominant** presence (permanent or temporary) in at least one adjacent Core district (Government Citadel, Military Installation, Chorus Research, or Financial Sanctum).
 * **Chorus Activity Suppression:** A faction holding Established influence at the Chorus Node reduces all Chorus Activity track advancements from Situation Reports by half (round down) during the Upkeep phase. Present-level or Contested presence does not suppress activity.
 * **Chorus Question Access:** Only factions with at least Present influence (including operational marker) at the Chorus Node may propose a Chorus Question when the window opens. Not available when the Chorus Node is Contested.
@@ -49,7 +49,7 @@ The following districts have unique narrative features that translate to active 
 
 ## 3. Contested Districts Rules
 
-* **Tension Marker Placement:** Whenever a board state update results in two or more factions tied at IL-01 (Dominant) in a district, place 1 Tension marker on that district from ARBITER supply.
+* **Tension Marker Placement:** Whenever a board state update results in two or more factions tied at IL-01 (Dominant) in a district, place 1 Tension Marker on that district from ARBITER supply.
 * **No Faction Dominant:** Since Dominant requires strictly more tokens than all others, no faction holds Dominant in a Contested district.
 * **Resource Yield:** Any faction with 3 or more presence tokens in a Contested district generates 1 unit flat of that district's resource type, regardless of the district's base generation value. Factions below the 3-token threshold are governed by their normal influence level:
   * The faction in second place by token count with 2+ tokens is Established and generates full base resources.

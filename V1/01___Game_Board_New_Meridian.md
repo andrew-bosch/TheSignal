@@ -1,7 +1,7 @@
 # 01 — Game Board: New Meridian
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.1 — S90 (§4 Narrative Function and §6 Physical Forms migrated to Art 02; geography/zone-only). S114 (agy): DB-driven geography metadata blocks added, procedural content moved to Whiteboard — pending review and re-sign-off.  
+**Version:** 2.2 — S90 (§4 Narrative Function and §6 Physical Forms migrated to Art 02; geography/zone-only). S114 (agy): DB-driven geography metadata blocks added, procedural content moved to Whiteboard — pending review and re-sign-off.  
 **Status:** 🔄 Needs Re-Sign-Off  
 **Depends on:** 00 — Factions, World & Narrative Context  
 **Supersedes:** setup_guide (board sections), board_layout (visual reference only)
@@ -55,7 +55,7 @@ The board serves four simultaneous functions:
 
 **Information display:** The board provides the physical zones where shared tracks and decks are placed.
 
-**Narrative stage:** The physical game table is a recreation of the actual setting where The Table convenes. Faction Representatives gather around the same surface that exists in the fiction: a private chamber at the Chorus Node, each seat corresponding to a player position, and the ARBITER screen separating authority from process.
+**Narrative stage:** The physical game table is a recreation of the actual setting where The Table convenes. Faction Representatives gather around the same surface that exists in the fiction: a private chamber at the Chorus Node, each seat corresponding to a player position, and the ARBITER Screen separating authority from process.
 
 ---
 
@@ -77,7 +77,7 @@ The physical zones of New Meridian represent specific facilities, administrative
 
 4. **Resource type is immediately readable.** Each resource type has a distinct background color applied to its district. A player can identify the resource type of any district across the table without reading text.
 
-5. **The Terminal area is private.** What a Faction Representative holds, plans, and knows is concealed behind their faction screen. The board geography separates private player spaces from the public Central Area.
+5. **The Terminal area is private.** What a Faction Representative holds, plans, and knows is concealed behind their Faction Screen. The board geography separates private player spaces from the public Central Area.
 
 ---
 
@@ -89,7 +89,7 @@ The physical zones of New Meridian represent specific facilities, administrative
 
 ![Center Table Wireframe](component_layout_v1.png)
 
-*Center table wireframe (Non-Canonical): Illustrates detailed layout of subzones in the center table area (public tracks, ring deck locations, broadcast card placement area, reservoir, and backlog). P6 (ARBITER Area) subzones are stubs and pending design in Art 07.*
+*Center table wireframe (Non-Canonical): Illustrates detailed layout of subzones in the center table area (public tracks, ring deck locations, Broadcast Card placement area, reservoir, and backlog). P6 (ARBITER Area) subzones are stubs and pending design in Art 07.*
 
 ![New Meridian Map Layout](NM_Overlay.svg)
 
@@ -131,18 +131,18 @@ Feeds the `district_metadata` database table.
 | Supply | Central Area | Shared supply zone |
 | Accord Placement Area | Central Area | Shared active Accord documents zone |
 | Session Timeline Area | Central Area | Timeline track zone |
-| Initiative Strip Area | Central Area | Initiative strip zone |
-| Chorus Activity Track Area | Central Area | Chorus activity track zone |
-| Situation Report Area | Central Area | Situation report card zone |
-| Public Standing Track Area | Central Area | Public standing track zone |
+| Initiative Strip Area | Central Area | Initiative Strip zone |
+| Chorus Activity Track Area | Central Area | Chorus Activity Track zone |
+| Situation Report Area | Central Area | Situation Report card zone |
+| Public Standing Track Area | Central Area | Public Standing track zone |
 | City | Central Area | Map region on the Overview |
 | Ring 0 | City | Chorus Node ring |
 | Ring 1 | City | Core ring |
 | Ring 2 | City | The Mid ring |
 | Ring 3 | City | Baryo ring |
-| Ring 1 Modifier Area | Ring 1 | Modifier deck zone for Ring 1 |
-| Ring 2 Modifier Area | Ring 2 | Modifier deck zone for Ring 2 |
-| Ring 3 Modifier Area | Ring 3 | Modifier deck zone for Ring 3 |
+| Ring 1 Modifier Area | Ring 1 | Modifier Deck zone for Ring 1 |
+| Ring 2 Modifier Area | Ring 2 | Modifier Deck zone for Ring 2 |
+| Ring 3 Modifier Area | Ring 3 | Modifier Deck zone for Ring 3 |
 
 ---
 

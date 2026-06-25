@@ -1,7 +1,7 @@
 # 07 — ARBITER Toolkit
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.1 Draft — Placeholder  
+**Version:** 0.2 — Placeholder  
 **Status:** 🔄 Draft — Partially defined, pending system finalization  
 **Last Updated:** 2026-05-15  
 **Depends on:** 00 — Factions & World; 00a — Governing Rules & Design Policy; 03 — Round Structure; 04 — Action Card System; 06 — Messaging System  
@@ -107,7 +107,7 @@ Portrait is also moved by:
 - *[TBD — Chorus Node Translation requests (see D02a-03): does requesting The Translation carry a Portrait consequence?]*
 
 ### 6.4 ARBITER as Sole Mover
-ARBITER is the sole physical mover of Portrait markers. No card effect, operative ability, or faction action may directly instruct a faction to move the Portrait track. If a card's Portrait field says "negative shift," ARBITER evaluates and applies. The faction does not know this happened. See Governing Rule 5.1.
+ARBITER is the sole physical mover of Portrait Markers. No card effect, operative ability, or faction action may directly instruct a faction to move the Portrait track. If a card's Portrait field says "negative shift," ARBITER evaluates and applies. The faction does not know this happened. See Governing Rule 5.1.
 
 ### 6.5 Portrait Band Labels and Score Ranges
 
@@ -164,7 +164,7 @@ Used for: operation announcements, rule clarifications, timing calls, resource c
 
 **Characteristics:** Exact. Terse. No interpretation. No implication. States what is true.
 
-**Example:** *"The Researchers' Collective has submitted a Surveillance operation targeting the Harbor Ring. The operation resolves. One intelligence token is placed in the dispatch case and returned to The Researchers' Collective."*
+**Example:** *"The Researchers' Collective has submitted a Surveillance operation targeting the Harbor Ring. The operation resolves. One intelligence token is placed in the Dispatch Case and returned to The Researchers' Collective."*
 
 **Not:** *"It appears that..." / "Interestingly..." / "In response to..."*
 
@@ -207,7 +207,7 @@ The Chronicle is ARBITER's private record of everything that has happened during
 For each quarter:
 - Initiative order
 - Each submitted operation (faction, card name, target, outcome)
-- Each declared political act (faction, type, outcome)
+- Each declared Public Act (faction, type, outcome)
 - Each Accord signed, amended, or violated
 - Each operative deployed or activated
 - Portrait movements (private — not included in any shared document)
@@ -231,7 +231,7 @@ During this design session, consider: should the Chronicle entry for a faction r
 *[TBD — full script development requires Artifact 04 and 07 completion. Category stubs below. Flavor text content referenced in PM02 10-01, 10-02, 07-03.]*
 
 ### 11.1 Standard Operations
-Template language for each covert operation and political act type. Procedural register. One sentence per operation type.
+Template language for each Covert Operation and Public Act type. Procedural register. One sentence per operation type.
 
 ### 11.2 Special Situations
 - Contested operation: *[TBD]*
@@ -267,13 +267,13 @@ See PM02 10-01 for flavor text placement in player manuals.
 
 ### 12.1 ARBITER Setup Tasks (in order)
 1. Set the Chorus Portrait board to neutral position for all five factions.
-2. Prepare dispatch cases — one per faction, one for ARBITER.
-3. Prepare classified directives — one per faction, sealed.
+2. Prepare Dispatch Cases — one per faction, one for ARBITER.
+3. Prepare Classified Directives — one per faction, sealed.
 4. Place the ARBITER Dominance Marker at the Chorus Node (see PM01 §2.08a and Artifact 01 setup).
 5. Prepare Chronicle forms — one per quarter (8 total).
 6. Prepare ARBITER script pack reference.
-7. Confirm Accord forms and notification slips are available.
-8. Deal classified directives — deliver one to each faction, sealed.
+7. Confirm Accord forms and Notification Slips are available.
+8. Deal Classified Directives — deliver one to each faction, sealed.
 
 ### 12.2 ARBITER Seating
 *[TBD — ARBITER seating relative to other players. Recommend: ARBITER sits at a distinct position with their private tableau (Portrait board, Chronicle) not accessible to other players.]*

@@ -13,7 +13,7 @@
 | Remove | Remove | Component exits active play to supply or off-board |
 | Move | Remove + Place | Component relocates from one on-board location to another |
 | Reveal | Transform | Component face/contents become visible to named recipients |
-| Conceal | Transform | Component placed or returned face-down or closed *(physical system behavior — dispatch case, faction terminal, ARBITER screen; not a card-triggered function — L224)* |
+| Conceal | Transform | Component placed or returned face-down or closed *(physical system behavior — Dispatch Case, Faction Terminal, ARBITER Screen; not a card-triggered function — L224)* |
 | Flip | Transform | Physical orientation changed — not an information state change |
 | Corrupt | Transform | A physically written or recorded value is altered |
 
@@ -25,8 +25,8 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 
 | Layer | Visibility | Governs |
 |-------|-----------|---------|
-| Territory | Public | Presence tokens, structures, Dominant markers, spatial markers |
-| Economy | Public | Native resources, token counts, card counts, Accord existence |
+| Territory | Public | Presence tokens, structures, Dominant Markers, spatial markers |
+| Economy | Public | Native Resources, token counts, card counts, Accord existence |
 | Information | Private → Public | Token content, written records, attribution, reconnaissance |
 | Submission | Split (covert=private, PA=public) | What enters the resolution queue: costs, eligibility, blocks, scope. Cards that affect whether and how an action reaches resolution — before the dice roll. |
 | Resolution | Split by phase | The d100 system: threshold, difficulty, modifier stack, Battlefield Strength, outcome scale. Cards that alter how the queue resolves — at or during the dice roll, not the submission of the action. |
@@ -60,24 +60,24 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 | Subject | Layer(s) typically used with |
 |---------|------------------------------|
 | Presence token | Territory |
-| Structure block | Territory |
-| Deployment marker | Territory |
-| Native resource | Economy |
-| Intel token | Economy / Information |
-| Accord agreement | Economy / Information |
-| Modifier card | Economy / Submission |
-| Covert operation | Submission / Resolution |
-| Public act / Political act | Submission / Standing |
+| Structure Block | Territory |
+| Deployment Marker | Territory |
+| Native Resource | Economy |
+| Intel Token | Economy / Information |
+| Accord Agreement | Economy / Information |
+| Modifier Card | Economy / Submission |
+| Covert Operation | Submission / Resolution |
+| Public Act / Public Act | Submission / Standing |
 | Action attribution | Information |
 | Written record | Information |
 | Public Standing | Standing |
-| DebriefActionCard | Information |
+| Debrief Action Card | Information |
 | BroadcastCard (DB:25) | Information / Submission — public narrative half of the Broadcast two-component pair; used as selector when targeting the linked BEC |
 | BroadcastEffectCard (DB:98) — ARBITER tableau, private | Information — mechanically applied effects; subject of GR 10.1b-domain Reveal (e.g., GHO.PA.4); linked by ID to its Broadcast Card |
 
-Corrupt targets are strictly: Intel token faction-name field (location constraint applies) · Accord agreement terms · Accord named party (L227) · Target Profile. Only components with physically written values in the paper prototype.
+Corrupt targets are strictly: Intel Token faction-name field (location constraint applies) · Accord Agreement terms · Accord named party (L227) · Target Profile. Only components with physically written values in the paper prototype.
 
-**Intel token location constraint (L222):** Tokens are valid Corrupt targets ONLY when publicly placed (on a Public Act as payment, Beat 0–4). Tokens in faction terminal or ARBITER terminal are not reachable. Round-number field is additionally prohibited by 7.2b.
+**Intel Token location constraint (L222):** Tokens are valid Corrupt targets ONLY when publicly placed (on a Public Act as payment, Beat 0–4). Tokens in Faction Terminal or ARBITER terminal are not reachable. Round-number field is additionally prohibited by 7.2b.
 
 ---
 
@@ -91,11 +91,11 @@ Corrupt targets are strictly: Intel token faction-name field (location constrain
 
 Key assignment rules:
 1. Same physical verb can serve different Layers — assign Layer by design intent, not by verb.
-2. **Dual-aspect components:** count = Economy; content = Information. Assign by dominant design intent (e.g., STD.CA.5 Gather adds an Intel token but intent is intelligence acquisition → Information/Add/IntelToken).
+2. **Dual-aspect components:** count = Economy; content = Information. Assign by dominant design intent (e.g., STD.CA.5 Gather adds an Intel Token but intent is intelligence acquisition → Information/Add/IntelToken).
 3. **Protect** assigns to the layer of the protected target.
 4. React/Instant/interrupt is timing only — the card still carries its own Layer/Function/Subject.
-5. Modifier cards and Pass cards are excluded from taxonomy entirely.
-6. Corrupt applies only to physically written/recorded values. Invalid targets: printed card text, marker positions, Chronicle, Intel token round-number field (7.2b). Intel tokens must be in public-placement window to be reachable (L222).
+5. Modifier Cards and Pass cards are excluded from taxonomy entirely.
+6. Corrupt applies only to physically written/recorded values. Invalid targets: printed card text, marker positions, Chronicle, Intel Token round-number field (7.2b). Intel Tokens must be in public-placement window to be reachable (L222).
 6b. InfluenceTier is not a targetable component — it is derived from token counts. Only board state changes (add/remove tokens) affect tier (L223).
 7. Portrait is ARBITER-sole-mover — player cards affect Public Standing only (Standing/Shift/PublicStanding).
 8. Card effects use exactly one of four valid duration types: **Immediate** (resolved at beat; no lingering marker) · **Transient** (removed at end of current Month) · **Seasonal** (removed at end of current Quarter / Phase 21) · **Permanent** (persists until a named action or condition removes it). No card creates a state that expires after a defined number of Quarters. *(Art 04b §4.7)*

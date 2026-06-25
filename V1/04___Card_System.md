@@ -8706,96 +8706,96 @@ SYN.PA.3 = Card(
 
 | Card ID | Name | Status | Layer | Visibility | Function | Subject | Primitive Verb(s) |
 |---------|------|--------|-------|------|----------|---------|-------------------|
-| DIR.CA.1 | Invoke Jurisdiction | 📝 | Submission | Split | Block | Covert operation (STD.CA.1, STD.CA.3) | — |
-| DIR.CA.2 | Detain | 📝 | Territory | Public | Move | Deployment marker | Move | *(taxonomy corrected S107 L226: success operation is game.move() to Detention zone; Remove was incorrect — Remove = return to supply; Detention zone is an active play area on Directorate's tableau. Art 04 spec function field correction tracked under 04-n105)* |
-| DIR.CA.3 | Surveillance Placement | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
-| DIR.CA.4 | Tactical Redirection | 📝 | Territory | Public | Move | PresenceToken | Move |
-| DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Public | Remove | PresenceToken | Remove |
-| DIR.PA.1 | Regulatory Override | ⛔ BLOCKED | Submission | Split | Modify | PublicAct (add·PresenceChip cost) | — | Cost modification is not a physical verb; "cost" is not a component attribute. Card targets action cost for all Add·PresenceChip operations — requires new component + ARBITER overhead. Needs redesign. See PM05 04-n99. |
-| DIR.PA.2 | Convene an Inquiry | 📝 | Information | Private → Public | Add | Intel token | Add |
-| DIR.PA.3 | Entry/Exit Controls | 📝 | Territory | Public | Block | DeploymentMarker | — |
+| DIR.CA.1 | Invoke Jurisdiction | 📝 | Submission | Split | Block | Covert Operation (STD.CA.1, STD.CA.3) | — |
+| DIR.CA.2 | Detain | 📝 | Territory | Public | Move | Deployment Marker | Move | *(taxonomy corrected S107 L226: success operation is game.move() to Detention zone; Remove was incorrect — Remove = return to supply; Detention zone is an active play area on Directorate's tableau. Art 04 spec function field correction tracked under 04-n105)* |
+| DIR.CA.3 | Surveillance Placement | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
+| DIR.CA.4 | Tactical Redirection | 📝 | Territory | Public | Move | Presence Token | Move |
+| DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Public | Remove | Presence Token | Remove |
+| DIR.PA.1 | Regulatory Override | 📝 | Territory | Public | Modify | Presence Token (placement cost) | — |
+| DIR.PA.2 | Convene an Inquiry | 📝 | Information | Private → Public | Add | Intel Token | Add |
+| DIR.PA.3 | Entry/Exit Controls | 📝 | Territory | Public | Block | Deployment Marker | — |
 | DIR.PA.4 | Regulatory Downgrade | 🚫 BLOCKED | Territory | Public | Modify | InfluenceTier (derived — not targetable) | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
 | DIR.PA.5 | Regulatory Freeze | 🚫 BLOCKED | Territory | Public | Block | InfluenceTier (derived — not targetable) | — | *L223: Same subject violation — InfluenceTier not a targetable component. Additionally, Block targets actions (not derived states); Block\|InfluenceTier is a subject mismatch. Fundamental redesign required (04-n104).* |
-| DIR.PA.6 | Standing Injunction | 📝 | Submission | Split | Block | Political act | — |
-| GHO.CA.1 | Pattern Match | ✅ | Submission | Split | Copy | Covert operation (full) | Invoke |
-| GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
-| GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | IntelDeliverySlip | Reveal |
-| GHO.CA.4 | Deep Cover | 📝 | Information | Private → Public | Remove | IntelToken | Remove |
-| GHO.CA.5 | Misdirection | 📝 | Information | Private → Public | Add | Intel token (corrupt content) | Add + Corrupt |
-| GHO.CA.6 | Synthesize | 📝 | Economy | Public | Add | IntelToken | Add |
-| GHO.CA.7 | Station | 📝 | Information | Private → Public | Add | IntelToken | Add |
-| GHO.CA.8 | Full Take | 📝 | Information | Private → Public | Add | IntelToken | Add |
-| GHO.CA.9 | SCIF | 📝 | Information | Private → Public | Add | DebriefActionCard | Add |
-| GHO.CA.10 | Flip | 📝 | Economy | Public | Add | FactionNativeResource | Add |
-| GHO.CA.11 | Signals Analysis | 📝 | Information | Private → Public | Reveal | ClassifiedDirective | Reveal |
-| GHO.CA.12 | Source Substitution | 📝 | Information | Private → Public | Corrupt | Intel token | Corrupt |
-| GHO.CA.13 | Backdate | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel token (round-number field) | Corrupt | *L222: (1) Location constraint — Intel token in private terminal zone unreachable by opposing card; only publicly placed tokens (PA payment window) are valid Corrupt targets. (2) 7.2b — round-number records committed validity state; altering it is retroactive modification. §4.10 revised. Art 04 spec: BLOCKED pending redesign (04-n103).* |
-| GHO.CA.14 | Field Verification | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel token (age field) | Corrupt | *7.2b violation: mechanic alters committed token age field retroactively. Fundamental redesign required. G-ext id retired. Art 04 spec: BLOCKED pending redesign (04-n103).* |
-| GHO.PA.1 | Publish Analysis | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
-| GHO.PA.2 | Signal Review Request | 📝 | Resolution | Split by phase | Modify | Covert operation (difficulty) | — |
-| GHO.PA.3 | Declassified Records | 📝 | Information | Public | Remove | Intel token (expired) | Remove |
+| DIR.PA.6 | Standing Injunction | 📝 | Submission | Split | Block | Public Act | — |
+| GHO.CA.1 | Pattern Match | ✅ | Submission | Split | Copy | Covert Operation (full) | Invoke |
+| GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
+| GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | Intel Delivery Slip | Reveal |
+| GHO.CA.4 | Deep Cover | 📝 | Information | Private → Public | Remove | Intel Token | Remove |
+| GHO.CA.5 | Misdirection | 📝 | Information | Private → Public | Add | Intel Token (corrupt content) | Add + Corrupt |
+| GHO.CA.6 | Synthesize | 📝 | Economy | Public | Add | Intel Token | Add |
+| GHO.CA.7 | Station | 📝 | Information | Private → Public | Add | Intel Token | Add |
+| GHO.CA.8 | Full Take | 📝 | Information | Private → Public | Add | Intel Token | Add |
+| GHO.CA.9 | SCIF | 📝 | Information | Private → Public | Add | Debrief Action Card | Add |
+| GHO.CA.10 | Flip | 📝 | Economy | Public | Add | Native Resource | Add |
+| GHO.CA.11 | Signals Analysis | 📝 | Information | Private → Public | Reveal | Classified Directives | Reveal |
+| GHO.CA.12 | Source Substitution | 📝 | Information | Private → Public | Corrupt | Intel Token | Corrupt |
+| GHO.CA.13 | Backdate | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel Token (round-number field) | Corrupt | *L222: (1) Location constraint — Intel token in private terminal zone unreachable by opposing card; only publicly placed tokens (PA payment window) are valid Corrupt targets. (2) 7.2b — round-number records committed validity state; altering it is retroactive modification. §4.10 revised. Art 04 spec: BLOCKED pending redesign (04-n103).* |
+| GHO.CA.14 | Field Verification | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel Token (age field) | Corrupt | *7.2b violation: mechanic alters committed token age field retroactively. Fundamental redesign required. G-ext id retired. Art 04 spec: BLOCKED pending redesign (04-n103).* |
+| GHO.PA.1 | Publish Analysis | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
+| GHO.PA.2 | Signal Review Request | 📝 | Resolution | Split by phase | Modify | Covert Operation (difficulty) | — |
+| GHO.PA.3 | Declassified Records | 📝 | Information | Public | Remove | Intel Token (expired) | Remove |
 | GHO.PA.4 | Public Threat Assessment | 📝 | Information | Private → Public | Reveal | Broadcast Effect Card | Reveal |
-| GHO.PA.5 | Agency Recruitment Fair | 📝 | Territory | Public | Add | PresenceToken | Add |
-| GHO.MOD.1 | Clarify Misinformation | 📝 | Information | Public | Remove | IntelToken | Remove | *ModifierCard/React — taxonomy excluded from §11.1 per modifier card rules (S110)* |
-| GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure block | — |
-| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
-| GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence token | Add |
-| GUI.CA.4 | Construction Crew | ✅ | Submission | Split | Remove Restriction | Covert operation (presence requirement) | — |
-| GUI.CA.5 | Infrastructure Yield | ✅ | Economy | Public | Add | Native resource | Add |
-| GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | NativeResource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
-| GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Public | Add | Structure block | Add |
-| GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Public | Add | Accord agreement | Add |
+| GHO.PA.5 | Agency Recruitment Fair | 📝 | Territory | Public | Add | Presence Token | Add |
+| GHO.MOD.1 | Clarify Misinformation | 📝 | Information | Public | Remove | Intel Token | Remove | *ModifierCard/React — taxonomy excluded from §11.1 per modifier card rules (S110)* |
+| GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure Block | — |
+| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
+| GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence Token | Add |
+| GUI.CA.4 | Construction Crew | ✅ | Submission | Split | Remove Restriction | Covert Operation (presence requirement) | — |
+| GUI.CA.5 | Infrastructure Yield | ✅ | Economy | Public | Add | Native Resource | Add |
+| GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
+| GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Public | Add | Structure Block | Add |
+| GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Public | Add | Accord Agreement | Add |
 | NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
 | NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
-| NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | CovertOperation | Reveal |
-| NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | PublicAct | — |
-| NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence token | Add |
-| NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | IntelToken | Add |
+| NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
+| NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | Public Act | — |
+| NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence Token | Add |
+| NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | Intel Token | Add |
 | NET.MOD.1 | Signal Break | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
 | NET.MOD.2 | Reputational Strike | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
-| NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
-| NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence token | Add |
-| NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | FactionHand | Reveal |
-| STD.CA.1 | Build Structure | ✅ | Territory | Public | Add | Structure block | Add |
-| STD.CA.2 | Demolish | ✅ | Territory | Public | Remove | Structure block | Remove |
-| STD.CA.3 | Campaign | ✅ | Territory | Public | Add | Presence token | Add |
-| STD.CA.4 | Undermine | ✅ | Territory | Public | Remove | Presence token | Remove |
-| STD.CA.5 | Gather | ✅ | Information | Private → Public | Add | Intel token | Add |
-| STD.CA.6 | Broadcast Interference | ✅ | Submission | Split | Modify | Political act (cost) | — |
-| STD.CA.7 | Amplify | ✅ | Resolution | Split by phase | Modify | Political act (outcome scale) | — |
-| STD.CA.8 | Buy Influence | ✅ | Territory | Public | Add | Presence token | Add |
-| STD.CA.9 | Fund | ✅ | Economy | Public | Redirect | Native resource | Move |
-| STD.CA.10 | Protect | ✅ | Resolution | Split by phase | Protect | Covert operation (difficulty) | — |
-| STD.CA.11 | Tort Interference | 📝 | Information | Private → Public | Corrupt | Accord | Corrupt |
-| STD.CA.12 | Absolute Compromise | 📝 | Submission | Split | Block | CovertOperation | — |
+| NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
+| NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence Token | Add |
+| NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | Faction Hand | Reveal |
+| STD.CA.1 | Build Structure | ✅ | Territory | Public | Add | Structure Block | Add |
+| STD.CA.2 | Demolish | ✅ | Territory | Public | Remove | Structure Block | Remove |
+| STD.CA.3 | Campaign | ✅ | Territory | Public | Add | Presence Token | Add |
+| STD.CA.4 | Undermine | ✅ | Territory | Public | Remove | Presence Token | Remove |
+| STD.CA.5 | Gather | ✅ | Information | Private → Public | Add | Intel Token | Add |
+| STD.CA.6 | Broadcast Interference | ✅ | Submission | Split | Modify | Public Act (cost) | — |
+| STD.CA.7 | Amplify | ✅ | Resolution | Split by phase | Modify | Public Act (outcome scale) | — |
+| STD.CA.8 | Buy Influence | ✅ | Territory | Public | Add | Presence Token | Add |
+| STD.CA.9 | Fund | ✅ | Economy | Public | Redirect | Native Resource | Move |
+| STD.CA.10 | Protect | ✅ | Resolution | Split by phase | Protect | Covert Operation (difficulty) | — |
+| STD.CA.11 | Tort Interference | 📝 | Information | Private → Public | Corrupt | Accord Agreement | Corrupt |
+| STD.CA.12 | Absolute Compromise | 📝 | Submission | Split | Block | Covert Operation | — |
 | STD.CA.13 | Disinformation Campaign | 📝 | Standing | Split | Shift | Public Standing | Move |
-| STD.CA.14 | Disprove | 📝 | Economy | Public | Remove | Intel token | Remove |
-| STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel token | Move |
-| STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier card | Move |
+| STD.CA.14 | Disprove | 📝 | Economy | Public | Remove | Intel Token | Remove |
+| STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel Token | Move |
+| STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier Card | Move |
 | STD.MOD.1 | Overture | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
-| STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence token | Add |
-| STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence token | Remove |
-| STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure block | Add |
+| STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence Token | Add |
+| STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence Token | Remove |
+| STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure Block | Add |
 | STD.PA.4 | Public Censure | 📝 | Standing | Split | Shift | Public Standing (−) | Move |
-| STD.PA.5 | On the Record | 📝 | Information | Private → Public | Reveal | Action attribution | Reveal |
-| STD.PA.6 | Economic Sanction | 📝 | Economy | Public | Remove | Native resource | Remove |
+| STD.PA.5 | On the Record | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
+| STD.PA.6 | Economic Sanction | 📝 | Economy | Public | Remove | Native Resource | Remove |
 | STD.PA.7 | Public Address | 📝 | Standing | Split | Shift | Public Standing (+) | Move |
-| STD.PA.8 | Table an Accord | 📝 | Economy | Public | Add | Accord agreement | Add |
-| SYN.CA.1 | Leveraged Acquisition | 📝 | Economy | Public | Add | Native resource | Add |
-| SYN.CA.2 | Short the Market | 📝 | Economy | Public | Remove | Native resource | Remove |
-| SYN.CA.3 | Hostile Acquisition | 📝 | Territory | Public | Redirect | Structure block | Move |
-| SYN.CA.4 | Golden Parachute | 📝 | Economy | Public | Protect | Native resource | — |
-| SYN.CA.5 | Regulatory Capture | 📝 | Submission | Split | Block | Named action type | — |
-| SYN.CA.6 | Parasitic | 📝 | Economy | Public | Add | IntelToken | Add |
-| SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Public | Redirect | NativeResource | Move |
-| SYN.CA.8 | Land Title | 📝 | Territory | Public | Add | StructureBlock | Add |
-| SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | PresenceToken | Add |
-| SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | AccordCard | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
-| SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | AccordAgreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
+| STD.PA.8 | Table an Accord | 📝 | Economy | Public | Add | Accord Agreement | Add |
+| SYN.CA.1 | Leveraged Acquisition | 📝 | Economy | Public | Add | Native Resource | Add |
+| SYN.CA.2 | Short the Market | 📝 | Economy | Public | Remove | Native Resource | Remove |
+| SYN.CA.3 | Hostile Acquisition | 📝 | Territory | Public | Redirect | Structure Block | Move |
+| SYN.CA.4 | Golden Parachute | 📝 | Economy | Public | Protect | Native Resource | — |
+| SYN.CA.5 | Regulatory Capture | 📝 | Submission | Split | Block | Named Action Type | — |
+| SYN.CA.6 | Parasitic | 📝 | Economy | Public | Add | Intel Token | Add |
+| SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Public | Redirect | Native Resource | Move |
+| SYN.CA.8 | Land Title | 📝 | Territory | Public | Add | Structure Block | Add |
+| SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | Presence Token | Add |
+| SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
+| SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
 | SYN.MOD.1 | Accord Leverage | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
-| SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence token | Move |
-| SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native resource (conditional) | Add |
-| SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | IntelTokensHeld | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
+| SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
+| SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
+| SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
 
 ---
 
@@ -8806,56 +8806,58 @@ SYN.PA.3 = Card(
 | Layer | Function | Subject | Standard | Guild | Ghost | Directorate | Network | Syndicate |
 |-------|----------|---------|----------|-------|-------|-------------|---------|-----------|
 | **Territory** | | | | | | | | |
-| | Add | Presence token | STD.CA.3, STD.CA.8, STD.PA.1 | GUI.CA.3 | GHO.PA.5 | — | NET.CA.5, NET.PA.2 | SYN.CA.9 |
-| | Add | Structure block | STD.CA.1, STD.PA.3 | GUI.PA.1 | — | — | — | SYN.CA.8 |
-| | Block | Deployment marker | — | — | — | DIR.PA.3 | — | — |
-| | Remove | Presence token | STD.CA.4, STD.PA.2 | — | — | DIR.CA.5 | — | — |
-| | Move | Deployment marker | — | — | — | DIR.CA.2 | — | — |
-| | Remove | Structure block | STD.CA.2 | — | — | — | — | — |
-| | Move | Presence token | — | — | — | DIR.CA.4 | — | — |
-| | Redirect | Presence token | — | — | — | — | — | SYN.PA.1 |
-| | Redirect | Structure block | — | — | — | — | — | SYN.CA.3 |
-| | Protect | Structure block | — | GUI.CA.1 | — | — | — | — |
+| | Add | Presence Token | STD.CA.3, STD.CA.8, STD.PA.1 | GUI.CA.3 | GHO.PA.5 | — | NET.CA.5, NET.PA.2 | SYN.CA.9 |
+| | Add | Structure Block | STD.CA.1, STD.PA.3 | GUI.PA.1 | — | — | — | SYN.CA.8 |
+| | Block | Deployment Marker | — | — | — | DIR.PA.3 | — | — |
+| | Remove | Presence Token | STD.CA.4, STD.PA.2 | — | — | DIR.CA.5 | — | — |
+| | Move | Deployment Marker | — | — | — | DIR.CA.2 | — | — |
+| | Remove | Structure Block | STD.CA.2 | — | — | — | — | — |
+| | Move | Presence Token | — | — | — | DIR.CA.4 | — | — |
+| | Redirect | Presence Token | — | — | — | — | — | SYN.PA.1 |
+| | Redirect | Structure Block | — | — | — | — | — | SYN.CA.3 |
+| | Protect | Structure Block | — | GUI.CA.1 | — | — | — | — |
+| | Modify | Presence Token | — | — | — | DIR.PA.1 | — | — |
 | **Economy** | | | | | | | | |
-| | Add | Native resource | — | GUI.CA.2, GUI.CA.5, GUI.CA.6 | — | DIR.CA.6 | — | SYN.CA.1, SYN.PA.2 |
-| | Add | Intel token | — | — | GHO.CA.6 | — | NET.CA.6 | SYN.CA.6 |
-| | Add | Accord agreement | STD.PA.8, GUI.PA.2 | — | — | — | — | — |
+| | Add | Native Resource | — | GUI.CA.2, GUI.CA.5, GUI.CA.6 | — | DIR.CA.6 | — | SYN.CA.1, SYN.PA.2 |
+| | Add | Intel Token | — | — | GHO.CA.6 | — | NET.CA.6 | SYN.CA.6 |
+| | Add | Accord Agreement | STD.PA.8, GUI.PA.2 | — | — | — | — | — |
 | | Add | Exposure | — | — | — | — | NET.CA.2 | — |
-| | Add | FactionNativeResource | — | — | GHO.CA.10 | — | — | — |
-| | Remove | Native resource | STD.PA.6 | — | — | — | — | SYN.CA.2 |
-| | Remove | Intel token | STD.CA.14 | — | — | — | — | — |
-| | Remove | Accord agreement | — | — | — | — | — | — |
-| | Redirect | Native resource | STD.CA.9 | — | — | — | — | SYN.CA.7 |
-| | Redirect | Intel token | STD.CA.15 | — | — | — | — | — |
-| | Redirect | Modifier card | STD.CA.16 | — | — | — | — | — |
-| | Redirect | Accord agreement | — | — | — | — | — | — |
-| | Corrupt | AccordCard (named party) | — | — | — | — | — | SYN.CA.10 |
-| | Protect | Native resource | — | — | — | — | — | SYN.CA.4 |
+| | Add | Native Resource | — | — | GHO.CA.10 | — | — | — |
+| | Remove | Native Resource | STD.PA.6 | — | — | — | — | SYN.CA.2 |
+| | Remove | Intel Token | STD.CA.14 | — | — | — | — | — |
+| | Remove | Accord Agreement | — | — | — | — | — | — |
+| | Redirect | Native Resource | STD.CA.9 | — | — | — | — | SYN.CA.7 |
+| | Redirect | Intel Token | STD.CA.15 | — | — | — | — | — |
+| | Redirect | Modifier Card | STD.CA.16 | — | — | — | — | — |
+| | Redirect | Accord Agreement | — | — | — | — | — | — |
+| | Corrupt | Accord Agreement | — | — | — | — | — | SYN.CA.10 |
+| | Protect | Native Resource | — | — | — | — | — | SYN.CA.4 |
 | **Information** | | | | | | | | |
-| | Add | Intel token | STD.CA.5 | — | GHO.CA.5, GHO.CA.7, GHO.CA.8 | DIR.PA.2 | — | — |
-| | Add | DebriefActionCard | — | — | GHO.CA.9 | — | — | — |
-| | Reveal | CovertOperation | — | — | GHO.CA.2 | DIR.CA.3 | NET.CA.3 | — |
-| | Reveal | IntelDeliverySlip | — | — | GHO.CA.3 | — | — | — |
+| | Add | Intel Token | STD.CA.5 | — | GHO.CA.5, GHO.CA.7, GHO.CA.8 | DIR.PA.2 | — | — |
+| | Add | Debrief Action Card | — | — | GHO.CA.9 | — | — | — |
+| | Reveal | Covert Operation | — | — | GHO.CA.2 | DIR.CA.3 | NET.CA.3 | — |
+| | Reveal | Intel Delivery Slip | — | — | GHO.CA.3 | — | — | — |
 | | Reveal | District | — | — | — | — | NET.CA.1 | — |
-| | Reveal | FactionHand | — | — | — | — | NET.PA.3 | — |
-| | Reveal | Action attribution | STD.PA.5 | — | GHO.PA.1 | — | NET.PA.1 | — |
-| | Reveal | ClassifiedDirective | — | — | GHO.CA.11 | — | — | — |
-| | Reveal | BroadcastEffectCard | — | — | GHO.PA.4 | — | — | — |
-| | Reveal | IntelTokensHeld | — | — | — | — | — | SYN.PA.3 |
-| | Remove | Intel token | — | — | GHO.CA.4, GHO.PA.3, GHO.MOD.1 | — | — | — |
-| | Corrupt | Accord | STD.CA.11 | — | — | — | — | SYN.CA.11 |
-| | Corrupt | Intel token | — | — | GHO.CA.12 | — | — | — |
+| | Reveal | Faction Hand | — | — | — | — | NET.PA.3 | — |
+| | Reveal | Action Attribution | STD.PA.5 | — | GHO.PA.1 | — | NET.PA.1 | — |
+| | Reveal | Classified Directives | — | — | GHO.CA.11 | — | — | — |
+| | Reveal | Broadcast Effect Card | — | — | GHO.PA.4 | — | — | — |
+| | Reveal | Intel Token | — | — | — | — | — | SYN.PA.3 |
+| | Remove | Intel Token | — | — | GHO.CA.4, GHO.PA.3, GHO.MOD.1 | — | — | — |
+| | Corrupt | Accord Agreement | STD.CA.11 | — | — | — | — | SYN.CA.11 |
+| | Corrupt | Intel Token | — | — | GHO.CA.12 | — | — | — |
 | **Submission** | | | | | | | | |
-| | Block | CovertOperation | STD.CA.12 | — | — | DIR.CA.1 | — | — |
-| | Block | Named action type | — | — | — | — | — | SYN.CA.5 |
-| | Block | Political act | — | — | — | DIR.PA.1 ⛔, DIR.PA.6 | — | — |
-| | Modify | Political act | STD.CA.6 | — | — | — | NET.CA.4 | — |
-| | Copy | CovertOperation | — | — | GHO.CA.1 | — | — | — |
-| | Remove Restriction | CovertOperation | — | GUI.CA.4 | — | — | — | — |
+| | Block | Covert Operation | STD.CA.12 | — | — | DIR.CA.1 | — | — |
+| | Block | Named Action Type | — | — | — | — | — | SYN.CA.5 |
+| | Block | Public Act | — | — | — | DIR.PA.6 | — | — |
+| | Modify | Public Act | STD.CA.6 | — | — | — | NET.CA.4 | — |
+| | Copy | Covert Operation | — | — | GHO.CA.1 | — | — | — |
+| | Remove Restriction | Covert Operation | — | GUI.CA.4 | — | — | — | — |
 | **Resolution** | | | | | | | | |
-| | Modify | Outcome scale | STD.CA.7 | — | — | — | — | — |
-| | Modify | Difficulty | — | — | GHO.PA.2 | DIR.CA.8 | — | — |
-| | Protect | CovertOperation | STD.CA.10 | — | — | — | — | — |
+| | Modify | Public Act (outcome scale) | STD.CA.7 | — | — | — | — | — |
+| | Modify | Covert Operation | — | — | GHO.PA.2 | — | — | — |
+| | Modify | Difficulty | — | — | — | DIR.CA.8 | — | — |
+| | Protect | Covert Operation | STD.CA.10 | — | — | — | — | — |
 | **Standing** | | | | | | | | |
 | | Shift | Public Standing | STD.CA.13, STD.PA.4, STD.PA.7 | — | — | DIR.CA.7 | NET.CA.7 | — |
 
@@ -9487,4 +9489,4 @@ Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacit
 
 ---
 
-*End of Artifact 04 — Card System v0.9.18*
+*End of Artifact 04 — Card System v0.9.47*

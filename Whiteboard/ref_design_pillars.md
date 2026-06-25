@@ -7,9 +7,9 @@
 
 These are premises — not constraints — from which all governing rules derive. Violating a pillar changes the fundamental nature of the game.
 
-**4.1 — The Overview Is Truth.** No hidden state on The Overview. Everything shared is visible there. What factions conceal lives in Terminals, hands, and dispatch cases — never on the shared display.
+**4.1 — The Overview Is Truth.** No hidden state on The Overview. Everything shared is visible there. What factions conceal lives in Terminals, hands, and Dispatch Cases — never on the shared display.
 
-**4.2 — Information Has Timing.** Secrecy is temporary. The game moves toward disclosure. Covert operations may be discovered; intel tokens age and expire; hidden directives surface at session end.
+**4.2 — Information Has Timing.** Secrecy is temporary. The game moves toward disclosure. Covert Operations may be discovered; Intel Tokens age and expire; hidden directives surface at session end.
 
 **4.3 — Negotiation Is Mandatory.** No faction can achieve its goals alone. The most significant actions require resources, relationships, and cooperation no single faction can generate independently. Cooperation is incentivized even when it is politically uncomfortable.
 
@@ -86,14 +86,14 @@ These are premises — not constraints — from which all governing rules derive
 | The Chronicle | End-of-session narrative | ARBITER's written record in The Witness register. |
 | Resolution | ARBITER's track | Private measure of The Table's coherence. Not visible to factions. |
 | The Overview | Game mat / shared display | MIRROR's holographic rendering of New Meridian. |
-| Footprint | Physical board presence | All placed influence markers, structure blocks, deployment markers. |
+| Footprint | Physical board presence | All placed influence markers, Structure Blocks, Deployment Markers. |
 | The Backlog | Shared Dispatch Token pool | Queue of authorized but uncommitted operational work. |
-| Dispatch case | Sealed envelope/box | Protocol for covert submission. |
+| Dispatch Case | Sealed envelope/box | Protocol for covert submission. |
 | Public Standing track | Popularity track | Bell curve with natural drift. |
 | Chorus Portrait | Portrait score | ARBITER's private faction-alignment assessment. |
 | Intel Token | Proof token | Confirmed intelligence held privately. |
-| Presence chip | Influence token | Felt weight of faction power in a district. |
-| Operational marker | Claim marker / Deployment marker | Temporary deployment; counts as presence chip during Quarter. |
+| Presence Token | Influence token | Felt weight of faction power in a district. |
+| Operational marker | Claim marker / Deployment Marker | Temporary deployment; counts as Presence Token during Quarter. |
 | Classified Directive | Hidden objective card | Full-arc faction objective; surfaces at session close. |
 | Situation Report | World event card | Two-card system: public narrative + ARBITER effect card. |
 | Countermeasure Card | Reaction card | Reactive card type. Art 03 §10. |

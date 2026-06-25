@@ -1,19 +1,19 @@
 # Reference — Card Types & Resolution Mechanics (Art 04 §5, §6, §11)
-*Load when: card type questions, resolution mechanics, modifier card rules, §5 principle arguments.*
+*Load when: card type questions, resolution mechanics, Modifier Card rules, §5 principle arguments.*
 
 ---
 
 ## Card Types
 
-**CovertOperation** — Committed secretly face-down in dispatch case. Content hidden until ARBITER opens case at Beat 3. Irreversible once submitted. Resolves on the Beat 3 Resolution Grid. May be Automatic or d100. Default persistence = Immediate.
+**CovertOperation** — Committed secretly face-down in Dispatch Case. Content hidden until ARBITER opens case at Beat 3. Irreversible once submitted. Resolves on the Beat 3 Resolution Grid. May be Automatic or d100. Default persistence = Immediate.
 
 **PublicAct** — Declared openly face-up at Phase B. Public and visible from moment of declaration. Carries `outcome_type` field (Binary · ElectPlayer · ElectDistrict · ElectFaction · BilateralAgreement · Unilateral). Resolves at Beat 4.
 
-**Pass** — Not drawn from a deck; four faction-specific variants (PS-01 through PS-04) kept beside tableau, reusable every round. Signals a covert or political slot is intentionally empty. Works for Beat 3 or Beat 4. Ghost's Political Pass special rule: using it confirms Ghost's case contains four covert operations rather than the standard three. Named variants carry small secondary effects (PS-02: +1 Findings at cleanup; PS-03: +1 modifier draw next Upkeep; PS-04: +1 Findings if faction holds highest Chorus Portrait). Excluded from Layer/Function/Subject taxonomy.
+**Pass** — Not drawn from a deck; four faction-specific variants (PS-01 through PS-04) kept beside tableau, reusable every round. Signals a covert or political slot is intentionally empty. Works for Beat 3 or Beat 4. Ghost's Political Pass special rule: using it confirms Ghost's case contains four Covert Operations rather than the standard three. Named variants carry small secondary effects (PS-02: +1 Findings at cleanup; PS-03: +1 modifier draw next Upkeep; PS-04: +1 Findings if faction holds highest Chorus Portrait). Excluded from Layer/Function/Subject taxonomy.
 
-**Countermeasure** — Interact with covert operations only; not public acts. Submitted at Beat 2. Two types:
-- **Type A (district block):** blocks covert operations targeting the named district
-- **Type B (faction defense):** reduces covert operation difficulty against that faction's assets
+**Countermeasure** — Interact with Covert Operations only; not Public Acts. Submitted at Beat 2. Two types:
+- **Type A (district block):** blocks Covert Operations targeting the named district
+- **Type B (faction defense):** reduces Covert Operation difficulty against that faction's assets
 STD.CA.12 (Absolute Compromise) can remove active Type A and Protect/Fortify plays; cannot target Type B. ⚠ Type A/B distinction is an open outstanding issue — the taxonomy must be defined in Art 03 or Art 04 before STD.CA.12 can be fully adjudicated (Art 04 STD.CA.12 checklist). Full Countermeasure design pending D-04-12.
 
 **Modifier** — Alters parameters of a host action. No independent game-state primitives. Effect categories: difficulty reduction, cost reduction, effect extension, detection immunity, reach extension, outcome addition. Two timing sub-types:
@@ -22,21 +22,21 @@ STD.CA.12 (Absolute Compromise) can remove active Type A and Protect/Fortify pla
 
 **Outcome addition** — attaches an additional Automatic resolution outcome to the host action. Fires when the host action resolves at its designated beat, regardless of host success or failure (unless card text specifies otherwise). Not a separate action; requires no Dispatch Token. *(Art 04 §11.7 — draft section)*
 
-Maximum 1 modifier card per action submitted. Excluded from taxonomy.
+Maximum 1 Modifier Card per action submitted. Excluded from taxonomy.
 
 **EmergencyResponse** — Pre-sealed in faction envelopes at setup. Faction-specific; one per faction. Reactive threshold interventions that fire when a faction's board position is threatened. Not drawn from a deck. Effect descriptions are in Art 04 §14.1 — stub/draft territory; treat as working content only. Full card data structure not yet applied — pending D-04-10.
 
-**DebriefActionCard** — Component type (not a CardType); a card that resolves at Debrief. SCIFRecord is the first defined subtype: placed in Ghost's Dispatch Case during play; at Debrief, Ghost draws modifier cards equal to target faction's structure block count at time of play.
+**Debrief Action Card** — Component type (not a CardType); a card that resolves at Debrief. SCIFRecord is the first defined subtype: placed in Ghost's Dispatch Case during play; at Debrief, Ghost draws Modifier Cards equal to target faction's Structure Block count at time of play.
 
 ---
 
 ## Modifier Cards in Depth
 
-**Faction modifier cards** — drawn from faction's own deck in player tableau. Draw gated by structure block count (0–1: 0; 2–3: 1; 4–5: 2; 6+: 3 max). Back: faction color. One-pass per session; not reshuffled. Freely tradeable between factions outside Resolution — ring constraint on ring cards travels with the card.
+**Faction Modifier Cards** — drawn from faction's own deck in player tableau. Draw gated by Structure Block count (0–1: 0; 2–3: 1; 4–5: 2; 6+: 3 max). Back: faction color. One-pass per session; not reshuffled. Freely tradeable between factions outside Resolution — ring constraint on ring cards travels with the card.
 
-**Ring modifier cards** — drawn from shared ring decks on the game board (Ring 3/2/1; no Chorus Node deck). Draw requires: 1+ structure block AND Established+ in at least 1 district in that ring. Back: ring color. Ring constraint applies to all users regardless of holder (Principle 23).
+**Ring Modifier Cards** — drawn from shared ring decks on the game board (Ring 3/2/1; no Chorus Node deck). Draw requires: 1+ Structure Block AND Established+ in at least 1 district in that ring. Back: ring color. Ring constraint applies to all users regardless of holder (Principle 23).
 
-**Burst Play:** After Upkeep Step 6, before Dispatch — faction may trade all held modifier cards to Reservoir at 1:1 (any resource type per card). Removes the faction's modifier deck from tableau for rest of session. Post-Burst factions may still receive and use modifier cards through trade — Burst removes draw access only. *(Art 04 §11.6 — draft section)*
+**Burst Play:** After Upkeep Step 6, before Dispatch — faction may trade all held Modifier Cards to Reservoir at 1:1 (any resource type per card). Removes the faction's Modifier Deck from tableau for rest of session. Post-Burst factions may still receive and use Modifier Cards through trade — Burst removes draw access only. *(Art 04 §11.6 — draft section)*
 
 ---
 

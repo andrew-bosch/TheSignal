@@ -31,7 +31,7 @@
 ## Agent 1 — ref_card_types.md vs Art 04 §5 / §6 / §11
 
 ### Structural Issue
-The ref header claims "Art 04 §1–§5" as source for card type definitions. Card types are in **§6** (schema/enums) and **§11** (modifier card rules). §5 is Design Principles only. Source attribution is wrong throughout.
+The ref header claims "Art 04 §1–§5" as source for card type definitions. Card types are in **§6** (schema/enums) and **§11** (Modifier Card rules). §5 is Design Principles only. Source attribution is wrong throughout.
 
 ### High Severity
 - **Critical ranges incorrect:** Ref says 01–05 / 96–00. Schema §6.1 says `successcrit` fires on "roll < 5" (= 01–04) and `failcrit` on "roll ≥ 95" (= 95–00). Off by one on both boundaries.
@@ -40,7 +40,7 @@ The ref header claims "Art 04 §1–§5" as source for card type definitions. Ca
 - **STD.CA.12 Type B targeting presented as settled:** Art 04 line 1560 explicitly flags this as an open outstanding issue ("Type A / Type B distinction — confirm defined somewhere"). Ref presents it as a locked rule.
 - **P26 and P27 absent:** P26 (Card Narrative Test — every card expressible as 1–2 sentence story) and P27 (outcome determinacy — one determinate outcome per resolution tier) are referenced in the design checklist for every card but are not in the ref. P14 (card entries contain card-specific info only), P17 (outsourced equivalents), P20, P24, P25 also absent.
 - **Design Rationale and Card Story block requirements absent:** Both are required in every card entry (§5). Card Story is the P26 deliverable.
-- **Post-Burst modifier card trade exception missing:** Per §11.6, post-Burst factions can still receive and use modifier cards through trade. Ref omits this.
+- **Post-Burst Modifier Card trade exception missing:** Per §11.6, post-Burst factions can still receive and use Modifier Cards through trade. Ref omits this.
 - **Outcome addition modifier:** Ref omits that outcome addition "requires no Dispatch Token" and fires at host action resolution beat regardless of host success/failure (unless card specifies otherwise). Directly affects Overture-style designs.
 
 ### Medium Severity
@@ -86,7 +86,7 @@ The ref covers §4.1 through §4.6a (6 pillars/corollaries) and misses everythin
 ## Agent 3 — ref_resources.md vs Art 02 §7/§8/§9/§11/§12
 
 ### High Severity
-- **PA Dispatch Token cost — contradiction:** Ref states political acts cost no Dispatch Token. Art 02 DB:12 movement_path shows a PA spend path explicitly. Contradicts PM02 L146. This is a genuine unresolved ambiguity between PM02 and Art 02's movement_path — needs resolution in Art 03 before ref can be corrected.
+- **PA Dispatch Token cost — contradiction:** Ref states Public Acts cost no Dispatch Token. Art 02 DB:12 movement_path shows a PA spend path explicitly. Contradicts PM02 L146. This is a genuine unresolved ambiguity between PM02 and Art 02's movement_path — needs resolution in Art 03 before ref can be corrected.
 - **Passive generation absent:** Ghost receives +1 Findings/Quarter as an unconditional passive floor (Art 00c §4.4). The ref's Generation Formula omits this entirely — Ghost income is systematically underestimated by any calculation using the ref.
 - **Residential Quarter PS amplifier — premature:** Ref presents the full multiplier table as settled content. PM05 02-n27 is still open: the mechanic has no canonical artifact home and has not been signed off. The table values appear stable (match PM05 02-n27) but should be flagged as pending sign-off.
 
@@ -163,7 +163,7 @@ The ref covers §4.1 through §4.6a (6 pillars/corollaries) and misses everythin
 - **§4.9 cited in source but unresolvable:** Art 04b §5.1 cites §4.9 for three Corrupt exclusions (Territory, Resolution, Standing), but §4.9 does not exist as a section header in Art 04b. This is a source artifact gap; the ref cannot cite what doesn't resolve.
 
 ### Low Severity
-- Territory scope: "control flags" in ref vs. "Dominant markers" in source (§5.1).
+- Territory scope: "control flags" in ref vs. "Dominant Markers" in source (§5.1).
 - Recover retirement rationale: ref says "reducible to Add + React context" — §4.14 says committed board state finality. The ref's rationale is a synthesis, not a citation.
 - §4.13 is a dangling cross-reference in the source artifact itself (not a ref issue).
 

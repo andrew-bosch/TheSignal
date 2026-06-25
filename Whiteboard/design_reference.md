@@ -34,10 +34,10 @@
 | `ref_design_pillars.md` | Foundational Design Pillars 4.1–4.6, §3 principles for 00a, canonical definitions (in-world ↔ mechanical term table) | Design principle arguments, source-of-truth disputes, terminology questions |
 | `ref_components.md` | Full component registry (NS-xx, CA-xx, O-xx, etc.), lifecycle rules, component_positions DB table | Component registration, 00b questions, DB schema |
 | `ref_board_narrative.md` | The Overview/MIRROR narrative, Chorus Node identity, ring character, district faction geography, zone vs. component distinction, ARBITER physical position, starting configuration | District design, board layout, narrative anchoring, physical placement questions |
-| `ref_resources.md` | Generation formula, affinity bonus, structure block mechanics, The Translation (conversion rates), Findings decay, Dispatch Token rules, Chorus Node economics, Residential Quarter PS amplifier, starting resources | Resource system mechanics, conversion, generation, Contested districts |
+| `ref_resources.md` | Generation formula, affinity bonus, Structure Block mechanics, The Translation (conversion rates), Findings decay, Dispatch Token rules, Chorus Node economics, Residential Quarter PS amplifier, starting resources | Resource system mechanics, conversion, generation, Contested districts |
 | `ref_tracking.md` | Portrait bands (all 11) + game effects, Public Standing bands + threshold formula + drift, Intel Token age/use/privacy/discard | Portrait design, PS design, scoring, Intel Token mechanics, initiative order |
 | `ref_procedures.md` | Dice roll procedure + modifier stack, Phase B declaration rules, Beat 4 PA resolution steps, React card rules (§28), Debrief procedure, Battlefield Strength | Procedure gaps, timing questions, React card design, Debrief rules, dice mechanics |
-| `ref_card_types.md` | All CardTypes (CovertOp, PublicAct, Pass, Countermeasure, Modifier, EmergencyResponse, DebriefActionCard), modifier card draw/assignment/Burst Play, resolution mechanics (ring_mod baselines, doctrine_mod), §5 thematic overview | Card type questions, resolution mechanics, modifier card rules, §5 principle arguments |
+| `ref_card_types.md` | All CardTypes (CovertOp, PublicAct, Pass, Countermeasure, Modifier, EmergencyResponse, Debrief Action Card), Modifier Card draw/assignment/Burst Play, resolution mechanics (ring_mod baselines, doctrine_mod), §5 thematic overview | Card type questions, resolution mechanics, Modifier Card rules, §5 principle arguments |
 | `ref_taxonomy.md` | 7 verb primitives, Layer/Function/Subject vocabulary, construction logic, assignment rules | Taxonomy assignment for new cards, 04b audit work |
 
 **For card spec work:** also read `design_reference_card_system.md` (schema, governing rules, design flags — always relevant for card design).
@@ -48,7 +48,7 @@
 
 4 rings: **Baryo** (Ring 3, 9 districts, base gen 1) → **The Mid** (Ring 2, 7 districts, base gen 2) → **Core** (Ring 1, 4 districts, base gen 3) → **Chorus Node** (Ring 0, ARBITER's district, gen 0, no structures). Entry: Mid requires no presence; Core requires Established+ in adjacent Mid; Chorus Node requires Established+ in adjacent Core.
 
-21 districts total. Influence levels: Dominant (3+, strictly most) · Established (2+, second) · Present (1+) · Absent (0) · Contested (tie at 3+). Max 6 presence chips/faction/district (deployment markers count). Max 1 structure block/faction/district.
+21 districts total. Influence levels: Dominant (3+, strictly most) · Established (2+, second) · Present (1+) · Absent (0) · Contested (tie at 3+). Max 6 Presence Tokens/faction/district (Deployment Markers count). Max 1 Structure Block/faction/district.
 
 ---
 

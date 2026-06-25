@@ -1,7 +1,7 @@
 # 03-init — Game Initialization
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.3 — Draft S84
+**Version:** 0.4 — Draft S84
 **Status:** In progress — gaps surface during Art 03 rubric pass
 **Depends on:** 01 — Game Board: New Meridian; 02 — Components; 00c — Economy Manifest (pending); Art 04 §12 (card decks, pending)
 **Called by:** 03 — at session start, before Quarter 1
@@ -25,7 +25,7 @@ All structural and environmental components placed before faction setup begins.
 | Component | Zone | on_component_id | Notes |
 |-----------|------|-----------------|-------|
 | The Overview (game mat) | Central Area | — | Placed at center |
-| District tile ×21 | The Overview | — | All 21 placed on mat; designated subzone |
+| District Tile ×21 | The Overview | — | All 21 placed on mat; designated subzone |
 | Ring Modifier Deck ×3 | The Overview | — | One per ring (Rings 1–3); designated subzone adjacent to respective ring |
 | Session Timeline | The Overview | — | Designated subzone: left side (P1/P2 adjacency) |
 | Initiative Strip | The Overview | — | Designated subzone: left side (P1/P2 adjacency) |
@@ -35,7 +35,7 @@ All structural and environmental components placed before faction setup begins.
 | Reservoir | The Overview | — | Designated subzone: shared resource supply (resource tokens only) |
 | ARBITER Screen | P6 | — | — |
 | ARBITER Tableau | P6 | — | — |
-| Portrait track | P6 | — | Behind ARBITER screen |
+| Portrait track | P6 | — | Behind ARBITER Screen |
 | Faction Screen ×5 | P1–P5 | — | One per faction position |
 | Faction Terminal ×5 | P1–P5 | — | One per faction position |
 | Faction Resolution Grid ×5 | P1–P5 | — | One per faction position |
@@ -48,25 +48,25 @@ Only districts with starting tokens are listed. All other districts start empty.
 
 | Component | District | Faction | Count | Influence Level |
 |-----------|----------|---------|-------|-----------------|
-| Presence chip | University Perimeter | Ghost | 1 | Present |
-| Presence chip | University Perimeter | Network | 1 | Present |
-| Presence chip | Media District | Network | 2 | Established |
-| Presence chip | Industrial Fringe | Guild | 1 | Present |
-| Presence chip | Commercial Strip | Syndicate | 1 | Present |
-| Presence chip | Civic Center | Directorate | 1 | Present |
-| Presence chip | Broadcast Tower | Network | 1 | Present |
-| Presence chip | Power Grid | Guild | 3 | Dominant |
-| Presence chip | Financial Clearinghouse | Syndicate | 3 | Dominant |
-| Presence chip | Data Exchange | Ghost | 2 | Established |
-| Presence chip | Communications Hub | Network | 2 | Established |
-| Presence chip | Logistics Center | Guild | 1 | Present |
-| Presence chip | Research Institute | Ghost | 1 | Present |
-| Presence chip | Regulatory District | Directorate | 1 | Present |
-| Presence chip | Government Citadel | Directorate | 1 | Present |
-| Presence chip | Military Installation | Directorate | 2 | Established |
-| Presence chip | Chorus Research | Ghost | 2 | Established |
-| Presence chip | Financial Sanctum | Syndicate | 2 | Established |
-| Presence chip | Chorus Node | Directorate | 1 | Present |
+| Presence Token | University Perimeter | Ghost | 1 | Present |
+| Presence Token | University Perimeter | Network | 1 | Present |
+| Presence Token | Media District | Network | 2 | Established |
+| Presence Token | Industrial Fringe | Guild | 1 | Present |
+| Presence Token | Commercial Strip | Syndicate | 1 | Present |
+| Presence Token | Civic Center | Directorate | 1 | Present |
+| Presence Token | Broadcast Tower | Network | 1 | Present |
+| Presence Token | Power Grid | Guild | 3 | Dominant |
+| Presence Token | Financial Clearinghouse | Syndicate | 3 | Dominant |
+| Presence Token | Data Exchange | Ghost | 2 | Established |
+| Presence Token | Communications Hub | Network | 2 | Established |
+| Presence Token | Logistics Center | Guild | 1 | Present |
+| Presence Token | Research Institute | Ghost | 1 | Present |
+| Presence Token | Regulatory District | Directorate | 1 | Present |
+| Presence Token | Government Citadel | Directorate | 1 | Present |
+| Presence Token | Military Installation | Directorate | 2 | Established |
+| Presence Token | Chorus Research | Ghost | 2 | Established |
+| Presence Token | Financial Sanctum | Syndicate | 2 | Established |
+| Presence Token | Chorus Node | Directorate | 1 | Present |
 
 ### §2.3 ARBITER Starting Components
 
@@ -78,18 +78,18 @@ Only districts with starting tokens are listed. All other districts start empty.
 
 | Faction | Condition |
 |---------|-----------|
-| The Network | Virtual structure block at University Perimeter. Not a physical block — cannot be demolished; does not count toward the 1-structure-per-faction-per-district limit. Counts toward modifier draw (§7.5.3) while Network holds any presence at University Perimeter. |
+| The Network | Virtual Structure Block at University Perimeter. Not a physical block — cannot be demolished; does not count toward the 1-structure-per-faction-per-district limit. Counts toward modifier draw (§7.5.3) while Network holds any presence at University Perimeter. |
 
 ### §2.5 Track Starting Values
 
 | Marker | Track / Strip | Starting Value |
 |--------|--------------|----------------|
-| Pointer marker | Session Timeline | Q1M1 |
-| Activity marker | Chorus Activity Track | 1 |
+| Pointer Marker | Session Timeline | Q1M1 |
+| Activity Marker | Chorus Activity Track | 1 |
 | Threshold marker | Chorus Activity Track | 6 (default) |
-| Standing marker ×5 | Public Standing Track | 10 (Neutral) — each faction |
-| Portrait marker ×5 | ARBITER Portrait Track (hidden) | 0 (Ambiguous) — each faction |
-| Faction order markers ×5 | Adjacent to Initiative Strip | — (order determined at §7.1) |
+| Standing Marker ×5 | Public Standing Track | 10 (Neutral) — each faction |
+| Portrait Marker ×5 | ARBITER Portrait Track (hidden) | 0 (Ambiguous) — each faction |
+| Faction Order Markers ×5 | Adjacent to Initiative Strip | — (order determined at §7.1) |
 
 ### §2.6 Starting Resources
 
@@ -113,13 +113,13 @@ Per-faction components at faction tableau at T=0. All counts TBD unless noted.
 
 | Component | Count | Notes |
 |-----------|-------|-------|
-| Deployment marker | 2 | — |
+| Deployment Marker | 2 | — |
 | Dispatch Case | 1 | Empty at T=0 |
 | Emergency Response card | 1 | — |
-| Operative card | 1 | Distributed at §3.6 |
+| Operative Card | 1 | Distributed at §3.6 |
 | Floor Act PA card | 1 | Standard PA card; distributed at §3.6; starts in hand permanently — do not discard. Full design: Art 04 (PM05 04-n96). |
-| Countermeasure card (CM-A) | 1 | Distributed at §3.7 |
-| Countermeasure card (CM-B) | 2 | Distributed at §3.7 |
+| Countermeasure Card (CM-A) | 1 | Distributed at §3.7 |
+| Countermeasure Card (CM-B) | 2 | Distributed at §3.7 |
 | Classified Objective card | 1 | Distributed sealed at §3.8 |
 | Target Profile | TBD | Blank; held in faction tableau storage area. Physical design (erasable vs. single-use) pending — see PM05 03-n16. |
 
@@ -129,15 +129,15 @@ Components at ARBITER Tableau at T=0. Subzones TBD. All counts TBD unless noted.
 
 | Component | Notes |
 |-----------|-------|
-| Presence chip | — |
-| Established marker | — |
-| Dominant marker | — |
-| Structure block | — |
-| Tension marker | — |
-| Intel token | — |
-| Status marker | — |
-| Modifier token | — |
-| Accord agreement | — |
+| Presence Token | — |
+| Established Marker | — |
+| Dominant Marker | — |
+| Structure Block | — |
+| Tension Marker | — |
+| Intel Token | — |
+| Status Marker | — |
+| Modifier Token | — |
+| Accord Agreement | — |
 | Notification Slip (NS-xx) | — |
 | Intel Delivery Slip (IS-xx) | — |
 | Target Profile | — |
@@ -166,21 +166,21 @@ Place all components per §2.1 in their designated zones.
 
 ### §3.4 Seed Starting Tokens
 
-1. Place all presence chips per §2.2.
-2. Place an influence marker on each district stack whose Influence Level column shows Established (Established marker) or Dominant (Dominant marker).
+1. Place all Presence Tokens per §2.2.
+2. Place an influence marker on each district stack whose Influence Level column shows Established (Established Marker) or Dominant (Dominant Marker).
 3. Verify influence levels match the table.
-4. Note Network virtual structure block (§2.4) — no physical component placed.
+4. Note Network virtual Structure Block (§2.4) — no physical component placed.
 
 ### §3.5 Set Track Starting Values
 
 Set all markers per §2.5:
 
 1. Session Timeline → Q1M1
-2. Chorus Activity Track → threshold marker at 6; activity marker at 1
+2. Chorus Activity Track → threshold marker at 6; Activity Marker at 1
 3. Public Standing Track → all five faction markers at 10
 4. ARBITER Portrait Track (hidden) → all five faction markers at 0
 
-*Faction order markers placed adjacent to Initiative Strip at T=0. Order determined during §7.1 Upkeep.*
+*Faction Order Markers placed adjacent to Initiative Strip at T=0. Order determined during §7.1 Upkeep.*
 
 ### §3.6 Faction Terminal Setup
 
@@ -190,13 +190,13 @@ Each Faction Player simultaneously:
 2. Places Faction Terminal at assigned position
 3. Places Dispatch Case at assigned position — empty
 4. Collects starting resources from Reservoir per §2.6
-5. Collects starting hand: 1 Operative card, 1 Floor Act PA card
+5. Collects starting hand: 1 Operative Card, 1 Floor Act PA card
 
 *[TBD — distribution source: Art 04 §12]*
 
 ### §3.7 Distribute Countermeasures
 
-Each faction receives 3 Countermeasure cards: 1 CM-A and 2 CM-B. Place in designated Terminal area.
+Each faction receives 3 Countermeasure Cards: 1 CM-A and 2 CM-B. Place in designated Terminal area.
 
 *[TBD — card design: Art 04]*
 
@@ -208,7 +208,7 @@ ARBITER distributes one sealed Classified Directive to each faction.
 
 ### §3.9 Distribute and Shuffle Card Decks
 
-*[TBD — deck construction and distribution: Art 04 §12. Decks required: covert operation deck (per faction), public act deck (per faction), faction modifier deck (per faction), Ring Modifier Decks ×3, Broadcast Deck, Broadcast Effect Deck, Battlefield Modifier deck.]*
+*[TBD — deck construction and distribution: Art 04 §12. Decks required: Covert Operation Deck (per faction), Public Act Deck (per faction), Faction Modifier Deck (per faction), Ring Modifier Decks ×3, Broadcast Deck, Broadcast Effect Deck, Battlefield Modifier Deck.]*
 
 ### §3.10 ARBITER Verification
 
@@ -222,7 +222,7 @@ ARBITER confirms before proceeding:
 | All tracks at starting values | §2.5 |
 | All factions hold starting resources | §2.6 |
 | All card decks shuffled and in position | §3.9 |
-| All factions hold 3 Countermeasure cards (1 CM-A + 2 CM-B) | §3.7 |
+| All factions hold 3 Countermeasure Cards (1 CM-A + 2 CM-B) | §3.7 |
 | ARBITER supply in position | §2.8 |
 | All factions hold 1 sealed Classified Directive | §3.8 |
 | All Dispatch Cases at faction positions — empty | §3.6 |
@@ -238,7 +238,7 @@ All of the following must be true before Art 03 §7 Upkeep begins:
 - [ ] All tracks at starting values (§2.5)
 - [ ] All factions hold starting resources (§2.6)
 - [ ] All card decks shuffled and in position
-- [ ] All factions hold 3 Countermeasure cards (1 CM-A + 2 CM-B)
+- [ ] All factions hold 3 Countermeasure Cards (1 CM-A + 2 CM-B)
 - [ ] All factions hold 1 sealed Classified Directive
 - [ ] All Dispatch Cases at faction positions — empty
 - [ ] Backlog holds full Dispatch Token supply

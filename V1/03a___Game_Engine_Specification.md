@@ -1,7 +1,7 @@
 # 03a — GAME ENGINE SPECIFICATION
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.98  
+**Version:** 0.99  
 **Status:** 🔄 In Progress — Tiers 1–3 complete; Phase procedures added (Phase_1–Phase_7); Tier 4 stub pending  
 **Last Updated:** 2026-05-18  
 **Companion to:** [Artifact 03 — Round Structure & Gameplay](03___Round_Structure___Gameplay.md)  
@@ -75,11 +75,11 @@ The State Model defines every variable in the game system — its type, visibili
 
 The physical state of the game immediately after setup and before Quarter 1 Phase 1 begins. This is not a reset — Quarter 1 is the first increment from this configuration. §4.2 "Start of Quarter" applies to Quarters 2–8 (carry-forward), not Quarter 1.
 
-**ARBITER as faction:** ARBITER (F-06) participates in the Board domain as a standard faction entry, not a special exception. At setup, F-06 holds 8 presence chips at the Chorus Node (D-22). All derived values — InfluenceLevel, ControlFlag, TensionMarker — follow normal derivation from those chips. The ARBITER Dominance Marker (Art 02 §14) is the physical component representing this placement; it replaces standard chip stacks on the board.
+**ARBITER as faction:** ARBITER (F-06) participates in the Board domain as a standard faction entry, not a special exception. At setup, F-06 holds 8 Presence Tokens at the Chorus Node (D-22). All derived values — InfluenceLevel, ControlFlag, TensionMarker — follow normal derivation from those chips. The ARBITER Dominance Marker (Art 02 §14) is the physical component representing this placement; it replaces standard chip stacks on the board.
 
 #### Board Domain at Setup
 
-Presence chip placement per [03-init___Game_Initialization.md](file:///home/abosch/Projects/TheSignal/V1/03-init___Game_Initialization.md) §2.2 Faction Starting Tokens. F-06 (ARBITER) added: 8 chips at D-22 only, 0 elsewhere.
+Presence Token placement per [03-init___Game_Initialization.md](file:///home/abosch/Projects/TheSignal/V1/03-init___Game_Initialization.md) §2.2 Faction Starting Tokens. F-06 (ARBITER) added: 8 chips at D-22 only, 0 elsewhere.
 
 | Variable | Starting Value | Source |
 |----------|----------------|--------|
@@ -135,12 +135,12 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Card.Covert.Hand[F-xx]` | [] (0) — drawn to 6 in Phase 1 Upkeep Step 6 | Phase 1 |
 | `Card.Political.Deck[F-xx]` | 12 cards — selected from session pool (~20 available); shuffled and placed face-down on tableau | Session setup; Art 04 §3 |
 | `Card.Political.Hand[F-xx]` | [] (0) — drawn to 3 in Phase 1 Upkeep Step 6 | Phase 1 |
-| `Card.Modifier.Deck[F-xx]` | Faction modifier deck shuffled and placed face-down; applicable ring decks pre-positioned on board | Session setup; Art 04 §11 |
+| `Card.Modifier.Deck[F-xx]` | Faction Modifier Deck shuffled and placed face-down; applicable ring decks pre-positioned on board | Session setup; Art 04 §11 |
 | `Card.Modifier.Hand[F-xx]` | [] (0) — drawn in Phase 1 Upkeep Step 6 | Phase 1 |
 | `Card.Countermeasure.Hand[F-xx]` | 3 CC cards — all Active=True; in tableau designated area | Session setup; Art 04 |
 | `Card.Pass.Hand[F-xx]` | 4 Pass cards — Lifecycle: Permanent; beside tableau | Session setup; Art 04 §12 |
 | `Card.Floor.Hand[F-xx]` | 1 Floor Act — Lifecycle: Permanent; beside tableau | Session setup; Art 04 D04-13 |
-| `Card.Operative.Hand[F-xx]` | Operative cards selected at session setup — Lifecycle: Deploy; in Hand, 0 deployed to board | Session setup; Art 05 |
+| `Card.Operative.Hand[F-xx]` | Operative Cards selected at session setup — Lifecycle: Deploy; in Hand, 0 deployed to board | Session setup; Art 05 |
 | `Card.ClassifiedDirective.Hand[F-xx]` | Classified directive cards assigned at session setup — Lifecycle: Secret; private to faction; never removed until scored | Session setup; Art 05 |
 | `Card.ARBITER.*` | TBD — Art 07 (resolution materials, Apex envelopes, Chronicle cards, Emergency Response set) | Art 07 |
 
@@ -192,7 +192,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Board.StructureBlocks[D-xx][F-xx]` | Integer ≥ 0 | VS-01 | Beat 3 Step 7; Beat 4 Step 7 (op success — structure placement) |
 | `Board.DeploymentMarker[F-xx][1\|2]` | {Location: D-xx \| Hand, Face: Converting \| Blocked \| N/A} | VS-01 | Phase 2 (placed on board); Upkeep Step 3 (Blocked face from Situation Report); Upkeep Step 4 (returned to hand); Beat 1 (Blocked face from conversion restriction); Beat 2 (Blocked face from Type A CM); Beat 3 Step 7; Beat 4 Step 7 (Blocked face from op outcome) |
 
-*`Board.InfluenceLevel` and `Board.ControlFlag` are computed views. Physical components (Control flags, Established markers, Tension markers) are player-maintained and must be synchronized immediately after every chip change.*
+*`Board.InfluenceLevel` and `Board.ControlFlag` are computed views. Physical components (Control flags, Established Markers, Tension Markers) are player-maintained and must be synchronized immediately after every chip change.*
 
 *ARBITER (F-06) chip placement at D-22 (8 chips) makes ARBITER's Dominant status at the Chorus Node structurally permanent — no playing faction can accumulate enough chips to surpass 8 while holding other board positions. See §4.0 for setup initialization. ARBITER Dominance Marker (Art 02 §14) is the physical representation.*
 
@@ -204,10 +204,10 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 |----------|------|-----------|------------|
 | `Faction.Resources[F-xx][RT-xx]` | Integer ≥ 0 | VS-02 | Upkeep Step 5 (income); Beat 0 (covert payment drain to Reservoir); Phase 4 Declaration (tokens moved to Grid.Political.ResourceStake — committed, not yet in Reservoir); Beat 4 Submit Payment (Grid.Political.ResourceStake drained to Reservoir); Beat 3/4 failure conditions (standing/resource penalties per card text); Debrief (trades, conversion) |
 | `Faction.PublicStanding[F-xx]` | Integer 0–20 | VS-01 | Upkeep Step 3 (Situation Report effect); Beat 3 Steps 8–9; Beat 4 Step 8 (failure/discovery conditions); Quarter close (natural drift, L13) |
-| `Faction.ChorusPortrait[F-xx]` | Integer | VS-04 | Beat 3 Step 11 (per resolved covert operation, privately); Beat 4 Step 10 (per resolved political act, privately) |
+| `Faction.ChorusPortrait[F-xx]` | Integer | VS-04 | Beat 3 Step 11 (per resolved Covert Operation, privately); Beat 4 Step 10 (per resolved Public Act, privately) |
 | `Faction.StatusMarker[F-xx]` | Discussing \| Operating | VS-01 | Upkeep Step 1 (reset to Discussing) |
 | `Faction.BurstPlay[F-xx]` | Boolean | VS-01 | Upkeep Step 6 (set True on trigger — persistent for remainder of session) |
-| `Faction.IntelTokens[F-xx]` | Integer ≥ 0 | VS-02 | Beat 5 (incremented by intel tokens received from dispatch case); TBD — Art 02 §12 (spending, age rules, scoring) |
+| `Faction.IntelTokens[F-xx]` | Integer ≥ 0 | VS-02 | Beat 5 (incremented by Intel Tokens received from Dispatch Case); TBD — Art 02 §12 (spending, age rules, scoring) |
 
 ---
 
@@ -239,7 +239,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 **Card.Faction attribute:** Every card entity (C-xx, P-xx) carries a `Faction` field (Art 04 §4): `All` (Common — standard cards available to every faction) or `F-xx` (Faction-Specific — exclusive to the owning faction). `Card.Covert.Deck[F-xx]` and `Card.Political.Deck[F-xx]` are built from the faction's session pool, pre-filtered to: `Card.Faction = All` (eligible for any faction) UNION `Card.Faction = F-xx` (eligible for this faction only). This constraint governs deck construction at session setup.
 
-*ARBITER (F-06) has a distinct card set and modifier token provisioning. Variables stubbed below; full definition Art 07.*
+*ARBITER (F-06) has a distinct card set and Modifier Token provisioning. Variables stubbed below; full definition Art 07.*
 
 **Lifecycle taxonomy:** All card variables use `.Hand` — cards in the faction's possession, available to play. The distinction between card types is in lifecycle behavior, not in the variable name:
 
@@ -251,7 +251,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | Deploy | Operative | In Hand until deployed → moves to board operative zone; not recycled |
 | Secret | Classified Directive | Assigned at session setup → Hand; VS-04 (private to faction); held throughout session; revealed and scored at game end or per Art 05 conditions; full lifecycle TBD |
 
-**Active flag:** Modifier and Countermeasure cards carry `Active: Boolean` on each card instance. `Active=True` = in hand or in play (Countermeasure: including while held by ARBITER after Phase 5 deployment). `Active=False` = removed from game. Covert, Political, Pass, Floor Act, and Operative do not require this flag — their in-play status is determined by their position (Hand vs Deck vs board zone).
+**Active flag:** Modifier and Countermeasure Cards carry `Active: Boolean` on each card instance. `Active=True` = in hand or in play (Countermeasure: including while held by ARBITER after Phase 5 deployment). `Active=False` = removed from game. Covert, Political, Pass, Floor Act, and Operative do not require this flag — their in-play status is determined by their position (Hand vs Deck vs board zone).
 
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
@@ -264,7 +264,7 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Card.Countermeasure.Hand[F-xx]` | List of {CC-xx, Active: Boolean} (max 3) | VS-02 | Session setup (3 allocated; Active=True); Phase 5 (deployed to ARBITER; Active=True — in play); Beat 2 (processed → Active=False, removed from game) |
 | `Card.Pass.Hand[F-xx]` | Fixed list of 4 Pass — Lifecycle: Permanent | VS-01 (count); VS-02 (usage intent) | Immutable — reusable every Quarter; never removed |
 | `Card.Floor.Hand[F-xx]` | Fixed 1 Floor Act — Lifecycle: Permanent | VS-01 (count); VS-02 (usage intent) | Immutable — always available; never removed; full design Art 04 D04-13 |
-| `Card.Operative.Hand[F-xx]` | List of operative cards — Lifecycle: Deploy | VS-02 | Session setup (operative set selected; in Hand); Phase 2 (deployed → moves to board operative zone; no longer in Hand); TBD — Art 05 |
+| `Card.Operative.Hand[F-xx]` | List of Operative Cards — Lifecycle: Deploy | VS-02 | Session setup (operative set selected; in Hand); Phase 2 (deployed → moves to board operative zone; no longer in Hand); TBD — Art 05 |
 | `Card.ClassifiedDirective.Hand[F-xx]` | List of classified directive cards — Lifecycle: Secret | VS-04 | Session setup (assigned; private to faction); Art 05 (scoring conditions, revelation TBD) |
 | `Card.ARBITER.*` | TBD — resolution materials, Apex envelopes, Chronicle cards, Emergency Response set | VS-04 | TBD — Art 07 |
 
@@ -272,13 +272,13 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 #### ARBITER Domain
 
-*ARBITER (F-06) holds materials that are not part of the faction card system. Modifier tokens are physical pieces in multiple denominations managed by ARBITER during Resolution. Full denomination set and physical design: Art 07.*
+*ARBITER (F-06) holds materials that are not part of the faction card system. Modifier Tokens are physical pieces in multiple denominations managed by ARBITER during Resolution. Full denomination set and physical design: Art 07.*
 
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
 | `ARBITER.ModifierToken[M-xx]` | Integer ≥ 0 (quantity per denomination) | VS-04 | Session setup (provisioned by denomination); Beat 2 (M-11 placed on grid cell); Beat 3/4 (tokens placed and returned to pool per resolution step) |
 | `ARBITER.Resources[RT-06]` | Integer ≥ 0 (Resolution resource — RT-06) | VS-04 | TBD — Art 07 (Translation mechanic, income source) |
-| `ARBITER.Notepad` | Running record — per-Quarter observations, resolution patterns, portrait notes, Debrief material, Chronicle source | VS-04 | Beat 3 Step 11 (portrait + resolution notes); Beat 4 Step 10 (political act notes); Beat 5 Step 2 (Quarter-level record); Debrief (narrative summary) |
+| `ARBITER.Notepad` | Running record — per-Quarter observations, resolution patterns, portrait notes, Debrief material, Chronicle source | VS-04 | Beat 3 Step 11 (portrait + resolution notes); Beat 4 Step 10 (Public Act notes); Beat 5 Step 2 (Quarter-level record); Debrief (narrative summary) |
 
 *`ARBITER.Resources[RT-06]` is ARBITER's operational resource (Resolution, generated at Chorus Node). It is distinct from the Reservoir — see System Domain below.*
 
@@ -290,17 +290,17 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
-| `Reservoir[RT-xx]` | Integer ≥ 0 per resource type | VS-01 | Session setup (pre-loaded 50 per type); Beat 0 (payment drain from dispatch cases); Beat 4 Submit Payment (political act payment drain); Debrief (Burst Play trade-in; Translation payouts) |
+| `Reservoir[RT-xx]` | Integer ≥ 0 per resource type | VS-01 | Session setup (pre-loaded 50 per type); Beat 0 (payment drain from Dispatch Cases); Beat 4 Submit Payment (Public Act payment drain); Debrief (Burst Play trade-in; Translation payouts) |
 
 *Design decision: Reservoir = System entity (not F-06). ARBITER already has RT-06 (Resolution) as their own resource type, earned operationally. The Reservoir is the collective pool of all spent faction resources — a board-level pool owned by no faction. Conflating it with F-06 would mix ARBITER's operational budget with the city's resource pool. If Tier 2 architecture treats all resource pools under a unified `Resources[Owner][RT-xx]` model, Reservoir maps to `Owner = System.Reservoir`, not `Owner = F-06`.*
 
-*Starting value of 50 per resource type is a working baseline — sufficient to sustain Burst Play trades (modifier cards → Reservoir resources at 1:1), Translation payouts, and any other Reservoir draws across 8 Quarters. Pending playtest validation (PT-xx — to be assigned).*
+*Starting value of 50 per resource type is a working baseline — sufficient to sustain Burst Play trades (Modifier Cards → Reservoir resources at 1:1), Translation payouts, and any other Reservoir draws across 8 Quarters. Pending playtest validation (PT-xx — to be assigned).*
 
 ---
 
 #### Case Domain — physical transport layer between Faction Players and ARBITER
 
-*The dispatch case is the physical container each faction submits at Phase 3. It holds packets — one per submitted action — which ARBITER reads at Beat 0 to build the Resolution Grid. ARBITER loads response cards and intel tokens into each packet during Beats 3–4; the case is returned to the faction at Beat 5. Cases are assigned at session setup and persist for the full session; packet contents are cleared between Quarters.*
+*The Dispatch Case is the physical container each faction submits at Phase 3. It holds packets — one per submitted action — which ARBITER reads at Beat 0 to build the Resolution Grid. ARBITER loads response cards and Intel Tokens into each packet during Beats 3–4; the case is returned to the faction at Beat 5. Cases are assigned at session setup and persist for the full session; packet contents are cleared between Quarters.*
 
 *At setup and at the start of each Quarter: all packet fields are empty — cases exist as physical objects but contain no submissions.*
 
@@ -313,13 +313,13 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 | `Case[F-xx].Packet[n].CovertCard` | C-xx \| Pass \| None | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned → VS-02) |
 | `Case[F-xx].Packet[n].ModifierCards` | List of MC-xx | VS-04 | Phase 3 Dispatch (faction loads); Beat 5 (returned → VS-02) |
 | `Case[F-xx].Packet[n].ARBITERResponseCards` | List of resolution cards (Succeeded / Failed) placed by ARBITER | VS-04 | Beat 3 Step 10 / Beat 4 Step 9 (ARBITER loads); Beat 5 (returned → VS-02) |
-| `Case[F-xx].Packet[n].IntelTokens` | List of ARBITER-placed intel tokens | VS-04 | Beat 3–4 (ARBITER loads, per card text or ARBITER discretion); Beat 5 (returned → VS-02); TBD — Art 07 |
+| `Case[F-xx].Packet[n].IntelTokens` | List of ARBITER-placed Intel Tokens | VS-04 | Beat 3–4 (ARBITER loads, per card text or ARBITER discretion); Beat 5 (returned → VS-02); TBD — Art 07 |
 
 *`SequenceID` establishes packet order within the case — the order in which the faction submitted their operations during Phase 3 Dispatch. This order determines lane assignment in the Resolution Grid (Beat 0 Step 2).*
 
 *`ARBITERResponseCards` and `IntelTokens` are empty at Phase 3 close. ARBITER loads them during Beats 3–4 as each operation resolves. At Beat 5, each faction receives their case with both their submitted content and ARBITER's additions.*
 
-*Intel token contents and provisioning: TBD Art 07.*
+*Intel Token contents and provisioning: TBD Art 07.*
 
 ---
 
@@ -327,21 +327,21 @@ All card types follow the same structural model: `Card.Type.Deck` is the active 
 
 *The Resolution Grid spans two physical zones, together forming the full resolution workspace for each Quarter.*
 
-*— **ARBITER Resolution Area**: ARBITER's physical workspace — built at Beat 0 from submitted dispatch cases, active through Beats 1–4, cleared at Beat 5. All variables in this area are VS-04.*
+*— **ARBITER Resolution Area**: ARBITER's physical workspace — built at Beat 0 from submitted Dispatch Cases, active through Beats 1–4, cleared at Beat 5. All variables in this area are VS-04.*
 
 *— **Political Act Declaration Area**: each faction's tableau zone — populated at Phase 4 Declaration, resolved in Beat 4, cleared at Beat 5. Declared acts are VS-01 (public) from the moment of Declaration.*
 
-*`Grid.ResolvedCells` spans both areas — it accumulates resolution outcomes (Succeeded / Failed / Voided) for covert operations (Beat 3) and political acts (Beat 4). Face-down cards are recorded as Voided; resolved cards record Succeeded or Failed.*
+*`Grid.ResolvedCells` spans both areas — it accumulates resolution outcomes (Succeeded / Failed / Voided) for Covert Operations (Beat 3) and Public Acts (Beat 4). Face-down cards are recorded as Voided; resolved cards record Succeeded or Failed.*
 
 **ARBITER Resolution Area** — VS-04
 
 | Variable | Type | Visibility | Mutates At |
 |----------|------|-----------|------------|
 | `Grid.Lane[F-xx].Beat2Slot` | CC-xx \| None | VS-04 | Beat 0 (built from Phase 5 countermeasures); Beat 2 (processed, removed) |
-| `Grid.Lane[F-xx].Beat3Queue` | Ordered list of GridCell | VS-04 | Beat 0 (built from dispatch case); Beat 1 (cells removed — restriction blocked); Beat 2 (cells removed — CM blocked; modifier tokens added) |
+| `Grid.Lane[F-xx].Beat3Queue` | Ordered list of GridCell | VS-04 | Beat 0 (built from Dispatch Case); Beat 1 (cells removed — restriction blocked); Beat 2 (cells removed — CM blocked; Modifier Tokens added) |
 | `Grid.ActiveModifierTokens` | Map of GridCell → List of M-xx | VS-04 | Beat 0 (M-06 partial payment marker attached); Beat 2 (M-11 Type B token placed); Beat 3 Step 4 (consumed in threshold calculation, returned to pool at Step 10) |
 | `Grid.ProtectModifiers` | Map of GridCell → modifier value | VS-04 | Beat 2 (noted from Protect operations for Beat 3 application) |
-| `Grid.ResolvedCells` | List of {GridCell × outcome} where outcome ∈ {Succeeded, Failed, Voided} | VS-04 → VS-02 (after Beat 5 dispatch case return) | Beat 3 Step 10 (per covert op); Beat 4 Step 9 (per political act) |
+| `Grid.ResolvedCells` | List of {GridCell × outcome} where outcome ∈ {Succeeded, Failed, Voided} | VS-04 → VS-02 (after Beat 5 Dispatch Case return) | Beat 3 Step 10 (per covert op); Beat 4 Step 9 (per Public Act) |
 | `Grid.ResolutionQueue` | Ordered list of GridCell positions | VS-04 | Beat 0 (established by case receipt order — first action per lane, then second actions per lane, repeating) |
 
 *GridCell = {Lane: F-xx, Row: Beat2 \| Beat3[position], Card: C-xx \| CC-xx \| Pass, Face: Up \| Down, Target: D-xx \| RG-xx \| F-xx \| N/A}*
@@ -395,7 +395,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Card.Covert.Hand`, `Card.Political.Hand`, `Card.Modifier.Hand` = drawn to hand size
 
 **Invariants:**
-- No deployment markers on board — all in Hand
+- No Deployment Markers on board — all in Hand
 - `Card.Covert.Hand` count ≤ 6; `Card.Political.Hand` count ≤ 3 per faction
 - Initiative order publicly announced and recorded on Initiative Strip
 
@@ -405,7 +405,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 
 **Outputs:**
 - `Board.DeploymentMarker[F-xx][1|2]` for placed markers = {Location: D-xx, Face: Converting}
-- `Board.InfluenceLevel`, `Board.ControlFlag`, `Board.TensionMarker` = updated immediately after each placement (marker counts as 1 temporary presence chip)
+- `Board.InfluenceLevel`, `Board.ControlFlag`, `Board.TensionMarker` = updated immediately after each placement (marker counts as 1 temporary Presence Token)
 
 **Invariants:**
 - Each faction has placed 0–2 markers; each is on the board (Converting face) or in Hand
@@ -417,7 +417,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 #### Phase 3 — Dispatch Complete
 
 **Outputs:**
-- ARBITER Player holds all received dispatch cases, ordered left-to-right by receipt time
+- ARBITER Player holds all received Dispatch Cases, ordered left-to-right by receipt time
 - `Grid.ResolutionQueue` lane assignments established by receipt order
 
 **Invariants:**
@@ -431,10 +431,10 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 **Outputs:**
 - `Grid.Political[F-xx].DeclaredCard` = P-xx or Pass — face-up on faction tableau
 - `Grid.Political[F-xx].ResourceStake[RT-xx]` = resource tokens moved from `Faction.Resources` and stacked on card — committed, not yet in Reservoir
-- `Grid.Political[F-xx].ModifierCards` = modifier cards played alongside declared act — face-up
+- `Grid.Political[F-xx].ModifierCards` = Modifier Cards played alongside declared act — face-up
 
 **Invariants:**
-- Declared political acts are fully public — card identity, target, and modifier count visible to all
+- Declared Public Acts are fully public — card identity, target, and modifier count visible to all
 - `Grid.Political[F-xx].ResourceStake` is set; payment transferred to Reservoir in Beat 4 Submit Payment only
 - Declared acts cannot be withdrawn or modified
 
@@ -448,7 +448,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 
 **Invariants:**
 - ARBITER Player holds all deployed CC-xx cards
-- Countermeasure card identities are VS-04 — not yet public
+- Countermeasure Card identities are VS-04 — not yet public
 
 ---
 
@@ -456,13 +456,13 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 
 **Outputs:**
 - `Grid.Lane[F-xx].Beat2Slot` = CC-xx cards from Phase 5 placed in Beat 2 row per lane
-- `Grid.Lane[F-xx].Beat3Queue` = all covert operations placed (face-up or face-down per Payment Validation table)
+- `Grid.Lane[F-xx].Beat3Queue` = all Covert Operations placed (face-up or face-down per Payment Validation table)
 - `Grid.ActiveModifierTokens` = M-06 partial payment markers attached to applicable face-up cards
 - `Grid.ResolutionQueue` = established — first action per lane in receipt order, then second actions, repeating
 - `Faction.Resources[F-xx][RT-xx]` = reduced by all payment drained to Reservoir
 
 **Invariants:**
-- Every submitted covert operation is in the grid with a determined face (Up or Down)
+- Every submitted Covert Operation is in the grid with a determined face (Up or Down)
 - Face-down cards: zero payment (non-Apex) or Apex payment shortfall — auto-fail at Beat 3 Step 1 with no roll
 - Face-up cards: full or partial payment — partial payment marker M-06 attached where applicable
 - Resources drained to Reservoir match validated payment amounts — no resource can remain with a submitted operation
@@ -474,12 +474,12 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 **Outputs:**
 - `Grid.Lane[F-xx].Beat3Queue` = operations targeting restricted D-xx or RG-xx flipped face-down in grid; recorded as Voided in Grid.ResolvedCells
 - `Board.DeploymentMarker[F-xx][1|2]` = markers in conversion-blocked districts or rings flipped to Blocked face
-- Political acts targeting restricted D-xx or RG-xx: cancelled — card returned to faction; resource tokens returned (not spent)
+- Public Acts targeting restricted D-xx or RG-xx: cancelled — card returned to faction; resource tokens returned (not spent)
 
 **Invariants:**
 - No face-up card remaining in any Beat3Queue targets a district or ring under an active targeting restriction
-- No deployment marker in a conversion-blocked district or ring shows Converting face
-- Cancelled political act resource tokens are returned — not in Reservoir
+- No Deployment Marker in a conversion-blocked district or ring shows Converting face
+- Cancelled Public Act resource tokens are returned — not in Reservoir
 
 ---
 
@@ -488,7 +488,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 **Outputs:**
 - `Grid.Lane[F-xx].Beat3Queue` = operations targeting Type A-named districts flipped face-down in grid; recorded as Voided in Grid.ResolvedCells
 - `Board.DeploymentMarker[F-xx][1|2]` = markers in Type A-named districts flipped to Blocked face
-- `Grid.ActiveModifierTokens` = M-11 Type B modifier tokens (−15) placed on operations targeting defending faction's assets
+- `Grid.ActiveModifierTokens` = M-11 Type B Modifier Tokens (−15) placed on operations targeting defending faction's assets
 - `Grid.ProtectModifiers` = Protect operation defensive modifiers noted for Beat 3 application
 
 **Invariants:**
@@ -501,8 +501,8 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 #### Beat 3 End — Covert Operations Resolved
 
 **Outputs:**
-- `Board.PresenceChips[D-xx][F-xx]` = updated for all successful covert operations
-- `Board.StructureBlocks[D-xx][F-xx]` = updated for all successful covert operations placing structure blocks
+- `Board.PresenceChips[D-xx][F-xx]` = updated for all successful Covert Operations
+- `Board.StructureBlocks[D-xx][F-xx]` = updated for all successful Covert Operations placing Structure Blocks
 - `Board.InfluenceLevel`, `Board.ControlFlag`, `Board.TensionMarker` = recalculated after each chip change
 - `Board.DeploymentMarker[F-xx][1|2]` = markers blocked by covert op outcomes flipped to Blocked face
 - `Faction.PublicStanding[F-xx]` = updated for failure/discovery conditions
@@ -515,7 +515,7 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 - `Grid.Lane[F-xx].Beat3Queue` is empty for all lanes — every card resolved or face-down (Beat 0–2)
 - All board changes from covert resolutions are physically applied
 - Portrait track updated but hidden — no faction knows their current score from this beat
-- Each faction's dispatch case contains one resolution card (Succeeded / Failed) per covert operation that resolved; face-down (Voided) operations return with no resolution card
+- Each faction's Dispatch Case contains one resolution card (Succeeded / Failed) per Covert Operation that resolved; face-down (Voided) operations return with no resolution card
 
 ---
 
@@ -523,30 +523,30 @@ A beat boundary snapshot defines the invariants — what must be true at the exa
 
 **Outputs:**
 - `Faction.Resources[F-xx][RT-xx]` = reduced by payment transferred to Reservoir (Submit Payment step)
-- `Board.PresenceChips[D-xx][F-xx]` = updated for all successful political acts
-- `Board.StructureBlocks[D-xx][F-xx]` = updated for all successful political acts placing structure blocks
+- `Board.PresenceChips[D-xx][F-xx]` = updated for all successful Public Acts
+- `Board.StructureBlocks[D-xx][F-xx]` = updated for all successful Public Acts placing Structure Blocks
 - `Board.InfluenceLevel`, `Board.ControlFlag`, `Board.TensionMarker` = recalculated after each chip change
-- `Board.DeploymentMarker[F-xx][1|2]` = markers blocked by political act outcomes flipped to Blocked face
+- `Board.DeploymentMarker[F-xx][1|2]` = markers blocked by Public Act outcomes flipped to Blocked face
 - `Faction.PublicStanding[F-xx]` = updated for failure/discovery conditions
 - `Faction.ChorusPortrait[F-xx]` = privately updated per Beat 4 Step 10
 
 **Invariants:**
-- All political act payments transferred to Reservoir — or partial payment marker attached — or card flipped face-down (zero payment, auto-fail)
-- All board changes from political act resolutions are physically applied
-- Portrait track privately updated for all political act resolutions
+- All Public Act payments transferred to Reservoir — or partial payment marker attached — or card flipped face-down (zero payment, auto-fail)
+- All board changes from Public Act resolutions are physically applied
+- Portrait track privately updated for all Public Act resolutions
 
 ---
 
 #### Beat 5 End — Table Speaks
 
 **Outputs:**
-- Dispatch cases returned to faction owners
-- `Grid.ResolvedCells` outcomes (Succeeded / Failed / Voided per operation) visible to each faction via their dispatch case
-- `Faction.IntelTokens[F-xx]` = incremented by any intel tokens ARBITER loaded into the faction's dispatch case
+- Dispatch Cases returned to faction owners
+- `Grid.ResolvedCells` outcomes (Succeeded / Failed / Voided per operation) visible to each faction via their Dispatch Case
+- `Faction.IntelTokens[F-xx]` = incremented by any Intel Tokens ARBITER loaded into the faction's Dispatch Case
 - ARBITER Player's Quarter-level notes recorded for Debrief
 
 **Invariants:**
-- Each faction knows the outcome of their own covert operations — private to that faction until voluntarily shared
+- Each faction knows the outcome of their own Covert Operations — private to that faction until voluntarily shared
 - No board state changes occur in Beat 5
 - Resolution Grid cleared — all Grid domain variables reset to empty state
 
@@ -590,9 +590,9 @@ Quarter_Flow(quarter_number):
   Quarter.Number ← quarter_number
 
   Phase_1()   // Upkeep — initiative, event, conversion, income, card draw
-  Phase_2()   // Placement — deployment markers placed; entry requirements enforced
-  Phase_3()   // Dispatch — covert operations submitted in cases
-  Phase_4()   // Declaration — political acts declared publicly
+  Phase_2()   // Placement — Deployment Markers placed; entry requirements enforced
+  Phase_3()   // Dispatch — Covert Operations submitted in cases
+  Phase_4()   // Declaration — Public Acts declared publicly
   Phase_5()   // Countermeasures — CC-xx cards deployed to ARBITER Player
   Phase_6()   // Resolution — delegates to Beat_0 through Beat_5
 
@@ -649,7 +649,7 @@ FOR EACH faction f ∈ Faction.All:
       RECALCULATE Board.InfluenceLevel[d][*]
       RECALCULATE Board.ControlFlag[d]
       RECALCULATE Board.TensionMarker[d]
-      Faction Player updates Control flag, Established markers, Tension markers immediately
+      Faction Player updates Control flag, Established Markers, Tension Markers immediately
     Board.DeploymentMarker[f][slot] ← {Location: Hand, Face: N/A}
 
 // Step 5 — Resource Collection  (simultaneous; all factions at once)
@@ -657,7 +657,7 @@ FOR EACH faction f ∈ Faction.All:
   FOR EACH district d WHERE Board.PresenceChips[d][f] > 0
                          OR Board.DeploymentMarker[f][*].Location = d:
     Faction.Resources[f][*] += district_income(d, f)   // Art 02 §5 — IL modifier × base generation
-  FOR EACH structure block s AT district d OWNED BY f:
+  FOR EACH Structure Block s AT district d OWNED BY f:
     resource_type ← f declares aloud: d.NativeResource OR f.NativeResource
     Faction.Resources[f][resource_type] += 1
   Faction.Resources[f][f.NativeResource] += 1   // passive generation — unconditional
@@ -671,7 +671,7 @@ FOR EACH faction f ∈ Faction.All:
   WHILE Card.Political.Hand[f].count < 3:
     IF Card.Political.Deck[f] empty: SHUFFLE discard pile into Deck
     Card.Political.Hand[f] += draw(Card.Political.Deck[f])
-  // Modifier card draw — skipped if Faction.BurstPlay[f] = True
+  // Modifier Card draw — skipped if Faction.BurstPlay[f] = True
   IF NOT Faction.BurstPlay[f]:
     faction_draw_count ← modifier_draw_table(Board.StructureBlocks[*][f].total)  // Art 03 §7 table
     Card.Modifier.Hand[f] += draw(Card.Modifier.Deck[f], faction_draw_count)
@@ -700,10 +700,10 @@ STATE MUTATIONS:
   Board.DeploymentMarker[F-xx][1|2] ← {Location: Hand, Face: N/A} (all markers returned)
   Board.PresenceChips[D-xx][F-xx] ← +1 per converted marker
   Board.InfluenceLevel, Board.ControlFlag, Board.TensionMarker ← recalculated (derived)
-  Faction.Resources[F-xx][RT-xx] ← income collected (district + structure blocks + passive)
+  Faction.Resources[F-xx][RT-xx] ← income collected (district + Structure Blocks + passive)
   Card.Covert.Hand[F-xx] ← drawn to 6
   Card.Political.Hand[F-xx] ← drawn to 3
-  Card.Modifier.Hand[F-xx] ← drawn per structure block count and ring qualifications
+  Card.Modifier.Hand[F-xx] ← drawn per Structure Block count and ring qualifications
   Faction.BurstPlay[F-xx] ← True if triggered this step (persistent)
 ```
 
@@ -735,11 +735,11 @@ FOR EACH (faction f, slot s) IN snake_order(Quarter.InitiativeOrder):
   // RG-01 (Baryo) and RG-02 (The Mid): no entry requirement
 
   Board.DeploymentMarker[f][s] ← {Location: d, Face: Converting}
-  // Marker counts as 1 temporary presence chip immediately upon placement
+  // Marker counts as 1 temporary Presence Token immediately upon placement
   RECALCULATE Board.InfluenceLevel[d][*]
   RECALCULATE Board.ControlFlag[d]
   RECALCULATE Board.TensionMarker[d]
-  Faction Player updates Control flag, Established markers, Tension markers immediately
+  Faction Player updates Control flag, Established Markers, Tension Markers immediately
 
 STATE MUTATIONS:
   Board.DeploymentMarker[F-xx][1|2] ← {Location: D-xx, Face: Converting} per placed marker
@@ -794,8 +794,8 @@ FOR EACH faction f IN Quarter.InitiativeOrder:
     CONTINUE
 
   act ← selected from Card.Political.Hand[f]
-  // Must target one of f's two placed deployment marker locations this Quarter
-  target ← f's deployment marker location (declared on target slip)
+  // Must target one of f's two placed Deployment Marker locations this Quarter
+  target ← f's Deployment Marker location (declared on target slip)
   stake ← resource tokens f places on card — may be any amount ≤ act.BaseCost
            // Partial or zero payment: detected and handled at Beat_4 Submit Payment
   modifiers ← MC-xx cards played alongside (may be empty)
@@ -831,7 +831,7 @@ FOR EACH faction f IN Quarter.InitiativeOrder:
     DECLARE cc.Type (Type A or Type B) to ARBITER Player
     HAND cc to ARBITER Player  // identity is VS-04 — not yet public
 
-// ARBITER Player collects all dispatch cases from receive queue
+// ARBITER Player collects all Dispatch Cases from receive queue
 // Phase 6 begins immediately after
 
 STATE MUTATIONS:
@@ -852,8 +852,8 @@ Phase_6()
 Beat_0(dispatch_cases, countermeasures)   // Grid built; payment validated; resources drained
 Beat_1(Event.ActiveCards)                 // Restrictions applied; restricted ops/acts removed
 Beat_2()                                  // Countermeasures processed; grid cleaned
-Beat_3()                                  // Covert operations resolved
-Beat_4()                                  // Political acts resolved
+Beat_3()                                  // Covert Operations resolved
+Beat_4()                                  // Public Acts resolved
 Beat_5()                                  // Cases returned; Resolution Grid cleared
 
 // If Apex resolved during Beat_3 or Beat_4: Quarter_Flow does not return from Phase_6
@@ -889,7 +889,7 @@ IF Chorus.ActivityTrack ≥ question_threshold
 //   If Chorus.ActivityTrack changed this Quarter: incorporate into observation
 
 // Ready-to-close
-// Each Faction Player flips Status marker to Ready (green/Operating) when done with Debrief
+// Each Faction Player flips Status Marker to Ready (green/Operating) when done with Debrief
 // On 3-of-5 green: ARBITER announces and starts 60-second courtesy timer
 // Debrief closes when timer expires OR all 5 show green
 
@@ -945,8 +945,8 @@ Beat_0(
 ) → Grid (built)
 
 PRECONDITIONS:
-  Phase 3 Dispatch closed — no additions permitted to any dispatch case
-  Phase 4 political acts declared — face-up on faction tableaux
+  Phase 3 Dispatch closed — no additions permitted to any Dispatch Case
+  Phase 4 Public Acts declared — face-up on faction tableaux
   Phase 5 countermeasures transferred to ARBITER Player
 
 PROCEDURE:
@@ -967,7 +967,7 @@ FOR EACH dispatch_case IN dispatch_cases (in case receipt order, Lane 1 → Lane
     ELSE IF card.CardType = Beat2:
       Grid.Lane[lane].Beat2Slot ← card  // Faction-submitted CC-xx
       DRAIN actual_payment → Reservoir
-    ELSE:  // Beat3 covert operation
+    ELSE:  // Beat3 Covert Operation
       IF card.IsApex:  // DT-02 — Apex payment rule
         card.Face ← IF actual_payment ≥ card_cost THEN Up ELSE Down
         DRAIN actual_payment → Reservoir  // Any shortfall: drain what was submitted, no refund
@@ -1016,26 +1016,26 @@ PROCEDURE:
 restrictions ← targeting restriction effects from Event.ActiveCards
 conversion_blocks ← conversion-blocking effects from Event.ActiveCards
 
-// Step 2 — Flip restricted covert operations face-down
+// Step 2 — Flip restricted Covert Operations face-down
 FOR EACH restriction r ∈ restrictions:
   FOR EACH lane ∈ Grid.Lanes:
     FOR EACH cell ∈ Grid.Lane[lane].Beat3Queue:
       IF cell.Target ∈ r.RestrictedDistricts OR cell.Target ∈ r.RestrictedRings:
         cell.Face ← Down
         INSERT {cell.ID, Voided} → Grid.ResolvedCells
-        DISCARD modifier cards from cell — removed from game
+        DISCARD Modifier Cards from cell — removed from game
         // No resource refund — resources were drained at Beat 0
-        // Card remains in queue; Beat 3 Step 1 face-down check returns it to dispatch case
+        // Card remains in queue; Beat 3 Step 1 face-down check returns it to Dispatch Case
 
-// Step 3 — Cancel restricted political acts
+// Step 3 — Cancel restricted Public Acts
 FOR EACH restriction r ∈ restrictions:
   FOR EACH faction f ∈ Faction.All:
     IF Faction.DeclaredAct[f].Target ∈ r.RestrictedDistricts:
       ARBITER announces restriction
-      RETURN political act card → Faction Player  // Cancelled — not resolved
+      RETURN Public Act Card → Faction Player  // Cancelled — not resolved
       RETURN resource tokens → Faction Player  // NOT transferred to Reservoir
-      DISCARD modifier cards — removed from game
-      // No RO-xx entry — political act was cancelled before entering resolution
+      DISCARD Modifier Cards — removed from game
+      // No RO-xx entry — Public Act was cancelled before entering resolution
 
 // Step 4 — Apply conversion blocks
 FOR EACH block b ∈ conversion_blocks:
@@ -1063,7 +1063,7 @@ PRECONDITIONS:
 
 PROCEDURE:
 
-// Step 1 — Type A Countermeasure cards (District Block)
+// Step 1 — Type A Countermeasure Cards (District Block)
 FOR EACH lane ∈ Grid.Lanes WHERE Grid.Lane[lane].Beat2Slot.Type = TypeA:
   named_district ← Grid.Lane[lane].Beat2Slot.NamedDistrict
   FOR EACH target_lane ∈ Grid.Lanes:
@@ -1071,16 +1071,16 @@ FOR EACH lane ∈ Grid.Lanes WHERE Grid.Lane[lane].Beat2Slot.Type = TypeA:
       IF cell.Target = named_district:
         cell.Face ← Down
         INSERT {cell.ID, Voided} → Grid.ResolvedCells
-        DISCARD modifier cards — removed from game
-        RETURN modifier tokens (M-06 if attached) → pool
+        DISCARD Modifier Cards — removed from game
+        RETURN Modifier Tokens (M-06 if attached) → pool
         // Resources committed to blocked ops are NOT refunded — attempt was made
-        // Card remains in queue; Beat 3 Step 1 face-down check returns it to dispatch case
+        // Card remains in queue; Beat 3 Step 1 face-down check returns it to Dispatch Case
   FOR EACH faction f ∈ Faction.All:
     FOR EACH slot ∈ [1, 2]:
       IF Board.DeploymentMarker[f][slot].Location = named_district:
         Board.DeploymentMarker[f][slot].Face ← Blocked
 
-// Step 2 — Type B Countermeasure cards (Faction Defense)
+// Step 2 — Type B Countermeasure Cards (Faction Defense)
 FOR EACH lane ∈ Grid.Lanes WHERE Grid.Lane[lane].Beat2Slot.Type = TypeB:
   defending_faction ← Grid.Lane[lane].Beat2Slot.DefendingFaction
   FOR EACH target_lane ∈ Grid.Lanes WHERE target_lane.Faction ≠ defending_faction:
@@ -1114,7 +1114,7 @@ STATE MUTATIONS:
 ### Beat_3 — Covert Operations Resolve
 
 ```
-Beat_3() → Resolved covert operations
+Beat_3() → Resolved Covert Operations
 
 PRECONDITIONS:
   Beat_2 complete — countermeasures processed; M-11 tokens placed; Protect modifiers noted
@@ -1139,7 +1139,7 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
   IF cell.Face = Down:
     PLACE operation card + target slip → dispatch_case[f]
     // No resolution card — card returned, no roll made; Voided already recorded at Beat 1/2
-    DISCARD modifier cards from stack — removed from game
+    DISCARD Modifier Cards from stack — removed from game
     CONTINUE
 
   IF cell.Card.IsApex:
@@ -1209,7 +1209,7 @@ FOR EACH position p IN Grid.ResolutionQueue (in established order):
   INSERT {cell.ID, outcome} → Grid.ResolvedCells
   PLACE operation card + target slip → dispatch_case[f]
   PLACE resolution card (Succeeded / Failed) → dispatch_case[f]
-  DISCARD modifier cards from cell — removed from game
+  DISCARD Modifier Cards from cell — removed from game
   RETURN Grid.ActiveModifierTokens[cell.ID] → pool
   Card.Covert.Hand[f] ← per card text (return to hand or discard)
 
@@ -1237,10 +1237,10 @@ STATE MUTATIONS:
 ### Beat_4 — Political Acts Resolve
 
 ```
-Beat_4() → Resolved political acts
+Beat_4() → Resolved Public Acts
 
 PRECONDITIONS:
-  Beat_3 complete — all covert operations resolved
+  Beat_3 complete — all Covert Operations resolved
   Grid.Political[F-xx].DeclaredCard set for all factions — face-up on faction tableau
   Grid.Political[F-xx].ResourceStake[RT-xx] set — stacked on card, not yet in Reservoir
 
@@ -1274,8 +1274,8 @@ FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Qua
 
   IF act.Face = Down:
     INSERT {act.ID, Voided} → Grid.ResolvedCells
-    DISCARD modifier cards — removed from game
-    RETURN political act card → Faction Player
+    DISCARD Modifier Cards — removed from game
+    RETURN Public Act Card → Faction Player
     CONTINUE
 
   // Step 2 — Base difficulty
@@ -1293,7 +1293,7 @@ FOR EACH faction f WHERE Grid.Political[f].DeclaredCard ∉ {Pass, None} (in Qua
                                ELSE 0)
              + Σ(card.ModifierValue FOR EACH modifier_card IN Grid.Political[f].ModifierCards)  // M-08; Variable
 
-  // Note: M-06, M-09, M-11 do not apply to political acts
+  // Note: M-06, M-09, M-11 do not apply to Public Acts
   Faction Player announces final threshold aloud
 
   // Step 5 — Roll (Faction Player rolls publicly)
@@ -1359,12 +1359,12 @@ STATE MUTATIONS:
 Beat_5() → Quarter resolution complete
 
 PRECONDITIONS:
-  Beat_4 complete — all political acts resolved
+  Beat_4 complete — all Public Acts resolved
   Grid.ResolvedCells contains RO-xx outcome for every submitted operation this Quarter
 
 PROCEDURE:
 
-// Step 1 — Return dispatch cases
+// Step 1 — Return Dispatch Cases
 FOR EACH faction f ∈ Faction.All:
   RETURN dispatch_case[f] → Faction Player
   // Contents: operation cards, target slips, resolution cards (RO-xx), ARBITER intel notes
@@ -1387,12 +1387,12 @@ Grid.Political[F-xx].ResourceStake[RT-xx]  ← 0     FOR ALL f  // should alread
 Grid.Political[F-xx].PartialPaymentMarker  ← None  FOR ALL f
 
 OUTPUT:
-  Faction Players hold dispatch cases — each faction's outcomes privately visible
+  Faction Players hold Dispatch Cases — each faction's outcomes privately visible
   Resolution Grid cleared — no Grid domain state carries to next Quarter
   Debrief opens
 
 STATE MUTATIONS:
-  Faction.IntelTokens[F-xx] ← incremented by intel tokens received from dispatch case
+  Faction.IntelTokens[F-xx] ← incremented by Intel Tokens received from Dispatch Case
   Grid.* ← all variables cleared to empty state
 ```
 
@@ -1427,7 +1427,7 @@ Applied per non-Apex operation card during Beat_0 Step 2. Face determines whethe
 | DT-01-B | Partial | 0 < actual_payment < card_cost | Up | Yes (−50) | Yes — submitted amount |
 | DT-01-C | None | actual_payment = 0 | Down | No | None |
 
-**Face = Down consequence (DT-01-C):** Card reaches Beat_3 as Voided — no roll made. Operation card and target slip returned to dispatch case. No resolution card placed.
+**Face = Down consequence (DT-01-C):** Card reaches Beat_3 as Voided — no roll made. Operation card and target slip returned to Dispatch Case. No resolution card placed.
 
 ---
 
@@ -1465,13 +1465,13 @@ Applied at Beat_3 Step 6 and Beat_4 Step 6 whenever `roll ∈ [96, 100]`. Overri
 |----|------------|-----------|---------|-------------|---------------------------|
 | DT-04-A | 96–100 | Any | Failed (Critical Failure) | True | Yes — if card specifies discovery condition |
 
-**Discovery effect path (Beat_3 only):** If `card.DiscoveryCondition` is specified and `crit_failure = True`, the Discovered resolution effect fires at Step 9 alongside the Failed outcome. Outcome remains Failed — discovery is an additional effect, not a separate state. Does not apply to political acts (Beat_4).
+**Discovery effect path (Beat_3 only):** If `card.DiscoveryCondition` is specified and `crit_failure = True`, the Discovered resolution effect fires at Step 9 alongside the Failed outcome. Outcome remains Failed — discovery is an additional effect, not a separate state. Does not apply to Public Acts (Beat_4).
 
 ---
 
 ### DT-05 — Partial Payment at Beat 4 (Political Acts)
 
-Applied during Beat_4 Submit Payment phase for each declared political act (excludes Pass and None).
+Applied during Beat_4 Submit Payment phase for each declared Public Act (excludes Pass and None).
 
 | ID | Payment State | Amount Condition | act.Face | M-07 Applied | ARBITER Announcement |
 |----|---------------|-----------------|----------|------|---|
@@ -1479,15 +1479,15 @@ Applied during Beat_4 Submit Payment phase for each declared political act (excl
 | DT-05-B | Partial | 0 < actual_payment < card_cost | Up (unchanged) | Yes (−50) | "Additional difficulty" |
 | DT-05-C | None | actual_payment = 0 | Down | No | "Act invalid" |
 
-**Face = Down consequence (DT-05-C):** When reached in resolution phase, act is Voided — no roll made. Political act card returned to Faction Player; modifier cards discarded.
+**Face = Down consequence (DT-05-C):** When reached in resolution phase, act is Voided — no roll made. Public Act Card returned to Faction Player; Modifier Cards discarded.
 
-**Stacking note (DT-05-B):** Modifier cards staked on a partial-payment act remain in play and apply to the threshold. M-07 stacks additively with all other applicable modifiers.
+**Stacking note (DT-05-B):** Modifier Cards staked on a partial-payment act remain in play and apply to the threshold. M-07 stacks additively with all other applicable modifiers.
 
 ---
 
 ### DT-06 — The Mid Modifier Scope (L107)
 
-M-12 (−25 threshold) applies to any covert operation or political act targeting a district in the The Mid (RG-02), unless the acting faction holds Established or Dominant presence in at least one adjacent Core district (RG-03) at time of resolution.
+M-12 (−25 threshold) applies to any Covert Operation or Public Act targeting a district in the The Mid (RG-02), unless the acting faction holds Established or Dominant presence in at least one adjacent Core district (RG-03) at time of resolution.
 
 | ID | Target Ring | Faction Influence in Adjacent Core | M-12 Applied |
 |----|-------------|-------------------------------------|--------------|
@@ -1496,15 +1496,15 @@ M-12 (−25 threshold) applies to any covert operation or political act targetin
 | DT-06-C | Baryo (RG-01) | Any | No |
 | DT-06-D | Core (RG-03) | Any | No |
 
-**Scope (L107):** Applies to all action types — covert operations (Beat_3) and political acts (Beat_4).
+**Scope (L107):** Applies to all action types — Covert Operations (Beat_3) and Public Acts (Beat_4).
 
-**Timing:** Influence check evaluated at time of resolution, not at submission. Board state changes from earlier in the same Beat (e.g., a preceding covert operation) apply to the check.
+**Timing:** Influence check evaluated at time of resolution, not at submission. Board state changes from earlier in the same Beat (e.g., a preceding Covert Operation) apply to the check.
 
 ---
 
 ### DT-07 — Type B Countermeasure Scope
 
-M-11 (−15 threshold) is attached during Beat_2 Step 2. Applies to covert operations targeting the defending faction's assets, submitted by any faction other than the defending faction.
+M-11 (−15 threshold) is attached during Beat_2 Step 2. Applies to Covert Operations targeting the defending faction's assets, submitted by any faction other than the defending faction.
 
 | ID | Submitting Faction | Operation Target | M-11 Applied |
 |----|--------------------|-----------------|--------------|
@@ -1512,7 +1512,7 @@ M-11 (−15 threshold) is attached during Beat_2 Step 2. Applies to covert opera
 | DT-07-B | Any faction other than the defending faction | Asset not belonging to the defending faction | No |
 | DT-07-C | Defending faction (self) | Any | No — own Type B does not penalise own ops |
 
-**"Defending faction's assets" definition:** Pending Art 04/05. Expected: districts where the defending faction holds Established or Dominant presence, or districts containing their structure blocks.
+**"Defending faction's assets" definition:** Pending Art 04/05. Expected: districts where the defending faction holds Established or Dominant presence, or districts containing their Structure Blocks.
 
 **Multiple Type B edge case:** If two factions each play a Type B in the same Quarter, they apply independently. An operation targeting assets that satisfy two distinct Type B conditions accumulates M-11 twice (−30 total).
 
@@ -1543,8 +1543,8 @@ Each non-Apex faction submits exactly one Emergency Response. All submitted simu
 
 | ID | Emergency Response Role | Board Effect | Board Strength Impact at DT-08 |
 |----|------------------------|-------------|-------------------------------|
-| DT-09-A | Assist | Adds presence chips or structure blocks to Apex faction's count | Raises Board Strength |
-| DT-09-B | Thwart | Removes presence chips or structure blocks from Apex faction | Lowers Board Strength |
+| DT-09-A | Assist | Adds Presence Tokens or Structure Blocks to Apex faction's count | Raises Board Strength |
+| DT-09-B | Thwart | Removes Presence Tokens or Structure Blocks from Apex faction | Lowers Board Strength |
 | DT-09-C | Neutral / Other | Affects board state unrelated to Apex faction (own presence, Public Standing, etc.) | No direct Board Strength impact |
 | DT-09-D | Pass | No board effect | None |
 
@@ -1554,7 +1554,7 @@ Each non-Apex faction submits exactly one Emergency Response. All submitted simu
 
 ### Apex_Activation() — Procedure
 
-Called from Beat_3 (covert) and Beat_4 (political act) when an Apex card with `card.Face = Up` is reached. Halts the calling Beat — Beat_3 and Beat_4 do not return after this call unless the Apex is cancelled (DT-08-B).
+Called from Beat_3 (covert) and Beat_4 (Public Act) when an Apex card with `card.Face = Up` is reached. Halts the calling Beat — Beat_3 and Beat_4 do not return after this call unless the Apex is cancelled (DT-08-B).
 
 ```
 Apex_Activation(apex_card, apex_faction):
@@ -1562,7 +1562,7 @@ Apex_Activation(apex_card, apex_faction):
 // Step 1 — Announce
 ARBITER announces: "An Apex operation has been submitted. Resolution is suspended."
 
-// Step 2 — Payment confirmation (Beat 4 political act path only)
+// Step 2 — Payment confirmation (Beat 4 Public Act path only)
 // Note: Beat 4 apex with Face = Up means payment was validated at Submit Payment.
 // The DT-02 face assignment at Beat 0 (covert path) already ensured Face = Up implies full payment.
 // No additional payment check needed — guaranteed by DT-01/DT-02 preconditions.
@@ -1601,7 +1601,7 @@ SESSION ENDS — proceed to Artifact 10a — Victory System
 
 Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 compliant — single-typed columns, controlled vocabulary.
 
-**Sign convention:** Positive Threshold Adjustment = threshold raised = success more likely. Negative = threshold lowered = harder. (Source: Art 03 §13.) Physical modifier tokens may express this inversely as "+N difficulty" — see [DF-02].
+**Sign convention:** Positive Threshold Adjustment = threshold raised = success more likely. Negative = threshold lowered = harder. (Source: Art 03 §13.) Physical Modifier Tokens may express this inversely as "+N difficulty" — see [DF-02].
 
 | ID | Category | Modifier | Scope | Applied | Instance Limit | Value Type | Threshold Adjustment |
 |----|----------|----------|-------|---------|----------------|------------|---------------------|
@@ -1612,7 +1612,7 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 | M-05 | Standing | Discredited | All | Persistent | 1 | Fixed | −20 |
 | M-06 | Payment | Partial payment marker | Covert | Beat 0 | 1 per submitted card | Fixed | −50 |
 | M-07 | Payment | Partial payment marker | Political | Beat 4 | 1 per submitted card | Fixed | −50 |
-| M-08 | Card Effect | Modifier card | All | Pre-Resolution | Unlimited | Variable | See card |
+| M-08 | Card Effect | Modifier Card | All | Pre-Resolution | Unlimited | Variable | See card |
 | M-09 | Card Effect | Protect / Defend operation | Covert | Beat 2 | 1 per Protect submitted | Variable | See card |
 | M-10 | Situation Report | Difficulty effect | All | Beat 1 | 1 per active Event Card | Variable | See Event Card |
 | M-11 | Countermeasure | Type B — target faction assets | Covert | Beat 2 | 1 per defending faction | Fixed | −15 |
@@ -1642,7 +1642,7 @@ Canonical source for all `M-xx.value` references in §5 Beat Procedures. L108 co
 
 | ID | Section | Finding | Action Required |
 |----|---------|---------|-----------------|
-| DF-01 | Beat_1/2 | ✅ Resolved — Session 22 (L112). Art 03 Beat 1 used "Operation Failed"; Beat 2 used "Operation Blocked." Both unified as **Voided**. **Superseded S103:** RO-xx codes removed from all artifacts; Voided now covers all face-down states (targeting restriction, Type A CM, zero payment, no Dispatch Token). Targeting restriction procedure updated to flip face-down in grid rather than remove to dispatch case — Beat 3 Step 1 handles all face-down cleanup uniformly. | — |
+| DF-01 | Beat_1/2 | ✅ Resolved — Session 22 (L112). Art 03 Beat 1 used "Operation Failed"; Beat 2 used "Operation Blocked." Both unified as **Voided**. **Superseded S103:** RO-xx codes removed from all artifacts; Voided now covers all face-down states (targeting restriction, Type A CM, zero payment, no Dispatch Token). Targeting restriction procedure updated to flip face-down in grid rather than remove to Dispatch Case — Beat 3 Step 1 handles all face-down cleanup uniformly. | — |
 | DF-02 | Beat_4, §7 | ✅ Resolved — Session 22 (L113). Threshold convention adopted throughout. Art 03 beat prose updated: "+50 difficulty marker" → "−50 threshold marker" in Beat 0 table and Beat 4 prose. Rationale: threshold framing is positively oriented — players think "I need to roll under 69," not "I have a 31% chance to fail." All references now use threshold-subtractive sign convention matching the modifier table (M-06/M-07 = −50). | — |
 | DF-03 | §4.1 Faction Domain | ✅ Resolved — Session 22. `Faction.Resources[F-xx][RT-xx]` Mutates At split into five distinct entries: Upkeep Step 5 (income); Beat 0 (covert payment drain); Phase 4 Declaration (tokens → Grid.Political.ResourceStake); Beat 4 Submit Payment (ResourceStake → Reservoir); Beat 3/4 failure conditions (card text penalties); Debrief (trades, conversion). | — |
 | DF-04 | §4, §5 | ✅ Resolved — Session 22. (a) Case (CA-xx) added to 00b §4 entity registry and §6 schema status — indexed via F-xx in Tier 1, CA-xx prefix anticipates Tier 2+. (b) Packet and (c) GridCell noted in 00b §4 as internal 03a modeling types (no persistent IDs; not registered entities). (d) IP-xx already registered in 00b §4 and §6 — ID column will be added to Art 03 §7 table at Art 03 sign-off. | — |

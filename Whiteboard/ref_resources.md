@@ -1,5 +1,5 @@
 # Reference — Resource System (Art 02 §6–§9)
-*Load when: resource mechanics, generation, conversion, structure blocks, Contested districts, starting positions.*
+*Load when: resource mechanics, generation, conversion, Structure Blocks, Contested districts, starting positions.*
 
 ---
 
@@ -8,7 +8,7 @@
 ```
 Generation = District Base Value × Level Modifier
            + Affinity Bonus (if applicable)
-           + Structure Block Bonus (per structure block owned)
+           + Structure Block Bonus (per Structure Block owned)
 ```
 
 District base values: Baryo = 1 · The Mid = 2 · Core = 3 · Chorus Node = 0.
@@ -19,23 +19,23 @@ Level modifiers: Dominant = full + affinity · Established = full · Present = h
 
 ## Affinity Bonus
 
-+1 additional unit when: (a) faction holds Dominant AND (b) district's native resource matches faction's native resource. Applies in every qualifying district simultaneously. Dominant only. (Playtest variable PT-02-02.)
++1 additional unit when: (a) faction holds Dominant AND (b) district's Native Resource matches faction's Native Resource. Applies in every qualifying district simultaneously. Dominant only. (Playtest variable PT-02-02.)
 
 ---
 
 ## Structure Block Mechanics
 
-Each structure block generates +1/Quarter. Owner declares publicly at Upkeep (before income collected), per block:
-- **Option A:** +1 district's native resource
-- **Option B:** +1 faction's native resource
+Each Structure Block generates +1/Quarter. Owner declares publicly at Upkeep (before income collected), per block:
+- **Option A:** +1 district's Native Resource
+- **Option B:** +1 faction's Native Resource
 
-Choice may differ Quarter to Quarter and block to block. Key lever: a Directorate structure block in a Findings district can produce Mandate instead — in-place cross-resource conversion without The Translation. Structure generation is **not** affected by the Contested condition. Structures survive any influence level except Absent. Structure blocks also gate modifier card draws (draw thresholds in design_reference.md).
+Choice may differ Quarter to Quarter and block to block. Key lever: a Directorate Structure Block in a Findings district can produce Mandate instead — in-place cross-resource conversion without The Translation. Structure generation is **not** affected by the Contested condition. Structures survive any influence level except Absent. Structure Blocks also gate Modifier Card draws (draw thresholds in design_reference.md).
 
 ---
 
 ## Contested District — Full Mechanics
 
-Contested = two or more factions tie at 3+ chips. **Second place wins** — any faction at 2+ chips not in the tie holds Established and generates full base value, more than tied factions generating flat 1. Tied factions also lose Dominant-level structure defense (drops to Average). Structure block generation unaffected by Contested.
+Contested = two or more factions tie at 3+ chips. **Second place wins** — any faction at 2+ chips not in the tie holds Established and generates full base value, more than tied factions generating flat 1. Tied factions also lose Dominant-level structure defense (drops to Average). Structure Block generation unaffected by Contested.
 
 ---
 
@@ -48,7 +48,7 @@ Available during Debrief and between phases. No action slot; no per-Quarter limi
 | None | 4:1 |
 | Present | 3:1 |
 | Established | 2:1 |
-| Contested (Tension marker placed) | 5:1 |
+| Contested (Tension Marker placed) | 5:1 |
 
 The 2:1 rate at Established is a major strategic lever — rewards holding the Node beyond its Portrait/suppression benefits.
 
@@ -70,7 +70,7 @@ Ghost starts Q1 with 12 Findings (5 reserves + 7 income) and loses 2 immediately
 
 ## Dispatch Tokens — Capacity, Not Resource
 
-Not resources. Per-Quarter operational capacity drawn from The Backlog (shared public pool). Ghost: 4 · All others: 3. Covert operations and public acts each cost 1 token. Pass requires none. Tokens return to The Backlog at Quarter close — they do not accumulate. A faction that burns all tokens in Month 1 can only Pass in Month 2.
+Not resources. Per-Quarter operational capacity drawn from The Backlog (shared public pool). Ghost: 4 · All others: 3. Covert Operations and Public Acts each cost 1 token. Pass requires none. Tokens return to The Backlog at Quarter close — they do not accumulate. A faction that burns all tokens in Month 1 can only Pass in Month 2.
 
 ---
 
