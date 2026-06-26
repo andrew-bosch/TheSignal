@@ -2,8 +2,8 @@
 ## THE SIGNAL P1 — Paper Prototype
 
 **Version:** 2.3  
-**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed. v2.0: §8.0 Standard doctrine statement added (S119, gate for 04-n87 audit). v2.1: §6.4 Economic Integration Audit added (S119, per 00a §9.2 — audit framework for 04-n87–04-n92). v2.2: §6.4 STD+GHO audit results added (S120, gates 04-n87/04-n88).  
-**Last Updated:** 2026-06-25  
+**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed. v2.0: §8.0 Standard doctrine statement added (S119, gate for 04-n87 audit). v2.1: §6.4 Economic Integration Audit added (S119, per 00a §9.2 — audit framework for 04-n87–04-n92). v2.2: §6.4 STD+GHO audit results added (S120, gates 04-n87/04-n88). v2.3: §6.4 STD+DIR audit results added; §8.2 Directorate section updated to S121 (S121, 04-n89).  
+**Last Updated:** 2026-06-26  
 **Companion to:** 04 — Action Card System  
 **Purpose:** Preserve the taxonomy framework, development decisions, coverage analysis, and faction design recommendations that govern Artifact 04 and all future card design passes.
 
