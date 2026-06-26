@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 121 complete | Updated: 2026-06-26**
+**Session 122 complete | Updated: 2026-06-26**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read ref_*.md files (Whiteboard/) first — before reading any full artifact. Full artifact reads only when deep work requires it.
@@ -273,45 +273,70 @@ Working documents created:
 
 ---
 
-### Priority Order (S122) ← CURRENT
+### S122 Accomplishments ✅
 
-**Next session: STD+GUI combined set audit (04-n92)**
+**STD+GUI combined set audit (04-n92) — complete**
 
-Same structure as STD+GHO and STD+DIR audits. Use card_analysis_STD_DIR.md as the template.
+- `Whiteboard/card_analysis_STD_GUI.md` — full audit: Sections A–G written; pre-audit FLAGS 1–5 explicitly resolved
+- Art 04b v2.4: §6.4 STD+GUI Economic Integration Audit (5-check) added; §8.5 Guild section updated to S122 (card list, design targets)
+- PM05: 04-n92 ✅; 04-n119–04-n122 added; 00a-78 updated
+
+**Key findings:**
+- **FLAG 1 (passive income):** 04-n2 is an existing PM05 item — not missing, unimplemented. §5a describes intended complete system. Three open questions at implementation: (1) CA.2 trigger (STD.CA.2 Demolish) has no passive counterpart — 04-n2 fires build-side only; (2) 04-n2 + CA.6 both trigger on opponent STD.CA.1 — stacking unspecified; (3) placement must be Art 03 §9.4.3 (event yield), NOT 00a upkeep — 00a §9.2 expressly excludes opponent actions from upkeep income
+- **FLAG 2 (defense):** MOD.1 cannot prevent demolition (chip removal is simultaneous with structure removal; no React window). CA.1 protects 1 structure per Quarter; defense does not scale. Design decision → 04-n120
+- **FLAG 3 (Standing):** PREMISE CORRECTED — STD Standing tools (CA.13, PA.4, PA.7) are all mono own-native; Guild pays Capacity, same as every other faction. No cross-resource disadvantage. 04-n108 is a doctrinal enhancement vehicle, not a survival item
+- **FLAG 4 (territorial recovery):** COST CORRECTED — STD.CA.4 costs 1 Capacity + 1 district-native (not "3 Mandate"). Moderate, practical. Gap is zero faction-specific recovery cards (no Remove/Move/Block in Guild set). Design decision → 04-n121
+- **FLAG 5 (§9.2):** CA.4 (C×3) genuinely mono — district-native in crit-fail outcome only. PA.1 (C×4) cross-but-waived — Guild affinity zeroes district-native for both districts; DB encodes effective cost. Both exceed floor power with zero cross commitment → §9.2 inversion. Split remedies: CA.4 needs new cross-cost card; PA.1 lever is the waiver itself. → 04-n119
+- **GUI.CA.2 mismatch:** Success expression gives 2 Capacity; design rationale says "mirrors STD.CA.2 cost (1 native + 1 district native)." CA.6 arbiter_note confirms 2 Capacity intent for that card; CA.2 lacks equivalent clarification → 04-n122
+
+**PM05 additions S122:** 04-n92 ✅ · 04-n119 (§9.2 ceiling gap — split remedies) · 04-n120 (defense scaling decision) · 04-n121 (territorial recovery decision) · 04-n122 (GUI.CA.2 mismatch) · 00a-78 updated
+
+**Artifacts updated S122:** Art 04b (v2.4 — §6.4 STD+GUI, §8.5 Guild) · PM05 · Whiteboard/card_analysis_STD_GUI.md (new)
+
+**Pending sign-offs carried:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
+---
+
+### Priority Order (S123) ← CURRENT
+
+**Next session: STD+SYN combined set audit (04-n91)**
+
+Mirror the audit and report format from STD+GUI (S122) and STD+DIR (S121). Use `card_analysis_STD_GUI.md` as the template.
 
 **Session startup sequence (mandatory):**
-1. Read `Whiteboard/ref_procedures.md`
-2. Read `Whiteboard/design_reference.md` + `Whiteboard/design_reference_card_system.md`
-3. DB pull (correct column = `name`, faction full names):
-   `SELECT card_id, name, cost_type, cost_variable, cost_primary_amount, uses_intel_token FROM card_status WHERE faction IN ('Standard','Guild') AND blocked=0 ORDER BY faction, card_id;`
-4. Read Guild card bodies in Art 04 (full body read — do not rely on §8 index alone)
+1. Read `Whiteboard/design_reference.md` + `Whiteboard/design_reference_card_system.md`
+2. DB pull:
+   `SELECT card_id, name, cost_type, cost_variable, cost_primary_amount, uses_intel_token FROM card_status WHERE faction IN ('Standard','Syndicate') AND blocked=0 ORDER BY faction, card_id;`
+3. Read Syndicate card bodies in Art 04 (full body read — do not rely on §8 index alone)
+4. Create `Whiteboard/card_analysis_STD_SYN.md` pre-audit stub with at-a-glance table before full analysis
 
 **Audit steps (same order every faction):**
 
 **Step 1 — §6.4 Economic Integration (5-check framework):**
-1. *Generation check:* Which resources does the faction generate natively? Any non-native generation?
-2. *Spending check:* Do all 5 faction native types have spending destinations in STD+GUI? Flag any unspendable acquired resource.
-3. *Floor calibration:* What is the mono-cost range? Are any mono-priced effects disproportionately powerful (§9.2 inversion)?
-4. *Ceiling coverage:* Which cards are cross-resource? Are the highest-power plays also the cross plays (§9.2 compliance)? Flag inversions.
-5. *Gap verdict:* Summary. Update Art 04b §6.4 and 00a-78 (mark STD+GUI complete).
+1. *Generation check:* Which resources does Syndicate generate natively? Any non-native generation?
+2. *Spending check:* Do all 5 faction native types have spending destinations in STD+SYN? Flag any unspendable acquired resource.
+3. *Floor calibration:* What is the mono-cost range? Any §9.2 inversion (high-power effects at mono)?
+4. *Ceiling coverage:* Which cards are cross-resource? Are the highest-power plays also the cross plays? Flag inversions.
+5. *Gap verdict:* Summary. Update Art 04b §6.4 and 00a-78 (mark STD+SYN complete).
 
-**Step 2 — §5a alignment (4 consistent questions):**
-1. Does deck feel match §5a? (Guild: "heavy, deliberate, permanent")
-2. Is win path mechanically supported? (Guild: passive income from opponent builds; positional wagers)
-3. Sustained pressure vs. point-disruption — where does Guild sit?
+**Step 2 — §5a alignment:**
+1. Does deck feel match §5a? (Syndicate: economy extraction, resource redirection, accord manipulation)
+2. Is win path mechanically supported?
+3. Sustained pressure vs. point-disruption — where does Syndicate sit?
 4. CA/PA ratio gap? Modifier deck gap?
 
 **Step 3 — Cross-faction differentiation:**
-Compare Guild against DIR (sustained institutional pressure) and NET (distributed reactive pressure). Where does Guild's positional model differentiate from both?
+Compare Syndicate against Guild (also economy-focused) and Ghost (also operates covertly). Where does Syndicate's extraction/redirection model differentiate?
 
 **Step 4 — Output:**
-- Write `Whiteboard/card_analysis_STD_GUI.md` (Sections A–G, same structure as card_analysis_STD_DIR.md)
-- Update Art 04b §6.4 (add STD+GUI 5-check results)
-- Update Art 04b §8.x (Guild section — verify staleness, fix in place)
+- Write `Whiteboard/card_analysis_STD_SYN.md` (Sections A–G)
+- Update Art 04b §6.4 (add STD+SYN 5-check results)
+- Update Art 04b §8.4 (Syndicate section — verify staleness, fix in place)
 - Add PM05 items for open design decisions and §9.2 flags
+- Mark 04-n91 ✅
 
-**After GUI:** NET (04-n90) · SYN (04-n91) — then 04-n110 cross-faction §5a pass
-**Open §9.2 flags:** DIR (04-n118) · additional factions TBD via remaining audits
+**After SYN:** NET (04-n90) — then 04-n110 cross-faction §5a pass
+**Open §9.2 flags:** DIR (04-n118) · GUI (04-n119 — split remedies) · SYN/NET TBD via remaining audits
 
 ---
 

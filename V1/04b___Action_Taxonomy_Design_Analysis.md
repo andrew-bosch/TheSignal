@@ -1,8 +1,8 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.3  
-**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed. v2.0: §8.0 Standard doctrine statement added (S119, gate for 04-n87 audit). v2.1: §6.4 Economic Integration Audit added (S119, per 00a §9.2 — audit framework for 04-n87–04-n92). v2.2: §6.4 STD+GHO audit results added (S120, gates 04-n87/04-n88). v2.3: §6.4 STD+DIR audit results added; §8.2 Directorate section updated to S121 (S121, 04-n89).  
+**Version:** 2.4  
+**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed. v2.0: §8.0 Standard doctrine statement added (S119, gate for 04-n87 audit). v2.1: §6.4 Economic Integration Audit added (S119, per 00a §9.2 — audit framework for 04-n87–04-n92). v2.2: §6.4 STD+GHO audit results added (S120, gates 04-n87/04-n88). v2.3: §6.4 STD+DIR audit results added; §8.2 Directorate section updated to S121 (S121, 04-n89). v2.4: §6.4 STD+GUI audit results added; §8.5 Guild section updated to S122 (S122, 04-n92 ✅).  
 **Last Updated:** 2026-06-26  
 **Companion to:** 04 — Action Card System  
 **Purpose:** Preserve the taxonomy framework, development decisions, coverage analysis, and faction design recommendations that govern Artifact 04 and all future card design passes.
@@ -310,6 +310,20 @@ For each faction audit:
 
 ---
 
+#### STD + GUI Economic Integration Audit (S122)
+
+**Standard set:** Audited in full at S120 (card_analysis_STD_GHO.md). Results unchanged — all five faction native types have STD spending destinations; no unspendable acquired resources. ✓
+
+**Guild set (GUI), evaluated with STD:**
+
+1. **Generation check:** GUI.CA.5 Infrastructure Yield generates Capacity in any Established/Dominant Guild district (free, Beat 3, Automatic). GUI.CA.2 Materials Acquisition and GUI.CA.6 Labor Contract generate Capacity on trigger (Beat 2 positional wagers, zero resource cost, 2 Capacity payout per activation). ⚠ **CA.2 code/comment mismatch:** Success expression gives `faction(acting).resource.native += 1` twice (2 Capacity as-coded), but design rationale states "mirrors STD.CA.2's cost exactly (1 native + 1 district native)" — which would yield 1 Capacity + 1 district-native (potentially off-faction). GUI.CA.6 arbiter_note confirms 2 Capacity. GUI.CA.2 intent requires clarification (spec audit flag). Generation check passes on as-coded reading (2 Capacity only). ✓ (pending CA.2 clarification)
+2. **Spending check:** Capacity has deep spending paths: CA.1 (C×1), CA.3 (C×1), CA.4 (C×3), PA.1 (C×4), PA.2 (C×1), plus STD affinity reduction on STD.CA.1. If CA.2 yields district-native resources, those have STD cross-card spending paths (STD.CA.1–4, CA.6–9). ✓ No unspendable resource on either CA.2 reading.
+3. **Floor calibration:** CA.4 (C×3) is genuinely mono — no district-native in the cost; district-native appears only in the crit-fail outcome. PA.1 (C×4) is cross-but-waived — base cost carries district-native for both target districts; Guild affinity zeroes both terms, effective cost 4 Capacity. DB encodes effective (post-waiver) cost; both read as mono but neither carries cross-economy commitment. §9.2 floor/ceiling inversion on both; remedies differ (see 04-n119). ⚠
+4. **Ceiling coverage:** Zero cross-resource cost cards in the Guild set. DB confirms all Guild cards are mono or free (effective encoding). No cross ceiling exists. Same §9.2 compliance shape as DIR (04-n118). ✗
+5. **Gap verdict:** ⚠ No unspendable acquired resources (check passes). §9.2 inversion on CA.4 (C×3, genuinely mono) and PA.1 (C×4, cross-but-waived via Guild affinity). CA.4 needs a new cross-cost card at higher power tier. PA.1's lever is whether the affinity waiver should be redesigned to require cross commitment at this power level. New PM05 item: 04-n119. Parallel to 04-n118 (DIR ceiling gap).
+
+---
+
 ## 7. Faction Coverage Matrix
 
 *Relocated to Art 04 §9. See Art 04 §9 — Faction Coverage Matrix.*
@@ -368,13 +382,20 @@ Current Syndicate set (S111): SYN.CA.1 (Economy|Add|NativeResource), SYN.CA.2 (E
 
 ### 8.5 Guild — Priority design targets
 
-Current Guild set (S106): GUI.CA.1 (Territory|Protect|StructureBlock), GUI.CA.2 (Economy|Add|NativeResource — reclassified from Recover, S106), GUI.CA.3 (Territory|Add|PresenceToken), GUI.CA.4 (Submission|RemoveRestriction|CovertOp), GUI.CA.5 (Economy|Add|NativeResource), GUI.CA.6 Labor Contract (Economy|Add|NativeResource — id assigned S106, function reclassified from Recover). Standard STD.CA.1 (Build Structure) carries a Guild affinity waiving the district-native cost. Territory and Economy coverage is strong — aligned with Guild doctrine of permanence and structural investment. Art 04 spec fixes for GUI.CA.2 and GUI.CA.6 pending 04-n103.
+Current Guild set (S122): GUI.CA.1 (Territory|Protect|StructureBlock), GUI.CA.2 (Economy|Add|NativeResource — wager on STD.CA.2), GUI.CA.3 (Territory|Add|PresenceToken — first-entry, unclaimed only), GUI.CA.4 (Submission|RemoveRestriction|CovertOp), GUI.CA.5 (Economy|Add|NativeResource — Established/Dominant infrastructure draw), GUI.CA.6 Labor Contract (Economy|Add|NativeResource — wager on STD.CA.1; id pending 04-n70), GUI.PA.1 Civic Works Mandate (Territory|Add|StructureBlock — dual build, Automatic, C×4, +3 PS), GUI.PA.2 Infrastructure Bond (Economy|Add|AccordAgreement). GUI.MOD.1 Return to Site: stub (Territory|Add|PresenceToken React; trigger = chip removal; beat and cost undefined). Standard STD.CA.1 carries Guild affinity waiving district-native cost. Territory and Economy coverage is strong. Zero cross-resource cost cards. Zero Standing, Information, or Resolution faction cards. Full audit: card_analysis_STD_GUI.md (S122, 04-n92 ✅).
 
 **High priority:**
-1. **Territory — Add — PresenceToken (React):** GUI.MOD.1 Return to Site (S106 stub). Originally Territory|Recover|PresenceToken — Recover retired S106 (04b-20): reducible to Add + React context; 7.2b prohibits retroactive board state reversal. Card is Territory|Add|PresenceToken React; trigger = Guild chip removed from district. Full spec pending 04-n102 (Modifier schema).
+1. **GUI.MOD.1 Return to Site — full spec:** Territory|Add|PresenceToken React; trigger = Guild chip removed from district. Recover retired S106 (04b-20); card is Add + React context. 7.2b prohibits retroactive board state reversal — MOD.1 cannot prevent removal or demolition; it places a new presence token after the trigger fires. Full spec pending 04-n102 (Modifier schema). Note: structure block removal is simultaneous with chips hitting 0 — no React window can catch demolition; MOD.1 addresses presence recovery only.
+2. **04-n2 passive income rule:** Implement governing rule: +1 Capacity to Guild when any opponent completes STD.CA.1 in a district where Guild has presence. Referenced in GUI.CA.6 design_note and §5a as the complete Guild income floor. Unimplemented. Upstream artifact change — Art 03 §9.4.3 (Beat resolution event yield); not 00a upkeep (00a §9.2 expressly limits upkeep income to presence and structure output; an opponent's action is neither). Required for §5a to be mechanically complete. ⚠ Stacking behavior with CA.6 on the same trigger event unresolved — must be specified at implementation.
+3. **§9.2 ceiling gap (04-n119):** CA.4 (C×3, genuinely mono) and PA.1 (C×4, cross-but-waived via Guild affinity) are the two highest-power plays with zero cross-economy commitment. Remedies differ: CA.4 needs a new cross-cost card at higher power tier; PA.1's lever is whether the affinity waiver should be redesigned to require cross commitment at this power level. New PM05 item: 04-n119.
+
+**Medium priority:**
+4. **Defense scaling:** CA.1 protects one structure per Quarter; defense does not scale with structure count. MOD.1 does not address demolition. Design decision: second structure-defense card (district-level, cost-raise standing PA, or doctrinal acceptance). New PM05 item.
+5. **Territorial recovery:** No faction-specific presence-recovery card (Remove/Move functions absent). STD.CA.4 available at 1 Capacity + 1 district-native. Battlefield Strength from structures provides passive territorial defense in §10. Design decision: dedicated recovery card or doctrinal model. New PM05 item.
 
 **Low priority:**
-2. **Information — Any:** Guild has zero information capability. Doctrinally consistent — Guild is visible and structural, not intelligence-oriented. Structural reconnaissance (knowing what's built where) could give Guild an intel-adjacent capability without contradicting doctrine. Not a priority until Territory|Recover|PresenceToken is designed.
+6. **04-n108 Standing card:** Guild has no faction-specific Standing card. STD.CA.13/PA.4/PA.7 accessible at Capacity cost — no resource-type barrier. Design gap is doctrinal compounding (structures → PS), not survival access. A faction card yielding PS proportional to structure count would be doctrinally coherent. Low priority relative to MOD.1 spec and passive rule.
+7. **Information — Any:** Guild has zero information capability. Doctrinally consistent — Guild is visible and structural. Low priority until high-priority items resolved.
 
 ---
 
