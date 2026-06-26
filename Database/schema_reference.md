@@ -504,7 +504,12 @@ CREATE TABLE `card_status` (
   `layer` VARCHAR(30) NULL,         -- Art 04 §8 taxonomy layer (PascalCase) — added S117
   `function` VARCHAR(30) NULL,      -- Art 04 §8 taxonomy function (PascalCase) — added S117
   `subject` VARCHAR(50) NULL,       -- Art 04 §8 taxonomy subject (PascalCase, component name only) — added S117
-  `beat` INT NULL                   -- Resolution beat: 2=early-intervention CA, 3=standard covert grid CA, 4=PA — added S117
+  `beat` INT NULL,                  -- Resolution beat: 2=early-intervention CA, 3=standard covert grid CA, 4=PA — added S117
+  `cost_type` ENUM('mono','cross','free') NULL,  -- native resource axis only; mono=all cost components use acting faction's own native; cross=at least one non-own native type; free=no native resource cost — added S119
+  `cost_variable` TINYINT(1) NOT NULL DEFAULT 0, -- 1 if amount is play-determined (declared N, count-based, etc.) — orthogonal to cost_type — added S119
+  `cost_primary_amount` INT NULL,   -- own-native units in cost; 0=explicitly none; NULL=variable/unknown — added S119
+  `cost_native_count` INT NOT NULL DEFAULT 0,    -- distinct native resource types in cost (0=free, 1=mono or single-type cross, 2+=multi-type cross) — added S119
+  `uses_intel_token` TINYINT(1) NOT NULL DEFAULT 0  -- 1 if Intel Token is part of the cost; orthogonal to cost_type — added S119
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
@@ -516,6 +521,16 @@ CREATE TABLE `card_status` (
 - S117 also corrected 3 `card_type` bugs: Regulatory Downgrade (CA→PA), Regulatory Freeze (CA→PA), Accord Leverage (CA→MOD).
 
 **beat distribution (S117):** 27 CA beat=2 · 35 CA beat=3 · 27 PA beat=4 · 6 MOD/DA NULL
+
+**card_status — cost columns (S119):**
+- `cost_type` / `uses_intel_token` are orthogonal axes. Intel Token is not a faction native resource — a card with Intel Token cost and no native cost is `cost_type='free'` + `uses_intel_token=1`.
+- `cost_type='mono'` = all native resource components use the acting faction's own native type (including `resource.faction(acting)` without subtype, which is always submitter-relative).
+- `cost_type='cross'` = at least one native resource type in the cost is not the acting faction's native (district-native, target-faction-native, or a named type that doesn't match the card's faction native).
+- `cost_type='free'` = no native resource cost component (may still have `uses_intel_token=1`).
+- `cost_variable=1` = amount is play-determined (declared N, count-based). Orthogonal to `cost_type` — e.g., `capital * declared(N)` = mono + variable.
+- `cost_native_count` = distinct native resource types in the cost (0=free, 1=mono or single-cross-type, 2+=multi-type cross).
+- STD cards with `resource.faction(acting)` (no subtype) = mono regardless of submitter (submitter-relative). STD cards naming a specific faction's native type (e.g., Exposure, Capital, Mandate) = cross at design level.
+- **Distribution (S119, 90 non-blocked cards):** mono/fixed=58 · mono/variable=4 · cross/fixed=14 · free/fixed=14. Intel Token cards=12.
 
 ### card_subject_map (S117)
 ```sql

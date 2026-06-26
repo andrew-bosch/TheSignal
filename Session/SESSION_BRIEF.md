@@ -1,8 +1,8 @@
 # THE SIGNAL — Session Brief
-**Session 118 complete | Updated: 2026-06-25**
+**Session 120 complete | Updated: 2026-06-25**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
-Read full files only when deep work requires it.
+Read ref_*.md files (Whiteboard/) first — before reading any full artifact. Full artifact reads only when deep work requires it.
 
 ---
 
@@ -161,24 +161,137 @@ Read full files only when deep work requires it.
 
 **Pending sign-offs:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
 
-### Priority Order (S119) ← NEXT
+### S119 Accomplishments (mid-session — continuing after /clear)
 
-**Tier 1 — STD + GHO action card analysis**
-- Read full STD and GHO card set specs (Art 04)
-- Identify gaps: missing cards, taxonomy holes, doctrinal alignment mismatches vs. Art 04b §8
-- Surface doctrinal questions: does each faction's card set express its pentagram doctrine position?
-- Use card_status DB views as analysis scaffold (layer/function/subject/beat taxonomy now seeded)
-- Output: structured gap list + doctrinal questions for Andy review
+**STD + GHO doctrinal analysis — Tier 1 complete (analysis); design decisions in progress**
 
-**Tier 2 — Card set audits (04-n87–04-n92)** (carry from S118)
-- card_status taxonomy now seeded — use for audit queries
-- Start with Standard (04-n87); Ghost (04-n88) likely second given current context
+Working documents created:
+- `Whiteboard/card_analysis_STD_GHO.md` — full STD + GHO coverage map, open issues, design decisions, systemic blockers, audit bucket. Live working document — update as decisions are made.
+- `Whiteboard/design_covert_messaging.md` — covert inter-faction messaging system design stub (Art 06 future home).
 
-**Tier 3 — Ghost CA issues resolution** (carry from S117/S118)
-- GHO.CA.4: sign-off (Andy's call)
-- GHO.CA.5 Misdirection: redesign (`content=false` not a valid Intel Token state)
-- GHO.CA.6 Synthesize: update token keying to target faction per Target Profile
-- GHO.PA.3/4/5: mark Issues Resolved ✓
+**Standard doctrine confirmed:**
+- STD = shared toolkit, basic functions, available to all factions regardless of doctrine
+- Faction cards either enhance (cheaper/more powerful) or fill unique gaps STD doesn't cover
+- STD is the floor, not the ceiling — intentional gaps exist
+- Standing: STD has 3 Standing|Shift cards (floor). Faction cards needed for GHO, SYN, GUI. DIR.CA.7 / NET.CA.7 exist but need calibration check against STD floor.
+- Portrait absent by design — 00a §5. Not a gap.
+- Art 04b §8.0 Standard doctrine section — written S119. Gate for 04-n87 audit cleared.
+
+**MOD design space framing confirmed:**
+- CA, PA, MOD are all valid gap-fill vehicles — MOD subtypes (Resolution Modifier / React / Battlefield Modifier) may fill gaps better than new CAs. SCIF / GHO.MOD.1 are the reference models.
+
+**GHO doctrinal analysis — in progress:**
+- Territorial weakness: intentional. Intelligence is the compensation. SCIF + copy ops provide resource access without territory.
+- Intelligence diplomacy gap: addressed at component level by covert messaging system (see below). Ghost's unique role = intercepting communications, not just sending them.
+- Information|Reveal|Named faction: **retired** — delivery reading covered by messaging; surveillance reading already IS-xx. Target-scope/filter dependency dissolved.
+- Submission|Copy|Subset: remains High priority gap (partial-copy mechanism needed).
+
+**Covert inter-faction messaging system — designed (Whiteboard stub):**
+- Option A confirmed: ARBITER as intermediary
+- ARBITER reads all packets — no disclosure duty unless compelled by card action (GR 10.1b extended)
+- Routing: message packet → Dispatch Case → ARBITER (§9.1, no new submission gesture)
+- Beat 0 order: action packets first (build resolution grid) → THEN message packets → THEN intercept card resolution
+- Return: simultaneous with cases at Beat 3–4 boundary
+- Component: faction-keyed envelopes, 5×4=20 packets total, direction from context (no TO/FROM labels)
+- Ghost Packet Intercept: pre-committed at §9.1; floor intel = IS-xx on target's first Beat 3 CA if no message exists
+- Beat 0.3 procedure: generalized in Art 03 — no faction names even if Ghost is the only current user
+- Future home: Art 06
+
+**Art 04b §6.1 updated:**
+- Information|Reveal|Named faction row retired (S119)
+- 4 new ARBITER-domain Reveal subjects added: SubmissionStatus / DispatchTokenCount / ResourceCommitment / ModifierStackComposition — all gated on shared ARBITER-domain access procedure prerequisite (Art 03)
+
+**Debrief Action Card space clarified:**
+- SCIF = historical board state snapshot (structure count by ring → Modifier Card draws at Debrief). Mechanical bonus, not intelligence reveal. Snapshot may be months stale.
+- Intel Token validation: no truth value on tokens — nothing to validate.
+- Accords: public knowledge.
+- ARBITER observation data: protected per 00a §5.
+- Debrief Action Card space = mechanical bonus space for current card types. May expand if new types designed.
+
+**Artifacts updated S119 (so far):** Art 04b (v2.0 — §6.1 updated, §8.1 Named faction retired + IS-xx seeds added, Last Updated) · Whiteboard (card_analysis_STD_GHO.md created, design_covert_messaging.md created)
+
+**Last 3 decisions S119 (so far):** Standard doctrine confirmed (floor, not ceiling) · Information|Reveal|Named faction retired · ARBITER reads all packets, no duty unless compelled
+
+**All S119 design decisions resolved (post-/clear):**
+
+- **GHO.CA.5 Misdirection** ✅ — Reclassified Information|Add → Information|Corrupt|IntelToken. Targets faction_name field on a publicly placed token in the FRG (L222 compliant). declared_params = replacement faction name. Fizzle if target has no qualifying token. v2.0. Issues Resolved ✓.
+- **GHO.CA.6 Synthesize** ✅ — Token keying: consumed token's faction key. Enables Gather→Synthesize→Flip pipeline. v1.1.
+- **GHO.CA.1 Pattern Match** ✅ — Option C confirmed: fizzle if Ghost cannot supply copied op's cost. Checklist updated.
+- **STD.CA.12 Absolute Compromise** ✅ — Scope: CA-inclusive. ARBITER sweeps both covert grid and FRG at Beat 2. Design note + arbiter note updated.
+
+**Additional S119 work (post-/clear, continued):** GHO.CA.1 Pattern Match → full v2.0 redesign (steal/redirect model, Beat 2, Submission|Redirect|CovertOperation). PM05 04b-23 added (Submission|Redirect L×F validity check). Art 04b §8.0 Standard doctrine statement written — 04-n87 gate cleared. Art 00a v0.11 signed off (L237) — §9.2 Cross-Faction Resource Economy; §3 Governs Field revised + Copy Design Principle — No Embedded Action Items; §4/§5 tracking note cleanup.
+
+**Artifacts updated (post-/clear):** Art 04 (v0.9.49 — P28 added, 87 Design Pass cleared) · Art 04b (v2.1 — §6.4 Economic Integration Audit) · Art 00a (v0.11 ✅ — §9.2, §3 updates) · PM02 (L237) · PM05 (04b-23, 00a-77/78/79) · Whiteboard ref_design_pillars.md · Whiteboard card_analysis_STD_GHO.md · DB card_status · SESSION_BRIEF
+
+**Pending sign-offs carried:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
+### S120 Accomplishments ✅
+
+**DB cost analysis complete:**
+- 5 columns added to card_status: cost_type ENUM('mono','cross','free'), cost_variable TINYINT(1), cost_primary_amount INT NULL, cost_native_count INT NOT NULL DEFAULT 0, uses_intel_token TINYINT(1)
+- All 90 non-blocked cards seeded. Distribution: mono/fixed=58, mono/variable=4, cross/fixed=14, free/fixed=14; Intel Token cards=12
+- cost_type is native resource axis only; uses_intel_token is orthogonal
+- STD card rule: resource.faction(acting) without subtype = mono (submitter-relative); named non-own subtypes (Exposure, Capital, Mandate) on STD cards = cross at design level
+- schema_reference.md updated: new columns in CREATE TABLE block + comprehensive design notes block
+
+**STD+GHO combined set audit (04-n87/88 complete):**
+- Art 04b v2.2: §6.4 Economic Integration Audit written — STD + Ghost each verified
+- STD audit: all 5 faction natives have spending paths; ⚠ playtest calibration flag for CA.6/7/8/9
+- Ghost audit: Flip→Synthesize→Deep Cover pipeline verified; precision design confirmed
+- STD.CA.12 Outstanding Issues cleared: Beat 1 CM timing (Art 03 §9.4.1.2) makes Type A/B distinction moot; GR 7.2b no-refund confirmed. issues_resolved=1
+- GHO.PA.3/4/5 issues_resolved=1 ✓; STD.PA.8 issues_resolved=1 (Art 06 gate stale — design complete)
+- Ghost §5a flavor assessment written — Section F, card_analysis_STD_GHO.md
+- Design space framing locked: CA/PA = core doctrinal action set; Modifier decks = secondary gap-fill space (do not default to new CA/PA for §5a gaps)
+- ref_procedures.md updated: CM-A/CM-B mechanics explicit; CM cards not valid Beat 2 targets
+- PM05 additions: 04-n108 (Standing card gap — GHO/SYN/GUI), 04-n109 (STD.CA.6/7/8/9 calibration), 04-n110 (cross-faction §5a alignment audit — gate: all 04-n87–92 complete)
+
+**Sign-off protocol confirmed:** No individual card sign-offs until all 6 faction set audits substantially complete; consolidated passes only.
+
+**Artifacts updated S120:** Art 04b (v2.2 — §6.4 STD+GHO) · Art 04 (v0.9.49 — STD.CA.12 clean) · PM05 (04-n108/109/110, 04-n87/88 complete) · Database/schema_reference.md · Whiteboard/card_analysis_STD_GHO.md (Section F) · Whiteboard/ref_procedures.md (CM-A/B) · DB card_status (cost columns + seeded)
+
+---
+
+### Priority Order (S121) ← CURRENT
+
+**Next session: STD+DIR combined set audit (04-n89)**
+
+Same analysis structure as S120 STD+GHO. Use card_analysis_STD_GHO.md Section F as the template.
+
+**Session startup sequence (mandatory):**
+1. Read ref_procedures.md — CM timing, Beat sequence, FRG mechanics (active game expertise)
+2. Read design_reference.md + design_reference_card_system.md — card schema, Always-Relevant rules
+3. DB pull: `SELECT card_id, card_name, cost_type, cost_variable, cost_primary_amount, uses_intel_token FROM card_status WHERE faction IN ('STD','DIR') AND blocked=0 ORDER BY faction, card_id;`
+
+**Audit steps (same order every faction):**
+1. §6.4 Economic Integration — 5-check framework: all 5 faction natives have STD spending destination; flag any cross costs that require acquisition overhead
+2. §5a alignment check — Art 04 §5a Directorate entry: "institutional, methodical, capable of making the whole table play defensively"; economy=Mandate; suppression toolkit; win path=Established in more districts than any other faction
+3. Four consistent questions: (1) does deck feel match §5a? (2) win path mechanically supported? (3) sustained pressure vs. point-disruption? (4) CA/PA gap or Modifier deck gap?
+4. Write findings to Whiteboard/card_analysis_STD_DIR.md (new file)
+5. Compare against Ghost findings where relevant — cross-faction differentiation check
+
+**Remaining faction audits after DIR:** NET (04-n90) · SYN (04-n91) · GUI (04-n92)
+**After all 6 complete:** 04-n110 cross-faction §5a alignment pass
+
+---
+
+### Priority Order (S119 — remaining)
+
+**Tier 1 ✅ — GHO design decisions complete**
+
+**Tier 2 — GHO.CA.4 sign-off + GHO.PA.3/4/5 Issues Resolved ✓**
+
+**Tier 2.5 ✅ — Art 04b §8.0 Standard doctrine statement** (gate for 04-n87 Standard audit) — written S119
+
+**Tier 3 — Card set audits (04-n87–04-n92)**
+- Standard (04-n87) first — Art 04b §8.0 doctrine statement written ✅, gate cleared
+- Ghost (04-n88) second
+
+**Carry — DB cost schema proposal (discuss next session):**
+Current card cost format (`resource.faction(acting).findings * 2`) is freeform and not queryable without reading every card. Proposed solution: three new columns on `card_status`:
+- `cost_type` — `enum('mono','cross','free','variable')`: mono = own native resource only; cross = includes non-native; free = None; variable = game-state dependent
+- `cost_primary_amount` — `int NULL`: quantity of own-native resource spent (NULL if free/variable)
+- `generates_nonnative` — `tinyint(1)`: does the success effect produce a non-native resource for the acting faction?
+Key audit queries: `WHERE cost_type = 'mono'` (P28 floor check) · `WHERE generates_nonnative = 1` (doctrine justification flag) · `WHERE cost_type = 'cross'` (ceiling coverage). Cross-faction cost detail (which specific non-native resources) deferred until first cross-faction card is designed — add `cost_secondary` JSON or pivot table then. No change to card spec format — DB columns are the queryable layer only.
 
 ### Priority Order (S118) ← PREV
 

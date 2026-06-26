@@ -1,9 +1,9 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.10 — Signed Off — S108 (GR 10.1b added — ARBITER disclosure exception to §10.1)  
+**Version:** 0.11 — Signed Off — S119 (§9.2 Cross-Faction Resource Economy added; §3 Governs field revised, Copy Design Principle — No Embedded Action Items added; §4/§5 embedded tracking notes removed per new §3 principle)  
 **Status:** Signed Off  
-**Last Updated:** 2026-06-20  
+**Last Updated:** 2026-06-25  
 **Companion to:** 00 — Factions, World & Narrative Context  
 **Depends on:** 00, 01, 02, 03, 04, 04b
 
@@ -95,13 +95,15 @@ The **Mechanics:** field states the rule and any binding design constraints that
 
 ---
 
-### Rule Data Structure — Governs vs. Pending
+### Rule Data Structure — Governs Field
 
-Each rule carries two cross-reference fields with different permanence:
+Each rule carries a **Governs:** cross-reference field listing the artifacts, rules, and card sets this rule constrains. Governs entries are permanent and do not expire. If a rule has no downstream dependencies, the Governs field is absent. Open items, audits, and unresolved cross-references triggered by a rule belong in PM05, not in rule text.
 
-**Governs:** — permanent. Lists the artifacts, rules, and card sets this rule constrains. Governs entries do not expire.
+---
 
-**Pending:** — temporary. Lists open design decisions, audits, or unresolved cross-references that require future action. When the referenced item resolves, the Pending entry is removed. If a rule has no open dependencies, the Pending field is absent entirely.
+### Copy Design Principle — No Embedded Action Items
+
+Rule text contains no tracking notes, Pending items, session references, or audit flags. A rule states what is true and what it governs. Action items, open audits, and unresolved cross-references belong in PM05.
 
 ---
 
@@ -240,7 +242,7 @@ If the narrative reason for a rule cannot be stated, the rule may be arbitrary. 
 
 **Art 00 is the origin of all canonical narrative.** Downstream artifacts may reference, summarize, or point to Art 00 narrative — they may not introduce canonical narrative of their own. If narrative content is needed anywhere in the design, Art 00 is amended first; downstream artifacts reference it. A narrative statement that does not have its origin in Art 00 is not canonical.
 
-*Source: PM02 L195. Governs: all V1 artifacts.*
+*Source: PM02 L195.*
 
 ---
 
@@ -252,8 +254,6 @@ They are not decorative. They are feeds.
 
 > *"The Table doesn't print abstractions on the wall. Everything up there means something. You just have to know how to read it."*
 > — Directorate protocol officer, orientation brief
-
-Zones whose narrative anchor is pending are marked TBD in Artifact 01 and Artifact 11 until resolved.
 
 *Source: Design Pillar 4.6, PM02 FD-02.*
 
@@ -286,7 +286,7 @@ The factions fight over medium, timing, ownership, and access. The moment any fa
 
 These identities are the same person in the paper prototype. They will not be in all implementations.
 
-*See also: PM02 L88, PM05 00a-10 (retroactive audit).*
+*Source: PM02 L88.*
 
 ---
 
@@ -385,7 +385,7 @@ Rules governing the Chorus Portrait track — what it is, how it is maintained, 
 
 *Source: PM02 L84. Derived from Artifact 00 §9.*
 
-*Governs: All card design. See also: 5.1a, 5.1b, 5.1c. Retired: Cross-Category — Shift — Chorus Portrait as player-facing taxonomy function (04b).*
+*Governs: All card design. See also: 5.1a, 5.1b, 5.1c.*
 
 ---
 
@@ -437,8 +437,6 @@ Rules governing the Chorus Portrait track — what it is, how it is maintained, 
 *Source: PM02 L82, Artifact 04 Principle 10. Corollary of 5.1.*
 
 *Governs: All card design; Portrait fields in card data structure.*
-
-*Pending: Art 04 card design principles migration (PM05 XA-xx) — card implementation detail (Portrait values printed on card) migrates with §7 content.*
 
 ---
 
@@ -813,6 +811,18 @@ Rules governing resource generation and the modifiers that affect it.
 *Source: Art 02 §11, §12. Corollary of 9.1.*
 
 *Governs: Artifacts 02, 03, 04, 09.*
+
+---
+
+#### 9.2 — Cross-Faction Resource Economy
+
+**Rule:** Every faction's native resource must be economically demanded by every other faction. Mono-resource plays (cost = own native resource only) are the floor: available from game-open, sufficient to sustain early play, deliberately limited in power. Cross-faction-resource plays (cost includes two or more distinct native resources) are the ceiling: more powerful, executable only through prior trade or territorial expansion.
+
+**Narrative:** The factions are not independent economies. Ghost's Findings have capital value. Network's Exposure generates institutional Mandate. Guild's Capacity is infrastructure Syndicate cannot self-produce. New Meridian is an integrated city — the resources that flow through it do not stop at faction lines. A faction that has isolated itself from the others has not secured its position. It has capped it.
+
+**Mechanics:** The action set must provide spending destinations for every native resource across all factions. A generation mechanism that produces another faction's resource without a corresponding spending destination in that faction's action set is a design gap. The highest-power plays — including Apex — require at minimum one of each faction's native resource.
+
+*Source: Design Pillar 4.3. Governs: Art 04, Art 05.*
 
 ---
 

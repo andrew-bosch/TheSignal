@@ -31,7 +31,7 @@
 | File | Contains | Load when... |
 |------|----------|-------------|
 | `ref_world_narrative.md` | The Signal/Chorus premise, New Meridian, faction profiles & voices, ARBITER identity & hidden objectives, Four Registers, victory/Chronicle, Art 00 design principles | Narrative design, faction discussion, ARBITER behavior, Chronicle framing |
-| `ref_design_pillars.md` | Foundational Design Pillars 4.1–4.6, §3 principles for 00a, canonical definitions (in-world ↔ mechanical term table) | Design principle arguments, source-of-truth disputes, terminology questions |
+| `ref_design_pillars.md` | Foundational Design Pillars 4.1–4.8d (00a §4) + canonical definitions. Art 00a §1–§3 = document structure only (§3 = meta-design for 00a itself — not game content). §4+ = the actual artifact content: design pillars, governing rules, board state rules. | Design principle arguments, source-of-truth disputes, terminology questions |
 | `ref_components.md` | Full component registry (NS-xx, CA-xx, O-xx, etc.), lifecycle rules, component_positions DB table | Component registration, 00b questions, DB schema |
 | `ref_board_narrative.md` | The Overview/MIRROR narrative, Chorus Node identity, ring character, district faction geography, zone vs. component distinction, ARBITER physical position, starting configuration | District design, board layout, narrative anchoring, physical placement questions |
 | `ref_resources.md` | Generation formula, affinity bonus, Structure Block mechanics, The Translation (conversion rates), Findings decay, Dispatch Token rules, Chorus Node economics, Residential Quarter PS amplifier, starting resources | Resource system mechanics, conversion, generation, Contested districts |

@@ -1,9 +1,9 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.0  
-**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed.  
-**Last Updated:** 2026-06-24  
+**Version:** 2.2  
+**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed. v2.0: §8.0 Standard doctrine statement added (S119, gate for 04-n87 audit). v2.1: §6.4 Economic Integration Audit added (S119, per 00a §9.2 — audit framework for 04-n87–04-n92). v2.2: §6.4 STD+GHO audit results added (S120, gates 04-n87/04-n88).  
+**Last Updated:** 2026-06-25  
 **Companion to:** 04 — Action Card System  
 **Purpose:** Preserve the taxonomy framework, development decisions, coverage analysis, and faction design recommendations that govern Artifact 04 and all future card design passes.
 
@@ -210,7 +210,11 @@ The following combinations exist in the taxonomy but have no current card. Layer
 | Function | Definition | Subject | Priority | Notes |
 |---|---|---|---|---|
 | Reveal | Makes hidden information visible to a named audience | Modifier Cards held | Medium | Disclose individual Modifier Card contents |
-| Reveal | Makes hidden information visible to a named audience | Named faction only | High | Targeted disclosure — Ghost intelligence delivery. ⚠️ Target-scope/filter system needed |
+| ~~Reveal~~ | ~~Named faction only~~ | ~~High~~ | **Retired S119** — delivery reading covered by covert messaging system; surveillance reading covered by IS-xx targeting. Target-scope/filter system dependency dissolved. |
+| Reveal | Makes hidden information visible to a named audience | SubmissionStatus | Medium | ARBITER-domain: whether a named faction submitted a case this Month. Non-submission is actionable intelligence. ⚠️ Requires ARBITER-domain access procedure (Art 03) |
+| Reveal | Makes hidden information visible to a named audience | DispatchTokenCount | Low | ARBITER-domain: operation count per case (faction's operational tempo). ⚠️ Requires ARBITER-domain access procedure |
+| Reveal | Makes hidden information visible to a named audience | ResourceCommitment | Low | ARBITER-domain: resources committed per covert operation (scale/cost signals). ⚠️ Requires ARBITER-domain access procedure |
+| Reveal | Makes hidden information visible to a named audience | ModifierStackComposition | Low | ARBITER-domain: Modifier Cards submitted alongside a covert operation. ⚠️ Requires ARBITER-domain access procedure |
 | Corrupt | Alters a physically written or recorded value on a component | Intel Token | High | Falsify Intel Token content. Location constraint (L222): token must be in public-placement window (on PA as payment) — private terminal tokens unreachable. Partially addressed: Source Substitution (📝, faction-name field only); Backdate (🚫 BLOCKED L222 — round-number additionally prohibited by 7.2b). Full-field arbitrary corruption remains an open gap. |
 
 **Layer: Standing** — *Reputation tracks: Public Standing and Portrait*
@@ -221,7 +225,9 @@ The following combinations exist in the taxonomy but have no current card. Layer
 
 *React / Instant / interrupt timing is a separate design dimension not captured in this table — cards with these triggers carry their own Layer/Function/Subject for the primary effect. React-triggered card design space to be tracked once the timing mechanic is fully specified. See §4.9 and §10.*
 
-*⚠️ Two subjects require schema extension before primitives can be modeled: **Named faction only** (target-scope/filter system) and **Subset only** (partial-copy mechanism).*
+*⚠️ One subject requires schema extension before primitives can be modeled: **Subset only** (partial-copy mechanism). Named faction only retired S119.*
+
+*⚠️ Four Information|Reveal subjects (SubmissionStatus, DispatchTokenCount, ResourceCommitment, ModifierStackComposition) share a common prerequisite: ARBITER-domain access procedure must be defined in Art 03 before any card in this cluster can be specified. They travel together — design when the access procedure is ready.*
 
 *🔬 **Research flag (S48 — agy):** Established card games (Netrunner, espionage genre) use a distinct **Inspect** function — private read of a face-down card without making it public. Currently merged into `Reveal` (which implies public disclosure). If Inspect is added to §5.1, candidate gaps: Information | Inspect | Intel Token; Information | Inspect | Covert Operation. Flag for §5.1 review before actioning.*
 
@@ -245,6 +251,45 @@ Live view results are in the DB — query directly for current state. Results ca
 
 ---
 
+### 6.4 Economic Integration Audit (00a §9.2)
+
+The complete action set for any faction = that faction's cards + all Standard cards (unconditionally available to all factions at all times). STD establishes the economic floor; faction cards extend or specialize it. Faction audits (04-n87–04-n92) evaluate STD + faction together — the faction-only set is incomplete without it.
+
+For each faction audit:
+
+1. **Generation check** — non-native resource generation through card effects must be strictly limited. The canonical acquisition paths are trade (negotiation) and territory expansion (controlling districts that produce the resource natively). A card effect that generates another faction's native resource shortcuts both paths — flag it; the design requires explicit doctrine justification, not design convenience.
+2. **Spending check** — for each non-native resource the faction can acquire through trade or territory, does the complete action set include at least one meaningful spending destination?
+3. **Floor calibration** — mono-resource plays (acting faction's own native resource only) must be limited in power. Confirm each mono-resource play sits below the power ceiling.
+4. **Ceiling coverage** — cross-faction-resource plays must exist at proportionally higher power than mono-resource equivalents. If none exist, flag as a design gap.
+5. **Gap verdict** — an unspendable acquired resource is a design gap per 00a §9.2. A faction that can receive non-native resources through trade or territory but has no spending destinations has no economic incentive for either.
+
+#### STD + GHO Economic Integration Audit (S120)
+
+**Standard set (STD):**
+
+1. **Generation check:** STD.CA.9 Fund moves Capital to a named faction's Dispatch Case — net-zero redistribution, not generation. No concern. ✓
+2. **Spending check:** All five faction native types have at least one spending destination in the STD set:
+   - *Exposure* — STD.CA.6 Broadcast Interference · STD.CA.7 Amplify (2 cards, PA manipulation)
+   - *Capital* — STD.CA.8 Buy Influence · STD.CA.9 Fund (2 cards, Territory + Economy)
+   - *Mandate* — STD.CA.11 Tort Interference (1 Mandate + 1 own-native; district-keyed model makes Mandate acquirable by any faction, S68)
+   - *Findings / Capacity* — covered via district-native territory ops (STD.CA.1–4, CA.10, PA.3) when operating in producing districts
+   - ✓ No unspendable acquired resource.
+3. **Floor calibration:** STD mono CAs (CA.5 at cost=1; CA.13–16 at cost=2) deliver structurally limited effects — blind-random disruption and single Intel Token acquisition. Calibrated below cross-resource ceiling. ✓
+4. **Ceiling coverage:** Named-type cross cards (CA.6/7 at Exposure; CA.8/9 at Capital; CA.11 at Mandate + own-native) deliver proportionally higher effects — PA amplification/suppression, Territory presence acquisition, Accord lock. ✓
+5. **Gap verdict:** ✓ No unspendable acquired resources. Named-type alignment (Exposure→Network, Capital→Syndicate, Mandate→Directorate) is doctrine-encoding: it creates economic interdependency within the Standard set without making cards faction-exclusive. ⚠ **Calibration flag (playtest):** CA.6/7 (Exposure) and CA.8/9 (Capital) are nominally universal but require acquisition overhead for non-Network/Syndicate factions (territory control or trade). If the effect payoff doesn't justify the cross-economy bar for non-native holders, these cards become functionally Network/Syndicate-only. Verify during playtest.
+
+---
+
+**Ghost set (GHO), evaluated with STD:**
+
+1. **Generation check:** GHO.CA.10 Flip places 2 units of the target faction's native resource in Ghost's Dispatch Case. Non-native generation — explicit doctrine justification in spec: intelligence has economic value; target faction's assets turned against them. ✓
+2. **Spending check:** Primary pipeline — Flip (acquire target-native) → GHO.CA.4 Deep Cover (spend 1 target-native for intelligence interdiction). Pipeline is self-contained. For other non-native types acquired through territory or trade: STD.CA.6/7 (Exposure), STD.CA.8/9 (Capital), STD.CA.11 (Mandate), district-native territory ops (STD.CA.1–4). ✓ No unspendable acquired resource.
+3. **Floor calibration:** GHO mono CAs at 1–3 Findings, above STD floor (STD.CA.5 at 1 Findings → 1 token). GHO.CA.7 Station (2 Findings → 2 tokens), GHO.CA.8 Full Take (n Findings → 2n tokens). Faction advantage over STD floor clearly expressed. ✓
+4. **Ceiling coverage:** GHO.CA.4 Deep Cover (cross, 1 target-native, threshold 25) is the only cross CA — high-value PA void or modifier strip. One cross card is thin coverage, but Ghost's operational model is intelligence depth (mono collection) over cross-economy breadth. Current card count does not require a second cross card; IS-xx design seeds (§8.1) may produce one. Not a gap at L1. ✓
+5. **Gap verdict:** ✓ No unspendable resources. Flip-to-Deep-Cover is Ghost's primary cross-economy play; STD set provides spending for remaining resource types. Ghost's limited cross-card count is doctrinal precision, not an audit failure.
+
+---
+
 ## 7. Faction Coverage Matrix
 
 *Relocated to Art 04 §9. See Art 04 §9 — Faction Coverage Matrix.*
@@ -255,13 +300,30 @@ Live view results are in the DB — query directly for current state. Results ca
 
 These recommendations inform the redesign decisions D-04-02 through D-04-05 in Artifact 04 §16.
 
+### 8.0 Standard — Doctrine
+
+Standard is the shared toolkit. All factions may use Standard cards regardless of faction doctrine — Standard cards perform basic functions that any organized group operating in New Meridian would have access to. Standard does not cover every action intentionally: gaps in the Standard set are gaps by design, not omissions.
+
+Where Standard and faction cards overlap on the same Layer|Function|Subject, Standard is the floor: higher cost, lower efficiency, or less powerful outcome than the faction-specific version. Faction cards either enhance a Standard capability (same taxonomy, better terms) or fill gaps that Standard does not cover at all (unique taxonomy entries). No faction card should be strictly worse than its Standard equivalent — that would make the faction card dead weight.
+
+**Coverage summary (S119):** Standard holds the basic territorial operations (Presence, Structure — Add and Remove), economic redirection (Fund, blind transfer), information gathering (STD.CA.5 Intel collection), Standing floor (CA.13, PA.4, PA.7), and the only system-wide covert Block (STD.CA.12 Absolute Compromise). Economy layer Intel handling (CA.14–16 blind disposal/transfer) is Standard's deliberate floor for intel economics — Ghost operates on the same objects at the Information layer with content-aware ops, encoding the doctrinal distinction in taxonomy.
+
 ### 8.1 Ghost — Priority redesign targets
 
 Current Ghost set (S108): GHO.CA.1 (Submission|Copy|CovertOp), GHO.CA.2 (Information|Reveal|CovertOp), GHO.CA.3 (Information|Reveal|IntelDeliverySlip), GHO.CA.4 (Information|Remove|IntelToken), GHO.CA.5 (Information|Add|IntelToken), GHO.CA.6 (Economy|Add|IntelToken), GHO.CA.7 Station (Information|Add|IntelToken), GHO.CA.8 Full Take (Information|Add|IntelToken), GHO.CA.9 SCIF (Information|Add|Debrief Action Card), GHO.CA.10 Flip (Economy|Add|FactionNativeResource), GHO.CA.11 Signals Analysis (Information|Reveal|ClassifiedDirective), GHO.CA.12 Source Substitution (Information|Corrupt|IntelToken), GHO.CA.13 Backdate (🚫 BLOCKED L222+7.2b), GHO.CA.14 Field Verification (🚫 BLOCKED 7.2b). Ghost now has the deepest Information suite of any faction — generation, interception, disclosure, delivery tracking, removal, and corruption all represented. Two design space entries remain blocked pending fundamental redesign (04-n103). Portrait pathway remains closed (L84, 00a R01); see PM05 04-11.
 
 **High priority:**
-1. **Information — Reveal — Named faction:** Ghost delivers targeted intelligence to a specific faction privately rather than the whole table. *Targeted intelligence disclosure that strengthens relationships without public exposure.* ⚠️ Target-scope/filter system needed before this can be specified.
-2. **Submission — Copy — Subset:** Ghost should have a partial copy card — copy only the target (apply your own operation to the same district as named faction) without replicating the full cost and effect. ⚠️ Partial-copy mechanism needed in action model.
+1. **Submission — Copy — Subset:** Ghost should have a partial copy card — copy only the target (apply your own operation to the same district as named faction) without replicating the full cost and effect. ⚠️ Partial-copy mechanism needed in action model.
+
+**Retired gap (S119):**
+- ~~Information — Reveal — Named faction~~ — retired S119. The delivery reading (Ghost sends intelligence to a named faction) is addressed by the covert messaging system (Whiteboard: design_covert_messaging.md). The surveillance reading (targeted disclosure about a named faction's holdings) is already covered by IS-xx mechanics — Named faction was the targeting parameter on IS-xx, not a distinct card Subject. Target-scope/filter system dependency dissolved.
+
+**IS-xx information disclosure space (S119 — design seeds, not locked decisions):**
+ARBITER's access to covert case contents between Beat 0 and Beat 3 exposes intelligence beyond what IS-xx currently surfaces. Potential IS-xx card extension targets:
+- **Pass detection** — whether a named faction submitted a case at all (non-submission is actionable intelligence)
+- **Operation count** — Dispatch Token count per case (faction's operational tempo this Month)
+- **Resource commitment** — resources committed per operation (scale and cost signals)
+- **Modifier stack composition** — Modifier Cards submitted alongside an operation (tactical intelligence about op augmentation)
 
 **Blocked — redesign required:**
 3. **GHO.CA.13 Backdate / GHO.CA.14 Field Verification** — both target Intel Token provenance fields (Information|Corrupt|Intel Token): Backdate aimed at the round-number field (when the token was committed); Field Verification aimed at the age/validity field. Both blocked by 7.2b — those fields record committed facts and cannot be retroactively altered. Design intent: manipulation of token temporal provenance — making intelligence appear more or less current than it is. Valid redesign path: alteration of committed provenance fields is permanently closed. The mechanic must be additive — plant a new token that mimics a different temporal signature, or affect how token age is read (e.g., a modifier shifting the effective staleness threshold for a target faction) rather than altering the token itself. Both cards require fundamental redesign; specs blocked at Art 04 (04-n103).
@@ -309,4 +371,4 @@ The following card types are excluded from the Layer — Function — Subject ta
 
 ---
 
-*End of Artifact 04b — Action Taxonomy & Design Analysis v1.7*
+*End of Artifact 04b — Action Taxonomy & Design Analysis v2.0*

@@ -54,6 +54,9 @@ Built fresh at Beat 0; cleared at end of Beat 3. Entirely ARBITER-private — fa
 **How it fills — Beat 0:** ARBITER opens each case; verifies Dispatch Token present. Each operation card placed in the Beat 2 or Beat 3 row of its faction lane per the card's `beat` field. Target Profile (DB:48) stacked under the operation card. CM cards (DB:52) from §9.3 placed in the Beat 1 row of the targeted faction's lane.
 
 **Beat 1:** CM cards processed lane by lane. Each CM applies to all operations in the grid targeting its keyed faction.
+- **CM-A:** Flip each targeted op face-down; discard Modifier Cards from those stacks. CM card discarded.
+- **CM-B:** Place a CM-B Modifier Token (M-11, −15) on each targeted op. CM card discarded.
+- CM cards are gone by end of Beat 1 — they are not in the Beat 2 row and cannot be targeted by Beat 2 cards.
 
 **Beats 2–3:** Row-first processing — all Beat 2 pairs resolve before any Beat 3 pair begins. Within each row: round-robin by case receipt order (submission speed sets initiative, not faction standing order).
 

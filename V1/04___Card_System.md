@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.45 Draft  
+**Version:** 0.9.49 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-24  
+**Last Updated:** 2026-06-25  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -196,6 +196,14 @@ Each of the four resolution fields — `success`, `successcrit`, `fail`, `failcr
 
 ---
 
+**P28 — Resource Cost Positioning**
+
+A card's resource cost must match its power level per the floor/ceiling model in 00a §9.2. Mono-resource costs (acting faction's own native resource only) belong on floor-power cards — limited in effect, available from game-open. Cross-faction-resource costs (two or more distinct native resources) belong on ceiling-power cards — proportionally stronger, executable only through prior trade or territorial expansion. A card may not be simultaneously mono-resource and high-power. If a card's effect is strong, its cost must cross faction lines.
+
+Non-native resource generation through card effects must be exceptional. The canonical paths to non-native resources are trade and territory expansion — a card that generates them directly shortcuts those paths and requires explicit doctrine justification.
+
+---
+
 ### Design Rationale
 
 Each card entry opens with a Design Rationale block. The Design Rationale documents the design intent and mechanical reasoning for the card — the "why" behind the spec. A reviewer reading the Design Rationale alone should understand what role the card plays, why it is built the way it is, and what narrative logic the design serves.
@@ -231,7 +239,7 @@ The **Artifact ref** column in each card's checklist should cite the specific se
 |--|-------------|-----------------|------------|
 | Status | | | |
 
-- **Design Pass** ✓ — checklist evaluation complete; all 16 rows assessed
+- **Design Pass** ✓ — checklist evaluation complete; all 17 rows assessed
 - **Issues Resolved** ✓ — all flagged issues addressed; blank if open issues remain
 - **Signed off** ✓ — Andy's explicit approval; record session number (e.g., ✓ S49); blank until signed
 
@@ -255,6 +263,7 @@ A card with no issues from the design pass gets ✓ in both Design Pass and Issu
 | Data schema validation | Are all required fields from §6.1 present in the card spec? Do field values match §6.2 data dictionary types — e.g., `affinity` is `ConditionalExpr \| None` (not a tag); `doctrine_mod` is present and correctly typed; `persistence_condition`/`persistence_effect` are None unless `persistence=Permanent`; all enum values are valid per §6.3? | Art 04 §6.1–§6.3 |
 | Card narrative | Is a Card Story block present and populated? Does it answer "What is actually happening in the world when this card is played?" in plain language — as an event in the world, not a restatement of the mechanic? Does the mechanic follow naturally from that story, or does the narrative feel retrofitted? If the story cannot be told plainly, the card should be revisited. *(P26)* | Art 04 §5 Card Story; Art 00 §5 P1/P5 |
 | Outcome determinacy | Do all four resolution tiers (`success`, `successcrit`, `fail`, `failcrit`) each resolve to exactly one outcome? Is `game.choose_one()` absent from every tier? Does the card avoid conditional player choice in any resolution tier? *(P27)* | Art 04 §5 P27 |
+| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
 
 ---
 
@@ -656,7 +665,7 @@ Territory-control foundation card. Construction is publicly visible — the cove
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ S63 |
+| Status |  | ✓ | ✓ S63 |
 
 ```python
 STD.CA.1 = Card(
@@ -747,7 +756,7 @@ Territory disruption card — the destructive mirror of STD.CA.1. Structure remo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ S63 |
+| Status |  | ✓ | ✓ S63 |
 
 ```python
 STD.CA.2 = Card(
@@ -839,7 +848,7 @@ Presence-deepening card — a deliberate structural parallel to STD.CA.1. To Cam
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ S63 |
+| Status |  | ✓ | ✓ S63 |
 
 ```python
 STD.CA.3 = Card(
@@ -924,7 +933,7 @@ Presence-disruption card — the destructive mirror of STD.CA.3, following the s
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ S63 |
+| Status |  | ✓ | ✓ S63 |
 
 ```python
 STD.CA.4 = Card(
@@ -1016,7 +1025,7 @@ Universal intelligence card — the baseline for the Information layer. Observat
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 STD.CA.5 = Card(
@@ -1104,7 +1113,7 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ S63 |
+| Status |  | ✓ | ✓ S63 |
 
 ```python
 STD.CA.6 = Card(
@@ -1193,7 +1202,7 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ S63 |
+| Status |  | ✓ | ✓ S63 |
 
 ```python
 STD.CA.7 = Card(
@@ -1281,7 +1290,7 @@ Economy-bypasses-Territory card — the only Standard CovertOperation with no re
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ S63 |
+| Status |  | ✓ | ✓ S63 |
 
 ```python
 STD.CA.8 = Card(
@@ -1377,7 +1386,7 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 STD.CA.9 = Card(
@@ -1472,7 +1481,7 @@ Defensive Beat 2 positional wager — the only Standard card that explicitly pro
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ S63 |
+| Status |  | ✓ | ✓ S63 |
 
 ```python
 STD.CA.10 = Card(
@@ -1532,7 +1541,11 @@ STD.CA.10 = Card(
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
-Standard counter-counter card — the only card available to all factions that removes a Beat 2 Block or Protect operation before it can apply. Addresses the problem that committed defensive plays (Invoke Jurisdiction, Regulatory Capture, Fortify Structure, Protect) otherwise have no counter in the same round. Intel token cost makes this a premium play — factions must hold Intel specifically to access this capability, reinforcing Intel as a cross-faction strategic resource. Cannot target Type B Countermeasures (faction defense layers) or Hidden Objectives — only active Beat 2 Board Conditions. Positioned here from Art 04 §8 (retired) where it was misplaced: STD.CA.12 is subtype=Standard (all factions), not FactionSpecific.
+Standard counter-counter card — the only card available to all factions that removes active Block or Protect plays before they can apply. Addresses the problem that committed defensive plays (Invoke Jurisdiction, Regulatory Capture, Fortify Structure, Protect) otherwise have no counter in the same round.
+
+**Scope (confirmed S119/S120):** Absolute Compromise targets all cards with `function=Block` or `function=Protect` in the Beat 2 row — CA cards in ARBITER's covert grid and Protect/Fortify modifier plays in the Faction Resolution Grid. ARBITER has full visibility of the covert grid and executes the removal sweep from that position; the acting faction commits a blanket sweep without disclosing what was removed. Countermeasure Cards (CM-A, CM-B) are not valid targets: they are processed at Beat 1 and discarded before Beat 2 begins (Art 03 §9.4.1.2). CM-B modifier tokens left on operations are also not targetable — they are not Block/Protect cards.
+
+Intel token cost makes this a premium play — factions must hold Intel specifically to access this capability, reinforcing Intel as a cross-faction strategic resource. Positioned here from Art 04 §8 (retired) where it was misplaced: STD.CA.12 is subtype=Standard (all factions), not FactionSpecific.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1546,28 +1559,31 @@ Standard counter-counter card — the only card available to all factions that r
 | Doctrine alignment | ✓ | N/A — Standard card; no faction doctrine alignment required; no affinity; portrait = {} | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / Standard / faction=All — all-faction counter-counter capability; no faction restriction | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Submission/Block/CovertOperation — removes a submitted covert op's effect before it applies; Block function correct | Art 04b §4, §5 |
-| Balance | ✓ | Intel token for one Beat 2 card removal — premium cost justified by cross-faction utility; resources on discarded card not refunded (Outstanding Issue) | Art 02 §6–§7 |
+| Balance | ✓ | Intel token for one Beat 2 card removal — premium cost justified by cross-faction utility; resources on discarded card not refunded (confirmed S120 — GR 7.2b consistent) | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: target card discarded at Beat 2 resolution; no lingering effect | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None; restriction enforces target Beat 2 card exists | — |
 | Portrait validity | ✓ | portrait = {} — Standard card; no portrait entry confirmed intentional | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named — Beat 2 cards are district-anchored | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken cost; Beat 2 Block or Protect card as target — scope definition outstanding (Outstanding Issue) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; target card must exist in Beat 2 row at resolution; discard occurs at Beat 2; Type A/B distinction outstanding (Outstanding Issue) | Art 03 §9, §11 |
+| Supported by components | ✓ | IntelToken cost; Beat 2 Block or Protect card as target (function=Block or function=Protect per Art 04b taxonomy) — scope resolved S119, CA-inclusive | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Beat 2 Automatic; target card must exist in Beat 2 row at resolution; discard occurs at Beat 2. CM cards are not valid targets — processed and discarded at Beat 1 (Art 03 §9.4.1.2) before CA.12 fires. Valid targets: CA cards (function=Block or function=Protect) and Protect/Fortify modifier plays. | Art 03 §9.4.1.2, §9.4.2 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
-- **Type A vs Type B Countermeasure distinction:** Design note says "cannot target Type B Countermeasures (faction defense)." Confirm Type A / Type B taxonomy is defined somewhere in Art 03 or Art 04 — if not, this card cannot be adjudicated correctly.
-- **Scope of "Block or Protect card":** Does this include all Beat 2 Automatic cards that create restrictions (e.g., SYN.CA.4 Golden Parachute, SYN.CA.6 Parasitic) or only cards that explicitly Block/Protect? Definition needed for ARBITER adjudication.
-- **Resource refund on discard:** Resources committed to the discarded card are explicitly not refunded. Confirm this is the intent — the faction who played the blocked card loses both the slot and resources.
+None — all design questions resolved S119/S120:
+- Scope: CA-inclusive (covert grid + public Protect/Fortify). ARBITER sweeps both domains at Beat 2. S119.
+- CM interaction: Countermeasure Cards (both types) are Beat 1 — processed and discarded at §9.4.1.2 before Beat 2 begins. CA.12 never encounters a live CM card. S120 (Art 03 §9.4.1.2 read).
+- Scope boundary: SYN.CA.4 Golden Parachute and SYN.CA.6 Parasitic are Beat 2 Automatic but not function=Block/Protect — not valid targets. S119.
+- Resource refund: no refund (GR 7.2b consistent — committed resources are sunk). S120.
+- Remaining: 04-n70 (schema) + 04-n79 (narrative) — infrastructure sweeps only.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Migrated from Art 04 §8 (retired) Intel Economy block to Standard Covert section S59. Pre-convention flat format — full schema pass pending (04-47).*
 
@@ -1593,8 +1609,8 @@ STD.CA.12 = Card(
     portrait    = {},
     narrative   = "There are no walls. There are only varying degrees of access.",
     perspectives = {},
-    design_note  = "Cannot target Type B Countermeasures (faction defense) — only Type A (District Block) and Protect/Fortify ops. Intel token consumed is any held token. Migrated from Art 02 §8 Intel Economy block — Standard subtype confirmed.",
-    arbiter_note = "At Beat 2 resolution: discard named Beat 2 Block or Protect card from target district. Resources committed to that card by its submitting faction are not refunded. Operations the card would have blocked or protected proceed without that modifier.",
+    design_note  = "Scope (S119): CA-inclusive — targets Block/Protect plays in both the Faction Resolution Grid (Type A CMs, Protect/Fortify modifier plays) and ARBITER's covert resolution grid (Beat 2 CA cards with function=Block or function=Protect). Cannot target Type B Countermeasures (faction defense — reduces difficulty, not a Block/Protect play). Intel token consumed is any held token.",
+    arbiter_note = "At Beat 2 resolution: sweep both grid domains. (1) Faction Resolution Grid: discard any Type A Countermeasure or Protect/Fortify modifier play targeting the named district. (2) Covert grid: discard any Beat 2 CA with function=Block or function=Protect from the named district row. Resources committed to discarded cards are not refunded. Operations those cards would have affected proceed without the modifier.",
 )
 ```
 
@@ -1633,7 +1649,7 @@ First Standard card with Public Standing shift as its primary covert effect — 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 C_DisinformationCampaign = Card(
@@ -1730,7 +1746,7 @@ Fills the Economy/Remove/IntelToken coverage gap in the Standard card set. All f
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 C_Disprove = Card(
@@ -1821,7 +1837,7 @@ Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused c
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 C_IntelExtraction = Card(
@@ -1915,7 +1931,7 @@ Economy/Redirect/ModifierCard — splits Asset Extraction (S62) alongside Intel 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 C_ModifierRaid = Card(
@@ -2035,7 +2051,7 @@ Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outc
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 STD.PA.1 = Card(
@@ -2125,7 +2141,7 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 STD.PA.2 = Card(
@@ -2224,7 +2240,7 @@ Public counterpart to STD.CA.1 (Build Structure). Same cost; unlike STD.CA.1, th
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 STD.PA.3 = Card(
@@ -2317,7 +2333,7 @@ The PS attack card of the standard set. A formal public accusation carries both 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 STD.PA.4 = Card(
@@ -2412,7 +2428,7 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 STD.PA.5 = Card(
@@ -2509,7 +2525,7 @@ The economic attack card of the standard PA set. PS is intentionally reversed fr
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 STD.PA.6 = Card(
@@ -2603,7 +2619,7 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 STD.PA.7 = Card(
@@ -2698,7 +2714,7 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 STD.PA.8 = Card(
@@ -2822,7 +2838,7 @@ Guild-exclusive structural defense card. The hardest counter to STD.CA.2 Demolis
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 GUI.CA.1 = Card(
@@ -2910,7 +2926,7 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 GUI.CA.2 = Card(
@@ -3002,7 +3018,7 @@ Guild-exclusive first-entry card for unclaimed districts. Unclaimed territory ha
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 GUI.CA.3 = Card(
@@ -3089,7 +3105,7 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 GUI.CA.4 = Card(
@@ -3182,7 +3198,7 @@ Guild-exclusive passive income card — the economic expression of territorial c
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 GUI.CA.5 = Card(
@@ -3269,7 +3285,7 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Draft S59 — design pass pending*
 
@@ -3367,7 +3383,7 @@ Guild's prestige structure PA — a simultaneous double build in two named distr
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 GUI.PA.1 = Card(
@@ -3466,7 +3482,7 @@ Guild's economic relationship PA. Distinct from STD.CA.9 (Fund) in cost currency
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 GUI.PA.2 = Card(
@@ -3560,54 +3576,66 @@ GUI.PA.2 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost-exclusive intelligence-into-action card — the only card with Prediction resolution in the set. No roll; success is structural (correct prediction on faction OR district — either match is sufficient). Rewards moderate intelligence rather than perfect intelligence. Cost vs reward: 2 Findings to copy a covert operation worth whatever that operation costs — asymmetric upside if the copied op is expensive. Portrait modifier on success (+1 PS on crit) reflects the Ghost doctrine that intelligence is vindicated by successful prediction, not by gathering alone.
+Ghost-exclusive intelligence-into-action card — the only card with Predictive resolution in the set. Ghost submits a prediction at §9.1: target faction, target district, and the operation they believe that faction has dispatched. At Beat 2, ARBITER checks all three against the covert grid. A correct match causes ARBITER to move the matched operation from the target faction's Beat 3 lane into Ghost's lane. The target faction loses the operation entirely: their case returns empty, resources spent, Dispatch Token consumed.
+
+This is not a copy. The operation executes once, for Ghost.
+
+Ghost resolves the stolen operation at Beat 3 as `faction(acting)`. Same target district, same Target Profile as originally submitted — but Ghost is the actor and Ghost receives the benefit. Any op, any faction — if Ghost can identify and execute it, Ghost keeps it. Effects that reference `faction(acting)` now reference Ghost; Ghost receives whatever the op produces, including off-faction resources.
+
+Executability check precedes the move: if Ghost cannot execute the stolen op (restriction failure, resource type mismatch), Pattern Match fizzles. The op stays in the target's lane. Ghost gains nothing; 2 Findings spent. The risk of a wrong prediction — or an unexecutable steal — is real.
+
+Prediction bar is high: all three elements (faction + district + operation name) must match. Intelligence depth is the enabler — Intel Tokens, prior observations, pattern analysis. At that depth, the interception is earned.
+
+Fills `Submission | Redirect | CovertOperation` — a function unique to Ghost in the card set. No standard equivalent (Art 04 §5 P17). The Redirect taxonomy needs Art 04b §5.1 validity matrix confirmation (PM05 flagged).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A faction submits their operation. Ghost, watching, named all three things in advance. At Beat 2, ARBITER finds Ghost's prediction in the grid, finds the matching operation, and moves it. The faction's case comes back lighter than they expected. The operation resolves — but not for them.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Pattern-matching intelligence into executed action — Ghost's prediction mechanic makes intelligence operationally consequential rather than purely informational. Fits Ghost doctrine: understanding precedes action. | Art 00 §7; Art 04b §5 |
-| Voice fit | ✓ | "We are not predicting. We are recognising a pattern we have already seen." — Ghost's core intelligence-vs-prediction distinction. Only one perspective (Ghost only) — unusually minimal even for FactionSpecific; consider adding 1–2 outside readings in a future pass. | Art 00 §7 |
-| Doctrine alignment | ✓ | `target_faction = faction.opponent`, `doctrine_mod = None` — explicit design choice: prediction accuracy is about intelligence quality, not doctrinal proximity to the target faction. | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation: prediction and operation-copying is covert intelligence work. FactionSpecific (Ghost): Prediction resolution is Ghost's unique mechanism. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | `layer = Submission` — copying an opponent's operation modifies what enters Ghost's resolution queue. `function = Copy`, `subject = CovertOperation` — correctly scoped. | Art 04b §4, §5 |
-| Balance | ⚠ | **Open:** Does Ghost pay the copied op's cost? Option C (fizzle if Ghost cannot supply) recommended. Without this constraint, Ghost can copy expensive ops at marginal 2-Findings cost. | Art 02 §8 |
-| Effect duration | ✓ | One-time execution of the copied operation; no persistent state. | — |
-| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | N/A | `trigger = None` — Prediction resolution verified by ARBITER at Beat 3. | — |
-| Portrait validity | ✓ | Ghost `submitter=+1, modifier=+1, mod_where=game.outcome == Success`. `submitter=+1` fires on play (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). **Open:** `modifier=+1` AND/OR semantics — confirm `submitter` always fires on play AND `modifier` additionally fires on Success (not independent of submitter activation). | Art 04 §6.2 |
-| Supported by zones | ✓ | `target_district = district.any`. No presence restriction — Ghost intelligence operations unrestricted by zone. | Art 01 §6 |
-| Supported by components | ✓ | Findings cost (Art 02 §8); CovertOperation as copy target; copied op's components governed by that op's spec. | Art 02 §8; Art 04b §5 |
-| Supported by game procedure | ⚠ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0). **Open:** Prediction resolution not defined in Art 03 — §11 covers Automatic and d100 only. Procedure gap: Art 03 extension required for Prediction resolution type. | Art 03 §9, §11 |
+| Action fit | ✓ | Intelligence-into-action via operational interception — Ghost's prediction accuracy converts to execution, not just information. Fits Ghost doctrine: understanding precedes action, and in this case enables theft. | Art 00 §7; Art 04b §5 |
+| Voice fit | ✓ | Ghost only; single perspective — interception as doctrine. Extended in v2.0 to include the "theft" framing. | Art 00 §7 |
+| Doctrine alignment | ✓ | target_faction = faction.named; doctrine_mod = None — prediction accuracy is about intelligence depth, not doctrinal proximity. | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — operation interception is Ghost-exclusive; no Standard equivalent. | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ⚠ | Submission/Redirect/CovertOperation — Redirect communicates the mechanism (op moves from target lane to Ghost lane; no duplication). Needs Art 04b §5.1 validity matrix check (PM05 queued). | Art 04b §4, §5 |
+| Balance | ✓ | 2 Findings for a triple-prediction. High prediction bar (faction + district + operation name) is the gate. Stolen op is free to Ghost — original faction bore the cost. Fizzle risk (wrong prediction OR can't execute) is the downside. | Art 02 §8 |
+| Effect duration | ✓ | Immediate: stolen op resolves at Beat 3, no persistent state from Pattern Match itself. | — |
+| Persistence | ✓ | Immediate — fully resolved at Beat 3; no lingering game-state marker from Pattern Match. | Art 04 §6 |
+| Trigger validity | N/A | trigger = None — Predictive resolution: ARBITER checks prediction against grid at Beat 2. | — |
+| Portrait validity | ⚠ | Ghost submitter=+1, modifier=+1, mod_where=game.outcome == Success. Portrait AND/OR semantics still open (see Outstanding Issues). Additional open: does Portrait also fire when the stolen op resolves at Beat 3 under Ghost's lane? | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named — Ghost names a specific district in the prediction. No adjacency restriction (analytical op). | Art 01 §6 |
+| Supported by components | ✓ | Findings cost; CovertOperation as redirect target; stolen op's components governed by that op's spec. Ghost may receive off-faction resources (Mandate, Capacity, etc.) — tradeable at Debrief. | Art 02 §8 |
+| Supported by game procedure | ⚠ | Beat 2 resolution; ARBITER checks prediction against covert grid; if match + executable: lane redirect. Art 03 gap: Pattern Match redirect procedure not yet written in Art 03 §9.4 — simpler than the prior copy-injection model but still unwritten. | Art 03 §9 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Card narrative | ✓ | Card Story written S119 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
-- **Copied op cost (design decision):** Does Ghost pay the copied operation's cost? Options: (A) free, (B) pay equivalent, (C) fizzle if Ghost cannot supply. Option C recommended — confirm before v1.1.
-- **Portrait `mod_where=` semantics:** `modifier=+1, mod_where=game.outcome == Success` — confirm AND semantics: `submitter` always fires on play; `modifier` fires additionally on Success. Confirm OR is not intended.
-- **Art 03 Prediction procedure gap:** Art 03 §9.4 covers Automatic and d100 only. Prediction resolution requires a procedure extension before GHO.CA.1 can be fully procedurally supported.
-- **Arbiter note:** If the copied operation cannot legally be executed by Ghost, Pattern Match fizzles — 2 Findings spent, no effect regardless of prediction accuracy.
+- **Portrait AND/OR semantics:** `modifier=+1, mod_where=game.outcome == Success` — confirm AND semantics: `submitter` always fires on play; `modifier` fires additionally on Success. Confirm OR is not intended.
+- **Portrait from stolen op:** The moved op has its own portrait block (keyed to original faction). When it resolves in Ghost's lane, does ARBITER fire those portrait entries for the original faction (who didn't submit it) or not at all? Rule needed.
+- **Art 03 procedure gap:** Pattern Match redirect (Beat 2 lane move) not yet written in Art 03. Simpler than copy-injection — just a grid lane transfer — but still requires a new sub-step in §9.4.2. Blocked on Art 03 edit.
+- **Submission|Redirect L×F validity:** Art 04b §5.1 matrix check required. PM05 queued.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
+
+*S119 v2.0 redesign — mechanism changed from Copy (Beat 3) to Redirect/steal (Beat 2 intercept → Beat 3 execution). Original faction loses op, cost, and Dispatch Token. Ghost is actor on stolen op; effects reference Ghost as faction(acting). Prediction now requires all three: faction + district + operation name.*
 
 ```python
 GHO.CA.1 = Card(
-    id      = 16,  version = "v1.0",
+    id      = 16,  card_id = "GHO.CA.1",  version = "v2.0",
     name    = "Pattern Match",
-    tagline = "Identify a faction's operation and location before they move.",
+    tagline = "Identify a faction's operation and location — then take it.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
 
-    layer    = Submission,  function = Copy,  subject = CovertOperation,
+    layer    = Submission,  function = Redirect,  subject = CovertOperation,
 
-    beat            = 3,
+    beat            = 2,
     resolution      = Automatic,
     threshold       = None,
     ring_mod        = None,
@@ -3619,26 +3647,35 @@ GHO.CA.1 = Card(
     persistence_condition = None,
     persistence_effect    = None,
 
-    target_district = district.any,
-    target_faction  = faction.opponent,
+    target_district = district.named,
+    target_faction  = faction.named,
     target_object   = CovertOperation,
+    declared_params = operation.named,
 
     target_taxonomy=None,
     affinity    = None,
     restriction = None,
     cost        = resource.faction(acting).findings * 2,
+    boost       = None,
 
-    success     = game.copy_op(faction(target).op(beat=3, type=CovertOperation)),
+    success     = game.redirect(
+        op        = faction(target).beat3_row.op(district=target_district, name=declared_params.operation),
+        to        = faction(acting).beat3_lane,
+        condition = game.can_execute(faction(acting), op),
+    ),
     successcrit = None,
     fail        = None,
     failcrit    = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1, modifier=+1, mod_where=game.outcome == Success)},
+    ps_framing = None,
 
-    narrative    = "Ghost does not guess. Ghost identifies what is already in motion.",
+    narrative    = "Ghost does not guess. Ghost identifies what is already in motion — and takes it.",
     perspectives = {
-        Ghost: "We are not predicting. We are recognising a pattern we have already seen.",
+        Ghost: "We are not predicting. We are recognising a pattern we have already seen. And then we are keeping it.",
     },
+    design_note  = "Steal not copy: matched op moves from target faction's Beat 3 lane to Ghost's. Original faction loses the op, the cost, and the Dispatch Token — no compensation. Ghost resolves the stolen op as faction(acting) at Beat 3; same target as originally submitted; Ghost receives all effects including off-faction resources. Executability check precedes the move: if Ghost cannot execute (restriction failure, wrong resource type), Pattern Match fizzles and the op stays in target's lane. Taxonomy: Submission|Redirect — Art 04b §5.1 L×F validity check pending (PM05 queued).",
+    arbiter_note = "At Beat 2: (1) Check Ghost's declared_params (target faction + target district + operation name) against the Beat 3 grid. (2) If all three match: check whether Ghost can execute the matched op — if restriction or resource type blocks execution, Pattern Match fizzles (2 Findings spent; op stays in target lane; no notification). (3) If match AND executable: move the op and its Target Profile from target faction's Beat 3 lane to Ghost's Beat 3 lane. Target faction's committed cost resources and Dispatch Token are consumed — not returned. (4) At Beat 3: the moved op resolves in Ghost's lane with Ghost as faction(acting). The original Target Profile governs targeting (same district, same target faction as originally submitted). All effects referencing faction(acting) now reference Ghost.",
 )
 ```
 
@@ -3681,7 +3718,7 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ⚠ pending re-sign-off (v1.1 — beat timing correction) |
+| Status |  | ✓ | ⚠ pending re-sign-off (v1.1 — beat timing correction) |
 
 ```python
 GHO.CA.2 = Card(
@@ -3756,7 +3793,7 @@ Redesigned S68: original target was the unplayed hand (CardHandContents) — req
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *S68 redesign — SIGINT tap model*
 
@@ -3822,7 +3859,7 @@ Ghost's intelligence interdiction card — operational disruption rather than ev
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *S113 redesign — Issues Resolved pending sign-off review*
 
@@ -3866,66 +3903,74 @@ GHO.CA.4 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Active deception — Ghost fabricates a self-directed Intel token and places it in an opponent's case. The false token is physically indistinguishable from a genuine Gather result; any Denounce built on it fails at resolution. Requires Ghost to hold a self-faction Intel token as the source material, meaning Ghost has previously gathered intelligence about their own operations to craft a believable false trail. 1 Finding cost, Automatic — the fabrication is simple once the source material exists; the difficulty is in having done the groundwork.
+Evidence corruption — Ghost alters the faction attribution on an Intel Token a target faction has submitted on an active Public Act. The token remains in place; its `faction_name` field now identifies a different source. Any resolution depending on that attribution — Flip eligibility, Debrief gate access, attribution-based inference work — proceeds from a corrupted record.
+
+Unlike GHO.CA.12 Source Substitution (which re-keys Ghost's own held tokens as an internal analytical step), Misdirection is offensive: Ghost corrupts the record while it is in active play. The target faction submitted this token believing they know what it says. Ghost has changed what it says.
+
+1 Findings cost, Automatic — the corruption is technically simple once Ghost is in position; the difficulty is timing the operation against the target's PA submission. Fills Information|Corrupt|IntelToken at the offensive targeting scope that Source Substitution does not cover. L222 compliant — targets publicly placed tokens in the Faction Resolution Grid only (Beat 0–4 window). `declared_params` carries the replacement faction name declared at §9.1.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A faction submits intelligence alongside their public declaration — an Intel Token they believe says exactly what they think it says. By the time their declaration resolves, the attribution on that token has been quietly changed. The intelligence is genuine. The source is not.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Active deception — Ghost fabricates a self-directed token and plants it in an opponent's case; fills Information/Add+Corrupt/IntelToken gap in Ghost's counter-intelligence toolkit | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — fabrication as operational doctrine | Art 00 §7 |
-| Doctrine alignment | ✓ | Ghost only; self-Intel token restriction means Ghost must have done prior groundwork; 1 Finding cost reflects fabrication is the easy part — having the source material is the hard part | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — fabrication is Ghost-exclusive; no Standard equivalent | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Add/IntelToken with false-content attribute — Add+corrupt-content vs Corrupt function outstanding (Outstanding Issue) | Art 04b §4, §5 |
-| Balance | ✓ | 1 Finding + self-Intel token — restriction is real gate (Ghost must hold self-directed token); false token creates downstream risk for recipient (wasted attribution play) | Art 02 §6–§7 |
-| Effect duration | ✓ | Immediate: false token placed in target's case at Beat 3; no card-level lingering effect | — |
+| Action fit | ✓ | Offensive evidence corruption — Ghost alters attribution on a token publicly submitted by a target faction; fills Information|Corrupt|IntelToken at offensive scope (distinct from Source Substitution's self-directed re-keying) | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — record alteration as operational doctrine | Art 00 §7 |
+| Doctrine alignment | ✓ | Ghost only; 1 Finding cost reflects precision operation; Automatic resolution reflects Ghost's technical competence in field correction | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence record manipulation is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Corrupt/IntelToken — alters faction_name field on publicly placed token; L222 compliant (FRG submission, Beat 0–4 window) | Art 04b §4, §5 |
+| Balance | ✓ | 1 Finding — low cost reflects precision play; power is timing-dependent (target must have PA with Intel Token) | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate: token field altered at Beat 3; no card-level lingering effect | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Ghost +1 submitter — deception operation aligns with Ghost intelligence manipulation doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — token delivered to target's case, not district-anchored | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken with content=false — false-content flag registration outstanding (Outstanding Issue); Ghost self-token cap exemption outstanding (Outstanding Issue) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | ARBITER delivers false token via case at Beat 3; token indistinguishable from real on inspection per design | Art 03 §9, §11; Art 07 |
+| Portrait validity | ✓ | Ghost +1 submitter — evidence corruption aligns with Ghost intelligence manipulation doctrine | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — token is in Faction Resolution Grid, not district-anchored | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken (publicly placed on PA in FRG); Findings cost; no new components; declared_params carries replacement faction name | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Beat 3 resolution; ARBITER checks FRG for qualifying token; alters faction_name; if no qualifying token: fizzle | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Card narrative | ✓ | Card Story written S119 | Art 04 §5 P26 |
 
 #### Outstanding Issues
 
-- **False-content IntelToken:** `IntelToken(faction=Ghost, content=false)` — confirm `content` flag is a defined field on IntelToken in Art 02.
-- **Taxonomy: Add vs Corrupt:** design_note says "Add with corrupt content." Confirm whether this should use Corrupt function or Add with a false-content attribute.
-- **Self-Intel token cap exemption:** Ghost may hold self-directed Intel tokens without cap (Art 02 §12) — confirm this is documented.
+None. (Taxonomy resolved S119 — Corrupt function confirmed; content=false retired; self-token restriction removed.)
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | ✓ | |
 
-*S51 redesign — design pass pending*
+*S119 redesign — taxonomy changed from Information|Add to Information|Corrupt; targeting model changed from fabrication/plant to FRG attribution corruption. L222 compliant.*
 
 ```python
 GHO.CA.5 = Card(
-    id=20,  version="v1.0",
+    id=20,  card_id="GHO.CA.5",  version="v2.0",
     name    = "Misdirection",
-    tagline = "Plant false intelligence about Ghost in the accessible record.",
+    tagline = "Ghost has been thinking about what they think they know.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = Information,  function = Add,  subject = IntelToken,
-    beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    layer   = Information,  function = Corrupt,  subject = IntelToken,
+    beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
-    target_district=None, target_faction=faction(named_opponent), target_object=None,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+    target_district=None, target_faction=faction.named, target_object=IntelToken,
     target_taxonomy=None,
+    declared_params = FactionName,
     affinity=None,
-    restriction = faction(acting).intel_tokens(faction=Ghost) >= 1,
+    restriction = faction(target).FRG.active_PA.intel_token.count >= 1,
     cost        = resource.faction(acting).findings * 1,
-    success     = game.dispatch(faction(target), IntelToken(faction=Ghost, content=false, quarter=game.quarter)),
+    boost       = None,
+    success     = game.corrupt(field=faction_name, target=faction(target).FRG.active_PA.intel_token, new_value=declared_params.faction),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
-    narrative   = "Ghost has been considering what its opponents think Ghost is doing. It is never quite right.",
-    perspectives = {Ghost: "We have thought carefully about what they expect. We have given them exactly that."},
-    design_note  = "Add with corrupt content — falsification is an attribute of content, not a separate function. False token is indistinguishable from a genuine Gather result. Any Denounce using it will fail.",
-    arbiter_note = "Deliver false Intel token to target faction via case. Token contains false Ghost operation type and false target district for this round. Ghost may hold self-directed Intel tokens without cap (Art 02 §12).",
+    ps_framing  = None,
+    narrative   = "Ghost has been considering what the record says. It is never quite right.",
+    perspectives = {Ghost: "The attribution is wrong. Systematically, deliberately wrong. By the time anyone checks, it will have been wrong for a while."},
+    design_note  = "Fills Information|Corrupt|IntelToken at the offensive targeting scope: alters faction attribution on a token publicly placed on an active PA. Distinct from GHO.CA.12 Source Substitution (which re-keys Ghost's own held tokens). L222 compliant — targets publicly placed tokens in FRG only (Beat 0–4 window). declared_params carries the replacement faction name declared at §9.1.",
+    arbiter_note = "At Beat 3: check whether target faction has any Intel Token submitted on an active PA in the Faction Resolution Grid. If yes: alter the faction_name field on that token to the faction named in declared_params. Token remains face-down on the PA; target faction is not notified. If no qualifying token: card fizzles, 1 Findings spent, no effect.",
 )
 ```
 
@@ -3968,7 +4013,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *Issues Resolved S112*
 
@@ -4054,7 +4099,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *Issues Resolved S112*
 
@@ -4141,7 +4186,7 @@ Ghost cashes one piece of intelligence for something more durable. ARBITER recor
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ S94 | |
+| Status |  | ✓ S94 | |
 
 ```python
 GHO.CA.9 = Card(
@@ -4226,7 +4271,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *Issues Resolved S112*
 
@@ -4319,7 +4364,7 @@ Ghost's strategically decisive card. Reveals the target faction's Classified Dir
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Draft S59 — design pass pending*
 
@@ -4404,20 +4449,21 @@ Ghost's intelligence amplification card — converts one held Intel token into t
 
 #### Outstanding Issues
 
-- **Token faction-keying:** The original design note says "Intel token consumed is any held token — not required to be faction-indexed." Confirm whether the 3 tokens delivered are also unkeyed (any) or if Synthesize generates tokens keyed to the consumed token's faction. The answer affects SCIF/Flip gate eligibility.
 - **GATHER→SYNTHESIZE combo L145:** Confirm L145 is still the canonical reference for this combo — if L145 has been superseded or renumbered, update reference.
+
+*Token faction-keying resolved S119: generated tokens carry the consumed token's faction key. Ghost consumes an X-keyed token and receives three X-keyed tokens. Enables the Gather→Synthesize→Flip pipeline (collect X-keyed token; amplify; use Flip to access Faction X's resources).*
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
-*Migrated from Art 04 §8 (retired) Intel Economy block to Ghost extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
+*Migrated from Art 04 §8 (retired) Intel Economy block to Ghost extended section S59. Pre-convention flat format — full schema pass pending (04-47). Token keying resolved S119.*
 
 ```python
 GHO.CA.6 = Card(
-    id=36,  version="v1.0",
+    id=36,  card_id="GHO.CA.6",  version="v1.1",
     name    = "Synthesize",
     tagline = "Convert raw intelligence into operational clarity.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4432,13 +4478,15 @@ GHO.CA.6 = Card(
     affinity=None,
     restriction = faction(acting).intel_tokens.count >= 1,
     cost        = resource.faction(acting).findings * 1 + IntelToken(any) * 1,
-    success     = game.dispatch(faction(acting), IntelToken(any) * 3),
+    boost       = None,
+    success     = game.dispatch(faction(acting), IntelToken(faction=consumed_token.faction) * 3),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing  = None,
     narrative   = "Raw surveillance is noise. What Ghost does to it — that is signal.",
     perspectives = {Ghost: "We don't just gather. We process. The difference is what we are."},
-    design_note  = "GATHER→SYNTHESIZE Double Case Pass combo (L145): Gather in Month 1, Synthesize in Month 2/3. Consumed token is any held token — not required to be faction-keyed. Generated tokens: confirm faction-keying at schema pass (outstanding issue).",
-    arbiter_note = "Consume 1 held Intel token (any faction key) and 1 Findings from Ghost's supply. Deliver 3 Intel tokens to Ghost's Dispatch Case. Confirm faction-keying of delivered tokens per resolution of outstanding issue.",
+    design_note  = "GATHER→SYNTHESIZE Double Case Pass combo (L145): Gather in Month 1, Synthesize in Month 2/3. Consumed token is any held token — not required to be faction-keyed. Generated tokens carry the consumed token's faction key (S119 decision) — enables Gather→Synthesize→Flip pipeline for any target faction.",
+    arbiter_note = "Consume 1 held Intel token (any faction key) and 1 Findings from Ghost's supply. Deliver 3 Intel tokens keyed to the consumed token's faction to Ghost's Dispatch Case.",
 )
 ```
 
@@ -4483,7 +4531,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *Redesigned S112 — plant mode retired; Automatic resolution; cost = CA slot*
 
@@ -4775,7 +4823,7 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 GHO.PA.1 = Card(
@@ -4874,7 +4922,7 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 GHO.PA.2 = Card(
@@ -4966,7 +5014,7 @@ Ghost submits the case files in order — sequential, dated, attributed. The rec
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 GHO.PA.3 = Card(
@@ -5055,7 +5103,7 @@ Ghost files the request before Beat 4. The Broadcast Card has been face-up all Q
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 GHO.PA.4 = Card(
@@ -5143,12 +5191,13 @@ Ghost files the act at Phase B. A table. A banner. Printed materials no other fa
 | Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | success = exactly one outcome; successcrit = additive delta; fail = None; failcrit = additive delta | Art 04 §5 P27 |
+| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 GHO.PA.5 = Card(
@@ -5263,7 +5312,7 @@ Directorate's positional authority card — asserts institutional control over a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -5334,7 +5383,7 @@ Directorate's permanent removal card — eliminates a faction's deployment marke
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -5411,7 +5460,7 @@ None — all resolved S68. District-keyed resource model makes Mandate acquirabl
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *Redesigned S68: Directorate FactionSpecific CovertOperation (Evidence Preservation) → Standard CovertOperation. Name: Evidence Preservation → Tort Interference.*
 
@@ -5493,7 +5542,7 @@ Redesigned S68: original model was permanent passive feed with beat3_pre_resolut
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Redesigned S68 v2.0 — episodic Beat 2 model. Blocking open issues: 04-n44 (Art 03), 04-n45 (Art 02), 04-n46 (00b).*
 
@@ -5564,7 +5613,7 @@ Directorate's repositioning card — the only card in the full set using Territo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *S51 redesign — design rationale scaffold added S59. Design pass pending.*
 
@@ -5822,7 +5871,7 @@ The Directorate dispatches a team to the district — no announcement, no negoti
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *v2.2 — S79: boost model replaces Phase B n-declaration; base cost = faction×1 + native×1 + IntelToken (Mandate×2 removed); boost = same unit; threshold = 65−10×n_boost; PS scales with (1+n) in both directions; successcrit = PS+(1+n_boost) (public endorsement of clean large-scale op); fail = NotificationSlip; failcrit = Discovery + PS−(1+n_boost); modifier scope = target faction only; 04-n81/82/83/84 gate sign-off.*
 
@@ -5904,7 +5953,7 @@ An internal team works through the standing record. Active directives in this ri
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *New card — S106. Fills Economy|Add|NativeResource gap (04b §8.2 HP).*
 
@@ -5979,7 +6028,7 @@ Before any version of events could circulate, the Directorate's closed channels 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *New card — S106. Fills Standing|Shift|PublicStanding gap (04b §8.2 HP). Narrative grounding: covert mechanism, public outcome via closed-channel circulation of institutional record.*
 
@@ -6054,7 +6103,7 @@ The district is under enhanced institutional review. Documentation requirements 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *New card — S106. Fills Resolution|Modify|Difficulty gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
 
@@ -6137,7 +6186,7 @@ Directorate's district-level regulatory control PA. All non-Directorate presence
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 DIR.PA.1 = Card(
@@ -6234,7 +6283,7 @@ Directorate's institutional intelligence-gathering PA. No formal restriction —
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 DIR.PA.2 = Card(
@@ -6333,7 +6382,7 @@ Directorate's persistent territorial control tool — a district-level board con
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Redesigned S66 — v1.0 (ring-scope) retired*
 
@@ -6414,7 +6463,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *Redesigned S67 — v2.0. PublicAct → PublicAct. InjunctionMarker removed; card-as-condition pattern. Seasonal → Permanent with dual clearing condition (trigger OR Phase 21). Dispatch Token consumed on trigger per Governing Rule 7.3. target_taxonomy field introduced (§6.1/§6.2). Self-policing per Governing Rule 6.1a.*
 
@@ -6532,7 +6581,7 @@ Network's pre-execution discovery card — spends 1 Exposure + 1 Findings to exp
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Redesigned S68: subject ActionAttribution → District; pre-execution discovery + cancellation model; cross-resource cost; beat=3 initiative incentive confirmed.*
 
@@ -6605,7 +6654,7 @@ Network's Exposure generation card — converts the act of revealing into additi
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *S51 redesign — design rationale scaffold added S59. Design pass pending.*
 
@@ -6684,7 +6733,7 @@ A Network operative submits intelligence on a target faction's committed operati
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S78 | ✓ S89 | |
+| Status |  | ✓ S89 | |
 
 ```python
 NET.CA.3 = Card(
@@ -6765,7 +6814,7 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -6836,7 +6885,7 @@ Network's Baryo-targeted presence card — specialized version of STD.CA.3 Campa
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -6906,7 +6955,7 @@ Network's credibility-to-Intel conversion card. Reflects the Network doctrine th
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *Migrated from Art 04 §8 (retired) Intel Economy block to Network extended section S59. Pre-convention flat format — full schema pass pending (04-47).*
 
@@ -6984,7 +7033,7 @@ The message doesn't travel because Network announced it. It travels because Netw
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *New card — S106. Fills Standing|Shift|PublicStanding gap (04b §8.3 HP).*
 
@@ -7062,7 +7111,7 @@ Network's signature information-attack PA — a coordinated release of all subst
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 NET.PA.1 = Card(
@@ -7153,7 +7202,7 @@ Network's broadcast-derived presence PA — scaling territorial expansion built 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 NET.PA.2 = Card(
@@ -7254,7 +7303,7 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S78 | ✓ S89 | |
+| Status |  | ✓ S89 | |
 
 ```python
 NET.PA.3 = Card(
@@ -7359,7 +7408,7 @@ Syndicate's non-presence resource extraction card — Capital buys immediate res
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *v1.4 — S71: boost field added (True: capital×2); affinity=None confirmed; Issues Resolved ✓.*
 
@@ -7450,7 +7499,7 @@ Syndicate's economic disruption card — directly reduces a target faction's nat
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -7524,7 +7573,7 @@ Syndicate's structure takeover card — Capital purchases ownership of an oppone
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -7603,7 +7652,7 @@ Syndicate's bribe card — pays a named faction to nullify their Beat 3 operatio
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *Pre-convention card — design rationale scaffold added S59. Full redesign S65.*
 
@@ -7675,7 +7724,7 @@ Syndicate's submission-layer blocking card — analogous to DIR.CA.1 Invoke Juri
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -7757,7 +7806,7 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Redesigned S67 — v2.0*
 
@@ -7833,7 +7882,7 @@ Syndicate's presence absorption card — distinct from SYN.CA.3 Hostile Acquisit
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Draft S59 — design pass pending*
 
@@ -7904,6 +7953,7 @@ A form that has been in the Accord Placement Area since Debrief is quietly updat
 | Data schema validation | ✓ | All fields per §6.1/§6.2 | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Four paths (success / crit success / fail / failcrit) each has exactly one outcome | Art 04 §5 P27 |
+| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -7914,7 +7964,7 @@ A form that has been in the Accord Placement Area since Debrief is quietly updat
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ | |
+| Status |  | ⚠ | |
 
 *v0.1 — S111: full design pass replacing S59 stub. Art 06 §9.10 signed off (L205); taxonomy corrected (L227). Issues Resolved pending balance doctrine review.*
 
@@ -8041,7 +8091,7 @@ Syndicate's economic intelligence tap — a positional wager on district activit
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *Redesigned S67 — v2.0. Positional wager replacing deferred conditional. No component needed.*
 
@@ -8140,7 +8190,7 @@ Syndicate uses covertly gathered intelligence to threaten a faction operating in
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *v2.0 — S71: full redesign. Forced transfer replaced with coercive choice (ElectPlayer). target_district added. Restriction: target presence > 0 at district. Comply/resist model. Covert notification procedure outstanding.*
 
@@ -8229,7 +8279,7 @@ Syndicate converts gathered intelligence into a forced Accord commitment. The In
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 *v1.0 — S71: redesigned as modifier card (Instant). Forced acceptance of Accord draft as written. Replaces deferred "forced Accord vote" stub from S70.*
 
@@ -8281,12 +8331,13 @@ A Syndicate operative approaches the Accord Placement Area during a recess. They
 | Data schema validation | ✓ | All fields populated per §6.1/§6.2 | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | One outcome per tier; no branching; successcrit additive on success; failcrit additive on fail | Art 04 §5 P27 |
+| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 *v0.1 — S111: new card, fills Information\|Corrupt\|AccordAgreement gap. Art 02 §8 Target Profile declared-parameters field added (S111).*
 
@@ -8400,7 +8451,7 @@ Syndicate's public territorial acquisition PA — the counterpart to SYN.CA.3 Ho
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status |  | ✓ | |
 
 ```python
 SYN.PA.1 = Card(
@@ -8499,7 +8550,7 @@ Syndicate's political leverage PA. Places a Capital-valued marker on a named dis
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status |  | | |
 
 ```python
 SYN.PA.2 = Card(
@@ -8592,6 +8643,7 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 | Data schema validation | ✓ | All fields populated per §6.1/§6.2 | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Three paths (accept / cannot-meet / decline) — each has exactly one outcome; no branching within paths; Permanent React fires once then discards | Art 04 §5 P27 |
+| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -8602,7 +8654,7 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ | |
+| Status |  | ⚠ | |
 
 *v0.1 — S111: new card, fills Information\|Reveal\|IntelTokensHeld gap. Permanent React model. Issues Resolved pending doctrine review (04-n88).*
 
@@ -8717,11 +8769,11 @@ SYN.PA.3 = Card(
 | DIR.PA.4 | Regulatory Downgrade | 🚫 BLOCKED | Territory | Public | Modify | InfluenceTier (derived — not targetable) | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
 | DIR.PA.5 | Regulatory Freeze | 🚫 BLOCKED | Territory | Public | Block | InfluenceTier (derived — not targetable) | — | *L223: Same subject violation — InfluenceTier not a targetable component. Additionally, Block targets actions (not derived states); Block\|InfluenceTier is a subject mismatch. Fundamental redesign required (04-n104).* |
 | DIR.PA.6 | Standing Injunction | 📝 | Submission | Split | Block | Public Act | — |
-| GHO.CA.1 | Pattern Match | ✅ | Submission | Split | Copy | Covert Operation (full) | Invoke |
+| GHO.CA.1 | Pattern Match | 📝 | Submission | Private | Redirect | Covert Operation (lane steal — Beat 2 intercept) | Redirect |
 | GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
 | GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | Intel Delivery Slip | Reveal |
 | GHO.CA.4 | Deep Cover | 📝 | Information | Private → Public | Remove | Intel Token | Remove |
-| GHO.CA.5 | Misdirection | 📝 | Information | Private → Public | Add | Intel Token (corrupt content) | Add + Corrupt |
+| GHO.CA.5 | Misdirection | 📝 | Information | Private | Corrupt | Intel Token (faction_name field — FRG placed only) | Corrupt |
 | GHO.CA.6 | Synthesize | 📝 | Economy | Public | Add | Intel Token | Add |
 | GHO.CA.7 | Station | 📝 | Information | Private → Public | Add | Intel Token | Add |
 | GHO.CA.8 | Full Take | 📝 | Information | Private → Public | Add | Intel Token | Add |
@@ -8992,7 +9044,7 @@ Overture is the bridge between STD.CA.9's anonymous funding gesture and formal a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (Perspectives, ID, value rating) | |
+| Status |  | ⚠ (Perspectives, ID, value rating) | |
 
 ```python
 Overture = Card(
@@ -9489,4 +9541,4 @@ Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacit
 
 ---
 
-*End of Artifact 04 — Card System v0.9.47*
+*End of Artifact 04 — Card System v0.9.48*

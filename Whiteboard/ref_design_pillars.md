@@ -1,5 +1,7 @@
-# Reference — Design Pillars & Canonical Definitions (00a §3–§4)
+# Reference — Design Pillars & Governing Rules (00a §4+)
 *Load when: design principle arguments, canonical definition disputes, source-of-truth questions.*
+
+**Art 00a content starts at §4.** §1–§3 are document structure (overview, index, meta-design for how 00a itself is written — not game content). §4 = Foundational Design Pillars. §5+ = governing rules by domain (Portrait, ARBITER procedure, board state, etc.). The title of the artifact — *Governing Rules — Design Policy* — describes §4 onward.
 
 ---
 
@@ -12,6 +14,8 @@ These are premises — not constraints — from which all governing rules derive
 **4.2 — Information Has Timing.** Secrecy is temporary. The game moves toward disclosure. Covert Operations may be discovered; Intel Tokens age and expire; hidden directives surface at session end.
 
 **4.3 — Negotiation Is Mandatory.** No faction can achieve its goals alone. The most significant actions require resources, relationships, and cooperation no single faction can generate independently. Cooperation is incentivized even when it is politically uncomfortable.
+
+**§9.2 — Cross-Faction Resource Economy** *(governing rule derived from 4.3; see 00a §9.2 for full Rule/Narrative/Mechanics)*: Every faction's native resource must be economically demanded by every other faction. Mono-resource plays are the floor (limited power); cross-faction-resource plays are the ceiling (more powerful, require prior trade). The action set must provide spending destinations for every native resource. The highest-power plays — including Apex — require at minimum one of each faction's native resource. *Source: Design Pillar 4.3. Governs: Art 04, Art 05.*
 
 **4.4 — Control of Systems Defines What Outcomes Are Possible.** Who controls districts, structures, and resource flows determines which answers to the Chorus remain viable. Players don't pick an ending — they shape what endings remain possible.
 
@@ -57,10 +61,11 @@ These are premises — not constraints — from which all governing rules derive
 
 *Governs how 00a itself is written — not the game.*
 
-- **Pillars are premises, not constraints.** A §4 entry cannot be violated without changing the fundamental nature of the game — it spans the entire design and answers "why does this game work this way?"
+- **Pillars are premises, not constraints.** A §4 entry cannot be violated without changing the fundamental nature of the game — it spans the entire design and answers "why does this game work this way?" §4 entries carry no Governs field — they are global premises, not artifact-governing rules.
 - **No exception clauses.** If a rule needs an exception, reframe it or give the exception its own numbered rule. Exceptions signal incomplete framing.
 - **Mechanics field:** states binding constraints only, never execution procedure. Procedure belongs in source artifacts.
-- **Governs** (cross-ref field): permanent — lists what this rule constrains. **Pending**: temporary — open audits; removed when resolved.
+- **Governs field:** permanent cross-reference listing artifacts and rules this entry constrains. §5–§10 rules carry Governs; §4 pillars do not. No Pending field — open items belong in PM05.
+- **No embedded action items.** Rule text states what is true and what it governs — period. Tracking notes, Pending items, session references, and audit flags belong in PM05.
 - **Never hardcode variable values** — reference the concept and point to the canonical source.
 
 ---
