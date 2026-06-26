@@ -1,7 +1,7 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.2  
+**Version:** 2.3  
 **Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed. v2.0: §8.0 Standard doctrine statement added (S119, gate for 04-n87 audit). v2.1: §6.4 Economic Integration Audit added (S119, per 00a §9.2 — audit framework for 04-n87–04-n92). v2.2: §6.4 STD+GHO audit results added (S120, gates 04-n87/04-n88).  
 **Last Updated:** 2026-06-25  
 **Companion to:** 04 — Action Card System  
@@ -290,6 +290,26 @@ For each faction audit:
 
 ---
 
+#### STD + DIR Economic Integration Audit (S121)
+
+**Standard set:** Audited in full at S120 (card_analysis_STD_GHO.md). Results unchanged — all five faction native types have STD spending destinations; no unspendable acquired resources. ✓
+
+**Directorate set (DIR), evaluated with STD:**
+
+1. **Generation check:** DIR.CA.6 Institutional Audit generates Mandate (native resource) proportional to active Directorate Permanents in the target ring. No non-native generation in the DIR set. ✓
+2. **Spending check:** All five faction native types have spending destinations available to Directorate in STD+DIR:
+   - *Mandate* — 11 of 12 DIR cards cost Mandate only; DIR.CA.5 also requires district NativeResource + Intel token (cross). The faction toolkit is overwhelmingly Mandate-denominated. ✓
+   - *Findings* — STD.CA.5 Gather (mono 1) available when controlling Findings-producing districts. ✓
+   - *Exposure* — STD.CA.6/CA.7 (cross, Exposure-named) available. ✓
+   - *Capital* — STD.CA.8/CA.9 (cross, Capital-named) available. ✓
+   - *Capacity* — STD territory ops (CA.1–4, PA.3) when operating in Capacity-producing districts. ✓
+   No unspendable acquired resource. ✓
+3. **Floor calibration:** All DIR costs are mono Mandate. Range is M×1–M×3 across the set. Beat 2 Automatics cluster at M×2 regardless of relative effect magnitude — CA.1 (blocks 2 card types for 1 round), CA.4 (moves up to 2 tokens), CA.8 (−15 to all Beat 3 ops in district) all priced the same. Internal mono-range calibration is a playtest question. ⚠ Calibration flag (playtest).
+4. **Ceiling coverage:** DIR.CA.5 Sanctioned Raid is the cross ceiling — district NativeResource + Mandate + Intel token, at the highest-force removal slot in the set. This is the one play where Directorate commits cross-economy resources. The remaining 11 cards are mono-Mandate. Near-mono architecture is doctrine-intentional: the Directorate operates almost entirely in institutional authority. Not a design gap; mirrors STD.CA.4 Undermine cost shape (also cross) as the Standard-floor equivalent. ✓
+5. **Gap verdict:** ✓ No unspendable acquired resources. All-mono DIR is doctrine-coherent. The Permanent-investment feedback loop (Audit and Brief yield proportional to active Permanents) is the faction's economic engine — it takes 2–3 Quarters to compound. DIR expansion depends on the Standard set cross-resource cards (Campaign, Buy Influence); Mandate allocation between suppression and expansion is the key playtest variable.
+
+---
+
 ## 7. Faction Coverage Matrix
 
 *Relocated to Art 04 §9. See Art 04 §9 — Faction Coverage Matrix.*
@@ -330,11 +350,10 @@ ARBITER's access to covert case contents between Beat 0 and Beat 3 exposes intel
 
 ### 8.2 Directorate — Priority redesign targets
 
-Current Directorate set (S108): DIR.CA.1 (Submission|Block|CovertOp), DIR.CA.2 (Territory|Move|DeploymentMarker — taxonomy corrected S107 L226), DIR.CA.3 (Information|Reveal|CovertOp), DIR.CA.4 (Territory|Move|PresenceToken), DIR.CA.5 (Territory|Remove|PresenceToken), DIR.CA.6 (Economy|Add|NativeResource ✅ S106), DIR.CA.7 (Standing|Shift|PublicStanding ✅ S106), DIR.CA.8 (Resolution|Modify|Difficulty ✅ S106), DIR.PA.3 Entry/Exit Controls (Territory|Block|DeploymentMarker), DIR.PA.4 Regulatory Downgrade (🚫 BLOCKED L223), DIR.PA.5 Regulatory Freeze (🚫 BLOCKED L223), DIR.PA.6 Standing Injunction (Submission|Block|PublicAct). Effective Block count: DIR.CA.1 (CovertOp), DIR.PA.6 (PublicAct). DIR.PA.1 (⛔ BLOCKED, PM05 04-n99) unresolved.
+Current Directorate set (S121): DIR.CA.1 (Submission|Block|CovertOp), DIR.CA.2 (Territory|Move|DeploymentMarker — taxonomy corrected S107 L226), DIR.CA.3 (Information|Reveal|CovertOp), DIR.CA.4 (Territory|Move|PresenceToken), DIR.CA.5 (Territory|Remove|PresenceToken), DIR.CA.6 (Economy|Add|NativeResource ✅ S106), DIR.CA.7 (Standing|Shift|PublicStanding ✅ S106), DIR.CA.8 (Resolution|Modify|Difficulty ✅ S106), DIR.PA.1 Regulatory Override (Territory|Modify|PresenceToken ✅ 04-n99 S118), DIR.PA.2 Convene an Inquiry (Information|Add|IntelToken), DIR.PA.3 Entry/Exit Controls (Territory|Block|DeploymentMarker), DIR.PA.4 Regulatory Downgrade (🚫 BLOCKED L223), DIR.PA.5 Regulatory Freeze (🚫 BLOCKED L223), DIR.PA.6 Standing Injunction (Submission|Block|PublicAct). Effective Block count: DIR.CA.1 (CovertOp), DIR.PA.6 (PublicAct). Full audit: card_analysis_STD_DIR.md (S121).
 
 **Blocked — redesign required:**
 1. **DIR.PA.4 Regulatory Downgrade / DIR.PA.5 Regulatory Freeze** — both target InfluenceTier (Territory|Modify and Territory|Block respectively). Blocked: InfluenceTier is a derived state (calculated from token counts), not a placed component; GR 9.1 prohibits direct income modification by card. Design intent: economic suppression — reduce or freeze a rival's territorial income. Valid redesign path: income suppression must work through board state. Territory|Remove|PresenceToken is the permitted approach — token removal reduces tier, which reduces income naturally. A PA version (public, political character) would be distinct from DIR.CA.5 Sanctioned Raid (covert). Design the pair together; specs blocked at Art 04 (04-n104).
-2. **DIR.PA.1 Regulatory Override** — attempted Submission|Modify|PublicAct (add·PresenceChip cost) — a district-wide cost increase on presence operations for all factions. Blocked: "cost" is not a physical component attribute; no board object represents operation cost. Valid redesign path: requires a physical regulatory burden component placed on districts that ARBITER reads when processing operations — a new component design question touching Art 02 (registration), Art 03 (procedure for applying modifier), and Art 07 (ARBITER overhead). Prerequisite to redesign: define the component and Art 03 procedure. PM05 04-n99.
 
 ### 8.3 Network — Priority redesign targets
 

@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** STD+GHO card set audit complete (04-n87/88). DB cost analysis seeded (90 cards). Art 04 v0.9.49 (S120). Art 04b v2.2 (S120).
+**Design milestone:** STD+DIR card set audit complete (04-n89). DB cost analysis seeded (90 cards). Art 04 v0.9.49 (S120). Art 04b v2.3 (S121). Next: STD+GUI (04-n92).
 
 ---
 
@@ -75,7 +75,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.49 | 🔄 In progress — S120: STD+GHO set audit complete (04-n87/88). S119: P28 cross-faction cost floor constraint added. |
-| 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.2 | ✅ Signed off — S108 (L230 scope policy). S120: §6.4 STD+GHO Economic Integration Audit added. |
+| 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.3 | ✅ Signed off — S108 (L230 scope policy). S121: §6.4 STD+DIR Economic Integration Audit added; §8.2 Directorate section fixed. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |
 | 07 | [ARBITER Subroutines](V1/07___ARBITER_Toolkit.md) | 0.2 | ⬜ Placeholder |

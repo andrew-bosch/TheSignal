@@ -1,7 +1,20 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-25 — Session 120 Close
+**Last Updated:** 2026-06-26 — Session 121 Close
+
+### Session 121 Summary (2026-06-26)
+
+**Focus:** STD+DIR combined card set audit (04-n89) + PM05 items for open design decisions.
+
+**Key work:**
+- **Whiteboard/card_analysis_STD_DIR.md (new):** Full STD+DIR audit — coverage map, beat distribution, doctrinal assessment, win path tension, Ghost differentiation, §5a verdict (Sections A–G).
+- **Art 04b v2.3:** §6.4 STD+DIR Economic Integration Audit added (5-check framework); §8.2 Directorate section fixed — DIR.PA.1 now Territory|Modify|PresenceToken (04-n99 ✅ S118), DIR.PA.2/CA.6/CA.7/CA.8 added to active set, stale BLOCKED note removed.
+- **PM05 additions:** 04-n89 ✅; 04-n111–117 (7 DIR card design reviews from Section C); 04-n118 (§9.2 cross-resource ceiling gap — 11/12 mono-Mandate inverts §9.2 floor/ceiling principle for high-power DIR cards); 00a-78 updated (STD+DIR S121 ✅, DIR flagged as §9.2 gap faction).
+- **Key findings:** DIR economy near-mono (11/12 Mandate-only; CA.5 is the sole cross card); Beat 2 cluster (4 of 8 CAs) is the doctrinal signature — unique in the faction set; Ghost vs. DIR differentiation settled (Ghost = point-disruption/reactive/zero standing conditions; DIR = sustained pressure/proactive/3 standing-condition PAs); §9.2 adherence gap — high-power effects (PA.3, PA.6, PA.1) priced at mono; DB cost_type=mono for DIR.CA.5 is stale (flagged E2).
+- **SESSION_BRIEF:** S121 logged complete; S122 priority set to STD+GUI (04-n92) with fully explicit startup instructions matching audit pattern.
+
+**Artifacts updated S121:** Art 04b (v2.3) · PM05 (04-n89 ✅; 04-n111–04-n118; 00a-78) · Whiteboard/card_analysis_STD_DIR.md (new) · SESSION_BRIEF
 
 ### Session 120 Summary (2026-06-25)
 

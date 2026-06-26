@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 120 complete | Updated: 2026-06-25**
+**Session 121 complete | Updated: 2026-06-26**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read ref_*.md files (Whiteboard/) first — before reading any full artifact. Full artifact reads only when deep work requires it.
@@ -251,26 +251,67 @@ Working documents created:
 
 ---
 
-### Priority Order (S121) ← CURRENT
+### S121 Accomplishments ✅
 
-**Next session: STD+DIR combined set audit (04-n89)**
+**STD+DIR combined set audit (04-n89) — complete**
 
-Same analysis structure as S120 STD+GHO. Use card_analysis_STD_GHO.md Section F as the template.
+- `Whiteboard/card_analysis_STD_DIR.md` — full audit: coverage map, beat distribution, doctrinal assessment, win path tension, Ghost differentiation settled, §5a verdict, open design decisions, systemic blockers, audit bucket
+- Art 04b §6.4 — STD+DIR Economic Integration Audit (5-check framework) written
+- Art 04b §8.2 — stale DIR section fixed: DIR.PA.1 active (04-n99 ✅ S118), S106 cards (CA.6/7/8) added, DIR.PA.4/PA.5 remain BLOCKED (04-n104)
+
+**Key findings:**
+- DIR economy: 11/12 mono-Mandate; DIR.CA.5 Sanctioned Raid is the sole cross card (district NativeResource + Intel token). DB cost_type=mono for CA.5 is stale — flagged E2.
+- Beat 2 cluster (4 of 8 CAs) = doctrinal signature — most Beat 2 concentration in faction set
+- Ghost vs. DIR differentiation settled: Ghost = point-disruption/reactive/zero standing conditions; DIR = sustained pressure/proactive/3 standing-condition PAs
+- §9.2 adherence gap: high-power effects (PA.3, PA.6, PA.1) priced at mono — inverts §9.2 floor/ceiling principle → 04-n118
+
+**PM05 additions S121:** 04-n89 ✅ · 04-n111–117 (7 DIR card design reviews) · 04-n118 (§9.2 ceiling gap)
+
+**Artifacts updated S121:** Art 04b (v2.2 → §6.4 + §8.2) · PM05 (04-n89 ✅; 04-n111–04-n118; 00a-78 updated) · Whiteboard/card_analysis_STD_DIR.md (new)
+
+**Pending sign-offs carried:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
+---
+
+### Priority Order (S122) ← CURRENT
+
+**Next session: STD+GUI combined set audit (04-n92)**
+
+Same structure as STD+GHO and STD+DIR audits. Use card_analysis_STD_DIR.md as the template.
 
 **Session startup sequence (mandatory):**
-1. Read ref_procedures.md — CM timing, Beat sequence, FRG mechanics (active game expertise)
-2. Read design_reference.md + design_reference_card_system.md — card schema, Always-Relevant rules
-3. DB pull: `SELECT card_id, card_name, cost_type, cost_variable, cost_primary_amount, uses_intel_token FROM card_status WHERE faction IN ('STD','DIR') AND blocked=0 ORDER BY faction, card_id;`
+1. Read `Whiteboard/ref_procedures.md`
+2. Read `Whiteboard/design_reference.md` + `Whiteboard/design_reference_card_system.md`
+3. DB pull (correct column = `name`, faction full names):
+   `SELECT card_id, name, cost_type, cost_variable, cost_primary_amount, uses_intel_token FROM card_status WHERE faction IN ('Standard','Guild') AND blocked=0 ORDER BY faction, card_id;`
+4. Read Guild card bodies in Art 04 (full body read — do not rely on §8 index alone)
 
 **Audit steps (same order every faction):**
-1. §6.4 Economic Integration — 5-check framework: all 5 faction natives have STD spending destination; flag any cross costs that require acquisition overhead
-2. §5a alignment check — Art 04 §5a Directorate entry: "institutional, methodical, capable of making the whole table play defensively"; economy=Mandate; suppression toolkit; win path=Established in more districts than any other faction
-3. Four consistent questions: (1) does deck feel match §5a? (2) win path mechanically supported? (3) sustained pressure vs. point-disruption? (4) CA/PA gap or Modifier deck gap?
-4. Write findings to Whiteboard/card_analysis_STD_DIR.md (new file)
-5. Compare against Ghost findings where relevant — cross-faction differentiation check
 
-**Remaining faction audits after DIR:** NET (04-n90) · SYN (04-n91) · GUI (04-n92)
-**After all 6 complete:** 04-n110 cross-faction §5a alignment pass
+**Step 1 — §6.4 Economic Integration (5-check framework):**
+1. *Generation check:* Which resources does the faction generate natively? Any non-native generation?
+2. *Spending check:* Do all 5 faction native types have spending destinations in STD+GUI? Flag any unspendable acquired resource.
+3. *Floor calibration:* What is the mono-cost range? Are any mono-priced effects disproportionately powerful (§9.2 inversion)?
+4. *Ceiling coverage:* Which cards are cross-resource? Are the highest-power plays also the cross plays (§9.2 compliance)? Flag inversions.
+5. *Gap verdict:* Summary. Update Art 04b §6.4 and 00a-78 (mark STD+GUI complete).
+
+**Step 2 — §5a alignment (4 consistent questions):**
+1. Does deck feel match §5a? (Guild: "heavy, deliberate, permanent")
+2. Is win path mechanically supported? (Guild: passive income from opponent builds; positional wagers)
+3. Sustained pressure vs. point-disruption — where does Guild sit?
+4. CA/PA ratio gap? Modifier deck gap?
+
+**Step 3 — Cross-faction differentiation:**
+Compare Guild against DIR (sustained institutional pressure) and NET (distributed reactive pressure). Where does Guild's positional model differentiate from both?
+
+**Step 4 — Output:**
+- Write `Whiteboard/card_analysis_STD_GUI.md` (Sections A–G, same structure as card_analysis_STD_DIR.md)
+- Update Art 04b §6.4 (add STD+GUI 5-check results)
+- Update Art 04b §8.x (Guild section — verify staleness, fix in place)
+- Add PM05 items for open design decisions and §9.2 flags
+
+**After GUI:** NET (04-n90) · SYN (04-n91) — then 04-n110 cross-faction §5a pass
+**Open §9.2 flags:** DIR (04-n118) · additional factions TBD via remaining audits
 
 ---
 
