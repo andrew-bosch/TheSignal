@@ -569,7 +569,7 @@ CREATE TABLE `card_subject_map` (
 
 Bridge table linking Art 04 taxonomy subject vocabulary (PascalCase) to the `component` table (spaced lowercase). Enables joins from `card_status` into all 27 gap views via `component_id`.
 
-**25 rows seeded:**
+**26 rows seeded:**
 
 | subject | component_id | component name |
 |---------|-------------|----------------|
@@ -584,6 +584,7 @@ Bridge table linking Art 04 taxonomy subject vocabulary (PascalCase) to the `com
 | PublicAct | 14 | Public Act |
 | DeploymentMarker | 2 | Deployment Marker |
 | PresenceToken | 1 | Presence token |
+| StandingMarker | 37 | Standing Marker |
 | StructureBlock | 3 | Structure Block |
 | District | 4 | District Tile |
 | IntelDeliverySlip | 96 | Intel Delivery Slip |
@@ -945,6 +946,131 @@ JOIN component c_ref ON cm.max_placement_ref = c_ref.id;
 
 ---
 
+## 6.6. Card Alignment and Coverage Views DDL
+
+### v_card_mechanical_alignment
+```sql
+CREATE OR REPLACE VIEW v_card_mechanical_alignment AS
+SELECT 
+  cs.card_id,
+  cs.name AS card_name,
+  cs.faction,
+  cs.card_type,
+  cs.blocked,
+  cs.layer AS design_layer,
+  cs.function AS design_function,
+  cs.subject AS design_subject,
+  csm.component_id,
+  c.name AS component_name,
+  v.id AS verb_id,
+  v.name AS verb_name,
+  cs.beat AS design_beat,
+  CASE 
+    WHEN cs.subject IS NULL THEN 'Abstract / No Subject'
+    WHEN csm.component_id IS NULL THEN 'Non-component Subject'
+    WHEN fv.verb_id IS NULL THEN 'Abstract Function (No Mechanical Verb)'
+    WHEN cvp.component_id IS NOT NULL THEN 'Legalized'
+    ELSE 'Rules Gap (Verb not permitted on component)'
+  END AS rules_status,
+  IF(a.id IS NULL, 0, 1) AS is_modeled_in_timeline,
+  GROUP_CONCAT(DISTINCT a.phase_id ORDER BY a.phase_id) AS timeline_beats
+FROM card_status cs
+LEFT JOIN card_subject_map csm ON cs.subject = csm.subject
+LEFT JOIN component c ON csm.component_id = c.id
+LEFT JOIN function f ON cs.function = f.name
+LEFT JOIN function_verb fv ON f.id = fv.function_id
+LEFT JOIN verb v ON fv.verb_id = v.id
+LEFT JOIN comp_verb_phase cvp ON cvp.component_id = c.id AND cvp.verb_id = fv.verb_id
+LEFT JOIN action a ON a.verb_id = v.id AND a.component_id = c.id
+GROUP BY cs.id, fv.verb_id;
+```
+
+### v_card_cost_structural_patterns
+```sql
+CREATE OR REPLACE VIEW v_card_cost_structural_patterns AS
+SELECT 
+  cs.card_id,
+  cs.name AS card_name,
+  cs.faction,
+  cs.card_type,
+  cs.layer AS design_layer,
+  cs.function AS design_function,
+  cs.subject AS design_subject,
+  cs.cost_type,
+  cs.cost_variable,
+  cs.cost_primary_amount,
+  cs.cost_native_count,
+  cs.uses_intel_token,
+  CASE 
+    WHEN cs.cost_type = 'cross' THEN 'Cross-faction cooperation/trade required'
+    WHEN cs.cost_type = 'mono' AND cs.cost_variable = 1 THEN 'Scaling native resource expenditure'
+    WHEN cs.cost_type = 'mono' AND cs.cost_variable = 0 THEN 'Standard native resource expenditure'
+    WHEN cs.cost_type = 'free' AND cs.uses_intel_token = 1 THEN 'Intel-gated free action'
+    ELSE 'Completely free action'
+  END AS cost_pattern_description
+FROM card_status cs
+WHERE cs.blocked = 0;
+```
+
+### v_card_subject_action_matrix
+```sql
+CREATE OR REPLACE VIEW v_card_subject_action_matrix AS
+SELECT 
+  cs.subject AS design_subject,
+  c.name AS component_name,
+  SUM(CASE WHEN cs.faction = 'Standard' THEN 1 ELSE 0 END) AS std_count,
+  SUM(CASE WHEN cs.faction = 'Directorate' THEN 1 ELSE 0 END) AS dir_count,
+  SUM(CASE WHEN cs.faction = 'Ghost' THEN 1 ELSE 0 END) AS gho_count,
+  SUM(CASE WHEN cs.faction = 'Guild' THEN 1 ELSE 0 END) AS gui_count,
+  SUM(CASE WHEN cs.faction = 'Network' THEN 1 ELSE 0 END) AS net_count,
+  SUM(CASE WHEN cs.faction = 'Syndicate' THEN 1 ELSE 0 END) AS syn_count,
+  COUNT(*) AS total_cards
+FROM card_status cs
+LEFT JOIN card_subject_map csm ON cs.subject = csm.subject
+LEFT JOIN component c ON csm.component_id = c.id
+WHERE cs.blocked = 0
+GROUP BY cs.subject;
+### v_card_faction_layer_balance
+```sql
+CREATE OR REPLACE VIEW v_card_faction_layer_balance AS
+SELECT 
+  cs.layer AS design_layer,
+  SUM(CASE WHEN cs.faction = 'Standard' THEN 1 ELSE 0 END) AS std_count,
+  SUM(CASE WHEN cs.faction = 'Directorate' THEN 1 ELSE 0 END) AS dir_count,
+  SUM(CASE WHEN cs.faction = 'Ghost' THEN 1 ELSE 0 END) AS gho_count,
+  SUM(CASE WHEN cs.faction = 'Guild' THEN 1 ELSE 0 END) AS gui_count,
+  SUM(CASE WHEN cs.faction = 'Network' THEN 1 ELSE 0 END) AS net_count,
+  SUM(CASE WHEN cs.faction = 'Syndicate' THEN 1 ELSE 0 END) AS syn_count,
+  COUNT(*) AS total_cards
+FROM card_status cs
+WHERE cs.blocked = 0 AND cs.layer IS NOT NULL
+GROUP BY cs.layer;
+```
+
+### v_card_duplication_auditor
+```sql
+CREATE OR REPLACE VIEW v_card_duplication_auditor AS
+SELECT 
+  cs_faction.card_id AS faction_card_id,
+  cs_faction.name AS faction_card_name,
+  cs_faction.faction AS faction_name,
+  cs_std.card_id AS std_card_id,
+  cs_std.name AS std_card_name,
+  cs_faction.layer AS design_layer,
+  cs_faction.function AS design_function,
+  cs_faction.subject AS design_subject
+FROM card_status cs_faction
+JOIN card_status cs_std ON 
+  cs_faction.layer = cs_std.layer AND 
+  cs_faction.function = cs_std.function AND 
+  cs_faction.subject = cs_std.subject
+WHERE cs_faction.faction <> 'Standard' AND cs_std.faction = 'Standard'
+  AND cs_faction.blocked = 0 AND cs_std.blocked = 0;
+```
+*Analytical views bridging high-level design card status and taxonomy metadata to mechanical action/verb schemas and resource cost patterns.*
+
+---
+
 ## 7. Canonical Component Registration Pattern
 
 Use **Countermeasure Card (id=52)** as the reference. Full 4-table cascade required for every new component.
@@ -1039,7 +1165,7 @@ As of S50 (unchanged unless noted):
 
 As of S117 (new):
 - `card_status`: **95 rows** (77 with spec-accurate taxonomy; 18 at §8-level accuracy)
-- `card_subject_map`: **25 rows** (21 mapped to component_id; 4 NULL for non-component subjects)
+- `card_subject_map`: **26 rows** (22 mapped to component_id; 4 NULL for non-component subjects)
 
 ---
 
@@ -1057,13 +1183,66 @@ As of S117 (new):
 - **DB-09** ✅ S50 (agy): district_adjacency created and fully seeded — 21 district components in `components`, 21 rows in `district_metadata`, 104 bidirectional adjacency rows. PKs enforced on district_metadata and player_metadata.
 - **category / type**: Deprecated. Drop and rebuild after Art 04b sign-off (DB-16).
 - **destination_component_id / destination_zone_id** in action: Unpopulated — destination currently encoded in notes text only.
+- **S126 agy audit fixes:** (1) Five cards (STD.CA.13, STD.PA.4, STD.PA.7, DIR.CA.7, NET.CA.7) corrected from `subject = PublicStanding` → `subject = StandingMarker` in `card_status`; `StandingMarker` (id 37) added to `card_subject_map`. (2) NET.CA.1 Leak corrected from `subject = District` → `subject = CovertOperation` — S68 correction was also a mismatch; the card reveals a `CovertOperation`, not the district tile. (3) BroadcastEffectCard (id 98) added to `comp_verb_phase`: Add at phase 2; Remove/Reveal/Invoke at phases 17 and 18 (Beat 4 / Beat 5). All 7 cards now Legalized in `v_card_mechanical_alignment`. Art 04 specs updated to match.
 
 ---
 
-## 10. agy Sharing
+## 10. Audit & Maintenance Scripts
+
+### audit_card_alignment.sql
+
+**Purpose:** Identifies active cards whose taxonomy subjects are not legalized in `comp_verb_phase`. The primary diagnostic for card taxonomy health.
+
+**Usage:**
+```bash
+mysql the_signal_db < Database/audit_card_alignment.sql
+```
+
+**When to run:** After any card spec change (new card, subject/function update), after `card_subject_map` additions, or after `comp_verb_phase` updates. Also after agy taxonomy audits to confirm all gaps are closed.
+
+**Output — four sections:**
+
+| Section | rules_status | Meaning | Action |
+|---------|-------------|---------|--------|
+| 1 | Summary | Count by status | — |
+| 2 | Rules Gap (Verb not permitted on component) | Verb mapped but not permitted on this component | Fix: correct `card_status.subject`; ensure subject in `card_subject_map`; add entry to `comp_verb_phase`; update Art 04 spec |
+| 3 | Non-component Subject | Subject not in `card_subject_map` or maps to NULL | Fix: add row to `card_subject_map` if component-backed; leave NULL if intentionally abstract |
+| 4 | Abstract Function (No Mechanical Verb) | Function has no `function_verb` entry | Design gap — not an error; tracked separately |
+
+**Fix pattern for Rules Gaps (three-table chain):**
+```sql
+-- Step 1: correct the card's subject in card_status
+UPDATE card_status SET subject = 'CorrectSubject' WHERE card_id = 'FAC.TYPE.n';
+
+-- Step 2: ensure subject exists in card_subject_map (add if missing)
+INSERT INTO card_subject_map (subject, component_id) VALUES ('CorrectSubject', <component_id>);
+
+-- Step 3: ensure verb is permitted on the component at the relevant phase(s)
+INSERT INTO comp_verb_phase (component_id, verb_id, phase_id, notes) VALUES
+  (<component_id>, <verb_id>, <phase_id>, '<rationale>');
+```
+Then update the Art 04 card spec `subject` field to match. Verify with:
+```sql
+SELECT card_id, rules_status FROM v_card_mechanical_alignment WHERE card_id = 'FAC.TYPE.n';
+```
+
+### verify_matrix.py
+
+**Purpose:** Compares `v_comp_verb_matrix` (DB) against `applicable_verbs` in Art 02 component entries. Catches drift between Art 02 design intent and DB capability seeding.
+
+**Usage:**
+```bash
+python3 Database/verify_matrix.py
+```
+
+**Relationship to audit_card_alignment.sql:** Complementary, not overlapping. `verify_matrix.py` checks component verb *capabilities* (can this component be acted on at all?). `audit_card_alignment.sql` checks card *taxonomy subjects* (is this specific card's subject legalized for its function verb?).
+
+---
+
+## 11. agy Sharing
 
 This file is at `~/Projects/TheSignal/Database/` alongside all SQL build scripts. agy reads it via `GEMINI_CONTEXT.md` §DB Schema Reference. All schema changes go through dual-authorization: Claude Code proposes → Andy confirms → agy executes. Treat as read-only reference.
 
 ---
 
-*Populated S50 — 2026-05-29. Updated S117 — 2026-06-24: added card_status taxonomy columns (layer/function/subject/beat), new card_subject_map table, component renames (id=1 Presence token, id=14 Public Act), §9 DB-derivable note.*
+*Populated S50 — 2026-05-29. Updated S117 — 2026-06-24: added card_status taxonomy columns (layer/function/subject/beat), new card_subject_map table, component renames (id=1 Presence token, id=14 Public Act), §9 DB-derivable note. Updated S126 — 2026-06-27: StandingMarker (id 37) added to card_subject_map; BroadcastEffectCard (id 98) seeded in comp_verb_phase (phases 2/17/18); 7-card taxonomy subject corrections logged in §9.*

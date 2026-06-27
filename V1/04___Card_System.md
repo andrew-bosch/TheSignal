@@ -1659,7 +1659,7 @@ C_DisinformationCampaign = Card(
     tagline = "Run a covert narrative operation degrading a faction's public standing in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
 
-    layer    = Standing,  function = Shift,  subject = PublicStanding,
+    layer    = Standing,  function = Shift,  subject = StandingMarker,
 
     beat            = 3,
     resolution      = d100,
@@ -2343,7 +2343,7 @@ STD.PA.4 = Card(
     tagline = "Formally accuse another faction of conduct contrary to the city's interest.",
     type    = PublicAct,  subtype = Standard,  faction = All,
 
-    layer    = Standing,  function = Shift,  subject = PublicStanding,
+    layer    = Standing,  function = Shift,  subject = StandingMarker,
 
     beat            = 4,
     resolution      = d100,
@@ -2629,7 +2629,7 @@ STD.PA.7 = Card(
     tagline = "Rally public support in a district where you operate.",
     type    = PublicAct,  subtype = Standard,  faction = All,
 
-    layer    = Standing,  function = Shift,  subject = PublicStanding,
+    layer    = Standing,  function = Shift,  subject = StandingMarker,
 
     beat            = 4,
     resolution      = Automatic,
@@ -6039,7 +6039,7 @@ DIR.CA.7 = Card(
     name    = "Institutional Brief",
     tagline = "Circulate the standing record through closed channels. Demonstrated authority in this ring builds public confidence.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
-    layer   = Standing, function = Shift, subject = PublicStanding,
+    layer   = Standing, function = Shift, subject = StandingMarker,
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
     outcome_type=None,
@@ -6592,7 +6592,7 @@ NET.CA.1 = Card(
     name    = "Leak",
     tagline = "Expose and cancel a rival's most costly unresolved operation before it fires.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
-    layer   = Information,  function = Reveal,  subject = District,
+    layer   = Information,  function = Reveal,  subject = CovertOperation,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
@@ -6611,7 +6611,7 @@ NET.CA.1 = Card(
     portrait    = {Network: PortraitEntry(submitter=+1)},
     narrative   = "The Network does not need to know everything — only enough to make the right question public.",
     perspectives = {Network: "We do not reveal everything. We reveal the piece that makes everything else visible."},
-    design_note  = "Redesigned S68: subject corrected to District (was ActionAttribution — taxonomy mismatch); pre-execution discovery + cancellation model confirmed (target op cancelled, resources lost, PS reduction applies); cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending 04-n33/04-n34b.",
+    design_note  = "Redesigned S68: subject corrected to District (was ActionAttribution — taxonomy mismatch); pre-execution discovery + cancellation model confirmed (target op cancelled, resources lost, PS reduction applies); cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending 04-n33/04-n34b. S126 agy audit: subject corrected to CovertOperation (District was also a mismatch — DistrictTile has no Reveal in comp_verb_phase; the card reveals and cancels a CovertOperation, not the district itself).",
     arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending 04-n33). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
 )
 ```
@@ -7044,7 +7044,7 @@ NET.CA.7 = Card(
     name    = "Ground Signal",
     tagline = "Put the message on the street. Presence here is readable. Let it be read.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
-    layer   = Standing, function = Shift, subject = PublicStanding,
+    layer   = Standing, function = Shift, subject = StandingMarker,
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
     outcome_type=None,

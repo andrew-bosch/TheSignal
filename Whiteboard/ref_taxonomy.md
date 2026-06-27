@@ -70,7 +70,7 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 | Public Act / Public Act | Submission / Standing |
 | Action attribution | Information |
 | Written record | Information |
-| Public Standing | Standing |
+| Standing Marker | Standing | *Art 04 subject field: `StandingMarker` — the physical token that tracks PS. Do not use `PublicStanding` (abstract concept, not a valid card target per comp_verb_phase — corrected S126).* |
 | Debrief Action Card | Information |
 | BroadcastCard (DB:25) | Information / Submission — public narrative half of the Broadcast two-component pair; used as selector when targeting the linked BEC |
 | BroadcastEffectCard (DB:98) — ARBITER tableau, private | Information — mechanically applied effects; subject of GR 10.1b-domain Reveal (e.g., GHO.PA.4); linked by ID to its Broadcast Card |
@@ -97,7 +97,7 @@ Key assignment rules:
 5. Modifier Cards and Pass cards are excluded from taxonomy entirely.
 6. Corrupt applies only to physically written/recorded values. Invalid targets: printed card text, marker positions, Chronicle, Intel Token round-number field (7.2b). Intel Tokens must be in public-placement window to be reachable (L222).
 6b. InfluenceTier is not a targetable component — it is derived from token counts. Only board state changes (add/remove tokens) affect tier (L223).
-7. Portrait is ARBITER-sole-mover — player cards affect Public Standing only (Standing/Shift/PublicStanding).
+7. Portrait is ARBITER-sole-mover — player cards affect Public Standing only (Standing/Shift/StandingMarker).
 8. Card effects use exactly one of four valid duration types: **Immediate** (resolved at beat; no lingering marker) · **Transient** (removed at end of current Month) · **Seasonal** (removed at end of current Quarter / Phase 21) · **Permanent** (persists until a named action or condition removes it). No card creates a state that expires after a defined number of Quarters. *(Art 04b §4.7)*
 
 ---
@@ -135,3 +135,23 @@ Key assignment rules:
 - All non-Standing | Shift: Shift applies only to Standing track values
 
 *Three Corrupt exclusions (Territory, Resolution, Standing) governed by §4.6 (Corrupt scope definition).*
+
+---
+
+## Taxonomy Assignment Verification
+
+After assigning Layer/Function/Subject to a new card and adding it to `card_status`, confirm the taxonomy is legalized in the DB:
+
+```bash
+mysql the_signal_db < Database/audit_card_alignment.sql
+```
+
+The card should show `Legalized` in `rules_status`. For fix steps if it doesn't: `Database/schema_reference.md §10`.
+
+**Common gap patterns:**
+
+| rules_status | Cause | Fix |
+|---|---|---|
+| Rules Gap | Subject maps to a component, but verb not permitted at any phase in `comp_verb_phase` | Add entry to `comp_verb_phase`; or correct the subject |
+| Non-component Subject | Subject string missing from `card_subject_map` | Add row to `card_subject_map` |
+| Abstract Function | Function has no `function_verb` entry (`Modify`, `Block`, `Protect`, etc.) | Known design gap — not a card error; tracked separately |
