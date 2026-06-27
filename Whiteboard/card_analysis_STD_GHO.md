@@ -282,4 +282,44 @@ CA and PA sets are the core doctrinal action set. Faction Modifier decks (largel
 
 ---
 
-*Last updated: S120 (2026-06-25)*
+## G. Cross-Faction Differentiation (S123)
+
+*3 pairwise comparisons for Ghost. Full 5-faction synthesis follows (04-n90 ✅).*
+
+### GHO vs. DIR
+
+Ghost operates through information and targeted interception; Directorate installs standing board conditions. Ghost disrupts specific plays — voiding an Op (Deep Cover), copying an Op (Pattern Match), extracting a resource (Flip). These are discrete events; each resolves and leaves no persistent marker. Directorate's signature cards are Permanent PAs (PA.1, PA.3, PA.6) that persist across Quarters and compound with CA.6/CA.7 Audit/Brief yield. Ghost cannot remove Directorate Permanents — PA removal requires a Public Act, which is outside Ghost's toolkit.
+
+Clean doctrinal separation: Ghost sees everything and strikes precisely; Directorate shapes the space and makes others navigate the constraint. Economy: Findings vs. Mandate — no resource competition.
+
+### GHO vs. GUI
+
+Complete domain separation. Ghost holds zero territory cards; Guild is the most territory-primary faction in the game. Ghost has zero construction operations; Guild has no Information cards and no covert operations. Orthogonal design spaces.
+
+Where they interact: GHO.CA.10 Flip extracts another faction's native resource — targeting Guild converts Capacity, disrupting Guild's build pipeline. Guild has no Intel capacity and no covert counter; its entire defense against Ghost disruption is passive (Fortify Structure protects one structure per Quarter; §10 Battlefield Strength in contested districts). Guild cannot preempt Ghost operations.
+
+Economy: Findings vs. Capacity. No resource competition.
+
+### GHO vs. SYN
+
+Both use Intel tokens, but for different purposes. Ghost collects Intel for disclosure effects (Information|Reveal — intelligence as weapon). Syndicate uses Intel as transactional cost for territorial plays (CA.7 Corporate Blackmail, CA.9 Hostile Takeover). Different spending destinations for the same commodity.
+
+Intel depth asymmetry: Ghost has 5+ generation cards (CA.5, CA.6, CA.7, CA.8, CA.9 plus IS-xx). Syndicate has CA.6 Parasitic (contingent) and PA.3 Data Acquisition (trade path). Ghost is the primary Intel producer; Syndicate is a downstream consumer. In games where both are active, Syndicate's CA.7/CA.9 availability depends partly on Ghost's Intel supply being accessible through trade.
+
+Non-native generation: GHO.CA.10 Flip and SYN.CA.1/CA.7 both deliver another faction's native resource to the acting faction. Flip carries explicit doctrine justification in spec; CA.1/CA.7 do not (04-n124). Same effect class; different spec completeness.
+
+### Faction Cross-Reference (5-faction synthesis, complete)
+
+| Faction | Native resource | Income model | Territory posture | §9.2 ceiling gap | Information posture |
+|---------|----------------|-------------|------------------|-----------------|---------------------|
+| Ghost | Findings | Intel-activity yield (CA.5/CA.7/CA.8) | None — zero territory cards | Not flagged | Dominant — 5+ Reveal cards, deep Intel economy |
+| Directorate | Mandate | Institutional yield (CA.6 Audit, Permanent-scaled) | Suppression — clears space; builds through STD | ✗ 04-n118 — 11/12 mono | External — requires STD PA setup (PA.2 Convene) |
+| Guild | Capacity | Wager/passive (CA.2/CA.5/CA.6 on STD triggers) | Construction — Add/Protect; permanence through building | ✗ 04-n119 — zero cross | None — zero Information cards |
+| Syndicate | Capital | Extraction/coercion (CA.1 unilateral, CA.7 coercive) | Acquisition — seize/replace (CA.3/CA.8/CA.9/PA.1) | ✗ 04-n123 — zero cross | Transactional — Intel as cost input (CA.7, CA.9) |
+| Network | Exposure | Loop/sacrifice (CA.2 Disclosure Loop; CA.6 PS→Intel) | Broadcast reach — restricted expansion (CA.5 Baryo); consolidation (PA.2); opportunistic (MOD.1) | ⚠ 04-n126 — cross exists but Findings-gated | Dominant public — 4 Reveal cards; all table-broadcast |
+
+DIR/GUI/SYN all show zero-cross-ceiling architecture — systemic across mono-economy factions. Network is the exception: cross ceiling exists in CA.1 (E×1+F×1 — the only faction-specific cross-ceiling card), but Findings-gated (Ghost dependency). Ghost and Network are the two information-dominant factions with opposite disclosure models: Ghost concentrates (private IS-xx); Network distributes (public broadcast to all players). 5-faction synthesis complete S123 (04-n90 ✅).
+
+---
+
+*Last updated: S123 (2026-06-26)*

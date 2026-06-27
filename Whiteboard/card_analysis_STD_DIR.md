@@ -23,6 +23,41 @@ Standard set audited in full at S119/S120 (card_analysis_STD_GHO.md §A). Summar
 
 **Outstanding STD note carried forward:** STD.CA.9 Fund (IR=0) is the only STD card unresolved from design pass perspective. Not a DIR-specific concern.
 
+### Cross-Faction Reference (from STD+GHO §A — S119/S120)
+
+**MOD Inventory (6 cards across all factions)**
+
+| Faction | MOD cards |
+|---------|-----------|
+| Standard | STD.MOD.1 Overture |
+| Ghost | GHO.MOD.1 Clarify Misinformation |
+| Network | NET.MOD.1 Signal Break · NET.MOD.2 Reputational Strike |
+| Syndicate | SYN.MOD.1 Accord Leverage |
+| Guild | GUI.MOD.1 Return to Site |
+| **Directorate** | **None** |
+
+MOD design is largely unexplored. Coverage gaps should be evaluated across CA, PA, and MOD before assuming a new CA is required. GHO.MOD.1 is the reference model: a React that fires on a PA submission event rather than a CA consuming a covert slot.
+
+**Standing Gap (04-n108)**
+
+| Faction | Standing cards | Status |
+|---------|---------------|--------|
+| Standard | CA.13 · PA.4 · PA.7 | Floor — correctly positioned |
+| Directorate | DIR.CA.7 Institutional Brief | Calibration check — should outperform CA.13 |
+| Network | NET.CA.7 Ground Signal | Calibration check — should outperform CA.13 |
+| Ghost | None | Design gap |
+| Syndicate | None | Design gap |
+| Guild | None | Design gap |
+
+**STD Outstanding Issues**
+
+| Card | IR | Note |
+|------|----|------|
+| STD.CA.9 Fund | 0 | Art 07 delivery procedure gap — not a design question |
+| STD.CA.12 Absolute Compromise | 0 | Design decisions cleared S120; consolidated sign-off pending |
+| STD.PA.8 Table an Accord | 1 ✓ | — |
+| STD.MOD.1 Overture | 0 | Perspectives · Card ID · Value rating TBD (D-04-08) |
+
 ---
 
 ## B. DIRECTORATE SET
@@ -98,15 +133,43 @@ The resource tension is real: spending Mandate×3 on Entry/Exit Controls is Mand
 
 **Verdict:** Doctrine-coherent but playtest-critical. The win path is mechanically supported; whether Mandate allocation allows simultaneous suppression and expansion at required scale is unknown until playtesting. Flag for 04-n110 cross-faction §5a alignment pass.
 
-### B6. Cross-Faction Differentiation (vs. Ghost — S120 commitment)
+### B6. Cross-Faction Differentiation (S123)
 
-S120 audit deferred the Ghost sustained-pressure comparison to this audit. Settling it here.
+#### DIR vs. GHO
 
-**Ghost:** Point-disruption / reactive. Every Ghost card is Immediate or Permanent-but-self-executing (no persistent board conditions). Ghost strikes targeted intelligence and operational blows — each op is a discrete event. Ghost has no standing board conditions. The covert toolkit is about depth of intelligence and targeted interception, not environmental shaping.
+Ghost: point-disruption / reactive. Every Ghost card is Immediate or Permanent-but-self-executing (no persistent board conditions). Ghost strikes targeted intelligence and operational blows — each op is a discrete event. Ghost has no standing board conditions. The covert toolkit is about depth of intelligence and targeted interception, not environmental shaping.
 
-**Directorate:** Standing pressure / proactive. Three PA cards create persistent board conditions that operate across months. Four Beat 2 cards shape conditions before dice are rolled. The Directorate doesn't react to the table — it installs the framework within which the table operates.
+Directorate: standing pressure / proactive. Three PA cards create persistent board conditions that operate across months. Four Beat 2 cards shape conditions before dice are rolled. The Directorate doesn't react to the table — it installs the framework within which the table operates.
 
-This is the clearest doctrinal differentiation in the design: Ghost sees everything and strikes precisely; Directorate shapes everything and constrains systematically. A Ghost operator decides based on information; a Directorate operator decides first and makes others navigate the constraint.
+This is the clearest doctrinal differentiation in the design: Ghost sees everything and strikes precisely; Directorate shapes everything and constrains systematically. A Ghost operator decides based on information; a Directorate operator decides first and makes others navigate the constraint. Economy: Mandate vs. Findings — no resource competition.
+
+#### DIR vs. GUI
+
+Territorial adversaries with opposite posture. DIR controls what can happen in a district (suppression, cost-raising, entry restriction); Guild fills districts with permanent construction. Both have territory-based win paths through inverse mechanisms.
+
+Key interaction: DIR.PA.1 Regulatory Override raises all presence action costs in a named district, including STD.CA.1 Build Structure — the primary trigger for GUI.CA.6 Labor Contract. A Regulatory Override in a key district simultaneously constrains Guild's build tempo and suppresses Guild's wager income — double pressure from one PA. DIR.CA.5 Sanctioned Raid removes presence at scale; Guild has no faction-specific presence-recovery counter.
+
+Economy: Mandate vs. Capacity — orthogonal. Both §9.2-gap factions (DIR: 04-n118; GUI: 04-n119). Zero cross-ceiling architecture on both sides — the largest design item they share.
+
+#### DIR vs. SYN
+
+Suppression against acquisition. DIR removes and restricts presence; SYN seizes and replaces. DIR.CA.5 Sanctioned Raid removes the presence SYN.CA.9 Hostile Takeover would wholesale-replace. DIR.PA.3 Entry/Exit Controls blocks deployment markers that enable SYN's advance plays. DIR's suppression toolkit directly disrupts SYN's acquisition model.
+
+Accord layer: DIR has no Accord-specific cards. SYN holds the deepest Accord manipulation suite (CA.10/CA.11/MOD.1). DIR.PA.6 Standing Injunction blocks PA taxonomy at the faction level — if targeted at Syndicate, removes SYN.PA.1 and SYN.PA.2 for that Quarter. DIR.CA.1 Invoke Jurisdiction scope (open design question C1) includes whether it can block Accord-type operations; if yes, it directly suppresses SYN's Accord suite in the named district. Accord manipulation is SYN's safest operating layer relative to DIR — DIR's territorial toolkit does not touch it.
+
+Economy: Mandate vs. Capital — orthogonal. Both §9.2-gap factions (DIR: 04-n118; SYN: 04-n123). Same zero-cross-ceiling pattern from different native-resource bases.
+
+#### Faction Cross-Reference (5-faction synthesis, complete)
+
+| Faction | Native resource | Income model | Territory posture | §9.2 ceiling gap | Information posture |
+|---------|----------------|-------------|------------------|-----------------|---------------------|
+| Ghost | Findings | Intel-activity yield (CA.5/CA.7/CA.8) | None — zero territory cards | Not flagged | Dominant — 5+ Reveal cards, deep Intel economy |
+| Directorate | Mandate | Institutional yield (CA.6 Audit, Permanent-scaled) | Suppression — clears space; builds through STD | ✗ 04-n118 — 11/12 mono | External — requires STD PA setup (PA.2 Convene) |
+| Guild | Capacity | Wager/passive (CA.2/CA.5/CA.6 on STD triggers) | Construction — Add/Protect; permanence through building | ✗ 04-n119 — zero cross | None — zero Information cards |
+| Syndicate | Capital | Extraction/coercion (CA.1 unilateral, CA.7 coercive) | Acquisition — seize/replace (CA.3/CA.8/CA.9/PA.1) | ✗ 04-n123 — zero cross | Transactional — Intel as cost input (CA.7, CA.9) |
+| Network | Exposure | Loop/sacrifice (CA.2 Disclosure Loop; CA.6 PS→Intel) | Broadcast reach — restricted expansion (CA.5 Baryo); consolidation (PA.2); opportunistic (MOD.1) | ⚠ 04-n126 — cross exists but Findings-gated | Dominant public — 4 Reveal cards; all table-broadcast |
+
+DIR/GUI/SYN all show zero-cross-ceiling architecture — systemic across mono-economy factions. Network is the exception: cross ceiling exists in CA.1 (E×1+F×1 — the only faction-specific cross-ceiling card), but Findings-gated (Ghost dependency). Ghost and Network are the two information-dominant factions with opposite disclosure models: Ghost concentrates (private IS-xx); Network distributes (public broadcast to all players). 5-faction synthesis complete S123 (04-n90 ✅).
 
 ---
 

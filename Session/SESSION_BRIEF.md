@@ -297,46 +297,52 @@ Working documents created:
 
 ---
 
-### Priority Order (S123) ← CURRENT
+### S123 Accomplishments ✅
 
-**Next session: STD+SYN combined set audit (04-n91)**
+**STD+SYN audit addenda (CA.7 spec gap + cross-faction sections)**
+- CA.7 `on_accept` debit-only expression confirmed — credit line absent from spec code; transfer established by arbiter_note + Redirect label. Documented in PM05 04-n124, Art 04b §6.4 SYN section, card_analysis_STD_SYN.md §B.
+- Cross-faction differentiation sections added to all 4 existing audit reports (GHO, DIR, GUI, SYN) — 3 pairwise comparisons each + 5-faction synthesis table (updated from 4-faction once NET complete).
 
-Mirror the audit and report format from STD+GUI (S122) and STD+DIR (S121). Use `card_analysis_STD_GUI.md` as the template.
+**STD+NET combined set audit (04-n90 ✅)**
+- `Whiteboard/card_analysis_STD_NET.md` created — Pre-Audit Notes through Section G; 12-card coverage.
+- Key findings: Network is the only faction with cross-ceiling architecture (CA.1: E×1+F×1); Findings-gated (Ghost dependency) → 04-n126. 4 Reveal cards — highest concentration in game. Modifier deck = largest §5a gap (04-n4 gate). Win path expansion STD-dependent (FLAG 5).
+- Art 04b v2.5 → **v2.6**: §6.4 STD+NET 5-check added; §8.3 Network updated to 12-card S123 data.
+- 5-faction synthesis tables complete in all 5 audit files. Cross-faction reference tables (MOD inventory, Standing gap, STD outstanding issues) added to §A of DIR/GUI/SYN/NET.
 
-**Session startup sequence (mandatory):**
-1. Read `Whiteboard/design_reference.md` + `Whiteboard/design_reference_card_system.md`
-2. DB pull:
-   `SELECT card_id, name, cost_type, cost_variable, cost_primary_amount, uses_intel_token FROM card_status WHERE faction IN ('Standard','Syndicate') AND blocked=0 ORDER BY faction, card_id;`
-3. Read Syndicate card bodies in Art 04 (full body read — do not rely on §8 index alone)
-4. Create `Whiteboard/card_analysis_STD_SYN.md` pre-audit stub with at-a-glance table before full analysis
+**Environment update (agy)**
+- WireGuard VPN operational to cluster subnet. Mosh installed on Pi 5 — UDP sessions, drop-proof on mobile. Use mosh via Termius for remote shells going forward.
+- Wiki: Art 04 (666KB) split into 8 chapters at build time for iOS WebKit crash fix. TOC sidebar integrated. Anchor healing implemented. Rebuild: `bash tools/deploy_wiki.sh` from `~/Projects/TheSignal/`. Wiki is the mobile review surface for large files.
 
-**Audit steps (same order every faction):**
+**Cross-layer coverage analysis (preliminary 04-n110 work)**
+- Resolution layer: STD-only for GHO/GUI/NET/SYN (DIR has CA.8). GHO excluded (no doctrinal basis). GUI/NET/SYN gaps → 04-n127/128/129.
+- Standing layer: GUI and SYN gaps confirmed. GUI → deed-based PS (04-n130). SYN → design decision on relative-Standing model vs. PS floor (04-n131).
+- Guild Information: doctrinal weakness confirmed — correct absence; no faction Information card warranted.
+- PM05 additions: 04-n90 ✅ · 04-n126 (NET §9.2 Findings-gated ceiling) · 04-n127 (GUI Resolution) · 04-n128 (NET Resolution) · 04-n129 (SYN Resolution) · 04-n130 (GUI Standing) · 04-n131 (SYN Standing decision)
 
-**Step 1 — §6.4 Economic Integration (5-check framework):**
-1. *Generation check:* Which resources does Syndicate generate natively? Any non-native generation?
-2. *Spending check:* Do all 5 faction native types have spending destinations in STD+SYN? Flag any unspendable acquired resource.
-3. *Floor calibration:* What is the mono-cost range? Any §9.2 inversion (high-power effects at mono)?
-4. *Ceiling coverage:* Which cards are cross-resource? Are the highest-power plays also the cross plays? Flag inversions.
-5. *Gap verdict:* Summary. Update Art 04b §6.4 and 00a-78 (mark STD+SYN complete).
+**Wiki rebuilt** — current as of all S123 changes.
 
-**Step 2 — §5a alignment:**
-1. Does deck feel match §5a? (Syndicate: economy extraction, resource redirection, accord manipulation)
-2. Is win path mechanically supported?
-3. Sustained pressure vs. point-disruption — where does Syndicate sit?
-4. CA/PA ratio gap? Modifier deck gap?
+**Last 3 decisions S123:** GHO Resolution excluded (no doctrinal basis confirmed) · Guild Information weakness confirmed as correct doctrine · CA.7 spec gap documented (debit-only `on_accept`; credit via arbiter_note + Redirect)
 
-**Step 3 — Cross-faction differentiation:**
-Compare Syndicate against Guild (also economy-focused) and Ghost (also operates covertly). Where does Syndicate's extraction/redirection model differentiate?
+**Pending sign-offs carried:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
 
-**Step 4 — Output:**
-- Write `Whiteboard/card_analysis_STD_SYN.md` (Sections A–G)
-- Update Art 04b §6.4 (add STD+SYN 5-check results)
-- Update Art 04b §8.4 (Syndicate section — verify staleness, fix in place)
-- Add PM05 items for open design decisions and §9.2 flags
-- Mark 04-n91 ✅
+**Artifacts updated S123:** Art 04b (v2.6 — §6.4 STD+NET, §8.3 Network) · PM05 (04-n90 ✅; 04-n126–04-n131; 00a-78 updated) · Whiteboard/card_analysis_STD_NET.md (new) · Whiteboard/card_analysis_STD_GHO/DIR/GUI/SYN.md (cross-faction §A + synthesis tables updated)
 
-**After SYN:** NET (04-n90) — then 04-n110 cross-faction §5a pass
-**Open §9.2 flags:** DIR (04-n118) · GUI (04-n119 — split remedies) · SYN/NET TBD via remaining audits
+---
+
+### Priority Order (S124) ← CURRENT
+
+**04-n110: Cross-faction §5a alignment audit** — all mechanical audits substantially complete; gate is open. S123 completed the coverage analysis (Resolution/Standing/Information layers). Remaining §5a work: formal deck-feel assessment per faction, win-path support verification, sustained-pressure comparison across factions.
+
+**Card design work unlocked (can interleave with 04-n110):**
+- 04-n127: GUI Resolution card (construction certainty doctrine)
+- 04-n128: NET Resolution card (broadcast irreversibility doctrine)
+- 04-n129: SYN Resolution card (money-at-the-table doctrine)
+- 04-n130: GUI Standing card (deed-based PS from construction presence)
+- 04-n131: SYN Standing decision — resolve relative-Standing model vs. PS floor
+
+**Open §9.2 cross-faction pass** (04-n118 DIR · 04-n119 GUI · 04-n123 SYN · 04-n126 NET) — address together after 04-n110 complete.
+
+**Session startup (S124):** Standard sequence — Claude_context.md → SESSION_BRIEF. No DB pull required unless moving to card design work.
 
 ---
 

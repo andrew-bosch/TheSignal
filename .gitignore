@@ -21,3 +21,5 @@ ClaudeIOS/TrueState.md
 # Python cache (grip renderer)
 __pycache__/
 *.pyc
+wiki_src/
+

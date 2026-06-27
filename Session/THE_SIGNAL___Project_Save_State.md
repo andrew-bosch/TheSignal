@@ -1,7 +1,23 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-26 — Session 121 Close
+**Last Updated:** 2026-06-26 — Session 123 Close
+
+### Session 123 Summary (2026-06-26)
+
+**Focus:** STD+NET combined card set audit (04-n90) + 5-faction synthesis tables complete + cross-layer coverage analysis (Resolution/Standing/Information layer gaps).
+
+**Key work:**
+- **Whiteboard/card_analysis_STD_NET.md (new):** Full audit — 12-card coverage; Sections A–G. CA.1 Leak = only cross-ceiling card in 5-faction set (E×1+F×1; Findings-gated → 04-n126). 4 Reveal cards = highest Reveal concentration in game. Modifier deck = largest §5a gap (04-n4 gate). Win path expansion STD-dependent (FLAG 5).
+- **Art 04b v2.6:** §6.4 STD+NET 5-check added; §8.3 Network section rewritten with S123 12-card data (replacing S104 7-card data); priority design targets listed (04-n126, PA.3 borderline inversion, modifier deck).
+- **5-faction synthesis complete:** Synthesis tables in all 5 prior audit files updated from "4-faction, NET pending" to "5-faction, complete"; Network row added to each. Cross-faction reference tables (MOD inventory · Standing gap · STD outstanding issues) added to §A of DIR/GUI/SYN/NET audit files.
+- **Cross-layer coverage analysis:** Resolution layer — STD-only for GHO/GUI/NET/SYN (DIR has CA.8 Enhanced Scrutiny); GHO excluded (no doctrinal basis); GUI/NET/SYN → 04-n127/128/129. Standing layer — GUI/SYN gaps → 04-n130/131. Guild Information — doctrinal weakness confirmed as correct absence.
+- **PM05 additions:** 04-n90 ✅; 04-n126 (NET §9.2 cross-ceiling Findings-gated); 04-n127 (GUI Resolution — construction certainty); 04-n128 (NET Resolution — broadcast irreversibility); 04-n129 (SYN Resolution — money at the table); 04-n130 (GUI Standing — deed-based PS); 04-n131 (SYN Standing — relative model vs. PS floor, playtest gate); 00a-78 STD+NET complete.
+- **Environment:** WireGuard VPN + mosh on Pi 5 operational (agy report ingested). Wiki rebuilt with 8-chapter Art 04 split for iOS WebKit; wiki is mobile review surface for large file review.
+
+**Artifacts updated S123:** Art 04b (v2.6) · PM05 (04-n90 ✅; 04-n126–04-n131; 00a-78) · Whiteboard/card_analysis_STD_NET.md (new) · Whiteboard/card_analysis_STD_GHO/DIR/GUI/SYN.md (§A tables + 5-faction synthesis) · SESSION_BRIEF (S123 logged; S124 priority set)
+
+---
 
 ### Session 121 Summary (2026-06-26)
 

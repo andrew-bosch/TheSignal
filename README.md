@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** STD+GUI combined set audit complete (04-n92 ✅). Art 04 v0.9.49 (S120). Art 04b v2.4 (S122). Next: STD+SYN audit (04-n91).
+**Design milestone:** STD+NET combined set audit complete (04-n90 ✅); Resolution/Standing layer gaps identified (04-n127–04-n131). Art 04 v0.9.49 (S120). Art 04b v2.6 (S123). Next: Cross-faction §5a alignment audit (04-n110).
 
 ---
 
@@ -75,7 +75,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.49 | 🔄 In progress — S120: STD+GHO set audit complete (04-n87/88). S119: P28 cross-faction cost floor constraint added. |
-| 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.4 | ✅ Signed off — S108 (L230 scope policy). S122: §6.4 STD+GUI Economic Integration Audit added; §8.5 Guild section updated. |
+| 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |
 | 07 | [ARBITER Subroutines](V1/07___ARBITER_Toolkit.md) | 0.2 | ⬜ Placeholder |

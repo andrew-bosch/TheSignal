@@ -132,6 +132,41 @@ The standard set provides a shared 27-card floor (16 CA + 5 MOD + 6 PA). For thi
 
 **STD territorial suppression fact-check (FLAG 4):** STD.CA.4 Undermine cost = `resource.faction(acting) * 1 + resource.district(native) * 1`. For Guild: 1 Capacity + 1 district-native. Moderate cost, not 3 Mandate as the pre-audit stub stated. Guild access to territorial disruption is practical at moderate cross cost.
 
+### Cross-Faction Reference (from STD+GHO §A — S119/S120)
+
+**MOD Inventory (6 cards across all factions)**
+
+| Faction | MOD cards |
+|---------|-----------|
+| Standard | STD.MOD.1 Overture |
+| Ghost | GHO.MOD.1 Clarify Misinformation |
+| Network | NET.MOD.1 Signal Break · NET.MOD.2 Reputational Strike |
+| Syndicate | SYN.MOD.1 Accord Leverage |
+| Guild | GUI.MOD.1 Return to Site |
+| **Directorate** | **None** |
+
+MOD design is largely unexplored. Coverage gaps should be evaluated across CA, PA, and MOD before assuming a new CA is required. GHO.MOD.1 is the reference model: a React that fires on a PA submission event rather than a CA consuming a covert slot.
+
+**Standing Gap (04-n108)**
+
+| Faction | Standing cards | Status |
+|---------|---------------|--------|
+| Standard | CA.13 · PA.4 · PA.7 | Floor — correctly positioned |
+| Directorate | DIR.CA.7 Institutional Brief | Calibration check — should outperform CA.13 |
+| Network | NET.CA.7 Ground Signal | Calibration check — should outperform CA.13 |
+| Ghost | None | Design gap |
+| Syndicate | None | Design gap |
+| Guild | None | Design gap |
+
+**STD Outstanding Issues**
+
+| Card | IR | Note |
+|------|----|------|
+| STD.CA.9 Fund | 0 | Art 07 delivery procedure gap — not a design question |
+| STD.CA.12 Absolute Compromise | 0 | Design decisions cleared S120; consolidated sign-off pending |
+| STD.PA.8 Table an Accord | 1 ✓ | — |
+| STD.MOD.1 Overture | 0 | Perspectives · Card ID · Value rating TBD (D-04-08) |
+
 ---
 
 ## B. GUILD SET
@@ -432,4 +467,50 @@ Update version v2.3 → v2.4. Update status header (S121 → S122). Add STD+GUI 
 
 ---
 
-*Audit complete S122 (04-n92 ✅). Art 04b updates and PM05 items: Section G.*
+## H. Cross-Faction Differentiation (S123)
+
+*3 pairwise comparisons for Guild. Full 5-faction synthesis follows (04-n90 ✅).*
+
+### GUI vs. GHO
+
+Complete domain separation. Guild is the most territory-primary faction in the game; Ghost holds zero territory cards. Guild has no Information cards and no covert operations; Ghost has the deepest information suite (5+ Reveal cards, Intel economy). Orthogonal design spaces.
+
+Where Ghost is a threat to Guild: GHO.CA.10 Flip extracts another faction's native resource — targeting Guild converts Capacity directly, disrupting Guild's build pipeline. Guild has no Intel capacity and no covert counter; its entire defense against Ghost is passive (Fortify Structure protects one structure per Quarter; §10 Battlefield Strength in contested districts). Guild cannot preempt Ghost operations.
+
+Economy: Capacity vs. Findings. No resource competition.
+
+### GUI vs. DIR
+
+Territorial adversaries with opposite posture. DIR controls what can happen in a district (suppression, cost-raising, entry restriction); Guild fills districts with permanent construction. Both compete for district-level dominance through inverse mechanisms.
+
+Key interaction: DIR.PA.1 Regulatory Override raises all presence action costs in a named district, including STD.CA.1 Build Structure — the primary trigger for GUI.CA.6 Labor Contract. A Regulatory Override in a key district simultaneously constrains Guild's build tempo and suppresses Guild's wager income — double pressure from one PA. DIR.CA.5 Sanctioned Raid removes presence at scale; Guild has no faction-specific presence-recovery counter. DIR is Guild's most direct faction-level constraint.
+
+Economy: Capacity vs. Mandate — orthogonal. Both §9.2-gap factions (GUI: 04-n119; DIR: 04-n118). Zero cross-ceiling architecture on both sides — the largest design item they share.
+
+### GUI vs. SYN
+
+Both Capital-denominated, economy-primary, but mechanically inverse.
+
+Income model: Guild earns by wagering on opponent actions (CA.2/CA.6 wager cards) or through infrastructure yield (CA.5). Syndicate extracts directly and covertly (CA.1 unilateral, CA.7 coercive). Guild requires the table to act; Syndicate does not.
+
+Territory model: Guild builds and defends (STD.CA.1, PA.1; CA.1 Fortify Structure). Syndicate seizes and replaces (CA.3 Hostile Acquisition, CA.8 Land Title, CA.9 Hostile Takeover). Guild's constructions are precisely what SYN.CA.3 targets — SYN is Guild's most direct territorial adversary. SYN.CA.8 files claims on undeveloped land before other factions build, pre-positioning against Guild's planned expansion districts.
+
+Accord layer: GUI.PA.2 Infrastructure Bond creates an AccordAgreement. SYN.CA.10/CA.11/MOD.1 can corrupt any live Accord without Guild's consent — party replacement, term alteration, or forced acceptance all apply.
+
+No §9.2 differentiation: both factions have zero cross-ceiling architecture (GUI: 04-n119; SYN: 04-n123).
+
+### Faction Cross-Reference (5-faction synthesis, complete)
+
+| Faction | Native resource | Income model | Territory posture | §9.2 ceiling gap | Information posture |
+|---------|----------------|-------------|------------------|-----------------|---------------------|
+| Ghost | Findings | Intel-activity yield (CA.5/CA.7/CA.8) | None — zero territory cards | Not flagged | Dominant — 5+ Reveal cards, deep Intel economy |
+| Directorate | Mandate | Institutional yield (CA.6 Audit, Permanent-scaled) | Suppression — clears space; builds through STD | ✗ 04-n118 — 11/12 mono | External — requires STD PA setup (PA.2 Convene) |
+| Guild | Capacity | Wager/passive (CA.2/CA.5/CA.6 on STD triggers) | Construction — Add/Protect; permanence through building | ✗ 04-n119 — zero cross | None — zero Information cards |
+| Syndicate | Capital | Extraction/coercion (CA.1 unilateral, CA.7 coercive) | Acquisition — seize/replace (CA.3/CA.8/CA.9/PA.1) | ✗ 04-n123 — zero cross | Transactional — Intel as cost input (CA.7, CA.9) |
+| Network | Exposure | Loop/sacrifice (CA.2 Disclosure Loop; CA.6 PS→Intel) | Broadcast reach — restricted expansion (CA.5 Baryo); consolidation (PA.2); opportunistic (MOD.1) | ⚠ 04-n126 — cross exists but Findings-gated | Dominant public — 4 Reveal cards; all table-broadcast |
+
+DIR/GUI/SYN all show zero-cross-ceiling architecture — systemic across mono-economy factions. Network is the exception: cross ceiling exists in CA.1 (E×1+F×1 — the only faction-specific cross-ceiling card), but Findings-gated (Ghost dependency). Ghost and Network are the two information-dominant factions with opposite disclosure models: Ghost concentrates (private IS-xx); Network distributes (public broadcast to all players). 5-faction synthesis complete S123 (04-n90 ✅).
+
+---
+
+*Audit complete S122 (04-n92 ✅). Cross-faction differentiation added S123. Art 04b updates and PM05 items: Section G.*
