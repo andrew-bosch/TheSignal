@@ -5,7 +5,7 @@
 **Status:** ✅ Signed Off — S111 (L233)
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian
 **DB Anchor:** `the_signal_db.component` — canonical component registry. Names and IDs from that registry are authoritative.
-**DB Sync:** Changes to component schema design or any component entry fields must be coordinated with corresponding DB updates. Art 02 and `the_signal_db` must remain in sync.
+**DB Sync:** Changes to component schema design or any component entry fields must be coordinated with corresponding DB updates. Art 02 and `the_signal_db` must remain in sync. *(Note: You can easily synchronize the database with this document's metadata blocks by running `python3 Database/seed_component_metadata.py --execute`.)*
 **Feeds:** 03-init (starting positions); 03 (procedures)
 
 ---

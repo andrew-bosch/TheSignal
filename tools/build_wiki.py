@@ -87,8 +87,6 @@ def clean_title(filename):
     base = os.path.splitext(filename)[0]
     # Replace triple underscores or double underscores with spaces
     base = re.sub(r'_{2,}', ' ', base)
-    # Strip leading numbers like "01 " or "PM01 "
-    base = re.sub(r'^(?:PM)?\d+(?:-init)?[ \-_]*', '', base)
     # Replace single underscores with spaces
     base = base.replace('_', ' ')
     # Capitalize nicely
@@ -123,7 +121,7 @@ def get_category_id(filename, relative_path):
     # Root markdown files
     if filename == 'README.md':
         return 'home'
-    elif filename in ['GEMINI_CONTEXT.md', 'gem_task.md', 'gem_web_context.md']:
+    elif filename in ['GEMINI_CONTEXT.md', 'Claude_context.md', 'gem_task.md', 'gem_web_context.md']:
         return 'system_tasks'
     return 'whiteboard'
 

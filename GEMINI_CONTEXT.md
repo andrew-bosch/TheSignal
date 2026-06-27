@@ -1,5 +1,5 @@
 # THE SIGNAL — Gemini Context Brief
-*Last updated: 2026-06-19 — Session 104*
+*Last updated: 2026-06-27 — Session 124*
 
 This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated at session close.
 
@@ -94,10 +94,7 @@ This file is Claude Code's outbound SOT to Gemini. Read-only for Gemini. Updated
 ---
 
 *Task sections through Session 101 pruned. See git history for archive.*
+*S104 tasks complete — pruned.*
+*S124 tasks complete — pruned. DB-41/42/43/45/46/37 closed. schema_reference.md updated. Whiteboard pruned to Phase 3 stubs.*
 
 ---
-
-## Active Tasks — S104
-
-All tasks for Session 104 have been completed.
-

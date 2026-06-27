@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** STD+NET combined set audit complete (04-n90 ✅); Resolution/Standing layer gaps identified (04-n127–04-n131). Art 04 v0.9.49 (S120). Art 04b v2.6 (S123). Next: Cross-faction §5a alignment audit (04-n110).
+**Design milestone:** DB component_metadata seeded (74 components; DB-42 ✅); Art 04 §10 Deck Construction + Art 03-init §3.9 Deck Selection added. Art 04 v0.9.50 (S124). Art 04b v2.6 (S123). Art 03-init v0.5 (S124). Next: Cross-faction §5a alignment audit (04-n110); modifier card schema (04-n102).
 
 ---
 
@@ -61,8 +61,8 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.4 | 🔄 In progress. S118: component name sweep. |
-| 03 | [while session(true): Quarter Structure](<V1/03___Round_Structure___Gameplay.md>) | 4.11 | ✅ Signed off — S110 (L232). S118: component name sweep. |
+| 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.5 | 🔄 In progress. S124: §3.9 Deck Selection added; §3.6 sequencing conflict open (04-n137). |
+| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.11 | ✅ Signed off — S110 (L232). S118: component name sweep. |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.99 | 🔄 In progress. S118: component name sweep. |
 | 03b | [Component Lifecycle Register](V1/03b___Component_Lifecycle.md) | 0.2 | 🔄 In progress. S118: component name sweep. |
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.49 | 🔄 In progress — S120: STD+GHO set audit complete (04-n87/88). S119: P28 cross-faction cost floor constraint added. |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.50 | 🔄 In progress — S124: §10 Deck Construction & Pool Selection added. S120: STD+GHO set audit complete (04-n87/88). |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |
@@ -150,6 +150,17 @@ TheSignal/
 
 ---
 
+## Wiki Maintenance & Deployment
+
+The project wiki is built using `mkdocs` with the `material` theme. It serves as the primary mobile review surface for large artifacts (specifically splitting the massive `04___Card_System.md` into 8 chapters to prevent iOS WebKit crashes).
+
+*   **Wiki Source Directory:** `wiki_src/` (contains generated docs and `mkdocs.yml`; excluded from git via `.gitignore`).
+*   **Build Script:** `python3 tools/build_wiki.py` (wipes `wiki_src/docs/`, copies/flattens files from `V1/`, `Whiteboard/`, `Creative/`, `ClaudeIOS/`, splits `04___Card_System.md`, and runs link/anchor resolution to heal relative links).
+*   **Deployment Script:** `bash tools/deploy_wiki.sh` (runs the local build, syncs `wiki_src/` via `rsync` to the Pi Zero server at `10.0.1.15`, and triggers `mkdocs build` remotely).
+*   **Rebuild & Deploy Command:** Run `./tools/deploy_wiki.sh` from the workspace root.
+
+---
+
 ## Version Control
 
 This repository uses git. Commit at the close of each design session with a message describing what was decided or completed.
@@ -159,3 +170,4 @@ session N — [primary decision or milestone]
 ```
 
 The `/Retired` folder is tracked in git for historical reference but should not be edited. The `/Session` folder is tracked; `PRIVATE___True_State.md` should remain in `.gitignore` if distributed to collaborators.
+

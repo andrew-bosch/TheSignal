@@ -82,6 +82,8 @@ Factions cannot reach Dominant (ARBITER holds 8 tokens; faction max is 6). Maxim
 
 ## Residential Quarter — PS Amplifier
 
+*⚠️ Provisional — multiplier values not yet placed in a signed-off artifact. PM05 02-n27 open. Treat as design target only.*
+
 All Public Standing changes are amplified for factions with presence in Residential Quarter (district 3), applied to every PS change anywhere on the board:
 
 | Level | Multiplier |

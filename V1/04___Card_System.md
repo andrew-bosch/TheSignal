@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.49 Draft  
+**Version:** 0.9.50 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-25  
+**Last Updated:** 2026-06-27  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -27,6 +27,7 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §7 | [Card Specifications](#7-card-specifications) |
 | §8 | [Card Taxonomy Index](#8-card-taxonomy-index) |
 | §9 | [Faction Coverage Matrix](#9-faction-coverage-matrix) |
+| §10 | [Deck Construction & Pool Selection](#10-deck-construction--pool-selection) |
 | §11 | [Rules & Constraints — Modifier Cards](#11-rules-constraints-modifier-cards) |
 | §12 | [Rules & Constraints — Pass Cards](#12-rules-constraints-pass-cards) |
 | §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
@@ -8912,6 +8913,30 @@ SYN.PA.3 = Card(
 | | Protect | Covert Operation | STD.CA.10 | — | — | — | — | — |
 | **Standing** | | | | | | | | |
 | | Shift | Public Standing | STD.CA.13, STD.PA.4, STD.PA.7 | — | — | DIR.CA.7 | NET.CA.7 | — |
+
+---
+
+## 10. Deck Construction & Pool Selection
+
+Before the session begins, each faction player constructs their active decks from a larger initial card pool (Art 02, components DB:114/115). The pool is not played with in its entirety — players select a working subset for Q1–Q8. Cards not selected are returned to the box and remain out of play for the duration of the session.
+
+This is the first strategic decision of the game. Preparation expresses doctrine: you cannot play a card you didn't bring.
+
+### 10.1 Per-Faction Selection
+
+| Card Type | Selection Rule |
+|-----------|---------------|
+| Covert Operations (CA) | Select a subset from the CA pool (Standard CAs + Faction CAs combined). Shuffle into the Covert Operation Deck. |
+| Public Acts (PA) | Select a subset from the PA pool (Standard PAs + Faction PAs combined). Shuffle into the Public Act Deck. |
+| Modifier Cards | Select a working subset from the Modifier pool. Form the Faction Modifier Deck. |
+| Operative | Select **1** from the Operative pool. |
+| Apex | Select **1** from the Apex pool. |
+
+Standard cards are distributed as part of each faction's CA and PA pools — each faction holds its own physical set of Standard cards, not a shared deck.
+
+> **Design note:** Deck sizes (total card counts, per-card copy counts, and pool sizes) are pending balance analysis and playtesting. Legacy `pool_copies` field references are retired. Counts will be established during the balance pass. *(PM05 04-n136)*
+
+**Procedure:** Art 03-init §3.9.
 
 ---
 

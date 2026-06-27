@@ -370,7 +370,33 @@ CREATE TABLE `component` (
   CONSTRAINT `fk_component_parent` FOREIGN KEY (`parent_component_id`) REFERENCES `component` (`id`) ON DELETE SET NULL
 )
 ```
-*AUTO_INCREMENT=120 as of S98. 77 registered components (max id=119 — d10 added S98). Next component will receive id=120.*
+### component_metadata
+```sql
+CREATE TABLE component_metadata (
+  component_id INT NOT NULL,
+  physical_form VARCHAR(2048) NOT NULL,
+  quantity_expr VARCHAR(255) NOT NULL,
+  visibility ENUM('Public', 'Player-private', 'ARBITER-only', 'Variable') NOT NULL,
+  states VARCHAR(255) DEFAULT NULL,
+  faction_keyed ENUM('Yes', 'No', 'N/A') NOT NULL DEFAULT 'N/A',
+  max_placement_count INT DEFAULT NULL,
+  max_placement_ref INT DEFAULT NULL,
+  privacy_model ENUM('Open', 'Faction-private', 'ARBITER-private') DEFAULT NULL,
+  display_fields VARCHAR(2048) DEFAULT NULL,
+  back_design ENUM('Faction-keyed', 'Neutral', 'ARBITER-keyed') DEFAULT NULL,
+  card_source ENUM('Deck', 'Hand', 'ARBITER supply', 'Sealed') DEFAULT NULL,
+  recorded_fields VARCHAR(2048) DEFAULT NULL,
+  function_prose VARCHAR(2048) DEFAULT NULL,
+  scale_prose VARCHAR(2048) DEFAULT NULL,
+  init_value_prose VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (component_id),
+  CONSTRAINT fk_metadata_component FOREIGN KEY (component_id)
+    REFERENCES component (id) ON DELETE CASCADE,
+  CONSTRAINT fk_metadata_max_ref FOREIGN KEY (max_placement_ref)
+    REFERENCES component (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+*Stores physical metrics, privacy mappings, back designs, and prose descriptions for components. Drops legacy `placement_surface` (resolved in `subject_target`) and `movement_path` (procedural).*
 
 ### component_dim
 ```sql
@@ -644,6 +670,104 @@ CREATE TABLE `state_condition_clause` (
 
 ---
 
+## 4.5. Lookup Tables (Phase 1)
+
+### public_standing_tier, difficulty_tier, resolution_outcome, influence_level
+```sql
+CREATE TABLE public_standing_tier (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  range_min TINYINT NOT NULL,
+  range_max TINYINT NOT NULL,
+  drift_delta TINYINT NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO public_standing_tier (id, name, range_min, range_max, drift_delta) VALUES
+  (1, 'Celebrated', 18, 20, -1),
+  (2, 'Respected',  14, 17, -1),
+  (3, 'Neutral',     7, 13,  0),
+  (4, 'Suspect',     3,  6,  1),
+  (5, 'Discredited', 0,  2,  1);
+
+CREATE TABLE difficulty_tier (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  base_threshold TINYINT NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO difficulty_tier (id, name, base_threshold) VALUES
+  (1, 'Easy', 75),
+  (2, 'Average', 50),
+  (3, 'Challenging', 25);
+
+CREATE TABLE resolution_outcome (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO resolution_outcome (id, name) VALUES
+  (1, 'Succeeded'),
+  (2, 'Failed'),
+  (3, 'Voided'),
+  (4, 'Discovered'),
+  (5, 'Auto-failed');
+
+CREATE TABLE influence_level (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  chip_threshold TINYINT NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO influence_level (id, name, chip_threshold) VALUES
+  (1, 'Dominant',    3),
+  (2, 'Established', 2),
+  (3, 'Present',     1),
+  (4, 'None',        0);
+```
+*Seeded lookup tables for core rules metrics.*
+
+---
+
+## 4.6. Slip Content Tables (Phase 2)
+
+### notification_slip, intel_delivery_slip
+```sql
+CREATE TABLE notification_slip (
+  id INT NOT NULL AUTO_INCREMENT,
+  slip_type VARCHAR(50) NOT NULL DEFAULT 'Target Warning',
+  trigger_condition VARCHAR(255) NOT NULL,
+  body_text TEXT NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE intel_delivery_slip (
+  slip_id INT NOT NULL AUTO_INCREMENT,
+  recipient_faction_id BIGINT(20) NOT NULL,
+  delivery_quarter TINYINT NOT NULL,
+  delivery_month TINYINT NOT NULL,
+  submitting_faction_id BIGINT(20) DEFAULT NULL,
+  covert_operation_card_id VARCHAR(15) DEFAULT NULL,
+  target_faction_id BIGINT(20) DEFAULT NULL,
+  target_district_id INT(11) DEFAULT NULL,
+  operation_type VARCHAR(50) DEFAULT NULL,
+  boost_marker_present CHAR(1) NOT NULL DEFAULT 'N',
+  modifier_token_total INT DEFAULT NULL,
+  PRIMARY KEY (slip_id),
+  CONSTRAINT fk_ids_recipient FOREIGN KEY (recipient_faction_id) REFERENCES factions(id) ON DELETE RESTRICT,
+  CONSTRAINT fk_ids_submitting FOREIGN KEY (submitting_faction_id) REFERENCES factions(id) ON DELETE SET NULL,
+  CONSTRAINT fk_ids_target_faction FOREIGN KEY (target_faction_id) REFERENCES factions(id) ON DELETE SET NULL,
+  CONSTRAINT fk_ids_target_district FOREIGN KEY (target_district_id) REFERENCES component(id) ON DELETE SET NULL,
+  CONSTRAINT fk_ids_covert_card FOREIGN KEY (covert_operation_card_id) REFERENCES card_ref(card_id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+*Stores written and recorded data for Notification and Intel Delivery Slips. Intel Delivery Slips are modeled with explicit foreign keys to track sender, target, and outcome specifics privately.*
+
+---
+
 ## 5. Component Registry (component — 77 active rows as of S104; id=1 and id=14 renamed S117)
 
 | id | name | act | xfm | rcv | vis | ori | dat | par |
@@ -779,8 +903,45 @@ CREATE TABLE `state_condition_clause` (
 | `v_phase_verb_summary` | Verb usage per beat |
 | `v_fulfiller_summary` | Fulfiller role coverage |
 | `v_layer_function_coverage` | Every Faction-initiatable Function × Component with beat availability |
-
 **§9 Faction Coverage Matrix — DB-derivable (S117):** Art 04 §9 is now a live query, not a maintained markdown table. Pivot `card_status` by faction × layer × function × subject (with `blocked=0`) to reproduce it. The `card_status` taxonomy columns are the canonical source; §9 in Art 04 is the documentation snapshot.
+
+---
+
+## 6.5. Component Metadata Views DDL (DB-37)
+
+### v_component_accommodates, v_component_contains, v_component_held_by
+```sql
+CREATE OR REPLACE VIEW v_component_accommodates AS
+SELECT 
+  st.target_id AS target_component_id,
+  c_target.name AS target_component_name,
+  st.subject_id AS placed_component_id,
+  c_subject.name AS placed_component_name
+FROM subject_target st
+JOIN component c_target ON st.target_id = c_target.id
+JOIN component c_subject ON st.subject_id = c_subject.id;
+
+CREATE OR REPLACE VIEW v_component_contains AS
+SELECT 
+  st.target_id AS container_component_id,
+  c_target.name AS container_component_name,
+  st.subject_id AS contained_component_id,
+  c_subject.name AS contained_component_name
+FROM subject_target st
+JOIN component c_target ON st.target_id = c_target.id
+JOIN component c_subject ON st.subject_id = c_subject.id;
+
+CREATE OR REPLACE VIEW v_component_held_by AS
+SELECT 
+  cm.component_id AS component_id,
+  c.name AS component_name,
+  cm.max_placement_ref AS placement_surface_id,
+  c_ref.name AS placement_surface_name
+FROM component_metadata cm
+JOIN component c ON cm.component_id = c.id
+JOIN component c_ref ON cm.max_placement_ref = c_ref.id;
+```
+*Derived component metadata views used to traverse placement, containment, and surface relationships. Views depending on legacy movement_path are dropped.*
 
 ---
 

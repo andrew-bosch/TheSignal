@@ -35,7 +35,7 @@
 **Game effects:**
 - Private (ARBITER's tableau only)
 - Factions cannot read their own position; cannot infer from initiative order (D10 step decouples visible order from hidden rankings)
-- Initiative: ARBITER reads Portrait scores to rank factions 1–5, then rolls a d10 to select an ordering method from a table of permutations and social triggers (e.g., rank order, reverse rank, "middle-out down," seating order L→R from ARBITER, narrative triggers). Final initiative order is deliberately hard to reverse-engineer into Portrait rank. Q1 exception: clockwise from ARBITER's left regardless of d10. *(Full d10 table pending Art 07 documentation — PM05 03-11)*
+- Initiative: ARBITER reads Portrait scores to rank factions 1–5, then rolls a d10 to select an ordering method from a table of permutations and social triggers (e.g., rank order, reverse rank, "middle-out down," seating order L→R from ARBITER, narrative triggers). Final initiative order is deliberately hard to reverse-engineer into Portrait rank. Q1 exception: clockwise from ARBITER's left regardless of d10. *(Full D10 table: Art 07 §6.6 — draft, not yet signed off)*
 - Determines tone of each faction's Chronicle entry
 - Contributes to final scoring (Art 10a)
 - ARBITER may adjust Portrait for any behavior including Debrief negotiations and table conduct

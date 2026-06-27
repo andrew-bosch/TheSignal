@@ -2,9 +2,9 @@
 ## THE SIGNAL P1 — Paper Prototype
 
 **Version:** 0.4
-**Status:** 🔄 Partially Populated — Active Reference
+**Status:** ⚠️ Future Analysis Stub — Not Canonical
 
-**Purpose:** Single-source-of-truth for all economic quantities in THE SIGNAL. Aggregates coin values, resource generation rates, starting asset values, operation costs, and modifier thresholds from across the design artifacts into one calibration reference. Primary use: balance analysis and playtesting tuning.
+**Purpose:** Future economic calibration index — not yet active. Will aggregate resource generation rates, operation costs, and modifier thresholds from source artifacts into a single balance/playtesting reference. **Not canonical:** Art 02, Art 03, and Art 04 are the authoritative sources for all current economic values. Do not cite 00c for design decisions or ref files.
 
 **Relationship to source artifacts:** Source artifacts remain canonical. This document does not define economic values — it indexes them. When a source artifact defines a cost or rate, the value lives in the source artifact; 00c registers it here for cross-system visibility. Discrepancies resolve in favor of the source artifact; flag and correct here.
 

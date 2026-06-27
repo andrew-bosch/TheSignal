@@ -111,9 +111,44 @@ ARBITER is the sole physical mover of Portrait Markers. No card effect, operativ
 
 ### 6.5 Portrait Band Labels and Score Ranges
 
-*[TBD — Portrait band design. The eleven canonical band labels and their score ranges are designed here. Labels are proposed in Art 02 §12 (Chorus Portrait track entry) and are the reference during design. Once ranges are determined, update Art 02 §12 as the canonical source. See PM05 07-13.]*
+The eleven canonical band labels and their provisional score ranges are defined as follows:
 
-Canonical band labels (from Art 02 §12, lowest to highest): Void · Collapsed · Fractured · Dissonant · Uncertain · Ambiguous · Observed · Legible · Coherent · Aligned · Resonant. Track scale: −20 to +20. Zero-line band: Ambiguous (−1 to 0, L42). Top band: Resonant (+18 to +20, L42).
+| Band Name | Score Range | Chorus Evaluation Stance |
+| :--- | :--- | :--- |
+| **Resonant** | `+18` to `+20` | This faction has become something the Chorus recognizes. |
+| **Aligned** | `+13` to `+17` | Behavior and doctrine have converged. |
+| **Coherent** | `+8` to `+12` | A consistent pattern is emerging. |
+| **Legible** | `+4` to `+7` | The Chorus can begin to read this faction. |
+| **Observed** | `+2` to `+3` | Initial signals noted. Trajectory forming. |
+| **Ambiguous** | `-1` to `0` | No determination. Observation continues. (Starting Position) |
+| **Uncertain** | `-2` to `-3` | Early contradictions detected. |
+| **Dissonant** | `-4` to `-7` | Stated doctrine and observed behavior diverge. |
+| **Fractured** | `-8` to `-12` | The pattern of contradiction is consistent. |
+| **Collapsed** | `-13` to `-17` | This faction no longer produces readable signal. |
+| **Void** | `-18` to `-20` | Silence. The Chorus has nothing to interpret here. |
+
+### 6.6 Initiative Determination (D10 Obfuscation Model)
+
+During Upkeep Step 2 (Artifact 03 §7.1), ARBITER determines the Quarter's initiative order. To prevent factions from reverse-engineering their hidden Portrait ranks from the visible initiative order, ARBITER rolls a D10 to select an ordering method that obfuscates the Portrait rank.
+
+#### The Obfuscation Procedure:
+1. **Rank Factions:** ARBITER ranks the factions 1–5 based on their current hidden Portrait scores (ties broken by Public Standing, then ARBITER discretion).
+2. **Roll D10:** ARBITER rolls a D10 and selects the corresponding permutation mapping from the table below.
+3. **Q1 Exception:** During Quarter 1 setup, initiative is always set clockwise from ARBITER's left, regardless of the D10 roll.
+
+#### Initiative Permutations Table:
+| D10 Roll | Ordering Method | Permutation Mapping (by Portrait Rank) |
+| :--- | :--- | :--- |
+| **1** | Pure Rank Order | Rank `1` → `2` → `3` → `4` → `5` |
+| **2** | Reverse Rank Order | Rank `5` → `4` → `3` → `2` → `1` |
+| **3** | Middle-Out Up | Rank `3` → `4` → `5` → `2` → `1` |
+| **4** | Middle-Out Down | Rank `3` → `2` → `1` → `4` → `5` |
+| **5** | Spatial Left-to-Right | Seating order L→R from ARBITER |
+| **6** | Spatial Right-to-Left | Seating order R→L from ARBITER |
+| **7** | Rank-Alternating | Rank `1` → `5` → `2` → `4` → `3` |
+| **8** | Inverse Rank-Alternating | Rank `5` → `1` → `4` → `2` → `3` |
+| **9** | Personal Tiebreaker | Resolved via physical Tiebreaker cards (Art 07 §15) |
+| **10** | Narrative Trigger | Faction with highest Public Standing starts, then clockwise |
 
 ---
 

@@ -1,9 +1,9 @@
 # 03-init — Game Initialization
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.4 — Draft S84
+**Version:** 0.5 — Draft S124
 **Status:** In progress — gaps surface during Art 03 rubric pass
-**Depends on:** 01 — Game Board: New Meridian; 02 — Components; 00c — Economy Manifest (pending); Art 04 §12 (card decks, pending)
+**Depends on:** 01 — Game Board: New Meridian; 02 — Components; 00c — Economy Manifest (pending); Art 04 §10 (card decks, pending)
 **Called by:** 03 — at session start, before Quarter 1
 
 ---
@@ -192,7 +192,7 @@ Each Faction Player simultaneously:
 4. Collects starting resources from Reservoir per §2.6
 5. Collects starting hand: 1 Operative Card, 1 Floor Act PA card
 
-*[TBD — distribution source: Art 04 §12]*
+*[TBD — distribution source: Art 04 §10 / Art 03-init §3.9. Sequencing note: Operative selection occurs in §3.9; reconciliation with this step required before sign-off. See PM05 04-n136.]*
 
 ### §3.7 Distribute Countermeasures
 
@@ -208,7 +208,26 @@ ARBITER distributes one sealed Classified Directive to each faction.
 
 ### §3.9 Distribute and Shuffle Card Decks
 
-*[TBD — deck construction and distribution: Art 04 §12. Decks required: Covert Operation Deck (per faction), Public Act Deck (per faction), Faction Modifier Deck (per faction), Ring Modifier Decks ×3, Broadcast Deck, Broadcast Effect Deck, Battlefield Modifier Deck.]*
+Ref: Art 04 §10 (design context and pool selection model).
+
+**Per faction player (simultaneously):**
+
+1. Lay out the full CA pool (Standard CAs + Faction CAs). Select a working subset. Shuffle into the Covert Operation Deck and place at the faction Terminal. Return unselected cards to the box.
+2. Lay out the full PA pool (Standard PAs + Faction PAs). Select a working subset. Shuffle into the Public Act Deck and place at the faction Terminal. Return unselected cards to the box.
+3. Lay out the Modifier pool. Select a working subset. Form the Faction Modifier Deck and place at the faction Terminal. Return unselected cards to the box.
+4. Select 1 Operative from the Operative pool. Place in designated Terminal area. Return remaining Operatives to the box.
+5. Select 1 Apex from the Apex pool. Place sealed in designated Terminal area. Return remaining Apex cards to the box.
+
+*[Reconciliation required before sign-off: §3.6 step 5 currently distributes the Operative and Floor Act PA as part of Terminal Setup, which precedes this step. Decision needed: does deck selection (this step) move before §3.6, or does §3.6 step 5 reference the Operative pre-selected here? See PM05 04-n136.]*
+
+**ARBITER assembles:**
+
+- Ring Modifier Deck (Inner) — shuffle and place at ARBITER Tableau.
+- Ring Modifier Deck (Mid) — shuffle and place at ARBITER Tableau.
+- Ring Modifier Deck (Outer) — shuffle and place at ARBITER Tableau.
+- Broadcast Deck — shuffle and place at ARBITER Tableau.
+- Broadcast Effect Deck — shuffle and place at ARBITER Tableau.
+- Battlefield Modifier Deck — shuffle and place at ARBITER Tableau.
 
 ### §3.10 ARBITER Verification
 

@@ -1,7 +1,7 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-26 — Session 123 Close
+**Last Updated:** 2026-06-27 — Session 124 Close
 
 ### Session 123 Summary (2026-06-26)
 
@@ -16,6 +16,22 @@
 - **Environment:** WireGuard VPN + mosh on Pi 5 operational (agy report ingested). Wiki rebuilt with 8-chapter Art 04 split for iOS WebKit; wiki is mobile review surface for large file review.
 
 **Artifacts updated S123:** Art 04b (v2.6) · PM05 (04-n90 ✅; 04-n126–04-n131; 00a-78) · Whiteboard/card_analysis_STD_NET.md (new) · Whiteboard/card_analysis_STD_GHO/DIR/GUI/SYN.md (§A tables + 5-faction synthesis) · SESSION_BRIEF (S123 logged; S124 priority set)
+
+---
+
+### Session 124 Summary (2026-06-27)
+
+**Focus:** Whiteboard housekeeping + Art 04 §10 / Art 03-init §3.9 (deck construction model) + DB component_metadata complete (agy).
+
+**Key work:**
+- **Art 04 §10 added — Deck Construction & Pool Selection** (v0.9.49 → 0.9.50): per-faction selection from larger pool; CA/PA/Modifier subsets + 1 Operative + 1 Apex; Standard cards held by each faction; deck sizes deferred to balance pass (04-n136); pointer to Art 03-init §3.9.
+- **Art 03-init §3.9 added — Deck Selection procedure** (v0.4 → 0.5): 5-step simultaneous per-faction selection + ARBITER deck assembly (Ring Modifiers ×3, Broadcast, Broadcast Effect, Battlefield Modifier); §3.6/§3.9 sequencing conflict flagged → 04-n137.
+- **Whiteboard pruned:** card_ideas_20260626.md Sections 1 + 4 pruned (canonized into Art 04/03-init and PM05); Section 3 retained for 04-n110; component_metadata_and_database_strategy.md pruned to Phase 3 stubs.
+- **PM05 additions:** 04-n132–04-n140 · 03-n26 · DB-44/45/46 · 09-15 · modifier card design elevated (04-n102/09-06). DB-41/42/43/45/46/37 ✅ S124.
+- **DB (agy):** component_metadata table seeded (74 components, Option A hybrid wide); Phase 1 lookup tables complete (resolution_outcome + 2 missing rows: Discovered + Auto-failed; notification_slip; intel_delivery_slip); 3 derived views (v_component_accommodates, v_component_contains, v_component_held_by); schema_reference.md updated.
+- **Art 02:** DB Sync note added to header (non-material, no re-sign-off).
+
+**Artifacts updated S124:** Art 04 (v0.9.50 — §10 added) · Art 03-init (v0.5 — §3.9 full procedure) · PM05 (04-n132–04-n140, 03-n26, DB-44/45/46, 09-15; DB-41/42/43/45/46/37 ✅) · Art 02 (DB Sync note, non-material) · Database/schema_reference.md (component_metadata, Phase 1 lookups, slip tables, views) · SESSION_BRIEF (S124 logged; S125 priority set)
 
 ---
 

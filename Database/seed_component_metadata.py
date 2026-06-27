@@ -189,7 +189,6 @@ def main():
         visibility = parse_visibility(fields.get("visibility", ""))
         states = clean_val(fields.get("states", ""))
         faction_keyed = parse_faction_keyed(fields.get("faction_keyed", ""))
-        placement_surface = clean_val(fields.get("placement_surface", ""))
         max_placement_count = parse_max_placement_count(fields.get("max_placement_count", ""))
         max_placement_ref = parse_max_placement_ref(fields.get("max_placement_ref", ""))
 
@@ -211,12 +210,12 @@ def main():
         stmt = (
             f"INSERT INTO component_metadata ("
             f"component_id, physical_form, quantity_expr, visibility, states, faction_keyed, "
-            f"placement_surface, max_placement_count, max_placement_ref, privacy_model, "
+            f"max_placement_count, max_placement_ref, privacy_model, "
             f"display_fields, back_design, card_source, recorded_fields, function_prose, "
             f"scale_prose, init_value_prose"
             f") VALUES ("
             f"{db_id}, {esc(physical_form)}, {esc(quantity_expr)}, {esc(visibility)}, {esc(states)}, {esc(faction_keyed)}, "
-            f"{esc(placement_surface)}, {esc(max_placement_count)}, {esc(max_placement_ref)}, {esc(privacy_model)}, "
+            f"{esc(max_placement_count)}, {esc(max_placement_ref)}, {esc(privacy_model)}, "
             f"{esc(display_fields)}, {esc(back_design)}, {esc(card_source)}, {esc(recorded_fields)}, {esc(function_prose)}, "
             f"{esc(scale_prose)}, {esc(init_value_prose)}"
             f");"

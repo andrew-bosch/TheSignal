@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 122 complete | Updated: 2026-06-26**
+**Session 124 complete | Updated: 2026-06-27**
 
 Lean startup document — replaces unconditional full reads of Save State and PM05.
 Read ref_*.md files (Whiteboard/) first — before reading any full artifact. Full artifact reads only when deep work requires it.
@@ -329,11 +329,52 @@ Working documents created:
 
 ---
 
-### Priority Order (S124) ← CURRENT
+### S124 Accomplishments ✅
 
-**04-n110: Cross-faction §5a alignment audit** — all mechanical audits substantially complete; gate is open. S123 completed the coverage analysis (Resolution/Standing/Information layers). Remaining §5a work: formal deck-feel assessment per faction, win-path support verification, sustained-pressure comparison across factions.
+**Whiteboard housekeeping — card_ideas_20260626.md**
+- Section 1 (Deck Composition & Pool Selection): canonized into Art 04 §10 + Art 03-init §3.9; pruned
+- Section 4 (Deckbuilding Meta-Knowledge): items assessed → new PM05 items; pruned
+- Section 3 (Emergent Strategic Patterns): retained for 04-n110 analysis; Section 2 already pruned
 
-**Card design work unlocked (can interleave with 04-n110):**
+**Art 04 §10 added — Deck Construction & Pool Selection** (v0.9.49 → 0.9.50)
+- Pool-not-in-entirety model: per-faction selection of CA subset, PA subset, Modifier subset, 1 Operative, 1 Apex
+- Standard cards held by each faction (not shared); deck sizes deferred to balance pass (04-n136)
+- Procedure pointer → Art 03-init §3.9
+
+**Art 03-init §3.9 added — full deck selection procedure** (v0.4 → 0.5)
+- Five-step simultaneous per-faction selection + ARBITER deck assembly (Ring Modifiers × 3, Broadcast, Broadcast Effect, Battlefield Modifier)
+- §3.6/§3.9 sequencing conflict flagged: §3.6 step 5 distributes Operative in Terminal Setup before this step → 04-n137 (resolution required before sign-off)
+
+**PM05 additions S124:** 04-n132–04-n140 (from card ideas + DB strategy) · 03-n26 (optional hand discard not stated in Art 03) · DB-44 (card_version field, seed 0.1, print-run cadence) · DB-45 (VM/BM metadata seeding) · DB-46 (NS-xx/IS-xx content tables) · 09-15 (card_version on physical card face)
+- Modifier card design elevated: 04-n102 (schema) + 09-06 (design pass) marked priority before or alongside 04-n110
+- DB-41/42/43/45/46/37 ✅ S124
+
+**DB work (agy) — component_metadata complete**
+- component_metadata table seeded: 74 actionable components (Option A hybrid wide table, VARCHAR prose columns at 2048)
+- Phase 1 lookup tables complete: resolution_outcome (2 missing rows added: Discovered, Auto-failed), notification_slip, intel_delivery_slip
+- 3 derived views created: v_component_accommodates, v_component_contains, v_component_held_by
+- schema_reference.md updated by agy
+- Art 02 header: DB Sync note added (non-material, no re-sign-off)
+- Whiteboard/component_metadata_and_database_strategy.md: pruned to Phase 3 stubs (portrait_band, operative, modifier/event/countermeasure)
+
+**Last 3 decisions S124:** Art 04 §6 NOT going into DB yet — 04-n140 normalization pass required first; DB-21/DB-08 gated · component_metadata Option A (hybrid wide table, 1-to-1 with component, VARCHAR to 2048) · card_version seeded at 0.1, updated only at first print run (DB-44 + 09-15)
+
+**Pending sign-offs carried:** GHO.CA.4 redesign · Ghost card set (04-n50) · SYN.CA.10/11/PA.3 Issues Resolved ⚠ (04-n88)
+
+**Artifacts updated S124:** Art 04 (v0.9.50 — §10 added) · Art 03-init (v0.5 — §3.9 full procedure) · PM05 (04-n132–04-n140, 03-n26, DB-44/45/46, 09-15; DB-41/42/43/45/46/37 ✅) · Art 02 (DB Sync note, non-material) · Database/schema_reference.md (agy — component_metadata, Phase 1 lookups, slip tables, views)
+
+---
+
+### Priority Order (S125) ← CURRENT
+
+**04-n110: Cross-faction §5a alignment audit** — gate open (S123 coverage analysis complete). Remaining: formal deck-feel assessment per faction, win-path support verification, sustained-pressure comparison across factions. When closing out: prune card_ideas_20260626.md §3.
+
+**Modifier card design (elevated S124):**
+- 04-n102: Modifier card schema definition pass (Art 04 §6) — gate for 09-06
+- 09-06: Full modifier card design pass — read `Whiteboard/modifier_card_ideas.md` first
+- May run before or alongside 04-n110
+
+**Card design unlocked (can interleave with 04-n110):**
 - 04-n127: GUI Resolution card (construction certainty doctrine)
 - 04-n128: NET Resolution card (broadcast irreversibility doctrine)
 - 04-n129: SYN Resolution card (money-at-the-table doctrine)
@@ -342,7 +383,7 @@ Working documents created:
 
 **Open §9.2 cross-faction pass** (04-n118 DIR · 04-n119 GUI · 04-n123 SYN · 04-n126 NET) — address together after 04-n110 complete.
 
-**Session startup (S124):** Standard sequence — Claude_context.md → SESSION_BRIEF. No DB pull required unless moving to card design work.
+**Session startup (S125):** Standard sequence — Claude_context.md → SESSION_BRIEF. If moving to modifier card or Resolution/Standing design: read design_reference.md + relevant ref files first.
 
 ---
 

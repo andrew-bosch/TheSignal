@@ -307,6 +307,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 |-------|------|-------|
 | `beat` | int | 1–5; order within beat = submission order |
 | `resolution` | Resolution | `d100` or `Automatic` |
+| `resolution_type` | str | `"Probabilistic"` (d100) · `"Transactional"` (Automatic) — str, not enum |
 | `threshold` | int \| None | None when Automatic |
 | `ring_mod` | dict[Ring, int] \| None | Per-ring threshold adjustment; positive = easier |
 | `doctrine_mod` | dict[PentagramRelation, int] \| None | Per-doctrinal-relationship threshold adjustment; None when no faction target |
