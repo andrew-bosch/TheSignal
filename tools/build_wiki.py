@@ -39,7 +39,7 @@ CATEGORIES = [
     },
     {
         'id': 'toolkits_engine',
-        'title': 'Toolkits & Engine',
+        'title': 'Manuals and Engine',
         'files': []
     },
     {
@@ -107,7 +107,7 @@ def get_category_id(filename, relative_path):
                 return 'world_factions'
             elif filename.startswith('00a') or filename.startswith('00b') or filename.startswith('00c') or filename.startswith('11___'):
                 return 'rules_design'
-            elif filename.startswith('07___') or filename.startswith('08___') or filename.startswith('03a___'):
+            elif filename.startswith('03a___') or filename.startswith('09___') or filename.startswith('10___') or filename.startswith('10a___'):
                 return 'toolkits_engine'
             else:
                 return 'components_mechanics'
@@ -312,6 +312,10 @@ def build_wiki():
                     
                     shutil.copy2(full_src_path, dest_path)
                     file_map[rel_src_path] = dest_filename
+                elif file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg')):
+                    full_src_path = os.path.join(root, file)
+                    dest_path = os.path.join(DOCS_DIR, file)
+                    shutil.copy2(full_src_path, dest_path)
                     
     # Handle the large Card System file (splitting it into parts and building slug map)
     card_system_path = os.path.join('V1', '04___Card_System.md')
@@ -457,7 +461,7 @@ def build_wiki():
             'pymdownx.highlight',
             'pymdownx.inlinehilite',
             'tables',
-            'toc'
+            {'toc': {'toc_depth': 3}}
         ],
         'nav': []
     }

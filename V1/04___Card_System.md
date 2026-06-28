@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.50 Draft  
+**Version:** 0.9.51 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-06-27  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -146,7 +146,7 @@ Every card requiring ARBITER action maps to a named general procedure defined in
 **Principle 19 — Card effects use exactly one of four valid duration types.**
 
 - **Immediate** — resolves and is removed at the Beat in which the card resolves; no lingering game state
-- **Transient** — persists until Beat 5 (end of the current month); removed automatically
+- **Transient** — persists until Close Month (end of the current month); removed automatically
 - **Seasonal** — persists until End of Quarter (Debrief); removed automatically
 - **Permanent** — persists for the remainder of the session until a named action or condition removes it
 
@@ -407,6 +407,10 @@ class Card:
     subtype:      Subtype
     faction:      Faction
 
+    # ── Pool ──────────────────────────────────────── static
+    is_unique:    bool                     # True = at most 1 copy in active deck (Operative, Apex); False for all others
+    deck_limit:   int | None               # max copies in active deck; None = no per-card limit (pool-size governed)
+
     # ── Taxonomy ──────────────────────────────────── static, dimension-backed (Art 04b §4)
     layer:        Layer
     function:     Function
@@ -476,6 +480,32 @@ class PSFraming:
     threshold:  int | None           # D100 roll target; probabilistic only; None when fixed
     on_success: list[PSShift]
     on_fail:    list[PSShift] | None # None = no PS on fail; probabilistic PA default = acting −1
+
+
+class ModActionCard(Card):
+    # Modifier bundled with an op at Covert Dispatch; fires with host action. Field constraints: §6.2.
+    effect:           ModActionExpr        # tagged union: threshold_delta | success_multiplier | ps_shift | cost_reduction (PA only)
+    value_rating:     int | None            # 1–3; printed on card face; None = TBD (stub only)
+    ring_constraint:  Ring | None          # None = no deployment restriction; Ring = usable only targeting that ring's districts
+    ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
+
+
+class ModBattleCard(Card):
+    # Modifier for Battlefield Strength resolution (§10 Contested District Resolution). Field constraints: §6.2.
+    effect:           ModBattleExpr        # threshold delta; direction (Self | Opponent) + magnitude
+    value_rating:     int | None            # 1–3; None = TBD (stub only)
+    ring_constraint:  Ring | None          # if set, usable only in Battlefield Strength for a district in that ring
+    ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
+
+
+class ModReactCard(Card):
+    # Modifier firing on a publicly observable board state delta. Played in Faction Resolution Grid.
+    # trigger: required (never None) — defines what activates the card; overrides Card.trigger default
+    # beat:    always None — React fires on trigger condition, not at a named beat
+    # Field constraints: §6.2.
+    value_rating:     int | None            # 1–3; None = TBD (stub only)
+    ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
+    ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
 ```
 
 ---
@@ -484,6 +514,8 @@ class PSFraming:
 
 | Field | Class | Type | Purpose | Displayed |
 |-------|-------|------|---------|-----------|
+| is_unique | Pool | bool | True = at most 1 copy in active deck; applies to Operative and Apex cards; False for all others | No |
+| deck_limit | Pool | int \| None | Max copies of this card in the faction's active deck; None = no per-card limit (pool size governed by §10 rules only) | No |
 | card_id | Identity | CardID | Canonical card identifier — `[FAC].[TYPE].n` per L219; registry: `card_ref` | TBD |
 | id | Identity | str | Legacy sequence integer (e.g., `id=42`); preserved in specs for traceability | TBD |
 | version | Identity | Semver | Per-card revision — v[major].[minor]; independent of Art 04 version | TBD |
@@ -503,7 +535,7 @@ class PSFraming:
 | trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
 | resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
-| persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Beat 5 of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. PA cards with active board-condition effects must use Transient or Seasonal. | Face |
+| persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Close Month of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. PA cards with active board-condition effects must use Transient or Seasonal. | Face |
 | persistence_condition | Metadata | BoolExpr | Condition that must remain True for a Permanent card to stay in play; card is discarded immediately when it evaluates False. None for all non-Permanent cards. | Face |
 | persistence_effect | Metadata | MutationExpr | Ongoing board condition active while a Permanent card is in play; evaluated continuously until persistence_condition is met. Use `game.board_condition(...)` to express scoped persistent effects. None for all non-Permanent cards. | Face |
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
@@ -526,6 +558,44 @@ class PSFraming:
 | perspectives | Narrative | dict[Faction, str] | Per-faction in-world perspective — one sentence per faction | TBD |
 | design_note | Narrative | str | Design intent — doctrine rationale, Art 11 layout context | No |
 | arbiter_note | Narrative | str | ARBITER resolution guidance — timing, edge cases, table validation | No |
+
+---
+
+#### Modifier Subclass Fields
+
+Fields added by ModActionCard, ModBattleCard, and ModReactCard. All three subclasses also inherit the full Card field set; always-None fields per subclass are listed in the table below.
+
+| Field | Subclass | Type | Purpose | Displayed |
+|-------|----------|------|---------|-----------|
+| effect | ModActionCard | ModActionExpr | Tagged union — exactly one: threshold_delta(n) \| success_multiplier(n) \| ps_shift(faction, delta) \| cost_reduction(n); cost_reduction is PA ops only (CA cost committed at dispatch before Beat 0) | Face |
+| effect | ModBattleCard | ModBattleExpr | Threshold delta applied to submitting faction (Self) or opponent (Opponent) during Battlefield Strength resolution | Face |
+| value_rating | All modifier subclasses | int \| None | 1–3; modifier strength signal printed on card face; used in Splay calculation; None = TBD (stub only — must be set before design pass) | Face |
+| ring_constraint | All modifier subclasses | Ring \| None | Deployment restriction set at card design time by narrative — location-anchored assets get the ring value; portable assets get None. ModActionCard: usable only with ops targeting that ring's districts. ModBattleCard: usable only in Battlefield Strength for a district in that ring. ModReactCard: fires only when trigger condition occurs in that ring's districts. | Face |
+| ring_origin | All modifier subclasses | Ring \| None | Which modifier deck this card belongs to — None = faction modifier deck; 1/2/3 = Ring 1/2/3 modifier deck. Determines draw eligibility (§11.2) and card back color. Separate from ring_constraint: a Ring 1 card (ring_origin=1) may have ring_constraint=None (portable, no deployment restriction). | No |
+
+#### Modifier Subclass Field Constraints
+
+Which inherited Card fields are always None vs. per-card design vs. required. `None` = always None for that subclass; `—` = inherits from Card class, value set per individual card design; `Required` = must be non-None.
+
+| Field | ModActionCard | ModBattleCard | ModReactCard |
+|-------|--------------|--------------|--------------|
+| layer / function / subject | None | None | — |
+| beat | None — fires with host action | None | None — fires on trigger |
+| resolution / threshold | None | None | — |
+| ring_mod / doctrine_mod | None | None | — |
+| trigger | None — fires when bundled | None | **Required** — never None |
+| resolution_type | None | None | — |
+| outcome_type | None | None | — |
+| persistence / persistence_condition / persistence_effect | None | None | — |
+| target_district / target_faction / target_object / target_taxonomy | None | None | — |
+| affinity / restriction | — | None | — |
+| boost | None | None | — |
+| success / successcrit / fail / failcrit | None | None | — |
+| on_accept / on_decline | None | None | — |
+| ps_framing | None | None | — |
+| perspectives / design_note | — | None | — |
+
+*ModReactCard: only `beat` is always None. All other `—` fields are live — set per individual card design.*
 
 ---
 
@@ -557,6 +627,48 @@ BoostExpr:           condition: CostExpr
 # Physical: ARBITER places n BM-xx (BoostMarker) tokens on card's grid slot at Beat 0
 # Resolution (Beat 2/3): effect fires (1 + BM-xx count) times; BM-xx returned to ARBITER supply at beat cleanup
 # Threshold-scaling cards: threshold locked at Beat 0 using (1 + BM-xx count) as total n
+
+TriggerExpr:         Any
+                     | component[.scope][.attribute].change(faction)
+# component:   presence_chip | structure_block | deployment_marker | dominant_marker |
+#              established_marker | tension_marker | standing_marker | world_event |
+#              accord | resolution_grid
+# scope:       ring1 | ring2 | ring3 | district.{id} | global  (optional filter)
+# attribute:   optional sub-state filter on component (e.g., influence level, chip count)
+# change:      placed | removed | converted | blocked | increased | decreased |
+#              played | expired | corrupted | updated
+# faction:     Any | Ghost | Network | Syndicate | Guild | Directorate
+#
+# Confirmed React trigger set (sourced from Art 03b + Art 02; public-only):
+#   presence_chip.placed / removed
+#   structure_block.placed / removed
+#   deployment_marker.placed / converted / blocked     (blocked = Blocked-face flip)
+#   dominant_marker.placed / removed                   (Dominant status change)
+#   established_marker.placed / removed
+#   tension_marker.placed / removed                    (Contested condition)
+#   standing_marker.increased / decreased              (PS track shift at Beat resolution)
+#   world_event.played / expired
+#   accord.placed / corrupted
+#   resolution_grid.updated                            (after Beat 0 public reveal)
+#
+# Excluded (static — never change): district tiles, board geography, ARBITER Dominance Marker
+# Excluded (procedural — not player-driven): Initiative Strip, Session Timeline, Quarter/Month markers
+
+ModActionExpr:       threshold_delta(n: int)
+                     | success_multiplier(n: int)
+                     | ps_shift(faction: str, delta: int)
+                     | cost_reduction(n: int)
+# threshold_delta:    +n or −n applied to host action threshold; valid for CA and PA
+# success_multiplier: effect fires additional n times; valid for CA and PA
+# ps_shift:           faction = "acting" | "target" | named faction; valid for CA and PA
+# cost_reduction:     reduce PA cost by n resources; PA ops only
+#                     (CA cost committed at dispatch before Beat 0; cannot be reduced post-submission)
+# Tagged union — exactly one effect expression per card
+
+ModBattleExpr:       direction: Self | Opponent
+                     magnitude: int
+# Self:    +magnitude applied to submitting faction's Battlefield Strength threshold
+# Opponent: −magnitude applied to opponent's threshold
 ```
 
 ---
@@ -1538,6 +1650,82 @@ STD.CA.10 = Card(
 
 ---
 
+### STD.CA.11 — TORT INTERFERENCE
+[↑ Covert Operations](#standard-covert-operations)
+
+#### Design Rationale
+Standard card available to all factions — any faction with a stake in an active Accord can lock it against voluntary dissolution through back-channel means. Reflects the legal concept of tortious interference: a third party prevents two contracting parties from exiting an agreement the third party benefits from. Directorate invokes this with institutional standing; Ghost files paperwork no one can trace; Syndicate retains counsel; Network embeds the agreement in public record; Collective organizes pressure around it. Cost is 1 Mandate + 1 of the acting faction's native resource — the Mandate requirement means any faction must spend a unit of institutional authority to invoke this regardless of doctrine. Lock persists until game end or direct breach by the Accord parties; breach is not blocked, but consequences apply normally. Voluntary dissolution suspended; unilateral breach is not.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Accord lock — prevents voluntary dissolution of a named executed Accord; distinct from GHO.CA.4 (evidence destruction) and DIR.CA.3 (surveillance); any faction with a stake can invoke | Art 00 §7 |
+| Voice fit | ✓ | Standard card; five faction perspectives by design — each faction arrives at the same outcome through different means | Art 00 §7 |
+| Doctrine alignment | ✓ | Standard; 1 Mandate + 1 native resource; Mandate requirement gates casual play regardless of faction; lock/breach distinction is mechanically clean | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / Standard — lock filed covertly; acting faction not announced at resolution; effect (marked Accord) is publicly visible | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Corrupt/Accord — corrupts the dissolution process; target is a defined physical component (executed Accord on table) | Art 04b §4, §5 |
+| Balance | ✓ | 1 Mandate + 1 native — dual resource cost reflects invoking legal/institutional authority outside normal doctrine; balance deferred until lock enforcement defined | Art 02 §6–§7 |
+| Effect duration | ✓ | Until game end or breach — not permanent in the absolute sense; releases on direct breach by parties | — |
+| Persistence | ✓ | Until(game.end OR Accord(named).breach_by_party) — card leaves a physical lock marker on the Accord; lingering per design | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None | — |
+| Portrait validity | ✓ | No portrait entry — PS implications deferred to 04-n34 sweep | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — Accord is on table/overview, not district-anchored | Art 01 §6–§7 |
+| Supported by components | ✓ | Accord (executed, on table) — physically verifiable by all players; no ARBITER ledger required | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Beat 3 Automatic; lock enforcement and breach detection outstanding (Outstanding Issues) | Art 03 §9, §11 |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+
+#### Outstanding Issues
+
+None — all resolved S68. District-keyed resource model makes Mandate acquirable by any faction (S68). `faction(acting).native` is existing notation precedent. Enforcement and breach detection are player-visible via the annotated public document per Governing Rule 6.1a — ARBITER does not track.
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  | ✓ | |
+
+*Redesigned S68: Directorate FactionSpecific CovertOperation (Evidence Preservation) → Standard CovertOperation. Name: Evidence Preservation → Tort Interference.*
+
+```python
+STD.CA.11 = Card(
+    id=23,  version="v2.0",
+    name    = "Tort Interference",
+    tagline = "Lock an executed Accord against voluntary dissolution until game end or breach.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
+    layer   = Information,  function = Corrupt,  subject = Accord,
+    beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    resolution_type="Transactional", outcome_type=None,
+    persistence     = Permanent,
+    persistence_condition = not (game.end OR Accord(named).breach_by_party),
+    persistence_effect    = None,
+    target_district=None, target_faction=None, target_object=Accord(executed, on_table),
+    target_taxonomy=None,
+    affinity=None,
+    restriction = Accord(named).is_executed == True AND Accord(named).on_table == True,
+    cost        = resource.faction(acting).mandate * 1 + resource.faction(acting).native * 1,
+    success     = game.lock(Accord(named), until=game.end OR Accord(named).breach_by_party),
+    successcrit=None, fail=None, failcrit=None,
+    portrait    = {},
+    narrative   = "The agreement stands. Whatever your reasons for wanting out, the record disagrees.",
+    perspectives = {
+        Directorate: "The agreement is now a matter of institutional record. Dissolution would require a filing no one is prepared to make.",
+        Ghost:       "The paperwork has been submitted. Quietly. Neither party knows who filed it.",
+        Syndicate:   "We have an interest in this arrangement continuing. Our lawyers agree.",
+        Network:     "We have made this agreement part of the public record. Dissolving it now would be a story.",
+        Collective:  "We hold both parties to what they agreed to. The community remembers.",
+    },
+    design_note  = "Redesigned S68: Directorate FactionSpecific CovertOperation (Evidence Preservation) → Standard CovertOperation. Any faction with a stake in an active Accord can lock it against voluntary dissolution. Cost: 1 Mandate + 1 faction native resource. Lock persists until game end or direct breach by Accord parties — breach not blocked, consequences apply normally.",
+    arbiter_note = "ARBITER annotates the named Accord document at Beat 3 — writes 'cannot voluntarily dissolve' or marks equivalent field on the Accord blank (TBD Art 06). No new component. Annotation is public; faction players enforce. Annotation is voided if either party directly breaches the Accord terms — breach consequences apply normally. Acting faction identity is not announced at resolution.",
+)
+```
+
+---
+
 ### STD.CA.12 — ABSOLUTE COMPROMISE
 [↑ Covert Operations](#standard-covert-operations)
 
@@ -1799,7 +1987,7 @@ C_Disprove = Card(
         Syndicate:   "Market intelligence has a half-life. The fastest way to extend it is to reduce the competition's supply.",
     },
     design_note  = "Standard covert op targeting an opponent's Intel token supply via blind random removal — ARBITER draws one token from target's supply without acting faction specifying which. No district restriction; no affinity (destroying evidence has no faction-native doctrine edge). Silent on success: target receives no notification. Automatic fail if target holds no tokens at Beat 3 (cost sunk).",
-    arbiter_note = "Phase A: acting faction names target faction. Beat 3: if target faction holds zero Intel tokens, op fails (cost sunk; do not announce reason). Otherwise, draw one Intel token at random from target faction's supply and remove from play (return to box). Acting faction receives no information about the removed token. Target faction receives no notification.",
+    arbiter_note = "Covert Dispatch: acting faction names target faction. Beat 3: if target faction holds zero Intel tokens, op fails (cost sunk; do not announce reason). Otherwise, draw one Intel token at random from target faction's supply and remove from play (return to box). Acting faction receives no information about the removed token. Target faction receives no notification.",
 )
 ```
 
@@ -1893,7 +2081,7 @@ C_IntelExtraction = Card(
         Syndicate:   "Capital intelligence infrastructure exists precisely for this — locating value before the market prices it in.",
     },
     design_note  = "Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two cards. Blind random draw from target's supply; acting faction receives token face-down in case, inspects privately at Beat 3 resolution. Target's token count decreases visibly (visible resource denial). Ghost affinity (threshold +10): covert acquisition doctrine. Syndicate portrait +1: capital intelligence motivation, no threshold bonus (physical acquisition is not Syndicate-native). Automatic fail if target holds no tokens at Beat 3.",
-    arbiter_note = "Phase A: acting faction names target faction. Beat 3: if target faction holds zero Intel tokens, op fails (cost sunk; do not announce reason). Otherwise, draw one Intel token at random from target faction's supply. Transfer face-down to acting faction's dispatch case — acting faction may inspect privately. Target faction's token count decreases by 1 (visible).",
+    arbiter_note = "Covert Dispatch: acting faction names target faction. Beat 3: if target faction holds zero Intel tokens, op fails (cost sunk; do not announce reason). Otherwise, draw one Intel token at random from target faction's supply. Transfer face-down to acting faction's dispatch case — acting faction may inspect privately. Target faction's token count decreases by 1 (visible).",
 )
 ```
 
@@ -1987,7 +2175,7 @@ C_ModifierRaid = Card(
         Syndicate:   "Their preparation becomes our edge. That is the nature of capital intelligence — arbitrage at the operational level.",
     },
     design_note  = "Economy/Redirect/ModifierCard — splits Asset Extraction (S62) into two cards alongside Intel Extraction. Blind random draw from target's modifier hand; acting faction receives card face-down in case, inspects privately at Beat 3 resolution. Target's card count decreases visibly. Ghost affinity (threshold +10); Syndicate portrait +1. Automatic fail if target holds no modifier cards at Beat 3.",
-    arbiter_note = "Phase A: acting faction names target faction. Beat 3: if target faction holds zero modifier cards, op fails (cost sunk; do not announce reason). Otherwise, draw one modifier card at random from target faction's hand. Transfer face-down to acting faction's dispatch case — acting faction may inspect privately. Target faction's modifier card count decreases by 1 (visible).",
+    arbiter_note = "Covert Dispatch: acting faction names target faction. Beat 3: if target faction holds zero modifier cards, op fails (cost sunk; do not announce reason). Otherwise, draw one modifier card at random from target faction's hand. Transfer face-down to acting faction's dispatch case — acting faction may inspect privately. Target faction's modifier card count decreases by 1 (visible).",
 )
 ```
 
@@ -4894,7 +5082,7 @@ GHO.PA.1 = Card(
 [↑ Public Acts](#ghost-public-acts)
 
 #### Design Rationale
-Ghost uses institutional channels to apply operational pressure on a named faction. The effect is a −15 threshold penalty on that faction's covert operations in the named district next Month (Transient). Ghost gains no PS — this is a tool, not a stage. Ghost adjacency applies — Ghost must have presence in a district adjacent to the target. Persistence = Transient: the GHO.PA.2 card stays face-up on the table with a marker on the target district until Beat 5 of next Month, serving as the active condition indicator. ARBITER removes the card and returns it to Ghost at Beat 5.
+Ghost uses institutional channels to apply operational pressure on a named faction. The effect is a −15 threshold penalty on that faction's covert operations in the named district next Month (Transient). Ghost gains no PS — this is a tool, not a stage. Ghost adjacency applies — Ghost must have presence in a district adjacent to the target. Persistence = Transient: the GHO.PA.2 card stays face-up on the table with a marker on the target district until Close Month of next Month, serving as the active condition indicator. ARBITER removes the card and returns it to Ghost at Close Month.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -4909,13 +5097,13 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 | Card type fit | ✓ | PublicAct / FactionSpecific (Ghost) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Resolution / Modify / CovertOperation (difficulty) | Art 04b §4 |
 | Balance | ✓ | 2 Findings; −15 threshold (meaningful but not absolute block); Transient. Ghost adjacency limits targeting range | Art 02 §6–§7 |
-| Effect duration | ✓ | Threshold modifier is Transient (until Beat 5 of next Month — within-Quarter). No multi-Quarter duration | Art 04 §5 P19 |
-| Persistence | ✓ | Transient — card stays face-up on table with district marker until Beat 5 next Month | Art 04 §6 |
+| Effect duration | ✓ | Threshold modifier is Transient (until Close Month of next Month — within-Quarter). No multi-Quarter duration | Art 04 §5 P19 |
+| Persistence | ✓ | Transient — card stays face-up on table with district marker until Close Month next Month | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
 | Portrait validity | ✓ | Ghost +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any — valid zone; restriction: Ghost presence in district adjacent to target | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component — threshold modifier is a world condition tracked by ARBITER; Findings × 2 cost (Art 02 §8) | Art 02 §8 |
-| Supported by game procedure | ✓ | Physical tracking: GHO.PA.2 card face-up + district marker; ARBITER removes at Beat 5 next Month | Art 03 §9.4 |
+| Supported by game procedure | ✓ | Physical tracking: GHO.PA.2 card face-up + district marker; ARBITER removes at Close Month next Month | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -4942,7 +5130,7 @@ GHO.PA.2 = Card(
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
-    persistence     = Transient,  # card stays on table with district marker until Beat 5 next Month
+    persistence     = Transient,  # card stays on table with district marker until Close Month next Month
     persistence_condition = None,
     persistence_effect    = None,
 
@@ -4959,7 +5147,7 @@ GHO.PA.2 = Card(
         scope    = district(target),
         target   = covert_op(faction=target_faction),
         effect   = threshold -= 15,
-        duration = Transient,  # Beat 5 of next Month
+        duration = Transient,  # Close Month of next Month
     ),
     # Ghost does not gain PS — uses the channel as a tool, not a stage
 
@@ -4975,8 +5163,8 @@ GHO.PA.2 = Card(
         Syndicate: "Ghost asks ARBITER to enforce the review. No exposure, no escalation, no record beyond the request itself. We recognize the structure. The target carries the friction. Ghost carries nothing.",  # aligned
         Guild:     "Ghost routes the pressure through ARBITER rather than holding the position itself. The district gets harder to operate in. Nothing is built. Ghost calls this strategy. Guild calls it avoidance.",  # opposed
     },
-    design_note  = "Ghost operational pressure PA. Uses institutional scrutiny (ARBITER) to apply −15 threshold to target faction's covert ops in named district next Month. No PS gain for Ghost — the channel is a tool. Ghost adjacency: must have presence in district adjacent to target. Persistence = Transient: GHO.PA.2 card face-up on table + district marker until Beat 5 of next Month. Multiple P18s from different Months can stack. Distinct from GHO.PA.1 (attribution) — GHO.PA.2 creates ongoing pressure without disclosure.",
-    arbiter_note = "Beat 4: place GHO.PA.2 card face-up on table with marker on target district. Apply −15 threshold penalty to all covert operations submitted by target faction in target district next Month (Beat 3). Card expires Beat 5 that Month — announce removal, return card to Ghost. Multiple GHO.PA.2 cards on same district from different Months stack (each tracked independently). Ghost adjacency enforced at Beat 0.",
+    design_note  = "Ghost operational pressure PA. Uses institutional scrutiny (ARBITER) to apply −15 threshold to target faction's covert ops in named district next Month. No PS gain for Ghost — the channel is a tool. Ghost adjacency: must have presence in district adjacent to target. Persistence = Transient: GHO.PA.2 card face-up on table + district marker until Close Month of next Month. Multiple P18s from different Months can stack. Distinct from GHO.PA.1 (attribution) — GHO.PA.2 creates ongoing pressure without disclosure.",
+    arbiter_note = "Beat 4: place GHO.PA.2 card face-up on table with marker on target district. Apply −15 threshold penalty to all covert operations submitted by target faction in target district next Month (Beat 3). Card expires Close Month that Month — announce removal, return card to Ghost. Multiple GHO.PA.2 cards on same district from different Months stack (each tracked independently). Ghost adjacency enforced at Beat 0.",
 )
 ```
 
@@ -5424,80 +5612,6 @@ DIR.CA.2 = Card(
 
 ---
 
-### STD.CA.11 — TORT INTERFERENCE
-[↑ Covert Operations](#standard-covert-operations)
-
-#### Design Rationale
-Standard card available to all factions — any faction with a stake in an active Accord can lock it against voluntary dissolution through back-channel means. Reflects the legal concept of tortious interference: a third party prevents two contracting parties from exiting an agreement the third party benefits from. Directorate invokes this with institutional standing; Ghost files paperwork no one can trace; Syndicate retains counsel; Network embeds the agreement in public record; Collective organizes pressure around it. Cost is 1 Mandate + 1 of the acting faction's native resource — the Mandate requirement means any faction must spend a unit of institutional authority to invoke this regardless of doctrine. Lock persists until game end or direct breach by the Accord parties; breach is not blocked, but consequences apply normally. Voluntary dissolution suspended; unilateral breach is not.
-
-#### Card Story
-⚠ Story pending 04-n79.
-
-**Design checklist:**
-
-| Category | Pass | Note | Artifact ref |
-|----------|------|------|--------------|
-| Action fit | ✓ | Accord lock — prevents voluntary dissolution of a named executed Accord; distinct from GHO.CA.4 (evidence destruction) and DIR.CA.3 (surveillance); any faction with a stake can invoke | Art 00 §7 |
-| Voice fit | ✓ | Standard card; five faction perspectives by design — each faction arrives at the same outcome through different means | Art 00 §7 |
-| Doctrine alignment | ✓ | Standard; 1 Mandate + 1 native resource; Mandate requirement gates casual play regardless of faction; lock/breach distinction is mechanically clean | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | CovertOperation / Standard — lock filed covertly; acting faction not announced at resolution; effect (marked Accord) is publicly visible | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Information/Corrupt/Accord — corrupts the dissolution process; target is a defined physical component (executed Accord on table) | Art 04b §4, §5 |
-| Balance | ✓ | 1 Mandate + 1 native — dual resource cost reflects invoking legal/institutional authority outside normal doctrine; balance deferred until lock enforcement defined | Art 02 §6–§7 |
-| Effect duration | ✓ | Until game end or breach — not permanent in the absolute sense; releases on direct breach by parties | — |
-| Persistence | ✓ | Until(game.end OR Accord(named).breach_by_party) — card leaves a physical lock marker on the Accord; lingering per design | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | No portrait entry — PS implications deferred to 04-n34 sweep | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = None — Accord is on table/overview, not district-anchored | Art 01 §6–§7 |
-| Supported by components | ✓ | Accord (executed, on table) — physically verifiable by all players; no ARBITER ledger required | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; lock enforcement and breach detection outstanding (Outstanding Issues) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-
-#### Outstanding Issues
-
-None — all resolved S68. District-keyed resource model makes Mandate acquirable by any faction (S68). `faction(acting).native` is existing notation precedent. Enforcement and breach detection are player-visible via the annotated public document per Governing Rule 6.1a — ARBITER does not track.
-
-#### Status
-
-| | Design Pass | Issues Resolved | Signed off |
-|--|-------------|-----------------|------------|
-| Status |  | ✓ | |
-
-*Redesigned S68: Directorate FactionSpecific CovertOperation (Evidence Preservation) → Standard CovertOperation. Name: Evidence Preservation → Tort Interference.*
-
-```python
-STD.CA.11 = Card(
-    id=23,  version="v2.0",
-    name    = "Tort Interference",
-    tagline = "Lock an executed Accord against voluntary dissolution until game end or breach.",
-    type    = CovertOperation,  subtype = Standard,  faction = All,
-    layer   = Information,  function = Corrupt,  subject = Accord,
-    beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
-    persistence     = Permanent,
-    persistence_condition = not (game.end OR Accord(named).breach_by_party),
-    persistence_effect    = None,
-    target_district=None, target_faction=None, target_object=Accord(executed, on_table),
-    target_taxonomy=None,
-    affinity=None,
-    restriction = Accord(named).is_executed == True AND Accord(named).on_table == True,
-    cost        = resource.faction(acting).mandate * 1 + resource.faction(acting).native * 1,
-    success     = game.lock(Accord(named), until=game.end OR Accord(named).breach_by_party),
-    successcrit=None, fail=None, failcrit=None,
-    portrait    = {},
-    narrative   = "The agreement stands. Whatever your reasons for wanting out, the record disagrees.",
-    perspectives = {
-        Directorate: "The agreement is now a matter of institutional record. Dissolution would require a filing no one is prepared to make.",
-        Ghost:       "The paperwork has been submitted. Quietly. Neither party knows who filed it.",
-        Syndicate:   "We have an interest in this arrangement continuing. Our lawyers agree.",
-        Network:     "We have made this agreement part of the public record. Dissolving it now would be a story.",
-        Collective:  "We hold both parties to what they agreed to. The community remembers.",
-    },
-    design_note  = "Redesigned S68: Directorate FactionSpecific CovertOperation (Evidence Preservation) → Standard CovertOperation. Any faction with a stake in an active Accord can lock it against voluntary dissolution. Cost: 1 Mandate + 1 faction native resource. Lock persists until game end or direct breach by Accord parties — breach not blocked, consequences apply normally.",
-    arbiter_note = "ARBITER annotates the named Accord document at Beat 3 — writes 'cannot voluntarily dissolve' or marks equivalent field on the Accord blank (TBD Art 06). No new component. Annotation is public; faction players enforce. Annotation is voided if either party directly breaches the Accord terms — breach consequences apply normally. Acting faction identity is not announced at resolution.",
-)
-```
----
 
 ### DIR.CA.3 — SURVEILLANCE PLACEMENT
 [↑ Covert Operations](#directorate-covert-operations)
@@ -6615,6 +6729,7 @@ NET.CA.1 = Card(
     arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending 04-n33). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
 )
 ```
+
 ---
 
 ### NET.CA.2 — DISCLOSURE LOOP
@@ -7263,9 +7378,9 @@ NET.PA.2 = Card(
 [↑ Public Acts](#network-public-acts)
 
 #### Design Rationale
-Network's forced-transparency PA — the broadcaster turns its full institutional reach on a named faction and makes them The Story. The declaration is public and immediate: from the next Phase A, the named faction is under live coverage. They must choose each Phase A whether to cooperate (hand face-up on the table, covert ops proceed) or go dark (dispatch case disabled this Month, hand stays hidden). The scrutiny doesn't end by fighting it; it ends when the faction gives the interview.
+Network's forced-transparency PA — the broadcaster turns its full institutional reach on a named faction and makes them The Story. The declaration is public and immediate: from the next Covert Dispatch, the named faction is under live coverage. They must choose each Covert Dispatch whether to cooperate (hand face-up on the table, covert ops proceed) or go dark (dispatch case disabled this Month, hand stays hidden). The scrutiny doesn't end by fighting it; it ends when the faction gives the interview.
 
-Comply for one full Phase A → card clears. The faction has been transparent enough; Network moves on. The strategic question is *when* to give the interview — a faction holding strong ops for Month 3 may choose to absorb the disability in Month 2 to protect the play, then comply in Month 3 when there's less to expose.
+Comply for one full Covert Dispatch → card clears. The faction has been transparent enough; Network moves on. The strategic question is *when* to give the interview — a faction holding strong ops for Month 3 may choose to absorb the disability in Month 2 to protect the play, then comply in Month 3 when there's less to expose.
 
 *Note: cards laid face-up during compliance are still "in hand" for all game purposes — card counts, submittability, and eligibility are unchanged. The open hand is a visibility state, not a mechanical restriction.*
 
@@ -7273,7 +7388,7 @@ Comply for one full Phase A → card clears. The faction has been transparent en
 
 #### Card Story
 
-Network turns its full broadcast infrastructure on a named faction, making them The Story. Under live coverage, that faction faces a choice each Phase A: open their hand to the table and operate in full view, or go dark and forfeit covert submissions entirely. The scrutiny doesn't end by fighting it — it ends when the faction gives the interview.
+Network turns its full broadcast infrastructure on a named faction, making them The Story. Under live coverage, that faction faces a choice each Covert Dispatch: open their hand to the table and operate in full view, or go dark and forfeit covert submissions entirely. The scrutiny doesn't end by fighting it — it ends when the faction gives the interview.
 
 **Design checklist:**
 
@@ -7286,7 +7401,7 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 | Taxonomy fit | ⚠ | Information / Reveal / FactionHand — FactionHand not a registered subject type; needs 04b validation | Art 04b §4, §5 |
 | Balance | ✓ | Exposure×2 at threshold 50; comply-to-clear limits maximum duration; resist penalty (covert ops disabled) is real cost; crit adds immediate PS pressure | Art 02 §6–§7 |
 | Effect duration | ✓ | Seasonal — clears at Quarter end OR when target complies once (whichever is first) | — |
-| Persistence | ✓ | Seasonal; `persistence_condition` = target complied for one Phase A; `persistence_effect` = Phase A comply/resist obligation | Art 04 §6 |
+| Persistence | ✓ | Seasonal; `persistence_condition` = target complied for one Covert Dispatch; `persistence_effect` = Covert Dispatch comply/resist obligation | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
 | Portrait validity | ✓ | Network +1 submitter; FailCrit Network −1 (failed broadcast backfires — reckless accusation without traction); FactionSpecific, no other entries | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
@@ -7310,14 +7425,14 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 NET.PA.3 = Card(
     id=TBD, version="v1.0",
     name    = "Live Coverage",
-    tagline = "Force a named faction to play with their hand visible or forfeit covert submissions, each Phase A for the remaining Months of the Quarter.",
+    tagline = "Force a named faction to play with their hand visible or forfeit covert submissions, each Covert Dispatch for the remaining Months of the Quarter.",
     type    = PublicAct, subtype = FactionSpecific, faction = Network,
     layer   = Information, function = Reveal, subject = FactionHand,  # 04b validation needed
     beat=4, resolution=d100, threshold=50, ring_mod=None, doctrine_mod=None, trigger=None,
     resolution_type = "Probabilistic", outcome_type=None,
     persistence     = Seasonal,
-    persistence_condition = "target_faction complied (open hand) for one full Phase A this Quarter → card clears at end of that Phase A; or Quarter end",
-    persistence_effect    = "Each Phase A of remaining Months: target faction elects comply (lay all held cards face-up on table; covert ops proceed normally this Phase A) or resist (dispatch case disabled this Month — no covert submissions). Comply once → card clears.",
+    persistence_condition = "target_faction complied (open hand) for one full Covert Dispatch this Quarter → card clears at end of that Covert Dispatch; or Quarter end",
+    persistence_effect    = "Each Covert Dispatch of remaining Months: target faction elects comply (lay all held cards face-up on table; covert ops proceed normally this Covert Dispatch) or resist (dispatch case disabled this Month — no covert submissions). Comply once → card clears.",
     target_district = None,
     target_faction  = faction(named_opponent),
     target_object   = None,
@@ -7338,8 +7453,8 @@ NET.PA.3 = Card(
         Network:     "We are not exposing secrets. We are establishing accountability. The distinction matters to us.",
         Directorate: "Network has appointed itself an oversight authority. The Directorate notes this. It will not be forgotten.",
     },
-    design_note  = "Successor to C40 Option B (Weaponized Transparency, retired S70). Hand-visibility model replaces dispatch-case forced-reveal — simpler L1 execution, genuine comply/resist decision friction. Comply once → card clears (the faction gave the interview; Network moves on). Resist → covert submissions disabled that Month; card persists. Natural expiry: Quarter end. SuccessCrit: obligation activates + target −1 PS (story breaks big). FailCrit: Network −1 PS (reckless broadcast, story didn't land). Art 03 Phase A procedure required (04-n77). Subject = FactionHand — 04b validation needed.",
-    arbiter_note = "Network has declared Live Coverage against faction X. Place card in Network's active PA area, face-up; faction X announced. Effect begins next Phase A. Each Phase A while Live Coverage is active: at start of Phase A announce — 'Live Coverage is active against [Faction X]. Faction X: comply (lay all held cards face-up on your table area for Phase A — cards remain in hand; covert ops proceed) or resist (forfeit covert submissions this Month).' If faction X complies: covert submissions proceed normally; at end of Phase A, remove Live Coverage from Network's active PA area. If faction X resists: faction X does not open their dispatch case this Phase A; Live Coverage remains in play. Cards laid face-up during compliance are still counted as in hand. Network identity as declaring faction is already public (Phase B declaration).",
+    design_note  = "Successor to C40 Option B (Weaponized Transparency, retired S70). Hand-visibility model replaces dispatch-case forced-reveal — simpler L1 execution, genuine comply/resist decision friction. Comply once → card clears (the faction gave the interview; Network moves on). Resist → covert submissions disabled that Month; card persists. Natural expiry: Quarter end. SuccessCrit: obligation activates + target −1 PS (story breaks big). FailCrit: Network −1 PS (reckless broadcast, story didn't land). Art 03 Covert Dispatch procedure required (04-n77). Subject = FactionHand — 04b validation needed.",
+    arbiter_note = "Network has declared Live Coverage against faction X. Place card in Network's active PA area, face-up; faction X announced. Effect begins next Covert Dispatch. Each Covert Dispatch while Live Coverage is active: at start of Covert Dispatch announce — 'Live Coverage is active against [Faction X]. Faction X: comply (lay all held cards face-up on your table area for Covert Dispatch — cards remain in hand; covert ops proceed) or resist (forfeit covert submissions this Month).' If faction X complies: covert submissions proceed normally; at end of Covert Dispatch, remove Live Coverage from Network's active PA area. If faction X resists: faction X does not open their dispatch case this Covert Dispatch; Live Coverage remains in play. Cards laid face-up during compliance are still counted as in hand. Network identity as declaring faction is already public (Phase B declaration).",
 )
 ```
 
@@ -7989,7 +8104,7 @@ SYN.CA.10 = Card(
     target_object   = AccordCard(state=active, party=target_faction),
     declared_params = (
         incoming_party = faction(any),
-        # written on TP declared-parameters line at Phase A
+        # written on TP declared-parameters line at Covert Dispatch
         # may be Syndicate (self-insertion or self-exit) or any other faction not
         # already a named party on the target Accord
     ),
@@ -8049,7 +8164,7 @@ SYN.CA.10 = Card(
     },
 
     design_note  = "Completes the Accord manipulation suite with SYN.CA.11 Redline: CA.10 controls who is bound; CA.11 controls what the terms say. Economy|Corrupt|AccordCard — party names on the Accord form are written records; replacement is a Corrupt operation. ARBITER makes the physical alteration at Beat 3 per Art 06 §9.10 and announces publicly (the change is public; the acting faction remains covert). No consent required from either party (Art 06 §9.10, L205). Outgoing_party may be Syndicate (self-exit, forcing obligations onto incoming party). Incoming_party may be Syndicate (self-insertion to acquire another faction's Accord position). Restriction: incoming_party not already a named party on the same Accord. Crit success: incoming party — the involuntarily inserted faction — elects one numeric term change at the table; gives them a single renegotiation concession. Supersedes SECONDARY OBLIGATIONS gap concept.",
-    arbiter_note = "Phase A: acting faction writes on TP declared-parameters line: incoming party. Beat 0: verify restriction — outgoing party is named on target Accord; incoming party is not. Beat 3: roll d100. On success (≤50): locate Accord form in Accord Placement Area; strike outgoing party name; write incoming party name; announce to table: '[Outgoing] replaced by [Incoming] on [Accord]. All terms now bind [Incoming].' On crit success (01–05): apply named party change as above; then address incoming party player: 'You may alter one numeric term in this Accord — name the clause and state the new value.' Apply declared change per Art 06 §9.10 Alter/Terms. On fail: no effect; cost spent. On failcrit (96–00): no Accord change; announce acting faction publicly; apply Syndicate −2 PS.",
+    arbiter_note = "Covert Dispatch: acting faction writes on TP declared-parameters line: incoming party. Beat 0: verify restriction — outgoing party is named on target Accord; incoming party is not. Beat 3: roll d100. On success (≤50): locate Accord form in Accord Placement Area; strike outgoing party name; write incoming party name; announce to table: '[Outgoing] replaced by [Incoming] on [Accord]. All terms now bind [Incoming].' On crit success (01–05): apply named party change as above; then address incoming party player: 'You may alter one numeric term in this Accord — name the clause and state the new value.' Apply declared change per Art 06 §9.10 Alter/Terms. On fail: no effect; cost spent. On failcrit (96–00): no Accord change; announce acting faction publicly; apply Syndicate −2 PS.",
 )
 ```
 
@@ -8254,7 +8369,7 @@ Syndicate converts gathered intelligence into a forced Accord commitment. The In
 | Action fit | ✓ | Intelligence leverage applied to Accord formation — forces yes-vote on existing draft terms | Art 00 §7 |
 | Voice fit | — | TBD — single Syndicate perspective minimum | Art 00 §7 |
 | Doctrine alignment | — | Syndicate only; IntelToken cost; Art 06 §9 Lock interaction outstanding | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | ModifierCard / Instant — modifier applied to Accord formation window, not a CovertOperation | Art 04 §6.2 |
+| Card type fit | ✓ | ModActionCard — modifier applied to Accord formation window, not a CovertOperation | Art 04 §6.1, §6.2 |
 | Taxonomy fit | — | Modifier card taxonomy — excluded from Layer/Function/Subject taxonomy | Art 04b §5.1, §9 |
 | Balance | — | IntelToken × 1; effect = forced acceptance of existing Accord draft; scope and party requirements outstanding | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate at Beat 4 Accord formation | — |
@@ -8269,7 +8384,7 @@ Syndicate converts gathered intelligence into a forced Accord commitment. The In
 
 #### Outstanding Issues
 
-- **Art 03 procedure — modifier card in Accord window:** No procedure written for Instant modifier cards played during Beat 4 Accord formation. Must be written as generalizable rule before Issues Resolved.
+- **Art 03 procedure — modifier card in Accord window:** No procedure written for ModActionCard played during Beat 4 Accord formation. Must be written as generalizable rule before Issues Resolved.
 - **Party requirement:** Must Syndicate be a named party to the target Accord? Expected yes — this is leverage, not arbitration. Confirm.
 - **Scope after forced acceptance:** Can the target exercise any standard Accord rights after forced acceptance (dissolution, breach action), or are they fully bound as written? Clarify.
 - **Lock type interaction:** Art 06 §9 Lock applies to a single manipulation within an existing Accord. Confirm whether "forcing acceptance of a draft Accord" is a Lock (modifying the target's vote) or a new manipulation category.
@@ -8285,11 +8400,11 @@ Syndicate converts gathered intelligence into a forced Accord commitment. The In
 *v1.0 — S71: redesigned as modifier card (Instant). Forced acceptance of Accord draft as written. Replaces deferred "forced Accord vote" stub from S70.*
 
 ```python
-# STUB — modifier card schema TBD (04-n4); Art 06 §9 Lock interaction outstanding
+# STUB — full ModActionCard spec (effect, value_rating, ring_constraint, ring_origin) pending 09-06; Art 06 §9 Lock interaction outstanding
 Card(
     id=TBD,  version="v1.0",
     name        = "Accord Leverage",  # placeholder
-    type        = ModifierCard,  subtype = Instant,  faction = Syndicate,
+    type        = ModActionCard,  faction = Syndicate,
     beat        = 4,  # Accord formation window
     trigger     = AccordDraft(named).status == Draft,  # draft exists, not yet executed
     restriction = AccordDraft(named).party(faction(target)) == True,  # target is named party
@@ -8401,7 +8516,7 @@ SYN.CA.11 = Card(
     },
 
     design_note  = "Syndicate's only Information-layer covert op. Effect is public (form changes) but actor is covert — unique table dynamic. Valid clause targets: fill-in values that are numeric or ordinal (resource quantity, influence tier, Quarter number). Prohibited: clause rows with only named entries (district name, PA type) — not numeric alterations. declared_clause and declared_value sourced from Target Profile declared-parameters line.",
-    arbiter_note = "Acting faction declares at Phase A: (a) target Accord by named parties, (b) clause row to alter, (c) replacement value — all written on Target Profile declared-parameters line. On success at Beat 3: locate declared Accord form in Accord Placement Area; apply Alter/Terms per Art 06 §9.10 — write new value; acting faction identity not disclosed. If declared Accord has been removed before Beat 3 resolution, treat as fail. Alteration resolves in submission order; subsequent Beat 3 ops see altered terms.",
+    arbiter_note = "Acting faction declares at Covert Dispatch: (a) target Accord by named parties, (b) clause row to alter, (c) replacement value — all written on Target Profile declared-parameters line. On success at Beat 3: locate declared Accord form in Accord Placement Area; apply Alter/Terms per Art 06 §9.10 — write new value; acting faction identity not disclosed. If declared Accord has been removed before Beat 3 resolution, treat as fail. Alteration resolves in submission order; subsequent Beat 3 ops see altered terms.",
 )
 ```
 
@@ -8789,7 +8904,7 @@ SYN.PA.3 = Card(
 | GHO.PA.3 | Declassified Records | 📝 | Information | Public | Remove | Intel Token (expired) | Remove |
 | GHO.PA.4 | Public Threat Assessment | 📝 | Information | Private → Public | Reveal | Broadcast Effect Card | Reveal |
 | GHO.PA.5 | Agency Recruitment Fair | 📝 | Territory | Public | Add | Presence Token | Add |
-| GHO.MOD.1 | Clarify Misinformation | 📝 | Information | Public | Remove | Intel Token | Remove | *ModifierCard/React — taxonomy excluded from §11.1 per modifier card rules (S110)* |
+| GHO.MOD.1 | Clarify Misinformation | 📝 | Information | Public | Remove | Intel Token | Remove | *ModReactCard — taxonomy excluded from §11.1; effect description for spec clarity only* |
 | GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure Block | — |
 | GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
 | GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence Token | Add |
@@ -8804,8 +8919,8 @@ SYN.PA.3 = Card(
 | NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | Public Act | — |
 | NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence Token | Add |
 | NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | Intel Token | Add |
-| NET.MOD.1 | Signal Break | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
-| NET.MOD.2 | Reputational Strike | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| NET.MOD.1 | Signal Break | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.2 | Reputational Strike | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
 | NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence Token | Add |
 | NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | Faction Hand | Reveal |
@@ -8825,7 +8940,7 @@ SYN.PA.3 = Card(
 | STD.CA.14 | Disprove | 📝 | Economy | Public | Remove | Intel Token | Remove |
 | STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel Token | Move |
 | STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier Card | Move |
-| STD.MOD.1 | Overture | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| STD.MOD.1 | Overture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence Token | Add |
 | STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence Token | Remove |
 | STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure Block | Add |
@@ -8845,7 +8960,7 @@ SYN.PA.3 = Card(
 | SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | Presence Token | Add |
 | SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
 | SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
-| SYN.MOD.1 | Accord Leverage | 📝 | ModifierCard — taxonomy excluded §5.1 | — | — | — | — |
+| SYN.MOD.1 | Accord Leverage | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
 | SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
 | SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
@@ -8944,14 +9059,15 @@ Standard cards are distributed as part of each faction's CA and PA pools — eac
 
 ### 11.1 What They Are
 
-Modifier cards alter the parameters of an action rather than targeting a game layer directly. They produce no game-state primitives on their own; their effect is mediated by the host action or condition they modify. Parameters a modifier card can alter include difficulty, cost, threshold, scope, outcome, timing, or validity of the host action. Modifier cards carry no Layer — Function — Subject assignment and are excluded from the card taxonomy. *(Art 04b §5.1, §9)*
+Modifier cards alter the parameters of an action rather than targeting a game layer directly. They produce no game-state primitives on their own; their effect is mediated by the host action or condition they modify. Modifier cards carry no Layer — Function — Subject assignment and are excluded from the card taxonomy. *(Art 04b §5.1, §9)*
 
-Two timing sub-types govern when a modifier card fires:
+Three subclass types govern how a modifier card fires (§6.1):
 
-- **React** — fires automatically when a named publicly-observable condition is met; not submitted in the standard action sequence.
-- **Instant** — played actively during a defined window.
+- **ModActionCard** — bundled with a submitted operation (CA, PA, Operative, Emergency, Apex) at Covert Dispatch; fires with the host action; effect expressed as a `ModActionExpr` tagged union.
+- **ModBattleCard** — played during Battlefield Strength resolution (§10 Contested District Resolution); effect is a `ModBattleExpr` threshold delta.
+- **ModReactCard** — fires when a publicly observable board state change matches its `trigger` condition; played in the Faction Resolution Grid, not bundled with a dispatch case.
 
-React and Instant describe *when* a modifier fires, not what it does.
+*"Instant" was a working designation in earlier design. The canonical term is ModActionCard (operation modifier) or ModReactCard (react/trigger modifier) per §6.1.*
 
 Two sets:
 
@@ -9010,14 +9126,25 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 
 ### 11.7 Effect Types
 
-| Category | Effect |
-|----------|--------|
-| Difficulty reduction | Reduce covert operation target threshold by stated amount |
-| Cost reduction | Reduce resource cost of modified action by 1 unit |
-| Effect extension | Extend a one-round effect — permanent where applicable per Principle 11 |
-| Detection immunity | One failed detection roll does not surface the faction |
-| Reach extension | Apply a public act to a non-operational-marker district |
-| Outcome addition | Attach an additional Automatic resolution outcome to the host action. Fires when the host action resolves at its designated beat, regardless of the host action's success or failure unless card text specifies otherwise. Not a separate action; requires no Dispatch Token. |
+**ModActionCard** effects (§6.3 `ModActionExpr` — one per card):
+
+| ModActionExpr | Effect | Valid for |
+|---------------|--------|-----------|
+| `threshold_delta(n)` | +n or −n applied to host action threshold | CA and PA |
+| `success_multiplier(n)` | Effect fires additional n times on success | CA and PA |
+| `ps_shift(faction, delta)` | Applies a PS shift to "acting", "target", or a named faction | CA and PA |
+| `cost_reduction(n)` | Reduces PA cost by n resources | PA only |
+
+**ModBattleCard** effects (§6.3 `ModBattleExpr`):
+
+| Direction | Effect |
+|-----------|--------|
+| `Self` | +magnitude applied to submitting faction's Battlefield Strength threshold |
+| `Opponent` | −magnitude applied to opponent's threshold |
+
+**ModReactCard** effects: Full CA/PA effect field set (`success`, `successcrit`, `fail`, `failcrit`) — see §6.1.
+
+*Legacy effect categories from earlier design (Effect extension, Detection immunity, Reach extension, Outcome addition) are superseded by the §6.1 modifier subclass schema. Outcome addition remains valid for ModActionCard via `success` on Automatic host action.*
 
 ### 11.8 Named Modifier Cards — Stubs
 
@@ -9031,7 +9158,7 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 
 #### Design Rationale
 
-Overture is the bridge between STD.CA.9's anonymous funding gesture and formal alliance. When STD.CA.9 Fund succeeds, ARBITER delivers Overture (as a modifier card) to the acting faction. In a subsequent Month or Quarter, the faction assigns Overture to any of their Public Acts at Phase B. When that PA resolves at Beat 4 — regardless of outcome — ARBITER delivers a blank AccordForm to the acting faction. The faction drafts the terms and places the completed form in the Accord Placement Area during Beat 4 resolution or Debrief. The target faction then accepts, negotiates, or declines at Debrief. Mechanically: a free Instant modifier that attaches one Accord initiation to any PA slot.
+Overture is the bridge between STD.CA.9's anonymous funding gesture and formal alliance. When STD.CA.9 Fund succeeds, ARBITER delivers Overture (as a modifier card) to the acting faction. In a subsequent Month or Quarter, the faction assigns Overture to any of their Public Acts at Phase B. When that PA resolves at Beat 4 — regardless of outcome — ARBITER delivers a blank AccordForm to the acting faction. The faction drafts the terms and places the completed form in the Accord Placement Area during Beat 4 resolution or Debrief. The target faction then accepts, negotiates, or declines at Debrief. Mechanically: a free ModActionCard that attaches one Accord initiation to any PA slot.
 
 **Timing constraint:** Overture cannot be used in the Month it is received. STD.CA.9 resolves at Beat 3; the host PA must be declared at Phase B (before Beat 3). Overture is held to Month 2, Month 3, or a subsequent Quarter. Tradeable per Art 03 §11.5.
 
@@ -9046,11 +9173,11 @@ Overture is the bridge between STD.CA.9's anonymous funding gesture and formal a
 | Action fit | ✓ | Modifier card attaching Accord initiation as PA outcome addition. Alliance-opening mechanic — earned through STD.CA.9; formalized through PA attachment. | Art 04 §11.1; Art 06 §9.4 |
 | Voice fit | ✓ | Narrative in diplomatic register. Perspectives: TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
 | Doctrine alignment | ✓ | `faction = All` — no alignment penalty for using Overture; doctrine weight carried by STD.CA.9. | Art 04 §6.5 |
-| Card type fit | ✓ | `Modifier / Instant` — assigned at Phase B; fires when host PA resolves. Does not enter Resolution Grid as independent action. | Art 04 §11.1, §11.4 |
+| Card type fit | ✓ | `ModActionCard` — assigned at Phase B; fires when host PA resolves. Does not enter Resolution Grid as independent action. | Art 04 §6.1, §11.1, §11.4 |
 | Taxonomy fit | ✓ | No Layer / Function / Subject — modifier cards excluded per §11.1. | Art 04b §5.1, §9 |
 | Balance | ✓ | `cost = None` — reward from STD.CA.9 success (2 Capital + roll risk already paid). Assignment free. Accord Portrait implications governed by Art 06 §9.9. Reassess STD.CA.9 threshold after §11 redesign. | Art 02 §8; Art 06 §9.9 |
 | Effect duration | ✓ | Immediate — AccordForm delivery is instantaneous. Resulting Accord's duration governed by Art 06 §9.3–§9.7 independently. | Art 04 §5 P19 |
-| Trigger validity | ✓ | Instant — fires at Beat 4 host PA resolution. Art 03 §5 P5 (publicly observable trigger) does not apply to Instant modifiers. | Art 04 §5 P5; §11.1 |
+| Trigger validity | ✓ | ModActionCard — fires at Beat 4 when host PA resolves. Art 03 §5 P5 does not apply (ModActionCard bundled with host op at Covert Dispatch, not an independent play). | Art 04 §5 P5; §11.1 |
 | Portrait validity | ✓ | No portrait entry for Overture assignment. Portrait from resulting Accord governed by Art 06 §9.9. | Art 04 §6.2; Art 06 §9.9 |
 | Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
 | Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in STD.CA.9 `arbiter_note`; Art 07 subroutine pass to formalize. | Art 03 Phase B; Art 06 §9.4; STD.CA.9 |
@@ -9076,7 +9203,7 @@ Overture = Card(
     id      = TBD,  version = "v1.0",
     name    = "Overture",
     tagline = "Extend a formal invitation to negotiate — attached to any public act you declare.",
-    type    = Modifier,  subtype = Instant,  faction = All,
+    type    = ModActionCard,  faction = All,
 
     layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
 
@@ -9138,7 +9265,7 @@ Overture = Card(
 | Action fit | — | Intelligence-to-reputation conversion; unblockable PS −1 on visible trigger | Art 00 §7 |
 | Voice fit | — | TBD — single Network perspective minimum | Art 00 §7 |
 | Doctrine alignment | — | TBD | Art 00 §7; Art 04 §6.5 |
-| Card type fit | — | ModifierCard / React — not a CovertOperation; modifier card schema applies (04-n4) | Art 04 §6.2 |
+| Card type fit | — | ModReactCard — not a CovertOperation; full spec pending 09-06 design pass | Art 04 §6.1, §6.2 |
 | Taxonomy fit | — | TBD — modifier card taxonomy differs from action card taxonomy | Art 04b §4, §5 |
 | Balance | — | IntelToken cost; Automatic; PS −1; unblockable — TBD relative to countermeasure rarity | Art 02 §6–§7 |
 | Effect duration | — | Immediate at trigger point | — |
@@ -9161,11 +9288,11 @@ Overture = Card(
 **Status:** Stub — design pass, Issues Resolved, sign-off all pending.
 
 ```python
-# STUB — modifier card schema TBD (04-n4)
+# STUB — full ModReactCard spec (trigger, value_rating, ring_constraint, ring_origin) pending 09-06 design pass
 Card(
     id=TBD,  version="v0.1",
     name    = "Reputational Strike",  # placeholder
-    type    = ModifierCard,  subtype = React,  faction = Network,
+    type    = ModReactCard,  faction = Network,
     layer   = Information,  function = Reveal,  subject = PublicStanding,
     trigger = TBD,  # visible board state change — see Outstanding Issues
     cost    = IntelToken(any) * 1,
@@ -9194,7 +9321,7 @@ The district was already moving. Network didn't start the change — it arrived 
 | Action fit | ✓ | Opportunistic chip placement on publicly-observable PA trigger — fills Territory|Add|PresenceToken gap in Network Modifier set | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Network perspective — presence inserted through public disruption | Art 00 §7 |
 | Doctrine alignment | ✓ | Network only; trigger is publicly observable (any PA board state change); no prior presence required — doctrinal reach-first | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | ModifierCard / React — trigger is PA success causing board state change; not a CovertOperation | Art 04 §6.2; Art 04b §9 |
+| Card type fit | ✓ | ModReactCard — trigger is PA success causing board state change; not a CovertOperation | Art 04 §6.1, §6.2; Art 04b §9 |
 | Taxonomy fit | — | Modifier cards excluded from matrix (Art 04b §9); effect is Territory|Add|PresenceToken for spec reference only | Art 04b §9 |
 | Balance | ⚠ | Exposure×1 cost; broad trigger (any PA board state change); chip placement with no prior foothold requirement is strong — validate against board state frequency in playtesting | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — chip placed at Beat 4 trigger point | — |
@@ -9204,7 +9331,7 @@ The district was already moving. Network didn't start the change — it arrived 
 | Supported by zones | ✓ | target_district = district(trigger.target) — fixed by trigger, not a free choice | Art 01 §6–§7 |
 | Supported by components | ✓ | Chip placement — standard; Exposure×1 cost — standard Network resource | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 4 React; Art 03 §18 React rules apply; trigger window opens on PA success announcement | Art 03 §18 |
-| Data schema validation | ⚠ | Modifier card schema pending (04-n4) | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | ModReactCard schema defined (04-n102 ✅); full spec (trigger, value_rating, ring_constraint, ring_origin) pending 09-06 design pass | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Board disruption as entry window — Network presence arrives with the change | Art 04 §5 P26 |
 
 **Outstanding Issues:**
@@ -9219,7 +9346,7 @@ NET.MOD.1 = Card(
     id=TBD,  card_id="NET.MOD.1",  version="v1.0",
     name    = "Signal Break",
     tagline = "A public action changes the district. The signal finds the opening.",
-    type    = ModifierCard,  subtype = React,  faction = Network,
+    type    = ModReactCard,  faction = Network,
     trigger = PA_success.where(effect.causes_board_state_change(district)),
               # fires on any PA success that places or removes an influence chip
               # or structure block in any district; target = that district
@@ -9254,18 +9381,18 @@ NET.MOD.1 = Card(
 
 **Outstanding Issues:**
 - **00a-77:** Taxonomy validity — if "Recover" is reclassified as Add+React context, this card's Layer|Function|Subject = Territory|Add|PresenceToken. Pending 00a Art 02 §7.2 review.
-- **04-n102:** Modifier card schema — full spec pending.
+- **09-06:** Full ModReactCard spec (trigger, value_rating, ring_constraint, ring_origin) pending design pass.
 - **Trigger scope:** Confirm whether trigger fires on any chip removal (STD.CA.4, DIR.CA.5, any chip-removing effect) or only on specific action types.
 - **card_id:** GUI.MOD.1 (first Guild Modifier card).
 
 **Status:** Stub — all passes pending.
 
 ```python
-# GUI.MOD.1 — RETURN TO SITE (stub; modifier card schema TBD pending 04-n102)
+# GUI.MOD.1 — RETURN TO SITE (stub; full ModReactCard spec pending 09-06 design pass)
 GUI.MOD.1 = Card(
     id=TBD,  card_id="GUI.MOD.1",  version="v0.1",
     name    = "Return to Site",
-    type    = ModifierCard,  subtype = React,  faction = Guild,
+    type    = ModReactCard,  faction = Guild,
     layer   = Territory,  function = Add,  subject = PresenceToken,
     # function = Add pending 00a-77 (Recover taxonomy validity)
     trigger = chip_removed.where(faction=Guild, district=district(trigger.target)),
@@ -9300,7 +9427,7 @@ Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Gho
 | Action fit | ✓ | Counter-attribution at PA placement — Ghost doctrine: operational anonymity across the full table | Art 00 §7 |
 | Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08) | Art 00 §9 |
 | Doctrine alignment | ✓ | Ghost +1 portrait: publicly demonstrating intelligence superiority while suppressing attribution is Ghost doctrine at peak visibility. FactionSpecific — no other portraits | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | ModifierCard / React / FactionSpecific (Ghost) — trigger is publicly visible board state change (PA placement at Art 03 §9.2.0) per Art 03 §18.0 | Art 04 §6.2; Art 03 §18 |
+| Card type fit | ✓ | ModReactCard / FactionSpecific (Ghost) — trigger is publicly visible board state change (PA placement at Art 03 §9.2.0) per Art 03 §18.0 | Art 04 §6.1, §6.2; Art 03 §18 |
 | Taxonomy fit | ✓ | Modifier cards excluded from matrix per §11.1 — Layer/Function/Subject = None. Spec clarity: Information / Remove / IntelToken | Art 04b §9; Art 04 §11.1 |
 | Balance | ✓ | No activation cost — card consumed on fire. Requires prior intelligence to use reliably. Misfire wastes the card. Strongly rewards GHO Source Substitution plant chain | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — PA cancellation and PS shift at Art 03 §9.2.0 trigger | Art 04 §5 P19 |
@@ -9325,7 +9452,7 @@ GHO.MOD.1 = Card(
     id=TBD,  card_id="GHO.MOD.1",  version="v1.0",
     name    = "Clarify Misinformation",
     tagline = "Name the faction on the Intel token. If correct: the attribution ends here.",
-    type    = ModifierCard,  subtype = React,  faction = Ghost,
+    type    = ModReactCard,  faction = Ghost,
     layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
     # Spec clarity: Information / Remove / IntelToken
 

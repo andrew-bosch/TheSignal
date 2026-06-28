@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 126 complete | Updated: 2026-06-27**
+**Session 127 complete | Updated: 2026-06-28**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -29,27 +29,26 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S126 Accomplishments
+## S127 Accomplishments
 
-**agy S125 audit ingested — card taxonomy subject corrections + DB tooling**
+**04-n102 complete — Modifier card schema (ModActionCard / ModBattleCard / ModReactCard)**
 
-- **Card taxonomy fixes (04-n141 ✅):** 7 cards corrected. 5 cards `subject = PublicStanding` → `StandingMarker` (STD.CA.13, STD.PA.4, STD.PA.7, DIR.CA.7, NET.CA.7). NET.CA.1 Leak `subject = District` → `CovertOperation` (S68 correction was also wrong). GHO.PA.4 BroadcastEffectCard (id 98): 7 entries added to `comp_verb_phase` (phases 2/17/18). `StandingMarker` added to `card_subject_map` (id 37). All 7 cards now Legalized in `v_card_mechanical_alignment`. Art 04 specs updated to match.
-- **DB tooling:** `Database/audit_card_alignment.sql` created — card taxonomy alignment diagnostic; run after any card spec change to confirm Legalized status. Documented in `schema_reference.md §10`.
-- **Ref files:** `ref_taxonomy.md` — StandingMarker corrected in subject vocabulary + rule 7; Taxonomy Assignment Verification section added. `preload_n102_modifier_schema.md` — audit step 11 added with mod card heads-up.
-- **Memory:** `project_db_design_intent.md` updated (3-table taxonomy fix pattern + `v_card_mechanical_alignment` as go-to diagnostic).
+- **Art 04 §6.1:** Three modifier subclasses defined. `is_unique` / `deck_limit` added to Card base (04-n138 ✅). `value_rating: int | None` (None = stub/TBD). `ring_origin: Ring | None` on all three subclasses (04-56 ✅).
+- **Art 04 §6.2:** Modifier subclass field rows; "Modifier Subclass Field Constraints" table (replaces always-None framing; ModReactCard column uses `—` for live fields, only `beat` is always None); Pool field rows.
+- **Art 04 §6.3:** `TriggerExpr` / `ModActionExpr` / `ModBattleExpr` type definitions; confirmed React trigger vocabulary sourced from Art 03b + Art 02.
+- **Art 04 §11.1/§11.7:** Retired "Instant" terminology; three-type architecture.
+- **Stub terminology sweep:** All 6 existing modifier card stubs updated to proper subclass types (ModActionCard / ModReactCard); full field redesign deferred to 09-06.
+- **Terminology fixes:** "Phase A" → "Covert Dispatch" throughout Art 04 + design_reference_card_system.md; "Beat 5 contested district" → "§10 Contested District Resolution"; "Beat 5" (Transient cleanup) → "Close Month".
+- **04-n29 ✅** (sub-item 2: Art 03 persistence monitoring resolved via GR 6.1a/6.1c); **04-n142 added** (counter-card design, extracted from 04-n29).
+- Art 04 → **v0.9.51**. DB audit: 67 Legalized, no new gaps.
 
 ---
 
-## Current Focus (S127)
+## Current Focus (S128)
 
-**04-n102: Modifier card schema definition pass — preload file ready**
-- Load `Whiteboard/preload_n102_modifier_schema.md` at session open (no other pre-reads needed beyond design_reference_card_system.md)
-- Step 1: React trigger enumeration from Art 03b + Art 02 (public lifecycle events only)
-- Step 2: Confirm `applies_to` field on ModActionCard; write 3 subclasses in §6.1; update §6.2/§6.3
-- Close 04-n29 in PM05. Bump Art 04 → v0.9.51.
-- Gates: 09-06 (full modifier card design pass)
+**Check Claude_context.md at startup — agy report expected (not yet written at S127 close); ingest before any design work.**
 
-**04-n110: Cross-faction §5a alignment audit** — gate open. Remaining: formal deck-feel per faction, win-path support, sustained-pressure comparison. Close action: prune card_ideas_20260626.md §3 after.
+**04-n110: Cross-faction §5a alignment audit** — gate open. Remaining: formal deck-feel per faction, win-path support, sustained-pressure comparison. Close action: prune `Whiteboard/card_ideas_20260626.md §3` after.
 
 **Card design unlocked (interleave with 04-n110):**
 - 04-n127 GUI Resolution (construction certainty)
@@ -59,6 +58,8 @@ Then prompt: *"What's our focus today?"*
 - 04-n131 SYN Standing (relative-Standing model vs. PS floor — decision required)
 
 **After 04-n110:** §9.2 cross-faction pass — 04-n118 DIR · 04-n119 GUI · 04-n123 SYN · 04-n126 NET
+
+**04-n142:** Counter-card design — permanent PA removal mechanic (extracted from 04-n29 this session)
 
 ---
 

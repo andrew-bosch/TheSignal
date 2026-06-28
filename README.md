@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** DB component_metadata seeded (74 components; DB-42 ✅); Art 04 §10 Deck Construction + Art 03-init §3.9 Deck Selection added. Art 04 v0.9.50 (S124). Art 04b v2.6 (S123). Art 03-init v0.5 (S124). Next: Cross-faction §5a alignment audit (04-n110); modifier card schema (04-n102).
+**Design milestone:** DB component_metadata seeded (74 components; DB-42 ✅); Art 04 §10 Deck Construction + Art 03-init §3.9 Deck Selection added. Modifier card schema complete (04-n102 ✅). Art 04 v0.9.51 (S127). Art 04b v2.6 (S123). Art 03-init v0.5 (S124). Next: Counter-card design (04-n142); cross-faction alignment audit.
 
 ---
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.50 | 🔄 In progress — S124: §10 Deck Construction & Pool Selection added. S120: STD+GHO set audit complete (04-n87/88). |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.51 | 🔄 In progress — S127: Modifier card schema (ModActionCard/ModBattleCard/ModReactCard) complete (04-n102). S124: §10 Deck Construction & Pool Selection added. S120: STD+GHO set audit complete (04-n87/88). |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |

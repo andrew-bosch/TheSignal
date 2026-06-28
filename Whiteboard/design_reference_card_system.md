@@ -324,7 +324,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | `target_faction` | FactionExpr \| None | None = no faction target |
 | `target_object` | ObjectExpr \| None | None = no object target |
 | `target_taxonomy` | TaxonomyExpr \| None | Targets a class of actions; declared at Phase B alongside target_faction; None = no taxonomy target |
-| `declared_params` | DeclaredParamsExpr \| None | Faction-declared free-form parameters written on TP declared-parameters line at §9.2 or Phase A — e.g., N tokens + consideration (SYN.PA.3), clause + new value (SYN.CA.11), incoming party (SYN.CA.10); None = no declaration required. Art 02 v2.4 / L233. Full §6.1 addition pending 04-n106. |
+| `declared_params` | DeclaredParamsExpr \| None | Faction-declared free-form parameters written on TP declared-parameters line at §9.2 or Covert Dispatch — e.g., N tokens + consideration (SYN.PA.3), clause + new value (SYN.CA.11), incoming party (SYN.CA.10); None = no declaration required. Art 02 v2.4 / L233. Full §6.1 addition pending 04-n106. |
 
 **Logic**
 | Field | Type | Notes |
@@ -373,7 +373,7 @@ Permanent public acts that create ongoing board conditions use the card-on-board
 - `persistence_effect` = the ongoing board mutation active while the card is in play
 - Card sits face-up in the acting faction's play area
 - Factions self-police per Design Pillar 4.7b; ARBITER adjudicates calls (Governing Rule 6.1a)
-- Art 03 persistence monitoring trigger not yet defined (PM05 04-n29)
+- Persistence monitoring: faction self-policing under GR 6.1a covers all Permanent cards and React standing effects; GR 6.1c (ARBITER ruling final on disputes) covers edge cases. No Art 03 procedure step required.
 
 *Examples: Regulatory Downgrade, Regulatory Freeze, Standing Injunction, Entry/Exit Controls*
 
