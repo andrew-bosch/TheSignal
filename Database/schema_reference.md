@@ -535,7 +535,8 @@ CREATE TABLE `card_status` (
   `cost_variable` TINYINT(1) NOT NULL DEFAULT 0, -- 1 if amount is play-determined (declared N, count-based, etc.) — orthogonal to cost_type — added S119
   `cost_primary_amount` INT NULL,   -- own-native units in cost; 0=explicitly none; NULL=variable/unknown — added S119
   `cost_native_count` INT NOT NULL DEFAULT 0,    -- distinct native resource types in cost (0=free, 1=mono or single-type cross, 2+=multi-type cross) — added S119
-  `uses_intel_token` TINYINT(1) NOT NULL DEFAULT 0  -- 1 if Intel Token is part of the cost; orthogonal to cost_type — added S119
+  `uses_intel_token` TINYINT(1) NOT NULL DEFAULT 0, -- 1 if Intel Token is part of the cost; orthogonal to cost_type — added S119
+  `is_ring_modifier` TINYINT(1) DEFAULT 0           -- 1 if the card is a Ring Modifier (public pool, not drafted) — added S130 (DB-47)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
