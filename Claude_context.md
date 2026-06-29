@@ -1,32 +1,22 @@
 # THE SIGNAL — agy Outbound Consulting Report
-*Date: 2026-06-29*
 
-## Session Handoff Report for Claude & Opus
+*Pruned S130 — report ingested. Ready for next agy report.*
 
-**1. The "Target Profile" Manipulation Space Opened**
-We established that TargetProfiles for Public Acts are placed face down on the FRG at **9.2.0 step 2** (not Beat 0). They are included with the action card in the ARG for covert actions. We officially opened this up as a mechanical surface area:
-*   **Ghost (`GHO.CA.15` and `GHO.MOD.11`):** Ghost can now directly `Corrupt` Target Profiles. They can blindly swap face-down profiles (hijacking the paperwork), and they can wager at Beat 2 to silently rewrite the target of an opponent's Beat 3 Covert Op.
-*   **Network (`NET.MOD.12` Forced Transparency):** Network can now `Reveal` Target Profiles. They can spend Exposure to force an opponent's face-down PA target to be flipped face-up immediately, stripping tactical ambiguity.
+## 1. Execution of the §9.2 Cross-Resource Ceiling Pass
+A major sweep was executed to fix the §9.2 cross-resource ceiling gap (where factions were playing ceiling-power cards at purely mono-native costs).
 
-**2. Component-Verb Taxonomy is 100% Legalized**
-*   We ran the `audit_card_alignment.sql` and found 4 cards attempting to `Add/Remove` the `PublicStanding` track. 
-*   We corrected these to `Shift` the `StandingMarker` (affecting `GUI.PA.8`, `NET.PA.5`, `NET.MOD.11`, and `SYN.PA.4`). 
-*   **Status:** The database audit is now perfectly clean with **0 Rules Gaps**. All 77 active cards use legal verb-component pairings.
+**Specific Card Cost Adjustments:** High-power cards across four factions were converted from mono-native costs to cross-faction (or district-native) costs to force the intended economic tension:
+*   **Ghost:** Several high-power abilities now explicitly require `Capacity` or `Capital` alongside `Findings`.
+*   **Directorate:** PAs and CAs now require `Findings`, `Exposure`, or `Capital` alongside `Mandate`.
+*   **Network:** `NET.CA.5`, `NET.PA.1`, `NET.PA.3`, `NET.PA.5`, and `NET.MOD.9` now explicitly demand cross-resources like `Capital`, `Findings`, or `district_native` resources alongside `Exposure`.
+*   **Syndicate:** `SYN.CA.3`, `SYN.CA.4`, `SYN.CA.5`, `SYN.MOD.5`, `SYN.MOD.8`, and `SYN.PA.5` were heavily restructured to require `Findings`, `Exposure`, or `Mandate` alongside `Capital` (reflecting Syndicate outsourcing or leveraging other factions' domains).
 
-**3. Art 04 Syntax & Database Synchronization**
-*   We discovered massive drift in `04___Card_System.md` where 54 older cards were using legacy integer IDs (e.g., `id = 1`) and 11 newer cards were using placeholders (`id = "TBD"`).
-*   We wrote and executed a Python script that bulk-updated every single Python code block in Art 04 to perfectly match the strict string `CardID` (e.g., `STD.CA.1`) tracked in the `the_signal_db` database. 
-*   **Status:** The Markdown and the Database are now a 1:1 mirror. *(Note: This may be an outstanding PM05 sweep that Claude can verify and mark complete).*
+**Status:** The §9.2 gap identified in `04-n118/119/123/126` has been successfully implemented into the Art 04 DB for Ghost, Directorate, Network, and Syndicate. Guild's cross-faction costs should be reviewed as part of their missing 4 cards.
 
-**4. Procedural Boundary: Signed-off Artifacts**
-*   Do not attempt to embed new faction rules (like Guild passive income) directly into `03___Round_Structure___Gameplay.md`. It is a signed-off procedural artifact. Faction mechanics must live in the Card System (`Art 04`), or changes to Art 03 must go through a formal amendment process.
+## 2. Phase 1 Design Strategy: Filling the Deficit
+We have mathematically validated that 4 out of 5 factions currently fail to hit the 53-card minimum draftable palette (Standard=25, requiring 28 faction-specific cards).
 
-**5. Taxonomic Classification of Ring Modifiers**
-*   Ring Modifiers are universally available to all factions and must be placed under the Standard faction schema (e.g., `STD.MOD.R1.x`, `STD.MOD.R2.x`).
-*   However, because they are drawn from a public pool during gameplay and not drafted, they must be instantiated with `subtype = RingModifier` (or similar designation) in the DB. This ensures they can be filtered out so they do not artificially inflate the 53-card minimum calculation for the draftable Standard palette.
-
-**6. Phase 1 Design Strategy: Filling the Deficit**
-*   We have mathematically validated that 4 out of 5 factions currently fail to hit the 53-card minimum draftable palette (Standard=25, requiring 28 faction-specific cards).
-*   **Strategy 1 (Variations):** To hit the floor without unnecessarily bloating mechanical complexity, the deficits for **Network (-3), Syndicate (-4), and Guild (-4)** should primarily be filled by designing **variations** of their existing PA and Mod cards (e.g., inverted triggers, alternate costs, or shifted targets).
-*   **Strategy 2 (Shared Action Spaces):** Explore the same action space across different factions, implemented through their unique doctrines. (For example, how `NET.MOD.12` and `GHO.MOD.11` both manipulate Target Profiles, but one uses public doxing and the other uses blind corruption).
-*   **Directorate (-6)** may require more substantial net-new design due to the larger gap, making Strategy 2 particularly useful for them (e.g., Directorate surveillance cards that also play in the Target Profile space).
+**Strategy for Claude/Opus:**
+1. **Variations:** To hit the floor without unnecessarily bloating mechanical complexity, the deficits for **Network (-3), Syndicate (-4), and Guild (-4)** should primarily be filled by designing **variations** of their existing PA and Mod cards (e.g., inverted triggers, alternate costs, or shifted targets).
+2. **Shared Action Spaces:** Explore the same action space across different factions, implemented through their unique doctrines. (For example, how `NET.MOD.12` and `GHO.MOD.11` both manipulate Target Profiles, but one uses public doxing and the other uses blind corruption).
+3. **Directorate (-6)** may require more substantial net-new design due to the larger gap, making Strategy 2 particularly useful for them (e.g., Directorate surveillance cards that also play in the Target Profile space).
