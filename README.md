@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** DB component_metadata seeded (74 components; DB-42 ✅); Art 04 §10 Deck Construction + Art 03-init §3.9 Deck Selection added. Modifier card schema complete (04-n102 ✅). ModReactCard stub pass complete — all 5 factions fully stubbed (09-06 partial). Art 04 v0.9.52 (S128). Art 04b v2.6 (S123). Art 03-init v0.5 (S124). Next: PM05 item queue (04-n143–147).
+**Design milestone:** ModReactCard stub pass complete — all 5 factions fully stubbed (09-06 partial). §11.8 MOD stubs migrated to faction sections; wiki slug routing confirmed. Art 04 v0.9.53 (S129). Art 04b v2.6 (S123). Art 03-init v0.5 (S124). Next: PM05 04-n144–147 (09-06 pre-design gates).
 
 ---
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.52 | 🔄 In progress — S128: ModReactCard stub pass complete — all 5 factions (GHO.MOD.1–8, NET.MOD.1–10, GUI.MOD.1–8, DIR.MOD.1–8, SYN.MOD.1–8); §8 index updated (+38 rows); §6.3 broadcast_card.placed added. S127: Modifier card schema complete (04-n102). S124: §10 Deck Construction added. |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.53 | 🔄 In progress — S129: 41 faction MOD stubs migrated §11.8→faction sections; headers promoted h4→h3 (wiki slug router); SYN.MOD.3 duplicate fixed; ref file sync (deployment_marker triggers, accord semantics, 04-n144 expanded). S128: ModReactCard stub pass complete — all 5 factions (GHO.MOD.1–8, NET.MOD.1–10, GUI.MOD.1–8, DIR.MOD.1–8, SYN.MOD.1–8); §8 index updated (+38 rows); §6.3 broadcast_card.placed added. |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |

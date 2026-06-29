@@ -1,7 +1,21 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-06-28 — Session 128 Close
+**Last Updated:** 2026-06-28 — Session 129 Close
+
+### Session 129 Summary (2026-06-28)
+
+**Focus:** agy handoff ingestion + 09-06 structural work (§11.8 → faction sections migration) + ref file sync.
+
+**Key work:**
+- **agy handoff ingested:** S128 ModReactCard stub pass summary read. Items 2 & 3 confirmed done in S128 (§8 index complete; all stubs in full §6 schema). Claude_context.md pruned.
+- **§11.8 → faction sections migration (09-06 structural):** 41 faction MOD stubs moved from §11.8 into Guild/Ghost/Directorate/Network/Syndicate sections. Headers promoted h4 → `### CARD_ID — FINAL NAME *(stub)*` — wiki slug router now registers all MOD cards. SYN.MOD.3 orphan code block / duplicate header fixed. OVERTURE (faction=All) remains in §11.8. Wiki build clean — Guild 8, Ghost 8, Directorate 8, Network 10, Syndicate 7 MOD cards confirmed in faction pages.
+- **Ref file sync (all queued from S128):** Art 04 §6.3 `accord.removed` added to confirmed trigger set. `design_reference_card_system.md`: `deployment_marker.placed/converted/blocked` added to trigger vocab; accord semantic definitions added; 04-n144 expanded (accord.removed scope, public_standing.shifted, resource.drawn_from_reservoir). `ref_card_types.md` + `ref_procedures.md`: accord semantics + trigger vocab pointer added.
+- **Art 04 → v0.9.53.**
+
+**Artifacts updated S129:** Art 04 (v0.9.53) · PM03 (Art 04 → v0.9.53) · Whiteboard/design_reference_card_system.md · Whiteboard/ref_card_types.md · Whiteboard/ref_procedures.md · SESSION_BRIEF (S129 logged; S130 priority set)
+
+---
 
 ### Session 128 Summary (2026-06-28)
 
