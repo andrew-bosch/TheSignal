@@ -264,6 +264,7 @@ Because only Ghost has successfully hit the 53-card minimum (28 faction + 25 sta
 *   **Syndicate (+4 Cards):** Requires 4 new cards. (Potential focus: Market shock mechanics or Accord penalties).
 *   **Guild (+4 Cards):** Requires 4 new cards. (Potential focus: Logistics, mobility, or adjacency bonuses outside of Ring 1).
 *   **Directorate (+6 Cards):** Requires 6 new cards. (Potential focus: Covert operations and anti-stealth/surveillance).
+*   *Taxonomic Rule for Ring Modifiers:* Ring Modifiers are universally available to all factions and must be placed under the Standard faction schema (e.g., `STD.MOD.R1.x`, `STD.MOD.R2.x`). However, because they are drawn from a public pool during gameplay and not drafted, they must be instantiated with `subtype = RingModifier` in the DB. This ensures they can be easily filtered out so they do not artificially inflate the 53-card draftable palette minimum calculation.
 
 **Phase 2: Detailed Design of Stubs**
 *   The newly added cards (GHO.CA.15, GHO.MOD.11, NET.MOD.12, SYN.PA.4, SYN.PA.5) and the 17 forthcoming cards must undergo detail design and numeric balancing. 

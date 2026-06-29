@@ -20,3 +20,7 @@ We established that TargetProfiles for Public Acts are placed face down on the F
 
 **4. Procedural Boundary: Signed-off Artifacts**
 *   Do not attempt to embed new faction rules (like Guild passive income) directly into `03___Round_Structure___Gameplay.md`. It is a signed-off procedural artifact. Faction mechanics must live in the Card System (`Art 04`), or changes to Art 03 must go through a formal amendment process.
+
+**5. Taxonomic Classification of Ring Modifiers**
+*   Ring Modifiers are universally available to all factions and must be placed under the Standard faction schema (e.g., `STD.MOD.R1.x`, `STD.MOD.R2.x`).
+*   However, because they are drawn from a public pool during gameplay and not drafted, they must be instantiated with `subtype = RingModifier` (or similar designation) in the DB. This ensures they can be filtered out so they do not artificially inflate the 53-card minimum calculation for the draftable Standard palette.
