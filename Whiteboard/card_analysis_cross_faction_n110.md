@@ -231,19 +231,43 @@ With the L1 Modifier Decks fully stubbed (MOD.1 through MOD.n for all factions),
 
 ## N. Post-Audit Faction Space Expansion & Floor Deck Counts (S129+)
 
-### 1. The 53-Card Minimum Decision
+### 1. The 53-Card Minimum Decision & Mathematical Reality
 A major design directive was implemented to ensure that every faction has a rich, variable draft environment. The requirement established a **minimum floor of 53 unique cards** for each faction's total playable palette (Standard Deck + Faction-Specific Deck). 
 
-Because the Standard deck is 54 cards, every faction technically clears this floor mathematically. However, to ensure the *faction-specific* identity isn't drowned out by Standard cards, we expanded the faction-specific card spaces to guarantee high density and variance. To hit this density and fill specific tactical gaps, the following cards were developed and stubbed into the system:
+**Current Database Counts (Active Cards):**
+*   **Standard Deck:** 25 cards (16 CA, 8 PA, 1 MOD)
+*   **Ghost:** 28 cards (12 CA, 5 PA, 11 MOD) — *Total Palette: 53 (Meets Floor)*
+*   **Network:** 25 cards (7 CA, 6 PA, 12 MOD) — *Total Palette: 50 (Deficit: -3)*
+*   **Syndicate:** 24 cards (11 CA, 5 PA, 8 MOD) — *Total Palette: 49 (Deficit: -4)*
+*   **Guild:** 24 cards (8 CA, 8 PA, 8 MOD) — *Total Palette: 49 (Deficit: -4)*
+*   **Directorate:** 22 cards (8 CA, 6 PA, 8 MOD) — *Total Palette: 47 (Deficit: -6)*
 
-*   **Syndicate:** Added `SYN.PA.4` (Charity Gala) and `SYN.PA.5` (Protection Racket) to provide public, enforceable extortion and capital-flexing without violating the covert blindness rules.
+To begin pushing toward this floor and fill specific tactical gaps identified in the taxonomy audit, we took the following detailed actions this session:
+
+**A. Legalization of Placeholder Mechanics (11 Cards Formalized)**
+We formally assigned IDs and tracked 11 previously loosely-defined cards to properly integrate them into the DB:
+*   **Standard:** `STD.CA.13` (Disinformation Campaign), `STD.CA.14` (Disprove), `STD.CA.15` (Intel Extraction), `STD.CA.16` (Modifier Raid), `STD.MOD.1` (Overture)
+*   **Directorate:** `DIR.PA.3` (Entry/Exit Controls), `DIR.PA.4` (Regulatory Downgrade), `DIR.PA.5` (Regulatory Freeze), `DIR.PA.6` (Standing Injunction)
+*   **Syndicate:** `SYN.CA.8` (Land Title), `SYN.CA.9` (Hostile Takeover)
+
+**B. Injection of Net-New Faction Mechanics (5 Cards Added)**
+To establish the `TargetProfile` manipulation space and provide Syndicate with legal public extortion (resolving covert blindness rules):
 *   **Ghost:** Added `GHO.CA.15` (Routing Override) and `GHO.MOD.11` (Manufactured Evidence) to introduce direct `Corrupt` mechanics against `TargetProfiles`, allowing Ghost to silently misdirect opponent operations and blindly hijack public paperwork.
 *   **Network:** Added `NET.MOD.12` (Forced Transparency) to directly counter hidden Target Profiles, spending Exposure to "dox" an opponent's PA target to the entire table at Beat 0.
+*   **Syndicate:** Added `SYN.PA.4` (Charity Gala) and `SYN.PA.5` (Protection Racket) to provide public, enforceable extortion and capital-flexing.
 
-### 2. Full Re-Audit Gating & Future Steps
-With these new mechanics (Target Profile corruption, blind PA redirection, and public extortion) added to the ecosystem, the current Cross-Faction Analysis and individual STD+[Fac] audits are now slightly outdated. 
+### 2. Full Re-Audit Gating & Detailed Work Breakdown
+Because only Ghost has successfully hit the 53-card minimum (28 faction + 25 standard), the ecosystem is not yet mathematically balanced for the final audit. The following work breakdown details exactly what is next:
 
-**Next Steps:**
-1. **Detailed Design:** The newly added cards are currently **stubs**. We must perform detail design and balancing on these individual cards before they can be fully integrated into the interaction matrix.
-2. **Comprehensive Re-Audit:** Once the stubs are detailed, we will completely rerun the Cross-Faction Analysis (to be executed by Claude in conjunction with the Opus advisor) to evaluate the new meta.
-3. **Revise Faction Audits:** The individual Standard + Faction audits will be refreshed to account for the new capabilities and how they shift the faction's win condition paths.
+**Phase 1: Hit the 53-Card Floor (17 Net-New Cards Required)**
+*   **Network (+3 Cards):** Requires 3 new cards. (Potential focus: Covert Ops or additional PA momentum mechanics).
+*   **Syndicate (+4 Cards):** Requires 4 new cards. (Potential focus: Market shock mechanics or Accord penalties).
+*   **Guild (+4 Cards):** Requires 4 new cards. (Potential focus: Logistics, mobility, or adjacency bonuses outside of Ring 1).
+*   **Directorate (+6 Cards):** Requires 6 new cards. (Potential focus: Covert operations and anti-stealth/surveillance).
+
+**Phase 2: Detailed Design of Stubs**
+*   The newly added cards (GHO.CA.15, GHO.MOD.11, NET.MOD.12, SYN.PA.4, SYN.PA.5) and the 17 forthcoming cards must undergo detail design and numeric balancing. 
+
+**Phase 3: Comprehensive Re-Audit (Opus & Claude)**
+*   Once all 5 factions possess exactly 28 faction-specific cards (yielding a 53-card palette), the Cross-Faction Analysis matrix will be completely re-run by Claude in conjunction with the Opus advisor to evaluate the finalized meta.
+*   The individual Standard + [Faction] audits will be refreshed to account for the completed ecosystem.
