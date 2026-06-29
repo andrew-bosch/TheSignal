@@ -783,7 +783,7 @@ Territory-control foundation card. Construction is publicly visible — the cove
 
 ```python
 STD.CA.1 = Card(
-    id      = 1,  version = "v1.1",
+    id      = "STD.CA.1",  version = "v1.1",
     name    = "Build Structure",
     tagline = "Construct a physical installation in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -874,7 +874,7 @@ Territory disruption card — the destructive mirror of STD.CA.1. Structure remo
 
 ```python
 STD.CA.2 = Card(
-    id      = 2,  version = "v1.1",
+    id      = "STD.CA.2",  version = "v1.1",
     name    = "Demolish",
     tagline = "Remove an opponent's structure from a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -966,7 +966,7 @@ Presence-deepening card — a deliberate structural parallel to STD.CA.1. To Cam
 
 ```python
 STD.CA.3 = Card(
-    id      = 3,  version = "v1.1",
+    id      = "STD.CA.3",  version = "v1.1",
     name    = "Campaign",
     tagline = "Build local support and deepen presence in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1051,7 +1051,7 @@ Presence-disruption card — the destructive mirror of STD.CA.3, following the s
 
 ```python
 STD.CA.4 = Card(
-    id      = 4,  version = "v1.1",
+    id      = "STD.CA.4",  version = "v1.1",
     name    = "Undermine",
     tagline = "Erode an opponent's presence in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1143,7 +1143,7 @@ Universal intelligence card — the baseline for the Information layer. Observat
 
 ```python
 STD.CA.5 = Card(
-    id      = 5,  version = "v1.1",
+    id      = "STD.CA.5",  version = "v1.1",
     name    = "Gather",
     tagline = "Extract actionable intelligence about a specific faction's operations.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1231,7 +1231,7 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 
 ```python
 STD.CA.6 = Card(
-    id      = 6,  version = "v1.1",
+    id      = "STD.CA.6",  version = "v1.1",
     name    = "Broadcast Interference",
     tagline = "Disrupt public communications in a district, dampening public activity.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1320,7 +1320,7 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 
 ```python
 STD.CA.7 = Card(
-    id      = 7,  version = "v1.1",
+    id      = "STD.CA.7",  version = "v1.1",
     name    = "Amplify",
     tagline = "Boost the Public Standing impact of your own public act this round.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1408,7 +1408,7 @@ Economy-bypasses-Territory card — the only Standard CovertOperation with no re
 
 ```python
 STD.CA.8 = Card(
-    id      = 8,  version = "v1.1",
+    id      = "STD.CA.8",  version = "v1.1",
     name    = "Buy Influence",
     tagline = "Deploy capital to place presence tokens directly, without groundwork.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1504,7 +1504,7 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 
 ```python
 STD.CA.9 = Card(
-    id      = 9,  version = "v1.1",
+    id      = "STD.CA.9",  version = "v1.1",
     name    = "Fund",
     tagline = "Transfer resources to another faction as a gesture of support.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1599,7 +1599,7 @@ Defensive Beat 2 positional wager — the only Standard card that explicitly pro
 
 ```python
 STD.CA.10 = Card(
-    id      = 10,  version = "v1.1",
+    id      = "STD.CA.10",  version = "v1.1",
     name    = "Protect",
     tagline = "Defend a district's assets from covert disruption this round.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1694,7 +1694,7 @@ None — all resolved S68. District-keyed resource model makes Mandate acquirabl
 
 ```python
 STD.CA.11 = Card(
-    id=23,  version="v2.0",
+    id      = "STD.CA.11",  version="v2.0",
     name    = "Tort Interference",
     tagline = "Lock an executed Accord against voluntary dissolution until game end or breach.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1779,7 +1779,7 @@ None — all design questions resolved S119/S120:
 
 ```python
 STD.CA.12 = Card(
-    id=39,  version="v1.0",
+    id      = "STD.CA.12",  version="v1.0",
     name    = "Absolute Compromise",
     tagline = "Some barriers are not barriers at all — just the illusion of one.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1843,7 +1843,7 @@ First Standard card with Public Standing shift as its primary covert effect — 
 
 ```python
 C_DisinformationCampaign = Card(
-    id      = "—",  version = "v1.0",
+    id      = "STD.CA.13",  version = "v1.0",
     name    = "Disinformation Campaign",
     tagline = "Run a covert narrative operation degrading a faction's public standing in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1940,7 +1940,7 @@ Fills the Economy/Remove/IntelToken coverage gap in the Standard card set. All f
 
 ```python
 C_Disprove = Card(
-    id      = "—",  version = "v1.0",
+    id      = "STD.CA.14",  version = "v1.0",
     name    = "Disprove",
     tagline = "Covertly destroy one Intel token held in an opponent's supply.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -2031,7 +2031,7 @@ Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused c
 
 ```python
 C_IntelExtraction = Card(
-    id      = "—",  version = "v1.0",
+    id      = "STD.CA.15",  version = "v1.0",
     name    = "Intel Extraction",
     tagline = "Covertly transfer one Intel token from an opponent's supply into your dispatch case.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -2125,7 +2125,7 @@ Economy/Redirect/ModifierCard — splits Asset Extraction (S62) alongside Intel 
 
 ```python
 C_ModifierRaid = Card(
-    id      = "—",  version = "v1.0",
+    id      = "STD.CA.16",  version = "v1.0",
     name    = "Modifier Raid",
     tagline = "Covertly transfer one modifier card from an opponent's hand into your dispatch case.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -2245,7 +2245,7 @@ Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outc
 
 ```python
 STD.PA.1 = Card(
-    id="STD.PA.1",  version="v1.0",
+    id      = "STD.PA.1",  version="v1.0",
     name    = "Open Operations",
     tagline = "Formally declare your operational presence in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2335,7 +2335,7 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 
 ```python
 STD.PA.2 = Card(
-    id="STD.PA.2",  version="v1.0",
+    id      = "STD.PA.2",  version="v1.0",
     name    = "Disputed Claim",
     tagline = "Formally challenge another faction's presence in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2434,7 +2434,7 @@ Public counterpart to STD.CA.1 (Build Structure). Same cost; unlike STD.CA.1, th
 
 ```python
 STD.PA.3 = Card(
-    id="STD.PA.3",  version="v1.0",
+    id      = "STD.PA.3",  version="v1.0",
     name    = "Public Commission",
     tagline = "Publicly announce and fund construction of a structure in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2527,7 +2527,7 @@ The PS attack card of the standard set. A formal public accusation carries both 
 
 ```python
 STD.PA.4 = Card(
-    id="STD.PA.4",  version="v1.0",
+    id      = "STD.PA.4",  version="v1.0",
     name    = "Public Censure",
     tagline = "Formally accuse another faction of conduct contrary to the city's interest.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2622,7 +2622,7 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 
 ```python
 STD.PA.5 = Card(
-    id="STD.PA.5",  version="v1.0",
+    id      = "STD.PA.5",  version="v1.0",
     name    = "On the Record",
     tagline = "Formally attribute a recent covert action to a named faction before the city.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2719,7 +2719,7 @@ The economic attack card of the standard PA set. PS is intentionally reversed fr
 
 ```python
 STD.PA.6 = Card(
-    id="STD.PA.6",  version="v1.0",
+    id      = "STD.PA.6",  version="v1.0",
     name    = "Economic Sanction",
     tagline = "Publicly impose economic pressure on a faction, forcing resource loss.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2813,7 +2813,7 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 
 ```python
 STD.PA.7 = Card(
-    id="STD.PA.7",  version="v1.0",
+    id      = "STD.PA.7",  version="v1.0",
     name    = "Public Address",
     tagline = "Rally public support in a district where you operate.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2908,7 +2908,7 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 
 ```python
 STD.PA.8 = Card(
-    id="STD.PA.8",  version="v1.0",
+    id      = "STD.PA.8",  version="v1.0",
     name    = "Table an Accord",
     tagline = "Formally propose a binding agreement with another faction, placed on the public record.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3032,7 +3032,7 @@ Guild-exclusive structural defense card. The hardest counter to STD.CA.2 Demolis
 
 ```python
 GUI.CA.1 = Card(
-    id      = 11,  version = "v1.1",
+    id      = "GUI.CA.1",  version = "v1.1",
     name    = "Fortify Structure",
     tagline = "Reinforce a structure against demolition this Quarter.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -3120,7 +3120,7 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 
 ```python
 GUI.CA.2 = Card(
-    id      = 12,  version = "v1.1",
+    id      = "GUI.CA.2",  version = "v1.1",
     name    = "Materials Acquisition",
     tagline = "Recover the costs of demolition as subcontract payment.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -3212,7 +3212,7 @@ Guild-exclusive first-entry card for unclaimed districts. Unclaimed territory ha
 
 ```python
 GUI.CA.3 = Card(
-    id      = 13,  version = "v1.1",
+    id      = "GUI.CA.3",  version = "v1.1",
     name    = "Foundation Rights",
     tagline = "Claim a foothold in territory no other faction has entered.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -3299,7 +3299,7 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 
 ```python
 GUI.CA.4 = Card(
-    id      = 14,  version = "v1.1",
+    id      = "GUI.CA.4",  version = "v1.1",
     name    = "Construction Crew",
     tagline = "Build a structure before your presence is fully established.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -3325,7 +3325,7 @@ GUI.CA.4 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = district(target).faction(acting).structure == 0,
-    cost        = resource.faction(acting).capacity * 3,
+    cost        = resource.faction(acting).capacity * 2 + resource.faction(acting).findings * 1,
 
     success     = (
         district(target).faction(acting).presence += 1,
@@ -3346,6 +3346,7 @@ GUI.CA.4 = Card(
         Network:  "We know this method. Presence before permission is how this city was actually built.",
         Ghost:    "Establishing presence before authorization is requested — the Guild is better at covert operations than they admit.",
     },
+    design_note  = "Cost reasoning: 2 Capacity + 1 Findings (Mid-tier). Findings identify the un-zoned loopholes necessary to bypass prerequisites and break ground immediately.",
 )
 ```
 
@@ -3392,7 +3393,7 @@ Guild-exclusive passive income card — the economic expression of territorial c
 
 ```python
 GUI.CA.5 = Card(
-    id      = 15,  version = "v1.1",
+    id      = "GUI.CA.5",  version = "v1.1",
     name    = "Infrastructure Yield",
     tagline = "Draw resources from infrastructure you have already built.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -3481,7 +3482,7 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 
 ```python
 GUI.CA.6 = Card(
-    id=TBD,  version="v1.0",  # ID pending PM05 04-n1
+    id      = "GUI.CA.6",  version="v1.0",  # ID pending PM05 04-n1
     name    = "Labor Contract",
     tagline = "Collect subcontract payment when a faction develops district infrastructure.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -3540,6 +3541,58 @@ GUI.CA.6 = Card(
 | [GUI.PA.1](#p09-civic-works-mandate) | Civic Works Mandate |
 | [GUI.PA.2](#p10-infrastructure-bond) | Infrastructure Bond |
 
+---
+
+### GUI.CA.7 — BUYOUT CLAUSE *(stub)*
+[↑ Covert Operations](#guild-covert-operations)
+
+```python
+GUI.CA.7 = Card(
+    id      = "GUI.CA.7",  version = "v1.0",
+    name    = "Buyout Clause",
+    tagline = "Liquidate an opponent's real estate through an unblockable coercive eviction.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
+
+    layer    = Territory,  function = Remove,  subject = PresenceToken,
+
+    beat            = 3,
+    resolution      = Automatic,
+    threshold       = None,
+    trigger         = None,
+
+    target_district = district.any,
+    target_faction  = faction.opponent,
+    target_object   = None,
+
+    cost        = resource.faction(Guild).capacity * 2 + resource.faction(Guild).capital * 1,
+
+    success     = "Guild pays 2 target.native resources to target_faction; arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1)",
+    
+    design_note = "Guild's territorial response gap filled. Coercive eviction via buyout. Cost reasoning: 2 Capacity + 1 Capital (Mid-tier). Liquidating real estate out from under an opponent."
+)
+```
+
+---
+
+---
+
+### GUI.CA.8 — BUILDING INSPECTION *(stub)*
+[↑ Covert Operations](#guild-covert-operations)
+
+```python
+GUI.CA.8 = Card(
+    id      = "GUI.CA.8",  version = "v1.1",
+    name    = "Building Inspection",
+    tagline = "Condemn an opponent's building via weaponized zoning code.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
+    layer   = Territory,  function = Remove,  subject = StructureBlock,
+    beat    = 3,  resolution = d100,  threshold = 60,
+    cost    = resource.faction(Guild).capacity * 1 + resource.faction(Guild).mandate * 1,
+    success = "Remove 1 target Structure Block. Guild gains +1 PS.",
+    design_note = "A thematic variant of STD.CA.2 (Demolish). Bribe removed to keep resolution strictly blind via Arbiter."
+)
+```
+
 ### GUI.PA.1 — CIVIC WORKS MANDATE
 [↑ Public Acts](#guild-public-acts)
 
@@ -3577,7 +3630,7 @@ Guild's prestige structure PA — a simultaneous double build in two named distr
 
 ```python
 GUI.PA.1 = Card(
-    id="GUI.PA.1",  version="v1.0",
+    id      = "GUI.PA.1",  version="v1.0",
     name    = "Civic Works Mandate",
     tagline = "Declare a public infrastructure program across two districts simultaneously.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -3608,7 +3661,7 @@ GUI.PA.1 = Card(
         district(target1).faction(Guild).structure == 0 and
         district(target2).faction(Guild).structure == 0
     ),
-    cost = resource.faction(Guild) * 4,
+    cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).capital * 1 + resource.faction(Guild).mandate * 1,
 
     success     = (
         district(target1).faction(Guild).structure += 1,
@@ -3627,7 +3680,7 @@ GUI.PA.1 = Card(
         Network: "Two districts at once. When Guild commits at this scale, the announcement becomes the infrastructure. The public knows before the cement sets.",  # aligned
         Ghost:   "Guild builds when we have not yet established whether what is being built belongs in the answer. The structures will outlast the certainty they were built on.",  # opposed
     },
-    design_note  = "Guild's prestige build PA. 4 Capacity (district native waived for both). Both-or-nothing: if either district fails restriction at Beat 0, full PA is voided. PS +3: highest single-card build reward. Portrait +2: double structure = doctrinal maximum. Counter: Directorate DIR.PA.1 Regulatory Override applied to either district beforehand raises presence-placement costs, potentially blocking prerequisite presence for this card.",
+    design_note  = "Guild's prestige build PA. Cost reasoning: 2 Capacity + 1 Capital + 1 Mandate (Ceiling-tier). Capital secures the massive land footprint, while Mandate bypasses zoning laws to fast-track construction. Both-or-nothing: if either district fails restriction at Beat 0, full PA is voided. PS +3: highest single-card build reward. Portrait +2: double structure = doctrinal maximum. Counter: Directorate DIR.PA.1 Regulatory Override applied to either district beforehand raises presence-placement costs, potentially blocking prerequisite presence for this card.",
     arbiter_note = "Phase B: two distinct districts named. Beat 0: both restrictions checked simultaneously. If either fails (no Guild presence, or existing structure), entire PA voided; 4 Capacity returned; Guild takes Public Pass. Beat 4: place 1 structure in each declared district; Guild +3 PS.",
 )
 ```
@@ -3676,7 +3729,7 @@ Guild's economic relationship PA. Distinct from STD.CA.9 (Fund) in cost currency
 
 ```python
 GUI.PA.2 = Card(
-    id="GUI.PA.2",  version="v1.0",
+    id      = "GUI.PA.2",  version="v1.0",
     name    = "Infrastructure Bond",
     tagline = "Publicly extend Guild infrastructure investment to another faction, establishing a formal economic relationship.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -3738,6 +3791,150 @@ GUI.PA.2 = Card(
 
 ---
 
+---
+
+### GUI.PA.3 — HERITAGE REGISTRY *(stub)*
+[↑ Public Acts](#guild-public-acts)
+
+```python
+GUI.PA.3 = Card(
+    id      = "GUI.PA.3",  version = "v1.0",
+    name    = "Heritage Registry",
+    tagline = "Declare a district's structures historically protected.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
+
+    layer    = Territory,  function = Protect,  subject = StructureBlock,
+
+    beat            = 4,
+    resolution      = Automatic,
+    persistence     = Permanent,
+    
+    target_district = district.any,
+    target_faction  = None,
+
+    cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).mandate * 1,
+
+    success = "Places standing condition on target_district: If a structure block is removed for any reason (unless due to influence token reaching 0), add the structure block back to the district. Remove this standing effect after it triggers once.",
+    
+    design_note = "Defense scaling gap addressed. Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier). Mandate provides the legal shield to protect the concrete."
+)
+```
+
+---
+
+### GUI.PA.4 — CIVIC UNVEILING *(stub)*
+[↑ Public Acts](#guild-public-acts)
+
+```python
+GUI.PA.4 = Card(
+    id      = "GUI.PA.4",  version = "v1.0",
+    name    = "Civic Unveiling",
+    tagline = "A highly publicized ribbon-cutting ceremony that compounds structural density into public adoration.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
+
+    layer    = Standing,  function = Shift,  subject = StandingMarker,
+
+    beat            = 4,
+    resolution      = Automatic,
+    
+    target_district = district.any,
+
+    cost = resource.faction(Guild).capacity * 1 + resource.faction(Guild).exposure * 1,
+
+    success = "faction(Guild).standing += district(target_district).faction(Guild).structure * 1",
+    
+    design_note = "Standing / PS Compounding gap filled. Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier). Broadcasting the massive ribbon-cutting to the city."
+)
+```
+
+---
+
+### GUI.PA.5 — ZONING EXEMPTION *(stub)*
+[↑ Public Acts](#guild-public-acts)
+
+```python
+GUI.PA.5 = Card(
+    id      = "GUI.PA.5",  version = "v1.0",
+    name    = "Zoning Exemption",
+    tagline = "Secure a blanket override of Ring expansion limitations.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
+
+    layer    = Submission,  function = RemoveRestriction,  subject = District,
+
+    beat            = 4,
+    resolution      = Automatic,
+    
+    target_district = district.any,
+
+    cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).findings * 1 + resource.faction(Guild).capital * 1,
+
+    success = "For the next Quarter, Guild may place structures in the target district regardless of Ring limitations or connectivity rules.",
+    
+    design_note = "Ceiling-tier expansion enabler. Cost reasoning: 2 Capacity + 1 Findings + 1 Capital. Finding the bureaucratic loop-hole and buying the necessary judges to skip the physical expansion limits."
+)
+```
+
+---
+
+---
+
+### GUI.PA.6 — ASSET TRANSFER *(stub)*
+[↑ Public Acts](#guild-public-acts)
+
+```python
+GUI.PA.6 = Card(
+    id      = "GUI.PA.6",  version = "v1.1",
+    name    = "Asset Transfer",
+    tagline = "Liquidate Guild property into another faction's hands for massive resource injection.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
+    layer   = Territory,  function = Modify,  subject = StructureBlock,
+    beat    = 4,  resolution = Automatic,
+    cost    = resource.faction(Guild).capacity * 1,
+    restriction = "district(target).faction(Guild).structure > 0 AND district(target).faction(target_faction).presence > 0",
+    success = "Guild removes 1 of their Structure Blocks in target_district and replaces it with 1 Structure Block of the target_faction. Guild gains 3 of the target_faction's native resource from the supply.",
+    design_note = "A powerful, legal asset flip. Leverages existing footprint to extract deep foreign resource pockets."
+)
+```
+
+---
+
+### GUI.PA.7 — EMINENT DOMAIN PETITION *(stub)*
+[↑ Public Acts](#guild-public-acts)
+
+```python
+GUI.PA.7 = Card(
+    id      = "GUI.PA.7",  version = "v1.1",
+    name    = "Eminent Domain Petition",
+    tagline = "Force massive influence into a district to pave the way for expansion.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+    beat    = 4,  resolution = Automatic,
+    cost    = resource.faction(Guild).capacity * 2 + resource.faction(Guild).mandate * 1,
+    restriction = "district(target).faction(Guild).presence > 0",
+    success = "Place 2 Guild Presence Tokens in target_district.",
+    design_note = "Requires existing foothold. A blunt-force legal maneuver to crack an opponent's Established status."
+)
+```
+
+---
+
+### GUI.PA.8 — STRUCTURAL SUBSIDY *(stub)*
+[↑ Public Acts](#guild-public-acts)
+
+```python
+GUI.PA.8 = Card(
+    id      = "GUI.PA.8",  version = "v1.1",
+    name    = "Structural Subsidy",
+    tagline = "Turn a district's development into a PR engine.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,
+    beat    = 4,  resolution = Automatic,  persistence = Permanent,
+    cost    = resource.faction(Guild).capacity * 2,
+    success = "Places standing condition on target_district: 'Whenever an opponent places a Structure Block here, Guild gains +1 PS.'",
+    design_note = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige."
+)
+```
+
 ### GUI.MOD.1 — NIGHT SHIFT CREW *(stub)*
 
 *S106. Guild React Modifier — stub. Originally conceived as Territory|Recover|PresenceToken CovertAction (GUI.CA.6), redesigned as React Modifier after two blocking findings: (1) structure block removal is simultaneous with chips hitting 0 — no React window can catch it; (2) "Recover" may not be a valid primitive per 00a §7.2 (see 00a-77). Taxonomy reclassified as Territory|Add|PresenceToken pending 00a-77 resolution.*
@@ -3755,7 +3952,7 @@ GUI.PA.2 = Card(
 ```python
 # GUI.MOD.1 — RETURN TO SITE (stub; full ModReactCard spec pending 09-06 design pass)
 GUI.MOD.1 = Card(
-    id=TBD,  card_id="GUI.MOD.1",  version="v0.1",
+    id      = "GUI.MOD.1",  card_id="GUI.MOD.1",  version="v0.1",
     name    = "Night Shift Crew",
     type    = ModReactCard,  faction = Guild,
     layer   = Territory,  function = Add,  subject = PresenceToken,
@@ -3777,7 +3974,7 @@ GUI.MOD.1 = Card(
 
 ```python
 GUI.MOD.2 = Card(
-    id=TBD,  card_id="GUI.MOD.2",  version="v0.1",
+    id      = "GUI.MOD.2",  card_id="GUI.MOD.2",  version="v0.1",
     name    = "Union Representative",
     tagline = "Other factions build with Guild labor. Guild gets paid.",
     type    = ModReactCard,  faction = Guild,
@@ -3819,7 +4016,7 @@ GUI.MOD.2 = Card(
 
 ```python
 GUI.MOD.3 = Card(
-    id=TBD,  card_id="GUI.MOD.3",  version="v0.1",
+    id      = "GUI.MOD.3",  card_id="GUI.MOD.3",  version="v0.1",
     name    = "Institutional Contract",
     tagline = "Directorate builds. Guild crews and invoices.",
     type    = ModReactCard,  faction = Guild,
@@ -3861,7 +4058,7 @@ GUI.MOD.3 = Card(
 
 ```python
 GUI.MOD.4 = Card(
-    id=TBD,  card_id="GUI.MOD.4",  version="v0.1",
+    id      = "GUI.MOD.4",  card_id="GUI.MOD.4",  version="v0.1",
     name    = "Core Premium",
     tagline = "Core construction pays Guild at institutional rates.",
     type    = ModReactCard,  faction = Guild,
@@ -3903,7 +4100,7 @@ GUI.MOD.4 = Card(
 
 ```python
 GUI.MOD.5 = Card(
-    id=TBD,  card_id="GUI.MOD.5",  version="v0.1",
+    id      = "GUI.MOD.5",  card_id="GUI.MOD.5",  version="v0.1",
     name    = "Company Town",
     tagline = "Our people built the walls. We hear who whispers behind them.",
     type    = ModReactCard,  faction = Guild,
@@ -3945,7 +4142,7 @@ GUI.MOD.5 = Card(
 
 ```python
 GUI.MOD.6 = Card(
-    id=TBD,  card_id="GUI.MOD.6",  version="v0.1",
+    id      = "GUI.MOD.6",  card_id="GUI.MOD.6",  version="v0.1",
     name    = "Emergency Reconstruction",
     tagline = "You can knock down the building, but you can't erase the blueprint.",
     type    = ModReactCard,  faction = Guild,
@@ -3987,7 +4184,7 @@ GUI.MOD.6 = Card(
 
 ```python
 GUI.MOD.7 = Card(
-    id=TBD,  card_id="GUI.MOD.7",  version="v0.1",
+    id      = "GUI.MOD.7",  card_id="GUI.MOD.7",  version="v0.1",
     name    = "Worker Retaliation",
     tagline = "The site is clear, but the workers are still here.",
     type    = ModReactCard,  faction = Guild,
@@ -4029,7 +4226,7 @@ GUI.MOD.7 = Card(
 
 ```python
 GUI.MOD.8 = Card(
-    id=TBD,  card_id="GUI.MOD.8",  version="v0.1",
+    id      = "GUI.MOD.8",  card_id="GUI.MOD.8",  version="v0.1",
     name    = "Site Clearance",
     tagline = "We built it, we get paid. You blew it up, we get paid to clean it up.",
     type    = ModReactCard,  faction = Guild,
@@ -4148,7 +4345,7 @@ A faction submits their operation. Ghost, watching, named all three things in ad
 
 ```python
 GHO.CA.1 = Card(
-    id      = 16,  card_id = "GHO.CA.1",  version = "v2.0",
+    id      = "GHO.CA.1",  card_id = "GHO.CA.1",  version = "v2.0",
     name    = "Pattern Match",
     tagline = "Identify a faction's operation and location — then take it.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4242,7 +4439,7 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 
 ```python
 GHO.CA.2 = Card(
-    id=17,  version="v1.1",
+    id      = "GHO.CA.2",  version="v1.1",
     name    = "Intercept",
     tagline = "Surveil a faction's covert operations in real time.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4319,7 +4516,7 @@ Redesigned S68: original target was the unplayed hand (CardHandContents) — req
 
 \`\`\`python
 GHO.CA.3 = Card(
-    id=18, version="v1.2",
+    id      = "GHO.CA.3", version="v1.2",
     name    = "Dossier Breach",
     tagline = "Tap a rival's dispatch channel — read their submitted operations at Beat 2 resolution.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Ghost,
@@ -4385,8 +4582,8 @@ Ghost's intelligence interdiction card — operational disruption rather than ev
 
 ```python
 GHO.CA.4 = Card(
-    card_id = "GHO.CA.4",
-    id=19,  version="v1.2",
+    card_id      = "GHO.CA.4",
+    id="GHO.CA.4",  version="v1.2",
     name    = "Deep Cover",
     tagline = "Intercept and destroy the intelligence behind a rival's public act.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4466,7 +4663,7 @@ None. (Taxonomy resolved S119 — Corrupt function confirmed; content=false reti
 
 ```python
 GHO.CA.5 = Card(
-    id=20,  card_id="GHO.CA.5",  version="v2.0",
+    id      = "GHO.CA.5",  card_id="GHO.CA.5",  version="v2.0",
     name    = "Misdirection",
     tagline = "Ghost has been thinking about what they think they know.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4539,7 +4736,7 @@ None.
 
 ```python
 GHO.CA.7 = Card(
-    card_id = "GHO.CA.7",  version = "v1.1",
+    card_id      = "GHO.CA.7",  version = "v1.1",
     name    = "Station",
     tagline = "Deploy a sustained intelligence collection platform against a named faction.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4625,7 +4822,7 @@ None.
 
 ```python
 GHO.CA.8 = Card(
-    card_id = "GHO.CA.8",  version = "v1.1",
+    card_id      = "GHO.CA.8",  version = "v1.1",
     name    = "Full Take",
     tagline = "Saturate collection against a single target — maximum yield from a single operation.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4666,6 +4863,27 @@ GHO.CA.8 = Card(
     arbiter_note = "At Beat 0: record declared n; validate n Findings present in case. At Beat 3: success = dispatch 2n IntelToken(faction=target) to Ghost's case; crit success = dispatch 3n; fail = nothing; crit fail = NotificationSlip to target.",
 )
 ```
+
+---
+
+### GHO.CA.15 — ROUTING OVERRIDE *(stub)*
+[↑ Covert Operations](#ghost-covert-operations)
+
+```python
+GHO.CA.15 = Card(
+    id      = "GHO.CA.15",  version = "v1.0",
+    name    = "Routing Override",
+    tagline = "Blindly intercept and redirect an opponent's covert operation.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = Information,  function = Corrupt,  subject = TargetProfile,
+    beat    = 2,  resolution = Automatic,
+    cost    = resource.faction(Ghost).findings * 1 + intel_token * 1,
+    success = "Ghost corrupts the first CA in target faction's Beat 3 resolution queue if it matches Ghost's specified parameters.",
+    arbiter_note = "At Covert Dispatch, Ghost writes a target field (e.g., 'target_district') and expected value (e.g., 'Core'), plus a replacement value (e.g., 'Baryo'), in their Target Profile freeform space. At Beat 2: ARBITER checks target faction's first CA in the ARG. If that CA's Target Profile contains the exact field and value Ghost named, ARBITER silently crosses it out and writes Ghost's new value. If it does not match, Ghost's operation fizzles. The target faction executes their CA at Beat 3 against the new corrupted target.",
+    design_note = "Beat 2 positional wager against a Beat 3 CA. Ghost must correctly predict a parameter of the opponent's first queued operation. The corruption is entirely silent until the operation resolves at Beat 3."
+)
+```
+
 
 ---
 
@@ -4710,7 +4928,7 @@ Ghost cashes one piece of intelligence for something more durable. ARBITER recor
 
 ```python
 GHO.CA.9 = Card(
-    card_id = "GHO.CA.9",  version = "v1.1",
+    card_id      = "GHO.CA.9",  version = "v1.1",
     name    = "SCIF",
     tagline = "Turn intelligence into operational assets.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4797,7 +5015,7 @@ None.
 
 ```python
 GHO.CA.10 = Card(
-    card_id = "GHO.CA.10",  version = "v1.1",
+    card_id      = "GHO.CA.10",  version = "v1.1",
     name    = "Flip",
     tagline = "Redirect a target faction's operational resources through Ghost supply channels.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -4983,7 +5201,7 @@ Ghost's intelligence amplification card — converts one held Intel token into t
 
 ```python
 GHO.CA.6 = Card(
-    id=36,  card_id="GHO.CA.6",  version="v1.1",
+    id      = "GHO.CA.6",  card_id="GHO.CA.6",  version="v1.1",
     name    = "Synthesize",
     tagline = "Convert raw intelligence into operational clarity.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -5057,7 +5275,7 @@ None.
 
 ```python
 GHO.CA.12 = Card(
-    card_id = "GHO.CA.12",  version = "v1.0",
+    card_id      = "GHO.CA.12",  version = "v1.0",
     name    = "Source Substitution",
     tagline = "Alter the faction attribution on a held Intel token.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -5299,6 +5517,44 @@ FieldVerification = Card(
 
 ---
 
+---
+
+### GHO.CA.13 — PHANTOM ACCOUNTS *(stub)*
+[↑ Covert Operations](#ghost-covert-operations)
+
+```python
+GHO.CA.13 = Card(
+    id      = "GHO.CA.13",  version = "v1.1",
+    name    = "Phantom Accounts",
+    tagline = "Siphon a shadow copy of an opponent's influence-based resource generation.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = Economy,  function = Add,  subject = DebriefActionCard,
+    beat    = 3,  resolution = d100,  threshold = 50,
+    cost    = resource.faction(Ghost).findings * 2,
+    success = "Arbiter places 1 DA-02 (PhantomRecord) in Ghost's Dispatch Case. At debrief, Ghost gains district native resources equal to target_faction's influence-based generation.",
+    design_note = "A financial twin to SCIF. Instead of generating Modifier cards off of structural density, this converts Findings into a mirrored payout of the target's passive district income."
+)
+```
+
+---
+
+### GHO.CA.14 — GHOST PROTOCOL *(stub)*
+[↑ Covert Operations](#ghost-covert-operations)
+
+```python
+GHO.CA.14 = Card(
+    id      = "GHO.CA.14",  version = "v1.1",
+    name    = "Ghost Protocol",
+    tagline = "Completely erase an opponent's operation from existence.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = Submission,  function = Block,  subject = CovertOperation,
+    beat    = 2,  resolution = Automatic,
+    cost    = resource.faction(Ghost).findings * 2 + resource.faction(Ghost).exposure * 1 + resource.faction(Ghost).capital * 1 + intel_token * 1,
+    success = "The Arbiter invalidates and removes the first Covert Operation submitted by target_faction in Beat 3.",
+    design_note = "Massive multi-resource cost to justify an unblockable, blind veto of an opponent's action."
+)
+```
+
 ### Ghost — Public Acts
 [↑ Ghost](#ghost)
 
@@ -5347,7 +5603,7 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 
 ```python
 GHO.PA.1 = Card(
-    id="GHO.PA.1",  version="v1.0",
+    id      = "GHO.PA.1",  version="v1.0",
     name    = "Publish Analysis",
     tagline = "Release curated intelligence simultaneously attributing operations to two factions — a calculated, costly disclosure.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -5446,7 +5702,7 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 
 ```python
 GHO.PA.2 = Card(
-    id="GHO.PA.2",  version="v1.0",
+    id      = "GHO.PA.2",  version="v1.0",
     name    = "Signal Review Request",
     tagline = "Formally request institutional scrutiny on a faction's next covert operation in a named district.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -5538,7 +5794,7 @@ Ghost submits the case files in order — sequential, dated, attributed. The rec
 
 ```python
 GHO.PA.3 = Card(
-    id="GHO.PA.3",  version="v1.0",
+    id      = "GHO.PA.3",  version="v1.0",
     name    = "Declassified Records",
     tagline = "Release expired intelligence as institutional record — each file compounds the disclosure.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -5627,7 +5883,7 @@ Ghost files the request before Beat 4. The Broadcast Card has been face-up all Q
 
 ```python
 GHO.PA.4 = Card(
-    id="GHO.PA.4",  version="v1.0",
+    id      = "GHO.PA.4",  version="v1.0",
     name    = "Public Threat Assessment",
     tagline = "Name a Situation Report. ARBITER opens the file.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -5653,7 +5909,7 @@ GHO.PA.4 = Card(
 
     affinity    = None,
     restriction = count(broadcast_card(zone=SituationReportZone, status=Active)) >= 1,
-    cost        = resource.faction(Ghost).findings * 1,
+    cost        = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).exposure * 1,
     boost       = None,
 
     success = (
@@ -5675,7 +5931,7 @@ GHO.PA.4 = Card(
         Directorate: "Ghost has formalized the disclosure request. ARBITER complied. The effect was known to us already, but now it is known to everyone. We note this.",
         Network:     "We would have published that two weeks ago if we had it. Ghost had the institutional standing to ask. That's the difference.",
     },
-    design_note  = "Automatic — GR 10.1b obligates ARBITER to disclose from own domain when a valid trigger is submitted. Ghost names a Broadcast Card at Phase B (recorded on Target Profile target-object field); ARBITER places VM-xx on the linked BEC at Art 03 §9.4.3.3.0. BEC resolves publicly at Art 03 §9.4.3.1.3 when the next PA in initiative order is reached, or at Art 03 §9.4.1.1 next Quarter if Ghost plays last. BC/BEC link established at Art 02 §7.2.1; no new mechanism required. +1 PS: forcing institutional transparency is a credibility act. Portrait +1: disclosure from institutional authority is on-doctrine.",
+    design_note  = "Automatic — GR 10.1b obligates ARBITER to disclose from own domain when a valid trigger is submitted. Ghost names a Broadcast Card at Phase B (recorded on Target Profile target-object field); ARBITER places VM-xx on the linked BEC at Art 03 §9.4.3.3.0. BEC resolves publicly at Art 03 §9.4.3.1.3 when the next PA in initiative order is reached, or at Art 03 §9.4.1.1 next Quarter if Ghost plays last. BC/BEC link established at Art 02 §7.2.1; no new mechanism required. +1 PS: forcing institutional transparency is a credibility act. Portrait +1: disclosure from institutional authority is on-doctrine Cost reasoning: Exposure represents the deliberate unmasking of the threat to the public, amplifying the raw intelligence.",
     arbiter_note = None,
 )
 ```
@@ -5721,7 +5977,7 @@ Ghost files the act at Phase B. A table. A banner. Printed materials no other fa
 
 ```python
 GHO.PA.5 = Card(
-    id="GHO.PA.5",  version="v1.0",
+    id      = "GHO.PA.5",  version="v1.0",
     name    = "Agency Recruitment Fair",
     tagline = "The agency operates in the open. The interested are watching.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -5817,7 +6073,7 @@ Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Gho
 
 ```python
 GHO.MOD.1 = Card(
-    id=TBD,  card_id="GHO.MOD.1",  version="v1.0",
+    id      = "GHO.MOD.1",  card_id="GHO.MOD.1",  version="v1.0",
     name    = "Sleeper Analyst",
     tagline = "Name the faction on the Intel token. If correct: the attribution ends here.",
     type    = ModReactCard,  faction = Ghost,
@@ -5866,7 +6122,7 @@ GHO.MOD.1 = Card(
 
 ```python
 GHO.MOD.2 = Card(
-    id=TBD,  card_id="GHO.MOD.2",  version="v0.1",
+    id      = "GHO.MOD.2",  card_id="GHO.MOD.2",  version="v0.1",
     name    = "Perimeter Sensors",
     tagline = "Faction activity near Ghost presence generates automatic intelligence.",
     type    = ModReactCard,  faction = Ghost,
@@ -5908,7 +6164,7 @@ GHO.MOD.2 = Card(
 
 ```python
 GHO.MOD.3 = Card(
-    id=TBD,  card_id="GHO.MOD.3",  version="v0.1",
+    id      = "GHO.MOD.3",  card_id="GHO.MOD.3",  version="v0.1",
     name    = "Institutional Trace",
     tagline = "Directorate expansion near Ghost presence generates targeted intelligence.",
     type    = ModReactCard,  faction = Ghost,
@@ -5950,7 +6206,7 @@ GHO.MOD.3 = Card(
 
 ```python
 GHO.MOD.4 = Card(
-    id=TBD,  card_id="GHO.MOD.4",  version="v0.1",
+    id      = "GHO.MOD.4",  card_id="GHO.MOD.4",  version="v0.1",
     name    = "Signal Bleed",
     tagline = "Network expansion near Ghost presence generates exposure intelligence.",
     type    = ModReactCard,  faction = Ghost,
@@ -5992,7 +6248,7 @@ GHO.MOD.4 = Card(
 
 ```python
 GHO.MOD.5 = Card(
-    id=TBD,  card_id="GHO.MOD.5",  version="v0.1",
+    id      = "GHO.MOD.5",  card_id="GHO.MOD.5",  version="v0.1",
     name    = "False Flag",
     tagline = "Let them claim the victory, then rewrite the headline.",
     type    = ModReactCard,  faction = Ghost,
@@ -6012,7 +6268,7 @@ GHO.MOD.5 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = Resource(faction(trigger.faction).native, 1),
+    cost            = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).exposure * 1,
 
     success     = arbiter.shift(public_standing, faction=trigger.faction, amount=-(trigger.amount * 2)),
     successcrit = None,  fail = None,  failcrit = None,
@@ -6021,7 +6277,7 @@ GHO.MOD.5 = Card(
     portrait     = {},
     narrative    = None,
     perspectives = None,
-    design_note  = "Late-game Flipped intel sink. Ghost spends the target's native resource to invert their public victory into a disaster. Since Reacts occur after the state change (the positive shift), this effectively applies a negative shift equal to double the trigger amount to achieve the inversion.",
+    design_note  = "Late-game Flipped intel sink. Ghost spends the target's native resource to invert their public victory into a disaster. Since Reacts occur after the state change (the positive shift), this effectively applies a negative shift equal to double the trigger amount to achieve the inversion Cost reasoning: Exposure is expended to actively seed the manufactured narrative into the public consciousness.",
     arbiter_note = None,
 )
 ```
@@ -6034,7 +6290,7 @@ GHO.MOD.5 = Card(
 
 ```python
 GHO.MOD.6 = Card(
-    id=TBD,  card_id="GHO.MOD.6",  version="v0.1",
+    id      = "GHO.MOD.6",  card_id="GHO.MOD.6",  version="v0.1",
     name    = "Supply Chain Tap",
     tagline = "Their infrastructure is our logistics.",
     type    = ModReactCard,  faction = Ghost,
@@ -6076,7 +6332,7 @@ GHO.MOD.6 = Card(
 
 ```python
 GHO.MOD.7 = Card(
-    id=TBD,  card_id="GHO.MOD.7",  version="v0.1",
+    id      = "GHO.MOD.7",  card_id="GHO.MOD.7",  version="v0.1",
     name    = "Sleeper Cell",
     tagline = "Total control is just a convenient illusion.",
     type    = ModReactCard,  faction = Ghost,
@@ -6096,7 +6352,7 @@ GHO.MOD.7 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = Resource(faction(trigger.faction).native, 1),
+    cost            = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).capacity * 1 + resource.faction(Ghost).capital * 1,
 
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Ghost, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
@@ -6105,7 +6361,7 @@ GHO.MOD.7 = Card(
     portrait     = {},
     narrative    = None,
     perspectives = None,
-    design_note  = "Reacts to a massive late-game state change. By physically swapping 1 of the target's chips for 1 Ghost chip, Ghost instantly drops the opponent's chip count, stripping the Dominant marker the moment it is placed and forcing them back to Established. Delays the endgame condition.",
+    design_note  = "Reacts to a massive late-game state change. By physically swapping 1 of the target's chips for 1 Ghost chip, Ghost instantly drops the opponent's chip count, stripping the Dominant marker the moment it is placed and forcing them back to Established. Delays the endgame condition Cost reasoning: Requires Capacity to house the cell and Capital to fund their sudden activation, backed by precise intelligence.",
     arbiter_note = None,
 )
 ```
@@ -6118,7 +6374,7 @@ GHO.MOD.7 = Card(
 
 ```python
 GHO.MOD.8 = Card(
-    id=TBD,  card_id="GHO.MOD.8",  version="v0.1",
+    id      = "GHO.MOD.8",  card_id="GHO.MOD.8",  version="v0.1",
     name    = "Local Sympathizers",
     tagline = "They thought this neighborhood belonged to them.",
     type    = ModReactCard,  faction = Ghost,
@@ -6153,6 +6409,65 @@ GHO.MOD.8 = Card(
 ```
 
 ---
+
+---
+
+### GHO.MOD.9 — BURN NOTICE *(stub)*
+[↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
+
+```python
+GHO.MOD.9 = Card(
+    id      = "GHO.MOD.9",  version = "v1.1",
+    name    = "Burn Notice",
+    tagline = "Incinerate an opponent's intelligence assets as they try to use them.",
+    type    = ModReactCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = Submission,  function = Remove,  subject = ModifierCard,
+    trigger = "public_act.submitted(uses_intel_token=True)",
+    cost    = resource.faction(Ghost).findings * 1,
+    success = "Remove all Modifier cards submitted with the target PA.",
+    design_note = "Punishes factions trying to aggressively brute-force a PA using Intel Tokens."
+)
+```
+
+---
+
+### GHO.MOD.10 — DATA WIPE *(stub)*
+[↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
+
+```python
+GHO.MOD.10 = Card(
+    id      = "GHO.MOD.10",  version = "v1.1",
+    name    = "Data Wipe",
+    tagline = "A devastating cyber-attack that cripples a faction's operational hand.",
+    type    = ModReactCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = Information,  function = Remove,  subject = FactionHand,
+    trigger = "public_act.submitted",
+    cost    = resource.faction(Ghost).findings * 2 + intel_token * 1,
+    success = "Target faction must discard their entire hand of unplayed CA and PA cards. (They will redraw normally at Debrief).",
+    design_note = "Hugely disruptive. Clears their operational runway for the rest of the quarter."
+)
+```
+
+---
+
+### GHO.MOD.11 — MANUFACTURED EVIDENCE *(stub)*
+[↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
+
+```python
+GHO.MOD.11 = Card(
+    id      = "GHO.MOD.11",  version = "v1.0",
+    name    = "Manufactured Evidence",
+    tagline = "Hijack a public act before the ink dries.",
+    type    = ModReactCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = Information,  function = Corrupt,  subject = TargetProfile,
+    trigger = "public_act.placed_with_target_profile",
+    cost    = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).exposure * 1,
+    success = "Replaces the PA's original Target Profile with a new Target Profile provided by Ghost.",
+    arbiter_note = "Reacts at Art 03 §9.2.0 when an opponent places a PA with a face-down Target Profile. Ghost announces the React, discards the opponent's original face-down Target Profile, and places their own face-down Target Profile on the PA. At Beat 4 Apex Check, the PA resolves against Ghost's corrupted targets.",
+    design_note = "A public hijacking. The table sees Ghost swap the paperwork, but because Target Profiles are placed face-down, no one (not even the table) knows what Ghost changed the target to until Beat 4."
+)
+```
+
 
 ## Directorate
 [↑ 7. Card Specifications](#7-card-specifications)
@@ -6220,7 +6535,7 @@ Directorate's positional authority card — asserts institutional control over a
 
 ```python
 DIR.CA.1 = Card(
-    id=21,  version="v1.0",
+    id      = "DIR.CA.1",  version="v1.0",
     name    = "Invoke Jurisdiction",
     tagline = "Assert institutional authority over a target district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -6291,7 +6606,7 @@ Directorate's permanent removal card — eliminates a faction's deployment marke
 
 ```python
 DIR.CA.2 = Card(
-    id=22,  version="v1.0",
+    id      = "DIR.CA.2",  version="v1.0",
     name    = "Detain",
     tagline = "Permanently remove a faction's deployment marker from a district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -6310,7 +6625,7 @@ DIR.CA.2 = Card(
         AND intel(faction=faction(target), age_rounds<=1) >= 1
         AND district(target) != ChorusNode.deployment_marker
     ),
-    cost        = resource.faction(acting).mandate * 3,
+    cost        = resource.faction(acting).mandate * 2 + resource.faction(acting).findings * 1,
     success     = game.move(faction(target).deployment_marker, from_=district(target), to=Directorate.tableau.detention, public=True),
     successcrit = resource.faction(acting).mandate += 3,
     fail=None,
@@ -6318,7 +6633,7 @@ DIR.CA.2 = Card(
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
     narrative   = "The Directorate does not destroy — it detains. The distinction matters to them.",
     perspectives = {Directorate: "The marker has been detained. Its conversion will not occur."},
-    design_note  = "L183. Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction (L183).",
+    design_note  = "L183. Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction (L183) Cost reasoning: Requires Capital to grease the bureaucratic wheels while Mandate provides the authority.",
     arbiter_note = "Consume Intel token. Move named faction's deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.",
 )
 ```
@@ -6376,7 +6691,7 @@ Redesigned S68: original model was permanent passive feed with beat3_pre_resolut
 
 ```python
 DIR.CA.3 = Card(
-    id=24, version="v2.0",
+    id      = "DIR.CA.3", version="v2.0",
     name    = "Surveillance Placement",
     tagline = "Watch a named district — learn what has been submitted before it resolves.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
@@ -6447,7 +6762,7 @@ Directorate's repositioning card — the only card in the full set using Territo
 
 ```python
 DIR.CA.4 = Card(
-    id=25,  version="v1.0",
+    id      = "DIR.CA.4",  version="v1.0",
     name    = "Tactical Redirection",
     tagline = "Reposition institutional presence ahead of a contested exchange.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -6524,7 +6839,7 @@ Directorate's active tier suppression play — declared publicly at Phase B, res
 
 ```python
 RegulatoryDowngrade = Card(
-    id=TBD,  version="v2.0",
+    id      = "DIR.PA.4",  version="v2.0",
     name    = "Regulatory Downgrade",
     tagline = "Reclassify a faction's standing in a district. They generate resources as if one tier lower until they pay to clear it.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -6553,7 +6868,7 @@ RegulatoryDowngrade = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(target).influence_tier(district(target)) >= Established,
-    cost        = resource.faction(acting).mandate * 3,
+    cost        = resource.faction(acting).mandate * 1 + resource.faction(acting).exposure * 1 + resource.faction(acting).capital * 1,
 
     success     = None,
     successcrit = None,
@@ -6613,7 +6928,7 @@ Preventive tier suppression — lighter than Regulatory Downgrade but cheaper. W
 
 ```python
 RegulatoryFreeze = Card(
-    id=TBD,  version="v2.0",
+    id      = "DIR.PA.5",  version="v2.0",
     name    = "Regulatory Freeze",
     tagline = "Establish a tier ceiling in a target district. Target cannot advance beyond their current standing until they pay to lift it.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -6705,7 +7020,7 @@ The Directorate dispatches a team to the district — no announcement, no negoti
 
 ```python
 DIR.CA.5 = Card(
-    id=42,  version="v2.2",
+    id      = "DIR.CA.5",  version="v2.2",
     name    = "Sanctioned Raid",
     tagline = "Not every operation leaves a paper trail.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -6787,7 +7102,7 @@ An internal team works through the standing record. Active directives in this ri
 
 ```python
 DIR.CA.6 = Card(
-    id=TBD, version="v1.0",
+    id      = "DIR.CA.6", version="v1.0",
     name    = "Institutional Audit",
     tagline = "Review the standing record. Active directives in this ring generate institutional capital.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
@@ -6862,7 +7177,7 @@ Before any version of events could circulate, the Directorate's closed channels 
 
 ```python
 DIR.CA.7 = Card(
-    id=TBD, version="v1.0",
+    id      = "DIR.CA.7", version="v1.0",
     name    = "Institutional Brief",
     tagline = "Circulate the standing record through closed channels. Demonstrated authority in this ring builds public confidence.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
@@ -6937,7 +7252,7 @@ The district is under enhanced institutional review. Documentation requirements 
 
 ```python
 DIR.CA.8 = Card(
-    id=TBD, version="v1.0",
+    id      = "DIR.CA.8", version="v1.0",
     name    = "Enhanced Scrutiny",
     tagline = "Place a district under institutional review. All Beat 3 covert operations in this district find conditions harder.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
@@ -7018,7 +7333,7 @@ Directorate's district-level regulatory control PA. All non-Directorate presence
 
 ```python
 DIR.PA.1 = Card(
-    id="DIR.PA.1",  version="v1.0",
+    id      = "DIR.PA.1",  version="v1.0",
     name    = "Regulatory Override",
     tagline = "Declare a district under Directorate oversight, raising the cost of all non-Directorate presence operations.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -7071,7 +7386,7 @@ DIR.PA.1 = Card(
         Ghost:       "The Directorate taxes the district. We do not need to control the threshold. We only need to observe who stops trying to cross it.",  # aligned
         Network:     "One Mandate and the Directorate makes every other faction pay to exist in the district. They call it regulation. We call it a toll.",  # opposed
     },
-    design_note  = "District-level regulatory PA. +1 native cost on all non-Directorate PresenceToken.Add actions in district for remainder of Quarter (Seasonal). Physical marker on district; card stays on table as marker. Counter to Guild STD.PA.3/GUI.PA.1 build chain — raises cost of presence prerequisite. Restriction: Directorate Established+ in district. Multiple P11s may target different districts. Balance review pending playtesting.",
+    design_note  = "District-level regulatory PA. +1 native cost on all non-Directorate PresenceToken.Add actions in district for remainder of Quarter (Seasonal). Physical marker on district; card stays on table as marker. Counter to Guild STD.PA.3/GUI.PA.1 build chain — raises cost of presence prerequisite. Restriction: Directorate Established+ in district. Multiple P11s may target different districts. Balance review pending playtesting Cost reasoning: Exposure is necessary to enforce the controls publicly, making the restrictions visible across the district.",
     arbiter_note = "Beat 4: place RegulatoryOverrideMarker on declared district. DIR.PA.1 card stays on table as marker. Apply +1 native cost to all non-Directorate presence-placement actions (STD.CA.3 Campaign, STD.PA.1 Open Operations, STD.CA.8 Buy Influence, GUI.PA.1 Civic Works Mandate) targeting this district for remaining Months of Quarter. Directorate PS +1. Clear: Directorate Absent in district (remove immediately) OR Phase 21 cleanup. Multiple markers on different districts tracked independently.",
 )
 ```
@@ -7115,7 +7430,7 @@ Directorate's institutional intelligence-gathering PA. No formal restriction —
 
 ```python
 DIR.PA.2 = Card(
-    id="DIR.PA.2",  version="v1.0",
+    id      = "DIR.PA.2",  version="v1.0",
     name    = "Convene an Inquiry",
     tagline = "Commission an ARBITER-mediated institutional investigation into a faction's recent operations.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -7164,7 +7479,7 @@ DIR.PA.2 = Card(
         Guild:       "Directorate uses ARBITER to formalize what was publicly attributed. The investigation costs Mandate but produces something the record can verify. Guild respects the process.",  # aligned
         Syndicate:   "Directorate asks ARBITER to count what was already on the record. What was not on the record, ARBITER cannot count. That distinction is our operating margin.",  # opposed
     },
-    design_note  = "Directorate intelligence PA via institutional channel. No restriction — always available. Yield: 1 Intel token per publicly attributed covert action against target faction in last 2 months (from successful STD.PA.4 or STD.PA.5 this Quarter). 0 tokens = 3 Mandate wasted (costly gamble without prior groundwork). Distinct from Ghost STD.CA.5 Gather (covert fieldwork). Creates two-step sequence incentive: STD.PA.4/STD.PA.5 → DIR.PA.2.",
+    design_note  = "Directorate intelligence PA via institutional channel. No restriction — always available. Yield: 1 Intel token per publicly attributed covert action against target faction in last 2 months (from successful STD.PA.4 or STD.PA.5 this Quarter). 0 tokens = 3 Mandate wasted (costly gamble without prior groundwork). Distinct from Ghost STD.CA.5 Gather (covert fieldwork). Creates two-step sequence incentive: STD.PA.4/STD.PA.5 → DIR.PA.2 Cost reasoning: Findings provide the legal precedent and evidence required to sustain the injunction long-term.",
     arbiter_note = "Beat 4. Count: how many successful STD.PA.4 or STD.PA.5 resolutions named this target faction this Quarter? Provide Directorate with that many Fresh Intel tokens (max 2). Apply PS: target −1, Directorate +1. If count = 0: no tokens delivered. 3 Mandate spent regardless.",
 )
 ```
@@ -7216,7 +7531,7 @@ Directorate's persistent territorial control tool — a district-level board con
 
 ```python
 EntryExitControls = Card(
-    id=TBD,  version="v2.0",
+    id      = "DIR.PA.3",  version="v2.0",
     name    = "Entry/Exit Controls",
     tagline = "Designate a district as a controlled zone — displacing non-Directorate deployment markers and blocking future placement.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -7233,7 +7548,7 @@ EntryExitControls = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).influence_tier(district.named) >= Established,
-    cost = resource.faction(acting).mandate * 3,
+    cost = resource.faction(acting).mandate * 2 + resource.faction(acting).capacity * 1,
     success = (
         for_each(
             deployment_marker(faction=faction.all_except(Directorate), district=district.named),
@@ -7297,7 +7612,7 @@ None.
 
 ```python
 P_StandingInjunction = Card(
-    id      = "—",  version = "v2.0",
+    id      = "DIR.PA.6",  version = "v2.0",
     name    = "Standing Injunction",
     tagline = "Declare a public restriction on a named faction's next act of a specified type. If triggered, the act is voided.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -7326,7 +7641,7 @@ P_StandingInjunction = Card(
 
     affinity    = None,
     restriction = None,
-    cost        = resource.faction(Directorate).mandate * 3,
+    cost        = resource.faction(Directorate).mandate * 1 + resource.faction(Directorate).capital * 1 + resource.faction(Directorate).findings * 1,
 
     success     = faction(Directorate).standing += 1,
     successcrit = None,
@@ -7354,13 +7669,51 @@ P_StandingInjunction = Card(
 
 ---
 
+---
+
+### DIR.PA.7 — CURFEW *(stub)*
+[↑ Public Acts](#directorate-public-acts)
+
+```python
+DIR.PA.7 = Card(
+    id      = "DIR.PA.7",  version = "v1.1",
+    name    = "Curfew",
+    tagline = "Lock down a district to freeze physical movement.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = Territory,  function = Block,  subject = DeploymentMarker,
+    beat    = 4,  resolution = Automatic,  persistence = Transient,
+    cost    = resource.faction(Directorate).mandate * 2,
+    success = "Places a Standing Condition on target_district until the end of Quarter+1: Deployment Markers cannot be moved into this district.",
+    design_note = "A massive territorial denial tool. Blocks physical movement (which is public and enforceable) rather than targeting blind covert space."
+)
+```
+
+---
+
+### DIR.PA.8 — SUBPOENA *(stub)*
+[↑ Public Acts](#directorate-public-acts)
+
+```python
+DIR.PA.8 = Card(
+    id      = "DIR.PA.8",  version = "v1.2",
+    name    = "Subpoena",
+    tagline = "Weaponize target-keyed intelligence into a public audit that bleeds an opponent's finances or reputation.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = Economy,  function = Remove,  subject = Capital,
+    beat    = 4,  resolution = d100,  threshold = 40,
+    cost    = resource.faction(Directorate).mandate * 1 + intel_token(faction=target_faction) * 1,
+    success = "Target faction must pay 2 Capital or 2 of their Native Resource to the supply. If they do not, they lose 2 Public Standing.",
+    design_note = "Cost uses a faction-keyed Intel Token: Directorate 'found out something' that justifies the legal action. The target has the choice to pay the fine or take the PR hit."
+)
+```
+
 ### DIR.MOD.1 — RIOT SQUAD *(stub)*
 
 *S128. First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core).*
 
 ```python
 DIR.MOD.1 = Card(
-    id=TBD,  card_id="DIR.MOD.1",  version="v0.1",
+    id      = "DIR.MOD.1",  card_id="DIR.MOD.1",  version="v0.1",
     name    = "Riot Squad",
     tagline = "Presence placed without Directorate approval can be removed with Directorate authority.",
     type    = ModReactCard,  faction = Directorate,
@@ -7402,7 +7755,7 @@ DIR.MOD.1 = Card(
 
 ```python
 DIR.MOD.2 = Card(
-    id=TBD,  card_id="DIR.MOD.2",  version="v0.1",
+    id      = "DIR.MOD.2",  card_id="DIR.MOD.2",  version="v0.1",
     name    = "Capital Suppression",
     tagline = "Syndicate presence in regulated territory draws immediate institutional response.",
     type    = ModReactCard,  faction = Directorate,
@@ -7444,7 +7797,7 @@ DIR.MOD.2 = Card(
 
 ```python
 DIR.MOD.3 = Card(
-    id=TBD,  card_id="DIR.MOD.3",  version="v0.1",
+    id      = "DIR.MOD.3",  card_id="DIR.MOD.3",  version="v0.1",
     name    = "City Council Loyalist",
     tagline = "In the Core, the Directorate's authority does not require a justification.",
     type    = ModReactCard,  faction = Directorate,
@@ -7486,7 +7839,7 @@ DIR.MOD.3 = Card(
 
 ```python
 DIR.MOD.4 = Card(
-    id=TBD,  card_id="DIR.MOD.4",  version="v0.1",
+    id      = "DIR.MOD.4",  card_id="DIR.MOD.4",  version="v0.1",
     name    = "Administrative Overhead",
     tagline = "Every Accord formed is a Directorate administrative event.",
     type    = ModReactCard,  faction = Directorate,
@@ -7528,7 +7881,7 @@ DIR.MOD.4 = Card(
 
 ```python
 DIR.MOD.5 = Card(
-    id=TBD,  card_id="DIR.MOD.5",  version="v0.1",
+    id      = "DIR.MOD.5",  card_id="DIR.MOD.5",  version="v0.1",
     name    = "Emergency Appropriation",
     tagline = "Institutional scale requires institutional funding.",
     type    = ModReactCard,  faction = Directorate,
@@ -7570,7 +7923,7 @@ DIR.MOD.5 = Card(
 
 ```python
 DIR.MOD.6 = Card(
-    id=TBD,  card_id="DIR.MOD.6",  version="v0.1",
+    id      = "DIR.MOD.6",  card_id="DIR.MOD.6",  version="v0.1",
     name    = "State of Emergency",
     tagline = "The world changes. The Directorate dictates how.",
     type    = ModReactCard,  faction = Directorate,
@@ -7590,7 +7943,7 @@ DIR.MOD.6 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = None,
+    cost            = resource.faction(Directorate).mandate * 1 + resource.faction(Directorate).exposure * 1,
 
     success     = "Card remains in play (persistence=Quarter) on Directorate FRG. While in play, any opponent Public Act targeting a district where Directorate influence is >= Established suffers boost=-10.",
     successcrit = None,  fail = None,  failcrit = None,
@@ -7599,7 +7952,7 @@ DIR.MOD.6 = Card(
     portrait     = {},
     narrative    = None,
     perspectives = None,
-    design_note  = "Environmental shaping. Triggers when the Arbiter reveals a World Event. The ModReactCard itself is placed face-up on the Directorate's Faction Resolution Grid as a standing condition for the rest of the Quarter. It imposes a -10 difficulty penalty on any opponent PA that targets a district where Directorate is Established or higher. Solves the 'world event extension' gap by letting Directorate piggyback on the World Event phase to declare their own global environmental constraint. Legally escapes Art 00a §9.1 because it modifies action difficulty (9.1a), not resource income.",
+    design_note  = "Environmental shaping. Triggers when the Arbiter reveals a World Event. The ModReactCard itself is placed face-up on the Directorate's Faction Resolution Grid as a standing condition for the rest of the Quarter. It imposes a -10 difficulty penalty on any opponent PA that targets a district where Directorate is Established or higher. Solves the 'world event extension' gap by letting Directorate piggyback on the World Event phase to declare their own global environmental constraint. Legally escapes Art 00a §9.1 because it modifies action difficulty (9.1a), not resource income Cost reasoning: Exposure represents the widespread public broadcast necessary to enforce an emergency lockdown.",
     arbiter_note = None,
 )
 ```
@@ -7612,7 +7965,7 @@ DIR.MOD.6 = Card(
 
 ```python
 DIR.MOD.7 = Card(
-    id=TBD,  card_id="DIR.MOD.7",  version="v0.1",
+    id      = "DIR.MOD.7",  card_id="DIR.MOD.7",  version="v0.1",
     name    = "Eminent Domain",
     tagline = "Private development is subject to institutional oversight.",
     type    = ModReactCard,  faction = Directorate,
@@ -7654,7 +8007,7 @@ DIR.MOD.7 = Card(
 
 ```python
 DIR.MOD.8 = Card(
-    id=TBD,  card_id="DIR.MOD.8",  version="v0.1",
+    id      = "DIR.MOD.8",  card_id="DIR.MOD.8",  version="v0.1",
     name    = "Asset Seizure",
     tagline = "Unlicensed public operations are subject to immediate fines.",
     type    = ModReactCard,  faction = Directorate,
@@ -7674,7 +8027,7 @@ DIR.MOD.8 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = None,
+    cost            = resource.faction(Directorate).mandate * 1 + resource.faction(Directorate).capital * 1,
 
     success     = arbiter.remove(resource_token, target=trigger.card, count=1),
     successcrit = None,  fail = None,  failcrit = None,
@@ -7683,7 +8036,7 @@ DIR.MOD.8 = Card(
     portrait     = {},
     narrative    = None,
     perspectives = None,
-    design_note  = "Bureaucratic taxation. Triggers when a PA is placed on the FRG targeting a Directorate-Established district. Directorate instantly removes (impounds) 1 resource token off the card. The acting faction must either add a replacement resource before Beat 4, or suffer partial-payment failure.",
+    design_note  = "Bureaucratic taxation. Triggers when a PA is placed on the FRG targeting a Directorate-Established district. Directorate instantly removes (impounds) 1 resource token off the card. The acting faction must either add a replacement resource before Beat 4, or suffer partial-payment failure Cost reasoning: Requires Capital to mobilize the physical impoundment teams while Mandate authorizes the seizure.",
     arbiter_note = None,
 )
 ```
@@ -7754,7 +8107,7 @@ Network's pre-execution discovery card — spends 1 Exposure + 1 Findings to exp
 
 ```python
 NET.CA.1 = Card(
-    id=26,  version="v1.1",
+    id      = "NET.CA.1",  version="v1.1",
     name    = "Leak",
     tagline = "Expose and cancel a rival's most costly unresolved operation before it fires.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -7828,7 +8181,7 @@ Network's Exposure generation card — converts the act of revealing into additi
 
 ```python
 NET.CA.2 = Card(
-    id=27,  version="v1.0",
+    id      = "NET.CA.2",  version="v1.0",
     name    = "Disclosure Loop",
     tagline = "Transparency is self-sustaining. Revealing information generates the capacity to reveal more.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -7905,7 +8258,7 @@ A Network operative submits intelligence on a target faction's committed operati
 
 ```python
 NET.CA.3 = Card(
-    id=28, version="v2.0",
+    id      = "NET.CA.3", version="v2.0",
     name    = "Breaking News",
     tagline = "Force ARBITER to publicly reveal the target faction's first committed operation before Beat 3 resolves.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
@@ -7988,7 +8341,7 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 
 ```python
 NET.CA.4 = Card(
-    id=29,  version="v1.0",
+    id      = "NET.CA.4",  version="v1.0",
     name    = "Network Cascade",
     tagline = "Extend Broadcast Interference to an adjacent district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -8002,7 +8355,7 @@ NET.CA.4 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).submitted(STD.CA.6, round=game.round) == True,
-    cost        = resource.faction(acting).exposure * 2,
+    cost        = resource.faction(acting).exposure * 1 + resource.faction(acting).findings * 1,
     success     = district(target).political_act_cost += 1,
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
@@ -8059,7 +8412,7 @@ Network's Baryo-targeted presence card — specialized version of STD.CA.3 Campa
 
 ```python
 NET.CA.5 = Card(
-    id=30,  version="v1.0",
+    id      = "NET.CA.5",  version="v1.0",
     name    = "Community Anchor",
     tagline = "Establish presence in a Baryo district through existing relationships.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -8129,7 +8482,7 @@ Network's credibility-to-Intel conversion card. Reflects the Network doctrine th
 
 ```python
 NET.CA.6 = Card(
-    id=37,  version="v1.1",
+    id      = "NET.CA.6",  version="v1.1",
     name    = "Sacrifice",
     tagline = "Spend two steps of credibility. Receive one piece of intelligence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -8149,7 +8502,7 @@ NET.CA.6 = Card(
     portrait    = {},
     narrative   = "The Network knows: sometimes you spend credibility like currency. This is one of those times.",
     perspectives = {Network: "What we have built is not a goal. It is a tool. And sometimes a tool must be spent."},
-    design_note  = "PS −2 is a success effect, not a cost — PS is non-fungible and cannot appear in the cost field (Art 04 §6.2). target_faction required: tokens must be keyed at Dispatch. Single use per play; 2:1 ratio prevents cheap IntelToken arbitrage.",
+    design_note  = "PS −2 is a success effect, not a cost — PS is non-fungible and cannot appear in the cost field (Art 04 §6.2). target_faction required: tokens must be keyed at Dispatch. Single use per play; 2:1 ratio prevents cheap IntelToken arbitrage Cost reasoning: Findings are needed to identify the exact weak points in adjacent district firewalls for the signal to jump.",
     arbiter_note = None,
 )
 ```
@@ -8207,7 +8560,7 @@ The message doesn't travel because Network announced it. It travels because Netw
 
 ```python
 NET.CA.7 = Card(
-    id=TBD, version="v1.0",
+    id      = "NET.CA.7", version="v1.0",
     name    = "Ground Signal",
     tagline = "Put the message on the street. Presence here is readable. Let it be read.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
@@ -8283,7 +8636,7 @@ Network's signature information-attack PA — a coordinated release of all subst
 
 ```python
 NET.PA.1 = Card(
-    id="NET.PA.1",  version="v1.0",
+    id      = "NET.PA.1",  version="v1.0",
     name    = "Public Disclosure",
     tagline = "Network broadcasts all substantiated intelligence about a faction's operations in a single coordinated release.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
@@ -8374,7 +8727,7 @@ Network's broadcast-derived presence PA — scaling territorial expansion built 
 
 ```python
 NET.PA.2 = Card(
-    id="NET.PA.2",  version="v1.0",
+    id      = "NET.PA.2",  version="v1.0",
     name    = "Community Rally",
     tagline = "Mobilize communities across Network's established presence network.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
@@ -8400,8 +8753,8 @@ NET.PA.2 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Network).influence_tier(district.each_target) >= Established,
-    cost        = resource.faction(Network).exposure * 2 + resource.faction(Network).exposure * (count(district.target) - 1),
-    # cost = 2 Exposure + 1 per additional district above first
+    cost        = resource.faction(Network).exposure * 2 + resource.district(each_target).native * 1,
+    # cost = 2 Exposure + 1 district native per targeted district
 
     success     = (
         district.each(target).faction(Network).presence += 1,
@@ -8419,7 +8772,7 @@ NET.PA.2 = Card(
         Syndicate:   "Network deepens without purchasing. No Accord, no offer fee, no formal mechanism. The community already listening becomes the position. Efficient.",  # aligned
         Directorate: "Network consolidates three Established positions simultaneously without a single permit or notification. The Directorate marks this as unregulated expansion and files accordingly.",  # opposed
     },
-    design_note  = "Broadcast-derived presence PA. Deepens existing foothold (Established+) rather than expanding into new territory. Scaling cost: 2 Exposure (1 district), 3 (2 districts), 4 (3 districts). Partial resolution: if a named district fails Established+ restriction at Beat 0, that district is dropped from resolution; remaining valid districts proceed; cost already committed. Replaces Open Record Request (unworkable).",
+    design_note  = "Broadcast-derived presence PA. Deepens existing foothold (Established+) rather than expanding into new territory. Scaling cost: 2 Exposure (1 district), 3 (2 districts), 4 (3 districts). Partial resolution: if a named district fails Established+ restriction at Beat 0, that district is dropped from resolution; remaining valid districts proceed; cost already committed. Replaces Open Record Request (unworkable) Cost reasoning: District native resources represent the local on-the-ground support required to organize a massive rally.",
     arbiter_note = "Phase B: Network names 1–3 districts. Cost calculated (2 + extras) and committed. Beat 0: check each named district for Established+ restriction. Drop invalid districts from resolution. Beat 4: place 1 presence token in each valid district. Network +1 PS.",
 )
 ```
@@ -8475,7 +8828,7 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 
 ```python
 NET.PA.3 = Card(
-    id=TBD, version="v1.0",
+    id      = "NET.PA.3", version="v1.0",
     name    = "Live Coverage",
     tagline = "Force a named faction to play with their hand visible or forfeit covert submissions, each Covert Dispatch for the remaining Months of the Quarter.",
     type    = PublicAct, subtype = FactionSpecific, faction = Network,
@@ -8557,7 +8910,7 @@ NET.PA.3 = Card(
 
 ```python
 NET.MOD.2 = Card(
-    id=TBD,  card_id="NET.MOD.2",  version="v0.1",
+    id      = "NET.MOD.2",  card_id="NET.MOD.2",  version="v0.1",
     name    = "Troll Farm",  # placeholder name — confirm before sign-off
     tagline = "The narrative was already moving. We just changed where it was going.",
     type    = ModReactCard,  faction = Network,
@@ -8565,17 +8918,74 @@ NET.MOD.2 = Card(
               # fires when any other faction's standing marker increases (publicly observable)
     ring_constraint = None,  ring_origin = None,  value_rating = None,
     beat    = None,  resolution = Automatic,
-    cost    = IntelToken(any) * 1,
+    cost    = resource.faction(Network).exposure * 1 + resource.faction(Network).capital * 1,
     success = faction(trigger.faction).standing -= 1,  # unblockable — governing rule TBD; see Outstanding Issues
     fail    = None,
     restriction = None,
     portrait = {Network: PortraitEntry(submitter=+1)},
     narrative = None,  perspectives = None,  arbiter_note = None,
-    design_note = "Network activates an Intel dossier the moment a faction's standing increases — converting gathered intelligence into immediate reputational damage at the opponent's highest-visibility moment. PS −1 is unblockable: once the information releases, retraction is impossible. Governing rule for unblockability outstanding — address alongside any second bypass-capable card. Trigger is standing_marker.increased (publicly observable, §5 P5 compliant). Does not fire on Network's own standing increases. card_id = NET.MOD.2.",
+    design_note = "Network activates an Intel dossier the moment a faction's standing increases — converting gathered intelligence into immediate reputational damage at the opponent's highest-visibility moment. PS −1 is unblockable: once the information releases, retraction is impossible. Governing rule for unblockability outstanding — address alongside any second bypass-capable card. Trigger is standing_marker.increased (publicly observable, §5 P5 compliant). Does not fire on Network's own standing increases. card_id = NET.MOD.2 Cost reasoning: Capital funds the server farms and botnets needed to rapidly manufacture the public narrative.",
 )
 ```
 
 ---
+
+---
+
+### NET.PA.4 — GRASSROOTS PROTEST *(stub)*
+[↑ Public Acts](#network-public-acts)
+
+```python
+NET.PA.4 = Card(
+    id      = "NET.PA.4",  version = "v1.1",
+    name    = "Grassroots Protest",
+    tagline = "Mobilize the masses to physically drown out an opponent's influence.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
+    layer   = Territory,  function = Remove,  subject = PresenceToken,
+    beat    = 4,  resolution = d100,  threshold = 60,
+    cost    = resource.faction(Network).exposure * 1 + district_native(target_district) * 1,
+    success = "Remove 1 target_faction's Presence Token from target_district. Target faction loses 1 PS. Network gains +1 PS.",
+    design_note = "A loud territorial disruption. Burns Exposure and local resources to physically remove an opponent's token while shifting the PR balance."
+)
+```
+
+---
+
+### NET.PA.5 — VIRAL OUTRAGE *(stub)*
+[↑ Public Acts](#network-public-acts)
+
+```python
+NET.PA.5 = Card(
+    id      = "NET.PA.5",  version = "v1.1",
+    name    = "Viral Outrage",
+    tagline = "Weaponize an opponent's own assets against them to tank their standing.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,
+    beat    = 4,  resolution = Automatic,
+    cost    = resource.faction(Network).exposure * 2 + resource.faction(target_faction).native * 1,
+    success = "Target faction loses 3 Public Standing. Network gains +1 PS.",
+    design_note = "Pure PR assassination. Network burns the opponent's own native resource to fuel the smear campaign."
+)
+```
+
+---
+
+### NET.PA.6 — CROWDFUNDING CAMPAIGN *(stub)*
+[↑ Public Acts](#network-public-acts)
+
+```python
+NET.PA.6 = Card(
+    id      = "NET.PA.6",  version = "v1.1",
+    name    = "Crowdfunding Campaign",
+    tagline = "Convert public goodwill into hard resources.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
+    layer   = Economy,  function = Add,  subject = AnyResource,
+    beat    = 4,  resolution = Automatic,
+    cost    = resource.faction(Network).exposure * 1,
+    success = "Network names a resource type. Network gains 1 of that resource type for every 4 points of positive Public Standing they currently have.",
+    design_note = "Network's economy is driven by their audience. This rewards them for maintaining a high, positive PS track by converting it into any resource they need."
+)
+```
 
 ### NET.MOD.1 — PIRATE TRANSMITTER *(stub)*
 
@@ -8615,7 +9025,7 @@ The district was already moving. Network didn't start the change — it arrived 
 
 ```python
 NET.MOD.1 = Card(
-    id=TBD,  card_id="NET.MOD.1",  version="v1.0",
+    id      = "NET.MOD.1",  card_id="NET.MOD.1",  version="v1.0",
     name    = "Pirate Transmitter",
     tagline = "A public action changes the district. The signal finds the opening.",
     type    = ModReactCard,  faction = Network,
@@ -8650,7 +9060,7 @@ NET.MOD.1 = Card(
 
 ```python
 NET.MOD.3 = Card(
-    id=TBD,  card_id="NET.MOD.3",  version="v0.1",
+    id      = "NET.MOD.3",  card_id="NET.MOD.3",  version="v0.1",
     name    = "Backup Server Racks",
     tagline = "When Network loses standing, redirect the narrative before it lands.",
     type    = ModReactCard,  faction = Network,
@@ -8692,7 +9102,7 @@ NET.MOD.3 = Card(
 
 ```python
 NET.MOD.4 = Card(
-    id=TBD,  card_id="NET.MOD.4",  version="v0.1",
+    id      = "NET.MOD.4",  card_id="NET.MOD.4",  version="v0.1",
     name    = "Amplification Array",
     tagline = "When news breaks publicly, the Network's signal extends.",
     type    = ModReactCard,  faction = Network,
@@ -8734,7 +9144,7 @@ NET.MOD.4 = Card(
 
 ```python
 NET.MOD.5 = Card(
-    id=TBD,  card_id="NET.MOD.5",  version="v0.1",
+    id      = "NET.MOD.5",  card_id="NET.MOD.5",  version="v0.1",
     name    = "Infrastructure Signal",
     tagline = "Public broadcasts amplify Network reach in established infrastructure districts.",
     type    = ModReactCard,  faction = Network,
@@ -8776,7 +9186,7 @@ NET.MOD.5 = Card(
 
 ```python
 NET.MOD.6 = Card(
-    id=TBD,  card_id="NET.MOD.6",  version="v0.1",
+    id      = "NET.MOD.6",  card_id="NET.MOD.6",  version="v0.1",
     name    = "Street-level Agitator",
     tagline = "When anyone moves in the Baryo, Network's voice follows.",
     type    = ModReactCard,  faction = Network,
@@ -8818,7 +9228,7 @@ NET.MOD.6 = Card(
 
 ```python
 NET.MOD.7 = Card(
-    id=TBD,  card_id="NET.MOD.7",  version="v0.1",
+    id      = "NET.MOD.7",  card_id="NET.MOD.7",  version="v0.1",
     name    = "Community Amplifiers",
     tagline = "The louder the city gets, the more they listen.",
     type    = ModReactCard,  faction = Network,
@@ -8860,7 +9270,7 @@ NET.MOD.7 = Card(
 
 ```python
 NET.MOD.8 = Card(
-    id=TBD,  card_id="NET.MOD.8",  version="v0.1",
+    id      = "NET.MOD.8",  card_id="NET.MOD.8",  version="v0.1",
     name    = "Frequency Splitter",
     tagline = "A single broadcast splinters into a dozen channels.",
     type    = ModReactCard,  faction = Network,
@@ -8902,7 +9312,7 @@ NET.MOD.8 = Card(
 
 ```python
 NET.MOD.9 = Card(
-    id=TBD,  card_id="NET.MOD.9",  version="v0.1",
+    id      = "NET.MOD.9",  card_id="NET.MOD.9",  version="v0.1",
     name    = "Bandwidth Override",
     tagline = "Conflict creates the ultimate engagement metric.",
     type    = ModReactCard,  faction = Network,
@@ -8922,7 +9332,7 @@ NET.MOD.9 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = None,
+    cost            = resource.faction(Network).exposure * 1 + resource.faction(Network).findings * 1,
 
     success     = arbiter.draw_modifier(faction=Network, count=4),
     successcrit = None,  fail = None,  failcrit = None,
@@ -8931,7 +9341,7 @@ NET.MOD.9 = Card(
     portrait     = {},
     narrative    = None,
     perspectives = None,
-    design_note  = "The massive hand-flooder. Triggered by a high-tension public state change. Since there is no hand limit, Network holds these cards indefinitely to fund their cascading react chain.",
+    design_note  = "The massive hand-flooder. Triggered by a high-tension public state change. Since there is no hand limit, Network holds these cards indefinitely to fund their cascading react chain Cost reasoning: Findings pinpoint the opponent's exact communication frequencies to successfully jam them.",
     arbiter_note = None,
 )
 ```
@@ -8944,7 +9354,7 @@ NET.MOD.9 = Card(
 
 ```python
 NET.MOD.10 = Card(
-    id=TBD,  card_id="NET.MOD.10",  version="v0.1",
+    id      = "NET.MOD.10",  card_id="NET.MOD.10",  version="v0.1",
     name    = "Local Organizers",
     tagline = "They sent operatives. We sent neighbors.",
     type    = ModReactCard,  faction = Network,
@@ -8979,6 +9389,46 @@ NET.MOD.10 = Card(
 ```
 
 ---
+
+---
+
+### NET.MOD.11 — CANCEL CAMPAIGN *(stub)*
+[↑ Modifier & React Cards](#network-modifier-and-react-cards)
+
+```python
+NET.MOD.11 = Card(
+    id      = "NET.MOD.11",  version = "v1.1",
+    name    = "Cancel Campaign",
+    tagline = "Hijack the narrative of an opponent's public action.",
+    type    = ModReactCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,
+    trigger = "public_act.submitted",
+    cost    = resource.faction(Network).exposure * 1,
+    success = "The target faction's PA resolves normally, but their PS is reduced by 2 due to extreme public backlash. Network gains 1 Exposure.",
+    design_note = "Network doesn't block the legal act (Directorate's job). Instead, Network weaponizes the public's reaction to the act, ensuring the target pays a heavy PR price for whatever they just did."
+)
+```
+
+---
+
+### NET.MOD.12 — FORCED TRANSPARENCY *(stub)*
+[↑ Modifier & React Cards](#network-modifier-and-react-cards)
+
+```python
+NET.MOD.12 = Card(
+    id      = "NET.MOD.12",  version = "v1.0",
+    name    = "Forced Transparency",
+    tagline = "Broadcast their intended target before they are ready.",
+    type    = ModReactCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = Information,  function = Reveal,  subject = TargetProfile,
+    trigger = "public_act.placed_with_target_profile",
+    cost    = resource.faction(Network).exposure * 1,
+    success = "The Target Profile is immediately flipped face-up for the table to see.",
+    arbiter_note = "Reacts at Art 03 §9.2.0 when an opponent places a PA with a face-down Target Profile. Network announces the React and spends 1 Exposure. The Target Profile is flipped face-up immediately. The PA is locked in and will resolve normally at Beat 4, but the target is now public knowledge for the rest of the round.",
+    design_note = "A direct counter to hidden targets. By spending 1 Exposure, Network strips the opponent's tactical ambiguity for the entire round. This allows other factions to prepare defenses or negotiate before Beat 4."
+)
+```
+
 
 ## Syndicate
 [↑ 7. Card Specifications](#7-card-specifications)
@@ -9047,7 +9497,7 @@ Syndicate's non-presence resource extraction card — Capital buys immediate res
 
 ```python
 SYN.CA.1 = Card(
-    id      = 31,  version = "v1.4",
+    id      = "SYN.CA.1",  version = "v1.4",
     name    = "Leveraged Acquisition",
     tagline = "Extract resource income from a district without physical presence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9138,7 +9588,7 @@ Syndicate's economic disruption card — directly reduces a target faction's nat
 
 ```python
 SYN.CA.2 = Card(
-    id=32,  version="v1.0",
+    id      = "SYN.CA.2",  version="v1.0",
     name    = "Short the Market",
     tagline = "Reduce a faction's native resource generation for one round.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9212,7 +9662,7 @@ Syndicate's structure takeover card — Capital purchases ownership of an oppone
 
 ```python
 SYN.CA.3 = Card(
-    id=33,  version="v1.0",
+    id      = "SYN.CA.3",  version="v1.0",
     name    = "Hostile Acquisition",
     tagline = "Purchase ownership of an opponent's structure.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9230,7 +9680,7 @@ SYN.CA.3 = Card(
         district(target).faction(target).structure >= 1
         AND NOT (faction(target) == Guild AND C11.active(district(target), round=game.round))
     ),
-    cost        = resource.faction(acting).capital * 5,
+    cost        = resource.faction(acting).capital * 3 + resource.faction(acting).findings * 1 + resource.faction(acting).exposure * 1,
     success     = (
         game.transfer(district(target).faction(target).structure(1), faction(acting)),
         game.dispatch(faction(target), resource.faction(target).native * 1),
@@ -9291,7 +9741,7 @@ Syndicate's bribe card — pays a named faction to nullify their Beat 3 operatio
 
 ```python
 SYN.CA.4 = Card(
-    id=34,  version="v2.0",
+    id      = "SYN.CA.4",  version="v2.0",
     name    = "Golden Parachute",
     tagline = "Declare a bribe. Their operations against you are covered. Windfall or nullification — the Capital leaves either way.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9311,7 +9761,7 @@ SYN.CA.4 = Card(
     portrait        = {Syndicate: PortraitEntry(submitter=+1)},
     narrative       = "The Syndicate does not wait to find out. They price the outcome in advance.",
     perspectives    = {Syndicate: "We did not lose those resources. We placed them where the problem would be. There is a difference."},
-    design_note     = "Capital declared at Dispatch on target profile. Beat 0: retained (not drained). Beat 2: distributed across target_faction Beat 3 ops targeting Syndicate, first-to-last, until exhausted. Beat 3: full coverage = void + Capital to submitter case; partial = −50 marker + Capital to submitter case. No ops from target_faction = windfall to return case. Wager structure: Syndicate bets positionally — wrong bet wastes Capital, correct bet nullifies threat.",
+    design_note     = "Capital declared at Dispatch on target profile. Beat 0: retained (not drained). Beat 2: distributed across target_faction Beat 3 ops targeting Syndicate, first-to-last, until exhausted. Beat 3: full coverage = void + Capital to submitter case; partial = −50 marker + Capital to submitter case. No ops from target_faction = windfall to return case. Wager structure: Syndicate bets positionally — wrong bet wastes Capital, correct bet nullifies threat Cost reasoning: Exposure and Findings identify the target's vulnerabilities and legitimize the aggressive posture.",
     arbiter_note    = "See Art 03 Beat 0 (Retained validation), Beat 2 (Golden Parachute procedure), Beat 3 Step 1.4 (capital-on-card resolution).",
 )
 ```
@@ -9363,7 +9813,7 @@ Syndicate's submission-layer blocking card — analogous to DIR.CA.1 Invoke Juri
 
 ```python
 SYN.CA.5 = Card(
-    id=35,  version="v1.0",
+    id      = "SYN.CA.5",  version="v1.0",
     name    = "Regulatory Capture",
     tagline = "Block a specific action type in a named district for one round.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9377,7 +9827,7 @@ SYN.CA.5 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = district(target) != ChorusNode,
-    cost        = resource.faction(acting).capital * 3,
+    cost        = resource.faction(acting).capital * 2 + resource.faction(acting).exposure * 1,
     success     = game.block(district(target), action_type=named, round=game.round, public=True),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1, modifier=-2, mod_where=action_type(named).primary_faction == Guild)},
@@ -9445,7 +9895,7 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 
 ```python
 LandTitle = Card(
-    id=TBD,  version="v2.0",
+    id      = "SYN.CA.8",  version="v2.0",
     name    = "Land Title",
     tagline = "File a capital claim on undeveloped land. Let someone else build. Then collect.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9469,7 +9919,7 @@ LandTitle = Card(
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
     narrative   = "The deed was filed before the foundation was poured. That is how the Syndicate prefers it.",
     perspectives = {Syndicate: "We don't need to be there. We just need to be on the paperwork."},
-    design_note  = "Delivers Grant Deed component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire React played from hand when any faction places a structure block in the named district. No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds permitted; cost-governed. Governing Rule 8.2 governs step 3 of Grant Deed effect.",
+    design_note  = "Delivers Grant Deed component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire React played from hand when any faction places a structure block in the named district. No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds permitted; cost-governed. Governing Rule 8.2 governs step 3 of Grant Deed effect Cost reasoning: Exposure forces the targeted individuals out of the shadows, making the extraction inevitable.",
     arbiter_note = "Take 1 blank Grant Deed from ARBITER tableau. Write target district name. Place in submitting faction's Dispatch Case. Grant Deed moves to Syndicate hand at Debrief.",
 )
 ```
@@ -9521,7 +9971,7 @@ Syndicate's presence absorption card — distinct from SYN.CA.3 Hostile Acquisit
 
 ```python
 HostileTakeover = Card(
-    id=TBD,  version="v1.0",
+    id      = "SYN.MOD.8",  version="v1.0",
     name    = "Hostile Takeover",
     tagline = "Purchase control of a faction's community presence in a district, replacing their tokens with Syndicate's at equivalent tier.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9539,7 +9989,7 @@ HostileTakeover = Card(
         faction(target).presence(district(target)) >= 1
         AND faction(acting).intel_tokens(faction=faction(target)) >= 1
     ),
-    cost        = resource.faction(acting).capital * 4 + IntelToken(faction=faction(target)) * 1,
+    cost        = resource.faction(acting).capital * 3 + resource.faction(acting).mandate * 2,
     success     = game.replace_presence(
         faction(target), district(target),
         with_faction=faction(acting),
@@ -9603,7 +10053,7 @@ A form that has been in the Accord Placement Area since Debrief is quietly updat
 
 ```python
 SYN.CA.10 = Card(
-    card_id  = "SYN.CA.10",  version = "v0.1",
+    card_id      = "SYN.CA.10",  version = "v0.1",
     name     = "Accord Transfer",
     tagline  = "All terms remain binding. The signatories have been updated.",
     type     = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9730,7 +10180,7 @@ Syndicate's economic intelligence tap — a positional wager on district activit
 
 ```python
 SYN.CA.6 = Card(
-    id=38,  version="v2.0",
+    id      = "SYN.CA.6",  version="v2.0",
     name    = "Parasitic",
     tagline = "Wire a district's commerce. Let others do the work.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9829,7 +10279,7 @@ Syndicate uses covertly gathered intelligence to threaten a faction operating in
 
 ```python
 SYN.CA.7 = Card(
-    id=41,  version="v2.0",
+    id      = "SYN.CA.7",  version="v2.0",
     name    = "Corporate Blackmail",
     tagline = "Submit covertly. The target decides what compliance costs less.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -9976,7 +10426,7 @@ A Syndicate operative approaches the Accord Placement Area during a recess. They
 
 ```python
 SYN.CA.11 = Card(
-    card_id  = "SYN.CA.11",
+    card_id      = "SYN.CA.11",
     version  = "v0.1",
     name     = "Redline",
     tagline  = "The numbers that matter are the ones no one double-checked.",
@@ -10088,7 +10538,7 @@ Syndicate's public territorial acquisition PA — the counterpart to SYN.CA.3 Ho
 
 ```python
 SYN.PA.1 = Card(
-    id="SYN.PA.1",  version="v1.0",
+    id      = "SYN.PA.1",  version="v1.0",
     name    = "Acquisition Offer",
     tagline = "Publicly offer to purchase another faction's presence position in a district.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
@@ -10187,7 +10637,7 @@ Syndicate's political leverage PA. Places a Capital-valued marker on a named dis
 
 ```python
 SYN.PA.2 = Card(
-    id="SYN.PA.2",  version="v1.0",
+    id      = "SYN.PA.2",  version="v1.0",
     name    = "Public Dividend",
     tagline = "Declare a public capital investment in a district — rewarding whoever holds Dominance at next Upkeep.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
@@ -10293,7 +10743,7 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 
 ```python
 SYN.PA.3 = Card(
-    card_id  = "SYN.PA.3",
+    card_id      = "SYN.PA.3",
     version  = "v0.1",
     name     = "Data Acquisition",
     tagline  = "We know approximately what you're holding. We're giving you the chance to make this a transaction.",
@@ -10388,13 +10838,51 @@ SYN.PA.3 = Card(
 
 ---
 
+---
+
+### SYN.PA.4 — CHARITY GALA *(stub)*
+[↑ Public Acts](#syndicate-public-acts)
+
+```python
+SYN.PA.4 = Card(
+    id      = "SYN.PA.4",  version = "v1.0",
+    name    = "Charity Gala",
+    tagline = "A massive display of wealth that forces rivals to pay up or lose face.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,
+    beat    = 4,  resolution = Automatic,
+    cost    = resource.faction(Syndicate).capital * 2,
+    success = "Syndicate gains +2 PS. Every opponent must either pay 1 Capital to the supply or immediately lose 1 PS.",
+    design_note = "A public flex of pure capital. Weaponizes Syndicate's wealth to farm PR while forcing opponents to bleed money or take a PR hit just to keep up appearances."
+)
+```
+
+---
+
+### SYN.PA.5 — PROTECTION RACKET *(stub)*
+[↑ Public Acts](#syndicate-public-acts)
+
+```python
+SYN.PA.5 = Card(
+    id      = "SYN.PA.5",  version = "v1.1",
+    name    = "Protection Racket",
+    tagline = "Publicly leverage capital to extort physical expansion.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = Territory,  function = Remove,  subject = StructureBlock,
+    beat    = 4,  resolution = Automatic,  persistence = Transient,
+    cost    = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).mandate * 1,
+    success = "Places a Standing Condition on target_district until Quarter+1: Whenever a Structure Block or Presence Token is placed here, the faction that owns it must pay 1 Capital to Syndicate. If they do not, the structure or token is immediately removed.",
+    design_note = "Fixes the covert targeting issue. Physical placement of chips and blocks is public knowledge. Syndicate sets up a toll booth on the district: the owner of the structure pays, or their asset is destroyed."
+)
+```
+
 ### SYN.MOD.2 — SHELL CORPORATION *(stub)*
 
 *S128. React on Accord formation. Every formal deal creates economic opportunity — Syndicate positions inside it immediately. Pairs with SYN.MOD.3 (Offshore Slush Fund on accord.corrupted).*
 
 ```python
 SYN.MOD.2 = Card(
-    id=TBD,  card_id="SYN.MOD.2",  version="v0.1",
+    id      = "SYN.MOD.2",  card_id="SYN.MOD.2",  version="v0.1",
     name    = "Shell Corporation",
     tagline = "Every Accord is a market event. Syndicate responds accordingly.",
     type    = ModReactCard,  faction = Syndicate,
@@ -10436,7 +10924,7 @@ SYN.MOD.2 = Card(
 
 ```python
 SYN.MOD.3 = Card(
-    id=TBD,  card_id="SYN.MOD.3",  version="v0.1",
+    id      = "SYN.MOD.3",  card_id="SYN.MOD.3",  version="v0.1",
     name    = "Offshore Slush Fund",
     tagline = "When an Accord fails, Syndicate had a clause for that.",
     type    = ModReactCard,  faction = Syndicate,
@@ -10478,7 +10966,7 @@ SYN.MOD.3 = Card(
 
 ```python
 SYN.MOD.4 = Card(
-    id=TBD,  card_id="SYN.MOD.4",  version="v0.1",
+    id      = "SYN.MOD.4",  card_id="SYN.MOD.4",  version="v0.1",
     name    = "Insider Trading",
     tagline = "Public success always creates private wealth.",
     type    = ModReactCard,  faction = Syndicate,
@@ -10520,7 +11008,7 @@ SYN.MOD.4 = Card(
 
 ```python
 SYN.MOD.5 = Card(
-    id=TBD,  card_id="SYN.MOD.5",  version="v0.1",
+    id      = "SYN.MOD.5",  card_id="SYN.MOD.5",  version="v0.1",
     name    = "Short Squeeze",
     tagline = "A reputation in freefall is just an undervalued asset.",
     type    = ModReactCard,  faction = Syndicate,
@@ -10540,7 +11028,7 @@ SYN.MOD.5 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = None,
+    cost            = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).findings * 1,
 
     success     = faction(Syndicate).resources.add(1, Capital),
     successcrit = None,  fail = None,  failcrit = None,
@@ -10549,7 +11037,7 @@ SYN.MOD.5 = Card(
     portrait     = {},
     narrative    = None,
     perspectives = None,
-    design_note  = "Companion to SYN.MOD.4. Syndicate profits off the downfall of other factions. By holding both MOD.4 and MOD.5, Syndicate guarantees income from any major political volatility at the table.",
+    design_note  = "Companion to SYN.MOD.4. Syndicate profits off the downfall of other factions. By holding both MOD.4 and MOD.5, Syndicate guarantees income from any major political volatility at the table Cost reasoning: Findings identify the target's financial vulnerabilities before Capital is deployed to crush them.",
     arbiter_note = None,
 )
 ```
@@ -10562,7 +11050,7 @@ SYN.MOD.5 = Card(
 
 ```python
 SYN.MOD.6 = Card(
-    id=TBD,  card_id="SYN.MOD.6",  version="v0.1",
+    id      = "SYN.MOD.6",  card_id="SYN.MOD.6",  version="v0.1",
     name    = "Bounty Contract",
     tagline = "If someone wants them gone, I am willing to subsidize the effort.",
     type    = ModReactCard,  faction = Syndicate,
@@ -10604,7 +11092,7 @@ SYN.MOD.6 = Card(
 
 ```python
 SYN.MOD.7 = Card(
-    id=TBD,  card_id="SYN.MOD.7",  version="v0.1",
+    id      = "SYN.MOD.7",  card_id="SYN.MOD.7",  version="v0.1",
     name    = "Renegotiation Fee",
     tagline = "When the fine print changes, the lawyers get paid.",
     type    = ModReactCard,  faction = Syndicate,
@@ -10646,7 +11134,7 @@ SYN.MOD.7 = Card(
 
 ```python
 SYN.MOD.8 = Card(
-    id=TBD,  card_id="SYN.MOD.8",  version="v0.1",
+    id      = "SYN.MOD.8",  card_id="SYN.MOD.8",  version="v0.1",
     name    = "Hostile Takeover",
     tagline = "Buy when there's blood in the streets.",
     type    = ModReactCard,  faction = Syndicate,
@@ -10666,7 +11154,7 @@ SYN.MOD.8 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = faction(Syndicate).resources.has(2, Capital),
-    cost            = Capital(2),
+    cost            = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).exposure * 1,
 
     success     = "arbiter.place(presence_chip, district=target_district, faction=Syndicate, count=1); arbiter.place(structure_block, district=target_district, faction=Syndicate, count=1)",
     successcrit = None,  fail = None,  failcrit = None,
@@ -10675,7 +11163,7 @@ SYN.MOD.8 = Card(
     portrait     = {},
     narrative    = None,
     perspectives = None,
-    design_note  = "Opportunistic expansion. When a structure falls, Syndicate swoops in, paying 2 Capital to immediately place both a presence chip and a structure in the newly cleared real estate. Extremely powerful territorial swing funded entirely by Capital.",
+    design_note  = "Opportunistic expansion. When a structure falls, Syndicate swoops in, paying 2 Capital to immediately place both a presence chip and a structure in the newly cleared real estate. Extremely powerful territorial swing funded entirely by Capital Cost reasoning: Exposure ensures the takeover is recognized publicly, legitimizing the new ownership immediately.",
     arbiter_note = None,
 )
 ```
@@ -11053,7 +11541,7 @@ Overture is the bridge between STD.CA.9's anonymous funding gesture and formal a
 
 ```python
 Overture = Card(
-    id      = TBD,  version = "v1.0",
+    id      = "STD.MOD.1",  version = "v1.0",
     name    = "Overture",
     tagline = "Extend a formal invitation to negotiate — attached to any public act you declare.",
     type    = ModActionCard,  faction = All,

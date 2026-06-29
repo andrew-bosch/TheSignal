@@ -228,3 +228,22 @@ With the L1 Modifier Decks fully stubbed (MOD.1 through MOD.n for all factions),
 *   **Mid Game (Speculation):** Market manipulation and mercenary funding. *Insider Trading (MOD.4)* and *Short Squeeze (MOD.5)* harvest PR volatility, while *Bounty Contract (MOD.6)* allows Syndicate to secretly fund proxy wars between other factions.
 *   **End Game (Vulture Capitalism):** When the mid-game proxy wars inevitably destroy infrastructure or break Accords, Syndicate harvests the breach premiums (*MOD.3, MOD.7*) and buys the cleared land via *Hostile Takeover (MOD.8)*.
 *   **Remaining Gaps for Ring Mods:** Syndicate relies on opponents *doing* things. If the table stagnates or colludes peacefully, Syndicate starves. Ring mods could offer "Market Shock" mechanics that force action, mandate resource transfers, or heavily penalize inaction.
+
+## N. Post-Audit Faction Space Expansion & Floor Deck Counts (S129+)
+
+### 1. The 53-Card Minimum Decision
+A major design directive was implemented to ensure that every faction has a rich, variable draft environment. The requirement established a **minimum floor of 53 unique cards** for each faction's total playable palette (Standard Deck + Faction-Specific Deck). 
+
+Because the Standard deck is 54 cards, every faction technically clears this floor mathematically. However, to ensure the *faction-specific* identity isn't drowned out by Standard cards, we expanded the faction-specific card spaces to guarantee high density and variance. To hit this density and fill specific tactical gaps, the following cards were developed and stubbed into the system:
+
+*   **Syndicate:** Added `SYN.PA.4` (Charity Gala) and `SYN.PA.5` (Protection Racket) to provide public, enforceable extortion and capital-flexing without violating the covert blindness rules.
+*   **Ghost:** Added `GHO.CA.15` (Routing Override) and `GHO.MOD.11` (Manufactured Evidence) to introduce direct `Corrupt` mechanics against `TargetProfiles`, allowing Ghost to silently misdirect opponent operations and blindly hijack public paperwork.
+*   **Network:** Added `NET.MOD.12` (Forced Transparency) to directly counter hidden Target Profiles, spending Exposure to "dox" an opponent's PA target to the entire table at Beat 0.
+
+### 2. Full Re-Audit Gating & Future Steps
+With these new mechanics (Target Profile corruption, blind PA redirection, and public extortion) added to the ecosystem, the current Cross-Faction Analysis and individual STD+[Fac] audits are now slightly outdated. 
+
+**Next Steps:**
+1. **Detailed Design:** The newly added cards are currently **stubs**. We must perform detail design and balancing on these individual cards before they can be fully integrated into the interaction matrix.
+2. **Comprehensive Re-Audit:** Once the stubs are detailed, we will completely rerun the Cross-Faction Analysis (to be executed by Claude in conjunction with the Opus advisor) to evaluate the new meta.
+3. **Revise Faction Audits:** The individual Standard + Faction audits will be refreshed to account for the new capabilities and how they shift the faction's win condition paths.
