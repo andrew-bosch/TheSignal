@@ -27,5 +27,6 @@ We established that TargetProfiles for Public Acts are placed face down on the F
 
 **6. Phase 1 Design Strategy: Filling the Deficit**
 *   We have mathematically validated that 4 out of 5 factions currently fail to hit the 53-card minimum draftable palette (Standard=25, requiring 28 faction-specific cards).
-*   **Strategy for Claude/Opus:** To hit the floor without unnecessarily bloating mechanical complexity, the deficits for **Network (-3), Syndicate (-4), and Guild (-4)** should primarily be filled by designing **variations** of their existing PA and Mod cards (e.g., inverted triggers, alternate costs, or shifted targets).
-*   **Directorate (-6)** may require more substantial net-new design due to the larger gap.
+*   **Strategy 1 (Variations):** To hit the floor without unnecessarily bloating mechanical complexity, the deficits for **Network (-3), Syndicate (-4), and Guild (-4)** should primarily be filled by designing **variations** of their existing PA and Mod cards (e.g., inverted triggers, alternate costs, or shifted targets).
+*   **Strategy 2 (Shared Action Spaces):** Explore the same action space across different factions, implemented through their unique doctrines. (For example, how `NET.MOD.12` and `GHO.MOD.11` both manipulate Target Profiles, but one uses public doxing and the other uses blind corruption).
+*   **Directorate (-6)** may require more substantial net-new design due to the larger gap, making Strategy 2 particularly useful for them (e.g., Directorate surveillance cards that also play in the Target Profile space).
