@@ -260,10 +260,11 @@ To establish the `TargetProfile` manipulation space and provide Syndicate with l
 Because only Ghost has successfully hit the 53-card minimum (28 faction + 25 standard), the ecosystem is not yet mathematically balanced for the final audit. The following work breakdown details exactly what is next:
 
 **Phase 1: Hit the 53-Card Floor (17 Net-New Cards Required)**
-*   **Network (+3 Cards):** Requires 3 new cards. (Potential focus: Covert Ops or additional PA momentum mechanics).
-*   **Syndicate (+4 Cards):** Requires 4 new cards. (Potential focus: Market shock mechanics or Accord penalties).
-*   **Guild (+4 Cards):** Requires 4 new cards. (Potential focus: Logistics, mobility, or adjacency bonuses outside of Ring 1).
-*   **Directorate (+6 Cards):** Requires 6 new cards. (Potential focus: Covert operations and anti-stealth/surveillance).
+*   **Design Strategy — Variations vs. Net-New:** To preserve deck density without bloating mechanical complexity, the deficits for Network, Syndicate, and Guild should be primarily filled by designing **variations** of their existing PA and Mod cards (e.g., inverted triggers, alternate costs, or shifted targets). Directorate (-6 cards) will likely require more substantial net-new design work due to the larger gap.
+*   **Network (+3 Cards):** Design 3 PA/Mod variations (Potential focus: Alternate momentum triggers or PA cost variations).
+*   **Syndicate (+4 Cards):** Design 4 PA/Mod variations (Potential focus: Additional Accord penalty variants or alternate market shocks).
+*   **Guild (+4 Cards):** Design 4 PA/Mod variations (Potential focus: Alternate structural retaliation or logistics variants).
+*   **Directorate (+6 Cards):** Design 6 cards, likely requiring net-new mechanics. (Potential focus: Covert operations, anti-stealth, or deeper surveillance/audit constraints).
 *   *Taxonomic Rule for Ring Modifiers:* Ring Modifiers are universally available to all factions and must be placed under the Standard faction schema (e.g., `STD.MOD.R1.x`, `STD.MOD.R2.x`). However, because they are drawn from a public pool during gameplay and not drafted, they must be instantiated with `subtype = RingModifier` in the DB. This ensures they can be easily filtered out so they do not artificially inflate the 53-card draftable palette minimum calculation.
 
 **Phase 2: Detailed Design of Stubs**

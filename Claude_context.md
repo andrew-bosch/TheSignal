@@ -24,3 +24,8 @@ We established that TargetProfiles for Public Acts are placed face down on the F
 **5. Taxonomic Classification of Ring Modifiers**
 *   Ring Modifiers are universally available to all factions and must be placed under the Standard faction schema (e.g., `STD.MOD.R1.x`, `STD.MOD.R2.x`).
 *   However, because they are drawn from a public pool during gameplay and not drafted, they must be instantiated with `subtype = RingModifier` (or similar designation) in the DB. This ensures they can be filtered out so they do not artificially inflate the 53-card minimum calculation for the draftable Standard palette.
+
+**6. Phase 1 Design Strategy: Filling the Deficit**
+*   We have mathematically validated that 4 out of 5 factions currently fail to hit the 53-card minimum draftable palette (Standard=25, requiring 28 faction-specific cards).
+*   **Strategy for Claude/Opus:** To hit the floor without unnecessarily bloating mechanical complexity, the deficits for **Network (-3), Syndicate (-4), and Guild (-4)** should primarily be filled by designing **variations** of their existing PA and Mod cards (e.g., inverted triggers, alternate costs, or shifted targets).
+*   **Directorate (-6)** may require more substantial net-new design due to the larger gap.
