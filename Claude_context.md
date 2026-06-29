@@ -20,3 +20,6 @@ We have mathematically validated that 4 out of 5 factions currently fail to hit 
 1. **Variations:** To hit the floor without unnecessarily bloating mechanical complexity, the deficits for **Network (-3), Syndicate (-4), and Guild (-4)** should primarily be filled by designing **variations** of their existing PA and Mod cards (e.g., inverted triggers, alternate costs, or shifted targets).
 2. **Shared Action Spaces:** Explore the same action space across different factions, implemented through their unique doctrines. (For example, how `NET.MOD.12` and `GHO.MOD.11` both manipulate Target Profiles, but one uses public doxing and the other uses blind corruption).
 3. **Directorate (-6)** may require more substantial net-new design due to the larger gap, making Strategy 2 particularly useful for them (e.g., Directorate surveillance cards that also play in the Target Profile space).
+
+## 3. DB-47 Completion (Ring Modifier Math)
+Note: The database has been formally updated (PM05 DB-47 executed) to filter out Ring Modifiers from the draftable card pool calculation via the new `is_ring_modifier` column. The math in Phase 1 (17-card deficit) is mathematically accurate and properly excludes the public Ring pool.
