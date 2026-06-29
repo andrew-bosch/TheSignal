@@ -16,13 +16,13 @@
 | NET.CA.5 Community Anchor | Territory | Add | PresenceToken | 3 | mono: E×1 |
 | NET.CA.6 Sacrifice | Economy | Add | IntelToken | 3 | free (PS−2 as success effect) |
 | NET.CA.7 Ground Signal | Standing | Shift | PublicStanding | 3 | mono: E×1 |
-| NET.MOD.1 Signal Break | (Territory\|Add\|PresenceToken) | React modifier | — | Beat 4 | mono: E×1 |
-| NET.MOD.2 Reputational Strike | (Information\|Reveal\|PublicStanding) | React modifier | — | Beat 4 | free + Intel×1 |
+| NET.MOD.1 Pirate Transmitter | (Territory\|Add\|PresenceToken) | React modifier | — | Beat 4 | mono: E×1 |
+| NET.MOD.2 Troll Farm | (Information\|Reveal\|PublicStanding) | React modifier | — | Beat 4 | free + Intel×1 |
 | NET.PA.1 Public Disclosure | Information | Reveal | ActionAttribution | 4 | mono: E×2 + Intel×n (scaling) |
 | NET.PA.2 Community Rally | Territory | Add | PresenceToken | 4 | variable: E×2+ |
 | NET.PA.3 Live Coverage | Information | Reveal | FactionHand | 4 | mono: E×2 |
 
-**Legend:** E = Exposure (Network native). F = Findings (Ghost native — cross resource for Network). MOD cards excluded from taxonomy matrix (Art 04b §9); layer/function/subject shown for spec reference only. NET.MOD.2 Reputational Strike = stub (trigger TBD, schema TBD via 04-n4).
+**Legend:** E = Exposure (Network native). F = Findings (Ghost native — cross resource for Network). MOD cards excluded from taxonomy matrix (Art 04b §9); layer/function/subject shown for spec reference only. NET.MOD.2 Troll Farm = stub (trigger TBD, schema TBD via 04-n4).
 
 ### Layer Coverage (pre-audit)
 
@@ -47,7 +47,7 @@ Both cross Network cards require Findings (Ghost's native resource). No other fa
 
 **FLAG 3 — Modifier card schema gap (MOD.1, MOD.2)**
 
-Both modifier cards are pending 04-n4 (modifier card schema pass). MOD.1 Signal Break has a complete design pass (S106); MOD.2 Reputational Strike is a full stub (trigger TBD, card name TBD). Both appear in DB as active (non-blocked) but cannot reach Issues Resolved until 04-n4 completes.
+Both modifier cards are pending 04-n4 (modifier card schema pass). MOD.1 Pirate Transmitter has a complete design pass (S106); MOD.2 Troll Farm is a full stub (trigger TBD, card name TBD). Both appear in DB as active (non-blocked) but cannot reach Issues Resolved until 04-n4 completes.
 
 **FLAG 4 — §8.3 Art 04b staleness**
 
@@ -87,10 +87,10 @@ Network win path = Established in more districts than any other faction. Current
 | Faction | MOD cards |
 |---------|-----------|
 | Standard | STD.MOD.1 Overture |
-| Ghost | GHO.MOD.1 Clarify Misinformation |
-| Network | NET.MOD.1 Signal Break · NET.MOD.2 Reputational Strike |
-| Syndicate | SYN.MOD.1 Accord Leverage |
-| Guild | GUI.MOD.1 Return to Site |
+| Ghost | GHO.MOD.1 Sleeper Analyst |
+| Network | NET.MOD.1 Pirate Transmitter · NET.MOD.2 Troll Farm |
+| Syndicate | SYN.MOD.1 The Fixer |
+| Guild | GUI.MOD.1 Night Shift Crew |
 | **Directorate** | **None** |
 
 MOD design is largely unexplored. Coverage gaps should be evaluated across CA, PA, and MOD before assuming a new CA is required. GHO.MOD.1 is the reference model: a React that fires on a PA submission event rather than a CA consuming a covert slot.
@@ -130,8 +130,8 @@ MOD design is largely unexplored. Coverage gaps should be evaluated across CA, P
 | NET.CA.5 Community Anchor | Territory | Add | PresenceToken | 3 | mono | Open |
 | NET.CA.6 Sacrifice | Economy | Add | IntelToken | 3 | free | ✓ |
 | NET.CA.7 Ground Signal | Standing | Shift | PublicStanding | 3 | mono | Open |
-| NET.MOD.1 Signal Break | (Territory\|Add\|PresenceToken) | — | — | B4 React | mono | Pending 04-n4 |
-| NET.MOD.2 Reputational Strike | (stub) | — | — | B4 React | free+Intel | Stub |
+| NET.MOD.1 Pirate Transmitter | (Territory\|Add\|PresenceToken) | — | — | B4 React | mono | Pending 04-n4 |
+| NET.MOD.2 Troll Farm | (stub) | — | — | B4 React | free+Intel | Stub |
 | NET.PA.1 Public Disclosure | Information | Reveal | ActionAttribution | 4 | mono+Intel×n | Open |
 | NET.PA.2 Community Rally | Territory | Add | PresenceToken | 4 | variable | ✓ |
 | NET.PA.3 Live Coverage | Information | Reveal | FactionHand | 4 | mono | ✓ S89 |
@@ -163,7 +163,7 @@ Beat 2 cards (CA.3 Breaking News + CA.4 Network Cascade) create a distinctive in
 
 **Intel circuit:** CA.6 Sacrifice converts PS to Intel (PS−2 → IntelToken×1 as a success effect). NET.PA.1 Public Disclosure consumes all held Intel for scaling PS damage. The PS→Intel→PS-damage pipeline is Network's highest-expression play sequence: it requires accumulated PS overhead to spend and accumulated Intel tokens to deploy. The pipeline is doctrinally correct ("standing is a means, not an end") but creates resource tension between PS accumulation for win path and PS expenditure for Intel generation.
 
-**Presence model:** Network's territorial toolkit is restriction-heavy by design. CA.5 Community Anchor targets Baryo + zero-presence only (initial entry, not reinforcement). MOD.1 Signal Break fires opportunistically on PA board changes (no control over timing). PA.2 Community Rally consolidates Established+ only (deepens, doesn't expand). All three are conditional. General new-territory expansion depends entirely on STD.CA.3 and STD.CA.8.
+**Presence model:** Network's territorial toolkit is restriction-heavy by design. CA.5 Community Anchor targets Baryo + zero-presence only (initial entry, not reinforcement). MOD.1 Pirate Transmitter fires opportunistically on PA board changes (no control over timing). PA.2 Community Rally consolidates Established+ only (deepens, doesn't expand). All three are conditional. General new-territory expansion depends entirely on STD.CA.3 and STD.CA.8.
 
 **Win path support (FLAG 5 assessment):** Faction-specific toolkit supports consolidation and opportunistic insertion; it does not support systematic new-territory expansion. The doctrinally correct reading is that Network's broadcast reach means it can establish anywhere STD cards allow — the faction-specific kit then deepens and defends. Whether this is sufficient for a competitive wide-presence win path is a playtest question.
 
@@ -241,7 +241,7 @@ PA cost interference: NET.CA.4 + STD.CA.6 raises PA costs in up to two adjacent 
 
 NET.CA.4 + STD.CA.6 raises PA costs in districts — this can affect GUI.PA.1 Civic Works Mandate (C×4 + district-native) if deployed in Guild target districts, but Guild's wager income (CA.2/CA.6) triggers on STD.CA.1/CA.2 board state changes, not on PAs — the PA cost raise does not suppress Guild's wager circuit.
 
-MOD.1 Signal Break fires on any PA board state change (influence chip or structure placed or removed). This includes GUI.PA.1 building structures: when Guild builds with PA.1, Network can React to place a chip in the same district. Guild's build events become Network insertion windows — the faction that builds enables the faction that broadcasts.
+MOD.1 Pirate Transmitter fires on any PA board state change (influence chip or structure placed or removed). This includes GUI.PA.1 building structures: when Guild builds with PA.1, Network can React to place a chip in the same district. Guild's build events become Network insertion windows — the faction that builds enables the faction that broadcasts.
 
 No resource competition (Exposure vs. Capacity). Guild has zero Information cards — no covert interaction. Network cannot target Guild for Live Coverage without it being fully covert-disabled (Guild has no covert operations to suppress with the resist option; the resist penalty is dead for Guild. Live Coverage against Guild forces open hand only — the disable branch is toothless).
 
@@ -278,8 +278,8 @@ DIR/GUI/SYN share zero-cross-ceiling architecture — systemic across mono-econo
 | NET.CA.5 Community Anchor | E×1 | mono | Floor — 1 presence, Baryo+zero-presence restricted | ✓ |
 | NET.CA.6 Sacrifice | free + PS−2 | free | Mid — 1 Intel token; PS track is real gate | ✓ |
 | NET.CA.7 Ground Signal | E×1 | mono | Floor — +1 PS; crit chip+PS; IL≤Established restriction | ✓ |
-| NET.MOD.1 Signal Break | E×1 | mono | Mid — opportunistic chip placement on PA trigger | ✓ (React timing restriction limits use) |
-| NET.MOD.2 Reputational Strike | Intel×1 | free+Intel | Mid — unblockable PS−1 (stub; trigger TBD) | ⚠ stub — governing rule for unblockability pending |
+| NET.MOD.1 Pirate Transmitter | E×1 | mono | Mid — opportunistic chip placement on PA trigger | ✓ (React timing restriction limits use) |
+| NET.MOD.2 Troll Farm | Intel×1 | free+Intel | Mid — unblockable PS−1 (stub; trigger TBD) | ⚠ stub — governing rule for unblockability pending |
 | NET.PA.1 Public Disclosure | E×2 + Intel×n | mono+Intel | Ceiling — scaling PS damage proportional to payload | ✓ (Intel scarcity gates access to ceiling effect) |
 | NET.PA.2 Community Rally | E×2–4 | variable | Mid-to-ceiling at E×4 (3 districts) | ✓ (scaling cost matches scaling effect) |
 | NET.PA.3 Live Coverage | E×2 | mono | **Ceiling-borderline** — Seasonal covert-disable or hand-open obligation | ✗ borderline inversion |
@@ -347,7 +347,7 @@ Dominant bottlenecks:
 **§6.4** — Add STD+NET 5-check results as a new subsection after STD+SYN.
 
 **§8.3 Network section** — Full enumeration update from S104 (7 cards) to S123 (12 cards):
-- Add NET.CA.7 Ground Signal (S106), NET.MOD.1 Signal Break (S106), NET.MOD.2 Reputational Strike (stub), NET.PA.1 Public Disclosure, NET.PA.2 Community Rally
+- Add NET.CA.7 Ground Signal (S106), NET.MOD.1 Pirate Transmitter (S106), NET.MOD.2 Troll Farm (stub), NET.PA.1 Public Disclosure, NET.PA.2 Community Rally
 - Update design targets: Standing|Shift gap ✓ filled (CA.7); Reveal differentiation note (4 cards, subjects: District/CovertOperation/ActionAttribution/FactionHand); modifier deck gap (MOD.1 complete schema pending, MOD.2 stub — 04-n4 the gate)
 - Add cross-ceiling architecture note: CA.1 is the only faction-specific cross-ceiling card in the 5-faction set; Findings-gated (04-n126)
 

@@ -24,14 +24,14 @@ The audit initially flagged deviations which have been resolved or deferred per 
 | **STD.CA.11** (L5417)<br>*Tort Interference* | `persistence` | ✅ **Resolved** | Updated `persistence` to `Permanent` and moved the condition to `persistence_condition = not (game.end OR Accord(named).breach_by_party)`. |
 | **Overture** (L8833) | `subtype` | `Instant` | *Deferred:* Under §11.1, modifier card taxonomy and schemas are excluded and will be dealt with in a future modifier card schema pass. |
 | | `layer` | `None` | *Deferred:* Taxonomy fields should be omitted in the future. |
-| **NET.MOD.1** (L8976)<br>*Signal Break* | `type`/`subtype` | `ModifierCard`/`React` | *Deferred:* Pending modifier card schema pass (04-n4). |
-| **GUI.MOD.1** (L9022)<br>*Return to Site* | `type`/`subtype` | `ModifierCard`/`React` | *Deferred:* Pending modifier card schema pass (04-n4). |
-| **GHO.MOD.1** (L9082)<br>*Clarify Misinformation* | `type`/`subtype` | `ModifierCard`/`React` | *Deferred:* Pending modifier card schema pass (04-n4). |
+| **NET.MOD.1** (L8976)<br>*Pirate Transmitter* | `type`/`subtype` | `ModifierCard`/`React` | *Deferred:* Pending modifier card schema pass (04-n4). |
+| **GUI.MOD.1** (L9022)<br>*Night Shift Crew* | `type`/`subtype` | `ModifierCard`/`React` | *Deferred:* Pending modifier card schema pass (04-n4). |
+| **GHO.MOD.1** (L9082)<br>*Sleeper Analyst* | `type`/`subtype` | `ModifierCard`/`React` | *Deferred:* Pending modifier card schema pass (04-n4). |
 | | `resolution` | `Prediction` | *Deferred:* Guessing-resolution logic matches notes. |
 
 #### Stubs / Placeholders:
-* **Accord Leverage Stub** (L8235): uses `type = ModifierCard` and `subtype = Instant` (deferred to modifier card schema pass).
-* **Reputational Strike Stub** (L8922): uses `type = ModifierCard` and `subtype = React` (deferred to modifier card schema pass).
+* **The Fixer Stub** (L8235): uses `type = ModifierCard` and `subtype = Instant` (deferred to modifier card schema pass).
+* **Troll Farm Stub** (L8922): uses `type = ModifierCard` and `subtype = React` (deferred to modifier card schema pass).
 
 ---
 

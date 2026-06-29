@@ -19,7 +19,7 @@
 | GUI.CA.4 Construction Crew | Submission | RemoveRestriction | CovertOperation | 3 | C×3 |
 | GUI.CA.5 Infrastructure Yield | Economy | Add | NativeResource | 3 | free |
 | GUI.CA.6 Labor Contract | Economy | Add | NativeResource | 2 | free |
-| GUI.MOD.1 Return to Site | Territory | Add | PresenceToken | — | C×? |
+| GUI.MOD.1 Night Shift Crew | Territory | Add | PresenceToken | — | C×? |
 | GUI.PA.1 Civic Works Mandate | Territory | Add | StructureBlock | 4 | C×4 |
 | GUI.PA.2 Infrastructure Bond | Economy | Add | AccordAgreement | 4 | C×1 |
 
@@ -64,9 +64,9 @@ Win condition = structures on board. GUI.CA.1 Fortify Structure provides immunit
 
 The faction whose entire doctrine is permanence of physical form has a single-target defense tool. Directorate (which directly targets Guild's build model via Regulatory Override and the demolition suppression dynamic) can systematically pressure Guild's unprotected structures.
 
-**Question:** Is a second structure-defense card needed? Candidates: (A) district-level protection (all Guild structures in one district immune for a Quarter); (B) cost-raise card (increases demolition cost of Guild structures globally — closer to DIR.PA.1 Regulatory Override but building-focused); (C) React card that triggers on demolition of a Guild structure (Return to Site MOD.1 addresses this partially — assess fit).
+**Question:** Is a second structure-defense card needed? Candidates: (A) district-level protection (all Guild structures in one district immune for a Quarter); (B) cost-raise card (increases demolition cost of Guild structures globally — closer to DIR.PA.1 Regulatory Override but building-focused); (C) React card that triggers on demolition of a Guild structure (Night Shift Crew MOD.1 addresses this partially — assess fit).
 
-**Audit action:** Assess GUI.MOD.1 Return to Site as the designed response to this gap. If it covers the gap adequately, no new card needed. If it doesn't, flag as design gap.
+**Audit action:** Assess GUI.MOD.1 Night Shift Crew as the designed response to this gap. If it covers the gap adequately, no new card needed. If it doesn't, flag as design gap.
 
 ---
 
@@ -139,10 +139,10 @@ The standard set provides a shared 27-card floor (16 CA + 5 MOD + 6 PA). For thi
 | Faction | MOD cards |
 |---------|-----------|
 | Standard | STD.MOD.1 Overture |
-| Ghost | GHO.MOD.1 Clarify Misinformation |
-| Network | NET.MOD.1 Signal Break · NET.MOD.2 Reputational Strike |
-| Syndicate | SYN.MOD.1 Accord Leverage |
-| Guild | GUI.MOD.1 Return to Site |
+| Ghost | GHO.MOD.1 Sleeper Analyst |
+| Network | NET.MOD.1 Pirate Transmitter · NET.MOD.2 Troll Farm |
+| Syndicate | SYN.MOD.1 The Fixer |
+| Guild | GUI.MOD.1 Night Shift Crew |
 | **Directorate** | **None** |
 
 MOD design is largely unexplored. Coverage gaps should be evaluated across CA, PA, and MOD before assuming a new CA is required. GHO.MOD.1 is the reference model: a React that fires on a PA submission event rather than a CA consuming a covert slot.
@@ -181,7 +181,7 @@ MOD design is largely unexplored. Coverage gaps should be evaluated across CA, P
 | GUI.CA.4 Construction Crew | Submission | RemoveRestriction | CovertOperation | 3 | C×3 | mono | — |
 | GUI.CA.5 Infrastructure Yield | Economy | Add | NativeResource | 3 | free | free | — |
 | GUI.CA.6 Labor Contract | Economy | Add | NativeResource | 2 | free | free | ⚠ id=TBD |
-| GUI.MOD.1 Return to Site | Territory | Add | PresenceToken | — | C×? | mono | stub |
+| GUI.MOD.1 Night Shift Crew | Territory | Add | PresenceToken | — | C×? | mono | stub |
 | GUI.PA.1 Civic Works Mandate | Territory | Add | StructureBlock | 4 | C×4 | mono | — |
 | GUI.PA.2 Infrastructure Bond | Economy | Add | AccordAgreement | 4 | C×1 | mono | — |
 
@@ -228,7 +228,7 @@ The Art 03/00a search found no passive-income trigger implementing the §5a desc
 
 **FLAG 2 — Defense does not scale:**
 
-Confirmed gap. GUI.MOD.1 Return to Site is a React card triggered by chip removal (when a structure token is about to fall). The stub explicitly states: *"structure block removal is simultaneous with chips hitting 0 — no React window can catch it."* MOD.1 places a presence token (recovery), not a structure; it cannot prevent demolition. Guild's defense toolkit:
+Confirmed gap. GUI.MOD.1 Night Shift Crew is a React card triggered by chip removal (when a structure token is about to fall). The stub explicitly states: *"structure block removal is simultaneous with chips hitting 0 — no React window can catch it."* MOD.1 places a presence token (recovery), not a structure; it cannot prevent demolition. Guild's defense toolkit:
 - CA.1 Fortify Structure: total immunity for one structure per Quarter (Beat 2 wager)
 - STD.CA.10 Protect: −45 modifier on one PA targeting Guild (requires predicting which PA)
 
@@ -332,7 +332,7 @@ Ghost disrupts covert ops and presence; Guild builds presence and structures. Gh
 
 **None for S122 scope.**
 
-GUI.MOD.1 Return to Site is a stub (beat and cost undefined) — not a blocker for this audit but blocks final set completeness. Covered in existing PM05.
+GUI.MOD.1 Night Shift Crew is a stub (beat and cost undefined) — not a blocker for this audit but blocks final set completeness. Covered in existing PM05.
 
 GUI.CA.6 Labor Contract `id=TBD` — pre-existing issue tracked under 04-n70. Not a blocker for this audit.
 
@@ -442,7 +442,7 @@ No §5a re-sign-off until 04-n2 is implemented. FLAG 3 correction (non-material,
 
 Current §8.5 (S106) lists CA.1–CA.6 only; does not include PA.1, PA.2, or MOD.1 stub. Needs update:
 - Add PA.1 Civic Works Mandate and PA.2 Infrastructure Bond to card list
-- Add GUI.MOD.1 Return to Site (stub status, high priority)
+- Add GUI.MOD.1 Night Shift Crew (stub status, high priority)
 - Revise design targets: MOD.1 still high priority; also add 04-n2 passive rule implementation and 04-n108 Standing card
 - Update design notes to reflect S122 audit findings
 

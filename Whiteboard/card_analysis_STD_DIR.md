@@ -30,10 +30,10 @@ Standard set audited in full at S119/S120 (card_analysis_STD_GHO.md §A). Summar
 | Faction | MOD cards |
 |---------|-----------|
 | Standard | STD.MOD.1 Overture |
-| Ghost | GHO.MOD.1 Clarify Misinformation |
-| Network | NET.MOD.1 Signal Break · NET.MOD.2 Reputational Strike |
-| Syndicate | SYN.MOD.1 Accord Leverage |
-| Guild | GUI.MOD.1 Return to Site |
+| Ghost | GHO.MOD.1 Sleeper Analyst |
+| Network | NET.MOD.1 Pirate Transmitter · NET.MOD.2 Troll Farm |
+| Syndicate | SYN.MOD.1 The Fixer |
+| Guild | GUI.MOD.1 Night Shift Crew |
 | **Directorate** | **None** |
 
 MOD design is largely unexplored. Coverage gaps should be evaluated across CA, PA, and MOD before assuming a new CA is required. GHO.MOD.1 is the reference model: a React that fires on a PA submission event rather than a CA consuming a covert slot.

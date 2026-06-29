@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.51 Draft  
+**Version:** 0.9.52 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-27  
+**Last Updated:** 2026-06-28  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -332,7 +332,7 @@ Ghost believes understanding must precede action — that an incorrect answer to
 - **Passive generation:** Intel tokens from game events occurring near Ghost presence
 - **Signals Analysis:** high-cost; deduce a target faction's Classified Directive — knowledge used to suppress premature consensus
 - **No permanent territory** — presence is operational, not positional
-- **Win path:** build intelligence pipeline early; pre-fund multiple Quarters via Deep Cover (burst card); arrive at Q8 with a hand assembled from other factions' capabilities
+- **Win path:** build intelligence pipeline early; pre-fund multiple Quarters via Full Take (burst card — Findings×N for proportional token yield); arrive at Q8 with a hand assembled from other factions' capabilities via Flip → Deep Cover and future Flip-fed cards
 - **Deck feel:** precise, patient, deliberately small
 
 **Guild**
@@ -650,6 +650,7 @@ TriggerExpr:         Any
 #   world_event.played / expired
 #   accord.placed / corrupted
 #   resolution_grid.updated                            (after Beat 0 public reveal)
+#   broadcast_card.placed                              (db25 — public SitRep card placed in Situation Report Zone; fires at Upkeep phase 1 and Beat 5 phase 18; added S128)
 #
 # Excluded (static — never change): district tiles, board geography, ARBITER Dominance Marker
 # Excluded (procedural — not player-driven): Initiative Strip, Session Timeline, Quarter/Month markers
@@ -8357,7 +8358,7 @@ SYN.CA.7 = Card(
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate converts gathered intelligence into a forced Accord commitment. The Intel token is the leverage; the effect fires during the Beat 4 Accord formation window. The target cannot negotiate amendments, decline, or counter-propose — they accept the draft as written. Uses Art 06 §9 Lock manipulation type. Distinct from SYN.CA.7 Corporate Blackmail (presence-based coercion in a district): Accord Leverage operates entirely in the Accord formation layer, with no district dependency. The target must be a named party to the Accord draft being locked.
+Syndicate converts gathered intelligence into a forced Accord commitment. The Intel token is the leverage; the effect fires during the Beat 4 Accord formation window. The target cannot negotiate amendments, decline, or counter-propose — they accept the draft as written. Uses Art 06 §9 Lock manipulation type. Distinct from SYN.CA.7 Corporate Blackmail (presence-based coercion in a district): The Fixer operates entirely in the Accord formation layer, with no district dependency. The target must be a named party to the Accord draft being locked.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -8403,7 +8404,7 @@ Syndicate converts gathered intelligence into a forced Accord commitment. The In
 # STUB — full ModActionCard spec (effect, value_rating, ring_constraint, ring_origin) pending 09-06; Art 06 §9 Lock interaction outstanding
 Card(
     id=TBD,  version="v1.0",
-    name        = "Accord Leverage",  # placeholder
+    name        = "The Fixer",  # placeholder
     type        = ModActionCard,  faction = Syndicate,
     beat        = 4,  # Accord formation window
     trigger     = AccordDraft(named).status == Draft,  # draft exists, not yet executed
@@ -8422,7 +8423,7 @@ Card(
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate quietly alters a numeric or ordinal fill-in value in an active Accord — a resource quantity, an influence tier, a Quarter deadline — while the form sits face-up in the Accord Placement Area. The effect is public (the altered form is visible to all players) but the actor is covert (ARBITER makes the physical change without identifying the submitting faction). Completes the Syndicate Accord manipulation suite: SYN.CA.10 Accord Transfer changes a named party; SYN.CA.11 Redline changes what the terms say. Fills the Information|Corrupt|AccordAgreement gap identified in Art 04b §8.3. Distinct from Accord Leverage modifier card (which forces acceptance of a draft, not alteration of an active one).
+Syndicate quietly alters a numeric or ordinal fill-in value in an active Accord — a resource quantity, an influence tier, a Quarter deadline — while the form sits face-up in the Accord Placement Area. The effect is public (the altered form is visible to all players) but the actor is covert (ARBITER makes the physical change without identifying the submitting faction). Completes the Syndicate Accord manipulation suite: SYN.CA.10 Accord Transfer changes a named party; SYN.CA.11 Redline changes what the terms say. Fills the Information|Corrupt|AccordAgreement gap identified in Art 04b §8.3. Distinct from The Fixer modifier card (which forces acceptance of a draft, not alteration of an active one).
 
 #### Card Story
 A Syndicate operative approaches the Accord Placement Area during a recess. They adjust a number in one clause — a quantity, a tier, a deadline. The revision goes unquestioned. By the time anyone re-reads the terms carefully, the original number is simply what everyone thought they agreed to.
@@ -8431,7 +8432,7 @@ A Syndicate operative approaches the Accord Placement Area during a recess. They
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Information-layer Accord alteration; Syndicate "small print" doctrine; fills Information\|Corrupt\|AccordAgreement gap (Art 04b §8.3); distinct from SYN.CA.10 (named-party alteration) and Accord Leverage modifier (forced acceptance of draft) | Art 00 §7 |
+| Action fit | ✓ | Information-layer Accord alteration; Syndicate "small print" doctrine; fills Information\|Corrupt\|AccordAgreement gap (Art 04b §8.3); distinct from SYN.CA.10 (named-party alteration) and The Fixer modifier (forced acceptance of draft) | Art 00 §7 |
 | Voice fit | ✓ | FactionSpecific Syndicate; single Syndicate perspective; full perspectives block documented | Art 00 §7 |
 | Doctrine alignment | ✓ | Syndicate only; Capital×2; covert; altering written agreements for positional advantage = Capital doctrine ("control comes from positioning early") | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
@@ -8885,6 +8886,14 @@ SYN.PA.3 = Card(
 | DIR.PA.4 | Regulatory Downgrade | 🚫 BLOCKED | Territory | Public | Modify | InfluenceTier (derived — not targetable) | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
 | DIR.PA.5 | Regulatory Freeze | 🚫 BLOCKED | Territory | Public | Block | InfluenceTier (derived — not targetable) | — | *L223: Same subject violation — InfluenceTier not a targetable component. Additionally, Block targets actions (not derived states); Block\|InfluenceTier is a subject mismatch. Fundamental redesign required (04-n104).* |
 | DIR.PA.6 | Standing Injunction | 📝 | Submission | Split | Block | Public Act | — |
+| DIR.MOD.1 | Riot Squad | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.2 | Capital Suppression | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.3 | City Council Loyalist | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.4 | Administrative Overhead | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.5 | Emergency Appropriation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.6 | State of Emergency | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.7 | Eminent Domain | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.8 | Asset Seizure | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | GHO.CA.1 | Pattern Match | 📝 | Submission | Private | Redirect | Covert Operation (lane steal — Beat 2 intercept) | Redirect |
 | GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
 | GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | Intel Delivery Slip | Reveal |
@@ -8904,7 +8913,14 @@ SYN.PA.3 = Card(
 | GHO.PA.3 | Declassified Records | 📝 | Information | Public | Remove | Intel Token (expired) | Remove |
 | GHO.PA.4 | Public Threat Assessment | 📝 | Information | Private → Public | Reveal | Broadcast Effect Card | Reveal |
 | GHO.PA.5 | Agency Recruitment Fair | 📝 | Territory | Public | Add | Presence Token | Add |
-| GHO.MOD.1 | Clarify Misinformation | 📝 | Information | Public | Remove | Intel Token | Remove | *ModReactCard — taxonomy excluded from §11.1; effect description for spec clarity only* |
+| GHO.MOD.1 | Sleeper Analyst | 📝 | Information | Public | Remove | Intel Token | Remove | *ModReactCard — taxonomy excluded from §11.1; effect description for spec clarity only* |
+| GHO.MOD.2 | Perimeter Sensors | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.3 | Institutional Trace | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.4 | Signal Bleed | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.5 | False Flag | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.6 | Supply Chain Tap | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.7 | Sleeper Cell | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.8 | Local Sympathizers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure Block | — |
 | GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
 | GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence Token | Add |
@@ -8913,14 +8929,30 @@ SYN.PA.3 = Card(
 | GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
 | GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Public | Add | Structure Block | Add |
 | GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Public | Add | Accord Agreement | Add |
+| GUI.MOD.1 | Night Shift Crew | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.2 | Union Representative | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.3 | Institutional Contract | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.4 | Core Premium | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.5 | Company Town | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.6 | Emergency Reconstruction | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.7 | Worker Retaliation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.8 | Site Clearance | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
 | NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
 | NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
 | NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | Public Act | — |
 | NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence Token | Add |
 | NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | Intel Token | Add |
-| NET.MOD.1 | Signal Break | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.2 | Reputational Strike | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.1 | Pirate Transmitter | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.2 | Troll Farm | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.3 | Backup Server Racks | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.4 | Amplification Array | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.5 | Infrastructure Signal | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.6 | Street-level Agitator | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.7 | Community Amplifiers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.8 | Frequency Splitter | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.9 | Bandwidth Override | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.10 | Local Organizers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
 | NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence Token | Add |
 | NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | Faction Hand | Reveal |
@@ -8960,7 +8992,14 @@ SYN.PA.3 = Card(
 | SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | Presence Token | Add |
 | SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
 | SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
-| SYN.MOD.1 | Accord Leverage | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.1 | The Fixer | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.2 | Shell Corporation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.3 | Offshore Slush Fund | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.4 | Insider Trading | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.5 | Short Squeeze | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.6 | Bounty Contract | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.7 | Renegotiation Fee | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.8 | Hostile Takeover | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
 | SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
 | SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
@@ -9279,26 +9318,30 @@ Overture = Card(
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
 **Outstanding Issues:**
-- **Trigger condition:** What visible board state change fires this card? Must satisfy Art 04 §5 P5. Candidates: target faction plays a PA at Beat 4; target faction achieves Established+; target faction places a deployment marker. Define before design pass.
+- **Trigger condition:** Set S128 — `standing_marker.increased(faction=Any, except=Network)`. Publicly observable (§5 P5 compliant).
 - **Unblockability formalization:** Art 03 governing rule deferred until a second bypass-capable card establishes the generalizable pattern. Issues Resolved cannot be set until the rule is written.
 - **Card name:** Placeholder — confirm before sign-off.
-- **Card ID:** TBD — pending PM05 04-n1 numbering pass.
-- **Modifier card schema:** Full spec pending modifier card design pass (04-n4).
+- **Ring variants:** Consider faction-targeted variants (e.g., trigger narrowed to specific faction) as 09-06 design pass progresses.
 
-**Status:** Stub — design pass, Issues Resolved, sign-off all pending.
+**Status:** Stub — trigger set S128. Issues Resolved and sign-off pending unblockability governing rule.
 
 ```python
-# STUB — full ModReactCard spec (trigger, value_rating, ring_constraint, ring_origin) pending 09-06 design pass
-Card(
-    id=TBD,  version="v0.1",
-    name    = "Reputational Strike",  # placeholder
+NET.MOD.2 = Card(
+    id=TBD,  card_id="NET.MOD.2",  version="v0.1",
+    name    = "Troll Farm",  # placeholder name — confirm before sign-off
+    tagline = "The narrative was already moving. We just changed where it was going.",
     type    = ModReactCard,  faction = Network,
-    layer   = Information,  function = Reveal,  subject = PublicStanding,
-    trigger = TBD,  # visible board state change — see Outstanding Issues
+    trigger = standing_marker.increased(faction=Any, except=Network),
+              # fires when any other faction's standing marker increases (publicly observable)
+    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    beat    = None,  resolution = Automatic,
     cost    = IntelToken(any) * 1,
-    success = faction(target).standing -= 1,  # unblockable — governing rule TBD
-    target_taxonomy=None,
-    portrait = {Network: PortraitEntry(submitter=+1)},  # TBD — modifier card portrait model
+    success = faction(trigger.faction).standing -= 1,  # unblockable — governing rule TBD; see Outstanding Issues
+    fail    = None,
+    restriction = None,
+    portrait = {Network: PortraitEntry(submitter=+1)},
+    narrative = None,  perspectives = None,  arbiter_note = None,
+    design_note = "Network activates an Intel dossier the moment a faction's standing increases — converting gathered intelligence into immediate reputational damage at the opponent's highest-visibility moment. PS −1 is unblockable: once the information releases, retraction is impossible. Governing rule for unblockability outstanding — address alongside any second bypass-capable card. Trigger is standing_marker.increased (publicly observable, §5 P5 compliant). Does not fire on Network's own standing increases. card_id = NET.MOD.2.",
 )
 ```
 
@@ -9309,7 +9352,7 @@ Card(
 
 *S106. Network React Modifier — Territory|Add|PresenceToken. Successor B to Weaponized Transparency (retired S70, 04-n47/04-n48). Note: Art 04b §9 excludes Modifier cards from the taxonomy matrix; Layer/Function/Subject fields below describe the card's effect category for spec clarity only.*
 
-**Design Rationale:** Network's opportunistic presence card. Fires when any PA success causes a board state change (influence chip or structure block placed or removed) in a district. The act of change is publicly observable — qualifying trigger. Network announces Signal Break and rolls d100. On success: 1 Network chip placed in the changed district. The card does not require Network to have existing presence; the PA's visibility is the only entry condition. On successcrit: additional +1 PS — the signal lands publicly as well as physically. Failcrit: −1 PS — the insertion attempt is noticed and goes badly.
+**Design Rationale:** Network's opportunistic presence card. Fires when any PA success causes a board state change (influence chip or structure block placed or removed) in a district. The act of change is publicly observable — qualifying trigger. Network announces Pirate Transmitter and rolls d100. On success: 1 Network chip placed in the changed district. The card does not require Network to have existing presence; the PA's visibility is the only entry condition. On successcrit: additional +1 PS — the signal lands publicly as well as physically. Failcrit: −1 PS — the insertion attempt is noticed and goes badly.
 
 #### Card Story
 The district was already moving. Network didn't start the change — it arrived at the same time the change did.
@@ -9344,7 +9387,7 @@ The district was already moving. Network didn't start the change — it arrived 
 ```python
 NET.MOD.1 = Card(
     id=TBD,  card_id="NET.MOD.1",  version="v1.0",
-    name    = "Signal Break",
+    name    = "Pirate Transmitter",
     tagline = "A public action changes the district. The signal finds the opening.",
     type    = ModReactCard,  faction = Network,
     trigger = PA_success.where(effect.causes_board_state_change(district)),
@@ -9366,7 +9409,7 @@ NET.MOD.1 = Card(
     narrative   = "The district was already moving. Network didn't start the change — it arrived at the same time the change did. Two signals crossing in the open.",
     perspectives = {Network: "We don't need to create the disruption. We need to be in position when it happens."},
     design_note  = "Trigger: any PA success that causes a board state change (influence chip or structure block placed or removed in district). Target district fixed by trigger — not a free choice. No restriction on Network existing presence. Modifier card schema fields are CA-convention placeholders pending 04-n4.",
-    arbiter_note = "Beat 4: when a PA success produces a board state change in district X (influence chip count changes, or structure block placed/removed), Network may announce Signal Break. Confirm trigger validity. Network spends 1 Exposure and rolls d100 (threshold 50, usual modifiers). Success: place 1 Network chip in district X. Successcrit: +1 PS additional. Fail: no effect. Failcrit: −1 PS.",
+    arbiter_note = "Beat 4: when a PA success produces a board state change in district X (influence chip count changes, or structure block placed/removed), Network may announce Pirate Transmitter. Confirm trigger validity. Network spends 1 Exposure and rolls d100 (threshold 50, usual modifiers). Success: place 1 Network chip in district X. Successcrit: +1 PS additional. Fail: no effect. Failcrit: −1 PS.",
 )
 ```
 
@@ -9391,7 +9434,7 @@ NET.MOD.1 = Card(
 # GUI.MOD.1 — RETURN TO SITE (stub; full ModReactCard spec pending 09-06 design pass)
 GUI.MOD.1 = Card(
     id=TBD,  card_id="GUI.MOD.1",  version="v0.1",
-    name    = "Return to Site",
+    name    = "Night Shift Crew",
     type    = ModReactCard,  faction = Guild,
     layer   = Territory,  function = Add,  subject = PresenceToken,
     # function = Add pending 00a-77 (Recover taxonomy validity)
@@ -9415,7 +9458,7 @@ GUI.MOD.1 = Card(
 
 The intelligence test is genuine: because Target Profiles are placed face-down at Art 03 §9.2.0 (revealing at Art 03 §9.4.3.1.1), and Intel token content is always ARBITER-private, Ghost cannot guess from publicly visible information. Prior intelligence work is required — SIGINT taps, Source Substitution plant mode, or other intelligence that revealed the token's faction field. The chain play is: plant or observe the token → hold React → fire when the attribution PA is declared.
 
-Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Ghost's doctrine across all factions. Clarify Misinformation makes that doctrine actionable: Ghost can mechanically suppress any attribution they have intelligence on. Works against corrupted tokens (planted by Ghost via Source Substitution) and legitimate ones alike — Ghost believes no covert attribution belongs on the public record.
+Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Ghost's doctrine across all factions. Sleeper Analyst makes that doctrine actionable: Ghost can mechanically suppress any attribution they have intelligence on. Works against corrupted tokens (planted by Ghost via Source Substitution) and legitimate ones alike — Ghost believes no covert attribution belongs on the public record.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -9441,7 +9484,7 @@ Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Gho
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
 **Outstanding Issues:**
-- **Card name:** "Clarify Misinformation" — pending voice pass (D-04-08). Card suppresses attribution whether true or false; name reflects Ghost's doctrine that any public attribution distorts understanding.
+- **Card name:** "Sleeper Analyst" — pending voice pass (D-04-08). Card suppresses attribution whether true or false; name reflects Ghost's doctrine that any public attribution distorts understanding.
 - **Card ID:** GHO.MOD.1 — pending 04-n1 numbering pass.
 - **Modifier card schema:** Full spec pending modifier card design pass (04-n4). Fields below use established conventions.
 
@@ -9450,7 +9493,7 @@ Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Gho
 ```python
 GHO.MOD.1 = Card(
     id=TBD,  card_id="GHO.MOD.1",  version="v1.0",
-    name    = "Clarify Misinformation",
+    name    = "Sleeper Analyst",
     tagline = "Name the faction on the Intel token. If correct: the attribution ends here.",
     type    = ModReactCard,  faction = Ghost,
     layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
@@ -9486,7 +9529,1604 @@ GHO.MOD.1 = Card(
     perspectives = None,  # pending D-04-08
 
     design_note  = "Counter-attribution React payoff for Ghost's intelligence chain. Fires when any faction places a PA with Intel token at Art 02 §9.2.0. Ghost announces React and declares the faction they believe is on the token. ARBITER checks (Prediction resolution). Match → token removed, PA cancelled (resources drained to Reservoir, no refund), Ghost +1 PS. No match → card consumed, PA proceeds. Intelligence-gated: Target Profile face-down at Art 03 §9.2.0 means Ghost cannot derive the target from visible information — requires prior SIGINT or Source Substitution plant mode. Works against corrupted and legitimate tokens alike — Ghost doctrine: no attribution belongs on the public record. card_id = GHO.MOD.1.",
-    arbiter_note = "React at Art 03 §9.2.0 when opponent places any PA with an Intel token. Ghost announces React; states the faction they believe is named on the token's faction field. Pause Art 03 §9.2.0 declaration sequence. Check token faction field (do not reveal to table). If Ghost's declared faction matches token: React succeeds — remove token; flip PA face-down (cancelled); drain all resource tokens from PA card to Reservoir; Ghost +1 PS; resume Art 03 §9.2.0. If no match: React misfires — consume Clarify Misinformation card; no board effect; resume Art 03 §9.2.0; placed PA proceeds normally.",
+    arbiter_note = "React at Art 03 §9.2.0 when opponent places any PA with an Intel token. Ghost announces React; states the faction they believe is named on the token's faction field. Pause Art 03 §9.2.0 declaration sequence. Check token faction field (do not reveal to table). If Ghost's declared faction matches token: React succeeds — remove token; flip PA face-down (cancelled); drain all resource tokens from PA card to Reservoir; Ghost +1 PS; resume Art 03 §9.2.0. If no match: React misfires — consume Sleeper Analyst card; no board effect; resume Art 03 §9.2.0; placed PA proceeds normally.",
+)
+```
+
+---
+
+#### GHO.MOD.2 — PROXIMITY SIGNAL *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Delivers §5a "passive generation: Intel tokens from game events near Ghost presence" as a ModReactCard. Output of 04-n143. Generic variant (faction=Any). Faction-targeted variants: GHO.MOD.3 (Directorate), GHO.MOD.4 (Network).*
+
+```python
+GHO.MOD.2 = Card(
+    id=TBD,  card_id="GHO.MOD.2",  version="v0.1",
+    name    = "Perimeter Sensors",
+    tagline = "Faction activity near Ghost presence generates automatic intelligence.",
+    type    = ModReactCard,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    trigger         = presence_chip.placed(faction=Any, district=where(faction(Ghost).presence > 0)),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    value_rating    = None,   # TBD
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Ghost).presence > 0,  # Ghost must be present in triggered district
+    cost            = None,  # card consumed on fire
+
+    success     = arbiter.deliver(faction(Ghost), IntelToken(faction=trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    narrative    = None,  # pending
+    perspectives = None,  # pending
+    design_note  = "Passive Intel generation from nearby faction activity. Trigger: any faction places presence in a Ghost-present district (publicly observable). Ghost receives 1 Intel token keyed to the placing faction. Intelligence-minimal design: Ghost learns who is expanding near its positions without taking any action. Output of 04-n143.",
+    arbiter_note = None,  # TBD
+)
+```
+
+---
+
+#### GHO.MOD.3 — DIRECTORATE PROXIMITY *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Faction-targeted variant of GHO.MOD.2. Trigger narrowed to Directorate presence placement. Directorate expansion near Ghost positions is the highest-value intelligence signal — institutional authority is Ghost's primary constraint.*
+
+```python
+GHO.MOD.3 = Card(
+    id=TBD,  card_id="GHO.MOD.3",  version="v0.1",
+    name    = "Institutional Trace",
+    tagline = "Directorate expansion near Ghost presence generates targeted intelligence.",
+    type    = ModReactCard,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = presence_chip.placed(faction=Directorate, district=where(faction(Ghost).presence > 0)),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = Directorate,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Ghost).presence > 0,
+    cost            = None,
+
+    success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Directorate)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Directorate-targeted variant of GHO.MOD.2 (Perimeter Sensors). Same trigger/effect, faction-narrowed. Directorate expansion near Ghost positions is a high-priority intelligence signal — Directorate is Ghost's doctrinal suppressor. Narrower window than generic variant; more reliable in Directorate-heavy games.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GHO.MOD.4 — NETWORK PROXIMITY *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Faction-targeted variant of GHO.MOD.2. Trigger narrowed to Network presence placement. Network broadcast reach expanding into Ghost-present districts is an operational exposure risk.*
+
+```python
+GHO.MOD.4 = Card(
+    id=TBD,  card_id="GHO.MOD.4",  version="v0.1",
+    name    = "Signal Bleed",
+    tagline = "Network expansion near Ghost presence generates exposure intelligence.",
+    type    = ModReactCard,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = presence_chip.placed(faction=Network, district=where(faction(Ghost).presence > 0)),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = Network,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Ghost).presence > 0,
+    cost            = None,
+
+    success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Network)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Network-targeted variant of GHO.MOD.2 (Perimeter Sensors). Network presence placement near Ghost positions generates Network-keyed Intel — Ghost tracks the broadcast infrastructure expanding into shared territory. Network expansion = exposure risk for Ghost covert ops in those districts.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GHO.MOD.5 — FALSE FLAG *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on positive PS shift. The "Flip" point-disruption payoff. Reverse the opponent's public narrative.*
+
+```python
+GHO.MOD.5 = Card(
+    id=TBD,  card_id="GHO.MOD.5",  version="v0.1",
+    name    = "False Flag",
+    tagline = "Let them claim the victory, then rewrite the headline.",
+    type    = ModReactCard,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_standing.shifted(faction=Any, direction=Positive),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = Resource(faction(trigger.faction).native, 1),
+
+    success     = arbiter.shift(public_standing, faction=trigger.faction, amount=-(trigger.amount * 2)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Late-game Flipped intel sink. Ghost spends the target's native resource to invert their public victory into a disaster. Since Reacts occur after the state change (the positive shift), this effectively applies a negative shift equal to double the trigger amount to achieve the inversion.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GHO.MOD.6 — SUPPLY CHAIN TAP *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on resource generation. Precision economic disruption via mirrored draw.*
+
+```python
+GHO.MOD.6 = Card(
+    id=TBD,  card_id="GHO.MOD.6",  version="v0.1",
+    name    = "Supply Chain Tap",
+    tagline = "Their infrastructure is our logistics.",
+    type    = ModReactCard,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = resource.drawn_from_reservoir(faction=Any),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = Resource(faction(trigger.faction).native, 1),
+
+    success     = arbiter.deliver(faction(Ghost), trigger.resources),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Ghost pays 1 cross-faction resource to copy the entire resource draw of an opponent's Upkeep phase. Pure mirrored parasitic economy.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GHO.MOD.7 — SLEEPER CELL *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on Dominant marker placement. Point-disruption targeting end-game power spikes.*
+
+```python
+GHO.MOD.7 = Card(
+    id=TBD,  card_id="GHO.MOD.7",  version="v0.1",
+    name    = "Sleeper Cell",
+    tagline = "Total control is just a convenient illusion.",
+    type    = ModReactCard,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = dominant_marker.placed(faction=Any),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = Resource(faction(trigger.faction).native, 1),
+
+    success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Ghost, count=1)]),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Reacts to a massive late-game state change. By physically swapping 1 of the target's chips for 1 Ghost chip, Ghost instantly drops the opponent's chip count, stripping the Dominant marker the moment it is placed and forcing them back to Established. Delays the endgame condition.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GHO.MOD.8 — LOCAL SYMPATHIZERS *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on Established marker placement. Point-disruption targeting mid-game expansion.*
+
+```python
+GHO.MOD.8 = Card(
+    id=TBD,  card_id="GHO.MOD.8",  version="v0.1",
+    name    = "Local Sympathizers",
+    tagline = "They thought this neighborhood belonged to them.",
+    type    = ModReactCard,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = established_marker.placed(faction=Any),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = Resource(faction(trigger.faction).native, 1),
+
+    success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Reacts to a faction reaching IL-02 (Established). Ghost burns 1 cross-faction resource to immediately remove one of their chips, instantly downgrading them back to IL-01. Slows the table's structural expansion.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### NET.MOD.3 — SIGNAL RECOVERY *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. React on Network PS loss. Enables Sacrifice (NET.CA.2 Disclosure Loop) + recovery arc. Network manages its own signal — what the public hears is what Network decides they hear.*
+
+```python
+NET.MOD.3 = Card(
+    id=TBD,  card_id="NET.MOD.3",  version="v0.1",
+    name    = "Backup Server Racks",
+    tagline = "When Network loses standing, redirect the narrative before it lands.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = standing_marker.decreased(faction=Network),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = Network,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,  # card consumed; cost TBD (possibly 1 Exposure)
+
+    success     = faction(Network).standing.add(TBD),  # negate some or all of triggering decrease; magnitude TBD
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "PS recovery React. Fires when Network's own PS decreases by any cause. Partially or fully negates the loss — magnitude TBD at design pass. Enables Disclosure Loop (NET.CA.2) sacrifice + immediate recovery as a designed arc rather than a liability. Pairs with NET.CA.6 Sacrifice (PS→Intel) — the spend-and-recover cycle makes Network's PS expenditure feel controlled rather than punitive.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### NET.MOD.4 — BROADCAST REACH *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. React on broadcast_card.placed (db25 — public SitRep card in Situation Report Zone). Fires at Upkeep SitRep and Beat 5. Generic variant — any district where Network already has presence. Ring-constrained variant: NET.MOD.5 (Mid ring).*
+
+```python
+NET.MOD.4 = Card(
+    id=TBD,  card_id="NET.MOD.4",  version="v0.1",
+    name    = "Amplification Array",
+    tagline = "When news breaks publicly, the Network's signal extends.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = broadcast_card.placed,  # db25 — SitRep card placed in Situation Report Zone
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = faction(Network).district.any,  # any district where Network has presence
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Network).any_presence,  # must have at least 1 district with presence
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=faction(Network).district.acting_choice, faction=Network, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Presence expansion React on broadcast_card.placed (db25, public SitRep card). Every public information event is a Network signal event — the story expanding means the Network's reach expands. Network selects which existing-presence district receives the chip. Fires 1–2 times per Quarter (Upkeep SitRep + possible Beat 5). Delivers §5a 'broadcast-derived presence' at the modifier card level.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### NET.MOD.5 — BROADCAST REACH (MID RING) *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Ring-constrained variant of NET.MOD.4. Fires only when SitRep fires and Network has presence in a Mid ring (Ring 2) district. Mid ring is the consolidation zone — this card deepens Network's reach in established infrastructure.*
+
+```python
+NET.MOD.5 = Card(
+    id=TBD,  card_id="NET.MOD.5",  version="v0.1",
+    name    = "Infrastructure Signal",
+    tagline = "Public broadcasts amplify Network reach in established infrastructure districts.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = broadcast_card.placed,  # db25
+    beat            = None,
+    ring_constraint = 2,  # fires only in context of Ring 2 (Mid ring) districts
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = faction(Network).district.ring(2).any,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Network).presence_in_ring(2),
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=faction(Network).district.ring(2).acting_choice, faction=Network, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Ring 2–constrained variant of NET.MOD.4 (Amplification Array). Same trigger (broadcast_card.placed, db25) but fires only if Network has Mid ring presence; places chip in a Mid ring district. Deepens Network's Mid ring footprint each time public information spreads — Infrastructure districts amplify the signal.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### NET.MOD.6 — BARYO SIGNAL *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. React on any presence placement in Baryo (Ring 3). When any faction moves in Baryo, Network's community reach follows — opportunistic Baryo expansion is Network's territorial signature.*
+
+```python
+NET.MOD.6 = Card(
+    id=TBD,  card_id="NET.MOD.6",  version="v0.1",
+    name    = "Street-level Agitator",
+    tagline = "When anyone moves in the Baryo, Network's voice follows.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = presence_chip.placed(faction=Any, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = faction(Network).district.ring(3).adjacent_to(trigger.district),
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Network).any_presence,
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=faction(Network).district.ring(3).acting_choice, faction=Network, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Opportunistic Baryo expansion React. When any faction places presence in Ring 3 (Baryo), Network may place 1 chip in any Ring 3 district where it has presence (or adjacent — TBD at design pass). Network's community-relationship model means others' activity in Baryo draws Network in. Delivers §5a 'wide Presence coverage, Baryo outward' at the modifier deck level.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### NET.MOD.7 — COMMUNITY AMPLIFIERS *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on any Public Act resolution. Feeds the Network's hand when the board gets loud.*
+
+```python
+NET.MOD.7 = Card(
+    id=TBD,  card_id="NET.MOD.7",  version="v0.1",
+    name    = "Community Amplifiers",
+    tagline = "The louder the city gets, the more they listen.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_act.resolved(faction=Any),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.draw_modifier(faction=Network, count=2, if_acting_faction=Network, then_count=3),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Net growth engine. Draws 2 cards on any PA, or 3 if Network resolved it. Transforms public state changes into hand advantage.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### NET.MOD.8 — FREQUENCY SPLITTER *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on Network Modifier card placed. Links Reacts together sequentially.*
+
+```python
+NET.MOD.8 = Card(
+    id=TBD,  card_id="NET.MOD.8",  version="v0.1",
+    name    = "Frequency Splitter",
+    tagline = "A single broadcast splinters into a dozen channels.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = modifier_card.placed(faction=Network),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = faction(Network).district.ring(3).acting_choice,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Network).any_presence,
+    cost            = None,
+
+    success     = list([arbiter.draw_modifier(faction=Network, count=1), arbiter.place(presence_chip, district=target_district, faction=Network, count=1)]),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Chain enabler. Triggers off Network placing a ModReact card. Replaces itself and drops Baryo presence, letting them stack noise sequentially.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### NET.MOD.9 — BANDWIDTH OVERRIDE *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on district becoming Contested. High-yield payload when the board gets messy.*
+
+```python
+NET.MOD.9 = Card(
+    id=TBD,  card_id="NET.MOD.9",  version="v0.1",
+    name    = "Bandwidth Override",
+    tagline = "Conflict creates the ultimate engagement metric.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = status_marker.contested.placed(),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.draw_modifier(faction=Network, count=4),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "The massive hand-flooder. Triggered by a high-tension public state change. Since there is no hand limit, Network holds these cards indefinitely to fund their cascading react chain.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### NET.MOD.10 — LOCAL ORGANIZERS *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on any presence placement in Baryo (Ring 3). Grassroots co-option of opponent territorial momentum.*
+
+```python
+NET.MOD.10 = Card(
+    id=TBD,  card_id="NET.MOD.10",  version="v0.1",
+    name    = "Local Organizers",
+    tagline = "They sent operatives. We sent neighbors.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = presence_chip.placed(faction=Any, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = Resource(Exposure, 1),
+
+    success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Network, count=1)]),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Opportunistic Baryo swap. When any faction places a presence chip in Ring 3 (Baryo), Network pays 1 Exposure to immediately swap it for a Network chip. Represents grassroots community organizing co-opting the opponent's momentum. Creates brutal point-disruption in the slums without requiring a Dispatch Token.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GUI.MOD.2 — LABOR CLAIM *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. React on opponent structure placement. Guild labor built it — Guild gets paid. Generic opponent variant. Faction-targeted variant: GUI.MOD.3 (Directorate). Ring-constrained variant: GUI.MOD.4 (Ring 1 premium rate). Connects to §5a passive income / 04-n2.*
+
+```python
+GUI.MOD.2 = Card(
+    id=TBD,  card_id="GUI.MOD.2",  version="v0.1",
+    name    = "Union Representative",
+    tagline = "Other factions build with Guild labor. Guild gets paid.",
+    type    = ModReactCard,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = structure_block.placed(faction=opponent),  # any non-Guild faction places structure
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,  # no presence requirement — Guild workforce is citywide
+    cost            = None,
+
+    success     = faction(Guild).resources.add(1, Capacity),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Guild: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Passive income React. Any opponent structure placement triggers 1 Capacity yield to Guild. Guild's doctrine: construction is Guild's domain regardless of who commissions it. Companion to 04-n2 (unimplemented passive income governing rule) — this delivers the same income as a ModReactCard rather than an Art 03 procedural rule. No presence restriction: Guild labor operates citywide.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GUI.MOD.3 — INSTITUTIONAL CONTRACT *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Faction-targeted variant of GUI.MOD.2. Trigger narrowed to Directorate structure placement. Directorate builds institutional-scale structures — Guild is the primary contractor for government facilities.*
+
+```python
+GUI.MOD.3 = Card(
+    id=TBD,  card_id="GUI.MOD.3",  version="v0.1",
+    name    = "Institutional Contract",
+    tagline = "Directorate builds. Guild crews and invoices.",
+    type    = ModReactCard,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = structure_block.placed(faction=Directorate),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Guild).resources.add(1, Capacity),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Guild: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Directorate-targeted variant of GUI.MOD.2 (Union Representative). Same trigger/effect, faction-narrowed to Directorate. Guild–Directorate tension: Directorate controls Guild's operating environment (PA.1 Regulatory Override raises construction costs); Guild charges Directorate for every structure it commissions. Narrower trigger window than generic variant; reliable in DIR-heavy games.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GUI.MOD.4 — CORE PREMIUM *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Ring-constrained variant of GUI.MOD.2. Ring 1 (Core) structure placement by any opponent triggers 2 Capacity yield. Core ring commands premium construction rates — the infrastructure is more complex, the labor is scarcer.*
+
+```python
+GUI.MOD.4 = Card(
+    id=TBD,  card_id="GUI.MOD.4",  version="v0.1",
+    name    = "Core Premium",
+    tagline = "Core construction pays Guild at institutional rates.",
+    type    = ModReactCard,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = structure_block.placed(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Guild).resources.add(2, Capacity),  # double rate for Core ring
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Guild: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Ring 1–constrained variant of GUI.MOD.2. Core construction yields 2 Capacity (vs. 1 for generic). Scarcity and complexity of Core construction means Guild commands premium rates. Strongest Guild passive income trigger — incentivizes Guild to maintain Core presence to capture premium construction income from all factions.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GUI.MOD.5 — COMPANY TOWN *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on opponent presence placement near Guild structures. Passive modifier draw engine.*
+
+```python
+GUI.MOD.5 = Card(
+    id=TBD,  card_id="GUI.MOD.5",  version="v0.1",
+    name    = "Company Town",
+    tagline = "Our people built the walls. We hear who whispers behind them.",
+    type    = ModReactCard,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = presence_chip.placed(faction=opponent, district=where(faction(Guild).structure > 0)),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.draw_modifier(faction=Guild, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Passive intelligence engine. Guild's massive labor footprint acts as an informant network. When an opponent expands into a district where Guild has a structure, Guild draws 1 Faction Modifier card. Turns their win-condition (structures) into a territorial tax on opponent expansion.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GUI.MOD.6 — EMERGENCY RECONSTRUCTION *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on Guild structure removal. Fast-tracked structural replacement.*
+
+```python
+GUI.MOD.6 = Card(
+    id=TBD,  card_id="GUI.MOD.6",  version="v0.1",
+    name    = "Emergency Reconstruction",
+    tagline = "You can knock down the building, but you can't erase the blueprint.",
+    type    = ModReactCard,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = structure_block.removed(faction=Guild),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = faction(Guild).district.adjacent_to(trigger.district).acting_choice,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Guild).presence_in(target_district),
+    cost            = list([Resource(Capacity, 1), Resource(Capital, 1)]),
+
+    success     = arbiter.place(structure_block, district=target_district, faction=Guild, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Scaling structural defense. Reacts to the physical removal of a Guild structure (whether by covert Demolish or public act). Guild spends heavy resources to instantly place a replacement structure in an adjacent district. Ensures their structure count remains constant even under heavy attack.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GUI.MOD.7 — WORKER RETALIATION *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on Guild structure removal. Territorial fallback swarm.*
+
+```python
+GUI.MOD.7 = Card(
+    id=TBD,  card_id="GUI.MOD.7",  version="v0.1",
+    name    = "Worker Retaliation",
+    tagline = "The site is clear, but the workers are still here.",
+    type    = ModReactCard,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = structure_block.removed(faction=Guild),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = Resource(Capacity, 1),
+
+    success     = arbiter.place(presence_chip, district=target_district, faction=Guild, count=2),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Scaling structural defense. If an opponent manages to remove a Guild structure, Guild burns Capacity to flood the district with 2 presence chips. The territory becomes completely infested with Guild influence, preventing the attacker from claiming the space they just cleared.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### GUI.MOD.8 — SITE CLEARANCE *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React on any structure removal. The demolition and cleanup contract.*
+
+```python
+GUI.MOD.8 = Card(
+    id=TBD,  card_id="GUI.MOD.8",  version="v0.1",
+    name    = "Site Clearance",
+    tagline = "We built it, we get paid. You blew it up, we get paid to clean it up.",
+    type    = ModReactCard,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = structure_block.removed(faction=Any),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Guild).resources.add(1, district(trigger.district).native_resource),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Passive demolition income. Whenever ANY structure is removed, Guild takes the cleanup contract and receives 1 of the district's native resource type from the Reservoir. Pairs with GUI.MOD.2 to ensure Guild profits on both ends of a structure's lifecycle.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### DIR.MOD.1 — ENFORCEMENT RESPONSE *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core).*
+
+```python
+DIR.MOD.1 = Card(
+    id=TBD,  card_id="DIR.MOD.1",  version="v0.1",
+    name    = "Riot Squad",
+    tagline = "Presence placed without Directorate approval can be removed with Directorate authority.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = presence_chip.placed(faction=Any),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Directorate).influence >= Established,  # jurisdictional authority requires Established presence
+    cost            = None,  # card consumed; cost TBD (possibly 1 Mandate)
+
+    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Military-mode enforcement React. Fires when any faction places presence in a district where Directorate has Established presence. Directorate may remove 1 chip immediately. Restriction: Directorate must be Established — jurisdictional authority is earned by presence, not proclaimed. This is the suppression toolkit delivered at React speed: Directorate responds to expansion before Beat 3 resolves. Cost TBD — possibly 1 Mandate (enforcement has institutional overhead).",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### DIR.MOD.2 — SYNDICATE ENFORCEMENT *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2.*
+
+```python
+DIR.MOD.2 = Card(
+    id=TBD,  card_id="DIR.MOD.2",  version="v0.1",
+    name    = "Capital Suppression",
+    tagline = "Syndicate presence in regulated territory draws immediate institutional response.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = presence_chip.placed(faction=Syndicate),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = Syndicate,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Directorate).influence >= Established,
+    cost            = None,
+
+    success     = arbiter.remove(presence_chip, district=trigger.district, faction=Syndicate, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Directorate: PortraitEntry(submitter=+1), Syndicate: PortraitEntry(flat=-1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Syndicate-targeted variant of DIR.MOD.1. Directorate's doctrine makes no distinction between rogue capital and rogue information — Syndicate's gray-market acquisitions are the same institutional threat as Network's broadcasts. Syndicate portrait flat=-1 on fire: the Syndicate's response to having presence removed is public and traceable. Narrower trigger window than generic; reliable in SYN-heavy games.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### DIR.MOD.3 — CORE JURISDICTION *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level.*
+
+```python
+DIR.MOD.3 = Card(
+    id=TBD,  card_id="DIR.MOD.3",  version="v0.1",
+    name    = "City Council Loyalist",
+    tagline = "In the Core, the Directorate's authority does not require a justification.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = presence_chip.placed(faction=Any, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,  # Core ring: no Established requirement — blanket institutional authority
+    cost            = None,
+
+    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Ring 1–constrained variant of DIR.MOD.1. Core ring is institutional home territory — Directorate removes presence without needing Established status. Reflects doctrine: Directorate's authority in the Core is structural, not earned faction by faction. Strongest DIR enforcement React — no restriction to work around.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### DIR.MOD.4 — ADMINISTRATIVE OVERHEAD *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. Legislative-mode React. Directorate documents all new Accords — procedural overhead yields Mandate income.*
+
+```python
+DIR.MOD.4 = Card(
+    id=TBD,  card_id="DIR.MOD.4",  version="v0.1",
+    name    = "Administrative Overhead",
+    tagline = "Every Accord formed is a Directorate administrative event.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = accord.placed,
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Directorate).resources.add(1, Mandate),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Legislative-mode React on accord.placed. Directorate charges institutional overhead for registering diplomatic agreements — Mandate income regardless of which factions are party to the Accord.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### DIR.MOD.5 — EMERGENCY APPROPRIATION *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*React to subsidize the heavy Mandate cost of Permanent PAs.*
+
+```python
+DIR.MOD.5 = Card(
+    id=TBD,  card_id="DIR.MOD.5",  version="v0.1",
+    name    = "Emergency Appropriation",
+    tagline = "Institutional scale requires institutional funding.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_act.placed_on_frg(faction=Directorate, persistence=Permanent),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Directorate).resources.add(2, Mandate),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Economy fixer. Triggers when Directorate places a Permanent Public Act on their Faction Resolution Grid at Phase 9.2 (before resolution). Instantly yields 2 Mandate, subsidizing the crippling Q1/Q2 cost of laying down their win-condition standing condition PAs.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### DIR.MOD.6 — STATE OF EMERGENCY *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Creates a standing global difficulty constraint triggered by a World Event.*
+
+```python
+DIR.MOD.6 = Card(
+    id=TBD,  card_id="DIR.MOD.6",  version="v0.1",
+    name    = "State of Emergency",
+    tagline = "The world changes. The Directorate dictates how.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = world_event.revealed,
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = "Card remains in play (persistence=Quarter) on Directorate FRG. While in play, any opponent Public Act targeting a district where Directorate influence is >= Established suffers boost=-10.",
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Environmental shaping. Triggers when the Arbiter reveals a World Event. The ModReactCard itself is placed face-up on the Directorate's Faction Resolution Grid as a standing condition for the rest of the Quarter. It imposes a -10 difficulty penalty on any opponent PA that targets a district where Directorate is Established or higher. Solves the 'world event extension' gap by letting Directorate piggyback on the World Event phase to declare their own global environmental constraint. Legally escapes Art 00a §9.1 because it modifies action difficulty (9.1a), not resource income.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### DIR.MOD.7 — EMINENT DOMAIN *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Jurisdictional claim over private development.*
+
+```python
+DIR.MOD.7 = Card(
+    id=TBD,  card_id="DIR.MOD.7",  version="v0.1",
+    name    = "Eminent Domain",
+    tagline = "Private development is subject to institutional oversight.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = structure_block.placed(faction=opponent),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=target_district, faction=Directorate, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Win-condition engine. Whenever an opponent builds a structure, Directorate immediately claims jurisdictional oversight, placing a presence chip in that district for free. Helps Directorate passively achieve 'Established in more districts'.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### DIR.MOD.8 — ASSET SEIZURE *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Impounds public operational funds in Established territory.*
+
+```python
+DIR.MOD.8 = Card(
+    id=TBD,  card_id="DIR.MOD.8",  version="v0.1",
+    name    = "Asset Seizure",
+    tagline = "Unlicensed public operations are subject to immediate fines.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_act.placed_on_frg(target_district=where(faction(Directorate).influence >= Established)),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.remove(resource_token, target=trigger.card, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Bureaucratic taxation. Triggers when a PA is placed on the FRG targeting a Directorate-Established district. Directorate instantly removes (impounds) 1 resource token off the card. The acting faction must either add a replacement resource before Beat 4, or suffer partial-payment failure.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### SYN.MOD.2 — MARKET POSITION *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. React on Accord formation. Every formal deal creates economic opportunity — Syndicate positions inside it immediately. Pairs with SYN.MOD.3 (Offshore Slush Fund on accord.corrupted).*
+
+```python
+SYN.MOD.2 = Card(
+    id=TBD,  card_id="SYN.MOD.2",  version="v0.1",
+    name    = "Shell Corporation",
+    tagline = "Every Accord is a market event. Syndicate responds accordingly.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = accord.placed,
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Syndicate).resources.add(1, Capital),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Syndicate: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Accord formation React. Every new Accord at The Table generates 1 Capital for Syndicate — the economic positioning happens before Syndicate is even a party. Delivers §5a 'accord manipulation' at the modifier level: Syndicate doesn't need to be invited to benefit from diplomatic activity. Compare DIR.MOD.4: DIR earns Mandate from the same trigger; SYN earns Capital. Competing institutional reactions to the same event.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### SYN.MOD.3 — BREACH CLAUSE *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. React on Accord breach. Syndicate extracts Capital from diplomatic breakdown. Higher yield than formation — breach creates leverage. Pairs with SYN.MOD.2.*
+
+```python
+#### SYN.MOD.3 — BREACH CLAUSE *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*S128. React on Accord breach. Syndicate extracts Capital from diplomatic breakdown. Higher yield than formation — breach creates leverage. Pairs with SYN.MOD.2.*
+
+```python
+SYN.MOD.3 = Card(
+    id=TBD,  card_id="SYN.MOD.3",  version="v0.1",
+    name    = "Offshore Slush Fund",
+    tagline = "When an Accord fails, Syndicate had a clause for that.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = accord.removed,
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Syndicate).resources.add(2, Capital),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Syndicate: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Accord removal React. 2 Capital yield. Trigger corrected from 'corrupted' to 'removed' to align with Art 06 physical game state. Open question for detail design: Should accord.removed be the sole condition (meaning Syndicate profits off ANY Accord ending, completed or breached), or is a separate mod card needed to distinguish breach vs completion?",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### SYN.MOD.4 — INSIDER TRADING *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Market speculation on positive faction momentum.*
+
+```python
+SYN.MOD.4 = Card(
+    id=TBD,  card_id="SYN.MOD.4",  version="v0.1",
+    name    = "Insider Trading",
+    tagline = "Public success always creates private wealth.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_standing.shifted(direction=positive, faction=opponent),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Syndicate).resources.add(1, Capital),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Market speculation React. Syndicate bets on the political market. When someone else scores a massive PR victory, Syndicate quietly makes a fortune off the back of it.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### SYN.MOD.5 — SHORT SQUEEZE *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Market speculation on negative faction momentum.*
+
+```python
+SYN.MOD.5 = Card(
+    id=TBD,  card_id="SYN.MOD.5",  version="v0.1",
+    name    = "Short Squeeze",
+    tagline = "A reputation in freefall is just an undervalued asset.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_standing.shifted(direction=negative, faction=opponent),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Syndicate).resources.add(1, Capital),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Companion to SYN.MOD.4. Syndicate profits off the downfall of other factions. By holding both MOD.4 and MOD.5, Syndicate guarantees income from any major political volatility at the table.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### SYN.MOD.6 — BOUNTY CONTRACT *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Syndicate weaponizes other factions by crowdsourcing their own defense or offense.*
+
+```python
+SYN.MOD.6 = Card(
+    id=TBD,  card_id="SYN.MOD.6",  version="v0.1",
+    name    = "Bounty Contract",
+    tagline = "If someone wants them gone, I am willing to subsidize the effort.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_act.placed_on_frg(faction=opponent),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = "Syndicate places this card on their FRG as a standing condition and places 2 Capital on it. The target opponent's PA gains boost=+20. When target PA resolves: if success, the 2 Capital is transferred to the acting faction; if failure, the Capital is returned to Syndicate.",
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Transactional warfare. Played onto Syndicate's own FRG with 2 Capital 'escrowed' on the card, preventing any Beat 4 resource-cleanup conflicts with the target PA itself. The submitting faction effectively becomes Syndicate's mercenary, receiving the Capital only if the op succeeds.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### SYN.MOD.7 — RENEGOTIATION FEE *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Reacts to the corruption (textual alteration) of an Accord's terms.*
+
+```python
+SYN.MOD.7 = Card(
+    id=TBD,  card_id="SYN.MOD.7",  version="v0.1",
+    name    = "Renegotiation Fee",
+    tagline = "When the fine print changes, the lawyers get paid.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = covert_operation.resolved(layer=Information, function=Corrupt, subject=AccordAgreement),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(Syndicate).resources.add(2, Capital),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Leveraging Accord manipulation. Triggers when ANY faction successfully corrupts an Accord (e.g., via SYN.CA.11 Redline). Syndicate earns 2 Capital from the procedural friction of rewriting the agreement.",
+    arbiter_note = None,
+)
+```
+
+---
+
+#### SYN.MOD.8 — HOSTILE TAKEOVER *(stub)*
+[↑ Named Modifier Cards — Stubs](#118-named-modifier-cards--stubs)
+
+*Syndicate buys up the territory left behind by destroyed infrastructure.*
+
+```python
+SYN.MOD.8 = Card(
+    id=TBD,  card_id="SYN.MOD.8",  version="v0.1",
+    name    = "Hostile Takeover",
+    tagline = "Buy when there's blood in the streets.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = structure_block.removed(faction=opponent),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = faction(Syndicate).resources.has(2, Capital),
+    cost            = Capital(2),
+
+    success     = "arbiter.place(presence_chip, district=target_district, faction=Syndicate, count=1); arbiter.place(structure_block, district=target_district, faction=Syndicate, count=1)",
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Opportunistic expansion. When a structure falls, Syndicate swoops in, paying 2 Capital to immediately place both a presence chip and a structure in the newly cleared real estate. Extremely powerful territorial swing funded entirely by Capital.",
+    arbiter_note = None,
 )
 ```
 
@@ -9693,4 +11333,4 @@ Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacit
 
 ---
 
-*End of Artifact 04 — Card System v0.9.48*
+*End of Artifact 04 — Card System v0.9.52*

@@ -16,11 +16,13 @@
 - **Type B (faction defense):** reduces Covert Operation difficulty against that faction's assets
 STD.CA.12 (Absolute Compromise) can remove active Type A and Protect/Fortify plays; cannot target Type B. ⚠ Type A/B distinction is an open outstanding issue — the taxonomy must be defined in Art 03 or Art 04 before STD.CA.12 can be fully adjudicated (Art 04 STD.CA.12 checklist). Full Countermeasure design pending D-04-12.
 
-**Modifier** — Alters parameters of a host action. No independent game-state primitives. Effect categories: difficulty reduction, cost reduction, effect extension, detection immunity, reach extension, outcome addition. Two timing sub-types:
-- **React:** fires automatically when a named publicly-observable board state change occurs. Procedural authority: Art 03 §18. First registered example: Grant Deed (DB:113). Note: §6.3 CardType enum has no "React" value yet — schema question open in 04-n99.
-- **Instant:** played actively during a defined window
+**Modifier** — Alters parameters of a host action or fires on publicly observable board state changes. No independent game-state primitives. Three subclasses (Art 04 §6.1, 04-n102 ✅ S127):
 
-**Outcome addition** — attaches an additional Automatic resolution outcome to the host action. Fires when the host action resolves at its designated beat, regardless of host success or failure (unless card text specifies otherwise). Not a separate action; requires no Dispatch Token. *(Art 04 §11.7 — draft section)*
+- **ModReactCard** — fires automatically when trigger condition (publicly observable board state change) is met. `beat=None` always. `trigger` field Required (TriggerExpr — confirmed vocabulary in Art 04 §6.3). `ring_constraint` / `ring_origin` fields apply. Default: consumed on fire. FRG standing condition variant: DIR.MOD.6, SYN.MOD.6 place themselves face-up on the faction's FRG as a Quarter standing condition — no custom marker needed (schema model pending 04-n145). Procedural authority: Art 03 §18.
+- **ModActionCard** — submitted at Covert Dispatch bundled with a host Covert Operation; fires as an outcome addition when the host action resolves. `beat` inherited from host. Example: STD.MOD.1 Overture.
+- **ModBattleCard** — submitted during §10 Contested District Resolution (Battlefield Strength resolution) only. Entirely separate from React cards; not playable outside that window.
+
+**Outcome addition (ModActionCard behavior)** — attaches an additional Automatic outcome to the host PA at Beat 4 regardless of host success or failure. No Dispatch Token required. Example: STD.MOD.1 Overture.
 
 Maximum 1 Modifier Card per action submitted. Excluded from taxonomy.
 

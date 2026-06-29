@@ -24,7 +24,7 @@
 | SYN.CA.9 Hostile Takeover | Territory | Add | PresenceToken | 3 | C×4 + Intel×1 |
 | SYN.CA.10 Accord Transfer | Economy | Corrupt | AccordCard | 3 | C×3 |
 | SYN.CA.11 Redline | Information | Corrupt | AccordAgreement | 3 | C×2 |
-| SYN.MOD.1 Accord Leverage | — | — | — | 4 | Intel×1 (stub) |
+| SYN.MOD.1 The Fixer | — | — | — | 4 | Intel×1 (stub) |
 | SYN.PA.1 Acquisition Offer | Territory | Redirect | PresenceToken | 4 | C×1 |
 | SYN.PA.2 Public Dividend | Economy | Add | NativeResource (cond.) | 4 | C×2 |
 | SYN.PA.3 Data Acquisition | Information | Reveal | IntelTokensHeld | 4 | C×1 |
@@ -135,10 +135,10 @@ Differentiation risk: CA.1 Leveraged Acquisition extracts native resource from a
 | Faction | MOD cards |
 |---------|-----------|
 | Standard | STD.MOD.1 Overture |
-| Ghost | GHO.MOD.1 Clarify Misinformation |
-| Network | NET.MOD.1 Signal Break · NET.MOD.2 Reputational Strike |
-| Syndicate | SYN.MOD.1 Accord Leverage |
-| Guild | GUI.MOD.1 Return to Site |
+| Ghost | GHO.MOD.1 Sleeper Analyst |
+| Network | NET.MOD.1 Pirate Transmitter · NET.MOD.2 Troll Farm |
+| Syndicate | SYN.MOD.1 The Fixer |
+| Guild | GUI.MOD.1 Night Shift Crew |
 | **Directorate** | **None** |
 
 MOD design is largely unexplored. Coverage gaps should be evaluated across CA, PA, and MOD before assuming a new CA is required. GHO.MOD.1 is the reference model: a React that fires on a PA submission event rather than a CA consuming a covert slot.

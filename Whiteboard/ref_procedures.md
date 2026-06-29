@@ -179,7 +179,7 @@ React cards fire in response to **publicly visible board state changes only** �
 
 **Resume:** Once React resolves, original procedure resumes from the point it was paused.
 
-**Modifier React cards:** If a modifier react card creates a persistent board state, it remains with its duration type per the Duration Taxonomy (§15).
+**ModReactCard:** Default behavior is consumed on fire (cost=None = consumed). FRG standing condition variant: some React cards (e.g., DIR.MOD.6 State of Emergency, SYN.MOD.6 Bounty Contract) place themselves face-up on the acting faction's FRG as a Quarter-long standing condition after firing — no custom marker needed. Schema model for this variant pending 04-n145.
 
 ---
 

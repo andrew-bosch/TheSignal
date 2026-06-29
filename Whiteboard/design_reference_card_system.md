@@ -353,6 +353,10 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 
 ```
 CardType:    CovertOperation | PublicAct | Pass | Countermeasure | Modifier | EmergencyResponse
+  Modifier subclasses (Art 04 §6.1, 04-n102 ✅ S127):
+    ModReactCard    beat=None always · trigger Required · ring_constraint/ring_origin apply
+    ModActionCard   bundled with host Covert Op at Dispatch · fires with host
+    ModBattleCard   §10 Contested District Resolution window only
 Subtype:     Standard | FactionSpecific
 Faction:     All | Ghost | Network | Syndicate | Guild | Directorate
 Resolution:  d100 | Automatic   ← NOT "Dice" — d100 is the exact enum value
@@ -361,6 +365,25 @@ Layer:       Territory | Economy | Information | Submission | Resolution | Stand
 Function:    → Art 04b §4 / ref_taxonomy.md
 Subject:     → Art 04b §4 / ref_taxonomy.md
 ```
+
+**ModReactCard TriggerExpr — confirmed vocabulary (Art 04 §6.3, S128):**
+```
+presence_chip.placed(faction=X, district=Y, ring=Z)
+presence_chip.removed(faction=X, district=Y)
+structure_block.placed(faction=X, ring=Z)
+structure_block.removed(faction=X)
+dominant_marker.placed(faction=X, ring=Z)
+dominant_marker.removed(faction=X)
+established_marker.placed(faction=X)
+established_marker.removed(faction=X)
+tension_marker.placed / tension_marker.removed
+standing_marker.increased(faction=X) / standing_marker.decreased(faction=X)
+world_event.played / world_event.expired
+accord.placed / accord.corrupted / accord.removed
+resolution_grid.updated
+broadcast_card.placed   ← db25 public SitRep card; fires at Upkeep phase 1 and Beat 5 phase 18 (added S128)
+```
+Pending vocab decisions (04-n144): `public_act.placed_on_frg`, `world_event.revealed` (confirm = `world_event.played`?), `covert_operation.resolved(...)` (normalize → `accord.corrupted`).
 
 ---
 

@@ -17,17 +17,17 @@ Coverage gaps should be evaluated across all three card types — CA, PA, and MO
 | **React** | Triggers on a publicly observable event | Standing defense, information interception, territory response — without consuming a Beat slot |
 | **Battlefield Modifier** | Persistent state change | District locks, sustained economic pressure, structural advantages across beats |
 
-GHO.MOD.1 (Clarify Misinformation) is the model: a React that fires on a PA submission event rather than a CA that consumes a covert slot. Standing gaps for GHO/SYN/GUI may be better served by a React or Resolution Modifier than by a new CA.
+GHO.MOD.1 (Sleeper Analyst) is the model: a React that fires on a PA submission event rather than a CA that consumes a covert slot. Standing gaps for GHO/SYN/GUI may be better served by a React or Resolution Modifier than by a new CA.
 
 **Current MOD inventory (6 cards, none signed off):**
 
 | Faction | MOD cards |
 |---|---|
 | Standard | STD.MOD.1 Overture |
-| Ghost | GHO.MOD.1 Clarify Misinformation |
-| Network | NET.MOD.1 Signal Break · NET.MOD.2 Reputational Strike |
-| Syndicate | SYN.MOD.1 Accord Leverage |
-| Guild | GUI.MOD.1 Return to Site |
+| Ghost | GHO.MOD.1 Sleeper Analyst |
+| Network | NET.MOD.1 Pirate Transmitter · NET.MOD.2 Troll Farm |
+| Syndicate | SYN.MOD.1 The Fixer |
+| Guild | GUI.MOD.1 Night Shift Crew |
 | **Directorate** | **None** |
 
 MOD design is largely unexplored — the gap analysis below should be read with this in mind.
@@ -117,7 +117,7 @@ Standard is the floor for Standing shifts — all 3 STD Standing cards are Publi
 | Information | Add | IntelToken | CA.7, CA.8 | Station, Full Take — deep collection |
 | Information | Add | DebriefActionCard | CA.9 | SCIF |
 | Information | Corrupt | IntelToken | CA.5, CA.12 | Misdirection (FRG-placed tokens, offensive — S119) · Source Substitution (Ghost's own held tokens, self-supply) |
-| Information | Remove | IntelToken | CA.4, PA.3, MOD.1 | Deep Cover, Declassified Records, Clarify Misinformation |
+| Information | Remove | IntelToken | CA.4, PA.3, MOD.1 | Deep Cover, Declassified Records, Sleeper Analyst |
 | Information | Reveal | CovertOperation | CA.2 | Intercept |
 | Information | Reveal | IntelDeliverySlip | CA.3 | Dossier Breach |
 | Information | Reveal | BroadcastEffectCard | PA.4 | Public Threat Assessment |
@@ -181,7 +181,7 @@ ARBITER holds covert case contents between Beat 0 and Beat 3. Four new Informati
 **GHO.PA.4 Public Threat Assessment** — `issues_resolved=1` ✓ (marked S120)  
 **GHO.PA.5 Agency Recruitment Fair** — `issues_resolved=1` ✓ (marked S120)
 
-**GHO.MOD.1 Clarify Misinformation** — `issues_resolved=0`
+**GHO.MOD.1 Sleeper Analyst** — `issues_resolved=0`
 - Outstanding: Prediction resolution undefined in Art 03 §9.4 (same blocker as CA.1)
 - Type: Art 03 gap
 
@@ -206,7 +206,7 @@ ARBITER holds covert case contents between Beat 0 and Beat 3. Four new Informati
 Ghost's issues_resolved count reflects infrastructure debt more than card design gaps.
 
 **Prediction resolution procedure (Art 03 §9.4 — not written)**
-- Affects: GHO.CA.1 Pattern Match, GHO.MOD.1 Clarify Misinformation
+- Affects: GHO.CA.1 Pattern Match, GHO.MOD.1 Sleeper Analyst
 - Both cards functionally complete in spec; unresolvable at table without §9.4
 - Prediction = ARBITER evaluates stated outcome against actual result; distinct from Automatic and d100
 
