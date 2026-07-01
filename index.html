@@ -44,6 +44,22 @@
       overflow-x: hidden;
     }
 
+    /* ── MAP ──────────────────────────────────────────── */
+    .map-block {
+      text-align: center;
+      margin: 2rem auto;
+      padding: 1rem;
+      max-width: 600px; /* Keep it compact */
+      background: rgba(20, 20, 20, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .map-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
     /* ── SCANLINE OVERLAY ─────────────────────────────── */
     body::before {
       content: '';
@@ -440,7 +456,8 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    header, section, .objective-block, footer {
+    header, section, .objective-block, .map-block, footer {
+
       animation: fadeup 0.5s ease both;
     }
 
@@ -603,6 +620,20 @@
       and what that says about humanity.
     </p>
   </div>
+
+  <!-- ── MAP ── -->
+  <div class="map-block">
+    <object type="image/svg+xml" data="V1/NM_Overlay.svg" class="map-svg"></object>
+  </div>
+
+  <div class="map-block">
+    <object type="image/svg+xml" data="V1/Table_Layout.svg" class="map-svg" style="max-height: 50vh; width: 100%; border-radius: 8px; margin-top: 2rem;"></object>
+  </div>
+
+  <div class="map-block">
+    <object type="image/svg+xml" data="V1/Central_Area_Layout.svg" class="map-svg" style="max-height: 50vh; width: 100%; border-radius: 8px; margin-top: 2rem;"></object>
+  </div>
+
 
   <!-- ── FOOTER ── -->
   <footer>

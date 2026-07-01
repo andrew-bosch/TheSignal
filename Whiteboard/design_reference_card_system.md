@@ -61,7 +61,7 @@
 | Beat 5 | Post-resolution cleanup; Battlefield Strength if Contested |
 
 ### Dispatch Rules
-- Each covert op requires 1 Dispatch Token in case; each public act requires 1 token on declared card at Phase B (Governing Rule 7.3c); no token = rejected at Beat 0 (covert) or voided (public act)
+- Each covert op requires 1 Dispatch Token in case; each public act requires 1 token on declared card at §9.2 Public Declaration (Governing Rule 7.3c); no token = rejected at Beat 0 (covert) or voided (public act)
 - Cases sealed before transmit; no modifications after sealing (Governing Rule 7.3)
 - Submission order = tiebreaker within resolution priority tiers (Governing Rule 7.3b)
 - Ghost: 4 Dispatch Tokens/Quarter; others: 3
@@ -323,7 +323,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | `target_district` | DistrictExpr | District scope |
 | `target_faction` | FactionExpr \| None | None = no faction target |
 | `target_object` | ObjectExpr \| None | None = no object target |
-| `target_taxonomy` | TaxonomyExpr \| None | Targets a class of actions; declared at Phase B alongside target_faction; None = no taxonomy target |
+| `target_taxonomy` | TaxonomyExpr \| None | Targets a class of actions; declared at §9.2 Public Declaration alongside target_faction; None = no taxonomy target |
 | `declared_params` | DeclaredParamsExpr \| None | Faction-declared free-form parameters written on TP declared-parameters line at §9.2 or Covert Dispatch — e.g., N tokens + consideration (SYN.PA.3), clause + new value (SYN.CA.11), incoming party (SYN.CA.10); None = no declaration required. Art 02 v2.4 / L233. Full §6.1 addition pending 04-n106. |
 
 **Logic**
@@ -366,7 +366,7 @@ Function:    → Art 04b §4 / ref_taxonomy.md
 Subject:     → Art 04b §4 / ref_taxonomy.md
 ```
 
-**ModReactCard TriggerExpr — confirmed vocabulary (Art 04 §6.3, S128–S129):**
+**ModReactCard TriggerExpr — confirmed vocabulary (Art 04 §6.3, S128–S130):**
 ```
 presence_chip.placed(faction=X, district=Y, ring=Z)
 presence_chip.removed(faction=X, district=Y)
@@ -382,14 +382,29 @@ standing_marker.increased(faction=X) / standing_marker.decreased(faction=X)
 world_event.played / world_event.expired
 accord.placed / accord.corrupted / accord.removed  (semantics: see below)
 resolution_grid.updated
-broadcast_card.placed   ← db25 public SitRep card; fires at Upkeep phase 1 and Beat 5 phase 18 (added S128)
+broadcast_card.placed        ← db25 public SitRep card; fires at Upkeep phase 1 and Beat 5 phase 18 (added S128)
+public_act.placed_on_frg(faction=X, ...)  ← any faction places PA face-up on FRG at §9.2 Public Declaration (confirmed S130)
 ```
 
-**Accord trigger semantics (S128 agy ruling):**
-- `accord.corrupted` — textual alteration of an active Accord via Covert Op (e.g., SYN.CA.11 Redline). Terms change; Accord remains active on the board.
-- `accord.removed` — physical board state when an Accord is breached or expires. The Accord card leaves the Accord Placement Area. (added to Art 04 §6.3 S129)
+**Accord trigger semantics (S128–S130):**
+- `accord.corrupted` — textual alteration of an active Accord via Covert Op (e.g., SYN.CA.11 Redline). Terms change; Accord remains active on the board. ⚠ Requires Art 06 breach procedure to include an explicit ARBITER corrupt step on the Accord form — tracked 06-n01.
+- `accord.removed` — physical board state when an Accord is removed (breach or natural expiry). The Accord card leaves the Accord Placement Area. ARBITER removes the form; no distinct breach-marking step currently exists.
 
-**Pending vocab decisions (04-n144):** `public_act.placed_on_frg`, `world_event.revealed` (confirm = `world_event.played`?), `covert_operation.resolved(...)` (normalize → `accord.corrupted`), `accord.removed` (confirm scope: completion AND breach, or breach only — see SYN.MOD.3 design_note), `public_standing.shifted(faction=X, direction=positive)` (used GHO.MOD.5; normalize → `standing_marker.increased`?), `resource.drawn_from_reservoir(faction=X)` (used GHO.MOD.6; not in TriggerExpr schema — needs component classification).
+**ModReactCard persistence (S130):**
+- `persistence = Immediate` — fire-and-consume (default for ModReactCards)
+- `persistence = Seasonal` — card remains on acting faction's FRG as a standing condition until Quarter end
+
+**Resolved vocab decisions (04-n144 ✅ S130):** `public_act.placed_on_frg` confirmed as new general trigger term. `world_event.revealed` → `world_event.played`. `covert_operation.resolved(...)` → `accord.corrupted`. `public_standing.shifted(direction=positive/negative)` → `standing_marker.increased/decreased`.
+
+**Still pending:** `resource.drawn_from_reservoir(faction=X)` (used GHO.MOD.6; not in TriggerExpr schema — needs component classification). `structure_block.placed(district=X)` — district-scoped form (used GD-01 Grant Deed; current vocab is ring-scoped only); extension needed in Art 04 §6.3 (04-n27).
+
+**Modifier card naming convention (locked S130):**
+All faction and ring modifier card names must be one of three categories:
+- **Asset (human)** — a named individual or operative (e.g., Street-Level Agitator, Local Organizers, Press Credentials)
+- **Asset (business)** — an organization, network, or institutional entity (e.g., Troll Farm, Subscriber Network)
+- **Equipment** — a physical or technical device or infrastructure (e.g., Pirate Transmitter, Backup Server Racks, Amplification Array)
+- **Tactic** — a named operational plan or method (e.g., Cancel Campaign, Bandwidth Override)
+Applies to all modifier subclasses: ModReactCard, ModActionCard, ModBattleCard. Faction and ring modifier cards both governed.
 
 ---
 

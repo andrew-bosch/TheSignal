@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.52 Draft  
+**Version:** 0.9.61 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-28  
+**Last Updated:** 2026-06-30  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -500,8 +500,9 @@ class ModBattleCard(Card):
 
 class ModReactCard(Card):
     # Modifier firing on a publicly observable board state delta. Played in Faction Resolution Grid.
-    # trigger: required (never None) — defines what activates the card; overrides Card.trigger default
-    # beat:    always None — React fires on trigger condition, not at a named beat
+    # trigger:     required (never None) — defines what activates the card; overrides Card.trigger default
+    # beat:        always None — React fires on trigger condition, not at a named beat
+    # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as standing condition until Quarter end
     # Field constraints: §6.2.
     value_rating:     int | None            # 1–3; None = TBD (stub only)
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
@@ -648,9 +649,10 @@ TriggerExpr:         Any
 #   tension_marker.placed / removed                    (Contested condition)
 #   standing_marker.increased / decreased              (PS track shift at Beat resolution)
 #   world_event.played / expired
-#   accord.placed / corrupted / removed              (accord.removed: Accord breach or expiry — S128)
+#   accord.placed / corrupted / removed              (accord.removed: breach or expiry; accord.corrupted: requires Art 06 breach procedure ARBITER corrupt step on Accord form — 06-n pending S130)
 #   resolution_grid.updated                            (after Beat 0 public reveal)
 #   broadcast_card.placed                              (db25 — public SitRep card placed in Situation Report Zone; fires at Upkeep phase 1 and Beat 5 phase 18; added S128)
+#   public_act.placed_on_frg(faction, ...)             (any faction places a PA face-up on their FRG at §9.2 Public Declaration — S130)
 #
 # Excluded (static — never change): district tiles, board geography, ARBITER Dominance Marker
 # Excluded (procedural — not player-driven): Initiative Strip, Session Timeline, Quarter/Month markers
@@ -2989,6 +2991,7 @@ STD.PA.8 = Card(
 | [GUI.CA.4](#c14-construction-crew) | Construction Crew |
 | [GUI.CA.5](#c15-infrastructure-yield) | Infrastructure Yield |
 | [—](#guild-labor-contract) | Labor Contract |
+| [GUI.CA.10](#guica10--development-order) | Development Order |
 
 ### GUI.CA.1 — FORTIFY STRUCTURE
 [↑ Covert Operations](#guild-covert-operations)
@@ -3540,6 +3543,8 @@ GUI.CA.6 = Card(
 |------|------|
 | [GUI.PA.1](#p09-civic-works-mandate) | Civic Works Mandate |
 | [GUI.PA.2](#p10-infrastructure-bond) | Infrastructure Bond |
+| [GUI.PA.9](#guipa9--city-ledger) | City Ledger |
+| [GUI.PA.10](#guipa10--joint-development) | Joint Development |
 
 ---
 
@@ -3592,6 +3597,201 @@ GUI.CA.8 = Card(
     design_note = "A thematic variant of STD.CA.2 (Demolish). Bribe removed to keep resolution strictly blind via Arbiter."
 )
 ```
+
+### GUI.CA.9 — WORKS GUARANTEE
+[↑ Covert Operations](#guild-covert-operations)
+
+#### Design Rationale
+Guild's construction certainty card — a Beat 2 positional play that suppresses the dice on a named Guild Beat 3 d100 CA and fires that CA's full success+successcrit outcome in two districts simultaneously. The target profile carries two declarations: the CA being guaranteed (by card ID) and a second district. At Beat 3 the named CA resolves without a roll — success+successcrit applies to the CA's own declared district AND to Works Guarantee's declared district. The d100 is not rolled; failcrit consequences of the named CA are suppressed.
+
+Best target: GUI.CA.4 Construction Crew (success+successcrit = 2 presence + 1 structure). Double-fire yields 4 presence + 2 structures across two districts in one Beat 3 slot — immediate Established presence in two districts where Guild had none. Total cost (CA.4 + Works Guarantee + 2 dispatch slots) is high; this is an early-game land-grab or a late-game disruption play. CA.3 Foundation Rights is the cheaper-target variant (two unclaimed districts each receiving 1 presence + 1 structure).
+
+Distinct from STD.CA.10 Protect (raises attacker threshold on incoming CAs) and GUI.CA.1 Fortify Structure (protects existing structure). This card does not defend — it guarantees construction output.
+
+#### Card Story
+⚠ Story pending.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Guild's institutional weight guaranteeing a construction commitment in two districts — doctrinal expression of "when Guild commits, it gets built" | Art 00 §7 |
+| Voice fit | ✓ | Five perspectives: Guild matter-of-fact certainty; Directorate notes the institutional channel; Ghost reads it as operational pre-commitment; Network clocks the dual announcement; Syndicate prices the certainty premium | Art 00 §7 |
+| Doctrine alignment | ✓ | Guild ceiling Resolution card; Beat 2 Automatic; Portrait +1; construction certainty is the Guild doctrine made mechanical | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — the guarantee is covert; no public announcement of which CA is being backed | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Resolution / Modify / Difficulty — suppresses d100 roll on target CA, converting it to guaranteed success+successcrit | Art 04b §4 |
+| Balance | ⚠ | High total cost (CA cost + 2C + 1 district native + 2 dispatch slots); ceiling output (4 presence + 2 structures for CA.4); restriction checks at Beat 0 limit abuse — playtesting required | Art 02 §6–§7 |
+| Effect duration | ✓ | Beat 2 effect (guarantee registered); Beat 3 CA output is Permanent (structures/presence placed) | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate — guarantee resolves at Beat 3 with the target CA; no lingering marker | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None | — |
+| Portrait validity | ✓ | Guild +1: submitter-bounded | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district B; named CA's own target_district = district A; both validated at Beat 0 per Art 01 §6.5 | Art 01 §6.5 |
+| Supported by components | ✓ | PresenceToken + StructureBlock output via named CA; no new components; cost from Guild resource pool | Art 02 §6–§8 |
+| Supported by game procedure | ⚠ | Beat 0: ARBITER validates named CA and district B restriction; Beat 2: guarantee registered; Beat 3: named CA resolves without roll, output fires twice. Double-fire procedure is new — confirm against Art 03 §9.4 | Art 03 §9.4 |
+| Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending | Art 04 §5 P26 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | | |
+
+```python
+GUI.CA.9 = Card(
+    id      = "GUI.CA.9",  version = "v0.1",
+    name    = "Works Guarantee",
+    tagline = "Commit to both sites. Both get built.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
+
+    layer    = Resolution,  function = Modify,  subject = Difficulty,
+
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Positional wager",
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = district.named,       # district B — second fire location
+    target_faction  = None,
+    target_object   = None,
+    target_ca       = ca.guild.beat3.d100,  # named Guild Beat 3 d100 CA (declared in target profile)
+
+    affinity    = None,
+    restriction = (
+        target_ca in game.dispatch.guild.beat3                       # named CA is submitted this Month
+        and target_ca.restriction(district=target_district) == True  # district B satisfies CA's own restriction
+    ),
+    cost = resource.faction(Guild).capacity * 2
+         + resource.district(target_district).native * 1,
+
+    success = (
+        target_ca.resolve(district=target_ca.target_district, outcome=success_and_successcrit),
+        target_ca.resolve(district=target_district,           outcome=success_and_successcrit),
+        # d100 roll suppressed; named CA's failcrit consequences do not fire
+    ),
+
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+
+    portrait = {Guild: PortraitEntry(submitter=+1)},
+
+    narrative    = None,
+    perspectives = {
+        Guild:       "Both sites are committed. The crews are already moving. The question was never whether — only where.",
+        Directorate: "The Guild has pre-authorized both sites through the same institutional channel. Efficient. We note the district selections.",
+        Ghost:       "Pre-committed construction at two sites simultaneously. We mark both districts as active before Beat 3 opens.",
+        Network:     "Guild's already decided. Whatever goes in the grid tonight, those two districts are getting built. We're watching which ones.",
+        Syndicate:   "Certainty commands a premium. Guild is paying it. The output justifies the cost — barely, but it does.",
+    },
+    design_note  = "Construction certainty card. Target profile = {target_ca (named Guild Beat 3 d100 CA), target_district (district B)}. Beat 2 Automatic: registers guarantee. Beat 3: named CA resolves without roll — success+successcrit fires in CA's own district A AND in district B. Named CA's failcrit suppressed. Best target: GUI.CA.4 (success+crit = 2 presence + 1 structure per district; double-fire = 4 presence + 2 structures). CA.3 variant: 2 presence + 2 structures in two unclaimed districts. District B must satisfy the named CA's own restriction (checked at Beat 0). Total cost: this card (2C + 1 district native) + named CA cost + 2 dispatch slots.",
+    arbiter_note = "Phase B: Guild declares Works Guarantee with target profile = {CA-ID, district B}. Beat 0: (1) confirm named CA is Guild-submitted and d100; (2) confirm district B satisfies named CA's restriction (e.g., for CA.4: no existing Guild structure in district B; for CA.3: total presence in district B = 0). If either check fails: Works Guarantee void, cost returned. Beat 2: Works Guarantee resolves — record guarantee against named CA. Beat 3: named CA does NOT roll d100. Apply named CA's success+successcrit outcomes to district A (CA's declared target), then apply the same success+successcrit outcomes to district B. Named CA's failcrit consequences (Intel Tokens, resource transfers) are suppressed.",
+)
+```
+
+---
+
+### GUI.CA.10 — DEVELOPMENT ORDER
+[↑ Covert Operations](#guild-covert-operations)
+
+#### Design Rationale
+Guild's Grant Deed card — parallel to SYN.CA.8 Land Title in mechanism, distinct in doctrine. Land Title is a capital claim: "let someone else build, then collect." Development Order is a construction rights filing: "when this district develops, Guild is the builder of record." Both deliver GD-01 Grant Deed to the acting faction's Dispatch Case via ARBITER; both fire when any faction places a structure block in the named district.
+
+Cost: 3 Capacity + 1 `district(target).native` — the district-native term is the cross-resource commitment that satisfies the §9.2 ceiling gap (04-n119). Guild must engage with the target district's resource economy to file the order. Restriction: no Guild structure in target district (same gate as GUI.CA.4) and not Chorus Node. Automatic resolution — filing a development order doesn't require a roll. Multiple orders on the same district permitted; cost-governed.
+
+Doctrinal distinction from SYN.CA.8: Guild's deed doesn't extract value from others' development. It establishes Guild's right to participate. The fire effect (+1 Presence Token + 1 Structure Block per GD-01) reflects Guild crews arriving to execute the build — not just a claim on paper.
+
+#### Card Story
+The Guild files the development order before a single wall goes up. The district is undeveloped — for now. When any faction breaks ground, the permit is already on file. The crews arrive with the first delivery truck.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Construction rights filing on undeveloped district; Guild doctrine-coherent — "builder of record" rather than Syndicate's extractive claim | Art 00 §7 |
+| Voice fit | ⚠ | Perspectives pending | Art 00 §7 |
+| Doctrine alignment | ✓ | Capacity + district-native cost addresses 04-n119 §9.2 ceiling gap; construction rights framing is Guild-exclusive | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via GD-01 fire | Art 04b §4 |
+| Balance | ⚠ | Payback contingent on any faction building in named district; district-native cost throttles casual play — playtesting required | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent — Grant Deed held until fired or game end | — |
+| Persistence | ✓ | Card persistence = Immediate; GD-01 persists in hand | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None on this card; trigger lives on GD-01 | — |
+| Portrait validity | ✓ | Guild submitter=+1; filing construction rights is doctrine-consistent | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named; ChorusNode excluded | Art 01 §6 |
+| Supported by components | ✓ | GD-01 Grant Deed (Art 04 §12b.2); component registration pending 04-n26 | Art 02 §6–§8 |
+| Supported by game procedure | ⚠ | GD-01 trigger vocab (district-scoped) pending 04-n27; React window pending Art 03 addition | Art 03 §9.4 |
+| Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above | Art 04 §5 P26 |
+
+#### Outstanding Issues
+
+- **04-n26:** Grant Deed component registration in Art 02 pending.
+- **04-n27:** GD-01 trigger vocab (district-scoped `structure_block.placed`) and Art 03 React window pending.
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | | |
+
+```python
+GUI.CA.10 = Card(
+    id      = "GUI.CA.10",  version = "v0.1",
+    name    = "Development Order",
+    tagline = "File construction rights before ground is broken. The permit is already on file.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
+
+    layer    = Territory,  function = Add,  subject = StructureBlock,
+
+    beat            = 3,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = district.named,
+    target_faction  = None,
+    target_object   = None,
+    declared_params = None,
+
+    affinity    = None,
+    restriction = (faction(Guild).structure_block.count(district(target)) == 0
+               and district(target) != ChorusNode),
+    cost = resource.faction(acting).capacity * 3
+         + resource.district(target).native * 1,
+    boost = None,
+
+    success     = arbiter.dispatch(GrantDeed(district=district(target), holder=faction(acting)), faction(acting).case),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+
+    portrait = {Guild: PortraitEntry(submitter=+1)},
+
+    ps_framing   = None,
+
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Delivers GD-01 Grant Deed (Art 04 §12b.2). Addresses 04-n119 §9.2 ceiling gap: Capacity + district-native cost creates cross-resource commitment SYN.CA.8 Land Title lacks. Restriction (no Guild structure, not Chorus Node) parallels CA.4. Automatic — no roll, no fail. Multiple orders on same district permitted; cost-governed. Doctrinal distinction from SYN.CA.8: Guild establishes construction rights (crews arrive to build); Syndicate files ownership claim (extraction).",
+    arbiter_note = "Beat 3: take 1 blank Grant Deed (GD-01) from ARBITER tableau; write target district name in 'district' field and Guild in 'holder' field; place in Guild's Dispatch Case. Card moves to Guild's hand at Debrief.",
+)
+```
+
+---
 
 ### GUI.PA.1 — CIVIC WORKS MANDATE
 [↑ Public Acts](#guild-public-acts)
@@ -3934,6 +4134,206 @@ GUI.PA.8 = Card(
     design_note = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige."
 )
 ```
+
+### GUI.PA.9 — CITY LEDGER
+[↑ Public Acts](#guild-public-acts)
+
+#### Design Rationale
+Guild's ceiling Standing card — a public presentation of the full construction record across a district cluster. N = count of districts in {target ∪ adjacent} where Guild holds a structure block (max 9: target + 8 adjacencies by board geometry). Success: +N PS. The card is self-calibrating — the more Guild has built in the cluster, the larger the PS swing. Failcrit is symmetric: −N PS. A faction that bets its entire construction record on a public declaration that fails pays proportionally.
+
+Cost: 3 Capacity (show of strength), 1 Capital (broadcast), 1 Exposure (public act), 1 Mandate (record). Total cross-cost gate is high; this card is not played early. Distinct from GUI.PA.4 Civic Unveiling (Automatic, single-district, shallow PS ceiling): PA.4 is the floor version; City Ledger is the d100 ceiling gamble. Successcrit adds the harvest: for each qualifying district, Guild receives +1 of that district's native resource — a heterogeneous yield matching the actual resource character of each district in the cluster. At full cluster (N=9), successcrit can return a mix of Findings, Mandate, Capacity, and Exposure depending on which districts Guild has built in. Portrait +2 (Guild's maximum public commitment).
+
+#### Card Story
+⚠ Story pending.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Public declaration of construction record across a district cluster; Guild doctrine-coherent — standing earned through demonstrated building, not rhetoric | Art 00 §7 |
+| Voice fit | ✓ | Five perspectives distinct: Guild matter-of-fact accounting; Network acknowledges the ledger as signal; Ghost reads it as structural dependency data; Directorate contests the figures; Syndicate notes standing built on structures as the most durable kind | Art 00 §7 |
+| Doctrine alignment | ✓ | Guild ceiling card, d100, high cost — consistent with "heavy, deliberate, permanent" playstyle; Portrait +2 (Guild's doctrinal maximum) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker | Art 04b §4 |
+| Balance | ⚠ | N scales with board position; cost 3C+1Cap+1E+1M is ceiling tier; failcrit symmetric to success — playtesting required | Art 02 §6–§7 |
+| Effect duration | ✓ | PS shifts Immediate; resource delivery Immediate | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate — all effects resolve at Beat 4 | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None | — |
+| Portrait validity | ✓ | Guild +2: submitter-bounded; ceiling public commitment = doctrinal maximum | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named; N calculated across target + all adjacent districts per Art 01 §6.5 adjacency map | Art 01 §6.5 |
+| Supported by components | ✓ | PS tracked on Public Standing track (Art 02 §7); resources from existing resource system; StructureBlocks already on board — no new components | Art 02 §7–§8 |
+| Supported by game procedure | ⚠ | Beat 0: N-lock — ARBITER counts qualifying districts and records N; Beat 4: resolution. N-lock at Beat 0 is new procedure; confirm against Art 03 §9.4 | Art 03 §9.4 |
+| Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending | Art 04 §5 P26 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | | |
+
+```python
+GUI.PA.9 = Card(
+    id      = "GUI.PA.9",  version = "v0.1",
+    name    = "City Ledger",
+    tagline = "Present the full construction record. Let the district account for what has been built.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
+
+    layer    = Standing,  function = Shift,  subject = StandingMarker,
+
+    beat            = 4,
+    resolution      = d100,
+    threshold       = 40,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = district.named,
+    target_faction  = None,
+    target_object   = None,
+
+    affinity    = None,
+    restriction = count(d in ([district(target)] + district(target).adjacent)
+                        where d.faction(Guild).structure > 0) >= 1,
+    cost = resource.faction(Guild).capacity * 3
+         + resource.faction(Guild).capital  * 1
+         + resource.faction(Guild).exposure * 1
+         + resource.faction(Guild).mandate  * 1,
+
+    success = faction(Guild).standing.add(
+                  count(d in ([district(target)] + district(target).adjacent)
+                        where d.faction(Guild).structure > 0)),
+
+    successcrit = [faction(Guild).resource(d.native).add(1)
+                   for d in ([district(target)] + district(target).adjacent)
+                   if d.faction(Guild).structure > 0],
+
+    fail     = None,
+
+    failcrit = faction(Guild).standing.remove(
+                   count(d in ([district(target)] + district(target).adjacent)
+                         where d.faction(Guild).structure > 0)),
+
+    portrait = {Guild: PortraitEntry(submitter=+2)},
+
+    narrative    = None,
+    perspectives = {
+        Guild:       "The survey is not a campaign. It is a count. The city has been watching us build for years. Now they see the total.",
+        Network:     "Guild puts the ledger on the table. No spin, no campaign — just the number. Occasionally the number is the signal.",
+        Ghost:       "Quantified construction output translates to community dependency. The city's response is structural, not emotional. The leverage is already embedded in the districts.",
+        Directorate: "A public record of physical presence submitted to general attention. We maintain our own records. Guild's version of the total is, predictably, generous.",
+        Syndicate:   "Standing built on structures doesn't decay with the news cycle. Guild has been building this position for years. The ledger just makes it legible.",
+    },
+    design_note  = "Ceiling Standing card. N = count of districts in {target ∪ adjacent} where Guild holds a structure block; max 9 (target + 8 adjacencies for Research Institute, per Art 01 §6.5 adjacency map). Success = +N PS. Failcrit = −N PS: symmetric, bet big/fail big. Successcrit adds +1 district.native per qualifying district — heterogeneous resource harvest; each district pays its own native type. Cost: 3C (show of strength) + 1 Capital (broadcast) + 1 Exposure (public act) + 1 Mandate (record). Distinct from GUI.PA.4 Civic Unveiling (Automatic, single-district, shallow PS ceiling): PA.4 is floor; City Ledger is d100 ceiling gamble. N-lock at Beat 0: ARBITER counts and records qualifying districts before Beat 3–4 resolution.",
+    arbiter_note = "Phase B: Guild declares City Ledger and names target district publicly. Beat 0: identify qualifying set = {target district} + {all adjacent districts}; count Guild structure blocks across that set = N. If N = 0, PA voided, cost returned. Record N. Beat 4: d100 vs 40. Success: Guild +N PS. Successcrit (01–05): Guild +N PS AND for each qualifying district yield +1 of that district's native resource to Guild. Fail: no effect (cost sunk). Failcrit (96–00): Guild −N PS.",
+)
+```
+
+---
+
+### GUI.PA.10 — JOINT DEVELOPMENT
+[↑ Public Acts](#guild-public-acts)
+
+#### Design Rationale
+Cooperative PA. Cost: 2 Capacity + 1 native resource of the target faction's type — both paid by the Guild submitter, who must have acquired the target faction's native resource beforehand (through trade or prior economy cards). This is a standard cost structure; the target type specification narrows what's acceptable but imposes no procedural novelty. Both factions must already be Present in the district, and neither may hold a structure block there yet (first-infrastructure frame: both parties are establishing, not entrenching).
+
+Success: target faction gains a structure block (Guild builds FOR the ally). Guild receives the larger PS reward (+2) as the acting faction bearing the roll risk; target receives +1 as participant. Successcrit adds Guild's own structure block in the same district — both factions become infrastructure-holders simultaneously — plus 1 Presence Token for Guild (crew who stayed to anchor the work). Failcrit destabilizes both positions: −1 Presence Token each, reflecting that a failed public coordination is worse than no coordination.
+
+Portfolio position: Doctrine-consistent — Guild's maximum aspiration is demonstrating collective human capacity, not self-interest. The card's asymmetric PS reward (Guild leads) reflects risk differential, not hierarchy.
+
+#### Card Story
+The Guild moves its crews into a district where another faction already has a foothold, not to compete but to build alongside them. The foundation goes down; both faction colors appear in the same block. New Meridian doesn't miss it. Neither does the Chronicle.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Guild crews building infrastructure for an ally in a jointly-held district; Guild doctrine-coherent — demonstrated collective capacity over self-interest | Art 00 §7 |
+| Voice fit | ⚠ | Perspectives pending | Art 00 §7 |
+| Doctrine alignment | ✓ | Cooperative build is Guild's doctrinal ceiling aspiration; bilateral cost + bilateral PS reward encode mutual commitment; portrait submitter=+1 for Guild | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Add / StructureBlock — primary effect is structure block placement for target faction | Art 04b §4 |
+| Balance | ⚠ | Successcrit dual structure + presence token is significant payoff; cost gate (Guild must hold target faction's native resource type) is an implicit throttle — playtesting required | Art 02 §6–§7 |
+| Effect duration | ✓ | Structure block placements Permanent (board state); PS shifts Immediate | Art 04 §5 P19 |
+| Persistence | ✓ | Card persistence = Immediate; structure blocks persist as board state per GR 8.2 | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None | — |
+| Portrait validity | ✓ | Guild submitter=+1; submitter-bounded; public cooperative act is doctrine-consistent | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named; both factions' presence_token.count evaluated at declared district | Art 01 §6 |
+| Supported by components | ✓ | Structure Block (GR 8.2 — max 1 per faction per district; restriction ensures 0 for both before play); Presence Token; Public Standing track | Art 02 §7–§8 |
+| Supported by game procedure | ✓ | All resources submitted by Guild (submitter) at §9.2; standard Beat 4 payment procedure applies | Art 03 §9.2, §9.4.3 |
+| Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above | Art 04 §5 P26 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | | |
+
+```python
+GUI.PA.10 = Card(
+    id      = "GUI.PA.10",  version = "v0.1",
+    name    = "Joint Development",
+    tagline = "Guild and an allied faction commit jointly to structural development in a shared district.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
+
+    layer    = Territory,  function = Add,  subject = StructureBlock,
+
+    beat            = 4,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = {Ring3: +10, Ring2: 0, Ring1: -10, Ring0: -15},
+    doctrine_mod    = {Neighbor: +15, Opposed: -15},
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = district.named,
+    target_faction  = faction.named,
+    target_object   = None,
+    declared_params = None,
+
+    affinity    = None,
+    restriction = (faction(Guild).structure_block.count(district(target)) == 0
+               and faction(target).structure_block.count(district(target)) == 0
+               and faction(Guild).presence_token.count(district(target)) > 0
+               and faction(target).presence_token.count(district(target)) > 0),
+    cost = resource.faction(Guild).capacity * 2
+         + resource.faction(target).native * 1,
+    boost = None,
+
+    success = [faction(target).structure_block.add(district(target), 1),
+               faction(Guild).standing.add(2),
+               faction(target).standing.add(1)],
+
+    successcrit = [faction(Guild).structure_block.add(district(target), 1),
+                   faction(Guild).presence_token.add(district(target), 1)],
+
+    fail     = None,
+
+    failcrit = [faction(Guild).presence_token.remove(district(target), 1),
+                faction(target).presence_token.remove(district(target), 1)],
+
+    portrait = {Guild: PortraitEntry(submitter=+1)},
+
+    ps_framing = "Public cooperation between Guild and allied faction is visible to New Meridian; Guild leads (+2 PS) as acting faction bearing roll risk; target faction participates (+1 PS).",
+
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Restriction (both Present, neither has structure) frames this as a first-infrastructure moment — neither party is entrenching, both are establishing. Success: target gets structure block. Successcrit: both factions get structure blocks simultaneously + Guild gains 1 Presence Token. Failcrit: both lose 1 Presence Token — failed public coordination is worse than no coordination. PS asymmetry (Guild +2, target +1) reflects risk differential, not hierarchy.",
+    arbiter_note = None,
+)
+```
+
+---
 
 ### GUI.MOD.1 — NIGHT SHIFT CREW *(stub)*
 
@@ -7919,7 +8319,7 @@ DIR.MOD.5 = Card(
 
 ### DIR.MOD.6 — STATE OF EMERGENCY *(stub)*
 
-*Creates a standing global difficulty constraint triggered by a World Event.*
+*Creates a standing global difficulty constraint triggered by a World Event. ⚠ `world_event.played` trigger depends on undesigned Broadcast Card taxonomy — see XA-54.*
 
 ```python
 DIR.MOD.6 = Card(
@@ -7929,11 +8329,13 @@ DIR.MOD.6 = Card(
     type    = ModReactCard,  faction = Directorate,
     layer   = None,  function = None,  subject = None,
 
-    trigger         = world_event.revealed,
+    trigger         = world_event.played,
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
     value_rating    = None,
+
+    persistence     = Seasonal,
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -7945,14 +8347,14 @@ DIR.MOD.6 = Card(
     restriction     = None,
     cost            = resource.faction(Directorate).mandate * 1 + resource.faction(Directorate).exposure * 1,
 
-    success     = "Card remains in play (persistence=Quarter) on Directorate FRG. While in play, any opponent Public Act targeting a district where Directorate influence is >= Established suffers boost=-10.",
+    success     = "Card remains in play (persistence=Seasonal) on Directorate FRG. While in play, any opponent Public Act targeting a district where Directorate influence is >= Established suffers boost=-10.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
     narrative    = None,
     perspectives = None,
-    design_note  = "Environmental shaping. Triggers when the Arbiter reveals a World Event. The ModReactCard itself is placed face-up on the Directorate's Faction Resolution Grid as a standing condition for the rest of the Quarter. It imposes a -10 difficulty penalty on any opponent PA that targets a district where Directorate is Established or higher. Solves the 'world event extension' gap by letting Directorate piggyback on the World Event phase to declare their own global environmental constraint. Legally escapes Art 00a §9.1 because it modifies action difficulty (9.1a), not resource income Cost reasoning: Exposure represents the widespread public broadcast necessary to enforce an emergency lockdown.",
+    design_note  = "Environmental shaping. Triggers when the Arbiter reveals a World Event. The ModReactCard itself is placed face-up on the Directorate's Faction Resolution Grid as a standing condition for the rest of the Quarter. It imposes a -10 difficulty penalty on any opponent PA that targets a district where Directorate is Established or higher. Solves the 'world event extension' gap by letting Directorate piggyback on the World Event phase to declare their own global environmental constraint. Legally escapes Art 00a §9.1 because it modifies action difficulty (9.1a), not resource income Cost reasoning: Exposure represents the widespread public broadcast necessary to enforce an emergency lockdown. ⚠ XA-54: 'world_event.played' assumes 'World Event' is either a defined Broadcast Card subtype or a synonym for all Broadcast Cards — Broadcast Card design is open; trigger frequency depends entirely on how many World Events exist in the Broadcast Deck.",
     arbiter_note = None,
 )
 ```
@@ -8063,6 +8465,7 @@ DIR.MOD.8 = Card(
 | [NET.CA.6](#network-sacrifice) | Sacrifice |
 | [—](#network-weaponized-transparency) | Weaponized Transparency (Retired S70) |
 | [NET.CA.7](#netca7--ground-signal) | Ground Signal |
+| [NET.CA.8](#netca8--fake-news) | Fake News |
 
 ### NET.CA.1 — LEAK
 [↑ Covert Operations](#network-covert-operations)
@@ -8585,6 +8988,46 @@ NET.CA.7 = Card(
     perspectives = {Network: "We're not running outreach. We're making our existing presence legible to people who've been ignoring it."},
     design_note  = "Restriction: Network IL in target district ≤ Established (Dominant excluded — at Dominant, the street already knows). Successcrit delta: +1 chip in target district + +1 PS additional on top of success's +1 PS (total on successcrit: +2 PS, +1 chip placed).",
     arbiter_note = "Beat 3: Network IL in target district must be ≤ Established (Dominant: card invalid, do not resolve). On success: +1 PS to Network. On successcrit: additionally place 1 Network chip in target district AND +1 PS (total: +2 PS, +1 chip placed). Failcrit: −1 PS.",
+)
+```
+
+---
+
+### NET.CA.8 — FAKE NEWS *(stub)*
+
+*S130. Network plants false intelligence to redirect an opponent's DeploymentMarker to a useless district. 04-n134.*
+
+```python
+NET.CA.8 = Card(
+    id      = "NET.CA.8",  card_id="NET.CA.8",  version="v0.1",
+    name    = "Fake News",
+    tagline = "Plant a false story. Watch where the marker goes.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
+    layer   = Territory,  function = Move,  subject = DeploymentMarker,
+
+    beat    = 2,
+    resolution = d100,  threshold = 50,
+    persistence = Immediate,
+    persistence_condition = None,  persistence_effect = None,
+
+    target_district = None,  # source district declared in TargetProfile target_district field
+    target_faction  = faction(named_opponent),
+    target_object   = DeploymentMarker,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(Network).exposure * 1 + resource.faction(Network).findings * 1,
+
+    success = [
+        arbiter.move(DeploymentMarker(faction=target_faction, district=target_profile.target_district),
+                     to=target_profile.freeform_destination),
+        arbiter.flip(DeploymentMarker(faction=target_faction), status=Unconverted),
+    ],
+    successcrit = None,  fail = None,  failcrit = None,
+
+    portrait    = {Network: PortraitEntry(submitter=+1)},
+    narrative   = None,  perspectives = None,
+    design_note = "Network fabricates a story pointing to a destination district with no strategic value. The target faction's DeploymentMarker follows — their deployment is wasted. TargetProfile: target_faction and target_district identify the marker and its current location; freeform field specifies destination district. ARBITER executes the move and flips marker to Unconverted status. Chain play: Beat 2 covert move → same Quarter Leak or Live Coverage exposing the displaced position.",
+    arbiter_note = "Read TargetProfile: target_faction and target_district identify whose marker and from which district. Freeform field specifies destination. Beat 2: move marker from source to destination; flip to Unconverted face. Announce marker has moved — do not announce acting faction. Fail: no effect, cost spent.",
 )
 ```
 
@@ -9429,6 +9872,92 @@ NET.MOD.12 = Card(
 )
 ```
 
+---
+
+### NET.MOD.13 — PRESS CREDENTIALS *(stub)*
+
+*S130. Protect a Network PA and all attached components from targeting until Beat 4 resolution. 04-n128.*
+
+```python
+NET.MOD.13 = Card(
+    id      = "NET.MOD.13",  card_id="NET.MOD.13",  version="v0.1",
+    name    = "Press Credentials",
+    tagline = "The broadcast is live. No one pulls a credentialed signal off the air.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_act.placed_on_frg(faction=Network),
+    beat            = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(Network).exposure * 1 + resource.faction(Network).findings * 1 + resource.faction(Network).mandate * 1,
+
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    success     = "PA and all attached components (TargetProfile, submitted resources, ModActionCard) are immune from any targeting until the PA resolves at Beat 4.",
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Network: PortraitEntry(submitter=+1)},
+    narrative    = None,  perspectives = None,
+    design_note  = "Asset — human/institutional. Fires at §9.2 when Network places any PA on FRG. Effect: PA + all attached components immune from targeting until Beat 4 resolution. Ceiling-power card. Cost: Exposure×1 (signal is live) + Findings×1 (threat intelligence on who might try to jam it) + Mandate×1 (institutional authorization making interference legally indefensible). Three cross-resource cost requires trade relationships with Ghost and Directorate. 04-n128.",
+    arbiter_note = "Network places PA on FRG at §9.2 and plays Press Credentials. Collect Exposure×1, Findings×1, Mandate×1. Record the protected PA. Until that PA resolves at Beat 4: no card or procedure may target the PA, its TargetProfile, its submitted resources, or any attached ModActionCard. On PA resolution: effect clears.",
+)
+```
+
+---
+
+### NET.MOD.14 — SUBSCRIBER NETWORK *(stub)*
+
+*S130. Hand-growth React on Network PS gain. Completes the standing-interaction trilogy (MOD.2/MOD.3/MOD.14).*
+
+```python
+NET.MOD.14 = Card(
+    id      = "NET.MOD.14",  card_id="NET.MOD.14",  version="v0.1",
+    name    = "Subscriber Network",
+    tagline = "The audience grows. So does the signal.",
+    type    = ModReactCard,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = standing_marker.increased(faction=Network),
+    beat            = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    persistence = Immediate,
+    persistence_condition = None,  persistence_effect = None,
+
+    success     = arbiter.draw_modifier(faction=Network, count=2),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,  perspectives = None,
+    design_note  = "Asset — business. Hand-growth React on Network PS gain. When Network's standing increases, the subscriber base grows: Network draws 2 modifier cards. Completes the standing-interaction trilogy: MOD.2 Troll Farm (attacks when opponent gains PS), MOD.3 Backup Server Racks (recovers when Network loses PS), MOD.14 Subscriber Network (compounds when Network gains PS). Free cost — standing growth is Network's reward; this card amplifies without economic friction. Draw 2 (not 1) makes this a meaningful engine card across multiple triggers per Quarter.",
+    arbiter_note = None,
+)
+```
+
+---
 
 ## Syndicate
 [↑ 7. Card Specifications](#7-card-specifications)
@@ -9881,9 +10410,8 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 
 #### Outstanding Issues
 
-- **Grant Deed tripwire react window:** "immediately after structure block placed, before any other board state change" — this react class is not yet in Art 03. Tracks under 04-n27.
-- **Grant Deed component registration:** New component; needs Art 02 entry (SCIF-pattern: blank card stored in ARBITER tableau, fields: `district | owner`). Tracks under 04-n26.
-- **Governing Rule 8.2 interaction on Grant Deed fire:** If Syndicate already holds a structure block in the named district when the deed fires, step 3 (place Syndicate structure) is blocked by Governing Rule 8.2. Steps 1–2 still execute. No card-level restriction needed — Governing Rule 8.2 governs.
+- **Grant Deed trigger vocabulary (04-n27):** `structure_block.placed(district=deed.district)` is a district-scoped trigger not yet in confirmed TriggerExpr vocabulary. Extension needed in Art 04 §6.3.
+- **Grant Deed component registration (04-n26):** New component; Art 02 entry pending. Physical form: blank card; fill-in fields: `district | holder`. Fire effect: +1 Presence Token + 1 Structure Block for deed holder (GD-01 — Art 04 §12b.2). GR 8.2 governs structure placement.
 
 #### Status
 
@@ -9919,8 +10447,8 @@ LandTitle = Card(
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
     narrative   = "The deed was filed before the foundation was poured. That is how the Syndicate prefers it.",
     perspectives = {Syndicate: "We don't need to be there. We just need to be on the paperwork."},
-    design_note  = "Delivers Grant Deed component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire React played from hand when any faction places a structure block in the named district. No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds permitted; cost-governed. Governing Rule 8.2 governs step 3 of Grant Deed effect Cost reasoning: Exposure forces the targeted individuals out of the shadows, making the extraction inevitable.",
-    arbiter_note = "Take 1 blank Grant Deed from ARBITER tableau. Write target district name. Place in submitting faction's Dispatch Case. Grant Deed moves to Syndicate hand at Debrief.",
+    design_note  = "Delivers Grant Deed (GD-01) component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire ModReactCard held in faction hand; fires when any faction places a structure block in the named district. Fire effect: +1 Presence Token + 1 Structure Block for deed holder in named district. GR 8.2 governs structure placement (blocked if holder already has structure there; Presence Token still placed). No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds on same district permitted; cost-governed.",
+    arbiter_note = "Take 1 blank Grant Deed (GD-01) from ARBITER tableau. Write target district name and Syndicate as holder. Place in submitting faction's Dispatch Case. Grant Deed moves to hand at Debrief.",
 )
 ```
 
@@ -10489,6 +11017,57 @@ SYN.CA.11 = Card(
 
 ---
 
+### SYN.CA.12 — BOILERPLATE *(stub)*
+[↑ Covert Operations](#syndicate-covert-operations)
+
+*S130. Syndicate acquires a blank Accord form covertly — outside STD.CA.9 channels. Paired with SYN.MOD.11 Signature on File to produce a non-negotiable unilateral Accord. Closes 04-n125 (Option C: formation capability).*
+
+```python
+SYN.CA.12 = Card(
+    card_id      = "SYN.CA.12",
+    version      = "v0.1",
+    name         = "Boilerplate",
+    tagline      = "The terms were settled before you sat down.",
+    type         = CovertOperation,
+    subtype      = FactionSpecific,
+    faction      = Syndicate,
+
+    layer        = Economy,
+    function     = Add,
+    subject      = AccordForm,
+
+    beat         = 3,
+    resolution   = Automatic,
+    threshold    = None,
+    ring_mod     = None,
+    doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = Capital(1) + Mandate(1),
+
+    success     = arbiter.deliver(AccordForm(state=blank), recipient=faction(Syndicate).case),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+
+    persistence           = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    portrait = {Syndicate: PortraitEntry(flat=+1)},
+
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Covert form acquisition — distinct from STD.CA.9 which routes through public Accord channels. Syndicate obtains a blank form privately; fills it in and deploys at Debrief on their own terms, without signaling intent beforehand. Cross-resource cost: Capital×1 (Syndicate native — the commercial motivation) + Mandate×1 (institutional access required to obtain the form — Directorate's procedural domain). Pairs with SYN.MOD.11 Signature on File: Boilerplate provides the form; Signature on File forces acceptance. Closes 04-n125 parasitic posture gap — Syndicate now has Accord-formation capability.",
+    arbiter_note = "On success: retrieve one blank Accord form from supply and place it in Syndicate's dispatch case. Syndicate may fill it in and table it at Debrief (Art 06 §9). Covert — do not announce delivery.",
+)
+```
 
 ---
 
@@ -10972,7 +11551,7 @@ SYN.MOD.4 = Card(
     type    = ModReactCard,  faction = Syndicate,
     layer   = None,  function = None,  subject = None,
 
-    trigger         = public_standing.shifted(direction=positive, faction=opponent),
+    trigger         = standing_marker.increased(faction=opponent),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -11014,7 +11593,7 @@ SYN.MOD.5 = Card(
     type    = ModReactCard,  faction = Syndicate,
     layer   = None,  function = None,  subject = None,
 
-    trigger         = public_standing.shifted(direction=negative, faction=opponent),
+    trigger         = standing_marker.decreased(faction=opponent),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -11062,6 +11641,8 @@ SYN.MOD.6 = Card(
     ring_origin     = None,
     value_rating    = None,
 
+    persistence     = Seasonal,
+
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
 
@@ -11098,7 +11679,7 @@ SYN.MOD.7 = Card(
     type    = ModReactCard,  faction = Syndicate,
     layer   = None,  function = None,  subject = None,
 
-    trigger         = covert_operation.resolved(layer=Information, function=Corrupt, subject=AccordAgreement),
+    trigger         = accord.corrupted,
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -11165,6 +11746,130 @@ SYN.MOD.8 = Card(
     perspectives = None,
     design_note  = "Opportunistic expansion. When a structure falls, Syndicate swoops in, paying 2 Capital to immediately place both a presence chip and a structure in the newly cleared real estate. Extremely powerful territorial swing funded entirely by Capital Cost reasoning: Exposure ensures the takeover is recognized publicly, legitimizing the new ownership immediately.",
     arbiter_note = None,
+)
+```
+
+### SYN.MOD.9 — GOODWILL *(stub)*
+
+*S130. ModReactCard — Standing floor. Fires when Syndicate PS decreases; Capital×1 negates the drop. Counters SYN.CA.7 portrait bleed. 04-n131 design decision resolved.*
+
+```python
+SYN.MOD.9 = Card(
+    id      = "SYN.MOD.9",  card_id="SYN.MOD.9",  version="v0.1",
+    name    = "Goodwill",
+    tagline = "Reputation is a line item. We budget for it accordingly.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = standing_marker.decreased(Syndicate),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(Syndicate).capital * N,  # N declared at trigger (min 1)
+
+    success     = faction(Syndicate).standing += N,
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card does not discard — remains active for further triggers. Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger. 04-n131 design decision → PS floor card selected.",
+    arbiter_note = "On trigger (Syndicate's standing marker moved down for any reason): Syndicate declares N (min 1) and pays Capital×N. Apply faction(Syndicate).standing += N. If Capital unavailable or Syndicate declines: decrease stands. Card remains active for further triggers.",
+)
+```
+
+---
+
+### SYN.MOD.10 — LOBBY *(stub)*
+
+*S130. ModReactCard — Resolution layer gap. Syndicate spends Capital to apply −15 modifier token to a named faction's PA at §9.2. 04-n129 design decision resolved.*
+
+```python
+SYN.MOD.10 = Card(
+    id      = "SYN.MOD.10",  card_id="SYN.MOD.10",  version="v0.1",
+    name    = "Lobby",
+    tagline = "We don't oppose your agenda. We make it expensive to execute.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = public_act.placed_on_frg(faction(target)),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = faction(named_opponent),
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(Syndicate).capital * 1,
+
+    success     = arbiter.apply_modifier(op=trigger.card, modifier=-15),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Resolution layer gap fill (04-n129). Fills 'money-at-the-table' narrative: Syndicate pays Capital to suppress a named faction's PA threshold at the moment of declaration. ARBITER places −15 modifier token on target PA's Beat 4 resolution row. Named target faction declared when card is played/assigned (before §9.2). Single-fire Immediate — discards after triggering. Outstanding: (1) Trigger pattern public_act.placed_on_frg(faction(target)) — existing confirmed examples are self-targeting (Network's own PAs); confirm opponent-targeting variant is procedurally valid. (2) Named faction pre-declaration timing — confirm ARBITER can track the target faction designation without revealing Syndicate's intent.",
+    arbiter_note = "On trigger (named target faction places PA at §9.2): Syndicate pays Capital×1. Place modifier token (−15) on target PA's Beat 4 resolution row. Announce modifier publicly (target PA threshold is reduced by 15; acting faction not identified). Card discards after firing.",
+)
+```
+
+---
+
+### SYN.MOD.11 — SIGNATURE ON FILE *(stub)*
+
+*S130. ModReactCard — fires when Accord draft is tabled. Syndicate forges party B's acceptance; Accord becomes binding without consent. Ceiling-power card. Paired with SYN.CA.12 Boilerplate for non-negotiable unilateral Accord combo.*
+
+```python
+SYN.MOD.11 = Card(
+    id      = "SYN.MOD.11",  card_id="SYN.MOD.11",  version="v0.1",
+    name    = "Signature on File",
+    tagline = "We already have what we need. The form is a formality.",
+    type    = ModReactCard,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = accord.tabled,  # PENDING: confirm trigger expression — fires at draft tabling stage (before party signatures), not accord.placed (which fires when Accord is already active)
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = faction(accord.party_b),
+    target_object   = AccordDraft(state=tabled),
+    affinity        = None,
+    restriction     = IntelToken(keyed_to=faction(accord.party_b)) in faction(Syndicate).hand,
+    cost            = Capital(2) + Findings(1) + Mandate(1) + IntelToken(keyed_to=faction(accord.party_b)),
+
+    success     = arbiter.mark_acceptance(accord=trigger.accord, party=faction(accord.party_b), state=signed),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Syndicate: PortraitEntry(flat=+2)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Ceiling-power card — the most expensive Syndicate Accord card. Cost rationale: Capital×2 (commercial commitment to force the agreement); Findings×1 (due diligence on party B — they know enough to make this stick); Mandate×1 (institutional authority that makes the forced signing legally enforceable); IntelToken(keyed to party_b) (the specific leverage that makes party B's resistance futile — consumed on play). Effect: ARBITER marks party B's acceptance on the Accord form as signed. Accord becomes active immediately without party B's participation. Party B is notified privately at enforcement, not at tabling. Outstanding: (1) confirm trigger expression accord.tabled — needs Art 06 timing confirmation; must fire at draft placement stage before normal acceptance window opens. (2) Define 'party_b' — the second named party on the Accord form as drafted by Syndicate (or whichever party has not signed). (3) Portrait magnitude: flat=+2 reflects scale of action — confirm against portrait principles. Combo with SYN.CA.12 Boilerplate: Syndicate writes and forces through a unilateral Accord in one session.",
+    arbiter_note = "On trigger (Accord draft is tabled): confirm Syndicate holds IntelToken keyed to party_b and can pay Capital×2 + Findings×1 + Mandate×1. If valid: consume the IntelToken and all resource cost; mark party_b's acceptance field on the Accord form as signed. Notify party_b privately. Accord proceeds to active state as if party_b accepted voluntarily. Announce publicly only that the Accord has become active — not the mechanism. Card discards after firing.",
 )
 ```
 
@@ -11293,6 +11998,7 @@ SYN.MOD.8 = Card(
 | SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | Presence Token | Add |
 | SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
 | SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
+| SYN.CA.12 | Boilerplate | 📝 | Economy | Covert | Add | Accord Form | Add |
 | SYN.MOD.1 | The Fixer | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.2 | Shell Corporation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.3 | Offshore Slush Fund | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
@@ -11301,6 +12007,9 @@ SYN.MOD.8 = Card(
 | SYN.MOD.6 | Bounty Contract | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.7 | Renegotiation Fee | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.8 | Hostile Takeover | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.9 | Goodwill | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.10 | Lobby | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.11 | Signature on File | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
 | SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
 | SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
@@ -11589,6 +12298,23 @@ Overture = Card(
 
 ---
 
+### 11.9 ModReactCard Design Checklist
+
+ModReactCards introduce design dimensions not covered by the standard CA/PA checklist (§5). Use this checklist during any design review pass on ModReactCard stubs. Items below are the gate criteria for the 09-06 ModReactCard design pass.
+
+| Criterion | Design question | Guidance |
+|-----------|----------------|---------|
+| **Trigger observability** | Is the trigger a publicly observable board state change per §5 P5? | Triggers must reference something visible to all players. Private information events (covert operation contents, ARBITER-held state) are not valid triggers. See §6.3 confirmed TriggerExpr vocabulary. |
+| **Trigger frequency** | How often does this trigger fire in a typical Quarter? | Underfire (condition rarely met) = dead weight. Overfire (every round) = oppressive or trivial. Document expected frequency in `design_note`. |
+| **Firing window** | Does this card's trigger fire at the same time as other React cards? Is priority order needed? | Multiple React cards with identical or simultaneous triggers compete. If racing is possible, confirm resolution order or note as a design gap. |
+| **Automatic vs. d100** | Is `resolution = Automatic` justified? | Automatic is appropriate when the trigger is precisely defined and the effect is bounded. d100 is appropriate when outcome should depend on execution quality or add tension. |
+| **Persistence** | Is `persistence = Immediate` (fire-and-consume) or `persistence = Seasonal` (remains on FRG until Quarter end) correct? | Seasonal creates a standing environmental constraint across multiple subsequent actions. Use when the card represents an ongoing condition, not a single-event response. |
+| **Stack behavior** | Can multiple copies fire on the same trigger event in the same Quarter? | If a faction holds two copies and the trigger fires once, do both fire? Document the answer in `design_note`; add a restriction clause if stacking is undesirable. |
+| **Ring constraint** | Is `ring_constraint` set correctly relative to trigger frequency and effect power? | Ring-constrained React cards fire only when the trigger occurs in the specified ring. If trigger frequency is already low, a ring constraint may make the card unplayable. |
+| **Portrait** | What PS signals are appropriate? | React cards fire without declaration — the acting faction does not visibly "do" anything at Phase B. PS shifts (if any) should be legible as automatic environmental response, not player initiative. |
+
+---
+
 ## 12. Rules & Constraints
 
 ## 12a. Debrief Action Cards
@@ -11625,6 +12351,93 @@ Produced by Ghost SCIF card on successful Beat 3 resolution (see Art 03 §7.2 Gh
 3. No ring-eligibility check applies to these draws.
 4. Discard the DA-01 slip after use.
 5. DA-01 slips remaining in the Dispatch Case at Phase 21 are discarded without effect.
+
+---
+
+## 12b. Grant Deeds
+
+ARBITER-issued React cards placed in a faction's Dispatch Case during covert operation resolution. Not player-submitted; not drawn from a deck. Held in faction hand after Debrief delivery. Fire as a ModReactCard — trigger is a fill-in-the-blank district field written by ARBITER on the physical card at generation time. Fire effect applies to the holding faction regardless of which CA generated the deed. Multiple Grant Deeds may be held simultaneously; one fires per trigger event.
+
+Physical form: blank card with printed trigger text and effect text; two fill-in fields completed by ARBITER at generation. Stored blank in ARBITER tableau; ARBITER completes and routes at Beat 3 or Beat 4 of the generating CA's resolution.
+
+---
+
+### 12b.1 Card Identifier: GD-xx
+
+Grant Deeds use the **GD-xx** identifier prefix, assigned sequentially as subtypes are defined.
+
+---
+
+### 12b.2 GD-01 — Grant Deed
+
+Produced by any CA that delivers a Grant Deed (currently SYN.CA.8 Land Title and GUI.CA.10 Development Order). ARBITER completes and places in the acting faction's Dispatch Case at resolution; moves to holding faction's hand at Debrief.
+
+**Fill-in fields (ARBITER completes at generation):**
+
+| Field | Description |
+|-------|-------------|
+| `district` | Named district from the generating CA's target declaration |
+| `holder` | Acting faction from the generating CA |
+
+**Trigger:** `structure_block.placed(district=deed.district)` — fires when any faction places a structure block in the named district. Trigger is evaluated against the district name written on the card; no ARBITER monitoring required — deed holder self-polices and announces React.
+
+⚠ **Outstanding issue (04-n27 / trigger vocab):** `structure_block.placed(district=X)` is a district-scoped trigger form not yet in the confirmed TriggerExpr vocabulary (current vocabulary is ring-scoped: `structure_block.placed(faction=X, ring=Z)`). District-scoped extension needed in Art 04 §6.3 and design_reference_card_system.md.
+
+**Effect on fire:**
+1. Deed holder announces React; presents Grant Deed card; names district.
+2. Place 1 Presence Token for deed holder in `deed.district`.
+3. Place 1 Structure Block for deed holder in `deed.district` (Governing Rule 8.2 governs — if holder already has a structure block there, step 3 is skipped; step 2 still executes).
+4. Discard Grant Deed.
+
+**Component registration:** New component — Art 02 entry pending 04-n26.
+
+```python
+GD01 = Card(
+    id      = "GD-01",  version = "v0.1",
+    name    = "Grant Deed",
+    tagline = "A registered claim. When someone else breaks ground, the deed fires.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+
+    layer    = Territory,  function = Add,  subject = StructureBlock,
+
+    beat            = None,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = structure_block.placed(district=deed.district),
+    resolution_type = "Transactional",
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = deed.district,
+    target_faction  = None,
+    target_object   = None,
+    declared_params = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = None,
+    boost       = None,
+
+    success = [faction(holding).presence_token.add(deed.district, 1),
+               faction(holding).structure_block.add(deed.district, 1)],
+
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+
+    portrait    = None,
+    ps_framing  = None,
+
+    narrative    = None,
+    perspectives = None,
+    design_note  = "ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order.",
+    arbiter_note = "At generating CA resolution: take 1 blank Grant Deed from ARBITER tableau; write target district name in 'district' field and acting faction in 'holder' field; place in acting faction's Dispatch Case. Card moves to holder's hand at Debrief. No ongoing ARBITER monitoring required — holder self-polices and announces React when trigger fires.",
+)
+```
 
 ---
 
@@ -11790,4 +12603,4 @@ Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacit
 
 ---
 
-*End of Artifact 04 — Card System v0.9.52*
+*End of Artifact 04 — Card System v0.9.59*

@@ -34,8 +34,8 @@
   <g fill="#3a6ea8" font-size="12" letter-spacing="2" filter="url(#ui-glow)">
     <text x="35" y="38">NEW MERIDIAN // CIVIC GRID</text>
     <text x="35" y="56" font-size="10" fill="#6a9978">STATUS: LIVE ANALYTICS (SAT-LINK ACTIVE)</text>
-    <text x="1165" y="38" text-anchor="end" fill="#c9a84c">POPULATION: ~800,000</text>
-    <text x="1165" y="56" text-anchor="end" font-size="10" fill="#a0aab5">NODE EST: +31 YRS</text>
+    <text x="1000" y="38" text-anchor="end" fill="#c9a84c">POPULATION: ~800,000</text>
+    <text x="1000" y="56" text-anchor="end" font-size="10" fill="#a0aab5">NODE EST: +31 YRS</text>
   </g>
   
   <path d="M 30 75 L 1170 75" stroke="#3a6ea8" stroke-width="1" opacity="0.6" />

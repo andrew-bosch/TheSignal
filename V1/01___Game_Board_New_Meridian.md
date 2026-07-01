@@ -1,8 +1,8 @@
 # 01 — Game Board: New Meridian
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.2 — S90 (§4 Narrative Function and §6 Physical Forms migrated to Art 02; geography/zone-only). S114 (agy): DB-driven geography metadata blocks added, procedural content moved to Whiteboard — pending review and re-sign-off.  
-**Status:** 🔄 Needs Re-Sign-Off  
+**Version:** 2.3 — S90 (§4 Narrative Function and §6 Physical Forms migrated to Art 02; geography/zone-only). S114 (agy): DB-driven geography metadata blocks added, procedural content moved to Whiteboard. S130 (agy): §6.5 District Adjacency Map rewritten (Ring+Address schema); NM_Overlay.svg labels updated (ADD: R.P format); district_adjacency DB migrated — FK approach via game_zones (L238). Pending review and re-sign-off.  
+**Status:** ✅ Signed Off — v2.3 S130  
 **Depends on:** 00 — Factions, World & Narrative Context  
 **Supersedes:** setup_guide (board sections), board_layout (visual reference only)
 
@@ -11,15 +11,17 @@
 ## 1. Overview
 
 ### Problem This Document Solves
-The game operates across two distinct physical spaces: the shared table where all public information is displayed, and each faction's private zone where Terminal contents remain concealed. Without a fully specified layout for both, no other artifact can define where actions target, where resources generate, or how adjacency is calculated. This document defines the complete physical environment — every table zone and every district — in sufficient detail that visual design and database configuration can proceed without ambiguity.
+The game board physically models the in-universe Council room (the ARBITER's seat, the Faction Terminals, and the central city projection). Without a meticulously defined layout bridging these spaces, no other artifact can accurately define where actions target, where resources generate, or how adjacency is calculated. The requirement is a single, unambiguous source of truth for all physical geometries and zone hierarchies on the table.
 
 ### Deliverable
-A complete specification of the physical game environment: the table zone structure (ARBITER area, faction areas, central play surface, and supply) and the district map (Ring 0 to 3). All dynamic component placement mapping is handled by [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md) and all initialization states reside in [03-init___Game_Initialization.md](file:///home/abosch/Projects/TheSignal/V1/03-init___Game_Initialization.md).
+A complete, normalized specification of the physical game environment. This includes structural layout wireframes (SVGs) and database-backed metadata (`the_signal_db`) mapping out every physical table zone (ARBITER area, faction areas, central play surface, and supply) and the entire concentric district map (Ring 0 to 3).
 
 ### Success Criteria
-- Any player can inspect the board layout and map boundaries to calculate adjacency relationships.
-- The board's visual organization reflects the narrative geography of New Meridian — the Chorus Node at the top, the city spreading outward and downward.
-- A visual designer can produce a complete layout wireframe from this document alone without ambiguity.
+- Provides structural SVGs and normalized database schemas that serve as the unquestionable source of truth for physical component production.
+- Any player can inspect the board layout and map boundaries to natively calculate adjacency relationships.
+- The physical tabletop layout actively enforces the diegetic immersion of the fictional room, mapping table seats to Council seats.
+
+*(Status: These criteria have been successfully realized within this artifact).*
 
 ---
 
@@ -36,12 +38,8 @@ A complete specification of the physical game environment: the table zone struct
    - [§6.3 Detailed Zone Specifications](#63-detailed-zone-specifications)
    - [§6.4 Detailed District Specifications](#64-detailed-district-specifications)
    - [§6.5 District Adjacency Map](#65-district-adjacency-map)
-7. [Rules & Constraints](#7-rules-constraints)
-8. [Starting Configuration](#8-starting-configuration)
-9. [Faction Player Tableau](#9-faction-player-tableau)
-10. [ARBITER Tableau](#10-arbiter-tableau)
-11. [Special Conditions & Gameplay Impacts](#11-special-conditions-gameplay-impacts)
-12. [Examples & Exceptions](#12-examples-exceptions)
+7. [Faction Player Areas](#7-faction-player-areas)
+8. [ARBITER Area](#8-arbiter-area)
 
 ---
 
@@ -61,39 +59,67 @@ The board serves four simultaneous functions:
 
 ## 4. Narrative Function
 
-The physical zones of New Meridian represent specific facilities, administrative regions, and networks that the factions contend for.
+The physical game space *is* the room where the Table sits. The tabletop layout physically models MIRROR — the human-built architectural interface that renders New Meridian as legible terrain.
 
-*Component narratives — District Tiles, Influence Level Marker, Tension Markers, Session Timeline, Initiative Strip, Chorus Activity Track, Accord Documents, Situation Reports, Reservoir, Backlog, Dispatch Tokens, Public Standing Track, Chorus Portrait Track — are in [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md) §4.*
+When players sit down to play, they are assuming their exact positions in the evaluative configuration (as established in [00___Vision_and_Foundations.md](file:///home/abosch/Projects/TheSignal/V1/00___Vision_and_Foundations.md)): 
+- **The Faction Player Area** is the Representative's actual secure terminal. There are exactly five positions.
+- **The ARBITER Area** is the head of the room, physically occupied by the mediating instrument.
+- **The Central Area** is MIRROR's projection of The Overview, rendering live status overlays and systemic metrics directly onto the surface of the Table.
+
+The intent is immersion through geometry: it should feel exactly as if the players are physically standing in that sealed room with ARBITER, watching MIRROR map the city unfolding between them. The architecture of the game board enforces the architecture of the fiction.
 
 ---
 
 ## 5. Design Principles
 
-1. **Geography creates consequences.** A district's ring determines its resource generation value. A district's neighbors determine operational marker placement eligibility and battlefield strength calculations. Position on the map is never arbitrary.
-
-2. **The center is always relevant.** The Chorus Node's strategic incentives ensure it remains a contested objective throughout the session, despite its lack of resource output.
-
-3. **Rings are not equal.** Sprawl districts are accessible and low-value. Infrastructure districts are the economic engine of the mid-game. Core districts are high-value and require commitment to enter. This creates natural strategic progression across a session.
-
-4. **Resource type is immediately readable.** Each resource type has a distinct background color applied to its district. A player can identify the resource type of any district across the table without reading text.
-
-5. **The Terminal area is private.** What a Faction Representative holds, plans, and knows is concealed behind their Faction Screen. The board geography separates private player spaces from the public Central Area.
+1. **Immersion through Geometry.** The tabletop layout physically enforces the fiction. Players aren't just sitting at a table; they are sitting in their faction's specific seat in the Council room, looking at MIRROR.
+2. **Database-Backed Truth.** Map geography is strictly structural. Every zone, district, and boundary is mapped in our database schema (`the_signal_db`). If it's on the board, it has specific gameplay consequences.
+3. **The Center Drives Conflict.** The Chorus Node (Ring 0) at the center of the board remains the primary strategic objective. It pulls the factions inward to compete for access, driving the core tension of the session.
+4. **Immediate Legibility.** The board needs to be instantly readable from across the table. Resource types, ring levels, and district control must be visually distinct at a glance so players can assess the board state without reading fine text.
+5. **Clear Public vs. Private States.** Faction Terminals represent secure data and remain entirely private behind screens. The central board (The Overview) is the shared public space. Gameplay actions explicitly govern how information moves from private hands to the public board.
 
 ---
 
 ## 6. Physical Environment — Zones and Districts
 
-![Table Layout — Zone Diagram](table_layout_v1.png)
+![Table Layout — Zone Diagram](Table_Layout.svg)
 
-*Zone diagram (Non-Canonical / Stale): P6 (ARBITER) at head of table; P1–P5 (Faction Players) arranged around remaining sides; Central Area at center; Game Box adjacent off-table; Chair 1–6 outside Table perimeter. Center table and supply zones are sketched but not canonical.*
+*Macro Table Layout: Illustrates the grand-parent physical environment. The ARBITER (P6) is positioned at the head of the table; Faction Players (P1–P5) are arranged around the remaining perimeter; the Central Area anchors the center. The Game Box and Player Chairs sit outside the table perimeter.*
 
-![Center Table Wireframe](component_layout_v1.png)
+![Central Area Layout](Central_Area_Layout.svg)
 
-*Center table wireframe (Non-Canonical): Illustrates detailed layout of subzones in the center table area (public tracks, ring deck locations, Broadcast Card placement area, reservoir, and backlog). P6 (ARBITER Area) subzones are stubs and pending design in Art 07.*
+*Central Area Layout: Illustrates the detailed, canonical arrangement of shared tabletop zones within the Central Area. This includes the public tracks (Session Timeline, Initiative Strip, Situation Report, Chorus Activity, Public Standing), the Accord Placement Area, the Supply Zone (Reservoir and Backlog), the Ring Modifiers, and the City Map footprint.*
 
 ![New Meridian Map Layout](NM_Overlay.svg)
 
-*District layout diagram: concentric Ring 0–3 geography mapping the 21 districts of New Meridian, overlaid with their spatial connections and boundaries.*
+*District layout diagram: concentric Ring 0–3 geography mapping the 21 districts of New Meridian, overlaid with their spatial connections and boundaries. The district native resource types are color-keyed by the hex code for that resource (and native faction) and shown in the legend.*
+
+
+### Board Shape and Orientation
+New Meridian is structured as a collection of arcs forming an inverted half-circle shape. The Chorus Node is placed at the top center. Districts radiate outward and downward — Core districts immediately below the Node, The Mid below that, Baryo at the outer edges.
+
+District shapes represent actual city districts. Borders between adjacent districts are clearly marked. Faction color must be readable on districts.
+
+### Ring Structure
+The board's concentric ring layout organizes the 21 districts into distinct layers:
+- **Baryo (Ring 3):** 9 districts.
+- **The Mid (Ring 2):** 7 districts.
+- **Core (Ring 1):** 4 districts.
+- **Chorus Node (Ring 0):** 1 district.
+
+*(Note: Resource yields and entry requirements have been moved to the art03 gameplay rules staging area, as they are procedures rather than geometry).*
+
+### District Static Display Requirements
+Every district on the board must display the following static metadata:
+1. **District name:** Printed text.
+2. **Ring:** Visual border weight or position in arc.
+3. **Resource type:** Background color.
+4. **Base generation value:** Printed number.
+5. **Special rules:** Print a distinct icon on specialized districts (Chorus Node, Residential Quarter). **[NEEDS VISUAL DESIGN]**
+
+*Open Question: Should these display requirements (which are effectively print specs) remain in this structural artifact, or should they be moved? We could also design a sample "Example District SVG" component that models exactly how these elements are visually laid out.*
+
+---
 
 ### 6.1 Universal Schemas
 
@@ -148,588 +174,190 @@ Feeds the `district_metadata` database table.
 
 ### 6.3 Detailed Zone Specifications
 
-#### Game Box
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 1 |
-  | `zone_id` | `zone_game_box` |
-  | `zone_name` | Game Box |
-  | `parent_zone_id` | `None` |
-  | `visibility` | `Private` |
-
-#### Chairs
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 2 |
-  | `zone_id` | `zone_chairs` |
-  | `zone_name` | Chairs |
-  | `parent_zone_id` | `None` |
-  | `visibility` | `Public` |
-* **Description:** Represents seat positions Chair 1–6. Chair 6 is assigned to the ARBITER (P6); Chairs 1–5 correspond to Faction Players (P1–P5).
-
-#### Table
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 3 |
-  | `zone_id` | `zone_table` |
-  | `zone_name` | Table |
-  | `parent_zone_id` | `None` |
-  | `visibility` | `Public` |
-* **Description:** The physical table surface.
-
-#### Faction Player Areas (P1–P5)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 4 |
-  | `zone_id` | `zone_p1_area` to `zone_p5_area` |
-  | `zone_name` | Faction Player Areas |
-  | `parent_zone_id` | `zone_table` |
-  | `visibility` | `Mixed` |
-* **Description:** Private and public tablespace at each player position. The space behind each Faction Screen is private/concealed; the space in front of each screen is public.
-
-#### ARBITER Area (P6)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 5 |
-  | `zone_id` | `zone_p6_area` |
-  | `zone_name` | ARBITER Area |
-  | `parent_zone_id` | `zone_table` |
-  | `visibility` | `Mixed` |
-* **Description:** The head of the table. The space behind the ARBITER Screen is private/concealed; the space in front is public.
-
-#### Central Area
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 6 |
-  | `zone_id` | `zone_central_area` |
-  | `zone_name` | Central Area |
-  | `parent_zone_id` | `zone_table` |
-  | `visibility` | `Public` |
-* **Description:** Shared center play surface holding the game board mat (The Overview).
-
-#### Supply
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 7 |
-  | `zone_id` | `zone_supply` |
-  | `zone_name` | Supply |
-  | `parent_zone_id` | `zone_central_area` |
-  | `visibility` | `Public` |
-
-#### Accord Placement Area
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 8 |
-  | `zone_id` | `zone_accord_area` |
-  | `zone_name` | Accord Placement Area |
-  | `parent_zone_id` | `zone_central_area` |
-  | `visibility` | `Public` |
-
-#### Session Timeline Area
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 9 |
-  | `zone_id` | `zone_session_timeline` |
-  | `zone_name` | Session Timeline Area |
-  | `parent_zone_id` | `zone_central_area` |
-  | `visibility` | `Public` |
-
-#### Initiative Strip Area
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 10 |
-  | `zone_id` | `zone_initiative_strip` |
-  | `zone_name` | Initiative Strip Area |
-  | `parent_zone_id` | `zone_central_area` |
-  | `visibility` | `Public` |
-
-#### Chorus Activity Track Area
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 11 |
-  | `zone_id` | `zone_chorus_activity` |
-  | `zone_name` | Chorus Activity Track Area |
-  | `parent_zone_id` | `zone_central_area` |
-  | `visibility` | `Public` |
-
-#### Situation Report Area
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 12 |
-  | `zone_id` | `zone_situation_report` |
-  | `zone_name` | Situation Report Area |
-  | `parent_zone_id` | `zone_central_area` |
-  | `visibility` | `Public` |
-
-#### Public Standing Track Area
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 13 |
-  | `zone_id` | `zone_public_standing` |
-  | `zone_name` | Public Standing Track Area |
-  | `parent_zone_id` | `zone_central_area` |
-  | `visibility` | `Public` |
-
-#### City
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 14 |
-  | `zone_id` | `zone_city` |
-  | `zone_name` | City |
-  | `parent_zone_id` | `zone_central_area` |
-  | `visibility` | `Public` |
-* **Description:** Represents the organic half-circle city map on the Overview. Concentric rings branch outwards from Ring 0 to Ring 3.
-
-#### Rings (Ring 0 to Ring 3)
-* **Metadata:**
-  | Ring Zone | `db_id` | `zone_id` | `parent_zone_id` | `visibility` |
-  |-----------|---------|-----------|------------------|--------------|
-  | Ring 0 | 15 | `zone_ring_0` | `zone_city` | `Public` |
-  | Ring 1 | 16 | `zone_ring_1` | `zone_city` | `Public` |
-  | Ring 2 | 17 | `zone_ring_2` | `zone_city` | `Public` |
-  | Ring 3 | 18 | `zone_ring_3` | `zone_city` | `Public` |
-
-#### Modifier Areas (Rings 1 to 3)
-* **Metadata:**
-  | Modifier Zone | `db_id` | `zone_id` | `parent_zone_id` | `visibility` |
-  |---------------|---------|-----------|------------------|--------------|
-  | Ring 1 Modifier Area | 19 | `zone_ring_1_modifier` | `zone_ring_1` | `Public` |
-  | Ring 2 Modifier Area | 20 | `zone_ring_2_modifier` | `zone_ring_2` | `Public` |
-  | Ring 3 Modifier Area | 21 | `zone_ring_3_modifier` | `zone_ring_3` | `Public` |
-
----
+| Zone Name | DB ID | Zone ID | Parent Zone ID | Visibility | Description |
+|-----------|-------|---------|----------------|------------|-------------|
+| Game Box | 1 | `zone_game_box` | `None` | `Private` |  |
+| Chairs | 2 | `zone_chairs` | `None` | `Public` | Represents seat positions Chair 1–6. Chair 6 is assigned to the ARBITER (P6); Chairs 1–5 correspond to Faction Players (P1–P5). |
+| Table | 3 | `zone_table` | `None` | `Public` | The physical table surface. |
+| Faction Player Areas | 4 | `zone_p1_area` to `zone_p5_area` | `zone_table` | `Mixed` | Private and public tablespace at each player position. The space behind each Faction Screen is private/concealed; the space in front of each screen is public. |
+| ARBITER Area | 5 | `zone_p6_area` | `zone_table` | `Mixed` | The head of the table. The space behind the ARBITER Screen is private/concealed; the space in front is public. |
+| Central Area | 6 | `zone_central_area` | `zone_table` | `Public` | Shared center play surface holding the game board mat (The Overview). |
+| Supply | 7 | `zone_supply` | `zone_central_area` | `Public` |  |
+| Accord Placement Area | 8 | `zone_accord_area` | `zone_central_area` | `Public` |  |
+| Session Timeline Area | 9 | `zone_session_timeline` | `zone_central_area` | `Public` |  |
+| Initiative Strip Area | 10 | `zone_initiative_strip` | `zone_central_area` | `Public` |  |
+| Chorus Activity Track Area | 11 | `zone_chorus_activity` | `zone_central_area` | `Public` |  |
+| Situation Report Area | 12 | `zone_situation_report` | `zone_central_area` | `Public` |  |
+| Public Standing Track Area | 13 | `zone_public_standing` | `zone_central_area` | `Public` |  |
+| City | 14 | `zone_city` | `zone_central_area` | `Public` | Represents the organic half-circle city map on the Overview. Concentric rings branch outwards from Ring 0 to Ring 3. |
+|  | `db_id` |  |  |  |  |
+|  | `db_id` |  |  |  |  |
 
 ### 6.4 Detailed District Specifications
 
 All 21 districts of New Meridian function as child zones of their respective rings.
 
-#### Ring 0 — Origin
-##### Chorus Node (DB: 21)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 21 |
-  | `district_name` | Chorus Node |
-  | `ring` | Ring 0 |
-  | `resource_type` | None |
-  | `base_generation_value` | 0 |
-  | `hex_color` | None |
-* **Narrative Description:** The center of the city. Source of the Signal and focus of high-level faction translation operations.
-
----
-
-#### Ring 1 — Core
-Concentric core ring directly surrounding the Chorus Node.
-
-##### Government Citadel (DB: 17)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 17 |
-  | `district_name` | Government Citadel |
-  | `ring` | Ring 1 |
-  | `resource_type` | Mandate |
-  | `base_generation_value` | 3 |
-  | `hex_color` | `#3a6ea8` |
-
-##### Military Installation (DB: 18)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 18 |
-  | `district_name` | Military Installation |
-  | `ring` | Ring 1 |
-  | `resource_type` | Mandate |
-  | `base_generation_value` | 3 |
-  | `hex_color` | `#3a6ea8` |
-
-##### Chorus Research (DB: 19)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 19 |
-  | `district_name` | Chorus Research |
-  | `ring` | Ring 1 |
-  | `resource_type` | Findings |
-  | `base_generation_value` | 3 |
-  | `hex_color` | `#6a9978` |
-
-##### Financial Sanctum (DB: 20)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 20 |
-  | `district_name` | Financial Sanctum |
-  | `ring` | Ring 1 |
-  | `resource_type` | Capital |
-  | `base_generation_value` | 3 |
-  | `hex_color` | `#c9a84c` |
-
----
-
-#### Ring 2 — The Mid
-The administrative and industrial working systems of the city.
-
-##### Power Grid (DB: 10)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 10 |
-  | `district_name` | Power Grid |
-  | `ring` | Ring 2 |
-  | `resource_type` | Capacity |
-  | `base_generation_value` | 2 |
-  | `hex_color` | `#d4622a` |
-
-##### Financial Clearinghouse (DB: 11)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 11 |
-  | `district_name` | Financial Clearinghouse |
-  | `ring` | Ring 2 |
-  | `resource_type` | Capital |
-  | `base_generation_value` | 2 |
-  | `hex_color` | `#c9a84c` |
-
-##### Data Exchange (DB: 12)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 12 |
-  | `district_name` | Data Exchange |
-  | `ring` | Ring 2 |
-  | `resource_type` | Findings |
-  | `base_generation_value` | 2 |
-  | `hex_color` | `#6a9978` |
-
-##### Communications Hub (DB: 13)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 13 |
-  | `district_name` | Communications Hub |
-  | `ring` | Ring 2 |
-  | `resource_type` | Exposure |
-  | `base_generation_value` | 2 |
-  | `hex_color` | `#39d353` |
-
-##### Logistics Center (DB: 14)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 14 |
-  | `district_name` | Logistics Center |
-  | `ring` | Ring 2 |
-  | `resource_type` | Capacity |
-  | `base_generation_value` | 2 |
-  | `hex_color` | `#d4622a` |
-
-##### Research Institute (DB: 15)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 15 |
-  | `district_name` | Research Institute |
-  | `ring` | Ring 2 |
-  | `resource_type` | Findings |
-  | `base_generation_value` | 2 |
-  | `hex_color` | `#6a9978` |
-
-##### Regulatory District (DB: 16)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 16 |
-  | `district_name` | Regulatory District |
-  | `ring` | Ring 2 |
-  | `resource_type` | Mandate |
-  | `base_generation_value` | 2 |
-  | `hex_color` | `#3a6ea8` |
-
----
-
-#### Ring 3 — Baryo
-The outermost layer of populated city sectors.
-
-##### Industrial Fringe (DB: 4)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 4 |
-  | `district_name` | Industrial Fringe |
-  | `ring` | Ring 3 |
-  | `resource_type` | Capacity |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#d4622a` |
-
-##### Transit Hub (DB: 6)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 6 |
-  | `district_name` | Transit Hub |
-  | `ring` | Ring 3 |
-  | `resource_type` | Capacity |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#d4622a` |
-
-##### Civic Center (DB: 7)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 7 |
-  | `district_name` | Civic Center |
-  | `ring` | Ring 3 |
-  | `resource_type` | Mandate |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#3a6ea8` |
-
-##### Residential Quarter (DB: 3)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 3 |
-  | `district_name` | Residential Quarter |
-  | `ring` | Ring 3 |
-  | `resource_type` | Mandate |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#3a6ea8` |
-
-##### University Perimeter (DB: 1)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 1 |
-  | `district_name` | University Perimeter |
-  | `ring` | Ring 3 |
-  | `resource_type` | Findings |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#6a9978` |
-
-##### Media District (DB: 2)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 2 |
-  | `district_name` | Media District |
-  | `ring` | Ring 3 |
-  | `resource_type` | Exposure |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#39d353` |
-
-##### Broadcast Tower (DB: 8)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 8 |
-  | `district_name` | Broadcast Tower |
-  | `ring` | Ring 3 |
-  | `resource_type` | Exposure |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#39d353` |
-
-##### Observation Post (DB: 9)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 9 |
-  | `district_name` | Observation Post |
-  | `ring` | Ring 3 |
-  | `resource_type` | Exposure |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#39d353` |
-
-##### Commercial Strip (DB: 5)
-* **Metadata:**
-  | Field | Value |
-  |-------|-------|
-  | `db_id` | 5 |
-  | `district_name` | Commercial Strip |
-  | `ring` | Ring 3 |
-  | `resource_type` | Capital |
-  | `base_generation_value` | 1 |
-  | `hex_color` | `#c9a84c` |
-
----
+| District Name | DB ID | Ring | Resource Type | Base Gen | Hex Color | Description |
+|---------------|-------|------|---------------|----------|-----------|-------------|
+| Chorus Node | 600 | Ring 0 | None | 0 | None | The center of the city. Source of the Signal and focus of high-level faction translation operations. |
+| Government Citadel | 602 | Ring 1 | Mandate | 3 | `#3a6ea8` |  |
+| Military Installation | 601 | Ring 1 | Mandate | 3 | `#3a6ea8` |  |
+| Chorus Research | 603 | Ring 1 | Findings | 3 | `#6a9978` |  |
+| Financial Sanctum | 604 | Ring 1 | Capital | 3 | `#c9a84c` |  |
+| Power Grid | 606 | Ring 2 | Capacity | 2 | `#d4622a` |  |
+| Financial Clearinghouse | 611 | Ring 2 | Capital | 2 | `#c9a84c` |  |
+| Data Exchange | 609 | Ring 2 | Findings | 2 | `#6a9978` |  |
+| Communications Hub | 610 | Ring 2 | Exposure | 2 | `#39d353` |  |
+| Logistics Center | 607 | Ring 2 | Capacity | 2 | `#d4622a` |  |
+| Research Institute | 608 | Ring 2 | Findings | 2 | `#6a9978` |  |
+| Regulatory District | 605 | Ring 2 | Mandate | 2 | `#3a6ea8` |  |
+| Industrial Fringe | 612 | Ring 3 | Capacity | 1 | `#d4622a` |  |
+| Transit Hub | 613 | Ring 3 | Capacity | 1 | `#d4622a` |  |
+| Civic Center | 614 | Ring 3 | Mandate | 1 | `#3a6ea8` |  |
+| Residential Quarter | 615 | Ring 3 | Mandate | 1 | `#3a6ea8` |  |
+| University Perimeter | 616 | Ring 3 | Findings | 1 | `#6a9978` |  |
+| Media District | 617 | Ring 3 | Exposure | 1 | `#39d353` |  |
+| Broadcast Tower | 618 | Ring 3 | Exposure | 1 | `#39d353` |  |
+| Observation Post | 619 | Ring 3 | Exposure | 1 | `#39d353` |  |
+| Commercial Strip | 620 | Ring 3 | Capital | 1 | `#c9a84c` |  |
 
 ### 6.5 District Adjacency Map
 
 Canonical adjacency reference for all 21 districts. Feeds the `district_adjacency` table in `the_signal_db`.
 
-| Ring | Origin # | Origin District | Adjacent # | Adjacent Ring | Allow Ingress | Allow Egress |
-|------|---------|----------------|-----------|--------------|--------------|-------------|
-| Ring 0 | 21 | Chorus Node | 17 | Ring 1 | TRUE | TRUE |
-| Ring 0 | 21 | Chorus Node | 18 | Ring 1 | TRUE | TRUE |
-| Ring 0 | 21 | Chorus Node | 19 | Ring 1 | TRUE | TRUE |
-| Ring 0 | 21 | Chorus Node | 20 | Ring 1 | TRUE | TRUE |
-| Ring 1 | 18 | Military Installation | 21 | Ring 0 | TRUE | TRUE |
-| Ring 1 | 18 | Military Installation | 17 | Ring 1 | TRUE | TRUE |
-| Ring 1 | 18 | Military Installation | 10 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 18 | Military Installation | 11 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 17 | Government Citadel | 21 | Ring 0 | TRUE | TRUE |
-| Ring 1 | 17 | Government Citadel | 18 | Ring 1 | TRUE | TRUE |
-| Ring 1 | 17 | Government Citadel | 19 | Ring 1 | TRUE | TRUE |
-| Ring 1 | 17 | Government Citadel | 11 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 17 | Government Citadel | 16 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 17 | Government Citadel | 15 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 19 | Chorus Research | 21 | Ring 0 | TRUE | TRUE |
-| Ring 1 | 19 | Chorus Research | 17 | Ring 1 | TRUE | TRUE |
-| Ring 1 | 19 | Chorus Research | 20 | Ring 1 | TRUE | TRUE |
-| Ring 1 | 19 | Chorus Research | 15 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 19 | Chorus Research | 14 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 19 | Chorus Research | 13 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 20 | Financial Sanctum | 21 | Ring 0 | TRUE | TRUE |
-| Ring 1 | 20 | Financial Sanctum | 19 | Ring 1 | TRUE | TRUE |
-| Ring 1 | 20 | Financial Sanctum | 13 | Ring 2 | TRUE | TRUE |
-| Ring 1 | 20 | Financial Sanctum | 12 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 10 | Power Grid | 18 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 10 | Power Grid | 11 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 10 | Power Grid | 4 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 10 | Power Grid | 6 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 11 | Financial Clearinghouse | 18 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 11 | Financial Clearinghouse | 17 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 11 | Financial Clearinghouse | 10 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 11 | Financial Clearinghouse | 16 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 11 | Financial Clearinghouse | 6 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 11 | Financial Clearinghouse | 7 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 11 | Financial Clearinghouse | 3 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 16 | Regulatory District | 17 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 16 | Regulatory District | 19 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 16 | Regulatory District | 11 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 16 | Regulatory District | 15 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 16 | Regulatory District | 7 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 16 | Regulatory District | 3 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 16 | Regulatory District | 1 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 15 | Research Institute | 19 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 15 | Research Institute | 20 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 15 | Research Institute | 7 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 15 | Research Institute | 16 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 15 | Research Institute | 14 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 15 | Research Institute | 3 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 15 | Research Institute | 1 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 15 | Research Institute | 2 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 14 | Logistics Center | 19 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 14 | Logistics Center | 20 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 14 | Logistics Center | 15 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 14 | Logistics Center | 13 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 14 | Logistics Center | 1 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 14 | Logistics Center | 2 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 14 | Logistics Center | 8 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 13 | Communications Hub | 19 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 13 | Communications Hub | 20 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 13 | Communications Hub | 14 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 13 | Communications Hub | 12 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 13 | Communications Hub | 2 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 13 | Communications Hub | 8 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 13 | Communications Hub | 5 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 12 | Data Exchange | 20 | Ring 1 | TRUE | TRUE |
-| Ring 2 | 12 | Data Exchange | 13 | Ring 2 | TRUE | TRUE |
-| Ring 2 | 12 | Data Exchange | 5 | Ring 3 | TRUE | TRUE |
-| Ring 2 | 12 | Data Exchange | 9 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 4 | Industrial Fringe | 10 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 4 | Industrial Fringe | 6 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 6 | Transit Hub | 10 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 6 | Transit Hub | 11 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 6 | Transit Hub | 7 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 6 | Transit Hub | 3 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 7 | Civic Center | 11 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 7 | Civic Center | 16 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 7 | Civic Center | 6 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 7 | Civic Center | 3 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 7 | Civic Center | 15 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 3 | Residential Quarter | 11 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 3 | Residential Quarter | 16 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 3 | Residential Quarter | 15 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 3 | Residential Quarter | 7 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 3 | Residential Quarter | 1 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 1 | University Perimeter | 16 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 1 | University Perimeter | 15 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 1 | University Perimeter | 14 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 1 | University Perimeter | 3 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 1 | University Perimeter | 2 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 2 | Media District | 15 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 2 | Media District | 14 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 2 | Media District | 13 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 2 | Media District | 1 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 2 | Media District | 8 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 8 | Broadcast Tower | 14 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 8 | Broadcast Tower | 13 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 8 | Broadcast Tower | 2 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 8 | Broadcast Tower | 5 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 5 | Commercial Strip | 13 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 5 | Commercial Strip | 12 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 5 | Commercial Strip | 8 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 5 | Commercial Strip | 9 | Ring 3 | TRUE | TRUE |
-| Ring 3 | 9 | Observation Post | 12 | Ring 2 | TRUE | TRUE |
-| Ring 3 | 9 | Observation Post | 5 | Ring 3 | TRUE | TRUE |
+| Ring | Address | Origin District | Adjacent Ring | Adjacent Address | Adjacent District | Allow Ingress | Allow Egress |
+|------|---------|----------------|--------------|-----------------|-------------------|--------------|-------------|
+| Ring 0 | 0.0 | Chorus Node | Ring 1 | 1.0 | Military Installation | TRUE | TRUE |
+| Ring 0 | 0.0 | Chorus Node | Ring 1 | 1.1 | Government Citadel | TRUE | TRUE |
+| Ring 0 | 0.0 | Chorus Node | Ring 1 | 1.2 | Chorus Research | TRUE | TRUE |
+| Ring 0 | 0.0 | Chorus Node | Ring 1 | 1.3 | Financial Sanctum | TRUE | TRUE |
+| Ring 1 | 1.0 | Military Installation | Ring 0 | 0.0 | Chorus Node | TRUE | TRUE |
+| Ring 1 | 1.0 | Military Installation | Ring 1 | 1.1 | Government Citadel | TRUE | TRUE |
+| Ring 1 | 1.0 | Military Installation | Ring 2 | 2.0 | Regulatory District | TRUE | TRUE |
+| Ring 1 | 1.0 | Military Installation | Ring 2 | 2.1 | Power Grid | TRUE | TRUE |
+| Ring 1 | 1.1 | Government Citadel | Ring 0 | 0.0 | Chorus Node | TRUE | TRUE |
+| Ring 1 | 1.1 | Government Citadel | Ring 1 | 1.0 | Military Installation | TRUE | TRUE |
+| Ring 1 | 1.1 | Government Citadel | Ring 1 | 1.2 | Chorus Research | TRUE | TRUE |
+| Ring 1 | 1.1 | Government Citadel | Ring 2 | 2.1 | Power Grid | TRUE | TRUE |
+| Ring 1 | 1.1 | Government Citadel | Ring 2 | 2.2 | Logistics Center | TRUE | TRUE |
+| Ring 1 | 1.1 | Government Citadel | Ring 2 | 2.3 | Research Institute | TRUE | TRUE |
+| Ring 1 | 1.2 | Chorus Research | Ring 0 | 0.0 | Chorus Node | TRUE | TRUE |
+| Ring 1 | 1.2 | Chorus Research | Ring 1 | 1.1 | Government Citadel | TRUE | TRUE |
+| Ring 1 | 1.2 | Chorus Research | Ring 1 | 1.3 | Financial Sanctum | TRUE | TRUE |
+| Ring 1 | 1.2 | Chorus Research | Ring 2 | 2.3 | Research Institute | TRUE | TRUE |
+| Ring 1 | 1.2 | Chorus Research | Ring 2 | 2.4 | Data Exchange | TRUE | TRUE |
+| Ring 1 | 1.2 | Chorus Research | Ring 2 | 2.5 | Communications Hub | TRUE | TRUE |
+| Ring 1 | 1.3 | Financial Sanctum | Ring 0 | 0.0 | Chorus Node | TRUE | TRUE |
+| Ring 1 | 1.3 | Financial Sanctum | Ring 1 | 1.2 | Chorus Research | TRUE | TRUE |
+| Ring 1 | 1.3 | Financial Sanctum | Ring 2 | 2.5 | Communications Hub | TRUE | TRUE |
+| Ring 1 | 1.3 | Financial Sanctum | Ring 2 | 2.6 | Financial Clearinghouse | TRUE | TRUE |
+| Ring 2 | 2.0 | Regulatory District | Ring 1 | 1.0 | Military Installation | TRUE | TRUE |
+| Ring 2 | 2.0 | Regulatory District | Ring 2 | 2.1 | Power Grid | TRUE | TRUE |
+| Ring 2 | 2.0 | Regulatory District | Ring 3 | 3.0 | Industrial Fringe | TRUE | TRUE |
+| Ring 2 | 2.0 | Regulatory District | Ring 3 | 3.1 | Transit Hub | TRUE | TRUE |
+| Ring 2 | 2.1 | Power Grid | Ring 1 | 1.0 | Military Installation | TRUE | TRUE |
+| Ring 2 | 2.1 | Power Grid | Ring 1 | 1.1 | Government Citadel | TRUE | TRUE |
+| Ring 2 | 2.1 | Power Grid | Ring 2 | 2.0 | Regulatory District | TRUE | TRUE |
+| Ring 2 | 2.1 | Power Grid | Ring 2 | 2.2 | Logistics Center | TRUE | TRUE |
+| Ring 2 | 2.1 | Power Grid | Ring 3 | 3.1 | Transit Hub | TRUE | TRUE |
+| Ring 2 | 2.1 | Power Grid | Ring 3 | 3.2 | Civic Center | TRUE | TRUE |
+| Ring 2 | 2.2 | Logistics Center | Ring 1 | 1.1 | Government Citadel | TRUE | TRUE |
+| Ring 2 | 2.2 | Logistics Center | Ring 2 | 2.1 | Power Grid | TRUE | TRUE |
+| Ring 2 | 2.2 | Logistics Center | Ring 2 | 2.3 | Research Institute | TRUE | TRUE |
+| Ring 2 | 2.2 | Logistics Center | Ring 3 | 3.2 | Civic Center | TRUE | TRUE |
+| Ring 2 | 2.2 | Logistics Center | Ring 3 | 3.3 | Residential Quarter | TRUE | TRUE |
+| Ring 2 | 2.3 | Research Institute | Ring 1 | 1.1 | Government Citadel | TRUE | TRUE |
+| Ring 2 | 2.3 | Research Institute | Ring 1 | 1.2 | Chorus Research | TRUE | TRUE |
+| Ring 2 | 2.3 | Research Institute | Ring 2 | 2.2 | Logistics Center | TRUE | TRUE |
+| Ring 2 | 2.3 | Research Institute | Ring 2 | 2.4 | Data Exchange | TRUE | TRUE |
+| Ring 2 | 2.3 | Research Institute | Ring 3 | 3.3 | Residential Quarter | TRUE | TRUE |
+| Ring 2 | 2.3 | Research Institute | Ring 3 | 3.4 | University Perimeter | TRUE | TRUE |
+| Ring 2 | 2.3 | Research Institute | Ring 3 | 3.5 | Media District | TRUE | TRUE |
+| Ring 2 | 2.4 | Data Exchange | Ring 1 | 1.2 | Chorus Research | TRUE | TRUE |
+| Ring 2 | 2.4 | Data Exchange | Ring 2 | 2.3 | Research Institute | TRUE | TRUE |
+| Ring 2 | 2.4 | Data Exchange | Ring 2 | 2.5 | Communications Hub | TRUE | TRUE |
+| Ring 2 | 2.4 | Data Exchange | Ring 3 | 3.5 | Media District | TRUE | TRUE |
+| Ring 2 | 2.4 | Data Exchange | Ring 3 | 3.6 | Broadcast Tower | TRUE | TRUE |
+| Ring 2 | 2.5 | Communications Hub | Ring 1 | 1.2 | Chorus Research | TRUE | TRUE |
+| Ring 2 | 2.5 | Communications Hub | Ring 1 | 1.3 | Financial Sanctum | TRUE | TRUE |
+| Ring 2 | 2.5 | Communications Hub | Ring 2 | 2.4 | Data Exchange | TRUE | TRUE |
+| Ring 2 | 2.5 | Communications Hub | Ring 2 | 2.6 | Financial Clearinghouse | TRUE | TRUE |
+| Ring 2 | 2.5 | Communications Hub | Ring 3 | 3.6 | Broadcast Tower | TRUE | TRUE |
+| Ring 2 | 2.5 | Communications Hub | Ring 3 | 3.7 | Observation Post | TRUE | TRUE |
+| Ring 2 | 2.6 | Financial Clearinghouse | Ring 1 | 1.3 | Financial Sanctum | TRUE | TRUE |
+| Ring 2 | 2.6 | Financial Clearinghouse | Ring 2 | 2.5 | Communications Hub | TRUE | TRUE |
+| Ring 2 | 2.6 | Financial Clearinghouse | Ring 3 | 3.7 | Observation Post | TRUE | TRUE |
+| Ring 2 | 2.6 | Financial Clearinghouse | Ring 3 | 3.8 | Commercial Strip | TRUE | TRUE |
+| Ring 3 | 3.0 | Industrial Fringe | Ring 2 | 2.0 | Regulatory District | TRUE | TRUE |
+| Ring 3 | 3.0 | Industrial Fringe | Ring 3 | 3.1 | Transit Hub | TRUE | TRUE |
+| Ring 3 | 3.1 | Transit Hub | Ring 2 | 2.0 | Regulatory District | TRUE | TRUE |
+| Ring 3 | 3.1 | Transit Hub | Ring 2 | 2.1 | Power Grid | TRUE | TRUE |
+| Ring 3 | 3.1 | Transit Hub | Ring 3 | 3.0 | Industrial Fringe | TRUE | TRUE |
+| Ring 3 | 3.1 | Transit Hub | Ring 3 | 3.2 | Civic Center | TRUE | TRUE |
+| Ring 3 | 3.2 | Civic Center | Ring 2 | 2.1 | Power Grid | TRUE | TRUE |
+| Ring 3 | 3.2 | Civic Center | Ring 2 | 2.2 | Logistics Center | TRUE | TRUE |
+| Ring 3 | 3.2 | Civic Center | Ring 3 | 3.1 | Transit Hub | TRUE | TRUE |
+| Ring 3 | 3.2 | Civic Center | Ring 3 | 3.3 | Residential Quarter | TRUE | TRUE |
+| Ring 3 | 3.3 | Residential Quarter | Ring 2 | 2.2 | Logistics Center | TRUE | TRUE |
+| Ring 3 | 3.3 | Residential Quarter | Ring 2 | 2.3 | Research Institute | TRUE | TRUE |
+| Ring 3 | 3.3 | Residential Quarter | Ring 3 | 3.2 | Civic Center | TRUE | TRUE |
+| Ring 3 | 3.3 | Residential Quarter | Ring 3 | 3.4 | University Perimeter | TRUE | TRUE |
+| Ring 3 | 3.4 | University Perimeter | Ring 2 | 2.3 | Research Institute | TRUE | TRUE |
+| Ring 3 | 3.4 | University Perimeter | Ring 3 | 3.3 | Residential Quarter | TRUE | TRUE |
+| Ring 3 | 3.4 | University Perimeter | Ring 3 | 3.5 | Media District | TRUE | TRUE |
+| Ring 3 | 3.5 | Media District | Ring 2 | 2.3 | Research Institute | TRUE | TRUE |
+| Ring 3 | 3.5 | Media District | Ring 2 | 2.4 | Data Exchange | TRUE | TRUE |
+| Ring 3 | 3.5 | Media District | Ring 3 | 3.4 | University Perimeter | TRUE | TRUE |
+| Ring 3 | 3.5 | Media District | Ring 3 | 3.6 | Broadcast Tower | TRUE | TRUE |
+| Ring 3 | 3.6 | Broadcast Tower | Ring 2 | 2.4 | Data Exchange | TRUE | TRUE |
+| Ring 3 | 3.6 | Broadcast Tower | Ring 2 | 2.5 | Communications Hub | TRUE | TRUE |
+| Ring 3 | 3.6 | Broadcast Tower | Ring 3 | 3.5 | Media District | TRUE | TRUE |
+| Ring 3 | 3.6 | Broadcast Tower | Ring 3 | 3.7 | Observation Post | TRUE | TRUE |
+| Ring 3 | 3.7 | Observation Post | Ring 2 | 2.5 | Communications Hub | TRUE | TRUE |
+| Ring 3 | 3.7 | Observation Post | Ring 2 | 2.6 | Financial Clearinghouse | TRUE | TRUE |
+| Ring 3 | 3.7 | Observation Post | Ring 3 | 3.6 | Broadcast Tower | TRUE | TRUE |
+| Ring 3 | 3.7 | Observation Post | Ring 3 | 3.8 | Commercial Strip | TRUE | TRUE |
+| Ring 3 | 3.8 | Commercial Strip | Ring 2 | 2.6 | Financial Clearinghouse | TRUE | TRUE |
+| Ring 3 | 3.8 | Commercial Strip | Ring 3 | 3.7 | Observation Post | TRUE | TRUE |
+
+
+
+
 
 ---
 
-## 7. Rules & Constraints
+## 7. Faction Player Areas
 
-### Board Shape and Orientation
-New Meridian is printed as an organic, non-hexagonal map in an inverted arc (half-circle) shape. The Chorus Node is placed at the top center. Districts radiate outward and downward — Core districts immediately below the Node, The Mid below that, Baryo at the outer edges.
+The Faction Player Areas (P1–P5) are divided into public and private zones, physically separated by a Faction Screen. 
 
-District shapes are organic rather than geometric — they represent actual city districts, not abstract game spaces. Borders between adjacent districts are clearly marked. Faction color must be readable on districts.
+We are planning to build a dedicated zoomed-in SVG map (`Faction_Area_Layout.svg`) to explicitly define the physical geometries of these areas. This SVG will map directly to the `zone_p1_area` through `zone_p5_area` parent zones.
 
-### Ring Structure and Entry Requirements
-The board's concentric ring layout enforces movement, ingress, and egress rules during play, as detailed in [ref_special_district_and_ring_rules.md](file:///home/abosch/Projects/TheSignal/Whiteboard/ref_special_district_and_ring_rules.md) §1:
-- **Baryo (Ring 3):** 9 districts. Base Resource Yield: 1 unit per Quarter. Free entry during placement.
-- **The Mid (Ring 2):** 7 districts. Base Resource Yield: 2 units per Quarter. Restricted entry (subject to adjacency and the Ring Adjacency Penalty, M-12).
-- **Core (Ring 1):** 4 districts. Base Resource Yield: 3 units per Quarter. Restricted entry (requires Established or Dominant presence in adjacent Ring 2 district during placement).
-- **Chorus Node (Ring 0):** 1 district. Base Resource Yield: None. Excluded from normal adjacency rules (placement requires Established or Dominant presence in adjacent Ring 1 district).
+### Planned Layout Structure:
+**Private Zone (Behind Screen - Concealed):**
+- **Faction Terminal:** The core interface for managing concealed data, hidden agendas, and covert operations.
+- **Hand Area:** Dedicated space for holding unplayed action/asset cards.
+- **Private Resource Pool:** Storage for concealed tokens, capital, and findings.
 
-### District Static Display Requirements
-Every district on the board must display the following static attributes:
-1. **District name:** Printed text.
-2. **Ring:** Visual border weight or position in arc.
-3. **Resource type:** Background color.
-4. **Base generation value:** Printed number.
-5. **Special rules:** Print a distinct icon on specialized districts (Chorus Node, Residential Quarter).
-
-*Dynamic game state (such as faction presence, control tier markers, structures, and active operations) is displayed using components placed on the districts, as specified in [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md).*
+**Public Zone (In Front of Screen - Visible):**
+- **Active Operations Row:** A staging area for cards and actions currently in play or tabled for resolution.
+- **Public Resource Pool:** Storage for publicly visible assets and mandate tokens.
+- **Faction Identity Card:** Indicating the faction's current public standing, role, and persistent passive abilities.
 
 ---
 
-## 8. Starting Configuration
+## 8. ARBITER Area
 
-All starting positions, initial resource counts, and setup procedures are defined in [03-init___Game_Initialization.md](file:///home/abosch/Projects/TheSignal/V1/03-init___Game_Initialization.md).
+The ARBITER Area (P6) is located at the head of the table and is divided into public and private zones by the ARBITER Screen.
 
----
+We are planning to build a dedicated zoomed-in SVG map (`Arbiter_Area_Layout.svg`) to map the physical geometries of the Arbiter's domain, linking directly to the `zone_p6_area`.
 
-## 9. Faction Player Tableau
+### Planned Layout Structure:
+**Private Zone (Behind Screen - Concealed):**
+- **Arbiter Terminal:** The primary interface for managing system events, global thresholds, narrative pacing, and scenario scripts.
+- **Event Decks & Discards:** Staging areas for incoming city events and resolved narratives.
+- **Hidden Modifiers:** Space for concealed scenario overrides and upcoming triggers.
 
-All faction tableau components and terminal layouts are defined in [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md) and [08___Player_Toolkit.md](file:///home/abosch/Projects/TheSignal/V1/08___Player_Toolkit.md).
+**Public Zone (In Front of Screen - Visible):**
+- **Global Status Trackers:** Tokens and markers indicating current city-wide alert levels or systemic states.
+- **Active Edicts & Directives:** Publicly revealed conditions currently impacting all Faction players.
 
----
-
-## 10. ARBITER Tableau
-
-All ARBITER tableau components and screen layouts are defined in [02___Components.md](file:///home/abosch/Projects/TheSignal/V1/02___Components.md) and [07___ARBITER_Toolkit.md](file:///home/abosch/Projects/TheSignal/V1/07___ARBITER_Toolkit.md).
-
----
-
-## 11. Special Conditions & Gameplay Impacts
-
-All district-specific gameplay rules and active procedural outcomes have been moved to [ref_special_district_and_ring_rules.md](file:///home/abosch/Projects/TheSignal/Whiteboard/ref_special_district_and_ring_rules.md) §2.
-
----
-
-## 12. Examples & Exceptions
-
-All gameplay examples and exceptions have been consolidated in [ref_special_district_and_ring_rules.md](file:///home/abosch/Projects/TheSignal/Whiteboard/ref_special_district_and_ring_rules.md) §3.

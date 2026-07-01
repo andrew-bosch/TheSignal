@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** ModReactCard stub pass complete — all 5 factions fully stubbed (09-06 partial). §11.8 MOD stubs migrated to faction sections; wiki slug routing confirmed. Art 04 v0.9.53 (S129). Art 04b v2.6 (S123). Art 03-init v0.5 (S124). Next: PM05 04-n144–147 (09-06 pre-design gates).
+**Design milestone:** Guild deficit pass (−4 → −2); Art 01 v2.3 signed off; GD-01 Grant Deed new card type. Art 01 v2.3 (S130 ✅). Art 04 v0.9.61 (S130). Art 04b v2.6 (S123). Art 03-init v0.5 (S124). Next: PM05 04-n132, 04-n119, 01-n03 validation + design pass closure.
 
 ---
 
@@ -50,7 +50,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 2.2 | 🔄 Needs re-sign-off — S90/S114. S118: component name sweep. |
+| 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 2.3 | ✅ Signed off — S130 (L239). S118: component name sweep. |
 | 02 | [Components](V1/02___Components.md) | 2.5 | ✅ Signed off — S111 (L233). S118: full component name Title Case sweep (headings + metadata + body). |
 
 ---
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.53 | 🔄 In progress — S129: 41 faction MOD stubs migrated §11.8→faction sections; headers promoted h4→h3 (wiki slug router); SYN.MOD.3 duplicate fixed; ref file sync (deployment_marker triggers, accord semantics, 04-n144 expanded). S128: ModReactCard stub pass complete — all 5 factions (GHO.MOD.1–8, NET.MOD.1–10, GUI.MOD.1–8, DIR.MOD.1–8, SYN.MOD.1–8); §8 index updated (+38 rows); §6.3 broadcast_card.placed added. |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.61 | 🔄 In progress — S130: GUI.PA.9 City Ledger ✅; GUI.CA.9 Works Guarantee ✅; GUI.PA.10 Joint Development ✅; GUI.CA.10 Development Order ✅; GD-01 Grant Deed ✅ (ARBITER ModReactCard); ref fixes (Phase B → §9.2 Public Declaration, ARBITER-issued ModReactCard pattern added). |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |

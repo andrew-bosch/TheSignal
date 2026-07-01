@@ -353,6 +353,22 @@ Views are the primary interface to the model. They transform raw table data into
 
 ## 4. Table Schemas (Permanent tables)
 
+### district_adjacency
+Defines the bidirectional connectivity rules between physical district zones, utilizing a native composite key of the district's structural ring and orbital position.
+
+| Column | Type | Description |
+|---|---|---|
+| `origin_ring` | TINYINT | The Ring level (0-3) of the starting district. |
+| `origin_position` | TINYINT | The orbital index of the starting district within its ring. |
+| `origin_district_name` | VARCHAR | String name of the origin district. |
+| `adjacent_ring` | TINYINT | The Ring level (0-3) of the connected district. |
+| `adjacent_position` | TINYINT | The orbital index of the connected district within its ring. |
+| `adjacent_district_name` | VARCHAR | String name of the connected district. |
+| `allow_ingress` | BOOLEAN | Whether movement is allowed INTO adjacent. |
+| `allow_egress` | BOOLEAN | Whether movement is allowed FROM adjacent. |
+
+**Primary Key:** (`origin_ring`, `origin_position`, `adjacent_ring`, `adjacent_position`)
+
 ### component
 ```sql
 CREATE TABLE `component` (
@@ -1182,6 +1198,7 @@ As of S117 (new):
 - **DB-25** ✅ S50 (agy): Design-confirmed — Situation Report cards move to expired area (not removed); Target Profiles returned in Dispatch Case. No Remove primitive needed per Art 03.
 - **DB-26** ✅ S50 (agy): Move role permissions verified against Art 03. Public Act, Situation Report card, Target Profile resolved.
 - **DB-09** ✅ S50 (agy): district_adjacency created and fully seeded — 21 district components in `components`, 21 rows in `district_metadata`, 104 bidirectional adjacency rows. PKs enforced on district_metadata and player_metadata.
+- **DB-27** ✅ (agy): `district_adjacency` migrated to composite (`ring`, `position`) schema. Dropped reliance on arbitrary 1-21 IDs in favor of intrinsic location identifiers. Re-seeded from updated Art 01 rules.
 - **category / type**: Deprecated. Drop and rebuild after Art 04b sign-off (DB-16).
 - **destination_component_id / destination_zone_id** in action: Unpopulated — destination currently encoded in notes text only.
 - **S126 agy audit fixes:** (1) Five cards (STD.CA.13, STD.PA.4, STD.PA.7, DIR.CA.7, NET.CA.7) corrected from `subject = PublicStanding` → `subject = StandingMarker` in `card_status`; `StandingMarker` (id 37) added to `card_subject_map`. (2) NET.CA.1 Leak corrected from `subject = District` → `subject = CovertOperation` — S68 correction was also a mismatch; the card reveals a `CovertOperation`, not the district tile. (3) BroadcastEffectCard (id 98) added to `comp_verb_phase`: Add at phase 2; Remove/Reveal/Invoke at phases 17 and 18 (Beat 4 / Beat 5). All 7 cards now Legalized in `v_card_mechanical_alignment`. Art 04 specs updated to match.
