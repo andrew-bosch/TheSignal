@@ -48,8 +48,9 @@ This artifact defines everything ARBITER needs to run a complete session of THE 
 11. ARBITER Script Pack
 12. Session Setup Procedure
 13. Session Closeout
-14. Special Conditions & Gameplay Impacts
-15. Examples & Exceptions
+14. Best Practices
+15. Special Conditions & Gameplay Impacts
+16. Examples & Exceptions
 
 ---
 
@@ -327,7 +328,16 @@ See PM02 10-01 for flavor text placement in player manuals.
 
 ---
 
-## 14. Special Conditions & Gameplay Impacts
+## 14. Best Practices
+
+*Stub — table-tested habits that aren't formal rules, collected here as they're identified. Not procedure; ARBITER/players are free to substitute their own approach. First entry S132; more to follow as playtesting surfaces them.*
+
+- **Battlefield Strength running total (§10.1.2 — Art 03):** With no cap on Battlefield Modifier Cards or Intel Tokens playable into a contest, a faction with several stacked on the table can lose track doing the addition cold at Step 1.2.4 (Announce). Suggested habit: jot the running number on scratch paper as each card/token is placed in front of you at Step 1.2.2/1.2.3, rather than summing everything at once at Announce.
+- **Personal 2d10 set per player:** Every player (not just ARBITER) may want their own pair of d10 on hand — one shared die set gets passed around and slows the table, both for standard d100 rolls (percentile: two d10 read as tens+units) and for §10.1.3 (Roll d10) in Battlefield Strength, where every contesting faction rolls at the same moment. Having enough d10 in circulation lets those rolls actually happen simultaneously instead of queued through a single shared set.
+
+---
+
+## 15. Special Conditions & Gameplay Impacts
 
 ### ARBITER Absence
 *[TBD — can the game be run without a dedicated ARBITER player? Tier 1 recommendation: no. ARBITER is required. If an ARBITER is unavailable, the session cannot begin.]*
@@ -337,7 +347,7 @@ If the table disputes an ARBITER ruling: ARBITER cites the relevant rule from Ar
 
 ---
 
-## 15. Examples & Exceptions
+## 16. Examples & Exceptions
 
 *[TBD — populate after 04, 06, and 10a are finalized. Key scenarios: multi-operation resolution order, Accord dispute, Portrait query from faction.]*
 

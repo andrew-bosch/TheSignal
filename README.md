@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** L240 — 54-card minimum unique faction deck floor locked. All 5 factions confirmed ≥54 combined. Art 03 v4.11 (S110 ✅). Art 04 v0.9.63 (S131). Art 04b v2.6 (S123).
+**Design milestone:** L243 — Art 03 §10.1.2 Battlefield Strength redesigned and signed off (Boost/Hinder ModBattleCard model, face-down commit/reveal); 20 ModBattleCard stubs shipped across all 5 factions. Art 03 v4.12 (S132 ✅). Art 04 v0.9.64 (S132). Art 04b v2.6 (S123).
 
 ---
 
@@ -62,7 +62,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.5 | 🔄 In progress. S124: §3.9 Deck Selection added; §3.6 sequencing conflict open (04-n137). |
-| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.11 | ✅ Signed off — S110 (L232). S118: component name sweep. |
+| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.12 | ✅ Signed off — S132 (L243). §10.1.2 Battlefield Strength redesigned (Boost/Hinder ModBattleCard model, face-down commit/reveal, any faction may commit, Intel Token −2 Hinder); §10.1.4.0/0.2/1 sequential steps + cleanup relocation. Prior: S110 (L232). |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.99 | 🔄 In progress. S118: component name sweep. |
 | 03b | [Component Lifecycle Register](V1/03b___Component_Lifecycle.md) | 0.2 | 🔄 In progress. S118: component name sweep. |
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.63 | 🔄 In progress — S131: Guild ModReactCard deficit closed (GUI.MOD.9, GUI.MOD.10); Directorate faction-set deficit closed (DIR.PA.9, DIR.PA.4 redesign, DIR.PA.5 redesign, DIR.PA.10, DIR.MOD.9, DIR.PA.11); all factions ≥54 deck floor confirmed (PM02 L240); new DB view v_card_faction_deck_floor; ref/design sync (Permanent-persistence pattern documented, stale PA duration language corrected). |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.64 | 🔄 In progress — S132: 20 ModBattleCard stubs shipped, all 5 factions (2 Boost +1/+2, 2 Hinder −1/−2 each); new ModIssuedCard subclass locked for ARBITER-issued cards (PM02 L241, not yet drafted); duplicate card name fixed (SYN.MOD.8 "Hostile Takeover" → "Vulture Fund"). Prior — S131: Guild ModReactCard deficit closed (GUI.MOD.9, GUI.MOD.10); Directorate faction-set deficit closed; all factions ≥54 deck floor confirmed (PM02 L240). |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |

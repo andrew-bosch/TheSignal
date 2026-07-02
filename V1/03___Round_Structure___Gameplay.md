@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.11
+**Version:** 4.12
 
-**Status:** Signed off S110 (L232). Prior: Signed off S104 (L217). S109–S110: VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
+**Status:** Signed off S132 (L243). Prior: Signed off S110 (L232). S132: §10.1.2 Calculate and Declare Totals redesigned — Boost/Hinder model replaces Self/Opponent threshold-delta on Battlefield Modifier Cards, with an explicit named target faction chosen by the playing faction (contesting or not); face-down commit + simultaneous reveal (Steps 1.2.1 Count, 1.2.2 Commit, 1.2.3 Reveal & Validate, 1.2.4 Announce); any faction — not just contestants — may commit a Battlefield Modifier Card or Intel Token into an active contest; Intel Token effect changed to a fixed −2 Hinder applied to the named target (supersedes L163's +2 self-boost). §10.1.4.0 (Winner), §10.1.4.0.2 (Press), and §10.1.4.1 (Tie) reformatted to sequential numbered steps; cleanup (discard used Battlefield Modifier Cards, Intel Token hand-off/reset) relocated from §10.1.2.3 to §10.1.4.0 and duplicated at §10.1.4.1, firing once winner/tie is resolved and before any loop back to §10.1.2. Prior (S109–S110): VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02 — Components
 
@@ -1078,20 +1078,27 @@ ARBITER identifies all factions at Dominant influence in the contested district 
 
 #### §10.1.2 Step 1.2: Calculate and Declare Totals (simultaneously)
 
-Each contesting Faction Player:
-1. Counts all Presence Tokens and Structure Blocks in the contested district and in each adjacent district. Deployment Markers count as 1 Presence Token.
-2. Plays any Battlefield Modifier Cards face-up. Each card's +n bonus added to the total.
-3. Plays any fresh Intel Tokens (age 0–2) targeting an opposing faction face-up. Each token adds +2 to the total.
-4. Announces their full modifier total aloud.
+**Step 1.2.1 — Count:** Each contesting Faction Player counts all Presence Tokens and Structure Blocks in the contested district and in each adjacent district. Deployment Markers count as 1 Presence Token.
 
-Battlefield Modifier Cards are removed from the game upon use — may not be replayed in this contest or any subsequent district contest this Quarter.
+**Step 1.2.2 — Commit** (all face-down, simultaneously, before anything is revealed):
+1. Any faction — contesting or not — may play Battlefield Modifier Cards face-down. State aloud which contesting faction (identified at §10.1.1) each card affects. Place it face-down in front of that faction. No Target Profile — the target is declared verbally, not written; the card's content (Boost or Hinder, magnitude) stays hidden until reveal.
+2. Any faction — contesting or not — may commit fresh Intel Tokens face-down to a central location, not in front of any faction. Target and content both stay hidden until reveal.
 
-Intel Tokens played are handed to ARBITER. ARBITER resets (erases) and returns them to The Dossier, or discards if single-use.
+**Step 1.2.3 — Reveal & Validate:**
+1. Each contesting faction flips face-up whatever Battlefield Modifier Cards are sitting in front of them.
+2. Boost (+n) cards add to the named faction's total. Hinder (−n) cards subtract from it. A contesting faction's own Boost cards default to benefiting themselves unless placed in front of a different contestant.
+3. ARBITER flips the central Intel Token pile face-up.
+4. ARBITER validates each token: age 0–2 (Fresh), and named target among the contesting factions identified at §10.1.1.
+5. ARBITER places each valid token face-up in front of its named target faction — Hinder −2 per token, regardless of who committed it. Invalid tokens (stale, or naming a faction not contesting) are set aside instead: no placement, no effect.
+
+*Battlefield Modifier Cards and Intel Tokens played this round remain on the table, revealed, until cleanup at §10.1.4.0.*
+
+**Step 1.2.4 — Announce:** Each contesting Faction Player sums their Step 1.2.1 count and the Boost/Hinder values of all Battlefield Modifier Cards and Intel Tokens revealed in front of them at Step 1.2.3, and announces the total aloud.
 
 
 #### §10.1.3 Step 1.3: Roll d10
 
-Each contesting Faction Player rolls d10. Announces the sum of their modifier total (Step 1.2) and the d10 result aloud.
+Each contesting Faction Player rolls d10. Announces the sum of their modifier total (Step 1.2.4) and the d10 result aloud.
 
 #### §10.1.4 Step 1.4: Resolve Outcome
 
@@ -1099,9 +1106,11 @@ ARBITER compares totals. If tied: proceed to §10.1.4.1.
 
 ##### §10.1.4.0 Winner
 
-ARBITER announces: *"[Faction] holds [District Name]."* The winning Faction Player removes 1 Presence Token belonging to a contesting faction of their choice from the contested district. Return chip and Tension Marker to ARBITER for pool return.
-
-The faction that had their Presence Token removed moves the winning faction's PS marker −1.
+1. ARBITER announces: *"[Faction] holds [District Name]."*
+2. The winning Faction Player removes 1 Presence Token belonging to a contesting faction of their choice from the contested district.
+3. Return chip and Tension Marker to ARBITER for pool return.
+4. The faction that had their Presence Token removed moves the winning faction's PS marker −1.
+5. **Cleanup:** Battlefield Modifier Cards played this round (§10.1.2.3) are removed from the game — may not be replayed in this contest or any subsequent district contest this Quarter. Intel Tokens played this round are handed to ARBITER; ARBITER resets (erases) and returns them to The Dossier, or discards if single-use.
 
 ###### §10.1.4.0.1 Will You Press?
 
@@ -1113,21 +1122,21 @@ If no: proceed to §10.1.5.
 
 ###### §10.1.4.0.2 Press
 
-The losing Faction Player removes 1 Presence Token from an adjacent district of their choice and moves it to the contested district. The winning faction moves the losing faction's PS marker −1.
-
-Return to §10.1.2.
+1. The losing Faction Player removes 1 Presence Token from an adjacent district of their choice and moves it to the contested district.
+2. The winning faction moves the losing faction's PS marker −1.
+3. Return to §10.1.2.
 
 ##### §10.1.4.1 Tie
 
-Applies when two or more factions share the highest total. No press on a tie.
+*Applies when two or more factions share the highest total. No press on a tie.*
 
-Each tied Faction Player removes 1 Presence Token — from the contested district or an adjacent district of their choice (no adjacent chips: must remove from the contested district) — and returns it to the pool.
-
-ARBITER checks the Dominant condition across all contesting factions:
-- Exactly one faction is Dominant: settled in that faction's favor. ARBITER removes the Tension Marker. Proceed to §10.1.5.
-- No faction Dominant: no dominant presence remains. ARBITER removes the Tension Marker. Proceed to §10.1.5.
-- Multiple factions remain Dominant; no non-tied factions in the contest: return to §10.1.2.
-- Multiple factions remain Dominant; non-tied factions remain: tied factions step out. Remaining factions return to §10.1.2.
+1. Each tied Faction Player removes 1 Presence Token — from the contested district or an adjacent district of their choice (no adjacent chips: must remove from the contested district) — and returns it to ARBITER for pool return.
+2. **Cleanup:** Battlefield Modifier Cards played this round (§10.1.2.3) are removed from the game — may not be replayed in this contest or any subsequent district contest this Quarter. Intel Tokens played this round are handed to ARBITER; ARBITER resets (erases) and returns them to The Dossier, or discards if single-use.
+3. ARBITER checks the Dominant condition across all contesting factions:
+   - Exactly one faction is Dominant: settled in that faction's favor. ARBITER removes the Tension Marker. Proceed to §10.1.5.
+   - No faction Dominant: no dominant presence remains. ARBITER removes the Tension Marker. Proceed to §10.1.5.
+   - Multiple factions remain Dominant; no non-tied factions in the contest: return to §10.1.2.
+   - Multiple factions remain Dominant; non-tied factions remain: tied factions step out. Remaining factions return to §10.1.2.
 
 #### §10.1.5 Step 1.5: Update Board
 

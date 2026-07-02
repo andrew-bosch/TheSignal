@@ -206,19 +206,22 @@ No initiative order, no phase timer. ARBITER announces: "The Table is in Debrief
 
 ---
 
-## Battlefield Strength (§10 — Contested District Resolution)
+## Battlefield Strength (§10.1 — Resolve Contested District) — S132 redesign
 
-**Triggers:** After Month 3 §9.4.4 Close Month, ARBITER scans for Tension Markers. Resolves Ring 3 inward to Ring 0.
+**Triggers:** After Month 3 §9.4.4 Close Month, ARBITER scans for Tension Markers (§10.0). Resolves Ring 3 inward to Ring 0.
 
-**Calculation:** Each contesting faction simultaneously counts:
-- All Presence Tokens + Structure Blocks in contested district AND each adjacent district (Deployment Markers = 1 Presence Token)
-- Plus Battlefield Modifier Cards played face-up (+n per card; discarded immediately)
-- Plus +2 per Fresh Intel Token (age 0–2) targeting opposing faction (tokens spent on use)
+**§10.1.1 Identify Contesting Factions:** all factions at Dominant influence in the district (more than 2 may contest).
 
-Each faction rolls a d10, adds to declared total. Highest total wins.
+**§10.1.2 Calculate and Declare Totals** — face-down commit, then simultaneous reveal:
+- **1.2.1 Count:** each contesting faction counts Presence Tokens + Structure Blocks in the contested district and each adjacent district (Deployment Markers = 1 Presence Token).
+- **1.2.2 Commit** (face-down, simultaneous, before anything is revealed): any faction — contesting or not — may play Battlefield Modifier Cards face-down in front of a named contesting faction (target stated verbally at commit, content hidden until reveal); and/or commit fresh Intel Tokens face-down to a central location (target *and* content both hidden until reveal, unlike mod cards).
+- **1.2.3 Reveal & Validate:** each contesting faction flips whatever mod cards sit in front of them — **Boost (+n)** adds to the named faction's total, **Hinder (−n)** subtracts (a faction's own Boost cards default to benefiting themselves unless placed in front of someone else). ARBITER flips the central Intel Token pile, validates age (0–2, Fresh) and named target (must be a contesting faction per §10.1.1); valid tokens are placed face-up in front of their target — always **Hinder −2**, regardless of who committed it; invalid tokens (stale, or naming a non-contestant) are set aside, no effect. Everything stays on the table, revealed, until cleanup (§10.1.4.0/§10.1.4.1 — not here).
+- **1.2.4 Announce:** each contesting faction sums their 1.2.1 count plus everything Boost/Hinder sitting in front of them, announces the total aloud.
 
-**Outcome:** Winner removes 1 Presence Token belonging to any contesting faction from contested district; removes Tension Marker. Loser may **press** (spend 1 chip from adjacent district to re-run from Step 3 with updated counts).
+**§10.1.3 Roll d10:** each contesting faction rolls, announces the sum of their 1.2.4 total + roll.
 
-**Tie:** Each tied faction removes 1 chip. If one drops below Dominant and other holds — that faction wins. If both drop below Dominant — no winner, Tension Marker removed. No continuation after a tie.
+**§10.1.4 Resolve Outcome:** ARBITER compares totals; highest wins; tied → §10.1.4.1.
+- **Winner (§10.1.4.0):** ARBITER announces holder. Winner removes 1 Presence Token from any contesting faction in the district; chip + Tension Marker return to ARBITER. Faction that lost the token moves winner's PS marker −1. **Cleanup:** Battlefield Modifier Cards played this round discarded (may not replay this contest or Quarter); Intel Tokens played this round handed to ARBITER, reset/returned to Dossier or discarded if single-use. Then **Will You Press? (§10.1.4.0.1):** if yes → **Press (§10.1.4.0.2)**: loser moves 1 chip from an adjacent district into the contested district, winner moves loser's PS −1, return to §10.1.2 for a fresh round (fresh mod cards/tokens may be committed again from hand — not previously-discarded ones). If no → proceed to §10.1.5.
+- **Tie (§10.1.4.1):** no press. Each tied faction removes 1 chip (contested district or adjacent, their choice) to ARBITER for pool return. **Cleanup:** same as Winner, above. Then ARBITER checks the Dominant condition: exactly one or zero Dominant remaining → settled/no contest, Tension Marker removed, proceed to §10.1.5; multiple Dominant remain with no non-tied factions → return to §10.1.2; multiple Dominant remain with non-tied factions present → tied factions step out, remainder return to §10.1.2.
 
-Board update: all control flags, Established Markers, and Tension Markers updated in contested district and any adjacent districts from which chips were removed.
+**§10.1.5 Update Board:** Dominant/Established/Tension Markers updated in the contested district and any adjacent districts chips moved from/to.

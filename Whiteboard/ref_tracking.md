@@ -75,12 +75,14 @@
 
 **Creation:** ARBITER takes a Blank token from supply and fills in (1) the faction it concerns and (2) the quarter gathered when a faction successfully gathers intelligence. Players calculate age themselves.
 
-**Age tiers:**
+**Age tiers (canonical: Art 03 §13.6, lines 1354–1360 — corrected S132, was Fresh 0–1/Stale 2–3 and wrongly attributed −25 to Battlefield Strength):**
 | Tier | Age | Notes |
 |------|-----|-------|
-| Fresh | 0–1 Quarters | Full effectiveness |
-| Stale | 2–3 Quarters | Reduced effectiveness (−25 modifier in Battlefield Strength) |
-| Expired | 4+ Quarters | No mechanical use; partial payment only |
+| Fresh | 0–2 Quarters | No modifier |
+| Stale | 3 Quarters | −25 threshold modifier (M-13) applied at Beat 0 (covert) or Beat 4 (public) — general action resolution, not Battlefield Strength |
+| Expired | 4+ Quarters | Counts as partial payment only |
+
+**Battlefield Strength use (Art 03 §10.1.2, S132):** only Fresh tokens (age 0–2) count — Stale/Expired tokens committed into a district contest are invalid and have no effect (set aside at reveal, not the −25 penalty above, which applies only to normal action resolution).
 
 **Use:** Tokens apply only to actions involving the named faction. Standard factions hold guideline max of 2; Ghost holds up to 4 *(balance/playtest values — not mechanically enforced; ARBITER adjudicates called violations per Art 07)*. Own-faction tokens don't count against the guideline — defensive use only (block opponents from acquiring them).
 

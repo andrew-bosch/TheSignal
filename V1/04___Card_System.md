@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.63 Draft  
+**Version:** 0.9.64 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-07-01  
+**Last Updated:** 2026-07-02  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -492,7 +492,7 @@ class ModActionCard(Card):
 
 class ModBattleCard(Card):
     # Modifier for Battlefield Strength resolution (§10 Contested District Resolution). Field constraints: §6.2.
-    effect:           ModBattleExpr        # threshold delta; direction (Self | Opponent) + magnitude
+    effect:           ModBattleExpr        # delta on a named contesting faction's total; direction (Boost | Hinder) + target + magnitude — see §6.3
     value_rating:     int | None            # 1–3; None = TBD (stub only)
     ring_constraint:  Ring | None          # if set, usable only in Battlefield Strength for a district in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
@@ -570,7 +570,7 @@ Fields added by ModActionCard, ModBattleCard, and ModReactCard. All three subcla
 | Field | Subclass | Type | Purpose | Displayed |
 |-------|----------|------|---------|-----------|
 | effect | ModActionCard | ModActionExpr | Tagged union — exactly one: threshold_delta(n) \| success_multiplier(n) \| ps_shift(faction, delta) \| cost_reduction(n); cost_reduction is PA ops only (CA cost committed at dispatch before Beat 0) | Face |
-| effect | ModBattleCard | ModBattleExpr | Threshold delta applied to submitting faction (Self) or opponent (Opponent) during Battlefield Strength resolution | Face |
+| effect | ModBattleCard | ModBattleExpr | Delta (Boost or Hinder) applied to a named contesting faction's Battlefield Strength total (Art 03 §10.1.2); target faction is chosen by the playing faction at commit and need not be themselves, nor a contestant — Art 03 §10.1.2 Step 2 (S132) | Face |
 | value_rating | All modifier subclasses | int \| None | 1–3; modifier strength signal printed on card face; used in Splay calculation; None = TBD (stub only — must be set before design pass) | Face |
 | ring_constraint | All modifier subclasses | Ring \| None | Deployment restriction set at card design time by narrative — location-anchored assets get the ring value; portable assets get None. ModActionCard: usable only with ops targeting that ring's districts. ModBattleCard: usable only in Battlefield Strength for a district in that ring. ModReactCard: fires only when trigger condition occurs in that ring's districts. | Face |
 | ring_origin | All modifier subclasses | Ring \| None | Which modifier deck this card belongs to — None = faction modifier deck; 1/2/3 = Ring 1/2/3 modifier deck. Determines draw eligibility (§11.2) and card back color. Separate from ring_constraint: a Ring 1 card (ring_origin=1) may have ring_constraint=None (portable, no deployment restriction). | No |
@@ -669,10 +669,12 @@ ModActionExpr:       threshold_delta(n: int)
 #                     (CA cost committed at dispatch before Beat 0; cannot be reduced post-submission)
 # Tagged union — exactly one effect expression per card
 
-ModBattleExpr:       direction: Self | Opponent
+ModBattleExpr:       direction: Boost | Hinder
+                     target:    Faction   # a contesting faction identified at Art 03 §10.1.1; chosen by the playing faction, need not be themselves
                      magnitude: int
-# Self:    +magnitude applied to submitting faction's Battlefield Strength threshold
-# Opponent: −magnitude applied to opponent's threshold
+# Boost:  +magnitude applied to target faction's Battlefield Strength total
+# Hinder: −magnitude applied to target faction's Battlefield Strength total
+# Playing faction need not be the target, and need not itself be a contesting faction — Art 03 §10.1.2 Step 2 (S132)
 ```
 
 ---
@@ -4758,7 +4760,7 @@ This is new mechanical ground: the existing ModBattleCard subclass lets a *conte
 
 Restriction (Guild Present in the district or an adjacent district) keeps this tied to actual territorial investment — Guild needs to already have people nearby to know whose crews to prioritize. Target is any Dominant/contesting faction, no doctrinal constraint (Art 00 §7 pentagram) — Guild's doctrine here is transactional, not political: contracts go to whoever Guild backs, not to an ally by default.
 
-**Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 2 (Battlefield Modifier Cards) and Step 3 (Intel Tokens). No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
+**Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 1.2.2 (Commit) and Step 1.2.3 (Reveal & Validate), where Battlefield Modifier Cards and Intel Tokens are now handled (renumbered S132, PM02 L242). No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
 
 #### Card Story
 Tension breaks out over a contested block, and every material order in the district suddenly has two delivery dates — one for the faction Guild's crews like working with, one for everyone else. By the time the district actually goes to the wire, one side got their scaffolding early.
@@ -4839,6 +4841,114 @@ GUI.MOD.10 = Card(
     },
     design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — tracked 04-n148 (Outstanding Issue).",
     arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and direction (Support +2 / Withhold −2), and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization pending 04-n148.",
+)
+```
+
+---
+
+### GUI.MOD.11 — SITE FOREMAN *(stub)*
+
+*S132. Guild's ModBattleCard set, replicating the Directorate/Ghost/Network pattern (2 Boost +1/+2, 2 Hinder −1/−2, PM05 09-06). Doctrine per §5a and modifier_card_ideas.md's provisional voice seed: "construction crews, material stockpiles, structural expertise — physical commitment of resources to hold ground." Distinct from Contractor's Favor (GUI.MOD.10, a ModReactCard, pre-registered before §10 opens) — these are live-played at §10.1.2 like any other ModBattleCard. Weaker Boost tier (+1): experienced crew leadership, not yet material commitment.*
+
+```python
+GUI.MOD.11 = Card(
+    id      = "GUI.MOD.11",  card_id = "GUI.MOD.11",  version = "v0.1",
+    name    = "Site Foreman",
+    tagline = "Someone who's run a hundred jobs like this one knows exactly where to put the weight.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A foreman who's worked this district before shows up, clipboard in hand, and starts telling people where to stand.",
+    arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### GUI.MOD.12 — MATERIAL STOCKPILE *(stub)*
+
+*S132. Stronger Boost tier (+2) — physical material committed to the contest, not just labor. The escalation from Site Foreman's expertise to Material Stockpile's tonnage is the same logic as Guild's economy generally: everything Guild does ends up as a physical, visible commitment.*
+
+```python
+GUI.MOD.12 = Card(
+    id      = "GUI.MOD.12",  card_id = "GUI.MOD.12",  version = "v0.1",
+    name    = "Material Stockpile",
+    tagline = "Whatever the job needs, it's already on site, already paid for.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "Pallets of material that were supposed to go somewhere else get rerouted here instead. Nobody asks who authorized it.",
+    arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### GUI.MOD.13 — PERMIT DELAY *(stub)*
+
+*S132. Weaker Hinder tier (−1). Guild "cannot operate covertly in principle" (§5a) — even its suppression tools are procedural and visible, not sabotage. A permit delay is bureaucratic friction, not an attack.*
+
+```python
+GUI.MOD.13 = Card(
+    id      = "GUI.MOD.13",  card_id = "GUI.MOD.13",  version = "v0.1",
+    name    = "Permit Delay",
+    tagline = "The paperwork isn't wrong. It's just going to take a while.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A signature is missing from a form nobody remembers filing. Work stops until someone finds it.",
+    arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### GUI.MOD.14 — STRUCTURAL CONDEMNATION *(stub)*
+
+*S132. Stronger Hinder tier (−2), completing Guild's 2 Boost/2 Hinder pattern. Escalates Permit Delay from friction into a formal finding — Guild's engineers declare something structurally compromised, and the declaration itself is the weapon.*
+
+```python
+GUI.MOD.14 = Card(
+    id      = "GUI.MOD.14",  card_id = "GUI.MOD.14",  version = "v0.1",
+    name    = "Structural Condemnation",
+    tagline = "The inspection report is thorough, professional, and devastating.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "Guild's engineers sign off on a finding: unsafe as built. It's technically true. It's also exactly what was needed.",
+    arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
 ```
 
@@ -7050,6 +7160,116 @@ GHO.MOD.11 = Card(
 )
 ```
 
+---
+
+### GHO.MOD.12 — EMBEDDED CONTACT *(stub)*
+
+*S132. Ghost's ModBattleCard set, replicating the Directorate pattern (2 Boost + 1/+2, 2 Hinder −1/−2, PM05 09-06). Ghost's doctrine here is deliberately not literal force — §5a and modifier_card_ideas.md's provisional voice seed both frame Ghost's battlefield weight as "what they know about the contest, not what they bring to it." Weaker Boost tier (+1): a source already positioned in the district, not a deployed asset.*
+
+```python
+GHO.MOD.12 = Card(
+    id      = "GHO.MOD.12",  card_id = "GHO.MOD.12",  version = "v0.1",
+    name    = "Embedded Contact",
+    tagline = "Someone already there tells the right people what's actually happening.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A contact who was already in the district long before the tension marker went down passes along what they've seen.",
+    arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### GHO.MOD.13 — SIGNALS PACKAGE *(stub)*
+
+*S132. Stronger Boost tier (+2) — a technical/surveillance escalation rather than a bigger human asset, consistent with Ghost's "Perimeter Sensors" precedent (GHO.MOD.2) for treating equipment as passive listening infrastructure, not deployed muscle.*
+
+```python
+GHO.MOD.13 = Card(
+    id      = "GHO.MOD.13",  card_id = "GHO.MOD.13",  version = "v0.1",
+    name    = "Signals Package",
+    tagline = "Everything the listening posts picked up, handed over at once.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "Weeks of passive collection, compiled and handed over at the moment it's actually useful.",
+    arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### GHO.MOD.14 — PLANTED DOUBT *(stub)*
+
+*S132. Weaker Hinder tier (−1). Ghost's suppression is informational, never physical — this is a rumor or a manufactured inconsistency, not an attack. Fits the same register as GHO.MOD.5 False Flag and GHO.MOD.11 Manufactured Evidence (existing Ghost ModReactCards built on the same disinformation logic).*
+
+```python
+GHO.MOD.14 = Card(
+    id      = "GHO.MOD.14",  card_id = "GHO.MOD.14",  version = "v0.1",
+    name    = "Planted Doubt",
+    tagline = "A detail that doesn't add up, surfaced at exactly the wrong moment.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "Nothing is proven. Nothing needs to be — the timeline just stops holding together, right when it matters.",
+    arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### GHO.MOD.15 — BLOWN COVER *(stub)*
+
+*S132. Stronger Hinder tier (−2), completing Ghost's 2 Boost/2 Hinder pattern. Escalates Planted Doubt from a rumor into something confirmed and specific — a position Ghost knew was fragile and chose to expose.*
+
+```python
+GHO.MOD.15 = Card(
+    id      = "GHO.MOD.15",  card_id = "GHO.MOD.15",  version = "v0.1",
+    name    = "Blown Cover",
+    tagline = "Whatever they were counting on staying hidden isn't hidden anymore.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "Ghost knew exactly which detail would unravel them if it surfaced now. It surfaces now.",
+    arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
 
 ## Directorate
 [↑ 7. Card Specifications](#7-card-specifications)
@@ -8784,6 +9004,114 @@ DIR.MOD.9 = Card(
 
 ---
 
+### DIR.MOD.10 — RIOT CONTROL UNIT *(stub)*
+
+*S132. First ModBattleCard content in the game — 09-06 pattern-setter, establishing the stub format for the whole subclass. Fields follow Art 04 §6.1/§6.2 (ModBattleCard column) and the S132 procedure redesign (Art 03 §10.1.2, PM02 L242): `effect` is a fixed direction printed on the card, `target` is named by whoever plays it at commit (§10.1.2 Step 1.2.2) — not restricted to Directorate or to a contesting faction. Directorate's literal-force doctrine (§5a: "military assets: enforcement personnel and equipment for conflict resolution and presence removal") expressed as a Boost. **Count/magnitude locked S132 (Andy):** 4 cards per faction — 2 Boost + 2 Hinder, magnitudes +1/+2 and −1/−2 respectively; `value_rating` mirrors `magnitude`. Flagged for playtest validation, not treated as final (04-n94 log-to-validate). This is the weaker Boost tier (+1).*
+
+```python
+DIR.MOD.10 = Card(
+    id      = "DIR.MOD.10",  card_id = "DIR.MOD.10",  version = "v0.1",
+    name    = "Riot Control Unit",
+    tagline = "Institutional muscle, committed to hold whatever line the institution has already drawn.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude — resolves 04-n94's "do these move together" question for this pattern
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "Directorate enforcement units, deployed not to seize new ground but to hold whatever the institution has already decided should hold.",
+    arbiter_note = "Playable by any faction, not just Directorate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### DIR.MOD.11 — EMERGENCY CURFEW *(stub)*
+
+*S132. Hinder counterpart to DIR.MOD.10, expressing the other half of §5a's Directorate doctrine: "Suppression toolkit: push other factions' control tiers down rather than building own tiers up — best suppression capability in the game." A curfew doesn't reinforce Directorate's own position in the contest — it makes the named faction's position harder to hold, a Tactic rather than a deployed Asset. Weaker Hinder tier (−1); DIR.MOD.13 Martial Lockdown is the escalated −2 counterpart.*
+
+```python
+DIR.MOD.11 = Card(
+    id      = "DIR.MOD.11",  card_id = "DIR.MOD.11",  version = "v0.1",
+    name    = "Emergency Curfew",
+    tagline = "Movement restricted, checkpoints up — whoever needed the street tonight doesn't get it.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A curfew order goes out on short notice — official reasoning vague, timing anything but coincidental.",
+    arbiter_note = "Playable by any faction, not just Directorate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### DIR.MOD.12 — REQUISITIONED EQUIPMENT *(stub)*
+
+*S132. Second Boost card, Equipment category rather than DIR.MOD.10's human Asset — rounds out the pattern-setter with all three naming-convention categories represented (Asset/Equipment/Tactic, S130 lock) before replicating to the other four factions. Stronger Boost tier (+2) — heavier material commitment than the routine personnel deployment of DIR.MOD.10.*
+
+```python
+DIR.MOD.12 = Card(
+    id      = "DIR.MOD.12",  card_id = "DIR.MOD.12",  version = "v0.1",
+    name    = "Requisitioned Equipment",
+    tagline = "Barricades, vehicles, surveillance rigs — whatever the depot had on hand.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "Institutional hardware, signed out of storage on short notice and committed to wherever the tension is highest tonight.",
+    arbiter_note = "Playable by any faction, not just Directorate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### DIR.MOD.13 — MARTIAL LOCKDOWN *(stub)*
+
+*S132. Escalated Hinder counterpart to DIR.MOD.11 Emergency Curfew (−2 vs. −1) — completes the 2 Boost / 2 Hinder pattern locked S132. Where Curfew is a routine administrative order, Lockdown is Directorate's "best suppression capability in the game" (§5a) turned all the way up: full mobilization against the named faction's position, not just restricted movement.*
+
+```python
+DIR.MOD.13 = Card(
+    id      = "DIR.MOD.13",  card_id = "DIR.MOD.13",  version = "v0.1",
+    name    = "Martial Lockdown",
+    tagline = "Full mobilization. Whatever ground they were counting on tonight, they don't get to hold it.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "The order comes down from Government Citadel: full lockdown, effective immediately. No one asks who requested it.",
+    arbiter_note = "Playable by any faction, not just Directorate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
 ## Network
 [↑ 7. Card Specifications](#7-card-specifications)
 
@@ -10298,6 +10626,114 @@ NET.MOD.14 = Card(
 
 ---
 
+### NET.MOD.15 — COMMUNITY TURNOUT *(stub)*
+
+*S132. Network's ModBattleCard set, replicating the Directorate/Ghost pattern (2 Boost +1/+2, 2 Hinder −1/−2, PM05 09-06). Doctrine per §5a and modifier_card_ideas.md's provisional voice seed: "broadcast/exposure-based: public attention and narrative pressure as a form of contest weight" — not personnel or intelligence, but mobilized public attention. Weaker Boost tier (+1): ordinary residents, not Network operatives, showing up in visible numbers.*
+
+```python
+NET.MOD.15 = Card(
+    id      = "NET.MOD.15",  card_id = "NET.MOD.15",  version = "v0.1",
+    name    = "Community Turnout",
+    tagline = "Word got around. People showed up.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A few calls, a few posts, and the block is suddenly full of people who care how tonight goes.",
+    arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### NET.MOD.16 — LIVE BROADCAST *(stub)*
+
+*S132. Stronger Boost tier (+2) — infrastructure rather than a bigger crowd. Cameras and a real-time feed turn public attention into sustained leverage instead of a one-time gathering.*
+
+```python
+NET.MOD.16 = Card(
+    id      = "NET.MOD.16",  card_id = "NET.MOD.16",  version = "v0.1",
+    name    = "Live Broadcast",
+    tagline = "The feed goes live. Everyone at the table knows the whole city is watching now.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A camera crew sets up on the corner and starts streaming. Whatever happens next, it happens on the record.",
+    arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### NET.MOD.17 — STREET PRESSURE *(stub)*
+
+*S132. Weaker Hinder tier (−1). Network's suppression is public and visible, not covert — organized pushback that makes a position harder to hold in the open, not a hidden attack.*
+
+```python
+NET.MOD.17 = Card(
+    id      = "NET.MOD.17",  card_id = "NET.MOD.17",  version = "v0.1",
+    name    = "Street Pressure",
+    tagline = "Signs, chants, a crowd that isn't going home. Hard to hold ground while explaining yourself.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A crowd gathers outside, loud enough that whatever's happening inside has to happen slower, and worse, than planned.",
+    arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### NET.MOD.18 — PUBLIC OUTCRY *(stub)*
+
+*S132. Stronger Hinder tier (−2), completing Network's 2 Boost/2 Hinder pattern. Escalates Street Pressure from a local crowd into a citywide story — the reputational damage of the coverage itself, not just the presence of a crowd.*
+
+```python
+NET.MOD.18 = Card(
+    id      = "NET.MOD.18",  card_id = "NET.MOD.18",  version = "v0.1",
+    name    = "Public Outcry",
+    tagline = "By morning, everyone at The Table has seen the footage. That's the whole play.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "The clip is everywhere by morning. Nobody needed to lie about what it shows.",
+    arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
 ## Syndicate
 [↑ 7. Card Specifications](#7-card-specifications)
 
@@ -10316,7 +10752,7 @@ NET.MOD.14 = Card(
 | [SYN.CA.4](#c34-golden-parachute) | Golden Parachute |
 | [SYN.CA.5](#c35-regulatory-capture) | Regulatory Capture |
 | [—](#syndicate-land-title) | Land Title |
-| [—](#syndicate-hostile-takeover) | Hostile Takeover |
+| [SYN.CA.9](#syndicate-hostile-takeover) | Hostile Takeover |
 | [SYN.CA.10](#syn-ca-10--accord-transfer) | Accord Transfer |
 | [—](#syndicate-parasitic) | Parasitic |
 | [—](#syndicate-corporate-blackmail) | Corporate Blackmail |
@@ -10838,7 +11274,7 @@ Syndicate's presence absorption card — distinct from SYN.CA.3 Hostile Acquisit
 
 ```python
 HostileTakeover = Card(
-    id      = "SYN.MOD.8",  version="v1.0",
+    id      = "SYN.CA.9",  card_id = "SYN.CA.9",  version="v1.0",  # corrected S132 — was hardcoded "SYN.MOD.8" (a different card's ID), mismatched card_status and §8 index, which both already had this correctly as SYN.CA.9
     name    = "Hostile Takeover",
     tagline = "Purchase control of a faction's community presence in a district, replacing their tokens with Syndicate's at equivalent tier.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -12048,14 +12484,14 @@ SYN.MOD.7 = Card(
 
 ---
 
-### SYN.MOD.8 — HOSTILE TAKEOVER *(stub)*
+### SYN.MOD.8 — VULTURE FUND *(stub)*
 
-*Syndicate buys up the territory left behind by destroyed infrastructure.*
+*Renamed S132 from "Hostile Takeover" — duplicate name with SYN.CA.9 (04-n156). Syndicate buys up the territory left behind by destroyed infrastructure; the new name matches the actual mechanic — this isn't a takeover of an operating position (that's SYN.CA.9), it's opportunistic acquisition of what's left after someone else's structure comes down. Asset (business) category per S130 naming convention.*
 
 ```python
 SYN.MOD.8 = Card(
     id      = "SYN.MOD.8",  card_id="SYN.MOD.8",  version="v0.1",
-    name    = "Hostile Takeover",
+    name    = "Vulture Fund",
     tagline = "Buy when there's blood in the streets.",
     type    = ModReactCard,  faction = Syndicate,
     layer   = None,  function = None,  subject = None,
@@ -12081,9 +12517,9 @@ SYN.MOD.8 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    narrative    = None,
+    narrative    = "The paperwork was drafted before the demolition crew finished clearing the site. Syndicate doesn't wait for the dust to settle to make an offer.",
     perspectives = None,
-    design_note  = "Opportunistic expansion. When a structure falls, Syndicate swoops in, paying 2 Capital to immediately place both a presence chip and a structure in the newly cleared real estate. Extremely powerful territorial swing funded entirely by Capital Cost reasoning: Exposure ensures the takeover is recognized publicly, legitimizing the new ownership immediately.",
+    design_note  = "Renamed S132 from 'Hostile Takeover' — collided with SYN.CA.9, an unrelated card that displaces an opponent's active presence tokens. Vulture Fund is a different mechanic entirely: opportunistic expansion into vacated ground, not a forced acquisition of a going concern. When a structure falls, Syndicate swoops in, paying 2 Capital to immediately place both a presence chip and a structure in the newly cleared real estate. Extremely powerful territorial swing funded entirely by Capital Cost reasoning: Exposure ensures the takeover is recognized publicly, legitimizing the new ownership immediately.",
     arbiter_note = None,
 )
 ```
@@ -12214,6 +12650,114 @@ SYN.MOD.11 = Card(
 
 ---
 
+### SYN.MOD.12 — CONTRACTED MUSCLE *(stub)*
+
+*S132. Syndicate's ModBattleCard set, replicating the Directorate/Ghost/Network/Guild pattern (2 Boost +1/+2, 2 Hinder −1/−2, PM05 09-06) — last of the five. Doctrine per §5a is the most explicit of any faction on this exact subclass: "Battle winner modifier cards: rare and costly; serve primarily as deterrent — Directorate's awareness shapes Ring 1/2 calculus without deployment." **`cost = None`, matching all four other factions (corrected S132 — Andy):** Art 03 §10.1.2 has no cost validation/payment step anywhere in the commit or reveal sequence, so a `cost` field here would be unenforceable content, the same class of error 04-n152 exists to prevent on the effect side. "Rare and costly" stays true at the *deck* level — the acquisition/rarity side of that doctrine (how seldom these are drawn, how few exist) rather than a per-play resource cost with no procedure to collect it. Weaker Boost tier (+1): a cheap, disposable hire.*
+
+```python
+SYN.MOD.12 = Card(
+    id      = "SYN.MOD.12",  card_id = "SYN.MOD.12",  version = "v0.1",
+    name    = "Contracted Muscle",
+    tagline = "Paid by the hour, paid up front, gone the moment the money stops.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,   # corrected S132 (Andy) — Art 03 §10.1.2 has no cost validation step; "costly" is deck-level rarity, not a per-play resource cost
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A few names get a call, a rate gets quoted, and by evening there are more people on the block than there were this morning.",
+    arbiter_note = "Playable by any faction, not just Syndicate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### SYN.MOD.13 — ARMORED TRANSPORT *(stub)*
+
+*S132. Stronger Boost tier (+2) — hardware rather than headcount. `cost = None`, same as SYN.MOD.12 (see that card's note on why "costly" doesn't become a per-play resource cost).*
+
+```python
+SYN.MOD.13 = Card(
+    id      = "SYN.MOD.13",  card_id = "SYN.MOD.13",  version = "v0.1",
+    name    = "Armored Transport",
+    tagline = "Nobody asks where it came from. Everybody notices it's there.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,   # corrected S132 (Andy) — Art 03 §10.1.2 has no cost validation step; "costly" is deck-level rarity, not a per-play resource cost
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A convoy rolls in that nobody remembers ordering. It parks, and it stays parked, right where it's most visible.",
+    arbiter_note = "Playable by any faction, not just Syndicate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### SYN.MOD.14 — CALLED-IN DEBT *(stub)*
+
+*S132. Weaker Hinder tier (−1). Syndicate's suppression is financial leverage, not force — someone the target faction depends on suddenly has other obligations to honor first.*
+
+```python
+SYN.MOD.14 = Card(
+    id      = "SYN.MOD.14",  card_id = "SYN.MOD.14",  version = "v0.1",
+    name    = "Called-In Debt",
+    tagline = "Everyone owes somebody. Tonight, Syndicate collects.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,   # corrected S132 (Andy) — Art 03 §10.1.2 has no cost validation step; "costly" is deck-level rarity, not a per-play resource cost
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A supplier who was supposed to show up tonight suddenly has a more urgent invoice to settle first.",
+    arbiter_note = "Playable by any faction, not just Syndicate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### SYN.MOD.15 — BOUGHT OFF *(stub)*
+
+*S132. Stronger Hinder tier (−2), completing Syndicate's 2 Boost/2 Hinder pattern and the full five-faction ModBattleCard pattern-set. Escalates Called-In Debt from inconvenience into defection — not people the target hired, but people the target was counting on regardless.*
+
+```python
+SYN.MOD.15 = Card(
+    id      = "SYN.MOD.15",  card_id = "SYN.MOD.15",  version = "v0.1",
+    name    = "Bought Off",
+    tagline = "Everyone has a price. Syndicate found out whose was lowest.",
+    type    = ModBattleCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 2,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,   # corrected S132 (Andy) — Art 03 §10.1.2 has no cost validation step; "costly" is deck-level rarity, not a per-play resource cost
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "The people the target was counting on tonight took a better offer this afternoon. Nobody told them who from.",
+    arbiter_note = "Playable by any faction, not just Syndicate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
 ## 8. Card Taxonomy Index
 
 *Column definitions and Layer × Function validity matrix in Art 04b §5.1. Status key: ✅ Signed off — canonical, use for gap analysis. 📝 Draft — designed but not signed off. ⬜ Not yet designed. 🚫 Retired.*
@@ -12239,6 +12783,11 @@ SYN.MOD.11 = Card(
 | DIR.MOD.6 | State of Emergency | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | DIR.MOD.7 | Eminent Domain | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | DIR.MOD.8 | Asset Seizure | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.9 | Fiscal Sanction | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.10 | Riot Control Unit | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.11 | Emergency Curfew | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.12 | Requisitioned Equipment | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.13 | Martial Lockdown | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | GHO.CA.1 | Pattern Match | 📝 | Submission | Private | Redirect | Covert Operation (lane steal — Beat 2 intercept) | Redirect |
 | GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
 | GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | Intel Delivery Slip | Reveal |
@@ -12266,6 +12815,10 @@ SYN.MOD.11 = Card(
 | GHO.MOD.6 | Supply Chain Tap | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | GHO.MOD.7 | Sleeper Cell | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | GHO.MOD.8 | Local Sympathizers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.12 | Embedded Contact | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.13 | Signals Package | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.14 | Planted Doubt | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.15 | Blown Cover | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure Block | — |
 | GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
 | GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence Token | Add |
@@ -12284,6 +12837,10 @@ SYN.MOD.11 = Card(
 | GUI.MOD.8 | Site Clearance | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.MOD.9 | Field Supervisor | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.MOD.10 | Contractor's Favor | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.11 | Site Foreman | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.12 | Material Stockpile | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.13 | Permit Delay | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.14 | Structural Condemnation | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
 | NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
 | NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
@@ -12300,6 +12857,10 @@ SYN.MOD.11 = Card(
 | NET.MOD.8 | Frequency Splitter | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.MOD.9 | Bandwidth Override | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.MOD.10 | Local Organizers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.15 | Community Turnout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.16 | Live Broadcast | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.17 | Street Pressure | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.18 | Public Outcry | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
 | NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence Token | Add |
 | NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | Faction Hand | Reveal |
@@ -12347,10 +12908,14 @@ SYN.MOD.11 = Card(
 | SYN.MOD.5 | Short Squeeze | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.6 | Bounty Contract | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.7 | Renegotiation Fee | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.8 | Hostile Takeover | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.8 | Vulture Fund | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.9 | Goodwill | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.10 | Lobby | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.11 | Signature on File | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.12 | Contracted Muscle | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.13 | Armored Transport | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.14 | Called-In Debt | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.15 | Bought Off | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
 | SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
 | SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
@@ -12531,8 +13096,10 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 
 | Direction | Effect |
 |-----------|--------|
-| `Self` | +magnitude applied to submitting faction's Battlefield Strength threshold |
-| `Opponent` | −magnitude applied to opponent's threshold |
+| `Boost` | +magnitude applied to the named target faction's Battlefield Strength total |
+| `Hinder` | −magnitude applied to the named target faction's Battlefield Strength total |
+
+Target is any contesting faction identified at Art 03 §10.1.1 — chosen by the playing faction, not necessarily themselves. Any faction may play a Battlefield Modifier Card into an active contest, whether or not they are contesting it themselves (Art 03 §10.1.2 Step 2, S132).
 
 **ModReactCard** effects: Full CA/PA effect field set (`success`, `successcrit`, `fail`, `failcrit`) — see §6.1.
 

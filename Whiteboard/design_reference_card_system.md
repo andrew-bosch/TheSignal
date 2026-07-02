@@ -356,7 +356,9 @@ CardType:    CovertOperation | PublicAct | Pass | Countermeasure | Modifier | Em
   Modifier subclasses (Art 04 §6.1, 04-n102 ✅ S127):
     ModReactCard    beat=None always · trigger Required · ring_constraint/ring_origin apply
     ModActionCard   bundled with host Covert Op at Dispatch · fires with host
-    ModBattleCard   §10 Contested District Resolution window only
+    ModBattleCard   Art 03 §10.1.2 commit window only (S132 redesign, PM02 L242) · effect = ModBattleExpr(direction: Boost|Hinder, target: Faction, magnitude: int)
+                    · target = any contesting faction (§10.1.1), chosen by playing faction — need not be themselves, need not be a contestant
+                    · face-down commit in front of target, simultaneous reveal before d10 roll · no per-card quantity cap
 Subtype:     Standard | FactionSpecific
 Faction:     All | Ghost | Network | Syndicate | Guild | Directorate
 Resolution:  d100 | Automatic   ← NOT "Dice" — d100 is the exact enum value

@@ -125,6 +125,33 @@ Trigger: when an opponent's political act succeeds this round, Network may immed
 
 ---
 
+## ModBattleCard Design Principle (S132)
+
+**Status: faction-set stub pass complete (S132) — 20 cards shipped, all 5 factions (Art 04 §7, DIR.MOD.10–13/GHO.MOD.12–15/NET.MOD.15–18/GUI.MOD.11–14/SYN.MOD.12–15).** Everything below is now confirmed design, not a hypothesis — see the per-faction breakdown at the end of this section. Ring-set content (Ring 1/2/3 versions) is the next pass, gated on 04-29 (ring-voice narrative gap — not yet resolved).
+
+**Locked (Andy, S132):** All 5 factions get ModBattleCard content — not just the factions with obvious combat doctrine. Framing: **"battle" in this game is tension resolution — the struggle over a shift in a district's dominant influence, not necessarily violence.** Battlefield Strength (§10.1.2) fires whenever a district goes Contested; every faction has a stake in that outcome and a doctrinal way of contesting it.
+
+**Per-faction voice — confirmed via the shipped stub sets, not provisional anymore:**
+- **Directorate** — literal force: enforcement personnel, equipment, military assets (§5a explicit). Shipped: Riot Control Unit (Boost +1), Requisitioned Equipment (Boost +2), Emergency Curfew (Hinder −1), Martial Lockdown (Hinder −2).
+- **Syndicate** — rare, costly "battle winner" assets; deterrent more than deployed (§5a explicit) — "costly" stayed a deck-level/rarity property, not a per-play resource cost (see Mechanics below). Shipped: Contracted Muscle (+1), Armored Transport (+2), Called-In Debt (−1), Bought Off (−2).
+- **Guild** — construction crews, material stockpiles, structural expertise; Hinder cards kept procedural/visible (permits, inspections), consistent with Guild's "cannot operate covertly in principle" doctrine. Shipped: Site Foreman (+1), Material Stockpile (+2), Permit Delay (−1), Structural Condemnation (−2).
+- **Ghost** — leverage/intelligence-based: what they know about the contest, not what they bring to it. Shipped: Embedded Contact (+1), Signals Package (+2), Planted Doubt (−1), Blown Cover (−2).
+- **Network** — broadcast/exposure-based: public attention and narrative pressure as a form of contest weight. Shipped: Community Turnout (+1), Live Broadcast (+2), Street Pressure (−1), Public Outcry (−2).
+
+Do not default to a uniform combat vocabulary across factions — each ModBattleCard's flavor reads as that faction's doctrine expressed through the tension-resolution mechanic, same narrative discipline as every other card type (Art 04 §5 P26). Use these 20 as the reference set when designing Ring-set or any future ModBattleCard content.
+
+**Mechanics — locked and shipped (S132, PM02 L242; full procedure: Art 03 §10.1.2, condensed: `ref_procedures.md`):**
+- `effect = ModBattleExpr(direction: Boost|Hinder, target: Faction, magnitude: int)`. Every card names a **target** — a contesting faction identified at §10.1.1 — chosen freely by the playing faction. `Boost (+magnitude)` adds to the target's total; `Hinder (−magnitude)` subtracts. A contesting faction's own Boost cards default to targeting themselves unless deliberately placed on a different contestant.
+- **Any faction may play a card, contesting or not.** This is the mechanical hook for the "leverage/intelligence/broadcast" framing above — a Ghost or Network card doesn't need its own faction to be fighting over the district to have a doctrinal reason to weigh in on who wins it.
+- Placed face-down in front of the named target at commit; all commitments (mod cards + Intel Tokens) reveal simultaneously, before the d10 roll. No Target Profile — target is spoken, not written.
+- **No quantity cap** — Art 04 §11.4's "max 1 modifier card per action" does not apply here (§10.1.2 commit isn't an action submission; §11 itself is flagged non-canonical, 04-n153).
+- **`cost = None` for every shipped card, all 5 factions — including Syndicate.** Art 03 §10.1.2 has no cost validation/payment step anywhere in the commit sequence, so a per-play resource cost is unenforceable content. Syndicate's "costly" (§5a) is expressed at the deck level (rarity/acquisition), not a mechanical cost field — an initial attempt to give Syndicate's set a Capital cost was corrected for this reason.
+- **Magnitude scale (04-n94):** shipped as ±1/±2, mirrored 1:1 by `value_rating` — explicitly flagged for playtest validation, not treated as final balance numbers. Log actual play outcomes before locking.
+- Discarded on use regardless of outcome — may not be replayed in the same contest or any subsequent district contest that Quarter. Press-the-Battle re-roll (§10.1.4.0.2) already supports playing fresh cards from hand on each loop.
+- Naming convention (S130) still applies: Asset (human/business), Equipment, or Tactic.
+
+---
+
 ## Open Design Questions
 
 - Modifier card naming — "Assets" rename under consideration (PM05 XA-35); do not lock until Art 04 modifier section begins

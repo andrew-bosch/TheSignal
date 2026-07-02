@@ -44,8 +44,9 @@ This artifact defines everything a faction player needs to begin and sustain a s
 9. Classified Directives
 10. Faction Reference Card
 11. Player Setup Procedure
-12. Special Conditions & Gameplay Impacts
-13. Examples & Exceptions
+12. Best Practices
+13. Special Conditions & Gameplay Impacts
+14. Examples & Exceptions
 
 ---
 
@@ -220,7 +221,16 @@ Each faction has a faction reference card — a double-sided condensed reference
 
 ---
 
-## 12. Special Conditions & Gameplay Impacts
+## 12. Best Practices
+
+*Stub — table-tested habits that aren't formal rules, collected here as they're identified. Not procedure; players are free to substitute their own approach. First entry S132; more to follow as playtesting surfaces them.*
+
+- **Battlefield Strength running total (§10.1.2 — Art 03):** With no cap on Battlefield Modifier Cards or Intel Tokens playable into a contest, you can lose track doing the addition cold at Step 1.2.4 (Announce) if several stack up in front of you. Suggested habit: jot the running number on scratch paper as each card/token gets placed in front of you at Step 1.2.2/1.2.3, rather than summing everything at once at Announce.
+- **Bring your own 2d10 set:** A shared die set gets passed around and slows the table. Having your own pair of d10 helps for standard d100 rolls (percentile: two d10 read as tens+units) and especially for §10.1.3 (Roll d10) in Battlefield Strength, where every contesting faction rolls at the same moment — your own dice let you actually roll simultaneously with everyone else instead of waiting your turn for a shared set.
+
+---
+
+## 13. Special Conditions & Gameplay Impacts
 
 ### Faction Absence
 *[TBD — what happens if a faction player cannot complete a quarter (emergency, etc.)? Recommend: ARBITER controls the absent faction for the quarter, submitting Pass cards. Faction player resumes control next quarter.]*
@@ -230,7 +240,7 @@ Each faction has a faction reference card — a double-sided condensed reference
 
 ---
 
-## 13. Examples & Exceptions
+## 14. Examples & Exceptions
 
 *[TBD — populate after 04 and 05 complete. Key scenarios: deck selection edge cases, directive dispute, Emergency Response Card mistimed play.]*
 
