@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.61 Draft  
+**Version:** 0.9.63 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-06-30  
+**Last Updated:** 2026-07-01  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -502,7 +502,8 @@ class ModReactCard(Card):
     # Modifier firing on a publicly observable board state delta. Played in Faction Resolution Grid.
     # trigger:     required (never None) — defines what activates the card; overrides Card.trigger default
     # beat:        always None — React fires on trigger condition, not at a named beat
-    # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as standing condition until Quarter end
+    # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as standing condition until Quarter end;
+    #              Permanent = remains until an explicit clearing condition is met (confirmed S131 — DIR.MOD.9 Fiscal Sanction)
     # Field constraints: §6.2.
     value_rating:     int | None            # 1–3; None = TBD (stub only)
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
@@ -536,7 +537,7 @@ class ModReactCard(Card):
 | trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
 | resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
-| persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Close Month of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. PA cards with active board-condition effects must use Transient or Seasonal. | Face |
+| persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Close Month of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. Card-as-condition PAs with standing board-condition effects commonly use Permanent (e.g., DIR.PA.1/PA.3/PA.5/PA.6/PA.11) — corrected S131; the prior text here ("must use Transient or Seasonal") predated the card-as-condition pattern and was stale. | Face |
 | persistence_condition | Metadata | BoolExpr | Condition that must remain True for a Permanent card to stay in play; card is discarded immediately when it evaluates False. None for all non-Permanent cards. | Face |
 | persistence_effect | Metadata | MutationExpr | Ongoing board condition active while a Permanent card is in play; evaluated continuously until persistence_condition is met. Use `game.board_condition(...)` to express scoped persistent effects. None for all non-Permanent cards. | Face |
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
@@ -4662,6 +4663,187 @@ GUI.MOD.8 = Card(
 
 ---
 
+### GUI.MOD.9 — FIELD SUPERVISOR
+[↑ Guild](#guild)
+
+*S131. React on opponent Established Marker placement — passive income keyed to territorial milestone rather than structure state. Closes Guild deficit (2 of 2). Asset (human).*
+
+#### Design Rationale
+Guild's certification-network income card, keyed to a different trigger surface than MOD.2/MOD.3/MOD.4 (structure placement) or MOD.8 (structure removal). Every faction's climb to Established influence in a district is a public administrative milestone — a Silver Established Marker placed on the board. Guild's inspection and permitting offices are the ones who process that filing, regardless of whether the settling faction has built anything yet. No structure requirement means this card fires even in districts Guild's other income cards never reach — pure presence accumulation by an opponent is enough.
+
+This completes a four-angle passive-income doctrine across the Guild MOD set: build (MOD.2/3/4), demolish (MOD.8), and now settle (MOD.9). Each keys to a distinct, unambiguous, publicly observable board-state delta — no overlap, no redundant coverage.
+
+#### Card Story
+A Network survey team finally holds enough ground in a Baryo block to call it theirs — the second marker that tips them to Established. Within the day, a Guild inspector is on-site with a checklist and a fee schedule. Nobody's foothold in New Meridian goes unrecorded, and unrecorded means uncharged.
+
+**Design checklist (Art 04 §11.9):**
+
+| Criterion | Assessment |
+|-----------|-----------|
+| Trigger observability | ✓ `established_marker.placed` — Silver marker is a physical, publicly visible board component; confirmed §6.3 vocabulary. |
+| Trigger frequency | Moderate, front-loaded — Established markers are placed as factions climb to second-place influence; expect several fires across the first 2–3 Quarters, tapering as territorial positions settle. Not underfire (fires reliably in any contested game) or overfire (bounded by 21 districts × 4 opponents). |
+| Firing window | No race — no other Guild MOD reacts to `established_marker.placed`; distinct trigger object from MOD.2's `structure_block.placed`. |
+| Automatic vs. d100 | Automatic — trigger is unambiguous, effect is a bounded flat yield. |
+| Persistence | Immediate — single-event response to a milestone; no ongoing condition implied. |
+| Stack behavior | Consistent with MOD.2/MOD.8 precedent: no restriction against multiple copies each firing independently on the same trigger event. |
+| Ring constraint | None — Guild's certification network is citywide, matching MOD.2's baseline (ring-constrained variant is a future design candidate, not required here). |
+| Portrait | Guild submitter +1 — quiet administrative action, matches the scale of MOD.2/3/4/8 income Reacts. |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | | |
+
+```python
+GUI.MOD.9 = Card(
+    id      = "GUI.MOD.9",  card_id="GUI.MOD.9",  version="v0.1",
+    name    = "Field Supervisor",
+    tagline = "Every foothold in this city gets inspected. Guild does the inspecting.",
+    type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = established_marker.placed(faction=opponent),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = None,  # no presence requirement — Guild's certification network is citywide
+    cost            = None,
+    boost           = None,
+
+    success     = faction(Guild).resources.add(1, Capacity),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,
+    perspectives = {
+        Guild:       "Somebody's putting down roots. That means permits, inspections, code review. That means us.",
+        Directorate: "Guild's paperwork trail on every Established filing is, admittedly, more thorough than ours.",
+        Ghost:       "A structure-independent income trigger. Notable — Guild reads territory before it reads construction.",
+        Network:     "Guild's inspectors show up before our own press release does. Efficient, if a little presumptuous.",
+        Syndicate:   "A fee nobody negotiated and everybody pays. That's a business model we respect.",
+    },
+    design_note  = "Fourth angle of Guild's passive-income quartet (MOD.2 build / MOD.8 demolish / MOD.9 settle / MOD.4 premium-rate variant). Fires on any opponent's Established Marker placement, citywide, no structure or presence requirement. Flat +1 Capacity, Automatic, Immediate. Distinct trigger object from MOD.2 (structure_block.placed) — no overlap or double-count risk even if a single covert op both adds presence past the Established threshold and places a structure in the same beat.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### GUI.MOD.10 — CONTRACTOR'S FAVOR
+[↑ Guild](#guild)
+
+*S131. React on Tension Marker placement — Guild commits construction/material priority to a named contesting faction, applied as a Battlefield Strength modifier at §10. Closes Guild deficit (2 of 2). First third-party Battlefield Strength influence card in the set. Tactic.*
+
+#### Design Rationale
+Guild's only mechanic that reaches into Contested District Resolution (Art 03 §10) without Guild itself being a contesting faction. When a district goes Contested, Guild — already present or adjacent, already the district's contractor of record — commits its crews and material schedule to favor one side. That commitment is registered immediately (Guild doesn't wait for the battle to declare it) and stands as a Seasonal condition until §10 actually resolves that district, whenever in the Quarter that happens.
+
+This is new mechanical ground: the existing ModBattleCard subclass lets a *contesting* faction modify its own or a *named opponent's* total, played live during §10.1.2. Contractor's Favor is a *ModReactCard* — it fires earlier, off a different trigger (`tension_marker.placed`, not the Battlefield Strength declaration step), and its effect targets a named faction's total regardless of whether Guild itself is contesting that district. The tradeoff for committing early is fizzle risk: if the named faction is no longer a contesting (Dominant) faction by the time §10.1.1 actually identifies contestants, Guild's condition has no effect — the political ground shifted out from under an early bet. This is the narrative engine of the card, not a bug: Guild reads the room the moment it goes tense, and sometimes reads it wrong.
+
+Restriction (Guild Present in the district or an adjacent district) keeps this tied to actual territorial investment — Guild needs to already have people nearby to know whose crews to prioritize. Target is any Dominant/contesting faction, no doctrinal constraint (Art 00 §7 pentagram) — Guild's doctrine here is transactional, not political: contracts go to whoever Guild backs, not to an ally by default.
+
+**Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 2 (Battlefield Modifier Cards) and Step 3 (Intel Tokens). No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
+
+#### Card Story
+Tension breaks out over a contested block, and every material order in the district suddenly has two delivery dates — one for the faction Guild's crews like working with, one for everyone else. By the time the district actually goes to the wire, one side got their scaffolding early.
+
+**Design checklist (Art 04 §11.9):**
+
+| Criterion | Assessment |
+|-----------|-----------|
+| Trigger observability | ✓ `tension_marker.placed` — neutral marker placed on the board when Contested condition triggers; checked at every influence-change step (L1584); confirmed §6.3 vocabulary. |
+| Trigger frequency | Low–moderate — Contested (tie at 3+) is a specific, less-common board state; expect 0–3 fires per Quarter, likely spiking as territorial positions tighten late-Quarter. |
+| Firing window | No race with other Guild MODs (distinct trigger). Registered condition is read at §10.1.2 alongside live-played ModBattleCards — sequencing (Guild's pre-registered delta vs. live cards) is part of the Outstanding Issue / 04-n148 procedure gap. |
+| Automatic vs. d100 | Automatic — Guild's own action (registering the condition) is unconditional; the eventual battle outcome still resolves on d10 per §10.1.3, untouched by this card's resolution type. |
+| Persistence | Seasonal — correct fit per §11.9 guidance ("ongoing condition across multiple subsequent actions, not a single-event response"): the condition must survive from trigger (potentially Month 1) through to §10 (Quarter end). |
+| Stack behavior | Open — flagged in Outstanding Issues. If Guild holds multiple copies and both fire on the same district's Tension Marker, do both conditions register and stack? No hard restriction written; deferred to balance pass alongside 04-n136 (deck size / copy count). |
+| Ring constraint | None — presence/adjacency restriction already provides a geographic gate; a ring constraint would be redundant on top of it. |
+| Portrait | Guild submitter +1 only — fires for Guild regardless of outcome (registering the condition is the submitted action); does not fire for the named target_faction (portrait entries are submitter-bounded, P16). |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | ⚠ (04-n148 pending) | |
+
+```python
+GUI.MOD.10 = Card(
+    id      = "GUI.MOD.10",  card_id="GUI.MOD.10",  version="v0.1",
+    name    = "Contractor's Favor",
+    tagline = "We don't pick sides. We pick delivery dates.",
+    type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = tension_marker.placed(district=district(trigger.target)),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    persistence = Seasonal,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = trigger.district,
+    target_faction  = faction.named,   # declared at trigger — must be a Dominant (contesting) faction in target_district at time of declaration
+    target_object   = None,
+    target_taxonomy = None,
+    declared_params = direction.named, # "Support" (+2 to target_faction's Battlefield Strength total) or "Withhold" (−2); declared alongside target_faction
+    affinity        = None,
+    restriction     = (
+        faction(Guild).presence_in(target_district)
+        or faction(Guild).presence_in(district.adjacent_to(target_district))
+    ),
+    cost            = resource.faction(Guild).capacity * 1,
+    boost           = None,
+
+    success = arbiter.register_battlefield_modifier(
+        district=target_district,
+        faction=target_faction,
+        magnitude=magnitude_from(declared_params),  # Support = +2, Withhold = −2
+    ),
+    # Applied at Art 03 §10.1.2 (Calculate and Declare Totals) if target_faction is still a contesting
+    # (Dominant) faction in target_district when §10.1.1 identifies contestants; otherwise the condition
+    # lapses with no effect. Condition clears at Phase 21 (End of Quarter) regardless of outcome.
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,
+    perspectives = {
+        Guild:       "We don't fight for the block. We decide who gets the scaffolding on time.",
+        Directorate: "An unlicensed thumb on the scale before the contest even opens. Noted, not actionable.",
+        Ghost:       "A public commitment with private timing risk. Guild bets on today's map holding through the Quarter.",
+        Network:     "Everyone can see who Guild backed. That's a story whether the bet pays off or not.",
+        Syndicate:   "Guild's monetizing uncertainty before the dice even get picked up. Professionally, we approve.",
+    },
+    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — tracked 04-n148 (Outstanding Issue).",
+    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and direction (Support +2 / Withhold −2), and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization pending 04-n148.",
+)
+```
+
+---
+
 ## Ghost
 [↑ 7. Card Specifications](#7-card-specifications)
 
@@ -7194,57 +7376,19 @@ DIR.CA.4 = Card(
 
 ---
 
-### Directorate — REGULATORY DOWNGRADE 🚫 BLOCKED
+### DIR.PA.4 — REGULATORY DOWNGRADE *(stub)*
 [↑ Public Acts](#directorate-public-acts)
 
-#### Design Rationale
-Directorate's active tier suppression play — declared publicly at Phase B, resolved at Beat 4. The card stays on the Overview as the persistent condition: no separate marker component needed. Target faction collects resources in the named district as one tier lower (resource generation only; actual presence count still governs control tier for win-condition calculations). Cleared when target pays 2 native to Reservoir — available any time after Beat 4 resolution, including immediately. Economics: clearing same Quarter costs the target 2 native (net 3 from a full Core+structure district). Each Upkeep with the card active costs −1 resource generation plus the eventual 2 to clear. Directorate spent 3 Mandate for a guaranteed minimum 2-resource drain; compounding if target delays. Paired with Regulatory Freeze: Downgrade is the active suppression play once a faction is entrenched; Freeze is the cheaper preventive play to gate lower-tier factions out of advancement.
-
-#### Card Story
-⚠ Story pending 04-n79.
-
-**Design checklist:**
-
-| Category | Pass | Note | Artifact ref |
-|----------|------|------|--------------|
-| Action fit | ✓ | Public institutional reclassification — declared openly, contested in Countermeasure window, persistent economic suppression | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Directorate perspective — reclassification as institutional act | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; target must be Established+; public act fits regulatory authority doctrine — the Directorate does not act in secret when it reclassifies | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) — institutional reclassification is public, permanent, and Directorate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Modify/InfluenceTier — card on board IS the condition; no separate component needed | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×3, Automatic; guaranteed economic suppression; minimum 2-native drain on target; compounding cost per Upkeep delayed | Art 02 §6–§7 |
-| Effect duration | ✓ | Permanent — card stays on Overview until persistence_condition met | — |
-| Persistence | ✓ | Permanent public act; `persistence_condition` = target pays 2 native to Reservoir; card removed on payment | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Directorate +1 submitter — reclassification aligns with regulatory authority doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
-| Supported by components | ✓ | No new component — card on Overview is the persistent condition | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Phase B declaration → Countermeasure window → Beat 4 Automatic resolution; standard Permanent Public Act lifecycle | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-
-#### Outstanding Issues
-
-- **Win-condition scope:** Resource generation tier penalty only — actual presence count governs control tier for Dominance/Established win-condition calculations. Needs explicit statement in Art 03 Upkeep Step 5 procedure or Art 07 reference. Tracks under 04-n27.
-- **Freeze interaction:** If Downgrade and Freeze are both active on the same faction/district simultaneously, combined effect is: one tier down for resource gen + blocked from tier advancement. Needs explicit procedure note confirming coexistence is valid and no additional interaction applies.
-- **🚫 BLOCKED (S107, L223):** Two permanent constraints. (1) InfluenceTier is derived state (calculated from token counts), not a placed component — it cannot be directly targeted by a card. (2) GR 9.1 prohibits direct income modification by card. Both are permanent. Fundamental redesign required: income suppression must work through board state — Territory|Remove|PresenceToken is the valid path (token removal reduces tier, which reduces income naturally). Cross-ref: Art 04b §8.2 item 4, PM05 04-n104.
-
-#### Status
-
-| | Design Pass | Issues Resolved | Signed off |
-|--|-------------|-----------------|------------|
-| Status | 🚫 BLOCKED | — | — |
-
-*Redesigned S67 — v2.0. CovertOperation → PublicAct. TierPenaltyMarker removed; card-as-condition pattern.*
+*S131. Redesigned — resolves 04-n104 BLOCKED status (L223: original targeted InfluenceTier, a derived/non-targetable state, and violated GR 9.1). Simplified per GR 6.1 / Design Pillar 4.7b: no ARBITER calculation — removes exactly 1 named presence token. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
 ```python
-RegulatoryDowngrade = Card(
-    id      = "DIR.PA.4",  version="v2.0",
+DIR.PA.4 = Card(
+    id      = "DIR.PA.4",  card_id="DIR.PA.4",  version="v3.0",
     name    = "Regulatory Downgrade",
-    tagline = "Reclassify a faction's standing in a district. They generate resources as if one tier lower until they pay to clear it.",
+    tagline = "One chip, formally revoked.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
 
-    layer   = Territory,  function = Modify,  subject = InfluenceTier,
+    layer   = Territory,  function = Remove,  subject = PresenceToken,
 
     beat            = 4,
     resolution      = Automatic,
@@ -7252,88 +7396,49 @@ RegulatoryDowngrade = Card(
     ring_mod        = None,
     doctrine_mod    = None,
     trigger         = None,
-    resolution_type = "Permanent public act",
-    outcome_type    = None,
-    persistence     = Permanent,
-    persistence_condition = faction(target).pays(2, resource.native, to=Reservoir),
-    persistence_effect    = game.board_condition(
-                                scope  = district(target) + faction(target),
-                                effect = resource_gen.tier_effective -= 1,
-                            ),
+    resolution_type = "Transactional",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
 
     target_district = district.named,
-    target_faction  = faction(named_opponent),
+    target_faction  = faction.named_opponent,
     target_object   = None,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = faction(target).influence_tier(district(target)) >= Established,
+    cost            = resource.faction(Directorate).mandate * 2,
+    boost           = None,
 
-    target_taxonomy=None,
-    affinity    = None,
-    restriction = faction(target).influence_tier(district(target)) >= Established,
-    cost        = resource.faction(acting).mandate * 1 + resource.faction(acting).exposure * 1 + resource.faction(acting).capital * 1,
+    success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
 
-    success     = None,
-    successcrit = None,
-
-    portrait    = {Directorate: PortraitEntry(submitter=+1)},
-
-    narrative    = "The Directorate does not need to remove them. It need only redefine what they are.",
-    perspectives = {Directorate: "The reclassification stands. Their tier in this district now reflects our assessment, not their aspirations."},
-
-    design_note  = "Card placed in Directorate play area (public, face-up) — no TierPenaltyMarker. Card IS the persistent condition. Resource generation only; presence count unchanged. Clearing: target pays 2 native to Reservoir, any time after Beat 4 resolution. Economics: clear same Quarter = net 3; each Upkeep active = −1 gen then pay 2. Paired with Regulatory Freeze for full suppression toolkit.",
-    arbiter_note = "Per Permanent Public Act procedure: card placed in Directorate play area at Beat 4 (public, face-up; target district and faction declared). At each Upkeep Step 5: apply one-tier reduction to resource generation for faction(target) in district(target). Win-condition tier (Dominance/Established) uses actual presence count — do not apply penalty to control calculations. Clearing: when faction(target) pays 2 native to Reservoir (any time after Beat 4), remove card and announce.",
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Redesigned S131 (v2.0 → v3.0), resolves 04-n104. ARBITER performs no comparison or tier calculation — removes exactly 1 named presence token from target faction in target district; the tier consequence (if any) is a natural downstream effect of fewer tokens under the standard influence-level rules, not a direct write. Established+ restriction preserved from original (one-time boolean gate, not a recurring calculation — compliant with GR 6.1 / Design Pillar 4.7b). Locked cost principle: this base version (N=1) is mono (Mandate×2). Any future variant removing N>1 tokens must use cross-resource cost. Distinct from DIR.CA.5 Sanctioned Raid: public/Automatic/no-roll vs. covert/d100/boost-scaled.",
+    arbiter_note = "Beat 4: confirm target faction holds Established+ tier in target district. Remove 1 presence token belonging to target faction from target district (target's choice of which physical chip, if multiple present).",
 )
 ```
 
 ---
 
-### Directorate — REGULATORY FREEZE 🚫 BLOCKED
+### DIR.PA.5 — ZONING FREEZE *(stub)*
 [↑ Public Acts](#directorate-public-acts)
 
-#### Design Rationale
-Preventive tier suppression — lighter than Regulatory Downgrade but cheaper. Where Downgrade reduces an existing tier, Freeze prevents advancement from the current tier. Cost Mandate×2 and Automatic resolution reflect that issuing a regulatory ceiling is a procedural act, not a contested operation. No ring_mod — administrative acts carry the same institutional weight anywhere in New Meridian. Clearing is deliberately cheaper than Downgrade (1 native vs 2) because a ceiling is a future constraint, not a reclassification of existing status. Card-as-condition pattern: the card placed in the Directorate play area is the persistent condition; no separate marker component needed. Enforcement per Governing Rule 6.1a: Directorate monitors, calls violations, ARBITER adjudicates and reverses. Paired with Regulatory Downgrade for full suppression toolkit.
-
-#### Card Story
-⚠ Story pending 04-n79.
-
-**Design checklist:**
-
-| Category | Pass | Note | Artifact ref |
-|----------|------|------|--------------|
-| Action fit | ✓ | Preventive tier suppression — cheaper alternative to Regulatory Downgrade; blocks advancement from current tier; card-as-condition pattern | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Directorate perspective by design — administrative tier ceiling as institutional act | Art 00 §7 |
-| Doctrine alignment | ✓ | Directorate only; Mandate×2, Automatic; no ring_mod consistent with administrative nature; no restriction on target tier | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) — institutional act must be on record to be binding; consistent with Regulatory Downgrade | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Block/InfluenceTier — blocks tier advancement; card IS the persistent condition | Art 04b §4, §5 |
-| Balance | ✓ | Mandate×2, Automatic — 1-Mandate cheaper than Downgrade; clearing 1 native vs Downgrade 2 native is intentional (ceiling vs reclassification) | Art 02 §6–§7 |
-| Effect duration | ✓ | Permanent — card stays on Overview until persistence_condition met | — |
-| Persistence | ✓ | Permanent public act; card on board IS the condition; self-policing per Governing Rule 6.1a | Art 04 §6; Governing Rule 6.1a |
-| Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | Directorate +1 submitter — single entry; tier ceiling aligns with regulatory authority doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.named — standard zone targeting | Art 01 §6–§7 |
-| Supported by components | ✓ | No new component — card on Overview is the persistent condition | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Phase B declaration → Countermeasure window → Beat 4 Automatic; standard Permanent Public Act lifecycle; Downgrade/Freeze coexistence = one tier down for gen + blocked advancement, no additional interaction | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-
-#### Outstanding Issues
-
-- **🚫 BLOCKED (S107, L223):** Two permanent constraints. (1) InfluenceTier is derived state (not a placed component) — Block function targets actions, not derived states; Block|InfluenceTier is a subject mismatch. (2) Same subject violation as Regulatory Downgrade: InfluenceTier is not a targetable component. Fundamental redesign required. Redesign pair with Regulatory Downgrade — both address income suppression intent through board state manipulation. Cross-ref: Art 04b §8.2 item 4, PM05 04-n104.
-
-#### Status
-
-| | Design Pass | Issues Resolved | Signed off |
-|--|-------------|-----------------|------------|
-| Status | 🚫 BLOCKED | — | — |
-
-*Redesigned S67 — v2.0. CovertOperation → PublicAct. TierFreezeMarker removed; card-as-condition pattern. Self-policing per Governing Rule 6.1a.*
+*S131. Redesigned — resolves 04-n104 BLOCKED status. Retaxonomized Territory|Block|PresenceToken (not InfluenceTier; not Submission — the subject controlled is presence-token accumulation). Permanent standing card, self-inclusive ("a new law"), reactive to any presenceChip addition. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
 ```python
-RegulatoryFreeze = Card(
-    id      = "DIR.PA.5",  version="v2.0",
-    name    = "Regulatory Freeze",
-    tagline = "Establish a tier ceiling in a target district. Target cannot advance beyond their current standing until they pay to lift it.",
+DIR.PA.5 = Card(
+    id      = "DIR.PA.5",  card_id="DIR.PA.5",  version="v3.0",
+    name    = "Zoning Freeze",
+    tagline = "New settlement in this district doesn't stick. Not even ours.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
 
-    layer   = Territory,  function = Block,  subject = InfluenceTier,
+    layer   = Territory,  function = Block,  subject = PresenceToken,
 
     beat            = 4,
     resolution      = Automatic,
@@ -7342,34 +7447,43 @@ RegulatoryFreeze = Card(
     doctrine_mod    = None,
     trigger         = None,
     resolution_type = "Permanent public act",
-    outcome_type    = None,
+    outcome_type    = Unilateral,
     persistence     = Permanent,
-    persistence_condition = (
-        faction(target).pays(1, resource.native, to=Reservoir) OR
-        faction(target).influence_tier(district(target)) == Absent
+    persistence_condition = faction(Any).pays(
+        [Resource(Mandate, 1), Resource(district(target).native, 1)],
+        to=Reservoir,
     ),
-    persistence_effect = tier_advancement.blocked(
-        above = faction(target).influence_tier(district(target)).at_resolution
+    persistence_effect = game.board_condition(
+        scope  = district(target),
+        effect = on(presence_chip.placed(district=district(target))):
+                     arbiter.remove(trigger.chip, faction=trigger.faction, district=district(target), count=1),
+        # Fires for ANY faction, including Directorate ("a new law" — self-inclusive, per CA.8 uniform-scrutiny doctrine).
+        # Catches Upkeep Step 4 conversion chips (Converting marker -> permanent presence chip) and any CA/PA
+        # success effect that adds a chip. Does NOT touch the deployment marker itself (GR 8.3a: markers are
+        # moved/converted, never removed) — only the resulting presenceChip.
     ),
 
     target_district = district.named,
-    target_faction  = faction(named_opponent),
+    target_faction  = None,
     target_object   = None,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(Directorate).mandate * 2
+                     + resource.district(target).native * 1
+                     + resource.faction(Directorate).capital * 1,
+    boost           = None,
 
-    target_taxonomy=None,
-    affinity    = None,
-    restriction = None,
-    cost        = resource.faction(acting).mandate * 2,
+    success     = None,  # card placement IS the effect — card-as-condition pattern
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
 
-    success     = None,
-    successcrit = None,
-
-    portrait    = {Directorate: PortraitEntry(submitter=+1)},
-
-    narrative    = "Forward progress in this district has been administratively paused. The Directorate is still reviewing.",
-    perspectives = {Directorate: "They can build all they want. The tier ceiling is established. They will not pass through it."},
-
-    design_note  = "Card placed in Directorate play area (public, face-up) — card IS the persistent condition. Tier cap = target's tier at Beat 4 resolution. Enforcement per Governing Rule 6.1a: Directorate monitors tier advancement attempts; on called violation, ARBITER reverses the placement and returns tokens to supply. Clearing: target pays 1 native to Reservoir (any time after Beat 4) OR target reaches Absent in district — remove card and announce. No restriction on target tier — playing against a Dominant faction is a legal but wasted play. Paired with Regulatory Downgrade for full suppression toolkit.",
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Redesigned S131 (v2.0 → v3.0), resolves 04-n104. Retaxonomized Territory|Block|PresenceToken — sidesteps the InfluenceTier derived-state violation entirely; not Submission|Block since the thing being controlled is presence-token accumulation, not an action taxonomy. Card-as-condition, Permanent. Reactive effect uses a ModReactCard-style trigger (presence_chip.placed) inside a PublicAct's persistence_effect — a new combination of two individually-established patterns (self-policing per GR 6.1a; confirmed §6.3 trigger vocab), not new ARBITER behavior requiring a fresh Art 03 procedure. Self-inclusive: Directorate's own new chips in the district are reverted too. Deployment marker itself is never touched (GR 8.3a) — only genuine presenceChip additions trigger removal. Clearing: ANY faction (not just Directorate or the affected party) may pay 1 Mandate + 1 district-native to Reservoir — a public toll that reopens the district for everyone. Cost is cross (2 Mandate + 1 district-native + 1 Capital): district-native reflects genuine engagement with the target district's specific economy; Capital reflects the standing enforcement apparatus required to auto-revert placements indefinitely, distinct from a one-time legal filing (which would be Findings).",
+    arbiter_note = "Beat 4: place card in Directorate's play area as a standing condition on target district. From this point forward: any time a presence chip is added to target district (via any CA/PA success effect, or Upkeep Step 4 deployment marker conversion), immediately remove that chip. Applies to all factions including Directorate. Deployment markers themselves are never touched — only the resulting presence chip. Card remains active until any faction pays 1 Mandate + 1 district(target).native to Reservoir, at which point remove the card and announce.",
 )
 ```
 
@@ -7693,8 +7807,13 @@ DIR.CA.8 = Card(
 | [DIR.PA.2](#p12-convene-an-inquiry) | Convene an Inquiry |
 | [—](#directorate-entryexit-controls) | Entry/Exit Controls |
 | [—](#directorate-standing-injunction) | Standing Injunction |
-| [—](#directorate-regulatory-downgrade) | Regulatory Downgrade |
-| [—](#directorate-regulatory-freeze) | Regulatory Freeze |
+| [DIR.PA.4](#dirpa4--regulatory-downgrade-stub) | Regulatory Downgrade |
+| [DIR.PA.5](#dirpa5--zoning-freeze-stub) | Zoning Freeze |
+| [DIR.PA.7](#dirpa7--curfew-stub) | Curfew |
+| [DIR.PA.8](#dirpa8--subpoena-stub) | Subpoena |
+| [DIR.PA.9](#dirpa9--charter-grant-stub) | Charter Grant |
+| [DIR.PA.10](#dirpa10--official-demonstrations-stub) | Official Demonstrations |
+| [DIR.PA.11](#dirpa11--public-hearing-stub) | Public Hearing |
 
 ### DIR.PA.1 — REGULATORY OVERRIDE
 [↑ Public Acts](#directorate-public-acts)
@@ -8107,6 +8226,177 @@ DIR.PA.8 = Card(
 )
 ```
 
+---
+
+### DIR.PA.9 — CHARTER GRANT *(stub)*
+[↑ Public Acts](#directorate-public-acts)
+
+*S131. Directorate's first Territory|Add|PresenceToken card — closes the audit-flagged win-path gap (04-n89: "the faction whose win condition is territorial Established status has zero native presence-placement cards"). Closes 1 of 6 toward the 54-card floor (04-n149). Ring-spread mechanic, not single-district stacking — confirmed against Directorate's actual win path (Established in more districts, not Dominant) and the 6-chip-per-district cap. N capped at 2 (max same-ring neighbors per district).*
+
+```python
+DIR.PA.9 = Card(
+    id      = "DIR.PA.9",  card_id="DIR.PA.9",  version="v0.1",
+    name    = "Charter Grant",
+    tagline = "Institutional authority doesn't concentrate. It radiates.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
+
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Transactional",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = district.named,
+    target_faction  = None,
+    target_object   = None,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(Directorate).mandate * 2,
+    boost           = None,
+
+    success = (
+        arbiter.place(presence_chip, district=target_district, faction=Directorate, count=1, cap_check=True),
+        for_each(
+            district.adjacent(target_district).where(ring == ring(target_district)),  # same-ring neighbors only; max 2 per district
+            limit=min(2, count(game.active_permanents(faction=Directorate, ring=ring(target_district)))),
+            arbiter.place(presence_chip, district=neighbor, faction=Directorate, count=1, cap_check=True),
+        ),
+        # cap_check=True: skip any individual district placement if that district is already at 6 chips (GR 8.1) — does not void the rest of the card
+    ),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,
+    perspectives = None,
+    design_note  = "First DIR Territory|Add|PresenceToken card — closes 04-n89's headline gap. Places 1 token in target district + 1 token in each same-ring-adjacent district, up to N = min(2, active Directorate Permanents in that ring) — same counting mechanism as CA.6 Institutional Audit / CA.7 Institutional Brief, reinforcing Directorate's compounding-authority engine. Ring-spread (not single-district stack) is deliberate: Directorate's win path is Established (2+, second place) in more districts than any other faction, not Dominant — breadth beats depth. N naturally caps at 2 (max same-ring neighbors per district, confirmed against board geometry), so ceiling is modest: at most 3 districts touched, 1 token each. Each placement independently respects the 6-chip-per-district cap (GR 8.1) — a capped destination is skipped, not a card-voiding failure. Early game (0 Permanents) = ordinary single-district placement, same as Standard; late game = Directorate's strongest expansion tool, consistent with the audit's 'compounds over 2-3 Quarters' finding.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### DIR.PA.10 — OFFICIAL DEMONSTRATIONS *(stub)*
+[↑ Public Acts](#directorate-public-acts)
+
+*S131. Public Standing counterpart to covert DIR.CA.7 Institutional Brief — closes the audit's Standing gap (04-n108: Directorate's only PS card was covert, backwards for an 'on the record' faction). Closes 2 of remaining 4 toward the 54-card floor (04-n149). A genuine gamble, not a guaranteed accumulator: government presence reads publicly as either safety or oppression, so the swing (not just the odds) scales with the size of the claim — this also self-balances the 'yield scaling at scale' concern flagged at 04-n116 for CA.6/CA.7, since the downside grows with N too.*
+
+```python
+DIR.PA.10 = Card(
+    id      = "DIR.PA.10",  card_id="DIR.PA.10",  version="v0.1",
+    name    = "Official Demonstrations",
+    tagline = "The city gets to decide whether this looks like order or overreach.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
+
+    layer   = Standing,  function = Shift,  subject = StandingMarker,
+
+    beat            = 4,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(Directorate).mandate * 2,
+    boost           = None,
+
+    success     = faction(Directorate).standing.add(
+                      count(district.where(faction(Directorate).influence_tier >= Established))),  # N = Established+ district count, city-wide
+    successcrit = faction(Directorate).standing.add(1),
+    fail        = faction(Directorate).standing.remove(
+                      count(district.where(faction(Directorate).influence_tier >= Established))),
+    failcrit     = faction(Directorate).standing.remove(
+                      count(district.where(faction(Directorate).influence_tier >= Established)) + 1),
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Public counterpart to DIR.CA.7 Institutional Brief (covert, Permanent-count-scaled, ring-scoped). Distinct scaling basis to avoid duplication: N = count of districts city-wide where Directorate holds Established+ tier — a simple tally of physical Established markers already on the board (same counting mechanism CA.6/CA.7 use for Permanents; no ARBITER judgment call, GR 6.1/4.7b-safe). Flat threshold=50 (matches CA.2/CA.6/CA.7 precedent) — the gamble is in the outcome, not compounded difficulty. Success and fail both scale with N (not the usual 'fail = no effect') — a bigger public show of institutional reach is a bigger bet in both directions: it can read as reassuring stability or as authoritarian overreach. Failcrit's N+1 penalty represents the claim spectacularly backfiring. Cost kept cheap and mono (Mandate x2) — the filing itself is trivial; the risk lives entirely in the public's reaction, not the resource spend.",
+    arbiter_note = "Beat 4: count districts where Directorate currently holds Established+ tier (visible via Established/Dominant markers already on board) = N. Roll d100 vs threshold 50. Success: Directorate PS += N. Successcrit: PS += N+1. Fail: Directorate PS -= N. Failcrit: PS -= N+1.",
+)
+```
+
+---
+
+### DIR.PA.11 — PUBLIC HEARING *(stub)*
+[↑ Public Acts](#directorate-public-acts)
+
+*S131. Resolves 04-n142 (S127) — the long-standing counter-card design gap for Permanent PAs, originally named for Entry/Exit Controls. Establishes a standing, game-wide due-process institution: any faction may petition to remove any of Directorate's own currently-active standing Public Acts by matching its printed cost + 1 Intel Token. Atomic resolution (pay + prove, immediate removal) — no untracked exemption state, unlike an earlier draft of the cooperative-PA concept this replaced. Closes the last 1 of 6 toward the 54-card floor (04-n149) — Directorate now at exactly 54.*
+
+```python
+DIR.PA.11 = Card(
+    id      = "DIR.PA.11",  card_id="DIR.PA.11",  version="v0.1",
+    name    = "Public Hearing",
+    tagline = "Even our own regulations answer to due process — if you can make the case.",
+    type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
+
+    layer   = Submission,  function = Remove,  subject = PublicAct,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = None,
+    resolution_type = "Permanent public act",
+    outcome_type    = Unilateral,
+    persistence     = Permanent,
+    persistence_condition = None,  # standing institution, once established — no clearing condition; not tied to a single district or faction
+    persistence_effect = game.board_condition(
+        scope  = game.all_districts,
+        effect = "Any faction may petition to remove any currently active Directorate-owned standing Public Act "
+                 "(Regulatory Override, Zoning Freeze, Entry/Exit Controls, Standing Injunction, or any future "
+                 "Directorate standing PA) by paying Directorate an amount matching that PA's own printed cost, "
+                 "plus 1 Intel Token (Fresh or Stale). On payment: the targeted PA is removed immediately.",
+    ),
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_taxonomy = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = resource.faction(Directorate).mandate * 2,
+    boost           = None,
+
+    success     = faction(Directorate).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Resolves 04-n142 (S127) — the long-standing open counter-card design gap for Permanent PAs, originally named specifically for Entry/Exit Controls but generalized here to all Directorate standing PAs. Doctrinal extension of CA.8 Enhanced Scrutiny's self-inclusive principle ('scrutiny means something only when it applies uniformly') from 'Directorate submits to its own suppression' to 'Directorate's regulations answer to due process.' Atomic resolution (pay + prove, immediate removal) — nothing is tracked or remembered across time, avoiding the untracked per-faction exemption-state problem an earlier draft of this card (a Guild-specific construction-permit concept) ran into. Cost-match is a simple physical lookup (read the target PA's own printed cost directly off that card), not an ARBITER calculation — GR 6.1 / Design Pillar 4.7b-safe. Directorate profits from every invocation (full cost refund + an Intel token) regardless of which PA is targeted or by whom — a genuine income mechanism, not a giveaway; nothing prevents Directorate from re-declaring the same regulation later at its own cost. Scoped to Directorate's own standing PAs only, not any faction's — matches 04-n142's original named case and avoids becoming an unscoped general-purpose Permanent-PA-removal tool that would need its own balance pass.",
+    arbiter_note = "Beat 4: Directorate plays this card once — establishes the standing due-process institution (no target district; applies game-wide, for the rest of the session). From this point forward: any faction may, at any time, name one currently active Directorate-owned standing Public Act and pay Directorate an amount matching that PA's own printed cost, plus 1 Intel Token (Fresh or Stale), to have it immediately removed. Verify the payment matches the target PA's printed cost and that the Intel Token is not Expired, then remove the targeted PA and announce.",
+)
+```
+
+---
+
 ### DIR.MOD.1 — RIOT SQUAD *(stub)*
 
 *S128. First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core).*
@@ -8440,6 +8730,55 @@ DIR.MOD.8 = Card(
     perspectives = None,
     design_note  = "Bureaucratic taxation. Triggers when a PA is placed on the FRG targeting a Directorate-Established district. Directorate instantly removes (impounds) 1 resource token off the card. The acting faction must either add a replacement resource before Beat 4, or suffer partial-payment failure Cost reasoning: Requires Capital to mobilize the physical impoundment teams while Mandate authorizes the seizure.",
     arbiter_note = None,
+)
+```
+
+---
+
+### DIR.MOD.9 — FISCAL SANCTION *(stub)*
+
+*S131. Reactive React on any faction's Public Standing decrease — Directorate spends a matching, non-Expired Intel token (the payoff for holding tokens from DIR.PA.2 Convene an Inquiry, or any other source) to open a formal sanction. Fills a genuine gap: Directorate previously had zero Economy\|Remove cards. Closes the last 1 of 6 toward the 54-card floor (04-n149). First Permanent-persistence ModReactCard in the set — new combination of two individually-established patterns, flagged in design_note rather than assumed to need a fresh Art 03 procedure.*
+
+```python
+DIR.MOD.9 = Card(
+    id      = "DIR.MOD.9",  card_id="DIR.MOD.9",  version="v0.1",
+    name    = "Fiscal Sanction",
+    tagline = "The public already turned on them. Directorate just needed the opening.",
+    type    = ModReactCard,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    trigger         = standing_marker.decreased(faction=Any),
+    beat            = None,
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    persistence = Permanent,
+    persistence_condition = faction(trigger.faction).pays(2, resource.native, to=Reservoir),
+    persistence_effect    = PublicAct(submitter=trigger.faction).blocked_at(phase_b),
+    # Blocks ALL Public Act submission from the sanctioned faction (broader than PA.6 Standing Injunction's
+    # single-taxonomy block) — clears only when the fine is paid; no quarter-end auto-expiry (deliberate:
+    # distinct from PA.6's dual-clear pattern — this is a debt, not a deterrent).
+
+    target_district = None,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = intel_token(faction=trigger.faction, age__in=[Fresh, Stale]) * 1,
+
+    success     = faction(Directorate).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Fills Directorate's Economy|Remove gap (previously zero cards in that cell, §9). Reactive: fires whenever ANY faction's PS decreases, for any reason — the public souring on a faction is the trigger. Gate: Directorate must hold a non-Expired Intel token keyed to the same faction whose PS just dropped, consumed on fire. Effect is two-part: (1) +1 PS to Directorate for opening the sanction (matches PA.6 Standing Injunction's placement-PS precedent); (2) Permanent standing condition blocking ALL Public Act submission from the sanctioned faction — not one taxonomy, the whole class — until they pay a 2-native fine to Reservoir (self-policing per GR 6.1a, same clearing pattern as Zoning Freeze/Standing Injunction). No quarter-end escape valve — this is a debt the target must actively clear, not a deterrent play with a built-in expiry. First Permanent-persistence ModReactCard in the set (existing precedent is Immediate fire-and-consume or Seasonal-until-Quarter-end) — a new but consistent extension of the card-as-condition pattern, not new ARBITER behavior requiring a fresh procedure.",
+    arbiter_note = "On trigger (any faction's Standing marker moves down, any cause): if Directorate holds a Fresh or Stale Intel token keyed to that faction, Directorate may spend it to play this card. Directorate PS +1. Place card in Directorate's play area as a standing condition naming the sanctioned faction. From this point forward: the sanctioned faction cannot submit any Public Act at Phase B. Card remains active until the sanctioned faction pays 2 of their native resource to Reservoir, at which point remove the card and announce.",
 )
 ```
 
@@ -11943,6 +12282,8 @@ SYN.MOD.11 = Card(
 | GUI.MOD.6 | Emergency Reconstruction | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.MOD.7 | Worker Retaliation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.MOD.8 | Site Clearance | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.9 | Field Supervisor | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.10 | Contractor's Favor | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
 | NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
 | NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
@@ -12099,6 +12440,8 @@ This is the first strategic decision of the game. Preparation expresses doctrine
 Standard cards are distributed as part of each faction's CA and PA pools — each faction holds its own physical set of Standard cards, not a shared deck.
 
 > **Design note:** Deck sizes (total card counts, per-card copy counts, and pool sizes) are pending balance analysis and playtesting. Legacy `pool_copies` field references are retired. Counts will be established during the balance pass. *(PM05 04-n136)*
+
+**Minimum unique pool floor (L240, S131):** Distinct from 04-n136's per-card copy-count question above — this governs the size of the pool a faction drafts *from*, not how many of it a player selects. Every faction's drafting pool (Standard set + faction-specific set, excluding blocked and Ring Modifier cards) must total **≥ 54 unique cards**: Standard set = 26 (fixed — every faction draws from the same STD pool) + faction set ≥ 28. Live count: DB view `v_card_faction_deck_floor`. Directorate is currently 6 cards short of the floor — tracked at PM05 04-n149.
 
 **Procedure:** Art 03-init §3.9.
 

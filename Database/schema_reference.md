@@ -1084,6 +1084,50 @@ JOIN card_status cs_std ON
 WHERE cs_faction.faction <> 'Standard' AND cs_std.faction = 'Standard'
   AND cs_faction.blocked = 0 AND cs_std.blocked = 0;
 ```
+
+### v_card_faction_deck_floor (S131)
+Backs PM02 L240 — the locked 54-card minimum unique faction deck (STD 26 + faction set ≥ 28). One row per faction (Standard excluded — it's the shared baseline every faction adds to its own set, not a faction with its own deck). `blocked=1` and `is_ring_modifier=1` cards excluded from all counts per DB-47.
+```sql
+CREATE OR REPLACE VIEW v_card_faction_deck_floor AS
+SELECT
+  fac.faction,
+  std.std_ca,
+  std.std_pa,
+  std.std_mod,
+  std.std_total,
+  COALESCE(f.fac_ca, 0)  AS fac_ca,
+  COALESCE(f.fac_pa, 0)  AS fac_pa,
+  COALESCE(f.fac_mod, 0) AS fac_mod,
+  COALESCE(f.fac_total, 0) AS fac_total,
+  std.std_total + COALESCE(f.fac_total, 0) AS combined_total,
+  54 AS floor_target,
+  (std.std_total + COALESCE(f.fac_total, 0)) - 54 AS margin,
+  CASE WHEN (std.std_total + COALESCE(f.fac_total, 0)) >= 54
+       THEN 'At/above floor' ELSE 'BELOW FLOOR' END AS floor_status
+FROM (SELECT DISTINCT faction FROM card_status WHERE faction <> 'Standard' AND blocked = 0) fac
+CROSS JOIN (
+  SELECT
+    SUM(CASE WHEN card_type = 'CA'  THEN 1 ELSE 0 END) AS std_ca,
+    SUM(CASE WHEN card_type = 'PA'  THEN 1 ELSE 0 END) AS std_pa,
+    SUM(CASE WHEN card_type = 'MOD' THEN 1 ELSE 0 END) AS std_mod,
+    COUNT(*) AS std_total
+  FROM card_status
+  WHERE faction = 'Standard' AND blocked = 0 AND is_ring_modifier = 0
+) std
+LEFT JOIN (
+  SELECT
+    faction,
+    SUM(CASE WHEN card_type = 'CA'  THEN 1 ELSE 0 END) AS fac_ca,
+    SUM(CASE WHEN card_type = 'PA'  THEN 1 ELSE 0 END) AS fac_pa,
+    SUM(CASE WHEN card_type = 'MOD' THEN 1 ELSE 0 END) AS fac_mod,
+    COUNT(*) AS fac_total
+  FROM card_status
+  WHERE faction <> 'Standard' AND blocked = 0 AND is_ring_modifier = 0
+  GROUP BY faction
+) f ON fac.faction = f.faction
+ORDER BY combined_total;
+```
+Current output (S131): Directorate 48 (BELOW FLOOR, −6) · Syndicate/Ghost/Network 54 each (at floor) · Guild 56 (+2). Tracks PM05 04-n149.
 *Analytical views bridging high-level design card status and taxonomy metadata to mechanical action/verb schemas and resource cost patterns.*
 
 ---

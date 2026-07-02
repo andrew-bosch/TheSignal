@@ -390,9 +390,11 @@ public_act.placed_on_frg(faction=X, ...)  ← any faction places PA face-up on F
 - `accord.corrupted` — textual alteration of an active Accord via Covert Op (e.g., SYN.CA.11 Redline). Terms change; Accord remains active on the board. ⚠ Requires Art 06 breach procedure to include an explicit ARBITER corrupt step on the Accord form — tracked 06-n01.
 - `accord.removed` — physical board state when an Accord is removed (breach or natural expiry). The Accord card leaves the Accord Placement Area. ARBITER removes the form; no distinct breach-marking step currently exists.
 
-**ModReactCard persistence (S130):**
+**ModReactCard persistence (S130–S131):**
 - `persistence = Immediate` — fire-and-consume (default for ModReactCards)
 - `persistence = Seasonal` — card remains on acting faction's FRG as a standing condition until Quarter end
+- `persistence = Permanent` — remains until an explicit clearing condition is met; confirmed S131, first example DIR.MOD.9 Fiscal Sanction (clears when the sanctioned faction pays a fine)
+- **Related pattern (S131):** a Permanent PublicAct's `persistence_effect` may itself use confirmed TriggerExpr vocabulary to react to board-state changes, without the card being a ModReactCard — first example DIR.PA.5 Zoning Freeze (reacts to `presence_chip.placed`). Existing self-policing procedure (GR 6.1a) applied inside a new card-type combination; not new ARBITER behavior.
 
 **Resolved vocab decisions (04-n144 ✅ S130):** `public_act.placed_on_frg` confirmed as new general trigger term. `world_event.revealed` → `world_event.played`. `covert_operation.resolved(...)` → `accord.corrupted`. `public_standing.shifted(direction=positive/negative)` → `standing_marker.increased/decreased`.
 
@@ -419,9 +421,15 @@ Permanent public acts that create ongoing board conditions use the card-on-board
 - Factions self-police per Design Pillar 4.7b; ARBITER adjudicates calls (Governing Rule 6.1a)
 - Persistence monitoring: faction self-policing under GR 6.1a covers all Permanent cards and React standing effects; GR 6.1c (ARBITER ruling final on disputes) covers edge cases. No Art 03 procedure step required.
 
-*Examples: Regulatory Downgrade, Regulatory Freeze, Standing Injunction, Entry/Exit Controls*
+*Examples: Regulatory Downgrade, Zoning Freeze (renamed from Regulatory Freeze, redesigned S131), Standing Injunction, Entry/Exit Controls, Public Hearing (S131 — first counter-card mechanism removing another Permanent PA, resolves 04-n142)*
 
 **Seasonal persistence with timed effects** uses a different mechanism: `persistence_condition`/`persistence_effect` are None; the timed effect is encoded as `game.world_condition()` in the `success` field. This is not in conflict with the Permanent pattern — they serve different durations. Example: SYN.PA.2 Public Dividend (DividendMarker world_condition in success).
+
+---
+
+## Faction Deck Floor (PM02 L240)
+
+Every faction's drafting pool (Standard set + faction-specific set, `blocked=0`, excluding Ring Modifier cards) must total **≥ 54 unique cards**: Standard = 26 fixed + faction set ≥ 28. Distinct from 04-n136 (per-card copy counts within a selected deck) — this governs pool size, not selection size. Live check: DB view `v_card_faction_deck_floor` (Art 04 §10.1). Currently: Guild 56 · Ghost/Network/Syndicate 54 · **Directorate 48 (below floor — PM05 04-n149)**. Check this before closing any faction card-count gap work.
 
 ---
 

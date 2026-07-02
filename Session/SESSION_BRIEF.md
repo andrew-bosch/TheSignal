@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 130 complete | Updated: 2026-06-30**
+**Session 131 complete | Updated: 2026-07-01**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -29,56 +29,66 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S130 Accomplishments
+## S131 Accomplishments
 
-**Art 01 — agy report ingested + signed off v2.3 (L238/L239)**
+**Guild ModReactCard deficit — CLOSED (2 of 2)**
 
-- agy report (§6.5 adjacency table Ring+Address schema; NM_Overlay.svg ADD:R.P labels; district_adjacency DB FK migration) fully ingested. PM05 01-04 updated, DB-09 ✅, 02-n05 ✅.
-- Art 01 signed off v2.3. 01-n03 created (§7/§8 Faction/ARBITER Area SVGs pending; gates 01-n01).
+- GUI.MOD.9 Field Supervisor ✅ (React on opponent Established Marker placement, citywide, no structure requirement — completes Guild's 4-angle passive-income doctrine)
+- GUI.MOD.10 Contractor's Favor ✅ (first third-party Battlefield Strength influence card — Seasonal React on `tension_marker.placed`; Guild backs/opposes a contesting faction ahead of §10. Surfaces new PM05 item **04-n148**: Art 03 §10.1.2 needs a procedure step to read/apply this class of condition — Open)
 
-**Guild deficit pass (−4 → −2)**
+**PM02 L240 locked — 54-card minimum unique faction deck floor**
 
-- GUI.PA.9 City Ledger ✅ (Standing/Shift/StandingMarker PA; N = structure cluster count; +N PS success; +district native crit; −N PS failcrit. 04-n130 ✅)
-- GUI.CA.9 Works Guarantee ✅ (Beat 2 Automatic; named Guild CA fires without roll in two districts simultaneously. 04-n127 ✅)
-- GUI.PA.10 Joint Development ✅ (Territory/Add/StructureBlock PA; cost 2 Cap + 1 target.native; both factions Present + no structure gate; success = target structure; Guild +2 PS / target +1 PS; successcrit = Guild structure + Presence Token; failcrit = −1 PT both. 04-n132 ✅)
-- GUI.CA.10 Development Order ✅ (Automatic CA; 3 Cap + 1 district-native; delivers GD-01 Grant Deed; 04-n119 ✅ — §9.2 cross-resource ceiling gap addressed)
-- GD-01 Grant Deed ✅ (new ARBITER-issued ModReactCard; trigger: `structure_block.placed(district=deed.district)`; effect: +1 PT + 1 SB for holder; Art 04 §12b; 04-n27 trigger vocab extension pending)
+- Formula: STD (26, fixed) + faction set (≥28) ≥ 54. Supersedes informal "53-card" language in DB-47.
+- New DB view `v_card_faction_deck_floor` — live per-faction floor check; documented in `schema_reference.md`, `design_reference_card_system.md`, and Art 04 §10.1.
+- New PM05 item 04-n149 opened (Directorate below floor) → closed same session (see below).
 
-**Ref fixes**
+**Directorate faction-set deficit — CLOSED (22 → 28 faction-set, 48 → 54 combined)**
 
-- "Phase B" → "§9.2 Public Declaration" in `design_reference_card_system.md` (3 instances) and `ref_card_types.md` (1 instance). Canonical names per ref_procedures.md line 133.
-- ARBITER-issued ModReactCard pattern added to `ref_card_types.md`.
-- District-scoped trigger pending note added to `design_reference_card_system.md`.
-- SYN.CA.8 design_note/outstanding issues updated to reflect confirmed GD-01 fire effect (+1 PT + 1 SB).
+Built on existing audit 04-n89 (`Whiteboard/card_analysis_STD_DIR.md`), which had already flagged Directorate's zero Territory|Add cards as the headline gap.
 
-**Art 04 → v0.9.61**
+- DIR.PA.9 Charter Grant ✅ (new — Directorate's first Territory|Add|PresenceToken card; ring-spread mechanic scaled by active Permanents, capped at 2 same-ring neighbors)
+- DIR.PA.4 Regulatory Downgrade ✅ (redesigned, unblocked — resolves **04-n104**; simple 1-chip removal, no ARBITER calculation)
+- DIR.PA.5 Zoning Freeze ✅ (redesigned, unblocked, renamed from Regulatory Freeze — resolves **04-n104**; Permanent standing card, self-inclusive, reactive to any presence-chip addition, cross-resource cost)
+- DIR.PA.10 Official Demonstrations ✅ (new — public Standing counterpart to covert DIR.CA.7; d100 gamble, PS swings both directions scaled by N)
+- DIR.MOD.9 Fiscal Sanction ✅ (new — fills Directorate's Economy|Remove gap; first Permanent-persistence ModReactCard in the set)
+- DIR.PA.11 Public Hearing ✅ (new — resolves **04-n142**, the long-standing counter-card design gap; general due-process mechanism removing any Directorate standing PA)
+
+All 5 factions confirmed at/above the 54 floor: Guild 56, Ghost/Network/Syndicate/Directorate 54 each.
+
+**New flags from this pass:**
+- **04-n150** — STD.PA.5 On The Record: Intel-token cost/resolution sequencing not supported by procedure (Standard card set, out of scope this session)
+- **04-n151** — closed same session; false positive (Block is a deliberately verb-less "meta-constraint" Function per `ref_taxonomy.md` §5.1, not a DB gap)
+
+**Ref/design sync**
+- ModReactCard `persistence = Permanent` documented as confirmed (Art 04 §6.1, `ref_card_types.md`, `design_reference_card_system.md`)
+- Stale "PA cards... must use Transient or Seasonal" line corrected in Art 04 §6.2 (contradicted by 5+ shipped Permanent PAs)
+- Card-as-Condition example list refreshed (Zoning Freeze rename, Public Hearing added)
+
+**Art 04 → v0.9.63**
 
 ---
 
-## Current Focus (S131)
-
-**Guild deficit — 2 remaining (ModReactCards)**
-- 2 Guild ModReactCards needed; Andy confirmed this is S131 focus
-- After design: Art 04 §8/§9 taxonomy index update for new Guild cards
+## Current Focus (S132)
 
 **09-06 ModReactCard design pass**
-- 41 faction MOD stubs need full design using §11.9 checklist
-- Guild cards first; continue across factions
+- Remaining faction MOD stubs need full design using §11.9 checklist (Guild + Directorate now closed)
+- Continue across Ghost, Network, Syndicate
 
 **Open items:**
+- **04-n148** — Art 03 §10.1.2 procedure step for third-party Battlefield Strength modifiers (blocks GUI.MOD.10 from being fully executable)
+- **04-n150** — STD.PA.5 Intel-token cost/resolution sequencing gap
 - **XA-54** — Broadcast Card / BEC artifact design (gates DIR.MOD.6, 02-n17)
 - **06-n01** — Art 06 breach procedure: ARBITER corrupt step (gates `accord.corrupted` trigger)
 - **04-n26/27** — Grant Deed component registration + district-scoped trigger vocab
 - **04-n126** — NET.PA.3 Live Coverage Seasonal-at-mono inversion
 - **04-n123** — SYN §9.2 ceiling gap (CA.9/CA.10 still mono)
-- **04-n142** — Counter-card design (permanent PA removal)
 - **agy DB task** — card_status update for NET.CA.8/MOD.13/MOD.14 + SYN.MOD.9/10/11/CA.12
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 00 v1.8** — Needs re-sign-off (S99: §14.10 Integration — material narrative anchor addition)
+- **Art 00 v1.8** — Needs re-sign-off. Two material additions in scope: (1) S99 §14.10 Integration — narrative anchor addition; (2) S131 §15 Appendix — Master Reference Curriculum (reading/watch list) added at document tail. Both fold into the same pending re-sign-off pass, not separate events.
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives)
 
 *Card-level sign-offs gated behind set-level audits — not actionable until those gates clear.*

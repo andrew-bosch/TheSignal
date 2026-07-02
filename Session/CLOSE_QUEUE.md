@@ -1,56 +1,48 @@
-## CLOSE QUEUE — Session 130
+## CLOSE QUEUE — Session 131
 ## Execute every instruction in order. No interpretation. Delete this file last.
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 01 | Game Board — New Meridian | 2.2 | 🔄 Needs Re-Sign-Off — v2.1 S90 |
-NEW: | 01 | Game Board — New Meridian | 2.3 | ✅ Signed Off — v2.3 S130 |
-
-### EDIT
-FILE: /home/abosch/Projects/TheSignal/V1/PM03___Master_Artifact_Index.md
-OLD: | 04 | Card System | 0.9.53 | 🔄 In Progress |
-NEW: | 04 | Card System | 0.9.61 | 🔄 In Progress |
+OLD: | 04 | Card System | 0.9.61 | 🔄 In Progress | S129:
+NEW: | 04 | Card System | 0.9.63 | 🔄 In Progress | S131: Guild ModReactCard deficit closed (GUI.MOD.9 Field Supervisor, GUI.MOD.10 Contractor's Favor — first third-party Battlefield Strength influence card, surfaces 04-n148 Art 03 §10.1.2 procedure gap). PM02 L240 locked (54-card minimum unique faction deck floor); new DB view v_card_faction_deck_floor. Directorate faction-set deficit closed 22→28 faction-set (48→54 combined): DIR.PA.9 Charter Grant (new, first Territory|Add card); DIR.PA.4 Regulatory Downgrade + DIR.PA.5 Zoning Freeze (redesigned, unblocked, resolves 04-n104); DIR.PA.10 Official Demonstrations (new, public Standing counterpart to CA.7); DIR.MOD.9 Fiscal Sanction (new, first Permanent-persistence ModReactCard); DIR.PA.11 Public Hearing (new, resolves 04-n142 counter-card gap). All 5 factions confirmed at/above 54 floor. v0.9.63. S129:
 
 ### EDIT
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-OLD: **Last Updated:** 2026-06-28 — Session 129 Close
-NEW: **Last Updated:** 2026-06-30 — Session 130 Close
+OLD: **Last Updated:** 2026-06-30 — Session 130 Close
+NEW: **Last Updated:** 2026-07-01 — Session 131 Close
 
 ### APPEND
 FILE: /home/abosch/Projects/TheSignal/Session/THE_SIGNAL___Project_Save_State.md
-AFTER: **Last Updated:** 2026-06-30 — Session 130 Close
+AFTER: **Last Updated:** 2026-07-01 — Session 131 Close
 CONTENT:
 
-### Session 130 Summary (2026-06-30)
+### Session 131 Summary (2026-07-01)
 
-**Focus:** agy Art 01 report ingestion + Art 01 v2.3 sign-off + Guild deficit pass (−4 → −2).
+**Focus:** Guild ModReactCard deficit closed + PM02 L240 (54-card deck floor) locked + Directorate faction-set deficit audit and closure.
 
 **Key work:**
-- **Art 01 agy report ingested (L238):** §6.5 District Adjacency Map rewritten (Ring+Address schema); NM_Overlay.svg labels updated (ADD:R.P format); district_adjacency DB migrated (FK via game_zones, 92 rows). PM05 01-04 updated, DB-09 ✅.
-- **Art 01 v2.3 signed off (L239):** 02-n05 ✅. 01-n03 created (§7/§8 Faction/ARBITER Area SVGs — gates 01-n01).
-- **GUI.PA.9 City Ledger ✅:** Standing/Shift/StandingMarker PA; N = structure cluster count; +N PS success; successcrit +1 district.native per qualifying district; failcrit −N PS. 04-n130 ✅.
-- **GUI.CA.9 Works Guarantee ✅:** Beat 2 Automatic ModActionCard; named Guild d100 CA fires without roll in two districts simultaneously. 04-n127 ✅.
-- **GUI.PA.10 Joint Development ✅:** Territory/Add/StructureBlock PA; cost 2 Cap + 1 target.native; both factions Present + no structure gate; success = target structure block + Guild +2 PS / target +1 PS; successcrit = Guild structure + Presence Token; failcrit = −1 PT both factions. 04-n132 ✅.
-- **GUI.CA.10 Development Order ✅:** Automatic CA; 3 Cap + 1 district-native; delivers GD-01 Grant Deed. Addresses 04-n119 (§9.2 cross-resource ceiling gap). 04-n119 ✅.
-- **GD-01 Grant Deed ✅:** New ARBITER-issued ModReactCard (Art 04 §12b); trigger: `structure_block.placed(district=deed.district)` (fill-in-the-blank); effect: +1 Presence Token + 1 Structure Block for holder. Produced by SYN.CA.8 and GUI.CA.10. Trigger vocab extension pending 04-n27. Component registration pending 04-n26.
-- **Ref fixes:** "Phase B" → "§9.2 Public Declaration" in design_reference_card_system.md (3x) and ref_card_types.md (1x). ARBITER-issued ModReactCard pattern added to ref_card_types.md. District-scoped trigger pending note added to design_reference_card_system.md. SYN.CA.8 updated (confirmed GD-01 fire effect).
-- **Art 04 → v0.9.61.**
+- **Guild ModReactCard deficit closed (2 of 2):** GUI.MOD.9 Field Supervisor (React on opponent Established Marker placement, citywide) and GUI.MOD.10 Contractor's Favor (Seasonal React on `tension_marker.placed` — first card letting a non-contesting faction influence another faction's Battlefield Strength total ahead of §10). Surfaces PM05 04-n148 (Art 03 §10.1.2 needs a new procedure step) — Open.
+- **PM02 L240 locked:** minimum unique faction deck = 54 cards (STD 26 fixed + faction set ≥28). New DB view `v_card_faction_deck_floor` computes this live per faction. Superseded the informal "53-card" language in DB-47.
+- **Directorate faction-set audit and closure (04-n149, built on existing 04-n89 audit):** Directorate was the only faction below the 54 floor (48 combined, 22 faction-set). Closed via: DIR.PA.9 Charter Grant (new — Directorate's first Territory|Add|PresenceToken card, ring-spread mechanic scaled by active Permanents); DIR.PA.4 Regulatory Downgrade + DIR.PA.5 Zoning Freeze (redesigned and unblocked, resolving long-BLOCKED 04-n104 — simple 1-chip removal and a self-inclusive reactive Permanent standing card respectively); DIR.PA.10 Official Demonstrations (new — public Standing counterpart to covert DIR.CA.7, a genuine d100 gamble where PS swings both directions scaled by Established-district count); DIR.MOD.9 Fiscal Sanction (new — fills Directorate's Economy|Remove gap, first Permanent-persistence ModReactCard in the set); DIR.PA.11 Public Hearing (new — resolves long-standing 04-n142 counter-card design gap, a general due-process mechanism for challenging any Directorate standing PA). All 5 factions now confirmed at/above the 54 floor.
+- **New PM05 items:** 04-n148 (Art 03 §10.1.2 procedure gap, Open), 04-n150 (STD.PA.5 Intel-token cost/resolution sequencing gap, Open, Standard set — out of scope this session), 04-n151 (opened then closed same session — false positive; `Block` is a deliberately verb-less "meta-constraint" Function per `ref_taxonomy.md`, not a DB seeding gap).
+- **Ref/design sync:** ModReactCard `persistence = Permanent` documented as confirmed pattern (Art 04 §6.1, `ref_card_types.md`, `design_reference_card_system.md`); stale "PA cards must use Transient or Seasonal" line in Art 04 §6.2 corrected (contradicted by 5+ shipped Permanent PAs); Card-as-Condition example list refreshed.
+- **Memory maintenance:** `project_art04_card_design_context.md` compressed from 13 chronological session blocks (S62–S128) to current-state-only; new memories `project_deck_floor.md` and `feedback_arbiter_state_tracking.md` added (recurring design lesson: check whether a proposed mechanic requires ARBITER to track untracked state or perform comparative calculation — GR 6.1/4.7b — before presenting it).
+- **Art 00:** Andy added §15 Appendix — Master Reference Curriculum (reading/watch list) at document tail. Folded into the existing Art 00 v1.8 pending re-sign-off scope alongside S99's §14.10 Integration addition, rather than opening a new tracking line.
 
-**Artifacts updated S130:** Art 01 (v2.3 ✅) · Art 04 (v0.9.61) · PM02 (L238/L239) · PM03 (Art 01 v2.3, Art 04 v0.9.61) · PM05 (01-04, DB-09, 02-n05 ✅; 01-n03, 04-n132, 04-n119 closed) · SESSION_BRIEF · Whiteboard/design_reference_card_system.md · Whiteboard/ref_card_types.md · Claude_context.md (pruned)
-
----
+**Art 04 → v0.9.63.**
 
 ### README
-Update README.md: bump Art 01 to v2.3 (✅ Signed Off), Art 04 to v0.9.61. Update Design milestone line to reflect S130 Guild deficit pass and GD-01 Grant Deed new card type.
+Update README.md: bump all artifact version numbers to match PM03, update Design milestone line to reflect last L-decision (L240 — 54-card deck floor) and current Art 03/04 versions.
 
 ### WIKI
 cd /home/abosch/Projects/TheSignal && bash tools/deploy_wiki.sh
 
 ### COMMIT
-source ~/Projects/credentials.env && git -C ~/Projects/TheSignal add -A && git -C ~/Projects/TheSignal commit -m "session 130 — Guild deficit pass (-4→-2); Art 01 v2.3 signed off; GD-01 Grant Deed; ref fixes" && git -C ~/Projects/TheSignal push
+source ~/Projects/credentials.env && git -C ~/Projects/TheSignal add -A && git -C ~/Projects/TheSignal commit -m "session 131 — Guild + Directorate ModReactCard/faction-set deficits closed; PM02 L240 54-card deck floor locked" && git -C ~/Projects/TheSignal push
 
 ### GEM_CONTEXT
 /home/abosch/Projects/TheSignal/generate_gem_context.sh
 
 ### DELETE
 FILE: /home/abosch/Projects/TheSignal/Session/CLOSE_QUEUE.md
+

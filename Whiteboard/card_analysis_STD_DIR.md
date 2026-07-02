@@ -193,7 +193,7 @@ DIR/GUI/SYN all show zero-cross-ceiling architecture — systemic across mono-ec
 
 ## D. Systemic Blockers
 
-**D1. DIR.PA.4/PA.5 (04-n104) — BLOCKED:** Both require InfluenceTier as target, which is derived state. The income-suppression design intent is valid; the implementation path requires board-state manipulation (Territory|Remove|PresenceToken PA pair). The PA version would be a public institutional act — distinct from DIR.CA.5 Sanctioned Raid (covert). Pair redesign required before DIR set is complete.
+**D1. DIR.PA.4/PA.5 (04-n104) — ✅ RESOLVED S131.** Redesigned as two distinct mechanics rather than a matched pair: PA.4 Regulatory Downgrade → Territory|Remove|PresenceToken (simple 1-chip removal, no ARBITER calculation per GR 6.1/4.7b, mono cost). PA.5 → retaxonomized and renamed **Zoning Freeze** — Territory|Block|PresenceToken, Permanent card-as-condition that reactively removes any presence chip added to the target district (self-inclusive, cross-resource cost 2 Mandate + district-native + Capital, cleared by any faction paying a toll). Both unblocked in Art 04 and DB.
 
 **D2. DIR.CA.3 infrastructure gates (04-n44/45/46):** Three open infrastructure items block Issues Resolved for Surveillance Placement: Art 03 Beat 2 procedure addition (04-n44), Art 02 IntelDeliverySlip component entry (04-n45), 00b IS-xx definition update (04-n46). All three require cross-artifact work.
 

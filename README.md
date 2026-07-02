@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** Guild deficit pass (−4 → −2); Art 01 v2.3 signed off; GD-01 Grant Deed new card type. Art 01 v2.3 (S130 ✅). Art 04 v0.9.61 (S130). Art 04b v2.6 (S123). Art 03-init v0.5 (S124). Next: PM05 04-n132, 04-n119, 01-n03 validation + design pass closure.
+**Design milestone:** L240 — 54-card minimum unique faction deck floor locked. All 5 factions confirmed ≥54 combined. Art 03 v4.11 (S110 ✅). Art 04 v0.9.63 (S131). Art 04b v2.6 (S123).
 
 ---
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.61 | 🔄 In progress — S130: GUI.PA.9 City Ledger ✅; GUI.CA.9 Works Guarantee ✅; GUI.PA.10 Joint Development ✅; GUI.CA.10 Development Order ✅; GD-01 Grant Deed ✅ (ARBITER ModReactCard); ref fixes (Phase B → §9.2 Public Declaration, ARBITER-issued ModReactCard pattern added). |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.63 | 🔄 In progress — S131: Guild ModReactCard deficit closed (GUI.MOD.9, GUI.MOD.10); Directorate faction-set deficit closed (DIR.PA.9, DIR.PA.4 redesign, DIR.PA.5 redesign, DIR.PA.10, DIR.MOD.9, DIR.PA.11); all factions ≥54 deck floor confirmed (PM02 L240); new DB view v_card_faction_deck_floor; ref/design sync (Permanent-persistence pattern documented, stale PA duration language corrected). |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |
