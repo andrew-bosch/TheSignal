@@ -94,7 +94,7 @@ Key assignment rules:
 2. **Dual-aspect components:** count = Economy; content = Information. Assign by dominant design intent (e.g., STD.CA.5 Gather adds an Intel Token but intent is intelligence acquisition → Information/Add/IntelToken).
 3. **Protect** assigns to the layer of the protected target.
 4. React/Instant/interrupt is timing only — the card still carries its own Layer/Function/Subject.
-5. Modifier Cards and Pass cards are excluded from taxonomy entirely.
+5. Modifier Cards: **not uniform** (corrected S133, PM05 04-n155/04-n160 — supersedes the old blanket-exclusion rule). ModActionCard and ModBattleCard carry no independent Layer/Function/Subject taxonomy. ModReactCard is the exception — it's structurally action-like and routinely carries genuine taxonomy; this is the norm for that subclass, not a violation. Pass cards: excluded from taxonomy — status of Pass cards themselves is under review (⚠ see `ref_card_types.md`, S133).
 6. Corrupt applies only to physically written/recorded values. Invalid targets: printed card text, marker positions, Chronicle, Intel Token round-number field (7.2b). Intel Tokens must be in public-placement window to be reachable (L222).
 6b. InfluenceTier is not a targetable component — it is derived from token counts. Only board state changes (add/remove tokens) affect tier (L223).
 7. Portrait is ARBITER-sole-mover — player cards affect Public Standing only (Standing/Shift/StandingMarker).

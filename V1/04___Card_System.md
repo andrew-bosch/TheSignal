@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.64 Draft  
+**Version:** 0.9.75 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-07-02  
+**Last Updated:** 2026-07-03  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -29,11 +29,10 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §9 | [Faction Coverage Matrix](#9-faction-coverage-matrix) |
 | §10 | [Deck Construction & Pool Selection](#10-deck-construction--pool-selection) |
 | §11 | [Rules & Constraints — Modifier Cards](#11-rules-constraints-modifier-cards) |
-| §12 | [Rules & Constraints — Pass Cards](#12-rules-constraints-pass-cards) |
+| §12 | [Rules & Constraints](#12-rules-constraints) |
 | §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
 | §14 | [Special Conditions & Gameplay Impacts](#14-special-conditions-gameplay-impacts) |
 | §15 | [Examples & Exceptions](#15-examples-exceptions) |
-| §16 | [Appendix — Outstanding Decisions & Assumptions](#16-appendix-outstanding-decisions-assumptions) |
 
 ---
 
@@ -268,6 +267,20 @@ A card with no issues from the design pass gets ✓ in both Design Pass and Issu
 
 ---
 
+### ModReactCard Design Checklist
+
+ModReactCards introduce design dimensions the checklist above doesn't cover — all specific to trigger-based firing. Use this addendum during any design review pass on ModReactCard stubs, including Issued ModReactCards (GD-01, Overture, The Fixer — §11.1). Rows here don't repeat what the main checklist already asks: trigger observability is covered by that table's Trigger validity row, persistence timing by its Persistence row, and PS signal legibility by its Portrait validity row.
+
+| Criterion | Design question | Guidance |
+|-----------|----------------|---------|
+| **Trigger frequency** | How often does this trigger fire in a typical Quarter? | Underfire (condition rarely met) = dead weight. Overfire (every round) = oppressive or trivial. Document expected frequency in `design_note`. |
+| **Firing window** | Does this card's trigger fire at the same time as other React cards? Is priority order needed? | Multiple React cards with identical or simultaneous triggers compete. If racing is possible, confirm resolution order or note as a design gap. |
+| **Automatic vs. d100** | Is `resolution = Automatic` justified? | Automatic is appropriate when the trigger is precisely defined and the effect is bounded. d100 is appropriate when outcome should depend on execution quality or add tension. |
+| **Stack behavior** | Can multiple copies fire on the same trigger event in the same Quarter? | If a faction holds two copies and the trigger fires once, do both fire? Document the answer in `design_note`; add a restriction clause if stacking is undesirable. |
+| **Ring constraint** | Is `ring_constraint` set correctly relative to trigger frequency and effect power? | Ring-constrained React cards fire only when the trigger occurs in the specified ring. If trigger frequency is already low, a ring constraint may make the card unplayable. |
+
+---
+
 ## 5a. Faction Playstyle Reference
 
 This section defines each faction's intended operation economy, win path, and deck identity. It is the design reference for card assignments and gap analysis — read before designing or evaluating any faction-specific card.
@@ -488,6 +501,8 @@ class ModActionCard(Card):
     value_rating:     int | None            # 1–3; printed on card face; None = TBD (stub only)
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = usable only targeting that ring's districts
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
+    acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
+    generating_card:  CardID | list[CardID] | None   # required when acquisition=Issued; None when Deck
 
 
 class ModBattleCard(Card):
@@ -496,6 +511,8 @@ class ModBattleCard(Card):
     value_rating:     int | None            # 1–3; None = TBD (stub only)
     ring_constraint:  Ring | None          # if set, usable only in Battlefield Strength for a district in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
+    acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
+    generating_card:  CardID | list[CardID] | None   # required when acquisition=Issued; None when Deck
 
 
 class ModReactCard(Card):
@@ -508,7 +525,11 @@ class ModReactCard(Card):
     value_rating:     int | None            # 1–3; None = TBD (stub only)
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
+    acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
+    generating_card:  CardID | list[CardID] | None   # required when acquisition=Issued; None when Deck
 ```
+
+**Acquisition axis (S133 — replaces the S133-earlier `ModIssuedCard` 4th-subclass model; PM02 L245 revises L241):** `acquisition` is orthogonal to which of the three subclasses above a card is. A card fires according to its subclass (bundled-with-host / Battlefield-commit / trigger-based) regardless of where it came from. Most cards are `acquisition=Deck` — drawn from a Faction or Ring Modifier deck at Upkeep (§11.2), gated by `ring_origin`. A card is `acquisition=Issued` when ARBITER hands it directly to a faction as a specific, named consequence of another card's resolution (`generating_card`) — no Upkeep draw, no deck, no `ring_origin`. Current Issued cards: GD-01 Grant Deed, STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three are structurally ModReactCard (fire on a trigger condition) under this model; nothing yet exercises an Issued ModActionCard or ModBattleCard, but the schema doesn't rule it out.
 
 ---
 
@@ -572,8 +593,10 @@ Fields added by ModActionCard, ModBattleCard, and ModReactCard. All three subcla
 | effect | ModActionCard | ModActionExpr | Tagged union — exactly one: threshold_delta(n) \| success_multiplier(n) \| ps_shift(faction, delta) \| cost_reduction(n); cost_reduction is PA ops only (CA cost committed at dispatch before Beat 0) | Face |
 | effect | ModBattleCard | ModBattleExpr | Delta (Boost or Hinder) applied to a named contesting faction's Battlefield Strength total (Art 03 §10.1.2); target faction is chosen by the playing faction at commit and need not be themselves, nor a contestant — Art 03 §10.1.2 Step 2 (S132) | Face |
 | value_rating | All modifier subclasses | int \| None | 1–3; modifier strength signal printed on card face; used in Splay calculation; None = TBD (stub only — must be set before design pass) | Face |
-| ring_constraint | All modifier subclasses | Ring \| None | Deployment restriction set at card design time by narrative — location-anchored assets get the ring value; portable assets get None. ModActionCard: usable only with ops targeting that ring's districts. ModBattleCard: usable only in Battlefield Strength for a district in that ring. ModReactCard: fires only when trigger condition occurs in that ring's districts. | Face |
-| ring_origin | All modifier subclasses | Ring \| None | Which modifier deck this card belongs to — None = faction modifier deck; 1/2/3 = Ring 1/2/3 modifier deck. Determines draw eligibility (§11.2) and card back color. Separate from ring_constraint: a Ring 1 card (ring_origin=1) may have ring_constraint=None (portable, no deployment restriction). | No |
+| ring_constraint | All modifier subclasses | Ring \| None | Deployment restriction set at card design time by narrative — location-anchored assets get the ring value; portable assets get None. ModActionCard: usable only with ops targeting that ring's districts. ModBattleCard: usable only in Battlefield Strength for a district in that ring. ModReactCard: fires only when trigger condition occurs in that ring's districts. Semantics under review for Ring-sourced cards specifically — PM05 04-n161. | Face |
+| ring_origin | All modifier subclasses | Ring \| None | Which modifier deck this card belongs to — None = faction modifier deck; 1/2/3 = Ring 1/2/3 modifier deck. Determines draw eligibility (§11.2) and card back color. Separate from ring_constraint: a Ring 1 card (ring_origin=1) may have ring_constraint=None (portable, no deployment restriction). None (not applicable) when acquisition=Issued. | No |
+| acquisition | All modifier subclasses | AcquisitionSource | Deck (default) = drawn from a Faction or Ring Modifier deck at Upkeep, gated by ring_origin. Issued = ARBITER delivers the card directly as a named consequence of another card's resolution — no Upkeep draw, no deck, ring_origin forced None. Orthogonal to subclass — any of the three subclasses may in principle be Issued; all current Issued cards happen to be ModReactCard. S133 — supersedes the S133-earlier `ModIssuedCard` 4th-subclass model (PM02 L245 revises L241). | Face |
+| generating_card | All modifier subclasses | CardID \| list[CardID] \| None | Which card's resolution delivers this card — required when acquisition=Issued (e.g. GD-01: [SYN.CA.8, GUI.CA.10]; Overture: STD.CA.9); None when acquisition=Deck. | No |
 
 #### Modifier Subclass Field Constraints
 
@@ -596,8 +619,10 @@ Which inherited Card fields are always None vs. per-card design vs. required. `N
 | on_accept / on_decline | None | None | — |
 | ps_framing | None | None | — |
 | perspectives / design_note | — | None | — |
+| acquisition | Deck by default — omit unless Issued | Deck by default — omit unless Issued | Deck by default — omit unless Issued |
+| generating_card | None unless acquisition=Issued | None unless acquisition=Issued | None unless acquisition=Issued |
 
-*ModReactCard: only `beat` is always None. All other `—` fields are live — set per individual card design.*
+*ModReactCard: only `beat` is always None. All other `—` fields are live — set per individual card design. `acquisition` defaults to Deck for every existing stub that doesn't state it (all ~50 pre-S133 ModAction/ModBattle/ModReact cards) — only state it explicitly on the 3 current Issued cards; this is not a retroactive required-field migration.*
 
 ---
 
@@ -615,6 +640,7 @@ Ring:                0 (Chorus Node) | 1 (Core) | 2 (The Mid) | 3 (Baryo)
 PentagramRelation:   Neighbor | Opposed
 OutcomeType:         Binary | ElectPlayer | ElectDistrict | ElectFaction | BilateralAgreement | Unilateral
 Persistence:         Immediate | Transient | Seasonal | Permanent
+AcquisitionSource:   Deck | Issued   # modifier subclasses only (§6.1/§6.2) — Deck = drawn at Upkeep; Issued = ARBITER-delivered (S133)
 
 PSFramingType:       probabilistic | fixed
 PSFramingTrigger:    resolution | discovery | placement
@@ -1485,14 +1511,14 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 | Doctrine alignment | ✓ | `target_faction = faction.opponent` — `doctrine_mod = {Neighbor: +15, Opposed: -15}` applies. Syndicate affinity (+25) stacks — funding a Neighbor as Syndicate reaches effective threshold 90. Capital flows where doctrine is aligned; crosses resistance where it is not. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: anonymous transfer is covert; Overture preserves optionality on disclosure. Standard: all factions can fund others. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Economy` — capital transfer is NativeResource flow, correctly Economy under Art 04b §4.4. `function = Redirect`, `subject = NativeResource` — correctly scoped. | Art 04b §4, §5 |
-| Balance | ✓ | Net capital zero at success (2 Capital spent = 2 Capital delivered). Overture path to AccordForm costs 2 of 4 available action slots per Quarter (STD.CA.9 covert op slot + PA with Overture attached) — the slot cost is the real gate on this route, not the resource cost. Cost unchanged at 2 Capital (standard covert op cost). L201. | Art 02 §8; Art 04 §11.8 |
-| Effect duration | ✓ | Capital transfer is instantaneous. Overture modifier card lifecycle governed by Art 04 §11.8 and Art 06 §9.4. | Art 04 §11.8; Art 06 §9.4 |
+| Balance | ✓ | Net capital zero at success (2 Capital spent = 2 Capital delivered). Overture path to AccordForm costs 2 of 4 available action slots per Quarter (STD.CA.9 covert op slot + PA with Overture attached) — the slot cost is the real gate on this route, not the resource cost. Cost unchanged at 2 Capital (standard covert op cost). L201. | Art 02 §8; STD.MOD.1 |
+| Effect duration | ✓ | Capital transfer is instantaneous. Overture modifier card lifecycle governed by STD.MOD.1 and Art 06 §9.4. | STD.MOD.1; Art 06 §9.4 |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` | — |
 | Portrait validity | ✓ | Syndicate `submitter=+1`: capital-in-motion doctrine — "relationships create opportunities" (DIR.PA.1, SYN.PA.2). Directorate `submitter=−1`: using anonymous financial transfer conflicts with legitimate-process doctrine; Directorate scrutinises these transfers in others — performing one is in-doctrine hypocrisy (DIR.PA.1, SYN.PA.2). Guild: no entry — relationship investment is pragmatic, not doctrinal; absence justified. Network: no entry — analytical framing only; no doctrinal stake as actor; absence justified. Ghost: no entry — observational framing; Ghost tracks capital flows for intelligence, not as participant; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | N/A — `target_district = None`; faction-level operation, no district target. | — |
-| Supported by components | ✓ | Capital (Art 02 §8) ✓. Overture modifier card full spec written — Art 04 §11.8. | Art 02 §8; Art 04 §11.8 |
-| Supported by game procedure | ⚠ | Dispatch and Beat 3 resolution ✓. Overture delivery procedure (ARBITER tableau → faction hand at Beat 3 resolution) pending Art 07 ARBITER subroutine pass. | Art 03 §9; Art 04 §11.8 |
+| Supported by components | ✓ | Capital (Art 02 §8) ✓. Overture modifier card full spec written — STD.MOD.1. | Art 02 §8; STD.MOD.1 |
+| Supported by game procedure | ⚠ | Dispatch and Beat 3 resolution ✓. Overture delivery procedure (ARBITER tableau → faction hand at Beat 3 resolution) pending Art 07 ARBITER subroutine pass. | Art 03 §9; STD.MOD.1 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -2973,6 +2999,106 @@ STD.PA.8 = Card(
 
 ---
 
+### STD.MOD.1 — OVERTURE
+[↑ Standard](#standard)
+
+*S77.*
+
+#### Design Rationale
+
+Overture is the bridge between STD.CA.9's anonymous funding gesture and formal alliance. When STD.CA.9 Fund succeeds, ARBITER delivers Overture (as a modifier card) to the acting faction. In a subsequent Month or Quarter, the faction assigns Overture to any of their Public Acts at Phase B. When that PA resolves at Beat 4 — regardless of outcome — ARBITER delivers a blank AccordForm to the acting faction. The faction drafts the terms and places the completed form in the Accord Placement Area during Beat 4 resolution or Debrief. The target faction then accepts, negotiates, or declines at Debrief. Mechanically: a free Issued ModReactCard that attaches one Accord initiation to any PA slot — ARBITER-delivered as a consequence of STD.CA.9's success, not drawn from the Modifier deck. Firing mechanism is trigger-based rather than beat-tied: the card watches for its own assigned host PA to resolve, rather than being bundled at Covert Dispatch — see the python block below and the Trigger vocab outstanding issue.
+
+**Timing constraint:** Overture cannot be used in the Month it is received. STD.CA.9 resolves at Beat 3; the host PA must be declared at Phase B (before Beat 3). Overture is held to Month 2, Month 3, or a subsequent Quarter. Tradeable per Art 03 §11.5.
+
+**Host PA restriction:** Cannot be assigned to STD.PA.8 Table an Accord or GUI.PA.2 Infrastructure Bond — both already deliver a blank AccordForm at Beat 4; stacking Overture would duplicate the Accord initiation on the same PA.
+
+**Outcome addition mechanic:** Fires as an additional Automatic outcome when the host PA resolves at Beat 4, regardless of the host PA's success or failure. See §11.7.
+
+#### Design Checklist (Art 04 §5 ModReactCard Design Checklist)
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Modifier card attaching Accord initiation as PA outcome addition. Alliance-opening mechanic — earned through STD.CA.9; formalized through PA attachment. | Art 04 §11.1; Art 06 §9.4 |
+| Voice fit | ✓ | Narrative in diplomatic register. Perspectives: TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction = All` — no alignment penalty for using Overture; doctrine weight carried by STD.CA.9. | Art 04 §6.5 |
+| Card type fit | ✓ | Issued `ModReactCard` — ARBITER-delivered from STD.CA.9, not deck-drawn; fires when its assigned host PA resolves. Does not enter Resolution Grid as independent action. | Art 04 §6.1, §11.1, §11.4 |
+| Taxonomy fit | ✓ | No Layer / Function / Subject — this is a per-card design choice (§11.1 ModReactCard framing), not a subclass-wide exclusion; Overture doesn't represent an action-taxonomy category, unlike e.g. GD-01. | Art 04 §11.1; Art 04b §5.1, §9 |
+| Balance | ✓ | `cost = None` — reward from STD.CA.9 success (2 Capital + roll risk already paid). Assignment free. Accord Portrait implications governed by Art 06 §9.9. Reassess STD.CA.9 threshold after §11 redesign. | Art 02 §8; Art 06 §9.9 |
+| Effect duration | ✓ | Immediate — AccordForm delivery is instantaneous. Resulting Accord's duration governed by Art 06 §9.3–§9.7 independently. | Art 04 §5 P19 |
+| Trigger validity | ⚠ | Fires when its assigned host PA resolves (Beat 4) — trigger form `public_act.resolved(pa=X)` is new, not yet in confirmed TriggerExpr vocabulary (§6.3). Same category of gap as GD-01's district-scoped trigger (04-n27). | Art 04 §6.3; §11.1 |
+| Portrait validity | ✓ | No portrait entry for Overture assignment. Portrait from resulting Accord governed by Art 06 §9.9. | Art 04 §6.2; Art 06 §9.9 |
+| Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
+| Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in STD.CA.9 `arbiter_note`; Art 07 subroutine pass to formalize. | Art 03 Phase B; Art 06 §9.4; STD.CA.9 |
+| New ARBITER behavior | ✓ | Deliver-from-tableau consistent with IS-xx and existing delivery subroutines. No novel ARBITER behavior — Art 07 pass formalizes. | Design Pillar 4.7b; Governing Rule 6.1 |
+| Data schema validation | ✓ | All fields conform to §6.1/§6.2 modifier card schema. | Art 04 §6 |
+
+#### Outstanding Issues
+
+- **Perspectives:** TBD — deferred to modifier card voice pass (D-04-08)
+- **Card ID:** TBD — pending 04-n1 numbering pass
+- **Value rating:** N/A — ModReactCard carries `value_rating` in general, but Overture's is not deck-drawn/Splay-scored (Issued acquisition) — TBD whether the field is even meaningful here.
+- **STD.CA.9 balance reassessment:** Flag for after §11 redesign confirms Overture's modifier value
+- **ARBITER delivery formalization:** Overture delivery (STD.CA.9 → Beat 3 → acting faction hand) pending Art 07 ARBITER subroutine pass; STD.CA.9 `arbiter_note` covers interim reference
+- **Trigger vocab — `public_act.resolved(pa=X)`:** New PA-resolution trigger form, not yet in confirmed TriggerExpr vocabulary (§6.3). Needs the same kind of extension as GD-01's district-scoped `structure_block.placed` (04-n27). Also needs an Art 03 procedure describing how a card "attaches" to a specific PA at Phase B and how ARBITER/the table tracks that binding through to Beat 4.
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  | ⚠ (Perspectives, ID, trigger vocab) | |
+
+```python
+Overture = Card(
+    id      = "STD.MOD.1",  version = "v1.3",
+    name    = "Overture",
+    tagline = "Extend a formal invitation to negotiate — attached to any public act you declare.",
+    type    = ModReactCard,  faction = All,
+
+    layer   = None,  function = None,  subject = None,  # per-card choice — Overture isn't an action-taxonomy category
+
+    beat            = None,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = public_act.resolved(pa=overture.assigned_pa),  # NEW trigger form — pending §6.3 vocab extension
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = None,
+    target_faction  = None,  # named on AccordForm when drafted — not declared at card assignment
+    target_object   = AccordForm,
+
+    target_taxonomy=None,
+    affinity    = None,
+    restriction = overture.assigned_pa.type not in [STD.PA.8, GUI.PA.2],  # avoids duplicate AccordForm on same PA
+    cost        = None,  # earned as STD.CA.9 success reward; free to assign
+
+    acquisition      = Issued,
+    generating_card  = "STD.CA.9",
+
+    # Fires when the assigned host PA resolves (any outcome: success or fail)
+    success = arbiter.deliver(faction(acting), AccordForm(blank)),
+    successcrit = None,  fail = None,  failcrit = None,
+    # Faction fills form per Art 06 §9.3; places in Accord Placement Area during Beat 4 or Debrief.
+    # Art 06 §9.4 formation procedure applies from placement forward.
+
+    portrait = {},  # no entry; Art 06 §9.9 governs Portrait for resulting Accord
+
+    narrative    = "The terms don't matter yet. What matters is that the door is open.",
+    perspectives = {},  # modifier card voice pass deferred to D-04-08
+    design_note  = "Outcome addition modifier: attaches Accord initiation as additional Beat 4 outcome on any PA. "
+                   "Fires on any host PA outcome — success or fail. Earned from STD.CA.9 success; free to assign. "
+                   "Cannot assign to STD.PA.8 or GUI.PA.2 (duplicate AccordForm). "
+                   "Must be held to a subsequent Month: Overture delivered at Beat 3 via STD.CA.9; host PA declared at Phase B before Beat 3. "
+                   "Target faction not declared at Phase B — named on AccordForm when drafted. "
+                   "assigned_pa is set when the faction attaches this card to a PA at Phase B — mirrors GD-01's fill-in-field pattern (deed.district), just faction-written instead of ARBITER-written.",
+    arbiter_note = "On host PA resolution at Beat 4: deliver one blank AccordForm from ARBITER tableau supply to acting faction. "
+                   "Faction drafts and places in Accord Placement Area at their discretion — no timing constraint. "
+                   "Proceed per Art 06 §9.4.",
+)
+```
 
 ---
 
@@ -4678,7 +4804,7 @@ This completes a four-angle passive-income doctrine across the Guild MOD set: bu
 #### Card Story
 A Network survey team finally holds enough ground in a Baryo block to call it theirs — the second marker that tips them to Established. Within the day, a Guild inspector is on-site with a checklist and a fee schedule. Nobody's foothold in New Meridian goes unrecorded, and unrecorded means uncharged.
 
-**Design checklist (Art 04 §11.9):**
+**Design checklist (Art 04 §5 ModReactCard Design Checklist):**
 
 | Criterion | Assessment |
 |-----------|-----------|
@@ -4765,7 +4891,7 @@ Restriction (Guild Present in the district or an adjacent district) keeps this t
 #### Card Story
 Tension breaks out over a contested block, and every material order in the district suddenly has two delivery dates — one for the faction Guild's crews like working with, one for everyone else. By the time the district actually goes to the wire, one side got their scaffolding early.
 
-**Design checklist (Art 04 §11.9):**
+**Design checklist (Art 04 §5 ModReactCard Design Checklist):**
 
 | Criterion | Assessment |
 |-----------|-----------|
@@ -4773,7 +4899,7 @@ Tension breaks out over a contested block, and every material order in the distr
 | Trigger frequency | Low–moderate — Contested (tie at 3+) is a specific, less-common board state; expect 0–3 fires per Quarter, likely spiking as territorial positions tighten late-Quarter. |
 | Firing window | No race with other Guild MODs (distinct trigger). Registered condition is read at §10.1.2 alongside live-played ModBattleCards — sequencing (Guild's pre-registered delta vs. live cards) is part of the Outstanding Issue / 04-n148 procedure gap. |
 | Automatic vs. d100 | Automatic — Guild's own action (registering the condition) is unconditional; the eventual battle outcome still resolves on d10 per §10.1.3, untouched by this card's resolution type. |
-| Persistence | Seasonal — correct fit per §11.9 guidance ("ongoing condition across multiple subsequent actions, not a single-event response"): the condition must survive from trigger (potentially Month 1) through to §10 (Quarter end). |
+| Persistence | Seasonal — correct fit per §5 ModReactCard Design Checklist guidance ("ongoing condition across multiple subsequent actions, not a single-event response"): the condition must survive from trigger (potentially Month 1) through to §10 (Quarter end). |
 | Stack behavior | Open — flagged in Outstanding Issues. If Guild holds multiple copies and both fire on the same district's Tension Marker, do both conditions register and stack? No hard restriction written; deferred to balance pass alongside 04-n136 (deck size / copy count). |
 | Ring constraint | None — presence/adjacency restriction already provides a geographic gate; a ring constraint would be redundant on top of it. |
 | Portrait | Guild submitter +1 only — fires for Guild regardless of outcome (registering the condition is the submitted action); does not fire for the named target_faction (portrait entries are submitter-bounded, P16). |
@@ -9983,7 +10109,7 @@ NET.PA.3 = Card(
 
 ### NET.MOD.2 — TROLL FARM *(stub)*
 
-*Moved to §11.8 — S71. Successor to C40 Option A (Weaponized Transparency). React modifier card — Network faction.*
+*Successor to C40 Option A (Weaponized Transparency). React modifier card — Network faction.*
 
 **Design Rationale:** Network deploys gathered intelligence to damage a faction's reputation at the moment a visible trigger fires. The PS reduction is unblockable — once Network activates the information, the reputational damage cannot be countered or retracted. Operates as a React modifier card per Art 03 §18: Network announces and presents the card on the trigger condition; ARBITER confirms and pauses play. Trigger condition TBD.
 
@@ -11222,7 +11348,7 @@ LandTitle = Card(
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
     narrative   = "The deed was filed before the foundation was poured. That is how the Syndicate prefers it.",
     perspectives = {Syndicate: "We don't need to be there. We just need to be on the paperwork."},
-    design_note  = "Delivers Grant Deed (GD-01) component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire ModReactCard held in faction hand; fires when any faction places a structure block in the named district. Fire effect: +1 Presence Token + 1 Structure Block for deed holder in named district. GR 8.2 governs structure placement (blocked if holder already has structure there; Presence Token still placed). No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds on same district permitted; cost-governed.",
+    design_note  = "Delivers Grant Deed (GD-01) component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire Issued ModReactCard (acquisition=Issued, S133 — PM02 L245) held in faction hand; fires when any faction places a structure block in the named district. Fire effect: +1 Presence Token + 1 Structure Block for deed holder in named district. GR 8.2 governs structure placement (blocked if holder already has structure there; Presence Token still placed). No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds on same district permitted; cost-governed.",
     arbiter_note = "Take 1 blank Grant Deed (GD-01) from ARBITER tableau. Write target district name and Syndicate as holder. Place in submitting faction's Dispatch Case. Grant Deed moves to hand at Debrief.",
 )
 ```
@@ -11626,8 +11752,12 @@ SYN.CA.7 = Card(
 ### Syndicate — ACCORD LEVERAGE *(placeholder name)*
 [↑ Covert Operations](#syndicate-covert-operations)
 
+⚠ **Flagged for redesign (Andy, S133) — see Outstanding Issues.** Current forced-acceptance mechanic duplicates SYN.MOD.11 Signature on File. Redesign direction: corrupt a different, not-yet-described Accord field instead. Design Rationale below is legacy content, retained for reference until the redesign pass.
+
 #### Design Rationale
 Syndicate converts gathered intelligence into a forced Accord commitment. The Intel token is the leverage; the effect fires during the Beat 4 Accord formation window. The target cannot negotiate amendments, decline, or counter-propose — they accept the draft as written. Uses Art 06 §9 Lock manipulation type. Distinct from SYN.CA.7 Corporate Blackmail (presence-based coercion in a district): The Fixer operates entirely in the Accord formation layer, with no district dependency. The target must be a named party to the Accord draft being locked.
+
+Typed Issued `ModReactCard` (S133 — retyped twice: originally `ModActionCard`, briefly `ModIssuedCard`, now `acquisition=Issued` on `ModReactCard` under the acquisition-axis model; PM02 L245 revises L241/PM05 04-n154/04-n160): ARBITER-delivered as a consequence of another card's success, not drawn from the Modifier deck — same acquisition pattern as GD-01 Grant Deed and STD.MOD.1 Overture. Acquisition path should be re-confirmed against whatever mechanic the redesign lands on.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -11639,7 +11769,7 @@ Syndicate converts gathered intelligence into a forced Accord commitment. The In
 | Action fit | ✓ | Intelligence leverage applied to Accord formation — forces yes-vote on existing draft terms | Art 00 §7 |
 | Voice fit | — | TBD — single Syndicate perspective minimum | Art 00 §7 |
 | Doctrine alignment | — | Syndicate only; IntelToken cost; Art 06 §9 Lock interaction outstanding | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | ModActionCard — modifier applied to Accord formation window, not a CovertOperation | Art 04 §6.1, §6.2 |
+| Card type fit | ✓ | Issued ModReactCard (S133 — retyped twice; see Design Rationale; PM02 L245 revises L241/PM05 04-n154/04-n160) — ARBITER-delivered, not deck-drawn; modifier applied to Accord formation window, not a CovertOperation | Art 04 §6.1, §6.2 |
 | Taxonomy fit | — | Modifier card taxonomy — excluded from Layer/Function/Subject taxonomy | Art 04b §5.1, §9 |
 | Balance | — | IntelToken × 1; effect = forced acceptance of existing Accord draft; scope and party requirements outstanding | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate at Beat 4 Accord formation | — |
@@ -11654,10 +11784,12 @@ Syndicate converts gathered intelligence into a forced Accord commitment. The In
 
 #### Outstanding Issues
 
-- **Art 03 procedure — modifier card in Accord window:** No procedure written for ModActionCard played during Beat 4 Accord formation. Must be written as generalizable rule before Issues Resolved.
-- **Party requirement:** Must Syndicate be a named party to the target Accord? Expected yes — this is leverage, not arbitration. Confirm.
-- **Scope after forced acceptance:** Can the target exercise any standard Accord rights after forced acceptance (dissolution, breach action), or are they fully bound as written? Clarify.
-- **Lock type interaction:** Art 06 §9 Lock applies to a single manipulation within an existing Accord. Confirm whether "forcing acceptance of a draft Accord" is a Lock (modifying the target's vote) or a new manipulation category.
+- **Redesign flagged (Andy, S133) — PM05 04-n158.** Forced-acceptance mechanic is a near-duplicate of SYN.MOD.11 Signature on File (same effect — force Accord acceptance without consent — and Signature on File already has a documented generator, SYN.CA.12 Boilerplate). Andy's direction: keep both cards, but redesign The Fixer to corrupt a different Accord field that hasn't been described yet elsewhere in the set — distinct from SYN.CA.10 Accord Transfer (named party) and SYN.CA.11 Redline (numeric/ordinal fill-in value). Which field is undefined; identify during the 09-06 redesign pass. This supersedes the below issues that are specific to the forced-acceptance mechanic — they stay listed for reference but won't be resolved until the redesign lands on a new effect.
+- **Art 03 procedure — modifier card in Accord window:** No procedure written for an Issued ModReactCard played during Beat 4 Accord formation. Superseded by redesign — will need to be re-evaluated against whatever new effect is chosen.
+- **Party requirement:** Must Syndicate be a named party to the target Accord? Expected yes — this is leverage, not arbitration. Superseded by redesign.
+- **Scope after forced acceptance:** Can the target exercise any standard Accord rights after forced acceptance (dissolution, breach action), or are they fully bound as written? Superseded by redesign.
+- **Lock type interaction:** Art 06 §9 Lock applies to a single manipulation within an existing Accord. Confirm whether "forcing acceptance of a draft Accord" is a Lock (modifying the target's vote) or a new manipulation category. Superseded by redesign.
+- **Generating card:** Undefined under the current mechanic. Revisit once the redesign lands — Boilerplate is already spoken for (Signature on File); a new generator or acquisition path may be needed.
 - **Card name:** Placeholder — confirm before sign-off.
 - **Card ID:** TBD — pending PM05 04-n1 numbering pass.
 
@@ -11668,18 +11800,25 @@ Syndicate converts gathered intelligence into a forced Accord commitment. The In
 | Status |  | | |
 
 *v1.0 — S71: redesigned as modifier card (Instant). Forced acceptance of Accord draft as written. Replaces deferred "forced Accord vote" stub from S70.*
+*v1.1 — S133: retyped ModActionCard → ModIssuedCard (PM02 L241/PM05 04-n154). No field changes — `effect` already used a plain MutationExpr, which the prior ModActionCard typing didn't actually support (its `effect` field requires a ModActionExpr tagged union).*
+*v1.2 — S133: retyped again, ModIssuedCard → Issued ModReactCard (`acquisition=Issued`) under the acquisition-axis model (PM02 L245 revises L241/PM05 04-n160). `effect` field renamed `success` to match ModReactCard's field set.*
+*Flagged S133 (PM05 04-n158): forced-acceptance mechanic duplicates SYN.MOD.11 Signature on File — redesign to a different, not-yet-described Accord-corrupt field. Python block below is the pre-redesign mechanic, retained for reference.*
 
 ```python
-# STUB — full ModActionCard spec (effect, value_rating, ring_constraint, ring_origin) pending 09-06; Art 06 §9 Lock interaction outstanding
+# STUB — flagged for redesign (PM05 04-n158): duplicates SYN.MOD.11 Signature on File.
+# Below is the pre-redesign mechanic, kept for reference — effect will change.
 Card(
-    id=TBD,  version="v1.0",
+    id=TBD,  version="v1.2",
     name        = "The Fixer",  # placeholder
-    type        = ModActionCard,  faction = Syndicate,
-    beat        = 4,  # Accord formation window
+    type        = ModReactCard,  faction = Syndicate,
+    beat        = None,  # fires on trigger, not a named beat
     trigger     = AccordDraft(named).status == Draft,  # draft exists, not yet executed
     restriction = AccordDraft(named).party(faction(target)) == True,  # target is named party
     cost        = IntelToken(any) * 1,
-    effect      = AccordDraft(named).lock(faction(target), accept_as_written=True),
+    acquisition      = Issued,
+    generating_card  = None,  # still undefined — see Outstanding Issues
+    success     = AccordDraft(named).lock(faction(target), accept_as_written=True),
+    successcrit = None,  fail = None,  failcrit = None,
     # Art 06 §9 Lock manipulation type — target cannot negotiate, decline, or counter-propose
     target_taxonomy=None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},  # TBD — modifier card portrait model
@@ -12880,7 +13019,7 @@ SYN.MOD.15 = Card(
 | STD.CA.14 | Disprove | 📝 | Economy | Public | Remove | Intel Token | Remove |
 | STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel Token | Move |
 | STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier Card | Move |
-| STD.MOD.1 | Overture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.1 | Overture | 📝 | Issued ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence Token | Add |
 | STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence Token | Remove |
 | STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure Block | Add |
@@ -12901,7 +13040,7 @@ SYN.MOD.15 = Card(
 | SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
 | SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
 | SYN.CA.12 | Boilerplate | 📝 | Economy | Covert | Add | Accord Form | Add |
-| SYN.MOD.1 | The Fixer | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.1 | The Fixer | 📝 | Issued ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.2 | Shell Corporation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.3 | Offshore Slush Fund | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.4 | Insider Trading | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
@@ -13016,33 +13155,33 @@ Standard cards are distributed as part of each faction's CA and PA pools — eac
 
 ### 11.1 What They Are
 
-Modifier cards alter the parameters of an action rather than targeting a game layer directly. They produce no game-state primitives on their own; their effect is mediated by the host action or condition they modify. Modifier cards carry no Layer — Function — Subject assignment and are excluded from the card taxonomy. *(Art 04b §5.1, §9)*
+Modifier cards are the game's secondary layer of play — cards that don't act alone, but attach to, alter, or react to something else already in motion at the table. Two independent questions define any modifier card: **which of three subclasses governs how it fires** (below), and **which of three sets governs where it came from** (§11.1 second half). The two are orthogonal — a card's firing mechanism doesn't determine its acquisition source, and vice versa (S133, PM02 L245).
 
-Three subclass types govern how a modifier card fires (§6.1):
+**Three subclasses govern how a modifier card fires (§6.1):**
 
-- **ModActionCard** — bundled with a submitted operation (CA, PA, Operative, Emergency, Apex) at Covert Dispatch; fires with the host action; effect expressed as a `ModActionExpr` tagged union.
-- **ModBattleCard** — played during Battlefield Strength resolution (§10 Contested District Resolution); effect is a `ModBattleExpr` threshold delta.
-- **ModReactCard** — fires when a publicly observable board state change matches its `trigger` condition; played in the Faction Resolution Grid, not bundled with a dispatch case.
+- **ModActionCard** — attached to a CA/PA/Operative/Emergency/Apex at the moment it's submitted (Covert Dispatch); rides along and resolves when its host does. Its effect is always parasitic on the host action, so it carries no independent Layer/Function/Subject — the taxonomy belongs to the host, not the modifier. Effect expressed as a `ModActionExpr` tagged union (§6.3).
+- **ModBattleCard** — thrown into a live district contest at Battlefield Strength resolution (Art 03 §10.1.2); its only job is to shift a named contesting faction's total up or down before the d10 roll. Like ModActionCard, it has no independent taxonomy — the contest itself is the taxonomy-bearing act, not the modifier thrown into it. Effect is a `ModBattleExpr` (Boost/Hinder + target + magnitude).
+- **ModReactCard** — the odd one out: it doesn't attach to anything. It sits in a faction's hand until a publicly observable board-state change matches its `trigger`, then fires on its own — structurally closer to a self-triggering CA/PA than to the other two subclasses. This is why ModReactCard is the one subclass that routinely carries genuine Layer/Function/Subject taxonomy (per-card, not universal — see §6.2): it *is* an action, just one that declares itself instead of being submitted at Phase B.
 
-*"Instant" was a working designation in earlier design. The canonical term is ModActionCard (operation modifier) or ModReactCard (react/trigger modifier) per §6.1.*
+**Three sets govern where a modifier card comes from — independent of subclass:**
 
-Two sets:
+Faction and Ring modifier cards are drawn from a shuffled deck; ARBITER-issued cards are not.
 
-Faction modifier cards represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. Ring modifier cards represent key ring individuals, assets, equipment, and synergies within the ring.
-
-**Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–3).*
-
-**Ring modifier cards** — drawn from shared ring decks on game board (Sprawl, Infrastructure, Core). Chorus Node has no modifier deck. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only"), effect, Portrait alignment (if applicable), value rating (1–3).*
+- **Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. Represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–3).*
+- **Ring modifier cards** — drawn from shared ring decks on game board (Sprawl, Infrastructure, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only"), effect, Portrait alignment (if applicable), value rating (1–3).* Whether `ring_constraint` should default to restrictive is under review — PM05 04-n161.
+- **ARBITER-issued cards** — not drawn from any deck. ARBITER hands the card directly to a faction as a specific, named consequence of another card's resolution (`generating_card`, §6.2) — no shuffle, no card back convention, no Upkeep draw eligibility. Current examples: GD-01 Grant Deed (§12b.2), STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three happen to be ModReactCard underneath (fire on a trigger, once delivered), but acquisition source doesn't constrain which of the three subclasses a card is; an Issued ModActionCard or ModBattleCard is schema-valid, just unbuilt so far.
 
 Ring constraint applies to all users regardless of holder.
 
 *Naming note: "Modifier cards" is a working designation — pending decision D-04-07.*
 
-### 11.2 Draw Conditions (Upkeep Step 6)
+### 11.2 Draw Conditions (Art 03 §7.5.3 Modifier Card Draw)
+
+*Was "Upkeep Step 6" — stale flat numbering, predates Art 03's §7 Upkeep restructure into nested §7.0–§7.5.x steps. Fixed S133 (Andy).*
 
 Factions that have triggered Burst Play skip modifier draws for the remainder of the session.
 
-**Faction modifier draw:**
+**Faction modifier draw (§7.5.3.0):**
 
 | Structure blocks owned | Cards drawn |
 |------------------------|-------------|
@@ -13051,7 +13190,9 @@ Factions that have triggered Burst Play skip modifier draws for the remainder of
 | 4–5 | 2 |
 | 6+ | 3 (maximum) |
 
-**Ring modifier draw:** 1 card from a ring deck if the faction has both:
+*Table values sourced from Art 03 §21 Card Economy Reference (temporary home — migrates to Art 04 §12 when deck construction is finalized). Confirm this copy stays in sync if §21 changes.*
+
+**Ring modifier draw (§7.5.3.1):** 1 card from a ring deck if the faction has both:
 1. At least 1 structure block in that ring, AND
 2. Established or Dominant in at least 1 district in that ring.
 
@@ -13059,19 +13200,19 @@ One draw per qualifying ring per round.
 
 ### 11.3 Hand Accumulation
 
-No hand limit. Count publicly visible; content private. Modifier decks not reshuffled — one-pass per session.
+No hand limit. Modifier decks not reshuffled — one-pass per session.
 
 ### 11.4 Submit Rules
 
-Maximum 1 modifier card per action submitted. No total per-round limit. Burst Play supersedes (§11.6).
+No cap. A faction may attach as many modifier cards to as many submitted actions as it holds in hand — limited only by hand size (§11.3), not by an artificial per-action or per-round count.
 
 ### 11.5 Trading
 
-Freely tradeable between factions at any time outside Resolution. Ring constraint travels with the card. ARBITER notes trades. End-of-session cleanup: sort by card back color.
+Freely tradeable faction-to-faction — any resource, Intel Token, or modifier card — whenever both parties agree; not restricted to a specific window, though play shouldn't stall to negotiate one.
 
 ### 11.6 Burst Play
 
-**Trigger:** After Upkeep Step 6 draws complete, before Dispatch phase opens.
+**Trigger:** After Art 03 §7.5.3 draws complete (§7.5.3.2 Burst Play Window), before Dispatch phase opens.
 
 **Effect:** Trade ALL held modifier cards for Reservoir resources at 1:1 — any resource type, each card independently.
 
@@ -13101,129 +13242,10 @@ Freely tradeable between factions at any time outside Resolution. Ring constrain
 
 Target is any contesting faction identified at Art 03 §10.1.1 — chosen by the playing faction, not necessarily themselves. Any faction may play a Battlefield Modifier Card into an active contest, whether or not they are contesting it themselves (Art 03 §10.1.2 Step 2, S132).
 
-**ModReactCard** effects: Full CA/PA effect field set (`success`, `successcrit`, `fail`, `failcrit`) — see §6.1.
+**ModReactCard** effects: Full CA/PA effect field set (`success`, `successcrit`, `fail`, `failcrit`) — see §6.1. Applies identically to Issued ModReactCards (GD-01, Overture, The Fixer — §11.1); `acquisition` and `generating_card` govern where the card came from, not what its effect field looks like.
 
-*Legacy effect categories from earlier design (Effect extension, Detection immunity, Reach extension, Outcome addition) are superseded by the §6.1 modifier subclass schema. Outcome addition remains valid for ModActionCard via `success` on Automatic host action.*
+*Legacy effect categories from earlier design (Effect extension, Detection immunity, Reach extension, Outcome addition) are superseded by the §6.1 modifier subclass schema.*
 
-### 11.8 Named Modifier Cards — Stubs
-
-*Individual modifier card design is a full design pass pending decision D-04-08 and §11 redesign. Named cards below are direction-locked stubs.*
-
-
----
-
-#### OVERTURE
-
-*S77.*
-
-#### Design Rationale
-
-Overture is the bridge between STD.CA.9's anonymous funding gesture and formal alliance. When STD.CA.9 Fund succeeds, ARBITER delivers Overture (as a modifier card) to the acting faction. In a subsequent Month or Quarter, the faction assigns Overture to any of their Public Acts at Phase B. When that PA resolves at Beat 4 — regardless of outcome — ARBITER delivers a blank AccordForm to the acting faction. The faction drafts the terms and places the completed form in the Accord Placement Area during Beat 4 resolution or Debrief. The target faction then accepts, negotiates, or declines at Debrief. Mechanically: a free ModActionCard that attaches one Accord initiation to any PA slot.
-
-**Timing constraint:** Overture cannot be used in the Month it is received. STD.CA.9 resolves at Beat 3; the host PA must be declared at Phase B (before Beat 3). Overture is held to Month 2, Month 3, or a subsequent Quarter. Tradeable per Art 03 §11.5.
-
-**Host PA restriction:** Cannot be assigned to STD.PA.8 Table an Accord or GUI.PA.2 Infrastructure Bond — both already deliver a blank AccordForm at Beat 4; stacking Overture would duplicate the Accord initiation on the same PA.
-
-**Outcome addition mechanic:** Fires as an additional Automatic outcome when the host PA resolves at Beat 4, regardless of the host PA's success or failure. See §11.7.
-
-#### Design Checklist
-
-| Category | Pass | Note | Artifact ref |
-|----------|------|------|--------------|
-| Action fit | ✓ | Modifier card attaching Accord initiation as PA outcome addition. Alliance-opening mechanic — earned through STD.CA.9; formalized through PA attachment. | Art 04 §11.1; Art 06 §9.4 |
-| Voice fit | ✓ | Narrative in diplomatic register. Perspectives: TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
-| Doctrine alignment | ✓ | `faction = All` — no alignment penalty for using Overture; doctrine weight carried by STD.CA.9. | Art 04 §6.5 |
-| Card type fit | ✓ | `ModActionCard` — assigned at Phase B; fires when host PA resolves. Does not enter Resolution Grid as independent action. | Art 04 §6.1, §11.1, §11.4 |
-| Taxonomy fit | ✓ | No Layer / Function / Subject — modifier cards excluded per §11.1. | Art 04b §5.1, §9 |
-| Balance | ✓ | `cost = None` — reward from STD.CA.9 success (2 Capital + roll risk already paid). Assignment free. Accord Portrait implications governed by Art 06 §9.9. Reassess STD.CA.9 threshold after §11 redesign. | Art 02 §8; Art 06 §9.9 |
-| Effect duration | ✓ | Immediate — AccordForm delivery is instantaneous. Resulting Accord's duration governed by Art 06 §9.3–§9.7 independently. | Art 04 §5 P19 |
-| Trigger validity | ✓ | ModActionCard — fires at Beat 4 when host PA resolves. Art 03 §5 P5 does not apply (ModActionCard bundled with host op at Covert Dispatch, not an independent play). | Art 04 §5 P5; §11.1 |
-| Portrait validity | ✓ | No portrait entry for Overture assignment. Portrait from resulting Accord governed by Art 06 §9.9. | Art 04 §6.2; Art 06 §9.9 |
-| Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
-| Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in STD.CA.9 `arbiter_note`; Art 07 subroutine pass to formalize. | Art 03 Phase B; Art 06 §9.4; STD.CA.9 |
-| New ARBITER behavior | ✓ | Deliver-from-tableau consistent with IS-xx and existing delivery subroutines. No novel ARBITER behavior — Art 07 pass formalizes. | Design Pillar 4.7b; Governing Rule 6.1 |
-| Data schema validation | ✓ | All fields conform to §6.1/§6.2 modifier card schema. | Art 04 §6 |
-
-#### Outstanding Issues
-
-- **Perspectives:** TBD — deferred to modifier card voice pass (D-04-08)
-- **Card ID:** TBD — pending 04-n1 numbering pass
-- **Value rating (1–3):** TBD — deferred (D-04-08)
-- **STD.CA.9 balance reassessment:** Flag for after §11 redesign confirms Overture's modifier value
-- **ARBITER delivery formalization:** Overture delivery (STD.CA.9 → Beat 3 → acting faction hand) pending Art 07 ARBITER subroutine pass; STD.CA.9 `arbiter_note` covers interim reference
-
-#### Status
-
-| | Design Pass | Issues Resolved | Signed off |
-|--|-------------|-----------------|------------|
-| Status |  | ⚠ (Perspectives, ID, value rating) | |
-
-```python
-Overture = Card(
-    id      = "STD.MOD.1",  version = "v1.0",
-    name    = "Overture",
-    tagline = "Extend a formal invitation to negotiate — attached to any public act you declare.",
-    type    = ModActionCard,  faction = All,
-
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
-
-    beat            = 4,
-    resolution      = Automatic,
-    threshold       = None,
-    ring_mod        = None,
-    doctrine_mod    = None,
-    trigger         = None,
-    persistence     = Immediate,
-    persistence_condition = None,
-    persistence_effect    = None,
-
-    target_district = None,
-    target_faction  = None,  # named on AccordForm when drafted — not declared at card assignment
-    target_object   = AccordForm,
-
-    target_taxonomy=None,
-    affinity    = None,
-    restriction = host_action.type not in [STD.PA.8, GUI.PA.2],  # avoids duplicate AccordForm on same PA
-    cost        = None,  # earned as STD.CA.9 success reward; free to assign
-
-    # Outcome addition — fires at Beat 4 on host PA resolution (any outcome: success or fail)
-    success = arbiter.deliver(faction(acting), AccordForm(blank)),
-    # Faction fills form per Art 06 §9.3; places in Accord Placement Area during Beat 4 or Debrief.
-    # Art 06 §9.4 formation procedure applies from placement forward.
-
-    portrait = {},  # no entry; Art 06 §9.9 governs Portrait for resulting Accord
-
-    narrative    = "The terms don't matter yet. What matters is that the door is open.",
-    perspectives = {},  # modifier card voice pass deferred to D-04-08
-    design_note  = "Outcome addition modifier: attaches Accord initiation as additional Beat 4 outcome on any PA. "
-                   "Fires on any host PA outcome — success or fail. Earned from STD.CA.9 success; free to assign. "
-                   "Cannot assign to STD.PA.8 or GUI.PA.2 (duplicate AccordForm). "
-                   "Must be held to a subsequent Month: Overture delivered at Beat 3 via STD.CA.9; host PA declared at Phase B before Beat 3. "
-                   "Target faction not declared at Phase B — named on AccordForm when drafted.",
-    arbiter_note = "On host PA resolution at Beat 4: deliver one blank AccordForm from ARBITER tableau supply to acting faction. "
-                   "Faction drafts and places in Accord Placement Area at their discretion — no timing constraint. "
-                   "Proceed per Art 06 §9.4.",
-)
-```
-
----
-
-### 11.9 ModReactCard Design Checklist
-
-ModReactCards introduce design dimensions not covered by the standard CA/PA checklist (§5). Use this checklist during any design review pass on ModReactCard stubs. Items below are the gate criteria for the 09-06 ModReactCard design pass.
-
-| Criterion | Design question | Guidance |
-|-----------|----------------|---------|
-| **Trigger observability** | Is the trigger a publicly observable board state change per §5 P5? | Triggers must reference something visible to all players. Private information events (covert operation contents, ARBITER-held state) are not valid triggers. See §6.3 confirmed TriggerExpr vocabulary. |
-| **Trigger frequency** | How often does this trigger fire in a typical Quarter? | Underfire (condition rarely met) = dead weight. Overfire (every round) = oppressive or trivial. Document expected frequency in `design_note`. |
-| **Firing window** | Does this card's trigger fire at the same time as other React cards? Is priority order needed? | Multiple React cards with identical or simultaneous triggers compete. If racing is possible, confirm resolution order or note as a design gap. |
-| **Automatic vs. d100** | Is `resolution = Automatic` justified? | Automatic is appropriate when the trigger is precisely defined and the effect is bounded. d100 is appropriate when outcome should depend on execution quality or add tension. |
-| **Persistence** | Is `persistence = Immediate` (fire-and-consume) or `persistence = Seasonal` (remains on FRG until Quarter end) correct? | Seasonal creates a standing environmental constraint across multiple subsequent actions. Use when the card represents an ongoing condition, not a single-event response. |
-| **Stack behavior** | Can multiple copies fire on the same trigger event in the same Quarter? | If a faction holds two copies and the trigger fires once, do both fire? Document the answer in `design_note`; add a restriction clause if stacking is undesirable. |
-| **Ring constraint** | Is `ring_constraint` set correctly relative to trigger frequency and effect power? | Ring-constrained React cards fire only when the trigger occurs in the specified ring. If trigger frequency is already low, a ring constraint may make the card unplayable. |
-| **Portrait** | What PS signals are appropriate? | React cards fire without declaration — the acting faction does not visibly "do" anything at Phase B. PS shifts (if any) should be legible as automatic environmental response, not player initiative. |
-
----
 
 ## 12. Rules & Constraints
 
@@ -13232,6 +13254,8 @@ ModReactCards introduce design dimensions not covered by the standard CA/PA chec
 ARBITER-issued cards placed in a faction's Dispatch Case during operation resolution. Not player-submitted; not drawn from a deck. Carry a single instruction that fires at the start of Art 03 §11 Debrief. Physical form: disposable slip or reusable erasable card — design direction pending Art 11. Component: DB:100 (DebriefActionCard).
 
 Debrief Action Cards are distinguished from all other card types by source and timing: created by ARBITER as a consequence of resolved operation; no faction player submits or draws them.
+
+**Acquisition (S133):** same acquisition source as GD-01/Overture/The Fixer (§11.1, §12b) — ARBITER-delivered as a named consequence of a resolved operation (its generating CA), not drawn from a deck. But DA-xx cards are **not** Modifier cards and not `Card()` instances — they carry no `type` from the CardType enum, no Layer/Function/Subject, and critically, no `trigger`. Considered and rejected: typing them Issued `ModReactCard` — ModReactCard requires a non-None `trigger` (§6.2 field constraint), and "fires at the start of Debrief" isn't a `TriggerExpr` event a card reacts to; it's a **scheduled procedural checkpoint** it executes at unconditionally, the same category as `persistence=Seasonal` clearing at Phase 21 (End of Quarter) — phase-anchored, not board-state-reactive. This also matches Art 04 §6.3's explicit exclusion of Session Timeline/Quarter-Month markers from the TriggerExpr vocabulary (a physical Debrief-position marker wouldn't change this — it would still be exactly the excluded category). DA-xx therefore stays its own lightweight category: fields table + Art 03 §11 procedure, not folded into the modifier subclass hierarchy.
 
 ---
 
@@ -13264,9 +13288,33 @@ Produced by Ghost SCIF card on successful Beat 3 resolution (see Art 03 §7.2 Gh
 
 ---
 
+### 12a.3 DA-02 — PhantomRecord
+
+*New S133 — written to establish format parity with DA-01 per the acquisition-axis generalization above (§12a intro). GHO.CA.13 Phantom Accounts, the generating card, is itself an undesigned stub (id/version/beat/resolution/threshold only — no Design Rationale, checklist, or Status). DA-02's fields and procedure below match GHO.CA.13's one-line success text as written; exact mechanics are pending GHO.CA.13's own full design pass, not settled by this entry.*
+
+Produced by Ghost's GHO.CA.13 Phantom Accounts on successful Beat 3 resolution. ARBITER places one completed PhantomRecord in Ghost's Dispatch Case at Beat 3 instantiation.
+
+**Fields (ARBITER completes at generation):**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `quarter` | Integer | Quarter in which the card was produced |
+| `target_faction` | Faction | Faction whose district-native resource generation is being mirrored |
+| `generation_snapshot` | TBD | Target faction's influence-based district-native resource generation at Beat 3 (snapshot) — exact calculation method pending GHO.CA.13 full design pass |
+
+**Debrief procedure (Art 03 §11):** At the start of Debrief, process all DA-02 slips in Ghost's Dispatch Case:
+
+1. Ghost gains district-native resources equal to `generation_snapshot`.
+2. Discard the DA-02 slip after use.
+3. DA-02 slips remaining in the Dispatch Case at Phase 21 are discarded without effect.
+
+⚠ **Outstanding:** `generation_snapshot`'s exact source (which formula/table defines "influence-based generation") is undefined — GHO.CA.13 needs its own design pass before this is more than a placeholder field.
+
+---
+
 ## 12b. Grant Deeds
 
-ARBITER-issued React cards placed in a faction's Dispatch Case during covert operation resolution. Not player-submitted; not drawn from a deck. Held in faction hand after Debrief delivery. Fire as a ModReactCard — trigger is a fill-in-the-blank district field written by ARBITER on the physical card at generation time. Fire effect applies to the holding faction regardless of which CA generated the deed. Multiple Grant Deeds may be held simultaneously; one fires per trigger event.
+ARBITER-issued cards placed in a faction's Dispatch Case during covert operation resolution. Not player-submitted; not drawn from a deck. Held in faction hand after Debrief delivery. Fire as an Issued ModReactCard (`acquisition=Issued` — S133, PM02 L245 revises L241/L241's since-superseded `ModIssuedCard` model, PM05 04-n154/04-n160) — trigger is a fill-in-the-blank district field written by ARBITER on the physical card at generation time. Fire effect applies to the holding faction regardless of which CA generated the deed. Multiple Grant Deeds may be held simultaneously; one fires per trigger event.
 
 Physical form: blank card with printed trigger text and effect text; two fill-in fields completed by ARBITER at generation. Stored blank in ARBITER tableau; ARBITER completes and routes at Beat 3 or Beat 4 of the generating CA's resolution.
 
@@ -13303,7 +13351,7 @@ Produced by any CA that delivers a Grant Deed (currently SYN.CA.8 Land Title and
 
 ```python
 GD01 = Card(
-    id      = "GD-01",  version = "v0.1",
+    id      = "GD-01",  version = "v0.3",
     name    = "Grant Deed",
     tagline = "A registered claim. When someone else breaks ground, the deed fires.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
@@ -13332,19 +13380,19 @@ GD01 = Card(
     cost        = None,
     boost       = None,
 
+    acquisition      = Issued,
+    generating_card  = ["SYN.CA.8", "GUI.CA.10"],
+
     success = [faction(holding).presence_token.add(deed.district, 1),
                faction(holding).structure_block.add(deed.district, 1)],
-
-    successcrit = None,
-    fail        = None,
-    failcrit    = None,
+    successcrit = None,  fail = None,  failcrit = None,
 
     portrait    = None,
     ps_framing  = None,
 
     narrative    = None,
     perspectives = None,
-    design_note  = "ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order.",
+    design_note  = "Issued ModReactCard (S133 — was `ModIssuedCard`, PM02 L245 revises L241/PM05 04-n154; before that, plain ModReactCard). Acquisition axis (acquisition=Issued, generating_card) now carries what the retired ModIssuedCard subclass tried to express. ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order.",
     arbiter_note = "At generating CA resolution: take 1 blank Grant Deed from ARBITER tableau; write target district name in 'district' field and acting faction in 'holder' field; place in acting faction's Dispatch Case. Card moves to holder's hand at Debrief. No ongoing ARBITER monitoring required — holder self-polices and announces React when trigger fires.",
 )
 ```
@@ -13383,10 +13431,6 @@ Face: name, type indicator, effect, attachment rule (if restricted), Portrait (i
 
 Face: ring constraint statement as visually distinct element, name, type indicator, effect, Portrait (if applicable), value rating (1–3). Back: ring color, ring name.
 
-### 13.4 Pass Cards
-
-Four named variants (PS-01–PS-04). Face: variant name, tagline, and secondary effect (if any). Ghost rule note small on all variants. Back: neutral grey. Full card face design pending Artifact 11 visual pass.
-
 ### 13.5 Emergency Response Cards
 
 Face: name, faction indicator, trigger condition, complete effect text, Board Strength interaction note. Pre-sealed in faction envelopes at setup. Full card data structure review pending (D-04-10).
@@ -13406,10 +13450,6 @@ Face: name, faction indicator, trigger condition, complete effect text, Board St
 | Ghost | Counter-Analysis | Reveal one Intel token publicly. If accurate and damaging to Apex faction: Apex faction Public Standing −2 before threshold check. |
 | The Network | Emergency Broadcast | Apex faction Public Standing −3 immediately. VP calculation affected. |
 | The Syndicate | Hostile Takeover Bid | Offer Apex faction 4 Capital for 2 structure blocks (converted to Syndicate). If accepted: Board Strength −2. If declined: no effect. |
-
-### 14.2 Countermeasure Interaction
-
-Countermeasure cards interact with covert operations only — not public acts. Type A (district block) blocks covert operations targeting the named district. Type B (faction defense) reduces covert operation difficulty against that faction's assets. Full Countermeasure card design pending D-04-12.
 
 ### 14.3 Resource Availability Constraint
 
@@ -13466,51 +13506,6 @@ Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacit
 
 ---
 
-## 16. Appendix — Outstanding Decisions & Assumptions
-
-### Decisions Blocking Sign-Off
-
-| ID | Description | Blocking what |
-|----|-------------|---------------|
-| D-04-01 | Card set completeness — taxonomy gaps may warrant additional cards before production. Setup pool sizes (30/24 covert, 20/12 political) are assumptions pending final card set. | Production, Artifact 09 |
-| D-04-02 | Ghost GHO.CA.1–GHO.CA.5 redesign — GHO.CA.3 replaced with Dossier Breach (S51); GHO.CA.4 now unique. Portrait Shift, targeted Reveal, Copy subset gaps remain open. | Artifact 09 |
-| D-04-03 | Directorate DIR.CA.1–DIR.CA.4 redesign — DIR.CA.4 replaced with Tactical Redirection (S51). Block duplication resolved. Mandate generation and Public Standing Shift cards still needed. | Artifact 09 |
-| D-04-04 | Network NET.CA.1–NET.CA.5 redesign — NET.CA.2 replaced with Disclosure Loop (S51). Exposure generation addressed. NET.CA.1/NET.CA.3 Reveal overlap and Public Standing Shift card remain open. | Artifact 09 |
-| D-04-05 | Syndicate SYN.CA.1–SYN.CA.5 redesign — zero information capability; Corrupt Accord and Redirect Accord unused. Approve current set or redesign? | Artifact 09 |
-| D-04-06 | Public acts STD.PA.1–GHO.PA.2 full card data structure review — all fields (Beat, Taxonomy, Faction perspectives, Restriction, crit effects, Portrait) need card-by-card application. | Artifact 09 |
-| D-04-07 | Modifier card in-world naming — "Modifier cards" is a working designation. | Artifact 09 |
-| D-04-08 | Modifier card individual content — faction modifier decks and ring modifier decks have no individual card designs. | Artifact 09, physical production |
-| D-04-09 | Adjacency definition — formal district adjacency table needed in Artifact 01. Required by STD.CA.2, STD.CA.4, STD.CA.5, GUI.CA.4, NET.CA.4, NET.CA.5. | Artifact 01, physical play |
-| D-04-10 | Emergency Response card data structure review — full card data structure not yet applied. | Artifact 09 |
-| D-04-11 | Intel token mechanics cross-reference — Art 02 §12 audit against current card designs needed. Potential inconsistency with Denounce cost structure, token age rules, STD.CA.5 crit failure. | Art 02 |
-| D-04-12 | Countermeasure card design — referenced in §14.2 and Artifact 03 Phase 5 but no card data structure definition exists. | Artifact 09 |
-
-### Assumptions Requiring Explicit Confirmation
-
-| ID | Assumption | Impact if wrong |
-|----|------------|----------------|
-| A-04-01 | Setup pool sizes (30/24 covert, 20/12 political) are correct for the final card set | Deck construction rules change |
-| A-04-02 | Deck exhaustion occurs at approximately Round 4 | Pacing and strategy may differ — playtesting required |
-| A-04-03 | Maximum 1 structure per faction per district is the right balance cap | Guild doctrine and late-game economy affected |
-| A-04-04 | Ghost 4-operation slot available only when Ghost passes politically — confirmed design intent | Ghost balance and doctrine affected |
-| A-04-05 | Pre-written ARBITER notification slips are feasible as paper prototype components | ✅ Resolved S50 — Notification Slip (NS-xx, id=95) and Intel Delivery Slip (IS-xx, id=96) registered in 00b §4 and `component` table. Text/format: Art 07 (F-ART07-01). |
-
-### Cross-Artifact Flags
-
-| Flag | Description | Target artifact |
-|------|-------------|----------------|
-| F-ART01-01 | Formal district adjacency table needed | Artifact 01 |
-| F-ART02A-01 | Global convention: "at least 1 presence token" includes claim markers. Defined once here, not restated on cards | Art 02, Artifact 09 |
-| F-ART02B-01 | Intel token mechanics cross-reference audit | Art 02 |
-| F-ART03-01 | Beat 2 renamed "The Ground Shifts" — applied in Artifact 03 v1.5 | ✅ Done |
-| F-ART03-02 | Step 6 Card Draw rewritten — applied in Artifact 03 v1.5 | ✅ Done |
-| F-ART03-03 | Free Accord card (STD.CA.9) not from political deck — noted in Artifact 03 Declaration phase | ✅ Done |
-| F-ART07-01 | Pre-written notification slip component category and text | Artifact 07 |
-| F-ART09-01 | "Delivered in case" — standard phrase for privately delivered effects | Artifact 09 |
-| F-ART09-02 | "Return primary cost to dispatch case" — standard resolution phrase | Artifact 09 |
-| F-ART09-03 | Modifier card value rating field (1–3) on every modifier card | Artifact 09 |
-| F-ART09-04 | Free Accord card is not drawn from political deck — ARBITER-delivered | Artifact 09 |
-
 ---
 
-*End of Artifact 04 — Card System v0.9.59*
+*End of Artifact 04 — Card System v0.9.75*

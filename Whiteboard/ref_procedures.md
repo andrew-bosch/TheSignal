@@ -192,7 +192,7 @@ No initiative order, no phase timer. ARBITER announces: "The Table is in Debrief
 - Trade Intel Tokens between any two factions (examination permitted)
 - Accept/decline/counter-propose Accord terms
 
-**Debrief Action cards (§11.1):** Any faction holding a Debrief Action card resolves in initiative order — announce → execute → ARBITER confirms → card removed from game or returned to supply per card text. Runs before Chorus Question Window.
+**Debrief Action cards (Art 04 §12a):** Any faction holding a Debrief Action card resolves in initiative order — announce → execute → ARBITER confirms → card removed from game or returned to supply per card text. Runs before Chorus Question Window. Fires as a scheduled procedural checkpoint, not a `TriggerExpr` event (PM05 04-n162).
 
 **Chorus Question window (§11.2):** If Chorus Activity track has reached Question threshold AND Chorus Node is not Contested — any faction with at least Present at the Node may propose a question. Simple majority passes. ARBITER answers in The Observation register. If Node is Contested, window does not open.
 

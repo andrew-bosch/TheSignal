@@ -353,12 +353,17 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 
 ```
 CardType:    CovertOperation | PublicAct | Pass | Countermeasure | Modifier | EmergencyResponse
-  Modifier subclasses (Art 04 §6.1, 04-n102 ✅ S127):
-    ModReactCard    beat=None always · trigger Required · ring_constraint/ring_origin apply
-    ModActionCard   bundled with host Covert Op at Dispatch · fires with host
+  Modifier subclasses (Art 04 §6.1, 04-n102 ✅ S127) — three, govern HOW a card fires:
+    ModReactCard    beat=None always · trigger Required · ring_constraint/ring_origin apply · only subclass that routinely carries real Layer/Function/Subject (it's action-like)
+    ModActionCard   bundled with host Covert Op at Dispatch · fires with host · no independent taxonomy (effect is parasitic on host)
     ModBattleCard   Art 03 §10.1.2 commit window only (S132 redesign, PM02 L242) · effect = ModBattleExpr(direction: Boost|Hinder, target: Faction, magnitude: int)
                     · target = any contesting faction (§10.1.1), chosen by playing faction — need not be themselves, need not be a contestant
-                    · face-down commit in front of target, simultaneous reveal before d10 roll · no per-card quantity cap
+                    · face-down commit in front of target, simultaneous reveal before d10 roll · no per-card quantity cap · no independent taxonomy
+
+  Acquisition axis (Art 04 §6.2, S133 — PM02 L245 revises L241) — orthogonal to the 3 subclasses above, governs WHERE a card comes from:
+    acquisition: Deck (default, drawn at Upkeep, gated by ring_origin) | Issued (ARBITER delivers directly as a named consequence of `generating_card`)
+    Supersedes the brief S133 `ModIssuedCard` 4th-subclass experiment (built and reverted same session, PM05 04-n154/04-n160) — Issued is now a field on all 3 subclasses, not a separate class.
+    Current Issued cards: GD-01 Grant Deed (§12b.2), STD.MOD.1 Overture, SYN.MOD.1 The Fixer (§11.8) — all three are Issued ModReactCard; an Issued ModActionCard/ModBattleCard is schema-valid but unbuilt.
 Subtype:     Standard | FactionSpecific
 Faction:     All | Ghost | Network | Syndicate | Guild | Directorate
 Resolution:  d100 | Automatic   ← NOT "Dice" — d100 is the exact enum value
@@ -400,7 +405,7 @@ public_act.placed_on_frg(faction=X, ...)  ← any faction places PA face-up on F
 
 **Resolved vocab decisions (04-n144 ✅ S130):** `public_act.placed_on_frg` confirmed as new general trigger term. `world_event.revealed` → `world_event.played`. `covert_operation.resolved(...)` → `accord.corrupted`. `public_standing.shifted(direction=positive/negative)` → `standing_marker.increased/decreased`.
 
-**Still pending:** `resource.drawn_from_reservoir(faction=X)` (used GHO.MOD.6; not in TriggerExpr schema — needs component classification). `structure_block.placed(district=X)` — district-scoped form (used GD-01 Grant Deed; current vocab is ring-scoped only); extension needed in Art 04 §6.3 (04-n27).
+**Still pending:** `resource.drawn_from_reservoir(faction=X)` (used GHO.MOD.6; not in TriggerExpr schema — needs component classification). `structure_block.placed(district=X)` — district-scoped form (used GD-01 Grant Deed; current vocab is ring-scoped only); extension needed in Art 04 §6.3 (04-n27). `public_act.resolved(pa=X)` — new form needed for Overture (fires when its specific assigned host PA resolves); same category of gap as GD-01's.
 
 **Modifier card naming convention (locked S130):**
 All faction and ring modifier card names must be one of three categories:
@@ -408,7 +413,7 @@ All faction and ring modifier card names must be one of three categories:
 - **Asset (business)** — an organization, network, or institutional entity (e.g., Troll Farm, Subscriber Network)
 - **Equipment** — a physical or technical device or infrastructure (e.g., Pirate Transmitter, Backup Server Racks, Amplification Array)
 - **Tactic** — a named operational plan or method (e.g., Cancel Campaign, Bandwidth Override)
-Applies to all modifier subclasses: ModReactCard, ModActionCard, ModBattleCard. Faction and ring modifier cards both governed.
+Applies to all modifier subclasses: ModReactCard, ModActionCard, ModBattleCard. Faction and ring modifier cards both governed. Issued cards (acquisition=Issued) are exempt — not deck-drawn, no faction/ring modifier card back convention (S133). Rename to "Asset cards" raised (D-04-07/XA-35) but not executed — collides with this same Asset(human)/Asset(business)/Equipment/Tactic category naming; needs its own resolution first.
 
 ---
 
