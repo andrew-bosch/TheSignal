@@ -328,36 +328,47 @@ Canonical adjacency reference for all 21 districts. Feeds the `district_adjacenc
 
 ## 7. Faction Player Areas
 
-The Faction Player Areas (P1–P5) are divided into public and private zones, physically separated by a Faction Screen. 
+The Faction Player Areas (P1–P5) are divided into two parent zones separated by a Faction Screen. 
 
-We are planning to build a dedicated zoomed-in SVG map (`Faction_Area_Layout.svg`) to explicitly define the physical geometries of these areas. This SVG will map directly to the `zone_p1_area` through `zone_p5_area` parent zones.
+![Faction Area Layout](Faction_Area_Layout.svg)
 
-### Planned Layout Structure:
-**Private Zone (Behind Screen - Concealed):**
-- **Faction Terminal:** The core interface for managing concealed data, hidden agendas, and covert operations.
-- **Hand Area:** Dedicated space for holding unplayed action/asset cards.
-- **Private Resource Pool:** Storage for concealed tokens, capital, and findings.
+### Layout Structure:
 
-**Public Zone (In Front of Screen - Visible):**
-- **Active Operations Row:** A staging area for cards and actions currently in play or tabled for resolution.
-- **Public Resource Pool:** Storage for publicly visible assets and mandate tokens.
-- **Faction Identity Card:** Indicating the faction's current public standing, role, and persistent passive abilities.
+**Faction Terminal (Private Zone - Behind Screen):**
+- **zone_hand:** Holds `zone_classified_objective`, `zone_emergency_response`, `zone_operative`, `zone_apex`, `zone_cm_cards`, `zone_floor_act`, and `zone_held_cards` (CA/PA/Mod cards).
+- **Storage & Components:** Distinct subzones for `zone_resource_pool`, `zone_intel_and_slips`, `zone_deployment_markers`, `zone_target_profiles`, `zone_draw_deck`, `zone_discard_deck`, and `zone_dispatch_case`.
+
+**Faction Resolution Grid (Public Zone - In Front of Screen):**
+- **zone_faction_identity:** A narrow band centered across the very front of the grid indicating public standing and passive abilities.
+- **zone_faction_modifier_deck:** Storage for faction modifiers.
+- **zone_active_operations:** A parent zone subdivided into three rows:
+  - **Row 1:** CM Card Played & Active Operations (with Action Modifiers splayed).
+  - **Row 2:** Current React Card & Target Profiles (matched to active operations).
+  - **Row 3:** Standing Effects.
 
 ---
 
 ## 8. ARBITER Area
 
-The ARBITER Area (P6) is located at the head of the table and is divided into public and private zones by the ARBITER Screen.
+The ARBITER Area (P6) is located at the head of the table and is divided into two parent zones by the ARBITER Screen.
 
-We are planning to build a dedicated zoomed-in SVG map (`Arbiter_Area_Layout.svg`) to map the physical geometries of the Arbiter's domain, linking directly to the `zone_p6_area`.
+![Arbiter Area Layout](Arbiter_Area_Layout.svg)
 
-### Planned Layout Structure:
-**Private Zone (Behind Screen - Concealed):**
-- **Arbiter Terminal:** The primary interface for managing system events, global thresholds, narrative pacing, and scenario scripts.
-- **Event Decks & Discards:** Staging areas for incoming city events and resolved narratives.
-- **Hidden Modifiers:** Space for concealed scenario overrides and upcoming triggers.
+### Layout Structure:
 
-**Public Zone (In Front of Screen - Visible):**
-- **Global Status Trackers:** Tokens and markers indicating current city-wide alert levels or systemic states.
-- **Active Edicts & Directives:** Publicly revealed conditions currently impacting all Faction players.
+**Public Zone (In Front of Screen):**
+- **zone_arbiter_identity:** A narrow band at the top of the zone.
+- **zone_dispatch_receiving:** A wide area spanning the width of the table, subdivided into 5 lanes (Lane 1 through Lane 5) for receiving Dispatch Cases from P1–P5.
+
+**ARBITER Tableau (Private Zone - Behind Screen):**
+- **zone_arbiter_threshold (Top Row):** A narrow slider spanning the full width of the tableau, positioned right behind the screen.
+- **Deep Storage & Supply (Mid-Left, Square):** 
+  - **zone_arbiter_supply:** A massive parent container subdivided into distinct columns/rows for `zone_presence_chips`, `zone_established_markers`, `zone_dominant_markers`, `zone_tension_markers`, `zone_structure_blocks`, `zone_status_markers`, `zone_modifier_tokens`, `zone_boost_markers`, `zone_visibility_markers`, and `zone_intel_tokens`.
+- **Decks & Controls (Mid-Right):** 
+  - Standalone controls for `zone_accord_supply` and `zone_sealed_apex_supply` sitting at the top right.
+  - **zone_arbiter_card_supply:** A parent zone directly below the standalone controls holding `zone_ns_slips`, `zone_is_slips`, `zone_debrief_cards`, and `zone_broadcast_decks`.
+- **zone_covert_resolution_grid (Bottom Row):** Positioned near the Arbiter; structured with 5 matching lanes (`Lane 1 Resolution` through `Lane 5 Resolution`) for unpacking and resolving covert Dispatch Packets. Each lane contains a structured grid:
+  - **Row 1:** Beat 1 Cards
+  - **Row 2:** Beat 2 Cards, followed by Beat 2 Target Profiles
+  - **Row 3:** Beat 3 Cards, followed by Beat 3 Target Profiles
 
