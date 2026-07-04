@@ -23,3 +23,9 @@ __pycache__/
 *.pyc
 wiki_src/
 
+# Session close scratch file — ephemeral, created and deleted within each close, never canonical
+Session/CLOSE_QUEUE.md
+
+# Local-only working files — not canonical, not for git, not for wiki (Andy + agy, S134)
+V1/_assets_local/
+

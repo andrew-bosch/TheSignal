@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.76 Draft  
+**Version:** 0.9.84 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-07-03  
+**Last Updated:** 2026-07-04  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -498,7 +498,7 @@ class PSFraming:
 class ModActionCard(Card):
     # Modifier bundled with an op at Covert Dispatch; fires with host action. Field constraints: §6.2.
     effect:           ModActionExpr        # tagged union: threshold_delta | success_multiplier | ps_shift | cost_reduction (PA only)
-    value_rating:     int | None            # 1–3; printed on card face; None = TBD (stub only)
+    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259 — ModActionCard's threshold_delta needs a distinct value per tier); printed on card face; None = TBD (stub only)
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = usable only targeting that ring's districts
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -508,7 +508,7 @@ class ModActionCard(Card):
 class ModBattleCard(Card):
     # Modifier for Battlefield Strength resolution (§10 Contested District Resolution). Field constraints: §6.2.
     effect:           ModBattleExpr        # delta on a named contesting faction's total; direction (Boost | Hinder) + target + magnitude — see §6.3
-    value_rating:     int | None            # 1–3; None = TBD (stub only)
+    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259); None = TBD (stub only)
     ring_constraint:  Ring | None          # if set, usable only in Battlefield Strength for a district in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -522,7 +522,7 @@ class ModReactCard(Card):
     # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as standing condition until Quarter end;
     #              Permanent = remains until an explicit clearing condition is met (confirmed S131 — DIR.MOD.9 Fiscal Sanction)
     # Field constraints: §6.2.
-    value_rating:     int | None            # 1–3; None = TBD (stub only)
+    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259); None = TBD (stub only)
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -592,7 +592,7 @@ Fields added by ModActionCard, ModBattleCard, and ModReactCard. All three subcla
 |-------|----------|------|---------|-----------|
 | effect | ModActionCard | ModActionExpr | Tagged union — exactly one: threshold_delta(n) \| success_multiplier(n) \| ps_shift(faction, delta) \| cost_reduction(n); cost_reduction is PA ops only (CA cost committed at dispatch before Beat 0) | Face |
 | effect | ModBattleCard | ModBattleExpr | Delta (Boost or Hinder) applied to a named contesting faction's Battlefield Strength total (Art 03 §10.1.2); target faction is chosen by the playing faction at commit and need not be themselves, nor a contestant — Art 03 §10.1.2 Step 2 (S132) | Face |
-| value_rating | All modifier subclasses | int \| None | 1–3; modifier strength signal printed on card face; used in Splay calculation; None = TBD (stub only — must be set before design pass) | Face |
+| value_rating | All modifier subclasses | int \| None | 1–4 (widened from 1–3, S135/L259 — ModActionCard's 4-tier `threshold_delta` needed a distinct value per tier, not two tiers sharing a band); modifier strength signal printed on card face; used in Splay calculation; None = TBD (stub only — must be set before design pass) | Face |
 | ring_constraint | All modifier subclasses | Ring \| None | Deployment restriction set at card design time by narrative — location-anchored assets get the ring value; portable assets get None. ModActionCard: usable only with ops targeting that ring's districts. ModBattleCard: usable only in Battlefield Strength for a district in that ring. ModReactCard: fires only when trigger condition occurs in that ring's districts. Semantics under review for Ring-sourced cards specifically — PM05 04-n161. | Face |
 | ring_origin | All modifier subclasses | Ring \| None | Which modifier deck this card belongs to — None = faction modifier deck; 1/2/3 = Ring 1/2/3 modifier deck. Determines draw eligibility (§11.2) and card back color. Separate from ring_constraint: a Ring 1 card (ring_origin=1) may have ring_constraint=None (portable, no deployment restriction). None (not applicable) when acquisition=Issued. | No |
 | acquisition | All modifier subclasses | AcquisitionSource | Deck (default) = drawn from a Faction or Ring Modifier deck at Upkeep, gated by ring_origin. Issued = ARBITER delivers the card directly as a named consequence of another card's resolution — no Upkeep draw, no deck, ring_origin forced None. Orthogonal to subclass — any of the three subclasses may in principle be Issued; all current Issued cards happen to be ModReactCard. S133 — supersedes the S133-earlier `ModIssuedCard` 4th-subclass model (PM02 L245 revises L241). | Face |
@@ -3727,6 +3727,3390 @@ STD.MOD.25 = Card(
 
 ---
 
+### STD.MOD.26 — ZONING VARIANCE *(stub)*
+
+*S135. First Ring ModActionCard content — 09-06/04-n157 pattern-setter for the Ring leg, replicating the faction ModActionCard format (DIR.MOD.14–25 and Guild/Ghost/Network/Syndicate) with the same Portable/Ring-Locked doubling already established for Ring ModBattleCard (STD.MOD.2–25). **Format:** each ring ships a Portable 12-card set (`ring_constraint=None`) and a Ring-Locked 12-card set (`ring_constraint=`ring) — 24 cards/ring, 72 total — same 4 `threshold_delta` + 2 `success_multiplier` + 4 `ps_shift` + 2 `cost_reduction` structure, `cost=None`, `value_rating` 1–4 mirroring tier. Ring 1/Core voice per Art 00 §6.7: institutional access and proximity — distinct from Directorate's literal-force ModActionCard doctrine, same city, different lever. Drawn from the Ring ModAction Core seed pool (`Whiteboard/modifier_card_ideas.md`), reframing hostile-flavored entries per 04-n170. Portable set, minor threshold_delta tier (+5).*
+
+```python
+STD.MOD.26 = Card(
+    id      = "STD.MOD.26",  card_id = "STD.MOD.26",  version = "v0.1",
+    name    = "Zoning Variance",
+    tagline = "A quiet exception clears the way before anyone downstream has to ask for one.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set — the exception travels with whoever's holding it
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
+
+    portrait     = None,
+    narrative    = "A quiet exception makes a Core placement or build action easier to clear — filed and approved before anyone thought to object.",
+    arbiter_note = "Attach at Dispatch to any CA/PA in the holder's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+)
+```
+
+---
+
+### STD.MOD.27 — REDACTED FILE *(stub)*
+
+*S135. Portable set, mid threshold_delta tier (+10).*
+
+```python
+STD.MOD.27 = Card(
+    id      = "STD.MOD.27",  card_id = "STD.MOD.27",  version = "v0.1",
+    name    = "Redacted File",
+    tagline = "The report goes out with the inconvenient part blacked out.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A report reaches its audience with the inconvenient part blacked out — smoothing the acting faction's own submission.",
+    arbiter_note = "Self-only, same basis as STD.MOD.26.",
+)
+```
+
+---
+
+### STD.MOD.28 — MAINTENANCE WINDOW *(stub)*
+
+*S135. Portable set, third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Cordoned Block" — sealing a rival's district "for maintenance," raising their difficulty) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease the holder's own host action.*
+
+```python
+STD.MOD.28 = Card(
+    id      = "STD.MOD.28",  card_id = "STD.MOD.28",  version = "v0.1",
+    name    = "Maintenance Window",
+    tagline = "The block is closed off \"for maintenance\" — which clears the way for something else entirely.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A district block cordoned off \"for maintenance\" clears space for the acting faction's own operation there.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170 (same basis as the faction-set threshold_delta reframes: DIR.MOD.15/16, GUI.MOD.17, GHO.MOD.18, NET.MOD.21, SYN.MOD.18).",
+)
+```
+
+---
+
+### STD.MOD.29 — CLASSIFIED BRIEFING *(stub)*
+
+*S135. Portable set, capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Sealed Minutes" — classifying context before a rival can plan around it) per 04-n170.*
+
+```python
+STD.MOD.29 = Card(
+    id      = "STD.MOD.29",  card_id = "STD.MOD.29",  version = "v0.1",
+    name    = "Classified Briefing",
+    tagline = "The key context is classified in the acting faction's favor before anyone else can plan around it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Key context is classified before a rival can plan around it, raising their difficulty — but for the holder, the same classification smooths the way.",
+    arbiter_note = "Capstone tier, reframed per 04-n170 — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+)
+```
+
+---
+
+### STD.MOD.30 — INSTITUTIONAL BACKING *(stub)*
+
+*S135. Portable set, common success_multiplier tier (n=1).*
+
+```python
+STD.MOD.30 = Card(
+    id      = "STD.MOD.30",  card_id = "STD.MOD.30",  version = "v0.1",
+    name    = "Institutional Backing",
+    tagline = "An unseen endorsement from within the Core, and the outcome lands harder for it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An unseen endorsement from within the Core amplifies a successful action's effect.",
+    arbiter_note = "Self-only, amplifies the holder's own host action.",
+)
+```
+
+---
+
+### STD.MOD.31 — CEREMONIAL GROUNDBREAKING *(stub)*
+
+*S135. Portable set, rare/capstone success_multiplier tier (n=2).*
+
+```python
+STD.MOD.31 = Card(
+    id      = "STD.MOD.31",  card_id = "STD.MOD.31",  version = "v0.1",
+    name    = "Ceremonial Groundbreaking",
+    tagline = "Official recognition turns a routine placement into something that carries.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Official recognition of a successful placement makes its result carry further than usual.",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+)
+```
+
+---
+
+### STD.MOD.32 — OFF THE RECORD *(stub)*
+
+*S135. Portable set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.32 = Card(
+    id      = "STD.MOD.32",  card_id = "STD.MOD.32",  version = "v0.1",
+    name    = "Off the Record",
+    tagline = "An exchange, agreed by everyone present to have never happened.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An exchange is agreed to never have happened — insulating the acting faction from the standing cost it would otherwise carry.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+)
+```
+
+---
+
+### STD.MOD.33 — PUBLIC CITATION *(stub)*
+
+*S135. Portable set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.33 = Card(
+    id      = "STD.MOD.33",  card_id = "STD.MOD.33",  version = "v0.1",
+    name    = "Public Citation",
+    tagline = "A formal citation, delivered through institutional channels rather than the public eye.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A formal citation boosts standing through institutional channels rather than the public eye.",
+    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+)
+```
+
+---
+
+### STD.MOD.34 — WORD TO THE WISE *(stub)*
+
+*S135. Portable set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.34 = Card(
+    id      = "STD.MOD.34",  card_id = "STD.MOD.34",  version = "v0.1",
+    name    = "Word to the Wise",
+    tagline = "A quiet, informal heads-up to exactly the right official.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A quiet, informal heads-up to the right official costs a named faction a small, deniable amount of standing.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+)
+```
+
+---
+
+### STD.MOD.35 — NAMED IN THE REVIEW *(stub)*
+
+*S135. Portable set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+STD.MOD.35 = Card(
+    id      = "STD.MOD.35",  card_id = "STD.MOD.35",  version = "v0.1",
+    name    = "Named in the Review",
+    tagline = "An audit's findings reach exactly the audience that costs the most.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An audit's findings reach exactly the audience that costs a rival the most standing.",
+    arbiter_note = "Same target-resolution constraint as STD.MOD.34, major tier.",
+)
+```
+
+---
+
+### STD.MOD.36 — FEE WAIVED *(stub)*
+
+*S135. Portable set, common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+STD.MOD.36 = Card(
+    id      = "STD.MOD.36",  card_id = "STD.MOD.36",  version = "v0.1",
+    name    = "Fee Waived",
+    tagline = "A routine institutional charge, quietly set aside for one submission only.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A routine institutional charge is quietly set aside for the acting faction only.",
+    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### STD.MOD.37 — EMERGENCY ALLOCATION *(stub)*
+
+*S135. Portable set, capstone cost_reduction tier (n=2). Closes the Ring 1 Portable set (12 cards).*
+
+```python
+STD.MOD.37 = Card(
+    id      = "STD.MOD.37",  card_id = "STD.MOD.37",  version = "v0.1",
+    name    = "Emergency Allocation",
+    tagline = "Funds normally locked behind approval move immediately, no questions asked.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — closes Ring 1's Portable 12-card set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Funds normally locked behind approval move immediately, discounting an urgent action's cost.",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 1's Portable set (STD.MOD.26–37); Ring-Locked set follows (STD.MOD.38–49).",
+)
+```
+
+---
+
+### STD.MOD.38 — RECOGNIZED ON SIGHT *(stub)*
+
+*S135. Ring-Locked set opens for Ring 1 — the other half of the 04-n161 Portable/Ring-Locked pair, same slot as STD.MOD.26 but `ring_constraint=1` restricts it to hosts targeting a Ring 1 district. Invented fresh (not seed-drawn) — the Portable set already used all 4 seed-pool threshold_delta concepts for Core.*
+
+```python
+STD.MOD.38 = Card(
+    id      = "STD.MOD.38",  card_id = "STD.MOD.38",  version = "v0.1",
+    name    = "Recognized on Sight",
+    tagline = "The guards at this specific gate wave you through without checking the manifest.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=5),
+    value_rating    = 1,
+    ring_constraint = 1,      # Ring-Locked set — usable only with ops targeting a Ring 1 district (closes 04-n161 alongside STD.MOD.26's Portable counterpart)
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The recognition is real, but it's tied to this specific checkpoint — it doesn't travel with the holder anywhere else.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.39 — STANDING REQUEST *(stub)*
+
+*S135. Ring-Locked set, mid threshold_delta tier (+10).*
+
+```python
+STD.MOD.39 = Card(
+    id      = "STD.MOD.39",  card_id = "STD.MOD.39",  version = "v0.1",
+    name    = "Standing Request",
+    tagline = "The paperwork was pre-filed with the archive staff weeks ago.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A standing relationship with the archive staff eases a paperwork-dependent action — but only within their reach.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.40 — BACK-CHANNEL WORD *(stub)*
+
+*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
+
+```python
+STD.MOD.40 = Card(
+    id      = "STD.MOD.40",  card_id = "STD.MOD.40",  version = "v0.1",
+    name    = "Back-Channel Word",
+    tagline = "A direct line into the administrative wing, open only from inside the building.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A direct line into the administrative wing eases the operation — but the line only reaches this far.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.41 — FULL CLEARANCE *(stub)*
+
+*S135. Ring-Locked set, capstone threshold_delta tier (+20).*
+
+```python
+STD.MOD.41 = Card(
+    id      = "STD.MOD.41",  card_id = "STD.MOD.41",  version = "v0.1",
+    name    = "Full Clearance",
+    tagline = "Nothing left to process through ordinary channels — the clearance is already signed.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Full clearance from within the Core itself — nothing left to process through ordinary channels, so long as the work stays here.",
+    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 1 district — log actual play outcomes before treating +20 as balanced (04-n157).",
+)
+```
+
+---
+
+### STD.MOD.42 — SHIFT CHANGE TIMING *(stub)*
+
+*S135. Ring-Locked set, common success_multiplier tier (n=1).*
+
+```python
+STD.MOD.42 = Card(
+    id      = "STD.MOD.42",  card_id = "STD.MOD.42",  version = "v0.1",
+    name    = "Shift Change Timing",
+    tagline = "Knowing exactly when the checkpoint staff rotate changes what a result is worth.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Knowing exactly how this specific checkpoint runs its shift changes lets a successful action land further than expected.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.43 — FULL INSTITUTIONAL WEIGHT *(stub)*
+
+*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
+
+```python
+STD.MOD.43 = Card(
+    id      = "STD.MOD.43",  card_id = "STD.MOD.43",  version = "v0.1",
+    name    = "Full Institutional Weight",
+    tagline = "When the Core itself backs an outcome, it carries much further than a routine result would.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "When the institution itself backs an outcome, it carries much further than a routine result would — but only inside its own reach.",
+    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 1 district — log actual play outcomes before treating n=2 as balanced (04-n157).",
+)
+```
+
+---
+
+### STD.MOD.44 — NOTED FAVORABLY *(stub)*
+
+*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.44 = Card(
+    id      = "STD.MOD.44",  card_id = "STD.MOD.44",  version = "v0.1",
+    name    = "Noted Favorably",
+    tagline = "A quiet, favorable notation enters the record — this record specifically.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A quiet, favorable notation enters the institution's own record — a small, deliberate boost to standing.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction. Usable only with an operation targeting a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.45 — FORMAL RECOGNITION *(stub)*
+
+*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.45 = Card(
+    id      = "STD.MOD.45",  card_id = "STD.MOD.45",  version = "v0.1",
+    name    = "Formal Recognition",
+    tagline = "Recognition from within the institution itself — visible, and hard to dismiss.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Formal recognition from within the institution itself is a significant, visible boost — earned specifically here.",
+    arbiter_note = "Self-boost, major tier, resolves to the acting faction — usable only with an operation targeting a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.46 — QUIETLY FLAGGED *(stub)*
+
+*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.46 = Card(
+    id      = "STD.MOD.46",  card_id = "STD.MOD.46",  version = "v0.1",
+    name    = "Quietly Flagged",
+    tagline = "A named faction's presence gets a small, quiet notation at this specific checkpoint.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A named faction's presence is quietly flagged at this specific checkpoint — small, but on the record.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.47 — DENIED ACCESS *(stub)*
+
+*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+STD.MOD.47 = Card(
+    id      = "STD.MOD.47",  card_id = "STD.MOD.47",  version = "v0.1",
+    name    = "Denied Access",
+    tagline = "A named faction is visibly and formally turned away — everyone in the building knows why.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A rival is visibly and formally denied access to institutional records — a real, public cost to standing.",
+    arbiter_note = "Same target-resolution constraint as STD.MOD.46, major tier — usable only with an operation targeting a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.48 — REASSIGNED ON PAPER *(stub)*
+
+*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+STD.MOD.48 = Card(
+    id      = "STD.MOD.48",  card_id = "STD.MOD.48",  version = "v0.1",
+    name    = "Reassigned on Paper",
+    tagline = "An administrative reshuffle quietly absorbs part of the overhead.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = 1,      # Ring-Locked set
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An administrative reshuffle absorbs part of an action's overhead — quietly, and only on this institution's books.",
+    arbiter_note = "PA host only, usable only with a PA targeting a Ring 1 district. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### STD.MOD.49 — JUMPED THE QUEUE *(stub)*
+
+*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 1's 24-card Ring ModAction set (Portable STD.MOD.26–37 + Ring-Locked STD.MOD.38–49).*
+
+```python
+STD.MOD.49 = Card(
+    id      = "STD.MOD.49",  card_id = "STD.MOD.49",  version = "v0.1",
+    name    = "Jumped the Queue",
+    tagline = "The submission skips the full review process — and skips the overhead that comes with it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = 1,      # Ring-Locked set — closes Ring 1's 24-card set (Portable + Ring-Locked)
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A submission that skips the full review process skips the overhead that comes with it — but only through this specific channel.",
+    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 1 district — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 1 (STD.MOD.26–49, 24 cards); Ring 2 (Mid) follows.",
+)
+```
+
+---
+
+### STD.MOD.50 — REZONED CORRIDOR *(stub)*
+
+*S135. Ring 2 (Mid) Portable set opens — same 09-06/04-n157 Ring ModAction format as Ring 1 (STD.MOD.26–49). Voice per Art 00 §6.7: operational throughput and infrastructure chokepoints — distinct from Ring 1's institutional-access lean and from Network's already-shipped broadcast doctrine. Drawn from the Mid ModAction seed pool, reframing hostile-flavored entries per 04-n170. Minor threshold_delta tier (+5).*
+
+```python
+STD.MOD.50 = Card(
+    id      = "STD.MOD.50",  card_id = "STD.MOD.50",  version = "v0.1",
+    name    = "Rezoned Corridor",
+    tagline = "The corridor gets reclassified, and the placement clears without a fight.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170)
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,   # splay-display convention, PM02 L256
+
+    portrait     = None,
+    narrative    = "An infrastructure corridor is reclassified, making a placement there easier to clear.",
+    arbiter_note = "Attach at Dispatch to any CA/PA in the holder's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+)
+```
+
+---
+
+### STD.MOD.51 — RELAY INTERCEPT *(stub)*
+
+*S135. Portable set, mid threshold_delta tier (+10).*
+
+```python
+STD.MOD.51 = Card(
+    id      = "STD.MOD.51",  card_id = "STD.MOD.51",  version = "v0.1",
+    name    = "Relay Intercept",
+    tagline = "A tapped relay means the move is already anticipated before it's made.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A tapped communications relay lets the acting faction anticipate and ease their own move.",
+    arbiter_note = "Self-only, same basis as STD.MOD.50.",
+)
+```
+
+---
+
+### STD.MOD.52 — MANIFEST CORRECTION *(stub)*
+
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Manifest Discrepancy" — a mismatched manifest raising a rival's difficulty) per **04-n170**.*
+
+```python
+STD.MOD.52 = Card(
+    id      = "STD.MOD.52",  card_id = "STD.MOD.52",  version = "v0.1",
+    name    = "Manifest Correction",
+    tagline = "The manifest gets quietly corrected before anyone downstream has to reconcile it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The acting faction's own shipping manifest is quietly corrected in advance, smoothing a logistics-dependent action.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as STD.MOD.28/29.",
+)
+```
+
+---
+
+### STD.MOD.53 — GRIEVANCE WITHDRAWN *(stub)*
+
+*S135. Capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Union Grievance" — a formal complaint raising a rival's difficulty) per 04-n170.*
+
+```python
+STD.MOD.53 = Card(
+    id      = "STD.MOD.53",  card_id = "STD.MOD.53",  version = "v0.1",
+    name    = "Grievance Withdrawn",
+    tagline = "The complaint gets quietly withdrawn before it ever reaches a hearing.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A formal labor complaint against the acting faction's own submission is quietly withdrawn before it can raise the bar.",
+    arbiter_note = "Capstone tier, reframed per 04-n170 — log actual play outcomes before treating +20 as balanced (04-n157).",
+)
+```
+
+---
+
+### STD.MOD.54 — CROSS-DOCKED EFFICIENTLY *(stub)*
+
+*S135. Common success_multiplier tier (n=1).*
+
+```python
+STD.MOD.54 = Card(
+    id      = "STD.MOD.54",  card_id = "STD.MOD.54",  version = "v0.1",
+    name    = "Cross-Docked Efficiently",
+    tagline = "Resources move through without ever formally stopping.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Resources moved without ever formally stopping compound the action's benefit.",
+    arbiter_note = "Self-only, amplifies the holder's own host action.",
+)
+```
+
+---
+
+### STD.MOD.55 — CHAIN REACTION *(stub)*
+
+*S135. Rare/capstone success_multiplier tier (n=2).*
+
+```python
+STD.MOD.55 = Card(
+    id      = "STD.MOD.55",  card_id = "STD.MOD.55",  version = "v0.1",
+    name    = "Chain Reaction",
+    tagline = "One system's output feeds directly into the next, and the outcome multiplies.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "One system's output feeding directly into the next multiplies the outcome well past what was planned.",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+)
+```
+
+---
+
+### STD.MOD.56 — COMPLIANCE CERTIFICATE *(stub)*
+
+*S135. Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.56 = Card(
+    id      = "STD.MOD.56",  card_id = "STD.MOD.56",  version = "v0.1",
+    name    = "Compliance Certificate",
+    tagline = "A stamp of approval, small but visible.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A stamp of approval becomes a small, visible standing win.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+)
+```
+
+---
+
+### STD.MOD.57 — MODEL FACILITY *(stub)*
+
+*S135. Self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.57 = Card(
+    id      = "STD.MOD.57",  card_id = "STD.MOD.57",  version = "v0.1",
+    name    = "Model Facility",
+    tagline = "The operation gets cited publicly as an example of how it's supposed to run.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The acting faction's operation is cited publicly as a model of efficient operation — a real standing win.",
+    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+)
+```
+
+---
+
+### STD.MOD.58 — DELAY LOGGED *(stub)*
+
+*S135. Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.58 = Card(
+    id      = "STD.MOD.58",  card_id = "STD.MOD.58",  version = "v0.1",
+    name    = "Delay Logged",
+    tagline = "A minor procedural delay, logged where the public record can find it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A minor procedural delay on a rival's shipment gets logged in the public record — small, but on the record.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+)
+```
+
+---
+
+### STD.MOD.59 — SAFETY CITATION *(stub)*
+
+*S135. Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+STD.MOD.59 = Card(
+    id      = "STD.MOD.59",  card_id = "STD.MOD.59",  version = "v0.1",
+    name    = "Safety Citation",
+    tagline = "A public safety violation, and the paperwork has a name attached.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A public safety violation becomes standing damage for whoever's named on the citation.",
+    arbiter_note = "Same target-resolution constraint as STD.MOD.58, major tier.",
+)
+```
+
+---
+
+### STD.MOD.60 — PRIORITY ROUTING *(stub)*
+
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+STD.MOD.60 = Card(
+    id      = "STD.MOD.60",  card_id = "STD.MOD.60",  version = "v0.1",
+    name    = "Priority Routing",
+    tagline = "The submission gets rerouted to the front of the queue.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The acting faction's submission is rerouted to the front of a queue, skipping delay-related overhead.",
+    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### STD.MOD.61 — BULK RATE *(stub)*
+
+*S135. Capstone cost_reduction tier (n=2). Closes Ring 2's Portable set (12 cards); Ring-Locked set follows.*
+
+```python
+STD.MOD.61 = Card(
+    id      = "STD.MOD.61",  card_id = "STD.MOD.61",  version = "v0.1",
+    name    = "Bulk Rate",
+    tagline = "An institutional discount that isn't normally on offer.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — closes Ring 2's Portable 12-card set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A resource purchase clears at an institutional discount not normally available.",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 2's Portable set (STD.MOD.50–61); Ring-Locked set follows (STD.MOD.62–73).",
+)
+```
+
+---
+
+### STD.MOD.62 — DOCK FAMILIARITY *(stub)*
+
+*S135. Ring-Locked set opens for Ring 2 — invented fresh (Portable set used all 4 seed threshold_delta concepts).*
+
+```python
+STD.MOD.62 = Card(
+    id      = "STD.MOD.62",  card_id = "STD.MOD.62",  version = "v0.1",
+    name    = "Dock Familiarity",
+    tagline = "Regular business at this specific freight dock smooths the paperwork every time.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=5),
+    value_rating    = 1,
+    ring_constraint = 2,      # Ring-Locked set — usable only with ops targeting a Ring 2 district (closes 04-n161 alongside STD.MOD.50's Portable counterpart)
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Regular business at this specific freight dock eases a logistics-dependent action there — but only there.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.63 — GRID RAPPORT *(stub)*
+
+*S135. Ring-Locked set, mid threshold_delta tier (+10).*
+
+```python
+STD.MOD.63 = Card(
+    id      = "STD.MOD.63",  card_id = "STD.MOD.63",  version = "v0.1",
+    name    = "Grid Rapport",
+    tagline = "A standing relationship with substation staff eases anything running through their lines.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A standing relationship with substation staff eases an infrastructure-dependent action — within their lines only.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.64 — LINE ACCESS *(stub)*
+
+*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
+
+```python
+STD.MOD.64 = Card(
+    id      = "STD.MOD.64",  card_id = "STD.MOD.64",  version = "v0.1",
+    name    = "Line Access",
+    tagline = "Priority access to a specific relay hub, open only from inside its footprint.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Priority access at a specific communications hub smooths a relay-dependent action — but only through that hub.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.65 — FULL PROCESSING RIGHTS *(stub)*
+
+*S135. Ring-Locked set, capstone threshold_delta tier (+20).*
+
+```python
+STD.MOD.65 = Card(
+    id      = "STD.MOD.65",  card_id = "STD.MOD.65",  version = "v0.1",
+    name    = "Full Processing Rights",
+    tagline = "Full standing at the district clearinghouse — paperwork simply moves.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Full standing at the district clearinghouse means paperwork simply moves, no matter the action — so long as it moves through here.",
+    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 2 district — log actual play outcomes before treating +20 as balanced (04-n157).",
+)
+```
+
+---
+
+### STD.MOD.66 — OVERTIME CREW *(stub)*
+
+*S135. Ring-Locked set, common success_multiplier tier (n=1).*
+
+```python
+STD.MOD.66 = Card(
+    id      = "STD.MOD.66",  card_id = "STD.MOD.66",  version = "v0.1",
+    name    = "Overtime Crew",
+    tagline = "An extra shift pushes the build further than scheduled.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An extra shift pushes a build further than scheduled, amplifying its result — a local crew, working local hours.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.67 — FULL UTILIZATION *(stub)*
+
+*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
+
+```python
+STD.MOD.67 = Card(
+    id      = "STD.MOD.67",  card_id = "STD.MOD.67",  version = "v0.1",
+    name    = "Full Utilization",
+    tagline = "A facility running at full capacity turns a routine action into an exceptional one.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A facility running at capacity turns a routine action into an exceptional one — but only this facility, running this way.",
+    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 2 district — log actual play outcomes before treating n=2 as balanced (04-n157).",
+)
+```
+
+---
+
+### STD.MOD.68 — FILED UNDER ROUTINE *(stub)*
+
+*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.68 = Card(
+    id      = "STD.MOD.68",  card_id = "STD.MOD.68",  version = "v0.1",
+    name    = "Filed Under Routine",
+    tagline = "A genuinely significant action, buried among routine paperwork at this specific office.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A genuinely significant action is buried among routine paperwork, muting any standing consequence either way — a small protective boost.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction. Usable only with an operation targeting a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.69 — RELIABILITY COMMENDATION *(stub)*
+
+*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.69 = Card(
+    id      = "STD.MOD.69",  card_id = "STD.MOD.69",  version = "v0.1",
+    name    = "Reliability Commendation",
+    tagline = "A public commendation for keeping this specific facility running without a hitch.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A public commendation for keeping the Mid's infrastructure running is a real, visible standing win.",
+    arbiter_note = "Self-boost, major tier, resolves to the acting faction — usable only with an operation targeting a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.70 — OVERDRAWN ACCOUNT EXPOSED *(stub)*
+
+*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.70 = Card(
+    id      = "STD.MOD.70",  card_id = "STD.MOD.70",  version = "v0.1",
+    name    = "Overdrawn Account Exposed",
+    tagline = "A rival's resource draw becomes public knowledge, at this specific institution.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A rival's resource draw becomes public knowledge at this specific institution — a small cost to their standing.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.71 — PUBLIC SANCTION *(stub)*
+
+*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+STD.MOD.71 = Card(
+    id      = "STD.MOD.71",  card_id = "STD.MOD.71",  version = "v0.1",
+    name    = "Public Sanction",
+    tagline = "A formal sanction, posted where every faction doing business here will see it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A named rival is formally sanctioned at this institution — visible to every faction that does business through it.",
+    arbiter_note = "Same target-resolution constraint as STD.MOD.70, major tier — usable only with an operation targeting a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.72 — CONSIGNMENT HOLD RELEASED *(stub)*
+
+*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+STD.MOD.72 = Card(
+    id      = "STD.MOD.72",  card_id = "STD.MOD.72",  version = "v0.1",
+    name    = "Consignment Hold Released",
+    tagline = "A shipment already in the system clears without the fee a fresh order would carry.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = 2,      # Ring-Locked set
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A shipment already in the system is released without the fee a fresh order would carry — this system specifically.",
+    arbiter_note = "PA host only, usable only with a PA targeting a Ring 2 district. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### STD.MOD.73 — STANDING UTILITY CONTRACT *(stub)*
+
+*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 2's 24-card Ring ModAction set (Portable STD.MOD.50–61 + Ring-Locked STD.MOD.62–73); Ring 3 (Baryo) follows.*
+
+```python
+STD.MOD.73 = Card(
+    id      = "STD.MOD.73",  card_id = "STD.MOD.73",  version = "v0.1",
+    name    = "Standing Utility Contract",
+    tagline = "An existing service agreement makes this considerably cheaper to mount.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = 2,      # Ring-Locked set — closes Ring 2's 24-card set (Portable + Ring-Locked)
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An existing service agreement lowers what this action costs to mount — through this specific utility, and no other.",
+    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 2 district — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 2 (STD.MOD.50–73, 24 cards); Ring 3 (Baryo) follows.",
+)
+```
+
+---
+
+### STD.MOD.74 — SQUATTER'S CLAIM *(stub)*
+
+*S135. Ring 3 (Baryo) Portable set opens — same 09-06/04-n157 Ring ModAction format as Rings 1–2. Voice per Art 00 §6.7: gray economy and community network — distinct from Ghost's epistemic doctrine and from Rings 1–2's institutional/infrastructure lean. Drawn from the Baryo ModAction seed pool, reframing hostile-flavored entries per 04-n170. Minor threshold_delta tier (+5).*
+
+```python
+STD.MOD.74 = Card(
+    id      = "STD.MOD.74",  card_id = "STD.MOD.74",  version = "v0.1",
+    name    = "Squatter's Claim",
+    tagline = "An informally occupied space becomes a real claim, on paper, without a fight.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170)
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,   # splay-display convention, PM02 L256
+
+    portrait     = None,
+    narrative    = "An informally occupied space becomes easier to formalize into a real presence claim.",
+    arbiter_note = "Attach at Dispatch to any CA/PA in the holder's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+)
+```
+
+---
+
+### STD.MOD.75 — LANDLORD'S BLESSING *(stub)*
+
+*S135. Portable set, mid threshold_delta tier (+10).*
+
+```python
+STD.MOD.75 = Card(
+    id      = "STD.MOD.75",  card_id = "STD.MOD.75",  version = "v0.1",
+    name    = "Landlord's Blessing",
+    tagline = "One of Baryo's unofficial housing authorities backs the placement, and nobody easily challenges it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Backing from one of Baryo's unofficial housing authorities smooths a placement nobody easily challenges.",
+    arbiter_note = "Self-only, same basis as STD.MOD.74.",
+)
+```
+
+---
+
+### STD.MOD.76 — DOCK CONTACTS *(stub)*
+
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Word on the Docks" — advance knowledge raising a rival's difficulty) per **04-n170**.*
+
+```python
+STD.MOD.76 = Card(
+    id      = "STD.MOD.76",  card_id = "STD.MOD.76",  version = "v0.1",
+    name    = "Dock Contacts",
+    tagline = "Advance word from the right people at the docks smooths the whole operation.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Advance word from contacts at the docks smooths the acting faction's own shipment-dependent operation.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as STD.MOD.28/29/52/53.",
+)
+```
+
+---
+
+### STD.MOD.77 — NEIGHBORHOOD BACKING *(stub)*
+
+*S135. Capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Petition Drive" — visible grassroots opposition raising a rival's difficulty) per 04-n170.*
+
+```python
+STD.MOD.77 = Card(
+    id      = "STD.MOD.77",  card_id = "STD.MOD.77",  version = "v0.1",
+    name    = "Neighborhood Backing",
+    tagline = "Visible grassroots support smooths the way — nobody's raising a petition against this one.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Visible grassroots support for the acting faction's own submission smooths its passage — the neighborhood's already decided.",
+    arbiter_note = "Capstone tier, reframed per 04-n170 — log actual play outcomes before treating +20 as balanced (04-n157).",
+)
+```
+
+---
+
+### STD.MOD.78 — COMMUNITY POOL *(stub)*
+
+*S135. Common success_multiplier tier (n=1).*
+
+```python
+STD.MOD.78 = Card(
+    id      = "STD.MOD.78",  card_id = "STD.MOD.78",  version = "v0.1",
+    name    = "Community Pool",
+    tagline = "Several small contributions combine into more than any one source could produce.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Several small contributions combine into an outcome larger than any single source could produce.",
+    arbiter_note = "Self-only, amplifies the holder's own host action.",
+)
+```
+
+---
+
+### STD.MOD.79 — PACKED HOUSE *(stub)*
+
+*S135. Rare/capstone success_multiplier tier (n=2).*
+
+```python
+STD.MOD.79 = Card(
+    id      = "STD.MOD.79",  card_id = "STD.MOD.79",  version = "v0.1",
+    name    = "Packed House",
+    tagline = "An unusually large crowd amplifies whatever this was counting on being seen.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An unusually large crowd amplifies whatever the action was counting on being seen.",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+)
+```
+
+---
+
+### STD.MOD.80 — STREET REPUTATION *(stub)*
+
+*S135. Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.80 = Card(
+    id      = "STD.MOD.80",  card_id = "STD.MOD.80",  version = "v0.1",
+    name    = "Street Reputation",
+    tagline = "Word of mouth moves faster than any official channel ever could.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Word of mouth shifts standing faster than any official channel — a small, organic boost.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+)
+```
+
+---
+
+### STD.MOD.81 — NEIGHBORHOOD VOUCHING *(stub)*
+
+*S135. Self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.81 = Card(
+    id      = "STD.MOD.81",  card_id = "STD.MOD.81",  version = "v0.1",
+    name    = "Neighborhood Vouching",
+    tagline = "The whole block vouches for it, publicly and without being asked twice.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The neighborhood vouches for the acting faction publicly — a real and visible standing win.",
+    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+)
+```
+
+---
+
+### STD.MOD.82 — BUSKER'S TIP *(stub)*
+
+*S135. Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.82 = Card(
+    id      = "STD.MOD.82",  card_id = "STD.MOD.82",  version = "v0.1",
+    name    = "Busker's Tip",
+    tagline = "A street performer's aside becomes the detail somebody has to answer for.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A street performer's aside becomes the detail that costs a named faction a little standing.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+)
+```
+
+---
+
+### STD.MOD.83 — OVERHEARD AT THE STRIP *(stub)*
+
+*S135. Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+STD.MOD.83 = Card(
+    id      = "STD.MOD.83",  card_id = "STD.MOD.83",  version = "v0.1",
+    name    = "Overheard at the Strip",
+    tagline = "A casual conversation becomes something a rival has to publicly answer for.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A casual conversation becomes something a rival has to publicly answer for — the Strip doesn't forget what it hears.",
+    arbiter_note = "Same target-resolution constraint as STD.MOD.82, major tier.",
+)
+```
+
+---
+
+### STD.MOD.84 — CREDIT WITH THE VENDOR *(stub)*
+
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+STD.MOD.84 = Card(
+    id      = "STD.MOD.84",  card_id = "STD.MOD.84",  version = "v0.1",
+    name    = "Credit with the Vendor",
+    tagline = "Informal credit lets this proceed before payment technically clears.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Informal credit lets an action proceed before payment technically clears.",
+    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### STD.MOD.85 — BARTER CHAIN *(stub)*
+
+*S135. Capstone cost_reduction tier (n=2). Closes Ring 3's Portable set (12 cards); Ring-Locked set follows.*
+
+```python
+STD.MOD.85 = Card(
+    id      = "STD.MOD.85",  card_id = "STD.MOD.85",  version = "v0.1",
+    name    = "Barter Chain",
+    tagline = "The resource moves through several informal trades before landing exactly where it was always headed.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — closes Ring 3's Portable 12-card set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A resource moves through several informal trades before landing where it was always headed, cheaper than a direct purchase.",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 3's Portable set (STD.MOD.74–85); Ring-Locked set follows (STD.MOD.86–97).",
+)
+```
+
+---
+
+### STD.MOD.86 — REGULAR CUSTOMER *(stub)*
+
+*S135. Ring-Locked set opens for Ring 3 — invented fresh (Portable set used all 4 seed threshold_delta concepts).*
+
+```python
+STD.MOD.86 = Card(
+    id      = "STD.MOD.86",  card_id = "STD.MOD.86",  version = "v0.1",
+    name    = "Regular Customer",
+    tagline = "Being a known face at this specific stall smooths business there, every time.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=5),
+    value_rating    = 1,
+    ring_constraint = 3,      # Ring-Locked set — usable only with ops targeting a Ring 3 district (closes 04-n161 alongside STD.MOD.74's Portable counterpart)
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Being a known face at a specific market stall eases an economy-dependent action there — but only there.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.87 — ROUTE KNOWLEDGE *(stub)*
+
+*S135. Ring-Locked set, mid threshold_delta tier (+10).*
+
+```python
+STD.MOD.87 = Card(
+    id      = "STD.MOD.87",  card_id = "STD.MOD.87",  version = "v0.1",
+    name    = "Route Knowledge",
+    tagline = "Knowing exactly how this transit point actually runs eases anything passing through it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Knowing exactly how a specific transit point actually runs eases an operation passing through it — knowledge that doesn't travel elsewhere.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.88 — NEIGHBORHOOD STANDING *(stub)*
+
+*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
+
+```python
+STD.MOD.88 = Card(
+    id      = "STD.MOD.88",  card_id = "STD.MOD.88",  version = "v0.1",
+    name    = "Neighborhood Standing",
+    tagline = "Established standing in this specific block smooths a placement nobody here would challenge.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Established standing in a specific housing block smooths a placement there — standing that doesn't extend past the block.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.89 — LOCAL FIXTURE *(stub)*
+
+*S135. Ring-Locked set, capstone threshold_delta tier (+20).*
+
+```python
+STD.MOD.89 = Card(
+    id      = "STD.MOD.89",  card_id = "STD.MOD.89",  version = "v0.1",
+    name    = "Local Fixture",
+    tagline = "Being a fixture here means nothing about this operation needs explaining.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Being a fixture at this specific spot means nothing about an operation there needs explaining or clearing — but the standing doesn't travel.",
+    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 3 district — log actual play outcomes before treating +20 as balanced (04-n157). Closes Ring 3's threshold_delta tier progression.",
+)
+```
+
+---
+
+### STD.MOD.90 — FESTIVAL GROUNDS *(stub)*
+
+*S135. Ring-Locked set, common success_multiplier tier (n=1).*
+
+```python
+STD.MOD.90 = Card(
+    id      = "STD.MOD.90",  card_id = "STD.MOD.90",  version = "v0.1",
+    name    = "Festival Grounds",
+    tagline = "A temporary permit becomes cover for something that lands bigger than expected.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A temporary permit becomes cover for something that lands bigger than expected — but only on these grounds.",
+    arbiter_note = "Self-only; usable only with an operation targeting a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.91 — WORD SPREADS FAST *(stub)*
+
+*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
+
+```python
+STD.MOD.91 = Card(
+    id      = "STD.MOD.91",  card_id = "STD.MOD.91",  version = "v0.1",
+    name    = "Word Spreads Fast",
+    tagline = "Informal networks carry the outcome further than any official channel would.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Informal networks carry an outcome further than any official channel would — but only within this network's reach.",
+    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 3 district — log actual play outcomes before treating n=2 as balanced (04-n157).",
+)
+```
+
+---
+
+### STD.MOD.92 — QUIET WORD TO THE CROWD *(stub)*
+
+*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.92 = Card(
+    id      = "STD.MOD.92",  card_id = "STD.MOD.92",  version = "v0.1",
+    name    = "Quiet Word to the Crowd",
+    tagline = "A rumor seeded in a gathering, shaping how the outcome gets read locally.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A rumor seeded in a local gathering changes how an outcome is read — protecting the acting faction's standing, quietly.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction. Usable only with an operation targeting a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.93 — BLOCK PARTY *(stub)*
+
+*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.93 = Card(
+    id      = "STD.MOD.93",  card_id = "STD.MOD.93",  version = "v0.1",
+    name    = "Block Party",
+    tagline = "A genuinely celebrated local event, and the acting faction's name is all over it.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A genuinely celebrated local event puts the acting faction's name in a good light, visibly and specifically here.",
+    arbiter_note = "Self-boost, major tier, resolves to the acting faction — usable only with an operation targeting a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.94 — QUIET WORD AGAINST THEM *(stub)*
+
+*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+STD.MOD.94 = Card(
+    id      = "STD.MOD.94",  card_id = "STD.MOD.94",  version = "v0.1",
+    name    = "Quiet Word Against Them",
+    tagline = "A passing comment at the market costs a named faction a little standing, locally.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A passing comment at the market costs a named faction a little standing — nothing traceable, nothing worth a formal answer.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.95 — TURNED AWAY *(stub)*
+
+*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Closes Ring 3's ps_shift matrix.*
+
+```python
+STD.MOD.95 = Card(
+    id      = "STD.MOD.95",  card_id = "STD.MOD.95",  version = "v0.1",
+    name    = "Turned Away",
+    tagline = "A named faction is visibly denied service, right where everyone can see it happen.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A named faction is visibly turned away at this specific spot — a real, public cost to standing that the whole block sees.",
+    arbiter_note = "Same target-resolution constraint as STD.MOD.94, major tier — usable only with an operation targeting a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.96 — SCRAP VALUE *(stub)*
+
+*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+STD.MOD.96 = Card(
+    id      = "STD.MOD.96",  card_id = "STD.MOD.96",  version = "v0.1",
+    name    = "Scrap Value",
+    tagline = "Discarded materials get reused at a fraction of fresh cost.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = 3,      # Ring-Locked set
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Discarded materials from the Mid get reused at a fraction of fresh cost — but only through this specific yard.",
+    arbiter_note = "PA host only, usable only with a PA targeting a Ring 3 district. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### STD.MOD.97 — FAVOR OWED *(stub)*
+
+*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 3's 24-card Ring ModAction set (Portable STD.MOD.74–85 + Ring-Locked STD.MOD.86–97) — and closes the full 72-card Ring ModAction stub pass (Rings 1–3, 09-06/04-n157).*
+
+```python
+STD.MOD.97 = Card(
+    id      = "STD.MOD.97",  card_id = "STD.MOD.97",  version = "v0.1",
+    name    = "Favor Owed",
+    tagline = "A debt from the informal economy, called in to cover part of the cost.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = 3,      # Ring-Locked set — closes Ring 3's 24-card set and the full 72-card Ring ModAction stub pass
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A debt called in from the informal economy waives part of what an action would otherwise cost — this economy specifically, no other.",
+    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 3 district — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 3 (STD.MOD.74–97, 24 cards) and the full Ring ModAction stub pass (72 cards, STD.MOD.26–97) — 09-06's ModActionCard leg now fully complete, faction-set and ring-set alike.",
+)
+```
+
+---
+
+### STD.MOD.98 — NOTIFIED OF ENCROACHMENT *(stub)*
+
+*S135. First Ring ModReactCard content — 04-53/09-06 pattern-setter for Ring 1 (Core). Territory reaction: a rival's presence placement in Core triggers a matching reinforcement for whoever holds the card. `holder` is introduced here as the generic acting-faction reference for Deck-acquired `faction=All` cards with a real effect — distinct from GD-01's `faction(holding)`, which is a field written in at generation for an Issued card; here the holder is simply whichever faction drew this card from the Ring 1 Modifier deck. Pending reconciliation into confirmed vocabulary alongside the other new forms introduced in this set (04-n171).*
+
+```python
+STD.MOD.98 = Card(
+    id      = "STD.MOD.98",  card_id = "STD.MOD.98",  version = "v0.1",
+    name    = "Notified of Encroachment",
+    tagline = "A quiet call from someone who watches the building next door.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+
+    trigger         = presence_chip.placed(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Core doesn't miss a new arrival. Word reaches the right desk before the ink dries.",
+    perspectives = None,
+    design_note  = "Ring ModReactCard pattern-setter (04-53 direction, S135). A rival's presence placement in Core is met with an immediate matching reinforcement from whoever holds this card. Deliberately modest (single-unit, at or below faction-specific power per Andy's S135 guidance) — mirrors DIR.MOD.7 Eminent Domain's flat presence-yield template.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.99 — STRUCTURAL OBJECTION *(stub)*
+
+*S135. Territory reaction: a rival's structure placement in Core draws a formal objection, costing them a foothold elsewhere in the same district — does not touch the just-placed structure block itself (GR 7.2b: committed states are final; this is a new mutation, not an undo).*
+
+```python
+STD.MOD.99 = Card(
+    id      = "STD.MOD.99",  card_id = "STD.MOD.99",  version = "v0.1",
+    name    = "Structural Objection",
+    tagline = "A formal complaint, filed the same afternoon the concrete sets.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Remove,  subject = PresenceToken,
+
+    trigger         = structure_block.placed(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Core paperwork moves fast when it wants to. An objection on record costs someone their footing.",
+    perspectives = None,
+    design_note  = "Removes 1 presence chip from the triggering faction in the same district as their new structure — a bureaucratic cost, not a reversal of the structure placement itself (GR 7.2b compliant).",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.100 — ESCORT WITHDRAWN *(stub)*
+
+*S135. Territory reaction: a rival's presence removed from Core opens the district for whoever holds the card.*
+
+```python
+STD.MOD.100 = Card(
+    id      = "STD.MOD.100",  card_id = "STD.MOD.100",  version = "v0.1",
+    name    = "Escort Withdrawn",
+    tagline = "Someone else's retreat is Core's opening.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+
+    trigger         = presence_chip.removed(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "The building doesn't stay empty long. Core fills what's vacated before the news spreads.",
+    perspectives = None,
+    design_note  = "Fires on any presence removal in Core; narrative frames it as claiming a vacated district. ARBITER confirms narrative fit case-by-case — no distinct 'last chip' filter exists in confirmed TriggerExpr vocabulary (04-n171).",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.101 — OVERHEARD IN THE COMMISSARY *(stub)*
+
+*S135. Information reaction: a rival locking down Dominant status in Core is major, public news — worked through 3 design iterations with Andy this session before landing here. Rejected: Beat 0 resolution_grid reveal (covert, not public — Andy's catch); world_event.played (gated by the undesigned Broadcast Card taxonomy, XA-54); deployment_marker events (Upkeep-anchored only, per Andy — too rare for a standard React). Dominant Marker changes through ordinary CA/PA resolution across the Quarter, genuinely public, and not yet used elsewhere in this set.*
+
+```python
+STD.MOD.101 = Card(
+    id      = "STD.MOD.101",  card_id = "STD.MOD.101",  version = "v0.1",
+    name    = "Overheard in the Commissary",
+    tagline = "Everyone in the building hears when someone finally locks the room down.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Information,  function = Add,  subject = IntelToken,
+
+    trigger         = dominant_marker.placed(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 2,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Dominance in Core isn't quiet. The commissary knows before the announcement is official.",
+    perspectives = None,
+    design_note  = "Mirrors GHO.MOD.2 Perimeter Sensors' Intel Token delivery template. Reward changed from an initial 'draw 1 modifier card' after Andy flagged the circularity (a modifier card's reward being another modifier card, with no thematic tie to 'overheard information') — Intel Token on the triggering faction ties the reward to what the card is actually about.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.102 — ACCESS LOG PULLED *(stub)*
+
+*S135. Information reaction: any Accord forming anywhere passes through institutional record-keeping Core has a hand in — deliberately not ring-scoped (Andy: triggers don't need to be ring-scoped; Accords aren't a ring-dimensioned component to begin with).*
+
+```python
+STD.MOD.102 = Card(
+    id      = "STD.MOD.102",  card_id = "STD.MOD.102",  version = "v0.1",
+    name    = "Access Log Pulled",
+    tagline = "A filed agreement is a public document, and Core reads its own paperwork.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Information,  function = Add,  subject = PublicStanding,
+
+    trigger         = accord.placed(faction=Any),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "An Accord anywhere in the city passes through institutional record-keeping. Core's clerks note who's tied to whom.",
+    perspectives = None,
+    design_note  = "Not ring-scoped by design — Accords have no ring dimension, so 'Core flavor' comes from doctrine/theme (institutional paperwork), not a mechanical filter. Confirmed acceptable per Andy S135: Ring ModReact triggers don't require ring-scoping.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.103 — FLAGGED FOR REVIEW *(stub)*
+
+*S135. Submission reaction: a rival's Public Act submission in Core draws bureaucratic obstruction — a milder version of GHO.MOD.9 Burn Notice's full modifier-removal effect, sized down per Andy's power-ceiling guidance for Ring ModReact. Sign corrected mid-session: an initial +5 threshold delta read as helping the flagged PA (Andy's catch — positive threshold_delta is the established "benefit" convention across the ModActionCard set); a hindering effect needs a negative delta.*
+
+```python
+STD.MOD.103 = Card(
+    id      = "STD.MOD.103",  card_id = "STD.MOD.103",  version = "v0.1",
+    name    = "Flagged for Review",
+    tagline = "A submission lands on the wrong desk, and now it needs a second signature.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Submission,  function = Modify,  subject = PublicAct,
+
+    trigger         = public_act.placed_on_frg(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 2,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = trigger.card,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.modify(trigger.card, threshold, delta=-5),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Core's review process exists to slow things down. It works exactly as designed, on whoever it's aimed at.",
+    perspectives = None,
+    design_note  = "Hinders the flagged PA (−5 threshold — makes success harder), not a self-benefit. `arbiter.modify(target, field, delta)` is a new mutation form, not yet in confirmed vocabulary; flagged for reconciliation (04-n171) alongside GHO.MOD.9 Burn Notice's precedent for Submission-layer interference on a rival's PA.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.104 — BUDGET REALLOCATED *(stub)*
+
+*S135. Economy reaction: a rival's structure placement in Core is skimmed for a cut — generalized to whatever resource is native to the triggering faction, not hardcoded (Andy's correction: this is a Standard card, usable by any faction, so the resource type must key off the rival who caused the trigger, not a fixed type like Capacity).*
+
+```python
+STD.MOD.104 = Card(
+    id      = "STD.MOD.104",  card_id = "STD.MOD.104",  version = "v0.1",
+    name    = "Budget Reallocated",
+    tagline = "New construction means new permits, and permits mean a cut for whoever processes them.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = structure_block.placed(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Every structure that goes up in Core passes through an office with its hand out.",
+    perspectives = None,
+    design_note  = "`NativeResource(faction)` parameterizes the existing bare `NativeResource` subject symbol (Art 04 §6.1 line ~1559 usage) to resolve dynamically per triggering faction — needed because this card, unlike faction-specific precedent (GUI.MOD.2/3/4's hardcoded Capacity), doesn't have a single fixed faction context. Flagged for reconciliation (04-n171).",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.105 — AUDIT TRAIL *(stub)*
+
+*S135. Economy reaction: a rival reaching Established status in Core triggers an audit — same NativeResource(faction) generalization as STD.MOD.104.*
+
+```python
+STD.MOD.105 = Card(
+    id      = "STD.MOD.105",  card_id = "STD.MOD.105",  version = "v0.1",
+    name    = "Audit Trail",
+    tagline = "Reaching Established status means an audit — and audits find things.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = established_marker.placed(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Core's institutions track every faction's climb. The audit itself has a price, paid to whoever runs it.",
+    perspectives = None,
+    design_note  = "Same NativeResource(faction) generalization as STD.MOD.104 (04-n171). Shares its trigger event with GUI.MOD.9 Field Supervisor's established_marker.placed precedent — multiple cards firing on the same confirmed event is standard practice (e.g. presence_chip.placed already triggers several Ghost cards independently).",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.106 — EMERGENCY RESERVE *(stub)*
+
+*S135. Economy reaction: self-triggered safety net when the holder's own presence in Core is squeezed — same NativeResource generalization, but keyed to the holder's own faction rather than a rival's.*
+
+```python
+STD.MOD.106 = Card(
+    id      = "STD.MOD.106",  card_id = "STD.MOD.106",  version = "v0.1",
+    name    = "Emergency Reserve",
+    tagline = "A reserve fund, tapped the moment the ground gives out from under you.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = presence_chip.removed(faction=holder, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(holder)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Losing a foothold in Core isn't the end — there's always a contingency line item for exactly this.",
+    perspectives = None,
+    design_note  = "Distinct from the existing Floor Act mechanic (PM02 VE-01) — this is a Core-specific, presence-loss-triggered reserve, not a general insufficient-resource safety net. NativeResource(holder) keys to the holder's own faction, not a rival's (04-n171).",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.107 — ON THE DOCKET *(stub)*
+
+*S135. Standing reaction: a rival's standing gain in Core draws a formal, procedural response.*
+
+```python
+STD.MOD.107 = Card(
+    id      = "STD.MOD.107",  card_id = "STD.MOD.107",  version = "v0.1",
+    name    = "On the Docket",
+    tagline = "Every gain gets a formal response, whether anyone asked for one or not.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = standing_marker.increased(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Standing shifts in Core get logged, cross-referenced, and answered — Core doesn't let a change go unremarked.",
+    perspectives = None,
+    design_note  = "Straightforward capitalize-on-rival's-gain template, mirrors GHO.MOD.11 Manufactured Evidence's Standing-add pattern.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.108 — PRECEDENT CITED *(stub)*
+
+*S135. Standing reaction: a Core district turning Contested is treated as a procedural opening.*
+
+```python
+STD.MOD.108 = Card(
+    id      = "STD.MOD.108",  card_id = "STD.MOD.108",  version = "v0.1",
+    name    = "Precedent Cited",
+    tagline = "A contested district is a legal opening as much as a physical one.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = tension_marker.placed(ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Core keeps records of every dispute. A district turning contested opens the door to citing precedent from somewhere else.",
+    perspectives = None,
+    design_note  = "Reframed from the S134 seed concept (originally 'an Accord involving a Core-based faction forms') — Accords aren't ring-scoped, so a Core-specific version couldn't distinguish itself from the other rings' copies. Tension Marker placement is a genuinely ring-scoped, confirmed-vocabulary substitute with the same 'formal/procedural response' character.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.109 — QUIET REPRIMAND *(stub)*
+
+*S135. Standing reaction: a rival's standing drop in Core is capitalized on. Closes the 12-card Ring 1 (Core) ModReactCard set — 09-06's Ring ModReactCard content pass now underway (Ring 2/Mid and Ring 3/Baryo still pending).*
+
+```python
+STD.MOD.109 = Card(
+    id      = "STD.MOD.109",  card_id = "STD.MOD.109",  version = "v0.1",
+    name    = "Quiet Reprimand",
+    tagline = "Someone's standing slips, and Core is there to make a note of it.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = standing_marker.decreased(faction=opponent, ring=1),
+    beat            = None,
+    ring_constraint = 1,
+    ring_origin     = 1,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "A reprimand doesn't need to be loud to be effective. Core specializes in the quiet kind.",
+    perspectives = None,
+    design_note  = "Mirrors STD.MOD.107's template, opposite trigger direction. Closes Ring 1 (Core): 12 cards, STD.MOD.98–109 — first Ring ModReactCard set shipped (04-53/09-06).",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.110 — LINE REROUTED *(stub)*
+
+*S135. Ring 2 (Mid) ModReactCard set — 11 of 12 cards are direct ring=2 duplicates of Ring 1's mechanics (Andy's call: cards already ring-scoped in Ring 1 duplicate cleanly, no need to redesign each one), renamed to Mid's own established seed vocabulary (Whiteboard/modifier_card_ideas.md) and Art 00 §6.7 voice (operational throughput, infrastructure chokepoints). Only STD.MOD.114 needed a genuine redesign — see its note. Mirrors STD.MOD.98's template exactly.*
+
+```python
+STD.MOD.110 = Card(
+    id      = "STD.MOD.110",  card_id = "STD.MOD.110",  version = "v0.1",
+    name    = "Line Rerouted",
+    tagline = "Traffic reroutes around whoever just staked a claim — right into someone else's hands.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+
+    trigger         = presence_chip.placed(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Mid's routing systems don't tolerate a new obstruction quietly. Whoever's watching the reroute gets there first.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.98 Notified of Encroachment — same mechanic, ring=2.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.111 — CAPACITY EXCEEDED *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.99 Structural Objection.*
+
+```python
+STD.MOD.111 = Card(
+    id      = "STD.MOD.111",  card_id = "STD.MOD.111",  version = "v0.1",
+    name    = "Capacity Exceeded",
+    tagline = "Mid's infrastructure has a ceiling, and someone just tested it.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Remove,  subject = PresenceToken,
+
+    trigger         = structure_block.placed(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Mid's throughput has a hard limit. Building past it costs whoever built.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.99 Structural Objection — same mechanic, ring=2.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.112 — SALVAGE RIGHTS *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.100 Escort Withdrawn.*
+
+```python
+STD.MOD.112 = Card(
+    id      = "STD.MOD.112",  card_id = "STD.MOD.112",  version = "v0.1",
+    name    = "Salvage Rights",
+    tagline = "What Mid abandons, Mid also claims — someone always moves in on the leftovers.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+
+    trigger         = presence_chip.removed(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Nothing sits idle in Mid's infrastructure for long. Someone always moves in on the leftovers.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.100 Escort Withdrawn — same mechanic, ring=2.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.113 — GRID ANOMALY LOGGED *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.101 Overheard in the Commissary.*
+
+```python
+STD.MOD.113 = Card(
+    id      = "STD.MOD.113",  card_id = "STD.MOD.113",  version = "v0.1",
+    name    = "Grid Anomaly Logged",
+    tagline = "When one relay draws all the load, the monitoring logs notice first.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Information,  function = Add,  subject = IntelToken,
+
+    trigger         = dominant_marker.placed(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 2,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "A district locked down draws load like a failing relay. The grid logs it before anyone announces it.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.101 Overheard in the Commissary — same mechanic, ring=2. Name drawn from the Mid seed pool's 'Grid Anomaly Logged' entry (originally a covert-op-discovery concept, not buildable — repurposed for the confirmed dominant_marker.placed mechanic).",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.114 — SERVICE LEVEL BREACH *(stub)*
+
+*S135. The one Ring 2 card that needed genuine redesign rather than direct duplication — STD.MOD.102 Access Log Pulled's `accord.placed(faction=Any)` trigger isn't ring-scoped, so copying it verbatim would give every ring an identical, undifferentiated card. Mid's own seed pool already had the right concept: "Service Level Breach (fires when an Accord involving Mid infrastructure is broken)" — maps directly to the confirmed `accord.removed` change-type.*
+
+```python
+STD.MOD.114 = Card(
+    id      = "STD.MOD.114",  card_id = "STD.MOD.114",  version = "v0.1",
+    name    = "Service Level Breach",
+    tagline = "When an agreement lapses, whatever infrastructure depended on it becomes everyone's problem — and someone's opportunity.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Information,  function = Add,  subject = PublicStanding,
+
+    trigger         = accord.removed(faction=Any),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "An Accord's dissolution isn't just paperwork — whatever it was propping up now needs a new arrangement.",
+    perspectives = None,
+    design_note  = "Not ring-scoped, same as STD.MOD.102 (Accords have no ring dimension) — Mid flavor comes from doctrine (infrastructure-dependency framing), not a mechanical filter. `accord.removed` chosen over `.corrupted` — dissolution/breach fits Mid's operational-consequence voice better than data-tampering (which reads more Ghost/Information-doctrine).",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.115 — ROUTINE INSPECTION *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.103 Flagged for Review. Name drawn directly from the Mid seed pool's own Submission-reclassified entry (04-53 direction, PM02 L262) — "Routine Inspection" was already reclassified Information→Submission for exactly this mechanic.*
+
+```python
+STD.MOD.115 = Card(
+    id      = "STD.MOD.115",  card_id = "STD.MOD.115",  version = "v0.1",
+    name    = "Routine Inspection",
+    tagline = "An inspection nobody asked for, timed to land before the paperwork clears.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Submission,  function = Modify,  subject = PublicAct,
+
+    trigger         = public_act.placed_on_frg(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 2,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = trigger.card,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.modify(trigger.card, threshold, delta=-5),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Mid's inspectors don't announce a visit. They just show up when it's least convenient.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.103 Flagged for Review — same mechanic (−5 threshold, hinders the flagged PA), ring=2.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.116 — TOLL COLLECTED *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.104 Budget Reallocated. Name drawn from the Mid seed pool.*
+
+```python
+STD.MOD.116 = Card(
+    id      = "STD.MOD.116",  card_id = "STD.MOD.116",  version = "v0.1",
+    name    = "Toll Collected",
+    tagline = "Every structure that goes up in Mid crosses a toll line somewhere.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = structure_block.placed(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Nothing gets built in Mid without crossing a toll line somebody controls.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same NativeResource(trigger.faction) generalization (04-n171), ring=2.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.117 — OVERTIME BILLED *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.105 Audit Trail. Name drawn from the Mid seed pool.*
+
+```python
+STD.MOD.117 = Card(
+    id      = "STD.MOD.117",  card_id = "STD.MOD.117",  version = "v0.1",
+    name    = "Overtime Billed",
+    tagline = "Reaching Established in Mid means someone's books get reconciled — at a cost.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = established_marker.placed(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Every climb to Established in Mid triggers a reconciliation somewhere down the line.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.105 Audit Trail — same NativeResource(trigger.faction) generalization (04-n171), ring=2.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.118 — BACKUP GENERATOR *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.106 Emergency Reserve. Name drawn directly from the Mid seed pool — an exact conceptual match ("fires when the acting faction's own Mid-based generation is disrupted — a reserve kicks in").*
+
+```python
+STD.MOD.118 = Card(
+    id      = "STD.MOD.118",  card_id = "STD.MOD.118",  version = "v0.1",
+    name    = "Backup Generator",
+    tagline = "When the line goes down, the backup kicks in before anyone notices the gap.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = presence_chip.removed(faction=holder, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(holder)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Losing ground in Mid trips a contingency that's always been sitting there, waiting.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.106 Emergency Reserve — same NativeResource(holder) generalization (04-n171), ring=2. Distinct from the existing Floor Act mechanic (PM02 VE-01), same as its Ring 1 counterpart.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.119 — UNION STATEMENT *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.107 On the Docket. Name drawn from the Mid seed pool.*
+
+```python
+STD.MOD.119 = Card(
+    id      = "STD.MOD.119",  card_id = "STD.MOD.119",  version = "v0.1",
+    name    = "Union Statement",
+    tagline = "Every gain in Mid gets a statement from somebody with standing to make one.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = standing_marker.increased(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Mid's labor apparatus doesn't let a shift in standing pass without a formal word on it.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.107 On the Docket — same mechanic, ring=2.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.120 — ON RECORD *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.108 Precedent Cited.*
+
+```python
+STD.MOD.120 = Card(
+    id      = "STD.MOD.120",  card_id = "STD.MOD.120",  version = "v0.1",
+    name    = "On Record",
+    tagline = "A contested line in Mid gets logged the moment the tension shows.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = tension_marker.placed(ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Mid keeps a file on every dispute. A contested line gets a citation before it gets resolved.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.108 Precedent Cited — same mechanic, ring=2.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.121 — FORMAL NOTICE *(stub)*
+
+*S135. Ring 2 duplicate of STD.MOD.109 Quiet Reprimand. Closes the 12-card Ring 2 (Mid) ModReactCard set — Ring 3 (Baryo) is the only leg of 09-06's Ring ModReactCard pass still open.*
+
+```python
+STD.MOD.121 = Card(
+    id      = "STD.MOD.121",  card_id = "STD.MOD.121",  version = "v0.1",
+    name    = "Formal Notice",
+    tagline = "Someone's standing slips, and Mid puts it on the record.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = standing_marker.decreased(faction=opponent, ring=2),
+    beat            = None,
+    ring_constraint = 2,
+    ring_origin     = 2,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "A formal notice doesn't need drama. Mid's bureaucracy just needs the paper trail.",
+    perspectives = None,
+    design_note  = "Ring 2 duplicate of STD.MOD.109 Quiet Reprimand — same mechanic, ring=2. Closes Ring 2 (Mid): 12 cards, STD.MOD.110–121. Ring 3 (Baryo) is the last open leg of 09-06's Ring ModReactCard pass.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.122 — CROWD GATHERS *(stub)*
+
+*S135. Ring 3 (Baryo) ModReactCard set — same pattern as Ring 2: 11 of 12 cards are direct ring=3 duplicates of Ring 1's mechanics, renamed to Baryo's own seed vocabulary (gray economy, community network — Art 00 §6.7). Only STD.MOD.126 needed a genuine redesign, per Andy: `accord.corrupted` this time, not `.removed` (Mid's choice) — same underlying pattern (the one unscoped card gets a ring-specific accord change-type), different change-type per ring.*
+
+```python
+STD.MOD.122 = Card(
+    id      = "STD.MOD.122",  card_id = "STD.MOD.122",  version = "v0.1",
+    name    = "Crowd Gathers",
+    tagline = "The block notices a new face before anyone official does.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+
+    trigger         = presence_chip.placed(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Baryo doesn't wait for paperwork. Word moves faster than any filing ever could.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.98/STD.MOD.110 — same mechanic, ring=3. Name drawn directly from the Baryo seed pool's matching Territory entry.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.123 — PRICED OUT *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.99/STD.MOD.111.*
+
+```python
+STD.MOD.123 = Card(
+    id      = "STD.MOD.123",  card_id = "STD.MOD.123",  version = "v0.1",
+    name    = "Priced Out",
+    tagline = "New construction changes the rent, one way or another.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Remove,  subject = PresenceToken,
+
+    trigger         = structure_block.placed(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Something goes up in Baryo, and somebody else finds themselves priced out of the corner they held.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.99/STD.MOD.111 — same mechanic, ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.124 — EVICTION NOTICE *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.100/STD.MOD.112. Name drawn directly from the Baryo seed pool — an exact conceptual match.*
+
+```python
+STD.MOD.124 = Card(
+    id      = "STD.MOD.124",  card_id = "STD.MOD.124",  version = "v0.1",
+    name    = "Eviction Notice",
+    tagline = "Baryo doesn't leave a spot empty for long.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Territory,  function = Add,  subject = PresenceToken,
+
+    trigger         = presence_chip.removed(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "The moment a foothold disappears, someone else is already moving their things in.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.100/STD.MOD.112 — same mechanic, ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.125 — WORD TRAVELS *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.101/STD.MOD.113. Name drawn from the Baryo seed pool's Information entry.*
+
+```python
+STD.MOD.125 = Card(
+    id      = "STD.MOD.125",  card_id = "STD.MOD.125",  version = "v0.1",
+    name    = "Word Travels",
+    tagline = "Nothing stays quiet on the Strip for long.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Information,  function = Add,  subject = IntelToken,
+
+    trigger         = dominant_marker.placed(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 2,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "When someone locks down a piece of Baryo, the street knows before the ink's even dry — if there was any ink to begin with.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.101/STD.MOD.113 — same mechanic, ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.126 — QUIETLY REWRITTEN *(stub)*
+
+*S135. The one Ring 3 card needing genuine redesign, same as STD.MOD.102/STD.MOD.114 before it — Andy's direction this time: `accord.corrupted`, not `.removed`. A corrupted Accord (falsified/tampered terms) fits Baryo's informal, unfiled-agreement culture better than a formal dissolution.*
+
+```python
+STD.MOD.126 = Card(
+    id      = "STD.MOD.126",  card_id = "STD.MOD.126",  version = "v0.1",
+    name    = "Quietly Rewritten",
+    tagline = "A handshake deal's terms are whatever the last conversation says they are.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Information,  function = Add,  subject = PublicStanding,
+
+    trigger         = accord.corrupted(faction=Any),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Baryo's agreements aren't filed anywhere official. That's exactly what makes them so easy to quietly renegotiate.",
+    perspectives = None,
+    design_note  = "Not ring-scoped, same as STD.MOD.102/STD.MOD.114 (Accords have no ring dimension) — Baryo flavor comes from doctrine (informal/unfiled agreements), not a mechanical filter. `accord.corrupted` (Andy's direction) rather than `.removed` — Baryo's version of the unscoped card reacts to terms being falsified, not a formal breach.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.127 — SOMEONE'S WATCHING *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.103/STD.MOD.115. Name drawn directly from the Baryo seed pool's own Submission-reclassified entry (04-53 direction, PM02 L262).*
+
+```python
+STD.MOD.127 = Card(
+    id      = "STD.MOD.127",  card_id = "STD.MOD.127",  version = "v0.1",
+    name    = "Someone's Watching",
+    tagline = "Somebody's always got eyes on what's moving through Baryo.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Submission,  function = Modify,  subject = PublicAct,
+
+    trigger         = public_act.placed_on_frg(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 2,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = trigger.card,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = arbiter.modify(trigger.card, threshold, delta=-5),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "An operation through Baryo draws attention before it ever gets a chance to land clean.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.103/STD.MOD.115 — same mechanic (−5 threshold, hinders the flagged PA), ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.128 — INFORMAL TOLL *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.104/STD.MOD.116. Name drawn from the Baryo seed pool.*
+
+```python
+STD.MOD.128 = Card(
+    id      = "STD.MOD.128",  card_id = "STD.MOD.128",  version = "v0.1",
+    name    = "Informal Toll",
+    tagline = "Nothing crosses Baryo without somebody taking a cut.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = structure_block.placed(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "There's no filing cabinet for it, but everyone knows the toll gets paid regardless.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.104/STD.MOD.116 — same NativeResource(trigger.faction) generalization (04-n171), ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.129 — CUT OF THE ACTION *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.105/STD.MOD.117.*
+
+```python
+STD.MOD.129 = Card(
+    id      = "STD.MOD.129",  card_id = "STD.MOD.129",  version = "v0.1",
+    name    = "Cut of the Action",
+    tagline = "Reaching Established in Baryo means somebody local wants a piece.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = established_marker.placed(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "The gray economy notices every climb — and it always finds a way in.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.105/STD.MOD.117 — same NativeResource(trigger.faction) generalization (04-n171), ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.130 — VENDOR CREDIT CALLED *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.106/STD.MOD.118. Name drawn directly from the Baryo seed pool — an exact conceptual match ("fires when the acting faction's resource falls short in Baryo — informal credit covers the gap").*
+
+```python
+STD.MOD.130 = Card(
+    id      = "STD.MOD.130",  card_id = "STD.MOD.130",  version = "v0.1",
+    name    = "Vendor Credit Called",
+    tagline = "When the corner gets squeezed, credit from an old favor covers the gap.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Economy,  function = Add,  subject = NativeResource,
+
+    trigger         = presence_chip.removed(faction=holder, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).resources.add(1, NativeResource(holder)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Baryo runs on favors owed. This is one finally getting called in.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.106/STD.MOD.118 — same NativeResource(holder) generalization (04-n171), ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.131 — NEIGHBORHOOD NOTICES *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.107/STD.MOD.119.*
+
+```python
+STD.MOD.131 = Card(
+    id      = "STD.MOD.131",  card_id = "STD.MOD.131",  version = "v0.1",
+    name    = "Neighborhood Notices",
+    tagline = "A gain in Baryo doesn't go unnoticed — or unremarked on.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = standing_marker.increased(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "The neighborhood keeps its own ledger, and it's not shy about updating it out loud.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.107/STD.MOD.119 — same mechanic, ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.132 — SIDES ARE TAKEN *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.108/STD.MOD.120.*
+
+```python
+STD.MOD.132 = Card(
+    id      = "STD.MOD.132",  card_id = "STD.MOD.132",  version = "v0.1",
+    name    = "Sides Are Taken",
+    tagline = "When a block turns openly contested, everybody already knows where they stand.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = tension_marker.placed(ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = None,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "Baryo doesn't wait for an official ruling. The neighborhood picks its side the moment the tension shows.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.108/STD.MOD.120 — same mechanic, ring=3.",
+    arbiter_note = None,
+)
+```
+
+---
+
+### STD.MOD.133 — THE CROWD REMEMBERS *(stub)*
+
+*S135. Ring 3 duplicate of STD.MOD.109/STD.MOD.121. Name drawn directly from the Baryo seed pool — an exact conceptual match. Closes the 12-card Ring 3 (Baryo) ModReactCard set — and closes 09-06's full Ring ModReactCard pass (36 cards, all 3 rings).*
+
+```python
+STD.MOD.133 = Card(
+    id      = "STD.MOD.133",  card_id = "STD.MOD.133",  version = "v0.1",
+    name    = "The Crowd Remembers",
+    tagline = "Baryo's memory is longer than anywhere else in the city.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+    layer   = Standing,  function = Add,  subject = PublicStanding,
+
+    trigger         = standing_marker.decreased(faction=opponent, ring=3),
+    beat            = None,
+    ring_constraint = 3,
+    ring_origin     = 3,
+    value_rating    = 1,
+
+    resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,
+
+    target_district = trigger.district,
+    target_faction  = trigger.faction,
+    target_object   = None,
+    affinity        = None,
+    restriction     = None,
+    cost            = None,
+
+    success     = faction(holder).standing.add(1),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = None,
+    narrative    = "A slip in standing here doesn't fade quietly — the block holds onto it.",
+    perspectives = None,
+    design_note  = "Ring 3 duplicate of STD.MOD.109/STD.MOD.121 — same mechanic, ring=3. Closes Ring 3 (Baryo): 12 cards, STD.MOD.122–133. Closes 09-06's full Ring ModReactCard pass: 36 cards, all 3 rings (STD.MOD.98–133).",
+    arbiter_note = None,
+)
+```
+
+---
+
 ## Guild
 [↑ 7. Card Specifications](#7-card-specifications)
 
@@ -5700,6 +9084,318 @@ GUI.MOD.14 = Card(
     portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
     narrative    = "Guild's engineers sign off on a finding: unsafe as built. It's technically true. It's also exactly what was needed.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### GUI.MOD.15 — STRUCTURAL SURVEY *(stub)*
+
+*S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Guild — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Guild voice: construction and material, visible-by-doctrine (§5a) — same doctrinal lens as Guild's shipped ModBattleCard set (GUI.MOD.11–14). Minor threshold_delta tier (+5).*
+
+```python
+GUI.MOD.15 = Card(
+    id      = "GUI.MOD.15",  card_id = "GUI.MOD.15",  version = "v0.1",
+    name    = "Structural Survey",
+    tagline = "The engineering assessment comes back clean before anyone asks for one.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
+
+    portrait     = None,
+    narrative    = "An engineering assessment, filed in advance, clears the ground before the first shovel goes in.",
+    arbiter_note = "Attach at Dispatch to any CA/PA in Guild's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+)
+```
+
+---
+
+### GUI.MOD.16 — LOAD-BEARING CONFIDENCE *(stub)*
+
+*S135. Mid threshold_delta tier (+10).*
+
+```python
+GUI.MOD.16 = Card(
+    id      = "GUI.MOD.16",  card_id = "GUI.MOD.16",  version = "v0.1",
+    name    = "Load-Bearing Confidence",
+    tagline = "Every material on site has already been tested and certified.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Verified material integrity means nothing on this build is guesswork — the crew already knows it'll hold.",
+    arbiter_note = "Self-only, same basis as GUI.MOD.15.",
+)
+```
+
+---
+
+### GUI.MOD.17 — PERMIT FAST-TRACK *(stub)*
+
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Permit Delay Imposed" — raising a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Guild's own host action.*
+
+```python
+GUI.MOD.17 = Card(
+    id      = "GUI.MOD.17",  card_id = "GUI.MOD.17",  version = "v0.1",
+    name    = "Permit Fast-Track",
+    tagline = "The review board signs off before the ink on the application dries.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A favorable review clears part of the build in advance — nothing left for an inspector to hold up.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as DIR.MOD.15/16.",
+)
+```
+
+---
+
+### GUI.MOD.18 — CERTIFIED TO CODE *(stub)*
+
+*S135. Capstone threshold_delta tier (+20).*
+
+```python
+GUI.MOD.18 = Card(
+    id      = "GUI.MOD.18",  card_id = "GUI.MOD.18",  version = "v0.1",
+    name    = "Certified to Code",
+    tagline = "Full regulatory sign-off, in hand, before the first beam goes up.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Every code requirement cleared ahead of time — there's nothing left for an inspection to catch.",
+    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+)
+```
+
+---
+
+### GUI.MOD.19 — UNION CREW *(stub)*
+
+*S135. Common success_multiplier tier (n=1).*
+
+```python
+GUI.MOD.19 = Card(
+    id      = "GUI.MOD.19",  card_id = "GUI.MOD.19",  version = "v0.1",
+    name    = "Union Crew",
+    tagline = "Experienced hands turn a routine job into something better than scheduled.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An experienced crew doesn't just meet the spec — they turn a routine build into an exceptional one.",
+    arbiter_note = "Self-only, amplifies Guild's own host action.",
+)
+```
+
+---
+
+### GUI.MOD.20 — OVERBUILT *(stub)*
+
+*S135. Rare/capstone success_multiplier tier (n=2).*
+
+```python
+GUI.MOD.20 = Card(
+    id      = "GUI.MOD.20",  card_id = "GUI.MOD.20",  version = "v0.1",
+    name    = "Overbuilt",
+    tagline = "It goes up stronger than the minimum ever required.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A structure goes up well past the minimum required — the extra margin amplifies what the build was already meant to do.",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+)
+```
+
+---
+
+### GUI.MOD.21 — COMMUNITY GROUNDBREAKING *(stub)*
+
+*S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+GUI.MOD.21 = Card(
+    id      = "GUI.MOD.21",  card_id = "GUI.MOD.21",  version = "v0.1",
+    name    = "Community Groundbreaking",
+    tagline = "Visible investment in the neighborhood, announced before the first day of work.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Visible investment in a neighborhood buys goodwill Guild doesn't have to ask for.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+)
+```
+
+---
+
+### GUI.MOD.22 — RIBBON CUTTING *(stub)*
+
+*S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+GUI.MOD.22 = Card(
+    id      = "GUI.MOD.22",  card_id = "GUI.MOD.22",  version = "v0.1",
+    name    = "Ribbon Cutting",
+    tagline = "A completed project, celebrated publicly, with the Guild's name on the plaque.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A completed project gets the full ceremony — cameras, officials, and Guild's name front and center.",
+    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+)
+```
+
+---
+
+### GUI.MOD.23 — INSPECTION NOTED *(stub)*
+
+*S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix. **Playtest-questionable for Guild specifically:** this card and GUI.MOD.24 only fire when the host CA/PA carries a `target_faction` (§6.1), and Guild's CA/PA set skews toward self/territory-directed hosts (`target_faction=None` on most non-opponent-facing cards) rather than rival-targeting ones — fewer eligible hosts than a faction like Directorate or Syndicate. Not reworked; flagged for playtest to see how often these 2 cards actually see play.*
+
+```python
+GUI.MOD.23 = Card(
+    id      = "GUI.MOD.23",  card_id = "GUI.MOD.23",  version = "v0.1",
+    name    = "Inspection Noted",
+    tagline = "A minor observation, quietly logged against someone else's project.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A minor code observation gets logged against a rival's project — nothing dramatic, just on the record.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+)
+```
+
+---
+
+### GUI.MOD.24 — CODE VIOLATION CITED *(stub)*
+
+*S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+GUI.MOD.24 = Card(
+    id      = "GUI.MOD.24",  card_id = "GUI.MOD.24",  version = "v0.1",
+    name    = "Code Violation Cited",
+    tagline = "A rival's construction, publicly flagged for cutting corners.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A rival's construction gets flagged publicly for cutting corners — consistent with Guild's doctrine of keeping everything procedural and visible.",
+    arbiter_note = "Same target-resolution constraint as GUI.MOD.23, major tier.",
+)
+```
+
+---
+
+### GUI.MOD.25 — MATERIAL SURPLUS *(stub)*
+
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+GUI.MOD.25 = Card(
+    id      = "GUI.MOD.25",  card_id = "GUI.MOD.25",  version = "v0.1",
+    name    = "Material Surplus",
+    tagline = "Leftover stock from the last job covers most of this one.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Leftover stock from a prior job discounts the next one — nothing wasted.",
+    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### GUI.MOD.26 — IN-HOUSE FABRICATION *(stub)*
+
+*S135. Capstone cost_reduction tier (n=2).*
+
+```python
+GUI.MOD.26 = Card(
+    id      = "GUI.MOD.26",  card_id = "GUI.MOD.26",  version = "v0.1",
+    name    = "In-House Fabrication",
+    tagline = "Doing the work internally cuts out the markup entirely.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Guild faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Fabricating the components in-house cuts out the markup a third-party supplier would otherwise charge.",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157).",
 )
 ```
 
@@ -8021,6 +11717,318 @@ GHO.MOD.15 = Card(
 
 ---
 
+### GHO.MOD.16 — PRE-ANALYSIS *(stub)*
+
+*S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Ghost — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Ghost voice: intelligence and leverage, epistemic doctrine — same doctrinal lens as Ghost's shipped ModBattleCard set (GHO.MOD.12–15). Minor threshold_delta tier (+5).*
+
+```python
+GHO.MOD.16 = Card(
+    id      = "GHO.MOD.16",  card_id = "GHO.MOD.16",  version = "v0.1",
+    name    = "Pre-Analysis",
+    tagline = "The modeling was already done before the operation was even submitted.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
+
+    portrait     = None,
+    narrative    = "Advance modeling means Ghost already knows how this plays out before committing to it.",
+    arbiter_note = "Attach at Dispatch to any CA/PA in Ghost's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+)
+```
+
+---
+
+### GHO.MOD.17 — KNOWN VARIABLE *(stub)*
+
+*S135. Mid threshold_delta tier (+10).*
+
+```python
+GHO.MOD.17 = Card(
+    id      = "GHO.MOD.17",  card_id = "GHO.MOD.17",  version = "v0.1",
+    name    = "Known Variable",
+    tagline = "One fewer unknown in the equation, and the whole operation gets simpler.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Removing an unknown smooths the acting faction's own play — Ghost prefers certainty to speed.",
+    arbiter_note = "Self-only, same basis as GHO.MOD.16.",
+)
+```
+
+---
+
+### GHO.MOD.18 — CLEAN CHANNEL *(stub)*
+
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Compromised Model" — planting bad data to raise a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Ghost's own host action.*
+
+```python
+GHO.MOD.18 = Card(
+    id      = "GHO.MOD.18",  card_id = "GHO.MOD.18",  version = "v0.1",
+    name    = "Clean Channel",
+    tagline = "No noise in the data, no ambiguity in the read.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A scrubbed data channel removes the noise that would otherwise complicate the operation.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as GUI.MOD.17/DIR.MOD.15/16.",
+)
+```
+
+---
+
+### GHO.MOD.19 — TOTAL PICTURE *(stub)*
+
+*S135. Capstone threshold_delta tier (+20).*
+
+```python
+GHO.MOD.19 = Card(
+    id      = "GHO.MOD.19",  card_id = "GHO.MOD.19",  version = "v0.1",
+    name    = "Total Picture",
+    tagline = "Every piece assembled, nothing left to infer.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A fully assembled intelligence picture leaves nothing to chance — the operation proceeds on certainty, not estimate.",
+    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+)
+```
+
+---
+
+### GHO.MOD.20 — CLEAN DATA *(stub)*
+
+*S135. Common success_multiplier tier (n=1).*
+
+```python
+GHO.MOD.20 = Card(
+    id      = "GHO.MOD.20",  card_id = "GHO.MOD.20",  version = "v0.1",
+    name    = "Clean Data",
+    tagline = "Verified information, and the operation performs better for it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An operation run on verified information performs better than the plan ever assumed.",
+    arbiter_note = "Self-only, amplifies Ghost's own host action.",
+)
+```
+
+---
+
+### GHO.MOD.21 — LAYERED ANALYSIS *(stub)*
+
+*S135. Rare/capstone success_multiplier tier (n=2).*
+
+```python
+GHO.MOD.21 = Card(
+    id      = "GHO.MOD.21",  card_id = "GHO.MOD.21",  version = "v0.1",
+    name    = "Layered Analysis",
+    tagline = "Three independent sources say the same thing. That doesn't happen by accident.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Multiple independent confirmations amplify an outcome well past what a single source would support.",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+)
+```
+
+---
+
+### GHO.MOD.22 — QUIET CORRECTION *(stub)*
+
+*S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+GHO.MOD.22 = Card(
+    id      = "GHO.MOD.22",  card_id = "GHO.MOD.22",  version = "v0.1",
+    name    = "Quiet Correction",
+    tagline = "The error gets fixed before anyone thinks to look for it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An error is quietly fixed before anyone notices it was ever there — a small, deliberate protection of standing.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+)
+```
+
+---
+
+### GHO.MOD.23 — FINDINGS PUBLISHED *(stub)*
+
+*S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+GHO.MOD.23 = Card(
+    id      = "GHO.MOD.23",  card_id = "GHO.MOD.23",  version = "v0.1",
+    name    = "Findings Published",
+    tagline = "A selective disclosure, timed for maximum credibility.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A selective disclosure earns Ghost credibility and standing — true as far as it goes, and it goes exactly as far as intended.",
+    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+)
+```
+
+---
+
+### GHO.MOD.24 — DISCREET LEAK *(stub)*
+
+*S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+GHO.MOD.24 = Card(
+    id      = "GHO.MOD.24",  card_id = "GHO.MOD.24",  version = "v0.1",
+    name    = "Discreet Leak",
+    tagline = "A detail reaches exactly the right ears, and no further.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A detail reaches exactly the right ears — quiet, deniable, and costly to whoever it's about.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+)
+```
+
+---
+
+### GHO.MOD.25 — MODEL FAILURE EXPOSED *(stub)*
+
+*S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+GHO.MOD.25 = Card(
+    id      = "GHO.MOD.25",  card_id = "GHO.MOD.25",  version = "v0.1",
+    name    = "Model Failure Exposed",
+    tagline = "A rival's analysis, wrong in public, on the record.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A rival's flawed analysis becomes public — Ghost didn't lie, it just let the truth land at the worst possible time.",
+    arbiter_note = "Same target-resolution constraint as GHO.MOD.24, major tier.",
+)
+```
+
+---
+
+### GHO.MOD.26 — EXISTING DATASET *(stub)*
+
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+GHO.MOD.26 = Card(
+    id      = "GHO.MOD.26",  card_id = "GHO.MOD.26",  version = "v0.1",
+    name    = "Existing Dataset",
+    tagline = "The research was already done. This just draws on it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Prior research lowers the cost of new analysis — nothing here starts from zero.",
+    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### GHO.MOD.27 — SHARED INFRASTRUCTURE *(stub)*
+
+*S135. Capstone cost_reduction tier (n=2).*
+
+```python
+GHO.MOD.27 = Card(
+    id      = "GHO.MOD.27",  card_id = "GHO.MOD.27",  version = "v0.1",
+    name    = "Shared Infrastructure",
+    tagline = "The analytical tools were already built. Borrowing them costs almost nothing.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Ghost faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Borrowed analytical tools cut the overhead of building anything from scratch.",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157).",
+)
+```
+
+---
+
 
 ## Directorate
 [↑ 7. Card Specifications](#7-card-specifications)
@@ -9863,6 +13871,319 @@ DIR.MOD.13 = Card(
 
 ---
 
+### DIR.MOD.14 — STANDING ORDER *(stub)*
+
+*S135. First ModActionCard content in the game exercising the actual `ModActionExpr` menu (09-06/04-n157 pattern-setter — PM02 L256; STD.MOD.1 Overture and SYN.MOD.1 The Fixer, the two prior "ModActionCard" entries, were both migrated to Issued ModReactCard at L245, leaving this slot genuinely empty until now). Establishes the tagged-union call convention for `ModActionExpr` — `ModActionExpr.<variant>(...)`, no prior instance existed to follow. Fields per §6.1/§6.2 (ModActionCard column) and the 04-n157 action-space analysis: **host-binding** is packet-pairing only — attach at Dispatch assembly to any CA/PA in the acting faction's own submitted packet (Art 03 §9.1.1); no card-level restriction field exists or is needed, and a ModActionCard can never reach a rival's sealed Dispatch Case. **Cost** is `None` uniformly — Beat 0 payment validation (Art 03 §9.4.0.1 Step 2) could support a live modifier cost here, unlike ModBattleCard's true no-cost-step case, but the splay-display convention (§9.4.0.1 Step 4) makes a distinct modifier cost illegible, so it folds into the host packet's total drain instead. **Count/format locked S135, revised twice same session:** 12 cards/faction — 4 `threshold_delta` (this tier) + 2 `success_multiplier` + 4 `ps_shift` + 2 `cost_reduction`, asymmetric because the four effect types have genuinely different magnitude-variation room (§6.3): `threshold_delta` runs against the d100 threshold scale (real thresholds 25–65, `ring_mod`/`doctrine_mod` already establish ±10/±15 as meaningful) and supports 4 tiers (+5/+10/+15/+20 — Andy's original example already named 4 values; a first pass compressed it to 3 before he caught it reading back the transcript); `ps_shift` likewise grew from an initial 2-card same-direction reading to a full 2×2 self/target matrix (see DIR.MOD.19); the other two effect types are small-integer/exponential mechanics that stay at 2 tiers. Directorate's institutional-authority doctrine (§5a) expressed as a pre-cleared procedural advantage — this is the weakest tier (+5).*
+
+```python
+DIR.MOD.14 = Card(
+    id      = "DIR.MOD.14",  card_id = "DIR.MOD.14",  version = "v0.1",
+    name    = "Standing Order",
+    tagline = "A directive already on file, cleared before anyone thought to ask.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+
+    effect          = ModActionExpr.threshold_delta(n=5),  # eases the host CA/PA's own threshold; self-only — no faction param on this variant (§6.3, 04-n170)
+    value_rating    = 1,      # minor tier of 3 (04-n157: threshold_delta supports 3 magnitude tiers — +5/+10/+15)
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModActionCard column) — no trigger, no beat, no resolution, no target_* fields.
+    cost            = None,   # locked S135 (04-n157) — splay-display convention (Art 03 §9.4.0.1 Step 4) makes a distinct modifier cost illegible; folds into host packet's total drain instead.
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as ModBattleCard stubs)
+    narrative    = "A directive already cleared through channels lets a Directorate operation proceed without the friction a fresh request would meet.",
+    arbiter_note = "Attach at Dispatch assembly to any CA/PA in the same faction's own packet (Art 03 §9.1.1) — no card-level host restriction, narrative fit is advisory only. Effect applies only to the host it's packeted with; cannot reach another faction's operation.",
+)
+```
+
+---
+
+### DIR.MOD.15 — REGULATORY CLEARANCE *(stub)*
+
+*S135. Mid tier of the 3 `threshold_delta` cards (+10, matching the `ring_mod`/`doctrine_mod` baseline granularity — §6.5). Reframed from an earlier hostile-flavored seed concept ("Regulatory Inspection" — raising a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: `threshold_delta` carries no faction parameter (§6.3), so it can only ever ease the acting faction's own host action, never a rival's.*
+
+```python
+DIR.MOD.15 = Card(
+    id      = "DIR.MOD.15",  card_id = "DIR.MOD.15",  version = "v0.1",
+    name    = "Regulatory Clearance",
+    tagline = "The paperwork already says yes.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,      # mid tier of 3
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,   # see DIR.MOD.14 — splay-display convention, not a per-card exception
+
+    portrait     = None,
+    narrative    = "An inspection scheduled and passed well in advance leaves nothing for bad luck — or a rival's tip-off — to catch.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170 — self-only, same basis as all threshold_delta cards in this set.",
+)
+```
+
+---
+
+### DIR.MOD.16 — SHOW OF FORCE *(stub)*
+
+*S135, revised same session: third of **4** `threshold_delta` tiers (+15), not the capstone — Andy corrected the tier count from 3 to 4 (+5/+10/+15/+20; his original example already named 4 values, "+5, +10, +25, +20," compressed to 3 in the first pass). DIR.MOD.25 Executive Mandate (+20) is now the true capstone. Also reframed from a hostile-flavored seed concept per 04-n170, same basis as DIR.MOD.15. Magnitude exceeds the ±15 `doctrine_mod` baseline only nominally.*
+
+```python
+DIR.MOD.16 = Card(
+    id      = "DIR.MOD.16",  card_id = "DIR.MOD.16",  version = "v0.1",
+    name    = "Show of Force",
+    tagline = "The uniforms are visible before the operation even starts.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,      # third of 4 tiers (widened value_rating range to 1–4, S135/L259 — see DIR.MOD.25)
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A visible deployment backs up whatever the Directorate is about to attempt — resistance tends to evaporate before it fully forms.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as DIR.MOD.15.",
+)
+```
+
+---
+
+### DIR.MOD.17 — BY THE BOOK *(stub)*
+
+*S135. Common tier of the 2 `success_multiplier` cards (n=1) — 04-n157: this effect type supports only 2 tiers, since n=1 already doubles the host's effect and n=2 triples it.*
+
+```python
+DIR.MOD.17 = Card(
+    id      = "DIR.MOD.17",  card_id = "DIR.MOD.17",  version = "v0.1",
+    name    = "By the Book",
+    tagline = "Every form filed correctly. Every step accounted for.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),  # fires the host's success effect an additional time
+    value_rating    = 1,      # common tier of 2
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Procedural correctness compounds — an action executed exactly to protocol produces more than the protocol strictly requires.",
+    arbiter_note = "Self-only, same as all non-ps_shift ModActionExpr variants (§6.3, 04-n170) — amplifies the acting faction's own host action, never a rival's.",
+)
+```
+
+---
+
+### DIR.MOD.18 — OVERWHELMING RESPONSE *(stub)*
+
+*S135. Rare/capstone tier of the 2 `success_multiplier` cards (n=2 — triples the host's success effect). Flagged for playtest, same caveat as ModBattleCard's magnitude scale (04-n94) — reserve for high-stakes plays, not routine deployment.*
+
+```python
+DIR.MOD.18 = Card(
+    id      = "DIR.MOD.18",  card_id = "DIR.MOD.18",  version = "v0.1",
+    name    = "Overwhelming Response",
+    tagline = "What began as routine escalates into something the whole city notices.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,      # capstone tier of 2
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A measured response becomes full institutional mobilization — the outcome lands far past what was ever authorized on paper.",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+)
+```
+
+---
+
+### DIR.MOD.19 — MODEL CITIZEN *(stub)*
+
+*S135, revised same session: `ps_shift` is a full 2×2 matrix, not a 2-card direction split — 4 cards total (DIR.MOD.19/23/20/24), mirroring ModBattleCard's Boost+1/+2, Hinder−1/−2 structure exactly. Unlike the other three `ModActionExpr` variants, `ps_shift` carries a faction parameter (§6.3: `acting | target | named faction`), so both **direction** (self vs. target) and **magnitude** (±1/±2) vary independently. This card: self, minor (+1). DIR.MOD.23 Commendation: self, major (+2). DIR.MOD.20 Public Reprimand: target, major (−2). DIR.MOD.24 Internal Affairs Referral: target, minor (−1). Faction ModActionCard count revised 9 → **11 cards/faction** (3 threshold_delta + 2 success_multiplier + 4 ps_shift + 2 cost_reduction); Ring ModAction revised 18 → **22 cards/ring** (11 × 2 for Portable/Ring-Locked). See PM02 L257 (revises L256).*
+
+```python
+DIR.MOD.19 = Card(
+    id      = "DIR.MOD.19",  card_id = "DIR.MOD.19",  version = "v0.1",
+    name    = "Model Citizen",
+    tagline = "Compliance, held up publicly as the standard everyone else should meet.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost half of the direction-split pair (04-n157)
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The Directorate's conduct is cited publicly as the standard — a small, deliberate boost to standing.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half of the pair always resolves to the acting faction.",
+)
+```
+
+---
+
+### DIR.MOD.20 — PUBLIC REPRIMAND *(stub)*
+
+*S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix — see DIR.MOD.19 for the full structure. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242) rather than the ±1 baseline, since a named PS hit reads as a real consequence, not a nudge. This is one of two cards in the set that reach a faction other than the acting one — legitimately, since `ps_shift` is schema-built for it (unlike `threshold_delta`/`success_multiplier`/`cost_reduction`, flagged self-only at 04-n170).*
+
+```python
+DIR.MOD.20 = Card(
+    id      = "DIR.MOD.20",  card_id = "DIR.MOD.20",  version = "v0.1",
+    name    = "Public Reprimand",
+    tagline = "A formal rebuke, on the record, addressed to exactly the faction that earned it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),  # target-hinder half of the pair
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An official rebuke lands on whoever the action was aimed at — public, on the record, and costly.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one; unattachable to a host with target_faction=None.",
+)
+```
+
+---
+
+### DIR.MOD.21 — JURISDICTION WAIVER *(stub)*
+
+*S135. Common tier of the 2 `cost_reduction` cards (n=1). PA-only per §6.3 — CA cost is committed at dispatch before Beat 0 and cannot be reduced post-submission.*
+
+```python
+DIR.MOD.21 = Card(
+    id      = "DIR.MOD.21",  card_id = "DIR.MOD.21",  version = "v0.1",
+    name    = "Jurisdiction Waiver",
+    tagline = "A procedural waiver clears part of the overhead before the request is even filed.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,      # common tier of 2
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A jurisdictional formality is waived for this faction alone, quietly, ahead of submission.",
+    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA; reduces the resource total owed at Beat 4 by 1 unit.",
+)
+```
+
+---
+
+### DIR.MOD.22 — REQUISITIONED RESOURCES *(stub)*
+
+*S135. Capstone tier of the 2 `cost_reduction` cards (n=2). PA costs sample at 1–4 total units (04-n157) — a 2-unit reduction approaches making many PAs nearly free; flagged for playtest same as the rest of this set.*
+
+```python
+DIR.MOD.22 = Card(
+    id      = "DIR.MOD.22",  card_id = "DIR.MOD.22",  version = "v0.1",
+    name    = "Requisitioned Resources",
+    tagline = "Institutional supply lines make this considerably cheaper than it should be.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,      # capstone tier of 2
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Materiel and personnel already committed elsewhere in the institution get redirected — the public act proceeds at a fraction of its nominal cost.",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157, same playtest caveat as the rest of this set).",
+)
+```
+
+---
+
+### DIR.MOD.23 — COMMENDATION *(stub)*
+
+*S135, added same session as DIR.MOD.24 to complete the `ps_shift` 2×2 matrix (Andy: "we should make 2 more... if ps can be used this way — need +2 ps and −1 ps cards"). Self-boost, major tier (+2) — stronger counterpart to DIR.MOD.19 Model Citizen. See DIR.MOD.19 for the full matrix structure.*
+
+```python
+DIR.MOD.23 = Card(
+    id      = "DIR.MOD.23",  card_id = "DIR.MOD.23",  version = "v0.1",
+    name    = "Commendation",
+    tagline = "Official recognition, delivered with the full weight of the institution behind it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),  # self-boost, major tier of the 2×2 matrix
+    value_rating    = 2,      # mirrors magnitude, same convention as ModBattleCard
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A commendation issued through official channels carries more weight than a compliment — it's the institution putting its name behind the outcome.",
+    arbiter_note = "Self-only, resolves to the acting faction. Major tier — flagged for playtest same as the rest of this set (04-n157).",
+)
+```
+
+---
+
+### DIR.MOD.24 — INTERNAL AFFAIRS REFERRAL *(stub)*
+
+*S135, added same session as DIR.MOD.23 to complete the `ps_shift` 2×2 matrix. Target-hinder, minor tier (−1) — softer counterpart to DIR.MOD.20 Public Reprimand: a quiet referral rather than a public rebuke. Drawn from the Faction ModAction seed pool (`Whiteboard/modifier_card_ideas.md`), previously unused when only 2 ps_shift cards were planned.*
+
+```python
+DIR.MOD.24 = Card(
+    id      = "DIR.MOD.24",  card_id = "DIR.MOD.24",  version = "v0.1",
+    name    = "Internal Affairs Referral",
+    tagline = "A rival's conduct is quietly referred for review, and word gets out.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier of the 2×2 matrix
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Nothing is announced. A referral goes into a file, and somehow the file's contents find their way into conversation.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — same constraint as DIR.MOD.20, minor tier.",
+)
+```
+
+---
+
+### DIR.MOD.25 — EXECUTIVE MANDATE *(stub)*
+
+*S135, added same session Andy caught the tier count reading back the transcript: `threshold_delta` is 4 tiers, not 3 — his original example ("+5, +10, +25, +20") already named 4 values; the first pass compressed the top two into a single "+15–20 capstone" range. True capstone (+20); DIR.MOD.16 Show of Force (+15) is now the third of four, not the top. `value_rating` **widened schema-wide from 1–3 to 1–4 (§6.1/§6.2, PM02 L259)** so this tier gets its own distinct value (4) instead of sharing DIR.MOD.16's band — Andy's call after weighing it against leaving the two tiers to share `value_rating=3`. Faction ModActionCard count revised again: 11 → **12 cards/faction** (4 threshold_delta + 2 success_multiplier + 4 ps_shift + 2 cost_reduction); Ring ModAction: 22 → **24 cards/ring**. See PM02 L258/L259 (revises L257).*
+
+```python
+DIR.MOD.25 = Card(
+    id      = "DIR.MOD.25",  card_id = "DIR.MOD.25",  version = "v0.1",
+    name    = "Executive Mandate",
+    tagline = "When the order comes from the top, nothing further needs to be cleared.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),  # capstone tier of 4
+    value_rating    = 4,      # true capstone — value_rating widened to 1–4 (S135/L259) so this tier gets its own distinct value instead of sharing DIR.MOD.16's band
+    ring_constraint = None,
+    ring_origin     = None,   # Directorate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An executive mandate carries the full authority of Directorate leadership — nothing left to interpret, nothing left to contest.",
+    arbiter_note = "Capstone threshold_delta tier — log actual play outcomes before treating +20 as balanced (same playtest caveat as the rest of this set, 04-n157).",
+)
+```
+
+---
+
 ## Network
 [↑ 7. Card Specifications](#7-card-specifications)
 
@@ -11480,6 +15801,318 @@ NET.MOD.18 = Card(
     portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
     narrative    = "The clip is everywhere by morning. Nobody needed to lie about what it shows.",
     arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### NET.MOD.19 — GROUNDSWELL *(stub)*
+
+*S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Network — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Network voice: broadcast and exposure, transparency doctrine — same doctrinal lens as Network's shipped ModBattleCard set (NET.MOD.15–18). Minor threshold_delta tier (+5).*
+
+```python
+NET.MOD.19 = Card(
+    id      = "NET.MOD.19",  card_id = "NET.MOD.19",  version = "v0.1",
+    name    = "Groundswell",
+    tagline = "Organic public interest builds before the story is even filed.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
+
+    portrait     = None,
+    narrative    = "Organic public interest builds ahead of the story — by the time Network runs it, the audience is already listening.",
+    arbiter_note = "Attach at Dispatch to any CA/PA in Network's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+)
+```
+
+---
+
+### NET.MOD.20 — ADVANCE COVERAGE *(stub)*
+
+*S135. Mid threshold_delta tier (+10).*
+
+```python
+NET.MOD.20 = Card(
+    id      = "NET.MOD.20",  card_id = "NET.MOD.20",  version = "v0.1",
+    name    = "Advance Coverage",
+    tagline = "The piece is already written. It just needs an outcome to run with.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Pre-positioned attention eases a public action — the story's already primed, waiting only for the result.",
+    arbiter_note = "Self-only, same basis as NET.MOD.19.",
+)
+```
+
+---
+
+### NET.MOD.21 — CLEAR SIGNAL *(stub)*
+
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Signal Jammed" — disrupting a rival's broadcast-dependent action, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Network's own host action.*
+
+```python
+NET.MOD.21 = Card(
+    id      = "NET.MOD.21",  card_id = "NET.MOD.21",  version = "v0.1",
+    name    = "Clear Signal",
+    tagline = "No interference, no dropped frames — the broadcast goes out exactly as planned.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A scrubbed broadcast channel removes the interference that would otherwise complicate getting the message out clean.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as GHO.MOD.18/GUI.MOD.17/DIR.MOD.15/16.",
+)
+```
+
+---
+
+### NET.MOD.22 — FULL SATURATION *(stub)*
+
+*S135. Capstone threshold_delta tier (+20).*
+
+```python
+NET.MOD.22 = Card(
+    id      = "NET.MOD.22",  card_id = "NET.MOD.22",  version = "v0.1",
+    name    = "Full Saturation",
+    tagline = "Every channel, every feed, the same story at once.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Coverage reaches every channel at once — nothing about the outcome is left to chance when the whole city is already watching.",
+    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+)
+```
+
+---
+
+### NET.MOD.23 — CROSS-POSTED *(stub)*
+
+*S135. Common success_multiplier tier (n=1).*
+
+```python
+NET.MOD.23 = Card(
+    id      = "NET.MOD.23",  card_id = "NET.MOD.23",  version = "v0.1",
+    name    = "Cross-Posted",
+    tagline = "The same story, running on every channel that'll take it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Coverage across multiple channels amplifies an outcome further than any single placement would.",
+    arbiter_note = "Self-only, amplifies Network's own host action.",
+)
+```
+
+---
+
+### NET.MOD.24 — VIRAL MOMENT *(stub)*
+
+*S135. Rare/capstone success_multiplier tier (n=2).*
+
+```python
+NET.MOD.24 = Card(
+    id      = "NET.MOD.24",  card_id = "NET.MOD.24",  version = "v0.1",
+    name    = "Viral Moment",
+    tagline = "Nobody planned for it to travel this far. It travels this far anyway.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "An action catches unexpected attention and lands far harder than the plan ever accounted for.",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+)
+```
+
+---
+
+### NET.MOD.25 — OFF-AIR *(stub)*
+
+*S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+NET.MOD.25 = Card(
+    id      = "NET.MOD.25",  card_id = "NET.MOD.25",  version = "v0.1",
+    name    = "Off-Air",
+    tagline = "A story, deliberately not run.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A story that could have run doesn't — quietly protecting standing that a different editorial call would have cost.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+)
+```
+
+---
+
+### NET.MOD.26 — EXCLUSIVE ACCESS *(stub)*
+
+*S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+NET.MOD.26 = Card(
+    id      = "NET.MOD.26",  card_id = "NET.MOD.26",  version = "v0.1",
+    name    = "Exclusive Access",
+    tagline = "First to the story, and everyone knows it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Being first to a story earns standing no follow-up coverage ever quite matches.",
+    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+)
+```
+
+---
+
+### NET.MOD.27 — FOLLOW-UP QUESTION *(stub)*
+
+*S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+NET.MOD.27 = Card(
+    id      = "NET.MOD.27",  card_id = "NET.MOD.27",  version = "v0.1",
+    name    = "Follow-Up Question",
+    tagline = "One pointed question, asked in front of everyone.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A pointed follow-up question at a public event costs a named faction some standing — small, but on the record.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+)
+```
+
+---
+
+### NET.MOD.28 — RETRACTION DEMANDED *(stub)*
+
+*S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+NET.MOD.28 = Card(
+    id      = "NET.MOD.28",  card_id = "NET.MOD.28",  version = "v0.1",
+    name    = "Retraction Demanded",
+    tagline = "A public claim, publicly discredited.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A rival's claim gets publicly discredited — Network doesn't have to lie, just cover the correction as prominently as the original story.",
+    arbiter_note = "Same target-resolution constraint as NET.MOD.27, major tier.",
+)
+```
+
+---
+
+### NET.MOD.29 — VOLUNTEER STRINGERS *(stub)*
+
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+NET.MOD.29 = Card(
+    id      = "NET.MOD.29",  card_id = "NET.MOD.29",  version = "v0.1",
+    name    = "Volunteer Stringers",
+    tagline = "Community contributors cover the ground a paid crew would have charged for.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Volunteer contributors cut the cost of coverage that a professional crew would otherwise charge for.",
+    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### NET.MOD.30 — EXISTING AIRTIME *(stub)*
+
+*S135. Capstone cost_reduction tier (n=2).*
+
+```python
+NET.MOD.30 = Card(
+    id      = "NET.MOD.30",  card_id = "NET.MOD.30",  version = "v0.1",
+    name    = "Existing Airtime",
+    tagline = "The slot was already booked. Using it costs almost nothing extra.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Network faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A standing broadcast slot lowers the cost of getting a message out — the infrastructure's already paid for.",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157).",
 )
 ```
 
@@ -13522,6 +18155,318 @@ SYN.MOD.15 = Card(
 
 ---
 
+### SYN.MOD.16 — GOLDEN HANDSHAKE *(stub)*
+
+*S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Syndicate — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Syndicate voice: capital and leverage, patient accumulation, deterrent-first doctrine — same doctrinal lens as Syndicate's shipped ModBattleCard set (SYN.MOD.12–15). Completes the faction-set pattern-set for all 5 factions (last of five). Minor threshold_delta tier (+5).*
+
+```python
+SYN.MOD.16 = Card(
+    id      = "SYN.MOD.16",  card_id = "SYN.MOD.16",  version = "v0.1",
+    name    = "Golden Handshake",
+    tagline = "A well-placed incentive, offered before anyone had to ask twice.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
+
+    portrait     = None,
+    narrative    = "A well-placed incentive smooths the acting faction's own play — everyone involved walks away satisfied, which is the point.",
+    arbiter_note = "Attach at Dispatch to any CA/PA in Syndicate's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+)
+```
+
+---
+
+### SYN.MOD.17 — INSIDER TERMS *(stub)*
+
+*S135. Mid threshold_delta tier (+10).*
+
+```python
+SYN.MOD.17 = Card(
+    id      = "SYN.MOD.17",  card_id = "SYN.MOD.17",  version = "v0.1",
+    name    = "Insider Terms",
+    tagline = "The terms were negotiated well before the deal ever went public.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=10),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Favorable terms negotiated in advance ease a financial move well before anyone else at the table sees the numbers.",
+    arbiter_note = "Self-only, same basis as SYN.MOD.16.",
+)
+```
+
+---
+
+### SYN.MOD.18 — CLEARED POSITION *(stub)*
+
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Market Pressure" — applying leverage to make a rival's economic action harder, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Syndicate's own host action.*
+
+```python
+SYN.MOD.18 = Card(
+    id      = "SYN.MOD.18",  card_id = "SYN.MOD.18",  version = "v0.1",
+    name    = "Cleared Position",
+    tagline = "Every lever already pulled before the move is made.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=15),
+    value_rating    = 3,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Pre-arranged leverage removes the friction that would otherwise complicate the acting faction's own financial move.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as NET.MOD.21/GHO.MOD.18/GUI.MOD.17/DIR.MOD.15/16.",
+)
+```
+
+---
+
+### SYN.MOD.19 — TOTAL LEVERAGE *(stub)*
+
+*S135. Capstone threshold_delta tier (+20).*
+
+```python
+SYN.MOD.19 = Card(
+    id      = "SYN.MOD.19",  card_id = "SYN.MOD.19",  version = "v0.1",
+    name    = "Total Leverage",
+    tagline = "Nothing left standing in the way of the move.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=20),
+    value_rating    = 4,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Every lever available has already been pulled before the move is even made — nothing left in the way.",
+    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+)
+```
+
+---
+
+### SYN.MOD.20 — COMPOUND INTEREST *(stub)*
+
+*S135. Common success_multiplier tier (n=1).*
+
+```python
+SYN.MOD.20 = Card(
+    id      = "SYN.MOD.20",  card_id = "SYN.MOD.20",  version = "v0.1",
+    name    = "Compound Interest",
+    tagline = "The longer it's been set up, the bigger it pays out.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=1),
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A resource action's outcome grows the longer it's been quietly set up — patience is the whole strategy.",
+    arbiter_note = "Self-only, amplifies Syndicate's own host action.",
+)
+```
+
+---
+
+### SYN.MOD.21 — CONTROLLING STAKE *(stub)*
+
+*S135. Rare/capstone success_multiplier tier (n=2).*
+
+```python
+SYN.MOD.21 = Card(
+    id      = "SYN.MOD.21",  card_id = "SYN.MOD.21",  version = "v0.1",
+    name    = "Controlling Stake",
+    tagline = "Enough capital already committed to turn a modest win into a decisive one.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.success_multiplier(n=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Enough capital already committed turns a modest success into a decisive one — the position was built long before this moment.",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+)
+```
+
+---
+
+### SYN.MOD.22 — QUIET SETTLEMENT *(stub)*
+
+*S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
+
+```python
+SYN.MOD.22 = Card(
+    id      = "SYN.MOD.22",  card_id = "SYN.MOD.22",  version = "v0.1",
+    name    = "Quiet Settlement",
+    tagline = "A dispute resolved where no one outside the room ever hears about it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A dispute resolved out of public view protects standing that a drawn-out fight would have cost.",
+    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+)
+```
+
+---
+
+### SYN.MOD.23 — PHILANTHROPIC GESTURE *(stub)*
+
+*S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
+
+```python
+SYN.MOD.23 = Card(
+    id      = "SYN.MOD.23",  card_id = "SYN.MOD.23",  version = "v0.1",
+    name    = "Philanthropic Gesture",
+    tagline = "A visible donation, timed for maximum goodwill.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A visible donation buys Syndicate a standing boost that costs far less than what it appears to.",
+    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+)
+```
+
+---
+
+### SYN.MOD.24 — WORD GETS AROUND *(stub)*
+
+*S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix.*
+
+```python
+SYN.MOD.24 = Card(
+    id      = "SYN.MOD.24",  card_id = "SYN.MOD.24",  version = "v0.1",
+    name    = "Word Gets Around",
+    tagline = "A quiet mention, in exactly the right circles.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A quiet mention in the right circles costs a named rival a little standing — nothing traceable, nothing deniable enough to fight.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+)
+```
+
+---
+
+### SYN.MOD.25 — PREDATORY TERMS EXPOSED *(stub)*
+
+*S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+
+```python
+SYN.MOD.25 = Card(
+    id      = "SYN.MOD.25",  card_id = "SYN.MOD.25",  version = "v0.1",
+    name    = "Predatory Terms Exposed",
+    tagline = "The fine print, read aloud, in public.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A rival's finance practices become public knowledge — Syndicate knows exactly how bad the terms look read aloud.",
+    arbiter_note = "Same target-resolution constraint as SYN.MOD.24, major tier.",
+)
+```
+
+---
+
+### SYN.MOD.26 — BULK CONTRACT *(stub)*
+
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+
+```python
+SYN.MOD.26 = Card(
+    id      = "SYN.MOD.26",  card_id = "SYN.MOD.26",  version = "v0.1",
+    name    = "Bulk Contract",
+    tagline = "A standing agreement makes doing this again considerably cheaper.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    value_rating    = 1,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A standing agreement lowers the price of doing this again — the relationship was worth the investment.",
+    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+)
+```
+
+---
+
+### SYN.MOD.27 — LINE OF CREDIT *(stub)*
+
+*S135. Capstone cost_reduction tier (n=2). Completes the faction-set ModActionCard pattern-set for all 5 factions.*
+
+```python
+SYN.MOD.27 = Card(
+    id      = "SYN.MOD.27",  card_id = "SYN.MOD.27",  version = "v0.1",
+    name    = "Line of Credit",
+    tagline = "The financing was already arranged. This just draws on it.",
+    type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.cost_reduction(n=2),
+    value_rating    = 2,
+    ring_constraint = None,
+    ring_origin     = None,   # Syndicate faction modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Pre-arranged financing discounts what an action costs to mount — the capital was already standing by.",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Completes all 5 factions' ModActionCard pattern-set (09-06/04-n157).",
+)
+```
+
+---
+
 ## 8. Card Taxonomy Index
 
 *Column definitions and Layer × Function validity matrix in Art 04b §5.1. Status key: ✅ Signed off — canonical, use for gap analysis. 📝 Draft — designed but not signed off. ⬜ Not yet designed. 🚫 Retired.*
@@ -13552,6 +18497,18 @@ SYN.MOD.15 = Card(
 | DIR.MOD.11 | Emergency Curfew | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | DIR.MOD.12 | Requisitioned Equipment | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | DIR.MOD.13 | Martial Lockdown | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.14 | Standing Order | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.15 | Regulatory Clearance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.16 | Show of Force | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.17 | By the Book | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.18 | Overwhelming Response | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.19 | Model Citizen | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.20 | Public Reprimand | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.21 | Jurisdiction Waiver | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.22 | Requisitioned Resources | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.23 | Commendation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.24 | Internal Affairs Referral | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.25 | Executive Mandate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | GHO.CA.1 | Pattern Match | 📝 | Submission | Private | Redirect | Covert Operation (lane steal — Beat 2 intercept) | Redirect |
 | GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
 | GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | Intel Delivery Slip | Reveal |
@@ -13583,6 +18540,18 @@ SYN.MOD.15 = Card(
 | GHO.MOD.13 | Signals Package | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | GHO.MOD.14 | Planted Doubt | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | GHO.MOD.15 | Blown Cover | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.16 | Pre-Analysis | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.17 | Known Variable | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.18 | Clean Channel | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.19 | Total Picture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.20 | Clean Data | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.21 | Layered Analysis | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.22 | Quiet Correction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.23 | Findings Published | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.24 | Discreet Leak | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.25 | Model Failure Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.26 | Existing Dataset | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.27 | Shared Infrastructure | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure Block | — |
 | GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
 | GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence Token | Add |
@@ -13605,6 +18574,18 @@ SYN.MOD.15 = Card(
 | GUI.MOD.12 | Material Stockpile | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.MOD.13 | Permit Delay | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.MOD.14 | Structural Condemnation | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.15 | Structural Survey | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.16 | Load-Bearing Confidence | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.17 | Permit Fast-Track | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.18 | Certified to Code | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.19 | Union Crew | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.20 | Overbuilt | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.21 | Community Groundbreaking | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.22 | Ribbon Cutting | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.23 | Inspection Noted | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.24 | Code Violation Cited | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.25 | Material Surplus | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.26 | In-House Fabrication | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
 | NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
 | NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
@@ -13625,6 +18606,18 @@ SYN.MOD.15 = Card(
 | NET.MOD.16 | Live Broadcast | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.MOD.17 | Street Pressure | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.MOD.18 | Public Outcry | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.19 | Groundswell | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.20 | Advance Coverage | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.21 | Clear Signal | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.22 | Full Saturation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.23 | Cross-Posted | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.24 | Viral Moment | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.25 | Off-Air | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.26 | Exclusive Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.27 | Follow-Up Question | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.28 | Retraction Demanded | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.29 | Volunteer Stringers | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.30 | Existing Airtime | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
 | NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence Token | Add |
 | NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | Faction Hand | Reveal |
@@ -13669,6 +18662,114 @@ SYN.MOD.15 = Card(
 | STD.MOD.23 | Market Stall Cache | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | STD.MOD.24 | Housing Arrangement Called In | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | STD.MOD.25 | Transit Hub Shutout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.26 | Zoning Variance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.27 | Redacted File | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.28 | Maintenance Window | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.29 | Classified Briefing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.30 | Institutional Backing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.31 | Ceremonial Groundbreaking | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.32 | Off the Record | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.33 | Public Citation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.34 | Word to the Wise | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.35 | Named in the Review | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.36 | Fee Waived | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.37 | Emergency Allocation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.38 | Recognized on Sight | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.39 | Standing Request | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.40 | Back-Channel Word | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.41 | Full Clearance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.42 | Shift Change Timing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.43 | Full Institutional Weight | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.44 | Noted Favorably | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.45 | Formal Recognition | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.46 | Quietly Flagged | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.47 | Denied Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.48 | Reassigned on Paper | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.49 | Jumped the Queue | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.50 | Rezoned Corridor | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.51 | Relay Intercept | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.52 | Manifest Correction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.53 | Grievance Withdrawn | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.54 | Cross-Docked Efficiently | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.55 | Chain Reaction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.56 | Compliance Certificate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.57 | Model Facility | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.58 | Delay Logged | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.59 | Safety Citation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.60 | Priority Routing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.61 | Bulk Rate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.62 | Dock Familiarity | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.63 | Grid Rapport | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.64 | Line Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.65 | Full Processing Rights | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.66 | Overtime Crew | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.67 | Full Utilization | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.68 | Filed Under Routine | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.69 | Reliability Commendation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.70 | Overdrawn Account Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.71 | Public Sanction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.72 | Consignment Hold Released | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.73 | Standing Utility Contract | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.74 | Squatter's Claim | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.75 | Landlord's Blessing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.76 | Dock Contacts | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.77 | Neighborhood Backing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.78 | Community Pool | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.79 | Packed House | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.80 | Street Reputation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.81 | Neighborhood Vouching | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.82 | Busker's Tip | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.83 | Overheard at the Strip | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.84 | Credit with the Vendor | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.85 | Barter Chain | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.86 | Regular Customer | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.87 | Route Knowledge | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.88 | Neighborhood Standing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.89 | Local Fixture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.90 | Festival Grounds | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.91 | Word Spreads Fast | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.92 | Quiet Word to the Crowd | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.93 | Block Party | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.94 | Quiet Word Against Them | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.95 | Turned Away | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.96 | Scrap Value | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.97 | Favor Owed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.98 | Notified of Encroachment | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.99 | Structural Objection | 📝 | Territory | Public | Remove | Presence Token | — |
+| STD.MOD.100 | Escort Withdrawn | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.101 | Overheard in the Commissary | 📝 | Information | Public | Add | Intel Token | — |
+| STD.MOD.102 | Access Log Pulled | 📝 | Information | Public | Add | Public Standing | — |
+| STD.MOD.103 | Flagged for Review | 📝 | Submission | Public | Modify | Public Act | — |
+| STD.MOD.104 | Budget Reallocated | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.105 | Audit Trail | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.106 | Emergency Reserve | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.107 | On the Docket | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.108 | Precedent Cited | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.109 | Quiet Reprimand | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.110 | Line Rerouted | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.111 | Capacity Exceeded | 📝 | Territory | Public | Remove | Presence Token | — |
+| STD.MOD.112 | Salvage Rights | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.113 | Grid Anomaly Logged | 📝 | Information | Public | Add | Intel Token | — |
+| STD.MOD.114 | Service Level Breach | 📝 | Information | Public | Add | Public Standing | — |
+| STD.MOD.115 | Routine Inspection | 📝 | Submission | Public | Modify | Public Act | — |
+| STD.MOD.116 | Toll Collected | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.117 | Overtime Billed | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.118 | Backup Generator | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.119 | Union Statement | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.120 | On Record | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.121 | Formal Notice | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.122 | Crowd Gathers | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.123 | Priced Out | 📝 | Territory | Public | Remove | Presence Token | — |
+| STD.MOD.124 | Eviction Notice | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.125 | Word Travels | 📝 | Information | Public | Add | Intel Token | — |
+| STD.MOD.126 | Quietly Rewritten | 📝 | Information | Public | Add | Public Standing | — |
+| STD.MOD.127 | Someone's Watching | 📝 | Submission | Public | Modify | Public Act | — |
+| STD.MOD.128 | Informal Toll | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.129 | Cut of the Action | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.130 | Vendor Credit Called | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.131 | Neighborhood Notices | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.132 | Sides Are Taken | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.133 | The Crowd Remembers | 📝 | Standing | Public | Add | Public Standing | — |
 | STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence Token | Add |
 | STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence Token | Remove |
 | STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure Block | Add |
@@ -13704,6 +18805,18 @@ SYN.MOD.15 = Card(
 | SYN.MOD.13 | Armored Transport | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.14 | Called-In Debt | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.15 | Bought Off | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.16 | Golden Handshake | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.17 | Insider Terms | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.18 | Cleared Position | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.19 | Total Leverage | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.20 | Compound Interest | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.21 | Controlling Stake | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.22 | Quiet Settlement | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.23 | Philanthropic Gesture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.24 | Word Gets Around | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.25 | Predatory Terms Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.26 | Bulk Contract | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.27 | Line of Credit | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
 | SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
 | SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
@@ -13816,8 +18929,8 @@ Modifier cards are the game's secondary layer of play — cards that don't act a
 
 Faction and Ring modifier cards are drawn from a shuffled deck; ARBITER-issued cards are not.
 
-- **Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. Represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–3).*
-- **Ring modifier cards** — drawn from shared ring decks on game board (Baryo, The Mid, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only") when set, effect, Portrait alignment (if applicable), value rating (1–3).* **04-n161 ✅ closed S134:** rather than a single blanket default, the shipped Ring Modifier content (STD.MOD.2–25, §7) fields two complete 4-card sets per ring — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — so both models exist in play simultaneously; per-card narrative judgment (location-anchored vs. portable) determines which set a given concept belongs to, not a schema-wide rule.
+- **Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. Represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–4).*
+- **Ring modifier cards** — drawn from shared ring decks on game board (Baryo, The Mid, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only") when set, effect, Portrait alignment (if applicable), value rating (1–4).* **04-n161 ✅ closed S134:** rather than a single blanket default, the shipped Ring Modifier content (STD.MOD.2–25, §7) fields two complete 4-card sets per ring — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — so both models exist in play simultaneously; per-card narrative judgment (location-anchored vs. portable) determines which set a given concept belongs to, not a schema-wide rule.
 - **ARBITER-issued cards** — not drawn from any deck. ARBITER hands the card directly to a faction as a specific, named consequence of another card's resolution (`generating_card`, §6.2) — no shuffle, no card back convention, no Upkeep draw eligibility. Current examples: GD-01 Grant Deed (§12b.2), STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three happen to be ModReactCard underneath (fire on a trigger, once delivered), but acquisition source doesn't constrain which of the three subclasses a card is; an Issued ModActionCard or ModBattleCard is schema-valid, just unbuilt so far.
 
 Ring constraint, when set, applies to all users regardless of holder.
@@ -14074,11 +19187,11 @@ Faction perspectives are in the card data structure. Visual design (Artifact 11)
 
 ### 13.2 Modifier Cards — Faction
 
-Face: name, type indicator, effect, attachment rule (if restricted), Portrait (if applicable), value rating (1–3). Back: faction color, faction symbol.
+Face: name, type indicator, effect, attachment rule (if restricted), Portrait (if applicable), value rating (1–4). Back: faction color, faction symbol.
 
 ### 13.3 Modifier Cards — Ring
 
-Face: ring constraint statement as visually distinct element, name, type indicator, effect, Portrait (if applicable), value rating (1–3). Back: ring color, ring name.
+Face: ring constraint statement as visually distinct element, name, type indicator, effect, Portrait (if applicable), value rating (1–4). Back: ring color, ring name.
 
 ### 13.5 Emergency Response Cards
 

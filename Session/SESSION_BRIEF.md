@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 134 complete | Updated: 2026-07-03**
+**Session 135 complete | Updated: 2026-07-04**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -29,30 +29,33 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S134 Accomplishments
+## S135 Accomplishments
 
-**Ring-voice gap closed end-to-end: Art 00 §6.7 narrative anchor → 24-card Ring Modifier ModBattleCard set → Art 00 v1.9 sign-off → 144-concept ModAction/ModReact seed pool for next**
+**MILESTONE: full action-space drafted.** Every faction and Ring Modifier card subclass (ModAction, ModBattle, ModReact) is now stubbed — 232 modifier cards total, alongside the existing CA/PA set. First point where the complete card system's shape is visible end to end.
 
-- **Art 00 §6.7 "Ring Character" written (PM02 L253/L254).** Per-ring build history, lived culture, defining anxiety (Core: proximity; Mid: throughput; Baryo: exposure), and 6 citizen sample statements — all in narrative terms only, no game-mechanic vocabulary. Closes **04-29** (ring-voice narrative gap). Registered on **00-15** as the model section for the artifact's eventual full narrative-register refactor.
-- **Ring Modifier ModBattleCard stub pass complete — STD.MOD.2–25, 24 cards (Art 04 §7).** Andy expanded scope beyond the original 4/ring ask: each ring ships both a Portable set (`ring_constraint=None`) and a Ring-Locked set (`ring_constraint=`ring), 8/ring, so both resolutions of **04-n161** exist as real content instead of one being chosen on paper — closes 04-n161. Voice sourced directly from §6.7, kept distinct from all 5 already-shipped faction doctrines. `subtype=Standard, faction=All`; card_status DB synced (`is_ring_modifier=1`, 24 rows). Art 04 §11.1 stale ring names ("Sprawl, Infrastructure, Core") corrected to Baryo/Mid/Core. Art 04: v0.9.75 → **v0.9.76**.
-- **Art 00 v1.8 → v1.9 signed off (PM02 L255).** Bundled 3 pending material additions (S99 §14.10 Integration, S131 §15 Curriculum, S134 §6.7) plus a same-session 4th: **Pine Gap** (2018 miniseries) added to §15 under a new "Institutional Insularity & Compartmentalization" anchor area — scoped to the Core's workplace texture, not general city-development. PM03's Art 00 row corrected (had drifted, still showing only the S99 addition).
-- **144-concept ModAction/ModReact seed pool captured in `Whiteboard/modifier_card_ideas.md`, gated on 04-n157/04-53 (not locked design):** Ring ModAction (48, 16/ring) and Faction ModAction (60, 12/faction) — both bucketed by the real `ModActionExpr` schema categories (`threshold_delta`/`success_multiplier`/`ps_shift`/`cost_reduction`, §6.3) after an initial ring-only draft used a looser scheme and got reshaped for parity. Ring ModReact (36, 12/ring) — bucketed by actual taxonomy Layer values (Territory/Information/Economy/Standing), since ModReactCard is the one subclass that genuinely carries that taxonomy; gated on 04-53/04b-03, not 04-n157. All three pools pointer-logged on their respective PM05 items.
+- **ModActionCard action-space analysis closed (04-n157) and fully stubbed — 132 cards.** Host-binding and cost resolved via existing Art 03 procedure (no schema change). Locked format, corrected twice mid-session after Andy caught compression errors: 4 threshold_delta (+5/+10/+15/+20, not 3) + 2 success_multiplier + 4 ps_shift (full 2×2 matrix, not 2 same-direction tiers) + 2 cost_reduction = **12 cards/faction**. `value_rating` widened schema-wide 1–3→1–4 (PM02 L259) so threshold_delta's 4 tiers each get a distinct value. Shipped: 60 faction cards (all 5) + 72 Ring cards (24/ring, Portable+Ring-Locked ×3 rings). Art 04 v0.9.76→v0.9.81.
+- **Ring ModReactCard direction resolved (04-53 ✅) and fully stubbed — 36 cards, all 3 rings.** The "gate" on 04b-03 was stale (that audit closed S46, Art 04b signed off since S108) — closed as direct design-direction work. Locked: Ring-sourced ModReactCard follows the same six-layer taxonomy as faction ModReactCard; single-set format (12/ring, no Portable/Ring-Locked doubling — its triggers are inherently ring-scoped). Ring 1 (Core) took real exploratory work — 6 of 12 concepts needed genuine redesign, including 3 rejected trigger candidates for one card before landing on a confirmed, non-Upkeep-gated public trigger. Rings 2–3 moved fast once the pattern was set: 11/12 cards duplicate directly by ring number, only the one unscoped card (Accord-reactive) needs a fresh per-ring mechanic (Core: `accord.placed`, Mid: `accord.removed`, Baryo: `accord.corrupted`). New syntax (`holder`, `NativeResource(faction)`, `arbiter.modify`) flagged pending reconciliation (04-n171). Art 04 v0.9.81→v0.9.84.
+- **Session-close housekeeping:** `ref_card_types.md` and `design_reference_card_system.md` updated to match (Overture's stale ModActionCard example fixed — it's an Issued ModReactCard since S133; Ring ModBattleCard's "still pending" note corrected). `Whiteboard/modifier_card_ideas.md` trimmed from ~356 to 152 lines — all fully-consumed seed pools and design-principle write-ups archived to `Retired/Whiteboard_Archive/modifier_card_seeds_and_principles_S132-S135.md`, live file keeps only Open Design Questions and pre-schema conceptual notes.
+- Full decision trail: PM02 L256–L265 (10 entries). PM05 09-06 (now closed for all Ring content), 04-n157, 04-n170, 04-n171, 04-53, and new roadmap item **09-16**.
 
 ---
 
-## Current Focus (S135)
+## Current Focus (S136)
 
-**Locked (Andy, S134 close): ModAction space is next.** Start with **04-n157** (ModActionCard action-space analysis — still genuinely undone, same kind of pre-work 04-n152 did before ModBattleCard content began) rather than jumping straight to card content. The Whiteboard seed pool (108 ModAction concepts, ring + faction) is ready to draw from once the action-space itself is scoped — don't treat the pool as the scoping.
+**Andy's 5-step plan for the next phase (PM05 09-16) — build out all stubs, answering design questions along the way, before moving to review:**
+1. Build out all stubs (CA/PA + all modifier content) — full spec, `design_pass=1`
+2. Design review pass for all (Art 04 §5 checklist + ModReactCard-specific checklist)
+3. Identify issues from that review — log as new PM05 items
+4. Faction-level set analysis (STD+faction), refreshing `Whiteboard/card_analysis_STD_*.md` with the full set (these currently only reflect CA/PA)
+5. Cross-faction analysis — re-run 04-n110 (`card_analysis_cross_faction_n110.md`, last run S128, predates all modifier content)
 
-**Art 04 sign-off gates (do whenever there's room):** 04-n165 (copy-provenance sweep) and 04-n169 (§14/§15 disposition sweep, recommendations already logged).
-
-**Also open:** 04-53/04b-03 (Ring Modifier taxonomy — now also gates the 36-concept Ring ModReact seed pool), 09-06 tail (ModReactCard design-checklist review still open for Ghost/Network/Syndicate), `ref_board_narrative.md` sync pass against §6.7 (pending two sessions now), 04-n163 (deck-floor count question, needs Andy's call), 04-n164, 04-n166/04-n159 (parked design seeds), 04-n167/04-n168 (Art 07/09 cross-artifact gaps), 04-n148, 04-n150, XA-54, 06-n01, 04-n26/27, 04-n126, 04-n123, agy DB task (card_status sync for NET/SYN MOD cards).
+**Also open:** Art 04 sign-off gates 04-n165 (copy-provenance sweep) + 04-n169 (§14/§15 disposition sweep). 04-n171 (new ModReactCard syntax — `holder`/`NativeResource(faction)`/`arbiter.modify` — needs reconciliation into §6.3, likely folds into step 2 above). `ref_board_narrative.md` sync pass against Art 00 §6.7 (pending three sessions now). 04-n163, 04-n164, 04-n166/04-n159, 04-n167/04-n168, 04-n148, 04-n150, XA-54, 06-n01, 04-n26/27, 04-n126, 04-n123, agy DB task (card_status sync for NET/SYN MOD cards).
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 04** — Draft, gated on 04-n165 + 04-n169 (both copy/content sweeps, see Current Focus).
+- **Art 04** — Draft, gated on 04-n165 + 04-n169 (both copy/content sweeps, see Current Focus). Now also has the full modifier-card set behind it (232 cards) — worth a scope check on whether sign-off should wait for 09-16 step 1–2, or proceed on schema/procedure grounds independent of per-card completeness.
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
 
 *Card-level sign-offs gated behind set-level audits — not actionable until those gates clear.*

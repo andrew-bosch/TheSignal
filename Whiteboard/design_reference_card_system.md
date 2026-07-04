@@ -355,10 +355,16 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 CardType:    CovertOperation | PublicAct | Pass | Countermeasure | Modifier | EmergencyResponse
   Modifier subclasses (Art 04 §6.1, 04-n102 ✅ S127) — three, govern HOW a card fires:
     ModReactCard    beat=None always · trigger Required · ring_constraint/ring_origin apply · only subclass that routinely carries real Layer/Function/Subject (it's action-like)
-    ModActionCard   bundled with host Covert Op at Dispatch · fires with host · no independent taxonomy (effect is parasitic on host)
+                    · Ring-sourced ModReactCard follows the identical rule (04-53 ✅ S135, PM02 L262) — not a separate taxonomy track for Ring content
+    ModActionCard   bundled with host Covert Op/PA at Dispatch (packet-pairing, Art 03 §9.1.1/§9.4.0.1) · fires with host · no independent taxonomy (effect is parasitic on host)
+                    · effect: ModActionExpr — threshold_delta(n) | success_multiplier(n) | ps_shift(faction, delta) | cost_reduction(n, PA-only) — tagged union, exactly one per card (S135 04-n157)
+                    · only ps_shift carries a faction param (acting|target|named) — the other three apply only to the card's own host action, schema-locked (04-n170)
+                    · locked faction-set format: 12 cards/faction — 4 threshold_delta (+5/+10/+15/+20) + 2 success_multiplier (n=1/2) + 4 ps_shift (2×2 self/target × minor/major) + 2 cost_reduction (n=1/2) · cost=None uniformly
+                    · Ring set: same 12-card structure ×2 (Portable ring_constraint=None + Ring-Locked ring_constraint=ring) = 24/ring, 72 total, all 3 rings shipped S135
     ModBattleCard   Art 03 §10.1.2 commit window only (S132 redesign, PM02 L242) · effect = ModBattleExpr(direction: Boost|Hinder, target: Faction, magnitude: int)
                     · target = any contesting faction (§10.1.1), chosen by playing faction — need not be themselves, need not be a contestant
                     · face-down commit in front of target, simultaneous reveal before d10 roll · no per-card quantity cap · no independent taxonomy
+                    · Ring set: 8 cards/ring (4 Portable + 4 Ring-Locked), 24 total, all 3 rings shipped S134
 
   Acquisition axis (Art 04 §6.2, S133 — PM02 L245 revises L241) — orthogonal to the 3 subclasses above, governs WHERE a card comes from:
     acquisition: Deck (default, drawn at Upkeep, gated by ring_origin) | Issued (ARBITER delivers directly as a named consequence of `generating_card`)
@@ -369,6 +375,7 @@ Faction:     All | Ghost | Network | Syndicate | Guild | Directorate
 Resolution:  d100 | Automatic   ← NOT "Dice" — d100 is the exact enum value
 Persistence: Immediate | Transient | Seasonal | Permanent
 Layer:       Territory | Economy | Information | Submission | Resolution | Standing
+value_rating: int | None   — 1–4 (widened from 1–3, S135/PM02 L259 — gives ModActionCard's 4-tier threshold_delta a distinct value per tier). Applies to all 3 modifier subclasses. None = TBD/stub.
 Function:    → Art 04b §4 / ref_taxonomy.md
 Subject:     → Art 04b §4 / ref_taxonomy.md
 ```
@@ -405,7 +412,9 @@ public_act.placed_on_frg(faction=X, ...)  ← any faction places PA face-up on F
 
 **Resolved vocab decisions (04-n144 ✅ S130):** `public_act.placed_on_frg` confirmed as new general trigger term. `world_event.revealed` → `world_event.played`. `covert_operation.resolved(...)` → `accord.corrupted`. `public_standing.shifted(direction=positive/negative)` → `standing_marker.increased/decreased`.
 
-**Still pending:** `resource.drawn_from_reservoir(faction=X)` (used GHO.MOD.6; not in TriggerExpr schema — needs component classification). `structure_block.placed(district=X)` — district-scoped form (used GD-01 Grant Deed; current vocab is ring-scoped only); extension needed in Art 04 §6.3 (04-n27). `public_act.resolved(pa=X)` — new form needed for Overture (fires when its specific assigned host PA resolves); same category of gap as GD-01's.
+**Still pending:** `resource.drawn_from_reservoir(faction=X)` (used GHO.MOD.6; not in TriggerExpr schema — needs component classification). `structure_block.placed(district=X)` — district-scoped form (used GD-01 Grant Deed; current vocab is ring-scoped only); extension needed in Art 04 §6.3 (04-n27). `public_act.resolved(pa=X)` — new form needed for Overture (fires when its specific assigned host PA resolves); same category of gap as GD-01's. **New from the Ring ModReactCard pass (S135, PM05 04-n171 — NOT confirmed, do not treat as locked vocabulary):** `holder`/`faction(holder)` — generic acting-faction reference for Deck-acquired `faction=All` ModReactCard content (distinct from GD-01's `faction(holding)`, a field written in at generation for an Issued card); `NativeResource(faction)` — parameterized form of the existing bare `NativeResource` subject symbol; `arbiter.modify(target, field, delta)` — new mutation form for Submission-layer interference on an already-submitted PA. All three used in STD.MOD.98–133; gate for signing off that content.
+
+**Ring Modifier content — full set shipped S134–S135 (09-06):** All 3 Ring Modifier subclasses complete — 72 ModActionCard (STD.MOD.26–97) + 24 ModBattleCard (STD.MOD.2–25) + 36 ModReactCard (STD.MOD.98–133) = **132 total Ring Modifier cards**, all `subtype=Standard, faction=All`. Faction-set ModActionCard also complete (60 cards, all 5 factions, PM02 L256–L260). Full history: PM05 09-06, PM02 L256–L265.
 
 **Modifier card naming convention (locked S130):**
 All faction and ring modifier card names must be one of three categories:

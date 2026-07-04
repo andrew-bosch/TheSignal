@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** L255 — Art 00 v1.9 signed off (S134: §6.7 Ring Character narrative anchor + Pine Gap curriculum entry). Ring Modifier ModBattleCard stub pass complete (STD.MOD.2–25, 24 cards). Art 04 v0.9.76 (S134). Art 04b v2.6 (S123).
+**Design milestone:** S135 — Full action-space milestone: ModActionCard (132 cards: 60 faction + 72 ring) + Ring ModReactCard (36 cards) fully stubbed, 232 total modifier cards alongside existing CA/PA set. Decisions PM02 L256–L265. Art 04 v0.9.84 (S135). Art 04b v2.6 (S123).
 
 ---
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.76 | 🔄 In progress — S134: Ring Modifier ModBattleCard stub pass complete (STD.MOD.2–25, 24 cards: Portable + Ring-Locked sets/ring). Voice sourced from Art 00 §6.7; §11.1 ring names corrected (Baryo/Mid/Core). Prior — S133: Modifier card acquisition-source axis adopted; Art 04 §11 full revisit closed; §16 Appendix + §14.2 retired. |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.84 | 🔄 In progress — S135: Full action-space milestone — ModActionCard (132: 60 faction + 72 ring) and Ring ModReactCard (36) fully stubbed. New syntax (`holder`, `NativeResource(faction)`, `arbiter.modify`) pending §6.3 reconciliation (04-n171). Prior — S134: Ring Modifier ModBattleCard stub pass (STD.MOD.2–25, 24 cards); S133: Modifier card acquisition-source axis; Art 04 §11 revisited; §16 Appendix + §14.2 retired. |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |
