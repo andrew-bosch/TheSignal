@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" width="100%" height="100%">
+  <defs>
+    <!-- Background Grid -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1E293B" stroke-width="0.5" />
+    </pattern>
+
+    <!-- UI Glow for accents -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style>
+      .bg { fill: #05070A; }
+      .border { fill: none; stroke: #F59E0B; stroke-width: 6; rx: 16; ry: 16; }
+      .inner-panel { fill: #0B0F19; stroke: #334155; stroke-width: 2; rx: 8; ry: 8; }
+      
+      .text-title { fill: #F8FAFC; font-family: "Inter", "Segoe UI", sans-serif; font-size: 28px; font-weight: 800; letter-spacing: 2px; }
+      .text-address { fill: #94A3B8; font-family: "Courier New", monospace; font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+      
+      .resource-box { fill: #1f1406; stroke: #F59E0B; stroke-width: 2; rx: 6; ry: 6; }
+      .text-resource { fill: #FCD34D; font-family: "Inter", "Segoe UI", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-anchor: middle; }
+      
+      .tension-zone { fill: #2a0a0a; stroke: #EF4444; stroke-width: 2; stroke-dasharray: 6 4; }
+      .text-tension { fill: #FCA5A5; font-family: "Inter", "Segoe UI", sans-serif; font-size: 12px; font-weight: 700; text-anchor: middle; letter-spacing: 2px; }
+
+      .faction-col { fill: #0a0c0f; stroke-width: 2; rx: 8; ry: 8; }
+      .text-faction { fill: #cbd5e1; font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700; text-anchor: middle; }
+      
+      .stack-zone { fill: none; stroke: #64748B; stroke-width: 2; stroke-dasharray: 4 4; }
+      .stack-label { fill: #64748B; font-family: "Inter", "Segoe UI", sans-serif; font-size: 10px; font-weight: 600; text-anchor: middle; }
+
+      .structure-zone { fill: none; stroke: #94A3B8; stroke-width: 2; }
+      
+      .deployment-zone { fill: none; stroke: #475569; stroke-width: 1.5; stroke-dasharray: 2 2; rx: 2; ry: 2; }
+    </style>
+  </defs>
+
+  <!-- Base -->
+  <rect class="bg" width="600" height="480" rx="16" ry="16" />
+  <rect width="600" height="480" fill="url(#grid)" rx="16" ry="16" />
+  <rect class="border" x="3" y="3" width="594" height="474" filter="url(#glow)" />
+
+  <!-- HEADER -->
+  <g transform="translate(30, 30)">
+    <text x="0" y="30" class="text-title">GOVMT. CITADEL</text>
+    <text x="2" y="55" class="text-address">ADD: 1.1 // CORE RING</text>
+  </g>
+
+  <!-- RESOURCE BASELINE -->
+  <g transform="translate(420, 30)">
+    <rect class="resource-box" x="0" y="0" width="150" height="50" filter="url(#glow)" />
+    <text x="75" y="30" class="text-resource" dominant-baseline="middle">+1.0 CAPITAL</text>
+  </g>
+
+  <!-- TENSION ZONE -->
+  <g transform="translate(300, 140)">
+    <polygon class="tension-zone" points="0,-30 26,-15 26,15 0,30 -26,15 -26,-15" filter="url(#glow)" />
+    <text x="0" y="50" class="text-tension">TENSION</text>
+  </g>
+
+  <!-- FACTION ARRAYS (P1 to P5) -->
+  <g transform="translate(30, 210)">
+    
+    <!-- P1 (Guild / Capacity / Orange #d4622a) -->
+    <g transform="translate(0, 0)">
+      <rect class="faction-col" width="96" height="230" stroke="#d4622a" />
+      <text x="48" y="25" class="text-faction" fill="#d4622a">P1 / GUILD</text>
+      <!-- Chip Stack -->
+      <circle class="stack-zone" cx="48" cy="70" r="24" stroke="#d4622a" />
+      <text x="48" y="74" class="stack-label">STACK</text>
+      <!-- Structure -->
+      <rect class="structure-zone" x="30" y="110" width="36" height="36" rx="4" stroke="#d4622a" />
+      <text x="48" y="133" class="stack-label">STRUCT</text>
+      <!-- Deployment 1 & 2 -->
+      <rect class="deployment-zone" x="22" y="165" width="22" height="22" stroke="#d4622a" />
+      <rect class="deployment-zone" x="52" y="165" width="22" height="22" stroke="#d4622a" />
+      <text x="48" y="205" class="stack-label">DEPLOYMENT</text>
+    </g>
+
+    <!-- P2 (Ghost / Findings / Green #6a9978) -->
+    <g transform="translate(110, 0)">
+      <rect class="faction-col" width="96" height="230" stroke="#6a9978" />
+      <text x="48" y="25" class="text-faction" fill="#6a9978">P2 / GHOST</text>
+      <circle class="stack-zone" cx="48" cy="70" r="24" stroke="#6a9978" />
+      <text x="48" y="74" class="stack-label">STACK</text>
+      <rect class="structure-zone" x="30" y="110" width="36" height="36" rx="4" stroke="#6a9978" />
+      <text x="48" y="133" class="stack-label">STRUCT</text>
+      <rect class="deployment-zone" x="22" y="165" width="22" height="22" stroke="#6a9978" />
+      <rect class="deployment-zone" x="52" y="165" width="22" height="22" stroke="#6a9978" />
+      <text x="48" y="205" class="stack-label">DEPLOYMENT</text>
+    </g>
+
+    <!-- P3 (Directorate / Mandate / Blue #3a6ea8) -->
+    <g transform="translate(220, 0)">
+      <rect class="faction-col" width="96" height="230" stroke="#3a6ea8" />
+      <text x="48" y="25" class="text-faction" fill="#3a6ea8">P3 / DIRECT</text>
+      <circle class="stack-zone" cx="48" cy="70" r="24" stroke="#3a6ea8" />
+      <text x="48" y="74" class="stack-label">STACK</text>
+      <rect class="structure-zone" x="30" y="110" width="36" height="36" rx="4" stroke="#3a6ea8" />
+      <text x="48" y="133" class="stack-label">STRUCT</text>
+      <rect class="deployment-zone" x="22" y="165" width="22" height="22" stroke="#3a6ea8" />
+      <rect class="deployment-zone" x="52" y="165" width="22" height="22" stroke="#3a6ea8" />
+      <text x="48" y="205" class="stack-label">DEPLOYMENT</text>
+    </g>
+
+    <!-- P4 (Network / Exposure / Bright Green #39d353) -->
+    <g transform="translate(330, 0)">
+      <rect class="faction-col" width="96" height="230" stroke="#39d353" />
+      <text x="48" y="25" class="text-faction" fill="#39d353">P4 / NET</text>
+      <circle class="stack-zone" cx="48" cy="70" r="24" stroke="#39d353" />
+      <text x="48" y="74" class="stack-label">STACK</text>
+      <rect class="structure-zone" x="30" y="110" width="36" height="36" rx="4" stroke="#39d353" />
+      <text x="48" y="133" class="stack-label">STRUCT</text>
+      <rect class="deployment-zone" x="22" y="165" width="22" height="22" stroke="#39d353" />
+      <rect class="deployment-zone" x="52" y="165" width="22" height="22" stroke="#39d353" />
+      <text x="48" y="205" class="stack-label">DEPLOYMENT</text>
+    </g>
+
+    <!-- P5 (Syndicate / Capital / Gold #c9a84c) -->
+    <g transform="translate(440, 0)">
+      <rect class="faction-col" width="96" height="230" stroke="#c9a84c" />
+      <text x="48" y="25" class="text-faction" fill="#c9a84c">P5 / SYND</text>
+      <circle class="stack-zone" cx="48" cy="70" r="24" stroke="#c9a84c" />
+      <text x="48" y="74" class="stack-label">STACK</text>
+      <rect class="structure-zone" x="30" y="110" width="36" height="36" rx="4" stroke="#c9a84c" />
+      <text x="48" y="133" class="stack-label">STRUCT</text>
+      <rect class="deployment-zone" x="22" y="165" width="22" height="22" stroke="#c9a84c" />
+      <rect class="deployment-zone" x="52" y="165" width="22" height="22" stroke="#c9a84c" />
+      <text x="48" y="205" class="stack-label">DEPLOYMENT</text>
+    </g>
+
+  </g>
+</svg>

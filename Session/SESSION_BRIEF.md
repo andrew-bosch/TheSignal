@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 133 complete | Updated: 2026-07-03**
+**Session 134 complete | Updated: 2026-07-03**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -29,35 +29,29 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S133 Accomplishments
+## S134 Accomplishments
 
-**Modifier card architecture settled: acquisition-source axis (not a 4th subclass) → full Art 04 §11 revisit closed → §16/§14.2 stale-content retirement**
+**Ring-voice gap closed end-to-end: Art 00 §6.7 narrative anchor → 24-card Ring Modifier ModBattleCard set → Art 00 v1.9 sign-off → 144-concept ModAction/ModReact seed pool for next**
 
-- **Acquisition-source axis adopted (PM02 L245, closes 04-n160), supersedes the S132 `ModIssuedCard` 4th-subclass plan (04-n154, built then reverted same session).** Andy's reframe: "ARBITER-issued" is orthogonal to the 3 existing firing mechanisms, not a 4th one. New `acquisition: Deck | Issued` + `generating_card` fields added to ModActionCard/ModBattleCard/ModReactCard (§6.1/§6.2, new `AcquisitionSource` enum §6.3). GD-01/Overture/The Fixer re-migrated to match (Overture's ambiguous case resolved as Issued ModReactCard with a new `public_act.resolved(pa=X)` trigger form). The Fixer flagged for full redesign (04-n158) — a Syndicate card should generate it alongside delivering an Accord (Signature on File does that job now); kept both cards, don't merge.
-- **Art 04 §11 fully revisited and closed (04-n153 ✅).** §11.1 rewritten (3 subclasses, 3 acquisition sets, per-subclass taxonomy — ModReactCard genuinely carries Layer/Function/Subject, closes 04-n155's design question). §11.2/§11.6 stale "Upkeep Step 6" citation fixed to Art 03 §7.5.3. §11.3/§11.4/§11.5 trimmed to single-sentence current-state rules (no hand limit; no per-action modifier cap, limited only by hand size; freely tradeable whenever both parties agree, no enforced window). §11.8 (Overture, orphaned alone) retired — relocated to standalone `STD.MOD.1 — OVERTURE` inline in the Standard section, matching every other faction's pattern. §11.9 ModReactCard checklist relocated to §5, trimmed 8→5 rows (cut what duplicated the main checklist).
-- **DA-01/DA-02 generalized under the acquisition model, not folded into ModReactCard (04-n162 ✅).** Debrief Action Cards are Issued-acquisition but fire as scheduled procedural checkpoints (like Seasonal clearing), not `TriggerExpr` events — stay their own lightweight §12a category. DA-02 PhantomRecord written (generator GHO.CA.13, itself still an undesigned stub).
-- **Art 04 §16 Appendix retired outright (PM02 L251) — predated PM05 as a tracking mechanism.** Audited all 21 rows: 17 dropped (resolved inline, already tracked under a live PM05 item, or superseded by later work — §10/L240 floor, the Art 04b faction-set audit program S120–123, adjacency table L238, GR 8.2/8.3a); 2 genuinely open items migrated to new PM05 entries **04-n167** (Art 07 notification-slip component spec) and **04-n168** (Art 09 needs 4 standard-phrase/field conventions it doesn't have yet). §14.2 Countermeasure also removed (PM02 L252) — duplicate of PM05 04-07's full spec.
-- **Two sign-off gates now block Art 04 clean sign-off:** **04-n165** (sweep session/decision-provenance narration out of artifact prose — only §11 done as the model section so far) and **04-n169** (§14.1/14.3–14.6 + §15 disposition sweep — flagged "probably stale," pre-S30 fossil content, per-item recommendations logged, not yet executed).
-- **Ref/design file sync (prompted by Andy at close — see `feedback_ref_sync_discipline.md`, now corrected to run automatically every close):** found and fixed real drift in `ref_card_types.md` (stale "max 1 modifier per action" cap, stale §11.9/Upkeep-Step-6 citations, missing DA-02, Pass Card status flagged ⚠ uncertain), `ref_taxonomy.md` (flatly wrong "Modifier Cards excluded from taxonomy" blanket rule, corrected to per-subclass), `ref_procedures.md` (stale DA section citation). `design_reference_card_system.md` was already current (updated mid-session).
-- Art 04: v0.9.64 → **v0.9.75**.
+- **Art 00 §6.7 "Ring Character" written (PM02 L253/L254).** Per-ring build history, lived culture, defining anxiety (Core: proximity; Mid: throughput; Baryo: exposure), and 6 citizen sample statements — all in narrative terms only, no game-mechanic vocabulary. Closes **04-29** (ring-voice narrative gap). Registered on **00-15** as the model section for the artifact's eventual full narrative-register refactor.
+- **Ring Modifier ModBattleCard stub pass complete — STD.MOD.2–25, 24 cards (Art 04 §7).** Andy expanded scope beyond the original 4/ring ask: each ring ships both a Portable set (`ring_constraint=None`) and a Ring-Locked set (`ring_constraint=`ring), 8/ring, so both resolutions of **04-n161** exist as real content instead of one being chosen on paper — closes 04-n161. Voice sourced directly from §6.7, kept distinct from all 5 already-shipped faction doctrines. `subtype=Standard, faction=All`; card_status DB synced (`is_ring_modifier=1`, 24 rows). Art 04 §11.1 stale ring names ("Sprawl, Infrastructure, Core") corrected to Baryo/Mid/Core. Art 04: v0.9.75 → **v0.9.76**.
+- **Art 00 v1.8 → v1.9 signed off (PM02 L255).** Bundled 3 pending material additions (S99 §14.10 Integration, S131 §15 Curriculum, S134 §6.7) plus a same-session 4th: **Pine Gap** (2018 miniseries) added to §15 under a new "Institutional Insularity & Compartmentalization" anchor area — scoped to the Core's workplace texture, not general city-development. PM03's Art 00 row corrected (had drifted, still showing only the S99 addition).
+- **144-concept ModAction/ModReact seed pool captured in `Whiteboard/modifier_card_ideas.md`, gated on 04-n157/04-53 (not locked design):** Ring ModAction (48, 16/ring) and Faction ModAction (60, 12/faction) — both bucketed by the real `ModActionExpr` schema categories (`threshold_delta`/`success_multiplier`/`ps_shift`/`cost_reduction`, §6.3) after an initial ring-only draft used a looser scheme and got reshaped for parity. Ring ModReact (36, 12/ring) — bucketed by actual taxonomy Layer values (Territory/Information/Economy/Standing), since ModReactCard is the one subclass that genuinely carries that taxonomy; gated on 04-53/04b-03, not 04-n157. All three pools pointer-logged on their respective PM05 items.
 
 ---
 
-## Current Focus (S134)
+## Current Focus (S135)
 
-**Locked (Andy, S133 close): 04-29 is next — resolve the ring-voice narrative gap** (what makes a Ring card read as belonging to that ring, independent of faction). Unblocks the Ring Modifier ModBattleCard stub pass (Ring 1/2/3, using the faction 2 Boost/2 Hinder pattern as template) immediately after.
+**Locked (Andy, S134 close): ModAction space is next.** Start with **04-n157** (ModActionCard action-space analysis — still genuinely undone, same kind of pre-work 04-n152 did before ModBattleCard content began) rather than jumping straight to card content. The Whiteboard seed pool (108 ModAction concepts, ring + faction) is ready to draw from once the action-space itself is scoped — don't treat the pool as the scoping.
 
-**Art 04 sign-off gates (do whenever there's room, not blocking the ring-voice work):** 04-n165 (copy-provenance sweep, multi-agent-pass scale) and 04-n169 (§14/§15 disposition sweep, recommendations already logged).
+**Art 04 sign-off gates (do whenever there's room):** 04-n165 (copy-provenance sweep) and 04-n169 (§14/§15 disposition sweep, recommendations already logged).
 
-**Secondary — 09-06 tail:** ModReactCard full design-checklist review (now §5, per `feedback_card_design_review_workflow.md`) still open for Ghost/Network/Syndicate — stubs exist from S128 but were never checklisted.
-
-**Also open, lower priority:** 04-n157 (ModActionCard empty action-space analysis), 04-n161 (ring_constraint semantics — may feed directly into 04-29), 04-n163 (deck-floor count question for GD-01/Overture/Fixer — needs Andy's call), 04-n164 (unverified stale Upkeep-Step-N refs elsewhere), 04-n166/04-n159 (parked design seeds — modifier resurrection mechanic, speculative ARBITER deck), 04-n167/04-n168 (new — Art 07/09 cross-artifact gaps), 04-n148, 04-n150, XA-54, 06-n01, 04-n26/27, 04-n126, 04-n123, agy DB task (card_status sync for NET/SYN MOD cards).
+**Also open:** 04-53/04b-03 (Ring Modifier taxonomy — now also gates the 36-concept Ring ModReact seed pool), 09-06 tail (ModReactCard design-checklist review still open for Ghost/Network/Syndicate), `ref_board_narrative.md` sync pass against §6.7 (pending two sessions now), 04-n163 (deck-floor count question, needs Andy's call), 04-n164, 04-n166/04-n159 (parked design seeds), 04-n167/04-n168 (Art 07/09 cross-artifact gaps), 04-n148, 04-n150, XA-54, 06-n01, 04-n26/27, 04-n126, 04-n123, agy DB task (card_status sync for NET/SYN MOD cards).
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 00 v1.8** — Needs re-sign-off. Two material additions, same pass: S99 §14.10 Integration; S131 §15 Appendix (Master Reference Curriculum). Bundled with 04-29 completion (Andy, S133) — don't sign off separately; 04-29 writes into v1.8, close both together once 04-29 lands.
 - **Art 04** — Draft, gated on 04-n165 + 04-n169 (both copy/content sweeps, see Current Focus).
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
 

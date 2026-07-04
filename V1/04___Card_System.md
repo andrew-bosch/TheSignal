@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.75 Draft  
+**Version:** 0.9.76 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-07-03  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -3097,6 +3097,631 @@ Overture = Card(
     arbiter_note = "On host PA resolution at Beat 4: deliver one blank AccordForm from ARBITER tableau supply to acting faction. "
                    "Faction drafts and places in Accord Placement Area at their discretion — no timing constraint. "
                    "Proceed per Art 06 §9.4.",
+)
+```
+
+---
+
+### STD.MOD.2 — SENIOR LIAISON *(stub)*
+
+*S134. First Ring Modifier content in the game — 04-29/09-06 pattern-setter, establishing the stub format for the Ring Modifier set. Voice sourced from Art 00 §6.7 Ring Character (PM02 L253), closing 04-29's ring-voice gate: Core's defining anxiety is proximity, not force, so Ring 1 content leans on institutional access and standing rather than the Directorate's already-shipped literal-force doctrine (DIR.MOD.10–13) — same city, deliberately different lever, available to whichever faction holds the card. **Format:** each ring ships two complete 4-card sets — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — closing 04-n161 by fielding both models side by side rather than picking one on paper; playtest determines which reads better, or whether both earn a permanent place. 24 cards total, 8 per ring, each 4-card set following the locked 2 Boost (+1/+2) + 2 Hinder (−1/−2) faction-set format (D04-08, S132) and the Asset(human)/Equipment/Tactic naming convention (S130). `subtype=Standard, faction=All` — these are Standard-schema cards per the Ring Modifier taxonomic rule, distinguished from faction modifier decks by `ring_origin`, not by `faction`. This is the Portable set's weaker Boost tier (+1): a favor that travels with whoever's holding it.*
+
+```python
+STD.MOD.2 = Card(
+    id      = "STD.MOD.2",  card_id = "STD.MOD.2",  version = "v0.1",
+    name    = "Senior Liaison",
+    tagline = "A Core insider willing to make a call on your behalf — the reason doesn't have to travel with the favor.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
+    value_rating    = 1,      # mirrors magnitude
+    ring_constraint = None,   # Portable set — the favor travels with the holder, not the Core (closes 04-n161 alongside STD.MOD.6's Locked counterpart)
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    cost            = None,   # not schema-forced for ModBattleCard, and unenforceable regardless — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence (confirmed S132).
+
+    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    narrative    = "A liaison who owes you something makes a call. Nobody in the room needs to know where the call came from.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.3 — SIGNED-OUT INSTRUMENTATION *(stub)*
+
+*S134. Portable set, Equipment category — rounds out the Boost pair before the Hinder pair. Precision gear drawn from Chorus Research's stores, carried out rather than left behind.*
+
+```python
+STD.MOD.3 = Card(
+    id      = "STD.MOD.3",  card_id = "STD.MOD.3",  version = "v0.1",
+    name    = "Signed-Out Instrumentation",
+    tagline = "Precision gear signed out of storage on short notice — nobody's flagged it missing yet.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — the equipment leaves the building
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The requisition slip says routine maintenance. The gear is somewhere else entirely by the time anyone checks.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.4 — CLEARANCE REVIEW *(stub)*
+
+*S134. Portable set, weaker Hinder tier (−1). The disruption is a mark against a person, not a place — it follows the target wherever they go.*
+
+```python
+STD.MOD.4 = Card(
+    id      = "STD.MOD.4",  card_id = "STD.MOD.4",  version = "v0.1",
+    name    = "Clearance Review",
+    tagline = "A name enters an audit list. Everything that name is attached to slows down until the review clears.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set — the review follows the target, not the district
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Nobody says why the review opened. Nobody has to. The pause is the point.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.5 — ACCESS FROZEN *(stub)*
+
+*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 1. Where Clearance Review is a slow-down, this is an outright suspension, and it holds wherever the target tries to use the access.*
+
+```python
+STD.MOD.5 = Card(
+    id      = "STD.MOD.5",  card_id = "STD.MOD.5",  version = "v0.1",
+    name    = "Access Frozen",
+    tagline = "The credentials still exist. They just stop working, everywhere, until further notice.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — the suspension travels with the target's credentials, not the Core
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The system returns the same message everywhere it's checked: access denied, pending review.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.6 — CITADEL CONTACT *(stub)*
+
+*S134. Ring-Locked set opens — Ring 1's other half of the 04-n161 test pair. Same Asset/Boost+1 slot as STD.MOD.2, but the pull genuinely doesn't leave the building: `ring_constraint=1` restricts play to Battlefield Strength for a Ring 1 district.*
+
+```python
+STD.MOD.6 = Card(
+    id      = "STD.MOD.6",  card_id = "STD.MOD.6",  version = "v0.1",
+    name    = "Citadel Contact",
+    tagline = "Pull that stops existing the moment you're not standing inside Government Citadel.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district (closes 04-n161 alongside STD.MOD.2's Portable counterpart)
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The contact is real, and so is the favor. Neither one leaves the building.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.7 — SANCTUM LEDGER ACCESS *(stub)*
+
+*S134. Ring-Locked set, Equipment category. A live feed into Financial Sanctum's own books — the access is the Sanctum's, not the holder's, so it doesn't travel.*
+
+```python
+STD.MOD.7 = Card(
+    id      = "STD.MOD.7",  card_id = "STD.MOD.7",  version = "v0.1",
+    name    = "Sanctum Ledger Access",
+    tagline = "A live feed into what Financial Sanctum is actually tracking — worthless the moment you're not on its network.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The numbers only mean anything inside the Sanctum's own walls. Outside them, it's just a feed with nothing to compare against.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.8 — CHECKPOINT DELAY *(stub)*
+
+*S134. Ring-Locked set, weaker Hinder tier (−1). The friction is physical — a specific checkpoint, not a general restriction — so it only bites where that checkpoint stands.*
+
+```python
+STD.MOD.8 = Card(
+    id      = "STD.MOD.8",  card_id = "STD.MOD.8",  version = "v0.1",
+    name    = "Checkpoint Delay",
+    tagline = "Military Installation's own checkpoints slow a target's people down — right there, and nowhere else.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The checkpoint has never once been called temporary. Tonight it's also slow, and nobody's explaining why.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.9 — PERIMETER LOCKOUT *(stub)*
+
+*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 1. Outright denial at a named perimeter, not a slowdown.*
+
+```python
+STD.MOD.9 = Card(
+    id      = "STD.MOD.9",  card_id = "STD.MOD.9",  version = "v0.1",
+    name    = "Perimeter Lockout",
+    tagline = "Military Installation denies a target's access outright — the restriction only exists at that perimeter.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
+    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "No explanation posted. Just a perimeter that stopped opening for one name on the list.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
+)
+```
+
+---
+
+### STD.MOD.10 — LINE SUPERVISOR *(stub)*
+
+*S134. Ring 2 (Mid) opens, Portable set. Voice per Art 00 §6.7: the Mid's defining anxiety is throughput, not force or construction — deliberately distinct from Guild's already-shipped material-commitment doctrine (GUI.MOD.11–14). This is operational leverage available to anyone with a stake in the Mid, not a faction specialty.*
+
+```python
+STD.MOD.10 = Card(
+    id      = "STD.MOD.10",  card_id = "STD.MOD.10",  version = "v0.1",
+    name    = "Line Supervisor",
+    tagline = "A shift supervisor reroutes a crew or a schedule on short notice — the favor travels wherever it's called in.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set — the favor travels with the holder, not the Mid (closes 04-n161 alongside STD.MOD.14's Locked counterpart)
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The schedule says one thing. The supervisor makes it say another, quietly, before the shift starts.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.11 — RELAY PRIORITY *(stub)*
+
+*S134. Portable set, Equipment category. A grid or data allocation override — small enough to carry, general enough to apply anywhere.*
+
+```python
+STD.MOD.11 = Card(
+    id      = "STD.MOD.11",  card_id = "STD.MOD.11",  version = "v0.1",
+    name    = "Relay Priority",
+    tagline = "A brief allocation override, pulled from the grid and carried wherever it's needed.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — the override travels with the holder
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "For an hour, someone else's allocation is quietly someone else's problem.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.12 — REGULATORY HOLD *(stub)*
+
+*S134. Portable set, weaker Hinder tier (−1). Paperwork attached to a name, not a desk — it follows the target through the system.*
+
+```python
+STD.MOD.12 = Card(
+    id      = "STD.MOD.12",  card_id = "STD.MOD.12",  version = "v0.1",
+    name    = "Regulatory Hold",
+    tagline = "A target's paperwork stalls in the system — and keeps stalling, wherever they refile it.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set — the hold follows the target's filing, not a fixed office
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The form is correct. The form is always correct. It's still not moving.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.13 — SUPPLY LINE FROZEN *(stub)*
+
+*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 2. A shipment stalls wherever it was headed, not wherever it started.*
+
+```python
+STD.MOD.13 = Card(
+    id      = "STD.MOD.13",  card_id = "STD.MOD.13",  version = "v0.1",
+    name    = "Supply Line Frozen",
+    tagline = "A shipment through the Mid quietly stalls — cutting the target off wherever it was actually going.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — the disruption follows the shipment's destination, not the Mid
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Somewhere in transit, a manifest gets flagged. It doesn't matter where it started. It matters that it never arrives.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.14 — POWER GRID CHIEF *(stub)*
+
+*S134. Ring-Locked set opens for Ring 2 — the 04-n161 test pair with STD.MOD.10. Weight that only exists on the floor of the Power Grid itself.*
+
+```python
+STD.MOD.14 = Card(
+    id      = "STD.MOD.14",  card_id = "STD.MOD.14",  version = "v0.1",
+    name    = "Power Grid Chief",
+    tagline = "Commands real weight on the floor of the Power Grid. Nowhere else knows his name.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district (closes 04-n161 alongside STD.MOD.10's Portable counterpart)
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Outside the Grid, he's nobody in particular. Inside it, nothing moves without him knowing.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.15 — COMMUNICATIONS HUB OVERRIDE *(stub)*
+
+*S134. Ring-Locked set, Equipment category. A direct line into the relay system — it only works standing near a relay tower.*
+
+```python
+STD.MOD.15 = Card(
+    id      = "STD.MOD.15",  card_id = "STD.MOD.15",  version = "v0.1",
+    name    = "Communications Hub Override",
+    tagline = "A direct line into the relay system — useless the moment you're not standing near a tower.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The override rides the Hub's own relay hardware. Take it somewhere without towers and it's just a dead handset.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.16 — PERMIT OFFICE FREEZE *(stub)*
+
+*S134. Ring-Locked set, weaker Hinder tier (−1). The jam is specific to the Regulatory District's own queue — business filed anywhere else is unaffected.*
+
+```python
+STD.MOD.16 = Card(
+    id      = "STD.MOD.16",  card_id = "STD.MOD.16",  version = "v0.1",
+    name    = "Permit Office Freeze",
+    tagline = "The Regulatory District's own queue jams for a target — only for business actually filed there.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The clerk isn't stalling. The queue is just, tonight, exactly this long.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.17 — CLEARINGHOUSE LOCKOUT *(stub)*
+
+*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 2. Capital frozen exactly where it sits at Financial Clearinghouse.*
+
+```python
+STD.MOD.17 = Card(
+    id      = "STD.MOD.17",  card_id = "STD.MOD.17",  version = "v0.1",
+    name    = "Clearinghouse Lockout",
+    tagline = "A target's capital sticks mid-transfer at Financial Clearinghouse — frozen exactly where it sits.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
+    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The transfer clears the Sanctum end fine. It just never quite finishes clearing this one.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
+)
+```
+
+---
+
+### STD.MOD.18 — FAMILIAR FACE *(stub)*
+
+*S134. Ring 3 (Baryo) opens, Portable set. Voice per Art 00 §6.7: Baryo's defining anxiety is exposure, and its leverage is community and the gray economy — deliberately distinct from Network's already-shipped broadcast/public-attention doctrine (NET.MOD.15–18) and Ghost's intelligence doctrine (GHO.MOD.12–15). This is street-level social capital, not information or attention.*
+
+```python
+STD.MOD.18 = Card(
+    id      = "STD.MOD.18",  card_id = "STD.MOD.18",  version = "v0.1",
+    name    = "Familiar Face",
+    tagline = "Someone in the crowd knows you and vouches for you — the door opens wherever you actually need it to.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set — the connection travels with the holder, not Baryo (closes 04-n161 alongside STD.MOD.22's Locked counterpart)
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "A nod, a name dropped, and suddenly you're not a stranger anymore. It travels as far as the person vouching for you is willing to go.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.19 — SCAVENGED RIG *(stub)*
+
+*S134. Portable set, Equipment category. Improvised tech, built for exactly this — being carried somewhere else.*
+
+```python
+STD.MOD.19 = Card(
+    id      = "STD.MOD.19",  card_id = "STD.MOD.19",  version = "v0.1",
+    name    = "Scavenged Rig",
+    tagline = "Improvised tech pulled together from whatever the Mid discarded last quarter — built to travel.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — improvised and portable by nature
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "None of the parts match. All of them work. That's the whole design philosophy.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.20 — VENDORS CLOSE RANKS *(stub)*
+
+*S134. Portable set, weaker Hinder tier (−1). The gray economy's judgment follows the target, not the block they were standing on.*
+
+```python
+STD.MOD.20 = Card(
+    id      = "STD.MOD.20",  card_id = "STD.MOD.20",  version = "v0.1",
+    name    = "Vendors Close Ranks",
+    tagline = "Word moves through the gray economy — a target stops getting credit, no matter where they try next.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = None,   # Portable set — the reputation follows the target, not a single block
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Nobody posted a notice. Everyone who needed to know already does.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.21 — BARYO TURNS ITS BACK *(stub)*
+
+*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 3. The community's withdrawal is total and it follows the target, not the ring.*
+
+```python
+STD.MOD.21 = Card(
+    id      = "STD.MOD.21",  card_id = "STD.MOD.21",  version = "v0.1",
+    name    = "Baryo Turns Its Back",
+    tagline = "The ring's informal networks stop cooperating with a target everywhere at once.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = None,   # Portable set — the withdrawal follows the target's name, not a fixed block
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Doors that used to open don't. Nobody explains why. Nobody has to.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+)
+```
+
+---
+
+### STD.MOD.22 — STRIP REGULAR *(stub)*
+
+*S134. Ring-Locked set opens for Ring 3 — the 04-n161 test pair with STD.MOD.18. Standing that's real, and real only, on the Commercial Strip.*
+
+```python
+STD.MOD.22 = Card(
+    id      = "STD.MOD.22",  card_id = "STD.MOD.22",  version = "v0.1",
+    name    = "Strip Regular",
+    tagline = "A fixture of the Commercial Strip. Everybody there owes him a little something. Nobody past it does.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district (closes 04-n161 alongside STD.MOD.18's Portable counterpart)
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Ask about him three blocks over and you get a shrug. Ask on the Strip and everyone has an opinion.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.23 — MARKET STALL CACHE *(stub)*
+
+*S134. Ring-Locked set, Equipment category. Goods stockpiled in a specific stall — moving them defeats the point of having stockpiled them there.*
+
+```python
+STD.MOD.23 = Card(
+    id      = "STD.MOD.23",  card_id = "STD.MOD.23",  version = "v0.1",
+    name    = "Market Stall Cache",
+    tagline = "Goods and gear stockpiled in a Strip stall — useless anywhere but there.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "The cache has been building for years, one odd lot at a time. It was never going anywhere.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.24 — HOUSING ARRANGEMENT CALLED IN *(stub)*
+
+*S134. Ring-Locked set, weaker Hinder tier (−1). The leverage belongs to a specific unofficial landlord over a specific arrangement — it doesn't extend past that reach.*
+
+```python
+STD.MOD.24 = Card(
+    id      = "STD.MOD.24",  card_id = "STD.MOD.24",  version = "v0.1",
+    name    = "Housing Arrangement Called In",
+    tagline = "One of the ring's unofficial landlords makes a target's stay difficult — only within that arrangement's reach.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
+    ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "No one signed anything. That was always the arrangement's whole strength, and tonight it's a weakness instead.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
+)
+```
+
+---
+
+### STD.MOD.25 — TRANSIT HUB SHUTOUT *(stub)*
+
+*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 3, and closes out the 24-card Ring Modifier stub pass.*
+
+```python
+STD.MOD.25 = Card(
+    id      = "STD.MOD.25",  card_id = "STD.MOD.25",  version = "v0.1",
+    name    = "Transit Hub Shutout",
+    tagline = "Transit labor stops moving anything for a target — right at the Hub, and nowhere the Hub doesn't reach.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
+    ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
+    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    cost            = None,
+
+    portrait     = None,
+    narrative    = "Every shift finds a reason not to touch the load. By evening it's still sitting exactly where it was unloaded.",
+    arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
 ```
 
@@ -13020,6 +13645,30 @@ SYN.MOD.15 = Card(
 | STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel Token | Move |
 | STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier Card | Move |
 | STD.MOD.1 | Overture | 📝 | Issued ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.2 | Senior Liaison | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.3 | Signed-Out Instrumentation | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.4 | Clearance Review | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.5 | Access Frozen | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.6 | Citadel Contact | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.7 | Sanctum Ledger Access | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.8 | Checkpoint Delay | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.9 | Perimeter Lockout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.10 | Line Supervisor | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.11 | Relay Priority | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.12 | Regulatory Hold | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.13 | Supply Line Frozen | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.14 | Power Grid Chief | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.15 | Communications Hub Override | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.16 | Permit Office Freeze | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.17 | Clearinghouse Lockout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.18 | Familiar Face | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.19 | Scavenged Rig | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.20 | Vendors Close Ranks | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.21 | Baryo Turns Its Back | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.22 | Strip Regular | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.23 | Market Stall Cache | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.24 | Housing Arrangement Called In | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.25 | Transit Hub Shutout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
 | STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence Token | Add |
 | STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence Token | Remove |
 | STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure Block | Add |
@@ -13168,10 +13817,10 @@ Modifier cards are the game's secondary layer of play — cards that don't act a
 Faction and Ring modifier cards are drawn from a shuffled deck; ARBITER-issued cards are not.
 
 - **Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. Represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–3).*
-- **Ring modifier cards** — drawn from shared ring decks on game board (Sprawl, Infrastructure, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only"), effect, Portrait alignment (if applicable), value rating (1–3).* Whether `ring_constraint` should default to restrictive is under review — PM05 04-n161.
+- **Ring modifier cards** — drawn from shared ring decks on game board (Baryo, The Mid, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only") when set, effect, Portrait alignment (if applicable), value rating (1–3).* **04-n161 ✅ closed S134:** rather than a single blanket default, the shipped Ring Modifier content (STD.MOD.2–25, §7) fields two complete 4-card sets per ring — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — so both models exist in play simultaneously; per-card narrative judgment (location-anchored vs. portable) determines which set a given concept belongs to, not a schema-wide rule.
 - **ARBITER-issued cards** — not drawn from any deck. ARBITER hands the card directly to a faction as a specific, named consequence of another card's resolution (`generating_card`, §6.2) — no shuffle, no card back convention, no Upkeep draw eligibility. Current examples: GD-01 Grant Deed (§12b.2), STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three happen to be ModReactCard underneath (fire on a trigger, once delivered), but acquisition source doesn't constrain which of the three subclasses a card is; an Issued ModActionCard or ModBattleCard is schema-valid, just unbuilt so far.
 
-Ring constraint applies to all users regardless of holder.
+Ring constraint, when set, applies to all users regardless of holder.
 
 *Naming note: "Modifier cards" is a working designation — pending decision D-04-07.*
 

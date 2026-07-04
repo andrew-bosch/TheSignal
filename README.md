@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** L252 — Art 04 §14.2 Countermeasure removed as duplicate; §16 Appendix retired (21 rows audited: 17 dropped, 2 migrated to new PM05 items 04-n167/04-n168). Art 03 v4.12 (S132 ✅). Art 04 v0.9.75 (S133). Art 04b v2.6 (S123).
+**Design milestone:** L255 — Art 00 v1.9 signed off (S134: §6.7 Ring Character narrative anchor + Pine Gap curriculum entry). Ring Modifier ModBattleCard stub pass complete (STD.MOD.2–25, 24 cards). Art 04 v0.9.76 (S134). Art 04b v2.6 (S123).
 
 ---
 
@@ -28,7 +28,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.8 | 🔄 Needs re-sign-off — S99 (§14.10 material addition). Prior: ✅ S93 (L211). S118: component name sweep. |
+| 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.9 | ✅ Signed off — S134 (L255). S134: §6.7 Ring Character (narrative anchor), §15 curriculum extended (Pine Gap). Bundles S99 §14.10, S131 §15, S134 §6.7+Pine Gap. Prior: ✅ S93 (L211). S118: component name sweep. |
 | 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.10 | ✅ Signed off — S108 (GR 10.1b). S118: component name sweep. |
 
 ---
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.75 | 🔄 In progress — S133: Modifier card acquisition-source axis adopted; Art 04 §11 full revisit closed; §16 Appendix + §14.2 retired. Prior — S132: 20 ModBattleCard stubs shipped, all 5 factions. |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.76 | 🔄 In progress — S134: Ring Modifier ModBattleCard stub pass complete (STD.MOD.2–25, 24 cards: Portable + Ring-Locked sets/ring). Voice sourced from Art 00 §6.7; §11.1 ring names corrected (Baryo/Mid/Core). Prior — S133: Modifier card acquisition-source axis adopted; Art 04 §11 full revisit closed; §16 Appendix + §14.2 retired. |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |
