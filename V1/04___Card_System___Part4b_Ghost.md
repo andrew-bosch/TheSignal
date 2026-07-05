@@ -1869,60 +1869,72 @@ GHO.PA.5 = Card(
 
 ---
 
-### GHO.MOD.1 — SLEEPER ANALYST *(stub)*
+### GHO.MOD.1 — SLEEPER ANALYST
 
-*S110. Ghost Modifier/React — fires at Art 03 §9.2.0 on any PA placed with an Intel token. Ghost must name the faction on the token; ARBITER validates. Note: Art 02 §9 excludes Modifier cards from the taxonomy matrix; Layer/Function/Subject fields below describe the card's effect category for spec clarity only.*
-
-**Design Rationale:** Ghost's counter-attribution React. When any faction places a PA with an Intel token in the Faction Resolution Grid at Art 03 §9.2.0, Ghost may announce React and declare the faction they believe is named on that token. ARBITER checks the token's faction field. If Ghost's declaration matches: the Intel token is removed, the PA is cancelled, all resource tokens on the PA drain to the Reservoir (no refund), and Ghost gains +1 PS. If Ghost is wrong: card consumed, no effect, PA proceeds.
+#### Design Rationale
+Ghost's counter-attribution React. When any faction places a PA with an Intel token in the Faction Resolution Grid at Art 03 §9.2.0, Ghost may announce React and declare the faction they believe is named on that token. ARBITER checks the token's faction field. If Ghost's declaration matches: the Intel token is removed, the PA is cancelled, all resource tokens on the PA drain to the Reservoir (no refund), and Ghost gains +1 PS. If Ghost is wrong: card consumed, no effect, PA proceeds.
 
 The intelligence test is genuine: because Target Profiles are placed face-down at Art 03 §9.2.0 (revealing at Art 03 §9.4.3.1.1), and Intel token content is always ARBITER-private, Ghost cannot guess from publicly visible information. Prior intelligence work is required — SIGINT taps, Source Substitution plant mode, or other intelligence that revealed the token's faction field. The chain play is: plant or observe the token → hold React → fire when the attribution PA is declared.
 
 Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Ghost's doctrine across all factions. Sleeper Analyst makes that doctrine actionable: Ghost can mechanically suppress any attribution they have intelligence on. Works against corrupted tokens (planted by Ghost via Source Substitution) and legitimate ones alike — Ghost believes no covert attribution belongs on the public record.
 
+**S138 format migration + re-verification:** this card (S110-vintage) predates the current 4-block review format (structure_pass=0) — converted here, not just reformatted. Re-checking the existing ✓ verdicts (verification-audit mandate, not rubber-stamp) surfaced two real problems the S110-era review didn't have vocabulary to catch: `resolution = Prediction` and `resolution_type = "Conditional"` are not valid enum values (confirmed vocabulary is `d100 | Automatic` and `"Probabilistic" | "Transactional"` respectively — verified directly against Part1_Core.md §6.3) — logged as `schema_cleanup_log.md` item 12. The `trigger` field's method-call syntax (`faction(opponent).places(...)`) also predates confirmed §6.3 TriggerExpr forms entirely — item 13. Both flagged, not fixed; the underlying mechanic (Ghost declares a guess, ARBITER checks it against private data, no dice) most likely resolves to `resolution=Automatic` once corrected, but that's a content call for a future pass, not made here.
+
 #### Card Story
-⚠ Story pending 04-n79.
+A faction places a public act backed by an Intel token, confident the attribution is buried. Ghost already knows whose name is on it — and says so, out loud, before the table ever finds out. The attribution ends there; so does the act.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Counter-attribution at PA placement — Ghost doctrine: operational anonymity across the full table | Art 00 §7 |
-| Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08) | Art 00 §9 |
-| Doctrine alignment | ✓ | Ghost +1 portrait: publicly demonstrating intelligence superiority while suppressing attribution is Ghost doctrine at peak visibility. FactionSpecific — no other portraits | Art 00 §7; Art 04 §6.5 |
-| Card type fit | ✓ | ModReactCard / FactionSpecific (Ghost) — trigger is publicly visible board state change (PA placement at Art 03 §9.2.0) per Art 03 §18.0 | Art 04 §6.1, §6.2; Art 03 §18 |
-| Taxonomy fit | ✓ | Modifier cards excluded from matrix per §11.1 — Layer/Function/Subject = None. Spec clarity: Information / Remove / IntelToken | Art 04b §9; Art 04 §11.1 |
-| Balance | ✓ | No activation cost — card consumed on fire. Requires prior intelligence to use reliably. Misfire wastes the card. Strongly rewards GHO Source Substitution plant chain | Art 02 §6–§7 |
-| Effect duration | ✓ | Immediate — PA cancellation and PS shift at Art 03 §9.2.0 trigger | Art 04 §5 P19 |
-| Persistence | ✓ | Immediate — no lingering board state marker | Art 04 §6 |
-| Trigger validity | ✓ | Any PA with Intel token placed at Art 03 §9.2.0 — publicly visible board state change (Art 02 §18.0). React window closes when Art 03 §9.2.0 advances to next faction's declaration | Art 03 §18.0; Art 03 §9.2.0 |
-| Portrait validity | ✓ | Ghost submitter=+1 — submitter-bounded. Suppressing attribution from position of intelligence knowledge is Ghost on-doctrine | Art 04 §6.2 |
-| Supported by zones | ✓ | No district reference. N/A | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken (on placed PA card in Resolution Grid; Art 02 §6); PS shift (Art 02 §11) | Art 02 §6, §11 |
-| Supported by game procedure | ✓ | React per Art 03 §18. Trigger at Art 03 §9.2.0. Target Profile face-down at Art 03 §9.2.0 (per Art 03 §9.2.0 procedure — intelligence test is genuine). Ghost Source Substitution provides corruption mechanism. | Art 03 §18; Art 03 §9.2.0; Art 04 GHO — Source Substitution |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Action fit | ✓ | Counter-attribution at PA placement — Ghost doctrine: operational anonymity across the full table. Re-verified, holds up. | Art 00 §7 |
+| Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08); status of D-04-08 itself not re-checked this pass. | Art 00 §9 |
+| Doctrine alignment | ✓ | Ghost +1 portrait: publicly demonstrating intelligence superiority while suppressing attribution is Ghost doctrine at peak visibility. Re-verified. | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/FactionSpecific (Ghost) — trigger is a publicly visible board-state change. Re-verified. | Art 04 §6.1, §6.2; Art 03 §18 |
+| Taxonomy fit | ✓ | Information/Remove/IntelToken (04-n175, S137) — re-verified against the matrix directly this pass: IntelToken is a dual-aspect component (count=Economy, content=Information per Construction Logic rule 2); Information×Remove is valid. Holds up. | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n175 |
+| Balance | ✓ | No activation cost, card consumed on fire (success or misfire), requires genuine prior intelligence to use reliably. Re-verified. | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — PA cancellation and PS shift resolve at trigger. | Art 04 §5 P19 |
+| Persistence | ⚠ | Downgraded on re-verification: the S110 note reasoned correctly in prose ("Immediate, no lingering marker") but the `persistence` field itself is still absent from the spec — same open schema question as the rest of the corpus (`schema_cleanup_log.md` item 2/D), not a card-specific issue. | Art 04 §6.2 |
+| Trigger validity | ⚠ | Downgraded on re-verification: the trigger fires on a genuinely public board event, but its syntax predates confirmed §6.3 TriggerExpr forms entirely (item 13) — not the same as the Directorate set's `faction=Any` ambiguity, this is an unreconciled legacy construction. | Art 04 §6.3; schema_cleanup_log.md item 13 |
+| Portrait validity | ✓ | `{Ghost: submitter=+1}` — submitter-bounded, correctly structured. Re-verified. | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference — correct, this isn't a territory effect. | Art 01 §6–§7 |
+| Supported by components | ✓ | Intel Token (on the placed PA) and PS shift both reuse existing components. | Art 02 §6, §11 |
+| Supported by game procedure | ✓ | React timing at Art 03 §9.2.0, Target Profile face-down mechanism, Ghost Source Substitution as the intelligence-generation chain — all pre-existing procedure, no new ARBITER behavior. | Art 03 §18; Art 03 §9.2.0 |
+| Data schema validation | ⚠ | New finding, not the old "pending 04-n70" note (that reference is stale — superseded by the concrete issues below): `resolution=Prediction` and `resolution_type="Conditional"` are invalid enum values (item 12); scaffolding fields added this session (ring_constraint/ring_origin/value_rating/boost/ps_framing, 04-n177). | Art 04 §6.1–§6.3; schema_cleanup_log.md item 12 |
+| Card narrative | ⚠ | `narrative` field still empty; Card Story above is new this pass. | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | Genuine two-branch outcome (declaration matches / doesn't), but modeled via the invalid `Prediction` resolution value rather than a confirmed enum — can't fully assess determinacy until item 12 resolves. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None` — reasonable; the real cost is the intelligence-gathering prerequisite (Source Substitution/SIGINT chain), and misfire risk (card consumed on a wrong guess) already balances free activation. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ⚠ | Depends on how often PAs are placed with Intel tokens attached — a fairly specific combined event; best-effort, not independently verifiable here. |  |
+| Firing window (ModReactCard) | ✓ | No other Ghost card shares this exact trigger (PA + Intel Token at placement). |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ | Directly tied to item 12 — this reads as a deterministic ARBITER check (no dice), which argues for `Automatic`, but the card as specced uses neither valid enum value. Can't close until resolved. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: is a 2nd copy meaningful, or does the first copy's misfire consume the only useful attempt regardless of copies held? Undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` (added this session, 04-n177) — correct; not a district/ring-scoped effect. |  |
 
-**Outstanding Issues:**
-- **Card name:** "Sleeper Analyst" — pending voice pass (D-04-08). Card suppresses attribution whether true or false; name reflects Ghost's doctrine that any public attribution distorts understanding.
-- **Card ID:** GHO.MOD.1 — pending 04-n1 numbering pass.
-- **Modifier card schema:** Full spec pending modifier card design pass (04-n4). Fields below use established conventions.
+**Outstanding Issues (carried, pre-S138):**
+- Card name pending voice pass (D-04-08); Card ID pending 04-n1 numbering pass — both unresolved by this content-review pass, out of scope here.
 
-**Status:** Design pass complete — S110. Issues Resolved and sign-off pending 04-n4 schema pass.
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ |  |  |
 
 ```python
 GHO.MOD.1 = Card(
-    id      = "GHO.MOD.1",  card_id="GHO.MOD.1",  version="v1.0",
+    id      = "GHO.MOD.1",  card_id = "GHO.MOD.1",  version = "v1.0",
     name    = "Sleeper Analyst",
     tagline = "Name the faction on the Intel token. If correct: the attribution ends here.",
     type    = ModReactCard,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
-    # Spec clarity: Information / Remove / IntelToken
+    layer   = Information,  function = Remove,  subject = IntelToken,  # assigned S137 (04-n175) — corrects the stale "§11.1 excluded" claim in the checklist above; ModReactCard isn't exempt (S133 correction)
 
-    trigger = faction(opponent).places(PA, with=IntelToken(any), at=Art 03 §9.2.0),
+    trigger = faction(opponent).places(PA, with=IntelToken(any), at=Art 03 §9.2.0),  # ⚠ legacy syntax, predates confirmed §6.3 TriggerExpr vocabulary — flagged, not fixed (schema_cleanup_log.md item 13)
     beat    = None,  # React — fires at Art 03 §9.2.0, not in initiative
-    resolution = Prediction,  # Ghost declares faction named on token; ARBITER validates
+    ring_constraint = None,  # scaffolding only — added S138 (04-n177)
+    ring_origin     = None,  # scaffolding only — added S138 (04-n177)
+    value_rating    = None,  # scaffolding only — added S138 (04-n177)
+    resolution = Prediction,  # ⚠ NOT a valid Resolution enum value (d100 | Automatic only) — flagged, not fixed (schema_cleanup_log.md item 12)
     threshold  = None,
-    ring_mod   = None,  doctrine_mod = None,  resolution_type = "Conditional",
+    ring_mod   = None,  doctrine_mod = None,  resolution_type = "Conditional",  # ⚠ NOT a valid resolution_type value (Probabilistic | Transactional only) — same flag as above
 
     target_district = None,
     target_faction  = None,
@@ -1931,6 +1943,7 @@ GHO.MOD.1 = Card(
     affinity    = None,
     restriction = None,
     cost        = None,  # card consumed on fire (success or misfire)
+    boost       = None,  # scaffolding only — added S138 (04-n177)
 
     success = (
         arbiter.remove(IntelToken, from=target_PA),
@@ -1942,7 +1955,8 @@ GHO.MOD.1 = Card(
     failcrit    = None,
     on_accept   = None,  on_decline = None,
 
-    portrait = {Ghost: PortraitEntry(submitter=+1)},
+    portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing   = None,  # scaffolding only — added S138 (04-n177)
 
     narrative    = None,  # pending 04-n79
     perspectives = None,  # pending D-04-08
@@ -1954,56 +1968,56 @@ GHO.MOD.1 = Card(
 
 ---
 
-### GHO.MOD.2 — PERIMETER SENSORS *(stub)*
+### GHO.MOD.2 — PERIMETER SENSORS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+First of a three-card family (GHO.MOD.2/3/4) delivering §5a's "passive Intel generation near Ghost presence" — generic variant, faction-targeted variants follow. Same self-fire question as the Directorate set's item 5: `faction=Any` in the trigger includes Ghost's own presence placements, so Ghost placing a chip in a district it already holds would generate Intel on itself. Likely harmless (self-Intel isn't exploitable the way DIR.MOD.9's self-sanction would be) but flagged for consistency with the established pattern, not silently assumed fine. `district=where(faction(Ghost).presence > 0)` is the second confirmed instance of the unconfirmed `where(...)` trigger-parameter form (schema_cleanup_log.md item 9, first seen on DIR.MOD.8).
 
 #### Card Story
-⚠ Story pending 04-n79.
+Someone moves a piece onto ground Ghost already quietly holds. Nothing dramatic happens — no confrontation, no announcement. But the sensors were already there, and now Ghost knows exactly who just arrived.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Passive intelligence generation from proximity is a clean, low-key expression of Ghost's "understanding without acting" doctrine. | Art 00 §7 |
+| Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Portrait submitter=+1; passive observation is core Ghost doctrine. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Information/Add/IntelToken, 04-n175), matches STD.MOD.101's shape. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | IntelToken's dual-aspect content-half is Information; matrix confirms Information×Add valid. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Free Intel generation gated only by Ghost holding presence somewhere active — plausible as a low-key passive engine, final read pending the same whole-set cost/value_rating decision (04-n178) as the Directorate set. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus (`schema_cleanup_log.md` item 2/D). | Art 04 §6.2 |
+| Trigger validity | ⚠ | Base event (`presence_chip.placed`) is confirmed vocabulary, but the `district=where(...)` filter isn't a confirmed §6.3 parameter form — 2nd instance of item 9. Also carries the same `faction=Any` self-fire question as item 5/11 (Ghost could trigger this on its own placement). | Art 04 §6.3; schema_cleanup_log.md items 9, 5 |
+| Portrait validity | ✓ | `{Ghost: submitter=+1}` — submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
+| Supported by components | ✓ | Intel Token delivery reuses the standard mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Reuses existing chip-placement event and Intel Token delivery; no new ARBITER procedure. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolding to be added consistent with 04-n177 (this card already has ring_constraint/ring_origin/value_rating declared — only `ps_framing`/`boost`/`resolution_type` need adding). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set Floor Act/value_rating gate as the Directorate cards. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Fires whenever any faction places presence near existing Ghost presence — moderate-to-common depending on board spread. |  |
+| Firing window (ModReactCard) | ⚠ | GHO.MOD.3/4 (faction-targeted variants of this same family) likely share overlapping trigger space — same family-overlap flag as the Directorate enforcement family. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Flat passive generation, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → 2 Intel tokens per qualifying placement? Undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; gated by Ghost's own presence, not ring. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*S128. Delivers §5a "passive generation: Intel tokens from game events near Ghost presence" as a ModReactCard. Output of 04-n143. Generic variant (faction=Any). Faction-targeted variants: GHO.MOD.3 (Directorate), GHO.MOD.4 (Network).*
+*S128. Delivers §5a "passive generation: Intel tokens from game events near Ghost presence" as a ModReactCard. Output of 04-n143. Generic variant (faction=Any). Faction-targeted variants: GHO.MOD.3 (Directorate), GHO.MOD.4 (Network). S138: full content-review pass — self-fire question flagged (same category as Directorate item 5), `where(...)` trigger parameter confirmed as a 2nd instance (item 9), remaining flags are the standard schema/cost/stack gaps. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 GHO.MOD.2 = Card(
-    id      = "GHO.MOD.2",  card_id="GHO.MOD.2",  version="v0.1",
+    id      = "GHO.MOD.2",  card_id = "GHO.MOD.2",  version = "v0.1",
     name    = "Perimeter Sensors",
     tagline = "Faction activity near Ghost presence generates automatic intelligence.",
     type    = ModReactCard,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = Information,  function = Add,  subject = IntelToken,  # assigned S137 (04-n175) — arbiter.deliver(...IntelToken...), matches STD.MOD.101
 
     trigger         = presence_chip.placed(faction=Any, district=where(faction(Ghost).presence > 0)),
     beat            = None,
@@ -2011,7 +2025,7 @@ GHO.MOD.2 = Card(
     ring_origin     = None,   # Ghost faction modifier deck
     value_rating    = None,   # TBD
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2020,12 +2034,14 @@ GHO.MOD.2 = Card(
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,  # Ghost must be present in triggered district
     cost            = None,  # card consumed on fire
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,  # pending
     perspectives = None,  # pending
     design_note  = "Passive Intel generation from nearby faction activity. Trigger: any faction places presence in a Ghost-present district (publicly observable). Ghost receives 1 Intel token keyed to the placing faction. Intelligence-minimal design: Ghost learns who is expanding near its positions without taking any action. Output of 04-n143.",
@@ -2035,56 +2051,56 @@ GHO.MOD.2 = Card(
 
 ---
 
-### GHO.MOD.3 — INSTITUTIONAL TRACE *(stub)*
+### GHO.MOD.3 — INSTITUTIONAL TRACE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Second card of the GHO.MOD.2/3/4 family — narrowed to Directorate specifically, no self-fire ambiguity (Ghost ≠ Directorate). Third confirmed instance of the unconfirmed `where(...)` trigger-parameter form (`schema_cleanup_log.md` item 9).
 
 #### Card Story
-⚠ Story pending 04-n79.
+Directorate expands into ground Ghost already quietly watches. The sensors don't care about the politics — they log it, and Ghost gets a name attached to the movement.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Faction-targeted passive intelligence; design_note frames Directorate as Ghost's doctrinal suppressor — grounded narrowing, same reasoning pattern as DIR.MOD.2's Syndicate narrowing. | Art 00 §7 |
+| Voice fit | ✓ | Tagline reads correctly. `narrative` empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Portrait submitter=+1 — correctly expresses doctrine. | Art 04 §6.5 |
+| Card type fit | ✓ | Same shape as GHO.MOD.2. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Same verified Information×Add cell as GHO.MOD.2. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Narrower than GHO.MOD.2 (Directorate-only), so lower frequency — plausible; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `presence_chip.placed(faction=Directorate, ...)` — explicitly scoped, no self-fire ambiguity. But `district=where(...)` is the 3rd confirmed instance of the unconfirmed parameter form (item 9). | Art 04 §6.3; schema_cleanup_log.md item 9 |
+| Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same as GHO.MOD.2. | Art 01 §6–7 |
+| Supported by components | ✓ | Same as GHO.MOD.2. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same as GHO.MOD.2. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (`ps_framing`/`boost`/`resolution_type` added). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as GHO.MOD.2. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Directorate-only scope keeps frequency lower than GHO.MOD.2's generic trigger. |  |
+| Firing window (ModReactCard) | ⚠ | Same family-overlap flag as GHO.MOD.2 — GHO.MOD.2/3/4 share overlapping trigger space if Ghost holds the full family. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same as GHO.MOD.2. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; gated by faction identity, not ring. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*S128. Faction-targeted variant of GHO.MOD.2. Trigger narrowed to Directorate presence placement. Directorate expansion near Ghost positions is the highest-value intelligence signal — institutional authority is Ghost's primary constraint.*
+*S128. Faction-targeted variant of GHO.MOD.2. Trigger narrowed to Directorate presence placement. Directorate expansion near Ghost positions is the highest-value intelligence signal — institutional authority is Ghost's primary constraint. S138: full content-review pass — 3rd confirmed instance of the unconfirmed `where(...)` trigger form (item 9); remaining flags are the standard schema/cost/stack/family-overlap gaps. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 GHO.MOD.3 = Card(
-    id      = "GHO.MOD.3",  card_id="GHO.MOD.3",  version="v0.1",
+    id      = "GHO.MOD.3",  card_id = "GHO.MOD.3",  version = "v0.1",
     name    = "Institutional Trace",
     tagline = "Directorate expansion near Ghost presence generates targeted intelligence.",
     type    = ModReactCard,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,
+    layer   = Information,  function = Add,  subject = IntelToken,  # assigned S137 (04-n175), same shape as GHO.MOD.2
 
     trigger         = presence_chip.placed(faction=Directorate, district=where(faction(Ghost).presence > 0)),
     beat            = None,
@@ -2092,7 +2108,7 @@ GHO.MOD.3 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2101,12 +2117,14 @@ GHO.MOD.3 = Card(
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,
     cost            = None,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Directorate)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Directorate-targeted variant of GHO.MOD.2 (Perimeter Sensors). Same trigger/effect, faction-narrowed. Directorate expansion near Ghost positions is a high-priority intelligence signal — Directorate is Ghost's doctrinal suppressor. Narrower window than generic variant; more reliable in Directorate-heavy games.",
@@ -2116,56 +2134,56 @@ GHO.MOD.3 = Card(
 
 ---
 
-### GHO.MOD.4 — SIGNAL BLEED *(stub)*
+### GHO.MOD.4 — SIGNAL BLEED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third card of the GHO.MOD.2/3/4 family — narrowed to Network, no self-fire ambiguity. 4th confirmed instance of the unconfirmed `where(...)` trigger-parameter form (`schema_cleanup_log.md` item 9).
 
 #### Card Story
-⚠ Story pending 04-n79.
+Network's broadcast infrastructure creeps into ground Ghost already watches. The signal bleed itself is the tell — Ghost logs the expansion as an exposure risk to its own covert footing in that district.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Network's broadcast expansion is a natural, distinct intelligence trigger from Directorate's institutional one — design_note frames it correctly as exposure risk rather than mere activity tracking. | Art 00 §7 |
+| Voice fit | ✓ | Tagline reads correctly. `narrative` empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Portrait submitter=+1 — correctly expresses doctrine. | Art 04 §6.5 |
+| Card type fit | ✓ | Same shape as GHO.MOD.2/3. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Same verified Information×Add cell. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Same as GHO.MOD.3 — narrower than the generic variant, final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ⚠ | Explicitly Network-scoped, no self-fire ambiguity. 4th confirmed instance of the unconfirmed `where(...)` form (item 9). | Art 04 §6.3; schema_cleanup_log.md item 9 |
+| Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same as GHO.MOD.2/3. | Art 01 §6–7 |
+| Supported by components | ✓ | Same as GHO.MOD.2/3. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same as GHO.MOD.2/3. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | Same whole-set gate as the rest of the family. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Network-only scope, moderate frequency depending on Network's board presence. |  |
+| Firing window (ModReactCard) | ⚠ | Same family-overlap flag as GHO.MOD.2/3. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same as GHO.MOD.2/3. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*S128. Faction-targeted variant of GHO.MOD.2. Trigger narrowed to Network presence placement. Network broadcast reach expanding into Ghost-present districts is an operational exposure risk.*
+*S128. Faction-targeted variant of GHO.MOD.2. Trigger narrowed to Network presence placement. Network broadcast reach expanding into Ghost-present districts is an operational exposure risk. S138: full content-review pass — 4th confirmed instance of the `where(...)` trigger form (item 9); remaining flags are the standard schema/cost/stack/family-overlap gaps. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 GHO.MOD.4 = Card(
-    id      = "GHO.MOD.4",  card_id="GHO.MOD.4",  version="v0.1",
+    id      = "GHO.MOD.4",  card_id = "GHO.MOD.4",  version = "v0.1",
     name    = "Signal Bleed",
     tagline = "Network expansion near Ghost presence generates exposure intelligence.",
     type    = ModReactCard,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,
+    layer   = Information,  function = Add,  subject = IntelToken,  # assigned S137 (04-n175), same shape as GHO.MOD.2
 
     trigger         = presence_chip.placed(faction=Network, district=where(faction(Ghost).presence > 0)),
     beat            = None,
@@ -2173,7 +2191,7 @@ GHO.MOD.4 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2182,12 +2200,14 @@ GHO.MOD.4 = Card(
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,
     cost            = None,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Network)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Network-targeted variant of GHO.MOD.2 (Perimeter Sensors). Network presence placement near Ghost positions generates Network-keyed Intel — Ghost tracks the broadcast infrastructure expanding into shared territory. Network expansion = exposure risk for Ghost covert ops in those districts.",
@@ -2197,56 +2217,56 @@ GHO.MOD.4 = Card(
 
 ---
 
-### GHO.MOD.5 — FALSE FLAG *(stub)*
+### GHO.MOD.5 — FALSE FLAG
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ghost's Flip-doctrine payoff: reacts to *any* faction's positive PS shift and inverts it into a net loss, funded by spending the target's... no, Ghost's own resources (Findings + Exposure). Real finding this pass: the trigger uses `public_standing.shifted(faction=Any, direction=Positive)` — a retired term. PM05 04-n144 (closed S130) already normalized this exact form to `standing_marker.increased/decreased(faction=X)` for its known instances (SYN.MOD.4/5); GHO.MOD.5 uses the identical retired syntax and was missed by that sweep. Confirmed via grep (S138) that this is the *only* remaining instance across all 8 Art 04 Part files — logged to `schema_cleanup_log.md` item 14, not fixed here (content decision belongs to a future pass). Also worth noting: the cost spends Exposure, which isn't Ghost's native resource (Findings is) — not illegal (cross-resource costs are an established pattern elsewhere in the game), but worth flagging whether Ghost realistically has Exposure on hand without a prior conversion/trade step.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival claims a public win — the kind that moves their standing up in front of the whole table. Ghost already has the counter-narrative ready. By the time anyone checks the record again, the "victory" reads as the opposite.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Reversing a rival's public narrative gain is a clean expression of Ghost's information-warfare doctrine — distinct from the passive-intel family (GHO.MOD.2–4). | Art 00 §7 |
+| Voice fit | ✓ | Tagline ("let them claim the victory, then rewrite the headline") lands the doctrine precisely. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — reasonable; Ghost doctrine favors invisibility, an empty portrait for a covert narrative-manipulation play is consistent, not a gap like DIR.MOD.6's. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Standing/Shift/StandingMarker, 04-n175/04-n173 precedent). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Standing×Shift is the correct cell per the matrix (Standing×Add/Remove is invalid, subsumed by Shift — 04-n173); `subject=StandingMarker` matches the S126 correction, not the retired `PublicStanding`. | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ⚠ | Doubles the trigger amount to invert a gain into an equal-magnitude loss — mechanically sound (verified the math: net effect from pre-trigger baseline is −X on a +X gain), but real cost (Findings+Exposure) and value_rating aren't set; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `public_standing.shifted(direction=Positive)` is a retired term (schema_cleanup_log.md item 14) — confirmed via grep as the sole remaining instance across the whole card system. Flagged, not fixed. | Art 04 §6.3; schema_cleanup_log.md item 14 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct; this isn't a territory effect. | Art 01 §6–7 |
+| Supported by components | ✓ | PS/Standing marker shift reuses the standard mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | React timing after the triggering PS shift resolves — no new ARBITER behavior. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch, deterministic doubling formula. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Real cost specified (Findings+Exposure) — but Exposure isn't Ghost's native resource; worth checking whether Ghost realistically holds it without a prior conversion step (cross-resource cost design, not illegal per se). | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Any faction's positive PS shift is a recurring event; gated by Ghost having the resources on hand to fire. |  |
+| Firing window (ModReactCard) | ✓ | No other Ghost card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Deterministic inversion formula, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → quadruple the inversion? Undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*React on positive PS shift. The "Flip" point-disruption payoff. Reverse the opponent's public narrative.*
+*React on positive PS shift. The "Flip" point-disruption payoff. Reverse the opponent's public narrative. S138: full content-review pass — confirmed retired trigger term (`public_standing.shifted`, item 14, sole remaining instance); cross-resource cost (Exposure, not Ghost-native) flagged for Resource cost positioning. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 GHO.MOD.5 = Card(
-    id      = "GHO.MOD.5",  card_id="GHO.MOD.5",  version="v0.1",
+    id      = "GHO.MOD.5",  card_id = "GHO.MOD.5",  version = "v0.1",
     name    = "False Flag",
     tagline = "Let them claim the victory, then rewrite the headline.",
     type    = ModReactCard,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # assigned S137 (04-n175) — arbiter.shift(public_standing,...), matches the S126/04-n173 StandingMarker precedent
 
     trigger         = public_standing.shifted(faction=Any, direction=Positive),
     beat            = None,
@@ -2254,7 +2274,7 @@ GHO.MOD.5 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2263,12 +2283,14 @@ GHO.MOD.5 = Card(
     affinity        = None,
     restriction     = None,
     cost            = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).exposure * 1,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = arbiter.shift(public_standing, faction=trigger.faction, amount=-(trigger.amount * 2)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Late-game Flipped intel sink. Ghost spends the target's native resource to invert their public victory into a disaster. Since Reacts occur after the state change (the positive shift), this effectively applies a negative shift equal to double the trigger amount to achieve the inversion Cost reasoning: Exposure is expended to actively seed the manufactured narrative into the public consciousness.",
@@ -2278,56 +2300,56 @@ GHO.MOD.5 = Card(
 
 ---
 
-### GHO.MOD.6 — SUPPLY CHAIN TAP *(stub)*
+### GHO.MOD.6 — SUPPLY CHAIN TAP
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Parasitic economy React: Ghost pays 1 unit of the triggering faction's native resource type to mirror-copy that faction's entire Upkeep resource draw. Two real findings on this pass: (1) `trigger = resource.drawn_from_reservoir(faction=Any)` is a known, already-documented gap — `design_reference_card_system.md`'s "Still pending" note calls this out by name as "not in TriggerExpr schema — needs component classification," so this isn't a new discovery, just confirmed still open. (2) `faction=Any` carries the same self-fire question as items 5/11/9(GHO.MOD.2) — if Ghost's own Upkeep draw triggers this, Ghost would pay 1 Findings to "copy" a delivery it's already receiving, a costed no-op. Also worth flagging: the cost is denominated in the *triggering faction's* native resource type, which Ghost may not hold without a prior conversion — same cross-resource question as GHO.MOD.5.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An opponent's Upkeep resources land in their reserve. Ghost's tap on their supply line means the exact same shipment quietly lands in Ghost's reserve too — paid for, not stolen.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Parasitic mirroring of a rival's economy fits Ghost's "extract value without confrontation" doctrine. | Art 00 §7 |
+| Voice fit | ✓ | Tagline ("their infrastructure is our logistics") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — consistent with Ghost's invisibility preference for covert economic plays, same reasoning as GHO.MOD.5. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Economy/Copy/NativeResource, 04-n175) — correctly Copy, not Add, per the design_note's own "mirrored duplicate, not a transfer" framing. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy×Copy is valid per the matrix; Copy is the correct Function since this duplicates an effect chain rather than moving or creating new supply. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Full mirrored draw for a 1-resource cost is potentially strong depending on the triggering faction's Upkeep yield — final read needs 04-n178 plus resolution of the cross-resource-holding question below. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `resource.drawn_from_reservoir(faction=Any)` is a confirmed, already-documented gap (design_reference_card_system.md "Still pending" list) — not in the TriggerExpr schema at all. Also carries the same `faction=Any` self-fire question as items 5/9/11. | Art 04 §6.3; schema_cleanup_log.md items 5, 9 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
+| Supported by components | ✓ | Resource delivery reuses the standard mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ⚠ | Depends on Upkeep's resource-collection step being a detectable, reactable event — plausible given Upkeep is a defined phase, but the exact hook point isn't confirmed since the trigger term itself is unconfirmed (see Trigger validity). | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Cost is denominated in the *triggering faction's* native resource — Ghost may not hold that resource type without a prior conversion/trade, same open question as GHO.MOD.5's Exposure cost. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ⚠ | Every faction draws resources at Upkeep every Quarter — potentially very high frequency if the trigger term is confirmed broadly. Ties directly into the Balance flag. |  |
+| Firing window (ModReactCard) | ✓ | No other Ghost card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Flat mirrored copy, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → 2x the mirrored draw? Undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*React on resource generation. Precision economic disruption via mirrored draw.*
+*React on resource generation. Precision economic disruption via mirrored draw. S138: full content-review pass — confirmed `resource.drawn_from_reservoir` as an already-documented schema gap (not newly found), flagged the `faction=Any` self-fire question and the cross-resource cost-holding question (same shape as GHO.MOD.5). Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 GHO.MOD.6 = Card(
-    id      = "GHO.MOD.6",  card_id="GHO.MOD.6",  version="v0.1",
+    id      = "GHO.MOD.6",  card_id = "GHO.MOD.6",  version = "v0.1",
     name    = "Supply Chain Tap",
     tagline = "Their infrastructure is our logistics.",
     type    = ModReactCard,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,
+    layer   = Economy,  function = Copy,  subject = NativeResource,  # assigned S137 (04-n175) — Copy, not Add: design_note explicitly calls this a "mirrored" duplicate of the opponent's draw, not a transfer from them
 
     trigger         = resource.drawn_from_reservoir(faction=Any),
     beat            = None,
@@ -2335,7 +2357,7 @@ GHO.MOD.6 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2344,12 +2366,14 @@ GHO.MOD.6 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Resource(faction(trigger.faction).native, 1),
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = arbiter.deliver(faction(Ghost), trigger.resources),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Ghost pays 1 cross-faction resource to copy the entire resource draw of an opponent's Upkeep phase. Pure mirrored parasitic economy.",
@@ -2359,56 +2383,56 @@ GHO.MOD.6 = Card(
 
 ---
 
-### GHO.MOD.7 — SLEEPER CELL *(stub)*
+### GHO.MOD.7 — SLEEPER CELL
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ghost's endgame disruption React: swaps 1 opponent chip for 1 Ghost chip in the same district the instant a Dominant marker is placed there, stripping the fresh Dominant status back to Established. Correctly taxonomied as Redirect (Andy's catch, S137) rather than Remove — it's a same-slot allegiance change, not a plain removal. Two real findings: (1) `faction=Any` carries the same self-fire question as items 5/6/9/11 — if Ghost itself achieves Dominant somewhere, this would fire and have Ghost swap its own chip for its own chip, paying the full 3-resource cost for a literal no-op. (2) The cost spans three resource types (Findings, Capacity, Capital) — only Findings is Ghost-native; Capacity and Capital are Guild's and Syndicate's respectively. This is the sharpest instance yet of the cross-resource-holding question raised at GHO.MOD.5/6 — two of the three cost components require Ghost to already hold resources it doesn't natively generate.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival's chip count finally tips them into Dominant — the marker goes down, the table sees it land. Before anyone reacts, a presence nobody knew was there activates, and the marker's claim evaporates as fast as it arrived.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Endgame power-spike disruption via a dormant asset activating is a strong, doctrinally coherent Ghost beat — "total control is just a convenient illusion" lands the point precisely. | Art 00 §7 |
+| Voice fit | ✓ | Tagline is one of the strongest in the set. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — consistent with Ghost's invisibility preference. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Territory/Redirect/PresenceToken, 04-n175 — Andy's specific correction from an initially-assumed Remove). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory×Redirect is valid per the matrix; Redirect is correct since ownership changes on the same chip-slot, matching the verb's definition ("changes ownership, destination, or allegiance"). | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Powerful, precisely-timed disruption of a Dominant achievement — high 3-resource cost plausibly balances it, but see the cross-resource-holding flag below; if Ghost can't reliably afford two foreign resource types, the effective cost (and thus balance) is unclear. Final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `dominant_marker.placed(faction=X)` is confirmed vocabulary, but `faction=Any` carries the same self-fire question as items 5/6/11 — sharpest instance yet, since firing against Ghost's own Dominant achievement would cost 3 resources for a literal no-op swap. | Art 04 §6.3; schema_cleanup_log.md item 5 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
+| Supported by components | ⚠ | Same deployment-marker-removal edge as the Directorate enforcement family (`schema_cleanup_log.md` item 6) — the removed chip could be a Deployment Marker's temporary presence (GR 8.3a: markers move, never removed). | Art 02 §6–8; GR 8.3a; schema_cleanup_log.md item 6 |
+| Supported by game procedure | ✓ | Reuses existing chip removal/placement mechanisms and the Dominant-marker-placement event; no new ARBITER procedure. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch (two sequential mutations, no choose_one). | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Real cost specified but spans 3 resource types, 2 of which (Capacity, Capital) aren't Ghost-native — the sharpest instance of the cross-resource-holding question raised at GHO.MOD.5/6. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Dominant-marker placement is inherently rare (endgame-adjacent), matching the design_note's own "massive late-game state change" framing — low frequency by design, not a flaw. |  |
+| Firing window (ModReactCard) | ✓ | No other Ghost card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary swap — no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus, though less consequential here given the trigger's inherent rarity. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; fires wherever a Dominant marker lands. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*React on Dominant marker placement. Point-disruption targeting end-game power spikes.*
+*React on Dominant marker placement. Point-disruption targeting end-game power spikes. S138: full content-review pass — self-fire question (item 5 family, sharpest instance — full-cost no-op if self-triggered), cross-resource cost-holding question (2 of 3 resource types not Ghost-native), and the deployment-marker removal edge (item 6) all flagged. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 GHO.MOD.7 = Card(
-    id      = "GHO.MOD.7",  card_id="GHO.MOD.7",  version="v0.1",
+    id      = "GHO.MOD.7",  card_id = "GHO.MOD.7",  version = "v0.1",
     name    = "Sleeper Cell",
     tagline = "Total control is just a convenient illusion.",
     type    = ModReactCard,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,
+    layer   = Territory,  function = Redirect,  subject = PresenceToken,  # assigned S137 (04-n175, Andy's catch) — Redirect ("changes ownership, destination, or allegiance"), not Remove: the effect swaps 1 opponent chip for 1 Ghost chip in the same district, a same-slot allegiance change, not a plain removal
 
     trigger         = dominant_marker.placed(faction=Any),
     beat            = None,
@@ -2416,7 +2440,7 @@ GHO.MOD.7 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2425,12 +2449,14 @@ GHO.MOD.7 = Card(
     affinity        = None,
     restriction     = None,
     cost            = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).capacity * 1 + resource.faction(Ghost).capital * 1,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Ghost, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Reacts to a massive late-game state change. By physically swapping 1 of the target's chips for 1 Ghost chip, Ghost instantly drops the opponent's chip count, stripping the Dominant marker the moment it is placed and forcing them back to Established. Delays the endgame condition Cost reasoning: Requires Capacity to house the cell and Capital to fund their sudden activation, backed by precise intelligence.",
@@ -2440,56 +2466,56 @@ GHO.MOD.7 = Card(
 
 ---
 
-### GHO.MOD.8 — LOCAL SYMPATHIZERS *(stub)*
+### GHO.MOD.8 — LOCAL SYMPATHIZERS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Mid-game counterpart to GHO.MOD.7's endgame disruption: reacts to any faction reaching Established (IL-02) and immediately strips 1 chip, downgrading them back to Present. Same shape as DIR.MOD.1's enforcement family (Territory/Remove/PresenceToken), carrying the same open questions: `faction=Any` self-fire (item 5 family — Ghost achieving Established would trigger this against itself), the deployment-marker-removal edge (item 6), and the cross-resource cost-holding question (cost denominated in the *triggering faction's* native resource, same as GHO.MOD.6/7).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A faction plants its second foothold in a district and calls it secured. The neighborhood disagrees — quietly, and on someone else's payroll. One chip comes back off the board before the ink on "Established" dries.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Mid-game expansion disruption via unnamed local assets fits Ghost's "influence without visible presence" doctrine, distinct from GHO.MOD.7's endgame-scale disruption. | Art 00 §7 |
+| Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — consistent with the rest of Ghost's covert-action cards. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Territory/Remove/PresenceToken, 04-n175), matches DIR.MOD.1's shape. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory×Remove — same verified matrix cell as the Directorate enforcement family. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Cheaper than GHO.MOD.7 (1 resource vs. 3) but also less severe (Established→Present vs. Dominant→Established) — plausible tiering, final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `established_marker.placed(faction=X)` is confirmed vocabulary, but `faction=Any` carries the same self-fire question as items 5/6/7/11. | Art 04 §6.3; schema_cleanup_log.md item 5 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
+| Supported by components | ⚠ | Same deployment-marker-removal edge as DIR.MOD.1/2/3 and GHO.MOD.7 (`schema_cleanup_log.md` item 6). | Art 02 §6–8; GR 8.3a; schema_cleanup_log.md item 6 |
+| Supported by game procedure | ✓ | Reuses existing chip-removal mechanism and Established-marker-placement event; no new ARBITER procedure. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Same cross-resource-holding question as GHO.MOD.6/7: cost denominated in the triggering faction's native resource, which Ghost may not hold without prior conversion. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ⚠ | Reaching Established is a common mid-game milestone across all factions — likely higher-frequency than GHO.MOD.7's Dominant trigger. Ties into the Balance flag. |  |
+| Firing window (ModReactCard) | ✓ | No other Ghost card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary removal — no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*React on Established marker placement. Point-disruption targeting mid-game expansion.*
+*React on Established marker placement. Point-disruption targeting mid-game expansion. S138: full content-review pass — same self-fire (item 5), deployment-marker (item 6), and cross-resource cost-holding flags as the rest of the Ghost ModReactCard set. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 GHO.MOD.8 = Card(
-    id      = "GHO.MOD.8",  card_id="GHO.MOD.8",  version="v0.1",
+    id      = "GHO.MOD.8",  card_id = "GHO.MOD.8",  version = "v0.1",
     name    = "Local Sympathizers",
     tagline = "They thought this neighborhood belonged to them.",
     type    = ModReactCard,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,
+    layer   = Territory,  function = Remove,  subject = PresenceToken,  # assigned S137 (04-n175) — arbiter.remove(presence_chip,...), matches DIR.MOD.1
 
     trigger         = established_marker.placed(faction=Any),
     beat            = None,
@@ -2497,7 +2523,7 @@ GHO.MOD.8 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2506,12 +2532,14 @@ GHO.MOD.8 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Resource(faction(trigger.faction).native, 1),
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Reacts to a faction reaching IL-02 (Established). Ghost burns 1 cross-faction resource to immediately remove one of their chips, instantly downgrading them back to IL-01. Slows the table's structural expansion.",

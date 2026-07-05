@@ -1,7 +1,36 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-07-04 — Session 136 Close
+**Last Updated:** 2026-07-05 — Session 138 Close
+
+### Session 138 Summary (2026-07-05)
+
+**Focus:** Full 09-16 step 2 ModReactCard design-review pass across all 5 factions, completing the corpus started with Ring at S137.
+
+**Key work:**
+- **45 cards fully reviewed** (Design Rationale, Card Story, 22-row checklist, Status): Directorate 9, Ghost 8, Guild 9, Network 12, Syndicate 10. 8 cards confirmed as pre-schema fossils needing full re-authoring rather than review — GHO.MOD.9/10/11, GUI.MOD.1, NET.MOD.11/12, SYN.MOD.1 (the last has no `Card()` block anywhere in the codebase, worse than the other fossils, and its DB name "Accord Leverage" doesn't even match the "The Fixer" name used in surrounding comments).
+- **Two re-verification cases, not fresh reviews:** GHO.MOD.1 (S106-vintage abbreviated 14-row checklist + prose Status) converted to the current 4-block format; re-checking its existing ✓ marks (not rubber-stamping) surfaced that `resolution=Prediction`/`resolution_type="Conditional"` are not valid enum values and the trigger syntax predates confirmed §6.3 vocabulary. GUI.MOD.9/10 (S131-vintage 8-criterion checklist, already claiming `design_pass=1`) converted to the standard 22-row table — GUI.MOD.9 held up clean; GUI.MOD.10 confirmed more seriously blocked than its prior single footnote suggested (04-n148's missing Art 03 procedure step is actually a Governing Rule 6.1/Design Pillar 4.7b violation as drafted; 04-n176's "no taxonomy fits this mechanic" stands on re-check).
+- **Schema scaffolding (04-n177) applied session-wide** — `ps_framing`/`boost`/`resolution_type` added as explicit `None`/mechanical placeholders wherever silently absent (not filled with real design values); `card_id`/`version` spacing normalized across ~40 card blocks.
+- **`Whiteboard/schema_cleanup_log.md` grew from 4 items (S137) to 20 items (S138)**, satisfying Andy's S137 condition to wait for the full ModReactCard landscape before synthesizing. Individual findings (items 5–19): `faction=Any` self-fire ambiguity (DIR.MOD.1/3/9, GHO.MOD.2/6/7/8, NET.MOD.6/10 — ~9 cards, 3 factions; NET.MOD.2 already hand-patched it locally with `except=Network`); `arbiter.remove(presence_chip)` not distinguishing protected Deployment-Marker chips (GR 8.3a); Portrait `flat` entries on non-submitting target factions (DIR.MOD.2) and `{}` vs `None` inconsistency; the unconfirmed `where(...)` trigger parameter (5 confirmed instances, 3 factions); Intel Token as `cost` — fungibility question (DIR.MOD.9, SYN.MOD.11); invalid resolution enum + legacy `PA_success.where(...)`/`acting` syntax (GHO.MOD.1, NET.MOD.1); retired `public_standing.shifted` term (GHO.MOD.5, confirmed sole remaining instance via full-corpus grep); `status_marker.contested.placed()` vs confirmed `tension_marker.placed` (NET.MOD.9); invalid `+=`/`-=` statement-as-value syntax, 2 confirmed instances (NET.MOD.2, SYN.MOD.9); `modifier_card.placed` trigger + possible unbounded self-triggering loop (NET.MOD.8); a ModReactCard that structurally never discards, fitting none of the 4 documented Persistence values (SYN.MOD.9). **Item 20** (Andy's explicit ask at close) is the cross-cutting synthesis: schema drift correlates with authoring vintage not faction; stack-behavior is one ungoverned rule restated on ~45 cards, not 45 gaps; cross-resource cost-holding recurs on ~10 cards/4 factions; string-literal `success` fields cluster on exactly one MutationExpr-unsupported shape (contingent-on-a-later-event, 4 cards/3 factions); firing-window overlaps confirmed on 3 separate multi-card families with no governing procedure; positive finding — the S137 taxonomy sweep held up with zero corrections needed across all 45 re-verified cards.
+- **PM05 04-n177** (schema scaffolding + §6 canonical formatting sample — scaffolding done this session, sample still open) **and 04-n178** (Floor Act singularity — exactly one card in the entire action/react set should have `cost=None`; every other card's cost should derive from `value_rating`; whole-set decision, currently gating "Resource cost positioning" closure on most reviewed cards) added.
+- `card_status` DB fully synced for all 45 reviewed cards; the 8 fossil cards left untouched (still `design_pass=0`).
+
+**Andy's direction for next phase (S138 close):** ModActionCard design review + stub build-out — start Standard/Ring, then faction by faction. Then ModBattleCard, same treatment (both expected simpler than the ModReactCard pass just finished — existing content is mostly clean stubs). Then CA and PA design reviews, same faction sequence. Whole-set schema decisions (04-n178; schema_cleanup_log.md items 2 and 5/E flagged by Andy as the highest-leverage single governing-rule decisions available) remain open for whenever a dedicated schema session gets scheduled.
+
+**Art 04 → v0.9.85** (Draft, gated on 04-n165/04-n169 — sign-off also waits on however the ModAction/ModBattle/CA/PA phases land). Full ModReactCard corpus content-reviewed as of this session.
+
+### Session 137 Summary (2026-07-04) — backfilled at S138 close, not recorded at the time
+
+**Focus:** 09-16 step 2 ModReactCard design review, Ring set (first pattern-setter after the S136 scaffolding pass).
+
+**Key work:**
+- **Ring Modifiers (`Part3_Ring_Modifiers.md`) fully content-reviewed** — all 36 ModReactCard entries (`STD.MOD.98`–`133`, all 3 rings) rewritten from ⚠-stub to full Design Rationale/Card Story/22-row checklist/Status, `design_pass=1` in DB. Caught and fixed a real content bug (04-n173, closed): 12 cards mutating the Standing track were split between `Standing/Add` and `Information/Add`, both invalid — unified to `Standing/Shift/StandingMarker`.
+- **Faction ModReactCard taxonomy sweep (04-n175) closed, all 5 factions** — ~48 of ~54 faction-specific ModReactCards had `layer/function/subject=None` going in; assigned real taxonomy faction by faction. Follow-ons opened: 04-n174 (GHO.MOD.9/10/11 and GUI.MOD.1 are pre-schema fossils, taxonomy assigned but content needs full re-authoring) and 04-n176 (GUI.MOD.10 has no taxonomy-supported effect shape, needs redesign not force-fit).
+- **Schema-as-a-whole synthesis delivered** (`schema_cleanup_log.md` item 4) — five recommendations (A–F) presented, none implemented, awaiting direction.
+
+**Next session locked (Andy, S137 close):** full ModReactCard design-review passes continuing faction by faction, starting Directorate — completed at S138 (see above).
+
+---
 
 ### Session 136 Summary (2026-07-04)
 

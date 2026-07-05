@@ -5862,46 +5862,46 @@ STD.MOD.97 = Card(
 
 ---
 
-### STD.MOD.98 — NOTIFIED OF ENCROACHMENT *(stub)*
+### STD.MOD.98 — NOTIFIED OF ENCROACHMENT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring 1 ModReactCard pattern-setter (04-53/09-06, S135) — establishes that Ring Modifier ModReactCard content carries real trigger + Layer/Function/Subject the same way faction ModReactCards do, but is available to whoever holds the card rather than doctrinally locked. Mechanically mirrors DIR.MOD.7 Eminent Domain's flat single-chip yield, but fires off a rival's move instead of the holder's own action — a competitive echo, not an initiative. Deliberately the weakest tier (value_rating 1, single chip) per Andy's S135 guidance that Ring ModReact power should sit at or below faction-specific equivalents.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival stakes a new claim in Core. Whoever's holding this card gets word fast enough to stake one too — not because they did anything, just because they were already watching that address.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Reactive claim-staking against a rival's move is a grounded competitive dynamic for a contested Ring; matches 04-53's "available to whoever holds it" intent. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | `narrative` reads in Core's institutional/proximity register. `perspectives=None` — live/per-card field for ModReactCard (§6.2), not blanket-None; whether faction-differentiated perspective text is warranted on identical-effect Standard cards is an open convention question, not a Voice fit failure. | Art 00 §6.7, §9 |
+| Doctrine alignment | ✓ | No `target_faction` — card doesn't act against a named rival, so `doctrine_mod=None` is trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Standard/faction=All with real taxonomy — correctly classified per §6.1; available to any holder, distinct from Ghost's faction-locked presence-triggered cards. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Independently verified against `ref_taxonomy.md`: Presence token's listed Layer is Territory; Layer×Function validity matrix (§5.1) confirms Territory×Add is valid. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort, pre-Art 00c) | value_rating 1, single chip, cost=None — at/below faction-specific power per Andy's explicit S135 direction. Magnitude playtest-flagged like the rest of the set (04-n94). | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | Immediate — fully resolved at trigger, no multi-Quarter temporary. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Field absent from spec. §6.2 lists persistence as live/per-card for ModReactCard, not None — but whether Immediate should be an explicit line or an implicit default for fire-and-consume cards is an open schema question (`schema_cleanup_log.md` #2), not resolved here. | Art 04 §6.2 |
+| Trigger validity | ✓ | `presence_chip.placed(faction=opponent, ring=1)` — confirmed TriggerExpr vocabulary (§6.3), publicly observable board event. | Art 04 §6.3 |
+| Portrait validity | ✓ | Principle 11: Portrait fires when an action *strongly* aligns/opposes doctrine; grey areas produce none. This card's action (automatic, reactive, 1-chip, identical for every holder) is doctrinally neutral logistics for all five factions — no faction's doctrine is meaningfully expressed by holding or playing it. Justified absence documented uniformly across all five per the Standard-card portrait convention; distinct from DIR.MOD.9-style cards where the action is a deliberate, doctrinally-loaded choice. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=trigger.district`; ring context (`ring_constraint=1`, `ring_origin=1`) consistent. | Art 01 §6–7 |
+| Supported by components | ✓ | Presence chip is an existing component; `arbiter.place()` reuses the standard placement mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Trigger and response both reuse already-defined ARBITER chip-placement behavior — no novel procedure. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Missing `persistence`/`resolution_type` — see Persistence row above; logged in `schema_cleanup_log.md`, not hand-fixed here to avoid a partial-fix inconsistency ahead of that decision. All other fields present and correctly typed. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story states a concrete event (rival's chip placement → holder's matching claim); mechanic follows directly, no retrofit. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch, no `game.choose_one()`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None` — no resource cost to evaluate. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Presence-chip placement in Ring 1 is a common recurring event; effect is modest (1 chip) — not overfire either. |  |
+| Firing window (ModReactCard) | ✓ | No other Ring 1 ModReact card shares this exact trigger; STD.MOD.100 uses the removal side, not a race. (Cross-file collision against faction Ghost cards not checked — out of this batch's scope.) |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary reaction — no execution-quality dimension to model via roll. |  |
+| Stack behavior (ModReactCard) | ⚠ | Undocumented: does holding two copies double-fire on one rival placement? No restriction clause present. Genuinely open. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=1` matches trigger scope; frequency supports a ring-locked card remaining playable. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. First Ring ModReactCard content — 04-53/09-06 pattern-setter for Ring 1 (Core). Territory reaction: a rival's presence placement in Core triggers a matching reinforcement for whoever holds the card. `holder` is introduced here as the generic acting-faction reference for Deck-acquired `faction=All` cards with a real effect — distinct from GD-01's `faction(holding)`, which is a field written in at generation for an Issued card; here the holder is simply whichever faction drew this card from the Ring 1 Modifier deck. Pending reconciliation into confirmed vocabulary alongside the other new forms introduced in this set (04-n171).*
 
@@ -5943,46 +5943,46 @@ STD.MOD.98 = Card(
 
 ---
 
-### STD.MOD.99 — STRUCTURAL OBJECTION *(stub)*
+### STD.MOD.99 — STRUCTURAL OBJECTION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Territory reaction that punishes a rival's structure placement rather than rewarding the holder's own position — the first punitive-shaped card in the Ring 1 set (98/100 are purely additive). Removes one presence chip from the triggering faction in the same district as their new structure: a bureaucratic cost layered on the structure, not a reversal of the placement itself (GR 7.2b — committed states are final; this is a new mutation, distinct from an undo).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival pours concrete in Core. The paperwork that follows costs them a foothold elsewhere in the same district — not the structure itself, just the ground around it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Bureaucratic retaliation for structure placement is a grounded competitive dynamic; matches 04-53's holder-agnostic intent. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | `narrative` reads in Core's institutional register. Same open `perspectives=None` convention question as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `target_faction=trigger.faction` IS set here (genuinely adversarial, unlike 98/100) — `doctrine_mod=None` is still correctly justified: `resolution=Automatic`/`threshold=None` means there's no roll for a threshold modifier to adjust; `doctrine_mod` only has meaning on d100 cards. | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory/Remove/PresenceToken — Territory×Remove confirmed valid in the Layer×Function matrix (§5.1). | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | value_rating 1, single-chip removal, cost=None — same modest tier as 98. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `structure_block.placed(faction=X, ring=Z)` matches confirmed §6.3 signature exactly. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.98, explicitly weighed against the adversarial angle here (this removes a rival's chip, unlike 98/100's pure self-benefit) — narrative frames it as procedural/bureaucratic, magnitude is minor (1 chip), no faction's doctrine is strongly expressed by holding or playing it. Uniform absence, all five factions. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.98. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story is a concrete event, mechanic follows directly. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Structure placement in Ring 1 is a recurring but less frequent event than presence-chip placement — moderate frequency, not underfire. |  |
+| Firing window (ModReactCard) | ✓ | No other Ring 1 card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded binary reaction, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98 — undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Territory reaction: a rival's structure placement in Core draws a formal objection, costing them a foothold elsewhere in the same district — does not touch the just-placed structure block itself (GR 7.2b: committed states are final; this is a new mutation, not an undo).*
 
@@ -6024,48 +6024,48 @@ STD.MOD.99 = Card(
 
 ---
 
-### STD.MOD.100 — ESCORT WITHDRAWN *(stub)*
+### STD.MOD.100 — ESCORT WITHDRAWN
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Mirror image of STD.MOD.98 — same additive Territory reaction, opposite trigger direction (a rival's chip removed rather than placed). Together the pair covers both directions of Core presence flux.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The building doesn't stay empty long. Core fills what's vacated before the news spreads.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.98, mirrored direction. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory/Add/PresenceToken — same verified pairing as STD.MOD.98. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same modest tier as STD.MOD.98. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `presence_chip.removed(faction=opponent, ring=1)` — §6.3's confirmed signature for `.removed()` is `presence_chip.removed(faction=X, district=Y)`, district only; no `ring=` parameter is documented for `.removed()` the way it is for `.placed()`. Reasonable to assume symmetry, but not yet confirmed as written — flagging as a vocabulary-gap alongside the other §6.3 items, not a blocker. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.98 (exact mirror, no target_faction). | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.98. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same recurring frequency as STD.MOD.98's placement side. |  |
+| Firing window (ModReactCard) | ✓ | No collision with STD.MOD.98 (opposite trigger direction). |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.98. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
-*S135. Territory reaction: a rival's presence removed from Core opens the district for whoever holds the card.*
+*S135. Territory reaction: a rival's presence removed from Core opens the district for whoever holds the card. Design note's original 04-n171 tag for the "no distinct last-chip filter" concern is a mistag — 04-n171 covers three specific syntax forms (`faction(holder)`/`NativeResource(faction)`/`arbiter.modify`), none of which is a trigger-granularity question. The real open question here (does this fire on any removal, or only when the district becomes fully vacated?) is closer in kind to 04-n27's pending district-scoped extension category.*
 
 ```python
 STD.MOD.100 = Card(
@@ -6105,46 +6105,46 @@ STD.MOD.100 = Card(
 
 ---
 
-### STD.MOD.101 — OVERHEARD IN THE COMMISSARY *(stub)*
+### STD.MOD.101 — OVERHEARD IN THE COMMISSARY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Information reaction to a rival locking down Dominant status in Core — worked through 3 rejected trigger candidates before landing here: Beat 0 `resolution_grid.updated` (covert, not publicly observable — contradicts the whole premise of a ModReactCard trigger); `world_event.played` (gated by the undesigned Broadcast Card taxonomy, XA-54); `deployment_marker` events (Upkeep-anchored only, too rare for a standard React). `dominant_marker.placed(faction=opponent, ring=1)` is the confirmed landing point — Dominant Marker changes through ordinary CA/PA resolution across the Quarter, genuinely public, and not yet used elsewhere in this set. Reward is an Intel Token on the triggering faction rather than the originally-proposed "draw 1 modifier card" — corrected for circularity (a modifier card's reward shouldn't itself be another modifier card with no thematic tie to "overheard information").
 
 #### Card Story
-⚠ Story pending 04-n79.
+Everyone in the building hears when someone finally locks the room down. Whoever's holding this card gets the story before it's officially announced.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | A rival achieving Dominant status in Core is major public news — an information reaction naturally follows. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `target_faction=trigger.faction` set, but `doctrine_mod=None` correctly justified — Automatic/no threshold, same basis as STD.MOD.99. | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Information/Add/IntelToken — Information×Add confirmed valid in the Layer×Function matrix (§5.1). | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | value_rating 2 — one tier above 98/99/100, consistent with delivering an Intel Token (a more valuable resource than a presence chip) rather than escalated power for its own sake. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `dominant_marker.placed(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
+| Portrait validity | ⚠ | Not the same grey-area shape as 98–100: this card converts a rival's *public, doctrinally significant* milestone (Dominant status) into a private intelligence gain for the holder. Unlike the earlier cards' reflexive chip logistics, "capitalizing on overheard institutional information" reads as more deliberate — plausibly Portrait-relevant for at least Ghost (doctrine: understanding precedes action) if Ghost holds it. Genuinely uncertain rather than a settled absence — flagging rather than defaulting. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Intel Token is an existing component; `arbiter.deliver()` reuses the standard delivery mechanism (mirrors GHO.MOD.2 Perimeter Sensors' template, per design_note). | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries the `faction(holder)` syntax form flagged under 04-n171 — `faction(holder)` used here as a Faction-object receiver passed positionally to `arbiter.deliver()`, mirroring Overture's established `faction(acting)` pattern. Confirmable on that basis; formal §6.3 write-up still pending the full ModReactCard landscape per Andy's S137 direction. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Dominant status changes are infrequent relative to chip placement, but Dominant is a genuinely significant milestone each time — value_rating 2 reflects the lower frequency / higher stakes balance. |  |
+| Firing window (ModReactCard) | ✓ | No other Ring 1 card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary — no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope; frequency (infrequent but real) supports remaining ring-locked. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Information reaction: a rival locking down Dominant status in Core is major, public news — worked through 3 design iterations with Andy this session before landing here. Rejected: Beat 0 resolution_grid reveal (covert, not public — Andy's catch); world_event.played (gated by the undesigned Broadcast Card taxonomy, XA-54); deployment_marker events (Upkeep-anchored only, per Andy — too rare for a standard React). Dominant Marker changes through ordinary CA/PA resolution across the Quarter, genuinely public, and not yet used elsewhere in this set.*
 
@@ -6186,46 +6186,46 @@ STD.MOD.101 = Card(
 
 ---
 
-### STD.MOD.102 — ACCESS LOG PULLED *(stub)*
+### STD.MOD.102 — ACCESS LOG PULLED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Information reaction: any Accord forming anywhere passes through institutional record-keeping Core has a hand in — deliberately not ring-scoped (Andy, S135: triggers don't need to be ring-scoped; Accords aren't a ring-dimensioned component to begin with). "Core flavor" comes from doctrine/theme (institutional paperwork), not a mechanical filter.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An Accord anywhere in the city passes through institutional record-keeping. Core's clerks note who's tied to whom.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Institutional paperwork tracking Accords anywhere in the city is a grounded Core-flavored premise even without ring-scoping the trigger itself. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137 (Andy's catch, 04-n173): `layer=Standing, function=Shift` — the effect (`faction(holder).standing.add(1)`) mutates the Standing track directly, and the matrix marks Standing×Add as invalid ("subsumed by Shift"). Unified with STD.MOD.107/108/109 (were `Standing/Add`, also corrected) rather than the reverse — same fix across all 12 cards in this shape. | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | value_rating 1, +1 PS, cost=None — modest, consistent with the set's floor tier. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `accord.placed(faction=Any)` matches confirmed §6.3 signature. | Art 04 §6.3 |
+| Portrait validity | ✓ | Grey-area basis as STD.MOD.98/99/100: passive institutional record-keeping, automatic, no adversarial target, modest single-point PS gain — no faction's doctrine is meaningfully expressed. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ (N/A) | `target_district=None` by design — Accords aren't zone-scoped. | Art 01 §6–7 |
+| Supported by components | ✓ | Standing marker is an existing component. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries the `faction(holder)` form (04-n171) — here used as a Faction-object receiver for `.standing.add()`, same pattern as STD.MOD.107–109. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Accord formation is a genuine city-wide event, moderate frequency, not ring-filtered so not underfire. |  |
+| Firing window (ModReactCard) | ✓ | No other Ring 1 card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=1` set per convention, though the trigger itself isn't ring-scoped — Andy-confirmed acceptable design (S135). |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Information reaction: any Accord forming anywhere passes through institutional record-keeping Core has a hand in — deliberately not ring-scoped (Andy: triggers don't need to be ring-scoped; Accords aren't a ring-dimensioned component to begin with).*
 
@@ -6235,7 +6235,7 @@ STD.MOD.102 = Card(
     name    = "Access Log Pulled",
     tagline = "A filed agreement is a public document, and Core reads its own paperwork.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Information,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = accord.placed(faction=Any),
     beat            = None,
@@ -6267,48 +6267,48 @@ STD.MOD.102 = Card(
 
 ---
 
-### STD.MOD.103 — FLAGGED FOR REVIEW *(stub)*
+### STD.MOD.103 — FLAGGED FOR REVIEW
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Submission reaction: a rival's Public Act submission in Core draws bureaucratic obstruction. Sign corrected mid-session (S135): an initial +5 threshold delta read as helping the flagged PA (positive `threshold_delta` is the established "benefit" convention across the ModActionCard set) — a hindering effect needs a negative delta. Its original design_note cited GHO.MOD.9 Burn Notice as precedent; on inspection Burn Notice is a pre-schema relic (string-literal trigger/success, missing half the current required fields, not migrated to the current Card class) and isn't real precedent for anything. Stronger grounding found independently in Art 03: flat threshold modifiers already accumulate on submitted actions before resolution via the existing BEC/BM-xx modifier pipeline (§9.4.1.1/§9.4.3.1.3), and M-11 Type B Countermeasure already imposes a flat threshold delta on operations targeting a faction. `arbiter.modify(target, threshold, delta)` is one more source feeding that same existing pipeline, not new ARBITER behavior.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A submission lands on the wrong desk, and now it needs a second signature.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Bureaucratic obstruction of a rival's submission is a grounded Core-flavored premise. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `target_faction=trigger.faction` set, `doctrine_mod=None` justified — Automatic/no threshold-roll to adjust (same basis as STD.MOD.99). | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Submission/Modify/PublicAct — Submission×Modify confirmed valid in the Layer×Function matrix. `function=Modify` also matches the actual mutation verb used (`arbiter.modify`) — internally consistent. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | value_rating 2, −5 threshold (a real but moderate hindrance), cost=None. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate — the threshold penalty applies once, to one already-submitted PA. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `public_act.placed_on_frg(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
+| Portrait validity | ⚠ | Deliberately obstructing a rival's Public Act is a more pointed adversarial choice than STD.MOD.98–102's passive logistics — plausibly doctrine-relevant (e.g., Directorate's "control and restraint" doctrine might read obstruction favorably; Ghost's "understanding precedes action" might read it as premature interference). Flagging as genuinely open rather than defaulting to None. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | No new component — modifies an existing submitted card's threshold field. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | `arbiter.modify(target, threshold, delta)` isn't new ARBITER behavior — it feeds the existing threshold-modifier-accumulation pipeline already used by BM-xx tokens and M-11 Type B Countermeasure (Art 03 §9.4.1.1/§9.4.3.1.3). Design_note's Burn Notice citation should be replaced with this — Burn Notice is a pre-schema stub, not real precedent (see Design Rationale). | Art 03 §9.4.1.1, §9.4.3.1.3 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries `arbiter.modify(target, field, delta)` (04-n171) — procedurally grounded per the row above; formal §6.3 write-up still pending the full ModReactCard landscape per Andy's S137 direction. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | PA submission in Ring 1 is a regular recurring event — not underfire; moderate power (−5) keeps it from being oppressive. |  |
+| Firing window (ModReactCard) | ✓ | No other Ring 1 card shares this exact trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98 — does a second copy compound to −10? Undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
-*S135. Submission reaction: a rival's Public Act submission in Core draws bureaucratic obstruction — a milder version of GHO.MOD.9 Burn Notice's full modifier-removal effect, sized down per Andy's power-ceiling guidance for Ring ModReact. Sign corrected mid-session: an initial +5 threshold delta read as helping the flagged PA (Andy's catch — positive threshold_delta is the established "benefit" convention across the ModActionCard set); a hindering effect needs a negative delta.*
+*S135. Submission reaction: a rival's Public Act submission in Core draws bureaucratic obstruction — sized down per Andy's power-ceiling guidance for Ring ModReact. Sign corrected mid-session: an initial +5 threshold delta read as helping the flagged PA; a hindering effect needs a negative delta. Design_note's original citation of GHO.MOD.9 Burn Notice as precedent corrected during S137 review — Burn Notice is a pre-schema stub and isn't real precedent; the actual procedural grounding is the existing BM-xx/M-11 threshold-modifier pipeline (Art 03 §9.4.1.1/§9.4.3.1.3).*
 
 ```python
 STD.MOD.103 = Card(
@@ -6341,53 +6341,53 @@ STD.MOD.103 = Card(
     portrait     = None,
     narrative    = "Core's review process exists to slow things down. It works exactly as designed, on whoever it's aimed at.",
     perspectives = None,
-    design_note  = "Hinders the flagged PA (−5 threshold — makes success harder), not a self-benefit. `arbiter.modify(target, field, delta)` is a new mutation form, not yet in confirmed vocabulary; flagged for reconciliation (04-n171) alongside GHO.MOD.9 Burn Notice's precedent for Submission-layer interference on a rival's PA.",
+    design_note  = "Hinders the flagged PA (−5 threshold — makes success harder), not a self-benefit. `arbiter.modify(target, field, delta)` is a new mutation form, not yet in confirmed vocabulary; flagged for reconciliation (04-n171). Procedurally grounded in the existing BM-xx/M-11 threshold-modifier-accumulation pipeline (Art 03 §9.4.1.1/§9.4.3.1.3), not new ARBITER behavior — corrected S137 review from an earlier citation of GHO.MOD.9 Burn Notice, which is a pre-schema stub and isn't real precedent for anything.",
     arbiter_note = None,
 )
 ```
 
 ---
 
-### STD.MOD.104 — BUDGET REALLOCATED *(stub)*
+### STD.MOD.104 — BUDGET REALLOCATED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Economy reaction: a rival's structure placement in Core is skimmed for a cut — generalized to whatever resource is native to the triggering faction, not hardcoded (Andy's correction, S135: this is a Standard card, usable by any faction, so the resource type must key off the rival who caused the trigger, not a fixed type like Capacity).
 
 #### Card Story
-⚠ Story pending 04-n79.
+Every structure that goes up in Core passes through an office with its hand out.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Skimming a cut from new construction is a grounded institutional-graft premise. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `target_faction=trigger.faction` set, `doctrine_mod=None` justified — Automatic/no threshold-roll (same basis as STD.MOD.99). | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — Economy×Add confirmed valid in the Layer×Function matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | value_rating 1, +1 resource unit, cost=None — floor tier. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `structure_block.placed(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.99 (minor, automatic skim on a rival's move) — modest single-unit resource gain, no faction's doctrine strongly expressed. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Native resource tokens are existing components. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries `NativeResource(faction)` (04-n171) — parameterizes the existing bare `NativeResource` subject symbol so a `faction=All` card can resolve the correct resource type at runtime, needed because (unlike faction-specific precedent, e.g. GUI.MOD.2/3/4's hardcoded Capacity) this card has no single fixed faction context. Confirmable on that basis; formal §6.3 write-up pending full landscape per Andy's S137 direction. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same as STD.MOD.99's structure-placement frequency. |  |
+| Firing window (ModReactCard) | ✓ | Shares its trigger event with STD.MOD.99 (both fire on `structure_block.placed`) — not a race, since both can independently apply to the same event (one removes a chip, one grants a resource); multiple cards firing on the same confirmed event is standard practice elsewhere in the set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Economy reaction: a rival's structure placement in Core is skimmed for a cut — generalized to whatever resource is native to the triggering faction, not hardcoded (Andy's correction: this is a Standard card, usable by any faction, so the resource type must key off the rival who caused the trigger, not a fixed type like Capacity).*
 
@@ -6429,46 +6429,46 @@ STD.MOD.104 = Card(
 
 ---
 
-### STD.MOD.105 — AUDIT TRAIL *(stub)*
+### STD.MOD.105 — AUDIT TRAIL
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Economy reaction: a rival reaching Established status in Core triggers an audit — same `NativeResource(faction)` generalization as STD.MOD.104.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Reaching Established status means an audit — and audits find things.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.104. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.104. | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.104. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same floor tier as STD.MOD.104. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `established_marker.placed(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.104. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.104. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.104 (persistence/resolution_type deferred; `NativeResource(faction)` under 04-n171). | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Established status is a real but infrequent milestone — not overfire. |  |
+| Firing window (ModReactCard) | ✓ | Shares its trigger event with GUI.MOD.9 Field Supervisor (per design_note) — not a race; multiple cards firing on the same confirmed event is standard practice elsewhere in the set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Economy reaction: a rival reaching Established status in Core triggers an audit — same NativeResource(faction) generalization as STD.MOD.104.*
 
@@ -6510,46 +6510,46 @@ STD.MOD.105 = Card(
 
 ---
 
-### STD.MOD.106 — EMERGENCY RESERVE *(stub)*
+### STD.MOD.106 — EMERGENCY RESERVE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Economy reaction: self-triggered safety net when the holder's own presence in Core is squeezed — same `NativeResource` generalization as STD.MOD.104/105, but keyed to the holder's own faction rather than a rival's. Distinct from the Floor Act mechanic (PM02 VE-01) — this is a Core-specific, presence-loss-triggered reserve, not a general insufficient-resource safety net.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A reserve fund, tapped the moment the ground gives out from under you.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | A contingency reserve triggered by the holder's own setback is a grounded, self-serving premise distinct from the reactive-to-rival shape of 98–105. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` (self-triggered) — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.104/105. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same floor tier as STD.MOD.104/105 — compensatory rather than punitive, appropriate for a self-triggered safety net. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `presence_chip.removed(faction=holder, ring=1)` — same `ring=` parameter gap on `.removed()` flagged at STD.MOD.100; also worth confirming `faction=holder` is valid as a bare trigger-match parameter the same way `faction=opponent` is used elsewhere (plausible, since it's the same symbol class, but not yet independently confirmed in a trigger-matching position specifically). | Art 04 §6.3 |
+| Portrait validity | ✓ | Self-triggered contingency, automatic, modest single-unit resource gain — no adversarial target, no faction's doctrine strongly expressed by having a reserve fund. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.104. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.104 (persistence/resolution_type deferred; `NativeResource(holder)` under 04-n171), plus the `ring=` parameter question above. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Presence-chip loss is a recurring event for any faction under pressure — not underfire. |  |
+| Firing window (ModReactCard) | ✓ | No other Ring 1 card shares this exact `faction=holder` trigger scoping. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Economy reaction: self-triggered safety net when the holder's own presence in Core is squeezed — same NativeResource generalization, but keyed to the holder's own faction rather than a rival's.*
 
@@ -6591,46 +6591,46 @@ STD.MOD.106 = Card(
 
 ---
 
-### STD.MOD.107 — ON THE DOCKET *(stub)*
+### STD.MOD.107 — ON THE DOCKET
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Standing reaction: a rival's standing gain in Core draws a formal, procedural response — a straightforward capitalize-on-rival's-gain template. (Correction, S137: originally cited as mirroring "GHO.MOD.11 Manufactured Evidence's Standing-add pattern" — checked against GHO.MOD.11 directly during the faction ModReactCard survey and that card does no such thing; it's a Target-Profile-hijack card (Information/Corrupt/TargetProfile), not a Standing mutation. Mis-citation removed; this card's `faction(holder).standing.add(1)` template stands on its own precedent within the Ring set, STD.MOD.102.)
 
 #### Card Story
-⚠ Story pending 04-n79.
+Every gain gets a formal response, whether anyone asked for one or not.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Formal procedural response to a rival's standing gain is a grounded Core-flavored premise. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `target_faction=trigger.faction` set, `doctrine_mod=None` justified — Automatic/no threshold-roll (same basis as STD.MOD.99). | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137 (Andy's catch, 04-n173): `function=Add` → `function=Shift` — Standing×Add is invalid per the matrix ("subsumed by Shift"). Also unifies with STD.MOD.102/114/126 (were `Information/Add` for the identical effect, also corrected to `Standing/Shift`). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | value_rating 1, +1 PS, cost=None — floor tier. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `standing_marker.increased(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
+| Portrait validity | ✓ | Grey-area basis as STD.MOD.98–100/104: passive procedural response, automatic, modest single-point PS gain. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.102. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries `faction(holder)` (04-n171), same basis as STD.MOD.102. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Standing shifts are a recurring event — not underfire. |  |
+| Firing window (ModReactCard) | ✓ | Opposite-direction pair with STD.MOD.109 — not a race, since standing can't increase and decrease simultaneously for the same faction. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Standing reaction: a rival's standing gain in Core draws a formal, procedural response.*
 
@@ -6640,7 +6640,7 @@ STD.MOD.107 = Card(
     name    = "On the Docket",
     tagline = "Every gain gets a formal response, whether anyone asked for one or not.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = standing_marker.increased(faction=opponent, ring=1),
     beat            = None,
@@ -6665,53 +6665,53 @@ STD.MOD.107 = Card(
     portrait     = None,
     narrative    = "Standing shifts in Core get logged, cross-referenced, and answered — Core doesn't let a change go unremarked.",
     perspectives = None,
-    design_note  = "Straightforward capitalize-on-rival's-gain template, mirrors GHO.MOD.11 Manufactured Evidence's Standing-add pattern.",
+    design_note  = "Straightforward capitalize-on-rival's-gain template. Corrected S137: no longer cites GHO.MOD.11 as precedent — that card is a Target-Profile hijack (Information/Corrupt/TargetProfile), not a Standing mutation; the original citation was wrong.",
     arbiter_note = None,
 )
 ```
 
 ---
 
-### STD.MOD.108 — PRECEDENT CITED *(stub)*
+### STD.MOD.108 — PRECEDENT CITED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Standing reaction: a Core district turning Contested is treated as a procedural opening. Reframed from the S134 seed concept (originally "an Accord involving a Core-based faction forms") — Accords aren't ring-scoped, so a Core-specific version couldn't distinguish itself from the other rings' copies. Tension Marker placement is a genuinely ring-scoped, confirmed-vocabulary substitute with the same "formal/procedural response" character.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Core keeps records of every dispute. A district turning contested opens the door to citing precedent from somewhere else.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | A contested district as a procedural/legal opening is a grounded Core-flavored premise. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ (N/A) | No `target_faction` (tension marker isn't faction-scoped) — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.107: `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Same floor tier as STD.MOD.107. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `tension_marker.placed` matches confirmed §6.3 signature. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.107. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=trigger.district` — valid. | Art 01 §6–7 |
+| Supported by components | ✓ | Tension Marker is an existing component. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107 (persistence/resolution_type deferred; `faction(holder)` under 04-n171). | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Tension Marker placement is a recurring board event — not underfire. |  |
+| Firing window (ModReactCard) | ✓ | No other Ring 1 card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Standing reaction: a Core district turning Contested is treated as a procedural opening.*
 
@@ -6721,7 +6721,7 @@ STD.MOD.108 = Card(
     name    = "Precedent Cited",
     tagline = "A contested district is a legal opening as much as a physical one.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = tension_marker.placed(ring=1),
     beat            = None,
@@ -6753,46 +6753,46 @@ STD.MOD.108 = Card(
 
 ---
 
-### STD.MOD.109 — QUIET REPRIMAND *(stub)*
+### STD.MOD.109 — QUIET REPRIMAND
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Standing reaction: a rival's standing drop in Core is capitalized on. Mirrors STD.MOD.107's template, opposite trigger direction. Closes the 12-card Ring 1 (Core) ModReactCard set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A reprimand doesn't need to be loud to be effective. Core specializes in the quiet kind.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.107, mirrored direction. | Art 00 §7 |
+| Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.107. | Art 04 §6.5 |
+| Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.107/108: `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Same floor tier as STD.MOD.107. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `standing_marker.decreased(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.107. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.107. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Standing shifts are a recurring event — not underfire. |  |
+| Firing window (ModReactCard) | ✓ | Opposite-direction pair with STD.MOD.107 — not a race. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Standing reaction: a rival's standing drop in Core is capitalized on. Closes the 12-card Ring 1 (Core) ModReactCard set — 09-06's Ring ModReactCard content pass now underway (Ring 2/Mid and Ring 3/Baryo still pending).*
 
@@ -6802,7 +6802,7 @@ STD.MOD.109 = Card(
     name    = "Quiet Reprimand",
     tagline = "Someone's standing slips, and Core is there to make a note of it.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = standing_marker.decreased(faction=opponent, ring=1),
     beat            = None,
@@ -6834,46 +6834,46 @@ STD.MOD.109 = Card(
 
 ---
 
-### STD.MOD.110 — LINE REROUTED *(stub)*
+### STD.MOD.110 — LINE REROUTED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.98 Notified of Encroachment — same mechanic (`presence_chip.placed` → 1-chip reactive claim), renamed to Mid's operational-throughput voice per Art 00 §6.7.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Traffic reroutes around whoever just staked a claim in Mid — right into someone else's hands.
 
-**Design checklist:**
+**Design checklist:** verified independently against STD.MOD.98's basis, not copy-assumed — same trigger form (`presence_chip.placed(faction=X, district=Y, ring=Z)`, confirmed §6.3), same Territory×Add taxonomy pairing (valid per §5.1 matrix), same grey-area Portrait basis (automatic, reflexive, uniform across all 5 factions), same deferred persistence/resolution_type item, same open Stack-behavior question. All hold identically for ring=2 — no ring-specific delta found.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.98. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | Mid operational-throughput register (Art 00 §6.7). Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.98. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory/Add/PresenceToken — same verified pairing as STD.MOD.98. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.98. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.98. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.98. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.98. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.98. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.98. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 (Mid) ModReactCard set — 11 of 12 cards are direct ring=2 duplicates of Ring 1's mechanics (Andy's call: cards already ring-scoped in Ring 1 duplicate cleanly, no need to redesign each one), renamed to Mid's own established seed vocabulary (Whiteboard/modifier_card_ideas.md) and Art 00 §6.7 voice (operational throughput, infrastructure chokepoints). Only STD.MOD.114 needed a genuine redesign — see its note. Mirrors STD.MOD.98's template exactly.*
 
@@ -6915,46 +6915,46 @@ STD.MOD.110 = Card(
 
 ---
 
-### STD.MOD.111 — CAPACITY EXCEEDED *(stub)*
+### STD.MOD.111 — CAPACITY EXCEEDED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.99 Structural Objection — same mechanic (structure placement draws a 1-chip removal from the same district), renamed to Mid's throughput/ceiling voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Mid's infrastructure has a ceiling, and someone just tested it.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.99's basis — same `structure_block.placed` trigger (confirmed §6.3), same Territory×Remove pairing (valid), same `doctrine_mod=None`-justified-by-Automatic-resolution reasoning despite `target_faction` being set, same grey-area Portrait basis weighed against the adversarial angle, same deferred schema items. No ring-specific delta.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.99. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | Mid throughput/ceiling register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `target_faction` set, `doctrine_mod=None` justified — Automatic/no threshold-roll (same basis as STD.MOD.99). | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory/Remove/PresenceToken — same verified pairing as STD.MOD.99. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.99. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.99. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.99. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.98. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.99. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.99. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.99 Structural Objection.*
 
@@ -6996,46 +6996,46 @@ STD.MOD.111 = Card(
 
 ---
 
-### STD.MOD.112 — SALVAGE RIGHTS *(stub)*
+### STD.MOD.112 — SALVAGE RIGHTS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.100 Escort Withdrawn — same mechanic, renamed to Mid's salvage/leftovers voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Nothing sits idle in Mid's infrastructure for long. Someone always moves in on the leftovers.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.100's basis — inherits the same open `.removed()`-with-`ring=` vocabulary gap (schema log #3), same grey-area Portrait basis, same deferred schema items. No new ring-specific delta.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.100. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | Mid salvage/leftovers register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory/Add/PresenceToken — same verified pairing as STD.MOD.98/100. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.100. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ⚠ | Same `ring=` on `.removed()` gap as STD.MOD.100 (schema log #3). | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.100. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.98. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.100. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.100. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.100. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.100 Escort Withdrawn.*
 
@@ -7077,46 +7077,46 @@ STD.MOD.112 = Card(
 
 ---
 
-### STD.MOD.113 — GRID ANOMALY LOGGED *(stub)*
+### STD.MOD.113 — GRID ANOMALY LOGGED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.101 Overheard in the Commissary — same mechanic (`dominant_marker.placed` → Intel Token delivery), renamed to Mid's grid/relay-monitoring voice. Name repurposed from the Mid seed pool's originally-unbuildable covert-op-discovery concept.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A district locked down draws load like a failing relay. The grid logs it before anyone announces it.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.101's basis — same confirmed `dominant_marker.placed` trigger, same Information×Add pairing, same `faction(holder)` object-receiver syntax (04-n171, consistent usage), same genuinely-open Portrait question (this is the "capitalizing on a rival's public milestone" shape, not the reflexive-logistics shape — same uncertainty as 101, not resolved differently just because it's Mid).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.101. | Art 00 §7 |
+| Voice fit | ✓ | Mid grid/relay register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.101. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Information/Add/IntelToken — same verified pairing as STD.MOD.101. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.101 (value_rating 2). | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.101. | Art 04 §6.3 |
+| Portrait validity | ⚠ | Same genuinely-open question as STD.MOD.101 — capitalizing on a rival's public Dominant milestone reads more deliberate than the reflexive-logistics cards; not resolved here. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.101. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.101 (persistence/resolution_type deferred; `faction(holder)` under 04-n171). | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.101. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.101. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.101 Overheard in the Commissary.*
 
@@ -7158,46 +7158,46 @@ STD.MOD.113 = Card(
 
 ---
 
-### STD.MOD.114 — SERVICE LEVEL BREACH *(stub)*
+### STD.MOD.114 — SERVICE LEVEL BREACH
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+The one Ring 2 card that needed genuine redesign rather than direct duplication — STD.MOD.102 Access Log Pulled's `accord.placed(faction=Any)` trigger isn't ring-scoped, so copying it verbatim would give every ring an identical, undifferentiated card. Mid's own seed pool already had the right concept ("fires when an Accord involving Mid infrastructure is broken"), mapping to the confirmed `accord.removed` change-type rather than `.placed`. `accord.removed` chosen over `.corrupted` — dissolution/breach fits Mid's operational-consequence voice better than data-tampering, which reads more Ghost/Information-doctrine.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An Accord's dissolution isn't just paperwork — whatever it was propping up now needs a new arrangement.
 
-**Design checklist:**
+**Design checklist:** taxonomy corrected S137 alongside STD.MOD.102 to `Standing/Shift` (04-n173, closed). Trigger, Portrait, and schema-deferral reasoning otherwise mirror STD.MOD.102.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Accord dissolution as an operational-consequence event is grounded for Mid specifically. | Art 00 §7 |
+| Voice fit | ✓ | Mid operational-consequence register — deliberately distinct from STD.MOD.102's institutional-paperwork framing (per design_note). Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.102: `layer=Information` → `layer=Standing`, `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Floor tier, matches STD.MOD.102. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `accord.removed(faction=Any)` matches confirmed §6.3 signature (distinct semantics from `.placed`/`.corrupted`, correctly chosen per Accord trigger semantics notes). | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.102. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ (N/A) | `target_district=None` — Accords aren't zone-scoped, same as STD.MOD.102. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.102. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.102. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Accord dissolution is real but infrequent — moderate, not underfire given city-wide (not ring-filtered) scope. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ (N/A) | Same not-ring-scoped-trigger basis as STD.MOD.102, Andy-confirmed acceptable (S135). |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. The one Ring 2 card that needed genuine redesign rather than direct duplication — STD.MOD.102 Access Log Pulled's `accord.placed(faction=Any)` trigger isn't ring-scoped, so copying it verbatim would give every ring an identical, undifferentiated card. Mid's own seed pool already had the right concept: "Service Level Breach (fires when an Accord involving Mid infrastructure is broken)" — maps directly to the confirmed `accord.removed` change-type.*
 
@@ -7207,7 +7207,7 @@ STD.MOD.114 = Card(
     name    = "Service Level Breach",
     tagline = "When an agreement lapses, whatever infrastructure depended on it becomes everyone's problem — and someone's opportunity.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Information,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = accord.removed(faction=Any),
     beat            = None,
@@ -7239,46 +7239,46 @@ STD.MOD.114 = Card(
 
 ---
 
-### STD.MOD.115 — ROUTINE INSPECTION *(stub)*
+### STD.MOD.115 — ROUTINE INSPECTION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.103 Flagged for Review — same mechanic (−5 threshold hinder on a rival's submitted PA), renamed to Mid's inspection voice. Name drawn directly from the Mid seed pool's own Submission-reclassified entry (04-53 direction, PM02 L262).
 
 #### Card Story
-⚠ Story pending 04-n79.
+An inspection nobody asked for, timed to land before the paperwork clears.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.103's basis — same `arbiter.modify` grounding in the existing BM-xx/M-11 threshold pipeline (not the invalid Burn Notice citation, which this card's design_note never repeated), same Submission×Modify pairing, same genuinely-open Portrait question.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.103. | Art 00 §7 |
+| Voice fit | ✓ | Mid inspection register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.103. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Submission/Modify/PublicAct — same verified pairing as STD.MOD.103. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.103 (value_rating 2, −5 threshold). | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.103. | Art 04 §6.3 |
+| Portrait validity | ⚠ | Same genuinely-open question as STD.MOD.103 — deliberate obstruction of a rival's PA, not settled to None. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.103. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same BM-xx/M-11 pipeline grounding as STD.MOD.103 — not new ARBITER behavior. | Art 03 §9.4.1.1, §9.4.3.1.3 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.103 (`arbiter.modify` under 04-n171). | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.103. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.103. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.103 Flagged for Review. Name drawn directly from the Mid seed pool's own Submission-reclassified entry (04-53 direction, PM02 L262) — "Routine Inspection" was already reclassified Information→Submission for exactly this mechanic.*
 
@@ -7320,46 +7320,46 @@ STD.MOD.115 = Card(
 
 ---
 
-### STD.MOD.116 — TOLL COLLECTED *(stub)*
+### STD.MOD.116 — TOLL COLLECTED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same mechanic, renamed to Mid's toll/chokepoint voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Nothing gets built in Mid without crossing a toll line somebody controls.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.104's basis — same `NativeResource(trigger.faction)` generalization (04-n171), same Economy×Add pairing, same grey-area Portrait basis.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.104. | Art 00 §7 |
+| Voice fit | ✓ | Mid toll/chokepoint register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.104. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.104. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.104. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.104. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.104. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.104. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.104. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.104. |  |
+| Firing window (ModReactCard) | ✓ | Shares its trigger event with STD.MOD.111 (both fire on `structure_block.placed`, ring=2) — same standard-practice basis as STD.MOD.104/99. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.104. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.104 Budget Reallocated. Name drawn from the Mid seed pool.*
 
@@ -7401,46 +7401,46 @@ STD.MOD.116 = Card(
 
 ---
 
-### STD.MOD.117 — OVERTIME BILLED *(stub)*
+### STD.MOD.117 — OVERTIME BILLED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.105 Audit Trail — same mechanic, renamed to Mid's reconciliation voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Every climb to Established in Mid triggers a reconciliation somewhere down the line.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.105's basis — same `NativeResource(trigger.faction)` generalization, same Economy×Add pairing, same grey-area Portrait basis.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.105. | Art 00 §7 |
+| Voice fit | ✓ | Mid reconciliation register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.105. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.105. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.105. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.105. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.105. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.105. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.105. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.105. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.105. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.105 Audit Trail. Name drawn from the Mid seed pool.*
 
@@ -7482,46 +7482,46 @@ STD.MOD.117 = Card(
 
 ---
 
-### STD.MOD.118 — BACKUP GENERATOR *(stub)*
+### STD.MOD.118 — BACKUP GENERATOR
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.106 Emergency Reserve — same mechanic, renamed to Mid's backup-generator voice. Name drawn directly from the Mid seed pool — an exact conceptual match.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Losing ground in Mid trips a contingency that's always been sitting there, waiting.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.106's basis — same `NativeResource(holder)` generalization, same `.removed()`-with-`ring=` vocabulary gap (schema log #3), same grey-area Portrait basis.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.106. | Art 00 §7 |
+| Voice fit | ✓ | Mid backup/contingency register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` (self-triggered) — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.106. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.106. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ⚠ | Same `ring=` on `.removed()` gap as STD.MOD.106 (schema log #3). | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.106. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.106. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.106. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.106. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.106. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.106 Emergency Reserve. Name drawn directly from the Mid seed pool — an exact conceptual match ("fires when the acting faction's own Mid-based generation is disrupted — a reserve kicks in").*
 
@@ -7563,46 +7563,46 @@ STD.MOD.118 = Card(
 
 ---
 
-### STD.MOD.119 — UNION STATEMENT *(stub)*
+### STD.MOD.119 — UNION STATEMENT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.107 On the Docket — same mechanic, renamed to Mid's labor-apparatus voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Every gain in Mid gets a statement from somebody with standing to make one.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.107's basis — same `faction(holder)` syntax (04-n171), same grey-area Portrait basis. Taxonomy corrected S137 alongside STD.MOD.107 to `Standing/Shift` (04-n173, closed).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.107. | Art 00 §7 |
+| Voice fit | ✓ | Mid labor-apparatus register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.107. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.107: `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.107. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.107. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.107. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.107. |  |
+| Firing window (ModReactCard) | ✓ | Opposite-direction pair with STD.MOD.121 — not a race. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.107. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.107 On the Docket. Name drawn from the Mid seed pool.*
 
@@ -7612,7 +7612,7 @@ STD.MOD.119 = Card(
     name    = "Union Statement",
     tagline = "Every gain in Mid gets a statement from somebody with standing to make one.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = standing_marker.increased(faction=opponent, ring=2),
     beat            = None,
@@ -7644,46 +7644,46 @@ STD.MOD.119 = Card(
 
 ---
 
-### STD.MOD.120 — ON RECORD *(stub)*
+### STD.MOD.120 — ON RECORD
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.108 Precedent Cited — same mechanic, renamed to Mid's record-keeping voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Mid keeps a file on every dispute. A contested line gets a citation before it gets resolved.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.108's basis — same grey-area Portrait basis. Taxonomy corrected S137 alongside STD.MOD.108 to `Standing/Shift` (04-n173, closed).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.108. | Art 00 §7 |
+| Voice fit | ✓ | Mid record-keeping register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ (N/A) | No `target_faction` (tension marker isn't faction-scoped) — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.108: `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.108. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.108. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.108. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.108. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.108. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.108. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.108. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 2 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.108. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.108 Precedent Cited.*
 
@@ -7693,7 +7693,7 @@ STD.MOD.120 = Card(
     name    = "On Record",
     tagline = "A contested line in Mid gets logged the moment the tension shows.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = tension_marker.placed(ring=2),
     beat            = None,
@@ -7725,46 +7725,46 @@ STD.MOD.120 = Card(
 
 ---
 
-### STD.MOD.121 — FORMAL NOTICE *(stub)*
+### STD.MOD.121 — FORMAL NOTICE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 2 duplicate of STD.MOD.109 Quiet Reprimand — same mechanic, renamed to Mid's paper-trail voice. Closes the 12-card Ring 2 (Mid) ModReactCard set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A formal notice doesn't need drama. Mid's bureaucracy just needs the paper trail.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.109's basis — same grey-area Portrait basis. Taxonomy corrected S137 alongside STD.MOD.109 to `Standing/Shift` (04-n173, closed).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.109. | Art 00 §7 |
+| Voice fit | ✓ | Mid paper-trail register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.109. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.109: `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.109. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.109. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.109. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.107. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.109. |  |
+| Firing window (ModReactCard) | ✓ | Opposite-direction pair with STD.MOD.119 — not a race. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.109. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 2 duplicate of STD.MOD.109 Quiet Reprimand. Closes the 12-card Ring 2 (Mid) ModReactCard set — Ring 3 (Baryo) is the only leg of 09-06's Ring ModReactCard pass still open.*
 
@@ -7774,7 +7774,7 @@ STD.MOD.121 = Card(
     name    = "Formal Notice",
     tagline = "Someone's standing slips, and Mid puts it on the record.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = standing_marker.decreased(faction=opponent, ring=2),
     beat            = None,
@@ -7806,46 +7806,46 @@ STD.MOD.121 = Card(
 
 ---
 
-### STD.MOD.122 — CROWD GATHERS *(stub)*
+### STD.MOD.122 — CROWD GATHERS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.98/110 — same mechanic, renamed to Baryo's gray-economy/community-network voice. Name drawn directly from the Baryo seed pool's matching Territory entry.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Baryo doesn't wait for paperwork. Word moves faster than any filing ever could.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.98's basis — same confirmed trigger, taxonomy, and grey-area Portrait reasoning, no ring-specific delta.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.98. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | Baryo gray-economy register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.98. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory/Add/PresenceToken — same verified pairing as STD.MOD.98. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.98. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.98. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.98. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.98. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.98. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.98. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 (Baryo) ModReactCard set — same pattern as Ring 2: 11 of 12 cards are direct ring=3 duplicates of Ring 1's mechanics, renamed to Baryo's own seed vocabulary (gray economy, community network — Art 00 §6.7). Only STD.MOD.126 needed a genuine redesign, per Andy: `accord.corrupted` this time, not `.removed` (Mid's choice) — same underlying pattern (the one unscoped card gets a ring-specific accord change-type), different change-type per ring.*
 
@@ -7887,46 +7887,46 @@ STD.MOD.122 = Card(
 
 ---
 
-### STD.MOD.123 — PRICED OUT *(stub)*
+### STD.MOD.123 — PRICED OUT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.99/111 — same mechanic, renamed to Baryo's rent/displacement voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+New construction changes the rent, one way or another.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.99's basis — same `doctrine_mod=None`-justified-by-Automatic reasoning, same taxonomy pairing, same grey-area Portrait basis weighed against the adversarial angle.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.99. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | Baryo rent/displacement register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.99. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory/Remove/PresenceToken — same verified pairing as STD.MOD.99. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.99. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.99. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.99. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.98. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.99. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.99. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.99/STD.MOD.111.*
 
@@ -7968,46 +7968,46 @@ STD.MOD.123 = Card(
 
 ---
 
-### STD.MOD.124 — EVICTION NOTICE *(stub)*
+### STD.MOD.124 — EVICTION NOTICE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.100/112 — same mechanic, renamed to Baryo's voice. Name drawn directly from the Baryo seed pool — an exact conceptual match.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The moment a foothold disappears, someone else is already moving their things in.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.100's basis — inherits the same open `.removed()`-with-`ring=` vocabulary gap (schema log #3), same grey-area Portrait basis.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.100. | Art 00 §7; 04-53 |
+| Voice fit | ✓ | Baryo register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory/Add/PresenceToken — same verified pairing as STD.MOD.98/100. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.100. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ⚠ | Same `ring=` on `.removed()` gap as STD.MOD.100/112 (schema log #3). | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.100. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.98. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.100. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.100. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.100. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.100/STD.MOD.112. Name drawn directly from the Baryo seed pool — an exact conceptual match.*
 
@@ -8049,46 +8049,46 @@ STD.MOD.124 = Card(
 
 ---
 
-### STD.MOD.125 — WORD TRAVELS *(stub)*
+### STD.MOD.125 — WORD TRAVELS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.101/113 — same mechanic, renamed to Baryo's voice. Name drawn from the Baryo seed pool's Information entry.
 
 #### Card Story
-⚠ Story pending 04-n79.
+When someone locks down a piece of Baryo, the street knows before the ink's even dry — if there was any ink to begin with.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.101's basis — same `faction(holder)` syntax (04-n171), same genuinely-open Portrait question (not resolved to None, same as 101/113).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.101. | Art 00 §7 |
+| Voice fit | ✓ | Baryo street-information register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.101. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Information/Add/IntelToken — same verified pairing as STD.MOD.101. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.101. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.101. | Art 04 §6.3 |
+| Portrait validity | ⚠ | Same genuinely-open question as STD.MOD.101/113 — not resolved to None. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.101. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.101. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.101. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.101. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.101/STD.MOD.113. Name drawn from the Baryo seed pool's Information entry.*
 
@@ -8130,46 +8130,46 @@ STD.MOD.125 = Card(
 
 ---
 
-### STD.MOD.126 — QUIETLY REWRITTEN *(stub)*
+### STD.MOD.126 — QUIETLY REWRITTEN
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+The one Ring 3 card needing genuine redesign, same as STD.MOD.102/114 before it — Andy's direction this time: `accord.corrupted`, not `.removed`. A corrupted Accord (falsified/tampered terms) fits Baryo's informal, unfiled-agreement culture better than a formal dissolution.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A handshake deal's terms are whatever the last conversation says they are.
 
-**Design checklist:**
+**Design checklist:** taxonomy corrected S137 alongside STD.MOD.102/114 to `Standing/Shift` (04-n173, closed). Trigger semantics distinct from both siblings (`.corrupted` vs `.placed`/`.removed`) but confirmed valid.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Falsified/renegotiated informal terms is a grounded premise specifically for Baryo's unfiled-agreement culture. | Art 00 §7 |
+| Voice fit | ✓ | Baryo informal-agreement register, deliberately distinct from STD.MOD.102/114's institutional/operational framings. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.102/114: `layer=Information` → `layer=Standing`, `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Floor tier, matches STD.MOD.102/114. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | `accord.corrupted(faction=Any)` matches confirmed §6.3 signature and semantics (textual alteration of an active Accord, distinct from `.removed`). | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.102/114. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ (N/A) | Not zone-scoped, same as STD.MOD.102/114. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.102. | Art 02 §6–8 |
+| Supported by game procedure | ⚠ | Same open Art 06 gap noted for `accord.corrupted` generally (requires an explicit ARBITER corrupt step on the Accord form, tracked 06-n01) — not specific to this card. | Art 03; GR 6.1; PM05 06-n01 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.102. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Accord corruption is real but infrequent — moderate, not underfire given city-wide scope. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ (N/A) | Not ring-scoped trigger, same basis as STD.MOD.102/114. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. The one Ring 3 card needing genuine redesign, same as STD.MOD.102/STD.MOD.114 before it — Andy's direction this time: `accord.corrupted`, not `.removed`. A corrupted Accord (falsified/tampered terms) fits Baryo's informal, unfiled-agreement culture better than a formal dissolution.*
 
@@ -8179,7 +8179,7 @@ STD.MOD.126 = Card(
     name    = "Quietly Rewritten",
     tagline = "A handshake deal's terms are whatever the last conversation says they are.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Information,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = accord.corrupted(faction=Any),
     beat            = None,
@@ -8211,46 +8211,46 @@ STD.MOD.126 = Card(
 
 ---
 
-### STD.MOD.127 — SOMEONE'S WATCHING *(stub)*
+### STD.MOD.127 — SOMEONE'S WATCHING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.103/115 — same mechanic (−5 threshold hinder), renamed to Baryo's street-surveillance voice. Name drawn directly from the Baryo seed pool's own Submission-reclassified entry (04-53 direction, PM02 L262).
 
 #### Card Story
-⚠ Story pending 04-n79.
+An operation through Baryo draws attention before it ever gets a chance to land clean.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.103's basis — same `arbiter.modify` grounding in the existing BM-xx/M-11 pipeline, same genuinely-open Portrait question.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.103. | Art 00 §7 |
+| Voice fit | ✓ | Baryo street-surveillance register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.103. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Submission/Modify/PublicAct — same verified pairing as STD.MOD.103. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.103. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.103. | Art 04 §6.3 |
+| Portrait validity | ⚠ | Same genuinely-open question as STD.MOD.103/115. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.103. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same BM-xx/M-11 pipeline grounding as STD.MOD.103/115. | Art 03 §9.4.1.1, §9.4.3.1.3 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.103. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.103. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.103. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.103/STD.MOD.115. Name drawn directly from the Baryo seed pool's own Submission-reclassified entry (04-53 direction, PM02 L262).*
 
@@ -8292,46 +8292,46 @@ STD.MOD.127 = Card(
 
 ---
 
-### STD.MOD.128 — INFORMAL TOLL *(stub)*
+### STD.MOD.128 — INFORMAL TOLL
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.104/116 — same mechanic, renamed to Baryo's informal-economy voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+There's no filing cabinet for it, but everyone knows the toll gets paid regardless.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.104's basis — same `NativeResource(trigger.faction)` generalization (04-n171), same grey-area Portrait basis.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.104. | Art 00 §7 |
+| Voice fit | ✓ | Baryo informal-economy register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.104. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.104. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.104. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.104. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.104. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.104. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.104. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.104. |  |
+| Firing window (ModReactCard) | ✓ | Shares its trigger event with STD.MOD.123 — same standard-practice basis as STD.MOD.104/99. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.104. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.104/STD.MOD.116. Name drawn from the Baryo seed pool.*
 
@@ -8373,46 +8373,46 @@ STD.MOD.128 = Card(
 
 ---
 
-### STD.MOD.129 — CUT OF THE ACTION *(stub)*
+### STD.MOD.129 — CUT OF THE ACTION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.105/117 — same mechanic, renamed to Baryo's voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The gray economy notices every climb — and it always finds a way in.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.105's basis — same `NativeResource(trigger.faction)` generalization, same grey-area Portrait basis.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.105. | Art 00 §7 |
+| Voice fit | ✓ | Baryo gray-economy register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.105. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.105. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.105. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.105. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.105. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.105. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.105. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.105. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.105. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.105/STD.MOD.117.*
 
@@ -8454,46 +8454,46 @@ STD.MOD.129 = Card(
 
 ---
 
-### STD.MOD.130 — VENDOR CREDIT CALLED *(stub)*
+### STD.MOD.130 — VENDOR CREDIT CALLED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.106/118 — same mechanic, renamed to Baryo's favor-economy voice. Name drawn directly from the Baryo seed pool — an exact conceptual match.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Baryo runs on favors owed. This is one finally getting called in.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.106's basis — same `NativeResource(holder)` generalization, same open `.removed()`-with-`ring=` vocabulary gap (schema log #3).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.106. | Art 00 §7 |
+| Voice fit | ✓ | Baryo favor-economy register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | No `target_faction` (self-triggered) — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.106. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.106. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ⚠ | Same `ring=` on `.removed()` gap as STD.MOD.106/118 (schema log #3). | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.106. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.106. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.106. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.106. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.106. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.106/STD.MOD.118. Name drawn directly from the Baryo seed pool — an exact conceptual match ("fires when the acting faction's resource falls short in Baryo — informal credit covers the gap").*
 
@@ -8535,46 +8535,46 @@ STD.MOD.130 = Card(
 
 ---
 
-### STD.MOD.131 — NEIGHBORHOOD NOTICES *(stub)*
+### STD.MOD.131 — NEIGHBORHOOD NOTICES
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.107/119 — same mechanic, renamed to Baryo's community-ledger voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The neighborhood keeps its own ledger, and it's not shy about updating it out loud.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.107's basis — same `faction(holder)` syntax (04-n171), same grey-area Portrait basis. Taxonomy corrected S137 alongside STD.MOD.107 to `Standing/Shift` (04-n173, closed).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.107. | Art 00 §7 |
+| Voice fit | ✓ | Baryo community-ledger register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.107. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.107/119: `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.107. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.107. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.107. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.107. |  |
+| Firing window (ModReactCard) | ✓ | Opposite-direction pair with STD.MOD.133 — not a race. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.107. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.107/STD.MOD.119.*
 
@@ -8584,7 +8584,7 @@ STD.MOD.131 = Card(
     name    = "Neighborhood Notices",
     tagline = "A gain in Baryo doesn't go unnoticed — or unremarked on.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = standing_marker.increased(faction=opponent, ring=3),
     beat            = None,
@@ -8616,46 +8616,46 @@ STD.MOD.131 = Card(
 
 ---
 
-### STD.MOD.132 — SIDES ARE TAKEN *(stub)*
+### STD.MOD.132 — SIDES ARE TAKEN
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.108/120 — same mechanic, renamed to Baryo's voice.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Baryo doesn't wait for an official ruling. The neighborhood picks its side the moment the tension shows.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.108's basis — same grey-area Portrait basis. Taxonomy corrected S137 alongside STD.MOD.108 to `Standing/Shift` (04-n173, closed).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.108. | Art 00 §7 |
+| Voice fit | ✓ | Baryo register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ (N/A) | No `target_faction` (tension marker isn't faction-scoped) — trivially correct. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.108/120: `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.108. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.108. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.108. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.108. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.108. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.108. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.108. |  |
+| Firing window (ModReactCard) | ✓ | No collision within Ring 3 set. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.108. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.108/STD.MOD.120.*
 
@@ -8665,7 +8665,7 @@ STD.MOD.132 = Card(
     name    = "Sides Are Taken",
     tagline = "When a block turns openly contested, everybody already knows where they stand.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = tension_marker.placed(ring=3),
     beat            = None,
@@ -8697,46 +8697,46 @@ STD.MOD.132 = Card(
 
 ---
 
-### STD.MOD.133 — THE CROWD REMEMBERS *(stub)*
+### STD.MOD.133 — THE CROWD REMEMBERS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Direct Ring 3 duplicate of STD.MOD.109/121 — same mechanic, renamed to Baryo's long-memory voice. Closes the 12-card Ring 3 (Baryo) ModReactCard set — and closes 09-06's full Ring ModReactCard pass (36 cards, all 3 rings).
 
 #### Card Story
-⚠ Story pending 04-n79.
+Baryo's memory is longer than anywhere else in the city.
 
-**Design checklist:**
+**Design checklist:** verified against STD.MOD.109's basis — same grey-area Portrait basis. Taxonomy corrected S137 alongside STD.MOD.109 to `Standing/Shift` (04-n173, closed).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.109. | Art 00 §7 |
+| Voice fit | ✓ | Baryo long-memory register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Same basis as STD.MOD.109. | Art 04 §6.5 |
+| Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Corrected S137, same fix as STD.MOD.109/121: `function=Add` → `function=Shift` (04-n173). | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.109. | Art 02 §6–7 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
+| Trigger validity | ✓ | Same basis as STD.MOD.109. | Art 04 §6.3 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.109. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | Same basis as STD.MOD.107. | Art 01 §6–7 |
+| Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ | Same basis as STD.MOD.109. |  |
+| Firing window (ModReactCard) | ✓ | Opposite-direction pair with STD.MOD.131 — not a race. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Same basis as STD.MOD.109. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
+| Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S135. Ring 3 duplicate of STD.MOD.109/STD.MOD.121. Name drawn directly from the Baryo seed pool — an exact conceptual match. Closes the 12-card Ring 3 (Baryo) ModReactCard set — and closes 09-06's full Ring ModReactCard pass (36 cards, all 3 rings).*
 
@@ -8746,7 +8746,7 @@ STD.MOD.133 = Card(
     name    = "The Crowd Remembers",
     tagline = "Baryo's memory is longer than anywhere else in the city.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
-    layer   = Standing,  function = Add,  subject = PublicStanding,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # corrected S137 (subject fix, following S126 precedent on STD.CA.13/STD.PA.4/STD.PA.7/DIR.CA.7/NET.CA.7)
 
     trigger         = standing_marker.decreased(faction=opponent, ring=3),
     beat            = None,

@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** S136 — Art 04 physical split into 8 files (Part1–Part4e); 09-16 step 1 scaffolding tooling built and run (286/384 cards scaffolded, DB-48 structure_pass added). Prior (S135): Full action-space milestone — ModActionCard (132 cards: 60 faction + 72 ring) + Ring ModReactCard (36 cards) fully stubbed; 232 total modifier cards. PM02 L266, L256–L265.
+**Design milestone:** S138 — Full 09-16 step 2 ModReactCard design-review pass complete across the entire corpus (Ring S137 + all 5 factions S138, 81 cards content-reviewed to full Design Rationale/Card Story/22-row checklist/Status; 8 pre-schema fossils identified for full re-authoring). `Whiteboard/schema_cleanup_log.md` expanded to 20 items with a full-corpus synthesis. Next: ModActionCard → ModBattleCard → CA/PA design reviews. Prior (S136): Art 04 physical split into 8 files (Part1–Part4e); 09-16 step 1 scaffolding tooling built and run (286/384 cards scaffolded, DB-48 structure_pass added).
 
 ---
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System___Part1_Core.md) | 0.9.84 | 🔄 In progress — S135: Full action-space milestone — ModActionCard (132: 60 faction + 72 ring) and Ring ModReactCard (36) fully stubbed. New syntax (`holder`, `NativeResource(faction)`, `arbiter.modify`) pending §6.3 reconciliation (04-n171). Prior — S134: Ring Modifier ModBattleCard stub pass (STD.MOD.2–25, 24 cards); S133: Modifier card acquisition-source axis; Art 04 §11 revisited; §16 Appendix + §14.2 retired. |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System___Part1_Core.md) | 0.9.85 | 🔄 In progress — S138: Full 09-16 step 2 ModReactCard design-review pass complete — 81 cards (Ring + all 5 factions) content-reviewed; 8 fossils flagged for full re-authoring; `schema_cleanup_log.md` at 20 items (full-corpus synthesis delivered); PM05 04-n177/04-n178 added. Prior — S135: Full action-space milestone — ModActionCard (132: 60 faction + 72 ring) and Ring ModReactCard (36) fully stubbed. New syntax (`holder`, `NativeResource(faction)`, `arbiter.modify`) pending §6.3 reconciliation (04-n171). |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |

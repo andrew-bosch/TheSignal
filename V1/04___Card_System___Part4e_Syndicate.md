@@ -1609,56 +1609,56 @@ SYN.PA.5 = Card(
 )
 ```
 
-### SYN.MOD.2 — SHELL CORPORATION *(stub)*
+### SYN.MOD.2 — SHELL CORPORATION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+First of the SYN.MOD.2/3 Accord-lifecycle income family — fires on Accord formation, no self-fire ambiguity (`accord.placed` isn't faction-scoped). Design_note explicitly contrasts with DIR.MOD.4 (same trigger, different resource) — a deliberate "competing institutional reactions to the same event" pattern, not a redundant duplicate.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A formal Accord goes up at the table. Syndicate didn't need to be a party to it — the paperwork itself is a market signal, and there's already a shell entity positioned to profit from it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | "Economic positioning without needing to be invited" is a clean, doctrinally central Syndicate beat. | Art 00 §7 |
+| Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Portrait submitter=+1 — correctly expresses doctrine. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Economy/Add/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Economy×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Flat, low-value (+1), no cost, table-wide trigger — plausible as a minor engine; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ✓ | `accord.placed` — confirmed vocabulary, publicly observable, no faction-scoping ambiguity. | Art 04 §6.3 |
+| Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct; Accords have no district dimension. | Art 01 §6–7 |
+| Supported by components | ✓ | Standard resource-grant mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Reuses existing Accord-formation event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as the rest of the corpus. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ⚠ | Entirely dependent on Accord-formation rate, player-driven — same variability flag as DIR.MOD.4 (same trigger). |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this exact trigger (SYN.MOD.3/7 key off different Accord events — removed/corrupted, not placed). |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Flat administrative windfall, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; Accords aren't ring-scoped. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*S128. React on Accord formation. Every formal deal creates economic opportunity — Syndicate positions inside it immediately. Pairs with SYN.MOD.3 (Offshore Slush Fund on accord.corrupted).*
+*S128. React on Accord formation. Every formal deal creates economic opportunity — Syndicate positions inside it immediately. Pairs with SYN.MOD.3 (Offshore Slush Fund on accord.corrupted). S138: full content-review pass — clean, no new issues beyond the standard schema/cost/stack gaps. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 SYN.MOD.2 = Card(
-    id      = "SYN.MOD.2",  card_id="SYN.MOD.2",  version="v0.1",
+    id      = "SYN.MOD.2",  card_id = "SYN.MOD.2",  version = "v0.1",
     name    = "Shell Corporation",
     tagline = "Every Accord is a market event. Syndicate responds accordingly.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175) — resources.add(1, Capital)
 
     trigger         = accord.placed,
     beat            = None,
@@ -1666,7 +1666,7 @@ SYN.MOD.2 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1675,12 +1675,14 @@ SYN.MOD.2 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = faction(Syndicate).resources.add(1, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Accord formation React. Every new Accord at The Table generates 1 Capital for Syndicate — the economic positioning happens before Syndicate is even a party. Delivers §5a 'accord manipulation' at the modifier level: Syndicate doesn't need to be invited to benefit from diplomatic activity. Compare DIR.MOD.4: DIR earns Mandate from the same trigger; SYN earns Capital. Competing institutional reactions to the same event.",
@@ -1690,56 +1692,56 @@ SYN.MOD.2 = Card(
 
 ---
 
-### SYN.MOD.3 — OFFSHORE SLUSH FUND *(stub)*
+### SYN.MOD.3 — OFFSHORE SLUSH FUND
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Second card of the Accord-lifecycle family — fires on `accord.removed` (higher yield than SYN.MOD.2's formation trigger). Real open question, already admitted in the card's own design_note, not invented here: should `accord.removed` cover ANY Accord ending (breach or natural completion), or does the "breach creates leverage" framing in the trailing note actually require distinguishing the two? As specced, the card doesn't distinguish — it fires on any Accord removal.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An Accord collapses — breach, expiry, doesn't matter which. Syndicate already had a clause routing capital out of the wreckage before anyone else finished reading the fine print.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Profiting from diplomatic breakdown is a coherent, doctrinally central Syndicate beat — positioning ahead of collapse. | Art 00 §7 |
+| Voice fit | ✓ | Tagline ("Syndicate had a clause for that") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Portrait submitter=+1 — correctly expresses doctrine. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Economy/Add/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Same verified Economy×Add cell as SYN.MOD.2. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Real, self-admitted open question: does breach-vs-completion need separate cards, or is a flat 2 Capital on any Accord ending correctly calibrated regardless of cause? Not resolved here. | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ✓ | `accord.removed` — confirmed vocabulary (design_note notes this was corrected from `corrupted` to align with Art 06 physical state — a good catch already made). | Art 04 §6.3 |
+| Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct. | Art 01 §6–7 |
+| Supported by components | ✓ | Standard resource-grant mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Reuses existing Accord-removal event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as the rest of the corpus. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ⚠ | Dependent on Accord-ending rate, same variability as SYN.MOD.2. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Flat yield, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*S128. React on Accord breach. Syndicate extracts Capital from diplomatic breakdown. Higher yield than formation — breach creates leverage. Pairs with SYN.MOD.2.*
+*S128. React on Accord breach. Syndicate extracts Capital from diplomatic breakdown. Higher yield than formation — breach creates leverage. Pairs with SYN.MOD.2. S138: full content-review pass — the card's own self-admitted breach-vs-completion question remains open, not resolved. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 SYN.MOD.3 = Card(
-    id      = "SYN.MOD.3",  card_id="SYN.MOD.3",  version="v0.1",
+    id      = "SYN.MOD.3",  card_id = "SYN.MOD.3",  version = "v0.1",
     name    = "Offshore Slush Fund",
     tagline = "When an Accord fails, Syndicate had a clause for that.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175), same shape as SYN.MOD.2
 
     trigger         = accord.removed,
     beat            = None,
@@ -1747,7 +1749,7 @@ SYN.MOD.3 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1756,12 +1758,14 @@ SYN.MOD.3 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = faction(Syndicate).resources.add(2, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Accord removal React. 2 Capital yield. Trigger corrected from 'corrupted' to 'removed' to align with Art 06 physical game state. Open question for detail design: Should accord.removed be the sole condition (meaning Syndicate profits off ANY Accord ending, completed or breached), or is a separate mod card needed to distinguish breach vs completion?",
@@ -1771,56 +1775,56 @@ SYN.MOD.3 = Card(
 
 ---
 
-### SYN.MOD.4 — INSIDER TRADING *(stub)*
+### SYN.MOD.4 — INSIDER TRADING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+First of the SYN.MOD.4/5 market-speculation family — fires on an opponent's PS increase, explicitly `faction=opponent`-scoped, no self-fire ambiguity.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival scores a public win — their standing climbs in front of the whole table. Syndicate was already positioned on the other side of that trade; the profit lands before the applause fades.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | "Public success always creates private wealth" is a sharp, doctrinally coherent Syndicate hook. | Art 00 §7 |
+| Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — reasonable; opportunistic market play, not a doctrinal statement. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Economy/Add/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Same verified Economy×Add cell as SYN.MOD.2/3. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Flat, low-value, no cost, table-wide (any opponent) — plausible as a minor engine; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ✓ | `standing_marker.increased(faction=opponent)` — confirmed vocabulary, correctly scoped, no self-fire ambiguity. | Art 04 §6.3 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
+| Supported by components | ✓ | Standard resource-grant mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Reuses existing PS-increase event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as the rest of the corpus. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Any opponent's PS increase is a recurring event — moderate-to-common. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this exact trigger (SYN.MOD.5 is the negative-direction sibling, distinct event). |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Flat yield, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*Market speculation on positive faction momentum.*
+*Market speculation on positive faction momentum. S138: full content-review pass — clean, no new issues beyond the standard schema/cost/stack gaps. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 SYN.MOD.4 = Card(
-    id      = "SYN.MOD.4",  card_id="SYN.MOD.4",  version="v0.1",
+    id      = "SYN.MOD.4",  card_id = "SYN.MOD.4",  version = "v0.1",
     name    = "Insider Trading",
     tagline = "Public success always creates private wealth.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175), same shape as SYN.MOD.2
 
     trigger         = standing_marker.increased(faction=opponent),
     beat            = None,
@@ -1828,7 +1832,7 @@ SYN.MOD.4 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1837,12 +1841,14 @@ SYN.MOD.4 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = faction(Syndicate).resources.add(1, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Market speculation React. Syndicate bets on the political market. When someone else scores a massive PR victory, Syndicate quietly makes a fortune off the back of it.",
@@ -1852,56 +1858,56 @@ SYN.MOD.4 = Card(
 
 ---
 
-### SYN.MOD.5 — SHORT SQUEEZE *(stub)*
+### SYN.MOD.5 — SHORT SQUEEZE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Negative-direction sibling of SYN.MOD.4 — same opponent-scoped, no-self-fire shape, but with a real cost this time. Cross-resource question: cost spans Capital (Syndicate-native) and Findings (Ghost's) — same pattern flagged repeatedly this session on other factions' cards.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival's public standing craters. Syndicate doesn't wait for the dust to settle — the vulnerability was already priced in, and the position pays out the moment the numbers confirm it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | "A reputation in freefall is an undervalued asset" completes a coherent MOD.4/MOD.5 pair covering both directions of political volatility. | Art 00 §7 |
+| Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — reasonable, same as SYN.MOD.4. | Art 04 §6.5 |
+| Card type fit | ✓ | Same shape as SYN.MOD.4. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Same verified Economy×Add cell. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ | Real cost (unlike SYN.MOD.4's free trigger) for the same yield — reasonable given design_note's framing that holding both cards "guarantees income from any volatility." | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ✓ | `standing_marker.decreased(faction=opponent)` — confirmed vocabulary, correctly scoped. | Art 04 §6.3 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct. | Art 01 §6–7 |
+| Supported by components | ✓ | Standard resource-grant mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Reuses existing PS-decrease event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Real cost specified, but spans Capital (native) and Findings (Ghost's) — same cross-resource-holding question flagged on several cards this session. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Any opponent's PS decrease is recurring — moderate-to-common. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Flat yield, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*Market speculation on negative faction momentum.*
+*Market speculation on negative faction momentum. S138: full content-review pass — cross-resource cost flagged (Findings, not Syndicate-native); otherwise clean. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 SYN.MOD.5 = Card(
-    id      = "SYN.MOD.5",  card_id="SYN.MOD.5",  version="v0.1",
+    id      = "SYN.MOD.5",  card_id = "SYN.MOD.5",  version = "v0.1",
     name    = "Short Squeeze",
     tagline = "A reputation in freefall is just an undervalued asset.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175), same shape as SYN.MOD.2
 
     trigger         = standing_marker.decreased(faction=opponent),
     beat            = None,
@@ -1909,7 +1915,7 @@ SYN.MOD.5 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1918,12 +1924,14 @@ SYN.MOD.5 = Card(
     affinity        = None,
     restriction     = None,
     cost            = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).findings * 1,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = faction(Syndicate).resources.add(1, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Companion to SYN.MOD.4. Syndicate profits off the downfall of other factions. By holding both MOD.4 and MOD.5, Syndicate guarantees income from any major political volatility at the table Cost reasoning: Findings identify the target's financial vulnerabilities before Capital is deployed to crush them.",
@@ -1933,56 +1941,56 @@ SYN.MOD.5 = Card(
 
 ---
 
-### SYN.MOD.6 — BOUNTY CONTRACT *(stub)*
+### SYN.MOD.6 — BOUNTY CONTRACT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Transactional-warfare React: Syndicate escrows Capital on a named opponent's PA, paying out only if it succeeds — the submitting faction effectively becomes Syndicate's mercenary. Two known issues, both already flagged (04-n175/schema_cleanup_log.md item 2), re-confirmed here not fixed: (1) `success` is a prose string, not a real MutationExpr. (2) The clearing logic for the Seasonal standing condition (Capital transfers when the target PA resolves, either direction) is buried inside that same prose string rather than expressed via `persistence_condition`/`persistence_effect` — this card is one of the 4 named examples in the still-open schema question about how to encode "what ends a standing condition" (item 2/B), alongside GUI.MOD.10, NET.MOD.13-adjacent cases, and DIR.MOD.9.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Someone's about to make a move Syndicate wants to see succeed — or fail. Either way, there's Capital already on the table, waiting on the outcome, and the faction taking the action doesn't need to know whose money it is.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | "Crowdsourcing other factions' offense/defense via escrowed capital" is a sharply doctrinal Syndicate mechanic — mercenary incentive, not direct action. | Art 00 §7 |
+| Voice fit | ✓ | Tagline ("I am willing to subsidize the effort") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — reasonable; covert financial mechanism, not a public doctrinal statement. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Submission/Modify/PublicAct, 04-n175, Andy-confirmed as positive-direction sibling of SYN.MOD.10/STD.MOD.103/DIR.MOD.6). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Submission×Modify valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | +20 boost is significant; escrow-and-payout structure is a novel, interesting risk-sharing mechanic, but hard to fully assess while the effect is a prose description rather than a formal expression. | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | `persistence=Seasonal` correctly typed for a standing condition that must survive until the target PA resolves. | Art 04 §5 P19 |
+| Persistence | ⚠ **(known gap, item 2/B)** | `persistence_condition`/`persistence_effect` both `None` — the actual clearing logic (Capital transfers on target PA resolution, either direction) is described only in prose inside `success`. Re-confirmed as one of the 4 named examples in the still-open schema question. | Art 04 §6.2; schema_cleanup_log.md item 2 |
+| Trigger validity | ✓ | `public_act.placed_on_frg(faction=opponent)` — confirmed vocabulary, correctly scoped. | Art 04 §6.3 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
+| Supported by components | ⚠ | The "escrowed Capital on the card" mechanism has no defined component-level representation — tied to the same Persistence gap above. | Art 02 §6–8 |
+| Supported by game procedure | ⚠ | Same gap — no formal Art 03 procedure step currently reads this card's escrow-and-payout condition at Beat 4; the `arbiter_note` prose describes intent but isn't backed by a defined procedure. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ **(known issue)** | `success` is a string literal, not a real MutationExpr — re-confirmed, not fixed. Scaffolding added this session for the fields that were simply absent. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ | The escrow-and-payout structure genuinely branches on the target PA's own outcome — legitimate design, but can't be verified as schema-compliant while it's prose, not a real conditional Expr. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` for the card itself — the 2 Capital is escrowed as part of the effect, not a card cost. Same whole-set gate applies to the card-level `cost` field. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Any opponent PA placement — common, moderate-to-high frequency. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this exact trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Automatic is appropriate — the escrow condition, not the card's own resolution, carries the uncertainty. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus, compounded by the unresolved persistence-condition gap. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*Syndicate weaponizes other factions by crowdsourcing their own defense or offense.*
+*Syndicate weaponizes other factions by crowdsourcing their own defense or offense. Taxonomy assigned S137 (04-n175): Submission/Modify/PublicAct. S138: full content-review pass — re-confirmed both known gaps (string-literal success; clearing logic embedded in prose rather than persistence_condition/persistence_effect, item 2/B). Design Pass ✓, Issues Resolved not yet — real schema blockers remain.*
 
 ```python
 SYN.MOD.6 = Card(
-    id      = "SYN.MOD.6",  card_id="SYN.MOD.6",  version="v0.1",
+    id      = "SYN.MOD.6",  card_id = "SYN.MOD.6",  version = "v0.1",
     name    = "Bounty Contract",
     tagline = "If someone wants them gone, I am willing to subsidize the effort.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Submission,  function = Modify,  subject = PublicAct,  # assigned S137 (04-n175, Andy confirmed) — boosts a named opponent's PA, positive-direction sibling of SYN.MOD.10/STD.MOD.103/DIR.MOD.6
 
     trigger         = public_act.placed_on_frg(faction=opponent),
     beat            = None,
@@ -1991,8 +1999,10 @@ SYN.MOD.6 = Card(
     value_rating    = None,
 
     persistence     = Seasonal,
+    persistence_condition = None,  # ⚠ clearing logic is embedded in the success string instead — same gap as GUI.MOD.10/SYN.MOD.6 in schema_cleanup_log.md item 2/B
+    persistence_effect    = None,  # ⚠ see above
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2001,12 +2011,14 @@ SYN.MOD.6 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
-    success     = "Syndicate places this card on their FRG as a standing condition and places 2 Capital on it. The target opponent's PA gains boost=+20. When target PA resolves: if success, the 2 Capital is transferred to the acting faction; if failure, the Capital is returned to Syndicate.",
+    success     = "Syndicate places this card on their FRG as a standing condition and places 2 Capital on it. The target opponent's PA gains boost=+20. When target PA resolves: if success, the 2 Capital is transferred to the acting faction; if failure, the Capital is returned to Syndicate.",  # ⚠ string literal, not a real MutationExpr — flagged 04-n175, confirmed still true
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Transactional warfare. Played onto Syndicate's own FRG with 2 Capital 'escrowed' on the card, preventing any Beat 4 resource-cleanup conflicts with the target PA itself. The submitting faction effectively becomes Syndicate's mercenary, receiving the Capital only if the op succeeds.",
@@ -2016,56 +2028,56 @@ SYN.MOD.6 = Card(
 
 ---
 
-### SYN.MOD.7 — RENEGOTIATION FEE *(stub)*
+### SYN.MOD.7 — RENEGOTIATION FEE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third Accord-lifecycle income card — fires on `accord.corrupted` (textual alteration, e.g. via SYN.CA.11 Redline), distinct from SYN.MOD.2 (formation) and SYN.MOD.3 (removal). No overlap between the three, each keyed to a distinct Accord event.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An Accord's fine print quietly changes — someone rewrote a clause. Syndicate's lawyers are already billing for the "procedural friction" of the rewrite, whether or not they had anything to do with it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Profiting from Accord manipulation as procedural friction is a coherent, distinct beat from SYN.MOD.2/3's formation/removal triggers. | Art 00 §7 |
+| Voice fit | ✓ | Tagline ("when the fine print changes, the lawyers get paid") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — reasonable; routine economic reaction. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Economy/Add/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Same verified Economy×Add cell as SYN.MOD.2/3/4/5. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Flat, no cost, gated on a specific Accord-corruption event (rarer than formation/removal) — plausible; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ✓ | `accord.corrupted` — confirmed vocabulary, publicly observable (per GR 7.2a's Accord-corruption semantics). | Art 04 §6.3 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct. | Art 01 §6–7 |
+| Supported by components | ✓ | Standard resource-grant mechanism. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Reuses existing Accord-corruption event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as the rest of the corpus. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ✓ | Accord corruption is a specific, less-common event (requires a corrupt-capable card like SYN.CA.11) — low-moderate frequency. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Flat yield, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*Reacts to the corruption (textual alteration) of an Accord's terms.*
+*Reacts to the corruption (textual alteration) of an Accord's terms. S138: full content-review pass — clean, no new issues beyond the standard schema/cost/stack gaps. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 SYN.MOD.7 = Card(
-    id      = "SYN.MOD.7",  card_id="SYN.MOD.7",  version="v0.1",
+    id      = "SYN.MOD.7",  card_id = "SYN.MOD.7",  version = "v0.1",
     name    = "Renegotiation Fee",
     tagline = "When the fine print changes, the lawyers get paid.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175), same shape as SYN.MOD.2
 
     trigger         = accord.corrupted,
     beat            = None,
@@ -2073,7 +2085,7 @@ SYN.MOD.7 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2082,12 +2094,14 @@ SYN.MOD.7 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = faction(Syndicate).resources.add(2, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Leveraging Accord manipulation. Triggers when ANY faction successfully corrupts an Accord (e.g., via SYN.CA.11 Redline). Syndicate earns 2 Capital from the procedural friction of rewriting the agreement.",
@@ -2097,56 +2111,56 @@ SYN.MOD.7 = Card(
 
 ---
 
-### SYN.MOD.8 — VULTURE FUND *(stub)*
+### SYN.MOD.8 — VULTURE FUND
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Opportunistic dual-effect React: reacts to any opponent's structure removal, immediately placing both a Syndicate chip and a Syndicate structure in the vacated district. Real finding, worse than the typical string-literal gap: `success` here is a single string containing *two* semicolon-joined statements ("arbiter.place(...); arbiter.place(...)") — not just prose describing an effect, but something that reads like it was meant to be a real multi-statement mutation and never got converted to the schema's actual list-of-mutations pattern (compare GHO.MOD.7/NET.MOD.10's `list([...])` form, which is the correct way to express this exact "two placements" shape). Also carries the cross-resource cost question (Exposure, not Syndicate-native) seen repeatedly this session.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A structure falls somewhere in the city — sabotage, contest, doesn't matter. The paperwork for the vacated ground was drafted before the demolition crew finished clearing the site; Syndicate doesn't wait for the dust to settle.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Opportunistic acquisition of vacated ground (distinct from SYN.CA.9's active-position takeover, per the S132 rename) is a clean, doctrinally coherent beat. | Art 00 §7 |
+| Voice fit | ✓ | Tagline ("buy when there's blood in the streets") lands the doctrine. Rare among this set — `narrative` field is actually filled in. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — reasonable; opportunistic tactical play, not a public doctrinal statement. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Territory/Add/StructureBlock, 04-n175) — dual-effect, structure treated as primary per Andy's confirmation. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Design_note's own "extremely powerful territorial swing" framing is honest — a dual chip+structure placement for 3 resources is significant; can't fully verify power level while the effect is a semicolon-joined string rather than a checkable Expr. | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
+| Trigger validity | ✓ | `structure_block.removed(faction=opponent)` — confirmed vocabulary, correctly scoped, no self-fire ambiguity. | Art 04 §6.3 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
+| Supported by components | ✓ | Both chip and structure placement reuse standard mechanisms — the gap is purely in how `success` expresses them, not the underlying components. | Art 02 §6–8 |
+| Supported by game procedure | ✓ | Reuses existing structure-removal event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ **(known issue, sharper instance)** | `success` is a string literal containing 2 semicolon-joined pseudo-statements — a worse case than a single descriptive string, since it reads like unconverted code. The correct form is almost certainly `list([arbiter.place(presence_chip,...), arbiter.place(structure_block,...)])`, matching GHO.MOD.7/NET.MOD.10's precedent. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | `narrative` field is filled in (rare in this set) and reads well. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch (once the expression form is corrected). | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Real cost specified, but spans Capital (native) and Exposure (Network's) — same cross-resource-holding question flagged on several cards this session. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Gated on any opponent losing a structure — moderate, reactive. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary acquisition — no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*Renamed S132 from "Hostile Takeover" — duplicate name with SYN.CA.9 (04-n156). Syndicate buys up the territory left behind by destroyed infrastructure; the new name matches the actual mechanic — this isn't a takeover of an operating position (that's SYN.CA.9), it's opportunistic acquisition of what's left after someone else's structure comes down. Asset (business) category per S130 naming convention.*
+*Renamed S132 from "Hostile Takeover" — duplicate name with SYN.CA.9 (04-n156). Syndicate buys up the territory left behind by destroyed infrastructure. Taxonomy assigned S137 (04-n175): Territory/Add/StructureBlock. S138: full content-review pass — the `success` string-literal gap is sharper than typical (2 semicolon-joined statements, not just prose); cross-resource cost flagged. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 SYN.MOD.8 = Card(
-    id      = "SYN.MOD.8",  card_id="SYN.MOD.8",  version="v0.1",
+    id      = "SYN.MOD.8",  card_id = "SYN.MOD.8",  version = "v0.1",
     name    = "Vulture Fund",
     tagline = "Buy when there's blood in the streets.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Territory,  function = Add,  subject = StructureBlock,  # assigned S137 (04-n175) — see note above; dual-effect with presence chip, structure treated as primary
 
     trigger         = structure_block.removed(faction=opponent),
     beat            = None,
@@ -2154,7 +2168,7 @@ SYN.MOD.8 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2163,12 +2177,14 @@ SYN.MOD.8 = Card(
     affinity        = None,
     restriction     = faction(Syndicate).resources.has(2, Capital),
     cost            = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).exposure * 1,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
-    success     = "arbiter.place(presence_chip, district=target_district, faction=Syndicate, count=1); arbiter.place(structure_block, district=target_district, faction=Syndicate, count=1)",
+    success     = "arbiter.place(presence_chip, district=target_district, faction=Syndicate, count=1); arbiter.place(structure_block, district=target_district, faction=Syndicate, count=1)",  # ⚠ string literal containing 2 semicolon-joined statements — worse than a single-literal gap; flagged, not fixed
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = "The paperwork was drafted before the demolition crew finished clearing the site. Syndicate doesn't wait for the dust to settle to make an offer.",
     perspectives = None,
     design_note  = "Renamed S132 from 'Hostile Takeover' — collided with SYN.CA.9, an unrelated card that displaces an opponent's active presence tokens. Vulture Fund is a different mechanic entirely: opportunistic expansion into vacated ground, not a forced acquisition of a going concern. When a structure falls, Syndicate swoops in, paying 2 Capital to immediately place both a presence chip and a structure in the newly cleared real estate. Extremely powerful territorial swing funded entirely by Capital Cost reasoning: Exposure ensures the takeover is recognized publicly, legitimizing the new ownership immediately.",
@@ -2176,56 +2192,56 @@ SYN.MOD.8 = Card(
 )
 ```
 
-### SYN.MOD.9 — GOODWILL *(stub)*
+### SYN.MOD.9 — GOODWILL
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). Two real, unresolved problems, both flagged not fixed: (1) `success = faction(Syndicate).standing += N` uses invalid `+=` syntax — the second confirmed instance of this exact problem (`schema_cleanup_log.md` item 17, after NET.MOD.2). (2) The card explicitly never discards ("remains active for further triggers") — a persistence shape none of the 4 documented values (Immediate/Transient/Seasonal/Permanent) actually fit, since Permanent still requires an eventual clearing condition and this card has none. Logged as a new schema question, item 19. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Syndicate's reputation takes a hit — anywhere, any cause. Before the news finishes circulating, a public-goodwill campaign is already funded and running, buying back exactly as much standing as Syndicate is willing to spend on it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | "Reputation is a line item" — treating PS recovery as a scalable, budgeted expense is a sharply doctrinal Syndicate mechanic. | Art 00 §7 |
+| Voice fit | ✓ | Tagline lands the doctrine precisely. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — reasonable; a budgeted defensive mechanism, not a public doctrinal statement. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Standing/Shift/StandingMarker, 04-n175). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Standing×Shift valid per the matrix (04-n173 precedent). | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Scalable N with an admitted-open cap question — could this be abused as unlimited PS-buying if N is uncapped? Design_note flags this itself as unresolved. | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ⚠ | No `persistence` value fits — the card is meant to never discard, which none of Immediate/Transient/Seasonal/Permanent actually model. New finding, item 19. | Art 04 §5 P19; schema_cleanup_log.md item 19 |
+| Persistence | ⚠ **(new schema gap, item 19)** | Same issue as above — "remains active for further triggers, never discards" has no fitting enum value. Distinct from the item 2/B gap (cards that eventually clear but express the clearing logic inconsistently) — this card structurally never clears at all. | Art 04 §6.2; schema_cleanup_log.md item 19 |
+| Trigger validity | ✓ | `standing_marker.decreased(Syndicate)` — confirmed vocabulary, self-scoped, no ambiguity. | Art 04 §6.3 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
+| Supported by components | ✓ | PS/standing-marker shift reuses the standard mechanism, once the `+=` syntax issue is resolved. | Art 02 §6–8 |
+| Supported by game procedure | ⚠ | Design_note itself flags an unresolved question: does Syndicate ALWAYS pay when the trigger fires, or may they decline (ElectPlayer)? Not resolved here. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ **(blocker)** | `success = ... += N` is invalid syntax, not a valid MutationExpr — 2nd confirmed instance of item 17. Scaffolding added this session for the fields that were simply absent. | Art 04 §6.1–§6.3; schema_cleanup_log.md item 17 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch (once the expression syntax is corrected) — N is a declared parameter, not a hidden or probabilistic outcome. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Real, scalable cost (Capital×N) — reasonable in shape, but the balance question (N-cap) is unresolved, so the effective cost/value ratio can't be finalized. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Gated on Syndicate's own PS decreasing — self-limiting, moderate frequency. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ | Design_note's own open question: should this be Automatic (always fires, always pays) or ElectPlayer (Syndicate may decline)? Not resolved. |  |
+| Stack behavior (ModReactCard) | ⚠ | Compounded by the card never discarding — does holding 2 copies mean 2 independent N-declarations per trigger? Genuinely more consequential here than the generic stack question elsewhere. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*S130. ModReactCard — Standing floor. Fires when Syndicate PS decreases; Capital×1 negates the drop. Counters SYN.CA.7 portrait bleed. 04-n131 design decision resolved.*
+*S130. ModReactCard — Standing floor. Fires when Syndicate PS decreases; Capital×1 negates the drop. Counters SYN.CA.7 portrait bleed. 04-n131 design decision resolved. S138: full content-review pass — invalid `+=` syntax confirmed as a 2nd instance (item 17); "never discards" persistence shape doesn't fit any of the 4 documented values (new item 19); N-cap and Automatic-vs-ElectPlayer questions re-confirmed still open (self-admitted in the card's own design_note). Design Pass ✓, Issues Resolved not yet — real blockers remain.*
 
 ```python
 SYN.MOD.9 = Card(
-    id      = "SYN.MOD.9",  card_id="SYN.MOD.9",  version="v0.1",
+    id      = "SYN.MOD.9",  card_id = "SYN.MOD.9",  version = "v0.1",
     name    = "Goodwill",
     tagline = "Reputation is a line item. We budget for it accordingly.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Standing,  function = Shift,  subject = StandingMarker,  # assigned S137 (04-n175) — standing += N
 
     trigger         = standing_marker.decreased(Syndicate),
     beat            = None,
@@ -2233,7 +2249,7 @@ SYN.MOD.9 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2242,12 +2258,14 @@ SYN.MOD.9 = Card(
     affinity        = None,
     restriction     = None,
     cost            = resource.faction(Syndicate).capital * N,  # N declared at trigger (min 1)
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
-    success     = faction(Syndicate).standing += N,
+    success     = faction(Syndicate).standing += N,  # ⚠ INVALID SYNTAX — `+=` is a statement, not an expression; 2nd confirmed instance (schema_cleanup_log.md item 17, after NET.MOD.2)
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card does not discard — remains active for further triggers. Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger. 04-n131 design decision → PS floor card selected.",
@@ -2257,56 +2275,56 @@ SYN.MOD.9 = Card(
 
 ---
 
-### SYN.MOD.10 — LOBBY *(stub)*
+### SYN.MOD.10 — LOBBY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Resolution-layer gap-fill (04-n129): Syndicate pays Capital to apply a −15 threshold penalty to a specifically named faction's PA. Cleaner than its siblings — `success` is a real MutationExpr (`arbiter.apply_modifier`), not a string literal, matching the confirmed STD.MOD.103/DIR.MOD.6/SYN.MOD.6 pattern. Two things worth checking directly rather than assuming: the card's own design_note flags whether `public_act.placed_on_frg(faction(target))` targeting a *specific named* opponent (declared in advance) is procedurally valid, since prior confirmed examples were self-targeting (Network) or generically opponent-scoped (SYN.MOD.6's `faction=opponent`) — naming one faction ahead of time is a sharper requirement than either precedent actually covers. Also: `faction(named_opponent)` is yet another acting-faction-reference term with no established precedent (same category as item 15's `acting` keyword and the Ring set's `holder`).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A named rival is about to make their move. Before they even declare it, Syndicate has already quietly made the paperwork more expensive — nothing illegal, nothing traceable to a specific hand, just friction that lands exactly where it's aimed.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | "We don't oppose your agenda, we make it expensive" is a sharply doctrinal, non-confrontational Syndicate mechanic. | Art 00 §7 |
+| Voice fit | ✓ | Tagline lands the doctrine precisely. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | `portrait = {}` — reasonable; covert financial interference, not a public doctrinal statement. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Submission/Modify/PublicAct, 04-n175). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Submission×Modify valid per the matrix; matches the confirmed −15-modifier pattern from STD.MOD.103/DIR.MOD.6/SYN.MOD.6. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ | 1 Capital for a −15 penalty on a named target's PA is meaningful but not overwhelming, consistent with the sibling cards' power level. | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | Single-fire Immediate per design_note ("discards after triggering"). | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Not explicitly declared as a field (design_note states it in prose) — same open schema question as most of the corpus. | Art 04 §6.2 |
+| Trigger validity | ⚠ | Underlying event is genuinely observable, but two open questions, both self-admitted in the design_note: (1) does `public_act.placed_on_frg(faction(target))` validly support naming a *specific* opponent in advance, sharper than the confirmed self-targeting/generic-opponent precedents; (2) `faction(named_opponent)` is an unprecedented acting-faction-reference term, same category as item 15. | Art 04 §6.3; schema_cleanup_log.md item 15 |
+| Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct; this targets a faction's PA, not a district. | Art 01 §6–7 |
+| Supported by components | ✓ | Modifier-token application reuses the standard mechanism from STD.MOD.103/DIR.MOD.6/SYN.MOD.6. | Art 02 §6–8 |
+| Supported by game procedure | ⚠ | Design_note's own open question: can the target faction be named/tracked pre-§9.2 without inadvertently revealing Syndicate's intent (a private-information-boundary question)? Not resolved here. | Art 03; GR 6.1 |
+| Data schema validation | ✓ | `success` is a real MutationExpr, ahead of SYN.MOD.6/8's string-literal gap. Scaffolding added this session for `resolution_type`/`boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cost is Capital only, Syndicate-native — no cross-resource question. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Gated on the named target faction placing a PA — moderate, targeted frequency. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this exact trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Flat modifier application, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*S130. ModReactCard — Resolution layer gap. Syndicate spends Capital to apply −15 modifier token to a named faction's PA at §9.2. 04-n129 design decision resolved.*
+*S130. ModReactCard — Resolution layer gap. Syndicate spends Capital to apply −15 modifier token to a named faction's PA at §9.2. 04-n129 design decision resolved. S138: full content-review pass — this is one of the cleanest cards in the Syndicate set (real MutationExpr, native-resource cost); the card's own self-admitted questions about named-opponent-targeting validity and pre-declaration information boundaries remain genuinely open. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 SYN.MOD.10 = Card(
-    id      = "SYN.MOD.10",  card_id="SYN.MOD.10",  version="v0.1",
+    id      = "SYN.MOD.10",  card_id = "SYN.MOD.10",  version = "v0.1",
     name    = "Lobby",
     tagline = "We don't oppose your agenda. We make it expensive to execute.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Submission,  function = Modify,  subject = PublicAct,  # assigned S137 (04-n175) — arbiter.apply_modifier(op=trigger.card, modifier=-15), same shape as STD.MOD.103/DIR.MOD.6/SYN.MOD.6
 
     trigger         = public_act.placed_on_frg(faction(target)),
     beat            = None,
@@ -2314,7 +2332,7 @@ SYN.MOD.10 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2323,12 +2341,14 @@ SYN.MOD.10 = Card(
     affinity        = None,
     restriction     = None,
     cost            = resource.faction(Syndicate).capital * 1,
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = arbiter.apply_modifier(op=trigger.card, modifier=-15),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Resolution layer gap fill (04-n129). Fills 'money-at-the-table' narrative: Syndicate pays Capital to suppress a named faction's PA threshold at the moment of declaration. ARBITER places −15 modifier token on target PA's Beat 4 resolution row. Named target faction declared when card is played/assigned (before §9.2). Single-fire Immediate — discards after triggering. Outstanding: (1) Trigger pattern public_act.placed_on_frg(faction(target)) — existing confirmed examples are self-targeting (Network's own PAs); confirm opponent-targeting variant is procedurally valid. (2) Named faction pre-declaration timing — confirm ARBITER can track the target faction designation without revealing Syndicate's intent.",
@@ -2338,56 +2358,56 @@ SYN.MOD.10 = Card(
 
 ---
 
-### SYN.MOD.11 — SIGNATURE ON FILE *(stub)*
+### SYN.MOD.11 — SIGNATURE ON FILE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Syndicate's most expensive Accord card — forges a named party's Accord acceptance without their consent, paired with SYN.CA.12 Boilerplate for a fully unilateral Accord combo. Three questions the card's own text already flags, cited directly rather than re-derived: (1) `trigger = accord.tabled` needs Art 06 timing confirmation — this pre-signature event isn't in the confirmed §6.3 vocabulary (which has `accord.placed/corrupted/removed`, all post-formation), so this is a genuinely new trigger stage, not just an unreconciled term. (2) "party_b" (the second named party on the drafted form) needs a precise definition. (3) Portrait magnitude (`flat=+2`) is self-flagged as needing confirmation against Portrait principles. Independently re-verified: the taxonomy (Information/Corrupt/Accord) already flagged as "least-precedented" (04-n175) does hold up against the matrix (Information×Corrupt is valid) — the caution was warranted but the assignment itself is sound. Also worth noting: the cost includes an Intel Token as one of four cost components — same fungibility question as `schema_cleanup_log.md` item 10 (first raised on DIR.MOD.9).
 
 #### Card Story
-⚠ Story pending 04-n79.
+The Accord draft goes on the table with only one signature. Syndicate already has what it needs from the other party — the form is a formality, and by the time anyone notices, the agreement is already active.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Forcing a binding Accord through leverage rather than negotiation is the sharpest possible expression of Syndicate's "control comes from positioning early" doctrine. | Art 00 §7 |
+| Voice fit | ✓ | Tagline ("the form is a formality") lands the doctrine precisely. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Portrait `flat=+2` — functionally equivalent to `submitter=+2` here since only Syndicate can ever hold/play a Syndicate-only card; not an inconsistency, just a stylistic field choice. | Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Information/Corrupt/Accord, 04-n175). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Independently re-verified against the matrix (not just inherited from the S137 flag): Information×Corrupt is valid. The "least-precedented" caution was warranted given how novel this mechanic is, but the assignment itself holds. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ✓ | Four-resource cost (2 Capital + Findings + Mandate + a keyed Intel Token) for forcing a binding Accord is appropriately "ceiling-power" per its own framing — the most expensive Syndicate card reviewed this session. | Art 02 §6–7; Art 04 §6.5 |
+| Effect duration | ✓ | Immediate — the Accord becomes active at once; card discards after firing. | Art 04 §5 P19 |
+| Persistence | ⚠ (deferred) | Not explicitly declared as a field — same open schema question as most of the corpus. | Art 04 §6.2 |
+| Trigger validity | ⚠ | **Genuinely new, not just unreconciled:** `accord.tabled` is a pre-signature-stage event with no confirmed §6.3 form at all (confirmed vocabulary only covers post-formation Accord events — placed/corrupted/removed). The card's own text already flags this needs Art 06 timing confirmation. | Art 04 §6.3 |
+| Portrait validity | ✓ | Magnitude (`flat=+2`, vs. the more common `+1`) is self-flagged for confirmation — scale seems proportionate to the card's "ceiling-power" framing, but not independently re-derivable without a numeric Portrait-magnitude standard to check against. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | `target_district=None` — correct; Accords have no district dimension. | Art 01 §6–7 |
+| Supported by components | ✓ | Intel Token consumption and Accord-form marking both reuse existing components. | Art 02 §6–8 |
+| Supported by game procedure | ⚠ | Depends on the unconfirmed `accord.tabled` trigger stage — the underlying Art 06 procedure for a "tabled but unsigned" Accord state isn't yet formally described. | Art 03; GR 6.1 |
+| Data schema validation | ⚠ | Real MutationExpr (`arbiter.mark_acceptance`) — ahead of SYN.MOD.6/8's string-literal gap. Cost includes an Intel Token — same fungibility question as `schema_cleanup_log.md` item 10. Scaffolding added this session for `resolution_type`/`boost`/`ps_framing`. | Art 04 §6.1–§6.3; schema_cleanup_log.md item 10 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Cost is real and substantial, but one of the four components (Intel Token) has the same open fungibility question as item 10 — is a discrete tracked object a valid "fungible resource" cost component? | Art 00a §9.2; schema_cleanup_log.md item 10 |
+| Trigger frequency (ModReactCard) | ✓ | Gated on holding a keyed Intel Token on the specific party — inherently rare, matching the "ceiling-power" framing. |  |
+| Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Deterministic forgery, no execution-quality dimension. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
-*S130. ModReactCard — fires when Accord draft is tabled. Syndicate forges party B's acceptance; Accord becomes binding without consent. Ceiling-power card. Paired with SYN.CA.12 Boilerplate for non-negotiable unilateral Accord combo.*
+*S130. ModReactCard — fires when Accord draft is tabled. Syndicate forges party B's acceptance; Accord becomes binding without consent. Ceiling-power card. Paired with SYN.CA.12 Boilerplate for non-negotiable unilateral Accord combo. S138: full content-review pass — taxonomy re-verified sound despite being the least-precedented assignment in the sweep; `accord.tabled` confirmed as a genuinely new (not just unreconciled) pre-signature trigger stage; Intel-Token-as-cost fungibility question cross-referenced to item 10. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 SYN.MOD.11 = Card(
-    id      = "SYN.MOD.11",  card_id="SYN.MOD.11",  version="v0.1",
+    id      = "SYN.MOD.11",  card_id = "SYN.MOD.11",  version = "v0.1",
     name    = "Signature on File",
     tagline = "We already have what we need. The form is a formality.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,
+    layer   = Information,  function = Corrupt,  subject = Accord,  # assigned S137 (04-n175) — forges an Accord party's acceptance; closest analog is GHO.MOD.11's Information/Corrupt pattern (falsifying an official record). Least-precedented assignment in this sweep, flag for re-check when this card comes up for content review. Subject corrected from AccordDraft (not a registered subject) to Accord (registered; AccordForm is the established object-type name per Art 06/Overture, but the taxonomy subject list itself only registers Accord/AccordAgreement/AccordCard)
 
     trigger         = accord.tabled,  # PENDING: confirm trigger expression — fires at draft tabling stage (before party signatures), not accord.placed (which fires when Accord is already active)
     beat            = None,
@@ -2395,21 +2415,23 @@ SYN.MOD.11 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,
+    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
     target_faction  = faction(accord.party_b),
-    target_object   = AccordDraft(state=tabled),
+    target_object   = AccordForm(state=drafted),  # corrected S137 (Andy) — was AccordDraft(state=tabled); AccordForm is the established term (Art 06 §9.2, Overture's AccordForm(blank))
     affinity        = None,
     restriction     = IntelToken(keyed_to=faction(accord.party_b)) in faction(Syndicate).hand,
     cost            = Capital(2) + Findings(1) + Mandate(1) + IntelToken(keyed_to=faction(accord.party_b)),
+    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
     success     = arbiter.mark_acceptance(accord=trigger.accord, party=faction(accord.party_b), state=signed),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Syndicate: PortraitEntry(flat=+2)},
+    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
     design_note  = "Ceiling-power card — the most expensive Syndicate Accord card. Cost rationale: Capital×2 (commercial commitment to force the agreement); Findings×1 (due diligence on party B — they know enough to make this stick); Mandate×1 (institutional authority that makes the forced signing legally enforceable); IntelToken(keyed to party_b) (the specific leverage that makes party B's resistance futile — consumed on play). Effect: ARBITER marks party B's acceptance on the Accord form as signed. Accord becomes active immediately without party B's participation. Party B is notified privately at enforcement, not at tabling. Outstanding: (1) confirm trigger expression accord.tabled — needs Art 06 timing confirmation; must fire at draft placement stage before normal acceptance window opens. (2) Define 'party_b' — the second named party on the Accord form as drafted by Syndicate (or whichever party has not signed). (3) Portrait magnitude: flat=+2 reflects scale of action — confirm against portrait principles. Combo with SYN.CA.12 Boilerplate: Syndicate writes and forces through a unilateral Accord in one session.",
