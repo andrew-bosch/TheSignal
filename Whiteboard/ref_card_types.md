@@ -1,6 +1,8 @@
 # Reference — Card Types & Resolution Mechanics (Art 04 §5, §6, §11)
 *Load when: card type questions, resolution mechanics, Modifier Card rules, §5 principle arguments.*
 
+**File location (S136):** §5/§6/§11 above live in `V1/04___Card_System___Part1_Core.md`. Individual card entries (§7+) are split across `Part2_Standard.md`, `Part3_Ring_Modifiers.md`, and `Part4a_Guild.md`–`Part4e_Syndicate.md` — not one file. `04___Card_System.md` is generated, not source of truth.
+
 ---
 
 ## Card Types

@@ -1,6 +1,8 @@
 # Design Reference — Card System
 *Load for all card spec work: governing rules, card schema, design flags.*
-*Updated: S95.*
+*Updated: S136.*
+
+**File location (S136):** Art 04 card content lives in 8 files, not one. Edit `V1/04___Card_System___Part1_Core.md` (§1–6 schema/principles, §8–15 rules/taxonomy), `Part2_Standard.md` (STD.CA/PA), `Part3_Ring_Modifiers.md` (STD.MOD.1–133), `Part4a_Guild.md` through `Part4e_Syndicate.md` (per faction). `V1/04___Card_System.md` is a generated build artifact — never edit it directly; regenerate with `tools/assemble_card_system.py` after any Part edit. Section numbers below (e.g. §7, §11) are unchanged and still resolve correctly across the split.
 
 ---
 

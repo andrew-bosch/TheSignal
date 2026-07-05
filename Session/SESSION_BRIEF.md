@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 135 complete | Updated: 2026-07-04**
+**Session 136 complete | Updated: 2026-07-04**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -16,6 +16,8 @@ Terminology, methodology, governing rules, and registered decisions live in thos
 
 **Art 04–09 card work:** Also read `Whiteboard/modifier_card_ideas.md` (if modifier design) or `Whiteboard/gap_card_sketches_S62.md` (if gap card work).
 
+**Art 04 file location (S136):** Card content is split across 8 files — `04___Card_System___Part1_Core.md` (§1–6, §8–15), `Part2_Standard.md`, `Part3_Ring_Modifiers.md`, `Part4a_Guild.md`–`Part4e_Syndicate.md`. Edit these directly. `04___Card_System.md` is a generated build artifact (`tools/assemble_card_system.py`) — never edit it, regenerate it after any Part edit.
+
 ---
 
 ## Startup Delivery
@@ -29,33 +31,37 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S135 Accomplishments
+## S136 Accomplishments
 
-**MILESTONE: full action-space drafted.** Every faction and Ring Modifier card subclass (ModAction, ModBattle, ModReact) is now stubbed — 232 modifier cards total, alongside the existing CA/PA set. First point where the complete card system's shape is visible end to end.
+**Art 04 physically split into 8 files** (PM02 L266) ahead of the 09-16 stub build-out, which would otherwise have roughly doubled/tripled a single 19,273-line file. Boundaries match the 8-part scheme `tools/build_wiki.py` already used for the wiki (proven, no dangling anchors), with two adjustments per Andy: Ring-sourced Modifier content (STD.MOD.1–133) pulled out of Standard into its own `Part3_Ring_Modifiers.md` (the fastest-growing block), and Rules (§8–15) merged back into `Part1_Core.md` rather than kept as a separate Part5. One artifact, one version, one sign-off gate throughout — still 04-n165 + 04-n169. `V1/04___Card_System.md` is now a generated monolith (`tools/assemble_card_system.py`, byte-for-byte round-trip verified), kept only so the 10 legacy analysis scripts (`parse_mods.py`, `count_md.py`, etc.) that hardcode a single-file read keep working unmodified. `build_wiki.py`'s old header-detection split logic removed — it now consumes the 8 Part files directly, simpler than what it replaced. PM03/README/`ref_card_types.md`/`design_reference_card_system.md` updated with the new file map.
 
-- **ModActionCard action-space analysis closed (04-n157) and fully stubbed — 132 cards.** Host-binding and cost resolved via existing Art 03 procedure (no schema change). Locked format, corrected twice mid-session after Andy caught compression errors: 4 threshold_delta (+5/+10/+15/+20, not 3) + 2 success_multiplier + 4 ps_shift (full 2×2 matrix, not 2 same-direction tiers) + 2 cost_reduction = **12 cards/faction**. `value_rating` widened schema-wide 1–3→1–4 (PM02 L259) so threshold_delta's 4 tiers each get a distinct value. Shipped: 60 faction cards (all 5) + 72 Ring cards (24/ring, Portable+Ring-Locked ×3 rings). Art 04 v0.9.76→v0.9.81.
-- **Ring ModReactCard direction resolved (04-53 ✅) and fully stubbed — 36 cards, all 3 rings.** The "gate" on 04b-03 was stale (that audit closed S46, Art 04b signed off since S108) — closed as direct design-direction work. Locked: Ring-sourced ModReactCard follows the same six-layer taxonomy as faction ModReactCard; single-set format (12/ring, no Portable/Ring-Locked doubling — its triggers are inherently ring-scoped). Ring 1 (Core) took real exploratory work — 6 of 12 concepts needed genuine redesign, including 3 rejected trigger candidates for one card before landing on a confirmed, non-Upkeep-gated public trigger. Rings 2–3 moved fast once the pattern was set: 11/12 cards duplicate directly by ring number, only the one unscoped card (Accord-reactive) needs a fresh per-ring mechanic (Core: `accord.placed`, Mid: `accord.removed`, Baryo: `accord.corrupted`). New syntax (`holder`, `NativeResource(faction)`, `arbiter.modify`) flagged pending reconciliation (04-n171). Art 04 v0.9.81→v0.9.84.
-- **Session-close housekeeping:** `ref_card_types.md` and `design_reference_card_system.md` updated to match (Overture's stale ModActionCard example fixed — it's an Issued ModReactCard since S133; Ring ModBattleCard's "still pending" note corrected). `Whiteboard/modifier_card_ideas.md` trimmed from ~356 to 152 lines — all fully-consumed seed pools and design-principle write-ups archived to `Retired/Whiteboard_Archive/modifier_card_seeds_and_principles_S132-S135.md`, live file keeps only Open Design Questions and pre-schema conceptual notes.
-- Full decision trail: PM02 L256–L265 (10 entries). PM05 09-06 (now closed for all Ring content), 04-n157, 04-n170, 04-n171, 04-53, and new roadmap item **09-16**.
+**Built the Step 1 tooling for 09-16 and ran it across the whole card set.** `tools/card_completeness_audit.py` (read-only) classifies every card `no_structure` / `scaffolded` (has the 4 structural blocks — Design Rationale, Card Story, Design checklist, Status — but every checklist row is still `⚠`, no verdicts) / `reviewed` (real content). `tools/card_scaffolder.py` inserts the empty scaffold for `no_structure` cards only — modeled on `tools/art04_sweep.py`'s insert-only, idempotent discipline; never touches existing prose, never fills a verdict. Ran it against all 7 card-bearing Part files: **286 of 384 cards scaffolded** (132 Ring Modifiers + 154 across the 5 faction files), 92 already `reviewed` untouched, 6 left as genuine partial-completeness cases needing manual handling (`STD.MOD.1`, `GUI.MOD.9`/`10`, `GHO.MOD.1`, `NET.MOD.1`/`2`).
+
+**DB-48:** added `card_status.structure_pass` column (`db_update_session136.sql` + `136b.sql`) — distinct from `design_pass`/`signed_off`, which already existed but had no way to represent "scaffolded but unreviewed." Backfilled 374/385 rows; the 11 gaps are fully accounted for (the 6 partial cards + 5 already-known exceptions).
+
+**Reconciliation findings (04-n172), from cross-checking the audit against the DB:** `GHO.CA.3`'s code fence was literally escaped (`\`\`\`python`, both markers) — invisible to every regex/fence-based tool including the new audit script; fixed. `GHO.CA.11`/`SYN.MOD.1` are stale DB rows — both cards still carry `id=TBD` in the MD (never finalized; ID assignment gated on 04-n1 and 04-n158 respectively, not a sync failure). `DA-01`/`DA-02`/`GD-01` live outside the 7-file audit scope (different template entirely, not `Card()` instances) — noted, not treated as a gap.
+
+**Andy's direction heading into the next phase:** the design review pass (09-16 step 2) is a **verification audit**, not a rubber-stamp — re-check the 92 already-`reviewed` cards too, don't trust existing ✓ marks or `design_pass=1` at face value just because a card looks structurally complete. (Memory: `feedback-design-review-verification`.)
 
 ---
 
-## Current Focus (S136)
+## Current Focus (S137)
 
-**Andy's 5-step plan for the next phase (PM05 09-16) — build out all stubs, answering design questions along the way, before moving to review:**
-1. Build out all stubs (CA/PA + all modifier content) — full spec, `design_pass=1`
-2. Design review pass for all (Art 04 §5 checklist + ModReactCard-specific checklist)
-3. Identify issues from that review — log as new PM05 items
-4. Faction-level set analysis (STD+faction), refreshing `Whiteboard/card_analysis_STD_*.md` with the full set (these currently only reflect CA/PA)
-5. Cross-faction analysis — re-run 04-n110 (`card_analysis_cross_faction_n110.md`, last run S128, predates all modifier content)
+**09-16 step 2 — design review pass, verification-audit mindset (not a rubber-stamp):**
+1. Write real content for the 286 `scaffolded` cards — Design Rationale, Card Story, honest checklist verdicts (17-row main + 5-row ModReactCard addendum where applicable) — per card or per tier (tier-templated cards share near-identical reasoning; Voice fit and Balance still need individual judgment).
+2. **Re-verify** the 92 already-`reviewed` cards against current schema/rules — don't skip them. `GHO.CA.3`'s broken fence and the two stale-ID rows were found this way; assume more exist.
+3. Log real findings as new PM05 items as they surface (standard review-then-file pattern, e.g. 04-n111–04-n117 precedent) — issues are expected output, not a special case.
+4. Ring Modifiers (`Part3`, 132 scaffolded cards, uniform locked format) is the natural first batch — richest single pattern-set, good first checkpoint for the review pass same as it was for scaffolding.
 
-**Also open:** Art 04 sign-off gates 04-n165 (copy-provenance sweep) + 04-n169 (§14/§15 disposition sweep). 04-n171 (new ModReactCard syntax — `holder`/`NativeResource(faction)`/`arbiter.modify` — needs reconciliation into §6.3, likely folds into step 2 above). `ref_board_narrative.md` sync pass against Art 00 §6.7 (pending three sessions now). 04-n163, 04-n164, 04-n166/04-n159, 04-n167/04-n168, 04-n148, 04-n150, XA-54, 06-n01, 04-n26/27, 04-n126, 04-n123, agy DB task (card_status sync for NET/SYN MOD cards).
+**After step 2 closes:** 09-16 steps 4–5 (faction-level set analysis refresh, then cross-faction synthesis re-run — `card_analysis_cross_faction_n110.md` predates all modifier content).
+
+**Also open:** 04-n165, 04-n169 (Art 04 sign-off gates — copy-provenance sweep, §14/§15 disposition); 04-n171 (new ModReactCard syntax reconciliation into §6.3); 04-n172 sub-items (`GHO.CA.11` ID pending 04-n1, `SYN.MOD.1` pending 04-n158 redesign); `ref_board_narrative.md` sync pass (pending several sessions); smaller backlog carried from S135 (04-n163/164/166/167/168/148/150/26/27/126/123, XA-54, 06-n01, agy DB task for NET/SYN MOD card_status sync).
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 04** — Draft, gated on 04-n165 + 04-n169 (both copy/content sweeps, see Current Focus). Now also has the full modifier-card set behind it (232 cards) — worth a scope check on whether sign-off should wait for 09-16 step 1–2, or proceed on schema/procedure grounds independent of per-card completeness.
+- **Art 04** — Draft, gated on 04-n165 + 04-n169 (copy/content sweeps). The full modifier-card set (232 cards) is now structurally scaffolded but not content-reviewed — sign-off realistically waits for 09-16 step 2 to actually run, not just for the two existing gates to close.
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
 
 *Card-level sign-offs gated behind set-level audits — not actionable until those gates clear.*

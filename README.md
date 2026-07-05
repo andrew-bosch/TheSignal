@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** S135 — Full action-space milestone: ModActionCard (132 cards: 60 faction + 72 ring) + Ring ModReactCard (36 cards) fully stubbed, 232 total modifier cards alongside existing CA/PA set. Decisions PM02 L256–L265. Art 04 v0.9.84 (S135). Art 04b v2.6 (S123).
+**Design milestone:** S136 — Art 04 physical split into 8 files (Part1–Part4e); 09-16 step 1 scaffolding tooling built and run (286/384 cards scaffolded, DB-48 structure_pass added). Prior (S135): Full action-space milestone — ModActionCard (132 cards: 60 faction + 72 ring) + Ring ModReactCard (36 cards) fully stubbed; 232 total modifier cards. PM02 L266, L256–L265.
 
 ---
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System.md) | 0.9.84 | 🔄 In progress — S135: Full action-space milestone — ModActionCard (132: 60 faction + 72 ring) and Ring ModReactCard (36) fully stubbed. New syntax (`holder`, `NativeResource(faction)`, `arbiter.modify`) pending §6.3 reconciliation (04-n171). Prior — S134: Ring Modifier ModBattleCard stub pass (STD.MOD.2–25, 24 cards); S133: Modifier card acquisition-source axis; Art 04 §11 revisited; §16 Appendix + §14.2 retired. |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System___Part1_Core.md) | 0.9.84 | 🔄 In progress — S135: Full action-space milestone — ModActionCard (132: 60 faction + 72 ring) and Ring ModReactCard (36) fully stubbed. New syntax (`holder`, `NativeResource(faction)`, `arbiter.modify`) pending §6.3 reconciliation (04-n171). Prior — S134: Ring Modifier ModBattleCard stub pass (STD.MOD.2–25, 24 cards); S133: Modifier card acquisition-source axis; Art 04 §11 revisited; §16 Appendix + §14.2 retired. |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |
@@ -152,10 +152,11 @@ TheSignal/
 
 ## Wiki Maintenance & Deployment
 
-The project wiki is built using `mkdocs` with the `material` theme. It serves as the primary mobile review surface for large artifacts (specifically splitting the massive `04___Card_System.md` into 8 chapters to prevent iOS WebKit crashes).
+The project wiki is built using `mkdocs` with the `material` theme. It serves as the primary mobile review surface for large artifacts — Art 04 (Card System) in particular is physically split at the source into 8 files (S136) to keep individual chapters small enough for iOS WebKit to render.
 
 *   **Wiki Source Directory:** `wiki_src/` (contains generated docs and `mkdocs.yml`; excluded from git via `.gitignore`).
-*   **Build Script:** `python3 tools/build_wiki.py` (wipes `wiki_src/docs/`, copies/flattens files from `V1/`, `Whiteboard/`, `Creative/`, `ClaudeIOS/`, splits `04___Card_System.md`, and runs link/anchor resolution to heal relative links).
+*   **Build Script:** `python3 tools/build_wiki.py` (wipes `wiki_src/docs/`, copies/flattens files from `V1/`, `Whiteboard/`, `Creative/`, `ClaudeIOS/`, builds the card-ID slug-routing map from Art 04's 8 Part files, and runs link/anchor resolution to heal relative links).
+*   **Art 04 Assembly Script:** `python3 tools/assemble_card_system.py` (regenerates `V1/04___Card_System.md` — a generated build artifact, not source of truth — from the 8 Part files, for legacy analysis scripts that expect a single file). Run after editing any Part file.
 *   **Deployment Script:** `bash tools/deploy_wiki.sh` (runs the local build, syncs `wiki_src/` via `rsync` to the Pi Zero server at `10.0.1.15`, and triggers `mkdocs build` remotely).
 *   **Rebuild & Deploy Command:** Run `./tools/deploy_wiki.sh` from the workspace root.
 

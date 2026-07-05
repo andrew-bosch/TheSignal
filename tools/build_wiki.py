@@ -93,10 +93,6 @@ def clean_title(filename):
     return base.strip()
 
 def get_category_id(filename, relative_path):
-    # Split files for card system
-    if 'v1_04___Card_System_Part_' in filename:
-        return 'components_mechanics'
-        
     parts = relative_path.split(os.sep)
     if len(parts) > 1:
         parent_dir = parts[0]
@@ -125,65 +121,32 @@ def get_category_id(filename, relative_path):
         return 'system_tasks'
     return 'whiteboard'
 
-def split_card_system(src_path, dest_dir, file_map):
-    print("Splitting V1/04___Card_System.md and extracting card IDs for slug-routing...")
-    with open(src_path, 'r', encoding='utf-8', errors='ignore') as f:
+# Art 04 is physically split into 8 Part files as of S136 (source of truth).
+# V1/04___Card_System.md is a generated monolith (tools/assemble_card_system.py)
+# kept only for legacy analysis scripts - it is skipped in the normal copy loop
+# below and never gets its own wiki page.
+CARD_SYSTEM_PARTS = [
+    '04___Card_System___Part1_Core.md',
+    '04___Card_System___Part2_Standard.md',
+    '04___Card_System___Part3_Ring_Modifiers.md',
+    '04___Card_System___Part4a_Guild.md',
+    '04___Card_System___Part4b_Ghost.md',
+    '04___Card_System___Part4c_Directorate.md',
+    '04___Card_System___Part4d_Network.md',
+    '04___Card_System___Part4e_Syndicate.md',
+]
+
+def populate_card_slug_map(filepath, dest_filename):
+    """Scan one already-copied Part file and extract card ID -> (file, slug) routes."""
+    if not os.path.exists(filepath):
+        return
+    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
         lines = f.readlines()
-        
-    parts = {
-        'Core': [],
-        'Standard': [],
-        'Guild': [],
-        'Ghost': [],
-        'Directorate': [],
-        'Network': [],
-        'Syndicate': [],
-        'Rules': []
-    }
-    
-    filenames = {
-        'Core': 'v1_04___Card_System_Part_1_Core.md',
-        'Standard': 'v1_04___Card_System_Part_2_Standard.md',
-        'Guild': 'v1_04___Card_System_Part_3a_Guild.md',
-        'Ghost': 'v1_04___Card_System_Part_3b_Ghost.md',
-        'Directorate': 'v1_04___Card_System_Part_3c_Directorate.md',
-        'Network': 'v1_04___Card_System_Part_3d_Network.md',
-        'Syndicate': 'v1_04___Card_System_Part_3e_Syndicate.md',
-        'Rules': 'v1_04___Card_System_Part_4_Rules.md'
-    }
-    
-    current_part = 'Core'
-    current_file = filenames['Core']
+
     current_slug = None
-    current_section_type = 'c' # 'c' for covert, 'p' for public
-    
+    current_section_type = 'c'  # 'c' for covert, 'p' for public
+
     for line in lines:
-        # Detect section shifts
-        if line.startswith('## Standard'):
-            current_part = 'Standard'
-            current_file = filenames['Standard']
-        elif line.startswith('## Guild'):
-            current_part = 'Guild'
-            current_file = filenames['Guild']
-        elif line.startswith('## Ghost'):
-            current_part = 'Ghost'
-            current_file = filenames['Ghost']
-        elif line.startswith('## Directorate'):
-            current_part = 'Directorate'
-            current_file = filenames['Directorate']
-        elif line.startswith('## Network'):
-            current_part = 'Network'
-            current_file = filenames['Network']
-        elif line.startswith('## Syndicate'):
-            current_part = 'Syndicate'
-            current_file = filenames['Syndicate']
-        elif line.startswith('## 8. Card Taxonomy Index'):
-            current_part = 'Rules'
-            current_file = filenames['Rules']
-            
-        parts[current_part].append(line)
-        
-        # Track if standard/faction covert vs public for correct C/P routing fallback
         if 'covert operations' in line.lower() or 'covert' in line.lower():
             current_section_type = 'c'
         elif 'public acts' in line.lower() or 'public act' in line.lower() or 'public' in line.lower():
@@ -192,54 +155,23 @@ def split_card_system(src_path, dest_dir, file_map):
         # Extract slug and card codes from card headings
         if line.startswith('### '):
             header_text = line.replace('### ', '').strip()
-            
-            # Generate MkDocs-style slug using standard slugify rules
             slug = make_mkdocs_slug(header_text)
             current_slug = slug
-            
+
             # Map heading ID token (e.g. "GUI.CA.1" -> "guica1")
             match = re.match(r'^([A-Za-z0-9\.\-_]+)', header_text)
             if match:
                 raw_id = match.group(1)
                 clean_id = re.sub(r'[^a-z0-9]+', '', raw_id.lower())
-                card_slug_map[clean_id] = (current_file, slug)
-                
+                card_slug_map[clean_id] = (dest_filename, slug)
+
         # Parse python card blocks for integer IDs to associate c13/p09
         id_match = re.search(r'\bid\s*=\s*(\d+)', line)
-        if id_match and current_slug and current_file:
+        if id_match and current_slug:
             card_id = int(id_match.group(1))
             prefix = current_section_type
-            
-            # Add mappings for c11, c011, etc.
-            card_slug_map[f"{prefix}{card_id}"] = (current_file, current_slug)
-            card_slug_map[f"{prefix}{card_id:02d}"] = (current_file, current_slug)
-            
-    # Write files
-    for part_name, part_lines in parts.items():
-        filename = filenames[part_name]
-        filepath = os.path.join(dest_dir, filename)
-        
-        content = "".join(part_lines)
-        # Ensure the file starts with a title for MkDocs
-        if not content.strip().startswith('#'):
-            title = part_name
-            if part_name == 'Rules':
-                title = 'Rules & Appendix'
-            elif part_name == 'Core':
-                title = 'Overview & Structure'
-            else:
-                title = f"{title} Cards"
-            content = f"# Card System - {title}\n\n" + content
-            
-        with open(filepath, 'w', encoding='utf-8') as out_f:
-            out_f.write(content)
-            
-        # Register in file map
-        fake_rel_path = f"V1/{filename.replace('v1_', '')}"
-        file_map[fake_rel_path] = filename
-
-    # Map the original Card System link to the Core Part
-    file_map['V1/04___Card_System.md'] = filenames['Core']
+            card_slug_map[f"{prefix}{card_id}"] = (dest_filename, current_slug)
+            card_slug_map[f"{prefix}{card_id:02d}"] = (dest_filename, current_slug)
 
 def resolve_card_anchor(anchor_link):
     clean_anchor = re.sub(r'[^a-z0-9]+', '', anchor_link.lower().lstrip('#'))
@@ -317,10 +249,17 @@ def build_wiki():
                     dest_path = os.path.join(DOCS_DIR, file)
                     shutil.copy2(full_src_path, dest_path)
                     
-    # Handle the large Card System file (splitting it into parts and building slug map)
-    card_system_path = os.path.join('V1', '04___Card_System.md')
-    if os.path.exists(card_system_path):
-        split_card_system(card_system_path, DOCS_DIR, file_map)
+    # Art 04's 8 Part files were just copied through the normal V1 loop above.
+    # Build the card-ID -> (file, slug) routing map from those copies, then
+    # route any stale links to the old monolith path at Core.
+    for part in CARD_SYSTEM_PARTS:
+        dest_filename = file_map.get(f'V1/{part}')
+        if dest_filename:
+            populate_card_slug_map(os.path.join(DOCS_DIR, dest_filename), dest_filename)
+
+    core_dest = file_map.get(f'V1/{CARD_SYSTEM_PARTS[0]}')
+    if core_dest:
+        file_map['V1/04___Card_System.md'] = core_dest
 
     # 2. Rewrite relative markdown links and resolve anchors to prevent 404s
     print("Rewriting relative links and routing anchors...")
@@ -374,7 +313,7 @@ def build_wiki():
                     
             if matched_val:
                 # If we mapped to Core but there is an anchor, resolve it to the specific split file!
-                if matched_val == 'v1_04___Card_System_Part_1_Core.md' and anchor:
+                if matched_val == core_dest and anchor:
                     routed = resolve_card_anchor(anchor)
                     if routed:
                         target_file, target_slug = routed

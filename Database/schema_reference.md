@@ -552,9 +552,12 @@ CREATE TABLE `card_status` (
   `cost_primary_amount` INT NULL,   -- own-native units in cost; 0=explicitly none; NULL=variable/unknown — added S119
   `cost_native_count` INT NOT NULL DEFAULT 0,    -- distinct native resource types in cost (0=free, 1=mono or single-type cross, 2+=multi-type cross) — added S119
   `uses_intel_token` TINYINT(1) NOT NULL DEFAULT 0, -- 1 if Intel Token is part of the cost; orthogonal to cost_type — added S119
-  `is_ring_modifier` TINYINT(1) DEFAULT 0           -- 1 if the card is a Ring Modifier (public pool, not drafted) — added S130 (DB-47)
+  `is_ring_modifier` TINYINT(1) DEFAULT 0,          -- 1 if the card is a Ring Modifier (public pool, not drafted) — added S130 (DB-47)
+  `structure_pass` TINYINT(1) NOT NULL DEFAULT 0    -- has all 4 structural blocks (Design Rationale/Card Story/Checklist/Status) per tools/card_completeness_audit.py — added S136 (db_update_session136.sql)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
+
+**card_status — 4-state review progression (S136):** `structure_pass` (has the 4 structural blocks — set by `tools/card_scaffolder.py` or by writing a card in full directly), `design_pass` (checklist content actually reviewed, not just scaffolded), `issues_resolved`, `signed_off` (Andy's explicit approval — session ref, e.g. `S49`). A card can be `structure_pass=1, design_pass=0` — scaffolded but unreviewed; that state has no MD equivalent besides the checklist rows still reading `⚠` throughout. Keep this column in sync whenever `tools/card_scaffolder.py` runs, same as the existing sync discipline for `design_pass`/`signed_off`.
 
 **card_status — taxonomy field notes (S117):**
 - `layer` / `function` / `subject` use PascalCase Art 04 names (not DB component table names). Join to `component` via `card_subject_map`.

@@ -24,7 +24,7 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §5 | [Design Principles](#5-design-principles) |
 | §5a | [Faction Playstyle Reference](#5a-faction-playstyle-reference) |
 | §6 | [Card Data Schema](#6-card-data-schema) |
-| §7 | [Card Specifications](#7-card-specifications) |
+| §7 | [Card Specifications](#7-card-specifications) — see File Map below; content lives in Parts 2–4e |
 | §8 | [Card Taxonomy Index](#8-card-taxonomy-index) |
 | §9 | [Faction Coverage Matrix](#9-faction-coverage-matrix) |
 | §10 | [Deck Construction & Pool Selection](#10-deck-construction--pool-selection) |
@@ -33,6 +33,21 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
 | §14 | [Special Conditions & Gameplay Impacts](#14-special-conditions-gameplay-impacts) |
 | §15 | [Examples & Exceptions](#15-examples-exceptions) |
+
+**File Map (S136):** Artifact 04 is physically split across 8 files — one version, one sign-off, single artifact. Card specs are addressed by Card ID, not section number.
+
+| File | Content |
+|------|---------|
+| `04___Card_System___Part1_Core.md` (this file) | §1–6, §8–15 |
+| `04___Card_System___Part2_Standard.md` | Standard — Covert Operations, Public Acts (STD.CA, STD.PA) |
+| `04___Card_System___Part3_Ring_Modifiers.md` | Ring-sourced Modifier Cards (STD.MOD.1–133) |
+| `04___Card_System___Part4a_Guild.md` | Guild |
+| `04___Card_System___Part4b_Ghost.md` | Ghost |
+| `04___Card_System___Part4c_Directorate.md` | Directorate |
+| `04___Card_System___Part4d_Network.md` | Network |
+| `04___Card_System___Part4e_Syndicate.md` | Syndicate |
+
+`04___Card_System.md` (the original monolith) is regenerated from these 8 parts by `tools/assemble_card_system.py` — it is a build artifact, not source of truth, and stays around for legacy analysis scripts that expect a single file.
 
 ---
 
@@ -743,12 +758,818 @@ Design guidance for `ring_mod` and `doctrine_mod`. Not locked — adjust based o
 
 ---
 
+
 ## 7. Card Specifications
 
-[Standard](#standard) · [Guild](#guild) · [Ghost](#ghost) · [Directorate](#directorate) · [Network](#network) · [Syndicate](#syndicate)
+Card specifications (all Card IDs, full schema instances) are physically split into Parts 2–4e — see File Map in §2 above. This section is a pointer only; do not add card content here.
+
+[Part 2 — Standard](04___Card_System___Part2_Standard.md) · [Part 3 — Ring Modifiers](04___Card_System___Part3_Ring_Modifiers.md) · [Part 4a — Guild](04___Card_System___Part4a_Guild.md) · [Part 4b — Ghost](04___Card_System___Part4b_Ghost.md) · [Part 4c — Directorate](04___Card_System___Part4c_Directorate.md) · [Part 4d — Network](04___Card_System___Part4d_Network.md) · [Part 4e — Syndicate](04___Card_System___Part4e_Syndicate.md)
+
+---
+## 8. Card Taxonomy Index
+
+*Column definitions and Layer × Function validity matrix in Art 04b §5.1. Status key: ✅ Signed off — canonical, use for gap analysis. 📝 Draft — designed but not signed off. ⬜ Not yet designed. 🚫 Retired.*
+
+| Card ID | Name | Status | Layer | Visibility | Function | Subject | Primitive Verb(s) |
+|---------|------|--------|-------|------|----------|---------|-------------------|
+| DIR.CA.1 | Invoke Jurisdiction | 📝 | Submission | Split | Block | Covert Operation (STD.CA.1, STD.CA.3) | — |
+| DIR.CA.2 | Detain | 📝 | Territory | Public | Move | Deployment Marker | Move | *(taxonomy corrected S107 L226: success operation is game.move() to Detention zone; Remove was incorrect — Remove = return to supply; Detention zone is an active play area on Directorate's tableau. Art 04 spec function field correction tracked under 04-n105)* |
+| DIR.CA.3 | Surveillance Placement | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
+| DIR.CA.4 | Tactical Redirection | 📝 | Territory | Public | Move | Presence Token | Move |
+| DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Public | Remove | Presence Token | Remove |
+| DIR.PA.1 | Regulatory Override | 📝 | Territory | Public | Modify | Presence Token (placement cost) | — |
+| DIR.PA.2 | Convene an Inquiry | 📝 | Information | Private → Public | Add | Intel Token | Add |
+| DIR.PA.3 | Entry/Exit Controls | 📝 | Territory | Public | Block | Deployment Marker | — |
+| DIR.PA.4 | Regulatory Downgrade | 🚫 BLOCKED | Territory | Public | Modify | InfluenceTier (derived — not targetable) | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
+| DIR.PA.5 | Regulatory Freeze | 🚫 BLOCKED | Territory | Public | Block | InfluenceTier (derived — not targetable) | — | *L223: Same subject violation — InfluenceTier not a targetable component. Additionally, Block targets actions (not derived states); Block\|InfluenceTier is a subject mismatch. Fundamental redesign required (04-n104).* |
+| DIR.PA.6 | Standing Injunction | 📝 | Submission | Split | Block | Public Act | — |
+| DIR.MOD.1 | Riot Squad | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.2 | Capital Suppression | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.3 | City Council Loyalist | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.4 | Administrative Overhead | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.5 | Emergency Appropriation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.6 | State of Emergency | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.7 | Eminent Domain | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.8 | Asset Seizure | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.9 | Fiscal Sanction | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.10 | Riot Control Unit | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.11 | Emergency Curfew | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.12 | Requisitioned Equipment | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.13 | Martial Lockdown | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.14 | Standing Order | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.15 | Regulatory Clearance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.16 | Show of Force | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.17 | By the Book | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.18 | Overwhelming Response | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.19 | Model Citizen | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.20 | Public Reprimand | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.21 | Jurisdiction Waiver | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.22 | Requisitioned Resources | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.23 | Commendation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.24 | Internal Affairs Referral | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| DIR.MOD.25 | Executive Mandate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.CA.1 | Pattern Match | 📝 | Submission | Private | Redirect | Covert Operation (lane steal — Beat 2 intercept) | Redirect |
+| GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
+| GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | Intel Delivery Slip | Reveal |
+| GHO.CA.4 | Deep Cover | 📝 | Information | Private → Public | Remove | Intel Token | Remove |
+| GHO.CA.5 | Misdirection | 📝 | Information | Private | Corrupt | Intel Token (faction_name field — FRG placed only) | Corrupt |
+| GHO.CA.6 | Synthesize | 📝 | Economy | Public | Add | Intel Token | Add |
+| GHO.CA.7 | Station | 📝 | Information | Private → Public | Add | Intel Token | Add |
+| GHO.CA.8 | Full Take | 📝 | Information | Private → Public | Add | Intel Token | Add |
+| GHO.CA.9 | SCIF | 📝 | Information | Private → Public | Add | Debrief Action Card | Add |
+| GHO.CA.10 | Flip | 📝 | Economy | Public | Add | Native Resource | Add |
+| GHO.CA.11 | Signals Analysis | 📝 | Information | Private → Public | Reveal | Classified Directives | Reveal |
+| GHO.CA.12 | Source Substitution | 📝 | Information | Private → Public | Corrupt | Intel Token | Corrupt |
+| GHO.CA.13 | Backdate | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel Token (round-number field) | Corrupt | *L222: (1) Location constraint — Intel token in private terminal zone unreachable by opposing card; only publicly placed tokens (PA payment window) are valid Corrupt targets. (2) 7.2b — round-number records committed validity state; altering it is retroactive modification. §4.10 revised. Art 04 spec: BLOCKED pending redesign (04-n103).* |
+| GHO.CA.14 | Field Verification | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel Token (age field) | Corrupt | *7.2b violation: mechanic alters committed token age field retroactively. Fundamental redesign required. G-ext id retired. Art 04 spec: BLOCKED pending redesign (04-n103).* |
+| GHO.PA.1 | Publish Analysis | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
+| GHO.PA.2 | Signal Review Request | 📝 | Resolution | Split by phase | Modify | Covert Operation (difficulty) | — |
+| GHO.PA.3 | Declassified Records | 📝 | Information | Public | Remove | Intel Token (expired) | Remove |
+| GHO.PA.4 | Public Threat Assessment | 📝 | Information | Private → Public | Reveal | Broadcast Effect Card | Reveal |
+| GHO.PA.5 | Agency Recruitment Fair | 📝 | Territory | Public | Add | Presence Token | Add |
+| GHO.MOD.1 | Sleeper Analyst | 📝 | Information | Public | Remove | Intel Token | Remove | *ModReactCard — taxonomy excluded from §11.1; effect description for spec clarity only* |
+| GHO.MOD.2 | Perimeter Sensors | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.3 | Institutional Trace | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.4 | Signal Bleed | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.5 | False Flag | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.6 | Supply Chain Tap | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.7 | Sleeper Cell | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.8 | Local Sympathizers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.12 | Embedded Contact | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.13 | Signals Package | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.14 | Planted Doubt | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.15 | Blown Cover | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.16 | Pre-Analysis | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.17 | Known Variable | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.18 | Clean Channel | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.19 | Total Picture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.20 | Clean Data | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.21 | Layered Analysis | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.22 | Quiet Correction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.23 | Findings Published | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.24 | Discreet Leak | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.25 | Model Failure Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.26 | Existing Dataset | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GHO.MOD.27 | Shared Infrastructure | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure Block | — |
+| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
+| GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence Token | Add |
+| GUI.CA.4 | Construction Crew | ✅ | Submission | Split | Remove Restriction | Covert Operation (presence requirement) | — |
+| GUI.CA.5 | Infrastructure Yield | ✅ | Economy | Public | Add | Native Resource | Add |
+| GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
+| GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Public | Add | Structure Block | Add |
+| GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Public | Add | Accord Agreement | Add |
+| GUI.MOD.1 | Night Shift Crew | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.2 | Union Representative | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.3 | Institutional Contract | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.4 | Core Premium | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.5 | Company Town | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.6 | Emergency Reconstruction | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.7 | Worker Retaliation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.8 | Site Clearance | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.9 | Field Supervisor | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.10 | Contractor's Favor | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.11 | Site Foreman | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.12 | Material Stockpile | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.13 | Permit Delay | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.14 | Structural Condemnation | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.15 | Structural Survey | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.16 | Load-Bearing Confidence | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.17 | Permit Fast-Track | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.18 | Certified to Code | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.19 | Union Crew | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.20 | Overbuilt | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.21 | Community Groundbreaking | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.22 | Ribbon Cutting | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.23 | Inspection Noted | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.24 | Code Violation Cited | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.25 | Material Surplus | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| GUI.MOD.26 | In-House Fabrication | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
+| NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
+| NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
+| NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | Public Act | — |
+| NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence Token | Add |
+| NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | Intel Token | Add |
+| NET.MOD.1 | Pirate Transmitter | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.2 | Troll Farm | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.3 | Backup Server Racks | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.4 | Amplification Array | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.5 | Infrastructure Signal | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.6 | Street-level Agitator | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.7 | Community Amplifiers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.8 | Frequency Splitter | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.9 | Bandwidth Override | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.10 | Local Organizers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.15 | Community Turnout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.16 | Live Broadcast | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.17 | Street Pressure | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.18 | Public Outcry | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.19 | Groundswell | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.20 | Advance Coverage | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.21 | Clear Signal | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.22 | Full Saturation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.23 | Cross-Posted | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.24 | Viral Moment | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.25 | Off-Air | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.26 | Exclusive Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.27 | Follow-Up Question | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.28 | Retraction Demanded | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.29 | Volunteer Stringers | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.MOD.30 | Existing Airtime | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
+| NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence Token | Add |
+| NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | Faction Hand | Reveal |
+| STD.CA.1 | Build Structure | ✅ | Territory | Public | Add | Structure Block | Add |
+| STD.CA.2 | Demolish | ✅ | Territory | Public | Remove | Structure Block | Remove |
+| STD.CA.3 | Campaign | ✅ | Territory | Public | Add | Presence Token | Add |
+| STD.CA.4 | Undermine | ✅ | Territory | Public | Remove | Presence Token | Remove |
+| STD.CA.5 | Gather | ✅ | Information | Private → Public | Add | Intel Token | Add |
+| STD.CA.6 | Broadcast Interference | ✅ | Submission | Split | Modify | Public Act (cost) | — |
+| STD.CA.7 | Amplify | ✅ | Resolution | Split by phase | Modify | Public Act (outcome scale) | — |
+| STD.CA.8 | Buy Influence | ✅ | Territory | Public | Add | Presence Token | Add |
+| STD.CA.9 | Fund | ✅ | Economy | Public | Redirect | Native Resource | Move |
+| STD.CA.10 | Protect | ✅ | Resolution | Split by phase | Protect | Covert Operation (difficulty) | — |
+| STD.CA.11 | Tort Interference | 📝 | Information | Private → Public | Corrupt | Accord Agreement | Corrupt |
+| STD.CA.12 | Absolute Compromise | 📝 | Submission | Split | Block | Covert Operation | — |
+| STD.CA.13 | Disinformation Campaign | 📝 | Standing | Split | Shift | Public Standing | Move |
+| STD.CA.14 | Disprove | 📝 | Economy | Public | Remove | Intel Token | Remove |
+| STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel Token | Move |
+| STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier Card | Move |
+| STD.MOD.1 | Overture | 📝 | Issued ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.2 | Senior Liaison | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.3 | Signed-Out Instrumentation | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.4 | Clearance Review | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.5 | Access Frozen | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.6 | Citadel Contact | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.7 | Sanctum Ledger Access | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.8 | Checkpoint Delay | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.9 | Perimeter Lockout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.10 | Line Supervisor | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.11 | Relay Priority | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.12 | Regulatory Hold | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.13 | Supply Line Frozen | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.14 | Power Grid Chief | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.15 | Communications Hub Override | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.16 | Permit Office Freeze | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.17 | Clearinghouse Lockout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.18 | Familiar Face | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.19 | Scavenged Rig | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.20 | Vendors Close Ranks | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.21 | Baryo Turns Its Back | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.22 | Strip Regular | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.23 | Market Stall Cache | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.24 | Housing Arrangement Called In | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.25 | Transit Hub Shutout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.26 | Zoning Variance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.27 | Redacted File | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.28 | Maintenance Window | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.29 | Classified Briefing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.30 | Institutional Backing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.31 | Ceremonial Groundbreaking | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.32 | Off the Record | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.33 | Public Citation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.34 | Word to the Wise | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.35 | Named in the Review | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.36 | Fee Waived | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.37 | Emergency Allocation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.38 | Recognized on Sight | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.39 | Standing Request | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.40 | Back-Channel Word | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.41 | Full Clearance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.42 | Shift Change Timing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.43 | Full Institutional Weight | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.44 | Noted Favorably | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.45 | Formal Recognition | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.46 | Quietly Flagged | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.47 | Denied Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.48 | Reassigned on Paper | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.49 | Jumped the Queue | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.50 | Rezoned Corridor | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.51 | Relay Intercept | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.52 | Manifest Correction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.53 | Grievance Withdrawn | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.54 | Cross-Docked Efficiently | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.55 | Chain Reaction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.56 | Compliance Certificate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.57 | Model Facility | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.58 | Delay Logged | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.59 | Safety Citation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.60 | Priority Routing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.61 | Bulk Rate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.62 | Dock Familiarity | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.63 | Grid Rapport | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.64 | Line Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.65 | Full Processing Rights | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.66 | Overtime Crew | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.67 | Full Utilization | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.68 | Filed Under Routine | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.69 | Reliability Commendation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.70 | Overdrawn Account Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.71 | Public Sanction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.72 | Consignment Hold Released | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.73 | Standing Utility Contract | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.74 | Squatter's Claim | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.75 | Landlord's Blessing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.76 | Dock Contacts | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.77 | Neighborhood Backing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.78 | Community Pool | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.79 | Packed House | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.80 | Street Reputation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.81 | Neighborhood Vouching | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.82 | Busker's Tip | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.83 | Overheard at the Strip | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.84 | Credit with the Vendor | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.85 | Barter Chain | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.86 | Regular Customer | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.87 | Route Knowledge | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.88 | Neighborhood Standing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.89 | Local Fixture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.90 | Festival Grounds | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.91 | Word Spreads Fast | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.92 | Quiet Word to the Crowd | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.93 | Block Party | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.94 | Quiet Word Against Them | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.95 | Turned Away | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.96 | Scrap Value | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.97 | Favor Owed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| STD.MOD.98 | Notified of Encroachment | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.99 | Structural Objection | 📝 | Territory | Public | Remove | Presence Token | — |
+| STD.MOD.100 | Escort Withdrawn | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.101 | Overheard in the Commissary | 📝 | Information | Public | Add | Intel Token | — |
+| STD.MOD.102 | Access Log Pulled | 📝 | Information | Public | Add | Public Standing | — |
+| STD.MOD.103 | Flagged for Review | 📝 | Submission | Public | Modify | Public Act | — |
+| STD.MOD.104 | Budget Reallocated | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.105 | Audit Trail | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.106 | Emergency Reserve | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.107 | On the Docket | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.108 | Precedent Cited | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.109 | Quiet Reprimand | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.110 | Line Rerouted | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.111 | Capacity Exceeded | 📝 | Territory | Public | Remove | Presence Token | — |
+| STD.MOD.112 | Salvage Rights | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.113 | Grid Anomaly Logged | 📝 | Information | Public | Add | Intel Token | — |
+| STD.MOD.114 | Service Level Breach | 📝 | Information | Public | Add | Public Standing | — |
+| STD.MOD.115 | Routine Inspection | 📝 | Submission | Public | Modify | Public Act | — |
+| STD.MOD.116 | Toll Collected | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.117 | Overtime Billed | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.118 | Backup Generator | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.119 | Union Statement | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.120 | On Record | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.121 | Formal Notice | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.122 | Crowd Gathers | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.123 | Priced Out | 📝 | Territory | Public | Remove | Presence Token | — |
+| STD.MOD.124 | Eviction Notice | 📝 | Territory | Public | Add | Presence Token | — |
+| STD.MOD.125 | Word Travels | 📝 | Information | Public | Add | Intel Token | — |
+| STD.MOD.126 | Quietly Rewritten | 📝 | Information | Public | Add | Public Standing | — |
+| STD.MOD.127 | Someone's Watching | 📝 | Submission | Public | Modify | Public Act | — |
+| STD.MOD.128 | Informal Toll | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.129 | Cut of the Action | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.130 | Vendor Credit Called | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.131 | Neighborhood Notices | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.132 | Sides Are Taken | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.MOD.133 | The Crowd Remembers | 📝 | Standing | Public | Add | Public Standing | — |
+| STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence Token | Add |
+| STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence Token | Remove |
+| STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure Block | Add |
+| STD.PA.4 | Public Censure | 📝 | Standing | Split | Shift | Public Standing (−) | Move |
+| STD.PA.5 | On the Record | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
+| STD.PA.6 | Economic Sanction | 📝 | Economy | Public | Remove | Native Resource | Remove |
+| STD.PA.7 | Public Address | 📝 | Standing | Split | Shift | Public Standing (+) | Move |
+| STD.PA.8 | Table an Accord | 📝 | Economy | Public | Add | Accord Agreement | Add |
+| SYN.CA.1 | Leveraged Acquisition | 📝 | Economy | Public | Add | Native Resource | Add |
+| SYN.CA.2 | Short the Market | 📝 | Economy | Public | Remove | Native Resource | Remove |
+| SYN.CA.3 | Hostile Acquisition | 📝 | Territory | Public | Redirect | Structure Block | Move |
+| SYN.CA.4 | Golden Parachute | 📝 | Economy | Public | Protect | Native Resource | — |
+| SYN.CA.5 | Regulatory Capture | 📝 | Submission | Split | Block | Named Action Type | — |
+| SYN.CA.6 | Parasitic | 📝 | Economy | Public | Add | Intel Token | Add |
+| SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Public | Redirect | Native Resource | Move |
+| SYN.CA.8 | Land Title | 📝 | Territory | Public | Add | Structure Block | Add |
+| SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | Presence Token | Add |
+| SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
+| SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
+| SYN.CA.12 | Boilerplate | 📝 | Economy | Covert | Add | Accord Form | Add |
+| SYN.MOD.1 | The Fixer | 📝 | Issued ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.2 | Shell Corporation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.3 | Offshore Slush Fund | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.4 | Insider Trading | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.5 | Short Squeeze | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.6 | Bounty Contract | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.7 | Renegotiation Fee | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.8 | Vulture Fund | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.9 | Goodwill | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.10 | Lobby | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.11 | Signature on File | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.12 | Contracted Muscle | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.13 | Armored Transport | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.14 | Called-In Debt | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.15 | Bought Off | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.16 | Golden Handshake | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.17 | Insider Terms | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.18 | Cleared Position | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.19 | Total Leverage | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.20 | Compound Interest | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.21 | Controlling Stake | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.22 | Quiet Settlement | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.23 | Philanthropic Gesture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.24 | Word Gets Around | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.25 | Predatory Terms Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.26 | Bulk Contract | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.MOD.27 | Line of Credit | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
+| SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
+| SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
+| SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
 
 ---
 
+## 9. Faction Coverage Matrix
+
+*Standard column = faction=All cards and Political Acts (P-prefix). Faction columns = faction-specific cards only.*
+
+| Layer | Function | Subject | Standard | Guild | Ghost | Directorate | Network | Syndicate |
+|-------|----------|---------|----------|-------|-------|-------------|---------|-----------|
+| **Territory** | | | | | | | | |
+| | Add | Presence Token | STD.CA.3, STD.CA.8, STD.PA.1 | GUI.CA.3 | GHO.PA.5 | — | NET.CA.5, NET.PA.2 | SYN.CA.9 |
+| | Add | Structure Block | STD.CA.1, STD.PA.3 | GUI.PA.1 | — | — | — | SYN.CA.8 |
+| | Block | Deployment Marker | — | — | — | DIR.PA.3 | — | — |
+| | Remove | Presence Token | STD.CA.4, STD.PA.2 | — | — | DIR.CA.5 | — | — |
+| | Move | Deployment Marker | — | — | — | DIR.CA.2 | — | — |
+| | Remove | Structure Block | STD.CA.2 | — | — | — | — | — |
+| | Move | Presence Token | — | — | — | DIR.CA.4 | — | — |
+| | Redirect | Presence Token | — | — | — | — | — | SYN.PA.1 |
+| | Redirect | Structure Block | — | — | — | — | — | SYN.CA.3 |
+| | Protect | Structure Block | — | GUI.CA.1 | — | — | — | — |
+| | Modify | Presence Token | — | — | — | DIR.PA.1 | — | — |
+| **Economy** | | | | | | | | |
+| | Add | Native Resource | — | GUI.CA.2, GUI.CA.5, GUI.CA.6 | — | DIR.CA.6 | — | SYN.CA.1, SYN.PA.2 |
+| | Add | Intel Token | — | — | GHO.CA.6 | — | NET.CA.6 | SYN.CA.6 |
+| | Add | Accord Agreement | STD.PA.8, GUI.PA.2 | — | — | — | — | — |
+| | Add | Exposure | — | — | — | — | NET.CA.2 | — |
+| | Add | Native Resource | — | — | GHO.CA.10 | — | — | — |
+| | Remove | Native Resource | STD.PA.6 | — | — | — | — | SYN.CA.2 |
+| | Remove | Intel Token | STD.CA.14 | — | — | — | — | — |
+| | Remove | Accord Agreement | — | — | — | — | — | — |
+| | Redirect | Native Resource | STD.CA.9 | — | — | — | — | SYN.CA.7 |
+| | Redirect | Intel Token | STD.CA.15 | — | — | — | — | — |
+| | Redirect | Modifier Card | STD.CA.16 | — | — | — | — | — |
+| | Redirect | Accord Agreement | — | — | — | — | — | — |
+| | Corrupt | Accord Agreement | — | — | — | — | — | SYN.CA.10 |
+| | Protect | Native Resource | — | — | — | — | — | SYN.CA.4 |
+| **Information** | | | | | | | | |
+| | Add | Intel Token | STD.CA.5 | — | GHO.CA.5, GHO.CA.7, GHO.CA.8 | DIR.PA.2 | — | — |
+| | Add | Debrief Action Card | — | — | GHO.CA.9 | — | — | — |
+| | Reveal | Covert Operation | — | — | GHO.CA.2 | DIR.CA.3 | NET.CA.3 | — |
+| | Reveal | Intel Delivery Slip | — | — | GHO.CA.3 | — | — | — |
+| | Reveal | District | — | — | — | — | NET.CA.1 | — |
+| | Reveal | Faction Hand | — | — | — | — | NET.PA.3 | — |
+| | Reveal | Action Attribution | STD.PA.5 | — | GHO.PA.1 | — | NET.PA.1 | — |
+| | Reveal | Classified Directives | — | — | GHO.CA.11 | — | — | — |
+| | Reveal | Broadcast Effect Card | — | — | GHO.PA.4 | — | — | — |
+| | Reveal | Intel Token | — | — | — | — | — | SYN.PA.3 |
+| | Remove | Intel Token | — | — | GHO.CA.4, GHO.PA.3, GHO.MOD.1 | — | — | — |
+| | Corrupt | Accord Agreement | STD.CA.11 | — | — | — | — | SYN.CA.11 |
+| | Corrupt | Intel Token | — | — | GHO.CA.12 | — | — | — |
+| **Submission** | | | | | | | | |
+| | Block | Covert Operation | STD.CA.12 | — | — | DIR.CA.1 | — | — |
+| | Block | Named Action Type | — | — | — | — | — | SYN.CA.5 |
+| | Block | Public Act | — | — | — | DIR.PA.6 | — | — |
+| | Modify | Public Act | STD.CA.6 | — | — | — | NET.CA.4 | — |
+| | Copy | Covert Operation | — | — | GHO.CA.1 | — | — | — |
+| | Remove Restriction | Covert Operation | — | GUI.CA.4 | — | — | — | — |
+| **Resolution** | | | | | | | | |
+| | Modify | Public Act (outcome scale) | STD.CA.7 | — | — | — | — | — |
+| | Modify | Covert Operation | — | — | GHO.PA.2 | — | — | — |
+| | Modify | Difficulty | — | — | — | DIR.CA.8 | — | — |
+| | Protect | Covert Operation | STD.CA.10 | — | — | — | — | — |
+| **Standing** | | | | | | | | |
+| | Shift | Public Standing | STD.CA.13, STD.PA.4, STD.PA.7 | — | — | DIR.CA.7 | NET.CA.7 | — |
+
+---
+
+## 10. Deck Construction & Pool Selection
+
+Before the session begins, each faction player constructs their active decks from a larger initial card pool (Art 02, components DB:114/115). The pool is not played with in its entirety — players select a working subset for Q1–Q8. Cards not selected are returned to the box and remain out of play for the duration of the session.
+
+This is the first strategic decision of the game. Preparation expresses doctrine: you cannot play a card you didn't bring.
+
+### 10.1 Per-Faction Selection
+
+| Card Type | Selection Rule |
+|-----------|---------------|
+| Covert Operations (CA) | Select a subset from the CA pool (Standard CAs + Faction CAs combined). Shuffle into the Covert Operation Deck. |
+| Public Acts (PA) | Select a subset from the PA pool (Standard PAs + Faction PAs combined). Shuffle into the Public Act Deck. |
+| Modifier Cards | Select a working subset from the Modifier pool. Form the Faction Modifier Deck. |
+| Operative | Select **1** from the Operative pool. |
+| Apex | Select **1** from the Apex pool. |
+
+Standard cards are distributed as part of each faction's CA and PA pools — each faction holds its own physical set of Standard cards, not a shared deck.
+
+> **Design note:** Deck sizes (total card counts, per-card copy counts, and pool sizes) are pending balance analysis and playtesting. Legacy `pool_copies` field references are retired. Counts will be established during the balance pass. *(PM05 04-n136)*
+
+**Minimum unique pool floor (L240, S131):** Distinct from 04-n136's per-card copy-count question above — this governs the size of the pool a faction drafts *from*, not how many of it a player selects. Every faction's drafting pool (Standard set + faction-specific set, excluding blocked and Ring Modifier cards) must total **≥ 54 unique cards**: Standard set = 26 (fixed — every faction draws from the same STD pool) + faction set ≥ 28. Live count: DB view `v_card_faction_deck_floor`. Directorate is currently 6 cards short of the floor — tracked at PM05 04-n149.
+
+**Procedure:** Art 03-init §3.9.
+
+---
+
+## 11. Rules & Constraints — Modifier Cards
+
+### 11.1 What They Are
+
+Modifier cards are the game's secondary layer of play — cards that don't act alone, but attach to, alter, or react to something else already in motion at the table. Two independent questions define any modifier card: **which of three subclasses governs how it fires** (below), and **which of three sets governs where it came from** (§11.1 second half). The two are orthogonal — a card's firing mechanism doesn't determine its acquisition source, and vice versa (S133, PM02 L245).
+
+**Three subclasses govern how a modifier card fires (§6.1):**
+
+- **ModActionCard** — attached to a CA/PA/Operative/Emergency/Apex at the moment it's submitted (Covert Dispatch); rides along and resolves when its host does. Its effect is always parasitic on the host action, so it carries no independent Layer/Function/Subject — the taxonomy belongs to the host, not the modifier. Effect expressed as a `ModActionExpr` tagged union (§6.3).
+- **ModBattleCard** — thrown into a live district contest at Battlefield Strength resolution (Art 03 §10.1.2); its only job is to shift a named contesting faction's total up or down before the d10 roll. Like ModActionCard, it has no independent taxonomy — the contest itself is the taxonomy-bearing act, not the modifier thrown into it. Effect is a `ModBattleExpr` (Boost/Hinder + target + magnitude).
+- **ModReactCard** — the odd one out: it doesn't attach to anything. It sits in a faction's hand until a publicly observable board-state change matches its `trigger`, then fires on its own — structurally closer to a self-triggering CA/PA than to the other two subclasses. This is why ModReactCard is the one subclass that routinely carries genuine Layer/Function/Subject taxonomy (per-card, not universal — see §6.2): it *is* an action, just one that declares itself instead of being submitted at Phase B.
+
+**Three sets govern where a modifier card comes from — independent of subclass:**
+
+Faction and Ring modifier cards are drawn from a shuffled deck; ARBITER-issued cards are not.
+
+- **Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. Represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–4).*
+- **Ring modifier cards** — drawn from shared ring decks on game board (Baryo, The Mid, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only") when set, effect, Portrait alignment (if applicable), value rating (1–4).* **04-n161 ✅ closed S134:** rather than a single blanket default, the shipped Ring Modifier content (STD.MOD.2–25, §7) fields two complete 4-card sets per ring — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — so both models exist in play simultaneously; per-card narrative judgment (location-anchored vs. portable) determines which set a given concept belongs to, not a schema-wide rule.
+- **ARBITER-issued cards** — not drawn from any deck. ARBITER hands the card directly to a faction as a specific, named consequence of another card's resolution (`generating_card`, §6.2) — no shuffle, no card back convention, no Upkeep draw eligibility. Current examples: GD-01 Grant Deed (§12b.2), STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three happen to be ModReactCard underneath (fire on a trigger, once delivered), but acquisition source doesn't constrain which of the three subclasses a card is; an Issued ModActionCard or ModBattleCard is schema-valid, just unbuilt so far.
+
+Ring constraint, when set, applies to all users regardless of holder.
+
+*Naming note: "Modifier cards" is a working designation — pending decision D-04-07.*
+
+### 11.2 Draw Conditions (Art 03 §7.5.3 Modifier Card Draw)
+
+*Was "Upkeep Step 6" — stale flat numbering, predates Art 03's §7 Upkeep restructure into nested §7.0–§7.5.x steps. Fixed S133 (Andy).*
+
+Factions that have triggered Burst Play skip modifier draws for the remainder of the session.
+
+**Faction modifier draw (§7.5.3.0):**
+
+| Structure blocks owned | Cards drawn |
+|------------------------|-------------|
+| 0–1 | 0 |
+| 2–3 | 1 |
+| 4–5 | 2 |
+| 6+ | 3 (maximum) |
+
+*Table values sourced from Art 03 §21 Card Economy Reference (temporary home — migrates to Art 04 §12 when deck construction is finalized). Confirm this copy stays in sync if §21 changes.*
+
+**Ring modifier draw (§7.5.3.1):** 1 card from a ring deck if the faction has both:
+1. At least 1 structure block in that ring, AND
+2. Established or Dominant in at least 1 district in that ring.
+
+One draw per qualifying ring per round.
+
+### 11.3 Hand Accumulation
+
+No hand limit. Modifier decks not reshuffled — one-pass per session.
+
+### 11.4 Submit Rules
+
+No cap. A faction may attach as many modifier cards to as many submitted actions as it holds in hand — limited only by hand size (§11.3), not by an artificial per-action or per-round count.
+
+### 11.5 Trading
+
+Freely tradeable faction-to-faction — any resource, Intel Token, or modifier card — whenever both parties agree; not restricted to a specific window, though play shouldn't stall to negotiate one.
+
+### 11.6 Burst Play
+
+**Trigger:** After Art 03 §7.5.3 draws complete (§7.5.3.2 Burst Play Window), before Dispatch phase opens.
+
+**Effect:** Trade ALL held modifier cards for Reservoir resources at 1:1 — any resource type, each card independently.
+
+**Consequence:** Faction modifier deck removed from tableau for the remainder of the session. Modifier draw skipped at all future Upkeeps. Post-Burst factions may still receive and use modifier cards through trade — Burst removes draw access only.
+
+**ARBITER announces publicly:** *"[Faction] has liquidated their operational reserve."* Resource gain private.
+
+*Modifier card individual design is a full design pass — pending decision D-04-08.*
+
+### 11.7 Effect Types
+
+**ModActionCard** effects (§6.3 `ModActionExpr` — one per card):
+
+| ModActionExpr | Effect | Valid for |
+|---------------|--------|-----------|
+| `threshold_delta(n)` | +n or −n applied to host action threshold | CA and PA |
+| `success_multiplier(n)` | Effect fires additional n times on success | CA and PA |
+| `ps_shift(faction, delta)` | Applies a PS shift to "acting", "target", or a named faction | CA and PA |
+| `cost_reduction(n)` | Reduces PA cost by n resources | PA only |
+
+**ModBattleCard** effects (§6.3 `ModBattleExpr`):
+
+| Direction | Effect |
+|-----------|--------|
+| `Boost` | +magnitude applied to the named target faction's Battlefield Strength total |
+| `Hinder` | −magnitude applied to the named target faction's Battlefield Strength total |
+
+Target is any contesting faction identified at Art 03 §10.1.1 — chosen by the playing faction, not necessarily themselves. Any faction may play a Battlefield Modifier Card into an active contest, whether or not they are contesting it themselves (Art 03 §10.1.2 Step 2, S132).
+
+**ModReactCard** effects: Full CA/PA effect field set (`success`, `successcrit`, `fail`, `failcrit`) — see §6.1. Applies identically to Issued ModReactCards (GD-01, Overture, The Fixer — §11.1); `acquisition` and `generating_card` govern where the card came from, not what its effect field looks like.
+
+*Legacy effect categories from earlier design (Effect extension, Detection immunity, Reach extension, Outcome addition) are superseded by the §6.1 modifier subclass schema.*
+
+
+## 12. Rules & Constraints
+
+## 12a. Debrief Action Cards
+
+ARBITER-issued cards placed in a faction's Dispatch Case during operation resolution. Not player-submitted; not drawn from a deck. Carry a single instruction that fires at the start of Art 03 §11 Debrief. Physical form: disposable slip or reusable erasable card — design direction pending Art 11. Component: DB:100 (DebriefActionCard).
+
+Debrief Action Cards are distinguished from all other card types by source and timing: created by ARBITER as a consequence of resolved operation; no faction player submits or draws them.
+
+**Acquisition (S133):** same acquisition source as GD-01/Overture/The Fixer (§11.1, §12b) — ARBITER-delivered as a named consequence of a resolved operation (its generating CA), not drawn from a deck. But DA-xx cards are **not** Modifier cards and not `Card()` instances — they carry no `type` from the CardType enum, no Layer/Function/Subject, and critically, no `trigger`. Considered and rejected: typing them Issued `ModReactCard` — ModReactCard requires a non-None `trigger` (§6.2 field constraint), and "fires at the start of Debrief" isn't a `TriggerExpr` event a card reacts to; it's a **scheduled procedural checkpoint** it executes at unconditionally, the same category as `persistence=Seasonal` clearing at Phase 21 (End of Quarter) — phase-anchored, not board-state-reactive. This also matches Art 04 §6.3's explicit exclusion of Session Timeline/Quarter-Month markers from the TriggerExpr vocabulary (a physical Debrief-position marker wouldn't change this — it would still be exactly the excluded category). DA-xx therefore stays its own lightweight category: fields table + Art 03 §11 procedure, not folded into the modifier subclass hierarchy.
+
+---
+
+### 12a.1 Card Identifier: DA-xx
+
+Debrief Action Cards use the **DA-xx** identifier prefix, assigned sequentially as subtypes are defined.
+
+---
+
+### 12a.2 DA-01 — SCIFRecord
+
+Produced by Ghost SCIF card on successful Beat 3 resolution (see Art 03 §7.2 Ghost — SCIF). ARBITER places one completed SCIFRecord in Ghost's Dispatch Case at Beat 3 instantiation.
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `quarter` | Integer | Quarter in which the card was produced |
+| `draw_ring1` | Integer | Target faction's Ring 1 structure block count at Beat 3 (snapshot) |
+| `draw_ring2` | Integer | Target faction's Ring 2 structure block count at Beat 3 (snapshot) |
+| `draw_ring3` | Integer | Target faction's Ring 3 structure block count at Beat 3 (snapshot) |
+
+**Debrief procedure (Art 03 §11):** At the start of Debrief, process all DA-01 slips in Ghost's Dispatch Case:
+
+1. For each recorded ring count (draw_ring1, draw_ring2, draw_ring3): draw that many cards from the corresponding Ring modifier deck.
+2. Sum the three ring counts. Draw from the Ghost faction deck: 0–1 total → 0 draws; 2–3 → 1; 4–5 → 2; 6+ → 3.
+3. No ring-eligibility check applies to these draws.
+4. Discard the DA-01 slip after use.
+5. DA-01 slips remaining in the Dispatch Case at Phase 21 are discarded without effect.
+
+---
+
+### 12a.3 DA-02 — PhantomRecord
+
+*New S133 — written to establish format parity with DA-01 per the acquisition-axis generalization above (§12a intro). GHO.CA.13 Phantom Accounts, the generating card, is itself an undesigned stub (id/version/beat/resolution/threshold only — no Design Rationale, checklist, or Status). DA-02's fields and procedure below match GHO.CA.13's one-line success text as written; exact mechanics are pending GHO.CA.13's own full design pass, not settled by this entry.*
+
+Produced by Ghost's GHO.CA.13 Phantom Accounts on successful Beat 3 resolution. ARBITER places one completed PhantomRecord in Ghost's Dispatch Case at Beat 3 instantiation.
+
+**Fields (ARBITER completes at generation):**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `quarter` | Integer | Quarter in which the card was produced |
+| `target_faction` | Faction | Faction whose district-native resource generation is being mirrored |
+| `generation_snapshot` | TBD | Target faction's influence-based district-native resource generation at Beat 3 (snapshot) — exact calculation method pending GHO.CA.13 full design pass |
+
+**Debrief procedure (Art 03 §11):** At the start of Debrief, process all DA-02 slips in Ghost's Dispatch Case:
+
+1. Ghost gains district-native resources equal to `generation_snapshot`.
+2. Discard the DA-02 slip after use.
+3. DA-02 slips remaining in the Dispatch Case at Phase 21 are discarded without effect.
+
+⚠ **Outstanding:** `generation_snapshot`'s exact source (which formula/table defines "influence-based generation") is undefined — GHO.CA.13 needs its own design pass before this is more than a placeholder field.
+
+---
+
+## 12b. Grant Deeds
+
+ARBITER-issued cards placed in a faction's Dispatch Case during covert operation resolution. Not player-submitted; not drawn from a deck. Held in faction hand after Debrief delivery. Fire as an Issued ModReactCard (`acquisition=Issued` — S133, PM02 L245 revises L241/L241's since-superseded `ModIssuedCard` model, PM05 04-n154/04-n160) — trigger is a fill-in-the-blank district field written by ARBITER on the physical card at generation time. Fire effect applies to the holding faction regardless of which CA generated the deed. Multiple Grant Deeds may be held simultaneously; one fires per trigger event.
+
+Physical form: blank card with printed trigger text and effect text; two fill-in fields completed by ARBITER at generation. Stored blank in ARBITER tableau; ARBITER completes and routes at Beat 3 or Beat 4 of the generating CA's resolution.
+
+---
+
+### 12b.1 Card Identifier: GD-xx
+
+Grant Deeds use the **GD-xx** identifier prefix, assigned sequentially as subtypes are defined.
+
+---
+
+### 12b.2 GD-01 — Grant Deed
+
+Produced by any CA that delivers a Grant Deed (currently SYN.CA.8 Land Title and GUI.CA.10 Development Order). ARBITER completes and places in the acting faction's Dispatch Case at resolution; moves to holding faction's hand at Debrief.
+
+**Fill-in fields (ARBITER completes at generation):**
+
+| Field | Description |
+|-------|-------------|
+| `district` | Named district from the generating CA's target declaration |
+| `holder` | Acting faction from the generating CA |
+
+**Trigger:** `structure_block.placed(district=deed.district)` — fires when any faction places a structure block in the named district. Trigger is evaluated against the district name written on the card; no ARBITER monitoring required — deed holder self-polices and announces React.
+
+⚠ **Outstanding issue (04-n27 / trigger vocab):** `structure_block.placed(district=X)` is a district-scoped trigger form not yet in the confirmed TriggerExpr vocabulary (current vocabulary is ring-scoped: `structure_block.placed(faction=X, ring=Z)`). District-scoped extension needed in Art 04 §6.3 and design_reference_card_system.md.
+
+**Effect on fire:**
+1. Deed holder announces React; presents Grant Deed card; names district.
+2. Place 1 Presence Token for deed holder in `deed.district`.
+3. Place 1 Structure Block for deed holder in `deed.district` (Governing Rule 8.2 governs — if holder already has a structure block there, step 3 is skipped; step 2 still executes).
+4. Discard Grant Deed.
+
+**Component registration:** New component — Art 02 entry pending 04-n26.
+
+```python
+GD01 = Card(
+    id      = "GD-01",  version = "v0.3",
+    name    = "Grant Deed",
+    tagline = "A registered claim. When someone else breaks ground, the deed fires.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+
+    layer    = Territory,  function = Add,  subject = StructureBlock,
+
+    beat            = None,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    trigger         = structure_block.placed(district=deed.district),
+    resolution_type = "Transactional",
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = deed.district,
+    target_faction  = None,
+    target_object   = None,
+    declared_params = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = None,
+    boost       = None,
+
+    acquisition      = Issued,
+    generating_card  = ["SYN.CA.8", "GUI.CA.10"],
+
+    success = [faction(holding).presence_token.add(deed.district, 1),
+               faction(holding).structure_block.add(deed.district, 1)],
+    successcrit = None,  fail = None,  failcrit = None,
+
+    portrait    = None,
+    ps_framing  = None,
+
+    narrative    = None,
+    perspectives = None,
+    design_note  = "Issued ModReactCard (S133 — was `ModIssuedCard`, PM02 L245 revises L241/PM05 04-n154; before that, plain ModReactCard). Acquisition axis (acquisition=Issued, generating_card) now carries what the retired ModIssuedCard subclass tried to express. ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order.",
+    arbiter_note = "At generating CA resolution: take 1 blank Grant Deed from ARBITER tableau; write target district name in 'district' field and acting faction in 'holder' field; place in acting faction's Dispatch Case. Card moves to holder's hand at Debrief. No ongoing ARBITER monitoring required — holder self-polices and announces React when trigger fires.",
+)
+```
+
+---
+
+## 13. Card Information Design Requirements
+
+*Full visual design in Artifact 11. Card content tables in Artifact 09. These requirements are design-level constraints both must satisfy.*
+
+### 13.1 All Action Cards
+
+Card face must carry in clear information hierarchy:
+1. Card ID (primary key)
+2. Card name
+3. Tagline
+4. Card type indicator
+5. Beat (numeric)
+6. Target
+7. Restriction
+8. Primary cost / Secondary cost (separate fields)
+9. Faction affinity / Affinity bonus (if applicable)
+10. Difficulty
+11. Effect fields (grouped under single "Effect" header — crit success, success, failure, crit failure listed beneath)
+12. Portrait (positive/negative values only)
+13. Narrative anchor
+14. Taxonomy (Layer — Function — Subject)
+
+Faction perspectives are in the card data structure. Visual design (Artifact 11) decides whether they appear on the card face.
+
+### 13.2 Modifier Cards — Faction
+
+Face: name, type indicator, effect, attachment rule (if restricted), Portrait (if applicable), value rating (1–4). Back: faction color, faction symbol.
+
+### 13.3 Modifier Cards — Ring
+
+Face: ring constraint statement as visually distinct element, name, type indicator, effect, Portrait (if applicable), value rating (1–4). Back: ring color, ring name.
+
+### 13.5 Emergency Response Cards
+
+Face: name, faction indicator, trigger condition, complete effect text, Board Strength interaction note. Pre-sealed in faction envelopes at setup. Full card data structure review pending (D-04-10).
+
+---
+
+## 14. Special Conditions & Gameplay Impacts
+
+### 14.1 Emergency Response Cards
+
+*Card data structure review pending D-04-10. Effects carried forward.*
+
+| Faction | Emergency Response | Effect |
+|---------|-------------------|--------|
+| The Guild | Emergency Fortification | Place 2 presence tokens in any district. Remove 1 structure block from Apex faction's total. |
+| The Directorate | Emergency Injunction | Apex faction loses 2 presence tokens from their highest-token district. Board Strength recalculated. |
+| Ghost | Counter-Analysis | Reveal one Intel token publicly. If accurate and damaging to Apex faction: Apex faction Public Standing −2 before threshold check. |
+| The Network | Emergency Broadcast | Apex faction Public Standing −3 immediately. VP calculation affected. |
+| The Syndicate | Hostile Takeover Bid | Offer Apex faction 4 Capital for 2 structure blocks (converted to Syndicate). If accepted: Board Strength −2. If declined: no effect. |
+
+### 14.3 Resource Availability Constraint
+
+Covert operation resources must be physically present in the dispatch case at Beat 3. Public act resources must be physically paid at Declaration. If absent:
+- **Covert:** Action fails. Resources spent. ARBITER notes privately.
+- **Political:** Declaration void. Faction takes Political Pass. Public Standing −1 as "failed commitment." Resources already paid returned.
+
+### 14.4 Self-Directed Undermine
+
+A faction may submit Undermine targeting themselves (cost: 1 native resource + 1 district native resource — no Intel token required). Creates a false Public Standing drop recorded as unattributed. ARBITER does not note self-targeting.
+
+### 14.5 Deck Exhaustion
+
+Covert and political draw decks: when exhausted, shuffle discard pile immediately to form new deck and continue. Modifier decks are not reshuffled.
+
+### 14.6 Resource Acquisition — Non-Native Resources
+
+Non-native resources acquired through:
+1. District incursion — presence in districts controlled by the resource's native faction
+2. Direct faction-to-faction trade at any agreed rate
+3. ARBITER conversion — 4:1 universal rate
+
+---
+
+## 15. Examples & Exceptions
+
+### Example A — Ghost 4-Operation Round
+
+*Round 4. Ghost uses Political Pass. Dispatch case: Pattern Match (targeting Directorate — Invoke Jurisdiction), Archive Recovery, Deep Cover, Gather (Government Citadel).*
+
+ARBITER opens case at Beat 3. Pattern Match resolves first — Directorate submitted Invoke Jurisdiction this round. Pattern Match succeeds; resolves as Invoke Jurisdiction targeting Financial Clearing. Archive Recovery: Ghost recovers Round 2 Intel token. Deep Cover: Round 3 Gather attribution permanently removed. Gather at Government Citadel: Average −20 Core = Challenging. Roll → 19. Target 01–25. Succeeds.
+
+### Example B — Denounce Mechanics
+
+*Round 5. Network holds Round 3 Intel token naming Ghost (age 2 — stale). Network declares Denounce.*
+
+Cost: 1 Findings + 2 additional Findings (stale) = 3 Findings total. Verbal accusation delivered. Average difficulty. Roll → 22. Target 01–45. Success. Ghost Public Standing −2. Network Public Standing +1. Token spent.
+
+### Example C — Commission With Guild Affinity
+
+*Round 3. Guild operational markers at Power Grid (Present) and Industrial Fringe (Present). Guild declares Commission.*
+
+Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacity (Power Grid native) + 1 Capacity (Industrial Fringe native) = 3 Capacity. Both structures placed immediately.
+
+### Example D — Ring Modifier Constraint in Trade
+
+*Round 5. Syndicate holds 2 Infrastructure modifier cards. Guild offers 2 Capital for them. Guild attaches one to Commission targeting Power Grid (Infrastructure) — constraint satisfied. Guild later attempts to attach the second to Gather targeting University Perimeter (Sprawl) — ARBITER rejects. Card face: "Usable on Infrastructure district targets only."*
+
+### Example E — Burst Play and Post-Burst Trade
+
+*Round 6. Directorate triggers Burst Play. 7 modifier cards → 4 Mandate + 3 Capital. Faction modifier deck removed. ARBITER: "The Directorate has liquidated their operational reserve."*
+
+*Round 7. Guild offers Directorate 2 modifier cards as part of Accord. Directorate accepts and uses them normally — Burst removed draw access, not ability to hold or play cards.*
+
+---
+
+---
+
+*End of Artifact 04 — Card System v0.9.75*
 ## Standard
 [↑ 7. Card Specifications](#7-card-specifications)
 
@@ -3104,6 +3925,40 @@ Overture = Card(
 
 ### STD.MOD.2 — SENIOR LIAISON *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. First Ring Modifier content in the game — 04-29/09-06 pattern-setter, establishing the stub format for the Ring Modifier set. Voice sourced from Art 00 §6.7 Ring Character (PM02 L253), closing 04-29's ring-voice gate: Core's defining anxiety is proximity, not force, so Ring 1 content leans on institutional access and standing rather than the Directorate's already-shipped literal-force doctrine (DIR.MOD.10–13) — same city, deliberately different lever, available to whichever faction holds the card. **Format:** each ring ships two complete 4-card sets — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — closing 04-n161 by fielding both models side by side rather than picking one on paper; playtest determines which reads better, or whether both earn a permanent place. 24 cards total, 8 per ring, each 4-card set following the locked 2 Boost (+1/+2) + 2 Hinder (−1/−2) faction-set format (D04-08, S132) and the Asset(human)/Equipment/Tactic naming convention (S130). `subtype=Standard, faction=All` — these are Standard-schema cards per the Ring Modifier taxonomic rule, distinguished from faction modifier decks by `ring_origin`, not by `faction`. This is the Portable set's weaker Boost tier (+1): a favor that travels with whoever's holding it.*
 
 ```python
@@ -3131,6 +3986,40 @@ STD.MOD.2 = Card(
 
 ### STD.MOD.3 — SIGNED-OUT INSTRUMENTATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Portable set, Equipment category — rounds out the Boost pair before the Hinder pair. Precision gear drawn from Chorus Research's stores, carried out rather than left behind.*
 
 ```python
@@ -3156,6 +4045,40 @@ STD.MOD.3 = Card(
 ---
 
 ### STD.MOD.4 — CLEARANCE REVIEW *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Portable set, weaker Hinder tier (−1). The disruption is a mark against a person, not a place — it follows the target wherever they go.*
 
@@ -3183,6 +4106,40 @@ STD.MOD.4 = Card(
 
 ### STD.MOD.5 — ACCESS FROZEN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 1. Where Clearance Review is a slow-down, this is an outright suspension, and it holds wherever the target tries to use the access.*
 
 ```python
@@ -3208,6 +4165,40 @@ STD.MOD.5 = Card(
 ---
 
 ### STD.MOD.6 — CITADEL CONTACT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Ring-Locked set opens — Ring 1's other half of the 04-n161 test pair. Same Asset/Boost+1 slot as STD.MOD.2, but the pull genuinely doesn't leave the building: `ring_constraint=1` restricts play to Battlefield Strength for a Ring 1 district.*
 
@@ -3235,6 +4226,40 @@ STD.MOD.6 = Card(
 
 ### STD.MOD.7 — SANCTUM LEDGER ACCESS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Ring-Locked set, Equipment category. A live feed into Financial Sanctum's own books — the access is the Sanctum's, not the holder's, so it doesn't travel.*
 
 ```python
@@ -3260,6 +4285,40 @@ STD.MOD.7 = Card(
 ---
 
 ### STD.MOD.8 — CHECKPOINT DELAY *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Ring-Locked set, weaker Hinder tier (−1). The friction is physical — a specific checkpoint, not a general restriction — so it only bites where that checkpoint stands.*
 
@@ -3287,6 +4346,40 @@ STD.MOD.8 = Card(
 
 ### STD.MOD.9 — PERIMETER LOCKOUT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 1. Outright denial at a named perimeter, not a slowdown.*
 
 ```python
@@ -3312,6 +4405,40 @@ STD.MOD.9 = Card(
 ---
 
 ### STD.MOD.10 — LINE SUPERVISOR *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Ring 2 (Mid) opens, Portable set. Voice per Art 00 §6.7: the Mid's defining anxiety is throughput, not force or construction — deliberately distinct from Guild's already-shipped material-commitment doctrine (GUI.MOD.11–14). This is operational leverage available to anyone with a stake in the Mid, not a faction specialty.*
 
@@ -3339,6 +4466,40 @@ STD.MOD.10 = Card(
 
 ### STD.MOD.11 — RELAY PRIORITY *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Portable set, Equipment category. A grid or data allocation override — small enough to carry, general enough to apply anywhere.*
 
 ```python
@@ -3364,6 +4525,40 @@ STD.MOD.11 = Card(
 ---
 
 ### STD.MOD.12 — REGULATORY HOLD *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Portable set, weaker Hinder tier (−1). Paperwork attached to a name, not a desk — it follows the target through the system.*
 
@@ -3391,6 +4586,40 @@ STD.MOD.12 = Card(
 
 ### STD.MOD.13 — SUPPLY LINE FROZEN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 2. A shipment stalls wherever it was headed, not wherever it started.*
 
 ```python
@@ -3416,6 +4645,40 @@ STD.MOD.13 = Card(
 ---
 
 ### STD.MOD.14 — POWER GRID CHIEF *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Ring-Locked set opens for Ring 2 — the 04-n161 test pair with STD.MOD.10. Weight that only exists on the floor of the Power Grid itself.*
 
@@ -3443,6 +4706,40 @@ STD.MOD.14 = Card(
 
 ### STD.MOD.15 — COMMUNICATIONS HUB OVERRIDE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Ring-Locked set, Equipment category. A direct line into the relay system — it only works standing near a relay tower.*
 
 ```python
@@ -3468,6 +4765,40 @@ STD.MOD.15 = Card(
 ---
 
 ### STD.MOD.16 — PERMIT OFFICE FREEZE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Ring-Locked set, weaker Hinder tier (−1). The jam is specific to the Regulatory District's own queue — business filed anywhere else is unaffected.*
 
@@ -3495,6 +4826,40 @@ STD.MOD.16 = Card(
 
 ### STD.MOD.17 — CLEARINGHOUSE LOCKOUT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 2. Capital frozen exactly where it sits at Financial Clearinghouse.*
 
 ```python
@@ -3520,6 +4885,40 @@ STD.MOD.17 = Card(
 ---
 
 ### STD.MOD.18 — FAMILIAR FACE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Ring 3 (Baryo) opens, Portable set. Voice per Art 00 §6.7: Baryo's defining anxiety is exposure, and its leverage is community and the gray economy — deliberately distinct from Network's already-shipped broadcast/public-attention doctrine (NET.MOD.15–18) and Ghost's intelligence doctrine (GHO.MOD.12–15). This is street-level social capital, not information or attention.*
 
@@ -3547,6 +4946,40 @@ STD.MOD.18 = Card(
 
 ### STD.MOD.19 — SCAVENGED RIG *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Portable set, Equipment category. Improvised tech, built for exactly this — being carried somewhere else.*
 
 ```python
@@ -3572,6 +5005,40 @@ STD.MOD.19 = Card(
 ---
 
 ### STD.MOD.20 — VENDORS CLOSE RANKS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Portable set, weaker Hinder tier (−1). The gray economy's judgment follows the target, not the block they were standing on.*
 
@@ -3599,6 +5066,40 @@ STD.MOD.20 = Card(
 
 ### STD.MOD.21 — BARYO TURNS ITS BACK *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 3. The community's withdrawal is total and it follows the target, not the ring.*
 
 ```python
@@ -3624,6 +5125,40 @@ STD.MOD.21 = Card(
 ---
 
 ### STD.MOD.22 — STRIP REGULAR *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Ring-Locked set opens for Ring 3 — the 04-n161 test pair with STD.MOD.18. Standing that's real, and real only, on the Commercial Strip.*
 
@@ -3651,6 +5186,40 @@ STD.MOD.22 = Card(
 
 ### STD.MOD.23 — MARKET STALL CACHE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Ring-Locked set, Equipment category. Goods stockpiled in a specific stall — moving them defeats the point of having stockpiled them there.*
 
 ```python
@@ -3676,6 +5245,40 @@ STD.MOD.23 = Card(
 ---
 
 ### STD.MOD.24 — HOUSING ARRANGEMENT CALLED IN *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S134. Ring-Locked set, weaker Hinder tier (−1). The leverage belongs to a specific unofficial landlord over a specific arrangement — it doesn't extend past that reach.*
 
@@ -3703,6 +5306,40 @@ STD.MOD.24 = Card(
 
 ### STD.MOD.25 — TRANSIT HUB SHUTOUT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 3, and closes out the 24-card Ring Modifier stub pass.*
 
 ```python
@@ -3728,6 +5365,40 @@ STD.MOD.25 = Card(
 ---
 
 ### STD.MOD.26 — ZONING VARIANCE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. First Ring ModActionCard content — 09-06/04-n157 pattern-setter for the Ring leg, replicating the faction ModActionCard format (DIR.MOD.14–25 and Guild/Ghost/Network/Syndicate) with the same Portable/Ring-Locked doubling already established for Ring ModBattleCard (STD.MOD.2–25). **Format:** each ring ships a Portable 12-card set (`ring_constraint=None`) and a Ring-Locked 12-card set (`ring_constraint=`ring) — 24 cards/ring, 72 total — same 4 `threshold_delta` + 2 `success_multiplier` + 4 `ps_shift` + 2 `cost_reduction` structure, `cost=None`, `value_rating` 1–4 mirroring tier. Ring 1/Core voice per Art 00 §6.7: institutional access and proximity — distinct from Directorate's literal-force ModActionCard doctrine, same city, different lever. Drawn from the Ring ModAction Core seed pool (`Whiteboard/modifier_card_ideas.md`), reframing hostile-flavored entries per 04-n170. Portable set, minor threshold_delta tier (+5).*
 
@@ -3755,6 +5426,40 @@ STD.MOD.26 = Card(
 
 ### STD.MOD.27 — REDACTED FILE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Portable set, mid threshold_delta tier (+10).*
 
 ```python
@@ -3780,6 +5485,40 @@ STD.MOD.27 = Card(
 ---
 
 ### STD.MOD.28 — MAINTENANCE WINDOW *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Portable set, third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Cordoned Block" — sealing a rival's district "for maintenance," raising their difficulty) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease the holder's own host action.*
 
@@ -3807,6 +5546,40 @@ STD.MOD.28 = Card(
 
 ### STD.MOD.29 — CLASSIFIED BRIEFING *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Portable set, capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Sealed Minutes" — classifying context before a rival can plan around it) per 04-n170.*
 
 ```python
@@ -3832,6 +5605,40 @@ STD.MOD.29 = Card(
 ---
 
 ### STD.MOD.30 — INSTITUTIONAL BACKING *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Portable set, common success_multiplier tier (n=1).*
 
@@ -3859,6 +5666,40 @@ STD.MOD.30 = Card(
 
 ### STD.MOD.31 — CEREMONIAL GROUNDBREAKING *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Portable set, rare/capstone success_multiplier tier (n=2).*
 
 ```python
@@ -3884,6 +5725,40 @@ STD.MOD.31 = Card(
 ---
 
 ### STD.MOD.32 — OFF THE RECORD *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Portable set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
@@ -3911,6 +5786,40 @@ STD.MOD.32 = Card(
 
 ### STD.MOD.33 — PUBLIC CITATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Portable set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -3936,6 +5845,40 @@ STD.MOD.33 = Card(
 ---
 
 ### STD.MOD.34 — WORD TO THE WISE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Portable set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
@@ -3963,6 +5906,40 @@ STD.MOD.34 = Card(
 
 ### STD.MOD.35 — NAMED IN THE REVIEW *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Portable set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
 ```python
@@ -3988,6 +5965,40 @@ STD.MOD.35 = Card(
 ---
 
 ### STD.MOD.36 — FEE WAIVED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Portable set, common cost_reduction tier (n=1). PA-only per §6.3.*
 
@@ -4015,6 +6026,40 @@ STD.MOD.36 = Card(
 
 ### STD.MOD.37 — EMERGENCY ALLOCATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Portable set, capstone cost_reduction tier (n=2). Closes the Ring 1 Portable set (12 cards).*
 
 ```python
@@ -4040,6 +6085,40 @@ STD.MOD.37 = Card(
 ---
 
 ### STD.MOD.38 — RECOGNIZED ON SIGHT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set opens for Ring 1 — the other half of the 04-n161 Portable/Ring-Locked pair, same slot as STD.MOD.26 but `ring_constraint=1` restricts it to hosts targeting a Ring 1 district. Invented fresh (not seed-drawn) — the Portable set already used all 4 seed-pool threshold_delta concepts for Core.*
 
@@ -4067,6 +6146,40 @@ STD.MOD.38 = Card(
 
 ### STD.MOD.39 — STANDING REQUEST *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, mid threshold_delta tier (+10).*
 
 ```python
@@ -4092,6 +6205,40 @@ STD.MOD.39 = Card(
 ---
 
 ### STD.MOD.40 — BACK-CHANNEL WORD *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
 
@@ -4119,6 +6266,40 @@ STD.MOD.40 = Card(
 
 ### STD.MOD.41 — FULL CLEARANCE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, capstone threshold_delta tier (+20).*
 
 ```python
@@ -4144,6 +6325,40 @@ STD.MOD.41 = Card(
 ---
 
 ### STD.MOD.42 — SHIFT CHANGE TIMING *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, common success_multiplier tier (n=1).*
 
@@ -4171,6 +6386,40 @@ STD.MOD.42 = Card(
 
 ### STD.MOD.43 — FULL INSTITUTIONAL WEIGHT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
 
 ```python
@@ -4196,6 +6445,40 @@ STD.MOD.43 = Card(
 ---
 
 ### STD.MOD.44 — NOTED FAVORABLY *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
@@ -4223,6 +6506,40 @@ STD.MOD.44 = Card(
 
 ### STD.MOD.45 — FORMAL RECOGNITION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -4248,6 +6565,40 @@ STD.MOD.45 = Card(
 ---
 
 ### STD.MOD.46 — QUIETLY FLAGGED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
@@ -4275,6 +6626,40 @@ STD.MOD.46 = Card(
 
 ### STD.MOD.47 — DENIED ACCESS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
 ```python
@@ -4300,6 +6685,40 @@ STD.MOD.47 = Card(
 ---
 
 ### STD.MOD.48 — REASSIGNED ON PAPER *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
 
@@ -4327,6 +6746,40 @@ STD.MOD.48 = Card(
 
 ### STD.MOD.49 — JUMPED THE QUEUE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 1's 24-card Ring ModAction set (Portable STD.MOD.26–37 + Ring-Locked STD.MOD.38–49).*
 
 ```python
@@ -4352,6 +6805,40 @@ STD.MOD.49 = Card(
 ---
 
 ### STD.MOD.50 — REZONED CORRIDOR *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 2 (Mid) Portable set opens — same 09-06/04-n157 Ring ModAction format as Ring 1 (STD.MOD.26–49). Voice per Art 00 §6.7: operational throughput and infrastructure chokepoints — distinct from Ring 1's institutional-access lean and from Network's already-shipped broadcast doctrine. Drawn from the Mid ModAction seed pool, reframing hostile-flavored entries per 04-n170. Minor threshold_delta tier (+5).*
 
@@ -4379,6 +6866,40 @@ STD.MOD.50 = Card(
 
 ### STD.MOD.51 — RELAY INTERCEPT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Portable set, mid threshold_delta tier (+10).*
 
 ```python
@@ -4404,6 +6925,40 @@ STD.MOD.51 = Card(
 ---
 
 ### STD.MOD.52 — MANIFEST CORRECTION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Manifest Discrepancy" — a mismatched manifest raising a rival's difficulty) per **04-n170**.*
 
@@ -4431,6 +6986,40 @@ STD.MOD.52 = Card(
 
 ### STD.MOD.53 — GRIEVANCE WITHDRAWN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Union Grievance" — a formal complaint raising a rival's difficulty) per 04-n170.*
 
 ```python
@@ -4456,6 +7045,40 @@ STD.MOD.53 = Card(
 ---
 
 ### STD.MOD.54 — CROSS-DOCKED EFFICIENTLY *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Common success_multiplier tier (n=1).*
 
@@ -4483,6 +7106,40 @@ STD.MOD.54 = Card(
 
 ### STD.MOD.55 — CHAIN REACTION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Rare/capstone success_multiplier tier (n=2).*
 
 ```python
@@ -4508,6 +7165,40 @@ STD.MOD.55 = Card(
 ---
 
 ### STD.MOD.56 — COMPLIANCE CERTIFICATE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
@@ -4535,6 +7226,40 @@ STD.MOD.56 = Card(
 
 ### STD.MOD.57 — MODEL FACILITY *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -4560,6 +7285,40 @@ STD.MOD.57 = Card(
 ---
 
 ### STD.MOD.58 — DELAY LOGGED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
@@ -4587,6 +7346,40 @@ STD.MOD.58 = Card(
 
 ### STD.MOD.59 — SAFETY CITATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
 ```python
@@ -4612,6 +7405,40 @@ STD.MOD.59 = Card(
 ---
 
 ### STD.MOD.60 — PRIORITY ROUTING *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
 
@@ -4639,6 +7466,40 @@ STD.MOD.60 = Card(
 
 ### STD.MOD.61 — BULK RATE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Capstone cost_reduction tier (n=2). Closes Ring 2's Portable set (12 cards); Ring-Locked set follows.*
 
 ```python
@@ -4664,6 +7525,40 @@ STD.MOD.61 = Card(
 ---
 
 ### STD.MOD.62 — DOCK FAMILIARITY *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set opens for Ring 2 — invented fresh (Portable set used all 4 seed threshold_delta concepts).*
 
@@ -4691,6 +7586,40 @@ STD.MOD.62 = Card(
 
 ### STD.MOD.63 — GRID RAPPORT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, mid threshold_delta tier (+10).*
 
 ```python
@@ -4716,6 +7645,40 @@ STD.MOD.63 = Card(
 ---
 
 ### STD.MOD.64 — LINE ACCESS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
 
@@ -4743,6 +7706,40 @@ STD.MOD.64 = Card(
 
 ### STD.MOD.65 — FULL PROCESSING RIGHTS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, capstone threshold_delta tier (+20).*
 
 ```python
@@ -4768,6 +7765,40 @@ STD.MOD.65 = Card(
 ---
 
 ### STD.MOD.66 — OVERTIME CREW *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, common success_multiplier tier (n=1).*
 
@@ -4795,6 +7826,40 @@ STD.MOD.66 = Card(
 
 ### STD.MOD.67 — FULL UTILIZATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
 
 ```python
@@ -4820,6 +7885,40 @@ STD.MOD.67 = Card(
 ---
 
 ### STD.MOD.68 — FILED UNDER ROUTINE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
@@ -4847,6 +7946,40 @@ STD.MOD.68 = Card(
 
 ### STD.MOD.69 — RELIABILITY COMMENDATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -4872,6 +8005,40 @@ STD.MOD.69 = Card(
 ---
 
 ### STD.MOD.70 — OVERDRAWN ACCOUNT EXPOSED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
@@ -4899,6 +8066,40 @@ STD.MOD.70 = Card(
 
 ### STD.MOD.71 — PUBLIC SANCTION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
 ```python
@@ -4924,6 +8125,40 @@ STD.MOD.71 = Card(
 ---
 
 ### STD.MOD.72 — CONSIGNMENT HOLD RELEASED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
 
@@ -4951,6 +8186,40 @@ STD.MOD.72 = Card(
 
 ### STD.MOD.73 — STANDING UTILITY CONTRACT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 2's 24-card Ring ModAction set (Portable STD.MOD.50–61 + Ring-Locked STD.MOD.62–73); Ring 3 (Baryo) follows.*
 
 ```python
@@ -4976,6 +8245,40 @@ STD.MOD.73 = Card(
 ---
 
 ### STD.MOD.74 — SQUATTER'S CLAIM *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 3 (Baryo) Portable set opens — same 09-06/04-n157 Ring ModAction format as Rings 1–2. Voice per Art 00 §6.7: gray economy and community network — distinct from Ghost's epistemic doctrine and from Rings 1–2's institutional/infrastructure lean. Drawn from the Baryo ModAction seed pool, reframing hostile-flavored entries per 04-n170. Minor threshold_delta tier (+5).*
 
@@ -5003,6 +8306,40 @@ STD.MOD.74 = Card(
 
 ### STD.MOD.75 — LANDLORD'S BLESSING *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Portable set, mid threshold_delta tier (+10).*
 
 ```python
@@ -5028,6 +8365,40 @@ STD.MOD.75 = Card(
 ---
 
 ### STD.MOD.76 — DOCK CONTACTS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Word on the Docks" — advance knowledge raising a rival's difficulty) per **04-n170**.*
 
@@ -5055,6 +8426,40 @@ STD.MOD.76 = Card(
 
 ### STD.MOD.77 — NEIGHBORHOOD BACKING *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Petition Drive" — visible grassroots opposition raising a rival's difficulty) per 04-n170.*
 
 ```python
@@ -5080,6 +8485,40 @@ STD.MOD.77 = Card(
 ---
 
 ### STD.MOD.78 — COMMUNITY POOL *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Common success_multiplier tier (n=1).*
 
@@ -5107,6 +8546,40 @@ STD.MOD.78 = Card(
 
 ### STD.MOD.79 — PACKED HOUSE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Rare/capstone success_multiplier tier (n=2).*
 
 ```python
@@ -5132,6 +8605,40 @@ STD.MOD.79 = Card(
 ---
 
 ### STD.MOD.80 — STREET REPUTATION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
@@ -5159,6 +8666,40 @@ STD.MOD.80 = Card(
 
 ### STD.MOD.81 — NEIGHBORHOOD VOUCHING *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -5184,6 +8725,40 @@ STD.MOD.81 = Card(
 ---
 
 ### STD.MOD.82 — BUSKER'S TIP *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
@@ -5211,6 +8786,40 @@ STD.MOD.82 = Card(
 
 ### STD.MOD.83 — OVERHEARD AT THE STRIP *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
 ```python
@@ -5236,6 +8845,40 @@ STD.MOD.83 = Card(
 ---
 
 ### STD.MOD.84 — CREDIT WITH THE VENDOR *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
 
@@ -5263,6 +8906,40 @@ STD.MOD.84 = Card(
 
 ### STD.MOD.85 — BARTER CHAIN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Capstone cost_reduction tier (n=2). Closes Ring 3's Portable set (12 cards); Ring-Locked set follows.*
 
 ```python
@@ -5288,6 +8965,40 @@ STD.MOD.85 = Card(
 ---
 
 ### STD.MOD.86 — REGULAR CUSTOMER *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set opens for Ring 3 — invented fresh (Portable set used all 4 seed threshold_delta concepts).*
 
@@ -5315,6 +9026,40 @@ STD.MOD.86 = Card(
 
 ### STD.MOD.87 — ROUTE KNOWLEDGE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, mid threshold_delta tier (+10).*
 
 ```python
@@ -5340,6 +9085,40 @@ STD.MOD.87 = Card(
 ---
 
 ### STD.MOD.88 — NEIGHBORHOOD STANDING *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
 
@@ -5367,6 +9146,40 @@ STD.MOD.88 = Card(
 
 ### STD.MOD.89 — LOCAL FIXTURE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, capstone threshold_delta tier (+20).*
 
 ```python
@@ -5392,6 +9205,40 @@ STD.MOD.89 = Card(
 ---
 
 ### STD.MOD.90 — FESTIVAL GROUNDS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, common success_multiplier tier (n=1).*
 
@@ -5419,6 +9266,40 @@ STD.MOD.90 = Card(
 
 ### STD.MOD.91 — WORD SPREADS FAST *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
 
 ```python
@@ -5444,6 +9325,40 @@ STD.MOD.91 = Card(
 ---
 
 ### STD.MOD.92 — QUIET WORD TO THE CROWD *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
@@ -5471,6 +9386,40 @@ STD.MOD.92 = Card(
 
 ### STD.MOD.93 — BLOCK PARTY *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -5496,6 +9445,40 @@ STD.MOD.93 = Card(
 ---
 
 ### STD.MOD.94 — QUIET WORD AGAINST THEM *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
@@ -5523,6 +9506,40 @@ STD.MOD.94 = Card(
 
 ### STD.MOD.95 — TURNED AWAY *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Closes Ring 3's ps_shift matrix.*
 
 ```python
@@ -5548,6 +9565,40 @@ STD.MOD.95 = Card(
 ---
 
 ### STD.MOD.96 — SCRAP VALUE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
 
@@ -5575,6 +9626,40 @@ STD.MOD.96 = Card(
 
 ### STD.MOD.97 — FAVOR OWED *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 3's 24-card Ring ModAction set (Portable STD.MOD.74–85 + Ring-Locked STD.MOD.86–97) — and closes the full 72-card Ring ModAction stub pass (Rings 1–3, 09-06/04-n157).*
 
 ```python
@@ -5600,6 +9685,45 @@ STD.MOD.97 = Card(
 ---
 
 ### STD.MOD.98 — NOTIFIED OF ENCROACHMENT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. First Ring ModReactCard content — 04-53/09-06 pattern-setter for Ring 1 (Core). Territory reaction: a rival's presence placement in Core triggers a matching reinforcement for whoever holds the card. `holder` is introduced here as the generic acting-faction reference for Deck-acquired `faction=All` cards with a real effect — distinct from GD-01's `faction(holding)`, which is a field written in at generation for an Issued card; here the holder is simply whichever faction drew this card from the Ring 1 Modifier deck. Pending reconciliation into confirmed vocabulary alongside the other new forms introduced in this set (04-n171).*
 
@@ -5643,6 +9767,45 @@ STD.MOD.98 = Card(
 
 ### STD.MOD.99 — STRUCTURAL OBJECTION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Territory reaction: a rival's structure placement in Core draws a formal objection, costing them a foothold elsewhere in the same district — does not touch the just-placed structure block itself (GR 7.2b: committed states are final; this is a new mutation, not an undo).*
 
 ```python
@@ -5684,6 +9847,45 @@ STD.MOD.99 = Card(
 ---
 
 ### STD.MOD.100 — ESCORT WITHDRAWN *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Territory reaction: a rival's presence removed from Core opens the district for whoever holds the card.*
 
@@ -5727,6 +9929,45 @@ STD.MOD.100 = Card(
 
 ### STD.MOD.101 — OVERHEARD IN THE COMMISSARY *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Information reaction: a rival locking down Dominant status in Core is major, public news — worked through 3 design iterations with Andy this session before landing here. Rejected: Beat 0 resolution_grid reveal (covert, not public — Andy's catch); world_event.played (gated by the undesigned Broadcast Card taxonomy, XA-54); deployment_marker events (Upkeep-anchored only, per Andy — too rare for a standard React). Dominant Marker changes through ordinary CA/PA resolution across the Quarter, genuinely public, and not yet used elsewhere in this set.*
 
 ```python
@@ -5768,6 +10009,45 @@ STD.MOD.101 = Card(
 ---
 
 ### STD.MOD.102 — ACCESS LOG PULLED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Information reaction: any Accord forming anywhere passes through institutional record-keeping Core has a hand in — deliberately not ring-scoped (Andy: triggers don't need to be ring-scoped; Accords aren't a ring-dimensioned component to begin with).*
 
@@ -5811,6 +10091,45 @@ STD.MOD.102 = Card(
 
 ### STD.MOD.103 — FLAGGED FOR REVIEW *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Submission reaction: a rival's Public Act submission in Core draws bureaucratic obstruction — a milder version of GHO.MOD.9 Burn Notice's full modifier-removal effect, sized down per Andy's power-ceiling guidance for Ring ModReact. Sign corrected mid-session: an initial +5 threshold delta read as helping the flagged PA (Andy's catch — positive threshold_delta is the established "benefit" convention across the ModActionCard set); a hindering effect needs a negative delta.*
 
 ```python
@@ -5852,6 +10171,45 @@ STD.MOD.103 = Card(
 ---
 
 ### STD.MOD.104 — BUDGET REALLOCATED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Economy reaction: a rival's structure placement in Core is skimmed for a cut — generalized to whatever resource is native to the triggering faction, not hardcoded (Andy's correction: this is a Standard card, usable by any faction, so the resource type must key off the rival who caused the trigger, not a fixed type like Capacity).*
 
@@ -5895,6 +10253,45 @@ STD.MOD.104 = Card(
 
 ### STD.MOD.105 — AUDIT TRAIL *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Economy reaction: a rival reaching Established status in Core triggers an audit — same NativeResource(faction) generalization as STD.MOD.104.*
 
 ```python
@@ -5936,6 +10333,45 @@ STD.MOD.105 = Card(
 ---
 
 ### STD.MOD.106 — EMERGENCY RESERVE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Economy reaction: self-triggered safety net when the holder's own presence in Core is squeezed — same NativeResource generalization, but keyed to the holder's own faction rather than a rival's.*
 
@@ -5979,6 +10415,45 @@ STD.MOD.106 = Card(
 
 ### STD.MOD.107 — ON THE DOCKET *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Standing reaction: a rival's standing gain in Core draws a formal, procedural response.*
 
 ```python
@@ -6020,6 +10495,45 @@ STD.MOD.107 = Card(
 ---
 
 ### STD.MOD.108 — PRECEDENT CITED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Standing reaction: a Core district turning Contested is treated as a procedural opening.*
 
@@ -6063,6 +10577,45 @@ STD.MOD.108 = Card(
 
 ### STD.MOD.109 — QUIET REPRIMAND *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Standing reaction: a rival's standing drop in Core is capitalized on. Closes the 12-card Ring 1 (Core) ModReactCard set — 09-06's Ring ModReactCard content pass now underway (Ring 2/Mid and Ring 3/Baryo still pending).*
 
 ```python
@@ -6104,6 +10657,45 @@ STD.MOD.109 = Card(
 ---
 
 ### STD.MOD.110 — LINE REROUTED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 2 (Mid) ModReactCard set — 11 of 12 cards are direct ring=2 duplicates of Ring 1's mechanics (Andy's call: cards already ring-scoped in Ring 1 duplicate cleanly, no need to redesign each one), renamed to Mid's own established seed vocabulary (Whiteboard/modifier_card_ideas.md) and Art 00 §6.7 voice (operational throughput, infrastructure chokepoints). Only STD.MOD.114 needed a genuine redesign — see its note. Mirrors STD.MOD.98's template exactly.*
 
@@ -6147,6 +10739,45 @@ STD.MOD.110 = Card(
 
 ### STD.MOD.111 — CAPACITY EXCEEDED *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 2 duplicate of STD.MOD.99 Structural Objection.*
 
 ```python
@@ -6188,6 +10819,45 @@ STD.MOD.111 = Card(
 ---
 
 ### STD.MOD.112 — SALVAGE RIGHTS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 2 duplicate of STD.MOD.100 Escort Withdrawn.*
 
@@ -6231,6 +10901,45 @@ STD.MOD.112 = Card(
 
 ### STD.MOD.113 — GRID ANOMALY LOGGED *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 2 duplicate of STD.MOD.101 Overheard in the Commissary.*
 
 ```python
@@ -6272,6 +10981,45 @@ STD.MOD.113 = Card(
 ---
 
 ### STD.MOD.114 — SERVICE LEVEL BREACH *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. The one Ring 2 card that needed genuine redesign rather than direct duplication — STD.MOD.102 Access Log Pulled's `accord.placed(faction=Any)` trigger isn't ring-scoped, so copying it verbatim would give every ring an identical, undifferentiated card. Mid's own seed pool already had the right concept: "Service Level Breach (fires when an Accord involving Mid infrastructure is broken)" — maps directly to the confirmed `accord.removed` change-type.*
 
@@ -6315,6 +11063,45 @@ STD.MOD.114 = Card(
 
 ### STD.MOD.115 — ROUTINE INSPECTION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 2 duplicate of STD.MOD.103 Flagged for Review. Name drawn directly from the Mid seed pool's own Submission-reclassified entry (04-53 direction, PM02 L262) — "Routine Inspection" was already reclassified Information→Submission for exactly this mechanic.*
 
 ```python
@@ -6356,6 +11143,45 @@ STD.MOD.115 = Card(
 ---
 
 ### STD.MOD.116 — TOLL COLLECTED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 2 duplicate of STD.MOD.104 Budget Reallocated. Name drawn from the Mid seed pool.*
 
@@ -6399,6 +11225,45 @@ STD.MOD.116 = Card(
 
 ### STD.MOD.117 — OVERTIME BILLED *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 2 duplicate of STD.MOD.105 Audit Trail. Name drawn from the Mid seed pool.*
 
 ```python
@@ -6440,6 +11305,45 @@ STD.MOD.117 = Card(
 ---
 
 ### STD.MOD.118 — BACKUP GENERATOR *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 2 duplicate of STD.MOD.106 Emergency Reserve. Name drawn directly from the Mid seed pool — an exact conceptual match ("fires when the acting faction's own Mid-based generation is disrupted — a reserve kicks in").*
 
@@ -6483,6 +11387,45 @@ STD.MOD.118 = Card(
 
 ### STD.MOD.119 — UNION STATEMENT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 2 duplicate of STD.MOD.107 On the Docket. Name drawn from the Mid seed pool.*
 
 ```python
@@ -6524,6 +11467,45 @@ STD.MOD.119 = Card(
 ---
 
 ### STD.MOD.120 — ON RECORD *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 2 duplicate of STD.MOD.108 Precedent Cited.*
 
@@ -6567,6 +11549,45 @@ STD.MOD.120 = Card(
 
 ### STD.MOD.121 — FORMAL NOTICE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 2 duplicate of STD.MOD.109 Quiet Reprimand. Closes the 12-card Ring 2 (Mid) ModReactCard set — Ring 3 (Baryo) is the only leg of 09-06's Ring ModReactCard pass still open.*
 
 ```python
@@ -6608,6 +11629,45 @@ STD.MOD.121 = Card(
 ---
 
 ### STD.MOD.122 — CROWD GATHERS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 3 (Baryo) ModReactCard set — same pattern as Ring 2: 11 of 12 cards are direct ring=3 duplicates of Ring 1's mechanics, renamed to Baryo's own seed vocabulary (gray economy, community network — Art 00 §6.7). Only STD.MOD.126 needed a genuine redesign, per Andy: `accord.corrupted` this time, not `.removed` (Mid's choice) — same underlying pattern (the one unscoped card gets a ring-specific accord change-type), different change-type per ring.*
 
@@ -6651,6 +11711,45 @@ STD.MOD.122 = Card(
 
 ### STD.MOD.123 — PRICED OUT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 3 duplicate of STD.MOD.99/STD.MOD.111.*
 
 ```python
@@ -6692,6 +11791,45 @@ STD.MOD.123 = Card(
 ---
 
 ### STD.MOD.124 — EVICTION NOTICE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 3 duplicate of STD.MOD.100/STD.MOD.112. Name drawn directly from the Baryo seed pool — an exact conceptual match.*
 
@@ -6735,6 +11873,45 @@ STD.MOD.124 = Card(
 
 ### STD.MOD.125 — WORD TRAVELS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 3 duplicate of STD.MOD.101/STD.MOD.113. Name drawn from the Baryo seed pool's Information entry.*
 
 ```python
@@ -6776,6 +11953,45 @@ STD.MOD.125 = Card(
 ---
 
 ### STD.MOD.126 — QUIETLY REWRITTEN *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. The one Ring 3 card needing genuine redesign, same as STD.MOD.102/STD.MOD.114 before it — Andy's direction this time: `accord.corrupted`, not `.removed`. A corrupted Accord (falsified/tampered terms) fits Baryo's informal, unfiled-agreement culture better than a formal dissolution.*
 
@@ -6819,6 +12035,45 @@ STD.MOD.126 = Card(
 
 ### STD.MOD.127 — SOMEONE'S WATCHING *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 3 duplicate of STD.MOD.103/STD.MOD.115. Name drawn directly from the Baryo seed pool's own Submission-reclassified entry (04-53 direction, PM02 L262).*
 
 ```python
@@ -6860,6 +12115,45 @@ STD.MOD.127 = Card(
 ---
 
 ### STD.MOD.128 — INFORMAL TOLL *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 3 duplicate of STD.MOD.104/STD.MOD.116. Name drawn from the Baryo seed pool.*
 
@@ -6903,6 +12197,45 @@ STD.MOD.128 = Card(
 
 ### STD.MOD.129 — CUT OF THE ACTION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 3 duplicate of STD.MOD.105/STD.MOD.117.*
 
 ```python
@@ -6944,6 +12277,45 @@ STD.MOD.129 = Card(
 ---
 
 ### STD.MOD.130 — VENDOR CREDIT CALLED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 3 duplicate of STD.MOD.106/STD.MOD.118. Name drawn directly from the Baryo seed pool — an exact conceptual match ("fires when the acting faction's resource falls short in Baryo — informal credit covers the gap").*
 
@@ -6987,6 +12359,45 @@ STD.MOD.130 = Card(
 
 ### STD.MOD.131 — NEIGHBORHOOD NOTICES *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 3 duplicate of STD.MOD.107/STD.MOD.119.*
 
 ```python
@@ -7029,6 +12440,45 @@ STD.MOD.131 = Card(
 
 ### STD.MOD.132 — SIDES ARE TAKEN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Ring 3 duplicate of STD.MOD.108/STD.MOD.120.*
 
 ```python
@@ -7070,6 +12520,45 @@ STD.MOD.132 = Card(
 ---
 
 ### STD.MOD.133 — THE CROWD REMEMBERS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Ring 3 duplicate of STD.MOD.109/STD.MOD.121. Name drawn directly from the Baryo seed pool — an exact conceptual match. Closes the 12-card Ring 3 (Baryo) ModReactCard set — and closes 09-06's full Ring ModReactCard pass (36 cards, all 3 rings).*
 
@@ -7689,6 +13178,40 @@ GUI.CA.6 = Card(
 ### GUI.CA.7 — BUYOUT CLAUSE *(stub)*
 [↑ Covert Operations](#guild-covert-operations)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 GUI.CA.7 = Card(
     id      = "GUI.CA.7",  version = "v1.0",
@@ -7721,6 +13244,40 @@ GUI.CA.7 = Card(
 
 ### GUI.CA.8 — BUILDING INSPECTION *(stub)*
 [↑ Covert Operations](#guild-covert-operations)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 ```python
 GUI.CA.8 = Card(
@@ -8134,6 +13691,40 @@ GUI.PA.2 = Card(
 ### GUI.PA.3 — HERITAGE REGISTRY *(stub)*
 [↑ Public Acts](#guild-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 GUI.PA.3 = Card(
     id      = "GUI.PA.3",  version = "v1.0",
@@ -8163,6 +13754,40 @@ GUI.PA.3 = Card(
 ### GUI.PA.4 — CIVIC UNVEILING *(stub)*
 [↑ Public Acts](#guild-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 GUI.PA.4 = Card(
     id      = "GUI.PA.4",  version = "v1.0",
@@ -8189,6 +13814,40 @@ GUI.PA.4 = Card(
 
 ### GUI.PA.5 — ZONING EXEMPTION *(stub)*
 [↑ Public Acts](#guild-public-acts)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 ```python
 GUI.PA.5 = Card(
@@ -8219,6 +13878,40 @@ GUI.PA.5 = Card(
 ### GUI.PA.6 — ASSET TRANSFER *(stub)*
 [↑ Public Acts](#guild-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 GUI.PA.6 = Card(
     id      = "GUI.PA.6",  version = "v1.1",
@@ -8239,6 +13932,40 @@ GUI.PA.6 = Card(
 ### GUI.PA.7 — EMINENT DOMAIN PETITION *(stub)*
 [↑ Public Acts](#guild-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 GUI.PA.7 = Card(
     id      = "GUI.PA.7",  version = "v1.1",
@@ -8258,6 +13985,40 @@ GUI.PA.7 = Card(
 
 ### GUI.PA.8 — STRUCTURAL SUBSIDY *(stub)*
 [↑ Public Acts](#guild-public-acts)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 ```python
 GUI.PA.8 = Card(
@@ -8475,6 +14236,45 @@ GUI.PA.10 = Card(
 
 ### GUI.MOD.1 — NIGHT SHIFT CREW *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S106. Guild React Modifier — stub. Originally conceived as Territory|Recover|PresenceToken CovertAction (GUI.CA.6), redesigned as React Modifier after two blocking findings: (1) structure block removal is simultaneous with chips hitting 0 — no React window can catch it; (2) "Recover" may not be a valid primitive per 00a §7.2 (see 00a-77). Taxonomy reclassified as Territory|Add|PresenceToken pending 00a-77 resolution.*
 
 **Design Rationale:** Guild's React presence card — when a Guild chip is removed from a district, Guild may immediately respond by placing a chip back. "Established communities don't abandon positions — they return." The return is reflexive, not planned. Trigger is the chip removal itself (publicly observable resolved action). No structure dependency — structure may be simultaneously removed when chips hit 0, so the trigger window must not require it.
@@ -8507,6 +14307,45 @@ GUI.MOD.1 = Card(
 ---
 
 ### GUI.MOD.2 — UNION REPRESENTATIVE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S128. React on opponent structure placement. Guild labor built it — Guild gets paid. Generic opponent variant. Faction-targeted variant: GUI.MOD.3 (Directorate). Ring-constrained variant: GUI.MOD.4 (Ring 1 premium rate). Connects to §5a passive income / 04-n2.*
 
@@ -8550,6 +14389,45 @@ GUI.MOD.2 = Card(
 
 ### GUI.MOD.3 — INSTITUTIONAL CONTRACT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S128. Faction-targeted variant of GUI.MOD.2. Trigger narrowed to Directorate structure placement. Directorate builds institutional-scale structures — Guild is the primary contractor for government facilities.*
 
 ```python
@@ -8591,6 +14469,45 @@ GUI.MOD.3 = Card(
 ---
 
 ### GUI.MOD.4 — CORE PREMIUM *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S128. Ring-constrained variant of GUI.MOD.2. Ring 1 (Core) structure placement by any opponent triggers 2 Capacity yield. Core ring commands premium construction rates — the infrastructure is more complex, the labor is scarcer.*
 
@@ -8634,6 +14551,45 @@ GUI.MOD.4 = Card(
 
 ### GUI.MOD.5 — COMPANY TOWN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *React on opponent presence placement near Guild structures. Passive modifier draw engine.*
 
 ```python
@@ -8675,6 +14631,45 @@ GUI.MOD.5 = Card(
 ---
 
 ### GUI.MOD.6 — EMERGENCY RECONSTRUCTION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *React on Guild structure removal. Fast-tracked structural replacement.*
 
@@ -8718,6 +14713,45 @@ GUI.MOD.6 = Card(
 
 ### GUI.MOD.7 — WORKER RETALIATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *React on Guild structure removal. Territorial fallback swarm.*
 
 ```python
@@ -8759,6 +14793,45 @@ GUI.MOD.7 = Card(
 ---
 
 ### GUI.MOD.8 — SITE CLEARANCE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *React on any structure removal. The demolition and cleanup contract.*
 
@@ -8983,6 +15056,40 @@ GUI.MOD.10 = Card(
 
 ### GUI.MOD.11 — SITE FOREMAN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Guild's ModBattleCard set, replicating the Directorate/Ghost/Network pattern (2 Boost +1/+2, 2 Hinder −1/−2, PM05 09-06). Doctrine per §5a and modifier_card_ideas.md's provisional voice seed: "construction crews, material stockpiles, structural expertise — physical commitment of resources to hold ground." Distinct from Contractor's Favor (GUI.MOD.10, a ModReactCard, pre-registered before §10 opens) — these are live-played at §10.1.2 like any other ModBattleCard. Weaker Boost tier (+1): experienced crew leadership, not yet material commitment.*
 
 ```python
@@ -9009,6 +15116,40 @@ GUI.MOD.11 = Card(
 ---
 
 ### GUI.MOD.12 — MATERIAL STOCKPILE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Stronger Boost tier (+2) — physical material committed to the contest, not just labor. The escalation from Site Foreman's expertise to Material Stockpile's tonnage is the same logic as Guild's economy generally: everything Guild does ends up as a physical, visible commitment.*
 
@@ -9037,6 +15178,40 @@ GUI.MOD.12 = Card(
 
 ### GUI.MOD.13 — PERMIT DELAY *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Weaker Hinder tier (−1). Guild "cannot operate covertly in principle" (§5a) — even its suppression tools are procedural and visible, not sabotage. A permit delay is bureaucratic friction, not an attack.*
 
 ```python
@@ -9063,6 +15238,40 @@ GUI.MOD.13 = Card(
 ---
 
 ### GUI.MOD.14 — STRUCTURAL CONDEMNATION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Stronger Hinder tier (−2), completing Guild's 2 Boost/2 Hinder pattern. Escalates Permit Delay from friction into a formal finding — Guild's engineers declare something structurally compromised, and the declaration itself is the weapon.*
 
@@ -9091,6 +15300,40 @@ GUI.MOD.14 = Card(
 
 ### GUI.MOD.15 — STRUCTURAL SURVEY *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Guild — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Guild voice: construction and material, visible-by-doctrine (§5a) — same doctrinal lens as Guild's shipped ModBattleCard set (GUI.MOD.11–14). Minor threshold_delta tier (+5).*
 
 ```python
@@ -9116,6 +15359,40 @@ GUI.MOD.15 = Card(
 ---
 
 ### GUI.MOD.16 — LOAD-BEARING CONFIDENCE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Mid threshold_delta tier (+10).*
 
@@ -9143,6 +15420,40 @@ GUI.MOD.16 = Card(
 
 ### GUI.MOD.17 — PERMIT FAST-TRACK *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Permit Delay Imposed" — raising a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Guild's own host action.*
 
 ```python
@@ -9168,6 +15479,40 @@ GUI.MOD.17 = Card(
 ---
 
 ### GUI.MOD.18 — CERTIFIED TO CODE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Capstone threshold_delta tier (+20).*
 
@@ -9195,6 +15540,40 @@ GUI.MOD.18 = Card(
 
 ### GUI.MOD.19 — UNION CREW *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common success_multiplier tier (n=1).*
 
 ```python
@@ -9220,6 +15599,40 @@ GUI.MOD.19 = Card(
 ---
 
 ### GUI.MOD.20 — OVERBUILT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Rare/capstone success_multiplier tier (n=2).*
 
@@ -9247,6 +15660,40 @@ GUI.MOD.20 = Card(
 
 ### GUI.MOD.21 — COMMUNITY GROUNDBREAKING *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -9272,6 +15719,40 @@ GUI.MOD.21 = Card(
 ---
 
 ### GUI.MOD.22 — RIBBON CUTTING *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
 
@@ -9299,6 +15780,40 @@ GUI.MOD.22 = Card(
 
 ### GUI.MOD.23 — INSPECTION NOTED *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix. **Playtest-questionable for Guild specifically:** this card and GUI.MOD.24 only fire when the host CA/PA carries a `target_faction` (§6.1), and Guild's CA/PA set skews toward self/territory-directed hosts (`target_faction=None` on most non-opponent-facing cards) rather than rival-targeting ones — fewer eligible hosts than a faction like Directorate or Syndicate. Not reworked; flagged for playtest to see how often these 2 cards actually see play.*
 
 ```python
@@ -9324,6 +15839,40 @@ GUI.MOD.23 = Card(
 ---
 
 ### GUI.MOD.24 — CODE VIOLATION CITED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
@@ -9351,6 +15900,40 @@ GUI.MOD.24 = Card(
 
 ### GUI.MOD.25 — MATERIAL SURPLUS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
 
 ```python
@@ -9376,6 +15959,40 @@ GUI.MOD.25 = Card(
 ---
 
 ### GUI.MOD.26 — IN-HOUSE FABRICATION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Capstone cost_reduction tier (n=2).*
 
@@ -9653,7 +16270,7 @@ Redesigned S68: original target was the unplayed hand (CardHandContents) — req
 
 *S68 redesign — SIGINT tap model*
 
-\`\`\`python
+```python
 GHO.CA.3 = Card(
     id      = "GHO.CA.3", version="v1.2",
     name    = "Dossier Breach",
@@ -9678,7 +16295,7 @@ GHO.CA.3 = Card(
     design_note  = "Redesigned S68: original target was unplayed hand (CardHandContents) — requires physical access to target player's cards, not executable covertly at paper table. Redesigned to SIGINT tap model: Ghost taps faction X's dispatch channel at Beat 2. ARBITER reads faction X's Beat 3 grid column at Beat 2 resolution (name + declared target only; modifier cards excluded). IntelDeliverySlip delivered to Ghost at Beat 2 resolution. Beat 2 commitment is the risk. Empty case = empty slip — resources spent. DR-xx (DispatchReport) collapsed into IS-xx S68 — column read is IntelDeliverySlip with list content.",
     arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
 )
-\`\`\`
+```
 
 ---
 
@@ -10007,6 +16624,40 @@ GHO.CA.8 = Card(
 
 ### GHO.CA.15 — ROUTING OVERRIDE *(stub)*
 [↑ Covert Operations](#ghost-covert-operations)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 ```python
 GHO.CA.15 = Card(
@@ -10661,6 +17312,40 @@ FieldVerification = Card(
 ### GHO.CA.13 — PHANTOM ACCOUNTS *(stub)*
 [↑ Covert Operations](#ghost-covert-operations)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 GHO.CA.13 = Card(
     id      = "GHO.CA.13",  version = "v1.1",
@@ -10679,6 +17364,40 @@ GHO.CA.13 = Card(
 
 ### GHO.CA.14 — GHOST PROTOCOL *(stub)*
 [↑ Covert Operations](#ghost-covert-operations)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 ```python
 GHO.CA.14 = Card(
@@ -11257,6 +17976,45 @@ GHO.MOD.1 = Card(
 
 ### GHO.MOD.2 — PERIMETER SENSORS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S128. Delivers §5a "passive generation: Intel tokens from game events near Ghost presence" as a ModReactCard. Output of 04-n143. Generic variant (faction=Any). Faction-targeted variants: GHO.MOD.3 (Directorate), GHO.MOD.4 (Network).*
 
 ```python
@@ -11298,6 +18056,45 @@ GHO.MOD.2 = Card(
 ---
 
 ### GHO.MOD.3 — INSTITUTIONAL TRACE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S128. Faction-targeted variant of GHO.MOD.2. Trigger narrowed to Directorate presence placement. Directorate expansion near Ghost positions is the highest-value intelligence signal — institutional authority is Ghost's primary constraint.*
 
@@ -11341,6 +18138,45 @@ GHO.MOD.3 = Card(
 
 ### GHO.MOD.4 — SIGNAL BLEED *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S128. Faction-targeted variant of GHO.MOD.2. Trigger narrowed to Network presence placement. Network broadcast reach expanding into Ghost-present districts is an operational exposure risk.*
 
 ```python
@@ -11382,6 +18218,45 @@ GHO.MOD.4 = Card(
 ---
 
 ### GHO.MOD.5 — FALSE FLAG *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *React on positive PS shift. The "Flip" point-disruption payoff. Reverse the opponent's public narrative.*
 
@@ -11425,6 +18300,45 @@ GHO.MOD.5 = Card(
 
 ### GHO.MOD.6 — SUPPLY CHAIN TAP *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *React on resource generation. Precision economic disruption via mirrored draw.*
 
 ```python
@@ -11467,6 +18381,45 @@ GHO.MOD.6 = Card(
 
 ### GHO.MOD.7 — SLEEPER CELL *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *React on Dominant marker placement. Point-disruption targeting end-game power spikes.*
 
 ```python
@@ -11508,6 +18461,45 @@ GHO.MOD.7 = Card(
 ---
 
 ### GHO.MOD.8 — LOCAL SYMPATHIZERS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *React on Established marker placement. Point-disruption targeting mid-game expansion.*
 
@@ -11554,6 +18546,45 @@ GHO.MOD.8 = Card(
 ### GHO.MOD.9 — BURN NOTICE *(stub)*
 [↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 GHO.MOD.9 = Card(
     id      = "GHO.MOD.9",  version = "v1.1",
@@ -11572,6 +18603,45 @@ GHO.MOD.9 = Card(
 
 ### GHO.MOD.10 — DATA WIPE *(stub)*
 [↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 ```python
 GHO.MOD.10 = Card(
@@ -11592,6 +18662,45 @@ GHO.MOD.10 = Card(
 ### GHO.MOD.11 — MANUFACTURED EVIDENCE *(stub)*
 [↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 GHO.MOD.11 = Card(
     id      = "GHO.MOD.11",  version = "v1.0",
@@ -11610,6 +18719,40 @@ GHO.MOD.11 = Card(
 ---
 
 ### GHO.MOD.12 — EMBEDDED CONTACT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Ghost's ModBattleCard set, replicating the Directorate pattern (2 Boost + 1/+2, 2 Hinder −1/−2, PM05 09-06). Ghost's doctrine here is deliberately not literal force — §5a and modifier_card_ideas.md's provisional voice seed both frame Ghost's battlefield weight as "what they know about the contest, not what they bring to it." Weaker Boost tier (+1): a source already positioned in the district, not a deployed asset.*
 
@@ -11638,6 +18781,40 @@ GHO.MOD.12 = Card(
 
 ### GHO.MOD.13 — SIGNALS PACKAGE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Stronger Boost tier (+2) — a technical/surveillance escalation rather than a bigger human asset, consistent with Ghost's "Perimeter Sensors" precedent (GHO.MOD.2) for treating equipment as passive listening infrastructure, not deployed muscle.*
 
 ```python
@@ -11664,6 +18841,40 @@ GHO.MOD.13 = Card(
 ---
 
 ### GHO.MOD.14 — PLANTED DOUBT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Weaker Hinder tier (−1). Ghost's suppression is informational, never physical — this is a rumor or a manufactured inconsistency, not an attack. Fits the same register as GHO.MOD.5 False Flag and GHO.MOD.11 Manufactured Evidence (existing Ghost ModReactCards built on the same disinformation logic).*
 
@@ -11692,6 +18903,40 @@ GHO.MOD.14 = Card(
 
 ### GHO.MOD.15 — BLOWN COVER *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Stronger Hinder tier (−2), completing Ghost's 2 Boost/2 Hinder pattern. Escalates Planted Doubt from a rumor into something confirmed and specific — a position Ghost knew was fragile and chose to expose.*
 
 ```python
@@ -11719,6 +18964,40 @@ GHO.MOD.15 = Card(
 
 ### GHO.MOD.16 — PRE-ANALYSIS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Ghost — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Ghost voice: intelligence and leverage, epistemic doctrine — same doctrinal lens as Ghost's shipped ModBattleCard set (GHO.MOD.12–15). Minor threshold_delta tier (+5).*
 
 ```python
@@ -11744,6 +19023,40 @@ GHO.MOD.16 = Card(
 ---
 
 ### GHO.MOD.17 — KNOWN VARIABLE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Mid threshold_delta tier (+10).*
 
@@ -11771,6 +19084,40 @@ GHO.MOD.17 = Card(
 
 ### GHO.MOD.18 — CLEAN CHANNEL *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Compromised Model" — planting bad data to raise a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Ghost's own host action.*
 
 ```python
@@ -11796,6 +19143,40 @@ GHO.MOD.18 = Card(
 ---
 
 ### GHO.MOD.19 — TOTAL PICTURE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Capstone threshold_delta tier (+20).*
 
@@ -11823,6 +19204,40 @@ GHO.MOD.19 = Card(
 
 ### GHO.MOD.20 — CLEAN DATA *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common success_multiplier tier (n=1).*
 
 ```python
@@ -11848,6 +19263,40 @@ GHO.MOD.20 = Card(
 ---
 
 ### GHO.MOD.21 — LAYERED ANALYSIS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Rare/capstone success_multiplier tier (n=2).*
 
@@ -11875,6 +19324,40 @@ GHO.MOD.21 = Card(
 
 ### GHO.MOD.22 — QUIET CORRECTION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -11900,6 +19383,40 @@ GHO.MOD.22 = Card(
 ---
 
 ### GHO.MOD.23 — FINDINGS PUBLISHED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
 
@@ -11927,6 +19444,40 @@ GHO.MOD.23 = Card(
 
 ### GHO.MOD.24 — DISCREET LEAK *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -11952,6 +19503,40 @@ GHO.MOD.24 = Card(
 ---
 
 ### GHO.MOD.25 — MODEL FAILURE EXPOSED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
@@ -11979,6 +19564,40 @@ GHO.MOD.25 = Card(
 
 ### GHO.MOD.26 — EXISTING DATASET *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
 
 ```python
@@ -12004,6 +19623,40 @@ GHO.MOD.26 = Card(
 ---
 
 ### GHO.MOD.27 — SHARED INFRASTRUCTURE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Capstone cost_reduction tier (n=2).*
 
@@ -12358,6 +20011,40 @@ DIR.CA.4 = Card(
 ### DIR.PA.4 — REGULATORY DOWNGRADE *(stub)*
 [↑ Public Acts](#directorate-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S131. Redesigned — resolves 04-n104 BLOCKED status (L223: original targeted InfluenceTier, a derived/non-targetable state, and violated GR 9.1). Simplified per GR 6.1 / Design Pillar 4.7b: no ARBITER calculation — removes exactly 1 named presence token. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
 ```python
@@ -12407,6 +20094,40 @@ DIR.PA.4 = Card(
 
 ### DIR.PA.5 — ZONING FREEZE *(stub)*
 [↑ Public Acts](#directorate-public-acts)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S131. Redesigned — resolves 04-n104 BLOCKED status. Retaxonomized Territory|Block|PresenceToken (not InfluenceTier; not Submission — the subject controlled is presence-token accumulation). Permanent standing card, self-inclusive ("a new law"), reactive to any presenceChip addition. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
@@ -13172,6 +20893,40 @@ P_StandingInjunction = Card(
 ### DIR.PA.7 — CURFEW *(stub)*
 [↑ Public Acts](#directorate-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 DIR.PA.7 = Card(
     id      = "DIR.PA.7",  version = "v1.1",
@@ -13191,6 +20946,40 @@ DIR.PA.7 = Card(
 ### DIR.PA.8 — SUBPOENA *(stub)*
 [↑ Public Acts](#directorate-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 DIR.PA.8 = Card(
     id      = "DIR.PA.8",  version = "v1.2",
@@ -13209,6 +20998,40 @@ DIR.PA.8 = Card(
 
 ### DIR.PA.9 — CHARTER GRANT *(stub)*
 [↑ Public Acts](#directorate-public-acts)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S131. Directorate's first Territory|Add|PresenceToken card — closes the audit-flagged win-path gap (04-n89: "the faction whose win condition is territorial Established status has zero native presence-placement cards"). Closes 1 of 6 toward the 54-card floor (04-n149). Ring-spread mechanic, not single-district stacking — confirmed against Directorate's actual win path (Established in more districts, not Dominant) and the 6-chip-per-district cap. N capped at 2 (max same-ring neighbors per district).*
 
@@ -13268,6 +21091,40 @@ DIR.PA.9 = Card(
 ### DIR.PA.10 — OFFICIAL DEMONSTRATIONS *(stub)*
 [↑ Public Acts](#directorate-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S131. Public Standing counterpart to covert DIR.CA.7 Institutional Brief — closes the audit's Standing gap (04-n108: Directorate's only PS card was covert, backwards for an 'on the record' faction). Closes 2 of remaining 4 toward the 54-card floor (04-n149). A genuine gamble, not a guaranteed accumulator: government presence reads publicly as either safety or oppression, so the swing (not just the odds) scales with the size of the claim — this also self-balances the 'yield scaling at scale' concern flagged at 04-n116 for CA.6/CA.7, since the downside grows with N too.*
 
 ```python
@@ -13322,6 +21179,40 @@ DIR.PA.10 = Card(
 
 ### DIR.PA.11 — PUBLIC HEARING *(stub)*
 [↑ Public Acts](#directorate-public-acts)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S131. Resolves 04-n142 (S127) — the long-standing counter-card design gap for Permanent PAs, originally named for Entry/Exit Controls. Establishes a standing, game-wide due-process institution: any faction may petition to remove any of Directorate's own currently-active standing Public Acts by matching its printed cost + 1 Intel Token. Atomic resolution (pay + prove, immediate removal) — no untracked exemption state, unlike an earlier draft of the cooperative-PA concept this replaced. Closes the last 1 of 6 toward the 54-card floor (04-n149) — Directorate now at exactly 54.*
 
@@ -13378,6 +21269,45 @@ DIR.PA.11 = Card(
 
 ### DIR.MOD.1 — RIOT SQUAD *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S128. First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core).*
 
 ```python
@@ -13419,6 +21349,45 @@ DIR.MOD.1 = Card(
 ---
 
 ### DIR.MOD.2 — CAPITAL SUPPRESSION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S128. Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2.*
 
@@ -13462,6 +21431,45 @@ DIR.MOD.2 = Card(
 
 ### DIR.MOD.3 — CITY COUNCIL LOYALIST *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S128. Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level.*
 
 ```python
@@ -13503,6 +21511,45 @@ DIR.MOD.3 = Card(
 ---
 
 ### DIR.MOD.4 — ADMINISTRATIVE OVERHEAD *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S128. Legislative-mode React. Directorate documents all new Accords — procedural overhead yields Mandate income.*
 
@@ -13546,6 +21593,45 @@ DIR.MOD.4 = Card(
 
 ### DIR.MOD.5 — EMERGENCY APPROPRIATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *React to subsidize the heavy Mandate cost of Permanent PAs.*
 
 ```python
@@ -13587,6 +21673,45 @@ DIR.MOD.5 = Card(
 ---
 
 ### DIR.MOD.6 — STATE OF EMERGENCY *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *Creates a standing global difficulty constraint triggered by a World Event. ⚠ `world_event.played` trigger depends on undesigned Broadcast Card taxonomy — see XA-54.*
 
@@ -13632,6 +21757,45 @@ DIR.MOD.6 = Card(
 
 ### DIR.MOD.7 — EMINENT DOMAIN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *Jurisdictional claim over private development.*
 
 ```python
@@ -13674,6 +21838,45 @@ DIR.MOD.7 = Card(
 
 ### DIR.MOD.8 — ASSET SEIZURE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *Impounds public operational funds in Established territory.*
 
 ```python
@@ -13715,6 +21918,45 @@ DIR.MOD.8 = Card(
 ---
 
 ### DIR.MOD.9 — FISCAL SANCTION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S131. Reactive React on any faction's Public Standing decrease — Directorate spends a matching, non-Expired Intel token (the payoff for holding tokens from DIR.PA.2 Convene an Inquiry, or any other source) to open a formal sanction. Fills a genuine gap: Directorate previously had zero Economy\|Remove cards. Closes the last 1 of 6 toward the 54-card floor (04-n149). First Permanent-persistence ModReactCard in the set — new combination of two individually-established patterns, flagged in design_note rather than assumed to need a fresh Art 03 procedure.*
 
@@ -13765,6 +22007,40 @@ DIR.MOD.9 = Card(
 
 ### DIR.MOD.10 — RIOT CONTROL UNIT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. First ModBattleCard content in the game — 09-06 pattern-setter, establishing the stub format for the whole subclass. Fields follow Art 04 §6.1/§6.2 (ModBattleCard column) and the S132 procedure redesign (Art 03 §10.1.2, PM02 L242): `effect` is a fixed direction printed on the card, `target` is named by whoever plays it at commit (§10.1.2 Step 1.2.2) — not restricted to Directorate or to a contesting faction. Directorate's literal-force doctrine (§5a: "military assets: enforcement personnel and equipment for conflict resolution and presence removal") expressed as a Boost. **Count/magnitude locked S132 (Andy):** 4 cards per faction — 2 Boost + 2 Hinder, magnitudes +1/+2 and −1/−2 respectively; `value_rating` mirrors `magnitude`. Flagged for playtest validation, not treated as final (04-n94 log-to-validate). This is the weaker Boost tier (+1).*
 
 ```python
@@ -13791,6 +22067,40 @@ DIR.MOD.10 = Card(
 ---
 
 ### DIR.MOD.11 — EMERGENCY CURFEW *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Hinder counterpart to DIR.MOD.10, expressing the other half of §5a's Directorate doctrine: "Suppression toolkit: push other factions' control tiers down rather than building own tiers up — best suppression capability in the game." A curfew doesn't reinforce Directorate's own position in the contest — it makes the named faction's position harder to hold, a Tactic rather than a deployed Asset. Weaker Hinder tier (−1); DIR.MOD.13 Martial Lockdown is the escalated −2 counterpart.*
 
@@ -13819,6 +22129,40 @@ DIR.MOD.11 = Card(
 
 ### DIR.MOD.12 — REQUISITIONED EQUIPMENT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Second Boost card, Equipment category rather than DIR.MOD.10's human Asset — rounds out the pattern-setter with all three naming-convention categories represented (Asset/Equipment/Tactic, S130 lock) before replicating to the other four factions. Stronger Boost tier (+2) — heavier material commitment than the routine personnel deployment of DIR.MOD.10.*
 
 ```python
@@ -13845,6 +22189,40 @@ DIR.MOD.12 = Card(
 ---
 
 ### DIR.MOD.13 — MARTIAL LOCKDOWN *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Escalated Hinder counterpart to DIR.MOD.11 Emergency Curfew (−2 vs. −1) — completes the 2 Boost / 2 Hinder pattern locked S132. Where Curfew is a routine administrative order, Lockdown is Directorate's "best suppression capability in the game" (§5a) turned all the way up: full mobilization against the named faction's position, not just restricted movement.*
 
@@ -13873,6 +22251,40 @@ DIR.MOD.13 = Card(
 
 ### DIR.MOD.14 — STANDING ORDER *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. First ModActionCard content in the game exercising the actual `ModActionExpr` menu (09-06/04-n157 pattern-setter — PM02 L256; STD.MOD.1 Overture and SYN.MOD.1 The Fixer, the two prior "ModActionCard" entries, were both migrated to Issued ModReactCard at L245, leaving this slot genuinely empty until now). Establishes the tagged-union call convention for `ModActionExpr` — `ModActionExpr.<variant>(...)`, no prior instance existed to follow. Fields per §6.1/§6.2 (ModActionCard column) and the 04-n157 action-space analysis: **host-binding** is packet-pairing only — attach at Dispatch assembly to any CA/PA in the acting faction's own submitted packet (Art 03 §9.1.1); no card-level restriction field exists or is needed, and a ModActionCard can never reach a rival's sealed Dispatch Case. **Cost** is `None` uniformly — Beat 0 payment validation (Art 03 §9.4.0.1 Step 2) could support a live modifier cost here, unlike ModBattleCard's true no-cost-step case, but the splay-display convention (§9.4.0.1 Step 4) makes a distinct modifier cost illegible, so it folds into the host packet's total drain instead. **Count/format locked S135, revised twice same session:** 12 cards/faction — 4 `threshold_delta` (this tier) + 2 `success_multiplier` + 4 `ps_shift` + 2 `cost_reduction`, asymmetric because the four effect types have genuinely different magnitude-variation room (§6.3): `threshold_delta` runs against the d100 threshold scale (real thresholds 25–65, `ring_mod`/`doctrine_mod` already establish ±10/±15 as meaningful) and supports 4 tiers (+5/+10/+15/+20 — Andy's original example already named 4 values; a first pass compressed it to 3 before he caught it reading back the transcript); `ps_shift` likewise grew from an initial 2-card same-direction reading to a full 2×2 self/target matrix (see DIR.MOD.19); the other two effect types are small-integer/exponential mechanics that stay at 2 tiers. Directorate's institutional-authority doctrine (§5a) expressed as a pre-cleared procedural advantage — this is the weakest tier (+5).*
 
 ```python
@@ -13900,6 +22312,40 @@ DIR.MOD.14 = Card(
 
 ### DIR.MOD.15 — REGULATORY CLEARANCE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Mid tier of the 3 `threshold_delta` cards (+10, matching the `ring_mod`/`doctrine_mod` baseline granularity — §6.5). Reframed from an earlier hostile-flavored seed concept ("Regulatory Inspection" — raising a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: `threshold_delta` carries no faction parameter (§6.3), so it can only ever ease the acting faction's own host action, never a rival's.*
 
 ```python
@@ -13925,6 +22371,40 @@ DIR.MOD.15 = Card(
 ---
 
 ### DIR.MOD.16 — SHOW OF FORCE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135, revised same session: third of **4** `threshold_delta` tiers (+15), not the capstone — Andy corrected the tier count from 3 to 4 (+5/+10/+15/+20; his original example already named 4 values, "+5, +10, +25, +20," compressed to 3 in the first pass). DIR.MOD.25 Executive Mandate (+20) is now the true capstone. Also reframed from a hostile-flavored seed concept per 04-n170, same basis as DIR.MOD.15. Magnitude exceeds the ±15 `doctrine_mod` baseline only nominally.*
 
@@ -13952,6 +22432,40 @@ DIR.MOD.16 = Card(
 
 ### DIR.MOD.17 — BY THE BOOK *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common tier of the 2 `success_multiplier` cards (n=1) — 04-n157: this effect type supports only 2 tiers, since n=1 already doubles the host's effect and n=2 triples it.*
 
 ```python
@@ -13977,6 +22491,40 @@ DIR.MOD.17 = Card(
 ---
 
 ### DIR.MOD.18 — OVERWHELMING RESPONSE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Rare/capstone tier of the 2 `success_multiplier` cards (n=2 — triples the host's success effect). Flagged for playtest, same caveat as ModBattleCard's magnitude scale (04-n94) — reserve for high-stakes plays, not routine deployment.*
 
@@ -14004,6 +22552,40 @@ DIR.MOD.18 = Card(
 
 ### DIR.MOD.19 — MODEL CITIZEN *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135, revised same session: `ps_shift` is a full 2×2 matrix, not a 2-card direction split — 4 cards total (DIR.MOD.19/23/20/24), mirroring ModBattleCard's Boost+1/+2, Hinder−1/−2 structure exactly. Unlike the other three `ModActionExpr` variants, `ps_shift` carries a faction parameter (§6.3: `acting | target | named faction`), so both **direction** (self vs. target) and **magnitude** (±1/±2) vary independently. This card: self, minor (+1). DIR.MOD.23 Commendation: self, major (+2). DIR.MOD.20 Public Reprimand: target, major (−2). DIR.MOD.24 Internal Affairs Referral: target, minor (−1). Faction ModActionCard count revised 9 → **11 cards/faction** (3 threshold_delta + 2 success_multiplier + 4 ps_shift + 2 cost_reduction); Ring ModAction revised 18 → **22 cards/ring** (11 × 2 for Portable/Ring-Locked). See PM02 L257 (revises L256).*
 
 ```python
@@ -14029,6 +22611,40 @@ DIR.MOD.19 = Card(
 ---
 
 ### DIR.MOD.20 — PUBLIC REPRIMAND *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix — see DIR.MOD.19 for the full structure. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242) rather than the ±1 baseline, since a named PS hit reads as a real consequence, not a nudge. This is one of two cards in the set that reach a faction other than the acting one — legitimately, since `ps_shift` is schema-built for it (unlike `threshold_delta`/`success_multiplier`/`cost_reduction`, flagged self-only at 04-n170).*
 
@@ -14056,6 +22672,40 @@ DIR.MOD.20 = Card(
 
 ### DIR.MOD.21 — JURISDICTION WAIVER *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common tier of the 2 `cost_reduction` cards (n=1). PA-only per §6.3 — CA cost is committed at dispatch before Beat 0 and cannot be reduced post-submission.*
 
 ```python
@@ -14081,6 +22731,40 @@ DIR.MOD.21 = Card(
 ---
 
 ### DIR.MOD.22 — REQUISITIONED RESOURCES *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Capstone tier of the 2 `cost_reduction` cards (n=2). PA costs sample at 1–4 total units (04-n157) — a 2-unit reduction approaches making many PAs nearly free; flagged for playtest same as the rest of this set.*
 
@@ -14108,6 +22792,40 @@ DIR.MOD.22 = Card(
 
 ### DIR.MOD.23 — COMMENDATION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135, added same session as DIR.MOD.24 to complete the `ps_shift` 2×2 matrix (Andy: "we should make 2 more... if ps can be used this way — need +2 ps and −1 ps cards"). Self-boost, major tier (+2) — stronger counterpart to DIR.MOD.19 Model Citizen. See DIR.MOD.19 for the full matrix structure.*
 
 ```python
@@ -14134,6 +22852,40 @@ DIR.MOD.23 = Card(
 
 ### DIR.MOD.24 — INTERNAL AFFAIRS REFERRAL *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135, added same session as DIR.MOD.23 to complete the `ps_shift` 2×2 matrix. Target-hinder, minor tier (−1) — softer counterpart to DIR.MOD.20 Public Reprimand: a quiet referral rather than a public rebuke. Drawn from the Faction ModAction seed pool (`Whiteboard/modifier_card_ideas.md`), previously unused when only 2 ps_shift cards were planned.*
 
 ```python
@@ -14159,6 +22911,40 @@ DIR.MOD.24 = Card(
 ---
 
 ### DIR.MOD.25 — EXECUTIVE MANDATE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135, added same session Andy caught the tier count reading back the transcript: `threshold_delta` is 4 tiers, not 3 — his original example ("+5, +10, +25, +20") already named 4 values; the first pass compressed the top two into a single "+15–20 capstone" range. True capstone (+20); DIR.MOD.16 Show of Force (+15) is now the third of four, not the top. `value_rating` **widened schema-wide from 1–3 to 1–4 (§6.1/§6.2, PM02 L259)** so this tier gets its own distinct value (4) instead of sharing DIR.MOD.16's band — Andy's call after weighing it against leaving the two tiers to share `value_rating=3`. Faction ModActionCard count revised again: 11 → **12 cards/faction** (4 threshold_delta + 2 success_multiplier + 4 ps_shift + 2 cost_reduction); Ring ModAction: 22 → **24 cards/ring**. See PM02 L258/L259 (revises L257).*
 
@@ -14734,6 +23520,40 @@ NET.CA.7 = Card(
 
 ### NET.CA.8 — FAKE NEWS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S130. Network plants false intelligence to redirect an opponent's DeploymentMarker to a useless district. 04-n134.*
 
 ```python
@@ -15117,6 +23937,40 @@ NET.MOD.2 = Card(
 ### NET.PA.4 — GRASSROOTS PROTEST *(stub)*
 [↑ Public Acts](#network-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 NET.PA.4 = Card(
     id      = "NET.PA.4",  version = "v1.1",
@@ -15136,6 +23990,40 @@ NET.PA.4 = Card(
 ### NET.PA.5 — VIRAL OUTRAGE *(stub)*
 [↑ Public Acts](#network-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 NET.PA.5 = Card(
     id      = "NET.PA.5",  version = "v1.1",
@@ -15154,6 +24042,40 @@ NET.PA.5 = Card(
 
 ### NET.PA.6 — CROWDFUNDING CAMPAIGN *(stub)*
 [↑ Public Acts](#network-public-acts)
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 ```python
 NET.PA.6 = Card(
@@ -15238,6 +24160,45 @@ NET.MOD.1 = Card(
 
 ### NET.MOD.3 — BACKUP SERVER RACKS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S128. React on Network PS loss. Enables Sacrifice (NET.CA.2 Disclosure Loop) + recovery arc. Network manages its own signal — what the public hears is what Network decides they hear.*
 
 ```python
@@ -15279,6 +24240,45 @@ NET.MOD.3 = Card(
 ---
 
 ### NET.MOD.4 — AMPLIFICATION ARRAY *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S128. React on broadcast_card.placed (db25 — public SitRep card in Situation Report Zone). Fires at Upkeep SitRep and Beat 5. Generic variant — any district where Network already has presence. Ring-constrained variant: NET.MOD.5 (Mid ring).*
 
@@ -15322,6 +24322,45 @@ NET.MOD.4 = Card(
 
 ### NET.MOD.5 — INFRASTRUCTURE SIGNAL *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S128. Ring-constrained variant of NET.MOD.4. Fires only when SitRep fires and Network has presence in a Mid ring (Ring 2) district. Mid ring is the consolidation zone — this card deepens Network's reach in established infrastructure.*
 
 ```python
@@ -15363,6 +24402,45 @@ NET.MOD.5 = Card(
 ---
 
 ### NET.MOD.6 — STREET-LEVEL AGITATOR *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S128. React on any presence placement in Baryo (Ring 3). When any faction moves in Baryo, Network's community reach follows — opportunistic Baryo expansion is Network's territorial signature.*
 
@@ -15406,6 +24484,45 @@ NET.MOD.6 = Card(
 
 ### NET.MOD.7 — COMMUNITY AMPLIFIERS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *React on any Public Act resolution. Feeds the Network's hand when the board gets loud.*
 
 ```python
@@ -15447,6 +24564,45 @@ NET.MOD.7 = Card(
 ---
 
 ### NET.MOD.8 — FREQUENCY SPLITTER *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *React on Network Modifier card placed. Links Reacts together sequentially.*
 
@@ -15490,6 +24646,45 @@ NET.MOD.8 = Card(
 
 ### NET.MOD.9 — BANDWIDTH OVERRIDE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *React on district becoming Contested. High-yield payload when the board gets messy.*
 
 ```python
@@ -15531,6 +24726,45 @@ NET.MOD.9 = Card(
 ---
 
 ### NET.MOD.10 — LOCAL ORGANIZERS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *React on any presence placement in Baryo (Ring 3). Grassroots co-option of opponent territorial momentum.*
 
@@ -15577,6 +24811,45 @@ NET.MOD.10 = Card(
 ### NET.MOD.11 — CANCEL CAMPAIGN *(stub)*
 [↑ Modifier & React Cards](#network-modifier-and-react-cards)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 NET.MOD.11 = Card(
     id      = "NET.MOD.11",  version = "v1.1",
@@ -15596,6 +24869,45 @@ NET.MOD.11 = Card(
 ### NET.MOD.12 — FORCED TRANSPARENCY *(stub)*
 [↑ Modifier & React Cards](#network-modifier-and-react-cards)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 NET.MOD.12 = Card(
     id      = "NET.MOD.12",  version = "v1.0",
@@ -15614,6 +24926,45 @@ NET.MOD.12 = Card(
 ---
 
 ### NET.MOD.13 — PRESS CREDENTIALS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S130. Protect a Network PA and all attached components from targeting until Beat 4 resolution. 04-n128.*
 
@@ -15658,6 +25009,45 @@ NET.MOD.13 = Card(
 
 ### NET.MOD.14 — SUBSCRIBER NETWORK *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S130. Hand-growth React on Network PS gain. Completes the standing-interaction trilogy (MOD.2/MOD.3/MOD.14).*
 
 ```python
@@ -15700,6 +25090,40 @@ NET.MOD.14 = Card(
 
 ### NET.MOD.15 — COMMUNITY TURNOUT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Network's ModBattleCard set, replicating the Directorate/Ghost pattern (2 Boost +1/+2, 2 Hinder −1/−2, PM05 09-06). Doctrine per §5a and modifier_card_ideas.md's provisional voice seed: "broadcast/exposure-based: public attention and narrative pressure as a form of contest weight" — not personnel or intelligence, but mobilized public attention. Weaker Boost tier (+1): ordinary residents, not Network operatives, showing up in visible numbers.*
 
 ```python
@@ -15726,6 +25150,40 @@ NET.MOD.15 = Card(
 ---
 
 ### NET.MOD.16 — LIVE BROADCAST *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Stronger Boost tier (+2) — infrastructure rather than a bigger crowd. Cameras and a real-time feed turn public attention into sustained leverage instead of a one-time gathering.*
 
@@ -15754,6 +25212,40 @@ NET.MOD.16 = Card(
 
 ### NET.MOD.17 — STREET PRESSURE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Weaker Hinder tier (−1). Network's suppression is public and visible, not covert — organized pushback that makes a position harder to hold in the open, not a hidden attack.*
 
 ```python
@@ -15780,6 +25272,40 @@ NET.MOD.17 = Card(
 ---
 
 ### NET.MOD.18 — PUBLIC OUTCRY *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Stronger Hinder tier (−2), completing Network's 2 Boost/2 Hinder pattern. Escalates Street Pressure from a local crowd into a citywide story — the reputational damage of the coverage itself, not just the presence of a crowd.*
 
@@ -15808,6 +25334,40 @@ NET.MOD.18 = Card(
 
 ### NET.MOD.19 — GROUNDSWELL *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Network — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Network voice: broadcast and exposure, transparency doctrine — same doctrinal lens as Network's shipped ModBattleCard set (NET.MOD.15–18). Minor threshold_delta tier (+5).*
 
 ```python
@@ -15833,6 +25393,40 @@ NET.MOD.19 = Card(
 ---
 
 ### NET.MOD.20 — ADVANCE COVERAGE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Mid threshold_delta tier (+10).*
 
@@ -15860,6 +25454,40 @@ NET.MOD.20 = Card(
 
 ### NET.MOD.21 — CLEAR SIGNAL *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Signal Jammed" — disrupting a rival's broadcast-dependent action, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Network's own host action.*
 
 ```python
@@ -15885,6 +25513,40 @@ NET.MOD.21 = Card(
 ---
 
 ### NET.MOD.22 — FULL SATURATION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Capstone threshold_delta tier (+20).*
 
@@ -15912,6 +25574,40 @@ NET.MOD.22 = Card(
 
 ### NET.MOD.23 — CROSS-POSTED *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common success_multiplier tier (n=1).*
 
 ```python
@@ -15937,6 +25633,40 @@ NET.MOD.23 = Card(
 ---
 
 ### NET.MOD.24 — VIRAL MOMENT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Rare/capstone success_multiplier tier (n=2).*
 
@@ -15964,6 +25694,40 @@ NET.MOD.24 = Card(
 
 ### NET.MOD.25 — OFF-AIR *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -15989,6 +25753,40 @@ NET.MOD.25 = Card(
 ---
 
 ### NET.MOD.26 — EXCLUSIVE ACCESS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
 
@@ -16016,6 +25814,40 @@ NET.MOD.26 = Card(
 
 ### NET.MOD.27 — FOLLOW-UP QUESTION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -16041,6 +25873,40 @@ NET.MOD.27 = Card(
 ---
 
 ### NET.MOD.28 — RETRACTION DEMANDED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
@@ -16068,6 +25934,40 @@ NET.MOD.28 = Card(
 
 ### NET.MOD.29 — VOLUNTEER STRINGERS *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
 
 ```python
@@ -16093,6 +25993,40 @@ NET.MOD.29 = Card(
 ---
 
 ### NET.MOD.30 — EXISTING AIRTIME *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Capstone cost_reduction tier (n=2).*
 
@@ -17192,6 +27126,40 @@ SYN.CA.11 = Card(
 ### SYN.CA.12 — BOILERPLATE *(stub)*
 [↑ Covert Operations](#syndicate-covert-operations)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S130. Syndicate acquires a blank Accord form covertly — outside STD.CA.9 channels. Paired with SYN.MOD.11 Signature on File to produce a non-negotiable unilateral Accord. Closes 04-n125 (Option C: formation capability).*
 
 ```python
@@ -17594,6 +27562,40 @@ SYN.PA.3 = Card(
 ### SYN.PA.4 — CHARITY GALA *(stub)*
 [↑ Public Acts](#syndicate-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 SYN.PA.4 = Card(
     id      = "SYN.PA.4",  version = "v1.0",
@@ -17613,6 +27615,40 @@ SYN.PA.4 = Card(
 ### SYN.PA.5 — PROTECTION RACKET *(stub)*
 [↑ Public Acts](#syndicate-public-acts)
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 ```python
 SYN.PA.5 = Card(
     id      = "SYN.PA.5",  version = "v1.1",
@@ -17628,6 +27664,45 @@ SYN.PA.5 = Card(
 ```
 
 ### SYN.MOD.2 — SHELL CORPORATION *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S128. React on Accord formation. Every formal deal creates economic opportunity — Syndicate positions inside it immediately. Pairs with SYN.MOD.3 (Offshore Slush Fund on accord.corrupted).*
 
@@ -17671,6 +27746,45 @@ SYN.MOD.2 = Card(
 
 ### SYN.MOD.3 — OFFSHORE SLUSH FUND *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S128. React on Accord breach. Syndicate extracts Capital from diplomatic breakdown. Higher yield than formation — breach creates leverage. Pairs with SYN.MOD.2.*
 
 ```python
@@ -17712,6 +27826,45 @@ SYN.MOD.3 = Card(
 ---
 
 ### SYN.MOD.4 — INSIDER TRADING *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *Market speculation on positive faction momentum.*
 
@@ -17755,6 +27908,45 @@ SYN.MOD.4 = Card(
 
 ### SYN.MOD.5 — SHORT SQUEEZE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *Market speculation on negative faction momentum.*
 
 ```python
@@ -17796,6 +27988,45 @@ SYN.MOD.5 = Card(
 ---
 
 ### SYN.MOD.6 — BOUNTY CONTRACT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *Syndicate weaponizes other factions by crowdsourcing their own defense or offense.*
 
@@ -17841,6 +28072,45 @@ SYN.MOD.6 = Card(
 
 ### SYN.MOD.7 — RENEGOTIATION FEE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *Reacts to the corruption (textual alteration) of an Accord's terms.*
 
 ```python
@@ -17883,6 +28153,45 @@ SYN.MOD.7 = Card(
 
 ### SYN.MOD.8 — VULTURE FUND *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *Renamed S132 from "Hostile Takeover" — duplicate name with SYN.CA.9 (04-n156). Syndicate buys up the territory left behind by destroyed infrastructure; the new name matches the actual mechanic — this isn't a takeover of an operating position (that's SYN.CA.9), it's opportunistic acquisition of what's left after someone else's structure comes down. Asset (business) category per S130 naming convention.*
 
 ```python
@@ -17922,6 +28231,45 @@ SYN.MOD.8 = Card(
 ```
 
 ### SYN.MOD.9 — GOODWILL *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S130. ModReactCard — Standing floor. Fires when Syndicate PS decreases; Capital×1 negates the drop. Counters SYN.CA.7 portrait bleed. 04-n131 design decision resolved.*
 
@@ -17965,6 +28313,45 @@ SYN.MOD.9 = Card(
 
 ### SYN.MOD.10 — LOBBY *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S130. ModReactCard — Resolution layer gap. Syndicate spends Capital to apply −15 modifier token to a named faction's PA at §9.2. 04-n129 design decision resolved.*
 
 ```python
@@ -18006,6 +28393,45 @@ SYN.MOD.10 = Card(
 ---
 
 ### SYN.MOD.11 — SIGNATURE ON FILE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+| Trigger frequency (ModReactCard) | ⚠ |  |  |
+| Firing window (ModReactCard) | ⚠ |  |  |
+| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
+| Stack behavior (ModReactCard) | ⚠ |  |  |
+| Ring constraint (ModReactCard) | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S130. ModReactCard — fires when Accord draft is tabled. Syndicate forges party B's acceptance; Accord becomes binding without consent. Ceiling-power card. Paired with SYN.CA.12 Boilerplate for non-negotiable unilateral Accord combo.*
 
@@ -18049,6 +28475,40 @@ SYN.MOD.11 = Card(
 
 ### SYN.MOD.12 — CONTRACTED MUSCLE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Syndicate's ModBattleCard set, replicating the Directorate/Ghost/Network/Guild pattern (2 Boost +1/+2, 2 Hinder −1/−2, PM05 09-06) — last of the five. Doctrine per §5a is the most explicit of any faction on this exact subclass: "Battle winner modifier cards: rare and costly; serve primarily as deterrent — Directorate's awareness shapes Ring 1/2 calculus without deployment." **`cost = None`, matching all four other factions (corrected S132 — Andy):** Art 03 §10.1.2 has no cost validation/payment step anywhere in the commit or reveal sequence, so a `cost` field here would be unenforceable content, the same class of error 04-n152 exists to prevent on the effect side. "Rare and costly" stays true at the *deck* level — the acquisition/rarity side of that doctrine (how seldom these are drawn, how few exist) rather than a per-play resource cost with no procedure to collect it. Weaker Boost tier (+1): a cheap, disposable hire.*
 
 ```python
@@ -18075,6 +28535,40 @@ SYN.MOD.12 = Card(
 ---
 
 ### SYN.MOD.13 — ARMORED TRANSPORT *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Stronger Boost tier (+2) — hardware rather than headcount. `cost = None`, same as SYN.MOD.12 (see that card's note on why "costly" doesn't become a per-play resource cost).*
 
@@ -18103,6 +28597,40 @@ SYN.MOD.13 = Card(
 
 ### SYN.MOD.14 — CALLED-IN DEBT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S132. Weaker Hinder tier (−1). Syndicate's suppression is financial leverage, not force — someone the target faction depends on suddenly has other obligations to honor first.*
 
 ```python
@@ -18129,6 +28657,40 @@ SYN.MOD.14 = Card(
 ---
 
 ### SYN.MOD.15 — BOUGHT OFF *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S132. Stronger Hinder tier (−2), completing Syndicate's 2 Boost/2 Hinder pattern and the full five-faction ModBattleCard pattern-set. Escalates Called-In Debt from inconvenience into defection — not people the target hired, but people the target was counting on regardless.*
 
@@ -18157,6 +28719,40 @@ SYN.MOD.15 = Card(
 
 ### SYN.MOD.16 — GOLDEN HANDSHAKE *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Syndicate — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Syndicate voice: capital and leverage, patient accumulation, deterrent-first doctrine — same doctrinal lens as Syndicate's shipped ModBattleCard set (SYN.MOD.12–15). Completes the faction-set pattern-set for all 5 factions (last of five). Minor threshold_delta tier (+5).*
 
 ```python
@@ -18182,6 +28778,40 @@ SYN.MOD.16 = Card(
 ---
 
 ### SYN.MOD.17 — INSIDER TERMS *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Mid threshold_delta tier (+10).*
 
@@ -18209,6 +28839,40 @@ SYN.MOD.17 = Card(
 
 ### SYN.MOD.18 — CLEARED POSITION *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Market Pressure" — applying leverage to make a rival's economic action harder, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Syndicate's own host action.*
 
 ```python
@@ -18234,6 +28898,40 @@ SYN.MOD.18 = Card(
 ---
 
 ### SYN.MOD.19 — TOTAL LEVERAGE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Capstone threshold_delta tier (+20).*
 
@@ -18261,6 +28959,40 @@ SYN.MOD.19 = Card(
 
 ### SYN.MOD.20 — COMPOUND INTEREST *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common success_multiplier tier (n=1).*
 
 ```python
@@ -18286,6 +29018,40 @@ SYN.MOD.20 = Card(
 ---
 
 ### SYN.MOD.21 — CONTROLLING STAKE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Rare/capstone success_multiplier tier (n=2).*
 
@@ -18313,6 +29079,40 @@ SYN.MOD.21 = Card(
 
 ### SYN.MOD.22 — QUIET SETTLEMENT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -18338,6 +29138,40 @@ SYN.MOD.22 = Card(
 ---
 
 ### SYN.MOD.23 — PHILANTHROPIC GESTURE *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
 
@@ -18365,6 +29199,40 @@ SYN.MOD.23 = Card(
 
 ### SYN.MOD.24 — WORD GETS AROUND *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix.*
 
 ```python
@@ -18390,6 +29258,40 @@ SYN.MOD.24 = Card(
 ---
 
 ### SYN.MOD.25 — PREDATORY TERMS EXPOSED *(stub)*
+
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
 
 *S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
 
@@ -18417,6 +29319,40 @@ SYN.MOD.25 = Card(
 
 ### SYN.MOD.26 — BULK CONTRACT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
 
 ```python
@@ -18443,6 +29379,40 @@ SYN.MOD.26 = Card(
 
 ### SYN.MOD.27 — LINE OF CREDIT *(stub)*
 
+#### Design Rationale
+⚠ Pending design review (09-16). See stub design note below.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ⚠ |  |  |
+| Voice fit | ⚠ |  |  |
+| Doctrine alignment | ⚠ |  |  |
+| Card type fit | ⚠ |  |  |
+| Taxonomy fit | ⚠ |  |  |
+| Balance | ⚠ |  |  |
+| Effect duration | ⚠ |  |  |
+| Persistence | ⚠ |  |  |
+| Trigger validity | ⚠ |  |  |
+| Portrait validity | ⚠ |  |  |
+| Supported by zones | ⚠ |  |  |
+| Supported by components | ⚠ |  |  |
+| Supported by game procedure | ⚠ |  |  |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
+| Outcome determinacy | ⚠ |  |  |
+| Resource cost positioning | ⚠ |  |  |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status |  |  |  |
+
 *S135. Capstone cost_reduction tier (n=2). Completes the faction-set ModActionCard pattern-set for all 5 factions.*
 
 ```python
@@ -18467,807 +29437,3 @@ SYN.MOD.27 = Card(
 
 ---
 
-## 8. Card Taxonomy Index
-
-*Column definitions and Layer × Function validity matrix in Art 04b §5.1. Status key: ✅ Signed off — canonical, use for gap analysis. 📝 Draft — designed but not signed off. ⬜ Not yet designed. 🚫 Retired.*
-
-| Card ID | Name | Status | Layer | Visibility | Function | Subject | Primitive Verb(s) |
-|---------|------|--------|-------|------|----------|---------|-------------------|
-| DIR.CA.1 | Invoke Jurisdiction | 📝 | Submission | Split | Block | Covert Operation (STD.CA.1, STD.CA.3) | — |
-| DIR.CA.2 | Detain | 📝 | Territory | Public | Move | Deployment Marker | Move | *(taxonomy corrected S107 L226: success operation is game.move() to Detention zone; Remove was incorrect — Remove = return to supply; Detention zone is an active play area on Directorate's tableau. Art 04 spec function field correction tracked under 04-n105)* |
-| DIR.CA.3 | Surveillance Placement | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
-| DIR.CA.4 | Tactical Redirection | 📝 | Territory | Public | Move | Presence Token | Move |
-| DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Public | Remove | Presence Token | Remove |
-| DIR.PA.1 | Regulatory Override | 📝 | Territory | Public | Modify | Presence Token (placement cost) | — |
-| DIR.PA.2 | Convene an Inquiry | 📝 | Information | Private → Public | Add | Intel Token | Add |
-| DIR.PA.3 | Entry/Exit Controls | 📝 | Territory | Public | Block | Deployment Marker | — |
-| DIR.PA.4 | Regulatory Downgrade | 🚫 BLOCKED | Territory | Public | Modify | InfluenceTier (derived — not targetable) | — | *L223: InfluenceTier is not a targetable component — tier is derived from influence token counts, not a placed or written value. Only board state changes (token add/remove) can affect tier. 9.1 prohibits direct income modification by card. Fundamental redesign required (04-n104).* |
-| DIR.PA.5 | Regulatory Freeze | 🚫 BLOCKED | Territory | Public | Block | InfluenceTier (derived — not targetable) | — | *L223: Same subject violation — InfluenceTier not a targetable component. Additionally, Block targets actions (not derived states); Block\|InfluenceTier is a subject mismatch. Fundamental redesign required (04-n104).* |
-| DIR.PA.6 | Standing Injunction | 📝 | Submission | Split | Block | Public Act | — |
-| DIR.MOD.1 | Riot Squad | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.2 | Capital Suppression | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.3 | City Council Loyalist | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.4 | Administrative Overhead | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.5 | Emergency Appropriation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.6 | State of Emergency | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.7 | Eminent Domain | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.8 | Asset Seizure | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.9 | Fiscal Sanction | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.10 | Riot Control Unit | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.11 | Emergency Curfew | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.12 | Requisitioned Equipment | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.13 | Martial Lockdown | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.14 | Standing Order | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.15 | Regulatory Clearance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.16 | Show of Force | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.17 | By the Book | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.18 | Overwhelming Response | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.19 | Model Citizen | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.20 | Public Reprimand | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.21 | Jurisdiction Waiver | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.22 | Requisitioned Resources | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.23 | Commendation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.24 | Internal Affairs Referral | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| DIR.MOD.25 | Executive Mandate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.CA.1 | Pattern Match | 📝 | Submission | Private | Redirect | Covert Operation (lane steal — Beat 2 intercept) | Redirect |
-| GHO.CA.2 | Intercept | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
-| GHO.CA.3 | Dossier Breach | 📝 | Information | Private → Public | Reveal | Intel Delivery Slip | Reveal |
-| GHO.CA.4 | Deep Cover | 📝 | Information | Private → Public | Remove | Intel Token | Remove |
-| GHO.CA.5 | Misdirection | 📝 | Information | Private | Corrupt | Intel Token (faction_name field — FRG placed only) | Corrupt |
-| GHO.CA.6 | Synthesize | 📝 | Economy | Public | Add | Intel Token | Add |
-| GHO.CA.7 | Station | 📝 | Information | Private → Public | Add | Intel Token | Add |
-| GHO.CA.8 | Full Take | 📝 | Information | Private → Public | Add | Intel Token | Add |
-| GHO.CA.9 | SCIF | 📝 | Information | Private → Public | Add | Debrief Action Card | Add |
-| GHO.CA.10 | Flip | 📝 | Economy | Public | Add | Native Resource | Add |
-| GHO.CA.11 | Signals Analysis | 📝 | Information | Private → Public | Reveal | Classified Directives | Reveal |
-| GHO.CA.12 | Source Substitution | 📝 | Information | Private → Public | Corrupt | Intel Token | Corrupt |
-| GHO.CA.13 | Backdate | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel Token (round-number field) | Corrupt | *L222: (1) Location constraint — Intel token in private terminal zone unreachable by opposing card; only publicly placed tokens (PA payment window) are valid Corrupt targets. (2) 7.2b — round-number records committed validity state; altering it is retroactive modification. §4.10 revised. Art 04 spec: BLOCKED pending redesign (04-n103).* |
-| GHO.CA.14 | Field Verification | 🚫 BLOCKED | Information | Private → Public | Corrupt | Intel Token (age field) | Corrupt | *7.2b violation: mechanic alters committed token age field retroactively. Fundamental redesign required. G-ext id retired. Art 04 spec: BLOCKED pending redesign (04-n103).* |
-| GHO.PA.1 | Publish Analysis | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
-| GHO.PA.2 | Signal Review Request | 📝 | Resolution | Split by phase | Modify | Covert Operation (difficulty) | — |
-| GHO.PA.3 | Declassified Records | 📝 | Information | Public | Remove | Intel Token (expired) | Remove |
-| GHO.PA.4 | Public Threat Assessment | 📝 | Information | Private → Public | Reveal | Broadcast Effect Card | Reveal |
-| GHO.PA.5 | Agency Recruitment Fair | 📝 | Territory | Public | Add | Presence Token | Add |
-| GHO.MOD.1 | Sleeper Analyst | 📝 | Information | Public | Remove | Intel Token | Remove | *ModReactCard — taxonomy excluded from §11.1; effect description for spec clarity only* |
-| GHO.MOD.2 | Perimeter Sensors | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.3 | Institutional Trace | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.4 | Signal Bleed | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.5 | False Flag | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.6 | Supply Chain Tap | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.7 | Sleeper Cell | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.8 | Local Sympathizers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.12 | Embedded Contact | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.13 | Signals Package | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.14 | Planted Doubt | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.15 | Blown Cover | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.16 | Pre-Analysis | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.17 | Known Variable | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.18 | Clean Channel | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.19 | Total Picture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.20 | Clean Data | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.21 | Layered Analysis | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.22 | Quiet Correction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.23 | Findings Published | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.24 | Discreet Leak | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.25 | Model Failure Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.26 | Existing Dataset | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GHO.MOD.27 | Shared Infrastructure | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure Block | — |
-| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
-| GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence Token | Add |
-| GUI.CA.4 | Construction Crew | ✅ | Submission | Split | Remove Restriction | Covert Operation (presence requirement) | — |
-| GUI.CA.5 | Infrastructure Yield | ✅ | Economy | Public | Add | Native Resource | Add |
-| GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
-| GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Public | Add | Structure Block | Add |
-| GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Public | Add | Accord Agreement | Add |
-| GUI.MOD.1 | Night Shift Crew | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.2 | Union Representative | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.3 | Institutional Contract | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.4 | Core Premium | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.5 | Company Town | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.6 | Emergency Reconstruction | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.7 | Worker Retaliation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.8 | Site Clearance | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.9 | Field Supervisor | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.10 | Contractor's Favor | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.11 | Site Foreman | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.12 | Material Stockpile | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.13 | Permit Delay | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.14 | Structural Condemnation | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.15 | Structural Survey | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.16 | Load-Bearing Confidence | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.17 | Permit Fast-Track | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.18 | Certified to Code | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.19 | Union Crew | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.20 | Overbuilt | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.21 | Community Groundbreaking | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.22 | Ribbon Cutting | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.23 | Inspection Noted | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.24 | Code Violation Cited | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.25 | Material Surplus | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| GUI.MOD.26 | In-House Fabrication | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.CA.1 | Leak | 📝 | Information | Private → Public | Reveal | District | Reveal |
-| NET.CA.2 | Disclosure Loop | 📝 | Economy | Public | Add | Exposure | Add |
-| NET.CA.3 | Breaking News | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
-| NET.CA.4 | Network Cascade | 📝 | Submission | Split | Modify | Public Act | — |
-| NET.CA.5 | Community Anchor | 📝 | Territory | Public | Add | Presence Token | Add |
-| NET.CA.6 | Sacrifice | 📝 | Economy | Public | Add | Intel Token | Add |
-| NET.MOD.1 | Pirate Transmitter | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.2 | Troll Farm | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.3 | Backup Server Racks | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.4 | Amplification Array | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.5 | Infrastructure Signal | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.6 | Street-level Agitator | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.7 | Community Amplifiers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.8 | Frequency Splitter | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.9 | Bandwidth Override | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.10 | Local Organizers | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.15 | Community Turnout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.16 | Live Broadcast | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.17 | Street Pressure | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.18 | Public Outcry | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.19 | Groundswell | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.20 | Advance Coverage | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.21 | Clear Signal | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.22 | Full Saturation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.23 | Cross-Posted | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.24 | Viral Moment | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.25 | Off-Air | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.26 | Exclusive Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.27 | Follow-Up Question | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.28 | Retraction Demanded | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.29 | Volunteer Stringers | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.MOD.30 | Existing Airtime | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| NET.PA.1 | Public Disclosure | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
-| NET.PA.2 | Community Rally | 📝 | Territory | Public | Add | Presence Token | Add |
-| NET.PA.3 | Live Coverage | 📝 | Information | Private → Public | Reveal | Faction Hand | Reveal |
-| STD.CA.1 | Build Structure | ✅ | Territory | Public | Add | Structure Block | Add |
-| STD.CA.2 | Demolish | ✅ | Territory | Public | Remove | Structure Block | Remove |
-| STD.CA.3 | Campaign | ✅ | Territory | Public | Add | Presence Token | Add |
-| STD.CA.4 | Undermine | ✅ | Territory | Public | Remove | Presence Token | Remove |
-| STD.CA.5 | Gather | ✅ | Information | Private → Public | Add | Intel Token | Add |
-| STD.CA.6 | Broadcast Interference | ✅ | Submission | Split | Modify | Public Act (cost) | — |
-| STD.CA.7 | Amplify | ✅ | Resolution | Split by phase | Modify | Public Act (outcome scale) | — |
-| STD.CA.8 | Buy Influence | ✅ | Territory | Public | Add | Presence Token | Add |
-| STD.CA.9 | Fund | ✅ | Economy | Public | Redirect | Native Resource | Move |
-| STD.CA.10 | Protect | ✅ | Resolution | Split by phase | Protect | Covert Operation (difficulty) | — |
-| STD.CA.11 | Tort Interference | 📝 | Information | Private → Public | Corrupt | Accord Agreement | Corrupt |
-| STD.CA.12 | Absolute Compromise | 📝 | Submission | Split | Block | Covert Operation | — |
-| STD.CA.13 | Disinformation Campaign | 📝 | Standing | Split | Shift | Public Standing | Move |
-| STD.CA.14 | Disprove | 📝 | Economy | Public | Remove | Intel Token | Remove |
-| STD.CA.15 | Intel Extraction | 📝 | Economy | Public | Redirect | Intel Token | Move |
-| STD.CA.16 | Modifier Raid | 📝 | Economy | Public | Redirect | Modifier Card | Move |
-| STD.MOD.1 | Overture | 📝 | Issued ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.2 | Senior Liaison | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.3 | Signed-Out Instrumentation | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.4 | Clearance Review | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.5 | Access Frozen | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.6 | Citadel Contact | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.7 | Sanctum Ledger Access | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.8 | Checkpoint Delay | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.9 | Perimeter Lockout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.10 | Line Supervisor | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.11 | Relay Priority | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.12 | Regulatory Hold | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.13 | Supply Line Frozen | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.14 | Power Grid Chief | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.15 | Communications Hub Override | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.16 | Permit Office Freeze | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.17 | Clearinghouse Lockout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.18 | Familiar Face | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.19 | Scavenged Rig | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.20 | Vendors Close Ranks | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.21 | Baryo Turns Its Back | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.22 | Strip Regular | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.23 | Market Stall Cache | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.24 | Housing Arrangement Called In | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.25 | Transit Hub Shutout | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.26 | Zoning Variance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.27 | Redacted File | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.28 | Maintenance Window | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.29 | Classified Briefing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.30 | Institutional Backing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.31 | Ceremonial Groundbreaking | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.32 | Off the Record | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.33 | Public Citation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.34 | Word to the Wise | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.35 | Named in the Review | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.36 | Fee Waived | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.37 | Emergency Allocation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.38 | Recognized on Sight | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.39 | Standing Request | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.40 | Back-Channel Word | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.41 | Full Clearance | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.42 | Shift Change Timing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.43 | Full Institutional Weight | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.44 | Noted Favorably | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.45 | Formal Recognition | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.46 | Quietly Flagged | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.47 | Denied Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.48 | Reassigned on Paper | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.49 | Jumped the Queue | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.50 | Rezoned Corridor | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.51 | Relay Intercept | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.52 | Manifest Correction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.53 | Grievance Withdrawn | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.54 | Cross-Docked Efficiently | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.55 | Chain Reaction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.56 | Compliance Certificate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.57 | Model Facility | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.58 | Delay Logged | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.59 | Safety Citation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.60 | Priority Routing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.61 | Bulk Rate | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.62 | Dock Familiarity | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.63 | Grid Rapport | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.64 | Line Access | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.65 | Full Processing Rights | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.66 | Overtime Crew | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.67 | Full Utilization | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.68 | Filed Under Routine | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.69 | Reliability Commendation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.70 | Overdrawn Account Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.71 | Public Sanction | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.72 | Consignment Hold Released | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.73 | Standing Utility Contract | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.74 | Squatter's Claim | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.75 | Landlord's Blessing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.76 | Dock Contacts | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.77 | Neighborhood Backing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.78 | Community Pool | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.79 | Packed House | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.80 | Street Reputation | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.81 | Neighborhood Vouching | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.82 | Busker's Tip | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.83 | Overheard at the Strip | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.84 | Credit with the Vendor | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.85 | Barter Chain | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.86 | Regular Customer | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.87 | Route Knowledge | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.88 | Neighborhood Standing | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.89 | Local Fixture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.90 | Festival Grounds | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.91 | Word Spreads Fast | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.92 | Quiet Word to the Crowd | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.93 | Block Party | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.94 | Quiet Word Against Them | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.95 | Turned Away | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.96 | Scrap Value | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.97 | Favor Owed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| STD.MOD.98 | Notified of Encroachment | 📝 | Territory | Public | Add | Presence Token | — |
-| STD.MOD.99 | Structural Objection | 📝 | Territory | Public | Remove | Presence Token | — |
-| STD.MOD.100 | Escort Withdrawn | 📝 | Territory | Public | Add | Presence Token | — |
-| STD.MOD.101 | Overheard in the Commissary | 📝 | Information | Public | Add | Intel Token | — |
-| STD.MOD.102 | Access Log Pulled | 📝 | Information | Public | Add | Public Standing | — |
-| STD.MOD.103 | Flagged for Review | 📝 | Submission | Public | Modify | Public Act | — |
-| STD.MOD.104 | Budget Reallocated | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.105 | Audit Trail | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.106 | Emergency Reserve | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.107 | On the Docket | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.MOD.108 | Precedent Cited | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.MOD.109 | Quiet Reprimand | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.MOD.110 | Line Rerouted | 📝 | Territory | Public | Add | Presence Token | — |
-| STD.MOD.111 | Capacity Exceeded | 📝 | Territory | Public | Remove | Presence Token | — |
-| STD.MOD.112 | Salvage Rights | 📝 | Territory | Public | Add | Presence Token | — |
-| STD.MOD.113 | Grid Anomaly Logged | 📝 | Information | Public | Add | Intel Token | — |
-| STD.MOD.114 | Service Level Breach | 📝 | Information | Public | Add | Public Standing | — |
-| STD.MOD.115 | Routine Inspection | 📝 | Submission | Public | Modify | Public Act | — |
-| STD.MOD.116 | Toll Collected | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.117 | Overtime Billed | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.118 | Backup Generator | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.119 | Union Statement | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.MOD.120 | On Record | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.MOD.121 | Formal Notice | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.MOD.122 | Crowd Gathers | 📝 | Territory | Public | Add | Presence Token | — |
-| STD.MOD.123 | Priced Out | 📝 | Territory | Public | Remove | Presence Token | — |
-| STD.MOD.124 | Eviction Notice | 📝 | Territory | Public | Add | Presence Token | — |
-| STD.MOD.125 | Word Travels | 📝 | Information | Public | Add | Intel Token | — |
-| STD.MOD.126 | Quietly Rewritten | 📝 | Information | Public | Add | Public Standing | — |
-| STD.MOD.127 | Someone's Watching | 📝 | Submission | Public | Modify | Public Act | — |
-| STD.MOD.128 | Informal Toll | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.129 | Cut of the Action | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.130 | Vendor Credit Called | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.131 | Neighborhood Notices | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.MOD.132 | Sides Are Taken | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.MOD.133 | The Crowd Remembers | 📝 | Standing | Public | Add | Public Standing | — |
-| STD.PA.1 | Open Operations | 📝 | Territory | Public | Add | Presence Token | Add |
-| STD.PA.2 | Disputed Claim | 📝 | Territory | Public | Remove | Presence Token | Remove |
-| STD.PA.3 | Public Commission | 📝 | Territory | Public | Add | Structure Block | Add |
-| STD.PA.4 | Public Censure | 📝 | Standing | Split | Shift | Public Standing (−) | Move |
-| STD.PA.5 | On the Record | 📝 | Information | Private → Public | Reveal | Action Attribution | Reveal |
-| STD.PA.6 | Economic Sanction | 📝 | Economy | Public | Remove | Native Resource | Remove |
-| STD.PA.7 | Public Address | 📝 | Standing | Split | Shift | Public Standing (+) | Move |
-| STD.PA.8 | Table an Accord | 📝 | Economy | Public | Add | Accord Agreement | Add |
-| SYN.CA.1 | Leveraged Acquisition | 📝 | Economy | Public | Add | Native Resource | Add |
-| SYN.CA.2 | Short the Market | 📝 | Economy | Public | Remove | Native Resource | Remove |
-| SYN.CA.3 | Hostile Acquisition | 📝 | Territory | Public | Redirect | Structure Block | Move |
-| SYN.CA.4 | Golden Parachute | 📝 | Economy | Public | Protect | Native Resource | — |
-| SYN.CA.5 | Regulatory Capture | 📝 | Submission | Split | Block | Named Action Type | — |
-| SYN.CA.6 | Parasitic | 📝 | Economy | Public | Add | Intel Token | Add |
-| SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Public | Redirect | Native Resource | Move |
-| SYN.CA.8 | Land Title | 📝 | Territory | Public | Add | Structure Block | Add |
-| SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | Presence Token | Add |
-| SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
-| SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
-| SYN.CA.12 | Boilerplate | 📝 | Economy | Covert | Add | Accord Form | Add |
-| SYN.MOD.1 | The Fixer | 📝 | Issued ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.2 | Shell Corporation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.3 | Offshore Slush Fund | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.4 | Insider Trading | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.5 | Short Squeeze | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.6 | Bounty Contract | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.7 | Renegotiation Fee | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.8 | Vulture Fund | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.9 | Goodwill | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.10 | Lobby | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.11 | Signature on File | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.12 | Contracted Muscle | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.13 | Armored Transport | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.14 | Called-In Debt | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.15 | Bought Off | 📝 | ModBattleCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.16 | Golden Handshake | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.17 | Insider Terms | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.18 | Cleared Position | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.19 | Total Leverage | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.20 | Compound Interest | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.21 | Controlling Stake | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.22 | Quiet Settlement | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.23 | Philanthropic Gesture | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.24 | Word Gets Around | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.25 | Predatory Terms Exposed | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.26 | Bulk Contract | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.MOD.27 | Line of Credit | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
-| SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
-| SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
-| SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
-
----
-
-## 9. Faction Coverage Matrix
-
-*Standard column = faction=All cards and Political Acts (P-prefix). Faction columns = faction-specific cards only.*
-
-| Layer | Function | Subject | Standard | Guild | Ghost | Directorate | Network | Syndicate |
-|-------|----------|---------|----------|-------|-------|-------------|---------|-----------|
-| **Territory** | | | | | | | | |
-| | Add | Presence Token | STD.CA.3, STD.CA.8, STD.PA.1 | GUI.CA.3 | GHO.PA.5 | — | NET.CA.5, NET.PA.2 | SYN.CA.9 |
-| | Add | Structure Block | STD.CA.1, STD.PA.3 | GUI.PA.1 | — | — | — | SYN.CA.8 |
-| | Block | Deployment Marker | — | — | — | DIR.PA.3 | — | — |
-| | Remove | Presence Token | STD.CA.4, STD.PA.2 | — | — | DIR.CA.5 | — | — |
-| | Move | Deployment Marker | — | — | — | DIR.CA.2 | — | — |
-| | Remove | Structure Block | STD.CA.2 | — | — | — | — | — |
-| | Move | Presence Token | — | — | — | DIR.CA.4 | — | — |
-| | Redirect | Presence Token | — | — | — | — | — | SYN.PA.1 |
-| | Redirect | Structure Block | — | — | — | — | — | SYN.CA.3 |
-| | Protect | Structure Block | — | GUI.CA.1 | — | — | — | — |
-| | Modify | Presence Token | — | — | — | DIR.PA.1 | — | — |
-| **Economy** | | | | | | | | |
-| | Add | Native Resource | — | GUI.CA.2, GUI.CA.5, GUI.CA.6 | — | DIR.CA.6 | — | SYN.CA.1, SYN.PA.2 |
-| | Add | Intel Token | — | — | GHO.CA.6 | — | NET.CA.6 | SYN.CA.6 |
-| | Add | Accord Agreement | STD.PA.8, GUI.PA.2 | — | — | — | — | — |
-| | Add | Exposure | — | — | — | — | NET.CA.2 | — |
-| | Add | Native Resource | — | — | GHO.CA.10 | — | — | — |
-| | Remove | Native Resource | STD.PA.6 | — | — | — | — | SYN.CA.2 |
-| | Remove | Intel Token | STD.CA.14 | — | — | — | — | — |
-| | Remove | Accord Agreement | — | — | — | — | — | — |
-| | Redirect | Native Resource | STD.CA.9 | — | — | — | — | SYN.CA.7 |
-| | Redirect | Intel Token | STD.CA.15 | — | — | — | — | — |
-| | Redirect | Modifier Card | STD.CA.16 | — | — | — | — | — |
-| | Redirect | Accord Agreement | — | — | — | — | — | — |
-| | Corrupt | Accord Agreement | — | — | — | — | — | SYN.CA.10 |
-| | Protect | Native Resource | — | — | — | — | — | SYN.CA.4 |
-| **Information** | | | | | | | | |
-| | Add | Intel Token | STD.CA.5 | — | GHO.CA.5, GHO.CA.7, GHO.CA.8 | DIR.PA.2 | — | — |
-| | Add | Debrief Action Card | — | — | GHO.CA.9 | — | — | — |
-| | Reveal | Covert Operation | — | — | GHO.CA.2 | DIR.CA.3 | NET.CA.3 | — |
-| | Reveal | Intel Delivery Slip | — | — | GHO.CA.3 | — | — | — |
-| | Reveal | District | — | — | — | — | NET.CA.1 | — |
-| | Reveal | Faction Hand | — | — | — | — | NET.PA.3 | — |
-| | Reveal | Action Attribution | STD.PA.5 | — | GHO.PA.1 | — | NET.PA.1 | — |
-| | Reveal | Classified Directives | — | — | GHO.CA.11 | — | — | — |
-| | Reveal | Broadcast Effect Card | — | — | GHO.PA.4 | — | — | — |
-| | Reveal | Intel Token | — | — | — | — | — | SYN.PA.3 |
-| | Remove | Intel Token | — | — | GHO.CA.4, GHO.PA.3, GHO.MOD.1 | — | — | — |
-| | Corrupt | Accord Agreement | STD.CA.11 | — | — | — | — | SYN.CA.11 |
-| | Corrupt | Intel Token | — | — | GHO.CA.12 | — | — | — |
-| **Submission** | | | | | | | | |
-| | Block | Covert Operation | STD.CA.12 | — | — | DIR.CA.1 | — | — |
-| | Block | Named Action Type | — | — | — | — | — | SYN.CA.5 |
-| | Block | Public Act | — | — | — | DIR.PA.6 | — | — |
-| | Modify | Public Act | STD.CA.6 | — | — | — | NET.CA.4 | — |
-| | Copy | Covert Operation | — | — | GHO.CA.1 | — | — | — |
-| | Remove Restriction | Covert Operation | — | GUI.CA.4 | — | — | — | — |
-| **Resolution** | | | | | | | | |
-| | Modify | Public Act (outcome scale) | STD.CA.7 | — | — | — | — | — |
-| | Modify | Covert Operation | — | — | GHO.PA.2 | — | — | — |
-| | Modify | Difficulty | — | — | — | DIR.CA.8 | — | — |
-| | Protect | Covert Operation | STD.CA.10 | — | — | — | — | — |
-| **Standing** | | | | | | | | |
-| | Shift | Public Standing | STD.CA.13, STD.PA.4, STD.PA.7 | — | — | DIR.CA.7 | NET.CA.7 | — |
-
----
-
-## 10. Deck Construction & Pool Selection
-
-Before the session begins, each faction player constructs their active decks from a larger initial card pool (Art 02, components DB:114/115). The pool is not played with in its entirety — players select a working subset for Q1–Q8. Cards not selected are returned to the box and remain out of play for the duration of the session.
-
-This is the first strategic decision of the game. Preparation expresses doctrine: you cannot play a card you didn't bring.
-
-### 10.1 Per-Faction Selection
-
-| Card Type | Selection Rule |
-|-----------|---------------|
-| Covert Operations (CA) | Select a subset from the CA pool (Standard CAs + Faction CAs combined). Shuffle into the Covert Operation Deck. |
-| Public Acts (PA) | Select a subset from the PA pool (Standard PAs + Faction PAs combined). Shuffle into the Public Act Deck. |
-| Modifier Cards | Select a working subset from the Modifier pool. Form the Faction Modifier Deck. |
-| Operative | Select **1** from the Operative pool. |
-| Apex | Select **1** from the Apex pool. |
-
-Standard cards are distributed as part of each faction's CA and PA pools — each faction holds its own physical set of Standard cards, not a shared deck.
-
-> **Design note:** Deck sizes (total card counts, per-card copy counts, and pool sizes) are pending balance analysis and playtesting. Legacy `pool_copies` field references are retired. Counts will be established during the balance pass. *(PM05 04-n136)*
-
-**Minimum unique pool floor (L240, S131):** Distinct from 04-n136's per-card copy-count question above — this governs the size of the pool a faction drafts *from*, not how many of it a player selects. Every faction's drafting pool (Standard set + faction-specific set, excluding blocked and Ring Modifier cards) must total **≥ 54 unique cards**: Standard set = 26 (fixed — every faction draws from the same STD pool) + faction set ≥ 28. Live count: DB view `v_card_faction_deck_floor`. Directorate is currently 6 cards short of the floor — tracked at PM05 04-n149.
-
-**Procedure:** Art 03-init §3.9.
-
----
-
-## 11. Rules & Constraints — Modifier Cards
-
-### 11.1 What They Are
-
-Modifier cards are the game's secondary layer of play — cards that don't act alone, but attach to, alter, or react to something else already in motion at the table. Two independent questions define any modifier card: **which of three subclasses governs how it fires** (below), and **which of three sets governs where it came from** (§11.1 second half). The two are orthogonal — a card's firing mechanism doesn't determine its acquisition source, and vice versa (S133, PM02 L245).
-
-**Three subclasses govern how a modifier card fires (§6.1):**
-
-- **ModActionCard** — attached to a CA/PA/Operative/Emergency/Apex at the moment it's submitted (Covert Dispatch); rides along and resolves when its host does. Its effect is always parasitic on the host action, so it carries no independent Layer/Function/Subject — the taxonomy belongs to the host, not the modifier. Effect expressed as a `ModActionExpr` tagged union (§6.3).
-- **ModBattleCard** — thrown into a live district contest at Battlefield Strength resolution (Art 03 §10.1.2); its only job is to shift a named contesting faction's total up or down before the d10 roll. Like ModActionCard, it has no independent taxonomy — the contest itself is the taxonomy-bearing act, not the modifier thrown into it. Effect is a `ModBattleExpr` (Boost/Hinder + target + magnitude).
-- **ModReactCard** — the odd one out: it doesn't attach to anything. It sits in a faction's hand until a publicly observable board-state change matches its `trigger`, then fires on its own — structurally closer to a self-triggering CA/PA than to the other two subclasses. This is why ModReactCard is the one subclass that routinely carries genuine Layer/Function/Subject taxonomy (per-card, not universal — see §6.2): it *is* an action, just one that declares itself instead of being submitted at Phase B.
-
-**Three sets govern where a modifier card comes from — independent of subclass:**
-
-Faction and Ring modifier cards are drawn from a shuffled deck; ARBITER-issued cards are not.
-
-- **Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. Represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–4).*
-- **Ring modifier cards** — drawn from shared ring decks on game board (Baryo, The Mid, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only") when set, effect, Portrait alignment (if applicable), value rating (1–4).* **04-n161 ✅ closed S134:** rather than a single blanket default, the shipped Ring Modifier content (STD.MOD.2–25, §7) fields two complete 4-card sets per ring — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — so both models exist in play simultaneously; per-card narrative judgment (location-anchored vs. portable) determines which set a given concept belongs to, not a schema-wide rule.
-- **ARBITER-issued cards** — not drawn from any deck. ARBITER hands the card directly to a faction as a specific, named consequence of another card's resolution (`generating_card`, §6.2) — no shuffle, no card back convention, no Upkeep draw eligibility. Current examples: GD-01 Grant Deed (§12b.2), STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three happen to be ModReactCard underneath (fire on a trigger, once delivered), but acquisition source doesn't constrain which of the three subclasses a card is; an Issued ModActionCard or ModBattleCard is schema-valid, just unbuilt so far.
-
-Ring constraint, when set, applies to all users regardless of holder.
-
-*Naming note: "Modifier cards" is a working designation — pending decision D-04-07.*
-
-### 11.2 Draw Conditions (Art 03 §7.5.3 Modifier Card Draw)
-
-*Was "Upkeep Step 6" — stale flat numbering, predates Art 03's §7 Upkeep restructure into nested §7.0–§7.5.x steps. Fixed S133 (Andy).*
-
-Factions that have triggered Burst Play skip modifier draws for the remainder of the session.
-
-**Faction modifier draw (§7.5.3.0):**
-
-| Structure blocks owned | Cards drawn |
-|------------------------|-------------|
-| 0–1 | 0 |
-| 2–3 | 1 |
-| 4–5 | 2 |
-| 6+ | 3 (maximum) |
-
-*Table values sourced from Art 03 §21 Card Economy Reference (temporary home — migrates to Art 04 §12 when deck construction is finalized). Confirm this copy stays in sync if §21 changes.*
-
-**Ring modifier draw (§7.5.3.1):** 1 card from a ring deck if the faction has both:
-1. At least 1 structure block in that ring, AND
-2. Established or Dominant in at least 1 district in that ring.
-
-One draw per qualifying ring per round.
-
-### 11.3 Hand Accumulation
-
-No hand limit. Modifier decks not reshuffled — one-pass per session.
-
-### 11.4 Submit Rules
-
-No cap. A faction may attach as many modifier cards to as many submitted actions as it holds in hand — limited only by hand size (§11.3), not by an artificial per-action or per-round count.
-
-### 11.5 Trading
-
-Freely tradeable faction-to-faction — any resource, Intel Token, or modifier card — whenever both parties agree; not restricted to a specific window, though play shouldn't stall to negotiate one.
-
-### 11.6 Burst Play
-
-**Trigger:** After Art 03 §7.5.3 draws complete (§7.5.3.2 Burst Play Window), before Dispatch phase opens.
-
-**Effect:** Trade ALL held modifier cards for Reservoir resources at 1:1 — any resource type, each card independently.
-
-**Consequence:** Faction modifier deck removed from tableau for the remainder of the session. Modifier draw skipped at all future Upkeeps. Post-Burst factions may still receive and use modifier cards through trade — Burst removes draw access only.
-
-**ARBITER announces publicly:** *"[Faction] has liquidated their operational reserve."* Resource gain private.
-
-*Modifier card individual design is a full design pass — pending decision D-04-08.*
-
-### 11.7 Effect Types
-
-**ModActionCard** effects (§6.3 `ModActionExpr` — one per card):
-
-| ModActionExpr | Effect | Valid for |
-|---------------|--------|-----------|
-| `threshold_delta(n)` | +n or −n applied to host action threshold | CA and PA |
-| `success_multiplier(n)` | Effect fires additional n times on success | CA and PA |
-| `ps_shift(faction, delta)` | Applies a PS shift to "acting", "target", or a named faction | CA and PA |
-| `cost_reduction(n)` | Reduces PA cost by n resources | PA only |
-
-**ModBattleCard** effects (§6.3 `ModBattleExpr`):
-
-| Direction | Effect |
-|-----------|--------|
-| `Boost` | +magnitude applied to the named target faction's Battlefield Strength total |
-| `Hinder` | −magnitude applied to the named target faction's Battlefield Strength total |
-
-Target is any contesting faction identified at Art 03 §10.1.1 — chosen by the playing faction, not necessarily themselves. Any faction may play a Battlefield Modifier Card into an active contest, whether or not they are contesting it themselves (Art 03 §10.1.2 Step 2, S132).
-
-**ModReactCard** effects: Full CA/PA effect field set (`success`, `successcrit`, `fail`, `failcrit`) — see §6.1. Applies identically to Issued ModReactCards (GD-01, Overture, The Fixer — §11.1); `acquisition` and `generating_card` govern where the card came from, not what its effect field looks like.
-
-*Legacy effect categories from earlier design (Effect extension, Detection immunity, Reach extension, Outcome addition) are superseded by the §6.1 modifier subclass schema.*
-
-
-## 12. Rules & Constraints
-
-## 12a. Debrief Action Cards
-
-ARBITER-issued cards placed in a faction's Dispatch Case during operation resolution. Not player-submitted; not drawn from a deck. Carry a single instruction that fires at the start of Art 03 §11 Debrief. Physical form: disposable slip or reusable erasable card — design direction pending Art 11. Component: DB:100 (DebriefActionCard).
-
-Debrief Action Cards are distinguished from all other card types by source and timing: created by ARBITER as a consequence of resolved operation; no faction player submits or draws them.
-
-**Acquisition (S133):** same acquisition source as GD-01/Overture/The Fixer (§11.1, §12b) — ARBITER-delivered as a named consequence of a resolved operation (its generating CA), not drawn from a deck. But DA-xx cards are **not** Modifier cards and not `Card()` instances — they carry no `type` from the CardType enum, no Layer/Function/Subject, and critically, no `trigger`. Considered and rejected: typing them Issued `ModReactCard` — ModReactCard requires a non-None `trigger` (§6.2 field constraint), and "fires at the start of Debrief" isn't a `TriggerExpr` event a card reacts to; it's a **scheduled procedural checkpoint** it executes at unconditionally, the same category as `persistence=Seasonal` clearing at Phase 21 (End of Quarter) — phase-anchored, not board-state-reactive. This also matches Art 04 §6.3's explicit exclusion of Session Timeline/Quarter-Month markers from the TriggerExpr vocabulary (a physical Debrief-position marker wouldn't change this — it would still be exactly the excluded category). DA-xx therefore stays its own lightweight category: fields table + Art 03 §11 procedure, not folded into the modifier subclass hierarchy.
-
----
-
-### 12a.1 Card Identifier: DA-xx
-
-Debrief Action Cards use the **DA-xx** identifier prefix, assigned sequentially as subtypes are defined.
-
----
-
-### 12a.2 DA-01 — SCIFRecord
-
-Produced by Ghost SCIF card on successful Beat 3 resolution (see Art 03 §7.2 Ghost — SCIF). ARBITER places one completed SCIFRecord in Ghost's Dispatch Case at Beat 3 instantiation.
-
-**Fields:**
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `quarter` | Integer | Quarter in which the card was produced |
-| `draw_ring1` | Integer | Target faction's Ring 1 structure block count at Beat 3 (snapshot) |
-| `draw_ring2` | Integer | Target faction's Ring 2 structure block count at Beat 3 (snapshot) |
-| `draw_ring3` | Integer | Target faction's Ring 3 structure block count at Beat 3 (snapshot) |
-
-**Debrief procedure (Art 03 §11):** At the start of Debrief, process all DA-01 slips in Ghost's Dispatch Case:
-
-1. For each recorded ring count (draw_ring1, draw_ring2, draw_ring3): draw that many cards from the corresponding Ring modifier deck.
-2. Sum the three ring counts. Draw from the Ghost faction deck: 0–1 total → 0 draws; 2–3 → 1; 4–5 → 2; 6+ → 3.
-3. No ring-eligibility check applies to these draws.
-4. Discard the DA-01 slip after use.
-5. DA-01 slips remaining in the Dispatch Case at Phase 21 are discarded without effect.
-
----
-
-### 12a.3 DA-02 — PhantomRecord
-
-*New S133 — written to establish format parity with DA-01 per the acquisition-axis generalization above (§12a intro). GHO.CA.13 Phantom Accounts, the generating card, is itself an undesigned stub (id/version/beat/resolution/threshold only — no Design Rationale, checklist, or Status). DA-02's fields and procedure below match GHO.CA.13's one-line success text as written; exact mechanics are pending GHO.CA.13's own full design pass, not settled by this entry.*
-
-Produced by Ghost's GHO.CA.13 Phantom Accounts on successful Beat 3 resolution. ARBITER places one completed PhantomRecord in Ghost's Dispatch Case at Beat 3 instantiation.
-
-**Fields (ARBITER completes at generation):**
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `quarter` | Integer | Quarter in which the card was produced |
-| `target_faction` | Faction | Faction whose district-native resource generation is being mirrored |
-| `generation_snapshot` | TBD | Target faction's influence-based district-native resource generation at Beat 3 (snapshot) — exact calculation method pending GHO.CA.13 full design pass |
-
-**Debrief procedure (Art 03 §11):** At the start of Debrief, process all DA-02 slips in Ghost's Dispatch Case:
-
-1. Ghost gains district-native resources equal to `generation_snapshot`.
-2. Discard the DA-02 slip after use.
-3. DA-02 slips remaining in the Dispatch Case at Phase 21 are discarded without effect.
-
-⚠ **Outstanding:** `generation_snapshot`'s exact source (which formula/table defines "influence-based generation") is undefined — GHO.CA.13 needs its own design pass before this is more than a placeholder field.
-
----
-
-## 12b. Grant Deeds
-
-ARBITER-issued cards placed in a faction's Dispatch Case during covert operation resolution. Not player-submitted; not drawn from a deck. Held in faction hand after Debrief delivery. Fire as an Issued ModReactCard (`acquisition=Issued` — S133, PM02 L245 revises L241/L241's since-superseded `ModIssuedCard` model, PM05 04-n154/04-n160) — trigger is a fill-in-the-blank district field written by ARBITER on the physical card at generation time. Fire effect applies to the holding faction regardless of which CA generated the deed. Multiple Grant Deeds may be held simultaneously; one fires per trigger event.
-
-Physical form: blank card with printed trigger text and effect text; two fill-in fields completed by ARBITER at generation. Stored blank in ARBITER tableau; ARBITER completes and routes at Beat 3 or Beat 4 of the generating CA's resolution.
-
----
-
-### 12b.1 Card Identifier: GD-xx
-
-Grant Deeds use the **GD-xx** identifier prefix, assigned sequentially as subtypes are defined.
-
----
-
-### 12b.2 GD-01 — Grant Deed
-
-Produced by any CA that delivers a Grant Deed (currently SYN.CA.8 Land Title and GUI.CA.10 Development Order). ARBITER completes and places in the acting faction's Dispatch Case at resolution; moves to holding faction's hand at Debrief.
-
-**Fill-in fields (ARBITER completes at generation):**
-
-| Field | Description |
-|-------|-------------|
-| `district` | Named district from the generating CA's target declaration |
-| `holder` | Acting faction from the generating CA |
-
-**Trigger:** `structure_block.placed(district=deed.district)` — fires when any faction places a structure block in the named district. Trigger is evaluated against the district name written on the card; no ARBITER monitoring required — deed holder self-polices and announces React.
-
-⚠ **Outstanding issue (04-n27 / trigger vocab):** `structure_block.placed(district=X)` is a district-scoped trigger form not yet in the confirmed TriggerExpr vocabulary (current vocabulary is ring-scoped: `structure_block.placed(faction=X, ring=Z)`). District-scoped extension needed in Art 04 §6.3 and design_reference_card_system.md.
-
-**Effect on fire:**
-1. Deed holder announces React; presents Grant Deed card; names district.
-2. Place 1 Presence Token for deed holder in `deed.district`.
-3. Place 1 Structure Block for deed holder in `deed.district` (Governing Rule 8.2 governs — if holder already has a structure block there, step 3 is skipped; step 2 still executes).
-4. Discard Grant Deed.
-
-**Component registration:** New component — Art 02 entry pending 04-n26.
-
-```python
-GD01 = Card(
-    id      = "GD-01",  version = "v0.3",
-    name    = "Grant Deed",
-    tagline = "A registered claim. When someone else breaks ground, the deed fires.",
-    type    = ModReactCard,  subtype = Standard,  faction = All,
-
-    layer    = Territory,  function = Add,  subject = StructureBlock,
-
-    beat            = None,
-    resolution      = Automatic,
-    threshold       = None,
-    ring_mod        = None,
-    doctrine_mod    = None,
-    trigger         = structure_block.placed(district=deed.district),
-    resolution_type = "Transactional",
-    outcome_type    = None,
-    persistence     = Immediate,
-    persistence_condition = None,
-    persistence_effect    = None,
-
-    target_district = deed.district,
-    target_faction  = None,
-    target_object   = None,
-    declared_params = None,
-
-    affinity    = None,
-    restriction = None,
-    cost        = None,
-    boost       = None,
-
-    acquisition      = Issued,
-    generating_card  = ["SYN.CA.8", "GUI.CA.10"],
-
-    success = [faction(holding).presence_token.add(deed.district, 1),
-               faction(holding).structure_block.add(deed.district, 1)],
-    successcrit = None,  fail = None,  failcrit = None,
-
-    portrait    = None,
-    ps_framing  = None,
-
-    narrative    = None,
-    perspectives = None,
-    design_note  = "Issued ModReactCard (S133 — was `ModIssuedCard`, PM02 L245 revises L241/PM05 04-n154; before that, plain ModReactCard). Acquisition axis (acquisition=Issued, generating_card) now carries what the retired ModIssuedCard subclass tried to express. ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order.",
-    arbiter_note = "At generating CA resolution: take 1 blank Grant Deed from ARBITER tableau; write target district name in 'district' field and acting faction in 'holder' field; place in acting faction's Dispatch Case. Card moves to holder's hand at Debrief. No ongoing ARBITER monitoring required — holder self-polices and announces React when trigger fires.",
-)
-```
-
----
-
-## 13. Card Information Design Requirements
-
-*Full visual design in Artifact 11. Card content tables in Artifact 09. These requirements are design-level constraints both must satisfy.*
-
-### 13.1 All Action Cards
-
-Card face must carry in clear information hierarchy:
-1. Card ID (primary key)
-2. Card name
-3. Tagline
-4. Card type indicator
-5. Beat (numeric)
-6. Target
-7. Restriction
-8. Primary cost / Secondary cost (separate fields)
-9. Faction affinity / Affinity bonus (if applicable)
-10. Difficulty
-11. Effect fields (grouped under single "Effect" header — crit success, success, failure, crit failure listed beneath)
-12. Portrait (positive/negative values only)
-13. Narrative anchor
-14. Taxonomy (Layer — Function — Subject)
-
-Faction perspectives are in the card data structure. Visual design (Artifact 11) decides whether they appear on the card face.
-
-### 13.2 Modifier Cards — Faction
-
-Face: name, type indicator, effect, attachment rule (if restricted), Portrait (if applicable), value rating (1–4). Back: faction color, faction symbol.
-
-### 13.3 Modifier Cards — Ring
-
-Face: ring constraint statement as visually distinct element, name, type indicator, effect, Portrait (if applicable), value rating (1–4). Back: ring color, ring name.
-
-### 13.5 Emergency Response Cards
-
-Face: name, faction indicator, trigger condition, complete effect text, Board Strength interaction note. Pre-sealed in faction envelopes at setup. Full card data structure review pending (D-04-10).
-
----
-
-## 14. Special Conditions & Gameplay Impacts
-
-### 14.1 Emergency Response Cards
-
-*Card data structure review pending D-04-10. Effects carried forward.*
-
-| Faction | Emergency Response | Effect |
-|---------|-------------------|--------|
-| The Guild | Emergency Fortification | Place 2 presence tokens in any district. Remove 1 structure block from Apex faction's total. |
-| The Directorate | Emergency Injunction | Apex faction loses 2 presence tokens from their highest-token district. Board Strength recalculated. |
-| Ghost | Counter-Analysis | Reveal one Intel token publicly. If accurate and damaging to Apex faction: Apex faction Public Standing −2 before threshold check. |
-| The Network | Emergency Broadcast | Apex faction Public Standing −3 immediately. VP calculation affected. |
-| The Syndicate | Hostile Takeover Bid | Offer Apex faction 4 Capital for 2 structure blocks (converted to Syndicate). If accepted: Board Strength −2. If declined: no effect. |
-
-### 14.3 Resource Availability Constraint
-
-Covert operation resources must be physically present in the dispatch case at Beat 3. Public act resources must be physically paid at Declaration. If absent:
-- **Covert:** Action fails. Resources spent. ARBITER notes privately.
-- **Political:** Declaration void. Faction takes Political Pass. Public Standing −1 as "failed commitment." Resources already paid returned.
-
-### 14.4 Self-Directed Undermine
-
-A faction may submit Undermine targeting themselves (cost: 1 native resource + 1 district native resource — no Intel token required). Creates a false Public Standing drop recorded as unattributed. ARBITER does not note self-targeting.
-
-### 14.5 Deck Exhaustion
-
-Covert and political draw decks: when exhausted, shuffle discard pile immediately to form new deck and continue. Modifier decks are not reshuffled.
-
-### 14.6 Resource Acquisition — Non-Native Resources
-
-Non-native resources acquired through:
-1. District incursion — presence in districts controlled by the resource's native faction
-2. Direct faction-to-faction trade at any agreed rate
-3. ARBITER conversion — 4:1 universal rate
-
----
-
-## 15. Examples & Exceptions
-
-### Example A — Ghost 4-Operation Round
-
-*Round 4. Ghost uses Political Pass. Dispatch case: Pattern Match (targeting Directorate — Invoke Jurisdiction), Archive Recovery, Deep Cover, Gather (Government Citadel).*
-
-ARBITER opens case at Beat 3. Pattern Match resolves first — Directorate submitted Invoke Jurisdiction this round. Pattern Match succeeds; resolves as Invoke Jurisdiction targeting Financial Clearing. Archive Recovery: Ghost recovers Round 2 Intel token. Deep Cover: Round 3 Gather attribution permanently removed. Gather at Government Citadel: Average −20 Core = Challenging. Roll → 19. Target 01–25. Succeeds.
-
-### Example B — Denounce Mechanics
-
-*Round 5. Network holds Round 3 Intel token naming Ghost (age 2 — stale). Network declares Denounce.*
-
-Cost: 1 Findings + 2 additional Findings (stale) = 3 Findings total. Verbal accusation delivered. Average difficulty. Roll → 22. Target 01–45. Success. Ghost Public Standing −2. Network Public Standing +1. Token spent.
-
-### Example C — Commission With Guild Affinity
-
-*Round 3. Guild operational markers at Power Grid (Present) and Industrial Fringe (Present). Guild declares Commission.*
-
-Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacity (Power Grid native) + 1 Capacity (Industrial Fringe native) = 3 Capacity. Both structures placed immediately.
-
-### Example D — Ring Modifier Constraint in Trade
-
-*Round 5. Syndicate holds 2 Infrastructure modifier cards. Guild offers 2 Capital for them. Guild attaches one to Commission targeting Power Grid (Infrastructure) — constraint satisfied. Guild later attempts to attach the second to Gather targeting University Perimeter (Sprawl) — ARBITER rejects. Card face: "Usable on Infrastructure district targets only."*
-
-### Example E — Burst Play and Post-Burst Trade
-
-*Round 6. Directorate triggers Burst Play. 7 modifier cards → 4 Mandate + 3 Capital. Faction modifier deck removed. ARBITER: "The Directorate has liquidated their operational reserve."*
-
-*Round 7. Guild offers Directorate 2 modifier cards as part of Accord. Directorate accepts and uses them normally — Burst removed draw access, not ability to hold or play cards.*
-
----
-
----
-
-*End of Artifact 04 — Card System v0.9.75*
