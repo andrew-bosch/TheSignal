@@ -1,6 +1,6 @@
 # THE SIGNAL — Session Brief
-**Session 140 complete | Updated: 2026-07-05**
-**Session start:** 2026-07-05 20:45
+**Session 141 complete | Updated: 2026-07-06**
+**Session start:** (stamped at next boot — see CLAUDE.md Session Startup step 1)
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -19,7 +19,7 @@ Terminology, methodology, governing rules, and registered decisions live in thos
 
 **Art 04 file location (S136):** Card content is split across 8 files — `04___Card_System___Part1_Core.md` (§1–6, §8–15), `Part2_Standard.md`, `Part3_Ring_Modifiers.md`, `Part4a_Guild.md`–`Part4e_Syndicate.md`. Edit these directly. `04___Card_System.md` is a generated build artifact (`tools/assemble_card_system.py`) — never edit it, regenerate it after any Part edit.
 
-**CA design review (S141 focus):** Read `Whiteboard/ca_pa_review_notes.md` FIRST, before touching any card. It has the review methodology, the STD.CA.1 pattern-setter findings (not yet fixed), and the full scope inventory.
+**PA design review (S142 focus):** Read `Whiteboard/ca_pa_review_notes.md` FIRST, before touching any card — full CA-phase history (§5a–5g) plus the §6 full-corpus synthesis (also in `schema_cleanup_log.md` #34). Load the full reference set before starting (see §5c's list) — this materially increased finding yield starting with Directorate.
 
 ---
 
@@ -34,42 +34,40 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S140 Accomplishments
+## S141 Accomplishments
 
-**09-16 step 2 ModBattleCard design-review pass — full 44-card corpus (24 Ring/Standard + 20 faction), closes the third and final modifier subclass review.** Confirmed 6-of-17 N/A checklist rows (7 for Ring/Standard, since Doctrine alignment is also N/A there). **Portrait decision (Andy): ModBattleCard carries no portrait value, permanently** — resolves the open portrait-model question across all 44 cards. Pattern-set on Directorate, replicated to Ghost/Network/Guild/Syndicate, then Ring/Standard — **Andy's mid-pass correction: Ring voice (Core/Mid/Baryo) deserves the same design-craft depth as faction doctrine voice**, not a lesser afterthought tier (new memory: `feedback_ring_voice_parity.md`). All 44 cards clean, zero open issues. Monolith regeneration deferred to this session's close (Andy's explicit instruction).
+**09-16 step 2 CA design review — MILESTONE, full 69-card corpus complete across all 6 sets: Standard (16), Directorate (8), Ghost (15), Guild (10), Network (8), Syndicate (12).** Every card scaffolded (missing checklist rows added) and re-derived against source (not just the 2 new rows — the full pre-existing checklist too, after Andy's correction mid-session). `card_status` DB synced throughout (`design_pass=1` on every reviewed card).
 
-**8 pre-schema fossil ModReactCards fully re-authored against current schema** (not scaffold-and-review, full rewrites): GHO.MOD.9/10/11, GUI.MOD.1, NET.MOD.11/12, SYN.MOD.1 (new — never had a `Card()` definition), STD.MOD.1 Overture (lighter close-out). SYN.MOD.1 "The Fixer" built around Art 06 §9.10's "Term removal" Accord Manipulation type — the only one of four Alter sub-types unclaimed by Redline/Accord Transfer. Closes PM05 04-n174 and 04-n158.
+**Scope correction, locked early (Andy):** this review pass is **scaffold + flag, never resolve/redesign.** Schema/content issues found get logged to `Whiteboard/schema_cleanup_log.md`, not fixed in place — new memory `feedback_review_pass_scope.md`. Re-derivation (checking the pre-existing rows, not just the new ones) still applies per the existing verification standard — the two are independent axes; don't confuse "don't fix" with "don't verify."
 
-**Verification-audit standard applied hard, twice, and it caught real things both times.** (1) Re-checking STD.MOD.1 Overture (assumed "lighter, already designed") found its Taxonomy fit claim rested on a factually backwards comparison to GD-01 (GD-01 actually has real taxonomy), its checklist was a pre-current-format version missing 10 of 22 canonical rows, and "Data schema validation ✓" was false. (2) Andy then asked whether the 7 *freshly-written* fossils needed the same scrutiny — they did: all 7 were missing confirmed-required base-class fields (`outcome_type`/`acquisition`/`generating_card`), a gap now known to be corpus-wide (checked against 2 independent already-"clean" cards), and SYN.MOD.1's taxonomy call was marked ✓ with more confidence than the actual verb-definition check supported. Memory `feedback_design_review_verification.md` substantially rewritten to generalize this standard beyond the modifier-card pass it originated in.
+**Second correction, mid-session (Andy):** load full reference context (`ref_components.md`, `ref_procedures.md`, `ref_card_types.md`, `ref_resources.md`, `ref_world_narrative.md`, `ref_board_narrative.md`, `design_reference_card_system.md`) before continuing past Standard — a taxonomy/portrait-only pass can't verify "Supported by components/procedure" rows at all. Confirmed materially: Directorate onward produced far more real findings once full context was loaded. Memory `feedback_read_ref_files.md` extended with this evidence.
 
-**Sequencing decision:** CA/PA design review (item #2) now runs *before* the remaining item-#3 schema decisions (04-n178, schema_cleanup_log #2/#5) — Andy's call, expecting CA/PA to surface more findings first. **Plan: separate session for CA review, separate session for PA review** — don't compress either into a single sitting. Working notes + methodology + the STD.CA.1 pattern-setter findings (not yet fixed) are in `Whiteboard/ca_pa_review_notes.md` — read that file before starting, not this brief.
+**`schema_cleanup_log.md` grew from 21 to 34 items.** Highlights: Intel Token as `cost` now has **9 confirmed instances across 4 of 5 factions** (#10) — strong enough evidence to consider formalizing as a real cost category rather than flagging each instance. Invalid Function values (`Move`, `RemoveRestriction` — #25) and unregistered Subject strings (`Difficulty`×2, `TargetProfile`, `NamedActionType`, `AccordForm` — #27) recur across multiple factions. A **prose-states-cost-that-code-doesn't-match** pattern hit 4 independent cards (NET.CA.4, SYN.CA.3/5/9 — #31), all with comparative cost framing in their Design Rationale. Portrait `flat=` misuse on submitting/non-acting factions hit 4 confirmed Syndicate instances (#7). A third cost-notation style (bare `Capital(n)`) and a checklist row filled with unfilled template text (#33) also surfaced. **Item #34 is the full cross-cutting synthesis — read this first when PA review starts**, several of its hypotheses (comparative-cost-framing correlation, "public-effect/covert-actor" correlation with `flat=` misuse) suggest specific greps to run early rather than waiting for card-by-card discovery again.
 
-Full detail: PM02 L267–L273.
+**One open thread flagged, not closed:** item #23 (portrait penalty for acting against own doctrine) was raised mid-Standard-review via a Guild-specific question and evidence-gathered against only 3 Standard-set cards. Never re-checked against the other 4 factions' own doctrines vs. their own cards.
+
+Full detail: `Whiteboard/ca_pa_review_notes.md` §5a–§5g (per-set findings) + §6 (synthesis pointer); `schema_cleanup_log.md` #22–#34; PM02 L274.
 
 ---
 
-## Current Focus (S141)
+## Current Focus (S142)
 
-**CA design review — read `Whiteboard/ca_pa_review_notes.md` first.** It contains:
-- The re-derive-don't-trust standard and a concrete 5-point lookfor list (proven to find real defects this session)
-- CA/PA-specific schema scope (which fields apply, which don't — different from the modifier-card review)
-- STD.CA.1 (Build Structure) pattern-setter findings, not yet fixed: a real cost-expression bug, and an open Status-row question needing a decision before replicating the fix pattern
-- Full 114-card scope inventory (69 CA + 45 PA across Standard + 5 factions) and confirmed start order (Standard/Ring first)
+**PA design review — read `Whiteboard/ca_pa_review_notes.md` §6 and `schema_cleanup_log.md` #34 FIRST**, before touching any card. Same scope as CA (scaffold + flag, re-derive, log don't fix) — confirm this still holds with Andy before starting, in case the PA session warrants its own scope call.
 
-Confirm the STD.CA.1 fix and checklist-format approach with Andy before replicating across the rest of the Standard CA set.
+**Load full reference context before starting** (see S141 note above) — do not repeat the Standard-CA mistake of starting narrow.
 
-**PA design review is its own, later session** — do not start it as part of the CA session.
+**45-card scope:** Standard (8) + Directorate (11) + Ghost (5) + Guild (10) + Network (6) + Syndicate (5) — confirm faction order with Andy (CA went Standard→Directorate→Ghost→Guild→Network→Syndicate).
 
 **Also open, not yet scheduled:**
-- Remainder of item #3: 04-n178 (cost/value_rating model) and schema_cleanup_log.md #2 (stack behavior) / #5 (firing-window overlap) — deliberately deferred until after CA/PA review.
-- 04-n177's expanded scope (outcome_type/acquisition/generating_card corpus-wide gap on modifier cards) — not swept beyond the 7 fossil cards fixed this session; still needs a priority/timing decision.
+- Remainder of item #3: 04-n178 (cost/value_rating model) and schema_cleanup_log.md #2 (stack behavior) / #5 (firing-window overlap) — deliberately deferred until after CA/PA review, which is now CA-complete, PA-remaining.
+- 04-n177's expanded scope (outcome_type/acquisition/generating_card corpus-wide gap) — not swept beyond the 7 fossil cards fixed at S140.
 - 04-n165, 04-n169 (Art 04 sign-off gates); 04-n171 (ModReactCard syntax reconciliation into §6.3); `ref_board_narrative.md` sync pass; smaller carried backlog (04-n163/164/166/167/168/148/150/26/27/126/123, XA-54, 06-n01).
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 04** — Draft, gated on 04-n165 + 04-n169 (copy/content sweeps). All three modifier subclasses are now content-reviewed (not just scaffolded); CA/PA review starting next.
+- **Art 04** — Draft, gated on 04-n165 + 04-n169 (copy/content sweeps). All 3 modifier subclasses + full CA phase now content-reviewed (not just scaffolded); PA review is the last phase before item #3's remaining schema decisions can be made.
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
 
 *Card-level sign-offs gated behind set-level audits — not actionable until those gates clear.*

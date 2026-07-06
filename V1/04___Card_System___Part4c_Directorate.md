@@ -46,8 +46,10 @@ Directorate's positional authority card — asserts institutional control over a
 | Supported by zones | ✓ | target_district = district.any — no presence requirement | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components; game.block() is an existing Beat 2 mechanism | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 2 positional wager; game.block() applies at Beat 2 resolution; game.block resolution (resources on blocked card) outstanding (Outstanding Issue) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`, `doctrine_mod`, `boost`, `ps_framing` entirely (not just unset) — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -58,7 +60,7 @@ Directorate's positional authority card — asserts institutional control over a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -117,8 +119,10 @@ Directorate's permanent removal card — eliminates a faction's deployment marke
 | Supported by zones | ✓ | target_district = district.any; ChorusNode.deployment_marker excluded; Detention zone on Directorate public tableau (L183) | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken restriction; DeploymentMarker target; Detention zone is faction Terminal zone per L183; Intel age definition outstanding (Outstanding Issue) | Art 02 §6–§8; Art 02 §11 |
 | Supported by game procedure | ✓ | Beat 3 d100 resolution; Intel check at Dispatch; ARBITER moves marker to Detention; visible to all players; no NotificationSlip needed | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`, `doctrine_mod`, `boost`, `ps_framing` entirely — see schema_cleanup_log.md #24. Taxonomy note: `function = Move` is not a valid Function-vocabulary value (`ref_taxonomy.md` §Function Vocabulary lists Add/Remove/Redirect/Modify/Protect/Block/Copy/Reveal/Shift/Corrupt only — Move is a physical-verb primitive, not a Function; Redirect and Shift are the Functions that use Move as their underlying primitive). This card's own note claims `function` was deliberately "corrected S107 L226 (Remove → Move)" — flagged, not fixed; see schema_cleanup_log.md #25. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Cross-faction-resource (Mandate + Findings, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -129,7 +133,7 @@ Directorate's permanent removal card — eliminates a faction's deployment marke
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *Pre-convention card — design rationale scaffold added S59. Design pass pending.*
 
@@ -200,8 +204,10 @@ Redesigned S68: original model was permanent passive feed with beat3_pre_resolut
 | Supported by zones | ✓ | target_district = district.any — no presence requirement | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelDeliverySlip (IS-xx) — Art 02 component entry pending (04-n45); 00b definition update pending (04-n46) | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 2 Automatic; ARBITER reads existing Beat 3 grid row — no new tracking required; Art 03 Beat 2 procedure addition pending (04-n44) | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`, `doctrine_mod`, `boost`, `ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -214,7 +220,7 @@ Redesigned S68: original model was permanent passive feed with beat3_pre_resolut
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *Redesigned S68 v2.0 — episodic Beat 2 model. Blocking open issues: 04-n44 (Art 03), 04-n45 (Art 02), 04-n46 (00b).*
 
@@ -273,8 +279,10 @@ Directorate's repositioning card — the only card in the full set using Territo
 | Supported by zones | ✓ | source and target both district.named; adjacency enforced in restriction; ChorusNode excluded from both | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken in restriction and as target; Mandate cost; adjacency per district_adjacency table | Art 02 §6; Art 02 §8 |
 | Supported by game procedure | ✓ | Beat 2 Automatic; tokens moved before Beat 3 resolution; entry qualification and move count resolution outstanding (Outstanding Issues) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`, `doctrine_mod`, `boost`, `ps_framing` entirely — see schema_cleanup_log.md #24. Same `function = Move` taxonomy-vocabulary flag as DIR.CA.2 — see schema_cleanup_log.md #25. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -285,7 +293,7 @@ Directorate's repositioning card — the only card in the full set using Territo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *S51 redesign — design rationale scaffold added S59. Design pass pending.*
 
@@ -531,7 +539,9 @@ The Directorate dispatches a team to the district — no announcement, no negoti
 | Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
 | Supported by components | ⚠ | BM-xx not yet registered — gate: 04-n81 | Art 02 §6; Art 02 §11–§12 |
 | Supported by game procedure | ⚠ | Beat 0 boost detection (04-n82); Beat 2/3 BM-xx resolution (04-n83); Discovery definition (04-n84) — all gate sign-off | Art 03 §9, §11 |
-| Data schema validation | ✓ | boost field present; threshold-scaling noted in §6.3; affinity corrected to None (04-n70) | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | boost field present; threshold-scaling noted in §6.3; affinity corrected to None (04-n70). Re-derived S141: still missing `card_id`/`ps_framing` (see schema_cleanup_log.md #24). `cost`'s first term `resource.faction(acting) * 1` (and the identical term in `boost`) is missing a resource-type attribute — same corpus pattern as schema_cleanup_log.md #22, now confirmed outside the Standard set. | Art 04 §6.1–§6.3 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Triple-component cost (faction resource + district native + IntelToken) — cross-resource tier, consistent with this card's maximum-force framing. But the IntelToken component raises the same open question as schema_cleanup_log.md #10 (Intel Token as fungible `cost`) — third confirmed instance, now across a third card type (Standard CA, Directorate ModReactCard, Directorate CA). Flagged, not resolved. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -543,7 +553,7 @@ The Directorate dispatches a team to the district — no announcement, no negoti
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *v2.2 — S79: boost model replaces Phase B n-declaration; base cost = faction×1 + native×1 + IntelToken (Mandate×2 removed); boost = same unit; threshold = 65−10×n_boost; PS scales with (1+n) in both directions; successcrit = PS+(1+n_boost) (public endorsement of clean large-scale op); fail = NotificationSlip; failcrit = Discovery + PS−(1+n_boost); modifier scope = target faction only; 04-n81/82/83/84 gate sign-off.*
 
@@ -612,20 +622,22 @@ An internal team works through the standing record. Active directives in this ri
 | Portrait validity | ✓ | Directorate +1 submitter — institutional allocation aligns with authority doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named; restriction = chip count > 1 | Art 01 §6–§7 |
 | Supported by components | ✓ | Counts face-up Directorate Permanent cards in Directorate play area — no new component | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | ARBITER reads board state (face-up Permanents in play area, target ring match) — existing permanent card procedure | Art 03 §9 |
-| Data schema validation | ✓ | Fields consistent with §6.1–§6.3 | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Re-derived S141: `game.active_permanents(faction=, ring=)` doesn't appear anywhere else in the corpus (grepped all 8 Part files) — the claim "existing permanent card procedure" isn't confirmed; no generalizable Art 03/07 procedure for "count active Permanent cards by ring" was found. Possible tension with Governing Rule 6.1 / Design Pillar 4.7b (new ARBITER-facing behavior should be defined as a general procedure first). Not resolved — flagged alongside DIR.CA.7 (same mechanism). | Art 03 §9 |
+| Data schema validation | ⚠ | Fields consistent with §6.1–§6.3, but missing `card_id`, `boost`, `ps_framing` entirely (though `doctrine_mod=None` is declared, unlike DIR.CA.1–4) — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Internal audit — standing record clean, allocation approved | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
 - **DB registration:** New card — requires id assignment in card_ref and component_metadata.
-- **game.active_permanents() scope:** Confirm counting mechanism is unambiguous in paper play — ARBITER reads face-up Directorate Permanent cards from Directorate play area where card's target_district.ring == district(target).ring.
+- **game.active_permanents() scope:** Confirm counting mechanism is unambiguous in paper play — ARBITER reads face-up Directorate Permanent cards from Directorate play area where card's target_district.ring == district(target).ring. **(S141: also needs a generalizable Art 03/07 procedure definition — see Supported by game procedure row above.)**
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *New card — S106. Fills Economy|Add|NativeResource gap (04b §8.2 HP).*
 
@@ -679,7 +691,7 @@ Before any version of events could circulate, the Directorate's closed channels 
 | Voice fit | ✓ | Faction-specific; single Directorate perspective — institutional credibility through demonstrated record, not claimed reputation | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate only; chip count > 1 restriction; covert type consistent with undisclosed authorship | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — mechanism is covert; effect is public | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Standing / Shift / PublicStanding — upward PS shift; target = acting faction | Art 04b §4 |
+| Taxonomy fit | ✓ | Standing / Shift / PublicStanding — upward PS shift; target = acting faction. **Flagged S141, not corrected:** this row names "PublicStanding," the retired term per `ref_taxonomy.md` (corrected S126 — not a valid card subject); the actual code field (`subject = StandingMarker`) is already correct. Row prose is stale, code is fine — cosmetic mismatch, left as found. | Art 04b §4 |
 | Balance | ⚠ | PS yield scales with Permanents — same risk as DIR.CA.6 if Permanents accumulate; Mandate×2 cost higher than CA.6 to reflect PS vs. resource asymmetry | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — PS marker moved once at Beat 3 resolution | — |
 | Persistence | ✓ | Immediate | Art 04 §6 |
@@ -687,9 +699,11 @@ Before any version of events could circulate, the Directorate's closed channels 
 | Portrait validity | ✓ | Directorate +1 submitter | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named; restriction = chip count > 1 | Art 01 §6–§7 |
 | Supported by components | ✓ | PS marker (existing); no new component | Art 02 §11–§12 |
-| Supported by game procedure | ✓ | PS movement by ARBITER at Beat 3 resolution — existing procedure | Art 03 §9 |
-| Data schema validation | ✓ | Fields consistent with §6.1–§6.3 | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | PS movement by ARBITER at Beat 3 resolution is an existing procedure, but `game.active_permanents(faction=, ring=)` (the counting mechanism this card's yield depends on) is the same not-found-elsewhere mechanism flagged on DIR.CA.6 — same open question, not resolved here either. | Art 03 §9 |
+| Data schema validation | ⚠ | Fields consistent with §6.1–§6.3, but missing `card_id`, `boost`, `ps_framing` entirely (`doctrine_mod=None` is declared) — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Closed-channel record circulation; public confidence signal without disclosed authorship | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -700,7 +714,7 @@ Before any version of events could circulate, the Directorate's closed channels 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *New card — S106. Fills Standing|Shift|PublicStanding gap (04b §8.2 HP). Narrative grounding: covert mechanism, public outcome via closed-channel circulation of institutional record.*
 
@@ -754,7 +768,7 @@ The district is under enhanced institutional review. Documentation requirements 
 | Voice fit | ✓ | Faction-specific; single Directorate perspective — uniform scrutiny as institutional doctrine | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate only; applies to own Beat 3 ops — restraint doctrine; Mandate×2 mid-tier cost | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — scrutiny order is institutional, not public | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Resolution / Modify / Difficulty — threshold adjustment before Beat 3 resolution | Art 04b §4 |
+| Taxonomy fit | ⚠ | Resolution / Modify / Difficulty — threshold adjustment before Beat 3 resolution. **Flagged S141:** `v_card_mechanical_alignment` (DB) shows `Non-component Subject` for this card — "Difficulty" is not in `ref_taxonomy.md`'s Subject Vocabulary and is missing from `card_subject_map`, per that same reference's own gap-pattern table ("Subject string missing from card_subject_map → Add row to card_subject_map"). Distinct from the expected/known "Abstract Function" pattern on Modify/Block/Protect cards elsewhere in this set (CA.1/2/4) — this is a genuinely unregistered Subject term, not just an abstract-function non-issue. Not resolved. | Art 04b §4 |
 | Balance | ⚠ | −15 to all Beat 3 ops in district is significant suppression at Mandate×2; self-inclusion is the cost; playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate (within-month) — tokens placed at Beat 2, consumed at Beat 3 | — |
 | Persistence | ✓ | Immediate | Art 04 §6 |
@@ -763,8 +777,10 @@ The district is under enhanced institutional review. Documentation requirements 
 | Supported by zones | ✓ | target_district = district.named — no presence requirement | Art 01 §6–§7 |
 | Supported by components | ✓ | Uses existing Modifier tokens — no new component | Art 02 §11 |
 | Supported by game procedure | ✓ | ARBITER places existing Modifier tokens (−15) on each Beat 3 row targeting district at Beat 2 resolution — within existing modifier placement procedure | Art 03 §9 |
-| Data schema validation | ✓ | Automatic, no threshold/ring_mod; Beat 2 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Automatic, no threshold/ring_mod; Beat 2. But missing `card_id`, `boost`, `ps_framing` entirely (`doctrine_mod=None` is declared) — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Enhanced institutional review; uniform scrutiny including own ops | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -775,7 +791,7 @@ The district is under enhanced institutional review. Documentation requirements 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *New card — S106. Fills Resolution|Modify|Difficulty gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
 

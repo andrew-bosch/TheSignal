@@ -44,8 +44,10 @@ Guild-exclusive structural defense card. The hardest counter to STD.CA.2 Demolis
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: Guild structure in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | StructureBlock (restriction + immunity target); Capacity cost. | Art 02 §7, §8 |
 | Supported by game procedure | ⚠ | Submitted at Dispatch (Art 03 §9.1); Beat 2 row (Art 03 §9.4.0 Beat 0); immunity flag applied at Beat 3 when STD.CA.2 Demolish resolves (Art 03 §9.4.2 Beat 3). **Open:** Art 03 §9.4.2 Beat 2 covers Countermeasures and Protect only — no procedure defined for Fortify Structure immunity flag. Gap in Art 03. | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Capacity only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -56,7 +58,7 @@ Guild-exclusive structural defense card. The hardest counter to STD.CA.2 Demolis
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GUI.CA.1 = Card(
@@ -132,8 +134,10 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 | Supported by zones | N/A | `target_district = None` — trigger monitors named opponent globally, not district-specific. | — |
 | Supported by components | ✓ | NativeResource (Art 02 §8); STD.CA.2 Demolish as trigger source. | Art 02 §8; Art 04 (STD.CA.2) |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row (Art 03 §9.4.0 Beat 0); trigger fires when named faction completes STD.CA.2 at Beat 3 (Art 03 §9.4.2 Beat 3); delivery via ARBITER case (Art 07). | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | Missing row, scaffolded S141. `cost=None` — the action slot itself is the wager. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -144,7 +148,7 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 GUI.CA.2 = Card(
@@ -223,8 +227,10 @@ Guild-exclusive first-entry card for unclaimed districts. Unclaimed territory ha
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: total presence == 0 (unclaimed only). | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken (success); StructureBlock (crit success); Capacity cost; IntelToken to Directorate on crit fail. | Art 02 §6, §7, §8; Art 02 §12 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); d100 threshold 25 with ring_mod; ARBITER silent IntelToken delivery to Directorate on crit fail (Art 03 §9.4.2 Beat 3; Art 07). | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Capacity only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -236,7 +242,7 @@ Guild-exclusive first-entry card for unclaimed districts. Unclaimed territory ha
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GUI.CA.3 = Card(
@@ -303,7 +309,7 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 | Voice fit | ✓ | Three perspectives (Guild, Network, Ghost) — FactionSpecific card; acceptable. Ghost's "better at covert operations than they admit" is the sharpest outside read. | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild construction doctrine (rush, without permission). Crit fail rewards Ghost (Intel Token) and Syndicate (district native) — explicitly doctrinal: the two most opportunistic actors benefit from Guild overreach. No opponent target → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: unauthorized construction is covert until established. FactionSpecific (Guild): rush-build without prerequisites is exclusively Guild. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | `layer = Submission` — primary design intent is removing the STD.CA.1 presence prerequisite (a restriction on a CovertOperation). Territorial outcomes (presence + structure) are the consequence, not the driver. `function = RemoveRestriction`, `subject = CovertOperation` — correctly scoped per design intent. | Art 04b §4, §5 |
+| Taxonomy fit | ⚠ | `layer = Submission` — primary design intent is removing the STD.CA.1 presence prerequisite (a restriction on a CovertOperation). Territorial outcomes (presence + structure) are the consequence, not the driver. **Flagged S141:** `function = RemoveRestriction` is not in `ref_taxonomy.md`'s Function Vocabulary (Add/Remove/Redirect/Modify/Protect/Block/Copy/Reveal/Shift/Corrupt only) — confirmed by `v_card_mechanical_alignment` (DB), which shows Abstract Function for this card. `Modify` ("alters cost, value, or attribute without changing fundamental state") looks like the closer documented fit for "removes a restriction," but not changed here — see schema_cleanup_log.md #25. | Art 04b §4, §5 |
 | Balance | ✓ | High cost (3 Capacity), high threshold (65). Crit fail rewards both Ghost (Intel Token) and Syndicate (district native) — asymmetric penalty for overreach. Net: saves STD.CA.3+STD.CA.1 sequential plays at the cost of one high-risk probabilistic slot. | Art 02 §6, §7, §8; Art 02 §12 |
 | Effect duration | ✓ | Permanent: presence and structure placed on success persist. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
@@ -312,8 +318,10 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: no existing Guild structure in target district. Ring mods apply normally. | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken + StructureBlock on success; Capacity cost; IntelToken to Ghost + district native to Syndicate on crit fail. | Art 02 §6, §7, §8; Art 02 §12 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); d100 threshold 65 with ring_mod; ARBITER delivers crit fail rewards to Ghost and Syndicate (Art 03 §9.4.2 Beat 3; Art 07). | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Cross-resource (Capacity + Findings, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -323,7 +331,7 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 GUI.CA.4 = Card(
@@ -406,8 +414,10 @@ Guild-exclusive passive income card — the economic expression of territorial c
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: Guild must hold Established or Dominant control tier in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | NativeResource (Art 02 §8); control_tier states Established/Dominant (Art 02 §6). | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); Automatic resolution at Beat 3 (Art 03 §9.4.2 Beat 3). | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | Missing row, scaffolded S141. `cost=None` — passive income, no resource spent. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -417,7 +427,7 @@ Guild-exclusive passive income card — the economic expression of territorial c
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GUI.CA.5 = Card(
@@ -493,8 +503,10 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 | Supported by zones | ✓ | target_district = None; trigger monitors named faction globally | Art 01 §6–§7 |
 | Supported by components | ✓ | NativeResource (Capacity); STD.CA.1 as trigger source; no new components | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 2 submission; trigger confirmed at Beat 3; ARBITER case delivery | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`. Also missing `persistence`/`persistence_condition`/`persistence_effect` entirely — not just unset, absent from the code block (unlike every other Guild CA card, which at least declares `persistence=Immediate`). Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | Missing row, scaffolded S141. `cost=None` — the action slot itself is the wager, same shape as GUI.CA.2. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -504,7 +516,7 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *Draft S59 — design pass pending*
 
@@ -599,7 +611,7 @@ GUI.CA.6 = Card(
 | Supported by zones | ⚠ |  |  |
 | Supported by components | ⚠ |  |  |
 | Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Re-derived S141: `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/14/15 (schema_cleanup_log.md #29). Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`ring_mod`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
@@ -666,7 +678,7 @@ GUI.CA.7 = Card(
 | Supported by zones | ⚠ |  |  |
 | Supported by components | ⚠ |  |  |
 | Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Re-derived S141: `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/14/15 and GUI.CA.7 (schema_cleanup_log.md #29). Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`ring_mod`/`persistence`/`portrait`/`perspectives` entirely. Design note mentions a retired "Bribe" mechanic with no other trace in the spec. Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
@@ -712,17 +724,19 @@ Distinct from STD.CA.10 Protect (raises attacker threshold on incoming CAs) and 
 | Voice fit | ✓ | Five perspectives: Guild matter-of-fact certainty; Directorate notes the institutional channel; Ghost reads it as operational pre-commitment; Network clocks the dual announcement; Syndicate prices the certainty premium | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild ceiling Resolution card; Beat 2 Automatic; Portrait +1; construction certainty is the Guild doctrine made mechanical | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — the guarantee is covert; no public announcement of which CA is being backed | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Resolution / Modify / Difficulty — suppresses d100 roll on target CA, converting it to guaranteed success+successcrit | Art 04b §4 |
+| Taxonomy fit | ⚠ | Resolution / Modify / Difficulty — suppresses d100 roll on target CA, converting it to guaranteed success+successcrit. **Flagged S141:** `v_card_mechanical_alignment` (DB) shows `Non-component Subject` for "Difficulty" — same unregistered-Subject gap as DIR.CA.8 (schema_cleanup_log.md #27), now 3 confirmed instances (DIR.CA.8, GHO.CA.15's TargetProfile is a different subject but same gap-type, and this card). Not resolved. | Art 04b §4 |
 | Balance | ⚠ | High total cost (CA cost + 2C + 1 district native + 2 dispatch slots); ceiling output (4 presence + 2 structures for CA.4); restriction checks at Beat 0 limit abuse — playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Beat 2 effect (guarantee registered); Beat 3 CA output is Permanent (structures/presence placed) | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — guarantee resolves at Beat 3 with the target CA; no lingering marker | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None | — |
 | Portrait validity | ✓ | Guild +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district B; named CA's own target_district = district A; both validated at Beat 0 per Art 01 §6.5 | Art 01 §6.5 |
-| Supported by components | ✓ | PresenceToken + StructureBlock output via named CA; no new components; cost from Guild resource pool | Art 02 §6–§8 |
+| Supported by components | ✓ | PresenceToken + StructureBlock output via named CA; no new components; cost from Guild resource pool. **Flagged S141:** the card also declares `target_ca = ca.guild.beat3.d100` — a targeting field not in `design_reference_card_system.md`'s documented Targeting field group (`target_district`/`target_faction`/`target_object`/`target_taxonomy`/`declared_params`). Whether this needs to be a confirmed schema extension or should be re-expressed via `declared_params` (which already exists for exactly this "faction-declared free-form parameter" purpose) isn't resolved. | Art 02 §6–§8 |
 | Supported by game procedure | ⚠ | Beat 0: ARBITER validates named CA and district B restriction; Beat 2: guarantee registered; Beat 3: named CA resolves without roll, output fires twice. Double-fire procedure is new — confirm against Art 03 §9.4 | Art 03 §9.4 |
-| Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | New card — DB registration required. Also missing `card_id`/`boost`/`ps_framing` (`doctrine_mod=None` is present). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`) — the "double-fire" is two applications of the same success outcome, not a second resolution tier. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Cross-resource (Capacity + district native, both typed correctly). | Art 00a §9.2 |
 
 #### Status
 
@@ -812,7 +826,7 @@ The Guild files the development order before a single wall goes up. The district
 | Voice fit | ⚠ | Perspectives pending | Art 00 §7 |
 | Doctrine alignment | ✓ | Capacity + district-native cost addresses 04-n119 §9.2 ceiling gap; construction rights framing is Guild-exclusive | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via GD-01 fire | Art 04b §4 |
+| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via GD-01 fire. **Flagged S141:** the card's own code declares this taxonomy correctly and it's a valid Territory+Add cell, but `card_status` (DB) shows `layer`/`function`/`subject` all `NULL` for GUI.CA.10, flagged `Abstract / No Subject` in `v_card_mechanical_alignment` — a DB/MD sync gap (per `feedback_card_status_sync.md`), not a card content defect. Not corrected here, per this pass's scope. | Art 04b §4 |
 | Balance | ⚠ | Payback contingent on any faction building in named district; district-native cost throttles casual play — playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent — Grant Deed held until fired or game end | — |
 | Persistence | ✓ | Card persistence = Immediate; GD-01 persists in hand | Art 04 §6 |
@@ -821,8 +835,10 @@ The Guild files the development order before a single wall goes up. The district
 | Supported by zones | ✓ | target_district = district.named; ChorusNode excluded | Art 01 §6 |
 | Supported by components | ✓ | GD-01 Grant Deed (Art 04 §12b.2); component registration pending 04-n26 | Art 02 §6–§8 |
 | Supported by game procedure | ⚠ | GD-01 trigger vocab (district-scoped) pending 04-n27; React window pending Art 03 addition | Art 03 §9.4 |
-| Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | New card — DB registration required. `card_id`/`ps_framing` missing from code (has `doctrine_mod`/`boost` as `None`). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story above | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Cross-resource (Capacity + district native, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
