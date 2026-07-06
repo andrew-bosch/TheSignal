@@ -1549,16 +1549,18 @@ Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outc
 | Supported by game procedure | ✓ | Beat 4 resolution; ring entry rules enforced at Beat 0 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (successcrit/fail/failcrit all `None`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), but `cost`'s term is missing a resource-type attribute. Cross-card claim ("same cost as STD.CA.3") also checked and found false. Tier assessment blocked until cost bug resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.1 = Card(
-    id      = "STD.PA.1",  version="v1.0",
+    id      = "STD.PA.1",  card_id="STD.PA.1",  version="v1.0",
     name    = "Open Operations",
     tagline = "Formally declare your operational presence in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -1585,6 +1587,7 @@ STD.PA.1 = Card(
     affinity    = faction(acting) == Directorate: cost.faction(native) = 0,
     restriction = None,  # ring entry enforced universally at Beat 0
     cost        = resource.faction(acting) * 2,
+    boost       = None,
 
     success     = (district(target).faction(acting).presence += 2, faction(acting).standing += 1),
     successcrit = None,
@@ -1595,6 +1598,7 @@ STD.PA.1 = Card(
         Directorate: PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "A formal declaration carries weight in New Meridian. Presence on the record is presence that cannot be denied.",
     perspectives = {
@@ -1637,18 +1641,20 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 | Supported by zones | ✓ | target_district = district.any — valid zone reference; ring_mod calibrated to ring context | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — target removal (Art 02 §6); ContestedMarker — procedural (Art 03 §9.4); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8; Art 03 §9.4 |
 | Supported by game procedure | ✓ | Beat 4; Contested marker placement governed by Art 03 §9.4; ring_mod applies | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — not in the confirmed 2-value vocabulary (`"Probabilistic"`/`"Transactional"`). Corpus-wide grep confirms 10 instances of `"Contested"` alone, plus 7 other unconfirmed values (`"Permanent public act"`, `"Positional wager"`, `"Conditional"`, `"Deceptive"`, `"Predictive"`, `"Verification"`, `"PlayerChoice(target)"`). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching in any tier. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), but `cost`'s term is missing a resource-type attribute. Cross-card claim ("same cost, 45 vs 40 threshold, as STD.CA.4") checked directly and found false on both counts — STD.CA.4's actual cost is dual-resource, actual threshold is 50, not 40. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.2 = Card(
-    id      = "STD.PA.2",  version="v1.0",
+    id      = "STD.PA.2",  card_id="STD.PA.2",  version="v1.0",
     name    = "Disputed Claim",
     tagline = "Formally challenge another faction's presence in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -1678,6 +1684,7 @@ STD.PA.2 = Card(
     ),
     restriction = faction(target).influence_tier(target_district) >= Established,
     cost        = resource.faction(acting) * 2,
+    boost       = None,
 
     success     = (
         district(target_district).faction(target).presence -= 1,
@@ -1694,6 +1701,7 @@ STD.PA.2 = Card(
         Directorate: PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "A contested district is not a resolved one. Filing a formal challenge makes the dispute legible.",
     perspectives = {
@@ -1738,16 +1746,18 @@ Public counterpart to STD.CA.1 (Build Structure). Same cost; unlike STD.CA.1, th
 | Supported by game procedure | ✓ | Beat 4; restriction checked at Beat 0 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Dual-resource cost (faction native + district native), identical expression to STD.CA.1 — cross-card claim ("same cost as STD.CA.1") checked directly and confirmed true. Same missing resource-type attribute as its CA counterpart. Tier assessment blocked until cost bug resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.3 = Card(
-    id      = "STD.PA.3",  version="v1.0",
+    id      = "STD.PA.3",  card_id="STD.PA.3",  version="v1.0",
     name    = "Public Commission",
     tagline = "Publicly announce and fund construction of a structure in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -1777,6 +1787,7 @@ STD.PA.3 = Card(
         district(target).faction(acting).structure == 0
     ),
     cost = resource.faction(acting) * 1 + resource.district(native) * 1,
+    boost = None,
 
     success     = (district(target).faction(acting).structure += 1, faction(acting).standing += 1),
     successcrit = None,
@@ -1787,6 +1798,7 @@ STD.PA.3 = Card(
         Guild: PortraitEntry(submitter=+1),
         Ghost: PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "Every faction that wants to be taken seriously in New Meridian eventually has to build something where everyone can see it.",
     perspectives = {
@@ -1820,7 +1832,7 @@ The PS attack card of the standard set. A formal public accusation carries both 
 | Voice fit | ✓ | All five perspectives credible: Guild's evidence-based restraint, Directorate's formal mechanism framing, Network's public-fact stance, Ghost's attention-trace surveillance read, Syndicate's public-leverage calculation | Art 00 §7 |
 | Doctrine alignment | ✓ | Network −1 cost + portrait +1; Directorate −1 cost + portrait +1 — formal accusation aligns with institutional/broadcast doctrines. Ghost −1 portrait: public accusation = self-exposure. Intel token affinity is doctrinally neutral. No target_faction → doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / Standard | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Standing / Shift / PublicStanding | Art 04b §4 |
+| Taxonomy fit | ⚠ | Standing / Shift / PublicStanding — code correctly uses `subject = StandingMarker`; prose still says the retired term (corrected S126). Same pattern as DIR.CA.7/NET.CA.7 (schema_cleanup_log.md item 4-F); flagged, not corrected. | Art 04b §4 |
 | Balance | ✓ | Base threshold 35 is demanding; Intel token affinity rewards preparation. Fail/failcrit PS penalties create real downside | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
@@ -1829,18 +1841,20 @@ The PS attack card of the standard set. A formal public accusation carries both 
 | Supported by zones | ✓ | target_district = None — faction-targeted action; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (optional, Fresh — spent on resolution regardless; Art 02 §6); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 4; Intel token submitted with case at Phase B; token spent regardless | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), untyped resource-type attribute. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.4 = Card(
-    id      = "STD.PA.4",  version="v1.0",
+    id      = "STD.PA.4",  card_id="STD.PA.4",  version="v1.0",
     name    = "Public Censure",
     tagline = "Formally accuse another faction of conduct contrary to the city's interest.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -1871,6 +1885,7 @@ STD.PA.4 = Card(
     ),
     restriction = target_faction != faction(acting),
     cost        = resource.faction(acting) * 2,
+    boost       = None,
 
     success     = (faction(target).standing -= 2, faction(acting).standing += 1),
     successcrit = None,
@@ -1882,6 +1897,7 @@ STD.PA.4 = Card(
         Directorate: PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "A formal accusation in New Meridian is not a rumor. It is a claim that goes into the record and demands a response.",
     perspectives = {
@@ -1924,18 +1940,20 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 | Supported by zones | ✓ | target_district = None — faction-targeted attribution; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (faction=target, age=Fresh or Stale — Expired excluded per restriction; Art 02 §6); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 4; Intel token submitted with case; token age determined at Beat 4 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Cross-resource cost (faction native + Intel Token) — `resource.faction(acting)` term untyped; Intel Token as cost is the 10th confirmed corpus instance and first in Standard PA, using a new notation form (`intel_token(target=faction(target))`) not seen elsewhere in the corpus. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.5 = Card(
-    id      = "STD.PA.5",  version="v1.0",
+    id      = "STD.PA.5",  card_id="STD.PA.5",  version="v1.0",
     name    = "On the Record",
     tagline = "Formally attribute a recent covert action to a named faction before the city.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -1965,6 +1983,7 @@ STD.PA.5 = Card(
     ),
     restriction = faction(acting).holds_intel_token(faction=target, age__in=[Fresh, Stale]),  # Expired excluded — too degraded to constitute usable attribution evidence
     cost        = resource.faction(acting) * 1 + intel_token(target=faction(target)) * 1,
+    boost       = None,
 
     success     = (
         arbiter.announce(attribution=target_faction, context=intel_token.quarter),
@@ -1979,6 +1998,7 @@ STD.PA.5 = Card(
         Network: PortraitEntry(submitter=+1),
         Ghost:   PortraitEntry(submitter=-2),
     },
+    ps_framing   = None,
 
     narrative    = "In New Meridian, there are very few true secrets. There are only secrets that haven't been made public yet.",
     perspectives = {
@@ -2021,18 +2041,20 @@ The economic attack card of the standard PA set. PS is intentionally reversed fr
 | Supported by zones | ✓ | target_district = None — faction-targeted action; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | NativeResource (target's supply, Art 02 §8); faction native × 1 cost (Art 02 §8). Floor clause is procedural | Art 02 §8 |
 | Supported by game procedure | ✓ | Beat 4; ARBITER removes up to 2 native resources from target (floor = 0 — all available if fewer than 2) | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.6 = Card(
-    id      = "STD.PA.6",  version="v1.0",
+    id      = "STD.PA.6",  card_id="STD.PA.6",  version="v1.0",
     name    = "Economic Sanction",
     tagline = "Publicly impose economic pressure on a faction, forcing resource loss.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2059,6 +2081,7 @@ STD.PA.6 = Card(
     affinity    = faction(acting) == Syndicate: threshold += 15,
     restriction = None,
     cost        = resource.faction(acting) * 1,
+    boost       = None,
 
     success     = (
         faction(target).resource(native) -= min(2, faction(target).resource(native)),  # floor = 0
@@ -2073,6 +2096,7 @@ STD.PA.6 = Card(
         Syndicate: PortraitEntry(submitter=+1),
         Guild:     PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "Economic pressure in New Meridian is always visible. The faction applying it accepts that visibility as part of the cost.",
     perspectives = {
@@ -2106,7 +2130,7 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 | Voice fit | ✓ | All five perspectives distinct: Guild's building-primary-but-does-speak, Directorate's institutional communication expectation, Network's terse "this is what we do", Ghost's analytical surveillance framing of own public acts, Syndicate's investment/return calculation | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate +1, Network +1: institutional communication and broadcasting are both core doctrinal expressions. Ghost −1: public address = attention = exposure risk. Others: no strong doctrinal alignment with the act itself | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / Standard | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Standing / Shift / PublicStanding — +2 PS is a relative position change, not an unconditional grant | Art 04b §4 |
+| Taxonomy fit | ⚠ | Standing / Shift / PublicStanding — code correctly uses `subject = StandingMarker`; prose still says the retired term (corrected S126). Second Standard PA instance of the DIR.CA.7/NET.CA.7 pattern (schema_cleanup_log.md item 4-F); flagged, not corrected. +2 PS is a relative position change, not an unconditional grant | Art 04b §4 |
 | Balance | ✓ | 1 native for +2 PS with presence restriction. Cheap but not free; presence requirement prevents abuse | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shift is immediate; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
@@ -2117,16 +2141,18 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 | Supported by game procedure | ✓ | Beat 4; restriction at Beat 0 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.7 = Card(
-    id      = "STD.PA.7",  version="v1.0",
+    id      = "STD.PA.7",  card_id="STD.PA.7",  version="v1.0",
     name    = "Public Address",
     tagline = "Rally public support in a district where you operate.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2153,6 +2179,7 @@ STD.PA.7 = Card(
     affinity    = None,
     restriction = district(target).faction(acting).presence > 0,
     cost        = resource.faction(acting) * 1,
+    boost       = None,
 
     success     = faction(acting).standing += 2,
     successcrit = None,
@@ -2164,6 +2191,7 @@ STD.PA.7 = Card(
         Network:     PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "Presence without voice is presence waiting to become something else.",
     perspectives = {
@@ -2208,6 +2236,8 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 | Supported by game procedure | ✓ | Phase B: target faction named publicly. Beat 4: blank AccordForm delivered to submitting faction. Faction drafts and places per Art 06 §9.4. Execution at Debrief. | Art 03 Phase B; Art 06 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (`arbiter.deliver(...)`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -2217,11 +2247,11 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 STD.PA.8 = Card(
-    id      = "STD.PA.8",  version="v1.0",
+    id      = "STD.PA.8",  card_id="STD.PA.8",  version="v1.0",
     name    = "Table an Accord",
     tagline = "Formally propose a binding agreement with another faction, placed on the public record.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -2251,6 +2281,7 @@ STD.PA.8 = Card(
         accord(faction(acting), faction(target)).active == False
     ),
     cost = resource.faction(acting) * 1,
+    boost = None,
 
     success = arbiter.deliver(faction(acting), AccordForm(blank)),
     # Faction drafts terms per Art 06 §9.3; places in Accord Placement Area at their discretion.
@@ -2265,6 +2296,7 @@ STD.PA.8 = Card(
         Directorate: PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "The Table exists to make agreements. This is one of the few acts that uses it as intended.",
     perspectives = {

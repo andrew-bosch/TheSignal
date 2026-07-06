@@ -1455,16 +1455,18 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 | Supported by game procedure | ✓ | Two targets named at Phase B; both tokens submitted; Automatic Beat 4 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Findings × 3 + 2 Intel Tokens, one per target faction), correctly typed. Highest Ghost PA cost in the set, matching its "highest-cost PA" framing. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 GHO.PA.1 = Card(
-    id      = "GHO.PA.1",  version="v1.0",
+    id      = "GHO.PA.1",  card_id = "GHO.PA.1",  version="v1.0",
     name    = "Publish Analysis",
     tagline = "Release curated intelligence simultaneously attributing operations to two factions — a calculated, costly disclosure.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -1499,6 +1501,7 @@ GHO.PA.1 = Card(
         + intel_token(target=faction(target1)) * 1
         + intel_token(target=faction(target2)) * 1
     ),
+    boost = None,
 
     success = (
         arbiter.announce(attribution=target1, context=intel_token_1.quarter),
@@ -1512,6 +1515,7 @@ GHO.PA.1 = Card(
     failcrit    = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not publish because it wants credit. Ghost publishes because the analysis is complete and the disclosure serves more than the concealment.",
     perspectives = {
@@ -1554,16 +1558,18 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 | Supported by game procedure | ✓ | Physical tracking: GHO.PA.2 card face-up + district marker; ARBITER removes at Close Month next Month | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (a `game.world_condition()` placement, matching the confirmed Seasonal/Transient-effect pattern in design_reference_card_system.md) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Findings × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 GHO.PA.2 = Card(
-    id      = "GHO.PA.2",  version="v1.0",
+    id      = "GHO.PA.2",  card_id = "GHO.PA.2",  version="v1.0",
     name    = "Signal Review Request",
     tagline = "Formally request institutional scrutiny on a faction's next covert operation in a named district.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -1590,6 +1596,7 @@ GHO.PA.2 = Card(
     affinity    = None,
     restriction = faction(Ghost).presence(district.adjacent_to(target_district)) > 0,
     cost        = resource.faction(Ghost).findings * 2,
+    boost       = None,
 
     success = game.world_condition(
         scope    = district(target),
@@ -1604,6 +1611,7 @@ GHO.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not need credit for this. The scrutiny is the point.",
     perspectives = {
@@ -1644,18 +1652,20 @@ Ghost submits the case files in order — sequential, dated, attributed. The rec
 | Supported by zones | ✓ | target_district = None — tokens are held, not placed | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken expired (Art 02 §9); BM-xx (Art 02 §12); Findings × 1 (Art 02 §8) | Art 02 §8–§9, §12 |
 | Supported by game procedure | ✓ | BM-xx at Beat 4: boost detection added Art 03 §9.4.3.1.0.0 (S109); threshold at Art 03 §9.4.3.2.0; effect multiplication at Art 03 §9.4.3.3 | Art 03 §9.4.3 |
-| Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | All §6.1 fields present except `card_id`/`ps_framing` (missing entirely). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=`None`), no `game.choose_one()` — resolves deterministically once boost `n` is known. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource base (Findings × 1), correctly typed; `boost` is Intel-Token-scaled (expired tokens), a 6th distinct Intel-Token-as-cost notation variant (`intel_token(holder=Ghost, status=Expired)`). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GHO.PA.3 = Card(
-    id      = "GHO.PA.3",  version="v1.0",
+    id      = "GHO.PA.3",  card_id = "GHO.PA.3",  version="v1.0",
     name    = "Declassified Records",
     tagline = "Release expired intelligence as institutional record — each file compounds the disclosure.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -1693,6 +1703,7 @@ GHO.PA.3 = Card(
     on_decline = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not release because it ran out of options. Ghost releases because it chose this moment, these records, and this account. The archive is not empty — this is a selection.",
     perspectives = {
@@ -1733,18 +1744,20 @@ Ghost files the request before Beat 4. The Broadcast Card has been face-up all Q
 | Supported by zones | ✓ | target_district = None; target_object = BroadcastCard (Situation Report Zone) | Art 01 §6–§7 |
 | Supported by components | ✓ | BroadcastCard (DB:25, Art 02 §10); BroadcastEffectCard (DB:98, Art 02 §10); Target Profile target-object field (DB:48, Art 02 §8 — S109); Findings × 1 (Art 02 §8) | Art 02 §8, §10 |
 | Supported by game procedure | ✓ | §7.2.1 establishes BC/BEC link at setup. Art 03 §9.4.3.3.0 VM-xx placement clause; Art 03 §9.4.3.1.3 BEC public resolution step (S110). | Art 03 §7.2.1, §9.4.3.1.3, §9.4.3.3 |
-| Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | All §6.1 fields present except `card_id`/`ps_framing` (missing entirely). Design_note's trailing "Cost reasoning: Exposure represents the deliberate unmasking of the threat..." sentence — checked against the dangling-fragment pattern and, unlike its other instances, **this one is correct**: the card's actual cost does include Exposure. Confirmed-good contrast case, not a defect. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Findings × 1 + Exposure × 1), correctly typed. Notable: Exposure is Network's native resource, not Ghost's — a deliberate cross-faction resource cost, consistent with (and explained by) the design_note. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GHO.PA.4 = Card(
-    id      = "GHO.PA.4",  version="v1.0",
+    id      = "GHO.PA.4",  card_id = "GHO.PA.4",  version="v1.0",
     name    = "Public Threat Assessment",
     tagline = "Name a Situation Report. ARBITER opens the file.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -1785,6 +1798,7 @@ GHO.PA.4 = Card(
     on_decline = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not wait to find out what the Situation Report means. Ghost asks ARBITER, on the record, in front of everyone.",
     perspectives = {
@@ -1828,17 +1842,17 @@ Ghost files the act at Phase B. A table. A banner. Printed materials no other fa
 | Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | success = exactly one outcome; successcrit = additive delta; fail = None; failcrit = additive delta | Art 04 §5 P27 |
-| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (Findings × 1, Ghost's own native), correctly typed — floor-power cost for a +2-chip/Beat-4 public territorial gain, consistent with its "PA slot + 1 Findings justifies +2 output over STD.CA.3's covert +1" framing. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GHO.PA.5 = Card(
-    id      = "GHO.PA.5",  version="v1.0",
+    id      = "GHO.PA.5",  card_id = "GHO.PA.5",  version="v1.0",
     name    = "Agency Recruitment Fair",
     tagline = "The agency operates in the open. The interested are watching.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -1876,6 +1890,7 @@ GHO.PA.5 = Card(
     on_decline = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = None,  # pending D-04-08
     perspectives = None,  # pending D-04-08
@@ -1886,9 +1901,7 @@ GHO.PA.5 = Card(
 
 ---
 
-
 ---
-
 
 ---
 

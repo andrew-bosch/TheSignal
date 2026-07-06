@@ -930,16 +930,18 @@ Guild's prestige structure PA — a simultaneous double build in two named distr
 | Supported by game procedure | ✓ | Both districts declared at Phase B; restriction checked at Beat 0; both-or-nothing rule | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity ×2 + Capital ×1 + Mandate ×1), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Capital + 1 Mandate (Ceiling-tier)" checked against the dangling-fragment pattern — **correct**, matches the actual cost exactly. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.1 = Card(
-    id      = "GUI.PA.1",  version="v1.0",
+    id      = "GUI.PA.1",  card_id = "GUI.PA.1",  version="v1.0",
     name    = "Civic Works Mandate",
     tagline = "Declare a public infrastructure program across two districts simultaneously.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -971,6 +973,7 @@ GUI.PA.1 = Card(
         district(target2).faction(Guild).structure == 0
     ),
     cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).capital * 1 + resource.faction(Guild).mandate * 1,
+    boost = None,
 
     success     = (
         district(target1).faction(Guild).structure += 1,
@@ -982,6 +985,7 @@ GUI.PA.1 = Card(
     failcrit    = None,
 
     portrait = {Guild: PortraitEntry(submitter=+2)},
+    ps_framing = None,
 
     narrative    = "The Civic Works Mandate is Guild's strongest public statement: we are not here to compete. We are here to build what New Meridian requires.",
     perspectives = {
@@ -1024,21 +1028,22 @@ Guild's economic relationship PA. Distinct from STD.CA.9 (Fund) in cost currency
 | Supported by game procedure | ⚠ | Phase B: target faction named publicly. Beat 4: 2 native delivered; blank AccordForm delivered to Guild. Guild drafts bond terms; places per Art 06 §9.4. Upkeep income tracking requires Accord execution confirmation. | Art 03 Phase B; Art 06 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity ×1 + native ×2), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-- **Upkeep income tracking:** Confirm Accord income procedure (target pays 1 Capacity/Upkeep to Guild at Upkeep Step 6 while Accord active) against Art 06 §9.4 execution model.
 - **Upkeep income tracking:** Confirm Accord income procedure (target pays 1 Capacity/Upkeep to Guild at Upkeep Step 6 while Accord active) against Art 06 §9.4 execution model.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.2 = Card(
-    id      = "GUI.PA.2",  version="v1.0",
+    id      = "GUI.PA.2",  card_id = "GUI.PA.2",  version="v1.0",
     name    = "Infrastructure Bond",
     tagline = "Publicly extend Guild infrastructure investment to another faction, establishing a formal economic relationship.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -1066,6 +1071,7 @@ GUI.PA.2 = Card(
     restriction = faction(Guild).influence_tier(district.any_adjacent_to(faction(target).presence)) >= Established,
     cost        = resource.faction(Guild).capacity * 1  # form price → Reservoir
               + resource.faction(Guild).native * 2,   # sweetener → delivered to target at success
+    boost       = None,
 
     success = (
         faction(target).resource(native) += 2,  # immediate delivery
@@ -1080,6 +1086,7 @@ GUI.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Guild does not give resources away. The Infrastructure Bond is an investment — the terms make that clear.",
     perspectives = {
@@ -1094,9 +1101,7 @@ GUI.PA.2 = Card(
 
 ---
 
-
 ---
-
 
 ---
 
@@ -1115,33 +1120,33 @@ GUI.PA.2 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Historical-protection declaration thematically fits Guild's permanence doctrine — protecting what's already built | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Consistent with "permanence through building" — protecting structures from removal | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Protect / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity×2 + Mandate×1) set, but the one-time-trigger-then-clear effect's actual power level can't be fully assessed — `success` is prose, not a structured mutation | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Permanent`, but self-clearing after one trigger per its own prose — a one-shot Permanent, not standing indefinitely | Art 04 §5 P19 |
+| Persistence | ⚠ | `persistence = Permanent` set, but no `persistence_condition`/`persistence_effect` fields — the Card-as-Condition pattern (design_reference_card_system.md) requires both as structured fields; this card describes the standing condition in prose inside `success` instead | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock — existing component | Art 02 §6 |
+| Supported by game procedure | ⚠ | The "restore on removal, once" mechanism has no defined procedural home — not a confirmed TriggerExpr/persistence_effect pattern | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string — same bare-string-literal-effects defect shape seen elsewhere in this review, now confirmed a third faction. Missing entirely: `outcome_type`, `threshold`, `ring_mod`, `doctrine_mod`, `trigger`, `resolution_type`, `target_object`/`target_taxonomy`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `on_accept`/`on_decline`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No `game.choose_one()`, but no structured success/fail split exists to check against P27 either — `success` is unstructured prose | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier)" checked — correct, matches actual cost. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.3 = Card(
-    id      = "GUI.PA.3",  version = "v1.0",
+    id      = "GUI.PA.3",  card_id = "GUI.PA.3",  version = "v1.0",
     name    = "Heritage Registry",
     tagline = "Declare a district's structures historically protected.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -1149,17 +1154,29 @@ GUI.PA.3 = Card(
     layer    = Territory,  function = Protect,  subject = StructureBlock,
 
     beat            = 4,
-    resolution      = Automatic,
+    resolution      = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence     = Permanent,
-    
+    persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a card-as-condition effect not structured here
+
     target_district = district.any,
     target_faction  = None,
+    target_object   = None,  target_taxonomy = None,
 
+    affinity = None,  restriction = None,
     cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).mandate * 1,
+    boost = None,
 
     success = "Places standing condition on target_district: If a structure block is removed for any reason (unless due to influence token reaching 0), add the structure block back to the district. Remove this standing effect after it triggers once.",
-    
-    design_note = "Defense scaling gap addressed. Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier). Mandate provides the legal shield to protect the concrete."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Defense scaling gap addressed. Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier). Mandate provides the legal shield to protect the concrete.",
+    arbiter_note = None,
 )
 ```
 
@@ -1178,33 +1195,33 @@ GUI.PA.3 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Ribbon-cutting scaled to structural density is thematically grounded — public credibility earned from demonstrated building | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | PS scaling directly off Guild's own structure count in the district is maximally on-doctrine (standing earned through building, not rhetoric) | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity + Exposure) set, but can't confirm magnitude without a real district structure count at review time | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock (count read), Public Standing track — existing components | Art 02 §6–§7 |
+| Supported by game procedure | ✓ | Straightforward count-and-apply at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | `success` is a bare string — but notably **looks like valid Python expression syntax quoted as a string literal** (`"faction(Guild).standing += ..."`), a distinct sub-shape from GUI.PA.3/5's English-prose strings: this reads like real code that was accidentally left inside quotes rather than never structured at all. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields beyond `target_district`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 — `success` is a quoted string, not executable | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Exposure), correctly typed. Design_note's trailing "Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier)" checked — correct, matches actual cost; Exposure use explained coherently ("broadcasting the ribbon-cutting"), same pattern as GHO.PA.4. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.4 = Card(
-    id      = "GUI.PA.4",  version = "v1.0",
+    id      = "GUI.PA.4",  card_id = "GUI.PA.4",  version = "v1.0",
     name    = "Civic Unveiling",
     tagline = "A highly publicized ribbon-cutting ceremony that compounds structural density into public adoration.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -1212,15 +1229,28 @@ GUI.PA.4 = Card(
     layer    = Standing,  function = Shift,  subject = StandingMarker,
 
     beat            = 4,
-    resolution      = Automatic,
-    
-    target_district = district.any,
+    resolution      = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence     = Immediate,  # scaffolded — deterministic default for a non-standing, one-shot PA
+    persistence_condition = None,  persistence_effect = None,
 
+    target_district = district.any,
+    target_faction  = None,  target_object = None,  target_taxonomy = None,
+
+    affinity = None,  restriction = None,
     cost = resource.faction(Guild).capacity * 1 + resource.faction(Guild).exposure * 1,
+    boost = None,
 
     success = "faction(Guild).standing += district(target_district).faction(Guild).structure * 1",
-    
-    design_note = "Standing / PS Compounding gap filled. Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier). Broadcasting the massive ribbon-cutting to the city."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Standing / PS Compounding gap filled. Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier). Broadcasting the massive ribbon-cutting to the city.",
+    arbiter_note = None,
 )
 ```
 
@@ -1239,33 +1269,33 @@ GUI.PA.4 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Blanket regulatory exemption for expansion thematically fits Guild's builder doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Removing a structural obstacle to building is maximally on-doctrine for Guild | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ⚠ | `subject = District` — checked against `ref_taxonomy.md`'s Subject vocabulary; "District" as a bare subject (rather than a specific component like PresenceToken/StructureBlock) is unusual — worth confirming this is a registered Subject term, same open question as items #27's unregistered-subject pattern (Difficulty, TargetProfile, etc.), though not confirmed DB-flagged here. | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity + Findings + Capital) set, but "regardless of Ring limitations or connectivity rules" is a sweeping, unquantified effect — can't assess power level against a prose description | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared; prose says "for the next Quarter" (Seasonal-shaped), but no structured duration field confirms this | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
+| Supported by components | ⚠ | "Ring limitations or connectivity rules" bypass has no defined component/procedure hook — this would need to interact with the Ring Entry Rules (ref_special_district_and_ring_rules.md) directly, not clearly supported | Art 01 §6 |
+| Supported by game procedure | ⚠ | No confirmed Art 03 procedure for a temporary Ring-entry-rule bypass — new ARBITER-facing behavior, same category as other unconfirmed-procedure gaps flagged elsewhere in this review | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, most targeting/effect fields, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Findings + Capital), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Findings + 1 Capital" checked — correct, matches actual cost. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.5 = Card(
-    id      = "GUI.PA.5",  version = "v1.0",
+    id      = "GUI.PA.5",  card_id = "GUI.PA.5",  version = "v1.0",
     name    = "Zoning Exemption",
     tagline = "Secure a blanket override of Ring expansion limitations.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -1273,15 +1303,28 @@ GUI.PA.5 = Card(
     layer    = Submission,  function = RemoveRestriction,  subject = District,
 
     beat            = 4,
-    resolution      = Automatic,
-    
-    target_district = district.any,
+    resolution      = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence     = Seasonal,  # scaffolded — matches prose "for the next Quarter"
+    persistence_condition = None,  persistence_effect = None,
 
+    target_district = district.any,
+    target_faction  = None,  target_object = None,  target_taxonomy = None,
+
+    affinity = None,  restriction = None,
     cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).findings * 1 + resource.faction(Guild).capital * 1,
+    boost = None,
 
     success = "For the next Quarter, Guild may place structures in the target district regardless of Ring limitations or connectivity rules.",
-    
-    design_note = "Ceiling-tier expansion enabler. Cost reasoning: 2 Capacity + 1 Findings + 1 Capital. Finding the bureaucratic loop-hole and buying the necessary judges to skip the physical expansion limits."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Ceiling-tier expansion enabler. Cost reasoning: 2 Capacity + 1 Findings + 1 Capital. Finding the bureaucratic loop-hole and buying the necessary judges to skip the physical expansion limits.",
+    arbiter_note = None,
 )
 ```
 
@@ -1302,42 +1345,55 @@ GUI.PA.5 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Trading a structure for a resource windfall is a plausible economic act, though the "legal asset flip" framing is thin | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ⚠ | Giving up a Structure Block (Guild's core permanence asset) for resources cuts against "permanence through building" — not clearly on-doctrine; no design_note reasoning addresses this tension | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Modify / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost is cheap (Capacity×1) for removing a Guild structure, granting the target a structure, and gaining 3 of the target's native — can't fully assess without a structured effect to check magnitudes against | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_district` field declared — referenced only inside the `restriction`/`success` strings | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock, native resources — existing components | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Straightforward transfer-and-payment at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | **Both `restriction` and `success` are bare strings** — extends the bare-string defect beyond `success` alone to `restriction` too, the first confirmed instance on a non-`success` field. The restriction string also uses English `AND` rather than Python `and`. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capacity × 1), correctly typed — the only cleanly-structured field on this card. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.6 = Card(
-    id      = "GUI.PA.6",  version = "v1.1",
+    id      = "GUI.PA.6",  card_id = "GUI.PA.6",  version = "v1.1",
     name    = "Asset Transfer",
     tagline = "Liquidate Guild property into another faction's hands for massive resource injection.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
     layer   = Territory,  function = Modify,  subject = StructureBlock,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    affinity = None,
     cost    = resource.faction(Guild).capacity * 1,
+    boost   = None,
     restriction = "district(target).faction(Guild).structure > 0 AND district(target).faction(target_faction).presence > 0",
     success = "Guild removes 1 of their Structure Blocks in target_district and replaces it with 1 Structure Block of the target_faction. Guild gains 3 of the target_faction's native resource from the supply.",
-    design_note = "A powerful, legal asset flip. Leverages existing footprint to extract deep foreign resource pockets."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A powerful, legal asset flip. Leverages existing footprint to extract deep foreign resource pockets.",
+    arbiter_note = None,
 )
 ```
 
@@ -1356,42 +1412,55 @@ GUI.PA.6 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Forcing presence expansion from an existing foothold is thematically grounded — Guild's blunt-force building tool | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Direct presence expansion is on-doctrine for Guild's builder identity | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Add / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity×2 + Mandate×1) for +2 presence tokens with a foothold restriction — comparable in shape to STD.PA.1's dual-native cost for +2 presence, but can't confirm relative balance without the "crack Established status" framing being made concrete | Art 02 §6–§7 |
+| Effect duration | ✓ | Presence tokens are Permanent board state; the card itself is a one-shot act | Art 04 §5 P19 |
+| Persistence | ⚠ | No `persistence` field declared at all | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_district` field declared — referenced only inside the `restriction`/`success` strings | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken — existing component | Art 02 §6 |
+| Supported by game procedure | ✓ | Straightforward placement at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | Both `restriction` and `success` are bare strings — same defect shape as GUI.PA.6. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.7 = Card(
-    id      = "GUI.PA.7",  version = "v1.1",
+    id      = "GUI.PA.7",  card_id = "GUI.PA.7",  version = "v1.1",
     name    = "Eminent Domain Petition",
     tagline = "Force massive influence into a district to pave the way for expansion.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
     layer   = Territory,  function = Add,  subject = PresenceToken,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,
     cost    = resource.faction(Guild).capacity * 2 + resource.faction(Guild).mandate * 1,
+    boost   = None,
     restriction = "district(target).faction(Guild).presence > 0",
     success = "Place 2 Guild Presence Tokens in target_district.",
-    design_note = "Requires existing foothold. A blunt-force legal maneuver to crack an opponent's Established status."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Requires existing foothold. A blunt-force legal maneuver to crack an opponent's Established status.",
+    arbiter_note = None,
 )
 ```
 
@@ -1410,41 +1479,54 @@ GUI.PA.7 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Converting opponents' construction into Guild PS is a distinctive, doctrinally-grounded standing condition | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Reframes any faction's building as validation of Guild's permanence doctrine — on-doctrine | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity×2) for an indefinite standing PS-generation condition — can't confirm power level without a structured, bounded effect | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Permanent`, consistent with a standing reactive condition | Art 04 §5 P19 |
+| Persistence | ⚠ | `persistence = Permanent` set, but no `persistence_condition`/`persistence_effect` fields — the Card-as-Condition pattern requires both as structured fields; this card describes the standing trigger in prose inside `success` instead, same gap as GUI.PA.3 | Art 04 §6 |
+| Trigger validity | ⚠ | The described trigger ("whenever an opponent places a Structure Block here") maps to the confirmed `structure_block.placed(faction=X, ring=Z)` TriggerExpr vocabulary, but isn't expressed as one — it's prose inside `success` | Art 04 §6.3 |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district` implied by prose, not declared as a field | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock, Public Standing track — existing components | Art 02 §6–§7 |
+| Supported by game procedure | ⚠ | Reactive PS-on-opponent-build has no structured trigger — same gap as Trigger validity above | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string describing what should be a `persistence_effect` — same Card-as-Condition-pattern gap as DIR.PA.7 Curfew. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capacity × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.8 = Card(
-    id      = "GUI.PA.8",  version = "v1.1",
+    id      = "GUI.PA.8",  card_id = "GUI.PA.8",  version = "v1.1",
     name    = "Structural Subsidy",
     tagline = "Turn a district's development into a PR engine.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
-    beat    = 4,  resolution = Automatic,  persistence = Permanent,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Permanent,
+    persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
+    target_district = district.any,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Guild).capacity * 2,
+    boost   = None,
     success = "Places standing condition on target_district: 'Whenever an opponent places a Structure Block here, Guild gains +1 PS.'",
-    design_note = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige.",
+    arbiter_note = None,
 )
 ```
 
@@ -1478,6 +1560,8 @@ Cost: 3 Capacity (show of strength), 1 Capital (broadcast), 1 Exposure (public a
 | Supported by game procedure | ⚠ | Beat 0: N-lock — ARBITER counts qualifying districts and records N; Beat 4: resolution. N-lock at Beat 0 is new procedure; confirm against Art 03 §9.4 | Art 03 §9.4 |
 | Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically once N is locked at Beat 0. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity ×3 + Capital + Exposure + Mandate, ×1 each), correctly typed — ceiling-tier cost matching this card's high-variance design. | Art 00a §9.2 |
 
 #### Status
 
@@ -1487,7 +1571,7 @@ Cost: 3 Capacity (show of strength), 1 Capital (broadcast), 1 Exposure (public a
 
 ```python
 GUI.PA.9 = Card(
-    id      = "GUI.PA.9",  version = "v0.1",
+    id      = "GUI.PA.9",  card_id = "GUI.PA.9",  version = "v0.1",
     name    = "City Ledger",
     tagline = "Present the full construction record. Let the district account for what has been built.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -1509,6 +1593,7 @@ GUI.PA.9 = Card(
     target_district = district.named,
     target_faction  = None,
     target_object   = None,
+    target_taxonomy = None,
 
     affinity    = None,
     restriction = count(d in ([district(target)] + district(target).adjacent)
@@ -1517,6 +1602,7 @@ GUI.PA.9 = Card(
          + resource.faction(Guild).capital  * 1
          + resource.faction(Guild).exposure * 1
          + resource.faction(Guild).mandate  * 1,
+    boost = None,
 
     success = faction(Guild).standing.add(
                   count(d in ([district(target)] + district(target).adjacent)
@@ -1533,6 +1619,7 @@ GUI.PA.9 = Card(
                          where d.faction(Guild).structure > 0)),
 
     portrait = {Guild: PortraitEntry(submitter=+2)},
+    ps_framing = None,
 
     narrative    = None,
     perspectives = {
@@ -1579,8 +1666,10 @@ The Guild moves its crews into a district where another faction already has a fo
 | Supported by zones | ✓ | target_district = district.named; both factions' presence_token.count evaluated at declared district | Art 01 §6 |
 | Supported by components | ✓ | Structure Block (GR 8.2 — max 1 per faction per district; restriction ensures 0 for both before play); Presence Token; Public Standing track | Art 02 §7–§8 |
 | Supported by game procedure | ✓ | All resources submitted by Guild (submitter) at §9.2; standard Beat 4 payment procedure applies | Art 03 §9.2, §9.4.3 |
-| Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | New card — DB registration required. **`card_status` DB shows `layer`/`function`/`subject` all `NULL`** despite the code correctly declaring `Territory/Add/StructureBlock` — same NULL-taxonomy-but-valid-code desync as GUI.CA.10, now a second confirmed Guild-set instance (one CA, one PA). Not reconciled — flagged only. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story above | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity ×2 + target faction's native ×1), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
@@ -1590,7 +1679,7 @@ The Guild moves its crews into a district where another faction already has a fo
 
 ```python
 GUI.PA.10 = Card(
-    id      = "GUI.PA.10",  version = "v0.1",
+    id      = "GUI.PA.10",  card_id = "GUI.PA.10",  version = "v0.1",
     name    = "Joint Development",
     tagline = "Guild and an allied faction commit jointly to structural development in a shared district.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,

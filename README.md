@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** S141 — 09-16 step 2 CA design review complete — full 69-card corpus, all 6 sets (Standard 16, Directorate 8, Ghost 15, Guild 10, Network 8, Syndicate 12). schema_cleanup_log expanded 21→34 items; PM02 L274 last L-decision. Next: PA design review (45 cards). Prior (S140): ModBattleCard design-review complete (44 cards). Prior (S139): ModActionCard review complete (132 cards). Prior (S138): ModReactCard review complete (81 cards + Ring S137). Prior (S136): Art 04 physical split into 8 Part files.
+**Design milestone:** S142 — 09-16 step 2 PA design review complete — full 45-card corpus, all 6 sets (Standard 8, Directorate 11, Ghost 5, Guild 10, Network 6, Syndicate 5). CA+PA phase (114 cards total) now complete. schema_cleanup_log expanded 34→46 items; PM02 L276 last L-decision. Next: Floor Act design (D04-13). Prior (S141): CA design review complete (69 cards). Prior (S140): ModBattleCard design-review complete (44 cards). Prior (S139): ModActionCard review complete (132 cards). Prior (S138): ModReactCard review complete (81 cards + Ring S137). Prior (S136): Art 04 physical split into 8 Part files.
 
 ---
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System___Part1_Core.md) | 0.9.85 | 🔄 In progress — S138: Full 09-16 step 2 ModReactCard design-review pass complete — 81 cards (Ring + all 5 factions) content-reviewed; 8 fossils flagged for full re-authoring; `schema_cleanup_log.md` at 20 items (full-corpus synthesis delivered); PM05 04-n177/04-n178 added. Prior — S135: Full action-space milestone — ModActionCard (132: 60 faction + 72 ring) and Ring ModReactCard (36) fully stubbed. New syntax (`holder`, `NativeResource(faction)`, `arbiter.modify`) pending §6.3 reconciliation (04-n171). |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System___Part1_Core.md) | 0.9.85 | 🔄 In progress — S142: Full 09-16 step 2 PA design-review pass complete — 45 cards (all 6 factions) content-reviewed; CA+PA phase (114 cards) complete; `schema_cleanup_log.md` grew 34→46 items; new locked design principle on card design content standing alone (PM02 L276); artifact hygiene cleanup of session/log commentary from card specs in progress at 04-n180; next focus: Floor Act design (D04-13, gates 04-n178). Prior — S141: CA review complete (69 cards). Prior — S140: ModBattleCard review complete (44 cards). Prior — S139: ModActionCard review complete (132 cards). Prior — S138: ModReactCard review complete (81 cards). |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |

@@ -224,6 +224,140 @@ Read `schema_cleanup_log.md` #34 in full before the PA session — several of it
 
 ---
 
+## 5h. Standard PA set (STD.PA.1–8) — SCAFFOLDED + RE-DERIVED S142 — PA phase begins
+
+Andy confirmed PA review scope before starting: identical to CA (scaffold + flag, re-derive, log don't fix). Faction order confirmed: Standard → Directorate → Ghost → Guild → Network → Syndicate, same as CA. Full reference context reloaded before starting (`ref_components.md`, `ref_procedures.md`, `ref_card_types.md`, `ref_resources.md`, `ref_world_narrative.md`, `ref_board_narrative.md`, `ref_special_district_and_ring_rules.md`, `design_reference.md`, `design_reference_card_system.md`) per the S141 lesson — do not start narrow.
+
+All 8 STD.PA cards were missing the same 2 rows as the CA set (Outcome determinacy + Resource cost positioning) — 15/17 on all of them, identical shape to Standard CA. Scaffolded and Design Pass ✓ set (.md + DB) for all 8.
+
+**§4's flagged high-priority check confirmed clean:** every one of the 8 cards carries a real, non-`None` `outcome_type` (7× `Unilateral`, 1× `BilateralAgreement` on STD.PA.8) — no PA in this set silently omits it. This was the single highest-yield check anticipated going into the PA phase; it did not surface a defect here, but is worth re-running on every subsequent faction's PA set rather than assuming it stays clean.
+
+**New findings (all logged to schema_cleanup_log.md):**
+- **#22 (untyped cost attribute) massively extended:** all 8/8 Standard PA cards show the identical untyped `resource.faction(acting)` shape — not confined to "old CA.1–5," it's the default convention across the whole PA set regardless of card ID. This breaks the earlier "clusters at the low card-ID end" read and item #34-A's "Standard is clean of all FactionSpecific-only defects" framing, once PA is folded into the CA-only corpus that synthesis was built on.
+- **#10 (Intel Token as cost) — 10th instance, first in PA phase:** STD.PA.5 On the Record, paired with a typed resource (not pure), using a 4th distinct cost-notation variant not seen elsewhere in the corpus.
+- **New (#35):** Two of STD.PA.1–3's three "public counterpart to STD.CA.n" claims, checked directly per the standing re-derive standard, are **false** — STD.PA.1 claims same cost as STD.CA.3 (actually different resource shape), STD.PA.2 claims same cost + "45 vs 40" threshold vs STD.CA.4 (actual STD.CA.4 threshold is 50, and PA.2's 45 is worse, not better). STD.PA.3's claim against STD.CA.1 checked true. This is the Overture-pattern failure mode recurring in the *Standard* set specifically, undermining #34-A's "Standard is clean" framing further.
+- **Retired term "PublicStanding" in checklist prose (item 4-F pattern):** 2 more instances (STD.PA.4, STD.PA.7) — code correctly uses `StandingMarker` in both, prose didn't get swept forward. Now confirmed in Standard, not just Directorate/Network faction sets.
+
+**Confirmed clean:** no `game.choose_one()` in any of the 8 (Outcome determinacy all ✓); no `flat=` portrait entries — all use `submitter=` only; taxonomy (Layer/Function/Subject) checked against `ref_taxonomy.md` and DB `card_status` — all 8 valid, no mis-assignments.
+
+**Not yet checked:** STD.PA.3's design_note references forward to DIR.PA.1 (Regulatory Override) and GUI.PA.1 (Civic Works Mandate) as a cost-prerequisite/counter-play pair — out of scope this pass, worth confirming when Directorate and Guild PA sets are reached.
+
+---
+
+## 5i. Directorate PA set (DIR.PA.1–11) — SCAFFOLDED + RE-DERIVED S142
+
+**Scope correction mid-set (Andy):** scaffolding applies to every card reviewed regardless of content maturity — "Design Review TRUE" means the review work (checklist assessed, spec fields completed) was done, not that the card is clean. Issues Resolved / open ⚠ rows record what was *found*, not whether review happened. This corrected an initial misstep on DIR.PA.7/8 (see below) and now governs the rest of the PA phase.
+
+**11 cards, all scaffolded, all Design Pass ✓ (.md + DB).** STD.PA.3's forward-reference to DIR.PA.1 (raises presence-placement cost, prerequisite gate on Guild's build chain) checked directly against DIR.PA.1's actual code — confirmed accurate.
+
+**"(stub)" label was unreliable — checked directly, not trusted:** 5 of 7 stub-tagged cards (DIR.PA.4/5/9/10/11) turned out to carry complete, schema-conformant content — real S131 redesigns closing specific named PM05 gaps (04-n104 BLOCKED-status fix, 04-n89 win-path gap, 04-n108 PS-card gap, 04-n142 counter-card gap, the 54-card floor). Only DIR.PA.7/8 are genuinely thin (bare prose-string `success`, most fields absent). All 9 non-thin cards got full checklists; DIR.PA.7/8 got full checklists too, assessing what the thin content actually supports rather than a blank template (schema_cleanup_log.md #40).
+
+**Spec-level scaffolding performed this pass (not just checklist):** all 11 cards now carry `card_id`, `boost`, `ps_framing` explicitly (previously silently absent on 6 of 11 — DIR.PA.1/2/3/6/7/8). DIR.PA.7/8 additionally had their full deterministic field set scaffolded (`ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`/targeting fields/`portrait={}`/`narrative`/`perspectives`/`arbiter_note`, all `None` or the deterministic enum match) — `success` itself was left untouched since fixing it is content work, not scaffolding.
+
+**New findings (all logged to schema_cleanup_log.md):**
+- **#22 contrast confirmed:** all 11 Directorate PA costs are correctly typed (including two triple/cross-resource costs) — confirms the untyped-cost bug is Standard-specific, not a general corpus habit.
+- **#10 (Intel Token as cost) — 11th instance:** DIR.PA.8, a 5th distinct notation variant.
+- **#26 (unconfirmed `game.active_permanents` procedure) — 3rd instance:** DIR.PA.9, cross-card claim checked and confirmed true this time (unlike DIR.PA.10's looser version, below).
+- **#29 (bare string-literal `success`) — 2 more instances, first in PA phase:** DIR.PA.7, DIR.PA.8.
+- **New #36:** dangling "Cost reasoning: [wrong resource]" design_note fragments — DIR.PA.1, DIR.PA.2 (2 more instances alongside SYN.CA.4; DIR.PA.2's fragment names a different card entirely, confirming these are copy-paste artifacts).
+- **New #37:** `resolution_type = "Permanent public act"` — not in the confirmed 2-value vocabulary. 3 instances (DIR.PA.5, DIR.PA.6, DIR.PA.11), all Permanent card-as-condition PAs — may be a genuine missing 3rd vocabulary value rather than an error.
+- **New #38:** the PA-phase's flagged highest-priority check (`outcome_type` should never be `None` on a real PA) caught 3 confirmed defects here — DIR.PA.10 explicitly `None` despite a fully structured d100 resolution, DIR.PA.7/8 missing the field entirely. Standard PA's clean 8/8 result did not generalize.
+- **New #39:** `narrative`/`perspectives` entirely absent (not sparse — explicitly `None`) on all 5 of the S131 mislabeled-stub cluster (DIR.PA.4/5/9/10/11) — uniform across one authoring batch, distinct from the Card-Story-pending placeholder every card carries.
+- **New #40:** the "(stub)" mislabeling itself, plus a second DB/MD desync shape — DIR.PA.4/5 showed `design_pass=1` in `card_status` prior to this session despite a fully blank .md Status table (distinct from item #30's NULL-taxonomy desync).
+- **DIR.PA.10's cross-card claim** ("same counting mechanism CA.6/CA.7 use for Permanents") checked directly and found **imprecise, not false**: DIR.PA.10 actually counts districts at Established+ tier, not active Permanent cards — a different count than CA.6/7's. Shared property ("no ARBITER judgment call, simple tally") holds; the specific mechanism claim doesn't. Noted as a softer version of the Overture-pattern check.
+- **Legacy header/variable-naming pattern extends into Directorate PA:** DIR.PA.3 (`EntryExitControls`) and DIR.PA.6 (`P_StandingInjunction`) both use old-style headers with no card ID and non-standard Python variable names, plus "—" placeholders in the section TOC instead of proper anchors.
+
+**Confirmed clean:** no `game.choose_one()` anywhere in the 9 fully-checkable cards; no `flat=` portrait entries; taxonomy (Layer/Function/Subject) checked against DB and `ref_taxonomy.md` — all 11 valid.
+
+---
+
+## 5j. Ghost PA set (GHO.PA.1–5) — SCAFFOLDED + RE-DERIVED S142
+
+Smallest PA set (5 cards), notably more mature than Standard/Directorate — GHO.PA.3/4/5 already carried real Card Story blocks and "Data schema validation ✓"/"Card narrative ✓" checklist rows instead of the generic placeholders, matching the Ghost CA set's similar maturity noted in §5d.
+
+**All 5 scaffolded, all Design Pass ✓ (.md + DB).** GHO.PA.1/2/3/4 were missing the two universal rows (15-row format, same shape as every other set); GHO.PA.5 already had both rows present but its **Resource cost positioning row contained the raw guidance-template text verbatim** — the second confirmed instance of that exact defect (schema_cleanup_log.md #33), previously flagged for this session back in S141's Syndicate review and now fixed with a real assessment (mono-resource, Findings × 1).
+
+**Spec-level scaffolding:** all 5 cards got `card_id` added (previously absent on all 5, only GHO.PA.5 even mentioned it — as a stray sentence inside its own design_note prose rather than a real field); all 5 got `ps_framing = None` added; GHO.PA.1/2 got `boost = None` added (GHO.PA.3/4/5 already had real `boost` fields).
+
+**New findings (all logged to schema_cleanup_log.md):**
+- **#10 (Intel Token as cost) — 2 more instances, 6th notation variant:** GHO.PA.1 (2 tokens, one per target faction, same `intel_token(target=faction(X))` notation as STD.PA.5) and GHO.PA.3 (`boost = intel_token(holder=Ghost, status=Expired)` — a genuinely new `holder=`/`status=` keyed variant). Ghost now accounts for 8 of 13 total corpus instances.
+- **#36 (dangling "Cost reasoning" fragment) — important contrast case:** GHO.PA.4 carries the same sentence template as the 3 mismatched instances (SYN.CA.4, DIR.PA.1, DIR.PA.2), but here it's **correct** — Exposure genuinely is part of GHO.PA.4's cost. Confirms the template recurs across a wider authoring habit than previously evidenced, and that each instance still needs a direct check rather than an assumption either way.
+- **Extends the DB/MD desync family (schema_cleanup_log.md #40):** GHO.PA.3/4/5 all show `issues_resolved=1` in `card_status` despite fully blank .md Status tables — a third field/shape of the same underlying drift pattern (after DIR.PA.4/5's `design_pass` desync and GUI.CA.10/STD.CA.12's taxonomy desync).
+- **#22 contrast holds:** all 5 Ghost PA costs are correctly typed (Findings, and one deliberate cross-faction Findings+Exposure cost on GHO.PA.4) — Ghost joins Directorate as clean on this pattern.
+
+**Notable non-defect:** GHO.PA.4's cost pays partly in Exposure (Network's native resource, not Ghost's) — a deliberate cross-faction cost, explained coherently by its own design_note ("Exposure represents the deliberate unmasking of the threat to the public"). Confirmed intentional, not flagged as an error.
+
+**Confirmed clean:** no `game.choose_one()` across all 5; no `flat=` portrait entries; all `outcome_type` values present and non-`None` (all `Unilateral`) — Ghost passes the PA-phase's flagged highest-priority check cleanly, unlike Directorate; taxonomy checked against DB — all 5 valid.
+
+---
+
+## 5k. Guild PA set (GUI.PA.1–10) — SCAFFOLDED + RE-DERIVED S142
+
+Largest PA set reviewed after Directorate. **6 of 10 cards (GUI.PA.3/4/5/6/7/8) are `*(stub)*`-tagged and genuinely thin** — unlike Directorate's mostly-mislabeled cluster, these really are undeveloped: bare-string effect fields, most base-Card fields absent. Only GUI.PA.1/2/9/10 are fully developed. All 10 scaffolded, all Design Pass ✓ (.md + DB), per the scaffold-all standard now governing this review.
+
+**New sub-variants of the bare-string defect (schema_cleanup_log.md #29, now 12 corpus instances):**
+- **GUI.PA.6/GUI.PA.7:** the bare-string shape isn't confined to `success` — both cards' `restriction` field is also a bare string (with English `AND` instead of Python `and`), the first confirmed instance on a non-`success` field.
+- **GUI.PA.4:** its `success` string reads as syntactically-valid Python left inside quotes, distinct from the plain-English-prose shape everywhere else — suggests at least two different authoring failure modes produce the same symptom (never structured, vs. structured-then-accidentally-stringified).
+- **GUI.PA.3/GUI.PA.8:** both describe a Card-as-Condition standing effect in prose inside `success`, missing the required `persistence_condition`/`persistence_effect` structured fields — same gap as DIR.PA.7 Curfew.
+
+**Other new findings (all logged to schema_cleanup_log.md):**
+- **#30 (NULL-taxonomy DB desync) — 2nd confirmed instance:** GUI.PA.10 shows the identical pattern as GUI.CA.10 (valid code, `NULL` in `card_status`) — both confirmed instances are Guild-set cards, worth watching as a possible faction-specific DB sync gap.
+- **#36 (dangling "Cost reasoning" fragment) — 4 more correct instances:** GUI.PA.1/3/4/5 all carry the recurring sentence template, all four check out correct against their actual costs. Template now stands at 5 confirmed-correct vs. 3 confirmed-mismatched — a genuine mixed bag, not a reliable defect signal either way.
+- **#38 (`outcome_type` gap) — 6 more instances:** the entire thin-stub cluster (GUI.PA.3/4/5/6/7/8) had the field absent, now scaffolded explicit `None`. GUI.PA.1/2/9/10 all pass clean. Confirms the check's yield tracks content maturity, not faction.
+- **Duplicated Outstanding Issues bullet on GUI.PA.2:** an identical bullet appeared twice verbatim — deduplicated as mechanical cleanup (not a content decision).
+- **Doctrine tension flagged, not resolved:** GUI.PA.6 Asset Transfer's checklist notes a real doctrinal question its design_note doesn't address — giving up a Structure Block (Guild's core permanence asset) for resources cuts against "permanence through building," and nothing in the card's own text reconciles this.
+
+**Confirmed clean:** no `game.choose_one()` on any of the 4 non-stub cards; no `flat=` portrait entries anywhere; taxonomy (Layer/Function/Subject) valid against `ref_taxonomy.md` on all 10 (GUI.PA.5's bare `subject = District` flagged as worth confirming against the registered Subject vocabulary, though not DB-flagged as invalid); GUI.PA.10 notably already carries real `ps_framing` content — the first card in the entire CA/PA review to do so rather than `None`.
+
+---
+
+## 5l. Network PA set (NET.PA.1–6) — SCAFFOLDED + RE-DERIVED S142
+
+**Missed-then-caught finding, corrected retroactively:** NET.PA.1's `resolution_type = "Contested"` prompted a full corpus grep, revealing **9 distinct `resolution_type` values in active use against a documented vocabulary of 2** (schema_cleanup_log.md #41, which supersedes the narrower #37). Critically, this same `"Contested"` value had already passed through the Standard PA review (§5h: STD.PA.2/4/5/6) unflagged — corrected after the fact once the pattern was spotted here. This connects to an already-open PM05 item (04-25, "rationalize resolution_type taxonomy after full card set") whose trigger condition — the full CA+PA corpus being reviewed — is essentially met by this session.
+
+**3 of 6 cards (NET.PA.4/5/6) are `*(stub)*`-tagged and genuinely thin**, matching Guild's pattern rather than Directorate's. NET.PA.3 (Live Coverage) uses a legacy header/TOC-anchor style (no card ID) matching DIR.PA.3/6, but is unusually self-aware — its own Outstanding Issues section already names its missing `card_id`. All 6 scaffolded, all Design Pass ✓ (.md + DB).
+
+**New findings (all logged to schema_cleanup_log.md):**
+- **#41 (resolution_type vocabulary sprawl)** — the headline finding this set surfaced; see above.
+- **New #43:** NET.PA.5's cost draws partly from the *target* faction's own resource pool (`resource.faction(target_faction).native * 1`), not the acting faction's — a genuinely new schema shape (blurs cost/effect distinction), not just a typing question. Confirmed deliberate per its own design_note, not an authoring slip.
+- **#29 (bare-string effects) extended to two more fields:** NET.PA.3's `persistence_condition` and `persistence_effect` (in addition to `restriction`) are all bare strings rather than structured expressions — the first confirmed instance of the defect spreading to persistence fields specifically.
+- **#10 (Intel Token as cost) — 14th instance, 7th notation:** NET.PA.1's `intel_token(target=faction(target)).all_held` (spends every held token naming the target, not a fixed count).
+- **New cost-notation form:** NET.PA.4's `district_native(target_district)` — a bare function-call style distinct from the corpus's usual `resource.district(native)` wrapper, semantically equivalent but syntactically new.
+- **New threshold pattern:** NET.PA.1's `threshold = 30 + (10 * count(...))` is a computed formula rather than a flat int — the first instance of a dynamically-scaling threshold field in the corpus (distinct from ring_mod/doctrine_mod additive modifiers, which are separate fields).
+
+**Confirmed clean:** no `game.choose_one()` on the 3 non-stub cards; no `flat=` portrait entries; taxonomy valid against DB for all 6.
+
+---
+
+## 5m. Syndicate PA set (SYN.PA.1–5) — SCAFFOLDED + RE-DERIVED S142 — final PA set, phase complete
+
+Smallest remaining set. 2 of 5 (SYN.PA.4/5) are genuinely thin stubs; SYN.PA.1/2/3 are fully developed. All 5 scaffolded, all Design Pass ✓ (.md + DB).
+
+**Confirmed a third instance of the raw-template-text defect (schema_cleanup_log.md #33):** SYN.PA.3's Resource cost positioning row contained the guidance template verbatim — fixed with a real assessment (mono-resource, Capital × 1). All 3 sightings of this exact defect (SYN.CA.10/11, GHO.PA.5, SYN.PA.3) are now resolved with real content.
+
+**New findings (all logged to schema_cleanup_log.md):**
+- **#7 (`flat=` portrait misuse) — 5th confirmed instance, new angle:** SYN.PA.3 uses `flat=` on all three of its portrait entries, including Syndicate's own — but unlike hypothesis C's "public-effect/covert-actor" framing, this card's actor is fully public (a loud table demand), so the pattern here is purely "flat on the submitter's own entry" plus "flat on factions who only reacted narratively, never acted." Confirms the pattern isn't confined to the covert-actor shape.
+- **#22 (untyped/nonstandard cost notation) — 4th instance of the bare `Type(n)` style:** SYN.PA.3's `cost = Capital(1)` matches SYN.CA.10/11/12 exactly — all four instances are Syndicate cards, both CA and PA.
+- **New #44:** `persistence = Transient` paired with prose describing an effect lasting "until Quarter+1" — SYN.PA.5 is the second confirmed instance of this tension (after DIR.PA.7), both on thin stubs, both using the identical phrasing. Worth checking whether "Quarter+1" has an established, non-violating meaning before treating this as a genuine rule conflict.
+- **Confirmed correct:** SYN.PA.1's `outcome_type = ElectPlayer` is properly structured with `on_accept`/`on_decline` populated and `success`/`successcrit`/`fail`/`failcrit` correctly `None` — a clean positive example of the ElectPlayer pattern.
+
+**Confirmed clean:** no `game.choose_one()` on the 3 non-stub cards; taxonomy valid against DB for all 5; no untyped-cost-attribute bug (#22's original form) anywhere in the set.
+
+---
+
+## PA phase complete — all 45 cards across 6 sets scaffolded and re-derived (S142)
+
+Standard (8) → Directorate (11) → Ghost (5) → Guild (10) → Network (6) → Syndicate (5) = 45 PA cards, matching the CA phase's structure. Full cross-cutting synthesis: `schema_cleanup_log.md` item **#45** (mirrors item #34's treatment of the CA phase). Headlines:
+- Item #34-A's "Standard is clean of all defect categories" claim did not survive — Standard PA is 8/8 on the untyped-cost bug and produced 2 of 3 false cross-card claims, both defects the CA-only synthesis had marked Standard-clean.
+- `resolution_type` vocabulary sprawl (9 values in use, 2 documented) is the single most consequential finding — it directly triggers an already-open PM05 item (04-25).
+- Intel Token as cost grew from 10→14 instances and 4→7 distinct notations across the full corpus — the strongest formalization candidate in the whole log.
+- `flat=` portrait misuse stayed genuinely Syndicate-only across all 5 confirmed instances (both CA and PA) — the one pattern that held up as truly faction-specific rather than collapsing under full-corpus scrutiny.
+- `card_status` DB/MD desync recurred across 3 factions and 3 different fields this session alone — reads as a systemic sync gap, not isolated incidents.
+
+**114 CA/PA cards total, both phases now fully scaffolded, re-derived, and Design Pass ✓ in .md + DB.** This closes PM05 09-16 step 2's non-modifier action-space scope (see `ca_pa_review_notes.md` §1). Full history: this file §5a–§5m, `schema_cleanup_log.md` items 1–45, PM02 L267–L274+.
+
+---
+
 ## 6. Scope inventory (from `card_status`, pulled S140)
 
 ```sql

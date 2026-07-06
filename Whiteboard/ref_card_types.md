@@ -79,6 +79,8 @@ No cap on Modifier Cards attached per action submitted (Art 04 §11.4, resolved 
 
 **Faction doctrine and narrative integrity (P7–P10, P17):** Every faction-specific card must pass both mechanical test (only this faction would do this) and narrative test (only this faction would say it this way). Where a faction-specific card represents a native capability, a standard equivalent must exist at higher cost or lower threshold.
 
+**`perspectives` field convention on FactionSpecific cards (confirmed S142):** intended on every FactionSpecific card — three voices: the acting faction's own, one doctrinally-aligned faction reacting favorably, and one doctrinally-opposed faction reacting critically (marked `# aligned` / `# opposed` in the code block by convention). This is deliberate worldbuilding through card copy, not optional flavor — a card with only its own faction's voice, or with `perspectives = None`, is missing this by default, not satisfying a lighter-weight standard. (Standard/All-faction cards use a different shape — all five faction voices, no single aligned/opposed pair, since no one faction is the actor.)
+
 **Portrait and ARBITER governance (P11–P13, P16, P18, P22, P23):** Portrait fires on action taken, not outcome. ARBITER is the sole mover of Portrait — no Effect field may state a direct Portrait shift. Portrait entries are submitter-bounded. ARBITER instructions reference existing procedures; they do not define new ones.
 
 **Card narrative integrity (P26):** Every card must be expressible as a 1–2 sentence plain-language narrative — what is actually happening in the world when this card is played? If the story cannot be told plainly, the card has a design problem. P26 is satisfied by the Card Story block (see below).

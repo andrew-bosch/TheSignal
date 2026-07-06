@@ -669,18 +669,20 @@ Network's signature information-attack PA — a coordinated release of all subst
 | Supported by zones | ✓ | target_district = None — faction-targeted broadcast; no zone reference. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (all held, faction-keyed to target; Art 02 §6); Exposure × 2 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Token count calculated at Beat 4; all tokens spent regardless of outcome | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — not in the confirmed 2-value vocabulary (this is the instance that prompted a full corpus grep, confirming several more unconfirmed values in active use). `threshold` is a computed formula (`30 + 10*n`) rather than a flat int — a distinct pattern from every other threshold field in the corpus reviewed so far, worth noting though not necessarily wrong (§6.1 types `threshold` as `int \| None`, and this evaluates to an int at resolution time). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Exposure ×2 + all held Intel Tokens naming target), correctly typed. Intel-Token-as-cost 12th corpus instance, using a 7th distinct notation (`intel_token(target=faction(target)).all_held`). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 NET.PA.1 = Card(
-    id      = "NET.PA.1",  version="v1.0",
+    id      = "NET.PA.1",  card_id = "NET.PA.1",  version="v1.0",
     name    = "Public Disclosure",
     tagline = "Network broadcasts all substantiated intelligence about a faction's operations in a single coordinated release.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
@@ -707,6 +709,7 @@ NET.PA.1 = Card(
     affinity    = None,
     restriction = faction(Network).holds_intel_token(faction=target, count=1),
     cost        = resource.faction(Network).exposure * 2 + intel_token(target=faction(target)).all_held,
+    boost       = None,
 
     success = (
         faction(target).standing  -= (2 * count(intel_token(target=faction(target)).spent)),
@@ -720,6 +723,7 @@ NET.PA.1 = Card(
     failcrit = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Network does not sit on what it knows. When the moment is right, everything comes out at once.",
     perspectives = {
@@ -762,16 +766,18 @@ Network's broadcast-derived presence PA — scaling territorial expansion built 
 | Supported by game procedure | ✓ | Districts named at Phase B; restriction per district at Beat 0 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource, scaling with district count (Exposure ×2+ + district native ×1/district), correctly typed. Design_note's trailing "Cost reasoning: District native resources represent the local on-the-ground support..." checked — correct, matches actual cost. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 NET.PA.2 = Card(
-    id      = "NET.PA.2",  version="v1.0",
+    id      = "NET.PA.2",  card_id = "NET.PA.2",  version="v1.0",
     name    = "Community Rally",
     tagline = "Mobilize communities across Network's established presence network.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
@@ -799,6 +805,7 @@ NET.PA.2 = Card(
     restriction = faction(Network).influence_tier(district.each_target) >= Established,
     cost        = resource.faction(Network).exposure * 2 + resource.district(each_target).native * 1,
     # cost = 2 Exposure + 1 district native per targeted district
+    boost       = None,
 
     success     = (
         district.each(target).faction(Network).presence += 1,
@@ -809,6 +816,7 @@ NET.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Network presence does not require a march. It requires a broadcast and the communities that were already listening.",
     perspectives = {
@@ -856,8 +864,10 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component required — open hand is a physical visibility state, not a board marker; comply/resist is self-policing per Governing Rule 6.1a | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Art 03 §9.0 (Start of Month) provides generalizable Covert Dispatch obligation procedure — Steps 0–2 cover comply/resist for any active PA with this obligation type (04-n77 ✅) | Art 03 §9.0 |
-| Data schema validation | ✓ | All §6.1 fields present; FactionHand subject flagged for 04b validation | Art 04 §6.1 |
+| Data schema validation | ⚠ | Fields present, but **`persistence_condition`, `persistence_effect`, and `restriction` are all bare strings**, not structured BoolExpr/MutationExpr — extends the bare-string defect to a third and fourth field beyond `success`/`restriction`. FactionHand subject flagged for 04b validation (self-flagged already, see Outstanding Issues below). `card_id` missing — its own Outstanding Issues section already names this ("Card ID: TBD"), a rare case of a card correctly self-identifying its own schema gap. | Art 04 §6.1 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=`None`), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Exposure × 2), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -868,11 +878,11 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ S89 | |
+| Status | ✓ | ✓ S89 | |
 
 ```python
 NET.PA.3 = Card(
-    id      = "NET.PA.3", version="v1.0",
+    id      = "NET.PA.3",  card_id = "NET.PA.3",  version="v1.0",
     name    = "Live Coverage",
     tagline = "Force a named faction to play with their hand visible or forfeit covert submissions, each Covert Dispatch for the remaining Months of the Quarter.",
     type    = PublicAct, subtype = FactionSpecific, faction = Network,
@@ -889,6 +899,7 @@ NET.PA.3 = Card(
     affinity        = None,
     restriction     = "target_faction != Network",
     cost        = resource.faction(acting).exposure * 2,
+    boost       = None,
     success     = game.activate(LiveCoverage_obligation, target=faction(target)),
     successcrit = (
         game.activate(LiveCoverage_obligation, target=faction(target)),
@@ -897,6 +908,7 @@ NET.PA.3 = Card(
     fail        = None,
     failcrit    = faction(acting).standing -= 1,
     portrait    = {Network: PortraitEntry(submitter=+1)},
+    ps_framing  = None,
     narrative   = "The story is already written. The only question is whether the subject chooses the cameras or the consequences.",
     perspectives = {
         Network:     "We are not exposing secrets. We are establishing accountability. The distinction matters to us.",
@@ -909,9 +921,7 @@ NET.PA.3 = Card(
 
 ---
 
-
 ---
-
 
 ---
 
@@ -1006,41 +1016,54 @@ NET.MOD.2 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Public mass mobilization to displace a rival's presence fits Network's broadcast/community doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Public, Exposure-funded disruption is on-doctrine for Network | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Remove / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost + threshold 60 set, but effect magnitude can't be confirmed — `success` is prose | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; d100 doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_district`/`target_faction` fields declared — referenced only inside the `success` string | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken — existing component | Art 02 §6 |
+| Supported by game procedure | ✓ | Straightforward remove-and-shift at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. `cost` uses `district_native(target_district)` — a new bare-function-call cost-notation form, distinct from the corpus's usual `resource.district(native)` shape, though semantically equivalent. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, most targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Exposure + district native), correctly typed (allowing for the nonstandard notation noted above). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 NET.PA.4 = Card(
-    id      = "NET.PA.4",  version = "v1.1",
+    id      = "NET.PA.4",  card_id = "NET.PA.4",  version = "v1.1",
     name    = "Grassroots Protest",
     tagline = "Mobilize the masses to physically drown out an opponent's influence.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
     beat    = 4,  resolution = d100,  threshold = 60,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Probabilistic",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Network).exposure * 1 + district_native(target_district) * 1,
+    boost   = None,
     success = "Remove 1 target_faction's Presence Token from target_district. Target faction loses 1 PS. Network gains +1 PS.",
-    design_note = "A loud territorial disruption. Burns Exposure and local resources to physically remove an opponent's token while shifting the PR balance."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A loud territorial disruption. Burns Exposure and local resources to physically remove an opponent's token while shifting the PR balance.",
+    arbiter_note = None,
 )
 ```
 
@@ -1059,41 +1082,54 @@ NET.PA.4 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | PR attack converting an opponent's own resource into ammunition fits Network's information-warfare doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Exposure-funded PS attack is on-doctrine for Network | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost set, but effect magnitude (−3 PS) can't be fully cross-checked without a structured effect | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_faction` field declared — referenced only inside `cost`/`success` strings | Art 01 §6–§7 |
+| Supported by components | ✓ | Public Standing track, native resources — existing components | Art 02 §7–§8 |
+| Supported by game procedure | ⚠ | **Cost draws from the *target* faction's native resource pool** (`resource.faction(target_faction).native * 1`), not the acting faction's own — a genuinely new schema shape. Every other cost expression in the corpus reviewed so far is paid entirely from the acting faction's own pool; deducting from a target's resource as part of `cost` (rather than as a `success` effect) blurs the cost/effect distinction. Worth its own schema question, not just a typing note — see schema_cleanup_log.md. | Art 03 §9.4; Art 04 §6.1 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Cross-resource (Exposure, acting faction's own, + native, drawn from the *target*) — the target-resource term is a new schema shape (see Supported by game procedure), not simply a typing question. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 NET.PA.5 = Card(
-    id      = "NET.PA.5",  version = "v1.1",
+    id      = "NET.PA.5",  card_id = "NET.PA.5",  version = "v1.1",
     name    = "Viral Outrage",
     tagline = "Weaponize an opponent's own assets against them to tank their standing.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = None,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Network).exposure * 2 + resource.faction(target_faction).native * 1,
+    boost   = None,
     success = "Target faction loses 3 Public Standing. Network gains +1 PS.",
-    design_note = "Pure PR assassination. Network burns the opponent's own native resource to fuel the smear campaign."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Pure PR assassination. Network burns the opponent's own native resource to fuel the smear campaign.",
+    arbiter_note = None,
 )
 ```
 
@@ -1112,41 +1148,54 @@ NET.PA.5 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Converting public goodwill (PS) into hard resources is a distinctive, doctrinally-grounded Network economy mechanism | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | PS-to-resource conversion directly rewards Network's "audience" doctrine | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
+| Taxonomy fit | ⚠ | `subject = AnyResource` — checked against `ref_taxonomy.md`'s Subject vocabulary; not a specific registered component, same open question as GUI.PA.5's bare `District` subject — worth confirming as a registered term. | Art 04b §4 |
+| Balance | ⚠ | Cost cheap (Exposure×1) for a PS-scaled resource yield with no stated cap — can't fully assess without knowing realistic PS ranges | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference — faction-internal economy card, correctly no zone dependency | Art 01 §6–§7 |
+| Supported by components | ✓ | Public Standing track, generic resource pool — existing components | Art 02 §7–§8 |
+| Supported by game procedure | ✓ | Straightforward PS-read-and-convert at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Exposure × 1), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 NET.PA.6 = Card(
-    id      = "NET.PA.6",  version = "v1.1",
+    id      = "NET.PA.6",  card_id = "NET.PA.6",  version = "v1.1",
     name    = "Crowdfunding Campaign",
     tagline = "Convert public goodwill into hard resources.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
     layer   = Economy,  function = Add,  subject = AnyResource,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Network).exposure * 1,
+    boost   = None,
     success = "Network names a resource type. Network gains 1 of that resource type for every 4 points of positive Public Standing they currently have.",
-    design_note = "Network's economy is driven by their audience. This rewards them for maintaining a high, positive PS track by converting it into any resource they need."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Network's economy is driven by their audience. This rewards them for maintaining a high, positive PS track by converting it into any resource they need.",
+    arbiter_note = None,
 )
 ```
 

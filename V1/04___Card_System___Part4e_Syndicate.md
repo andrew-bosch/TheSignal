@@ -1213,16 +1213,18 @@ Syndicate's public territorial acquisition PA — the counterpart to SYN.CA.3 Ho
 | Supported by game procedure | ✓ | Target decides at Beat 4 (not Debrief); token/Capital transfer at Beat 4 cleanup | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`, `outcome_type = ElectPlayer` — `on_accept`/`on_decline` both populated (`success`/`successcrit`/`fail`/`failcrit` correctly `None` for this outcome type), no `game.choose_one()`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capital), correctly typed — offer fee mono, balance payment also mono. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 SYN.PA.1 = Card(
-    id      = "SYN.PA.1",  version="v1.0",
+    id      = "SYN.PA.1",  card_id = "SYN.PA.1",  version="v1.0",
     name    = "Acquisition Offer",
     tagline = "Publicly offer to purchase another faction's presence position in a district.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
@@ -1250,6 +1252,7 @@ SYN.PA.1 = Card(
     restriction = faction(target).influence_tier(target_district) >= Established,
     # declared at Phase B: target faction, district, token count (n)
     cost = resource.faction(Syndicate).capital * 1,  # offer fee; non-refundable regardless of outcome
+    boost = None,
 
     success     = None,
     successcrit = None,
@@ -1270,6 +1273,7 @@ SYN.PA.1 = Card(
     ),
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Syndicate does not take what it can buy. The offer is always made first. What the other faction does with it is their business.",
     perspectives = {
@@ -1312,16 +1316,18 @@ Syndicate's political leverage PA. Places a Capital-valued marker on a named dis
 | Supported by game procedure | ⚠ | DividendMarker is a new component — register in Art 02. Upkeep Step 5 procedure needs amendment to handle marker resolution | Art 03 §11; Art 02 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (a `game.world_condition()` placement, matching the confirmed Seasonal-timed-effect pattern in design_reference_card_system.md) — no `game.choose_one()`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capital × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 SYN.PA.2 = Card(
-    id      = "SYN.PA.2",  version="v1.0",
+    id      = "SYN.PA.2",  card_id = "SYN.PA.2",  version="v1.0",
     name    = "Public Dividend",
     tagline = "Declare a public capital investment in a district — rewarding whoever holds Dominance at next Upkeep.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
@@ -1348,6 +1354,7 @@ SYN.PA.2 = Card(
     affinity    = None,
     restriction = None,
     cost        = resource.faction(Syndicate).capital * 2,  # placed as escrow under DividendMarker
+    boost       = None,
 
     success = (
         arbiter.place(DividendMarker(value=2, resource=Capital, district=target_district)),
@@ -1365,6 +1372,7 @@ SYN.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Syndicate backs positions, not factions. The investment is in the district. The winner claims it.",
     perspectives = {
@@ -1403,14 +1411,14 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 | Effect duration | ✓ | Permanent on decline path; accept/cannot-meet paths discard at Beat 4; React fires once then card discards; Quarter-end expiry if React never fires | — |
 | Persistence | ✓ | Permanent model applied correctly; persistence_condition clear; card-as-condition sits in Syndicate PA area face-up | Art 04 §6 |
 | Trigger validity | ✓ | React trigger: PA with non-blank Target Profile placed at Art 03 §9.2 Public Declaration — publicly observable (P5) | Art 04 §5 P5 |
-| Portrait validity | ✓ | flat entries only; submitter-bounded (Syndicate, Network, Directorate); no direct Portrait track shift in effect fields; Automatic resolution — no failcrit | Art 04 §6.2 |
+| Portrait validity | ⚠ | All three entries use `flat=` — Syndicate's own included. Checked against the established `flat=`-misuse pattern: this card's actor is fully public (not covert), so it doesn't fit hypothesis C's "public-effect/covert-actor" shape, but it does fit the plainer original angle — `flat=` on the *submitter's own* entry where `submitter=` looks like the semantically correct field (SYN.CA.7/10/11/12's pattern), plus `flat=` on Network/Directorate who never acted at all, only reacted narratively. 3 more confirmed instances of this pattern. | Art 04 §6.2 |
 | Supported by zones | ✓ | Faction Resolution Grid (Art 01/02); faction terminal (Intel Tokens held behind screen — faction-private) | Art 01 §6–§7 |
 | Supported by components | ✓ | Intel Token (Art 02 §9); Target Profile with declared-parameters line (Art 02 v2.4 — S111); Faction Resolution Grid (Art 02 §5) | Art 02 §5, §8, §9 |
 | Supported by game procedure | ✓ | Beat 4 ElectPlayer: publicly resolved at table — target declares trade, show, or decline openly; standard PA resolution (Art 03 §9.4). React framework (Art 03 §18) covers Permanent persistence_effect; table enforces React timing; no new procedure needed | Art 03 §9.4; §18 |
 | Data schema validation | ✓ | All fields populated per §6.1/§6.2 | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Three paths (accept / cannot-meet / decline) — each has exactly one outcome; no branching within paths; Permanent React fires once then discards | Art 04 §5 P27 |
-| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (Capital × 1, offer fee), correctly floor-power for a card whose real leverage is the ElectPlayer/Permanent-React mechanism, not the cost. Cost notation `Capital(1)` is the bare `Type(n)` style, a 4th confirmed instance alongside SYN.CA.10/11/12. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -1421,7 +1429,7 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ⚠ | |
+| Status | ✓ | ⚠ | |
 
 *v0.1 — S111: new card, fills Information\|Reveal\|IntelTokensHeld gap. Permanent React model. Issues Resolved pending doctrine review (04-n88).*
 
@@ -1499,6 +1507,7 @@ SYN.PA.3 = Card(
         Network:     PortraitEntry(flat=-1),
         Directorate: PortraitEntry(flat=-1),
     },
+    ps_framing = None,
 
     narrative = "The offer is made in public, which is unusual for the Syndicate. They prefer quiet transactions. This one is designed to be loud.",
 
@@ -1511,14 +1520,13 @@ SYN.PA.3 = Card(
     },
 
     design_note  = "Three resolution paths at Beat 4 ElectPlayer: (1) trade — bilateral exchange: consideration moves Syndicate→target, N tokens move target→Syndicate; card discards only if both transfers complete; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards — information goal met; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. Sub-cases 1 (completed) and 2 both satisfy the card; only 3 triggers the stake. Non-fulfillment edge case (sub-case A, Syndicate cannot deliver consideration): exchange fails; card stays Permanent — Syndicate set the terms and failed to meet them. Bluff mechanic is intentional: consideration is a verbal offer written on TP declared-parameters line, not held in escrow; Syndicate bears public failure risk. Show path: target voluntarily reveals count — not compelled, consistent with GR 10.1 (ElectPlayer creates stake; choice is player's). PERMANENT PHASE is fully table-enforced: card is face-up in Syndicate PA area; table observes when target places a PA with Target Profile at Art 03 §9.2.0 and allows Syndicate to replace it (React); table observes if target accepts at any point (trade or show) and card is cleared. No ARBITER involvement required at any stage — Beat 4 ElectPlayer is public; Permanent card is table-enforced. Target may accept at any time to clear the card. Threat is the constraint: target must deal with Syndicate or avoid targeted PAs for the rest of the Quarter. N and consideration declared at Art 03 §9.2 on TP declared-parameters line (Art 02 v2.4).",
+    arbiter_note = None,
 )
 ```
 
 ---
 
-
 ---
-
 
 ---
 
@@ -1537,41 +1545,54 @@ SYN.PA.3 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Public wealth display forcing table-wide reaction fits Syndicate's Capital-as-leverage doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Weaponizing Capital for PR is maximally on-doctrine for Syndicate | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Syndicate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost set, but the table-wide "every opponent pays or loses PS" effect has no bound or per-faction structure to assess magnitude against | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference — table-wide effect, correctly no zone dependency | Art 01 §6–§7 |
+| Supported by components | ✓ | Public Standing track, Capital — existing components | Art 02 §7–§8 |
+| Supported by game procedure | ⚠ | "Every opponent must either pay or lose PS" is a simultaneous table-wide forced choice with no defined resolution order or procedure — new ARBITER-facing behavior, same category as other unconfirmed-procedure gaps flagged elsewhere in this review | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capital × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 SYN.PA.4 = Card(
-    id      = "SYN.PA.4",  version = "v1.0",
+    id      = "SYN.PA.4",  card_id = "SYN.PA.4",  version = "v1.0",
     name    = "Charity Gala",
     tagline = "A massive display of wealth that forces rivals to pay up or lose face.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Syndicate).capital * 2,
+    boost   = None,
     success = "Syndicate gains +2 PS. Every opponent must either pay 1 Capital to the supply or immediately lose 1 PS.",
-    design_note = "A public flex of pure capital. Weaponizes Syndicate's wealth to farm PR while forcing opponents to bleed money or take a PR hit just to keep up appearances."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A public flex of pure capital. Weaponizes Syndicate's wealth to farm PR while forcing opponents to bleed money or take a PR hit just to keep up appearances.",
+    arbiter_note = None,
 )
 ```
 
@@ -1590,41 +1611,54 @@ SYN.PA.4 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Capital-toll extortion on district development is grounded in Syndicate's leverage doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | On-doctrine — Capital positioned as a toll on others' physical expansion | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Syndicate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Remove / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost set, but the standing toll's actual power (removal threat on any placement) can't be assessed without a structured, bounded effect | Art 02 §6–§7 |
+| Effect duration | ⚠ | `persistence = Transient`, but the prose describes the effect lasting "until Quarter+1" — into the *next* Quarter. Same tension as DIR.PA.7 Curfew: a Transient effect (within-Quarter per Art 04 §5's duration discipline) described in prose as spanning a Quarter boundary. Second confirmed instance of this exact tension — worth its own schema_cleanup_log entry now that it's recurred. | Art 04 §5 P19 |
+| Persistence | ⚠ | See Effect duration — same tension | Art 04 §6 |
+| Trigger validity | ⚠ | The described trigger ("whenever a Structure Block or Presence Token is placed here") maps toward confirmed TriggerExpr vocabulary (`structure_block.placed`/`presence_chip.placed`) but isn't expressed as one — prose inside `success`, same Card-as-Condition gap as GUI.PA.3/8 and DIR.PA.7 | Art 04 §6.3 |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_district` field declared — referenced only inside `success` prose | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock, PresenceToken, Capital — existing components | Art 02 §6–§8 |
+| Supported by game procedure | ⚠ | The pay-or-lose-asset reactive mechanism has no structured procedural home — same gap as Trigger validity above | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string describing what should be a `persistence_effect`, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capital + Mandate), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 SYN.PA.5 = Card(
-    id      = "SYN.PA.5",  version = "v1.1",
+    id      = "SYN.PA.5",  card_id = "SYN.PA.5",  version = "v1.1",
     name    = "Protection Racket",
     tagline = "Publicly leverage capital to extort physical expansion.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Territory,  function = Remove,  subject = StructureBlock,
-    beat    = 4,  resolution = Automatic,  persistence = Transient,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Transient,
+    persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
+    target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).mandate * 1,
+    boost   = None,
     success = "Places a Standing Condition on target_district until Quarter+1: Whenever a Structure Block or Presence Token is placed here, the faction that owns it must pay 1 Capital to Syndicate. If they do not, the structure or token is immediately removed.",
-    design_note = "Fixes the covert targeting issue. Physical placement of chips and blocks is public knowledge. Syndicate sets up a toll booth on the district: the owner of the structure pays, or their asset is destroyed."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Fixes the covert targeting issue. Physical placement of chips and blocks is public knowledge. Syndicate sets up a toll booth on the district: the owner of the structure pays, or their asset is destroyed.",
+    arbiter_note = None,
 )
 ```
 

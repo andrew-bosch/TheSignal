@@ -3121,16 +3121,18 @@ Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outc
 | Supported by game procedure | ✓ | Beat 4 resolution; ring entry rules enforced at Beat 0 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (successcrit/fail/failcrit all `None`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), but `cost`'s term is missing a resource-type attribute. Cross-card claim ("same cost as STD.CA.3") also checked and found false. Tier assessment blocked until cost bug resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.1 = Card(
-    id      = "STD.PA.1",  version="v1.0",
+    id      = "STD.PA.1",  card_id="STD.PA.1",  version="v1.0",
     name    = "Open Operations",
     tagline = "Formally declare your operational presence in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3157,6 +3159,7 @@ STD.PA.1 = Card(
     affinity    = faction(acting) == Directorate: cost.faction(native) = 0,
     restriction = None,  # ring entry enforced universally at Beat 0
     cost        = resource.faction(acting) * 2,
+    boost       = None,
 
     success     = (district(target).faction(acting).presence += 2, faction(acting).standing += 1),
     successcrit = None,
@@ -3167,6 +3170,7 @@ STD.PA.1 = Card(
         Directorate: PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "A formal declaration carries weight in New Meridian. Presence on the record is presence that cannot be denied.",
     perspectives = {
@@ -3209,18 +3213,20 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 | Supported by zones | ✓ | target_district = district.any — valid zone reference; ring_mod calibrated to ring context | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — target removal (Art 02 §6); ContestedMarker — procedural (Art 03 §9.4); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8; Art 03 §9.4 |
 | Supported by game procedure | ✓ | Beat 4; Contested marker placement governed by Art 03 §9.4; ring_mod applies | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — not in the confirmed 2-value vocabulary (`"Probabilistic"`/`"Transactional"`). Corpus-wide grep confirms 10 instances of `"Contested"` alone, plus 7 other unconfirmed values (`"Permanent public act"`, `"Positional wager"`, `"Conditional"`, `"Deceptive"`, `"Predictive"`, `"Verification"`, `"PlayerChoice(target)"`). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching in any tier. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), but `cost`'s term is missing a resource-type attribute. Cross-card claim ("same cost, 45 vs 40 threshold, as STD.CA.4") checked directly and found false on both counts — STD.CA.4's actual cost is dual-resource, actual threshold is 50, not 40. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.2 = Card(
-    id      = "STD.PA.2",  version="v1.0",
+    id      = "STD.PA.2",  card_id="STD.PA.2",  version="v1.0",
     name    = "Disputed Claim",
     tagline = "Formally challenge another faction's presence in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3250,6 +3256,7 @@ STD.PA.2 = Card(
     ),
     restriction = faction(target).influence_tier(target_district) >= Established,
     cost        = resource.faction(acting) * 2,
+    boost       = None,
 
     success     = (
         district(target_district).faction(target).presence -= 1,
@@ -3266,6 +3273,7 @@ STD.PA.2 = Card(
         Directorate: PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "A contested district is not a resolved one. Filing a formal challenge makes the dispute legible.",
     perspectives = {
@@ -3310,16 +3318,18 @@ Public counterpart to STD.CA.1 (Build Structure). Same cost; unlike STD.CA.1, th
 | Supported by game procedure | ✓ | Beat 4; restriction checked at Beat 0 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Dual-resource cost (faction native + district native), identical expression to STD.CA.1 — cross-card claim ("same cost as STD.CA.1") checked directly and confirmed true. Same missing resource-type attribute as its CA counterpart. Tier assessment blocked until cost bug resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.3 = Card(
-    id      = "STD.PA.3",  version="v1.0",
+    id      = "STD.PA.3",  card_id="STD.PA.3",  version="v1.0",
     name    = "Public Commission",
     tagline = "Publicly announce and fund construction of a structure in a district.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3349,6 +3359,7 @@ STD.PA.3 = Card(
         district(target).faction(acting).structure == 0
     ),
     cost = resource.faction(acting) * 1 + resource.district(native) * 1,
+    boost = None,
 
     success     = (district(target).faction(acting).structure += 1, faction(acting).standing += 1),
     successcrit = None,
@@ -3359,6 +3370,7 @@ STD.PA.3 = Card(
         Guild: PortraitEntry(submitter=+1),
         Ghost: PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "Every faction that wants to be taken seriously in New Meridian eventually has to build something where everyone can see it.",
     perspectives = {
@@ -3392,7 +3404,7 @@ The PS attack card of the standard set. A formal public accusation carries both 
 | Voice fit | ✓ | All five perspectives credible: Guild's evidence-based restraint, Directorate's formal mechanism framing, Network's public-fact stance, Ghost's attention-trace surveillance read, Syndicate's public-leverage calculation | Art 00 §7 |
 | Doctrine alignment | ✓ | Network −1 cost + portrait +1; Directorate −1 cost + portrait +1 — formal accusation aligns with institutional/broadcast doctrines. Ghost −1 portrait: public accusation = self-exposure. Intel token affinity is doctrinally neutral. No target_faction → doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / Standard | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Standing / Shift / PublicStanding | Art 04b §4 |
+| Taxonomy fit | ⚠ | Standing / Shift / PublicStanding — code correctly uses `subject = StandingMarker`; prose still says the retired term (corrected S126). Same pattern as DIR.CA.7/NET.CA.7 (schema_cleanup_log.md item 4-F); flagged, not corrected. | Art 04b §4 |
 | Balance | ✓ | Base threshold 35 is demanding; Intel token affinity rewards preparation. Fail/failcrit PS penalties create real downside | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
@@ -3401,18 +3413,20 @@ The PS attack card of the standard set. A formal public accusation carries both 
 | Supported by zones | ✓ | target_district = None — faction-targeted action; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (optional, Fresh — spent on resolution regardless; Art 02 §6); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 4; Intel token submitted with case at Phase B; token spent regardless | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), untyped resource-type attribute. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.4 = Card(
-    id      = "STD.PA.4",  version="v1.0",
+    id      = "STD.PA.4",  card_id="STD.PA.4",  version="v1.0",
     name    = "Public Censure",
     tagline = "Formally accuse another faction of conduct contrary to the city's interest.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3443,6 +3457,7 @@ STD.PA.4 = Card(
     ),
     restriction = target_faction != faction(acting),
     cost        = resource.faction(acting) * 2,
+    boost       = None,
 
     success     = (faction(target).standing -= 2, faction(acting).standing += 1),
     successcrit = None,
@@ -3454,6 +3469,7 @@ STD.PA.4 = Card(
         Directorate: PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "A formal accusation in New Meridian is not a rumor. It is a claim that goes into the record and demands a response.",
     perspectives = {
@@ -3496,18 +3512,20 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 | Supported by zones | ✓ | target_district = None — faction-targeted attribution; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (faction=target, age=Fresh or Stale — Expired excluded per restriction; Art 02 §6); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 4; Intel token submitted with case; token age determined at Beat 4 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Cross-resource cost (faction native + Intel Token) — `resource.faction(acting)` term untyped; Intel Token as cost is the 10th confirmed corpus instance and first in Standard PA, using a new notation form (`intel_token(target=faction(target))`) not seen elsewhere in the corpus. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.5 = Card(
-    id      = "STD.PA.5",  version="v1.0",
+    id      = "STD.PA.5",  card_id="STD.PA.5",  version="v1.0",
     name    = "On the Record",
     tagline = "Formally attribute a recent covert action to a named faction before the city.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3537,6 +3555,7 @@ STD.PA.5 = Card(
     ),
     restriction = faction(acting).holds_intel_token(faction=target, age__in=[Fresh, Stale]),  # Expired excluded — too degraded to constitute usable attribution evidence
     cost        = resource.faction(acting) * 1 + intel_token(target=faction(target)) * 1,
+    boost       = None,
 
     success     = (
         arbiter.announce(attribution=target_faction, context=intel_token.quarter),
@@ -3551,6 +3570,7 @@ STD.PA.5 = Card(
         Network: PortraitEntry(submitter=+1),
         Ghost:   PortraitEntry(submitter=-2),
     },
+    ps_framing   = None,
 
     narrative    = "In New Meridian, there are very few true secrets. There are only secrets that haven't been made public yet.",
     perspectives = {
@@ -3593,18 +3613,20 @@ The economic attack card of the standard PA set. PS is intentionally reversed fr
 | Supported by zones | ✓ | target_district = None — faction-targeted action; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | NativeResource (target's supply, Art 02 §8); faction native × 1 cost (Art 02 §8). Floor clause is procedural | Art 02 §8 |
 | Supported by game procedure | ✓ | Beat 4; ARBITER removes up to 2 native resources from target (floor = 0 — all available if fewer than 2) | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.6 = Card(
-    id      = "STD.PA.6",  version="v1.0",
+    id      = "STD.PA.6",  card_id="STD.PA.6",  version="v1.0",
     name    = "Economic Sanction",
     tagline = "Publicly impose economic pressure on a faction, forcing resource loss.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3631,6 +3653,7 @@ STD.PA.6 = Card(
     affinity    = faction(acting) == Syndicate: threshold += 15,
     restriction = None,
     cost        = resource.faction(acting) * 1,
+    boost       = None,
 
     success     = (
         faction(target).resource(native) -= min(2, faction(target).resource(native)),  # floor = 0
@@ -3645,6 +3668,7 @@ STD.PA.6 = Card(
         Syndicate: PortraitEntry(submitter=+1),
         Guild:     PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "Economic pressure in New Meridian is always visible. The faction applying it accepts that visibility as part of the cost.",
     perspectives = {
@@ -3678,7 +3702,7 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 | Voice fit | ✓ | All five perspectives distinct: Guild's building-primary-but-does-speak, Directorate's institutional communication expectation, Network's terse "this is what we do", Ghost's analytical surveillance framing of own public acts, Syndicate's investment/return calculation | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate +1, Network +1: institutional communication and broadcasting are both core doctrinal expressions. Ghost −1: public address = attention = exposure risk. Others: no strong doctrinal alignment with the act itself | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / Standard | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Standing / Shift / PublicStanding — +2 PS is a relative position change, not an unconditional grant | Art 04b §4 |
+| Taxonomy fit | ⚠ | Standing / Shift / PublicStanding — code correctly uses `subject = StandingMarker`; prose still says the retired term (corrected S126). Second Standard PA instance of the DIR.CA.7/NET.CA.7 pattern (schema_cleanup_log.md item 4-F); flagged, not corrected. +2 PS is a relative position change, not an unconditional grant | Art 04b §4 |
 | Balance | ✓ | 1 native for +2 PS with presence restriction. Cheap but not free; presence requirement prevents abuse | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shift is immediate; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
@@ -3689,16 +3713,18 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 | Supported by game procedure | ✓ | Beat 4; restriction at Beat 0 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.PA.7 = Card(
-    id      = "STD.PA.7",  version="v1.0",
+    id      = "STD.PA.7",  card_id="STD.PA.7",  version="v1.0",
     name    = "Public Address",
     tagline = "Rally public support in a district where you operate.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3725,6 +3751,7 @@ STD.PA.7 = Card(
     affinity    = None,
     restriction = district(target).faction(acting).presence > 0,
     cost        = resource.faction(acting) * 1,
+    boost       = None,
 
     success     = faction(acting).standing += 2,
     successcrit = None,
@@ -3736,6 +3763,7 @@ STD.PA.7 = Card(
         Network:     PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "Presence without voice is presence waiting to become something else.",
     perspectives = {
@@ -3780,6 +3808,8 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 | Supported by game procedure | ✓ | Phase B: target faction named publicly. Beat 4: blank AccordForm delivered to submitting faction. Faction drafts and places per Art 06 §9.4. Execution at Debrief. | Art 03 Phase B; Art 06 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (`arbiter.deliver(...)`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -3789,11 +3819,11 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 STD.PA.8 = Card(
-    id      = "STD.PA.8",  version="v1.0",
+    id      = "STD.PA.8",  card_id="STD.PA.8",  version="v1.0",
     name    = "Table an Accord",
     tagline = "Formally propose a binding agreement with another faction, placed on the public record.",
     type    = PublicAct,  subtype = Standard,  faction = All,
@@ -3823,6 +3853,7 @@ STD.PA.8 = Card(
         accord(faction(acting), faction(target)).active == False
     ),
     cost = resource.faction(acting) * 1,
+    boost = None,
 
     success = arbiter.deliver(faction(acting), AccordForm(blank)),
     # Faction drafts terms per Art 06 §9.3; places in Accord Placement Area at their discretion.
@@ -3837,6 +3868,7 @@ STD.PA.8 = Card(
         Directorate: PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
     },
+    ps_framing   = None,
 
     narrative    = "The Table exists to make agreements. This is one of the few acts that uses it as intended.",
     perspectives = {
@@ -13875,16 +13907,18 @@ Guild's prestige structure PA — a simultaneous double build in two named distr
 | Supported by game procedure | ✓ | Both districts declared at Phase B; restriction checked at Beat 0; both-or-nothing rule | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity ×2 + Capital ×1 + Mandate ×1), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Capital + 1 Mandate (Ceiling-tier)" checked against the dangling-fragment pattern — **correct**, matches the actual cost exactly. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.1 = Card(
-    id      = "GUI.PA.1",  version="v1.0",
+    id      = "GUI.PA.1",  card_id = "GUI.PA.1",  version="v1.0",
     name    = "Civic Works Mandate",
     tagline = "Declare a public infrastructure program across two districts simultaneously.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -13916,6 +13950,7 @@ GUI.PA.1 = Card(
         district(target2).faction(Guild).structure == 0
     ),
     cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).capital * 1 + resource.faction(Guild).mandate * 1,
+    boost = None,
 
     success     = (
         district(target1).faction(Guild).structure += 1,
@@ -13927,6 +13962,7 @@ GUI.PA.1 = Card(
     failcrit    = None,
 
     portrait = {Guild: PortraitEntry(submitter=+2)},
+    ps_framing = None,
 
     narrative    = "The Civic Works Mandate is Guild's strongest public statement: we are not here to compete. We are here to build what New Meridian requires.",
     perspectives = {
@@ -13969,21 +14005,22 @@ Guild's economic relationship PA. Distinct from STD.CA.9 (Fund) in cost currency
 | Supported by game procedure | ⚠ | Phase B: target faction named publicly. Beat 4: 2 native delivered; blank AccordForm delivered to Guild. Guild drafts bond terms; places per Art 06 §9.4. Upkeep income tracking requires Accord execution confirmation. | Art 03 Phase B; Art 06 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity ×1 + native ×2), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-- **Upkeep income tracking:** Confirm Accord income procedure (target pays 1 Capacity/Upkeep to Guild at Upkeep Step 6 while Accord active) against Art 06 §9.4 execution model.
 - **Upkeep income tracking:** Confirm Accord income procedure (target pays 1 Capacity/Upkeep to Guild at Upkeep Step 6 while Accord active) against Art 06 §9.4 execution model.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.2 = Card(
-    id      = "GUI.PA.2",  version="v1.0",
+    id      = "GUI.PA.2",  card_id = "GUI.PA.2",  version="v1.0",
     name    = "Infrastructure Bond",
     tagline = "Publicly extend Guild infrastructure investment to another faction, establishing a formal economic relationship.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -14011,6 +14048,7 @@ GUI.PA.2 = Card(
     restriction = faction(Guild).influence_tier(district.any_adjacent_to(faction(target).presence)) >= Established,
     cost        = resource.faction(Guild).capacity * 1  # form price → Reservoir
               + resource.faction(Guild).native * 2,   # sweetener → delivered to target at success
+    boost       = None,
 
     success = (
         faction(target).resource(native) += 2,  # immediate delivery
@@ -14025,6 +14063,7 @@ GUI.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Guild does not give resources away. The Infrastructure Bond is an investment — the terms make that clear.",
     perspectives = {
@@ -14039,9 +14078,7 @@ GUI.PA.2 = Card(
 
 ---
 
-
 ---
-
 
 ---
 
@@ -14060,33 +14097,33 @@ GUI.PA.2 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Historical-protection declaration thematically fits Guild's permanence doctrine — protecting what's already built | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Consistent with "permanence through building" — protecting structures from removal | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Protect / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity×2 + Mandate×1) set, but the one-time-trigger-then-clear effect's actual power level can't be fully assessed — `success` is prose, not a structured mutation | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Permanent`, but self-clearing after one trigger per its own prose — a one-shot Permanent, not standing indefinitely | Art 04 §5 P19 |
+| Persistence | ⚠ | `persistence = Permanent` set, but no `persistence_condition`/`persistence_effect` fields — the Card-as-Condition pattern (design_reference_card_system.md) requires both as structured fields; this card describes the standing condition in prose inside `success` instead | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock — existing component | Art 02 §6 |
+| Supported by game procedure | ⚠ | The "restore on removal, once" mechanism has no defined procedural home — not a confirmed TriggerExpr/persistence_effect pattern | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string — same bare-string-literal-effects defect shape seen elsewhere in this review, now confirmed a third faction. Missing entirely: `outcome_type`, `threshold`, `ring_mod`, `doctrine_mod`, `trigger`, `resolution_type`, `target_object`/`target_taxonomy`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `on_accept`/`on_decline`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No `game.choose_one()`, but no structured success/fail split exists to check against P27 either — `success` is unstructured prose | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier)" checked — correct, matches actual cost. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.3 = Card(
-    id      = "GUI.PA.3",  version = "v1.0",
+    id      = "GUI.PA.3",  card_id = "GUI.PA.3",  version = "v1.0",
     name    = "Heritage Registry",
     tagline = "Declare a district's structures historically protected.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -14094,17 +14131,29 @@ GUI.PA.3 = Card(
     layer    = Territory,  function = Protect,  subject = StructureBlock,
 
     beat            = 4,
-    resolution      = Automatic,
+    resolution      = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence     = Permanent,
-    
+    persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a card-as-condition effect not structured here
+
     target_district = district.any,
     target_faction  = None,
+    target_object   = None,  target_taxonomy = None,
 
+    affinity = None,  restriction = None,
     cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).mandate * 1,
+    boost = None,
 
     success = "Places standing condition on target_district: If a structure block is removed for any reason (unless due to influence token reaching 0), add the structure block back to the district. Remove this standing effect after it triggers once.",
-    
-    design_note = "Defense scaling gap addressed. Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier). Mandate provides the legal shield to protect the concrete."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Defense scaling gap addressed. Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier). Mandate provides the legal shield to protect the concrete.",
+    arbiter_note = None,
 )
 ```
 
@@ -14123,33 +14172,33 @@ GUI.PA.3 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Ribbon-cutting scaled to structural density is thematically grounded — public credibility earned from demonstrated building | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | PS scaling directly off Guild's own structure count in the district is maximally on-doctrine (standing earned through building, not rhetoric) | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity + Exposure) set, but can't confirm magnitude without a real district structure count at review time | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock (count read), Public Standing track — existing components | Art 02 §6–§7 |
+| Supported by game procedure | ✓ | Straightforward count-and-apply at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | `success` is a bare string — but notably **looks like valid Python expression syntax quoted as a string literal** (`"faction(Guild).standing += ..."`), a distinct sub-shape from GUI.PA.3/5's English-prose strings: this reads like real code that was accidentally left inside quotes rather than never structured at all. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields beyond `target_district`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 — `success` is a quoted string, not executable | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Exposure), correctly typed. Design_note's trailing "Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier)" checked — correct, matches actual cost; Exposure use explained coherently ("broadcasting the ribbon-cutting"), same pattern as GHO.PA.4. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.4 = Card(
-    id      = "GUI.PA.4",  version = "v1.0",
+    id      = "GUI.PA.4",  card_id = "GUI.PA.4",  version = "v1.0",
     name    = "Civic Unveiling",
     tagline = "A highly publicized ribbon-cutting ceremony that compounds structural density into public adoration.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -14157,15 +14206,28 @@ GUI.PA.4 = Card(
     layer    = Standing,  function = Shift,  subject = StandingMarker,
 
     beat            = 4,
-    resolution      = Automatic,
-    
-    target_district = district.any,
+    resolution      = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence     = Immediate,  # scaffolded — deterministic default for a non-standing, one-shot PA
+    persistence_condition = None,  persistence_effect = None,
 
+    target_district = district.any,
+    target_faction  = None,  target_object = None,  target_taxonomy = None,
+
+    affinity = None,  restriction = None,
     cost = resource.faction(Guild).capacity * 1 + resource.faction(Guild).exposure * 1,
+    boost = None,
 
     success = "faction(Guild).standing += district(target_district).faction(Guild).structure * 1",
-    
-    design_note = "Standing / PS Compounding gap filled. Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier). Broadcasting the massive ribbon-cutting to the city."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Standing / PS Compounding gap filled. Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier). Broadcasting the massive ribbon-cutting to the city.",
+    arbiter_note = None,
 )
 ```
 
@@ -14184,33 +14246,33 @@ GUI.PA.4 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Blanket regulatory exemption for expansion thematically fits Guild's builder doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Removing a structural obstacle to building is maximally on-doctrine for Guild | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ⚠ | `subject = District` — checked against `ref_taxonomy.md`'s Subject vocabulary; "District" as a bare subject (rather than a specific component like PresenceToken/StructureBlock) is unusual — worth confirming this is a registered Subject term, same open question as items #27's unregistered-subject pattern (Difficulty, TargetProfile, etc.), though not confirmed DB-flagged here. | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity + Findings + Capital) set, but "regardless of Ring limitations or connectivity rules" is a sweeping, unquantified effect — can't assess power level against a prose description | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared; prose says "for the next Quarter" (Seasonal-shaped), but no structured duration field confirms this | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
+| Supported by components | ⚠ | "Ring limitations or connectivity rules" bypass has no defined component/procedure hook — this would need to interact with the Ring Entry Rules (ref_special_district_and_ring_rules.md) directly, not clearly supported | Art 01 §6 |
+| Supported by game procedure | ⚠ | No confirmed Art 03 procedure for a temporary Ring-entry-rule bypass — new ARBITER-facing behavior, same category as other unconfirmed-procedure gaps flagged elsewhere in this review | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, most targeting/effect fields, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Findings + Capital), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Findings + 1 Capital" checked — correct, matches actual cost. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.5 = Card(
-    id      = "GUI.PA.5",  version = "v1.0",
+    id      = "GUI.PA.5",  card_id = "GUI.PA.5",  version = "v1.0",
     name    = "Zoning Exemption",
     tagline = "Secure a blanket override of Ring expansion limitations.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -14218,15 +14280,28 @@ GUI.PA.5 = Card(
     layer    = Submission,  function = RemoveRestriction,  subject = District,
 
     beat            = 4,
-    resolution      = Automatic,
-    
-    target_district = district.any,
+    resolution      = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence     = Seasonal,  # scaffolded — matches prose "for the next Quarter"
+    persistence_condition = None,  persistence_effect = None,
 
+    target_district = district.any,
+    target_faction  = None,  target_object = None,  target_taxonomy = None,
+
+    affinity = None,  restriction = None,
     cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).findings * 1 + resource.faction(Guild).capital * 1,
+    boost = None,
 
     success = "For the next Quarter, Guild may place structures in the target district regardless of Ring limitations or connectivity rules.",
-    
-    design_note = "Ceiling-tier expansion enabler. Cost reasoning: 2 Capacity + 1 Findings + 1 Capital. Finding the bureaucratic loop-hole and buying the necessary judges to skip the physical expansion limits."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Ceiling-tier expansion enabler. Cost reasoning: 2 Capacity + 1 Findings + 1 Capital. Finding the bureaucratic loop-hole and buying the necessary judges to skip the physical expansion limits.",
+    arbiter_note = None,
 )
 ```
 
@@ -14247,42 +14322,55 @@ GUI.PA.5 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Trading a structure for a resource windfall is a plausible economic act, though the "legal asset flip" framing is thin | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ⚠ | Giving up a Structure Block (Guild's core permanence asset) for resources cuts against "permanence through building" — not clearly on-doctrine; no design_note reasoning addresses this tension | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Modify / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost is cheap (Capacity×1) for removing a Guild structure, granting the target a structure, and gaining 3 of the target's native — can't fully assess without a structured effect to check magnitudes against | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_district` field declared — referenced only inside the `restriction`/`success` strings | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock, native resources — existing components | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Straightforward transfer-and-payment at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | **Both `restriction` and `success` are bare strings** — extends the bare-string defect beyond `success` alone to `restriction` too, the first confirmed instance on a non-`success` field. The restriction string also uses English `AND` rather than Python `and`. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capacity × 1), correctly typed — the only cleanly-structured field on this card. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.6 = Card(
-    id      = "GUI.PA.6",  version = "v1.1",
+    id      = "GUI.PA.6",  card_id = "GUI.PA.6",  version = "v1.1",
     name    = "Asset Transfer",
     tagline = "Liquidate Guild property into another faction's hands for massive resource injection.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
     layer   = Territory,  function = Modify,  subject = StructureBlock,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    affinity = None,
     cost    = resource.faction(Guild).capacity * 1,
+    boost   = None,
     restriction = "district(target).faction(Guild).structure > 0 AND district(target).faction(target_faction).presence > 0",
     success = "Guild removes 1 of their Structure Blocks in target_district and replaces it with 1 Structure Block of the target_faction. Guild gains 3 of the target_faction's native resource from the supply.",
-    design_note = "A powerful, legal asset flip. Leverages existing footprint to extract deep foreign resource pockets."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A powerful, legal asset flip. Leverages existing footprint to extract deep foreign resource pockets.",
+    arbiter_note = None,
 )
 ```
 
@@ -14301,42 +14389,55 @@ GUI.PA.6 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Forcing presence expansion from an existing foothold is thematically grounded — Guild's blunt-force building tool | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Direct presence expansion is on-doctrine for Guild's builder identity | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Add / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity×2 + Mandate×1) for +2 presence tokens with a foothold restriction — comparable in shape to STD.PA.1's dual-native cost for +2 presence, but can't confirm relative balance without the "crack Established status" framing being made concrete | Art 02 §6–§7 |
+| Effect duration | ✓ | Presence tokens are Permanent board state; the card itself is a one-shot act | Art 04 §5 P19 |
+| Persistence | ⚠ | No `persistence` field declared at all | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_district` field declared — referenced only inside the `restriction`/`success` strings | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken — existing component | Art 02 §6 |
+| Supported by game procedure | ✓ | Straightforward placement at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | Both `restriction` and `success` are bare strings — same defect shape as GUI.PA.6. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.7 = Card(
-    id      = "GUI.PA.7",  version = "v1.1",
+    id      = "GUI.PA.7",  card_id = "GUI.PA.7",  version = "v1.1",
     name    = "Eminent Domain Petition",
     tagline = "Force massive influence into a district to pave the way for expansion.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
     layer   = Territory,  function = Add,  subject = PresenceToken,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,
     cost    = resource.faction(Guild).capacity * 2 + resource.faction(Guild).mandate * 1,
+    boost   = None,
     restriction = "district(target).faction(Guild).presence > 0",
     success = "Place 2 Guild Presence Tokens in target_district.",
-    design_note = "Requires existing foothold. A blunt-force legal maneuver to crack an opponent's Established status."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Requires existing foothold. A blunt-force legal maneuver to crack an opponent's Established status.",
+    arbiter_note = None,
 )
 ```
 
@@ -14355,41 +14456,54 @@ GUI.PA.7 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Converting opponents' construction into Guild PS is a distinctive, doctrinally-grounded standing condition | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Reframes any faction's building as validation of Guild's permanence doctrine — on-doctrine | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Capacity×2) for an indefinite standing PS-generation condition — can't confirm power level without a structured, bounded effect | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Permanent`, consistent with a standing reactive condition | Art 04 §5 P19 |
+| Persistence | ⚠ | `persistence = Permanent` set, but no `persistence_condition`/`persistence_effect` fields — the Card-as-Condition pattern requires both as structured fields; this card describes the standing trigger in prose inside `success` instead, same gap as GUI.PA.3 | Art 04 §6 |
+| Trigger validity | ⚠ | The described trigger ("whenever an opponent places a Structure Block here") maps to the confirmed `structure_block.placed(faction=X, ring=Z)` TriggerExpr vocabulary, but isn't expressed as one — it's prose inside `success` | Art 04 §6.3 |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district` implied by prose, not declared as a field | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock, Public Standing track — existing components | Art 02 §6–§7 |
+| Supported by game procedure | ⚠ | Reactive PS-on-opponent-build has no structured trigger — same gap as Trigger validity above | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string describing what should be a `persistence_effect` — same Card-as-Condition-pattern gap as DIR.PA.7 Curfew. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capacity × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 GUI.PA.8 = Card(
-    id      = "GUI.PA.8",  version = "v1.1",
+    id      = "GUI.PA.8",  card_id = "GUI.PA.8",  version = "v1.1",
     name    = "Structural Subsidy",
     tagline = "Turn a district's development into a PR engine.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
-    beat    = 4,  resolution = Automatic,  persistence = Permanent,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Permanent,
+    persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
+    target_district = district.any,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Guild).capacity * 2,
+    boost   = None,
     success = "Places standing condition on target_district: 'Whenever an opponent places a Structure Block here, Guild gains +1 PS.'",
-    design_note = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige.",
+    arbiter_note = None,
 )
 ```
 
@@ -14423,6 +14537,8 @@ Cost: 3 Capacity (show of strength), 1 Capital (broadcast), 1 Exposure (public a
 | Supported by game procedure | ⚠ | Beat 0: N-lock — ARBITER counts qualifying districts and records N; Beat 4: resolution. N-lock at Beat 0 is new procedure; confirm against Art 03 §9.4 | Art 03 §9.4 |
 | Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically once N is locked at Beat 0. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity ×3 + Capital + Exposure + Mandate, ×1 each), correctly typed — ceiling-tier cost matching this card's high-variance design. | Art 00a §9.2 |
 
 #### Status
 
@@ -14432,7 +14548,7 @@ Cost: 3 Capacity (show of strength), 1 Capital (broadcast), 1 Exposure (public a
 
 ```python
 GUI.PA.9 = Card(
-    id      = "GUI.PA.9",  version = "v0.1",
+    id      = "GUI.PA.9",  card_id = "GUI.PA.9",  version = "v0.1",
     name    = "City Ledger",
     tagline = "Present the full construction record. Let the district account for what has been built.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -14454,6 +14570,7 @@ GUI.PA.9 = Card(
     target_district = district.named,
     target_faction  = None,
     target_object   = None,
+    target_taxonomy = None,
 
     affinity    = None,
     restriction = count(d in ([district(target)] + district(target).adjacent)
@@ -14462,6 +14579,7 @@ GUI.PA.9 = Card(
          + resource.faction(Guild).capital  * 1
          + resource.faction(Guild).exposure * 1
          + resource.faction(Guild).mandate  * 1,
+    boost = None,
 
     success = faction(Guild).standing.add(
                   count(d in ([district(target)] + district(target).adjacent)
@@ -14478,6 +14596,7 @@ GUI.PA.9 = Card(
                          where d.faction(Guild).structure > 0)),
 
     portrait = {Guild: PortraitEntry(submitter=+2)},
+    ps_framing = None,
 
     narrative    = None,
     perspectives = {
@@ -14524,8 +14643,10 @@ The Guild moves its crews into a district where another faction already has a fo
 | Supported by zones | ✓ | target_district = district.named; both factions' presence_token.count evaluated at declared district | Art 01 §6 |
 | Supported by components | ✓ | Structure Block (GR 8.2 — max 1 per faction per district; restriction ensures 0 for both before play); Presence Token; Public Standing track | Art 02 §7–§8 |
 | Supported by game procedure | ✓ | All resources submitted by Guild (submitter) at §9.2; standard Beat 4 payment procedure applies | Art 03 §9.2, §9.4.3 |
-| Data schema validation | ⚠ | New card — DB registration required | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | New card — DB registration required. **`card_status` DB shows `layer`/`function`/`subject` all `NULL`** despite the code correctly declaring `Territory/Add/StructureBlock` — same NULL-taxonomy-but-valid-code desync as GUI.CA.10, now a second confirmed Guild-set instance (one CA, one PA). Not reconciled — flagged only. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story above | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity ×2 + target faction's native ×1), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
@@ -14535,7 +14656,7 @@ The Guild moves its crews into a district where another faction already has a fo
 
 ```python
 GUI.PA.10 = Card(
-    id      = "GUI.PA.10",  version = "v0.1",
+    id      = "GUI.PA.10",  card_id = "GUI.PA.10",  version = "v0.1",
     name    = "Joint Development",
     tagline = "Guild and an allied faction commit jointly to structural development in a shared district.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -17938,16 +18059,18 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 | Supported by game procedure | ✓ | Two targets named at Phase B; both tokens submitted; Automatic Beat 4 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Findings × 3 + 2 Intel Tokens, one per target faction), correctly typed. Highest Ghost PA cost in the set, matching its "highest-cost PA" framing. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 GHO.PA.1 = Card(
-    id      = "GHO.PA.1",  version="v1.0",
+    id      = "GHO.PA.1",  card_id = "GHO.PA.1",  version="v1.0",
     name    = "Publish Analysis",
     tagline = "Release curated intelligence simultaneously attributing operations to two factions — a calculated, costly disclosure.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -17982,6 +18105,7 @@ GHO.PA.1 = Card(
         + intel_token(target=faction(target1)) * 1
         + intel_token(target=faction(target2)) * 1
     ),
+    boost = None,
 
     success = (
         arbiter.announce(attribution=target1, context=intel_token_1.quarter),
@@ -17995,6 +18119,7 @@ GHO.PA.1 = Card(
     failcrit    = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not publish because it wants credit. Ghost publishes because the analysis is complete and the disclosure serves more than the concealment.",
     perspectives = {
@@ -18037,16 +18162,18 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 | Supported by game procedure | ✓ | Physical tracking: GHO.PA.2 card face-up + district marker; ARBITER removes at Close Month next Month | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (a `game.world_condition()` placement, matching the confirmed Seasonal/Transient-effect pattern in design_reference_card_system.md) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Findings × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 GHO.PA.2 = Card(
-    id      = "GHO.PA.2",  version="v1.0",
+    id      = "GHO.PA.2",  card_id = "GHO.PA.2",  version="v1.0",
     name    = "Signal Review Request",
     tagline = "Formally request institutional scrutiny on a faction's next covert operation in a named district.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -18073,6 +18200,7 @@ GHO.PA.2 = Card(
     affinity    = None,
     restriction = faction(Ghost).presence(district.adjacent_to(target_district)) > 0,
     cost        = resource.faction(Ghost).findings * 2,
+    boost       = None,
 
     success = game.world_condition(
         scope    = district(target),
@@ -18087,6 +18215,7 @@ GHO.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not need credit for this. The scrutiny is the point.",
     perspectives = {
@@ -18127,18 +18256,20 @@ Ghost submits the case files in order — sequential, dated, attributed. The rec
 | Supported by zones | ✓ | target_district = None — tokens are held, not placed | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken expired (Art 02 §9); BM-xx (Art 02 §12); Findings × 1 (Art 02 §8) | Art 02 §8–§9, §12 |
 | Supported by game procedure | ✓ | BM-xx at Beat 4: boost detection added Art 03 §9.4.3.1.0.0 (S109); threshold at Art 03 §9.4.3.2.0; effect multiplication at Art 03 §9.4.3.3 | Art 03 §9.4.3 |
-| Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | All §6.1 fields present except `card_id`/`ps_framing` (missing entirely). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=`None`), no `game.choose_one()` — resolves deterministically once boost `n` is known. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource base (Findings × 1), correctly typed; `boost` is Intel-Token-scaled (expired tokens), a 6th distinct Intel-Token-as-cost notation variant (`intel_token(holder=Ghost, status=Expired)`). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GHO.PA.3 = Card(
-    id      = "GHO.PA.3",  version="v1.0",
+    id      = "GHO.PA.3",  card_id = "GHO.PA.3",  version="v1.0",
     name    = "Declassified Records",
     tagline = "Release expired intelligence as institutional record — each file compounds the disclosure.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -18176,6 +18307,7 @@ GHO.PA.3 = Card(
     on_decline = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not release because it ran out of options. Ghost releases because it chose this moment, these records, and this account. The archive is not empty — this is a selection.",
     perspectives = {
@@ -18216,18 +18348,20 @@ Ghost files the request before Beat 4. The Broadcast Card has been face-up all Q
 | Supported by zones | ✓ | target_district = None; target_object = BroadcastCard (Situation Report Zone) | Art 01 §6–§7 |
 | Supported by components | ✓ | BroadcastCard (DB:25, Art 02 §10); BroadcastEffectCard (DB:98, Art 02 §10); Target Profile target-object field (DB:48, Art 02 §8 — S109); Findings × 1 (Art 02 §8) | Art 02 §8, §10 |
 | Supported by game procedure | ✓ | §7.2.1 establishes BC/BEC link at setup. Art 03 §9.4.3.3.0 VM-xx placement clause; Art 03 §9.4.3.1.3 BEC public resolution step (S110). | Art 03 §7.2.1, §9.4.3.1.3, §9.4.3.3 |
-| Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | All §6.1 fields present except `card_id`/`ps_framing` (missing entirely). Design_note's trailing "Cost reasoning: Exposure represents the deliberate unmasking of the threat..." sentence — checked against the dangling-fragment pattern and, unlike its other instances, **this one is correct**: the card's actual cost does include Exposure. Confirmed-good contrast case, not a defect. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Findings × 1 + Exposure × 1), correctly typed. Notable: Exposure is Network's native resource, not Ghost's — a deliberate cross-faction resource cost, consistent with (and explained by) the design_note. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GHO.PA.4 = Card(
-    id      = "GHO.PA.4",  version="v1.0",
+    id      = "GHO.PA.4",  card_id = "GHO.PA.4",  version="v1.0",
     name    = "Public Threat Assessment",
     tagline = "Name a Situation Report. ARBITER opens the file.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -18268,6 +18402,7 @@ GHO.PA.4 = Card(
     on_decline = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not wait to find out what the Situation Report means. Ghost asks ARBITER, on the record, in front of everyone.",
     perspectives = {
@@ -18311,17 +18446,17 @@ Ghost files the act at Phase B. A table. A banner. Printed materials no other fa
 | Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | success = exactly one outcome; successcrit = additive delta; fail = None; failcrit = additive delta | Art 04 §5 P27 |
-| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (Findings × 1, Ghost's own native), correctly typed — floor-power cost for a +2-chip/Beat-4 public territorial gain, consistent with its "PA slot + 1 Findings justifies +2 output over STD.CA.3's covert +1" framing. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 GHO.PA.5 = Card(
-    id      = "GHO.PA.5",  version="v1.0",
+    id      = "GHO.PA.5",  card_id = "GHO.PA.5",  version="v1.0",
     name    = "Agency Recruitment Fair",
     tagline = "The agency operates in the open. The interested are watching.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
@@ -18359,6 +18494,7 @@ GHO.PA.5 = Card(
     on_decline = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = None,  # pending D-04-08
     perspectives = None,  # pending D-04-08
@@ -18369,9 +18505,7 @@ GHO.PA.5 = Card(
 
 ---
 
-
 ---
-
 
 ---
 
@@ -20640,11 +20774,11 @@ DIR.CA.4 = Card(
 
 ---
 
-### DIR.PA.4 — REGULATORY DOWNGRADE *(stub)*
+### DIR.PA.4 — REGULATORY DOWNGRADE
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Formal, narrow, deterministic revocation of exactly one named presence token — the fix for the original 04-n104 BLOCKED design (which targeted InfluenceTier, a derived, non-targetable state, violating Governing Rule 9.1). The S131 redesign removes the ARBITER-side comparison entirely: ARBITER removes 1 physical token; any resulting tier change is a natural downstream consequence of fewer tokens under the standard influence-level rules, not a direct write. Established+ restriction preserves the original jurisdictional-legitimacy gate.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -20653,29 +20787,29 @@ DIR.CA.4 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Formal, narrow, single-token revocation — legitimate institutional act, distinct in scope from covert disruption cards (STD.CA.4, DIR.CA.2) | Art 00 §7 |
+| Voice fit | ⚠ | `narrative = None`, `perspectives = None` — no in-world voice content at all, not even a single Directorate line. Same gap on all 5 of this S131 batch (DIR.PA.4/5/9/10/11) — flagged as a uniform cluster finding, not fixed here. | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate-exclusive; Established+ restriction reflects jurisdictional legitimacy; narrow single-token scope matches "control, restraint, continuity" doctrine (a scalpel, not Sanctioned Raid's maximum-force approach) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Remove / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ✓ | Mandate × 2 for exactly 1 token; design_note locks the mono-cost principle for N=1, cross-resource required for any future N>1 variant | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent token removal; card persistence = Immediate | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate — no lingering marker | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None — N/A | — |
+| Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named; restriction checks target's influence tier — valid zone condition | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken — existing component; no new component required | Art 02 §6 |
+| Supported by game procedure | ✓ | Beat 4; `arbiter.remove(presence_chip, ...)` is a direct token removal, no derived-state write — Governing Rule 9.1-compliant per its own design_note | Art 03 §9.4 |
+| Data schema validation | ⚠ | Both `id` and `card_id` set (good — addresses the missing-`card_id` gap flagged elsewhere in this review). `ps_framing = None`, `narrative = None`, `perspectives = None` all explicitly set (not omitted) — cleaner than the corpus norm of silent omission, but the content itself (voice/narrative) is still absent. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block present | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (successcrit/fail/failcrit all `None`) — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S131. Redesigned — resolves 04-n104 BLOCKED status (L223: original targeted InfluenceTier, a derived/non-targetable state, and violated GR 9.1). Simplified per GR 6.1 / Design Pillar 4.7b: no ARBITER calculation — removes exactly 1 named presence token. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
@@ -20724,11 +20858,11 @@ DIR.PA.4 = Card(
 
 ---
 
-### DIR.PA.5 — ZONING FREEZE *(stub)*
+### DIR.PA.5 — ZONING FREEZE
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Card-as-condition Permanent PA that auto-reverts any new presence chip placed in the named district — self-inclusive (Directorate's own new chips revert too), reflecting Directorate's "uniform scrutiny" doctrine established by DIR.CA.8. Retaxonomized to Territory/Block/PresenceToken specifically to avoid the original 04-n104 BLOCKED violation (targeting InfluenceTier, a derived state). Reuses the confirmed ModReactCard-style `presence_chip.placed` trigger vocabulary inside a PA's `persistence_effect` — the same established pattern design_reference_card_system.md documents this card as the first example of (S131). Clearing is a public toll any faction may pay, not Directorate-exclusive.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -20737,29 +20871,29 @@ DIR.PA.4 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | District-level standing "law" that applies to all factions including the submitter — legitimate institutional-authority act | Art 00 §7 |
+| Voice fit | ⚠ | `narrative = None`, `perspectives = None` — no in-world voice content. Same gap across all 5 of this S131 batch (DIR.PA.4/5/9/10/11) — flagged as a uniform cluster finding, not fixed here. | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate-exclusive; self-inclusive enforcement matches DIR.CA.8's uniform-scrutiny doctrine ("scrutiny means something only when it applies uniformly") — directly extends an established doctrinal principle rather than inventing a new one | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Block / PresenceToken — matches `card_status` DB directly; design_note explains the deliberate retaxonomization away from InfluenceTier/Submission | Art 04b §4 |
+| Balance | ✓ | Cross-resource cost (Mandate ×2 + district-native ×1 + Capital ×1) for a Permanent, self-inclusive district freeze — design_note reasons through each cost component's narrative fit | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent; clears only when any faction pays the stated toll | Art 04 §5 P19 |
+| Persistence | ✓ | Permanent; card-as-condition — no separate marker component | Art 04 §6 |
+| Trigger validity | ✓ | `persistence_effect` uses confirmed TriggerExpr vocabulary (`presence_chip.placed(district=...)`) embedded inside a PA — the first confirmed example of this exact pattern per design_reference_card_system.md; correctly applied here | Art 04 §6.3 |
+| Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
+| Supported by components | ✓ | Operates on existing presence_chip component; no new component required | Art 02 §6 |
+| Supported by game procedure | ✓ | Self-policing per Governing Rule 6.1a; deployment marker itself is never touched, only the resulting chip (Governing Rule 8.3a-compliant, explicitly reasoned in design_note) | Art 03 §9; Governing Rule 6.1a, 8.3a |
+| Data schema validation | ⚠ | Both `id` and `card_id` set (addresses the missing-`card_id` gap flagged elsewhere in this review). `narrative = None`, `perspectives = None` explicitly set, content still absent. `resolution_type = "Permanent public act"` — not in the confirmed vocabulary (`"Probabilistic"`/`"Transactional"` only); flagged as an open schema question, same as DIR.PA.6/DIR.PA.11. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block present | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `success = None` — card placement itself IS the effect (card-as-condition pattern); no `game.choose_one()` or conditional branching anywhere in the spec. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Mandate + district-native + Capital, ×1–2 each), correctly typed throughout. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S131. Redesigned — resolves 04-n104 BLOCKED status. Retaxonomized Territory|Block|PresenceToken (not InfluenceTier; not Submission — the subject controlled is presence-token accumulation). Permanent standing card, self-inclusive ("a new law"), reactive to any presenceChip addition. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
@@ -21183,16 +21317,18 @@ Directorate's district-level regulatory control PA. All non-Directorate presence
 | Supported by game procedure | ⚠ | World condition application to PresenceToken.Add actions needs ARBITER tracking protocol. RegulatoryOverrideMarker component registration required | Art 03 §9.4; Art 02 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None` — passes the PA-wide check flagged going into this phase. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed (`.mandate` attribute present). Design_note's trailing "Cost reasoning: Exposure is necessary..." sentence doesn't match this card's actual Mandate-only cost — same dangling-fragment defect seen elsewhere in this review (e.g. SYN.CA.4). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 DIR.PA.1 = Card(
-    id      = "DIR.PA.1",  version="v1.0",
+    id      = "DIR.PA.1",  card_id="DIR.PA.1",  version="v1.0",
     name    = "Regulatory Override",
     tagline = "Declare a district under Directorate oversight, raising the cost of all non-Directorate presence operations.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -21219,6 +21355,7 @@ DIR.PA.1 = Card(
     affinity    = None,
     restriction = faction(Directorate).influence_tier(target_district) >= Established,
     cost        = resource.faction(Directorate).mandate * 2,
+    boost       = None,
 
     success = (
         arbiter.place(RegulatoryOverrideMarker, district(target)),
@@ -21238,6 +21375,7 @@ DIR.PA.1 = Card(
     failcrit    = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Directorate does not need to block what it can simply make more expensive.",
     perspectives = {
@@ -21280,16 +21418,18 @@ Directorate's institutional intelligence-gathering PA. No formal restriction —
 | Supported by game procedure | ✓ | ARBITER tracks STD.PA.4/STD.PA.5 resolution outcomes; yields based on that record | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Mandate × 3), correctly typed. Design_note's trailing "Cost reasoning: Findings provide the legal precedent and evidence required to sustain the injunction long-term" doesn't match this card at all — wrong resource (Mandate, not Findings) *and* wrong card (references "the injunction," i.e. DIR.PA.6, not this card's own Inquiry mechanic). Clearest confirmed instance yet of the dangling-copy-paste-fragment defect (schema_cleanup_log.md, extends SYN.CA.4). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 DIR.PA.2 = Card(
-    id      = "DIR.PA.2",  version="v1.0",
+    id      = "DIR.PA.2",  card_id="DIR.PA.2",  version="v1.0",
     name    = "Convene an Inquiry",
     tagline = "Commission an ARBITER-mediated institutional investigation into a faction's recent operations.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -21316,6 +21456,7 @@ DIR.PA.2 = Card(
     affinity    = None,
     restriction = None,  # no public restriction; yield is variable (0–2) based on ARBITER's record
     cost        = resource.faction(Directorate).mandate * 3,
+    boost       = None,
 
     success = (
         arbiter.provide_intel_tokens(
@@ -21331,6 +21472,7 @@ DIR.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Directorate does not gather intelligence in the traditional sense. It commissions review.",
     perspectives = {
@@ -21373,6 +21515,8 @@ Directorate's persistent territorial control tool — a district-level board con
 | Supported by game procedure | ⚠ | Beat 4 PA resolution defined; persistence_condition monitoring trigger not yet in Art 03 (PM05 04-n29 — blocks Issues Resolved) | Art 03 §9 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Mandate × 2 + Capacity × 1), correctly typed throughout. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -21384,13 +21528,13 @@ Directorate's persistent territorial control tool — a district-level board con
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *Redesigned S66 — v1.0 (ring-scope) retired*
 
 ```python
 EntryExitControls = Card(
-    id      = "DIR.PA.3",  version="v2.0",
+    id      = "DIR.PA.3",  card_id="DIR.PA.3",  version="v2.0",
     name    = "Entry/Exit Controls",
     tagline = "Designate a district as a controlled zone — displacing non-Directorate deployment markers and blocking future placement.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -21408,6 +21552,7 @@ EntryExitControls = Card(
     affinity=None,
     restriction = faction(acting).influence_tier(district.named) >= Established,
     cost = resource.faction(acting).mandate * 2 + resource.faction(acting).capacity * 1,
+    boost = None,
     success = (
         for_each(
             deployment_marker(faction=faction.all_except(Directorate), district=district.named),
@@ -21417,6 +21562,7 @@ EntryExitControls = Card(
     ),
     successcrit=None,  fail=None,  failcrit=None,
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
     narrative    = "Movement within the designated zone is now subject to Directorate authorization. Non-compliant presence has been relocated.",
     perspectives = {
         Directorate: "The district is designated. Who enters does so with our permission — or not at all.",
@@ -21454,8 +21600,10 @@ Directorate's pre-emptive PA block — distinct from DIR.PA.1 Regulatory Overrid
 | Supported by zones | ✓ | No district target — faction-targeted; no operational footprint restriction | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component — card on Overview is the persistent condition | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Phase B void: Dispatch Token returned, target −1 PS, card removed. No resources committed at Phase B (payment is Beat 4 Step 1) — nothing to refund. PAs declared before Injunction resolved (Beat 4) are committed board states; Governing Rule 7.2b governs, no retroactive block applies | Art 03 §9; Governing Rule 7.2b; Governing Rule 7.3 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Also: `resolution_type = "Permanent public act"` — not in the confirmed vocabulary (`"Probabilistic"` for d100, `"Transactional"` for Automatic per design_reference_card_system.md). Flagged as a new open question: does Permanent PA need its own confirmed `resolution_type` value in §6.3, or should this normalize to `"Transactional"`? | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Triple cross-resource (Mandate + Capital + Findings, ×1 each), correctly typed throughout — notable as the highest resource-type-diversity cost seen in the corpus so far. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -21465,13 +21613,13 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 *Redesigned S67 — v2.0. PublicAct → PublicAct. InjunctionMarker removed; card-as-condition pattern. Seasonal → Permanent with dual clearing condition (trigger OR Phase 21). Dispatch Token consumed on trigger per Governing Rule 7.3. target_taxonomy field introduced (§6.1/§6.2). Self-policing per Governing Rule 6.1a.*
 
 ```python
 P_StandingInjunction = Card(
-    id      = "DIR.PA.6",  version = "v2.0",
+    id      = "DIR.PA.6",  card_id = "DIR.PA.6",  version = "v2.0",
     name    = "Standing Injunction",
     tagline = "Declare a public restriction on a named faction's next act of a specified type. If triggered, the act is voided.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
@@ -21501,6 +21649,7 @@ P_StandingInjunction = Card(
     affinity    = None,
     restriction = None,
     cost        = resource.faction(Directorate).mandate * 1 + resource.faction(Directorate).capital * 1 + resource.faction(Directorate).findings * 1,
+    boost       = None,
 
     success     = faction(Directorate).standing += 1,
     successcrit = None,
@@ -21508,6 +21657,7 @@ P_StandingInjunction = Card(
     failcrit    = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Injunction does not prevent the act. It establishes that the act will carry costs the target has not yet calculated.",
     perspectives = {
@@ -21522,9 +21672,7 @@ P_StandingInjunction = Card(
 
 ---
 
-
 ---
-
 
 ---
 
@@ -21543,41 +21691,54 @@ P_StandingInjunction = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ⚠ | Territorial movement denial thematically fits Directorate doctrine, but the enforcement mechanism (a "Standing Condition") isn't implemented as a structured field — can't confirm the act is mechanically sound, only that it's thematically grounded | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields present at all (not even `None` — absent entirely) | Art 00 §7 |
+| Doctrine alignment | ✓ | Design_note frames this correctly as blocking public/enforceable movement rather than blind covert space — consistent with Directorate's institutional-control doctrine | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Block / DeploymentMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost (Mandate×2) is set, but effect magnitude can't be assessed — `success` is prose, not a structured mutation with a measurable scope | Art 02 §6–§7 |
+| Effect duration | ⚠ | `persistence = Transient` (a valid enum value, but its first confirmed use anywhere in the CA/PA corpus reviewed so far) — yet the prose `success` text describes the effect lasting "until the end of Quarter+1," i.e. into the *next* Quarter. That reads as a multi-Quarter temporary, which Art 04 §5's duration discipline (P19–P21, design_reference_card_system.md) prohibits ("effects are permanent or within-Quarter"). Real tension between the declared persistence type and the card's own prose — flagged, not resolved. | Art 04 §5 P19 |
+| Persistence | ⚠ | See Effect duration above — same tension | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field present; Automatic PA doesn't require one — acceptable by omission | — |
+| Portrait validity | ⚠ | Scaffolded as `portrait = {}` (was absent entirely) — an empty dict is the neutral placeholder; a real Directorate entry would be a content decision, not made here | Art 04 §6.2 |
+| Supported by zones | ⚠ | `target_district` scaffolded as `district.named` (was only referenced inside the prose `success` string, not a real field) | Art 01 §6–§7 |
+| Supported by components | ✓ | DeploymentMarker — existing component | Art 02 §6 |
+| Supported by game procedure | ⚠ | The Card-as-Condition pattern (design_reference_card_system.md) requires `persistence_condition` + `persistence_effect` as structured fields; this card describes the standing condition in prose inside `success` instead — doesn't follow the confirmed pattern. `persistence_condition`/`persistence_effect` scaffolded as `None` (structurally required placeholders), not filled with real logic. | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string, not a structured effect — same defect shape as the bare-string-`success` pattern already tracked on CA-phase stubs, now confirmed in PA phase; left untouched, not resolved. All other previously-absent fields scaffolded this pass: `card_id`, `boost`, `ps_framing`, `threshold`, `ring_mod`, `doctrine_mod`, `trigger`, `resolution_type`, `target_faction`/`target_object`/`target_taxonomy`, `affinity`, `restriction`, `successcrit`/`fail`/`failcrit`, `on_accept`/`on_decline`, `narrative`/`perspectives`, `arbiter_note` — all set to `None` (or the deterministic `"Transactional"` for `resolution_type`, matching every Automatic card in the corpus). `outcome_type` scaffolded as `None` explicitly rather than left silently absent — likely `Unilateral`, not resolved here. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block present | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No `game.choose_one()` present, but determinacy can't be positively confirmed either — `success` isn't a structured MutationExpr, so there's no tiered success/successcrit/fail/failcrit split to check against P27 at all | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed — the one field in this card structured enough to assess cleanly. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 DIR.PA.7 = Card(
-    id      = "DIR.PA.7",  version = "v1.1",
+    id      = "DIR.PA.7",  card_id = "DIR.PA.7",  version = "v1.1",
     name    = "Curfew",
     tagline = "Lock down a district to freeze physical movement.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Block,  subject = DeploymentMarker,
-    beat    = 4,  resolution = Automatic,  persistence = Transient,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Transient,
+    persistence_condition = None,  persistence_effect = None,
+    target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Directorate).mandate * 2,
+    boost   = None,
     success = "Places a Standing Condition on target_district until the end of Quarter+1: Deployment Markers cannot be moved into this district.",
-    design_note = "A massive territorial denial tool. Blocks physical movement (which is public and enforceable) rather than targeting blind covert space."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A massive territorial denial tool. Blocks physical movement (which is public and enforceable) rather than targeting blind covert space.",
+    arbiter_note = None,
 )
 ```
 
@@ -21596,51 +21757,64 @@ DIR.PA.7 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ⚠ | Intelligence-authorized public audit is thematically grounded (Directorate uses institutional process, not covert fieldwork, same mode as DIR.PA.2), but the pay-or-lose-PS mechanism isn't implemented as a structured effect | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields present at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Design_note frames the Intel Token cost as "Directorate found out something that justifies the legal action" — consistent with institutional/evidence-based doctrine | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Economy / Remove / Capital — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Threshold 40 is set, but the actual consequence structure ("must pay 2 Capital or 2 native, or lose 2 PS") is prose, not a structured conditional effect — can't confirm how the choice is adjudicated (player choice at the table vs. an ARBITER-resolved branch) | Art 02 §6–§7 |
+| Effect duration | ⚠ | `persistence` scaffolded as `Immediate` (was absent; deterministic default for a non-standing, one-shot PA per corpus convention) | Art 04 §5 P19 |
+| Persistence | ⚠ | See Effect duration — scaffolded `Immediate` | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; d100 PA doesn't require one — acceptable by omission | — |
+| Portrait validity | ⚠ | Scaffolded as `portrait = {}` (was absent) — empty dict is the neutral placeholder, a real entry would be a content decision | Art 04 §6.2 |
+| Supported by zones | ⚠ | `target_district = None` (faction-targeted, no district), `target_faction` scaffolded as `faction.opponent` (was only implied via bare reference inside prose) | Art 01 §6–§7 |
+| Supported by components | ✓ | Capital, Intel Token — both existing components | Art 02 §6 |
+| Supported by game procedure | ⚠ | The "pay X or lose PS" choice structure has no defined procedural home (not a `game.choose_one()` in the prohibited sense, but also not a structured `MutationExpr` — unclear who adjudicates payment vs. non-payment and when) | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string — same defect shape as DIR.PA.7; left untouched, not resolved. All other previously-absent fields scaffolded this pass: `card_id`, `boost`, `ps_framing`, `ring_mod`, `doctrine_mod`, `trigger`, `resolution_type` ("Probabilistic", matching this card's `d100` resolution), `persistence`/`persistence_condition`/`persistence_effect`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `affinity`, `restriction`, `successcrit`/`fail`/`failcrit`, `on_accept`/`on_decline`, `narrative`/`perspectives`, `arbiter_note` — all `None` except as noted. `outcome_type` scaffolded as `None` explicitly — likely `Unilateral`, not resolved here. Cost also introduces yet another Intel-Token-as-cost notation variant (`intel_token(faction=target_faction)`), 11th confirmed instance corpus-wide. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block present | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | `d100` with `threshold=40` set, but no structured success/successcrit/fail/failcrit split exists to check against P27 — the prose describes a binary pay/don't-pay branch, unclear if that's independent of the roll or gated by it | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Cross-resource (Mandate + Intel Token), Mandate term correctly typed — whether Intel Token qualifies as a valid fungible cost at all remains an open schema question | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 DIR.PA.8 = Card(
-    id      = "DIR.PA.8",  version = "v1.2",
+    id      = "DIR.PA.8",  card_id = "DIR.PA.8",  version = "v1.2",
     name    = "Subpoena",
     tagline = "Weaponize target-keyed intelligence into a public audit that bleeds an opponent's finances or reputation.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Economy,  function = Remove,  subject = Capital,
     beat    = 4,  resolution = d100,  threshold = 40,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Probabilistic",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,
+    persistence_condition = None,  persistence_effect = None,
+    target_district = None,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Directorate).mandate * 1 + intel_token(faction=target_faction) * 1,
+    boost   = None,
     success = "Target faction must pay 2 Capital or 2 of their Native Resource to the supply. If they do not, they lose 2 Public Standing.",
-    design_note = "Cost uses a faction-keyed Intel Token: Directorate 'found out something' that justifies the legal action. The target has the choice to pay the fine or take the PR hit."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Cost uses a faction-keyed Intel Token: Directorate 'found out something' that justifies the legal action. The target has the choice to pay the fine or take the PR hit.",
+    arbiter_note = None,
 )
 ```
 
 ---
 
-### DIR.PA.9 — CHARTER GRANT *(stub)*
+### DIR.PA.9 — CHARTER GRANT
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Directorate's first Territory|Add|PresenceToken card — closes the audit-flagged win-path gap (04-n89: the faction whose win condition is territorial Established status had zero native presence-placement cards). Ring-spread mechanic (1 token in target district + up to 2 same-ring-adjacent districts) matches Directorate's actual win path (breadth of Established districts, not Dominant depth) and reuses the same Permanent-counting mechanism as DIR.CA.6/CA.7.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -21649,29 +21823,29 @@ DIR.PA.8 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Formal institutional presence-expansion act; ring-spread framing ("radiates, doesn't concentrate") matches Directorate's breadth-over-depth win path | Art 00 §7 |
+| Voice fit | ⚠ | `narrative = None`, `perspectives = None` — no in-world voice content. Same gap across all 5 of this S131 batch — flagged as a uniform cluster finding, not fixed here. | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate-exclusive; closes a real, previously-audited doctrinal gap (04-n89) rather than duplicating an existing capability | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Add / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ✓ | Mandate × 2 for 1–3 tokens depending on N; design_note reasons the ceiling is modest (N caps at 2 by board geometry) and scales naturally from Standard-equivalent (0 Permanents) to Directorate's strongest late-game expansion tool | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent token placement(s); card persistence = Immediate | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None — N/A | — |
+| Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named; same-ring-adjacency check via `district.adjacent(...).where(ring==...)` — valid zone condition | Art 01 §6–§7 |
+| Supported by components | ✓ | presence_chip — existing component; each placement respects the 6-chip-per-district cap (`cap_check=True`, Governing Rule 8.1) | Art 02 §6 |
+| Supported by game procedure | ⚠ | Design_note claims this reuses "the same counting mechanism as CA.6 Institutional Audit / CA.7 Institutional Brief" — checked directly, **true**: same `game.active_permanents(faction=, ring=)` call. That mechanism is itself unconfirmed as a general Art 03/07 procedure — this is a third confirmed instance of the same gap, now in PA phase. | Art 03 §9, §11; Governing Rule 6.1 |
+| Data schema validation | ⚠ | Both `id` and `card_id` set (addresses #24). `narrative`/`perspectives` explicitly `None`, content absent. `arbiter_note = None` — unusual; every other reviewed card in this set carries at least a brief arbiter_note. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block present | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching (the `for_each`/`limit` construct iterates deterministically over a fixed board-state count, not a player choice). `outcome_type = Unilateral` present. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S131. Directorate's first Territory|Add|PresenceToken card — closes the audit-flagged win-path gap (04-n89: "the faction whose win condition is territorial Established status has zero native presence-placement cards"). Closes 1 of 6 toward the 54-card floor (04-n149). Ring-spread mechanic, not single-district stacking — confirmed against Directorate's actual win path (Established in more districts, not Dominant) and the 6-chip-per-district cap. N capped at 2 (max same-ring neighbors per district).*
 
@@ -21728,11 +21902,11 @@ DIR.PA.9 = Card(
 
 ---
 
-### DIR.PA.10 — OFFICIAL DEMONSTRATIONS *(stub)*
+### DIR.PA.10 — OFFICIAL DEMONSTRATIONS
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Public Standing counterpart to covert DIR.CA.7 Institutional Brief — closes the audit's Standing gap (04-n108: Directorate's only PS card was covert, backwards for an "on the record" faction). N = count of districts where Directorate holds Established+ tier, scaling both success and fail symmetrically — a genuine gamble (bigger claim, bigger swing in both directions) rather than a guaranteed accumulator.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -21741,29 +21915,29 @@ DIR.PA.9 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Public claim of institutional reach, scaled to actual board presence — fills a real, previously-audited gap (Directorate's only prior PS lever was covert) | Art 00 §7 |
+| Voice fit | ⚠ | `narrative = None`, `perspectives = None` — no in-world voice content. Same gap across all 5 of this S131 batch — flagged as a uniform cluster finding, not fixed here. | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate-exclusive; scaling by Established-district count is a direct, on-doctrine measure of institutional reach | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ✓ | Flat threshold 50 (matches CA.2/CA.6/CA.7 precedent); cost kept cheap and mono (Mandate×2) — design_note reasons the real risk lives in the public reaction (N-scaled swing), not the resource spend | Art 02 §6–§7 |
+| Effect duration | ✓ | PS shift is immediate; card persistence = Immediate | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
+| Trigger validity | ✓ | trigger = None — N/A | — |
+| Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — city-wide count, no single-zone reference; N derived from existing board-visible Established/Dominant markers | Art 01 §6–§7 |
+| Supported by components | ✓ | No new component — counts existing Established markers already on board | Art 02 §6 |
+| Supported by game procedure | ⚠ | Design_note claims N uses "the same counting mechanism CA.6/CA.7 use for Permanents." Checked directly: **not literally the same** — CA.6/CA.7 count active Directorate Permanent cards per ring (`game.active_permanents`), this card counts districts city-wide at Established+ tier (`district.where(influence_tier >= Established)`) — a different count entirely. The shared property is "no ARBITER judgment call, simple physical tally" (true for both), not an identical formula. Softer version of the Overture-pattern cross-card claim check — not confirmed false, but imprecisely worded. | Art 03 §9, §11; Governing Rule 6.1 |
+| Data schema validation | ⚠ | Both `id` and `card_id` set (addresses #24). `narrative`/`perspectives` explicitly `None`. **`outcome_type = None`** — this is a real, confirmed instance of exactly the defect flagged as highest-priority going into the PA phase (`ca_pa_review_notes.md` §4): a PublicAct with a real dice-roll resolution and all four tiers populated should carry a real `OutcomeType`, not `None`. Likely correction: `Unilateral`, matching every sibling card in this file. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block present | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically once N and the roll are known. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S131. Public Standing counterpart to covert DIR.CA.7 Institutional Brief — closes the audit's Standing gap (04-n108: Directorate's only PS card was covert, backwards for an 'on the record' faction). Closes 2 of remaining 4 toward the 54-card floor (04-n149). A genuine gamble, not a guaranteed accumulator: government presence reads publicly as either safety or oppression, so the swing (not just the odds) scales with the size of the claim — this also self-balances the 'yield scaling at scale' concern flagged at 04-n116 for CA.6/CA.7, since the downside grows with N too.*
 
@@ -21817,11 +21991,11 @@ DIR.PA.10 = Card(
 
 ---
 
-### DIR.PA.11 — PUBLIC HEARING *(stub)*
+### DIR.PA.11 — PUBLIC HEARING
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Resolves the long-standing counter-card design gap for Permanent PAs (04-n142) — a standing, game-wide due-process institution letting any faction petition to remove one of Directorate's own active standing Public Acts by matching its printed cost plus 1 Intel Token. Atomic resolution (pay + prove, immediate removal) avoids the untracked-exemption-state problem an earlier draft ran into. Extends DIR.CA.8's self-inclusive "uniform scrutiny" doctrine from suppression to due process.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -21830,29 +22004,29 @@ DIR.PA.10 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Standing due-process institution — closes a real, long-open counter-card gap (04-n142) for Permanent PAs generally | Art 00 §7 |
+| Voice fit | ⚠ | `narrative = None`, `perspectives = None` — no in-world voice content. Same gap across all 5 of this S131 batch — flagged as a uniform cluster finding, not fixed here. | Art 00 §7 |
+| Doctrine alignment | ✓ | Directorate-exclusive; design_note explicitly frames this as extending CA.8's uniform-scrutiny principle from "submits to suppression" to "regulations answer to due process" — a genuine doctrinal throughline, not asserted in isolation | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Directorate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Submission / Remove / PublicAct — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ✓ | Directorate profits from every invocation (cost refund + Intel Token) regardless of who invokes it — design_note reasons this as a genuine income mechanism, not a giveaway, and nothing prevents Directorate re-declaring the removed PA later | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent, no clearing condition — a standing institution once established, distinct from the other Permanent PAs it can be used against | Art 04 §5 P19 |
+| Persistence | ✓ | Permanent; card-as-condition, `persistence_condition = None` deliberately (no auto-discard — a standing institution, not a conditional one) | Art 04 §6 |
+| Trigger validity | ✓ | No confirmed TriggerExpr vocabulary used — `persistence_effect` is a prose-described standing institution rather than a trigger/mutation pair; consistent with "card IS the condition," not a reactive mechanism | Art 04 §6.3 |
+| Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — game-wide scope, no single zone reference | Art 01 §6–§7 |
+| Supported by components | ✓ | No new component — cost-match is a direct read of the target PA's own printed cost | Art 02 §6 |
+| Supported by game procedure | ✓ | Self-policing per Governing Rule 6.1a; cost-match is a physical lookup, not an ARBITER calculation (GR 6.1/4.7b-safe, explicitly reasoned in design_note) | Art 03 §9; Governing Rule 6.1, 6.1a |
+| Data schema validation | ⚠ | Both `id` and `card_id` set (addresses #24). `narrative`/`perspectives` explicitly `None`. `resolution_type = "Permanent public act"` — not in the confirmed vocabulary, third instance in this file alongside DIR.PA.5/DIR.PA.6 — same open schema question. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block present | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (a flat PS +1 for establishing the institution) — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 *S131. Resolves 04-n142 (S127) — the long-standing counter-card design gap for Permanent PAs, originally named for Entry/Exit Controls. Establishes a standing, game-wide due-process institution: any faction may petition to remove any of Directorate's own currently-active standing Public Acts by matching its printed cost + 1 Intel Token. Atomic resolution (pay + prove, immediate removal) — no untracked exemption state, unlike an earlier draft of the cooperative-PA concept this replaced. Closes the last 1 of 6 toward the 54-card floor (04-n149) — Directorate now at exactly 54.*
 
@@ -24347,18 +24521,20 @@ Network's signature information-attack PA — a coordinated release of all subst
 | Supported by zones | ✓ | target_district = None — faction-targeted broadcast; no zone reference. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (all held, faction-keyed to target; Art 02 §6); Exposure × 2 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Token count calculated at Beat 4; all tokens spent regardless of outcome | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — not in the confirmed 2-value vocabulary (this is the instance that prompted a full corpus grep, confirming several more unconfirmed values in active use). `threshold` is a computed formula (`30 + 10*n`) rather than a flat int — a distinct pattern from every other threshold field in the corpus reviewed so far, worth noting though not necessarily wrong (§6.1 types `threshold` as `int \| None`, and this evaluates to an int at resolution time). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Exposure ×2 + all held Intel Tokens naming target), correctly typed. Intel-Token-as-cost 12th corpus instance, using a 7th distinct notation (`intel_token(target=faction(target)).all_held`). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 NET.PA.1 = Card(
-    id      = "NET.PA.1",  version="v1.0",
+    id      = "NET.PA.1",  card_id = "NET.PA.1",  version="v1.0",
     name    = "Public Disclosure",
     tagline = "Network broadcasts all substantiated intelligence about a faction's operations in a single coordinated release.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
@@ -24385,6 +24561,7 @@ NET.PA.1 = Card(
     affinity    = None,
     restriction = faction(Network).holds_intel_token(faction=target, count=1),
     cost        = resource.faction(Network).exposure * 2 + intel_token(target=faction(target)).all_held,
+    boost       = None,
 
     success = (
         faction(target).standing  -= (2 * count(intel_token(target=faction(target)).spent)),
@@ -24398,6 +24575,7 @@ NET.PA.1 = Card(
     failcrit = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Network does not sit on what it knows. When the moment is right, everything comes out at once.",
     perspectives = {
@@ -24440,16 +24618,18 @@ Network's broadcast-derived presence PA — scaling territorial expansion built 
 | Supported by game procedure | ✓ | Districts named at Phase B; restriction per district at Beat 0 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource, scaling with district count (Exposure ×2+ + district native ×1/district), correctly typed. Design_note's trailing "Cost reasoning: District native resources represent the local on-the-ground support..." checked — correct, matches actual cost. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 NET.PA.2 = Card(
-    id      = "NET.PA.2",  version="v1.0",
+    id      = "NET.PA.2",  card_id = "NET.PA.2",  version="v1.0",
     name    = "Community Rally",
     tagline = "Mobilize communities across Network's established presence network.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
@@ -24477,6 +24657,7 @@ NET.PA.2 = Card(
     restriction = faction(Network).influence_tier(district.each_target) >= Established,
     cost        = resource.faction(Network).exposure * 2 + resource.district(each_target).native * 1,
     # cost = 2 Exposure + 1 district native per targeted district
+    boost       = None,
 
     success     = (
         district.each(target).faction(Network).presence += 1,
@@ -24487,6 +24668,7 @@ NET.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Network presence does not require a march. It requires a broadcast and the communities that were already listening.",
     perspectives = {
@@ -24534,8 +24716,10 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component required — open hand is a physical visibility state, not a board marker; comply/resist is self-policing per Governing Rule 6.1a | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Art 03 §9.0 (Start of Month) provides generalizable Covert Dispatch obligation procedure — Steps 0–2 cover comply/resist for any active PA with this obligation type (04-n77 ✅) | Art 03 §9.0 |
-| Data schema validation | ✓ | All §6.1 fields present; FactionHand subject flagged for 04b validation | Art 04 §6.1 |
+| Data schema validation | ⚠ | Fields present, but **`persistence_condition`, `persistence_effect`, and `restriction` are all bare strings**, not structured BoolExpr/MutationExpr — extends the bare-string defect to a third and fourth field beyond `success`/`restriction`. FactionHand subject flagged for 04b validation (self-flagged already, see Outstanding Issues below). `card_id` missing — its own Outstanding Issues section already names this ("Card ID: TBD"), a rare case of a card correctly self-identifying its own schema gap. | Art 04 §6.1 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=`None`), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Exposure × 2), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -24546,11 +24730,11 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ S89 | |
+| Status | ✓ | ✓ S89 | |
 
 ```python
 NET.PA.3 = Card(
-    id      = "NET.PA.3", version="v1.0",
+    id      = "NET.PA.3",  card_id = "NET.PA.3",  version="v1.0",
     name    = "Live Coverage",
     tagline = "Force a named faction to play with their hand visible or forfeit covert submissions, each Covert Dispatch for the remaining Months of the Quarter.",
     type    = PublicAct, subtype = FactionSpecific, faction = Network,
@@ -24567,6 +24751,7 @@ NET.PA.3 = Card(
     affinity        = None,
     restriction     = "target_faction != Network",
     cost        = resource.faction(acting).exposure * 2,
+    boost       = None,
     success     = game.activate(LiveCoverage_obligation, target=faction(target)),
     successcrit = (
         game.activate(LiveCoverage_obligation, target=faction(target)),
@@ -24575,6 +24760,7 @@ NET.PA.3 = Card(
     fail        = None,
     failcrit    = faction(acting).standing -= 1,
     portrait    = {Network: PortraitEntry(submitter=+1)},
+    ps_framing  = None,
     narrative   = "The story is already written. The only question is whether the subject chooses the cameras or the consequences.",
     perspectives = {
         Network:     "We are not exposing secrets. We are establishing accountability. The distinction matters to us.",
@@ -24587,9 +24773,7 @@ NET.PA.3 = Card(
 
 ---
 
-
 ---
-
 
 ---
 
@@ -24684,41 +24868,54 @@ NET.MOD.2 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Public mass mobilization to displace a rival's presence fits Network's broadcast/community doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Public, Exposure-funded disruption is on-doctrine for Network | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Remove / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost + threshold 60 set, but effect magnitude can't be confirmed — `success` is prose | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; d100 doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_district`/`target_faction` fields declared — referenced only inside the `success` string | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken — existing component | Art 02 §6 |
+| Supported by game procedure | ✓ | Straightforward remove-and-shift at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. `cost` uses `district_native(target_district)` — a new bare-function-call cost-notation form, distinct from the corpus's usual `resource.district(native)` shape, though semantically equivalent. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, most targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Exposure + district native), correctly typed (allowing for the nonstandard notation noted above). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 NET.PA.4 = Card(
-    id      = "NET.PA.4",  version = "v1.1",
+    id      = "NET.PA.4",  card_id = "NET.PA.4",  version = "v1.1",
     name    = "Grassroots Protest",
     tagline = "Mobilize the masses to physically drown out an opponent's influence.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
     beat    = 4,  resolution = d100,  threshold = 60,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Probabilistic",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Network).exposure * 1 + district_native(target_district) * 1,
+    boost   = None,
     success = "Remove 1 target_faction's Presence Token from target_district. Target faction loses 1 PS. Network gains +1 PS.",
-    design_note = "A loud territorial disruption. Burns Exposure and local resources to physically remove an opponent's token while shifting the PR balance."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A loud territorial disruption. Burns Exposure and local resources to physically remove an opponent's token while shifting the PR balance.",
+    arbiter_note = None,
 )
 ```
 
@@ -24737,41 +24934,54 @@ NET.PA.4 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | PR attack converting an opponent's own resource into ammunition fits Network's information-warfare doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Exposure-funded PS attack is on-doctrine for Network | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost set, but effect magnitude (−3 PS) can't be fully cross-checked without a structured effect | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_faction` field declared — referenced only inside `cost`/`success` strings | Art 01 §6–§7 |
+| Supported by components | ✓ | Public Standing track, native resources — existing components | Art 02 §7–§8 |
+| Supported by game procedure | ⚠ | **Cost draws from the *target* faction's native resource pool** (`resource.faction(target_faction).native * 1`), not the acting faction's own — a genuinely new schema shape. Every other cost expression in the corpus reviewed so far is paid entirely from the acting faction's own pool; deducting from a target's resource as part of `cost` (rather than as a `success` effect) blurs the cost/effect distinction. Worth its own schema question, not just a typing note — see schema_cleanup_log.md. | Art 03 §9.4; Art 04 §6.1 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Cross-resource (Exposure, acting faction's own, + native, drawn from the *target*) — the target-resource term is a new schema shape (see Supported by game procedure), not simply a typing question. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 NET.PA.5 = Card(
-    id      = "NET.PA.5",  version = "v1.1",
+    id      = "NET.PA.5",  card_id = "NET.PA.5",  version = "v1.1",
     name    = "Viral Outrage",
     tagline = "Weaponize an opponent's own assets against them to tank their standing.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = None,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Network).exposure * 2 + resource.faction(target_faction).native * 1,
+    boost   = None,
     success = "Target faction loses 3 Public Standing. Network gains +1 PS.",
-    design_note = "Pure PR assassination. Network burns the opponent's own native resource to fuel the smear campaign."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Pure PR assassination. Network burns the opponent's own native resource to fuel the smear campaign.",
+    arbiter_note = None,
 )
 ```
 
@@ -24790,41 +25000,54 @@ NET.PA.5 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Converting public goodwill (PS) into hard resources is a distinctive, doctrinally-grounded Network economy mechanism | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | PS-to-resource conversion directly rewards Network's "audience" doctrine | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
+| Taxonomy fit | ⚠ | `subject = AnyResource` — checked against `ref_taxonomy.md`'s Subject vocabulary; not a specific registered component, same open question as GUI.PA.5's bare `District` subject — worth confirming as a registered term. | Art 04b §4 |
+| Balance | ⚠ | Cost cheap (Exposure×1) for a PS-scaled resource yield with no stated cap — can't fully assess without knowing realistic PS ranges | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference — faction-internal economy card, correctly no zone dependency | Art 01 §6–§7 |
+| Supported by components | ✓ | Public Standing track, generic resource pool — existing components | Art 02 §7–§8 |
+| Supported by game procedure | ✓ | Straightforward PS-read-and-convert at Beat 4 — no new procedure needed | Art 03 §9.4 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Exposure × 1), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 NET.PA.6 = Card(
-    id      = "NET.PA.6",  version = "v1.1",
+    id      = "NET.PA.6",  card_id = "NET.PA.6",  version = "v1.1",
     name    = "Crowdfunding Campaign",
     tagline = "Convert public goodwill into hard resources.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Network,
     layer   = Economy,  function = Add,  subject = AnyResource,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Network).exposure * 1,
+    boost   = None,
     success = "Network names a resource type. Network gains 1 of that resource type for every 4 points of positive Public Standing they currently have.",
-    design_note = "Network's economy is driven by their audience. This rewards them for maintaining a high, positive PS track by converting it into any resource they need."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Network's economy is driven by their audience. This rewards them for maintaining a high, positive PS track by converting it into any resource they need.",
+    arbiter_note = None,
 )
 ```
 
@@ -28126,16 +28349,18 @@ Syndicate's public territorial acquisition PA — the counterpart to SYN.CA.3 Ho
 | Supported by game procedure | ✓ | Target decides at Beat 4 (not Debrief); token/Capital transfer at Beat 4 cleanup | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`, `outcome_type = ElectPlayer` — `on_accept`/`on_decline` both populated (`success`/`successcrit`/`fail`/`failcrit` correctly `None` for this outcome type), no `game.choose_one()`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capital), correctly typed — offer fee mono, balance payment also mono. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 SYN.PA.1 = Card(
-    id      = "SYN.PA.1",  version="v1.0",
+    id      = "SYN.PA.1",  card_id = "SYN.PA.1",  version="v1.0",
     name    = "Acquisition Offer",
     tagline = "Publicly offer to purchase another faction's presence position in a district.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
@@ -28163,6 +28388,7 @@ SYN.PA.1 = Card(
     restriction = faction(target).influence_tier(target_district) >= Established,
     # declared at Phase B: target faction, district, token count (n)
     cost = resource.faction(Syndicate).capital * 1,  # offer fee; non-refundable regardless of outcome
+    boost = None,
 
     success     = None,
     successcrit = None,
@@ -28183,6 +28409,7 @@ SYN.PA.1 = Card(
     ),
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Syndicate does not take what it can buy. The offer is always made first. What the other faction does with it is their business.",
     perspectives = {
@@ -28225,16 +28452,18 @@ Syndicate's political leverage PA. Places a Capital-valued marker on a named dis
 | Supported by game procedure | ⚠ | DividendMarker is a new component — register in Art 02. Upkeep Step 5 procedure needs amendment to handle marker resolution | Art 03 §11; Art 02 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (a `game.world_condition()` placement, matching the confirmed Seasonal-timed-effect pattern in design_reference_card_system.md) — no `game.choose_one()`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capital × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 SYN.PA.2 = Card(
-    id      = "SYN.PA.2",  version="v1.0",
+    id      = "SYN.PA.2",  card_id = "SYN.PA.2",  version="v1.0",
     name    = "Public Dividend",
     tagline = "Declare a public capital investment in a district — rewarding whoever holds Dominance at next Upkeep.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
@@ -28261,6 +28490,7 @@ SYN.PA.2 = Card(
     affinity    = None,
     restriction = None,
     cost        = resource.faction(Syndicate).capital * 2,  # placed as escrow under DividendMarker
+    boost       = None,
 
     success = (
         arbiter.place(DividendMarker(value=2, resource=Capital, district=target_district)),
@@ -28278,6 +28508,7 @@ SYN.PA.2 = Card(
     failcrit    = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Syndicate backs positions, not factions. The investment is in the district. The winner claims it.",
     perspectives = {
@@ -28316,14 +28547,14 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 | Effect duration | ✓ | Permanent on decline path; accept/cannot-meet paths discard at Beat 4; React fires once then card discards; Quarter-end expiry if React never fires | — |
 | Persistence | ✓ | Permanent model applied correctly; persistence_condition clear; card-as-condition sits in Syndicate PA area face-up | Art 04 §6 |
 | Trigger validity | ✓ | React trigger: PA with non-blank Target Profile placed at Art 03 §9.2 Public Declaration — publicly observable (P5) | Art 04 §5 P5 |
-| Portrait validity | ✓ | flat entries only; submitter-bounded (Syndicate, Network, Directorate); no direct Portrait track shift in effect fields; Automatic resolution — no failcrit | Art 04 §6.2 |
+| Portrait validity | ⚠ | All three entries use `flat=` — Syndicate's own included. Checked against the established `flat=`-misuse pattern: this card's actor is fully public (not covert), so it doesn't fit hypothesis C's "public-effect/covert-actor" shape, but it does fit the plainer original angle — `flat=` on the *submitter's own* entry where `submitter=` looks like the semantically correct field (SYN.CA.7/10/11/12's pattern), plus `flat=` on Network/Directorate who never acted at all, only reacted narratively. 3 more confirmed instances of this pattern. | Art 04 §6.2 |
 | Supported by zones | ✓ | Faction Resolution Grid (Art 01/02); faction terminal (Intel Tokens held behind screen — faction-private) | Art 01 §6–§7 |
 | Supported by components | ✓ | Intel Token (Art 02 §9); Target Profile with declared-parameters line (Art 02 v2.4 — S111); Faction Resolution Grid (Art 02 §5) | Art 02 §5, §8, §9 |
 | Supported by game procedure | ✓ | Beat 4 ElectPlayer: publicly resolved at table — target declares trade, show, or decline openly; standard PA resolution (Art 03 §9.4). React framework (Art 03 §18) covers Permanent persistence_effect; table enforces React timing; no new procedure needed | Art 03 §9.4; §18 |
 | Data schema validation | ✓ | All fields populated per §6.1/§6.2 | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Three paths (accept / cannot-meet / decline) — each has exactly one outcome; no branching within paths; Permanent React fires once then discards | Art 04 §5 P27 |
-| Resource cost positioning | Is this card's cost mono-resource (acting faction's own native resource only) or cross-faction-resource (two or more distinct native resources)? Confirm power level matches: mono-resource = floor-power; cross-faction-resource = ceiling-power. Flag if mono-resource and high-power, or cross-resource and underpowered. If cost generates non-native resources as an effect, flag — requires doctrine justification. *(P28)* | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (Capital × 1, offer fee), correctly floor-power for a card whose real leverage is the ElectPlayer/Permanent-React mechanism, not the cost. Cost notation `Capital(1)` is the bare `Type(n)` style, a 4th confirmed instance alongside SYN.CA.10/11/12. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -28334,7 +28565,7 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ⚠ | |
+| Status | ✓ | ⚠ | |
 
 *v0.1 — S111: new card, fills Information\|Reveal\|IntelTokensHeld gap. Permanent React model. Issues Resolved pending doctrine review (04-n88).*
 
@@ -28412,6 +28643,7 @@ SYN.PA.3 = Card(
         Network:     PortraitEntry(flat=-1),
         Directorate: PortraitEntry(flat=-1),
     },
+    ps_framing = None,
 
     narrative = "The offer is made in public, which is unusual for the Syndicate. They prefer quiet transactions. This one is designed to be loud.",
 
@@ -28424,14 +28656,13 @@ SYN.PA.3 = Card(
     },
 
     design_note  = "Three resolution paths at Beat 4 ElectPlayer: (1) trade — bilateral exchange: consideration moves Syndicate→target, N tokens move target→Syndicate; card discards only if both transfers complete; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards — information goal met; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. Sub-cases 1 (completed) and 2 both satisfy the card; only 3 triggers the stake. Non-fulfillment edge case (sub-case A, Syndicate cannot deliver consideration): exchange fails; card stays Permanent — Syndicate set the terms and failed to meet them. Bluff mechanic is intentional: consideration is a verbal offer written on TP declared-parameters line, not held in escrow; Syndicate bears public failure risk. Show path: target voluntarily reveals count — not compelled, consistent with GR 10.1 (ElectPlayer creates stake; choice is player's). PERMANENT PHASE is fully table-enforced: card is face-up in Syndicate PA area; table observes when target places a PA with Target Profile at Art 03 §9.2.0 and allows Syndicate to replace it (React); table observes if target accepts at any point (trade or show) and card is cleared. No ARBITER involvement required at any stage — Beat 4 ElectPlayer is public; Permanent card is table-enforced. Target may accept at any time to clear the card. Threat is the constraint: target must deal with Syndicate or avoid targeted PAs for the rest of the Quarter. N and consideration declared at Art 03 §9.2 on TP declared-parameters line (Art 02 v2.4).",
+    arbiter_note = None,
 )
 ```
 
 ---
 
-
 ---
-
 
 ---
 
@@ -28450,41 +28681,54 @@ SYN.PA.3 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Public wealth display forcing table-wide reaction fits Syndicate's Capital-as-leverage doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | Weaponizing Capital for PR is maximally on-doctrine for Syndicate | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Syndicate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost set, but the table-wide "every opponent pays or loses PS" effect has no bound or per-faction structure to assess magnitude against | Art 02 §6–§7 |
+| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
+| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference — table-wide effect, correctly no zone dependency | Art 01 §6–§7 |
+| Supported by components | ✓ | Public Standing track, Capital — existing components | Art 02 §7–§8 |
+| Supported by game procedure | ⚠ | "Every opponent must either pay or lose PS" is a simultaneous table-wide forced choice with no defined resolution order or procedure — new ARBITER-facing behavior, same category as other unconfirmed-procedure gaps flagged elsewhere in this review | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capital × 2), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 SYN.PA.4 = Card(
-    id      = "SYN.PA.4",  version = "v1.0",
+    id      = "SYN.PA.4",  card_id = "SYN.PA.4",  version = "v1.0",
     name    = "Charity Gala",
     tagline = "A massive display of wealth that forces rivals to pay up or lose face.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
-    beat    = 4,  resolution = Automatic,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Immediate,  # scaffolded, not addressed
+    persistence_condition = None,  persistence_effect = None,
+    target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Syndicate).capital * 2,
+    boost   = None,
     success = "Syndicate gains +2 PS. Every opponent must either pay 1 Capital to the supply or immediately lose 1 PS.",
-    design_note = "A public flex of pure capital. Weaponizes Syndicate's wealth to farm PR while forcing opponents to bleed money or take a PR hit just to keep up appearances."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "A public flex of pure capital. Weaponizes Syndicate's wealth to farm PR while forcing opponents to bleed money or take a PR hit just to keep up appearances.",
+    arbiter_note = None,
 )
 ```
 
@@ -28503,41 +28747,54 @@ SYN.PA.4 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Capital-toll extortion on district development is grounded in Syndicate's leverage doctrine | Art 00 §7 |
+| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Doctrine alignment | ✓ | On-doctrine — Capital positioned as a toll on others' physical expansion | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / FactionSpecific (Syndicate) | Art 04 §6.2 |
+| Taxonomy fit | ✓ | Territory / Remove / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ⚠ | Cost set, but the standing toll's actual power (removal threat on any placement) can't be assessed without a structured, bounded effect | Art 02 §6–§7 |
+| Effect duration | ⚠ | `persistence = Transient`, but the prose describes the effect lasting "until Quarter+1" — into the *next* Quarter. Same tension as DIR.PA.7 Curfew: a Transient effect (within-Quarter per Art 04 §5's duration discipline) described in prose as spanning a Quarter boundary. Second confirmed instance of this exact tension — worth its own schema_cleanup_log entry now that it's recurred. | Art 04 §5 P19 |
+| Persistence | ⚠ | See Effect duration — same tension | Art 04 §6 |
+| Trigger validity | ⚠ | The described trigger ("whenever a Structure Block or Presence Token is placed here") maps toward confirmed TriggerExpr vocabulary (`structure_block.placed`/`presence_chip.placed`) but isn't expressed as one — prose inside `success`, same Card-as-Condition gap as GUI.PA.3/8 and DIR.PA.7 | Art 04 §6.3 |
+| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Supported by zones | ⚠ | No `target_district` field declared — referenced only inside `success` prose | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock, PresenceToken, Capital — existing components | Art 02 §6–§8 |
+| Supported by game procedure | ⚠ | The pay-or-lose-asset reactive mechanism has no structured procedural home — same gap as Trigger validity above | Art 03 §9 |
+| Data schema validation | ⚠ | `success` is a bare prose string describing what should be a `persistence_effect`, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
+| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capital + Mandate), correctly typed. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | | |
 
 ```python
 SYN.PA.5 = Card(
-    id      = "SYN.PA.5",  version = "v1.1",
+    id      = "SYN.PA.5",  card_id = "SYN.PA.5",  version = "v1.1",
     name    = "Protection Racket",
     tagline = "Publicly leverage capital to extort physical expansion.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Territory,  function = Remove,  subject = StructureBlock,
-    beat    = 4,  resolution = Automatic,  persistence = Transient,
+    beat    = 4,  resolution = Automatic,  threshold = None,
+    ring_mod = None,  doctrine_mod = None,  trigger = None,
+    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    persistence = Transient,
+    persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
+    target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    affinity = None,  restriction = None,
     cost    = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).mandate * 1,
+    boost   = None,
     success = "Places a Standing Condition on target_district until Quarter+1: Whenever a Structure Block or Presence Token is placed here, the faction that owns it must pay 1 Capital to Syndicate. If they do not, the structure or token is immediately removed.",
-    design_note = "Fixes the covert targeting issue. Physical placement of chips and blocks is public knowledge. Syndicate sets up a toll booth on the district: the owner of the structure pays, or their asset is destroyed."
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,  on_decline = None,
+    portrait = {},  # scaffolded, not addressed
+    ps_framing = None,
+    narrative = None,  perspectives = None,
+    design_note = "Fixes the covert targeting issue. Physical placement of chips and blocks is public knowledge. Syndicate sets up a toll booth on the district: the owner of the structure pays, or their asset is destroyed.",
+    arbiter_note = None,
 )
 ```
 
