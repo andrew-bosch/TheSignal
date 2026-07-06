@@ -13,29 +13,44 @@ Overture is the bridge between STD.CA.9's anonymous funding gesture and formal a
 
 **Outcome addition mechanic:** Fires as an additional Automatic outcome when the host PA resolves at Beat 4, regardless of the host PA's success or failure. See §11.7.
 
+**Re-verified S140 (Andy: don't assume "reviewed" entries are correct).** This card's checklist and Design Rationale dated to S77, before the current 17-row + 5-row ModReactCard addendum checklist format existed, and were never brought current when that format landed. Re-checking surfaced real problems, not just formatting drift: (1) the Taxonomy fit row's justification — "Overture doesn't represent an action-taxonomy category, unlike e.g. GD-01" — is factually wrong. GD-01's actual spec carries `layer=Territory, function=Add, subject=StructureBlock`; it has real taxonomy. The comparison used to justify Overture's `None` was backwards, meaning that `None` was never actually grounded against precedent — just asserted. Overture sits outside 04-n175's faction sweep (Standard/`faction=All`, not one of the 5 factions) and was also one of the 6 cards the S136 scaffolding pass left untouched, so it's plausible this was simply never examined rather than deliberately decided. **Flagging for Andy, not resolving unilaterally** — candidate taxonomy if one is wanted: Information/Add/AccordAgreement (AccordAgreement is a confirmed registered subject per ref_taxonomy.md §5.2, "Economy / Information"), paralleling how SYN.CA.11 Redline and the newly-authored SYN.MOD.1 both carry real Accord-manipulation taxonomy. (2) The checklist itself was missing 5 of the canonical 17 rows (Persistence, Supported by zones, Card narrative, Outcome determinacy, Resource cost positioning) and all 5 of the ModReactCard-specific addendum rows, while carrying a "New ARBITER behavior" row that isn't part of the canonical Art 04 §5 list at all (folded its content into Supported by game procedure below, where it belongs). (3) No Card Story section existed. (4) The python spec was missing required scaffolding fields present on its direct sibling GD-01 (`resolution_type`, `outcome_type`, `boost`, `ps_framing`, `declared_params`) — meaning the old "Data schema validation ✓" verdict was false. All of the above fixed below except the taxonomy assignment itself, which stays open pending Andy's call.
+
+#### Card Story
+A quiet envelope arrives with no return address — just a blank form and the unmistakable understanding that someone, somewhere, is finally ready to talk.
+
 #### Design Checklist (Art 04 §5 ModReactCard Design Checklist)
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Modifier card attaching Accord initiation as PA outcome addition. Alliance-opening mechanic — earned through STD.CA.9; formalized through PA attachment. | Art 04 §11.1; Art 06 §9.4 |
-| Voice fit | ✓ | Narrative in diplomatic register. Perspectives: TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
+| Voice fit | ⚠ | Downgraded on re-verification: `perspectives={}` is genuinely empty (deferred to D-04-08), so this doesn't meet the bar for ✓ — same standard applied to every other ModReactCard reviewed this session. `narrative` line is populated and reads in the correct diplomatic register. | Art 00 §9 |
 | Doctrine alignment | ✓ | `faction = All` — no alignment penalty for using Overture; doctrine weight carried by STD.CA.9. | Art 04 §6.5 |
 | Card type fit | ✓ | Issued `ModReactCard` — ARBITER-delivered from STD.CA.9, not deck-drawn; fires when its assigned host PA resolves. Does not enter Resolution Grid as independent action. | Art 04 §6.1, §11.1, §11.4 |
-| Taxonomy fit | ✓ | No Layer / Function / Subject — this is a per-card design choice (§11.1 ModReactCard framing), not a subclass-wide exclusion; Overture doesn't represent an action-taxonomy category, unlike e.g. GD-01. | Art 04 §11.1; Art 04b §5.1, §9 |
+| Taxonomy fit | ⚠ | **New finding (S140):** the prior ✓ rested on a factually wrong comparison to GD-01 (GD-01 actually has real taxonomy: Territory/Add/StructureBlock). Overture's `None` taxonomy was never actually examined against precedent. Flagged for Andy — candidate: Information/Add/AccordAgreement, matching how Redline/SYN.MOD.1 carry real Accord-manipulation taxonomy. Not resolved this pass. | Art 04b §4; ref_taxonomy.md §5.2 |
 | Balance | ✓ | `cost = None` — reward from STD.CA.9 success (2 Capital + roll risk already paid). Assignment free. Accord Portrait implications governed by Art 06 §9.9. Reassess STD.CA.9 threshold after §11 redesign. | Art 02 §8; Art 06 §9.9 |
 | Effect duration | ✓ | Immediate — AccordForm delivery is instantaneous. Resulting Accord's duration governed by Art 06 §9.3–§9.7 independently. | Art 04 §5 P19 |
+| Persistence | ✓ | Missing row, added this pass. `persistence = Immediate` — no lingering game-state marker from Overture itself once the AccordForm is delivered; the resulting Accord's own persistence is a separate downstream concern (Art 06 §9.3–§9.7). | Art 04 §6.2 |
 | Trigger validity | ⚠ | Fires when its assigned host PA resolves (Beat 4) — trigger form `public_act.resolved(pa=X)` is new, not yet in confirmed TriggerExpr vocabulary (§6.3). Same category of gap as GD-01's district-scoped trigger (04-n27). | Art 04 §6.3; §11.1 |
-| Portrait validity | ✓ | No portrait entry for Overture assignment. Portrait from resulting Accord governed by Art 06 §9.9. | Art 04 §6.2; Art 06 §9.9 |
+| Portrait validity | ✓ | `portrait={}` — correctly typed (schema declares `portrait: dict[Faction, PortraitEntry]`, not Optional; empty dict is the right "no entry" representation, not `None`). No portrait entry for Overture's own assignment; Portrait implications for the resulting Accord governed separately by Art 06 §9.9. | Art 04 §6.1–§6.2; Art 06 §9.9 |
+| Supported by zones | ✓ (N/A) | Missing row, added this pass. `target_district=None` — Overture isn't a territory-scoped effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
-| Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in STD.CA.9 `arbiter_note`; Art 07 subroutine pass to formalize. | Art 03 Phase B; Art 06 §9.4; STD.CA.9 |
-| New ARBITER behavior | ✓ | Deliver-from-tableau consistent with IS-xx and existing delivery subroutines. No novel ARBITER behavior — Art 07 pass formalizes. | Design Pillar 4.7b; Governing Rule 6.1 |
-| Data schema validation | ✓ | All fields conform to §6.1/§6.2 modifier card schema. | Art 04 §6 |
+| Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in STD.CA.9 `arbiter_note`; deliver-from-tableau is consistent with existing ARBITER delivery subroutines, no novel behavior; Art 07 subroutine pass still needed to formalize. | Art 03 Phase B; Art 06 §9.4; STD.CA.9 |
+| Data schema validation | ⚠ | **Corrected from a false ✓ (S140):** required scaffolding fields present on sibling card GD-01 (`resolution_type`, `outcome_type`, `boost`, `ps_framing`, `declared_params`) were absent from this spec entirely, not just unset — added this pass matching GD-01 precedent. `value_rating` also added, resolved to N/A. Trigger form still unconfirmed against §6.3 (see Trigger validity). | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Missing entirely — no Card Story section existed. Written this pass. | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, added this pass. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | Missing row, added this pass. `cost=None` — free assignment; the real cost was already paid via STD.CA.9's own resource tier. Mono/cross-resource distinction doesn't apply to a zero-cost effect. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ⚠ | Missing row, added this pass. Depends on how often STD.CA.9 succeeds and the faction chooses to assign the resulting Overture — a fairly rare, player-gated combination; best-effort, not independently verifiable here. |  |
+| Firing window (ModReactCard) | ✓ | Missing row, added this pass. No other card shares this trigger shape (bound to one specific `assigned_pa` instance), so collision risk with other React cards is low. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Missing row, added this pass. Deterministic outcome-addition with no execution-quality dimension — `Automatic` is correct. |  |
+| Stack behavior (ModReactCard) | ⚠ | Missing row, added this pass. A faction could plausibly hold multiple Overture copies (from multiple STD.CA.9 successes) and assign each to a different PA independently — not explicitly documented; same open-question category as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ (N/A) | Missing row, added this pass. `ring_constraint=None` — not ring-scoped; `faction=All` and Issued acquisition, no ring gating applies. |  |
 
 #### Outstanding Issues
 
+- **Taxonomy assignment (new, S140):** `layer/function/subject=None` was justified by a factually incorrect comparison to GD-01 (which does have real taxonomy). Open — Andy to decide whether to assign real taxonomy (candidate: Information/Add/AccordAgreement) or re-ground the `None` on different grounds.
 - **Perspectives:** TBD — deferred to modifier card voice pass (D-04-08)
 - **Card ID:** TBD — pending 04-n1 numbering pass
-- **Value rating:** N/A — ModReactCard carries `value_rating` in general, but Overture's is not deck-drawn/Splay-scored (Issued acquisition) — TBD whether the field is even meaningful here.
+- **Value rating:** Resolved S140 (was TBD) — N/A. ModReactCard carries `value_rating` in general, but it's a deck-drawn/Splay-scoring field; Overture's Issued acquisition means it's never drawn or scored, so the field doesn't apply. Field added to the spec below as `value_rating = None`.
 - **STD.CA.9 balance reassessment:** Flag for after §11 redesign confirms Overture's modifier value
 - **ARBITER delivery formalization:** Overture delivery (STD.CA.9 → Beat 3 → acting faction hand) pending Art 07 ARBITER subroutine pass; STD.CA.9 `arbiter_note` covers interim reference
 - **Trigger vocab — `public_act.resolved(pa=X)`:** New PA-resolution trigger form, not yet in confirmed TriggerExpr vocabulary (§6.3). Needs the same kind of extension as GD-01's district-scoped `structure_block.placed` (04-n27). Also needs an Art 03 procedure describing how a card "attaches" to a specific PA at Phase B and how ARBITER/the table tracks that binding through to Beat 4.
@@ -44,7 +59,7 @@ Overture is the bridge between STD.CA.9's anonymous funding gesture and formal a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ⚠ (Perspectives, ID, trigger vocab) | |
+| Status | ✓ | ⚠ (Taxonomy, Perspectives, ID, trigger vocab) | |
 
 ```python
 Overture = Card(
@@ -57,9 +72,13 @@ Overture = Card(
 
     beat            = None,
     resolution      = Automatic,
+    resolution_type = "Transactional",  # missing prior to S140 — added matching GD-01 sibling precedent
+    outcome_type    = None,  # missing prior to S140 — added matching GD-01 sibling precedent
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    ring_constraint = None,  ring_origin = None,
+    value_rating    = None,  # N/A — Issued acquisition, never deck-drawn/Splay-scored (resolved S140, was TBD)
     trigger         = public_act.resolved(pa=overture.assigned_pa),  # NEW trigger form — pending §6.3 vocab extension
     persistence     = Immediate,
     persistence_condition = None,
@@ -68,11 +87,13 @@ Overture = Card(
     target_district = None,
     target_faction  = None,  # named on AccordForm when drafted — not declared at card assignment
     target_object   = AccordForm,
+    declared_params = None,  # missing prior to S140 — Overture uses the informal assigned_pa fill-in field directly, same pattern as GD-01's deed.district; no formal declared_params dict needed
 
     target_taxonomy=None,
     affinity    = None,
     restriction = overture.assigned_pa.type not in [STD.PA.8, GUI.PA.2],  # avoids duplicate AccordForm on same PA
     cost        = None,  # earned as STD.CA.9 success reward; free to assign
+    boost       = None,  # missing prior to S140 — added matching GD-01 sibling precedent
 
     acquisition      = Issued,
     generating_card  = "STD.CA.9",
@@ -84,6 +105,7 @@ Overture = Card(
     # Art 06 §9.4 formation procedure applies from placement forward.
 
     portrait = {},  # no entry; Art 06 §9.9 governs Portrait for resulting Accord
+    ps_framing = None,  # missing prior to S140 — added matching GD-01 sibling precedent
 
     narrative    = "The terms don't matter yet. What matters is that the door is open.",
     perspectives = {},  # modifier card voice pass deferred to D-04-08
@@ -101,43 +123,43 @@ Overture = Card(
 
 ---
 
-### STD.MOD.2 — SENIOR LIAISON *(stub)*
+### STD.MOD.2 — SENIOR LIAISON
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+First Ring Modifier content in the game — 04-29/09-06 pattern-setter, establishing the stub format for the Ring Modifier set. Voice sourced from Art 00 §6.7 Ring Character (PM02 L253): Core's defining anxiety is proximity, not force, so Ring 1 content leans on institutional access and standing rather than the Directorate's already-shipped literal-force doctrine (DIR.MOD.10–13) — same city, deliberately different lever, available to whichever faction holds the card. Each ring ships two complete 4-card sets — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — per 04-n161. This is the Portable set's weaker Boost tier (+1): a favor that travels with whoever's holding it, not the Core itself.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A liaison who owes you something makes a call on your behalf — reinforcing whichever side the playing faction has named, and nobody in the room needs to know where the call came from.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A personal favor called in is a grounded expression of Ring 1/Core's institutional-access character (Art 00 §6.7), distinct from any faction's literal-force doctrine. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`, no perspectives required (Standard card); narrative/tagline read in Core's institutional-proximity register. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent — no faction relationship in play (Standard card, no faction doctrine to serve). | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Asset-category naming slot for Ring 1. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Boost tier per locked S132/S134 pattern; no cost step exists for this subclass; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=1` correctly set for a Portable asset (favor travels with holder, sourced from Core). | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. First Ring Modifier content in the game — 04-29/09-06 pattern-setter, establishing the stub format for the Ring Modifier set. Voice sourced from Art 00 §6.7 Ring Character (PM02 L253), closing 04-29's ring-voice gate: Core's defining anxiety is proximity, not force, so Ring 1 content leans on institutional access and standing rather than the Directorate's already-shipped literal-force doctrine (DIR.MOD.10–13) — same city, deliberately different lever, available to whichever faction holds the card. **Format:** each ring ships two complete 4-card sets — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — closing 04-n161 by fielding both models side by side rather than picking one on paper; playtest determines which reads better, or whether both earn a permanent place. 24 cards total, 8 per ring, each 4-card set following the locked 2 Boost (+1/+2) + 2 Hinder (−1/−2) faction-set format (D04-08, S132) and the Asset(human)/Equipment/Tactic naming convention (S130). `subtype=Standard, faction=All` — these are Standard-schema cards per the Ring Modifier taxonomic rule, distinguished from faction modifier decks by `ring_origin`, not by `faction`. This is the Portable set's weaker Boost tier (+1): a favor that travels with whoever's holding it.*
+*S134. First Ring Modifier content in the game — 04-29/09-06 pattern-setter, establishing the stub format for the Ring Modifier set. Voice sourced from Art 00 §6.7 Ring Character (PM02 L253), closing 04-29's ring-voice gate: Core's defining anxiety is proximity, not force, so Ring 1 content leans on institutional access and standing rather than the Directorate's already-shipped literal-force doctrine (DIR.MOD.10–13) — same city, deliberately different lever, available to whichever faction holds the card. **Format:** each ring ships two complete 4-card sets — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — closing 04-n161 by fielding both models side by side rather than picking one on paper; playtest determines which reads better, or whether both earn a permanent place. 24 cards total, 8 per ring, each 4-card set following the locked 2 Boost (+1/+2) + 2 Hinder (−1/−2) faction-set format (D04-08, S132) and the Asset(human)/Equipment/Tactic naming convention (S130). `subtype=Standard, faction=All` — these are Standard-schema cards per the Ring Modifier taxonomic rule, distinguished from faction modifier decks by `ring_origin`, not by `faction`. This is the Portable set's weaker Boost tier (+1): a favor that travels with whoever's holding it. Design-reviewed S140 (09-16 step 4) — same 7-row N/A checklist disposition as faction ModBattleCard, plus Doctrine alignment N/A for Standard cards; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.2 = Card(
@@ -153,8 +175,11 @@ STD.MOD.2 = Card(
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
     cost            = None,   # not schema-forced for ModBattleCard, and unenforceable regardless — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence (confirmed S132).
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "A liaison who owes you something makes a call. Nobody in the room needs to know where the call came from.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -162,43 +187,43 @@ STD.MOD.2 = Card(
 
 ---
 
-### STD.MOD.3 — SIGNED-OUT INSTRUMENTATION *(stub)*
+### STD.MOD.3 — SIGNED-OUT INSTRUMENTATION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, Equipment category — rounds out the Boost pair before the Hinder pair. Precision gear drawn from Chorus Research's stores, carried out rather than left behind. Same no-cost/playtest-flagged (04-n94) terms as STD.MOD.2.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The requisition slip says routine maintenance. The gear is somewhere else entirely by the time anyone checks — reinforcing whichever side the playing faction has named.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Precision equipment quietly diverted for use elsewhere fits Core's institutional-access character — the leverage is proximity to Chorus Research's stores. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; institutional-requisition register, distinct from STD.MOD.2's personal-favor framing. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Equipment-category naming slot for Ring 1. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=1` correctly set for a Portable asset. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, Equipment category — rounds out the Boost pair before the Hinder pair. Precision gear drawn from Chorus Research's stores, carried out rather than left behind.*
+*S134. Portable set, Equipment category — rounds out the Boost pair before the Hinder pair. Precision gear drawn from Chorus Research's stores, carried out rather than left behind. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.2; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.3 = Card(
@@ -213,8 +238,11 @@ STD.MOD.3 = Card(
     ring_constraint = None,   # Portable set — the equipment leaves the building
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The requisition slip says routine maintenance. The gear is somewhere else entirely by the time anyone checks.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -222,43 +250,43 @@ STD.MOD.3 = Card(
 
 ---
 
-### STD.MOD.4 — CLEARANCE REVIEW *(stub)*
+### STD.MOD.4 — CLEARANCE REVIEW
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, weaker Hinder tier (−1). The disruption is a mark against a person, not a place — it follows the target wherever they go. Same no-cost/playtest-flagged (04-n94) terms as the rest of the Ring 1 set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A name enters an audit list. Nobody says why the review opened. Nobody has to — the named faction's position slows down until it clears.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | An administrative audit as leverage fits Core's institutional-access character — bureaucratic friction, not force. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; institutional-audit register, consistent with Core voice. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Tactic-category Hinder slot for Ring 1. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Hinder tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=1` correctly set — the review follows the target, not a district. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, weaker Hinder tier (−1). The disruption is a mark against a person, not a place — it follows the target wherever they go.*
+*S134. Portable set, weaker Hinder tier (−1). The disruption is a mark against a person, not a place — it follows the target wherever they go. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.2/3; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.4 = Card(
@@ -273,8 +301,11 @@ STD.MOD.4 = Card(
     ring_constraint = None,   # Portable set — the review follows the target, not the district
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Nobody says why the review opened. Nobody has to. The pause is the point.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -282,43 +313,43 @@ STD.MOD.4 = Card(
 
 ---
 
-### STD.MOD.5 — ACCESS FROZEN *(stub)*
+### STD.MOD.5 — ACCESS FROZEN
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 1. Where Clearance Review is a slow-down, this is an outright suspension, and it holds wherever the target tries to use the access. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The system returns the same message everywhere it's checked: access denied, pending review — the named faction's credentials stop working, everywhere, until further notice.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Outright credential suspension is the escalated form of Core's institutional-access character — still bureaucratic, not force. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same institutional register as STD.MOD.4, escalated to full suspension. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Tactic-category escalated Hinder slot alongside STD.MOD.4. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=1` correctly set — the suspension travels with the target's credentials, not the Core. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 1. Where Clearance Review is a slow-down, this is an outright suspension, and it holds wherever the target tries to use the access.*
+*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 1. Where Clearance Review is a slow-down, this is an outright suspension, and it holds wherever the target tries to use the access. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.2–4; portrait resolved same session (PM02 L269). Closes the Ring 1 Portable set — STD.MOD.2–5 design-passed, no open issues.*
 
 ```python
 STD.MOD.5 = Card(
@@ -333,8 +364,11 @@ STD.MOD.5 = Card(
     ring_constraint = None,   # Portable set — the suspension travels with the target's credentials, not the Core
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The system returns the same message everywhere it's checked: access denied, pending review.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -342,43 +376,43 @@ STD.MOD.5 = Card(
 
 ---
 
-### STD.MOD.6 — CITADEL CONTACT *(stub)*
+### STD.MOD.6 — CITADEL CONTACT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set opens — Ring 1's other half of the 04-n161 test pair. Same Asset/Boost+1 slot as STD.MOD.2, but the pull genuinely doesn't leave the building: `ring_constraint=1` restricts play to Battlefield Strength for a Ring 1 district. Same no-cost/playtest-flagged (04-n94) terms as the Portable set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The contact is real, and so is the favor — reinforcing whichever side the playing faction has named, but neither the contact nor the favor leaves Government Citadel.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A location-bound institutional contact fits Core's institutional-access character; the Ring-Locked constraint is the narrative point, not a limitation to excuse. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same institutional register as the Portable set, framed around physical presence at Government Citadel. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Asset-category naming slot for Ring 1, paired with STD.MOD.2's Portable counterpart per 04-n161. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Boost tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=1`/`ring_origin=1` correctly restrict play to a Ring 1 district contest, matching the narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card; `arbiter_note` correctly states the ring restriction. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set opens — Ring 1's other half of the 04-n161 test pair. Same Asset/Boost+1 slot as STD.MOD.2, but the pull genuinely doesn't leave the building: `ring_constraint=1` restricts play to Battlefield Strength for a Ring 1 district.*
+*S134. Ring-Locked set opens — Ring 1's other half of the 04-n161 test pair. Same Asset/Boost+1 slot as STD.MOD.2, but the pull genuinely doesn't leave the building: `ring_constraint=1` restricts play to Battlefield Strength for a Ring 1 district. Design-reviewed S140 (09-16 step 4) — same disposition as the Portable set; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.6 = Card(
@@ -393,8 +427,11 @@ STD.MOD.6 = Card(
     ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district (closes 04-n161 alongside STD.MOD.2's Portable counterpart)
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The contact is real, and so is the favor. Neither one leaves the building.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
 )
@@ -402,43 +439,43 @@ STD.MOD.6 = Card(
 
 ---
 
-### STD.MOD.7 — SANCTUM LEDGER ACCESS *(stub)*
+### STD.MOD.7 — SANCTUM LEDGER ACCESS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, Equipment category. A live feed into Financial Sanctum's own books — the access is the Sanctum's, not the holder's, so it doesn't travel. Same no-cost/playtest-flagged (04-n94) terms as STD.MOD.6.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The numbers only mean anything inside the Sanctum's own walls — reinforcing whichever side the playing faction has named, but worthless the moment the feed leaves the building.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A location-bound data feed fits Core's institutional-access character; the ring restriction expresses the institution's own walls, not an arbitrary limit. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; institutional-data register, distinct from STD.MOD.6's personal-contact framing. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Equipment-category naming slot for Ring 1. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=1`/`ring_origin=1` correctly restrict play to a Ring 1 district contest. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, Equipment category. A live feed into Financial Sanctum's own books — the access is the Sanctum's, not the holder's, so it doesn't travel.*
+*S134. Ring-Locked set, Equipment category. A live feed into Financial Sanctum's own books — the access is the Sanctum's, not the holder's, so it doesn't travel. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.6; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.7 = Card(
@@ -453,8 +490,11 @@ STD.MOD.7 = Card(
     ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The numbers only mean anything inside the Sanctum's own walls. Outside them, it's just a feed with nothing to compare against.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
 )
@@ -462,43 +502,43 @@ STD.MOD.7 = Card(
 
 ---
 
-### STD.MOD.8 — CHECKPOINT DELAY *(stub)*
+### STD.MOD.8 — CHECKPOINT DELAY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, weaker Hinder tier (−1). The friction is physical — a specific checkpoint, not a general restriction — so it only bites where that checkpoint stands. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The checkpoint has never once been called temporary. Tonight it's also slow, and nobody's explaining why — the named faction's position at that checkpoint suffers for it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A physical checkpoint slowdown fits Core's institutional-access character; location-bound friction, not force. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; institutional-friction register, consistent with Core voice. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Tactic-category Hinder slot for Ring 1. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Hinder tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=1`/`ring_origin=1` correctly restrict play to a Ring 1 district contest, matching the physical-checkpoint narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, weaker Hinder tier (−1). The friction is physical — a specific checkpoint, not a general restriction — so it only bites where that checkpoint stands.*
+*S134. Ring-Locked set, weaker Hinder tier (−1). The friction is physical — a specific checkpoint, not a general restriction — so it only bites where that checkpoint stands. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.6/7; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.8 = Card(
@@ -513,8 +553,11 @@ STD.MOD.8 = Card(
     ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The checkpoint has never once been called temporary. Tonight it's also slow, and nobody's explaining why.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
 )
@@ -522,43 +565,43 @@ STD.MOD.8 = Card(
 
 ---
 
-### STD.MOD.9 — PERIMETER LOCKOUT *(stub)*
+### STD.MOD.9 — PERIMETER LOCKOUT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 1. Outright denial at a named perimeter, not a slowdown. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+No explanation posted. Just a perimeter that stopped opening for one name on the list — the named faction's access at that perimeter is denied outright.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Outright perimeter denial is the escalated form of Core's institutional-access character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same institutional register as STD.MOD.8, escalated to full denial. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Tactic-category escalated Hinder slot alongside STD.MOD.8. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=1`/`ring_origin=1` correctly restrict play to a Ring 1 district contest, matching the named-perimeter narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 1. Outright denial at a named perimeter, not a slowdown.*
+*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 1. Outright denial at a named perimeter, not a slowdown. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.6–8; portrait resolved same session (PM02 L269). Closes the Ring 1 (Core) ModBattleCard set — all 8 cards (STD.MOD.2–9) design-passed, no open issues.*
 
 ```python
 STD.MOD.9 = Card(
@@ -573,8 +616,11 @@ STD.MOD.9 = Card(
     ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "No explanation posted. Just a perimeter that stopped opening for one name on the list.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
 )
@@ -582,43 +628,43 @@ STD.MOD.9 = Card(
 
 ---
 
-### STD.MOD.10 — LINE SUPERVISOR *(stub)*
+### STD.MOD.10 — LINE SUPERVISOR
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring 2 (Mid) opens, Portable set. Voice per Art 00 §6.7: the Mid's defining anxiety is throughput, not force or construction — deliberately distinct from Guild's already-shipped material-commitment doctrine (GUI.MOD.11–14). This is operational leverage available to anyone with a stake in the Mid, not a faction specialty. Same no-cost/playtest-flagged (04-n94) terms as the rest of the subclass.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The schedule says one thing. A shift supervisor makes it say another, quietly, before the shift starts — reinforcing whichever side the playing faction has named.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A rerouted shift/schedule is a grounded expression of the Mid's operational-throughput character (Art 00 §6.7), deliberately distinct from Guild's material-commitment doctrine. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; operational-logistics register specific to the Mid, distinct from Core's institutional-access voice. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Asset-category naming slot for Ring 2. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Boost tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=2` correctly set for a Portable asset (favor travels with holder, sourced from the Mid). | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring 2 (Mid) opens, Portable set. Voice per Art 00 §6.7: the Mid's defining anxiety is throughput, not force or construction — deliberately distinct from Guild's already-shipped material-commitment doctrine (GUI.MOD.11–14). This is operational leverage available to anyone with a stake in the Mid, not a faction specialty.*
+*S134. Ring 2 (Mid) opens, Portable set. Voice per Art 00 §6.7: the Mid's defining anxiety is throughput, not force or construction — deliberately distinct from Guild's already-shipped material-commitment doctrine (GUI.MOD.11–14). This is operational leverage available to anyone with a stake in the Mid, not a faction specialty. Design-reviewed S140 (09-16 step 4) — same disposition as the Ring 1 set; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.10 = Card(
@@ -633,8 +679,11 @@ STD.MOD.10 = Card(
     ring_constraint = None,   # Portable set — the favor travels with the holder, not the Mid (closes 04-n161 alongside STD.MOD.14's Locked counterpart)
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The schedule says one thing. The supervisor makes it say another, quietly, before the shift starts.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -642,43 +691,43 @@ STD.MOD.10 = Card(
 
 ---
 
-### STD.MOD.11 — RELAY PRIORITY *(stub)*
+### STD.MOD.11 — RELAY PRIORITY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, Equipment category. A grid or data allocation override — small enough to carry, general enough to apply anywhere. Same no-cost/playtest-flagged (04-n94) terms as STD.MOD.10.
 
 #### Card Story
-⚠ Story pending 04-n79.
+For an hour, someone else's allocation is quietly someone else's problem — reinforcing whichever side the playing faction has named.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A grid/data allocation override is a grounded expression of the Mid's operational-throughput character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; operational/infrastructure register, distinct from STD.MOD.10's personnel framing. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Equipment-category naming slot for Ring 2. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=2` correctly set for a Portable asset. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, Equipment category. A grid or data allocation override — small enough to carry, general enough to apply anywhere.*
+*S134. Portable set, Equipment category. A grid or data allocation override — small enough to carry, general enough to apply anywhere. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.10; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.11 = Card(
@@ -693,8 +742,11 @@ STD.MOD.11 = Card(
     ring_constraint = None,   # Portable set — the override travels with the holder
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "For an hour, someone else's allocation is quietly someone else's problem.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -702,43 +754,43 @@ STD.MOD.11 = Card(
 
 ---
 
-### STD.MOD.12 — REGULATORY HOLD *(stub)*
+### STD.MOD.12 — REGULATORY HOLD
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, weaker Hinder tier (−1). Paperwork attached to a name, not a desk — it follows the target through the system. Same no-cost/playtest-flagged (04-n94) terms as the rest of the Ring 2 set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The form is correct. The form is always correct. It's still not moving — the named faction's position stalls wherever they refile it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Regulatory/paperwork friction fits the Mid's operational-throughput character — a chokepoint, not force. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; operational-bureaucracy register consistent with Mid voice. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Tactic-category Hinder slot for Ring 2. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Hinder tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=2` correctly set — the hold follows the target's filing, not a fixed office. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, weaker Hinder tier (−1). Paperwork attached to a name, not a desk — it follows the target through the system.*
+*S134. Portable set, weaker Hinder tier (−1). Paperwork attached to a name, not a desk — it follows the target through the system. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.10/11; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.12 = Card(
@@ -753,8 +805,11 @@ STD.MOD.12 = Card(
     ring_constraint = None,   # Portable set — the hold follows the target's filing, not a fixed office
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The form is correct. The form is always correct. It's still not moving.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -762,43 +817,43 @@ STD.MOD.12 = Card(
 
 ---
 
-### STD.MOD.13 — SUPPLY LINE FROZEN *(stub)*
+### STD.MOD.13 — SUPPLY LINE FROZEN
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 2. A shipment stalls wherever it was headed, not wherever it started. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Somewhere in transit, a manifest gets flagged. It doesn't matter where it started — the named faction's shipment never arrives, wherever it was actually going.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A stalled shipment/manifest is the escalated form of the Mid's operational-throughput character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same operational register as STD.MOD.12, escalated to full disruption. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Tactic-category escalated Hinder slot alongside STD.MOD.12. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=2` correctly set — the disruption follows the shipment's destination, not the Mid. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 2. A shipment stalls wherever it was headed, not wherever it started.*
+*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 2. A shipment stalls wherever it was headed, not wherever it started. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.10–12; portrait resolved same session (PM02 L269). Closes the Ring 2 Portable set — STD.MOD.10–13 design-passed, no open issues.*
 
 ```python
 STD.MOD.13 = Card(
@@ -813,8 +868,11 @@ STD.MOD.13 = Card(
     ring_constraint = None,   # Portable set — the disruption follows the shipment's destination, not the Mid
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Somewhere in transit, a manifest gets flagged. It doesn't matter where it started. It matters that it never arrives.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -822,43 +880,43 @@ STD.MOD.13 = Card(
 
 ---
 
-### STD.MOD.14 — POWER GRID CHIEF *(stub)*
+### STD.MOD.14 — POWER GRID CHIEF
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set opens for Ring 2 — the 04-n161 test pair with STD.MOD.10. Weight that only exists on the floor of the Power Grid itself. Same no-cost/playtest-flagged (04-n94) terms as the Portable set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Outside the Grid, he's nobody in particular. Inside it, nothing moves without him knowing — reinforcing whichever side the playing faction has named, but only on the Power Grid's own floor.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A location-bound floor authority fits the Mid's operational-throughput character; the Ring-Locked constraint expresses the narrative directly. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same operational register as the Portable set, framed around physical presence at the Power Grid. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Asset-category naming slot for Ring 2, paired with STD.MOD.10's Portable counterpart per 04-n161. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Boost tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=2`/`ring_origin=2` correctly restrict play to a Ring 2 district contest, matching the narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card; `arbiter_note` correctly states the ring restriction. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set opens for Ring 2 — the 04-n161 test pair with STD.MOD.10. Weight that only exists on the floor of the Power Grid itself.*
+*S134. Ring-Locked set opens for Ring 2 — the 04-n161 test pair with STD.MOD.10. Weight that only exists on the floor of the Power Grid itself. Design-reviewed S140 (09-16 step 4) — same disposition as the Portable set; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.14 = Card(
@@ -873,8 +931,11 @@ STD.MOD.14 = Card(
     ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district (closes 04-n161 alongside STD.MOD.10's Portable counterpart)
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Outside the Grid, he's nobody in particular. Inside it, nothing moves without him knowing.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
 )
@@ -882,43 +943,43 @@ STD.MOD.14 = Card(
 
 ---
 
-### STD.MOD.15 — COMMUNICATIONS HUB OVERRIDE *(stub)*
+### STD.MOD.15 — COMMUNICATIONS HUB OVERRIDE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, Equipment category. A direct line into the relay system — it only works standing near a relay tower. Same no-cost/playtest-flagged (04-n94) terms as STD.MOD.14.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The override rides the Hub's own relay hardware — reinforcing whichever side the playing faction has named, but it's just a dead handset anywhere without towers.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A location-bound relay override fits the Mid's operational-throughput character; the ring restriction expresses the hardware dependency directly. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; operational/infrastructure register, distinct from STD.MOD.14's personnel framing. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Equipment-category naming slot for Ring 2. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=2`/`ring_origin=2` correctly restrict play to a Ring 2 district contest. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, Equipment category. A direct line into the relay system — it only works standing near a relay tower.*
+*S134. Ring-Locked set, Equipment category. A direct line into the relay system — it only works standing near a relay tower. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.14; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.15 = Card(
@@ -933,8 +994,11 @@ STD.MOD.15 = Card(
     ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The override rides the Hub's own relay hardware. Take it somewhere without towers and it's just a dead handset.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
 )
@@ -942,43 +1006,43 @@ STD.MOD.15 = Card(
 
 ---
 
-### STD.MOD.16 — PERMIT OFFICE FREEZE *(stub)*
+### STD.MOD.16 — PERMIT OFFICE FREEZE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, weaker Hinder tier (−1). The jam is specific to the Regulatory District's own queue — business filed anywhere else is unaffected. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The clerk isn't stalling. The queue is just, tonight, exactly this long — the named faction's business at the Regulatory District suffers for it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A location-bound permit queue jam fits the Mid's operational-throughput character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; operational-bureaucracy register consistent with Mid voice. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Tactic-category Hinder slot for Ring 2. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Hinder tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=2`/`ring_origin=2` correctly restrict play to a Ring 2 district contest, matching the location-bound narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, weaker Hinder tier (−1). The jam is specific to the Regulatory District's own queue — business filed anywhere else is unaffected.*
+*S134. Ring-Locked set, weaker Hinder tier (−1). The jam is specific to the Regulatory District's own queue — business filed anywhere else is unaffected. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.14/15; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.16 = Card(
@@ -993,8 +1057,11 @@ STD.MOD.16 = Card(
     ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The clerk isn't stalling. The queue is just, tonight, exactly this long.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
 )
@@ -1002,43 +1069,43 @@ STD.MOD.16 = Card(
 
 ---
 
-### STD.MOD.17 — CLEARINGHOUSE LOCKOUT *(stub)*
+### STD.MOD.17 — CLEARINGHOUSE LOCKOUT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 2. Capital frozen exactly where it sits at Financial Clearinghouse. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The transfer clears the Sanctum end fine. It just never quite finishes clearing this one — the named faction's capital sticks mid-transfer, frozen exactly where it sits.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A capital transfer frozen at a specific clearinghouse is the escalated form of the Mid's operational-throughput character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same operational register as STD.MOD.16, escalated to full lockout. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Tactic-category escalated Hinder slot alongside STD.MOD.16. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=2`/`ring_origin=2` correctly restrict play to a Ring 2 district contest, matching the Clearinghouse-specific narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 2. Capital frozen exactly where it sits at Financial Clearinghouse.*
+*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 2. Capital frozen exactly where it sits at Financial Clearinghouse. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.14–16; portrait resolved same session (PM02 L269). Closes the Ring 2 (Mid) ModBattleCard set — all 8 cards (STD.MOD.10–17) design-passed, no open issues.*
 
 ```python
 STD.MOD.17 = Card(
@@ -1053,8 +1120,11 @@ STD.MOD.17 = Card(
     ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The transfer clears the Sanctum end fine. It just never quite finishes clearing this one.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
 )
@@ -1062,43 +1132,43 @@ STD.MOD.17 = Card(
 
 ---
 
-### STD.MOD.18 — FAMILIAR FACE *(stub)*
+### STD.MOD.18 — FAMILIAR FACE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring 3 (Baryo) opens, Portable set. Voice per Art 00 §6.7: Baryo's defining anxiety is exposure, and its leverage is community and the gray economy — deliberately distinct from Network's already-shipped broadcast/public-attention doctrine (NET.MOD.15–18) and Ghost's intelligence doctrine (GHO.MOD.12–15). This is street-level social capital, not information or attention. Same no-cost/playtest-flagged (04-n94) terms as the rest of the subclass.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A nod, a name dropped, and suddenly you're not a stranger anymore — the vouching travels as far as the person willing to give it, reinforcing whichever side the playing faction has named.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Street-level social vouching is a grounded expression of Baryo's community/gray-economy character (Art 00 §6.7), distinct from Network's broadcast doctrine and Ghost's intelligence doctrine. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; informal community-trust register specific to Baryo, distinct from Core/Mid's institutional/operational voices. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Asset-category naming slot for Ring 3. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Boost tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=3` correctly set for a Portable asset (connection travels with holder, sourced from Baryo). | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring 3 (Baryo) opens, Portable set. Voice per Art 00 §6.7: Baryo's defining anxiety is exposure, and its leverage is community and the gray economy — deliberately distinct from Network's already-shipped broadcast/public-attention doctrine (NET.MOD.15–18) and Ghost's intelligence doctrine (GHO.MOD.12–15). This is street-level social capital, not information or attention.*
+*S134. Ring 3 (Baryo) opens, Portable set. Voice per Art 00 §6.7: Baryo's defining anxiety is exposure, and its leverage is community and the gray economy — deliberately distinct from Network's already-shipped broadcast/public-attention doctrine (NET.MOD.15–18) and Ghost's intelligence doctrine (GHO.MOD.12–15). This is street-level social capital, not information or attention. Design-reviewed S140 (09-16 step 4) — same disposition as Ring 1/2 sets; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.18 = Card(
@@ -1113,8 +1183,11 @@ STD.MOD.18 = Card(
     ring_constraint = None,   # Portable set — the connection travels with the holder, not Baryo (closes 04-n161 alongside STD.MOD.22's Locked counterpart)
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "A nod, a name dropped, and suddenly you're not a stranger anymore. It travels as far as the person vouching for you is willing to go.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -1122,43 +1195,43 @@ STD.MOD.18 = Card(
 
 ---
 
-### STD.MOD.19 — SCAVENGED RIG *(stub)*
+### STD.MOD.19 — SCAVENGED RIG
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, Equipment category. Improvised tech, built for exactly this — being carried somewhere else. Same no-cost/playtest-flagged (04-n94) terms as STD.MOD.18.
 
 #### Card Story
-⚠ Story pending 04-n79.
+None of the parts match. All of them work — reinforcing whichever side the playing faction has named, wherever the rig gets carried.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Improvised, scavenged equipment fits Baryo's gray-economy character — resourcefulness, not institutional or broadcast leverage. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; improvised/gray-economy register, distinct from STD.MOD.18's social-vouching framing. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Equipment-category naming slot for Ring 3. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=3` correctly set for a Portable asset. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, Equipment category. Improvised tech, built for exactly this — being carried somewhere else.*
+*S134. Portable set, Equipment category. Improvised tech, built for exactly this — being carried somewhere else. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.18; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.19 = Card(
@@ -1173,8 +1246,11 @@ STD.MOD.19 = Card(
     ring_constraint = None,   # Portable set — improvised and portable by nature
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "None of the parts match. All of them work. That's the whole design philosophy.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -1182,43 +1258,43 @@ STD.MOD.19 = Card(
 
 ---
 
-### STD.MOD.20 — VENDORS CLOSE RANKS *(stub)*
+### STD.MOD.20 — VENDORS CLOSE RANKS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, weaker Hinder tier (−1). The gray economy's judgment follows the target, not the block they were standing on. Same no-cost/playtest-flagged (04-n94) terms as the rest of the Ring 3 set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Nobody posted a notice. Everyone who needed to know already does — the named faction stops getting credit through the gray economy, no matter where they try next.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Informal reputational blacklisting fits Baryo's community/gray-economy character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; gray-economy/community register consistent with Baryo voice. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Tactic-category Hinder slot for Ring 3. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Hinder tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=3` correctly set — the reputation follows the target, not a single block. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, weaker Hinder tier (−1). The gray economy's judgment follows the target, not the block they were standing on.*
+*S134. Portable set, weaker Hinder tier (−1). The gray economy's judgment follows the target, not the block they were standing on. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.18/19; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.20 = Card(
@@ -1233,8 +1309,11 @@ STD.MOD.20 = Card(
     ring_constraint = None,   # Portable set — the reputation follows the target, not a single block
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Nobody posted a notice. Everyone who needed to know already does.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -1242,43 +1321,43 @@ STD.MOD.20 = Card(
 
 ---
 
-### STD.MOD.21 — BARYO TURNS ITS BACK *(stub)*
+### STD.MOD.21 — BARYO TURNS ITS BACK
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 3. The community's withdrawal is total and it follows the target, not the ring. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Doors that used to open don't. Nobody explains why. Nobody has to — the ring's informal networks stop cooperating with the named faction everywhere at once.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Total community withdrawal is the escalated form of Baryo's gray-economy/social-network character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same community register as STD.MOD.20, escalated to total withdrawal. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Portable Tactic-category escalated Hinder slot alongside STD.MOD.20. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=3` correctly set — the withdrawal follows the target's name, not a fixed block. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 3. The community's withdrawal is total and it follows the target, not the ring.*
+*S134. Portable set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Portable pattern for Ring 3. The community's withdrawal is total and it follows the target, not the ring. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.18–20; portrait resolved same session (PM02 L269). Closes the Ring 3 Portable set — STD.MOD.18–21 design-passed, no open issues.*
 
 ```python
 STD.MOD.21 = Card(
@@ -1293,8 +1372,11 @@ STD.MOD.21 = Card(
     ring_constraint = None,   # Portable set — the withdrawal follows the target's name, not a fixed block
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Doors that used to open don't. Nobody explains why. Nobody has to.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -1302,43 +1384,43 @@ STD.MOD.21 = Card(
 
 ---
 
-### STD.MOD.22 — STRIP REGULAR *(stub)*
+### STD.MOD.22 — STRIP REGULAR
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set opens for Ring 3 — the 04-n161 test pair with STD.MOD.18. Standing that's real, and real only, on the Commercial Strip. Same no-cost/playtest-flagged (04-n94) terms as the Portable set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Ask about him three blocks over and you get a shrug. Ask on the Strip and everyone has an opinion — reinforcing whichever side the playing faction has named, but only there.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A location-bound community fixture fits Baryo's gray-economy/community character; the Ring-Locked constraint expresses the narrative directly. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same community register as the Portable set, framed around physical presence on the Commercial Strip. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Asset-category naming slot for Ring 3, paired with STD.MOD.18's Portable counterpart per 04-n161. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Boost tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=3`/`ring_origin=3` correctly restrict play to a Ring 3 district contest, matching the narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card; `arbiter_note` correctly states the ring restriction. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set opens for Ring 3 — the 04-n161 test pair with STD.MOD.18. Standing that's real, and real only, on the Commercial Strip.*
+*S134. Ring-Locked set opens for Ring 3 — the 04-n161 test pair with STD.MOD.18. Standing that's real, and real only, on the Commercial Strip. Design-reviewed S140 (09-16 step 4) — same disposition as the Portable set; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.22 = Card(
@@ -1353,8 +1435,11 @@ STD.MOD.22 = Card(
     ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district (closes 04-n161 alongside STD.MOD.18's Portable counterpart)
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Ask about him three blocks over and you get a shrug. Ask on the Strip and everyone has an opinion.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
@@ -1362,43 +1447,43 @@ STD.MOD.22 = Card(
 
 ---
 
-### STD.MOD.23 — MARKET STALL CACHE *(stub)*
+### STD.MOD.23 — MARKET STALL CACHE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, Equipment category. Goods stockpiled in a specific stall — moving them defeats the point of having stockpiled them there. Same no-cost/playtest-flagged (04-n94) terms as STD.MOD.22.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The cache has been building for years, one odd lot at a time — reinforcing whichever side the playing faction has named, but it was never going anywhere.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A location-bound stockpile fits Baryo's gray-economy character; the ring restriction expresses the physical stall directly. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; gray-economy/commerce register, distinct from STD.MOD.22's personal-standing framing. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Equipment-category naming slot for Ring 3. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=3`/`ring_origin=3` correctly restrict play to a Ring 3 district contest. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, Equipment category. Goods stockpiled in a specific stall — moving them defeats the point of having stockpiled them there.*
+*S134. Ring-Locked set, Equipment category. Goods stockpiled in a specific stall — moving them defeats the point of having stockpiled them there. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.22; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.23 = Card(
@@ -1413,8 +1498,11 @@ STD.MOD.23 = Card(
     ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "The cache has been building for years, one odd lot at a time. It was never going anywhere.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
@@ -1422,43 +1510,43 @@ STD.MOD.23 = Card(
 
 ---
 
-### STD.MOD.24 — HOUSING ARRANGEMENT CALLED IN *(stub)*
+### STD.MOD.24 — HOUSING ARRANGEMENT CALLED IN
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, weaker Hinder tier (−1). The leverage belongs to a specific unofficial landlord over a specific arrangement — it doesn't extend past that reach. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+No one signed anything. That was always the arrangement's whole strength, and tonight it's a weakness instead — the named faction's stay in that arrangement's reach turns difficult.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Informal-landlord leverage bound to a specific arrangement fits Baryo's gray-economy character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; unofficial/informal-arrangement register consistent with Baryo voice. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Tactic-category Hinder slot for Ring 3. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Hinder tier per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=3`/`ring_origin=3` correctly restrict play to a Ring 3 district contest, matching the arrangement's-reach narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, weaker Hinder tier (−1). The leverage belongs to a specific unofficial landlord over a specific arrangement — it doesn't extend past that reach.*
+*S134. Ring-Locked set, weaker Hinder tier (−1). The leverage belongs to a specific unofficial landlord over a specific arrangement — it doesn't extend past that reach. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.22/23; portrait resolved same session (PM02 L269).*
 
 ```python
 STD.MOD.24 = Card(
@@ -1473,8 +1561,11 @@ STD.MOD.24 = Card(
     ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "No one signed anything. That was always the arrangement's whole strength, and tonight it's a weakness instead.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
@@ -1482,43 +1573,43 @@ STD.MOD.24 = Card(
 
 ---
 
-### STD.MOD.25 — TRANSIT HUB SHUTOUT *(stub)*
+### STD.MOD.25 — TRANSIT HUB SHUTOUT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 3, and closes out the 24-card Ring Modifier stub pass. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Every shift finds a reason not to touch the load. By evening it's still sitting exactly where it was unloaded — the named faction's position at the Hub goes nowhere.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Coordinated labor non-cooperation at a named hub is the escalated form of Baryo's gray-economy/community character. | Art 00 §6.7; Art 04 §5a |
+| Voice fit | ✓ | `faction=All`; same community register as STD.MOD.24, escalated to a full shutout. | Art 00 §6.7, §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/`subtype=Standard` correct; fills the Ring-Locked Tactic-category escalated Hinder slot alongside STD.MOD.24. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per locked S132/S134 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=3`/`ring_origin=3` correctly restrict play to a Ring 3 district contest, matching the named-Hub narrative. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 3, and closes out the 24-card Ring Modifier stub pass.*
+*S134. Ring-Locked set, escalated Hinder tier (−2) — completes the 2 Boost / 2 Hinder Ring-Locked pattern for Ring 3, and closes out the 24-card Ring Modifier stub pass. Design-reviewed S140 (09-16 step 4) — same disposition as STD.MOD.22–24; portrait resolved same session (PM02 L269). Closes the Ring 3 (Baryo) ModBattleCard set — all 8 cards (STD.MOD.18–25) design-passed, no open issues. This closes 09-16 step 4 in full: all 44 ModBattleCard cards across Ring 1/2/3 and all 5 factions are now design-reviewed, clean, zero open flags.*
 
 ```python
 STD.MOD.25 = Card(
@@ -1533,8 +1624,11 @@ STD.MOD.25 = Card(
     ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Every shift finds a reason not to touch the load. By evening it's still sitting exactly where it was unloaded.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
@@ -1542,43 +1636,43 @@ STD.MOD.25 = Card(
 
 ---
 
-### STD.MOD.26 — ZONING VARIANCE *(stub)*
+### STD.MOD.26 — ZONING VARIANCE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Minor tier of Ring 1's Portable `threshold_delta` quartet — a self-only +5 host-threshold ease bundled at Dispatch with any CA/PA the holder submits (self-only is schema-locked, §6.3/04-n170: 3 of 4 `ModActionExpr` variants carry no faction-target field). Portable (`ring_constraint=None`) fits the concept: "someone already cleared this elsewhere" doesn't require the holder to still be standing in Ring 1 to use it — `ring_origin=1` keeps the card's *source* Core-flavored (institutional access, Art 00 §6.7) even though its *use* travels. `cost=None` per the closed PM02 L256 convention (splay-display legibility), not a per-card gap.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A zoning officer signs off on an exception before anyone downstream even has to file the objection — the paperwork simply never becomes a problem.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Bureaucratic ease-of-passage; matches Ring 1/Core "institutional access" ring character. Parasitic on host, no independent action. | Art 00 §6.7; Art 04 §11.1 |
+| Voice fit | ✓ | `faction=All`, no perspectives required (Standard card). Tagline/narrative read in the neutral institutional register consistent with Core voice. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`; `doctrine_mod` correctly absent — no faction relationship in play. | Art 04 §6.2 |
+| Card type fit | ✓ | ModActionCard, `subtype=Standard`; correctly excluded from taxonomy (`layer`/`function`/`subject=None`) per §11.1 — parasitic on host, not its own action category. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | `layer`/`function`/`subject` schema-locked None for all modifier subclasses — not an open taxonomy question here. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the locked 4-value `threshold_delta` ladder (+5/+10/+15/+20); `value_rating=1` correctly mirrors tier (L259). | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host at resolution, consumed on use — no standing effect. | Art 04 §5 P19 |
+| Persistence | N/A | `persistence`/`persistence_condition`/`persistence_effect` schema-locked None for ModActionCard — no standing marker. | Art 04 §6.2 |
+| Trigger validity | N/A | `trigger` schema-locked None for ModActionCard — bundled at Dispatch, not trigger-fired. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` genuinely assessed, not a TBD punt — a procedural ease-of-passage nudge carries no doctrinal weight and affects no faction's standing. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=1` are the zone-relevant fields, set correctly for a Portable asset. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components; physical modifier card only. | Art 02 |
+| Supported by game procedure | ✓ | Dispatch-bundling procedure at Art 03 §9.1.1/§9.4.0.1 covers attachment; `arbiter_note` cites it correctly. | Art 03 §9.1.1, §9.4.0.1 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding, not previously applied to this corpus). All other §6.1/§6.2 fields present and correctly typed. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Card Story is a plain 1-sentence New Meridian event, not a mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | ModActionCard carries no `success`/`successcrit`/`fail`/`failcrit` of its own (schema-locked None) — determinacy belongs to the host action. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None` is the closed whole-subclass convention (PM02 L256); out of scope for the 04-n178 Floor Act rule (scoped to CovertOp/PublicAct/ModReact only). | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. First Ring ModActionCard content — 09-06/04-n157 pattern-setter for the Ring leg, replicating the faction ModActionCard format (DIR.MOD.14–25 and Guild/Ghost/Network/Syndicate) with the same Portable/Ring-Locked doubling already established for Ring ModBattleCard (STD.MOD.2–25). **Format:** each ring ships a Portable 12-card set (`ring_constraint=None`) and a Ring-Locked 12-card set (`ring_constraint=`ring) — 24 cards/ring, 72 total — same 4 `threshold_delta` + 2 `success_multiplier` + 4 `ps_shift` + 2 `cost_reduction` structure, `cost=None`, `value_rating` 1–4 mirroring tier. Ring 1/Core voice per Art 00 §6.7: institutional access and proximity — distinct from Directorate's literal-force ModActionCard doctrine, same city, different lever. Drawn from the Ring ModAction Core seed pool (`Whiteboard/modifier_card_ideas.md`), reframing hostile-flavored entries per 04-n170. Portable set, minor threshold_delta tier (+5).*
+*S135. First Ring ModActionCard content — 09-06/04-n157 pattern-setter for the Ring leg, replicating the faction ModActionCard format (DIR.MOD.14–25 and Guild/Ghost/Network/Syndicate) with the same Portable/Ring-Locked doubling already established for Ring ModBattleCard (STD.MOD.2–25). **Format:** each ring ships a Portable 12-card set (`ring_constraint=None`) and a Ring-Locked 12-card set (`ring_constraint=`ring) — 24 cards/ring, 72 total — same 4 `threshold_delta` + 2 `success_multiplier` + 4 `ps_shift` + 2 `cost_reduction` structure, `cost=None`, `value_rating` 1–4 mirroring tier. Ring 1/Core voice per Art 00 §6.7: institutional access and proximity — distinct from Directorate's literal-force ModActionCard doctrine, same city, different lever. Drawn from the Ring ModAction Core seed pool (`Whiteboard/modifier_card_ideas.md`), reframing hostile-flavored entries per 04-n170. Portable set, minor threshold_delta tier (+5). **Design-reviewed S139 (09-16 step 3, ModActionCard pattern-setter) — pattern approved by Andy; see remainder of Ring/faction ModActionCard sets for replication.**
 
 ```python
 STD.MOD.26 = Card(
@@ -1593,6 +1687,9 @@ STD.MOD.26 = Card(
     ring_constraint = None,   # Portable set — the exception travels with whoever's holding it
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A quiet exception makes a Core placement or build action easier to clear — filed and approved before anyone thought to object.",
@@ -1602,43 +1699,43 @@ STD.MOD.26 = Card(
 
 ---
 
-### STD.MOD.27 — REDACTED FILE *(stub)*
+### STD.MOD.27 — REDACTED FILE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Second tier of Ring 1's Portable `threshold_delta` quartet (+10) — identical structure to STD.MOD.26, self-only host-threshold ease. Narrative distinct from Zoning Variance: information suppression rather than pre-clearance, still fitting Core's institutional-access register.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A report reaches its audience with the inconvenient part blacked out — smoothing the acting faction's own submission.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Institutional information-control ease; same Core register as STD.MOD.26. | Art 00 §6.7; Art 04 §11.1 |
+| Voice fit | ✓ | `faction=All`, neutral institutional register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as STD.MOD.26. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Mid tier of the 4-value ladder; `value_rating=2` mirrors tier. | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted — no doctrinal weight. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis as STD.MOD.26. | Art 03 §9.1.1, §9.4.0.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, mid threshold_delta tier (+10).*
+*S135. Portable set, mid threshold_delta tier (+10). Design-reviewed S139.*
 
 ```python
 STD.MOD.27 = Card(
@@ -1653,6 +1750,9 @@ STD.MOD.27 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A report reaches its audience with the inconvenient part blacked out — smoothing the acting faction's own submission.",
@@ -1662,43 +1762,43 @@ STD.MOD.27 = Card(
 
 ---
 
-### STD.MOD.28 — MAINTENANCE WINDOW *(stub)*
+### STD.MOD.28 — MAINTENANCE WINDOW
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third tier of the Portable `threshold_delta` quartet (+15). Reframed from an earlier hostile-flavored seed concept ("Cordoned Block" — sealing a rival's district "for maintenance," raising their difficulty) per 04-n170: `threshold_delta` carries no faction parameter, so it can only ever ease the holder's own host action, never hinder a rival's. The reframe keeps the "maintenance closure" flavor but repoints the mechanical benefit to the acting faction's own operation in the cleared space.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A district block is cordoned off "for maintenance" — which clears space for the acting faction's own operation there.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Core institutional register; reframe correctly resolves to self-only benefit. | Art 00 §6.7; PM05 04-n170 |
+| Voice fit | ✓ | `faction=All`, neutral register — reframed narrative doesn't retain hostile framing. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as STD.MOD.26/27. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Third tier of the 4-value ladder; `value_rating=3` mirrors tier. | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted — no doctrinal weight. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis as STD.MOD.26. | Art 03 §9.1.1, §9.4.0.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Reframed narrative reads as a clean self-only event, no hostile residue. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Cordoned Block" — sealing a rival's district "for maintenance," raising their difficulty) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease the holder's own host action.*
+*S135. Portable set, third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Cordoned Block" — sealing a rival's district "for maintenance," raising their difficulty) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease the holder's own host action. Design-reviewed S139 — reframe holds up clean, no hostile-framing residue found.*
 
 ```python
 STD.MOD.28 = Card(
@@ -1713,6 +1813,9 @@ STD.MOD.28 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A district block cordoned off \"for maintenance\" clears space for the acting faction's own operation there.",
@@ -1722,43 +1825,43 @@ STD.MOD.28 = Card(
 
 ---
 
-### STD.MOD.29 — CLASSIFIED BRIEFING *(stub)*
+### STD.MOD.29 — CLASSIFIED BRIEFING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier of the Portable `threshold_delta` quartet (+20). Reframed from an earlier hostile-flavored seed concept ("Sealed Minutes" — classifying context before a rival can plan around it) per 04-n170, same self-only correction as STD.MOD.28. As the top tier, this card is the first in the set to carry an explicit playtest caveat (04-n157) — the +20 magnitude is the largest single `threshold_delta` value in the entire card system and hasn't been logged against actual play outcomes yet. **Outstanding issue:** narrative still reads slightly dual-purpose ("raising their difficulty" for a rival, "smooths the way" for the holder) despite the effect being schema-locked self-only — worth a light narrative tighten so the Card Story doesn't imply a hindrance the mechanic can't deliver.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Key context is classified before a rival can plan around it — and for the faction holding the briefing, the same classification smooths their own way through.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Core institutional register as the rest of the tier. | Art 00 §6.7; PM05 04-n170 |
+| Voice fit | ⚠ | Narrative/`narrative` field still frames a rival's difficulty rising, but the mechanic (`threshold_delta`) only ever eases the holder's own host — narrative implies a hindrance the card can't deliver. Minor tighten recommended, not blocking. | Art 00 §9; PM05 04-n170 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as rest of tier. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=4` correctly mirrors tier (L259), but +20 is unvalidated against actual play (04-n157 playtest flag — largest single `threshold_delta` value in the system). | PM02 L258, L259; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted — no doctrinal weight. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis as rest of tier. | Art 03 §9.1.1, §9.4.0.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ⚠ | Story is plain and in-world, but see Voice fit — implies dual-purpose effect the schema doesn't support. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (narrative tighten, +20 playtest flag) |  |
 
-*S135. Portable set, capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Sealed Minutes" — classifying context before a rival can plan around it) per 04-n170.*
+*S135. Portable set, capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Sealed Minutes" — classifying context before a rival can plan around it) per 04-n170. Design-reviewed S139 — narrative still implies a self-only card can hinder a rival; flagged for a light tighten, not blocking.*
 
 ```python
 STD.MOD.29 = Card(
@@ -1773,52 +1876,55 @@ STD.MOD.29 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Key context is classified before a rival can plan around it, raising their difficulty — but for the holder, the same classification smooths the way.",
-    arbiter_note = "Capstone tier, reframed per 04-n170 — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+    arbiter_note = "Capstone tier, reframed per 04-n170 — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set). Narrative flagged S139 — reads dual-purpose despite self-only mechanic.",
 )
 ```
 
 ---
 
-### STD.MOD.30 — INSTITUTIONAL BACKING *(stub)*
+### STD.MOD.30 — INSTITUTIONAL BACKING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the Portable `success_multiplier` pair — fires the host's success effect an additional time when the host succeeds. Self-only (no faction-target field on this `ModActionExpr` variant either), consistent with the tier's Core "institutional access" framing: an unseen endorsement, not a visible act.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An unseen endorsement from within the Core amplifies a successful action's effect.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Amplification-via-quiet-endorsement fits Core register. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as threshold_delta tier. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier of the 2-value `success_multiplier` pair; `value_rating=1` mirrors tier. | PM02 L256, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted — no doctrinal weight. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1, §9.4.0.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, common success_multiplier tier (n=1).*
+*S135. Portable set, common success_multiplier tier (n=1). Design-reviewed S139.*
 
 ```python
 STD.MOD.30 = Card(
@@ -1833,6 +1939,9 @@ STD.MOD.30 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An unseen endorsement from within the Core amplifies a successful action's effect.",
@@ -1842,43 +1951,43 @@ STD.MOD.30 = Card(
 
 ---
 
-### STD.MOD.31 — CEREMONIAL GROUNDBREAKING *(stub)*
+### STD.MOD.31 — CEREMONIAL GROUNDBREAKING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of the Portable `success_multiplier` pair — doubling an already-uncommon effect type (only 2 cards/set use it), so this is the highest-leverage single card in the Portable set on a per-card basis. Carries the same unvalidated-playtest caveat as STD.MOD.29's +20 threshold_delta.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Official recognition of a successful placement makes its result carry further than usual.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Ceremony-as-amplifier fits Core institutional register. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as tier. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, but n=2 success_multiplier is unvalidated against play — doubling an outcome is a stronger lever than any single `threshold_delta`/`ps_shift` tier in the set. | PM02 L256; PM05 04-n157, 04-n94 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted — no doctrinal weight. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1, §9.4.0.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (n=2 playtest flag) |  |
 
-*S135. Portable set, rare/capstone success_multiplier tier (n=2).*
+*S135. Portable set, rare/capstone success_multiplier tier (n=2). Design-reviewed S139 — same playtest-validation caveat as the +20 threshold_delta capstone.*
 
 ```python
 STD.MOD.31 = Card(
@@ -1893,6 +2002,9 @@ STD.MOD.31 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Official recognition of a successful placement makes its result carry further than usual.",
@@ -1902,43 +2014,43 @@ STD.MOD.31 = Card(
 
 ---
 
-### STD.MOD.32 — OFF THE RECORD *(stub)*
+### STD.MOD.32 — OFF THE RECORD
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix — the only `ModActionExpr` variant carrying a faction parameter (`acting`/`target`/named). This half resolves to the acting faction and needs no host-declared target, so — unlike the target-hinder half (STD.MOD.34/35) — it carries no submission-validity dependency.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An exchange is agreed by everyone present to have never happened — insulating the acting faction from the standing cost it would otherwise carry.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Discretion-as-PS-insulation fits Core institutional register. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no separate `target_faction`/`doctrine_mod` question; resolves to whoever submitted the host. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as rest of set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the 2×2 `ps_shift` matrix; `value_rating=1` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted — PS shift is the card's whole effect, no separate Portrait signal implied. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly to the submitter — no target-dependency gap (contrast STD.MOD.34/35). | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+*S135. Portable set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.32 = Card(
@@ -1953,6 +2065,9 @@ STD.MOD.32 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An exchange is agreed to never have happened — insulating the acting faction from the standing cost it would otherwise carry.",
@@ -1962,43 +2077,43 @@ STD.MOD.32 = Card(
 
 ---
 
-### STD.MOD.33 — PUBLIC CITATION *(stub)*
+### STD.MOD.33 — PUBLIC CITATION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost major tier (+2) of the `ps_shift` 2×2 matrix — same self-resolution basis as STD.MOD.32, doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A formal citation boosts standing through institutional channels rather than the public eye.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.32. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier of the 2×2 `ps_shift` matrix; `value_rating=2` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly, no target-dependency gap. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+*S135. Portable set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.33 = Card(
@@ -2013,6 +2128,9 @@ STD.MOD.33 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A formal citation boosts standing through institutional channels rather than the public eye.",
@@ -2022,43 +2140,43 @@ STD.MOD.33 = Card(
 
 ---
 
-### STD.MOD.34 — WORD TO THE WISE *(stub)*
+### STD.MOD.34 — WORD TO THE WISE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix. `faction="target"` resolves against whichever faction the host CA/PA it's packet-paired with declares as `target_faction` (§6.1) — the modifier has no target of its own; it's definitionally the host's target (Andy, S139).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A quiet, informal heads-up to the right official costs a named faction a small, deniable amount of standing.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Discreet-tip-as-hindrance fits Core institutional register. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` — resolves to whichever faction the host names; no `doctrine_mod` needed since this card doesn't itself declare the target. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the 2×2 `ps_shift` matrix; `value_rating=1` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+*S135. Portable set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix. Design-reviewed S139 — initially flagged as a target-restriction enforcement gap (schema_cleanup_log.md item 21); closed same session — Andy: the card's target IS the host it's packet-paired with at Dispatch, not an independently-validated field.*
 
 ```python
 STD.MOD.34 = Card(
@@ -2073,52 +2191,55 @@ STD.MOD.34 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A quiet, informal heads-up to the right official costs a named faction a small, deniable amount of standing.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA it's packet-paired with names as its target_faction (§6.1) — the modifier's target IS the host action, not an independently-declared field (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.35 — NAMED IN THE REVIEW *(stub)*
+### STD.MOD.35 — NAMED IN THE REVIEW
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Same target-resolution behavior as STD.MOD.34 (resolves via host pairing, not an independent field), doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An audit's findings reach exactly the audience that costs a rival the most standing.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.34. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier of the 2×2 `ps_shift` matrix; `value_rating=2` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+*S135. Portable set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Design-reviewed S139 — same target-resolution behavior as STD.MOD.34 (schema_cleanup_log.md #21, closed — not a gap).*
 
 ```python
 STD.MOD.35 = Card(
@@ -2133,52 +2254,55 @@ STD.MOD.35 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An audit's findings reach exactly the audience that costs a rival the most standing.",
-    arbiter_note = "Same target-resolution constraint as STD.MOD.34, major tier.",
+    arbiter_note = "Same target-resolution behavior as STD.MOD.34, major tier (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.36 — FEE WAIVED *(stub)*
+### STD.MOD.36 — FEE WAIVED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the Portable `cost_reduction` pair — PA-only per §6.3 (CA cost is already committed at Dispatch before Beat 0, so a cost reduction has nothing left to apply to; only PAs, declared at §9.2, have a cost step this can discount). `arbiter_note` correctly flags the PA-only restriction and the different attachment point (§9.2, not §9.1.1).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A routine institutional charge is quietly set aside for the acting faction only.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Fee-waiver fits Core institutional register. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set; correctly PA-restricted per `cost_reduction`'s §6.3 definition. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier of the 2-value `cost_reduction` pair; `value_rating=1` mirrors tier. | PM02 L256, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2 Public Declaration (not §9.1.1 Dispatch, since PA cost isn't committed until declaration) — `arbiter_note` cites the right procedure. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, common cost_reduction tier (n=1). PA-only per §6.3.*
+*S135. Portable set, common cost_reduction tier (n=1). PA-only per §6.3. Design-reviewed S139.*
 
 ```python
 STD.MOD.36 = Card(
@@ -2193,6 +2317,9 @@ STD.MOD.36 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A routine institutional charge is quietly set aside for the acting faction only.",
@@ -2202,43 +2329,43 @@ STD.MOD.36 = Card(
 
 ---
 
-### STD.MOD.37 — EMERGENCY ALLOCATION *(stub)*
+### STD.MOD.37 — EMERGENCY ALLOCATION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of the Portable `cost_reduction` pair, PA-only per §6.3. Closes the Ring 1 Portable set (STD.MOD.26–37, 12 cards). Same unvalidated-magnitude caveat as the other two capstones in this set (STD.MOD.29, STD.MOD.31) — a 2-unit cost reduction hasn't been checked against any specific PA's actual cost to confirm it isn't a near-total discount on cheap PAs.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Funds normally locked behind approval move immediately, discounting an urgent action's cost.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Emergency-allocation framing fits Core institutional register. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, same basis as STD.MOD.36. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, but a flat 2-unit `cost_reduction` isn't proportional to PA cost — could zero out or exceed a cheap PA's cost entirely. Unvalidated (04-n157). | PM02 L256; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=1` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Attaches at §9.2 Public Declaration, same as STD.MOD.36. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
 
-*S135. Portable set, capstone cost_reduction tier (n=2). Closes the Ring 1 Portable set (12 cards).*
+*S135. Portable set, capstone cost_reduction tier (n=2). Closes the Ring 1 Portable set (12 cards). Design-reviewed S139 — flags that a flat 2-unit reduction isn't checked against any specific PA's actual cost.*
 
 ```python
 STD.MOD.37 = Card(
@@ -2253,6 +2380,9 @@ STD.MOD.37 = Card(
     ring_constraint = None,   # Portable set — closes Ring 1's Portable 12-card set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Funds normally locked behind approval move immediately, discounting an urgent action's cost.",
@@ -2262,43 +2392,43 @@ STD.MOD.37 = Card(
 
 ---
 
-### STD.MOD.38 — RECOGNIZED ON SIGHT *(stub)*
+### STD.MOD.38 — RECOGNIZED ON SIGHT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set opens for Ring 1 — the other half of the 04-n161 Portable/Ring-Locked pair, same slot as STD.MOD.26 but `ring_constraint=1` restricts it to hosts targeting a Ring 1 district. Invented fresh (not seed-drawn) — the Portable set already used all 4 seed-pool threshold_delta concepts for Core.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The recognition is real, but it's tied to this specific checkpoint — it doesn't travel with the holder anywhere else.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Location-anchored recognition fits Ring-Locked framing; distinct concept from Portable's STD.MOD.26 (not a reskin). | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as Portable set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the 4-value ladder; `value_rating=1` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts — deployment restriction is itself the zone-relevant field. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Dispatch-bundling procedure covers attachment; ring-match validation is the same established mechanic as Ring-Locked ModBattleCard precedent. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event; correctly conveys the location-anchored constraint. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set opens for Ring 1 — the other half of the 04-n161 Portable/Ring-Locked pair, same slot as STD.MOD.26 but `ring_constraint=1` restricts it to hosts targeting a Ring 1 district. Invented fresh (not seed-drawn) — the Portable set already used all 4 seed-pool threshold_delta concepts for Core.*
+*S135. Ring-Locked set opens for Ring 1 — the other half of the 04-n161 Portable/Ring-Locked pair, same slot as STD.MOD.26 but `ring_constraint=1` restricts it to hosts targeting a Ring 1 district. Invented fresh (not seed-drawn) — the Portable set already used all 4 seed-pool threshold_delta concepts for Core. Design-reviewed S139.*
 
 ```python
 STD.MOD.38 = Card(
@@ -2313,6 +2443,9 @@ STD.MOD.38 = Card(
     ring_constraint = 1,      # Ring-Locked set — usable only with ops targeting a Ring 1 district (closes 04-n161 alongside STD.MOD.26's Portable counterpart)
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "The recognition is real, but it's tied to this specific checkpoint — it doesn't travel with the holder anywhere else.",
@@ -2322,43 +2455,43 @@ STD.MOD.38 = Card(
 
 ---
 
-### STD.MOD.39 — STANDING REQUEST *(stub)*
+### STD.MOD.39 — STANDING REQUEST
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Mid tier (+10) of the Ring-Locked `threshold_delta` quartet. Same structure as STD.MOD.38, different flavor (pre-filed paperwork vs. checkpoint recognition).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A standing relationship with the archive staff eases a paperwork-dependent action — but only within their reach.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Ring-Locked institutional-access basis as STD.MOD.38. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Mid tier; `value_rating=2` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis as STD.MOD.38. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, mid threshold_delta tier (+10).*
+*S135. Ring-Locked set, mid threshold_delta tier (+10). Design-reviewed S139.*
 
 ```python
 STD.MOD.39 = Card(
@@ -2373,6 +2506,9 @@ STD.MOD.39 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A standing relationship with the archive staff eases a paperwork-dependent action — but only within their reach.",
@@ -2382,43 +2518,43 @@ STD.MOD.39 = Card(
 
 ---
 
-### STD.MOD.40 — BACK-CHANNEL WORD *(stub)*
+### STD.MOD.40 — BACK-CHANNEL WORD
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third tier (+15) of the Ring-Locked `threshold_delta` quartet. Same structure as STD.MOD.38/39, unlike the Portable set's equivalent tier (STD.MOD.28) this one was never a hostile-flavored reframe — invented fresh, so carries no 04-n170 provenance note.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A direct line into the administrative wing eases the operation — but the line only reaches this far.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Ring-Locked basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register — clean self-only framing throughout (no dual-purpose residue, contrast STD.MOD.29). | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Third tier; `value_rating=3` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
+*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15). Design-reviewed S139.*
 
 ```python
 STD.MOD.40 = Card(
@@ -2433,6 +2569,9 @@ STD.MOD.40 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A direct line into the administrative wing eases the operation — but the line only reaches this far.",
@@ -2442,43 +2581,43 @@ STD.MOD.40 = Card(
 
 ---
 
-### STD.MOD.41 — FULL CLEARANCE *(stub)*
+### STD.MOD.41 — FULL CLEARANCE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (+20) of the Ring-Locked `threshold_delta` quartet. Unlike Portable's capstone (STD.MOD.29), narrative here is clean self-only throughout — "so long as the work stays here" correctly reinforces the ring restriction rather than implying a rival-facing effect.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Full clearance from within the Core itself — nothing left to process through ordinary channels, so long as the work stays here.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Ring-Locked basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative — no dual-purpose framing (contrast STD.MOD.29). | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=4` mirrors tier, but +20 unvalidated against play (04-n157) — same caveat as STD.MOD.29, though ring-locking here somewhat narrows the practical impact vs. the Portable capstone. | PM02 L258, L259, L261; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event, correctly self-only. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (+20 playtest flag) |  |
 
-*S135. Ring-Locked set, capstone threshold_delta tier (+20).*
+*S135. Ring-Locked set, capstone threshold_delta tier (+20). Design-reviewed S139 — narrative clean, playtest-magnitude flag carried from 04-n157.*
 
 ```python
 STD.MOD.41 = Card(
@@ -2493,6 +2632,9 @@ STD.MOD.41 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Full clearance from within the Core itself — nothing left to process through ordinary channels, so long as the work stays here.",
@@ -2502,43 +2644,43 @@ STD.MOD.41 = Card(
 
 ---
 
-### STD.MOD.42 — SHIFT CHANGE TIMING *(stub)*
+### STD.MOD.42 — SHIFT CHANGE TIMING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the Ring-Locked `success_multiplier` pair — location-anchored knowledge rather than Portable's unseen institutional endorsement (STD.MOD.30), same mechanic.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Knowing exactly how this specific checkpoint runs its shift changes lets a successful action land further than expected.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Location-specific knowledge fits Ring-Locked framing. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier of the 2-value pair; `value_rating=1` mirrors tier. | PM02 L256, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, common success_multiplier tier (n=1).*
+*S135. Ring-Locked set, common success_multiplier tier (n=1). Design-reviewed S139.*
 
 ```python
 STD.MOD.42 = Card(
@@ -2553,6 +2695,9 @@ STD.MOD.42 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Knowing exactly how this specific checkpoint runs its shift changes lets a successful action land further than expected.",
@@ -2562,43 +2707,43 @@ STD.MOD.42 = Card(
 
 ---
 
-### STD.MOD.43 — FULL INSTITUTIONAL WEIGHT *(stub)*
+### STD.MOD.43 — FULL INSTITUTIONAL WEIGHT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of the Ring-Locked `success_multiplier` pair — same unvalidated-magnitude caveat as Portable's equivalent (STD.MOD.31), narrative correctly reinforces the ring restriction ("only inside its own reach").
 
 #### Card Story
-⚠ Story pending 04-n79.
+When the institution itself backs an outcome, it carries much further than a routine result would — but only inside its own reach.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Ring-Locked basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, but n=2 success_multiplier unvalidated (same caveat as STD.MOD.31). | PM02 L256; PM05 04-n157, 04-n94 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (n=2 playtest flag) |  |
 
-*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
+*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2). Design-reviewed S139.*
 
 ```python
 STD.MOD.43 = Card(
@@ -2613,6 +2758,9 @@ STD.MOD.43 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "When the institution itself backs an outcome, it carries much further than a routine result would — but only inside its own reach.",
@@ -2622,43 +2770,43 @@ STD.MOD.43 = Card(
 
 ---
 
-### STD.MOD.44 — NOTED FAVORABLY *(stub)*
+### STD.MOD.44 — NOTED FAVORABLY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost minor tier (+1) of the Ring-Locked `ps_shift` 2×2 matrix. `faction="acting"` needs no host-declared target, so — same as Portable's STD.MOD.32 — carries no submission-validity dependency.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A quiet, favorable notation enters the institution's own record — a small, deliberate boost to standing.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Ring-Locked basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the 2×2 matrix; `value_rating=1` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly, no target-dependency gap. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.44 = Card(
@@ -2673,6 +2821,9 @@ STD.MOD.44 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A quiet, favorable notation enters the institution's own record — a small, deliberate boost to standing.",
@@ -2682,43 +2833,43 @@ STD.MOD.44 = Card(
 
 ---
 
-### STD.MOD.45 — FORMAL RECOGNITION *(stub)*
+### STD.MOD.45 — FORMAL RECOGNITION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost major tier (+2) of the Ring-Locked `ps_shift` matrix — same self-resolution basis as STD.MOD.44, doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Formal recognition from within the institution itself is a significant, visible boost — earned specifically here.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.44. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier of the 2×2 matrix; `value_rating=2` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.45 = Card(
@@ -2733,6 +2884,9 @@ STD.MOD.45 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Formal recognition from within the institution itself is a significant, visible boost — earned specifically here.",
@@ -2742,43 +2896,43 @@ STD.MOD.45 = Card(
 
 ---
 
-### STD.MOD.46 — QUIETLY FLAGGED *(stub)*
+### STD.MOD.46 — QUIETLY FLAGGED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder minor tier (−1) of the Ring-Locked `ps_shift` matrix — same target-resolution behavior as STD.MOD.34 (resolves via host pairing, not an independent field), location-anchored flavor.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A named faction's presence is quietly flagged at this specific checkpoint — small, but on the record.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.34, location-anchored. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the 2×2 matrix; `value_rating=1` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix. Design-reviewed S139 — same target-resolution behavior as STD.MOD.34 (schema_cleanup_log.md #21, closed — not a gap).*
 
 ```python
 STD.MOD.46 = Card(
@@ -2793,52 +2947,55 @@ STD.MOD.46 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A named faction's presence is quietly flagged at this specific checkpoint — small, but on the record.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 1 district.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 1 district (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.47 — DENIED ACCESS *(stub)*
+### STD.MOD.47 — DENIED ACCESS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder major tier (−2) of the Ring-Locked `ps_shift` matrix. Same target-resolution behavior as STD.MOD.46 (resolves via host pairing, not an independent field), doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival is visibly and formally denied access to institutional records — a real, public cost to standing.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.46. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier of the 2×2 matrix; `value_rating=2` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Design-reviewed S139.*
 
 ```python
 STD.MOD.47 = Card(
@@ -2853,52 +3010,55 @@ STD.MOD.47 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A rival is visibly and formally denied access to institutional records — a real, public cost to standing.",
-    arbiter_note = "Same target-resolution constraint as STD.MOD.46, major tier — usable only with an operation targeting a Ring 1 district.",
+    arbiter_note = "Same target-resolution behavior as STD.MOD.46, major tier — usable only with an operation targeting a Ring 1 district (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.48 — REASSIGNED ON PAPER *(stub)*
+### STD.MOD.48 — REASSIGNED ON PAPER
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the Ring-Locked `cost_reduction` pair, PA-only per §6.3. Same procedural basis as Portable's STD.MOD.36; `arbiter_note` correctly notes both the PA-only restriction and the §9.2 attachment point.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An administrative reshuffle absorbs part of an action's overhead — quietly, and only on this institution's books.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.36. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier of the 2-value pair; `value_rating=1` mirrors tier. | PM02 L256, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2, same as STD.MOD.36. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
+*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3. Design-reviewed S139.*
 
 ```python
 STD.MOD.48 = Card(
@@ -2913,6 +3073,9 @@ STD.MOD.48 = Card(
     ring_constraint = 1,      # Ring-Locked set
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An administrative reshuffle absorbs part of an action's overhead — quietly, and only on this institution's books.",
@@ -2922,43 +3085,43 @@ STD.MOD.48 = Card(
 
 ---
 
-### STD.MOD.49 — JUMPED THE QUEUE *(stub)*
+### STD.MOD.49 — JUMPED THE QUEUE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of the Ring-Locked `cost_reduction` pair. Same flat-vs-proportional caveat as Portable's STD.MOD.37. Closes Ring 1's 24-card Ring ModAction set (Portable STD.MOD.26–37 + Ring-Locked STD.MOD.38–49).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A submission that skips the full review process skips the overhead that comes with it — but only through this specific channel.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.37. | Art 00 §6.7 |
+| Voice fit | ✓ | `faction=All`, neutral register. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, but flat 2-unit reduction not checked against any specific PA's actual cost — same unresolved question as STD.MOD.37. | PM02 L256; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=1` correctly restricts to Ring 1-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
 
-*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 1's 24-card Ring ModAction set (Portable STD.MOD.26–37 + Ring-Locked STD.MOD.38–49).*
+*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 1's 24-card Ring ModAction set (Portable STD.MOD.26–37 + Ring-Locked STD.MOD.38–49). Design-reviewed S139 — Ring 1 fully reviewed, 24/24 cards.*
 
 ```python
 STD.MOD.49 = Card(
@@ -2973,6 +3136,9 @@ STD.MOD.49 = Card(
     ring_constraint = 1,      # Ring-Locked set — closes Ring 1's 24-card set (Portable + Ring-Locked)
     ring_origin     = 1,      # Ring 1 (Core) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A submission that skips the full review process skips the overhead that comes with it — but only through this specific channel.",
@@ -2982,43 +3148,43 @@ STD.MOD.49 = Card(
 
 ---
 
-### STD.MOD.50 — REZONED CORRIDOR *(stub)*
+### STD.MOD.50 — REZONED CORRIDOR
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring 2 (Mid) Portable set opens — same format as Ring 1 (STD.MOD.26), minor threshold_delta tier (+5). Voice per Art 00 §6.7: operational throughput and infrastructure chokepoints, distinct from Ring 1's institutional-access lean and Network's broadcast doctrine.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An infrastructure corridor is reclassified, making a placement there easier to clear.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.26 (identical mechanic/tier, Mid flavor). Voice/narrative independently checked — clean self-only framing, correctly Mid-flavored (corridor rezoning, not Core paperwork).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Infrastructure-rezoning fits Mid's throughput/chokepoint register. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative, no dual-purpose residue. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as STD.MOD.26. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring 2 (Mid) Portable set opens — same 09-06/04-n157 Ring ModAction format as Ring 1 (STD.MOD.26–49). Voice per Art 00 §6.7: operational throughput and infrastructure chokepoints — distinct from Ring 1's institutional-access lean and from Network's already-shipped broadcast doctrine. Drawn from the Mid ModAction seed pool, reframing hostile-flavored entries per 04-n170. Minor threshold_delta tier (+5).*
+*S135. Ring 2 (Mid) Portable set opens — same 09-06/04-n157 Ring ModAction format as Ring 1 (STD.MOD.26–49). Voice per Art 00 §6.7: operational throughput and infrastructure chokepoints — distinct from Ring 1's institutional-access lean and from Network's already-shipped broadcast doctrine. Drawn from the Mid ModAction seed pool, reframing hostile-flavored entries per 04-n170. Minor threshold_delta tier (+5). Design-reviewed S139.*
 
 ```python
 STD.MOD.50 = Card(
@@ -3033,6 +3199,9 @@ STD.MOD.50 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,   # splay-display convention, PM02 L256
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An infrastructure corridor is reclassified, making a placement there easier to clear.",
@@ -3042,43 +3211,43 @@ STD.MOD.50 = Card(
 
 ---
 
-### STD.MOD.51 — RELAY INTERCEPT *(stub)*
+### STD.MOD.51 — RELAY INTERCEPT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Mid tier (+10). Same structure as STD.MOD.50, self-only.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A tapped communications relay lets the acting faction anticipate and ease their own move.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.50/26. Narrative independently checked — clean self-only.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Mid basis. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Mid tier; `value_rating=2` mirrors tier. | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, mid threshold_delta tier (+10).*
+*S135. Portable set, mid threshold_delta tier (+10). Design-reviewed S139.*
 
 ```python
 STD.MOD.51 = Card(
@@ -3093,6 +3262,9 @@ STD.MOD.51 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A tapped communications relay lets the acting faction anticipate and ease their own move.",
@@ -3102,43 +3274,43 @@ STD.MOD.51 = Card(
 
 ---
 
-### STD.MOD.52 — MANIFEST CORRECTION *(stub)*
+### STD.MOD.52 — MANIFEST CORRECTION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third tier (+15). Reframed from "Manifest Discrepancy" (hostile) per 04-n170, same self-only correction as STD.MOD.28.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The acting faction's own shipping manifest is quietly corrected in advance, smoothing a logistics-dependent action.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.28. Narrative independently checked — clean, correctly "own manifest" throughout, no dual-purpose residue (unlike STD.MOD.29's capstone).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Mid basis. | Art 00 §6.7; PM05 04-n170 |
+| Voice fit | ✓ | Clean self-only reframe. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Third tier; `value_rating=3` mirrors tier. | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Manifest Discrepancy" — a mismatched manifest raising a rival's difficulty) per **04-n170**.*
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Manifest Discrepancy" — a mismatched manifest raising a rival's difficulty) per **04-n170**. Design-reviewed S139 — reframe clean, no hostile residue.*
 
 ```python
 STD.MOD.52 = Card(
@@ -3153,6 +3325,9 @@ STD.MOD.52 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "The acting faction's own shipping manifest is quietly corrected in advance, smoothing a logistics-dependent action.",
@@ -3162,43 +3337,43 @@ STD.MOD.52 = Card(
 
 ---
 
-### STD.MOD.53 — GRIEVANCE WITHDRAWN *(stub)*
+### STD.MOD.53 — GRIEVANCE WITHDRAWN
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (+20). Reframed from "Union Grievance" (hostile) per 04-n170. Unlike Portable's Ring 1 capstone (STD.MOD.29), narrative here is clean throughout — "against the acting faction's own submission" correctly keeps the effect self-only, no dual-purpose residue.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A formal labor complaint against the acting faction's own submission is quietly withdrawn before it can raise the bar.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.29 except narrative is clean (verified independently — no rival-facing implication).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Mid basis. | Art 00 §6.7; PM05 04-n170 |
+| Voice fit | ✓ | Clean self-only — "own submission" correctly scopes the effect (contrast STD.MOD.29). | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=4` mirrors tier, +20 unvalidated (04-n157). | PM02 L258, L259; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Clean self-only event, no schema/narrative mismatch. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (+20 playtest flag) |  |
 
-*S135. Capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Union Grievance" — a formal complaint raising a rival's difficulty) per 04-n170.*
+*S135. Capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Union Grievance" — a formal complaint raising a rival's difficulty) per 04-n170. Design-reviewed S139 — narrative clean, unlike STD.MOD.29's capstone; no dual-purpose framing residue.*
 
 ```python
 STD.MOD.53 = Card(
@@ -3213,6 +3388,9 @@ STD.MOD.53 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A formal labor complaint against the acting faction's own submission is quietly withdrawn before it can raise the bar.",
@@ -3222,43 +3400,43 @@ STD.MOD.53 = Card(
 
 ---
 
-### STD.MOD.54 — CROSS-DOCKED EFFICIENTLY *(stub)*
+### STD.MOD.54 — CROSS-DOCKED EFFICIENTLY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the `success_multiplier` pair. Same self-only basis as STD.MOD.30.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Resources moved without ever formally stopping compound the action's benefit.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.30.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Logistics-throughput fits Mid register. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Common success_multiplier tier (n=1).*
+*S135. Common success_multiplier tier (n=1). Design-reviewed S139.*
 
 ```python
 STD.MOD.54 = Card(
@@ -3273,6 +3451,9 @@ STD.MOD.54 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Resources moved without ever formally stopping compound the action's benefit.",
@@ -3282,43 +3463,43 @@ STD.MOD.54 = Card(
 
 ---
 
-### STD.MOD.55 — CHAIN REACTION *(stub)*
+### STD.MOD.55 — CHAIN REACTION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2). Same unvalidated-magnitude caveat as STD.MOD.31.
 
 #### Card Story
-⚠ Story pending 04-n79.
+One system's output feeding directly into the next multiplies the outcome well past what was planned.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.31.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Mid basis. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, n=2 unvalidated (same caveat as STD.MOD.31). | PM02 L256; PM05 04-n157, 04-n94 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (n=2 playtest flag) |  |
 
-*S135. Rare/capstone success_multiplier tier (n=2).*
+*S135. Rare/capstone success_multiplier tier (n=2). Design-reviewed S139.*
 
 ```python
 STD.MOD.55 = Card(
@@ -3333,6 +3514,9 @@ STD.MOD.55 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "One system's output feeding directly into the next multiplies the outcome well past what was planned.",
@@ -3342,43 +3526,43 @@ STD.MOD.55 = Card(
 
 ---
 
-### STD.MOD.56 — COMPLIANCE CERTIFICATE *(stub)*
+### STD.MOD.56 — COMPLIANCE CERTIFICATE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost minor tier (+1) of the `ps_shift` matrix. Same self-resolution basis as STD.MOD.32 — no target dependency.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A stamp of approval becomes a small, visible standing win.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.32.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Compliance-certification fits Mid register. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+*S135. Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.56 = Card(
@@ -3393,6 +3577,9 @@ STD.MOD.56 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A stamp of approval becomes a small, visible standing win.",
@@ -3402,43 +3589,43 @@ STD.MOD.56 = Card(
 
 ---
 
-### STD.MOD.57 — MODEL FACILITY *(stub)*
+### STD.MOD.57 — MODEL FACILITY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost major tier (+2) of the `ps_shift` matrix — same basis as STD.MOD.56, doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The acting faction's operation is cited publicly as a model of efficient operation — a real standing win.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.56.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.56. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier; `value_rating=2` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+*S135. Self-boost major tier (+2) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.57 = Card(
@@ -3453,6 +3640,9 @@ STD.MOD.57 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "The acting faction's operation is cited publicly as a model of efficient operation — a real standing win.",
@@ -3462,43 +3652,43 @@ STD.MOD.57 = Card(
 
 ---
 
-### STD.MOD.58 — DELAY LOGGED *(stub)*
+### STD.MOD.58 — DELAY LOGGED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder minor tier (−1) of the `ps_shift` matrix. Same target-resolution behavior as STD.MOD.34 — resolves via host pairing, not an independent field.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A minor procedural delay on a rival's shipment gets logged in the public record — small, but on the record.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.34.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Mid basis. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+*S135. Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix. Design-reviewed S139 — same target-resolution behavior as STD.MOD.34 (schema_cleanup_log.md #21, closed — not a gap).*
 
 ```python
 STD.MOD.58 = Card(
@@ -3513,52 +3703,55 @@ STD.MOD.58 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A minor procedural delay on a rival's shipment gets logged in the public record — small, but on the record.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — the host it's packet-paired with at Dispatch (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.59 — SAFETY CITATION *(stub)*
+### STD.MOD.59 — SAFETY CITATION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder major tier (−2) of the `ps_shift` matrix. Same target-resolution behavior as STD.MOD.58 (resolves via host pairing, not an independent field), doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A public safety violation becomes standing damage for whoever's named on the citation.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.58.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.58. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier; `value_rating=2` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+*S135. Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Design-reviewed S139.*
 
 ```python
 STD.MOD.59 = Card(
@@ -3573,52 +3766,55 @@ STD.MOD.59 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A public safety violation becomes standing damage for whoever's named on the citation.",
-    arbiter_note = "Same target-resolution constraint as STD.MOD.58, major tier.",
+    arbiter_note = "Same target-resolution behavior as STD.MOD.58, major tier (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.60 — PRIORITY ROUTING *(stub)*
+### STD.MOD.60 — PRIORITY ROUTING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the `cost_reduction` pair, PA-only per §6.3. Same procedural basis as STD.MOD.36.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The acting faction's submission is rerouted to the front of a queue, skipping delay-related overhead.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.36.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.36. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3. Design-reviewed S139.*
 
 ```python
 STD.MOD.60 = Card(
@@ -3633,6 +3829,9 @@ STD.MOD.60 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "The acting faction's submission is rerouted to the front of a queue, skipping delay-related overhead.",
@@ -3642,43 +3841,43 @@ STD.MOD.60 = Card(
 
 ---
 
-### STD.MOD.61 — BULK RATE *(stub)*
+### STD.MOD.61 — BULK RATE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of the `cost_reduction` pair. Same flat-vs-proportional caveat as STD.MOD.37. Closes Ring 2's Portable set (12 cards).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A resource purchase clears at an institutional discount not normally available.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.37.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.37. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, flat 2-unit reduction not checked against any specific PA's cost — same unresolved question as STD.MOD.37. | PM02 L256; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=2` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
 
-*S135. Capstone cost_reduction tier (n=2). Closes Ring 2's Portable set (12 cards); Ring-Locked set follows.*
+*S135. Capstone cost_reduction tier (n=2). Closes Ring 2's Portable set (12 cards); Ring-Locked set follows. Design-reviewed S139 — Ring 2 Portable fully reviewed, 12/12 cards.*
 
 ```python
 STD.MOD.61 = Card(
@@ -3693,6 +3892,9 @@ STD.MOD.61 = Card(
     ring_constraint = None,   # Portable set — closes Ring 2's Portable 12-card set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A resource purchase clears at an institutional discount not normally available.",
@@ -3702,43 +3904,43 @@ STD.MOD.61 = Card(
 
 ---
 
-### STD.MOD.62 — DOCK FAMILIARITY *(stub)*
+### STD.MOD.62 — DOCK FAMILIARITY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set opens for Ring 2 — invented fresh (Portable set used all 4 seed threshold_delta concepts). Same structure as STD.MOD.38, minor tier.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Regular business at this specific freight dock eases a logistics-dependent action there — but only there.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.38.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Location-anchored logistics fits Ring-Locked Mid framing. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set opens for Ring 2 — invented fresh (Portable set used all 4 seed threshold_delta concepts).*
+*S135. Ring-Locked set opens for Ring 2 — invented fresh (Portable set used all 4 seed threshold_delta concepts). Design-reviewed S139.*
 
 ```python
 STD.MOD.62 = Card(
@@ -3753,6 +3955,9 @@ STD.MOD.62 = Card(
     ring_constraint = 2,      # Ring-Locked set — usable only with ops targeting a Ring 2 district (closes 04-n161 alongside STD.MOD.50's Portable counterpart)
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Regular business at this specific freight dock eases a logistics-dependent action there — but only there.",
@@ -3762,43 +3967,43 @@ STD.MOD.62 = Card(
 
 ---
 
-### STD.MOD.63 — GRID RAPPORT *(stub)*
+### STD.MOD.63 — GRID RAPPORT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Mid tier (+10). Same structure as STD.MOD.62/39.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A standing relationship with substation staff eases an infrastructure-dependent action — within their lines only.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.39.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Mid tier; `value_rating=2` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, mid threshold_delta tier (+10).*
+*S135. Ring-Locked set, mid threshold_delta tier (+10). Design-reviewed S139.*
 
 ```python
 STD.MOD.63 = Card(
@@ -3813,6 +4018,9 @@ STD.MOD.63 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A standing relationship with substation staff eases an infrastructure-dependent action — within their lines only.",
@@ -3822,43 +4030,43 @@ STD.MOD.63 = Card(
 
 ---
 
-### STD.MOD.64 — LINE ACCESS *(stub)*
+### STD.MOD.64 — LINE ACCESS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third tier (+15). Same structure as STD.MOD.63, never a hostile reframe (invented fresh, like STD.MOD.40).
 
 #### Card Story
-⚠ Story pending 04-n79.
+Priority access at a specific communications hub smooths a relay-dependent action — but only through that hub.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.40.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Third tier; `value_rating=3` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
+*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15). Design-reviewed S139.*
 
 ```python
 STD.MOD.64 = Card(
@@ -3873,6 +4081,9 @@ STD.MOD.64 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Priority access at a specific communications hub smooths a relay-dependent action — but only through that hub.",
@@ -3882,43 +4093,43 @@ STD.MOD.64 = Card(
 
 ---
 
-### STD.MOD.65 — FULL PROCESSING RIGHTS *(stub)*
+### STD.MOD.65 — FULL PROCESSING RIGHTS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (+20). Clean self-only narrative throughout, same as STD.MOD.41.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Full standing at the district clearinghouse means paperwork simply moves, no matter the action — so long as it moves through here.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.41.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=4` mirrors tier, +20 unvalidated (04-n157). | PM02 L258, L259, L261; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (+20 playtest flag) |  |
 
-*S135. Ring-Locked set, capstone threshold_delta tier (+20).*
+*S135. Ring-Locked set, capstone threshold_delta tier (+20). Design-reviewed S139.*
 
 ```python
 STD.MOD.65 = Card(
@@ -3933,6 +4144,9 @@ STD.MOD.65 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Full standing at the district clearinghouse means paperwork simply moves, no matter the action — so long as it moves through here.",
@@ -3942,43 +4156,43 @@ STD.MOD.65 = Card(
 
 ---
 
-### STD.MOD.66 — OVERTIME CREW *(stub)*
+### STD.MOD.66 — OVERTIME CREW
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the Ring-Locked `success_multiplier` pair. Same self-only basis as STD.MOD.54/42.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An extra shift pushes a build further than scheduled, amplifying its result — a local crew, working local hours.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.42.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Location-specific labor fits Ring-Locked framing. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, common success_multiplier tier (n=1).*
+*S135. Ring-Locked set, common success_multiplier tier (n=1). Design-reviewed S139.*
 
 ```python
 STD.MOD.66 = Card(
@@ -3993,6 +4207,9 @@ STD.MOD.66 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An extra shift pushes a build further than scheduled, amplifying its result — a local crew, working local hours.",
@@ -4002,43 +4219,43 @@ STD.MOD.66 = Card(
 
 ---
 
-### STD.MOD.67 — FULL UTILIZATION *(stub)*
+### STD.MOD.67 — FULL UTILIZATION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2). Same unvalidated-magnitude caveat as STD.MOD.43.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A facility running at capacity turns a routine action into an exceptional one — but only this facility, running this way.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.43.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, n=2 unvalidated. | PM02 L256; PM05 04-n157, 04-n94 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (n=2 playtest flag) |  |
 
-*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
+*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2). Design-reviewed S139.*
 
 ```python
 STD.MOD.67 = Card(
@@ -4053,6 +4270,9 @@ STD.MOD.67 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A facility running at capacity turns a routine action into an exceptional one — but only this facility, running this way.",
@@ -4062,43 +4282,43 @@ STD.MOD.67 = Card(
 
 ---
 
-### STD.MOD.68 — FILED UNDER ROUTINE *(stub)*
+### STD.MOD.68 — FILED UNDER ROUTINE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost minor tier (+1) of the Ring-Locked `ps_shift` matrix. Same self-resolution basis as STD.MOD.44.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A genuinely significant action is buried among routine paperwork, muting any standing consequence either way — a small protective boost.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.44.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.68 = Card(
@@ -4113,6 +4333,9 @@ STD.MOD.68 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A genuinely significant action is buried among routine paperwork, muting any standing consequence either way — a small protective boost.",
@@ -4122,43 +4345,43 @@ STD.MOD.68 = Card(
 
 ---
 
-### STD.MOD.69 — RELIABILITY COMMENDATION *(stub)*
+### STD.MOD.69 — RELIABILITY COMMENDATION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost major tier (+2) of the Ring-Locked `ps_shift` matrix — same basis as STD.MOD.68, doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A public commendation for keeping the Mid's infrastructure running is a real, visible standing win.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.68.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.68. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier; `value_rating=2` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.69 = Card(
@@ -4173,6 +4396,9 @@ STD.MOD.69 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A public commendation for keeping the Mid's infrastructure running is a real, visible standing win.",
@@ -4182,43 +4408,43 @@ STD.MOD.69 = Card(
 
 ---
 
-### STD.MOD.70 — OVERDRAWN ACCOUNT EXPOSED *(stub)*
+### STD.MOD.70 — OVERDRAWN ACCOUNT EXPOSED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder minor tier (−1) of the Ring-Locked `ps_shift` matrix. Same target-resolution behavior as STD.MOD.58/34 — resolves via host pairing, not an independent field.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival's resource draw becomes public knowledge at this specific institution — a small cost to their standing.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.58.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.70 = Card(
@@ -4233,52 +4459,55 @@ STD.MOD.70 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A rival's resource draw becomes public knowledge at this specific institution — a small cost to their standing.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 2 district.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 2 district (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.71 — PUBLIC SANCTION *(stub)*
+### STD.MOD.71 — PUBLIC SANCTION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder major tier (−2) of the Ring-Locked `ps_shift` matrix. Same target-resolution behavior as STD.MOD.70 (resolves via host pairing, not an independent field), doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A named rival is formally sanctioned at this institution — visible to every faction that does business through it.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.70.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.70. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier; `value_rating=2` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Design-reviewed S139.*
 
 ```python
 STD.MOD.71 = Card(
@@ -4293,52 +4522,55 @@ STD.MOD.71 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A named rival is formally sanctioned at this institution — visible to every faction that does business through it.",
-    arbiter_note = "Same target-resolution constraint as STD.MOD.70, major tier — usable only with an operation targeting a Ring 2 district.",
+    arbiter_note = "Same target-resolution behavior as STD.MOD.70, major tier — usable only with an operation targeting a Ring 2 district (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.72 — CONSIGNMENT HOLD RELEASED *(stub)*
+### STD.MOD.72 — CONSIGNMENT HOLD RELEASED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the Ring-Locked `cost_reduction` pair, PA-only per §6.3. Same procedural basis as STD.MOD.60/48.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A shipment already in the system is released without the fee a fresh order would carry — this system specifically.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.48.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.48. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
+*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3. Design-reviewed S139.*
 
 ```python
 STD.MOD.72 = Card(
@@ -4353,6 +4585,9 @@ STD.MOD.72 = Card(
     ring_constraint = 2,      # Ring-Locked set
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A shipment already in the system is released without the fee a fresh order would carry — this system specifically.",
@@ -4362,43 +4597,43 @@ STD.MOD.72 = Card(
 
 ---
 
-### STD.MOD.73 — STANDING UTILITY CONTRACT *(stub)*
+### STD.MOD.73 — STANDING UTILITY CONTRACT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of the Ring-Locked `cost_reduction` pair. Same flat-vs-proportional caveat as STD.MOD.61/49. Closes Ring 2's 24-card Ring ModAction set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An existing utility contract absorbs the overhead of a fresh submission — but only at this specific facility.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.49.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.49. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, flat 2-unit reduction not checked against any specific PA's cost. | PM02 L256; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=2` correctly restricts to Ring 2-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
 
-*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 2's 24-card Ring ModAction set (Portable STD.MOD.50–61 + Ring-Locked STD.MOD.62–73); Ring 3 (Baryo) follows.*
+*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 2's 24-card Ring ModAction set (Portable STD.MOD.50–61 + Ring-Locked STD.MOD.62–73); Ring 3 (Baryo) follows. Design-reviewed S139 — Ring 2 fully reviewed, 24/24 cards.*
 
 ```python
 STD.MOD.73 = Card(
@@ -4412,6 +4647,9 @@ STD.MOD.73 = Card(
     value_rating    = 2,
     ring_constraint = 2,      # Ring-Locked set — closes Ring 2's 24-card set (Portable + Ring-Locked)
     ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
     cost            = None,
 
     portrait     = None,
@@ -4422,43 +4660,43 @@ STD.MOD.73 = Card(
 
 ---
 
-### STD.MOD.74 — SQUATTER'S CLAIM *(stub)*
+### STD.MOD.74 — SQUATTER'S CLAIM
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring 3 (Baryo) Portable set opens — same format as Rings 1–2, minor threshold_delta tier (+5). Voice per Art 00 §6.7: gray economy and community network, distinct from Ghost's epistemic doctrine and Rings 1–2's institutional/infrastructure lean.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An informally occupied space becomes easier to formalize into a real presence claim.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.26/50 (identical mechanic/tier). Narrative independently checked — clean self-only, correctly Baryo-flavored (informal claim, not paperwork/reclassification).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Informal-economy claim-staking fits Baryo's gray-economy/community register. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as STD.MOD.26. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring 3 (Baryo) Portable set opens — same 09-06/04-n157 Ring ModAction format as Rings 1–2. Voice per Art 00 §6.7: gray economy and community network — distinct from Ghost's epistemic doctrine and from Rings 1–2's institutional/infrastructure lean. Drawn from the Baryo ModAction seed pool, reframing hostile-flavored entries per 04-n170. Minor threshold_delta tier (+5).*
+*S135. Ring 3 (Baryo) Portable set opens — same 09-06/04-n157 Ring ModAction format as Rings 1–2. Voice per Art 00 §6.7: gray economy and community network — distinct from Ghost's epistemic doctrine and from Rings 1–2's institutional/infrastructure lean. Drawn from the Baryo ModAction seed pool, reframing hostile-flavored entries per 04-n170. Minor threshold_delta tier (+5). Design-reviewed S139.*
 
 ```python
 STD.MOD.74 = Card(
@@ -4473,6 +4711,9 @@ STD.MOD.74 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,   # splay-display convention, PM02 L256
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An informally occupied space becomes easier to formalize into a real presence claim.",
@@ -4482,43 +4723,43 @@ STD.MOD.74 = Card(
 
 ---
 
-### STD.MOD.75 — LANDLORD'S BLESSING *(stub)*
+### STD.MOD.75 — LANDLORD'S BLESSING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Mid tier (+10). Same structure as STD.MOD.74, self-only.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Backing from one of Baryo's unofficial housing authorities smooths a placement nobody easily challenges.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.74. Narrative independently checked — clean self-only.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Baryo basis. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Mid tier; `value_rating=2` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Portable set, mid threshold_delta tier (+10).*
+*S135. Portable set, mid threshold_delta tier (+10). Design-reviewed S139.*
 
 ```python
 STD.MOD.75 = Card(
@@ -4533,6 +4774,9 @@ STD.MOD.75 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Backing from one of Baryo's unofficial housing authorities smooths a placement nobody easily challenges.",
@@ -4542,43 +4786,43 @@ STD.MOD.75 = Card(
 
 ---
 
-### STD.MOD.76 — DOCK CONTACTS *(stub)*
+### STD.MOD.76 — DOCK CONTACTS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third tier (+15). Reframed from "Word on the Docks" (hostile) per 04-n170, same self-only correction as STD.MOD.28/52.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Advance word from contacts at the docks smooths the acting faction's own shipment-dependent operation.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.52. Narrative independently checked — clean, "acting faction's own" correctly scopes the effect.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Baryo basis. | Art 00 §6.7; PM05 04-n170 |
+| Voice fit | ✓ | Clean self-only reframe. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Third tier; `value_rating=3` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Word on the Docks" — advance knowledge raising a rival's difficulty) per **04-n170**.*
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Word on the Docks" — advance knowledge raising a rival's difficulty) per **04-n170**. Design-reviewed S139 — reframe clean.*
 
 ```python
 STD.MOD.76 = Card(
@@ -4593,6 +4837,9 @@ STD.MOD.76 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Advance word from contacts at the docks smooths the acting faction's own shipment-dependent operation.",
@@ -4602,43 +4849,43 @@ STD.MOD.76 = Card(
 
 ---
 
-### STD.MOD.77 — NEIGHBORHOOD BACKING *(stub)*
+### STD.MOD.77 — NEIGHBORHOOD BACKING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (+20). Reframed from "Petition Drive" (hostile) per 04-n170. Clean self-only narrative throughout — "the acting faction's own submission" and "the neighborhood's already decided" correctly scope the effect, no dual-purpose residue.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Visible grassroots support for the acting faction's own submission smooths its passage — the neighborhood's already decided.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.53/29 except narrative is clean (verified independently).
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Baryo basis. | Art 00 §6.7; PM05 04-n170 |
+| Voice fit | ✓ | Clean self-only, no dual-purpose framing (contrast STD.MOD.29). | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=4` mirrors tier, +20 unvalidated (04-n157). | PM02 L258, L259, L261; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Clean self-only event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (+20 playtest flag) |  |
 
-*S135. Capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Petition Drive" — visible grassroots opposition raising a rival's difficulty) per 04-n170.*
+*S135. Capstone threshold_delta tier (+20). Reframed from an earlier hostile-flavored seed concept ("Petition Drive" — visible grassroots opposition raising a rival's difficulty) per 04-n170. Design-reviewed S139 — narrative clean, no dual-purpose residue.*
 
 ```python
 STD.MOD.77 = Card(
@@ -4653,6 +4900,9 @@ STD.MOD.77 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Visible grassroots support for the acting faction's own submission smooths its passage — the neighborhood's already decided.",
@@ -4662,43 +4912,43 @@ STD.MOD.77 = Card(
 
 ---
 
-### STD.MOD.78 — COMMUNITY POOL *(stub)*
+### STD.MOD.78 — COMMUNITY POOL
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the `success_multiplier` pair. Same self-only basis as STD.MOD.30/54.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Several small contributions combine into an outcome larger than any single source could produce.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.30.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Pooled-resource concept fits Baryo's community register. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Common success_multiplier tier (n=1).*
+*S135. Common success_multiplier tier (n=1). Design-reviewed S139.*
 
 ```python
 STD.MOD.78 = Card(
@@ -4713,6 +4963,9 @@ STD.MOD.78 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Several small contributions combine into an outcome larger than any single source could produce.",
@@ -4722,43 +4975,43 @@ STD.MOD.78 = Card(
 
 ---
 
-### STD.MOD.79 — PACKED HOUSE *(stub)*
+### STD.MOD.79 — PACKED HOUSE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2). Same unvalidated-magnitude caveat as STD.MOD.31/55.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An unusually large crowd amplifies whatever the action was counting on being seen.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.31.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Baryo basis. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, n=2 unvalidated. | PM02 L256; PM05 04-n157, 04-n94 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (n=2 playtest flag) |  |
 
-*S135. Rare/capstone success_multiplier tier (n=2).*
+*S135. Rare/capstone success_multiplier tier (n=2). Design-reviewed S139.*
 
 ```python
 STD.MOD.79 = Card(
@@ -4773,6 +5026,9 @@ STD.MOD.79 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An unusually large crowd amplifies whatever the action was counting on being seen.",
@@ -4782,43 +5038,43 @@ STD.MOD.79 = Card(
 
 ---
 
-### STD.MOD.80 — STREET REPUTATION *(stub)*
+### STD.MOD.80 — STREET REPUTATION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost minor tier (+1) of the `ps_shift` matrix. Same self-resolution basis as STD.MOD.32/56 — no target dependency.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Word of mouth shifts standing faster than any official channel — a small, organic boost.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.32.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Word-of-mouth fits Baryo's community register. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+*S135. Self-boost minor tier (+1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.80 = Card(
@@ -4833,6 +5089,9 @@ STD.MOD.80 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Word of mouth shifts standing faster than any official channel — a small, organic boost.",
@@ -4842,43 +5101,43 @@ STD.MOD.80 = Card(
 
 ---
 
-### STD.MOD.81 — NEIGHBORHOOD VOUCHING *(stub)*
+### STD.MOD.81 — NEIGHBORHOOD VOUCHING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost major tier (+2) of the `ps_shift` matrix — same basis as STD.MOD.80, doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The neighborhood vouches for the acting faction publicly — a real and visible standing win.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.80.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.80. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier; `value_rating=2` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+*S135. Self-boost major tier (+2) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.81 = Card(
@@ -4893,6 +5152,9 @@ STD.MOD.81 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "The neighborhood vouches for the acting faction publicly — a real and visible standing win.",
@@ -4902,43 +5164,43 @@ STD.MOD.81 = Card(
 
 ---
 
-### STD.MOD.82 — BUSKER'S TIP *(stub)*
+### STD.MOD.82 — BUSKER'S TIP
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder minor tier (−1) of the `ps_shift` matrix. Same target-resolution behavior as STD.MOD.34 — resolves via host pairing, not an independent field.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A street performer's aside becomes the detail that costs a named faction a little standing.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.34.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same Baryo basis. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+*S135. Target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.82 = Card(
@@ -4953,52 +5215,55 @@ STD.MOD.82 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A street performer's aside becomes the detail that costs a named faction a little standing.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — the host it's packet-paired with at Dispatch (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.83 — OVERHEARD AT THE STRIP *(stub)*
+### STD.MOD.83 — OVERHEARD AT THE STRIP
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder major tier (−2) of the `ps_shift` matrix. Same target-resolution behavior as STD.MOD.82 (resolves via host pairing, not an independent field), doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A casual conversation becomes something a rival has to publicly answer for — the Strip doesn't forget what it hears.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.82.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.82. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier; `value_rating=2` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+*S135. Target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Design-reviewed S139.*
 
 ```python
 STD.MOD.83 = Card(
@@ -5013,52 +5278,55 @@ STD.MOD.83 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A casual conversation becomes something a rival has to publicly answer for — the Strip doesn't forget what it hears.",
-    arbiter_note = "Same target-resolution constraint as STD.MOD.82, major tier.",
+    arbiter_note = "Same target-resolution behavior as STD.MOD.82, major tier (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.84 — CREDIT WITH THE VENDOR *(stub)*
+### STD.MOD.84 — CREDIT WITH THE VENDOR
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the `cost_reduction` pair, PA-only per §6.3. Same procedural basis as STD.MOD.36/60.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Informal credit lets an action proceed before payment technically clears.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.36.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Informal-credit economy fits Baryo register. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3. Design-reviewed S139.*
 
 ```python
 STD.MOD.84 = Card(
@@ -5073,6 +5341,9 @@ STD.MOD.84 = Card(
     ring_constraint = None,   # Portable set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Informal credit lets an action proceed before payment technically clears.",
@@ -5082,43 +5353,43 @@ STD.MOD.84 = Card(
 
 ---
 
-### STD.MOD.85 — BARTER CHAIN *(stub)*
+### STD.MOD.85 — BARTER CHAIN
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of the `cost_reduction` pair. Same flat-vs-proportional caveat as STD.MOD.37/61. Closes Ring 3's Portable set (12 cards).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A resource moves through several informal trades before landing where it was always headed, cheaper than a direct purchase.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.37.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.37. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, flat 2-unit reduction not checked against any specific PA's cost. | PM02 L256; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=3` correct for Portable. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
 
-*S135. Capstone cost_reduction tier (n=2). Closes Ring 3's Portable set (12 cards); Ring-Locked set follows.*
+*S135. Capstone cost_reduction tier (n=2). Closes Ring 3's Portable set (12 cards); Ring-Locked set follows. Design-reviewed S139 — Ring 3 Portable fully reviewed, 12/12 cards.*
 
 ```python
 STD.MOD.85 = Card(
@@ -5133,6 +5404,9 @@ STD.MOD.85 = Card(
     ring_constraint = None,   # Portable set — closes Ring 3's Portable 12-card set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A resource moves through several informal trades before landing where it was always headed, cheaper than a direct purchase.",
@@ -5142,43 +5416,43 @@ STD.MOD.85 = Card(
 
 ---
 
-### STD.MOD.86 — REGULAR CUSTOMER *(stub)*
+### STD.MOD.86 — REGULAR CUSTOMER
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ring-Locked set opens for Ring 3 — invented fresh (Portable set used all 4 seed threshold_delta concepts). Same structure as STD.MOD.38/62, minor tier.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Being a known face at a specific market stall eases an economy-dependent action there — but only there.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.38/62.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Location-anchored market familiarity fits Ring-Locked Baryo framing. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set opens for Ring 3 — invented fresh (Portable set used all 4 seed threshold_delta concepts).*
+*S135. Ring-Locked set opens for Ring 3 — invented fresh (Portable set used all 4 seed threshold_delta concepts). Design-reviewed S139.*
 
 ```python
 STD.MOD.86 = Card(
@@ -5193,6 +5467,9 @@ STD.MOD.86 = Card(
     ring_constraint = 3,      # Ring-Locked set — usable only with ops targeting a Ring 3 district (closes 04-n161 alongside STD.MOD.74's Portable counterpart)
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Being a known face at a specific market stall eases an economy-dependent action there — but only there.",
@@ -5202,43 +5479,43 @@ STD.MOD.86 = Card(
 
 ---
 
-### STD.MOD.87 — ROUTE KNOWLEDGE *(stub)*
+### STD.MOD.87 — ROUTE KNOWLEDGE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Mid tier (+10). Same structure as STD.MOD.86/39/63.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Knowing exactly how a specific transit point actually runs eases an operation passing through it — knowledge that doesn't travel elsewhere.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.39.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Mid tier; `value_rating=2` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, mid threshold_delta tier (+10).*
+*S135. Ring-Locked set, mid threshold_delta tier (+10). Design-reviewed S139.*
 
 ```python
 STD.MOD.87 = Card(
@@ -5253,6 +5530,9 @@ STD.MOD.87 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Knowing exactly how a specific transit point actually runs eases an operation passing through it — knowledge that doesn't travel elsewhere.",
@@ -5262,43 +5542,43 @@ STD.MOD.87 = Card(
 
 ---
 
-### STD.MOD.88 — NEIGHBORHOOD STANDING *(stub)*
+### STD.MOD.88 — NEIGHBORHOOD STANDING
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third tier (+15). Same structure as STD.MOD.87, never a hostile reframe (invented fresh).
 
 #### Card Story
-⚠ Story pending 04-n79.
+Established standing in a specific housing block smooths a placement there — standing that doesn't extend past the block.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.40/64.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Third tier; `value_rating=3` mirrors tier. | PM02 L258, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15).*
+*S135. Ring-Locked set, third of 4 threshold_delta tiers (+15). Design-reviewed S139.*
 
 ```python
 STD.MOD.88 = Card(
@@ -5313,6 +5593,9 @@ STD.MOD.88 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Established standing in a specific housing block smooths a placement there — standing that doesn't extend past the block.",
@@ -5322,43 +5605,43 @@ STD.MOD.88 = Card(
 
 ---
 
-### STD.MOD.89 — LOCAL FIXTURE *(stub)*
+### STD.MOD.89 — LOCAL FIXTURE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (+20). Clean self-only narrative throughout, closes Ring 3's threshold_delta progression.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Being a fixture at this specific spot means nothing about an operation there needs explaining or clearing — but the standing doesn't travel.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.41/65.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=4` mirrors tier, +20 unvalidated (04-n157). | PM02 L258, L259, L261; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (+20 playtest flag) |  |
 
-*S135. Ring-Locked set, capstone threshold_delta tier (+20).*
+*S135. Ring-Locked set, capstone threshold_delta tier (+20). Design-reviewed S139 — closes Ring 3's threshold_delta progression.*
 
 ```python
 STD.MOD.89 = Card(
@@ -5373,6 +5656,9 @@ STD.MOD.89 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Being a fixture at this specific spot means nothing about an operation there needs explaining or clearing — but the standing doesn't travel.",
@@ -5382,43 +5668,43 @@ STD.MOD.89 = Card(
 
 ---
 
-### STD.MOD.90 — FESTIVAL GROUNDS *(stub)*
+### STD.MOD.90 — FESTIVAL GROUNDS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the Ring-Locked `success_multiplier` pair. Same self-only basis as STD.MOD.78/54/42.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A temporary permit becomes cover for something that lands bigger than expected — but only on these grounds.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.42/66.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Location-specific event cover fits Ring-Locked framing. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, common success_multiplier tier (n=1).*
+*S135. Ring-Locked set, common success_multiplier tier (n=1). Design-reviewed S139.*
 
 ```python
 STD.MOD.90 = Card(
@@ -5433,6 +5719,9 @@ STD.MOD.90 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A temporary permit becomes cover for something that lands bigger than expected — but only on these grounds.",
@@ -5442,43 +5731,43 @@ STD.MOD.90 = Card(
 
 ---
 
-### STD.MOD.91 — WORD SPREADS FAST *(stub)*
+### STD.MOD.91 — WORD SPREADS FAST
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2). Same unvalidated-magnitude caveat as STD.MOD.79/43/67.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Informal networks carry an outcome further than any official channel would — but only within this network's reach.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.43/67.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, n=2 unvalidated. | PM02 L256; PM05 04-n157, 04-n94 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (n=2 playtest flag) |  |
 
-*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2).*
+*S135. Ring-Locked set, rare/capstone success_multiplier tier (n=2). Design-reviewed S139 — closes all 6 success_multiplier capstones in the Ring set.*
 
 ```python
 STD.MOD.91 = Card(
@@ -5493,6 +5782,9 @@ STD.MOD.91 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Informal networks carry an outcome further than any official channel would — but only within this network's reach.",
@@ -5502,43 +5794,43 @@ STD.MOD.91 = Card(
 
 ---
 
-### STD.MOD.92 — QUIET WORD TO THE CROWD *(stub)*
+### STD.MOD.92 — QUIET WORD TO THE CROWD
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost minor tier (+1) of the Ring-Locked `ps_shift` matrix. Same self-resolution basis as STD.MOD.80/68/44.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rumor seeded in a local gathering changes how an outcome is read — protecting the acting faction's standing, quietly.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.44/68.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, self-boost minor tier (+1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.92 = Card(
@@ -5553,6 +5845,9 @@ STD.MOD.92 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A rumor seeded in a local gathering changes how an outcome is read — protecting the acting faction's standing, quietly.",
@@ -5562,43 +5857,43 @@ STD.MOD.92 = Card(
 
 ---
 
-### STD.MOD.93 — BLOCK PARTY *(stub)*
+### STD.MOD.93 — BLOCK PARTY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost major tier (+2) of the Ring-Locked `ps_shift` matrix — same basis as STD.MOD.92, doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A genuinely celebrated local event puts the acting faction's name in a good light, visibly and specifically here.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.92.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.92. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier; `value_rating=2` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, self-boost major tier (+2) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.93 = Card(
@@ -5613,6 +5908,9 @@ STD.MOD.93 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A genuinely celebrated local event puts the acting faction's name in a good light, visibly and specifically here.",
@@ -5622,43 +5920,43 @@ STD.MOD.93 = Card(
 
 ---
 
-### STD.MOD.94 — QUIET WORD AGAINST THEM *(stub)*
+### STD.MOD.94 — QUIET WORD AGAINST THEM
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder minor tier (−1) of the Ring-Locked `ps_shift` matrix. Same target-resolution behavior as STD.MOD.82/58/34 — resolves via host pairing, not an independent field.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A passing comment at the market costs a named faction a little standing — nothing traceable, nothing worth a formal answer.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.82.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier; `value_rating=1` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix.*
+*S135. Ring-Locked set, target-hinder minor tier (−1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.94 = Card(
@@ -5673,52 +5971,55 @@ STD.MOD.94 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A passing comment at the market costs a named faction a little standing — nothing traceable, nothing worth a formal answer.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 3 district.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — usable only with an operation targeting a Ring 3 district (Andy, S139).",
 )
 ```
 
 ---
 
-### STD.MOD.95 — TURNED AWAY *(stub)*
+### STD.MOD.95 — TURNED AWAY
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder major tier (−2) of the Ring-Locked `ps_shift` matrix. Same target-resolution behavior as STD.MOD.94 (resolves via host pairing, not an independent field), doubled magnitude. Closes Ring 3's `ps_shift` matrix and, with it, all 12 target-hinder ModActionCards in the 72-card Ring corpus (2 per set × 6 sets); the remaining 10 (Ring: 12, Faction: 10) are in the 5 faction sets, not yet reached.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A named faction is visibly turned away at this specific spot — a real, public cost to standing that the whole block sees.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.94.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as STD.MOD.94. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier; `value_rating=2` mirrors tier. | PM02 L257, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Closes Ring 3's ps_shift matrix.*
+*S135. Ring-Locked set, target-hinder major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Closes Ring 3's ps_shift matrix. Design-reviewed S139.*
 
 ```python
 STD.MOD.95 = Card(
@@ -5733,6 +6034,9 @@ STD.MOD.95 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A named faction is visibly turned away at this specific spot — a real, public cost to standing that the whole block sees.",
@@ -5742,43 +6046,43 @@ STD.MOD.95 = Card(
 
 ---
 
-### STD.MOD.96 — SCRAP VALUE *(stub)*
+### STD.MOD.96 — SCRAP VALUE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of the Ring-Locked `cost_reduction` pair, PA-only per §6.3. Same procedural basis as STD.MOD.84/72/60/48/36.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Discarded materials from the Mid get reused at a fraction of fresh cost — but only through this specific yard.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.48/72.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259, L261 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3.*
+*S135. Ring-Locked set, common cost_reduction tier (n=1). PA-only per §6.3. Design-reviewed S139.*
 
 ```python
 STD.MOD.96 = Card(
@@ -5793,6 +6097,9 @@ STD.MOD.96 = Card(
     ring_constraint = 3,      # Ring-Locked set
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Discarded materials from the Mid get reused at a fraction of fresh cost — but only through this specific yard.",
@@ -5802,43 +6109,43 @@ STD.MOD.96 = Card(
 
 ---
 
-### STD.MOD.97 — FAVOR OWED *(stub)*
+### STD.MOD.97 — FAVOR OWED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of the Ring-Locked `cost_reduction` pair. Same flat-vs-proportional caveat as STD.MOD.85/73/61/49. Closes Ring 3's 24-card set — and, with it, the full 72-card Ring ModActionCard corpus (STD.MOD.26–97).
 
 #### Card Story
-⚠ Story pending 04-n79.
+A debt called in from the informal economy waives part of what an action would otherwise cost — this economy specifically, no other.
 
-**Design checklist:**
+**Design checklist:** Same disposition as STD.MOD.49/73.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as tier. | Art 00 §6.7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, flat 2-unit reduction not checked against any specific PA's cost — same unresolved question across all 6 cost_reduction capstones in the Ring set. | PM02 L256; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=3` correctly restricts to Ring 3-targeting hosts. | Art 01 §6–§7; Art 04 §6.2 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
 
-*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 3's 24-card Ring ModAction set (Portable STD.MOD.74–85 + Ring-Locked STD.MOD.86–97) — and closes the full 72-card Ring ModAction stub pass (Rings 1–3, 09-06/04-n157).*
+*S135. Ring-Locked set, capstone cost_reduction tier (n=2). Closes Ring 3's 24-card Ring ModAction set (Portable STD.MOD.74–85 + Ring-Locked STD.MOD.86–97) — and closes the full 72-card Ring ModAction stub pass (Rings 1–3, 09-06/04-n157). **Design-reviewed S139 — full 72-card Ring ModActionCard corpus now content-reviewed.***
 
 ```python
 STD.MOD.97 = Card(
@@ -5853,6 +6160,9 @@ STD.MOD.97 = Card(
     ring_constraint = 3,      # Ring-Locked set — closes Ring 3's 24-card set and the full 72-card Ring ModAction stub pass
     ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A debt called in from the informal economy waives part of what an action would otherwise cost — this economy specifically, no other.",

@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.84 Draft  
+**Version:** 0.9.85 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-07-04  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  

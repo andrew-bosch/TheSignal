@@ -2551,218 +2551,280 @@ GHO.MOD.8 = Card(
 
 ---
 
-### GHO.MOD.9 — BURN NOTICE *(stub)*
+### GHO.MOD.9 — BURN NOTICE
 [↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ghost's punitive React against factions trying to brute-force a Public Act using Intel Tokens as payment. Fires the moment such a PA is submitted; on success, every Modifier card riding that PA is stripped — not just the submitter's own boosts, but any other faction's cards attached to the same PA. This is a genuinely harsh, full-stack wipe: Ghost's doctrine of operational anonymity extends to punishing anyone who thinks Intel currency buys them a clean filing. Confirmed as intended, not softened (Andy, S140) — bigger swing than most single-card React effects in the corpus, deliberately so. Pre-schema fossil (04-n174): trigger and success re-expressed in current Expr syntax this pass; underlying mechanic unchanged from the S135/S137-era design.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The token changes hands quietly, the paperwork goes through — and by the time anyone checks, every favor riding on that filing has already gone up in smoke. Ghost doesn't say who tipped them off. They don't have to.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Punitive counter-play against Intel-Token-funded PA submission; fits Ghost's information-as-leverage doctrine. | Art 00 §7 |
+| Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
+| Doctrine alignment | ✓ | Punishing information misuse (Intel currency spent to force a PA through) is squarely Ghost's anonymity/leverage doctrine. | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Ghost — trigger-based, fires on a publicly visible board event (PA submission). | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Submission / Remove / ModifierCard — confirmed registered pairing. | ref_taxonomy.md §5.2 |
+| Balance | ✓ | `cost = Findings(1)`, one-time punitive strip triggered by the opponent's own aggressive play. Full-stack-wipe magnitude confirmed intended (Andy, S140), not re-litigated further. | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — modifiers removed at trigger, no lingering effect. | Art 04 §5 P19 |
+| Persistence | ⚠ | `persistence` field open corpus-wide question (schema_cleanup_log item 2/D), not card-specific. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `public_act.submitted(uses_intel_token=True)` unconfirmed against §6.3 TriggerExpr vocabulary — same open category as the rest of this fossil set. | Art 04 §6.3; PM05 04-n174 |
+| Portrait validity | ✓ | `{Ghost: submitter=+1}` — added this pass; fossil carried no portrait entry. | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference — correct, not a territory effect. | Art 01 §6–§7 |
+| Supported by components | ✓ | Modifier cards and Intel Token both reuse existing components. | Art 02 §6, §11 |
+| Supported by game procedure | ✓ | PA submission at Covert Dispatch/Phase B; standard Ghost React window. | Art 03 §18; Art 03 §9.2.0 |
+| Data schema validation | ⚠ | Trigger/success re-expressed from string-literal fossil to Expr syntax this pass (04-n174). `arbiter.remove(...)` has no confirmed MutationExpr vocabulary — same open gap as the rest of the corpus. Scaffolding fields added (ring_constraint/ring_origin/value_rating/boost/ps_framing, 04-n177). | Art 04 §6.1–§6.3; PM05 04-n174 |
+| Card narrative | ✓ | Card Story written this pass (was empty). | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic` — deterministic ARBITER check (was an Intel Token used at submission), no dice appropriate. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | `Findings(1)` — light cost for a punitive strip triggered by the opponent's own play, not Ghost's initiative. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ⚠ | Depends on how often PAs are submitted with Intel Token payment — best-effort, not independently verifiable here. |  |
+| Firing window (ModReactCard) | ✓ | No other Ghost card shares this exact trigger. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Deterministic condition check, no dice — Automatic is correct. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not a district/ring-scoped effect. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
 ```python
 GHO.MOD.9 = Card(
-    id      = "GHO.MOD.9",  version = "v1.1",
+    id      = "GHO.MOD.9",  card_id = "GHO.MOD.9",  version = "v1.2",
     name    = "Burn Notice",
     tagline = "Incinerate an opponent's intelligence assets as they try to use them.",
-    type    = ModReactCard,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = Submission,  function = Remove,  subject = ModifierCard,
-    trigger = "public_act.submitted(uses_intel_token=True)",
-    cost    = resource.faction(Ghost).findings * 1,
-    success = "Remove all Modifier cards submitted with the target PA.",
-    design_note = "Punishes factions trying to aggressively brute-force a PA using Intel Tokens."
+    type    = ModReactCard,  faction = Ghost,
+
+    layer   = Submission,  function = Remove,  subject = ModifierCard,  # confirmed registered pairing — ref_taxonomy.md §5.2 (Modifier Card: Economy/Submission)
+
+    trigger         = public_act.submitted(uses_intel_token=True),  # unconfirmed against §6.3 TriggerExpr vocabulary — same open category as Overture's trigger and SYN.MOD.11's accord.tabled (04-n174)
+    beat            = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    ring_mod        = None,  doctrine_mod = None,
+    acquisition     = Deck,  generating_card = None,
+
+    target_district = None,
+    target_faction  = None,  # not needed — trigger.public_act uniquely identifies the target PA regardless of which faction(s) attached modifiers to it
+    target_object   = trigger.public_act,
+    affinity        = None,  restriction = None,
+    cost            = Findings(1),
+    boost           = None,
+
+    success     = arbiter.remove(ModifierCard, attached_to=trigger.public_act),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,  perspectives = None,
+    design_note  = "Punishes brute-forcing a PA with Intel Tokens by stripping every Modifier card riding it — full-stack wipe, not just the submitter's. Confirmed as intended (Andy, S140): this is a bigger swing than most single-card React effects in the corpus, deliberately so.",
+    arbiter_note = "On trigger (a PA is submitted using an Intel Token as payment): confirm Ghost pays Findings(1). Remove every Modifier card currently attached to that PA, regardless of owner.",
 )
 ```
 
 ---
 
-### GHO.MOD.10 — DATA WIPE *(stub)*
+### GHO.MOD.10 — DATA WIPE
 [↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ghost's most disruptive React: forces a target faction to discard their entire hand of unplayed Covert Operation and Public Act cards, clearing their operational runway for the rest of the Quarter (they redraw normally at Debrief). Confirmed as intended, not softened (Andy, S140) — the steepest cost in this fossil set (`Findings(2) + IntelToken(1)`) reflects the swing. Pre-schema fossil (04-n174): trigger and success re-expressed in current Expr syntax this pass; underlying mechanic unchanged.
 
 #### Card Story
-⚠ Story pending 04-n79.
+No warning, no negotiation — just a hand suddenly empty and a faction scrambling to rebuild a plan that doesn't exist anymore.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Ghost's heaviest disruption React — clears an opponent's operational hand outright. | Art 00 §7 |
+| Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
+| Doctrine alignment | ✓ | Information warfare against an opponent's operational capacity — Ghost doctrine at its most aggressive. | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Ghost — trigger-based, fires on PA submission. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ⚠ | Information / Remove / FactionHand — FactionHand not a registered subject type; same non-gate flag already carried by NET.PA.3 Live Coverage, pending 04b validation. | ref_taxonomy.md §5.2; PM05 04-n174 |
+| Balance | ✓ | `cost = Findings(2) + IntelToken(1)` — steepest cost in the fossil set, matching the swing (full hand discard). Confirmed intended (Andy, S140). | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — discard resolves at trigger; target redraws normally at next Debrief. | Art 04 §5 P19 |
+| Persistence | ⚠ | `persistence` field open corpus-wide question (schema_cleanup_log item 2/D), not card-specific. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `public_act.submitted` unconfirmed against §6.3 TriggerExpr vocabulary. | Art 04 §6.3; PM05 04-n174 |
+| Portrait validity | ✓ | `{Ghost: submitter=+1}` — added this pass; fossil carried no portrait entry. | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference — correct, not a territory effect. | Art 01 §6–§7 |
+| Supported by components | ✓ | Faction Hand, Findings, Intel Token — existing components. | Art 02 §6, §11 |
+| Supported by game procedure | ✓ | PA submission at Covert Dispatch/Phase B; standard Ghost React window; Debrief redraw per standard procedure. | Art 03 §18; Art 03 §9.2.0 |
+| Data schema validation | ⚠ | Trigger/success re-expressed from string-literal fossil to Expr syntax this pass (04-n174). `arbiter.discard_hand(...)` has no confirmed MutationExpr vocabulary — same open gap as the rest of the corpus. Scaffolding fields added (04-n177). | Art 04 §6.1–§6.3; PM05 04-n174 |
+| Card narrative | ✓ | Card Story written this pass (was empty). | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic` — deterministic, no dice. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | `Findings(2) + IntelToken(1)` — heaviest cost among the fossil set, matching effect magnitude. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ⚠ | Any PA submission qualifies — broad trigger window; best-effort, not independently verifiable here. |  |
+| Firing window (ModReactCard) | ✓ | No other Ghost card shares this exact trigger + effect combination. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Deterministic condition check, no dice — Automatic is correct. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not a district/ring-scoped effect. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
 ```python
 GHO.MOD.10 = Card(
-    id      = "GHO.MOD.10",  version = "v1.1",
+    id      = "GHO.MOD.10",  card_id = "GHO.MOD.10",  version = "v1.2",
     name    = "Data Wipe",
     tagline = "A devastating cyber-attack that cripples a faction's operational hand.",
-    type    = ModReactCard,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = Information,  function = Remove,  subject = FactionHand,
-    trigger = "public_act.submitted",
-    cost    = resource.faction(Ghost).findings * 2 + intel_token * 1,
-    success = "Target faction must discard their entire hand of unplayed CA and PA cards. (They will redraw normally at Debrief).",
-    design_note = "Hugely disruptive. Clears their operational runway for the rest of the quarter."
+    type    = ModReactCard,  faction = Ghost,
+
+    layer   = Information,  function = Remove,  subject = FactionHand,  # FactionHand not a registered subject type — same non-gate flag as NET.PA.3 Live Coverage (04b validation pending)
+
+    trigger         = public_act.submitted,  # unconfirmed against §6.3 TriggerExpr vocabulary (04-n174)
+    beat            = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    ring_mod        = None,  doctrine_mod = None,
+    acquisition     = Deck,  generating_card = None,
+
+    target_district = None,
+    target_faction  = faction(trigger.public_act.submitter),
+    target_object   = None,
+    affinity        = None,  restriction = None,
+    cost            = Findings(2) + IntelToken(1),
+    boost           = None,
+
+    success     = arbiter.discard_hand(target_faction, card_types=[CovertOperation, PublicAct]),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,  perspectives = None,
+    design_note  = "Hugely disruptive — clears the target's entire unplayed CA/PA hand; they redraw normally at Debrief. Confirmed as intended (Andy, S140), not softened. Steepest cost in the fossil set (Findings(2) + IntelToken(1)) reflects the swing.",
+    arbiter_note = "On trigger (any faction submits a PA): confirm Ghost pays Findings(2) + IntelToken(1) and names the submitting faction as target. Target discards all unplayed Covert Operation and Public Act cards from hand; they redraw normally at next Debrief per standard draw procedure.",
 )
 ```
 
 ---
 
-### GHO.MOD.11 — MANUFACTURED EVIDENCE *(stub)*
+### GHO.MOD.11 — MANUFACTURED EVIDENCE
 [↑ Modifier & React Cards](#ghost-modifier-and-react-cards)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+A public hijacking: when an opponent places a PA with a face-down Target Profile, Ghost may swap it for one of their own choosing before Beat 4. Because Target Profiles are placed face-down, no one — not even the table — knows what Ghost changed the target to until the Apex Check reveals it. Pre-schema fossil (04-n174): trigger and success re-expressed in current Expr syntax this pass; underlying mechanic, cost, and arbiter procedure unchanged.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The table watches Ghost trade one sealed envelope for another. Nobody objects — the rules allow it — but nobody knows what's inside the new one either, and won't until the dust settles at Beat 4.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
-| Trigger frequency (ModReactCard) | ⚠ |  |  |
-| Firing window (ModReactCard) | ⚠ |  |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ |  |  |
-| Stack behavior (ModReactCard) | ⚠ |  |  |
-| Ring constraint (ModReactCard) | ⚠ |  |  |
+| Action fit | ✓ | Anonymous hijacking of an opponent's PA targeting — Ghost doctrine of operating unseen inside someone else's action. | Art 00 §7 |
+| Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
+| Doctrine alignment | ✓ | Corrupting a Target Profile without public disclosure is squarely Ghost's covert-manipulation doctrine. | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/Ghost — trigger-based, fires on PA placement with a face-down Target Profile. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | Information / Corrupt / TargetProfile — confirmed Corrupt target. | ref_taxonomy.md §5.2 |
+| Balance | ✓ | `cost = Findings(1) + Exposure(1)` — moderate cost, unchanged from fossil. | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — swap resolves at trigger; corrupted target then resolves normally at Beat 4. | Art 04 §5 P19 |
+| Persistence | ⚠ | `persistence` field open corpus-wide question (schema_cleanup_log item 2/D), not card-specific. | Art 04 §6.2 |
+| Trigger validity | ⚠ | `public_act.placed_with_target_profile` unconfirmed against §6.3 TriggerExpr vocabulary — shared form with NET.MOD.12 (same open item, both fossils). | Art 04 §6.3; PM05 04-n174 |
+| Portrait validity | ✓ | `{Ghost: submitter=+1}` — added this pass; fossil carried no portrait entry. | Art 04 §6.2 |
+| Supported by zones | ✓ | No district reference — correct, not a territory effect. | Art 01 §6–§7 |
+| Supported by components | ✓ | Target Profile (face-down mechanism) — existing component. | Art 02 §6, §11 |
+| Supported by game procedure | ✓ | Reacts at Art 03 §9.2.0; face-down Target Profile mechanism and Beat 4 Apex Check both pre-existing procedure. | Art 03 §9.2.0; Art 03 §14 |
+| Data schema validation | ⚠ | Trigger/success re-expressed from string-literal fossil to Expr syntax this pass (04-n174). `arbiter.swap_target_profile(...)` has no confirmed MutationExpr vocabulary — same open gap as the rest of the corpus. Scaffolding fields added (04-n177). | Art 04 §6.1–§6.3; PM05 04-n174 |
+| Card narrative | ✓ | Card Story written this pass (was empty). | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic` — deterministic, no dice. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | `Findings(1) + Exposure(1)` — moderate cost for a covert, undisclosed swap. | Art 00a §9.2 |
+| Trigger frequency (ModReactCard) | ⚠ | Depends on how often opponents place PAs with face-down Target Profiles — best-effort, not independently verifiable here. |  |
+| Firing window (ModReactCard) | ✓ | Shares its trigger with NET.MOD.12 (Network's Forced Transparency) but the two effects don't overlap in resolution. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Deterministic condition check, no dice — Automatic is correct. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
+| Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not a district/ring-scoped effect. |  |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ |  |  |
 
 ```python
 GHO.MOD.11 = Card(
-    id      = "GHO.MOD.11",  version = "v1.0",
+    id      = "GHO.MOD.11",  card_id = "GHO.MOD.11",  version = "v1.1",
     name    = "Manufactured Evidence",
     tagline = "Hijack a public act before the ink dries.",
-    type    = ModReactCard,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = Information,  function = Corrupt,  subject = TargetProfile,
-    trigger = "public_act.placed_with_target_profile",
-    cost    = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).exposure * 1,
-    success = "Replaces the PA's original Target Profile with a new Target Profile provided by Ghost.",
-    arbiter_note = "Reacts at Art 03 §9.2.0 when an opponent places a PA with a face-down Target Profile. Ghost announces the React, discards the opponent's original face-down Target Profile, and places their own face-down Target Profile on the PA. At Beat 4 Apex Check, the PA resolves against Ghost's corrupted targets.",
-    design_note = "A public hijacking. The table sees Ghost swap the paperwork, but because Target Profiles are placed face-down, no one (not even the table) knows what Ghost changed the target to until Beat 4."
+    type    = ModReactCard,  faction = Ghost,
+
+    layer   = Information,  function = Corrupt,  subject = TargetProfile,  # confirmed Corrupt target — ref_taxonomy.md §5.2 ("Corrupt targets are strictly: ... Target Profile")
+
+    trigger         = public_act.placed_with_target_profile,  # unconfirmed against §6.3 TriggerExpr vocabulary — shared form with NET.MOD.12 (04-n174)
+    beat            = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    ring_mod        = None,  doctrine_mod = None,
+    acquisition     = Deck,  generating_card = None,
+
+    target_district = None,
+    target_faction  = None,  # not declared — the swap is anonymous even to the table until Beat 4
+    target_object   = trigger.public_act,
+    affinity        = None,  restriction = None,
+    cost            = Findings(1) + Exposure(1),
+    boost           = None,
+
+    success     = arbiter.swap_target_profile(pa=trigger.public_act, new_profile=declared_profile),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait     = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing   = None,
+    narrative    = None,  perspectives = None,
+    design_note  = "A public hijacking. The table sees Ghost swap the paperwork, but because Target Profiles are placed face-down, no one — not even the table — knows what Ghost changed the target to until Beat 4.",
+    arbiter_note = "Reacts at Art 03 §9.2.0 when an opponent places a PA with a face-down Target Profile. Ghost announces the React, pays Findings(1) + Exposure(1), and declares a replacement Target Profile privately to ARBITER. ARBITER discards the opponent's original face-down Target Profile and places Ghost's declared_profile face-down in its place. At Beat 4 Apex Check, the PA resolves against Ghost's corrupted target.",
 )
 ```
 
 ---
 
-### GHO.MOD.12 — EMBEDDED CONTACT *(stub)*
+### GHO.MOD.12 — EMBEDDED CONTACT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ghost's ModBattleCard set, replicating the Directorate pattern (2 Boost +1/+2, 2 Hinder −1/−2, S132). Ghost's doctrine here is deliberately not literal force — §5a and modifier_card_ideas.md's provisional voice seed both frame Ghost's battlefield weight as "what they know about the contest, not what they bring to it." Weaker Boost tier (+1): a source already positioned in the district, not a deployed asset. Same no-cost/playtest-flagged (04-n94) terms as the rest of the subclass.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A contact who was already embedded in the district long before the tension marker went down passes along what they've seen — reinforcing whichever side the playing faction has named.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | An informant already in place feeding intelligence into a live contest is a grounded, non-literal expression of Ghost's epistemic doctrine (§5a). | Art 00 §7; Art 04 §5a |
+| Voice fit | ✓ | Scoped to `narrative`/`arbiter_note` only (`perspectives`/`design_note` schema-locked None); intelligence-sourcing register, no combat language. | Art 00 §9 |
+| Doctrine alignment | ✓ | Boost expresses "understanding must precede action" through an intelligence asset, not force; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Ghost's Asset-category naming slot (S130). | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Boost tier per locked S132 pattern; no cost step exists for this subclass; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S132. Ghost's ModBattleCard set, replicating the Directorate pattern (2 Boost + 1/+2, 2 Hinder −1/−2, PM05 09-06). Ghost's doctrine here is deliberately not literal force — §5a and modifier_card_ideas.md's provisional voice seed both frame Ghost's battlefield weight as "what they know about the contest, not what they bring to it." Weaker Boost tier (+1): a source already positioned in the district, not a deployed asset.*
+*S132. Ghost's ModBattleCard set, replicating the Directorate pattern (2 Boost + 1/+2, 2 Hinder −1/−2, PM05 09-06). Ghost's doctrine here is deliberately not literal force — §5a and modifier_card_ideas.md's provisional voice seed both frame Ghost's battlefield weight as "what they know about the contest, not what they bring to it." Weaker Boost tier (+1): a source already positioned in the district, not a deployed asset. Design-reviewed S140 (09-16 step 4) — same disposition as the Directorate pattern-set; portrait resolved same session (PM02 L269).*
 
 ```python
 GHO.MOD.12 = Card(
@@ -2778,8 +2840,11 @@ GHO.MOD.12 = Card(
     ring_origin     = None,   # Ghost faction modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
     cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "A contact who was already in the district long before the tension marker went down passes along what they've seen.",
     arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2787,43 +2852,43 @@ GHO.MOD.12 = Card(
 
 ---
 
-### GHO.MOD.13 — SIGNALS PACKAGE *(stub)*
+### GHO.MOD.13 — SIGNALS PACKAGE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Stronger Boost tier (+2) — a technical/surveillance escalation rather than a bigger human asset, consistent with Ghost's "Perimeter Sensors" precedent (GHO.MOD.2) for treating equipment as passive listening infrastructure, not deployed muscle. Same no-cost/playtest-flagged (04-n94) terms as GHO.MOD.12.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Weeks of passive signals collection get compiled and handed over at the exact moment it's useful, reinforcing whichever side the playing faction has named.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Compiled surveillance handed over at the decisive moment is a grounded, non-literal expression of Ghost's epistemic doctrine. | Art 00 §7; Art 04 §5a |
+| Voice fit | ✓ | Scoped to `narrative`/`arbiter_note` only; passive-collection register, consistent with GHO.MOD.2 equipment framing. | Art 00 §9 |
+| Doctrine alignment | ✓ | Boost via technical intelligence infrastructure, not force; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Ghost's Equipment-category naming slot. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per locked S132 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S132. Stronger Boost tier (+2) — a technical/surveillance escalation rather than a bigger human asset, consistent with Ghost's "Perimeter Sensors" precedent (GHO.MOD.2) for treating equipment as passive listening infrastructure, not deployed muscle.*
+*S132. Stronger Boost tier (+2) — a technical/surveillance escalation rather than a bigger human asset, consistent with Ghost's "Perimeter Sensors" precedent (GHO.MOD.2) for treating equipment as passive listening infrastructure, not deployed muscle. Design-reviewed S140 (09-16 step 4) — same disposition as GHO.MOD.12; portrait resolved same session (PM02 L269).*
 
 ```python
 GHO.MOD.13 = Card(
@@ -2839,8 +2904,11 @@ GHO.MOD.13 = Card(
     ring_origin     = None,   # Ghost faction modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
     cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Weeks of passive collection, compiled and handed over at the moment it's actually useful.",
     arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2848,43 +2916,43 @@ GHO.MOD.13 = Card(
 
 ---
 
-### GHO.MOD.14 — PLANTED DOUBT *(stub)*
+### GHO.MOD.14 — PLANTED DOUBT
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Weaker Hinder tier (−1). Ghost's suppression is informational, never physical — this is a rumor or a manufactured inconsistency, not an attack. Fits the same register as GHO.MOD.5 False Flag and GHO.MOD.11 Manufactured Evidence (existing Ghost ModReactCards built on the same disinformation logic). Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A detail that doesn't add up surfaces at exactly the wrong moment — nothing is proven, but the named faction's position stops holding together when it matters.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A manufactured inconsistency undermining a rival's position is a grounded, non-literal expression of Ghost's disinformation doctrine. | Art 00 §7; Art 04 §5a |
+| Voice fit | ✓ | Scoped to `narrative`/`arbiter_note` only; disinformation register, matching GHO.MOD.5/GHO.MOD.11. | Art 00 §9 |
+| Doctrine alignment | ✓ | Hinder via information warfare, not force; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Ghost's Tactic-category Hinder slot. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Weak Hinder tier per locked S132 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S132. Weaker Hinder tier (−1). Ghost's suppression is informational, never physical — this is a rumor or a manufactured inconsistency, not an attack. Fits the same register as GHO.MOD.5 False Flag and GHO.MOD.11 Manufactured Evidence (existing Ghost ModReactCards built on the same disinformation logic).*
+*S132. Weaker Hinder tier (−1). Ghost's suppression is informational, never physical — this is a rumor or a manufactured inconsistency, not an attack. Fits the same register as GHO.MOD.5 False Flag and GHO.MOD.11 Manufactured Evidence (existing Ghost ModReactCards built on the same disinformation logic). Design-reviewed S140 (09-16 step 4) — same disposition as GHO.MOD.12/13; portrait resolved same session (PM02 L269).*
 
 ```python
 GHO.MOD.14 = Card(
@@ -2900,8 +2968,11 @@ GHO.MOD.14 = Card(
     ring_origin     = None,   # Ghost faction modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
     cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Nothing is proven. Nothing needs to be — the timeline just stops holding together, right when it matters.",
     arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2909,43 +2980,43 @@ GHO.MOD.14 = Card(
 
 ---
 
-### GHO.MOD.15 — BLOWN COVER *(stub)*
+### GHO.MOD.15 — BLOWN COVER
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Stronger Hinder tier (−2), completing Ghost's 2 Boost/2 Hinder pattern. Escalates Planted Doubt from a rumor into something confirmed and specific — a position Ghost knew was fragile and chose to expose. Same no-cost/playtest-flagged (04-n94) terms as the rest of the set.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Ghost knew exactly which detail would unravel the named faction's position if it surfaced now. It surfaces now.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | A deliberately exposed, confirmed weakness is the escalated form of Ghost's disinformation doctrine. | Art 00 §7; Art 04 §5a |
+| Voice fit | ✓ | Scoped to `narrative`/`arbiter_note` only; same disinformation register as GHO.MOD.14, escalated to confirmed exposure. | Art 00 §9 |
+| Doctrine alignment | ✓ | Hinder via deliberate exposure, not force; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
+| Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Ghost's Tactic-category escalated Hinder slot alongside GHO.MOD.14. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per locked S132 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components invoked. | Art 02 |
+| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S132. Stronger Hinder tier (−2), completing Ghost's 2 Boost/2 Hinder pattern. Escalates Planted Doubt from a rumor into something confirmed and specific — a position Ghost knew was fragile and chose to expose.*
+*S132. Stronger Hinder tier (−2), completing Ghost's 2 Boost/2 Hinder pattern. Escalates Planted Doubt from a rumor into something confirmed and specific — a position Ghost knew was fragile and chose to expose. Design-reviewed S140 (09-16 step 4) — same disposition as the rest of the Ghost set; portrait resolved same session (PM02 L269). Closes Ghost's ModBattleCard review — all 4 cards (GHO.MOD.12–15) design-passed, no open issues.*
 
 ```python
 GHO.MOD.15 = Card(
@@ -2961,8 +3032,11 @@ GHO.MOD.15 = Card(
     ring_origin     = None,   # Ghost faction modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
     cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # TBD — modifier card portrait model still open (same open note as SYN.MOD.1 The Fixer)
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
     narrative    = "Ghost knew exactly which detail would unravel them if it surfaced now. It surfaces now.",
     arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2970,43 +3044,43 @@ GHO.MOD.15 = Card(
 
 ---
 
-### GHO.MOD.16 — PRE-ANALYSIS *(stub)*
+### GHO.MOD.16 — PRE-ANALYSIS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Replicates the Directorate ModActionCard pattern to Ghost. Minor threshold_delta tier (+5) — self-only, fits Ghost's epistemic doctrine ("understanding must precede action") cleanly.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Advance modeling means Ghost already knows how this plays out before committing to it.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Pre-modeling advantage is the clean mechanical expression of Ghost's epistemic doctrine. | Art 00 §7 |
+| Voice fit | ✓ | `faction=Ghost`; narrative reads in the intelligence/certainty register, not another faction's voice. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | ModActionCard, `subtype=FactionSpecific`, correctly excluded from taxonomy. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None for all modifier subclasses. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the locked 4-value ladder; `value_rating=1` mirrors tier. | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None for ModActionCard. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None — bundled at Dispatch. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` genuinely assessed — no independent doctrinal weight beyond the host action. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct for a faction deck card. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Dispatch-bundling procedure at Art 03 §9.1.1/§9.4.0.1 covers attachment. | Art 03 §9.1.1, §9.4.0.1 |
+| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence New Meridian event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields (schema-locked None). | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention; out of scope for 04-n178. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Ghost — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Ghost voice: intelligence and leverage, epistemic doctrine — same doctrinal lens as Ghost's shipped ModBattleCard set (GHO.MOD.12–15). Minor threshold_delta tier (+5).*
+*S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Ghost — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Ghost voice: intelligence and leverage, epistemic doctrine — same doctrinal lens as Ghost's shipped ModBattleCard set (GHO.MOD.12–15). Minor threshold_delta tier (+5). Design-reviewed S139 (09-16 step 3).*
 
 ```python
 GHO.MOD.16 = Card(
@@ -3021,6 +3095,9 @@ GHO.MOD.16 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Advance modeling means Ghost already knows how this plays out before committing to it.",
@@ -3030,43 +3107,43 @@ GHO.MOD.16 = Card(
 
 ---
 
-### GHO.MOD.17 — KNOWN VARIABLE *(stub)*
+### GHO.MOD.17 — KNOWN VARIABLE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Mid tier (+10). Same structure as GHO.MOD.16, self-only.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Removing an unknown smooths the acting faction's own play — Ghost prefers certainty to speed.
 
-**Design checklist:**
+**Design checklist:** Same disposition as GHO.MOD.16.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same epistemic-doctrine basis. | Art 00 §7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Mid tier; `value_rating=2` mirrors tier. | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Mid threshold_delta tier (+10).*
+*S135. Mid threshold_delta tier (+10). Design-reviewed S139.*
 
 ```python
 GHO.MOD.17 = Card(
@@ -3081,6 +3158,9 @@ GHO.MOD.17 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Removing an unknown smooths the acting faction's own play — Ghost prefers certainty to speed.",
@@ -3090,43 +3170,43 @@ GHO.MOD.17 = Card(
 
 ---
 
-### GHO.MOD.18 — CLEAN CHANNEL *(stub)*
+### GHO.MOD.18 — CLEAN CHANNEL
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Third tier (+15). Reframed from "Compromised Model" (hostile) per 04-n170, same self-only correction as the rest of the corpus's reframed tiers.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A scrubbed data channel removes the noise that would otherwise complicate the operation.
 
-**Design checklist:**
+**Design checklist:** Same disposition as GHO.MOD.16. Narrative independently checked — clean self-only, no hostile residue.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same epistemic-doctrine basis. | Art 00 §7; PM05 04-n170 |
+| Voice fit | ✓ | Clean self-only reframe. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Third tier; `value_rating=3` mirrors tier. | PM02 L258, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Compromised Model" — planting bad data to raise a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Ghost's own host action.*
+*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Compromised Model" — planting bad data to raise a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Ghost's own host action. Design-reviewed S139 — reframe clean.*
 
 ```python
 GHO.MOD.18 = Card(
@@ -3141,6 +3221,9 @@ GHO.MOD.18 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A scrubbed data channel removes the noise that would otherwise complicate the operation.",
@@ -3150,43 +3233,43 @@ GHO.MOD.18 = Card(
 
 ---
 
-### GHO.MOD.19 — TOTAL PICTURE *(stub)*
+### GHO.MOD.19 — TOTAL PICTURE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (+20), closing Ghost's `threshold_delta` quartet. Clean self-only narrative — full intelligence picture as the epistemic doctrine's purest expression.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A fully assembled intelligence picture leaves nothing to chance — the operation proceeds on certainty, not estimate.
 
-**Design checklist:**
+**Design checklist:** Same disposition as GHO.MOD.16.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same epistemic-doctrine basis. | Art 00 §7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=4` mirrors tier, +20 unvalidated. | PM02 L258, L259; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Clean self-only event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (+20 playtest flag) |  |
 
-*S135. Capstone threshold_delta tier (+20).*
+*S135. Capstone threshold_delta tier (+20). Design-reviewed S139 — narrative clean.*
 
 ```python
 GHO.MOD.19 = Card(
@@ -3201,6 +3284,9 @@ GHO.MOD.19 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A fully assembled intelligence picture leaves nothing to chance — the operation proceeds on certainty, not estimate.",
@@ -3210,43 +3296,43 @@ GHO.MOD.19 = Card(
 
 ---
 
-### GHO.MOD.20 — CLEAN DATA *(stub)*
+### GHO.MOD.20 — CLEAN DATA
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of Ghost's `success_multiplier` pair. Self-only, verified-data framing fits doctrine cleanly.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An operation run on verified information performs better than the plan ever assumed.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Verification-as-amplifier fits epistemic doctrine. | Art 00 §7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Common success_multiplier tier (n=1).*
+*S135. Common success_multiplier tier (n=1). Design-reviewed S139.*
 
 ```python
 GHO.MOD.20 = Card(
@@ -3261,6 +3347,9 @@ GHO.MOD.20 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An operation run on verified information performs better than the plan ever assumed.",
@@ -3270,43 +3359,43 @@ GHO.MOD.20 = Card(
 
 ---
 
-### GHO.MOD.21 — LAYERED ANALYSIS *(stub)*
+### GHO.MOD.21 — LAYERED ANALYSIS
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of Ghost's `success_multiplier` pair. Same unvalidated-magnitude caveat as every n=2 success_multiplier card.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Multiple independent confirmations amplify an outcome well past what a single source would support.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Cross-verification-as-amplifier fits epistemic doctrine tightly. | Art 00 §7 |
+| Voice fit | ✓ | Clean self-only narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, n=2 unvalidated. | PM02 L256; PM05 04-n157, 04-n94 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (n=2 playtest flag) |  |
 
-*S135. Rare/capstone success_multiplier tier (n=2).*
+*S135. Rare/capstone success_multiplier tier (n=2). Design-reviewed S139.*
 
 ```python
 GHO.MOD.21 = Card(
@@ -3321,6 +3410,9 @@ GHO.MOD.21 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Multiple independent confirmations amplify an outcome well past what a single source would support.",
@@ -3330,43 +3422,43 @@ GHO.MOD.21 = Card(
 
 ---
 
-### GHO.MOD.22 — QUIET CORRECTION *(stub)*
+### GHO.MOD.22 — QUIET CORRECTION
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost minor tier (+1) of the `ps_shift` matrix. `faction="acting"` needs no host-declared target — no submission-validity dependency.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An error is quietly fixed before anyone notices it was ever there — a small, deliberate protection of standing.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Quiet-correction fits Ghost's discreet epistemic doctrine. | Art 00 §7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the 2×2 matrix; `value_rating=1` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly, no target-dependency gap. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix.*
+*S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 GHO.MOD.22 = Card(
@@ -3381,6 +3473,9 @@ GHO.MOD.22 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "An error is quietly fixed before anyone notices it was ever there — a small, deliberate protection of standing.",
@@ -3390,43 +3485,43 @@ GHO.MOD.22 = Card(
 
 ---
 
-### GHO.MOD.23 — FINDINGS PUBLISHED *(stub)*
+### GHO.MOD.23 — FINDINGS PUBLISHED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Self-boost major tier (+2) of the `ps_shift` matrix — same basis as GHO.MOD.22, doubled magnitude.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A selective disclosure earns Ghost credibility and standing — true as far as it goes, and it goes exactly as far as intended.
 
-**Design checklist:**
+**Design checklist:** Same disposition as GHO.MOD.22.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as GHO.MOD.22. | Art 00 §7 |
+| Voice fit | ✓ | Clean narrative — "true as far as it goes" is genuinely Ghost's voice. | Art 00 §9 |
+| Doctrine alignment | N/A | `faction="acting"` — no target dependency. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier of the 2×2 matrix; `value_rating=2` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix.*
+*S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 GHO.MOD.23 = Card(
@@ -3441,6 +3536,9 @@ GHO.MOD.23 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A selective disclosure earns Ghost credibility and standing — true as far as it goes, and it goes exactly as far as intended.",
@@ -3450,43 +3548,43 @@ GHO.MOD.23 = Card(
 
 ---
 
-### GHO.MOD.24 — DISCREET LEAK *(stub)*
+### GHO.MOD.24 — DISCREET LEAK
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder minor tier (−1) of the `ps_shift` matrix. Same target-resolution behavior as STD.MOD.34 — resolves via host pairing, not an independent field.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A detail reaches exactly the right ears — quiet, deniable, and costly to whoever it's about.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Discreet-leak is squarely Ghost's mechanical/narrative register. | Art 00 §7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Minor tier of the 2×2 matrix; `value_rating=1` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix.*
+*S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 GHO.MOD.24 = Card(
@@ -3501,52 +3599,55 @@ GHO.MOD.24 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A detail reaches exactly the right ears — quiet, deniable, and costly to whoever it's about.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — only attachable to a host that has one.",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA it's packet-paired with names as its target_faction (§6.1) — the modifier's target IS the host action, not an independently-declared field (Andy, S139).",
 )
 ```
 
 ---
 
-### GHO.MOD.25 — MODEL FAILURE EXPOSED *(stub)*
+### GHO.MOD.25 — MODEL FAILURE EXPOSED
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Target-hinder major tier (−2) of the `ps_shift` matrix. Same target-resolution behavior as GHO.MOD.24 (resolves via host pairing, not an independent field), doubled magnitude. Strong Ghost voice — "didn't lie, just let the truth land."
 
 #### Card Story
-⚠ Story pending 04-n79.
+A rival's flawed analysis becomes public — Ghost didn't lie, it just let the truth land at the worst possible time.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Same basis as GHO.MOD.24. | Art 00 §7 |
+| Voice fit | ✓ | Excellent Ghost-specific register — truth-as-weapon, not fabrication. | Art 00 §9 |
+| Doctrine alignment | ✓ | `faction="target"` resolves to whichever faction the host names. | Art 04 §6.2, §6.3 |
+| Card type fit | ✓ | Same basis as set. | Art 04 §6.1, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Major tier of the 2×2 matrix; `value_rating=2` mirrors tier. | PM02 L257, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242).*
+*S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Design-reviewed S139.*
 
 ```python
 GHO.MOD.25 = Card(
@@ -3561,52 +3662,55 @@ GHO.MOD.25 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "A rival's flawed analysis becomes public — Ghost didn't lie, it just let the truth land at the worst possible time.",
-    arbiter_note = "Same target-resolution constraint as GHO.MOD.24, major tier.",
+    arbiter_note = "Same target-resolution behavior as GHO.MOD.24, major tier (Andy, S139).",
 )
 ```
 
 ---
 
-### GHO.MOD.26 — EXISTING DATASET *(stub)*
+### GHO.MOD.26 — EXISTING DATASET
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Common tier (n=1) of Ghost's `cost_reduction` pair, PA-only per §6.3. Prior-research framing fits epistemic doctrine cleanly.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Prior research lowers the cost of new analysis — nothing here starts from zero.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Prior-research reuse fits epistemic doctrine. | Art 00 §7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ✓ | Common tier; `value_rating=1` mirrors tier. | PM02 L256, L259 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ✓ |  |
 
-*S135. Common cost_reduction tier (n=1). PA-only per §6.3.*
+*S135. Common cost_reduction tier (n=1). PA-only per §6.3. Design-reviewed S139.*
 
 ```python
 GHO.MOD.26 = Card(
@@ -3621,6 +3725,9 @@ GHO.MOD.26 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Prior research lowers the cost of new analysis — nothing here starts from zero.",
@@ -3630,43 +3737,43 @@ GHO.MOD.26 = Card(
 
 ---
 
-### GHO.MOD.27 — SHARED INFRASTRUCTURE *(stub)*
+### GHO.MOD.27 — SHARED INFRASTRUCTURE
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Capstone tier (n=2) of Ghost's `cost_reduction` pair, closing the faction set. Same flat-vs-proportional caveat as the rest of the corpus's cost_reduction capstones.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Borrowed analytical tools cut the overhead of building anything from scratch.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Shared-infrastructure reuse fits epistemic doctrine. | Art 00 §7 |
+| Voice fit | ✓ | Clean narrative. | Art 00 §9 |
+| Doctrine alignment | N/A | No `target_faction`. | Art 04 §6.2 |
+| Card type fit | ✓ | PA-only, correctly restricted. | Art 04 §6.1, §6.3, §11.1 |
+| Taxonomy fit | N/A | Schema-locked None. | Art 04 §6.2 |
+| Balance | ⚠ | Capstone tier; `value_rating=2` mirrors tier, flat 2-unit reduction not checked against any specific PA's cost. | PM02 L256; PM05 04-n157 |
+| Effect duration | ✓ | Fires with host, consumed on use. | Art 04 §5 P19 |
+| Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
+| Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
+| Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new components. | Art 02 |
+| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
+| Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
+| Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
+| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
 
-*S135. Capstone cost_reduction tier (n=2).*
+*S135. Capstone cost_reduction tier (n=2). Design-reviewed S139 — closes the Ghost ModActionCard set (12/12 cards); GHO.MOD.24/25's target-restriction "gap" (schema_cleanup_log.md #21) closed same session — not a real gap, per Andy; no narrative flags.*
 
 ```python
 GHO.MOD.27 = Card(
@@ -3681,6 +3788,9 @@ GHO.MOD.27 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
     cost            = None,
+    resolution_type = None,   # 04-n177 scaffolding placeholder
+    boost           = None,   # 04-n177 scaffolding placeholder
+    ps_framing      = None,   # 04-n177 scaffolding placeholder
 
     portrait     = None,
     narrative    = "Borrowed analytical tools cut the overhead of building anything from scratch.",

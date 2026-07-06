@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** S138 — Full 09-16 step 2 ModReactCard design-review pass complete across the entire corpus (Ring S137 + all 5 factions S138, 81 cards content-reviewed to full Design Rationale/Card Story/22-row checklist/Status; 8 pre-schema fossils identified for full re-authoring). `Whiteboard/schema_cleanup_log.md` expanded to 20 items with a full-corpus synthesis. Next: ModActionCard → ModBattleCard → CA/PA design reviews. Prior (S136): Art 04 physical split into 8 files (Part1–Part4e); 09-16 step 1 scaffolding tooling built and run (286/384 cards scaffolded, DB-48 structure_pass added).
+**Design milestone:** S140 — 09-16 step 2 ModBattleCard design-review pass complete (full 44-card corpus, 24 Ring/Standard + 20 faction). 8 pre-schema fossil ModReactCards fully re-authored (GHO.MOD.9/10/11, GUI.MOD.1, NET.MOD.11/12, SYN.MOD.1, STD.MOD.1). Verification-audit standard reinforced hard; two real defects caught. Portrait decision (Andy): ModBattleCard carries no portrait value, permanently. Sequencing decision: CA/PA review (item #2) now runs before item-#3 schema decisions. PM02 L273 last L-decision. Next: separate CA and PA design reviews. Prior (S139): ModActionCard review complete (132 cards). Prior (S138): ModReactCard review complete across all 5 factions (81 cards, plus Ring S137). Prior (S136): Art 04 physical split into 8 Part files; scaffolding tooling built.
 
 ---
 

@@ -215,3 +215,15 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 **G. Positive finding — the S137 taxonomy sweep holds up completely.** Across all ~45 cards re-verified this session, zero Layer/Function/Subject mis-assignments were found; every "Taxonomy fit" row confirmed rather than corrected the prior sweep. Same for the core confirmed TriggerExpr vocabulary (`presence_chip.*`, `structure_block.*`, `standing_marker.*`, `accord.*`, `broadcast_card.placed`, `public_act.placed_on_frg`) — used correctly on the large majority of modern-era cards. The schema itself isn't broken; the gaps cluster in specific, identifiable pockets (B–F above) rather than being spread evenly across the corpus.
 
 **Status:** Presented as a cross-cutting menu, same treatment as item 4's S137 synthesis — none of A–F implemented, awaiting Andy's read on which (if any) warrant a dedicated session before the remaining 09-16 steps (faction-level set analysis, cross-faction synthesis).
+
+---
+
+### 21. Category: `ps_shift(faction="target", ...)` ModActionCard has no restriction enforcing the host actually has a target — CLOSED, not a gap
+
+**Surfaced by:** STD.MOD.34 Word to the Wise (S139, Ring 1 Portable ModActionCard review — first target-hinder `ps_shift` card reached). Originally logged as: `ps_shift(faction="target", delta=-1)` resolves against whichever faction the host CA/PA declares as `target_faction` (§6.1), and nothing enforces that the host has one — as specced, a faction could attach this card to a targetless host at Dispatch, leaving ARBITER nothing to shift against.
+
+**Closed (Andy, S139):** Not a gap. A ModActionCard does not declare its own target — its target IS the host action card it's submitted with (Art 03 §9.1.1/§9.4.0.1 packet-pairing at Dispatch). It enhances the effect of the card it attaches to; `faction="target"` is definitionally the host's target, not a separately-validated field ModActionCard needs a `restriction` clause to police. A player simply wouldn't pair a target-hinder `ps_shift` card with a targetless host — same non-issue as pairing `cost_reduction` (PA-only) with a CA host. No schema fix needed; no restriction field, no Art 03 rule.
+
+**Retroactive note (corrected):** DIR.MOD.20 Public Reprimand's `arbiter_note` (S135 stub-pass content) describes `faction="target"` resolving to whichever faction the host names — that description is correct as far as it goes; it does not describe an actual gap, and the S139 review's reading of it as evidence of an "unformalized" constraint was the error, not the note itself.
+
+**Status:** Closed S139, not a gap. Affected 22 cards had an incorrect ⚠ flag added and removed in the same pass (STD.MOD.34/35/46/47/58/59/70/71/82/83/94/95, DIR.MOD.20/24, GHO.MOD.24/25, GUI.MOD.23/24, NET.MOD.27/28, SYN.MOD.24/25) — see PM02 entry revising L267. PM05 **04-n179** closed accordingly. GUI.MOD.23/24 retain a separate, still-valid note (Guild's own CA/PA mix skews self/territory-directed, so these two cards see fewer eligible hosts than Directorate/Syndicate's equivalents — confirmed by Andy as a distinct, surviving observation, not dissolved by this correction).
