@@ -90,9 +90,9 @@ The intent is immersion through geometry: it should feel exactly as if the playe
 
 *Central Area Layout: Illustrates the detailed, canonical arrangement of shared tabletop zones within the Central Area. This includes the public tracks (Session Timeline, Initiative Strip, Situation Report, Chorus Activity, Public Standing), the Accord Placement Area, the Supply Zone (Reservoir and Backlog), the Ring Modifiers, and the City Map footprint.*
 
-![New Meridian Map Layout](NM_Overlay.svg)
+![New Meridian Map Layout Generated](NM_Overlay_Generated.svg)
 
-*District layout diagram: concentric Ring 0–3 geography mapping the 21 districts of New Meridian, overlaid with their spatial connections and boundaries. The district native resource types are color-keyed by the hex code for that resource (and native faction) and shown in the legend.*
+*High-fidelity generated district layout diagram: physical 1px = 0.25mm mapped concentric Ring 0–3 geography. Shows the 21 districts of New Meridian, complete with chronological establishment data, native resources, and physical component placement footprints.*
 
 
 ### Board Shape and Orientation

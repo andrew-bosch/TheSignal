@@ -1,0 +1,1298 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 4000 2150" width="100%" height="100%" style="background-color: #0a0c0f;">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" stroke-width="0.5" />
+    </pattern>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <style>
+      .bg { fill: #05070A; stroke-width: 2.5; }
+      .text-title { fill: #F8FAFC; font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 800; letter-spacing: 2px; text-anchor: middle; }
+      .text-title-left { fill: #F8FAFC; font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 800; letter-spacing: 2px; text-anchor: start; }
+      .text-address { fill: #94A3B8; font-family: "Courier New", monospace; font-size: 17px; font-weight: 600; letter-spacing: 1px; text-anchor: middle; }
+      .text-address-left { fill: #94A3B8; font-family: "Courier New", monospace; font-size: 17px; font-weight: 600; letter-spacing: 1px; text-anchor: start; }
+      .text-resource { font-family: "Inter", sans-serif; font-size: 18px; font-weight: 700; text-anchor: middle; }
+      
+      .tension-zone { fill: #1c1006; stroke: #d97736; stroke-width: 2.5; stroke-dasharray: 6 4; }
+      .text-tension { fill: #e58249; font-family: "Inter", sans-serif; font-size: 10px; font-weight: 800; text-anchor: middle; letter-spacing: 2px; }
+      
+      .stack-zone { fill: none; stroke-width: 2; stroke-dasharray: 4 4; }
+      .structure-zone { fill: none; stroke-width: 2; }
+      .deployment-zone { fill: none; stroke-width: 2; stroke-dasharray: 3 3; }
+      
+      .r0-title { fill: #F8FAFC; font-family: "Inter", sans-serif; font-size: 52px; font-weight: 800; letter-spacing: 6px; text-anchor: middle; }
+      .r0-address { fill: #94A3B8; font-family: "Courier New", monospace; font-size: 24px; font-weight: 600; letter-spacing: 3px; text-anchor: middle; }
+      .r0-arbiter { fill: #fffff0; font-family: "Inter", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 2px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="4000" height="2150" fill="#0a0c0f" />
+  <rect width="4000" height="2150" fill="url(#grid)" />
+  
+  <text x="50" y="50" fill="#3a6ea8" font-family="Inter" font-size="24" font-weight="900" letter-spacing="4" filter="url(#glow)">NEW MERIDIAN // WAR ROOM MAP</text>
+  <text x="50" y="80" fill="#6a9978" font-family="Courier New" font-size="14" font-weight="bold">PHYSICAL SCALE: 1PX = 0.25MM (0.95M WIDE)</text>
+
+  <path d="M 1649.2597114673024 -102.50000000000006 A 405 405 0 1 0 2350.740288532698 -102.49999999999997 Z" fill="#05070A" stroke="#fffff0" stroke-width="4" filter="url(#glow)" /><path d="M 1649.2597114673024 -102.50000000000006 A 405 405 0 1 0 2350.740288532698 -102.49999999999997 Z" fill="url(#grid)" opacity="0.3" /><circle cx="2000" cy="230" r="21" fill="#fffff0" filter="url(#glow)" /><text x="2000" y="195" class="r0-arbiter" filter="url(#glow)">ARBITER INFLUENCE</text><text x="2000" y="80" class="r0-title" filter="url(#glow)">CHORUS NODE</text><text x="2000" y="130" class="r0-address">ORIGIN</text><path d="M 1821.2856512069936 260.1910782019139 L 1702.1427520116563 366.9851303365232 A 400 400 0 0 0 1771.9471509974019 428.6212075654858 L 1863.168290598441 297.1727245392915 A 240 240 0 0 1 1821.2856512069936 260.1910782019139 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="2" />
+        <g transform="rotate(41.44394718112955, 2000, 100) translate(2000, 340)">
+          <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+          <!-- Deploy octagons (50x50) -->
+          <polygon class="deployment-zone" points="-14,50 14,50 25,61 25,89 14,100 -14,100 -25,89 -25,61" stroke="#d4622a" />
+          <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+        </g>
+        <path d="M 1889.5279496012538 313.0631973868243 L 1815.8799160020894 455.1053289780406 A 400 400 0 0 0 1902.9774700845712 488.05492998905413 L 1941.7864820507427 332.8329579934325 A 240 240 0 0 1 1889.5279496012538 313.0631973868243 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="2" />
+        <g transform="rotate(20.721973590564772, 2000, 100) translate(2000, 340)">
+          <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+          <!-- Deploy octagons (50x50) -->
+          <polygon class="deployment-zone" points="-14,50 14,50 25,61 25,89 14,100 -14,100 -25,89 -25,61" stroke="#6a9978" />
+          <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+        </g>
+        <path d="M 1972.0634753046443 338.3685184497856 L 1953.4391255077405 497.280864082976 A 400 400 0 0 0 2046.5608744922597 497.280864082976 L 2027.9365246953557 338.3685184497856 A 240 240 0 0 1 1972.0634753046443 338.3685184497856 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="2" />
+        <g transform="rotate(0.0, 2000, 100) translate(2000, 340)">
+          <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+          <!-- Deploy octagons (50x50) -->
+          <polygon class="deployment-zone" points="-14,50 14,50 25,61 25,89 14,100 -14,100 -25,89 -25,61" stroke="#3a6ea8" />
+          <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+        </g>
+        <path d="M 2058.2135179492575 332.8329579934325 L 2097.022529915429 488.05492998905413 A 400 400 0 0 0 2184.1200839979106 455.1053289780406 L 2110.4720503987464 313.0631973868243 A 240 240 0 0 1 2058.2135179492575 332.8329579934325 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="2" />
+        <g transform="rotate(-20.721973590564772, 2000, 100) translate(2000, 340)">
+          <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+          <!-- Deploy octagons (50x50) -->
+          <polygon class="deployment-zone" points="-14,50 14,50 25,61 25,89 14,100 -14,100 -25,89 -25,61" stroke="#39d353" />
+          <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+        </g>
+        <path d="M 2136.831709401559 297.1727245392915 L 2228.052849002598 428.62120756548586 A 400 400 0 0 0 2297.8572479883437 366.9851303365233 L 2178.714348793006 260.19107820191397 A 240 240 0 0 1 2136.831709401559 297.1727245392915 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="2" />
+        <g transform="rotate(-41.443947181129545, 2000, 100) translate(2000, 340)">
+          <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+          <!-- Deploy octagons (50x50) -->
+          <polygon class="deployment-zone" points="-14,50 14,50 25,61 25,89 14,100 -14,100 -25,89 -25,61" stroke="#c9a84c" />
+          <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+        </g>
+        
+    <g transform="translate(2320, 230)">
+      <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+      <text x="0" y="35" class="text-tension">TENSION</text>
+    </g>
+    <path d="M 1575.0040456936879 101.85440644601724 L 1075.0088053333207 104.03606108839044 A 925 925 0 0 0 1343.078527548461 751.2136201217706 L 1698.1712153601038 399.2062578937865 A 425 425 0 0 1 1575.0040456936879 101.85440644601724 Z" class="bg" stroke="#3a6ea8" filter="url(#glow)" /><path d="M 1575.0040456936879 101.85440644601724 L 1075.0088053333207 104.03606108839044 A 925 925 0 0 0 1343.078527548461 751.2136201217706 L 1698.1712153601038 399.2062578937865 A 425 425 0 0 1 1575.0040456936879 101.85440644601724 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_1.0_0" d="M 1530.0044740612548 102.05075536383082 A 470 470 0 0 0 1666.2128734570558 430.88692049430506" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_1.0_0" startOffset="15">MILITARY</textPath></text><path id="curve_1.0_1" d="M 1500.0047596396328 102.18165464237322 A 500 500 0 0 0 1644.9073121883573 452.0073622279841" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_1.0_1" startOffset="15">INSTALLATION</textPath></text><path id="curve_1.0_ring" d="M 1465.005092814407 102.33437046733934 A 535 535 0 0 0 1620.0508240415422 476.647877583943" fill="none" /><path id="curve_1.0_addr" d="M 1445.0052831999924 102.42163665303427 A 555 555 0 0 0 1605.8471165290766 490.72817207306235" fill="none" /><path id="curve_1.0_gen" d="M 1425.0054735855776 102.5089028387292 A 575 575 0 0 0 1591.6434090166108 504.80846656218176" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_1.0_ring" startOffset="15">Ring: 1</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_1.0_addr" startOffset="15">Address: 1.0</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_1.0_gen" startOffset="15">Established: Year 1</textPath></text>
+        <g transform="rotate(52.21116947355206, 2000, 100) translate(2000, 575)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(52.21116947355206, 2000, 100) translate(2000, 635)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#3a6ea8" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#3a6ea8">MANDATE</text>
+          <text x="0" y="16" class="text-resource" fill="#3a6ea8" font-size="14">Base: 3</text>
+        </g>
+        <path d="M 1295.158040130349 176.6734087354236 L 1085.3954822565884 199.49158820393473 A 920 920 0 0 0 1096.0970256054147 271.34588667552464 L 1303.4052077763467 232.0480800575511 A 709 709 0 0 1 1295.158040130349 176.6734087354236 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(81.52898071011437, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 1309.7969559151827 262.1750842023886 L 1104.3909724146235 310.43875524146335 A 920 920 0 0 0 1123.7872906176642 380.44836943164114 L 1324.7447707042652 316.12814557286254 A 709 709 0 0 1 1309.7969559151827 262.1750842023886 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(74.51449035505719, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 1334.7677990726168 345.2490955117054 L 1136.793194847401 418.235779789519 A 920 920 0 0 0 1164.593936604865 485.35270758441993 L 1356.1925011444014 396.9729018232106 A 709 709 0 0 1 1334.7677990726168 345.2490955117054 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(67.5, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 1369.6967709934643 424.65187432684667 L 1182.1171076360893 521.2690047682636 A 920 920 0 0 0 1217.9061124467958 584.4885458418144 L 1397.2776453530196 473.37215108896345 A 709 709 0 0 1 1369.6967709934643 424.65187432684667 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(60.485509644942816, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 1414.0610058280622 499.1948084692209 L 1239.6842388742134 617.9960843324164 A 920 920 0 0 0 1282.92576670976 676.3718799101968 L 1447.3851832578475 544.1822422351408 A 709 709 0 0 1 1414.0610058280622 499.1948084692209 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(53.471019289885625, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 1700.7937421062134 401.82878463989624 L 1348.7863798782291 756.9214724515389 A 925 925 0 0 0 1995.9639389116096 1024.9911946666793 L 1998.1455935539827 524.9959543063121 A 425 425 0 0 1 1700.7937421062134 401.82878463989624 Z" class="bg" stroke="#3a6ea8" filter="url(#glow)" /><path d="M 1700.7937421062134 401.82878463989624 L 1348.7863798782291 756.9214724515389 A 925 925 0 0 0 1995.9639389116096 1024.9911946666793 L 1998.1455935539827 524.9959543063121 A 425 425 0 0 1 1700.7937421062134 401.82878463989624 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_1.1_0" d="M 1669.1130795056947 433.7871265429441 A 470 470 0 0 0 1997.9492446361692 569.9955259387452" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_1.1_0" startOffset="15">GOVERNMENT</textPath></text><path id="curve_1.1_1" d="M 1647.9926377720158 455.09268781164263 A 500 500 0 0 0 1997.8183453576269 599.9952403603672" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_1.1_1" startOffset="15">CITADEL</textPath></text><path id="curve_1.1_ring" d="M 1623.3521224160568 479.94917595845766 A 535 535 0 0 0 1997.6656295326607 634.994907185593" fill="none" /><path id="curve_1.1_addr" d="M 1609.2718279269375 494.15288347092337 A 555 555 0 0 0 1997.5783633469657 654.9947168000076" fill="none" /><path id="curve_1.1_gen" d="M 1595.1915334378182 508.3565909833891 A 575 575 0 0 0 1997.4910971612708 674.9945264144224" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_1.1_ring" startOffset="15">Ring: 1</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_1.1_addr" startOffset="15">Address: 1.1</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_1.1_gen" startOffset="15">Established: Year 2</textPath></text>
+        <g transform="rotate(7.2111694735520615, 2000, 100) translate(2000, 575)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(7.2111694735520615, 2000, 100) translate(2000, 635)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#3a6ea8" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#3a6ea8">MANDATE</text>
+          <text x="0" y="16" class="text-resource" fill="#3a6ea8" font-size="14">Base: 3</text>
+        </g>
+        <path d="M 1555.8177577648594 652.6148167421525 L 1423.6281200898034 817.0742332902402 A 920 920 0 0 0 1482.0039156675837 860.3157611257866 L 1600.8051915307792 685.9389941719377 A 709 709 0 0 1 1555.8177577648594 652.6148167421525 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(36.528980710114375, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 1626.6278489110364 702.7223546469802 L 1515.5114541581854 882.0938875532042 A 920 920 0 0 0 1578.7309952317362 917.8828923639107 L 1675.3481256731532 730.3032290065356 A 709 709 0 0 1 1626.6278489110364 702.7223546469802 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(29.51449035505719, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 1703.0270981767894 743.8074988555987 L 1614.64729241558 935.4060633951352 A 920 920 0 0 0 1681.7642202104812 963.2068051525989 L 1754.7509044882947 765.2322009273832 A 709 709 0 0 1 1703.0270981767894 743.8074988555987 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(22.5, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 1783.8718544271374 775.2552292957349 L 1719.5516305683589 976.2127093823358 A 920 920 0 0 0 1789.5612447585365 995.6090275853765 L 1837.8249157976113 790.2030440848173 A 709 709 0 0 1 1783.8718544271374 775.2552292957349 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(15.485509644942823, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 1867.951919942449 796.5947922236533 L 1828.6541133244752 1003.9029743945853 A 920 920 0 0 0 1900.5084117960653 1014.6045177434116 L 1923.3265912645763 804.841959869651 A 709 709 0 0 1 1867.951919942449 796.5947922236533 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(8.471019289885632, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 2001.8544064460173 524.9959543063121 L 2004.0360610883906 1024.9911946666793 A 925 925 0 0 0 2651.213620121771 756.921472451539 L 2299.2062578937866 401.8287846398963 A 425 425 0 0 1 2001.8544064460173 524.9959543063121 Z" class="bg" stroke="#6a9978" filter="url(#glow)" /><path d="M 2001.8544064460173 524.9959543063121 L 2004.0360610883906 1024.9911946666793 A 925 925 0 0 0 2651.213620121771 756.921472451539 L 2299.2062578937866 401.8287846398963 A 425 425 0 0 1 2001.8544064460173 524.9959543063121 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_1.2_0" d="M 2002.0507553638308 569.9955259387452 A 470 470 0 0 0 2330.8869204943053 433.7871265429442" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_1.2_0" startOffset="15">CHORUS</textPath></text><path id="curve_1.2_1" d="M 2002.1816546423734 599.9952403603672 A 500 500 0 0 0 2352.0073622279842 455.0926878116427" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_1.2_1" startOffset="15">RESEARCH</textPath></text><path id="curve_1.2_ring" d="M 2002.3343704673393 634.994907185593 A 535 535 0 0 0 2376.647877583943 479.9491759584577" fill="none" /><path id="curve_1.2_addr" d="M 2002.4216366530343 654.9947168000076 A 555 555 0 0 0 2390.7281720730625 494.1528834709234" fill="none" /><path id="curve_1.2_gen" d="M 2002.5089028387292 674.9945264144224 A 575 575 0 0 0 2404.808466562182 508.35659098338914" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_1.2_ring" startOffset="15">Ring: 1</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_1.2_addr" startOffset="15">Address: 1.2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_1.2_gen" startOffset="15">Established: Year 3</textPath></text>
+        <g transform="rotate(-37.78883052644794, 2000, 100) translate(2000, 575)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-37.78883052644794, 2000, 100) translate(2000, 635)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#6a9978" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#6a9978">FINDINGS</text>
+          <text x="0" y="16" class="text-resource" fill="#6a9978" font-size="14">Base: 3</text>
+        </g>
+        <path d="M 2076.673408735424 804.841959869651 L 2099.491588203935 1014.6045177434116 A 920 920 0 0 0 2171.345886675525 1003.9029743945853 L 2132.048080057551 796.5947922236533 A 709 709 0 0 1 2076.673408735424 804.841959869651 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-8.471019289885632, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 2162.175084202389 790.2030440848173 L 2210.4387552414637 995.6090275853765 A 920 920 0 0 0 2280.4483694316414 976.2127093823358 L 2216.1281455728626 775.2552292957349 A 709 709 0 0 1 2162.175084202389 790.2030440848173 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-15.485509644942823, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 2245.2490955117055 765.2322009273832 L 2318.235779789519 963.2068051525989 A 920 920 0 0 0 2385.35270758442 935.4060633951352 L 2296.9729018232106 743.8074988555987 A 709 709 0 0 1 2245.2490955117055 765.2322009273832 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-22.5, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 2324.651874326847 730.3032290065356 L 2421.269004768264 917.8828923639107 A 920 920 0 0 0 2484.488545841815 882.0938875532041 L 2373.3721510889636 702.7223546469802 A 709 709 0 0 1 2324.651874326847 730.3032290065356 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-29.51449035505719, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 2399.194808469221 685.9389941719377 L 2517.9960843324166 860.3157611257866 A 920 920 0 0 0 2576.3718799101966 817.0742332902402 L 2444.1822422351406 652.6148167421525 A 709 709 0 0 1 2399.194808469221 685.9389941719377 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-36.52898071011438, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 2301.828784639896 399.2062578937865 L 2656.921472451539 751.2136201217708 A 925 925 0 0 0 2924.9911946666793 104.03606108839058 L 2424.9959543063123 101.8544064460173 A 425 425 0 0 1 2301.828784639896 399.2062578937865 Z" class="bg" stroke="#c9a84c" filter="url(#glow)" /><path d="M 2301.828784639896 399.2062578937865 L 2656.921472451539 751.2136201217708 A 925 925 0 0 0 2924.9911946666793 104.03606108839058 L 2424.9959543063123 101.8544064460173 A 425 425 0 0 1 2301.828784639896 399.2062578937865 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_1.3_0" d="M 2333.787126542944 430.8869204943051 A 470 470 0 0 0 2469.9955259387452 102.05075536383089" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_1.3_0" startOffset="15">FINANCIAL</textPath></text><path id="curve_1.3_1" d="M 2355.0926878116425 452.0073622279842 A 500 500 0 0 0 2499.9952403603675 102.18165464237329" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_1.3_1" startOffset="15">SANCTUM</textPath></text><path id="curve_1.3_ring" d="M 2379.9491759584575 476.64787758394306 A 535 535 0 0 0 2534.994907185593 102.33437046733941" fill="none" /><path id="curve_1.3_addr" d="M 2394.1528834709234 490.7281720730624 A 555 555 0 0 0 2554.9947168000076 102.42163665303434" fill="none" /><path id="curve_1.3_gen" d="M 2408.356590983389 504.8084665621818 A 575 575 0 0 0 2574.9945264144226 102.50890283872928" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_1.3_ring" startOffset="15">Ring: 1</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_1.3_addr" startOffset="15">Address: 1.3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_1.3_gen" startOffset="15">Established: Year 4</textPath></text>
+        <g transform="rotate(-82.78883052644795, 2000, 100) translate(2000, 575)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-82.78883052644795, 2000, 100) translate(2000, 635)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#c9a84c" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#c9a84c">CAPITAL</text>
+          <text x="0" y="16" class="text-resource" fill="#c9a84c" font-size="14">Base: 3</text>
+        </g>
+        <path d="M 2552.6148167421525 544.1822422351408 L 2717.07423329024 676.3718799101968 A 920 920 0 0 0 2760.3157611257866 617.9960843324163 L 2585.938994171938 499.19480846922085 A 709 709 0 0 1 2552.6148167421525 544.1822422351408 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-53.47101928988562, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 2602.72235464698 473.3721510889638 L 2782.093887553204 584.4885458418148 A 920 920 0 0 0 2817.8828923639107 521.269004768264 L 2630.3032290065357 424.65187432684695 A 709 709 0 0 1 2602.72235464698 473.3721510889638 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-60.485509644942795, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 2643.8074988555986 396.9729018232106 L 2835.4060633951353 485.3527075844199 A 920 920 0 0 0 2863.206805152599 418.23577978951886 L 2665.232200927383 345.2490955117053 A 709 709 0 0 1 2643.8074988555986 396.9729018232106 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-67.5, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 2675.255229295735 316.12814557286265 L 2876.2127093823356 380.44836943164125 A 920 920 0 0 0 2895.6090275853767 310.43875524146347 L 2690.2030440848175 262.1750842023887 A 709 709 0 0 1 2675.255229295735 316.12814557286265 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-74.51449035505718, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 2696.5947922236533 232.04808005755137 L 2903.9029743945853 271.34588667552504 A 920 920 0 0 0 2914.6045177434116 199.49158820393507 L 2704.841959869651 176.67340873542386 A 709 709 0 0 1 2696.5947922236533 232.04808005755137 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-81.52898071011435, 2000, 100) translate(2000, 809)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 1058.9643434419447 186.46902963691542 L 561.0618796546139 232.21983896861673 A 1445 1445 0 0 0 736.6114437643027 801.3375478132339 L 1173.7701137420527 558.6601956287238 A 945 945 0 0 1 1058.9643434419447 186.46902963691542 Z" class="bg" stroke="#3a6ea8" filter="url(#glow)" /><path d="M 1058.9643434419447 186.46902963691542 L 561.0618796546139 232.21983896861673 A 1445 1445 0 0 0 736.6114437643027 801.3375478132339 L 1173.7701137420527 558.6601956287238 A 945 945 0 0 1 1058.9643434419447 186.46902963691542 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_2.0_0" d="M 1014.153121701085 190.58660247676855 A 990 990 0 0 0 1134.4258334440551 580.5011573253298" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.0_0" startOffset="15">REGULATORY</textPath></text><path id="curve_2.0_1" d="M 984.2789738738451 193.33165103667062 A 1020 1020 0 0 0 1108.1963132453902 595.0617984564004" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.0_1" startOffset="15">DISTRICT</textPath></text><path id="curve_2.0_ring" d="M 949.425801408732 196.5342076898897 A 1055 1055 0 0 0 1077.5952063469476 612.0492131093162" fill="none" /><path id="curve_2.0_addr" d="M 929.5097028572386 198.36424006315775 A 1075 1075 0 0 0 1060.1088595478377 621.7563071966965" fill="none" /><path id="curve_2.0_gen" d="M 909.5936043057454 200.19427243642582 A 1095 1095 0 0 0 1042.6225127487278 631.4634012840769" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_2.0_ring" startOffset="15">Ring: 2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.0_addr" startOffset="15">Address: 2.0</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.0_gen" startOffset="15">Established: Year 7</textPath></text>
+        <g transform="rotate(64.49435743784055, 2000, 100) translate(2000, 1095)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(64.49435743784055, 2000, 100) translate(2000, 1155)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#3a6ea8" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#3a6ea8">MANDATE</text>
+          <text x="0" y="16" class="text-resource" fill="#3a6ea8" font-size="14">Base: 2</text>
+        </g>
+        <path d="M 782.209324820039 265.610601848839 L 573.1337898623726 294.04334146649967 A 1440 1440 0 0 0 583.4533967236559 358.8353158791352 L 791.016822620398 320.9087522329564 A 1229 1229 0 0 1 782.209324820039 265.610601848839 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(80.950346537754, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 796.9320770300874 351.13457093928747 L 590.3842074233733 394.2504329963987 A 1440 1440 0 0 0 605.2503160356039 458.1526477372699 L 809.6198877831646 405.6733361591005 A 1229 1229 0 0 1 796.9320770300874 351.13457093928747 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(76.90374469744843, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 817.6533656459815 435.4063747630997 L 614.6630158911419 492.9903821471632 A 1440 1440 0 0 0 634.0015033456953 555.6842186626384 L 834.1582275082358 488.91382273359903 A 1229 1229 0 0 1 817.6533656459815 435.4063747630997 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(72.85714285714286, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 844.2698736381803 518.0058313225934 L 645.8491603246375 589.7708682705731 A 1440 1440 0 0 0 669.5636042842411 650.9437330207694 L 864.5094928231476 570.2151721406427 A 1229 1229 0 0 1 844.2698736381803 518.0058313225934 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(68.81054101683729, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 876.6488902185893 598.5210969987859 L 683.7871455775171 684.1093406657866 A 1440 1440 0 0 0 711.7593050412102 743.4562237262876 L 900.5223513164217 649.172013166394 A 1229 1229 0 0 1 876.6488902185893 598.5210969987859 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(64.76393917653172, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 1177.8040885232567 565.8528556861355 L 742.77979673662 812.3358481126622 A 1445 1445 0 0 0 1136.8650256043984 1258.8886987002265 L 1435.5276465025304 857.8891489769647 A 945 945 0 0 1 1177.8040885232567 565.8528556861355 Z" class="bg" stroke="#d4622a" filter="url(#glow)" /><path d="M 1177.8040885232567 565.8528556861355 L 742.77979673662 812.3358481126622 A 1445 1445 0 0 0 1136.8650256043984 1258.8886987002265 L 1435.5276465025304 857.8891489769647 A 945 945 0 0 1 1177.8040885232567 565.8528556861355 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_2.1_0" d="M 1138.6519022624593 588.036325004523 A 990 990 0 0 0 1408.6480106216986 893.9791084520583" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.1_0" startOffset="15">POWER</textPath></text><path id="curve_2.1_1" d="M 1112.5504447552612 602.8253045501144 A 1020 1020 0 0 0 1390.7282533678108 918.039081435454" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.1_1" startOffset="15">GRID</textPath></text><path id="curve_2.1_ring" d="M 1082.0987443301965 620.0791140199714 A 1055 1055 0 0 0 1369.8218699049414 946.1090499160824" fill="none" /><path id="curve_2.1_addr" d="M 1064.697772658731 629.9384337170325 A 1075 1075 0 0 0 1357.8753650690162 962.1490319050129" fill="none" /><path id="curve_2.1_gen" d="M 1047.2968009872657 639.7977534140934 A 1095 1095 0 0 0 1345.9288602330907 978.1890138939433" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_2.1_ring" startOffset="15">Ring: 2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.1_addr" startOffset="15">Address: 2.1</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.1_gen" startOffset="15">Established: Year 8</textPath></text>
+        <g transform="rotate(40.208643152126264, 2000, 100) translate(2000, 1095)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(40.208643152126264, 2000, 100) translate(2000, 1155)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#d4622a" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#d4622a">CAPACITY</text>
+          <text x="0" y="16" class="text-resource" fill="#d4622a" font-size="14">Base: 2</text>
+        </g>
+        <path d="M 958.0901773650078 751.8166318043128 L 779.2106227873157 863.7233114712859 A 1440 1440 0 0 0 815.2651082972166 918.5372541198074 L 988.8616792342217 798.5988092453077 A 1229 1229 0 0 1 958.0901773650078 751.8166318043128 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(56.66463225203971, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 1006.6849576620438 823.7169520365986 L 836.1483637374638 947.967787577463 A 1440 1440 0 0 0 875.981065523016 1000.1007915434944 L 1040.681062172074 868.2110227826074 A 1229 1229 0 0 1 1006.6849576620438 823.7169520365986 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(52.61803041173414, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 1060.232439573158 892.0087956389006 L 898.8891073924715 1027.9842682831706 A 1440 1440 0 0 0 942.3014182867466 1077.1763966867866 L 1097.283641023897 933.9929107833756 A 1229 1229 0 0 1 1060.232439573158 892.0087956389006 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(48.57142857142857, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 1118.4656335846644 956.3516572230782 L 967.1200263319092 1103.3737887723619 A 1440 1440 0 0 0 1013.8954911187138 1149.3797680363375 L 1158.3871934617357 995.6164825810131 A 1229 1229 0 0 1 1118.4656335846644 956.3516572230782 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(44.524826731123, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 1181.0941870675565 1016.4247211557825 L 1040.5009189400173 1173.7604544054734 A 1440 1440 0 0 0 1090.4063136067534 1216.3508971974468 L 1223.6870551546529 1052.7744810108766 A 1229 1229 0 0 1 1181.0941870675565 1016.4247211557825 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(40.47822489081743, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 1442.1628864424915 862.7861789111201 L 1147.0109745073019 1266.3767497635647 A 1445 1445 0 0 0 1689.8833952427435 1511.3301142729974 L 1797.1901788957734 1022.9805937633097 A 945 945 0 0 1 1442.1628864424915 862.7861789111201 Z" class="bg" stroke="#d4622a" filter="url(#glow)" /><path d="M 1442.1628864424915 862.7861789111201 L 1147.0109745073019 1266.3767497635647 A 1445 1445 0 0 0 1689.8833952427435 1511.3301142729974 L 1797.1901788957734 1022.9805937633097 A 945 945 0 0 1 1442.1628864424915 862.7861789111201 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_2.2_0" d="M 1415.5992143683245 899.1093302878402 A 990 990 0 0 0 1787.5325683670007 1066.9320506091817" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.2_0" startOffset="15">LOGISTICS</textPath></text><path id="curve_2.2_1" d="M 1397.8900996522132 923.3247645389869 A 1020 1020 0 0 0 1781.094161347819 1096.2330218397628" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.2_1" startOffset="15">CENTER</textPath></text><path id="curve_2.2_ring" d="M 1377.2294658167498 951.576104498658 A 1055 1055 0 0 0 1773.5826864921069 1130.417488275441" fill="none" /><path id="curve_2.2_addr" d="M 1365.4233893393423 967.7197273327557 A 1075 1075 0 0 0 1769.2904151459857 1149.9514690958285" fill="none" /><path id="curve_2.2_gen" d="M 1353.6173128619348 983.8633501668536 A 1095 1095 0 0 0 1764.9981437998645 1169.4854499162159" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_2.2_ring" startOffset="15">Ring: 2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.2_addr" startOffset="15">Address: 2.2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.2_gen" startOffset="15">Established: Year 9</textPath></text>
+        <g transform="rotate(15.92292886641198, 2000, 100) translate(2000, 1095)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(15.92292886641198, 2000, 100) translate(2000, 1155)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#d4622a" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#d4622a">CAPACITY</text>
+          <text x="0" y="16" class="text-resource" fill="#d4622a" font-size="14">Base: 2</text>
+        </g>
+        <path d="M 1318.3768733543357 1122.6587471985895 L 1201.352886599059 1298.2331944393563 A 1440 1440 0 0 0 1256.7610288264977 1333.3676790515285 L 1365.6661836303929 1152.6450538571726 A 1229 1229 0 0 1 1318.3768733543357 1122.6587471985895 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(32.37891796632542, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 1392.2429744093838 1168.2099034577648 L 1287.90063722499 1351.6047689008797 A 1440 1440 0 0 0 1345.6500101945926 1382.7416305872603 L 1441.5304600896905 1194.7843499942658 A 1229 1229 0 0 1 1392.2429744093838 1168.2099034577648 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(28.332316126019848, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 1469.1393720705573 1208.4349298512557 L 1377.998938797073 1398.7358006393881 A 1440 1440 0 0 0 1437.801602227531 1425.7197899790394 L 1520.179284123358 1231.4650151973885 A 1229 1229 0 0 1 1469.1393720705573 1208.4349298512557 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(24.285714285714278, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 1548.6826583589368 1243.1332630686782 L 1471.198558207379 1439.3912927737156 A 1440 1440 0 0 0 1532.756334043318 1462.0878667044062 L 1601.2205100966928 1262.5041584581356 A 1229 1229 0 0 1 1548.6826583589368 1243.1332630686782 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(20.239112445408708, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 1630.47622782147 1272.1318960743922 L 1567.03479907479 1473.3685356770748 A 1440 1440 0 0 0 1630.0407582124044 1491.6645283314322 L 1684.2500637798923 1287.747017582868 A 1229 1229 0 0 1 1630.47622782147 1272.1318960743922 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(16.192510605103138, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 1805.2523241881026 1024.7152765937547 L 1702.2112258749296 1513.9826187068522 A 1445 1445 0 0 0 2297.7887741250706 1513.9826187068522 L 2194.7476758118974 1024.7152765937547 A 945 945 0 0 1 1805.2523241881026 1024.7152765937547 Z" class="bg" stroke="#6a9978" filter="url(#glow)" /><path d="M 1805.2523241881026 1024.7152765937547 L 1702.2112258749296 1513.9826187068522 A 1445 1445 0 0 0 2297.7887741250706 1513.9826187068522 L 2194.7476758118974 1024.7152765937547 A 945 945 0 0 1 1805.2523241881026 1024.7152765937547 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_2.3_0" d="M 1795.9786253399172 1068.7493373839334 A 990 990 0 0 0 2204.021374660083 1068.7493373839334" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.3_0" startOffset="15">RESEARCH</textPath></text><path id="curve_2.3_1" d="M 1789.7961594411267 1098.1053779107192 A 1020 1020 0 0 0 2210.2038405588733 1098.1053779107192" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.3_1" startOffset="15">INSTITUTE</textPath></text><path id="curve_2.3_ring" d="M 1782.5832825592047 1132.3540918586361 A 1055 1055 0 0 0 2217.4167174407953 1132.3540918586361" fill="none" /><path id="curve_2.3_addr" d="M 1778.4616386266778 1151.92478554316 A 1075 1075 0 0 0 2221.5383613733225 1151.92478554316" fill="none" /><path id="curve_2.3_gen" d="M 1774.3399946941508 1171.495479227684 A 1095 1095 0 0 0 2225.660005305849 1171.495479227684" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_2.3_ring" startOffset="15">Ring: 2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.3_addr" startOffset="15">Address: 2.3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.3_gen" startOffset="15">Established: Year 10</textPath></text>
+        <g transform="rotate(-8.362785419302298, 2000, 100) translate(2000, 1095)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-8.362785419302298, 2000, 100) translate(2000, 1155)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#6a9978" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#6a9978">FINDINGS</text>
+          <text x="0" y="16" class="text-resource" fill="#6a9978" font-size="14">Base: 2</text>
+        </g>
+        <path d="M 1799.3028846179845 1312.5022341741635 L 1764.8463416191196 1520.6698268598823 A 1440 1440 0 0 0 1829.8015479212747 1529.9064608952592 L 1854.740348885588 1320.3854447501901 A 1229 1229 0 0 1 1799.3028846179845 1312.5022341741635 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(8.09320368061114, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 1885.3668711191922 1323.6422049614814 L 1865.6861630688663 1533.7223556912395 A 1440 1440 0 0 0 1931.1312441415587 1538.3522150247172 L 1941.2224298958163 1327.593661295401 A 1229 1229 0 0 1 1885.3668711191922 1323.6422049614814 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(4.04660184030557, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 1972.0024221877688 1328.6810552932961 L 1967.19567774645 1539.6262974958067 A 1440 1440 0 0 0 2032.8043222535503 1539.6262974958067 L 2027.9975778122314 1328.6810552932961 A 1229 1229 0 0 1 1972.0024221877688 1328.6810552932961 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(0.0, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 2058.7775701041837 1327.593661295401 L 2068.8687558584415 1538.3522150247172 A 1440 1440 0 0 0 2134.3138369311337 1533.7223556912395 L 2114.633128880808 1323.6422049614814 A 1229 1229 0 0 1 2058.7775701041837 1327.593661295401 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-4.04660184030557, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 2145.2596511144125 1320.3854447501901 L 2170.1984520787255 1529.9064608952592 A 1440 1440 0 0 0 2235.1536583808806 1520.6698268598823 L 2200.6971153820155 1312.5022341741635 A 1229 1229 0 0 1 2145.2596511144125 1320.3854447501901 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-8.09320368061114, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 2202.8098211042266 1022.9805937633096 L 2310.1166047572565 1511.3301142729972 A 1445 1445 0 0 0 2852.9890254926977 1266.376749763565 L 2557.8371135575085 862.7861789111203 A 945 945 0 0 1 2202.8098211042266 1022.9805937633096 Z" class="bg" stroke="#6a9978" filter="url(#glow)" /><path d="M 2202.8098211042266 1022.9805937633096 L 2310.1166047572565 1511.3301142729972 A 1445 1445 0 0 0 2852.9890254926977 1266.376749763565 L 2557.8371135575085 862.7861789111203 A 945 945 0 0 1 2202.8098211042266 1022.9805937633096 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_2.4_0" d="M 2212.4674316329993 1066.9320506091815 A 990 990 0 0 0 2584.4007856316753 899.1093302878403" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.4_0" startOffset="15">DATA</textPath></text><path id="curve_2.4_1" d="M 2218.905838652181 1096.2330218397628 A 1020 1020 0 0 0 2602.1099003477866 923.324764538987" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.4_1" startOffset="15">EXCHANGE</textPath></text><path id="curve_2.4_ring" d="M 2226.417313507893 1130.4174882754407 A 1055 1055 0 0 0 2622.7705341832498 951.5761044986581" fill="none" /><path id="curve_2.4_addr" d="M 2230.7095848540143 1149.9514690958283 A 1075 1075 0 0 0 2634.5766106606575 967.7197273327558" fill="none" /><path id="curve_2.4_gen" d="M 2235.0018562001355 1169.4854499162159 A 1095 1095 0 0 0 2646.382687138065 983.8633501668537" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_2.4_ring" startOffset="15">Ring: 2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.4_addr" startOffset="15">Address: 2.4</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.4_gen" startOffset="15">Established: Year 11</textPath></text>
+        <g transform="rotate(-32.648499705016576, 2000, 100) translate(2000, 1095)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-32.648499705016576, 2000, 100) translate(2000, 1155)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#6a9978" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#6a9978">FINDINGS</text>
+          <text x="0" y="16" class="text-resource" fill="#6a9978" font-size="14">Base: 2</text>
+        </g>
+        <path d="M 2315.7499362201074 1287.747017582868 L 2369.9592417875956 1491.6645283314322 A 1440 1440 0 0 0 2432.96520092521 1473.3685356770748 L 2369.52377217853 1272.1318960743922 A 1229 1229 0 0 1 2315.7499362201074 1287.747017582868 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-16.192510605103138, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 2398.779489903307 1262.5041584581356 L 2467.243665956682 1462.0878667044062 A 1440 1440 0 0 0 2528.801441792621 1439.3912927737156 L 2451.3173416410636 1243.1332630686782 A 1229 1229 0 0 1 2398.779489903307 1262.5041584581356 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-20.239112445408708, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 2479.820715876642 1231.4650151973885 L 2562.1983977724694 1425.7197899790394 A 1440 1440 0 0 0 2622.001061202927 1398.7358006393881 L 2530.8606279294427 1208.4349298512557 A 1229 1229 0 0 1 2479.820715876642 1231.4650151973885 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-24.285714285714278, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 2558.46953991031 1194.7843499942658 L 2654.349989805408 1382.7416305872603 A 1440 1440 0 0 0 2712.09936277501 1351.60476890088 L 2607.757025590616 1168.2099034577648 A 1229 1229 0 0 1 2558.46953991031 1194.7843499942658 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-28.332316126019848, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 2634.333816369607 1152.6450538571723 L 2743.2389711735023 1333.3676790515283 A 1440 1440 0 0 0 2798.6471134009407 1298.2331944393563 L 2681.6231266456643 1122.6587471985895 A 1229 1229 0 0 1 2634.333816369607 1152.6450538571723 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-32.37891796632542, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 2564.472353497469 857.8891489769647 L 2863.1349743956016 1258.8886987002265 A 1445 1445 0 0 0 3257.22020326338 812.3358481126619 L 2822.1959114767433 565.8528556861353 A 945 945 0 0 1 2564.472353497469 857.8891489769647 Z" class="bg" stroke="#39d353" filter="url(#glow)" /><path d="M 2564.472353497469 857.8891489769647 L 2863.1349743956016 1258.8886987002265 A 1445 1445 0 0 0 3257.22020326338 812.3358481126619 L 2822.1959114767433 565.8528556861353 A 945 945 0 0 1 2564.472353497469 857.8891489769647 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_2.5_0" d="M 2591.3519893783014 893.9791084520583 A 990 990 0 0 0 2861.3480977375407 588.0363250045227" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.5_0" startOffset="15">COMMUNICATIONS</textPath></text><path id="curve_2.5_1" d="M 2609.271746632189 918.039081435454 A 1020 1020 0 0 0 2887.449555244739 602.8253045501142" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.5_1" startOffset="15">HUB</textPath></text><path id="curve_2.5_ring" d="M 2630.1781300950583 946.1090499160824 A 1055 1055 0 0 0 2917.9012556698035 620.0791140199711" fill="none" /><path id="curve_2.5_addr" d="M 2642.1246349309836 962.1490319050129 A 1075 1075 0 0 0 2935.302227341269 629.9384337170322" fill="none" /><path id="curve_2.5_gen" d="M 2654.071139766909 978.1890138939433 A 1095 1095 0 0 0 2952.7031990127343 639.7977534140932" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_2.5_ring" startOffset="15">Ring: 2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.5_addr" startOffset="15">Address: 2.5</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.5_gen" startOffset="15">Established: Year 12</textPath></text>
+        <g transform="rotate(-56.93421399073088, 2000, 100) translate(2000, 1095)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-56.93421399073088, 2000, 100) translate(2000, 1155)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#39d353" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#39d353">EXPOSURE</text>
+          <text x="0" y="16" class="text-resource" fill="#39d353" font-size="14">Base: 2</text>
+        </g>
+        <path d="M 2776.312944845347 1052.7744810108768 L 2909.593686393246 1216.3508971974472 A 1440 1440 0 0 0 2959.499081059982 1173.7604544054739 L 2818.905812932443 1016.424721155783 A 1229 1229 0 0 1 2776.312944845347 1052.7744810108768 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-40.478224890817415, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 2841.6128065382636 995.6164825810134 L 2986.1045088812853 1149.379768036338 A 1440 1440 0 0 0 3032.8799736680903 1103.373788772362 L 2881.5343664153356 956.3516572230784 A 1229 1229 0 0 1 2841.6128065382636 995.6164825810134 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-44.52482673112297, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 2902.716358976103 933.9929107833756 L 3057.6985817132536 1077.1763966867866 A 1440 1440 0 0 0 3101.1108926075285 1027.9842682831709 L 2939.767560426842 892.0087956389007 A 1229 1229 0 0 1 2902.716358976103 933.9929107833756 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-48.571428571428555, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 2959.3189378279258 868.2110227826075 L 3124.018934476984 1000.1007915434946 A 1440 1440 0 0 0 3163.851636262536 947.9677875774628 L 2993.315042337956 823.7169520365985 A 1229 1229 0 0 1 2959.3189378279258 868.2110227826075 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-52.61803041173414, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 3011.138320765778 798.5988092453083 L 3184.734891702783 918.5372541198079 A 1440 1440 0 0 0 3220.7893772126836 863.7233114712866 L 3041.909822634992 751.8166318043133 A 1229 1229 0 0 1 3011.138320765778 798.5988092453083 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-56.664632252039695, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 2826.2298862579473 558.660195628724 L 3263.3885562356973 801.337547813234 A 1445 1445 0 0 0 3438.9381203453863 232.21983896861644 L 2941.0356565580555 186.46902963691525 A 945 945 0 0 1 2826.2298862579473 558.660195628724 Z" class="bg" stroke="#c9a84c" filter="url(#glow)" /><path d="M 2826.2298862579473 558.660195628724 L 3263.3885562356973 801.337547813234 A 1445 1445 0 0 0 3438.9381203453863 232.21983896861644 L 2941.0356565580555 186.46902963691525 A 945 945 0 0 1 2826.2298862579473 558.660195628724 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_2.6_0" d="M 2865.574166555945 580.5011573253298 A 990 990 0 0 0 2985.8468782989153 190.58660247676835" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.6_0" startOffset="15">FINANCIAL</textPath></text><path id="curve_2.6_1" d="M 2891.8036867546098 595.0617984564005 A 1020 1020 0 0 0 3015.7210261261553 193.33165103667042" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_2.6_1" startOffset="15">CLEARINGHOUSE</textPath></text><path id="curve_2.6_ring" d="M 2922.4047936530524 612.0492131093162 A 1055 1055 0 0 0 3050.574198591268 196.5342076898895" fill="none" /><path id="curve_2.6_addr" d="M 2939.8911404521623 621.7563071966965 A 1075 1075 0 0 0 3070.4902971427614 198.36424006315758" fill="none" /><path id="curve_2.6_gen" d="M 2957.377487251272 631.463401284077 A 1095 1095 0 0 0 3090.4063956942546 200.1942724364256" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_2.6_ring" startOffset="15">Ring: 2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.6_addr" startOffset="15">Address: 2.6</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_2.6_gen" startOffset="15">Established: Year 13</textPath></text>
+        <g transform="rotate(-81.21992827644516, 2000, 100) translate(2000, 1095)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-81.21992827644516, 2000, 100) translate(2000, 1155)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#c9a84c" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#c9a84c">CAPITAL</text>
+          <text x="0" y="16" class="text-resource" fill="#c9a84c" font-size="14">Base: 2</text>
+        </g>
+        <path d="M 3099.477648683578 649.1720131663939 L 3288.24069495879 743.4562237262874 A 1440 1440 0 0 0 3316.212854422483 684.1093406657866 L 3123.3511097814107 598.5210969987859 A 1229 1229 0 0 1 3099.477648683578 649.1720131663939 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-64.76393917653172, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 3135.4905071768526 570.2151721406423 L 3330.4363957157593 650.9437330207688 A 1440 1440 0 0 0 3354.1508396753625 589.7708682705722 L 3155.73012636182 518.0058313225925 A 1229 1229 0 0 1 3135.4905071768526 570.2151721406423 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-68.8105410168373, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 3165.8417724917645 488.91382273359886 L 3365.9984966543047 555.6842186626382 A 1440 1440 0 0 0 3385.336984108858 492.9903821471632 L 3182.3466343540185 435.4063747630997 A 1229 1229 0 0 1 3165.8417724917645 488.91382273359886 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-72.85714285714286, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 3190.380112216835 405.67333615910013 L 3394.7496839643964 458.1526477372695 A 1440 1440 0 0 0 3409.615792576627 394.2504329963985 L 3203.0679229699126 351.1345709392873 A 1229 1229 0 0 1 3190.380112216835 405.67333615910013 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-76.90374469744842, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 3208.9831773796022 320.9087522329563 L 3416.5466032763443 358.8353158791352 A 1440 1440 0 0 0 3426.8662101376276 294.0433414664999 L 3217.790675179961 265.6106018488391 A 1229 1229 0 0 1 3208.9831773796022 320.9087522329563 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-80.950346537754, 2000, 100) translate(2000, 1329)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 558.3803779481839 360.6872941191783 L 66.36002912503841 449.6590668560993 A 1965 1965 0 0 0 257.4638065441702 1008.1809370915395 L 700.8572399934908 777.0916401216821 A 1465 1465 0 0 1 558.3803779481839 360.6872941191783 Z" class="bg" stroke="#d4622a" filter="url(#glow)" /><path d="M 558.3803779481839 360.6872941191783 L 66.36002912503841 449.6590668560993 A 1965 1965 0 0 0 257.4638065441702 1008.1809370915395 L 700.8572399934908 777.0916401216821 A 1465 1465 0 0 1 558.3803779481839 360.6872941191783 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.0_0" d="M 514.0985465541007 368.6947536655012 A 1510 1510 0 0 0 660.9518309830519 797.8896768489692" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.0_0" startOffset="15">INDUSTRIAL</textPath></text><path id="curve_3.0_1" d="M 484.5773256247121 374.03306002971647 A 1540 1540 0 0 0 634.3482249760925 811.7550346671607" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.0_1" startOffset="15">FRINGE</textPath></text><path id="curve_3.0_ring" d="M 450.1359012070918 380.26108412130094 A 1575 1575 0 0 0 603.3106846346402 827.9312854550507" fill="none" /><path id="curve_3.0_addr" d="M 430.4550872541661 383.81995503077775 A 1595 1595 0 0 0 585.5749472966672 837.174857333845" fill="none" /><path id="curve_3.0_gen" d="M 410.7742733012403 387.3788259402546 A 1615 1615 0 0 0 567.8392099586945 846.4184292126392" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.0_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.0_addr" startOffset="15">Address: 3.0</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.0_gen" startOffset="15">Established: Year 17</textPath></text>
+        <g transform="rotate(64.83680994815896, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(64.83680994815896, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#d4622a" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#d4622a">CAPACITY</text>
+          <text x="0" y="16" class="text-resource" fill="#d4622a" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 291.04747480452306 472.1320553620748 L 84.87881681924819 517.0262026927769 A 1960 1960 0 0 0 99.2105837414033 578.1209000235233 L 303.8363831447523 526.6497215005827 A 1749 1749 0 0 1 291.04747480452306 472.1320553620748 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(76.7981021479728, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 311.6123187604378 556.4515722817644 L 107.92461107516169 611.5180569881406 A 1960 1960 0 0 0 125.26951732888642 671.8265622929158 L 327.0899927592973 610.2676823726069 A 1749 1749 0 0 1 311.6123187604378 556.4515722817644 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(73.95460662954196, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 336.3347642725512 639.6470915625622 L 135.62958146037772 704.75031415816 A 1960 1960 0 0 0 155.9449157596116 764.1241196396757 L 354.4630906446739 692.6291251274453 A 1749 1749 0 0 1 336.3347642725512 639.6470915625622 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(71.11111111111111, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 365.15393309644287 721.5137468551846 L 167.92550535679152 796.4933927022081 A 1960 1960 0 0 0 191.1612418298496 854.7862922320917 L 385.8882714083709 773.5312373030247 A 1749 1749 0 0 1 365.15393309644287 721.5137468551846 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(68.26761559268027, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 397.9988589354016 801.8499440961185 L 204.73285506768843 886.5213781751814 A 1960 1960 0 0 0 230.83177644439456 943.5898273219657 L 421.2881515312481 852.7747999929173 A 1749 1749 0 0 1 397.9988589354016 801.8499440961185 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(65.42412007424943, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 706.81537160217 788.4028739594038 L 265.4554301694636 1023.3526602936713 A 1965 1965 0 0 0 617.9648453611912 1496.8549786368246 L 969.6277345822623 1141.4211418335615 A 1465 1465 0 0 1 706.81537160217 788.4028739594038 Z" class="bg" stroke="#d4622a" filter="url(#glow)" /><path d="M 706.81537160217 788.4028739594038 L 265.4554301694636 1023.3526602936713 A 1965 1965 0 0 0 617.9648453611912 1496.8549786368246 L 969.6277345822623 1141.4211418335615 A 1465 1465 0 0 1 706.81537160217 788.4028739594038 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.1_0" d="M 667.0929768732265 809.5483547294879 A 1510 1510 0 0 0 937.9780745523658 1173.4101871458552" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.1_0" startOffset="15">TRANSIT</textPath></text><path id="curve_3.1_1" d="M 640.611380387264 823.6453419095438 A 1540 1540 0 0 0 916.8783011991015 1194.736217354051" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.1_1" startOffset="15">HUB</textPath></text><path id="curve_3.1_ring" d="M 609.7161844869747 840.0918269529426 A 1575 1575 0 0 0 892.2618989536265 1219.6165859302794" fill="none" /><path id="curve_3.1_addr" d="M 592.0617868296663 849.4898184063134 A 1595 1595 0 0 0 878.1953833847838 1233.83393940241" fill="none" /><path id="curve_3.1_gen" d="M 574.4073891723581 858.887809859684 A 1615 1615 0 0 0 864.128867815941 1248.0512928745404" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.1_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.1_addr" startOffset="15">Address: 3.1</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.1_gen" startOffset="15">Established: Year 18</textPath></text>
+        <g transform="rotate(47.05903217038117, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(47.05903217038117, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#d4622a" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#d4622a">CAPACITY</text>
+          <text x="0" y="16" class="text-resource" fill="#d4622a" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 486.2751628166202 976.1495975540653 L 303.65884455150126 1081.848605606614 A 1960 1960 0 0 0 335.96003871267817 1135.6500409109676 L 515.0990345451398 1024.1591436496337 A 1749 1749 0 0 1 486.2751628166202 976.1495975540653 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(59.02032437019501, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 531.6029326146293 1050.1636977353128 L 354.45497308443305 1164.7917939172173 A 1960 1960 0 0 0 389.385377937617 1216.9245897547635 L 562.7729724555572 1096.6842385107557 A 1749 1749 0 0 1 531.6029326146293 1050.1636977353128 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(56.17682885176417, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 580.5465840021061 1121.838049698635 L 409.3032044849217 1245.112965928716 A 1960 1960 0 0 0 446.7768050069101 1295.4487469295611 L 613.986036712799 1166.7550297856135 A 1749 1749 0 0 1 580.5465840021061 1121.838049698635 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(53.33333333333333, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 632.9855947770493 1190.9961576068642 L 468.0684767084142 1322.6143332815632 A 1960 1960 0 0 0 507.9929953366684 1371.0291491683238 L 668.6121167570577 1234.198970354795 A 1749 1749 0 0 1 632.9855947770493 1190.9961576068642 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(50.48983781490249, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 688.7908355249147 1257.4677217946721 L 530.6060821205447 1397.1050512964878 A 1960 1960 0 0 0 572.8832059837814 1443.4796821079472 L 726.516697584507 1298.849981636122 A 1749 1749 0 0 1 688.7908355249147 1257.4677217946721 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(47.64634229647164, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 978.7549665638599 1150.373067858281 L 630.2071735822419 1508.8621695163974 A 1965 1965 0 0 0 1110.4560865195199 1852.1234619711684 L 1336.8031382957233 1406.2905199937718 A 1465 1465 0 0 1 978.7549665638599 1150.373067858281 Z" class="bg" stroke="#3a6ea8" filter="url(#glow)" /><path d="M 978.7549665638599 1150.373067858281 L 630.2071735822419 1508.8621695163974 A 1965 1965 0 0 0 1110.4560865195199 1852.1234619711684 L 1336.8031382957233 1406.2905199937718 A 1465 1465 0 0 1 978.7549665638599 1150.373067858281 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.2_0" d="M 947.3856651955143 1182.6370870075114 A 1510 1510 0 0 0 1316.4319036358652 1446.4154847717375" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.2_0" startOffset="15">CIVIC</textPath></text><path id="curve_3.2_1" d="M 926.4727976166171 1204.1464331069985 A 1540 1540 0 0 0 1302.851080529293 1473.1654612903812" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.2_1" startOffset="15">CENTER</textPath></text><path id="curve_3.2_ring" d="M 902.0744521079039 1229.2406702230667 A 1575 1575 0 0 0 1287.0067869049585 1504.3737672287991" fill="none" /><path id="curve_3.2_addr" d="M 888.1325403886392 1243.5802342893912 A 1595 1595 0 0 0 1277.9529048339105 1522.207084907895" fill="none" /><path id="curve_3.2_gen" d="M 874.1906286693745 1257.9197983557158 A 1615 1615 0 0 0 1268.8990227628624 1540.040402586991" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.2_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.2_addr" startOffset="15">Address: 3.2</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.2_gen" startOffset="15">Established: Year 19</textPath></text>
+        <g transform="rotate(29.281254392603394, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(29.281254392603394, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#3a6ea8" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#3a6ea8">MANDATE</text>
+          <text x="0" y="16" class="text-resource" fill="#3a6ea8" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 826.0699748112563 1396.4911476598502 L 684.446627004038 1552.9003141299638 A 1960 1960 0 0 0 731.6323477496546 1594.2702227927007 L 868.1760082725234 1433.407459012466 A 1749 1749 0 0 1 826.0699748112563 1396.4911476598502 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(41.24254659241725, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 891.8316767298625 1453.1311715057975 L 758.1418447058493 1616.3734111785952 A 1960 1960 0 0 0 807.3217467630427 1655.3515950599851 L 935.7172117798784 1487.9132345713847 A 1749 1749 0 0 1 891.8316767298625 1453.1311715057975 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(38.399051073986406, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 960.3222082866794 1506.4391524051487 L 834.8950990519677 1676.1124864002809 A 1960 1960 0 0 0 885.9480784588941 1712.6029629485895 L 1005.8791781758193 1539.0013174474914 A 1749 1749 0 0 1 960.3222082866794 1506.4391524051487 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(35.55555555555556, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 1031.3729137021442 1556.2838211317621 L 914.5173875678688 1731.9704342014031 A 1960 1960 0 0 0 967.3177279686277 1765.8833467659501 L 1078.4891358250661 1586.5459048436971 A 1749 1749 0 0 1 1031.3729137021442 1556.2838211317621 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(32.712060037124715, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 1104.8088328490976 1602.5424367567807 L 996.8126428726306 1783.809706142533 A 1960 1960 0 0 0 1051.2303250898394 1815.0615452428722 L 1153.3682849908823 1630.4299197090731 A 1749 1749 0 0 1 1104.8088328490976 1602.5424367567807 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(29.868564518693873, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 1348.2277813939832 1412.0281914095408 L 1125.7799252144555 1859.8193830168925 A 1965 1965 0 0 0 1687.9025335839167 2040.0567443909113 L 1767.3166471757954 1546.4036287698143 A 1465 1465 0 0 1 1348.2277813939832 1412.0281914095408 Z" class="bg" stroke="#3a6ea8" filter="url(#glow)" /><path d="M 1348.2277813939832 1412.0281914095408 L 1125.7799252144555 1859.8193830168925 A 1965 1965 0 0 0 1687.9025335839167 2040.0567443909113 L 1767.3166471757954 1546.4036287698143 A 1465 1465 0 0 1 1348.2277813939832 1412.0281914095408 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.3_0" d="M 1328.2074743378257 1452.3293986542026 A 1510 1510 0 0 0 1760.1693769525264 1590.832409175713" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.3_0" startOffset="15">RESIDENTIAL</textPath></text><path id="curve_3.3_1" d="M 1314.860602967054 1479.1968701506437 A 1540 1540 0 0 0 1755.4045301370136 1620.451596112979" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.3_1" startOffset="15">QUARTER</textPath></text><path id="curve_3.3_ring" d="M 1299.289253034487 1510.5422535631583 A 1575 1575 0 0 0 1749.845542185582 1655.0073142064557" fill="none" /><path id="curve_3.3_addr" d="M 1290.391338787306 1528.4539012274522 A 1595 1595 0 0 0 1746.6689776419068 1674.7534388312995" fill="none" /><path id="curve_3.3_gen" d="M 1281.493424540125 1546.3655488917464 A 1615 1615 0 0 0 1743.4924130982317 1694.4995634561435" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.3_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.3_addr" startOffset="15">Address: 3.3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.3_gen" startOffset="15">Established: Year 20</textPath></text>
+        <g transform="rotate(11.503476614825615, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(11.503476614825615, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#3a6ea8" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#3a6ea8">MANDATE</text>
+          <text x="0" y="16" class="text-resource" fill="#3a6ea8" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 1277.9800691408727 1693.0123098840702 L 1190.8753204780505 1885.193897868941 A 1960 1960 0 0 0 1248.4391319132392 1910.1812786460573 L 1329.346960059314 1715.3097226285481 A 1749 1749 0 0 1 1277.9800691408727 1693.0123098840702 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(23.464768814639456, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 1357.8951825193594 1726.8688955684638 L 1280.4314223773267 1923.1349544392162 A 1960 1960 0 0 0 1339.1639329943678 1945.2359449524408 L 1410.304958575076 1746.5906467968464 A 1749 1749 0 0 1 1357.8951825193594 1726.8688955684638 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(20.621273296208614, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 1439.3914588132488 1756.719367771278 L 1371.7594392647043 1956.5865985315636 A 1960 1960 0 0 0 1431.516022103657 1975.746775786953 L 1492.7150625812735 1773.816893291521 A 1749 1749 0 0 1 1439.3914588132488 1756.719367771278 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(17.77777777777777, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 1522.268216005664 1782.490220643671 L 1464.6344787713558 1985.4664565246399 A 1960 1960 0 0 0 1525.2679851266435 2001.638639188393 L 1576.3743397890303 1796.9214183369895 A 1749 1749 0 0 1 1522.268216005664 1782.490220643671 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(14.93428225934693, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 1606.3213726889364 1804.1179942710767 L 1558.827839033914 2009.7034126765639 A 1960 1960 0 0 0 1620.1889608033866 2022.847777257573 L 1661.0767818597567 1815.8473277670894 A 1749 1749 0 0 1 1606.3213726889364 1804.1179942710767 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(12.090786740916073, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 1779.9475996563258 1548.3790736899603 L 1704.8443913479045 2042.7064025943837 A 1965 1965 0 0 0 2295.155608652095 2042.7064025943837 L 2220.052400343674 1548.3790736899603 A 1465 1465 0 0 1 1779.9475996563258 1548.3790736899603 Z" class="bg" stroke="#6a9978" filter="url(#glow)" /><path d="M 1779.9475996563258 1548.3790736899603 L 1704.8443913479045 2042.7064025943837 A 1965 1965 0 0 0 2295.155608652095 2042.7064025943837 L 2220.052400343674 1548.3790736899603 A 1465 1465 0 0 1 1779.9475996563258 1548.3790736899603 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.4_0" d="M 1773.188310908568 1592.8685332913585 A 1510 1510 0 0 0 2226.811689091432 1592.8685332913585" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.4_0" startOffset="15">UNIVERSITY</textPath></text><path id="curve_3.4_1" d="M 1768.6821184100627 1622.5281730256238 A 1540 1540 0 0 0 2231.3178815899373 1622.5281730256238" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.4_1" startOffset="15">PERIMETER</textPath></text><path id="curve_3.4_ring" d="M 1763.4248938284732 1657.1310860489334 A 1575 1575 0 0 0 2236.575106171527 1657.1310860489334" fill="none" /><path id="curve_3.4_addr" d="M 1760.4207654961363 1676.9041792051105 A 1595 1595 0 0 0 2239.5792345038635 1676.9041792051105" fill="none" /><path id="curve_3.4_gen" d="M 1757.4166371637994 1696.6772723612874 A 1615 1615 0 0 0 2242.5833628362006 1696.6772723612874" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.4_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.4_addr" startOffset="15">Address: 3.4</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.4_gen" startOffset="15">Established: Year 21</textPath></text>
+        <g transform="rotate(-6.274301162952156, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-6.274301162952156, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#6a9978" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#6a9978">FINDINGS</text>
+          <text x="0" y="16" class="text-resource" fill="#6a9978" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 1798.8461205231577 1837.39405915049 L 1774.578842896163 2046.9939141995198 A 1960 1960 0 0 0 1837.0231575729008 2053.212366547092 L 1854.5681135688794 1842.9430760667676 A 1749 1749 0 0 1 1798.8461205231577 1837.39405915049 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(5.686991036861684, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 1885.2824140470384 1845.233759550028 L 1871.442842499826 2055.779398923988 A 1960 1960 0 0 0 1934.11875851402 2058.892458002804 L 1941.2110758372557 1848.0116882892366 A 1749 1749 0 0 1 1885.2824140470384 1845.233759550028 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(2.843495518430842, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 1972.0011960178444 1848.7758767136424 L 1968.6234100600202 2059.7488383983646 A 1960 1960 0 0 0 2031.3765899399796 2059.7488383983646 L 2027.9988039821553 1848.7758767136424 A 1749 1749 0 0 1 1972.0011960178444 1848.7758767136424 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(0.0, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 2058.7889241627445 1848.0116882892366 L 2065.88124148598 2058.892458002804 A 1960 1960 0 0 0 2128.5571575001745 2055.779398923988 L 2114.7175859529616 1845.233759550028 A 1749 1749 0 0 1 2058.7889241627445 1848.0116882892366 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-2.843495518430842, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 2145.431886431121 1842.9430760667676 L 2162.976842427099 2053.212366547092 A 1960 1960 0 0 0 2225.4211571038377 2046.9939141995196 L 2201.153879476843 1837.3940591504897 A 1749 1749 0 0 1 2145.431886431121 1842.9430760667676 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-5.6869910368616985, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 2232.6833528242046 1546.4036287698143 L 2312.0974664160835 2040.0567443909113 A 1965 1965 0 0 0 2874.2200747855454 1859.8193830168925 L 2651.7722186060173 1412.0281914095406 A 1465 1465 0 0 1 2232.6833528242046 1546.4036287698143 Z" class="bg" stroke="#39d353" filter="url(#glow)" /><path d="M 2232.6833528242046 1546.4036287698143 L 2312.0974664160835 2040.0567443909113 A 1965 1965 0 0 0 2874.2200747855454 1859.8193830168925 L 2651.7722186060173 1412.0281914095406 A 1465 1465 0 0 1 2232.6833528242046 1546.4036287698143 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.5_0" d="M 2239.8306230474736 1590.832409175713 A 1510 1510 0 0 0 2671.7925256621747 1452.3293986542024" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.5_0" startOffset="15">MEDIA</textPath></text><path id="curve_3.5_1" d="M 2244.5954698629866 1620.451596112979 A 1540 1540 0 0 0 2685.1393970329464 1479.1968701506435" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.5_1" startOffset="15">DISTRICT</textPath></text><path id="curve_3.5_ring" d="M 2250.154457814418 1655.0073142064557 A 1575 1575 0 0 0 2700.7107469655134 1510.542253563158" fill="none" /><path id="curve_3.5_addr" d="M 2253.3310223580934 1674.7534388312995 A 1595 1595 0 0 0 2709.6086612126946 1528.4539012274522" fill="none" /><path id="curve_3.5_gen" d="M 2256.5075869017683 1694.4995634561435 A 1615 1615 0 0 0 2718.5065754598754 1546.3655488917461" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.5_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.5_addr" startOffset="15">Address: 3.5</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.5_gen" startOffset="15">Established: Year 23</textPath></text>
+        <g transform="rotate(-24.052078940729942, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-24.052078940729942, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#39d353" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#39d353">EXPOSURE</text>
+          <text x="0" y="16" class="text-resource" fill="#39d353" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 2338.923218140244 1815.8473277670892 L 2379.811039196614 2022.8477772575727 A 1960 1960 0 0 0 2441.1721609660867 2009.7034126765636 L 2393.6786273110642 1804.1179942710764 A 1749 1749 0 0 1 2338.923218140244 1815.8473277670892 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-12.090786740916087, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 2423.6256602109697 1796.9214183369895 L 2474.7320148733565 2001.638639188393 A 1960 1960 0 0 0 2535.3655212286444 1985.4664565246399 L 2477.731783994336 1782.490220643671 A 1749 1749 0 0 1 2423.6256602109697 1796.9214183369895 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-14.93428225934693, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 2507.2849374187267 1773.8168932915207 L 2568.4839778963433 1975.7467757869529 A 1960 1960 0 0 0 2628.2405607352957 1956.5865985315634 L 2560.608541186751 1756.7193677712778 A 1749 1749 0 0 1 2507.2849374187267 1773.8168932915207 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-17.77777777777777, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 2589.695041424924 1746.5906467968464 L 2660.8360670056322 1945.2359449524408 A 1960 1960 0 0 0 2719.5685776226737 1923.134954439216 L 2642.104817480641 1726.8688955684636 A 1749 1749 0 0 1 2589.695041424924 1746.5906467968464 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-20.621273296208614, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 2670.6530399406865 1715.309722628548 L 2751.5608680867613 1910.181278646057 A 1960 1960 0 0 0 2809.1246795219495 1885.193897868941 L 2722.0199308591273 1693.0123098840702 A 1749 1749 0 0 1 2670.6530399406865 1715.309722628548 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-23.46476881463947, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 2663.196861704277 1406.2905199937716 L 2889.543913480481 1852.123461971168 A 1965 1965 0 0 0 3369.792826417758 1508.8621695163977 L 3021.24503343614 1150.373067858281 A 1465 1465 0 0 1 2663.196861704277 1406.2905199937716 Z" class="bg" stroke="#39d353" filter="url(#glow)" /><path d="M 2663.196861704277 1406.2905199937716 L 2889.543913480481 1852.123461971168 A 1965 1965 0 0 0 3369.792826417758 1508.8621695163977 L 3021.24503343614 1150.373067858281 A 1465 1465 0 0 1 2663.196861704277 1406.2905199937716 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.6_0" d="M 2683.5680963641353 1446.4154847717373 A 1510 1510 0 0 0 3052.6143348044857 1182.6370870075116" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.6_0" startOffset="15">BROADCAST</textPath></text><path id="curve_3.6_1" d="M 2697.1489194707074 1473.165461290381 A 1540 1540 0 0 0 3073.5272023833827 1204.1464331069985" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.6_1" startOffset="15">TOWER</textPath></text><path id="curve_3.6_ring" d="M 2712.993213095042 1504.3737672287987 A 1575 1575 0 0 0 3097.925547892096 1229.2406702230667" fill="none" /><path id="curve_3.6_addr" d="M 2722.04709516609 1522.2070849078946 A 1595 1595 0 0 0 3111.8674596113606 1243.5802342893915" fill="none" /><path id="curve_3.6_gen" d="M 2731.100977237138 1540.0404025869905 A 1615 1615 0 0 0 3125.8093713306253 1257.919798355716" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.6_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.6_addr" startOffset="15">Address: 3.6</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.6_gen" startOffset="15">Established: Year 24</textPath></text>
+        <g transform="rotate(-41.82985671850773, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-41.82985671850773, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#39d353" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#39d353">EXPOSURE</text>
+          <text x="0" y="16" class="text-resource" fill="#39d353" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 2846.6317150091186 1630.4299197090725 L 2948.7696749101615 1815.0615452428715 A 1960 1960 0 0 0 3003.1873571273695 1783.809706142533 L 2895.191167150903 1602.5424367567807 A 1749 1749 0 0 1 2846.6317150091186 1630.4299197090725 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-29.868564518693887, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 2921.5108641749343 1586.5459048436971 L 3032.682272031373 1765.88334676595 A 1960 1960 0 0 0 3085.482612432131 1731.9704342014031 L 2968.627086297856 1556.2838211317621 A 1749 1749 0 0 1 2921.5108641749343 1586.5459048436971 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-32.71206003712473, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 2994.120821824182 1539.0013174474905 L 3114.051921541107 1712.6029629485886 A 1960 1960 0 0 0 3165.104900948032 1676.112486400281 L 3039.6777917133204 1506.4391524051487 A 1749 1749 0 0 1 2994.120821824182 1539.0013174474905 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-35.55555555555557, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 3064.2827882201227 1487.9132345713842 L 3192.678253236958 1655.3515950599844 A 1960 1960 0 0 0 3241.858155294151 1616.373411178595 L 3108.168323270138 1453.1311715057973 A 1749 1749 0 0 1 3064.2827882201227 1487.9132345713842 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-38.39905107398641, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 3131.8239917274764 1433.407459012466 L 3268.367652250345 1594.2702227927007 A 1960 1960 0 0 0 3315.5533729959625 1552.9003141299638 L 3173.9300251887435 1396.4911476598502 A 1749 1749 0 0 1 3131.8239917274764 1433.407459012466 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-41.242546592417256, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 3030.3722654177377 1141.4211418335615 L 3382.0351546388088 1496.8549786368246 A 1965 1965 0 0 0 3734.5445698305366 1023.3526602936709 L 3293.1846283978302 788.4028739594035 A 1465 1465 0 0 1 3030.3722654177377 1141.4211418335615 Z" class="bg" stroke="#39d353" filter="url(#glow)" /><path d="M 3030.3722654177377 1141.4211418335615 L 3382.0351546388088 1496.8549786368246 A 1965 1965 0 0 0 3734.5445698305366 1023.3526602936709 L 3293.1846283978302 788.4028739594035 A 1465 1465 0 0 1 3030.3722654177377 1141.4211418335615 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.7_0" d="M 3062.021925447634 1173.4101871458552 A 1510 1510 0 0 0 3332.9070231267738 809.5483547294875" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.7_0" startOffset="15">OBSERVATION</textPath></text><path id="curve_3.7_1" d="M 3083.1216988008982 1194.736217354051 A 1540 1540 0 0 0 3359.388619612736 823.6453419095435" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.7_1" startOffset="15">POST</textPath></text><path id="curve_3.7_ring" d="M 3107.7381010463732 1219.6165859302794 A 1575 1575 0 0 0 3390.2838155130257 840.0918269529423" fill="none" /><path id="curve_3.7_addr" d="M 3121.804616615216 1233.83393940241 A 1595 1595 0 0 0 3407.9382131703337 849.4898184063129" fill="none" /><path id="curve_3.7_gen" d="M 3135.871132184059 1248.0512928745404 A 1615 1615 0 0 0 3425.592610827642 858.8878098596837" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.7_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.7_addr" startOffset="15">Address: 3.7</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.7_gen" startOffset="15">Established: Year 25</textPath></text>
+        <g transform="rotate(-59.6076344962855, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-59.6076344962855, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#39d353" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#39d353">EXPOSURE</text>
+          <text x="0" y="16" class="text-resource" fill="#39d353" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 3273.483302415493 1298.8499816361216 L 3427.116794016219 1443.4796821079465 A 1960 1960 0 0 0 3469.3939178794553 1397.1050512964878 L 3311.2091644750853 1257.4677217946721 A 1749 1749 0 0 1 3273.483302415493 1298.8499816361216 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-47.64634229647166, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 3331.387883242943 1234.198970354794 L 3492.0070046633327 1371.0291491683226 A 1960 1960 0 0 0 3531.931523291586 1322.6143332815634 L 3367.0144052229507 1190.9961576068645 A 1749 1749 0 0 1 3331.387883242943 1234.198970354794 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-50.4898378149025, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 3386.0139632872015 1166.7550297856128 L 3553.2231949930906 1295.4487469295605 A 1960 1960 0 0 0 3590.6967955150785 1245.1129659287158 L 3419.453415997894 1121.8380496986347 A 1749 1749 0 0 1 3386.0139632872015 1166.7550297856128 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-53.33333333333334, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 3437.2270275444434 1096.6842385107552 L 3610.614622062383 1216.9245897547628 A 1960 1960 0 0 0 3645.545026915567 1164.791793917217 L 3468.397067385371 1050.1636977353126 A 1749 1749 0 0 1 3437.2270275444434 1096.6842385107552 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-56.176828851764185, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 3484.90096545486 1024.1591436496335 L 3664.039961287322 1135.6500409109672 A 1960 1960 0 0 0 3696.3411554484983 1081.8486056066142 L 3513.7248371833793 976.1495975540654 A 1749 1749 0 0 1 3484.90096545486 1024.1591436496335 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-59.02032437019503, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            <path d="M 3299.142760006509 777.0916401216822 L 3742.5361934558296 1008.1809370915396 A 1965 1965 0 0 0 3933.6399708749614 449.65906685609906 L 3441.619622051816 360.68729411917815 A 1465 1465 0 0 1 3299.142760006509 777.0916401216822 Z" class="bg" stroke="#c9a84c" filter="url(#glow)" /><path d="M 3299.142760006509 777.0916401216822 L 3742.5361934558296 1008.1809370915396 A 1965 1965 0 0 0 3933.6399708749614 449.65906685609906 L 3441.619622051816 360.68729411917815 A 1465 1465 0 0 1 3299.142760006509 777.0916401216822 Z" fill="url(#grid)" opacity="0.3" /><path id="curve_3.8_0" d="M 3339.048169016948 797.8896768489694 A 1510 1510 0 0 0 3485.9014534458993 368.694753665501" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.8_0" startOffset="15">COMMERCIAL</textPath></text><path id="curve_3.8_1" d="M 3365.6517750239072 811.7550346671609 A 1540 1540 0 0 0 3515.422674375288 374.0330600297163" fill="none" /><text class="text-title-left"><textPath xlink:href="#curve_3.8_1" startOffset="15">STRIP</textPath></text><path id="curve_3.8_ring" d="M 3396.6893153653596 827.9312854550509 A 1575 1575 0 0 0 3549.8640987929084 380.26108412130077" fill="none" /><path id="curve_3.8_addr" d="M 3414.4250527033328 837.1748573338451 A 1595 1595 0 0 0 3569.544912745834 383.8199550307776" fill="none" /><path id="curve_3.8_gen" d="M 3432.1607900413055 846.4184292126395 A 1615 1615 0 0 0 3589.22572669876 387.37882594025444" fill="none" /><text class="text-address-left"><textPath xlink:href="#curve_3.8_ring" startOffset="15">Ring: 3</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.8_addr" startOffset="15">Address: 3.8</textPath></text><text class="text-address-left"><textPath xlink:href="#curve_3.8_gen" startOffset="15">Established: Year 27</textPath></text>
+        <g transform="rotate(-77.38541227406327, 2000, 100) translate(2000, 1615)">
+          <polygon class="tension-zone" points="0,-21 21,-10 21,10 0,21 -21,10 -21,-10" filter="url(#glow)" />
+          <text x="0" y="35" class="text-tension">TENSION</text>
+        </g>
+        
+        <g transform="rotate(-77.38541227406327, 2000, 100) translate(2000, 1675)">
+          <rect x="-45" y="-18" width="90" height="40" fill="#0f172a" stroke="#c9a84c" stroke-width="1.5" rx="4" filter="url(#glow)" />
+          <text x="0" y="0" class="text-resource" fill="#c9a84c">CAPITAL</text>
+          <text x="0" y="16" class="text-resource" fill="#c9a84c" font-size="14">Base: 1</text>
+        </g>
+        <path d="M 3578.7118484687517 852.774799992917 L 3769.1682235556054 943.5898273219653 A 1960 1960 0 0 0 3795.2671449323116 886.5213781751817 L 3602.0011410645984 801.8499440961187 A 1749 1749 0 0 1 3578.7118484687517 852.774799992917 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="1.5" />
+            <g transform="rotate(-65.42412007424943, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#d4622a" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#d4622a" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#d4622a" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#d4622a" />
+            </g>
+            <path d="M 3614.111728591629 773.5312373030245 L 3808.8387581701504 854.7862922320915 A 1960 1960 0 0 0 3832.0744946432087 796.4933927022078 L 3634.846066903557 721.5137468551843 A 1749 1749 0 0 1 3614.111728591629 773.5312373030245 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="1.5" />
+            <g transform="rotate(-68.26761559268027, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#6a9978" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#6a9978" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#6a9978" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#6a9978" />
+            </g>
+            <path d="M 3645.5369093553263 692.6291251274455 L 3844.055084240388 764.1241196396759 A 1960 1960 0 0 0 3864.3704185396223 704.7503141581599 L 3663.665235727449 639.6470915625621 A 1749 1749 0 0 1 3645.5369093553263 692.6291251274455 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="1.5" />
+            <g transform="rotate(-71.11111111111111, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#3a6ea8" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#3a6ea8" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#3a6ea8" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#3a6ea8" />
+            </g>
+            <path d="M 3672.9100072407027 610.2676823726066 L 3874.7304826711134 671.8265622929154 A 1960 1960 0 0 0 3892.075388924838 611.5180569881406 L 3688.387681239562 556.4515722817644 A 1749 1749 0 0 1 3672.9100072407027 610.2676823726066 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="1.5" />
+            <g transform="rotate(-73.95460662954196, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#39d353" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#39d353" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#39d353" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#39d353" />
+            </g>
+            <path d="M 3696.1636168552477 526.6497215005826 L 3900.7894162585967 578.1209000235231 A 1960 1960 0 0 0 3915.1211831807523 517.0262026927765 L 3708.9525251954774 472.1320553620745 A 1749 1749 0 0 1 3696.1636168552477 526.6497215005826 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="1.5" />
+            <g transform="rotate(-76.7981021479728, 2000, 100) translate(2000, 1849)">
+              <!-- Influence (Diameter 42px) -->
+              <circle class="stack-zone" cx="0" cy="24" r="21" stroke="#c9a84c" />
+              <!-- Structure (Block 50x50) -->
+              <rect class="structure-zone" x="-25" y="50" width="50" height="50" rx="4" stroke="#c9a84c" />
+              <!-- Deploy octagons (50x50) -->
+              <polygon class="deployment-zone" points="-14,105 14,105 25,116 25,144 14,155 -14,155 -25,144 -25,116" stroke="#c9a84c" />
+              <polygon class="deployment-zone" points="-14,160 14,160 25,171 25,199 14,210 -14,210 -25,199 -25,171" stroke="#c9a84c" />
+            </g>
+            
+</svg>

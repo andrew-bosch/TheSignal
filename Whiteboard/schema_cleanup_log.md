@@ -1,6 +1,8 @@
 # Schema Cleanup Log
 
-Running log of Art 04 §6.1–§6.3 (Card Data Schema — field groups, enum vocabularies, Modifier Subclass Field Constraints) issues, questions, and normalization candidates surfacing during the 09-16 design review pass.
+Running log of Art 04 §6.1–§6.3 (Card Data Schema — field groups, enum vocabularies, Modifier Subclass Field Constraints) issues, questions, and normalization candidates surfacing during the 09-16 design review pass. Scope extended S141 from ModReactCard-only to the CA/PA review phase — same log, same format.
+
+**Working premise (Andy, S141):** The CA/PA review pass (and design review passes generally, per [[feedback-review-pass-scope]]) is scaffold + flag, not fix. Findings logged here are flagged for a later normalization/fix pass, not resolved in place during the review itself.
 
 **Working premise (Andy, S137):** §6.1–§6.3 reflect what was needed when drafted, not a locked ceiling. A card/schema mismatch is an open question in either direction — the card may need to change, or the schema section may be behind the pattern that real content now requires. Don't default to "the card is wrong."
 
@@ -120,7 +122,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** DIR.MOD.9 Fiscal Sanction (S138). `cost = intel_token(faction=trigger.faction, age__in=[Fresh, Stale]) * 1`. §6 Field Groups defines `cost: CostExpr` as "fungible resources only; PS and presence tiers are not valid cost values." Intel Tokens are individually tracked objects with per-token age/privacy state (Fresh/Stale/Expired, holder-keyed) — not a fungible pool the way native resources are. This may be an established, accepted pattern already (Intel Tokens function as a spendable resource type elsewhere — e.g., SCIF/Deep Cover economies), but it hasn't been checked against the literal "fungible resources only" constraint before. Not fixed — genuinely unclear whether this is a schema violation or whether Intel Tokens should simply be recognized as a second valid cost category alongside native resources.
 
-**Status:** Open, single example flagged this session. Needs either a definitional clarification (does "fungible resources" include Intel Tokens?) or a sweep to check whether other cards already spend Intel Tokens as cost without the same scrutiny.
+**Status:** Open, now 2 confirmed instances across 2 different card types — DIR.MOD.9 (ModReactCard, S138) and **STD.CA.12 Absolute Compromise** (`cost = IntelToken(any) * 1`, S141, Standard CA review). The recurrence across a faction ModReactCard and an all-faction Standard CA strengthens the case this is a real, standing pattern rather than a one-off — either a definitional clarification (does "fungible resources" include Intel Tokens?) is needed, or a sweep to check whether other cards already spend Intel Tokens as cost without the same scrutiny.
 
 ---
 
@@ -227,3 +229,15 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 **Retroactive note (corrected):** DIR.MOD.20 Public Reprimand's `arbiter_note` (S135 stub-pass content) describes `faction="target"` resolving to whichever faction the host names — that description is correct as far as it goes; it does not describe an actual gap, and the S139 review's reading of it as evidence of an "unformalized" constraint was the error, not the note itself.
 
 **Status:** Closed S139, not a gap. Affected 22 cards had an incorrect ⚠ flag added and removed in the same pass (STD.MOD.34/35/46/47/58/59/70/71/82/83/94/95, DIR.MOD.20/24, GHO.MOD.24/25, GUI.MOD.23/24, NET.MOD.27/28, SYN.MOD.24/25) — see PM02 entry revising L267. PM05 **04-n179** closed accordingly. GUI.MOD.23/24 retain a separate, still-valid note (Guild's own CA/PA mix skews self/territory-directed, so these two cards see fewer eligible hosts than Directorate/Syndicate's equivalents — confirmed by Andy as a distinct, surviving observation, not dissolved by this correction).
+
+---
+
+### 22. Category: `cost` expression term missing resource-type attribute — confirmed corpus pattern in Standard CA
+
+**Surfaced by:** STD.CA.1 Build Structure (S141, first card of the CA/PA review phase — oldest CA in the system, signed off S63). `cost = resource.faction(acting) * 1 + resource.district(native) * 1` — the first term (`resource.faction(acting)`) has no resource-type attribute, unlike most cost expressions in the corpus, which specify one (e.g. STD.CA.13: `resource.faction(acting).native * 2`). Design Rationale states the intent plainly ("dual cost: 1 faction native + 1 district native"), so the likely correction is `resource.faction(acting).native * 1` — but per [[feedback-review-pass-scope]] this is flagged, not fixed, during the review pass.
+
+**Confirmed corpus-wide (S141, full Standard CA set now reviewed):** same missing-attribute shape on **STD.CA.2, STD.CA.3, STD.CA.4** (all `resource.faction(acting) * 1 + resource.district(native) * 1`) and **STD.CA.5** (`resource.faction(acting) * 1`, mono-resource). 5 of 16 Standard CA cards affected — all clustered at the low card-ID end (CA.1–5), while CA.6 onward (Exposure, Capital, Mandate, IntelToken-typed costs) are all correctly typed with an explicit attribute (`.exposure`, `.capital`, `.mandate`, `.native`). Suggests an early-authoring-era gap (same "vintage correlates with drift" pattern seen in the ModReactCard corpus, schema_cleanup_log item #20A) rather than a random scatter.
+
+**Deeper gap, same shape as item A (no confirmed MutationExpr vocabulary):** there is no confirmed `CostExpr` vocabulary in Art 04 §6.3 either — grepped directly, no enumerated list of valid `resource.*` call forms exists the way §6.3 enumerates TriggerExpr forms. So there's no canonical text to check `resource.faction(acting)` (bare) against; it may be that bare = native-by-default was an intentional early shorthand, later abandoned in favor of always-explicit typing once non-native cost resources (Capital, Exposure, Mandate) entered the set. Not resolved — this session's job was to flag, not decide.
+
+**Status:** Open, 5 confirmed instances (STD.CA.1–5), corpus-wide sweep of the Standard CA set complete. Candidate direction, not proposed: either normalize CA.1–5 to explicit `.native` typing (matching CA.6+), or confirm bare `resource.faction(acting)` as valid native-shorthand syntax and leave as-is — Andy's call, once a normalization/fix pass is scheduled.

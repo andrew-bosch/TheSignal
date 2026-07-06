@@ -54,23 +54,46 @@ Confirmed by reading Part1_Core.md §6.1 directly this session:
 
 ---
 
-## 5. STD.CA.1 (Build Structure) — pattern-setter review, NOT YET FIXED
+## 5. STD.CA.1 (Build Structure) — pattern-setter review, SCAFFOLDED S141 (scope corrected: scaffold + flag, not fix)
 
 Read in full (`V1/04___Card_System___Part2_Standard.md` lines 29–116). This is the oldest CA card in the system (Guild-affinity territorial-foundation card, signed off S63) — picked as the pattern-setter specifically because "oldest/most legacy" is where stale format is most likely to surface (same logic that made Overture worth checking).
 
-**Confirmed real defect — fix pending:**
-- `cost = resource.faction(acting) * 1 + resource.district(native) * 1` — the first term has **no resource-type attribute**. Design Rationale states "dual cost (1 faction native + 1 district native)"; every other cost expression in the corpus specifies a type (compare STD.CA.13: `resource.faction(acting).native * 2`). Should almost certainly be `resource.faction(acting).native * 1`. Not yet written to file — do this first when CA session starts.
+**Scope correction (Andy, S141):** this review pass scaffolds missing checklist rows and flags issues found — it does not resolve or redesign anything in place. Schema/data findings (like the cost bug below) get logged to `Whiteboard/schema_cleanup_log.md`, not fixed here. See `feedback_review_pass_scope.md`.
 
-**Flagged, needs a decision, not asserted as broken:**
-- Status row: `Design Pass` blank, `Issues Resolved ✓`, `Signed off ✓ S63` — while 2 checklist rows (`Data schema validation`, `Card narrative`) are still ⚠. Per §3.1 above: check whether S63 predates 04-n70/04-n79 as tracked concepts before concluding this is a real contradiction. If it predates them, this is expected and just needs the Design Pass box actually checked off now that the review is happening; if it doesn't predate them, it's a genuine process gap worth logging.
+**Confirmed real defect — flagged in schema_cleanup_log.md #22, NOT fixed in file:**
+- `cost = resource.faction(acting) * 1 + resource.district(native) * 1` — the first term has **no resource-type attribute**. Design Rationale states "dual cost (1 faction native + 1 district native)"; every other cost expression in the corpus specifies a type (compare STD.CA.13: `resource.faction(acting).native * 2`). Likely correction: `resource.faction(acting).native * 1` — left as a flag on the card's new "Resource cost positioning" row and in the whiteboard log, pending a later fix pass.
+
+**Sign-off row question — resolved, not a contradiction:**
+- Status row: `Design Pass` blank → now ✓ (checklist scaffolding complete), `Issues Resolved ✓`, `Signed off ✓ S63` — 2 rows (`Data schema validation`, `Card narrative`) still ⚠. Checked: 04-n69/70 (Data schema validation row) landed S94–95; 04-n78/79 (Card narrative row) landed S94. S63 predates both by ~30 sessions — the ⚠ rows are tracking concepts that didn't exist at sign-off time, not evidence the sign-off was premature. No further action; not a genuine process gap.
 
 **Confirmed correct on direct check — no action needed:**
 - Territory/Add/StructureBlock taxonomy verifies directly against `ref_taxonomy.md` §5.2 ("Structure Block | Territory").
 - Missing `ps_framing`/`boost` — expected, per §4 above (04-n177 scope), not new.
 
+**Scaffolded this pass:** Added the two entirely-missing checklist rows — `Outcome determinacy` (✓, Automatic/single deterministic outcome) and `Resource cost positioning` (⚠, flagged per the cost bug above, tier assessment blocked until fixed).
+
 **Not yet checked:** the Guild affinity clause's `cost.resource.district(native) = 0` uses flat assignment (`=`) rather than the delta style (`-=`/`+=`) seen elsewhere (e.g. STD.CA.13's `threshold += 10`). May be stylistic, may be worth normalizing — low priority, noted for completeness, not a blocker.
 
-**Andy's outstanding question before replicating the pattern across the rest of the Standard CA set:** confirm (a) fix the cost typo, note-not-resolve the sign-off question, and (b) confirm CA/PA checklist format is the plain 17-row Art 04 §5 list with no addendum (per §3.2 above — this is already confirmed by reading §5 directly, just needs Andy's nod before the fix pattern replicates across ~15 more Standard CA cards).
+**Checklist format confirmed (S141):** CA/PA = plain 17-row Art 04 §5 list, no ModReactCard addendum — confirmed by direct read of §5. **Pattern locked for replication across the rest of the Standard CA set:** scaffold missing rows, flag issues (don't fix), log schema findings to `schema_cleanup_log.md`.
+
+---
+
+## 5a. Standard CA set (STD.CA.1–16) — SCAFFOLDED S141, batch complete
+
+All 16 Standard CA cards now carry the full 17-row checklist (Outcome determinacy + Resource cost positioning added where missing — was 15/17 on all of them) and `Design Pass ✓` in both the .md Status table and `card_status` DB. No content was rewritten; issues found were flagged in place and/or logged to `schema_cleanup_log.md`.
+
+**Findings, in addition to STD.CA.1's cost bug (§5 above):**
+- **Same cost-typing gap on STD.CA.2/3/4 and STD.CA.5** — `resource.faction(acting)` missing a resource-type attribute, identical shape to STD.CA.1. Confirmed corpus-wide across CA.1–5 only; CA.6–16 are all correctly typed (`.exposure`, `.capital`, `.mandate`, `.native`). Logged: schema_cleanup_log.md #22 (expanded).
+- **STD.CA.12 Absolute Compromise** costs `IntelToken(any) * 1` — a second confirmed instance of the open "Intel Token as fungible cost?" question (first was DIR.MOD.9). Logged: schema_cleanup_log.md #10 (expanded).
+- **STD.CA.10 Protect** — Status shows `Issues Resolved ✓` while its own Outstanding Issues section lists a real, undefined Art 03 procedural gap (threshold-reduction marker placement). Unlike CA.1's ⚠ rows, this doesn't predate any tracking concept — it's a live inconsistency in the same authoring era. Flagged in the card itself; status flag left as-is (not resolved).
+- **STD.CA.13–16 header/variable format** (already noted in §6 below) — old-style `### STANDARD — [NAME]` headers and `C_*` Python variable names instead of `### STD.CA.n —` / `STD.CA.n =`. Not touched this pass (would be a normalization edit, not scaffolding); still a low-stakes fix-in-place candidate for a future sweep.
+- **card_status DB note:** STD.CA.12's DB `issues_resolved=1` doesn't match the .md Status table's blank Issues Resolved cell (left blank this pass since a new issue — the IntelToken cost flag — was surfaced). Pre-existing MD/DB drift, not introduced this session; not reconciled, just noted.
+
+**Outcome determinacy:** clean across all 16 — no card uses `game.choose_one()` or conditional player choice in any resolution tier.
+
+**Resource cost positioning:** mono-resource on most of the set (Capital, Exposure, Mandate, or native, each single-typed); STD.CA.1/11 use genuine cross-faction-resource (dual-typed) costs; STD.CA.8 flagged as mono-resource paired with the highest Standard-CA cost (P28's explicit watch case, not confirmed as a mismatch).
+
+**Next:** Directorate CA set (per the modifier-card-review faction ordering convention) — reconfirm with Andy before starting, per §6 above.
 
 ---
 

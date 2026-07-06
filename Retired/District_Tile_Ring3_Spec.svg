@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 550" width="100%" height="100%">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1E293B" stroke-width="0.5" />
+    </pattern>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <style>
+      .bg { fill: #05070A; stroke: #d4622a; stroke-width: 4; }
+      .text-title { fill: #F8FAFC; font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 2px; text-anchor: middle; }
+      .text-address { fill: #94A3B8; font-family: "Courier New", monospace; font-size: 10px; font-weight: 600; letter-spacing: 1px; text-anchor: middle; }
+      .text-resource { fill: #d4622a; font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; text-anchor: middle; }
+      .tension-zone { fill: #1c1006; stroke: #d97736; stroke-width: 1.5; stroke-dasharray: 4 3; }
+      .text-tension { fill: #e58249; font-family: "Inter", sans-serif; font-size: 8px; font-weight: 700; text-anchor: middle; letter-spacing: 1px; }
+      .stack-zone { fill: none; stroke-width: 1.5; stroke-dasharray: 3 3; }
+      .structure-zone { fill: none; stroke-width: 1.5; }
+      .deployment-zone { fill: none; stroke-width: 1; stroke-dasharray: 2 2; }
+    </style>
+    
+    <path id="curve-title-0" d="M 333.8263270073862 229.9372570534759 A 435 435 0 0 0 466.17367299261383 229.9372570534759" fill="none" />
+<path id="curve-title-1" d="M 330.7838592835879 249.7044872628311 A 455 455 0 0 0 469.21614071641216 249.7044872628311" fill="none" />
+<text class="text-title"><textPath xlink:href="#curve-title-0" startOffset="50%">INDUSTRIAL</textPath></text>
+<text class="text-title"><textPath xlink:href="#curve-title-1" startOffset="50%">FRINGE</textPath></text>
+
+    <path id="curve-ring" d="M 326.98077462884 274.41352502452514 A 480 480 0 0 0 473.0192253711601 274.41352502452514" fill="none" />
+    <path id="curve-address" d="M 325.155293994561 286.27386315013825 A 492 492 0 0 0 474.8447060054391 286.27386315013825" fill="none" />
+    <path id="curve-gen" d="M 323.329813360282 298.13420127575137 A 504 504 0 0 0 476.67018663971805 298.13420127575137" fill="none" />
+  </defs>
+
+  <rect width="800" height="550" fill="#020305" />
+  <rect width="800" height="550" fill="url(#grid)" />
+
+  <path d="M 361.9691534525208 47.090377616940174 L 293.5136296670583 491.85305732743245 A 700 700 0 0 0 506.48637033294176 491.85305732743245 L 438.0308465474792 47.090377616940174 A 250 250 0 0 1 361.9691534525208 47.090377616940174 Z" class="bg" filter="url(#glow)" />
+  <path d="M 361.9691534525208 47.090377616940174 L 293.5136296670583 491.85305732743245 A 700 700 0 0 0 506.48637033294176 491.85305732743245 L 438.0308465474792 47.090377616940174 A 250 250 0 0 1 361.9691534525208 47.090377616940174 Z" fill="url(#grid)" opacity="0.3" />
+
+  <path id="curve-title-0" d="M 333.8263270073862 229.9372570534759 A 435 435 0 0 0 466.17367299261383 229.9372570534759" fill="none" />
+<path id="curve-title-1" d="M 330.7838592835879 249.7044872628311 A 455 455 0 0 0 469.21614071641216 249.7044872628311" fill="none" />
+<text class="text-title"><textPath xlink:href="#curve-title-0" startOffset="50%">INDUSTRIAL</textPath></text>
+<text class="text-title"><textPath xlink:href="#curve-title-1" startOffset="50%">FRINGE</textPath></text>
+
+  <text class="text-address"><textPath xlink:href="#curve-ring" startOffset="50%">Ring: Baryo</textPath></text>
+  <text class="text-address"><textPath xlink:href="#curve-address" startOffset="50%">Address: 3.0</textPath></text>
+  <text class="text-address"><textPath xlink:href="#curve-gen" startOffset="50%">Generation: 3</textPath></text>
+
+  <!-- TENSION ZONE -->
+  <g transform="rotate(0, 400, -200) translate(400, 90)">
+    <polygon class="tension-zone" points="0,-12 10,-6 10,6 0,12 -10,6 -10,-6" filter="url(#glow)" />
+    <text x="0" y="22" class="text-tension">TENSION</text>
+  </g>
+
+  <!-- RESOURCE BASELINE -->
+  <g transform="rotate(0, 400, -200) translate(400, 166)">
+    <rect x="-35" y="-15" width="70" height="30" fill="#0f172a" stroke="#d4622a" stroke-width="1.5" rx="4" filter="url(#glow)" />
+    <text x="0" y="-3" class="text-resource" fill="#d4622a">CAPACITY</text>
+    <text x="0" y="10" class="text-resource" fill="#d4622a" font-size="9">Base: 1</text>
+  </g>
+
+    <path d="M 329.87751625766407 315.25026664117877 L 306.95285811113115 483.69746919694876 A 690 690 0 0 0 344.06256432978427 487.72887338735495 L 357.84425137896784 318.28842632090516 A 520 520 0 0 1 329.87751625766407 315.25026664117877 Z" fill="#0a0c0f" stroke="#d4622a" stroke-width="2" />
+    
+    <!-- UI Layout -->
+    <g transform="rotate(6.2, 400, -200) translate(400, 320)">
+      <circle class="stack-zone" cx="0" cy="30" r="11" stroke="#d4622a" />
+      <rect class="structure-zone" x="-12" y="64" width="24" height="24" rx="4" stroke="#d4622a" />
+      <polygon class="deployment-zone" points="-5,110 5,110 12,117 12,127 5,134 -5,134 -12,127 -12,117" stroke="#d4622a" />
+      <polygon class="deployment-zone" points="-5,140 5,140 12,147 12,157 5,164 -5,164 -12,157 -12,147" stroke="#d4622a" />
+    </g>
+
+    <path d="M 357.84425137896784 318.28842632090516 L 344.06256432978427 487.72887338735495 A 690 690 0 0 0 381.33598036742103 489.7475294418638 L 385.9343620160275 319.8097323329988 A 520 520 0 0 1 357.84425137896784 318.28842632090516 Z" fill="#0a0c0f" stroke="#6a9978" stroke-width="2" />
+    
+    <!-- UI Layout -->
+    <g transform="rotate(3.1, 400, -200) translate(400, 320)">
+      <circle class="stack-zone" cx="0" cy="30" r="11" stroke="#6a9978" />
+      <rect class="structure-zone" x="-12" y="64" width="24" height="24" rx="4" stroke="#6a9978" />
+      <polygon class="deployment-zone" points="-5,110 5,110 12,117 12,127 5,134 -5,134 -12,127 -12,117" stroke="#6a9978" />
+      <polygon class="deployment-zone" points="-5,140 5,140 12,147 12,157 5,164 -5,164 -12,157 -12,147" stroke="#6a9978" />
+    </g>
+
+    <path d="M 385.9343620160275 319.8097323329988 L 381.33598036742103 489.7475294418638 A 690 690 0 0 0 418.66401963257886 489.7475294418638 L 414.06563798397247 319.8097323329988 A 520 520 0 0 1 385.9343620160275 319.8097323329988 Z" fill="#0a0c0f" stroke="#3a6ea8" stroke-width="2" />
+    
+    <!-- UI Layout -->
+    <g transform="rotate(-0.0, 400, -200) translate(400, 320)">
+      <circle class="stack-zone" cx="0" cy="30" r="11" stroke="#3a6ea8" />
+      <rect class="structure-zone" x="-12" y="64" width="24" height="24" rx="4" stroke="#3a6ea8" />
+      <polygon class="deployment-zone" points="-5,110 5,110 12,117 12,127 5,134 -5,134 -12,127 -12,117" stroke="#3a6ea8" />
+      <polygon class="deployment-zone" points="-5,140 5,140 12,147 12,157 5,164 -5,164 -12,157 -12,147" stroke="#3a6ea8" />
+    </g>
+
+    <path d="M 414.06563798397247 319.8097323329988 L 418.66401963257886 489.7475294418638 A 690 690 0 0 0 455.93743567021585 487.72887338735495 L 442.1557486210322 318.28842632090516 A 520 520 0 0 1 414.06563798397247 319.8097323329988 Z" fill="#0a0c0f" stroke="#39d353" stroke-width="2" />
+    
+    <!-- UI Layout -->
+    <g transform="rotate(-3.1000000000000005, 400, -200) translate(400, 320)">
+      <circle class="stack-zone" cx="0" cy="30" r="11" stroke="#39d353" />
+      <rect class="structure-zone" x="-12" y="64" width="24" height="24" rx="4" stroke="#39d353" />
+      <polygon class="deployment-zone" points="-5,110 5,110 12,117 12,127 5,134 -5,134 -12,127 -12,117" stroke="#39d353" />
+      <polygon class="deployment-zone" points="-5,140 5,140 12,147 12,157 5,164 -5,164 -12,157 -12,147" stroke="#39d353" />
+    </g>
+
+    <path d="M 442.1557486210322 318.28842632090516 L 455.93743567021585 487.72887338735495 A 690 690 0 0 0 493.0471418888689 483.69746919694876 L 470.122483742336 315.25026664117877 A 520 520 0 0 1 442.1557486210322 318.28842632090516 Z" fill="#0a0c0f" stroke="#c9a84c" stroke-width="2" />
+    
+    <!-- UI Layout -->
+    <g transform="rotate(-6.2, 400, -200) translate(400, 320)">
+      <circle class="stack-zone" cx="0" cy="30" r="11" stroke="#c9a84c" />
+      <rect class="structure-zone" x="-12" y="64" width="24" height="24" rx="4" stroke="#c9a84c" />
+      <polygon class="deployment-zone" points="-5,110 5,110 12,117 12,127 5,134 -5,134 -12,127 -12,117" stroke="#c9a84c" />
+      <polygon class="deployment-zone" points="-5,140 5,140 12,147 12,157 5,164 -5,164 -12,157 -12,147" stroke="#c9a84c" />
+    </g>
+</svg>

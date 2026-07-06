@@ -1,5 +1,6 @@
 # THE SIGNAL — Session Brief
 **Session 140 complete | Updated: 2026-07-05**
+**Session start:** 2026-07-05 20:45
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 

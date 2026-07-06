@@ -54,12 +54,14 @@ Territory-control foundation card. Construction is publicly visible — the cove
 | Supported by game procedure | ✓ | Submitted in Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4). ARBITER places Structure Block at Beat 3 outcome. Guild affinity evaluated at dispatch. | Art 03 §9, §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Dual-resource cost (faction native + district native) reads as cross-faction-resource tier, but `cost`'s first term is missing a resource-type attribute (see schema_cleanup_log.md) — can't confirm tier/power match until that's fixed. Flagged, not resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | ✓ S63 |
+| Status | ✓ | | ✓ S63 |
 
 ```python
 STD.CA.1 = Card(
@@ -145,12 +147,14 @@ Territory disruption card — the destructive mirror of STD.CA.1. Structure remo
 | Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with ring_mod. ARBITER removes Structure Block on success; standing loss on crit fail — Beat 3 outcome steps. | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Dual-resource cost (faction native + district native) reads as cross-faction-resource tier, but `cost`'s first term is missing a resource-type attribute (see schema_cleanup_log.md #22) — can't confirm tier/power match until that's fixed. Flagged, not resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | ✓ S63 |
+| Status | ✓ | | ✓ S63 |
 
 ```python
 STD.CA.2 = Card(
@@ -237,12 +241,14 @@ Presence-deepening card — a deliberate structural parallel to STD.CA.1. To Cam
 | Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4). ARBITER places PresenceToken on success. Network affinity evaluated at dispatch. | Art 03 §9, §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Dual-resource cost (faction native + district native) reads as cross-faction-resource tier, but `cost`'s first term is missing a resource-type attribute (see schema_cleanup_log.md #22) — can't confirm tier/power match until that's fixed. Flagged, not resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | ✓ S63 |
+| Status | ✓ | | ✓ S63 |
 
 ```python
 STD.CA.3 = Card(
@@ -322,12 +328,14 @@ Presence-disruption card — the destructive mirror of STD.CA.3, following the s
 | Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with ring_mod. ARBITER removes PresenceToken on success; double on crit success; standing loss on crit fail — Beat 3 outcome steps. | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Dual-resource cost (faction native + district native) reads as cross-faction-resource tier, but `cost`'s first term is missing a resource-type attribute (see schema_cleanup_log.md #22) — can't confirm tier/power match until that's fixed. Flagged, not resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | ✓ S63 |
+| Status | ✓ | | ✓ S63 |
 
 ```python
 STD.CA.4 = Card(
@@ -414,12 +422,14 @@ Universal intelligence card — the baseline for the Information layer. Observat
 | Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with Ghost affinity. ARBITER delivers IntelToken on success, NotificationSlip to target on crit fail — Art 03 Beat 3 outcome steps (per L170; Art 07 ref is stale). | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit populated identically (additive on crit), failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Mono-resource (faction native only, single term) — matches Balance row's "cheapest intel card" floor-power framing. But `cost` is missing a resource-type attribute (see schema_cleanup_log.md #22), same gap as STD.CA.1–4; flagged, not resolved. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 STD.CA.5 = Card(
@@ -502,12 +512,14 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); moved to Beat 4 carry row during Beat 2 processing (Art 03 §9.4.2); arming and effect applied at Beat 4 (Art 03 §9.4.3). | Art 03 §9, §9.4, §10 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Exposure only, typed correctly). Restricted-acquisition resource narrows practical access mostly to Network/Ghost by design (per Design Rationale) — power/cost match not independently re-verified beyond that. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | ✓ S63 |
+| Status | ✓ | ✓ | ✓ S63 |
 
 ```python
 STD.CA.6 = Card(
@@ -591,12 +603,14 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0 Beat 0); moved to Beat 4 carry row during Beat 2 processing (Art 03 §9.4.2 Beat 2); `standing_impact` multiplier applied at Beat 4 (Art 03 §17). | Art 03 §9, §11, §17 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Exposure only, typed correctly), same shape as STD.CA.6. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | ✓ S63 |
+| Status | ✓ | ✓ | ✓ S63 |
 
 ```python
 STD.CA.7 = Card(
@@ -679,12 +693,14 @@ Economy-bypasses-Territory card — the only Standard CovertOperation with no re
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 3 row of Resolution Grid (Art 03 §9.4.0 Beat 0); d100 threshold 50 with ring_mod and affinity; resolved at Beat 3 (Art 03 §9.4.2 Beat 3). | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Mono-resource (Capital only, typed correctly) — but Balance row already notes 3 Capital is "the highest Standard cost." P28 flags mono-resource + high-power as a check to confirm; not independently re-verified this pass. | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | ✓ S63 |
+| Status | ✓ | ✓ | ✓ S63 |
 
 ```python
 STD.CA.8 = Card(
@@ -770,6 +786,8 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 | Supported by game procedure | ⚠ | Dispatch and Beat 3 resolution ✓. Overture delivery procedure (ARBITER tableau → faction hand at Beat 3 resolution) pending Art 07 ARBITER subroutine pass. | Art 03 §9; STD.MOD.1 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Capital only, typed correctly); net-zero-to-actor transfer shape already covered in Balance row. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -780,7 +798,7 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 ```python
 STD.CA.9 = Card(
@@ -866,16 +884,19 @@ Defensive Beat 2 positional wager — the only Standard card that explicitly pro
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); threshold reduction applied at Beat 3 resolution (Art 03 §9.4.3). Note: Art 03 §20 M-09 refs in prior version are stale (pre-S52 reorg). | Art 03 §9, §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (district native only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
 - **Art 03 dependency:** Threshold reduction marker placement (ARBITER places −25/−45 marker on Beat 3 ops targeting acting faction's assets at Beat 2 resolution) to be defined in Art 03 §9.4 Beat 2 processing steps.
+- **Status flag inconsistency (flagged S141, not resolved):** this open Art 03 dependency coexists with `Issues Resolved ✓` in the Status row below — unlike STD.CA.1's ⚠ checklist rows (which predate 04-n70/79 as tracked concepts), this is a live, undefined procedural gap in the same authoring era as the rest of the card. Left as-is per this pass's scaffold-only scope; flagging the inconsistency rather than changing the flag.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | ✓ S63 |
+| Status | ✓ | ✓ | ✓ S63 |
 
 ```python
 STD.CA.10 = Card(
@@ -959,6 +980,8 @@ Standard card available to all factions — any faction with a stake in an activ
 | Supported by game procedure | ✓ | Beat 3 Automatic; lock enforcement and breach detection outstanding (Outstanding Issues) | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Cross-faction-resource (Mandate + faction native, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -968,7 +991,7 @@ None — all resolved S68. District-keyed resource model makes Mandate acquirabl
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 *Redesigned S68: Directorate FactionSpecific CovertOperation (Evidence Preservation) → Standard CovertOperation. Name: Evidence Preservation → Tort Interference.*
 
@@ -1039,6 +1062,8 @@ Intel token cost makes this a premium play — factions must hold Intel specific
 | Supported by game procedure | ✓ | Beat 2 Automatic; target card must exist in Beat 2 row at resolution; discard occurs at Beat 2. CM cards are not valid targets — processed and discarded at Beat 1 (Art 03 §9.4.1.2) before CA.12 fires. Valid targets: CA cards (function=Block or function=Protect) and Protect/Fortify modifier plays. | Art 03 §9.4.1.2, §9.4.2 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ⚠ | Missing row, scaffolded S141. `cost = IntelToken(any) * 1` — Intel Token as `cost` is a discrete, individually-tracked object, not a fungible native/Capital/Mandate resource. Second confirmed instance of the open question logged in schema_cleanup_log.md #10 (first was DIR.MOD.9) — flagged, not resolved. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -1053,7 +1078,7 @@ None — all design questions resolved S119/S120:
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | | |
+| Status | ✓ | | |
 
 *Migrated from Art 04 §8 (retired) Intel Economy block to Standard Covert section S59. Pre-convention flat format — full schema pass pending (04-47).*
 
@@ -1114,12 +1139,14 @@ First Standard card with Public Standing shift as its primary covert effect — 
 | Supported by game procedure | ✓ | Beat 3 covert resolution; NotificationSlip failcrit follows DIR.CA.2 established procedure | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/fail/failcrit populated (successcrit=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 C_DisinformationCampaign = Card(
@@ -1211,12 +1238,14 @@ Fills the Economy/Remove/IntelToken coverage gap in the Standard card set. All f
 | Supported by game procedure | ✓ | Beat 3 covert resolution; ARBITER blind draw from supply is consistent with ARBITER draw authority | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 C_Disprove = Card(
@@ -1302,12 +1331,14 @@ Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused c
 | Supported by game procedure | ✓ | Beat 3 covert resolution; face-down transfer to dispatch case follows established case-handling procedure | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 C_IntelExtraction = Card(
@@ -1396,12 +1427,14 @@ Economy/Redirect/ModifierCard — splits Asset Extraction (S62) alongside Intel 
 | Supported by game procedure | ✓ | Beat 3 covert resolution; face-down transfer to dispatch case follows established case-handling procedure | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  | ✓ | |
+| Status | ✓ | ✓ | |
 
 ```python
 C_ModifierRaid = Card(
