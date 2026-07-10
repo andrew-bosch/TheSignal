@@ -117,7 +117,7 @@ Per-faction components at faction tableau at T=0. All counts TBD unless noted.
 | Dispatch Case | 1 | Empty at T=0 |
 | Emergency Response card | 1 | — |
 | Operative Card | 1 | Distributed at §3.6 |
-| Floor Act PA card | 1 | Standard PA card; distributed at §3.6; starts in hand permanently — do not discard. Full design: Art 04 (PM05 04-n96). |
+| Floor Act PA card | 1 | STD.PA.9 "Town Hall" (Art 04); distributed at §3.6. `on_discard` field (Art 04 §6, P29) governs permanence — never leaves hand, self-policed by the faction, not an ARBITER-tracked step. |
 | Countermeasure Card (CM-A) | 1 | Distributed at §3.7 |
 | Countermeasure Card (CM-B) | 2 | Distributed at §3.7 |
 | Classified Objective card | 1 | Distributed sealed at §3.8 |

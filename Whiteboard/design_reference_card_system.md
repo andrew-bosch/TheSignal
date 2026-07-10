@@ -342,6 +342,9 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 **ElectPlayer Effects** *(ElectPlayer outcome_type only — None on all other cards)*
 `on_accept: MutationExpr | None` · `on_decline: MutationExpr | None`
 
+**Discard override** *(S143, P29 — Art 04 Part1_Core.md §5/§6)*
+`on_discard: MutationExpr | None` — None on every card by default. When set, the card is immune to all discard events (normal resolution AND targeted hand-discard effects) and this fires instead, self-policed by the acting faction, not ARBITER-tracked. Currently used by exactly one card: STD.PA.9 Town Hall (the Floor Act, PM02 D04-13/L216).
+
 **Portrait**
 `portrait: dict[Faction, PortraitEntry]` — valid params: `flat` · `submitter` · `where` · `modifier` · `mod_where` — `failcrit=` is NOT a valid PortraitEntry parameter
 
@@ -377,7 +380,7 @@ Faction:     All | Ghost | Network | Syndicate | Guild | Directorate
 Resolution:  d100 | Automatic   ← NOT "Dice" — d100 is the exact enum value
 Persistence: Immediate | Transient | Seasonal | Permanent
 Layer:       Territory | Economy | Information | Submission | Resolution | Standing
-value_rating: int | None   — 1–4 (widened from 1–3, S135/PM02 L259 — gives ModActionCard's 4-tier threshold_delta a distinct value per tier). Applies to all 3 modifier subclasses. None = TBD/stub.
+value_rating: int | None   — 1–4 (widened from 1–3, S135/PM02 L259 — gives ModActionCard's 4-tier threshold_delta a distinct value per tier). **S143: moved to base Card() class** — no longer Modifier-subclass-only; all 251 CA/PA specs swept to `value_rating = None,  # scaffolded, not addressed`. None = TBD/stub, or CA/PA definition not yet set (see PM05 04-n178/183, Whiteboard/cost_baseline_recommendations.md for the active derivation work).
 Function:    → Art 04b §4 / ref_taxonomy.md
 Subject:     → Art 04b §4 / ref_taxonomy.md
 ```

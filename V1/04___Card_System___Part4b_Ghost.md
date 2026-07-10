@@ -95,6 +95,7 @@ GHO.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Predictive",
     outcome_type    = None,
@@ -185,6 +186,7 @@ GHO.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
     beat=2, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
+    value_rating = None,  # scaffolded, not addressed
     trigger=None,
     resolution_type="Probabilistic", outcome_type=None,
     persistence     = Immediate,
@@ -280,6 +282,7 @@ GHO.CA.3 = Card(
     perspectives = {Ghost: "We did not take their cards. We simply read their intentions. They will act on plans we already know."},
     design_note  = "Redesigned S68: original target was unplayed hand (CardHandContents) — requires physical access to target player's cards, not executable covertly at paper table. Redesigned to SIGINT tap model: Ghost taps faction X's dispatch channel at Beat 2. ARBITER reads faction X's Beat 3 grid column at Beat 2 resolution (name + declared target only; modifier cards excluded). IntelDeliverySlip delivered to Ghost at Beat 2 resolution. Beat 2 commitment is the risk. Empty case = empty slip — resources spent. DR-xx (DispatchReport) collapsed into IS-xx S68 — column read is IntelDeliverySlip with list content.",
     arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -333,6 +336,7 @@ GHO.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Remove,  subject = IntelToken,
     beat=3, resolution=d100, threshold=25, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Probabilistic", outcome_type=None,
     persistence           = Immediate,
     persistence_condition = None,
@@ -415,6 +419,7 @@ GHO.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Corrupt,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -496,6 +501,7 @@ GHO.CA.7 = Card(
     threshold       = 55,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -584,6 +590,7 @@ GHO.CA.8 = Card(
     threshold       = 40,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -665,6 +672,7 @@ GHO.CA.15 = Card(
     success = "Ghost corrupts the first CA in target faction's Beat 3 resolution queue if it matches Ghost's specified parameters.",
     arbiter_note = "At Covert Dispatch, Ghost writes a target field (e.g., 'target_district') and expected value (e.g., 'Core'), plus a replacement value (e.g., 'Baryo'), in their Target Profile freeform space. At Beat 2: ARBITER checks target faction's first CA in the ARG. If that CA's Target Profile contains the exact field and value Ghost named, ARBITER silently crosses it out and writes Ghost's new value. If it does not match, Ghost's operation fizzles. The target faction executes their CA at Beat 3 against the new corrupted target.",
     design_note = "Beat 2 positional wager against a Beat 3 CA. Ghost must correctly predict a parameter of the opponent's first queued operation. The corruption is entirely silent until the operation resolves at Beat 3."
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -726,6 +734,7 @@ GHO.CA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -815,6 +824,7 @@ GHO.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -998,6 +1008,7 @@ GHO.CA.6 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1080,6 +1091,7 @@ GHO.CA.12 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -1172,6 +1184,7 @@ Backdate = Card(
     threshold       = 30,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Deceptive",
     outcome_type    = None,
@@ -1269,6 +1282,7 @@ FieldVerification = Card(
     threshold       = 35,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Verification",
     outcome_type    = None,
@@ -1360,6 +1374,7 @@ GHO.CA.13 = Card(
     cost    = resource.faction(Ghost).findings * 2,
     success = "Arbiter places 1 DA-02 (PhantomRecord) in Ghost's Dispatch Case. At debrief, Ghost gains district native resources equal to target_faction's influence-based generation.",
     design_note = "A financial twin to SCIF. Instead of generating Modifier cards off of structural density, this converts Findings into a mirrored payout of the target's passive district income."
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -1413,6 +1428,7 @@ GHO.CA.14 = Card(
     cost    = resource.faction(Ghost).findings * 2 + resource.faction(Ghost).exposure * 1 + resource.faction(Ghost).capital * 1 + intel_token * 1,
     success = "The Arbiter invalidates and removes the first Covert Operation submitted by target_faction in Beat 3.",
     design_note = "Massive multi-resource cost to justify an unblockable, blind veto of an opponent's action."
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -1478,6 +1494,7 @@ GHO.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1581,6 +1598,7 @@ GHO.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1677,6 +1695,7 @@ GHO.PA.3 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1769,6 +1788,7 @@ GHO.PA.4 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1864,6 +1884,7 @@ GHO.PA.5 = Card(
     threshold       = 50,
     ring_mod        = {Ring3: +10, Ring1: -15},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,

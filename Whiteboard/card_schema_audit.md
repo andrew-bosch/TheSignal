@@ -1,3 +1,5 @@
+**S143 update:** This audit predates the `value_rating` base-class move and `on_discard` field (see `design_reference_card_system.md` §Card Data Schema — both now current). It was also the entry point into a much larger S143 rabbit hole: value_rating scaffolding → cost/effect DB seeding → UVM pricing pipeline (`uvm_assumptions`, `uvm_pair_assumptions`, `v_card_pair_uvm_cost`) → outlier review, all tracked in PM05 04-n178 and `Whiteboard/cost_baseline_recommendations.md` (rewritten S143, that's the current working doc for the value_rating effort — this file is schema/enum conformance only, a narrower and now-dated scope).
+
 # Card Schema and Enum Validation Audit Report
 ## THE SIGNAL P1 — Paper Prototype (Artifact 04)
 

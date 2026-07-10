@@ -88,6 +88,7 @@ DIR.CA.1 = Card(
     perspectives = {Directorate: "This district is under institutional oversight. Expansion requires authorisation. Authorisation has not been granted."},
     design_note  = None,
     arbiter_note = None,
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -168,6 +169,7 @@ DIR.CA.2 = Card(
     perspectives = {Directorate: "The marker has been detained. Its conversion will not occur."},
     design_note  = "L183. Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction (L183) Cost reasoning: Requires Capital to grease the bureaucratic wheels while Mandate provides the authority.",
     arbiter_note = "Consume Intel token. Move named faction's deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -248,6 +250,7 @@ DIR.CA.3 = Card(
     perspectives = {Directorate: "We know what moves through that district before it moves. We will respond accordingly."},
     design_note  = "Redesigned S68 v2.0: original permanent passive feed with beat3_pre_resolution delivery invalidated — Governing Rule 7.2a prohibits covert board markers; ARBITER holds no log in L1. Episodic model: Directorate watches one district one month. ARBITER reads existing Beat 3 grid row at Beat 2 resolution — no new tracking. Op type only, no faction. Multiple copies in Directorate deck flagged for deck design pass (04-n42).",
     arbiter_note = "During Beat 2 resolution of this card: check the Beat 3 resolution grid for covert operations targeting district(target). For each operation present, write the operation type on an IntelDeliverySlip and deliver privately to Directorate. Do not include faction identity. If no Beat 3 operations target the district, deliver nothing — Directorate's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -326,6 +329,7 @@ DIR.CA.4 = Card(
     perspectives = {Directorate: "Our presence is where it needs to be. This was always the plan. The redistribution was anticipated."},
     design_note  = "Replaces DIR.CA.4 Sealed Border (retired S51). Fills Territory — Move — Presence token gap; no other card in the full set uses this verb + subject combination. Most impactful before Battlefield Strength when district control margins are tight.",
     arbiter_note = "Move named Directorate presence tokens from source to destination. Adjacency confirmed against district adjacency table. Entry requirements rechecked at destination — if Directorate does not qualify for entry, card is discarded without effect (resources not refunded). Control flags and Established markers recalculated after move.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -384,6 +388,7 @@ DIR.PA.4 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -468,6 +473,7 @@ DIR.PA.5 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Permanent public act",
     outcome_type    = Unilateral,
@@ -568,6 +574,7 @@ DIR.CA.5 = Card(
     threshold = 65 - (10 * n_boost),  # n_boost = BM-xx count; locked at Beat 0
     ring_mod  = {0:-15, 1:-10, 2:0, 3:+10},
     doctrine_mod = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger   = None,
     resolution_type = "Probabilistic", outcome_type = None,
     persistence     = Immediate,
@@ -650,6 +657,7 @@ DIR.CA.6 = Card(
     layer   = Economy, function = Add, subject = NativeResource,
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -727,6 +735,7 @@ DIR.CA.7 = Card(
     layer   = Standing, function = Shift, subject = StandingMarker,
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -804,6 +813,7 @@ DIR.CA.8 = Card(
     layer   = Resolution, function = Modify, subject = Difficulty,
     beat=2, resolution=Automatic, threshold=None,
     ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -897,6 +907,7 @@ DIR.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -998,6 +1009,7 @@ DIR.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1126,6 +1138,7 @@ EntryExitControls = Card(
     },
     design_note  = "Persistent PA. Card sits in Directorate's active PA area on the Overview (not on district tile). Immediate: non-Directorate deployment markers in named district displaced to any district where owning faction has presence, flipped to Blocked. Persistent: non-Directorate deployment marker placement blocked in named district. persistence_condition auto-discards card if Directorate falls below Established. PS −1 at resolution (public backlash). Counter-card removal TBD — see PM05 04-n29.",
     arbiter_note = "Name the district. Each non-Directorate deployment marker there: owning faction moves it to any district where they have presence, flip to Blocked.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -1188,6 +1201,7 @@ P_StandingInjunction = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Permanent public act",
     outcome_type    = Unilateral,
@@ -1281,6 +1295,7 @@ DIR.PA.7 = Card(
     layer   = Territory,  function = Block,  subject = DeploymentMarker,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Transient,
     persistence_condition = None,  persistence_effect = None,
@@ -1347,6 +1362,7 @@ DIR.PA.8 = Card(
     layer   = Economy,  function = Remove,  subject = Capital,
     beat    = 4,  resolution = d100,  threshold = 40,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Probabilistic",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
@@ -1420,6 +1436,7 @@ DIR.PA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1512,6 +1529,7 @@ DIR.PA.10 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1601,6 +1619,7 @@ DIR.PA.11 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Permanent public act",
     outcome_type    = Unilateral,

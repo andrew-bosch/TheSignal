@@ -29,3 +29,6 @@ Session/CLOSE_QUEUE.md
 # Local-only working files — not canonical, not for git, not for wiki (Andy + agy, S134)
 V1/_assets_local/
 
+# Database backps — binary files that will bloat the repository
+Database/db_backups/
+*.sql.gz

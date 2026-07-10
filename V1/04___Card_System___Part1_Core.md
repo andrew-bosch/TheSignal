@@ -39,13 +39,13 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | File | Content |
 |------|---------|
 | `04___Card_System___Part1_Core.md` (this file) | §1–6, §8–15 |
-| `04___Card_System___Part2_Standard.md` | Standard — Covert Operations, Public Acts (STD.CA, STD.PA) |
-| `04___Card_System___Part3_Ring_Modifiers.md` | Ring-sourced Modifier Cards (STD.MOD.1–133) |
-| `04___Card_System___Part4a_Guild.md` | Guild |
-| `04___Card_System___Part4b_Ghost.md` | Ghost |
-| `04___Card_System___Part4c_Directorate.md` | Directorate |
-| `04___Card_System___Part4d_Network.md` | Network |
-| `04___Card_System___Part4e_Syndicate.md` | Syndicate |
+| [`04___Card_System___Part2_Standard.md`](04___Card_System___Part2_Standard.md) | Standard — Covert Operations, Public Acts (STD.CA, STD.PA) |
+| [`04___Card_System___Part3_Ring_Modifiers.md`](04___Card_System___Part3_Ring_Modifiers.md) | Ring-sourced Modifier Cards (STD.MOD.1–133) |
+| [`04___Card_System___Part4a_Guild.md`](04___Card_System___Part4a_Guild.md) | Guild |
+| [`04___Card_System___Part4b_Ghost.md`](04___Card_System___Part4b_Ghost.md) | Ghost |
+| [`04___Card_System___Part4c_Directorate.md`](04___Card_System___Part4c_Directorate.md) | Directorate |
+| [`04___Card_System___Part4d_Network.md`](04___Card_System___Part4d_Network.md) | Network |
+| [`04___Card_System___Part4e_Syndicate.md`](04___Card_System___Part4e_Syndicate.md) | Syndicate |
 
 `04___Card_System.md` (the original monolith) is regenerated from these 8 parts by `tools/assemble_card_system.py` — it is a build artifact, not source of truth, and stays around for legacy analysis scripts that expect a single file.
 
@@ -216,6 +216,12 @@ Each of the four resolution fields — `success`, `successcrit`, `fail`, `failcr
 A card's resource cost must match its power level per the floor/ceiling model in 00a §9.2. Mono-resource costs (acting faction's own native resource only) belong on floor-power cards — limited in effect, available from game-open. Cross-faction-resource costs (two or more distinct native resources) belong on ceiling-power cards — proportionally stronger, executable only through prior trade or territorial expansion. A card may not be simultaneously mono-resource and high-power. If a card's effect is strong, its cost must cross faction lines.
 
 Non-native resource generation through card effects must be exceptional. The canonical paths to non-native resources are trade and territory expansion — a card that generates them directly shortcuts those paths and requires explicit doctrine justification.
+
+---
+
+**P29 — Discard-Immune Cards**
+
+A card with `on_discard` set is immune to every discard event that would otherwise apply to it — normal post-resolution discard and any effect that discards cards from a faction's hand (e.g. `arbiter.discard_hand`) alike. Instead of being removed, the card returns to the acting faction's hand. This is not an ARBITER-tracked step: the acting faction self-polices the return as part of their own end-of-Beat cleanup, the same way Permanent card-as-condition cards are self-policed (Pillar 4.7b; ARBITER adjudicates disputes only, GR 6.1a). `on_discard = None` on every card by default; set only where a card is explicitly designed as reusable/evergreen rather than consumed (currently: STD.PA.9 Town Hall, the Floor Act — PM02 D04-13/L216).
 
 ---
 
@@ -450,6 +456,7 @@ class Card:
     threshold:    int | None                # None when Automatic
     ring_mod:     dict[Ring, int] | None              # None when no ring variation
     doctrine_mod: dict[PentagramRelation, int] | None # None when no faction target or no doctrinal variation
+    value_rating: int | None                # 1–4; power/strength tier, printed on card face. Moved to base Card() S143 (04-n183) — was Modifier-subclass-only (S135/L259). CA/PA meaning not yet defined; None = TBD/unscaffolded pending whole-set cost-derivation analysis (04-n178).
     trigger:      TriggerExpr | None        # None = default beat timing
     resolution_type: str | None            # evolving vocabulary — feeds 00c §8
     outcome_type: OutcomeType | None        # public acts only
@@ -476,6 +483,7 @@ class Card:
     failcrit:     MutationExpr | None       # additive delta — fires with fail
     on_accept:    MutationExpr | None       # ElectPlayer only — effect when target accepts; None otherwise
     on_decline:   MutationExpr | None       # ElectPlayer only — effect when target declines; None otherwise
+    on_discard:   MutationExpr | None       # None = normal discard applies; else fires instead of discard — including targeted hand-discard effects — card returns to hand (P29)
 
     # ── Portrait ──────────────────────────────────── dimension table  [VS-06]
     portrait:     dict[Faction, PortraitEntry]
@@ -513,7 +521,7 @@ class PSFraming:
 class ModActionCard(Card):
     # Modifier bundled with an op at Covert Dispatch; fires with host action. Field constraints: §6.2.
     effect:           ModActionExpr        # tagged union: threshold_delta | success_multiplier | ps_shift | cost_reduction (PA only)
-    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259 — ModActionCard's threshold_delta needs a distinct value per tier); printed on card face; None = TBD (stub only)
+    # value_rating inherited from Card() — S143, 04-n183
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = usable only targeting that ring's districts
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -523,7 +531,7 @@ class ModActionCard(Card):
 class ModBattleCard(Card):
     # Modifier for Battlefield Strength resolution (§10 Contested District Resolution). Field constraints: §6.2.
     effect:           ModBattleExpr        # delta on a named contesting faction's total; direction (Boost | Hinder) + target + magnitude — see §6.3
-    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259); None = TBD (stub only)
+    # value_rating inherited from Card() — S143, 04-n183
     ring_constraint:  Ring | None          # if set, usable only in Battlefield Strength for a district in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -537,7 +545,7 @@ class ModReactCard(Card):
     # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as standing condition until Quarter end;
     #              Permanent = remains until an explicit clearing condition is met (confirmed S131 — DIR.MOD.9 Fiscal Sanction)
     # Field constraints: §6.2.
-    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259); None = TBD (stub only)
+    # value_rating inherited from Card() — S143, 04-n183
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -570,6 +578,7 @@ class ModReactCard(Card):
 | threshold | Metadata | int | Base difficulty as numeric threshold; None when Automatic | Face |
 | ring_mod | Metadata | dict[Ring, int] | Per-ring threshold adjustment; positive = easier, negative = harder; None when no variation | Face |
 | doctrine_mod | Metadata | dict[PentagramRelation, int] | Per-doctrinal-relationship threshold adjustment based on acting/target faction pentagram proximity; positive = easier, negative = harder; None when no faction target or no doctrinal variation | Face |
+| value_rating | Metadata | int \| None | 1–4 (widened from 1–3, S135/L259). Power/strength tier printed on card face; used in Splay calculation for Modifier cards. Base Card() field as of S143 (04-n183) — previously Modifier-subclass-only. Feeds the whole-set cost-derivation model (04-n178). CA/PA definition not yet set; `None` = TBD/unscaffolded until the whole-set analysis assigns real values. | Face |
 | trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
 | resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
@@ -590,6 +599,7 @@ class ModReactCard(Card):
 | failcrit | Effects | MutationExpr | Additive delta on critical failure (roll ≥ 96, i.e. 96–00); None when Automatic | Face |
 | on_accept | Effects | MutationExpr | ElectPlayer outcome type only — effect applied when target accepts the offer at resolution; None when outcome_type ≠ ElectPlayer | Face |
 | on_decline | Effects | MutationExpr | ElectPlayer outcome type only — effect applied when target declines the offer at resolution; None when outcome_type ≠ ElectPlayer | Face |
+| on_discard | Effects | MutationExpr | None = normal discard applies. When set, fires instead of any discard event — including targeted hand-discard effects (e.g. `arbiter.discard_hand`) — in place of removing the card. Self-policed by the acting faction as part of their own end-of-Beat cleanup; not an ARBITER-tracked step (P29, Pillar 4.7b, GR 6.1a). | Face |
 | portrait | Portrait | dict[Faction, PortraitEntry] | Per-faction portrait scoring — evaluated by ARBITER; analyzed in DB | TBD |
 | ps_framing | Public Standing | PSFraming \| None | Structured public-reception PS model. `type`: probabilistic (D100 roll at trigger) or fixed (unconditional). `trigger`: resolution (Beat 4 PA), discovery (covert failcrit only), or placement (on card placement). `threshold`: D100 roll target; probabilistic only. `on_success`/`on_fail`: lists of PSShift (faction + delta). Probabilistic PA default on_fail: acting −1. None = card produces no PS shift. | Face |
 | narrative | Narrative | str | In-world narrative grounding — one sentence; neutral observer (standard) or owning faction voice (faction-specific) | TBD |
@@ -607,7 +617,6 @@ Fields added by ModActionCard, ModBattleCard, and ModReactCard. All three subcla
 |-------|----------|------|---------|-----------|
 | effect | ModActionCard | ModActionExpr | Tagged union — exactly one: threshold_delta(n) \| success_multiplier(n) \| ps_shift(faction, delta) \| cost_reduction(n); cost_reduction is PA ops only (CA cost committed at dispatch before Beat 0) | Face |
 | effect | ModBattleCard | ModBattleExpr | Delta (Boost or Hinder) applied to a named contesting faction's Battlefield Strength total (Art 03 §10.1.2); target faction is chosen by the playing faction at commit and need not be themselves, nor a contestant — Art 03 §10.1.2 Step 2 (S132) | Face |
-| value_rating | All modifier subclasses | int \| None | 1–4 (widened from 1–3, S135/L259 — ModActionCard's 4-tier `threshold_delta` needed a distinct value per tier, not two tiers sharing a band); modifier strength signal printed on card face; used in Splay calculation; None = TBD (stub only — must be set before design pass) | Face |
 | ring_constraint | All modifier subclasses | Ring \| None | Deployment restriction set at card design time by narrative — location-anchored assets get the ring value; portable assets get None. ModActionCard: usable only with ops targeting that ring's districts. ModBattleCard: usable only in Battlefield Strength for a district in that ring. ModReactCard: fires only when trigger condition occurs in that ring's districts. Semantics under review for Ring-sourced cards specifically — PM05 04-n161. | Face |
 | ring_origin | All modifier subclasses | Ring \| None | Which modifier deck this card belongs to — None = faction modifier deck; 1/2/3 = Ring 1/2/3 modifier deck. Determines draw eligibility (§11.2) and card back color. Separate from ring_constraint: a Ring 1 card (ring_origin=1) may have ring_constraint=None (portable, no deployment restriction). None (not applicable) when acquisition=Issued. | No |
 | acquisition | All modifier subclasses | AcquisitionSource | Deck (default) = drawn from a Faction or Ring Modifier deck at Upkeep, gated by ring_origin. Issued = ARBITER delivers the card directly as a named consequence of another card's resolution — no Upkeep draw, no deck, ring_origin forced None. Orthogonal to subclass — any of the three subclasses may in principle be Issued; all current Issued cards happen to be ModReactCard. S133 — supersedes the S133-earlier `ModIssuedCard` 4th-subclass model (PM02 L245 revises L241). | Face |
@@ -632,6 +641,7 @@ Which inherited Card fields are always None vs. per-card design vs. required. `N
 | boost | None | None | — |
 | success / successcrit / fail / failcrit | None | None | — |
 | on_accept / on_decline | None | None | — |
+| on_discard | None | None | — |
 | ps_framing | None | None | — |
 | perspectives / design_note | — | None | — |
 | acquisition | Deck by default — omit unless Issued | Deck by default — omit unless Issued | Deck by default — omit unless Issued |
@@ -1406,13 +1416,14 @@ Produced by any CA that delivers a Grant Deed (currently SYN.CA.8 Land Title and
 1. Deed holder announces React; presents Grant Deed card; names district.
 2. Place 1 Presence Token for deed holder in `deed.district`.
 3. Place 1 Structure Block for deed holder in `deed.district` (Governing Rule 8.2 governs — if holder already has a structure block there, step 3 is skipped; step 2 still executes).
-4. Discard Grant Deed.
+4. Remove 1 Structure Block belonging to the triggering faction from `deed.district` — the registered deed takes precedence over the unauthorized build that just fired it.
+5. Discard Grant Deed.
 
 **Component registration:** New component — Art 02 entry pending 04-n26.
 
 ```python
 GD01 = Card(
-    id      = "GD-01",  version = "v0.3",
+    id      = "GD-01",  version = "v0.4",
     name    = "Grant Deed",
     tagline = "A registered claim. When someone else breaks ground, the deed fires.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
@@ -1445,7 +1456,8 @@ GD01 = Card(
     generating_card  = ["SYN.CA.8", "GUI.CA.10"],
 
     success = [faction(holding).presence_token.add(deed.district, 1),
-               faction(holding).structure_block.add(deed.district, 1)],
+               faction(holding).structure_block.add(deed.district, 1),
+               faction(trigger.faction).structure_block.remove(deed.district, 1)],
     successcrit = None,  fail = None,  failcrit = None,
 
     portrait    = None,
@@ -1453,7 +1465,7 @@ GD01 = Card(
 
     narrative    = None,
     perspectives = None,
-    design_note  = "Issued ModReactCard (S133 — was `ModIssuedCard`, PM02 L245 revises L241/PM05 04-n154; before that, plain ModReactCard). Acquisition axis (acquisition=Issued, generating_card) now carries what the retired ModIssuedCard subclass tried to express. ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order.",
+    design_note  = "Issued ModReactCard (S133 — was `ModIssuedCard`, PM02 L245 revises L241/PM05 04-n154; before that, plain ModReactCard). Acquisition axis (acquisition=Issued, generating_card) now carries what the retired ModIssuedCard subclass tried to express. ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order. **v0.4 (S143, Andy):** added step 3 effect — removes 1 structure block belonging to the triggering faction from deed.district. The registered claim doesn't just let the holder catch up when someone else builds; it displaces that build outright. Narrative: a Land Title/Development Order registered earlier legally supersedes an unauthorized structure raised later on the same ground. Materially strengthens the card — feeds into repricing SYN.CA.8/GUI.CA.10's own cost (PM05 04-n178, UVM pair-cost analysis).",
     arbiter_note = "At generating CA resolution: take 1 blank Grant Deed from ARBITER tableau; write target district name in 'district' field and acting faction in 'holder' field; place in acting faction's Dispatch Case. Card moves to holder's hand at Debrief. No ongoing ARBITER monitoring required — holder self-polices and announces React when trigger fires.",
 )
 ```

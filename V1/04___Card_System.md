@@ -39,13 +39,13 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | File | Content |
 |------|---------|
 | `04___Card_System___Part1_Core.md` (this file) | §1–6, §8–15 |
-| `04___Card_System___Part2_Standard.md` | Standard — Covert Operations, Public Acts (STD.CA, STD.PA) |
-| `04___Card_System___Part3_Ring_Modifiers.md` | Ring-sourced Modifier Cards (STD.MOD.1–133) |
-| `04___Card_System___Part4a_Guild.md` | Guild |
-| `04___Card_System___Part4b_Ghost.md` | Ghost |
-| `04___Card_System___Part4c_Directorate.md` | Directorate |
-| `04___Card_System___Part4d_Network.md` | Network |
-| `04___Card_System___Part4e_Syndicate.md` | Syndicate |
+| [`04___Card_System___Part2_Standard.md`](04___Card_System___Part2_Standard.md) | Standard — Covert Operations, Public Acts (STD.CA, STD.PA) |
+| [`04___Card_System___Part3_Ring_Modifiers.md`](04___Card_System___Part3_Ring_Modifiers.md) | Ring-sourced Modifier Cards (STD.MOD.1–133) |
+| [`04___Card_System___Part4a_Guild.md`](04___Card_System___Part4a_Guild.md) | Guild |
+| [`04___Card_System___Part4b_Ghost.md`](04___Card_System___Part4b_Ghost.md) | Ghost |
+| [`04___Card_System___Part4c_Directorate.md`](04___Card_System___Part4c_Directorate.md) | Directorate |
+| [`04___Card_System___Part4d_Network.md`](04___Card_System___Part4d_Network.md) | Network |
+| [`04___Card_System___Part4e_Syndicate.md`](04___Card_System___Part4e_Syndicate.md) | Syndicate |
 
 `04___Card_System.md` (the original monolith) is regenerated from these 8 parts by `tools/assemble_card_system.py` — it is a build artifact, not source of truth, and stays around for legacy analysis scripts that expect a single file.
 
@@ -216,6 +216,12 @@ Each of the four resolution fields — `success`, `successcrit`, `fail`, `failcr
 A card's resource cost must match its power level per the floor/ceiling model in 00a §9.2. Mono-resource costs (acting faction's own native resource only) belong on floor-power cards — limited in effect, available from game-open. Cross-faction-resource costs (two or more distinct native resources) belong on ceiling-power cards — proportionally stronger, executable only through prior trade or territorial expansion. A card may not be simultaneously mono-resource and high-power. If a card's effect is strong, its cost must cross faction lines.
 
 Non-native resource generation through card effects must be exceptional. The canonical paths to non-native resources are trade and territory expansion — a card that generates them directly shortcuts those paths and requires explicit doctrine justification.
+
+---
+
+**P29 — Discard-Immune Cards**
+
+A card with `on_discard` set is immune to every discard event that would otherwise apply to it — normal post-resolution discard and any effect that discards cards from a faction's hand (e.g. `arbiter.discard_hand`) alike. Instead of being removed, the card returns to the acting faction's hand. This is not an ARBITER-tracked step: the acting faction self-polices the return as part of their own end-of-Beat cleanup, the same way Permanent card-as-condition cards are self-policed (Pillar 4.7b; ARBITER adjudicates disputes only, GR 6.1a). `on_discard = None` on every card by default; set only where a card is explicitly designed as reusable/evergreen rather than consumed (currently: STD.PA.9 Town Hall, the Floor Act — PM02 D04-13/L216).
 
 ---
 
@@ -450,6 +456,7 @@ class Card:
     threshold:    int | None                # None when Automatic
     ring_mod:     dict[Ring, int] | None              # None when no ring variation
     doctrine_mod: dict[PentagramRelation, int] | None # None when no faction target or no doctrinal variation
+    value_rating: int | None                # 1–4; power/strength tier, printed on card face. Moved to base Card() S143 (04-n183) — was Modifier-subclass-only (S135/L259). CA/PA meaning not yet defined; None = TBD/unscaffolded pending whole-set cost-derivation analysis (04-n178).
     trigger:      TriggerExpr | None        # None = default beat timing
     resolution_type: str | None            # evolving vocabulary — feeds 00c §8
     outcome_type: OutcomeType | None        # public acts only
@@ -476,6 +483,7 @@ class Card:
     failcrit:     MutationExpr | None       # additive delta — fires with fail
     on_accept:    MutationExpr | None       # ElectPlayer only — effect when target accepts; None otherwise
     on_decline:   MutationExpr | None       # ElectPlayer only — effect when target declines; None otherwise
+    on_discard:   MutationExpr | None       # None = normal discard applies; else fires instead of discard — including targeted hand-discard effects — card returns to hand (P29)
 
     # ── Portrait ──────────────────────────────────── dimension table  [VS-06]
     portrait:     dict[Faction, PortraitEntry]
@@ -513,7 +521,7 @@ class PSFraming:
 class ModActionCard(Card):
     # Modifier bundled with an op at Covert Dispatch; fires with host action. Field constraints: §6.2.
     effect:           ModActionExpr        # tagged union: threshold_delta | success_multiplier | ps_shift | cost_reduction (PA only)
-    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259 — ModActionCard's threshold_delta needs a distinct value per tier); printed on card face; None = TBD (stub only)
+    # value_rating inherited from Card() — S143, 04-n183
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = usable only targeting that ring's districts
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -523,7 +531,7 @@ class ModActionCard(Card):
 class ModBattleCard(Card):
     # Modifier for Battlefield Strength resolution (§10 Contested District Resolution). Field constraints: §6.2.
     effect:           ModBattleExpr        # delta on a named contesting faction's total; direction (Boost | Hinder) + target + magnitude — see §6.3
-    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259); None = TBD (stub only)
+    # value_rating inherited from Card() — S143, 04-n183
     ring_constraint:  Ring | None          # if set, usable only in Battlefield Strength for a district in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -537,7 +545,7 @@ class ModReactCard(Card):
     # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as standing condition until Quarter end;
     #              Permanent = remains until an explicit clearing condition is met (confirmed S131 — DIR.MOD.9 Fiscal Sanction)
     # Field constraints: §6.2.
-    value_rating:     int | None            # 1–4 (widened from 1–3, S135/L259); None = TBD (stub only)
+    # value_rating inherited from Card() — S143, 04-n183
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -570,6 +578,7 @@ class ModReactCard(Card):
 | threshold | Metadata | int | Base difficulty as numeric threshold; None when Automatic | Face |
 | ring_mod | Metadata | dict[Ring, int] | Per-ring threshold adjustment; positive = easier, negative = harder; None when no variation | Face |
 | doctrine_mod | Metadata | dict[PentagramRelation, int] | Per-doctrinal-relationship threshold adjustment based on acting/target faction pentagram proximity; positive = easier, negative = harder; None when no faction target or no doctrinal variation | Face |
+| value_rating | Metadata | int \| None | 1–4 (widened from 1–3, S135/L259). Power/strength tier printed on card face; used in Splay calculation for Modifier cards. Base Card() field as of S143 (04-n183) — previously Modifier-subclass-only. Feeds the whole-set cost-derivation model (04-n178). CA/PA definition not yet set; `None` = TBD/unscaffolded until the whole-set analysis assigns real values. | Face |
 | trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
 | resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
@@ -590,6 +599,7 @@ class ModReactCard(Card):
 | failcrit | Effects | MutationExpr | Additive delta on critical failure (roll ≥ 96, i.e. 96–00); None when Automatic | Face |
 | on_accept | Effects | MutationExpr | ElectPlayer outcome type only — effect applied when target accepts the offer at resolution; None when outcome_type ≠ ElectPlayer | Face |
 | on_decline | Effects | MutationExpr | ElectPlayer outcome type only — effect applied when target declines the offer at resolution; None when outcome_type ≠ ElectPlayer | Face |
+| on_discard | Effects | MutationExpr | None = normal discard applies. When set, fires instead of any discard event — including targeted hand-discard effects (e.g. `arbiter.discard_hand`) — in place of removing the card. Self-policed by the acting faction as part of their own end-of-Beat cleanup; not an ARBITER-tracked step (P29, Pillar 4.7b, GR 6.1a). | Face |
 | portrait | Portrait | dict[Faction, PortraitEntry] | Per-faction portrait scoring — evaluated by ARBITER; analyzed in DB | TBD |
 | ps_framing | Public Standing | PSFraming \| None | Structured public-reception PS model. `type`: probabilistic (D100 roll at trigger) or fixed (unconditional). `trigger`: resolution (Beat 4 PA), discovery (covert failcrit only), or placement (on card placement). `threshold`: D100 roll target; probabilistic only. `on_success`/`on_fail`: lists of PSShift (faction + delta). Probabilistic PA default on_fail: acting −1. None = card produces no PS shift. | Face |
 | narrative | Narrative | str | In-world narrative grounding — one sentence; neutral observer (standard) or owning faction voice (faction-specific) | TBD |
@@ -607,7 +617,6 @@ Fields added by ModActionCard, ModBattleCard, and ModReactCard. All three subcla
 |-------|----------|------|---------|-----------|
 | effect | ModActionCard | ModActionExpr | Tagged union — exactly one: threshold_delta(n) \| success_multiplier(n) \| ps_shift(faction, delta) \| cost_reduction(n); cost_reduction is PA ops only (CA cost committed at dispatch before Beat 0) | Face |
 | effect | ModBattleCard | ModBattleExpr | Delta (Boost or Hinder) applied to a named contesting faction's Battlefield Strength total (Art 03 §10.1.2); target faction is chosen by the playing faction at commit and need not be themselves, nor a contestant — Art 03 §10.1.2 Step 2 (S132) | Face |
-| value_rating | All modifier subclasses | int \| None | 1–4 (widened from 1–3, S135/L259 — ModActionCard's 4-tier `threshold_delta` needed a distinct value per tier, not two tiers sharing a band); modifier strength signal printed on card face; used in Splay calculation; None = TBD (stub only — must be set before design pass) | Face |
 | ring_constraint | All modifier subclasses | Ring \| None | Deployment restriction set at card design time by narrative — location-anchored assets get the ring value; portable assets get None. ModActionCard: usable only with ops targeting that ring's districts. ModBattleCard: usable only in Battlefield Strength for a district in that ring. ModReactCard: fires only when trigger condition occurs in that ring's districts. Semantics under review for Ring-sourced cards specifically — PM05 04-n161. | Face |
 | ring_origin | All modifier subclasses | Ring \| None | Which modifier deck this card belongs to — None = faction modifier deck; 1/2/3 = Ring 1/2/3 modifier deck. Determines draw eligibility (§11.2) and card back color. Separate from ring_constraint: a Ring 1 card (ring_origin=1) may have ring_constraint=None (portable, no deployment restriction). None (not applicable) when acquisition=Issued. | No |
 | acquisition | All modifier subclasses | AcquisitionSource | Deck (default) = drawn from a Faction or Ring Modifier deck at Upkeep, gated by ring_origin. Issued = ARBITER delivers the card directly as a named consequence of another card's resolution — no Upkeep draw, no deck, ring_origin forced None. Orthogonal to subclass — any of the three subclasses may in principle be Issued; all current Issued cards happen to be ModReactCard. S133 — supersedes the S133-earlier `ModIssuedCard` 4th-subclass model (PM02 L245 revises L241). | Face |
@@ -632,6 +641,7 @@ Which inherited Card fields are always None vs. per-card design vs. required. `N
 | boost | None | None | — |
 | success / successcrit / fail / failcrit | None | None | — |
 | on_accept / on_decline | None | None | — |
+| on_discard | None | None | — |
 | ps_framing | None | None | — |
 | perspectives / design_note | — | None | — |
 | acquisition | Deck by default — omit unless Issued | Deck by default — omit unless Issued | Deck by default — omit unless Issued |
@@ -1406,13 +1416,14 @@ Produced by any CA that delivers a Grant Deed (currently SYN.CA.8 Land Title and
 1. Deed holder announces React; presents Grant Deed card; names district.
 2. Place 1 Presence Token for deed holder in `deed.district`.
 3. Place 1 Structure Block for deed holder in `deed.district` (Governing Rule 8.2 governs — if holder already has a structure block there, step 3 is skipped; step 2 still executes).
-4. Discard Grant Deed.
+4. Remove 1 Structure Block belonging to the triggering faction from `deed.district` — the registered deed takes precedence over the unauthorized build that just fired it.
+5. Discard Grant Deed.
 
 **Component registration:** New component — Art 02 entry pending 04-n26.
 
 ```python
 GD01 = Card(
-    id      = "GD-01",  version = "v0.3",
+    id      = "GD-01",  version = "v0.4",
     name    = "Grant Deed",
     tagline = "A registered claim. When someone else breaks ground, the deed fires.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
@@ -1445,7 +1456,8 @@ GD01 = Card(
     generating_card  = ["SYN.CA.8", "GUI.CA.10"],
 
     success = [faction(holding).presence_token.add(deed.district, 1),
-               faction(holding).structure_block.add(deed.district, 1)],
+               faction(holding).structure_block.add(deed.district, 1),
+               faction(trigger.faction).structure_block.remove(deed.district, 1)],
     successcrit = None,  fail = None,  failcrit = None,
 
     portrait    = None,
@@ -1453,7 +1465,7 @@ GD01 = Card(
 
     narrative    = None,
     perspectives = None,
-    design_note  = "Issued ModReactCard (S133 — was `ModIssuedCard`, PM02 L245 revises L241/PM05 04-n154; before that, plain ModReactCard). Acquisition axis (acquisition=Issued, generating_card) now carries what the retired ModIssuedCard subclass tried to express. ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order.",
+    design_note  = "Issued ModReactCard (S133 — was `ModIssuedCard`, PM02 L245 revises L241/PM05 04-n154; before that, plain ModReactCard). Acquisition axis (acquisition=Issued, generating_card) now carries what the retired ModIssuedCard subclass tried to express. ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order. **v0.4 (S143, Andy):** added step 3 effect — removes 1 structure block belonging to the triggering faction from deed.district. The registered claim doesn't just let the holder catch up when someone else builds; it displaces that build outright. Narrative: a Land Title/Development Order registered earlier legally supersedes an unauthorized structure raised later on the same ground. Materially strengthens the card — feeds into repricing SYN.CA.8/GUI.CA.10's own cost (PM05 04-n178, UVM pair-cost analysis).",
     arbiter_note = "At generating CA resolution: take 1 blank Grant Deed from ARBITER tableau; write target district name in 'district' field and acting faction in 'holder' field; place in acting faction's Dispatch Case. Card moves to holder's hand at Debrief. No ongoing ARBITER monitoring required — holder self-polices and announces React when trigger fires.",
 )
 ```
@@ -1649,6 +1661,7 @@ STD.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -1742,6 +1755,7 @@ STD.CA.2 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1836,6 +1850,7 @@ STD.CA.3 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -1923,6 +1938,7 @@ STD.CA.4 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -2017,6 +2033,7 @@ STD.CA.5 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -2107,6 +2124,7 @@ STD.CA.6 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -2198,6 +2216,7 @@ STD.CA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -2288,6 +2307,7 @@ STD.CA.8 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -2386,6 +2406,7 @@ STD.CA.9 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = {Neighbor: +15, Opposed: -15},
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -2484,6 +2505,7 @@ STD.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -2575,6 +2597,7 @@ STD.CA.11 = Card(
     type    = CovertOperation,  subtype = Standard,  faction = All,
     layer   = Information,  function = Corrupt,  subject = Accord,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Permanent,
     persistence_condition = not (game.end OR Accord(named).breach_by_party),
@@ -2662,6 +2685,7 @@ STD.CA.12 = Card(
     type    = CovertOperation,  subtype = Standard,  faction = All,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -2734,6 +2758,7 @@ C_DisinformationCampaign = Card(
     threshold       = 40,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -2833,6 +2858,7 @@ C_Disprove = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -2926,6 +2952,7 @@ C_IntelExtraction = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -3022,6 +3049,7 @@ C_ModifierRaid = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -3092,6 +3120,7 @@ Public acts are Beat 4 cards unless otherwise specified.
 | [STD.PA.6](#p06-economic-sanction) | Economic Sanction |
 | [STD.PA.7](#p07-public-address) | Public Address |
 | [STD.PA.8](#p08-table-an-accord) | Table an Accord |
+| [STD.PA.9](#p09-town-hall) | Town Hall |
 
 ### STD.PA.1 — OPEN OPERATIONS
 [↑ Public Acts](#standard-public-acts)
@@ -3144,6 +3173,7 @@ STD.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -3238,6 +3268,7 @@ STD.PA.2 = Card(
     threshold       = 45,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = {Neighbor: +10, Opposed: -10},
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -3341,6 +3372,7 @@ STD.PA.3 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -3438,6 +3470,7 @@ STD.PA.4 = Card(
     threshold       = 35,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -3537,6 +3570,7 @@ STD.PA.5 = Card(
     threshold       = 35,  # base = Stale token; Fresh → +15 via affinity; Network → +10 via affinity
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -3638,6 +3672,7 @@ STD.PA.6 = Card(
     threshold       = 40,
     ring_mod        = None,
     doctrine_mod    = {Neighbor: +10, Opposed: -10},
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -3736,6 +3771,7 @@ STD.PA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -3835,6 +3871,7 @@ STD.PA.8 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = BilateralAgreement,
@@ -3880,6 +3917,104 @@ STD.PA.8 = Card(
     },
     design_note  = "Accord initiation PA. Cost = 1 native flat (all factions). PA slot is the primary gate: 3 PA slots per Quarter, card is draw-dependent. PS vote at decline gates proposal quality (unreasonable proposal = proposer −1 PS). Blank form is a proposal, not a contract; 1 native signals that diplomacy is accessible. L200. Ghost −1: Accords are commitments.",
     arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver blank AccordForm from ARBITER tableau supply to submitting faction. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. PS consequences per Art 06 §9.4.",
+)
+```
+
+---
+
+### STD.PA.9 — TOWN HALL
+[↑ Public Acts](#standard-public-acts)
+
+#### Design Rationale
+The Floor Act (PM02 D04-13/L216) — the game's guaranteed playable floor (Pillar 4.8c): the only card that is never drawn and never leaves a faction's hand. Distributed once to each faction at setup (Art 03-init §3.6) and immune to every discard event via `on_discard` (P29, Art 04 §6) — normal resolution and any targeted hand-discard effect (cf. `arbiter.discard_hand`, GHO.MOD React) alike return it to the acting faction's hand instead of removing it. This guarantees availability, not success: resolution is `d100`/threshold 50 with no `ring_mod` or `doctrine_mod`, deliberately the weakest reliable play in the corpus rather than the safest (Pillar 4.8b, Irreducible Chance) — playing it against the same district all 3 Months of a Quarter succeeds all three times only 12.5% of the time (0.5³). Restricted to a district carrying the acting faction's own currently-placed deployment marker, below Established (`presence < 2`) — it reinforces a toehold already committed at Placement; it cannot be used to open new territory, which bounds the effect against runaway board-wide accumulation. Cost = 1 native, exactly matching passive generation (Pillar 4.8d) — always affordable regardless of resource state. Faction-agnostic by design: no `affinity`, no `doctrine_mod`, no `portrait` — every faction performs the identical act, so there is no differential doctrinal signal for the Chorus to read. Crit tail carries a small symmetric PS shift (successcrit +1 / failcrit −1, acting only) reflecting an unusually well- or poorly-attended forum; base success/fail carry no PS shift, keeping the floor non-punishing on an ordinary roll.
+
+#### Card Story
+A faction that already has a marker down in a district books the hall, puts out word, and stands up to take questions from whoever shows. Sometimes the room stays full and something sticks. Sometimes it's three people and a folding chair, and nothing changes — but the faction showed up, which is the only thing this was ever really about.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Minor, universal grassroots outreach — deliberately the low-floor action guaranteeing at least one legal, meaningful move every Beat 4 | Art 00a §4.8c |
+| Voice fit | ✓ | All five perspectives distinct and doctrinally grounded: Guild's show-the-work framing, Directorate's institutional-continuity framing, Network's outreach-is-the-mission framing, Ghost's reluctant-but-necessary framing, Syndicate's cheap-relevance framing | Art 00 §7 |
+| Doctrine alignment | ✓ | Deliberately none — no `affinity`, no `doctrine_mod`; every faction performs the identical act, so there is no doctrinal differentiation to encode | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / Standard, but distributed at setup (Art 03-init §3.6) rather than drawn — the only card in the corpus with this acquisition path | Art 04 §6.2; Art 03-init §3.6 |
+| Taxonomy fit | ✓ | Territory / Add / PresenceToken — same category as STD.PA.1, scaled down | Art 04b §4 |
+| Balance | ✓ | Cheapest possible cost (1 native, matching ~24 other cards in the corpus — cost is not what makes this card unique); floor-power resolution (d100/50, no ring_mod/doctrine_mod); restriction to below-Established districts carrying the acting faction's own deployment marker bounds the effect against runaway accumulation | Art 02 §6–§7; Art 00a §9.2 |
+| Effect duration | ✓ | `persistence = Immediate` — presence-token gain is a permanent board-state change; the card itself resolves and returns to hand each time, it does not create an ongoing board condition | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate + `on_discard` set (P29) — the only card in the corpus using `on_discard`; behavior is fully defined at schema level (Art 04 §6, P29), not restated per-card | Art 04 §6 |
+| Trigger validity | N/A | `trigger = None` — standard beat timing | — |
+| Portrait validity | ✓ | `portrait = {}` — no doctrinal differentiation to score; identical mechanic across all five factions | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any`, gated by `restriction` to a district carrying the acting faction's currently-placed deployment marker — same restriction-expression pattern as Directorate's Detain (`district(target).faction(target).deployment_marker >= 1`) | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken (Art 02 §6); deployment marker (Art 02 §6, restriction reference); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
+| Supported by game procedure | ✓ | Beat 4 standard PA resolution (Art 03 §9.4); setup distribution at Art 03-init §3.6 (1 per faction, permanent, do-not-discard note now superseded by `on_discard`) | Art 03 §9.4; Art 03-init §3.6 |
+| Data schema validation | ✓ | `on_discard` is a new field this pass (Art 04 §6.1/§6.2/P29); `resolution_type = "Probabilistic"` used correctly per the confirmed 2-value vocabulary (not `"Contested"`, avoiding the sprawl pattern flagged elsewhere in the corpus) | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story answers the P26 test directly; narrative + 5 perspectives written | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/successcrit/fail/failcrit each specify exactly one outcome; no `game.choose_one()` or branching | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 1) — correctly a floor-power card per the floor/ceiling model (Art 00a §9.2, P28): not simultaneously mono-resource and high-power | Art 00a §9.2 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | ✓ | |
+
+```python
+STD.PA.9 = Card(
+    id      = "STD.PA.9",  card_id="STD.PA.9",  version="v1.0",
+    name    = "Town Hall",
+    tagline = "Hold a public forum in a district where you already have people on the ground.",
+    type    = PublicAct,  subtype = Standard,  faction = All,
+
+    layer    = Territory,  function = Add,  subject = PresenceToken,
+
+    beat            = 4,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
+
+    target_taxonomy = None,
+    affinity    = None,
+    restriction = (
+        district(target_district).faction(acting).deployment_marker >= 1
+        AND district(target_district).faction(acting).presence < 2
+    ),
+    cost        = resource.faction(acting) * 1,
+    boost       = None,
+
+    success     = district(target_district).faction(acting).presence += 1,
+    successcrit = faction(acting).standing += 1,
+    fail        = None,
+    failcrit    = faction(acting).standing -= 1,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = game.return_to_hand(acting),
+
+    portrait = {},
+    ps_framing   = None,
+
+    narrative    = "New Meridian doesn't run on declarations alone. Sometimes a faction just needs to stand in the same room again, in front of the same people, and let them see it hasn't left.",
+    perspectives = {
+        Guild:       "We don't need a stage. We need people to see what we're already building here and decide to stay and watch.",
+        Directorate: "A scheduled forum, properly noticed. Continuity means showing up even in districts where we have little else to offer.",
+        Network:     "We don't stop talking to the people who live here just because the story's slow this month. That's the whole point of what we do.",
+        Ghost:       "We would rather listen than be listened to. Someone still has to stand in the room. This time, it's us.",
+        Syndicate:   "Cheap, and it buys another quarter of relevance somewhere we already paid to be.",
+    },
+    design_note  = "The Floor Act (PM02 D04-13/L216). Guarantees availability, not success — d100/50, no ring_mod/doctrine_mod, weakest reliable play by design (Pillar 4.8b). Restricted to a district carrying the acting faction's own deployment marker, below Established — reinforces a committed toehold, cannot open new territory. Cost = 1 native, matches passive generation exactly (Pillar 4.8d). Faction-agnostic: no affinity, no doctrine_mod, no portrait. Crit tail only: successcrit/failcrit ±1 PS (acting only); base success/fail carry no PS shift, keeping the floor non-punishing on an ordinary roll.",
+    arbiter_note = None,
 )
 ```
 
@@ -13051,6 +13186,7 @@ GUI.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -13141,6 +13277,7 @@ GUI.CA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = faction(target).completes(CovertOp, id=STD.CA.2),
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -13235,6 +13372,7 @@ GUI.CA.3 = Card(
     threshold       = 25,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -13324,6 +13462,7 @@ GUI.CA.4 = Card(
     threshold       = 65,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -13420,6 +13559,7 @@ GUI.CA.5 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -13511,6 +13651,7 @@ GUI.CA.6 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = faction(target).completes(CovertOp, id=STD.CA.1),
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -13622,6 +13763,7 @@ GUI.CA.7 = Card(
     success     = "Guild pays 2 target.native resources to target_faction; arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1)",
     
     design_note = "Guild's territorial response gap filled. Coercive eviction via buyout. Cost reasoning: 2 Capacity + 1 Capital (Mid-tier). Liquidating real estate out from under an opponent."
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -13677,6 +13819,7 @@ GUI.CA.8 = Card(
     cost    = resource.faction(Guild).capacity * 1 + resource.faction(Guild).mandate * 1,
     success = "Remove 1 target Structure Block. Guild gains +1 PS.",
     design_note = "A thematic variant of STD.CA.2 (Demolish). Bribe removed to keep resolution strictly blind via Arbiter."
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -13735,6 +13878,7 @@ GUI.CA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -13842,6 +13986,7 @@ GUI.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -13930,6 +14075,7 @@ GUI.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -14032,6 +14178,7 @@ GUI.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,  # Neighbor relationship noted for narrative — no threshold variance (Automatic)
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = BilateralAgreement,
@@ -14133,6 +14280,7 @@ GUI.PA.3 = Card(
     beat            = 4,
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence     = Permanent,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a card-as-condition effect not structured here
@@ -14208,6 +14356,7 @@ GUI.PA.4 = Card(
     beat            = 4,
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence     = Immediate,  # scaffolded — deterministic default for a non-standing, one-shot PA
     persistence_condition = None,  persistence_effect = None,
@@ -14282,6 +14431,7 @@ GUI.PA.5 = Card(
     beat            = 4,
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence     = Seasonal,  # scaffolded — matches prose "for the next Quarter"
     persistence_condition = None,  persistence_effect = None,
@@ -14355,6 +14505,7 @@ GUI.PA.6 = Card(
     layer   = Territory,  function = Modify,  subject = StructureBlock,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -14422,6 +14573,7 @@ GUI.PA.7 = Card(
     layer   = Territory,  function = Add,  subject = PresenceToken,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -14489,6 +14641,7 @@ GUI.PA.8 = Card(
     layer   = Standing,  function = Shift,  subject = StandingMarker,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Permanent,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
@@ -14560,6 +14713,7 @@ GUI.PA.9 = Card(
     threshold       = 40,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = Unilateral,
@@ -14668,6 +14822,7 @@ GUI.PA.10 = Card(
     threshold       = 50,
     ring_mod        = {Ring3: +10, Ring2: 0, Ring1: -10, Ring0: -15},
     doctrine_mod    = {Neighbor: +15, Opposed: -15},
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = Unilateral,
@@ -16699,6 +16854,7 @@ GHO.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Predictive",
     outcome_type    = None,
@@ -16789,6 +16945,7 @@ GHO.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
     beat=2, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
+    value_rating = None,  # scaffolded, not addressed
     trigger=None,
     resolution_type="Probabilistic", outcome_type=None,
     persistence     = Immediate,
@@ -16884,6 +17041,7 @@ GHO.CA.3 = Card(
     perspectives = {Ghost: "We did not take their cards. We simply read their intentions. They will act on plans we already know."},
     design_note  = "Redesigned S68: original target was unplayed hand (CardHandContents) — requires physical access to target player's cards, not executable covertly at paper table. Redesigned to SIGINT tap model: Ghost taps faction X's dispatch channel at Beat 2. ARBITER reads faction X's Beat 3 grid column at Beat 2 resolution (name + declared target only; modifier cards excluded). IntelDeliverySlip delivered to Ghost at Beat 2 resolution. Beat 2 commitment is the risk. Empty case = empty slip — resources spent. DR-xx (DispatchReport) collapsed into IS-xx S68 — column read is IntelDeliverySlip with list content.",
     arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -16937,6 +17095,7 @@ GHO.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Remove,  subject = IntelToken,
     beat=3, resolution=d100, threshold=25, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Probabilistic", outcome_type=None,
     persistence           = Immediate,
     persistence_condition = None,
@@ -17019,6 +17178,7 @@ GHO.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Corrupt,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -17100,6 +17260,7 @@ GHO.CA.7 = Card(
     threshold       = 55,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -17188,6 +17349,7 @@ GHO.CA.8 = Card(
     threshold       = 40,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -17269,6 +17431,7 @@ GHO.CA.15 = Card(
     success = "Ghost corrupts the first CA in target faction's Beat 3 resolution queue if it matches Ghost's specified parameters.",
     arbiter_note = "At Covert Dispatch, Ghost writes a target field (e.g., 'target_district') and expected value (e.g., 'Core'), plus a replacement value (e.g., 'Baryo'), in their Target Profile freeform space. At Beat 2: ARBITER checks target faction's first CA in the ARG. If that CA's Target Profile contains the exact field and value Ghost named, ARBITER silently crosses it out and writes Ghost's new value. If it does not match, Ghost's operation fizzles. The target faction executes their CA at Beat 3 against the new corrupted target.",
     design_note = "Beat 2 positional wager against a Beat 3 CA. Ghost must correctly predict a parameter of the opponent's first queued operation. The corruption is entirely silent until the operation resolves at Beat 3."
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -17330,6 +17493,7 @@ GHO.CA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -17419,6 +17583,7 @@ GHO.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -17602,6 +17767,7 @@ GHO.CA.6 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -17684,6 +17850,7 @@ GHO.CA.12 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -17776,6 +17943,7 @@ Backdate = Card(
     threshold       = 30,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Deceptive",
     outcome_type    = None,
@@ -17873,6 +18041,7 @@ FieldVerification = Card(
     threshold       = 35,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Verification",
     outcome_type    = None,
@@ -17964,6 +18133,7 @@ GHO.CA.13 = Card(
     cost    = resource.faction(Ghost).findings * 2,
     success = "Arbiter places 1 DA-02 (PhantomRecord) in Ghost's Dispatch Case. At debrief, Ghost gains district native resources equal to target_faction's influence-based generation.",
     design_note = "A financial twin to SCIF. Instead of generating Modifier cards off of structural density, this converts Findings into a mirrored payout of the target's passive district income."
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -18017,6 +18187,7 @@ GHO.CA.14 = Card(
     cost    = resource.faction(Ghost).findings * 2 + resource.faction(Ghost).exposure * 1 + resource.faction(Ghost).capital * 1 + intel_token * 1,
     success = "The Arbiter invalidates and removes the first Covert Operation submitted by target_faction in Beat 3.",
     design_note = "Massive multi-resource cost to justify an unblockable, blind veto of an opponent's action."
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -18082,6 +18253,7 @@ GHO.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -18185,6 +18357,7 @@ GHO.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -18281,6 +18454,7 @@ GHO.PA.3 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -18373,6 +18547,7 @@ GHO.PA.4 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -18468,6 +18643,7 @@ GHO.PA.5 = Card(
     threshold       = 50,
     ring_mod        = {Ring3: +10, Ring1: -15},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -20531,6 +20707,7 @@ DIR.CA.1 = Card(
     perspectives = {Directorate: "This district is under institutional oversight. Expansion requires authorisation. Authorisation has not been granted."},
     design_note  = None,
     arbiter_note = None,
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -20611,6 +20788,7 @@ DIR.CA.2 = Card(
     perspectives = {Directorate: "The marker has been detained. Its conversion will not occur."},
     design_note  = "L183. Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction (L183) Cost reasoning: Requires Capital to grease the bureaucratic wheels while Mandate provides the authority.",
     arbiter_note = "Consume Intel token. Move named faction's deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -20691,6 +20869,7 @@ DIR.CA.3 = Card(
     perspectives = {Directorate: "We know what moves through that district before it moves. We will respond accordingly."},
     design_note  = "Redesigned S68 v2.0: original permanent passive feed with beat3_pre_resolution delivery invalidated — Governing Rule 7.2a prohibits covert board markers; ARBITER holds no log in L1. Episodic model: Directorate watches one district one month. ARBITER reads existing Beat 3 grid row at Beat 2 resolution — no new tracking. Op type only, no faction. Multiple copies in Directorate deck flagged for deck design pass (04-n42).",
     arbiter_note = "During Beat 2 resolution of this card: check the Beat 3 resolution grid for covert operations targeting district(target). For each operation present, write the operation type on an IntelDeliverySlip and deliver privately to Directorate. Do not include faction identity. If no Beat 3 operations target the district, deliver nothing — Directorate's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -20769,6 +20948,7 @@ DIR.CA.4 = Card(
     perspectives = {Directorate: "Our presence is where it needs to be. This was always the plan. The redistribution was anticipated."},
     design_note  = "Replaces DIR.CA.4 Sealed Border (retired S51). Fills Territory — Move — Presence token gap; no other card in the full set uses this verb + subject combination. Most impactful before Battlefield Strength when district control margins are tight.",
     arbiter_note = "Move named Directorate presence tokens from source to destination. Adjacency confirmed against district adjacency table. Entry requirements rechecked at destination — if Directorate does not qualify for entry, card is discarded without effect (resources not refunded). Control flags and Established markers recalculated after move.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -20827,6 +21007,7 @@ DIR.PA.4 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -20911,6 +21092,7 @@ DIR.PA.5 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Permanent public act",
     outcome_type    = Unilateral,
@@ -21011,6 +21193,7 @@ DIR.CA.5 = Card(
     threshold = 65 - (10 * n_boost),  # n_boost = BM-xx count; locked at Beat 0
     ring_mod  = {0:-15, 1:-10, 2:0, 3:+10},
     doctrine_mod = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger   = None,
     resolution_type = "Probabilistic", outcome_type = None,
     persistence     = Immediate,
@@ -21093,6 +21276,7 @@ DIR.CA.6 = Card(
     layer   = Economy, function = Add, subject = NativeResource,
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -21170,6 +21354,7 @@ DIR.CA.7 = Card(
     layer   = Standing, function = Shift, subject = StandingMarker,
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -21247,6 +21432,7 @@ DIR.CA.8 = Card(
     layer   = Resolution, function = Modify, subject = Difficulty,
     beat=2, resolution=Automatic, threshold=None,
     ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -21340,6 +21526,7 @@ DIR.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -21441,6 +21628,7 @@ DIR.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -21569,6 +21757,7 @@ EntryExitControls = Card(
     },
     design_note  = "Persistent PA. Card sits in Directorate's active PA area on the Overview (not on district tile). Immediate: non-Directorate deployment markers in named district displaced to any district where owning faction has presence, flipped to Blocked. Persistent: non-Directorate deployment marker placement blocked in named district. persistence_condition auto-discards card if Directorate falls below Established. PS −1 at resolution (public backlash). Counter-card removal TBD — see PM05 04-n29.",
     arbiter_note = "Name the district. Each non-Directorate deployment marker there: owning faction moves it to any district where they have presence, flip to Blocked.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -21631,6 +21820,7 @@ P_StandingInjunction = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Permanent public act",
     outcome_type    = Unilateral,
@@ -21724,6 +21914,7 @@ DIR.PA.7 = Card(
     layer   = Territory,  function = Block,  subject = DeploymentMarker,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Transient,
     persistence_condition = None,  persistence_effect = None,
@@ -21790,6 +21981,7 @@ DIR.PA.8 = Card(
     layer   = Economy,  function = Remove,  subject = Capital,
     beat    = 4,  resolution = d100,  threshold = 40,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Probabilistic",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
@@ -21863,6 +22055,7 @@ DIR.PA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -21955,6 +22148,7 @@ DIR.PA.10 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -22044,6 +22238,7 @@ DIR.PA.11 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Permanent public act",
     outcome_type    = Unilateral,
@@ -23942,6 +24137,7 @@ NET.CA.1 = Card(
     perspectives = {Network: "We do not reveal everything. We reveal the piece that makes everything else visible."},
     design_note  = "Redesigned S68: subject corrected to District (was ActionAttribution — taxonomy mismatch); pre-execution discovery + cancellation model confirmed (target op cancelled, resources lost, PS reduction applies); cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending 04-n33/04-n34b. S126 agy audit: subject corrected to CovertOperation (District was also a mismatch — DistrictTile has no Reveal in comp_verb_phase; the card reveals and cancels a CovertOperation, not the district itself).",
     arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending 04-n33). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -24015,6 +24211,7 @@ NET.CA.2 = Card(
     perspectives = {Network: "We revealed something. Now we can reveal something more. The loop is already running."},
     design_note  = "Replaces NET.CA.2 Source Protection (retired S51). Source Protection was doctrinally misaligned — protecting attribution is Ghost's register, not Network's. Pairs with NET.CA.1 Leak and NET.CA.3 Breaking News.",
     arbiter_note = "At Beat 3 cleanup, check whether any Network Reveal card resolved successfully this round. If yes, deliver 1 Exposure to Network's resource pool. If no Reveal resolved, card takes effect but produces nothing — the slot cost was the investment.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -24106,6 +24303,7 @@ NET.CA.3 = Card(
     },
     design_note  = "Replaces NET.CA.3 Open Channel (retired S68 — Governing Rule 6.1 cross-beat state violation). Fills Network's forced-transparency FactionSpecific slot at L1. Beat 2: ARBITER announces target's first Beat 3 queue entry to all players; VM-xx placed to flag public Beat 3 resolution. Distinct from NET.CA.1 Leak (Beat 3 cancel + reveal) and GHO.CA.2 Intercept (private IS-xx to Ghost). Fizzle: if target has no committed Beat 3 ops at Beat 2, announce fizzle; cost spent. Second Beat 2 d100 card alongside GHO.CA.2 — procedure gap in Art 03 tracked in 04-n75.",
     arbiter_note = "Network has played Breaking News targeting faction X. Roll d100 (threshold 50 + PS modifier). Success: check faction X's Beat 3 queue. If empty: announce 'No operations queued for faction X — Breaking News fizzles'; cost spent, no further effect. Otherwise: identify faction X's first entry in Beat 3 resolution order; announce to all players: card name, type, declared targets; place VM-xx on that card in the grid. VM-xx procedure at Beat 3: when this card is reached, announce it publicly, roll d100 visibly, announce outcome to table, then remove VM-xx. Do not announce Network as acting faction. Crit success: reveal and place VM-xx on ALL of faction X's Beat 3 queue entries. Fail: cost spent, no announcement. Crit fail: dispatch NotificationSlip to faction X only. Do not announce Network.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -24179,6 +24377,7 @@ NET.CA.4 = Card(
     perspectives = {Network: "The signal does not stop at district borders. Neither do we."},
     design_note  = None,
     arbiter_note = None,
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -24252,6 +24451,7 @@ NET.CA.5 = Card(
     perspectives = {Network: "We already have contacts there. This is formalising what already exists."},
     design_note  = None,
     arbiter_note = None,
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -24308,6 +24508,7 @@ NET.CA.6 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -24389,6 +24590,7 @@ NET.CA.7 = Card(
     layer   = Standing, function = Shift, subject = StandingMarker,
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -24481,6 +24683,7 @@ NET.CA.8 = Card(
     narrative   = None,  perspectives = None,
     design_note = "Network fabricates a story pointing to a destination district with no strategic value. The target faction's DeploymentMarker follows — their deployment is wasted. TargetProfile: target_faction and target_district identify the marker and its current location; freeform field specifies destination district. ARBITER executes the move and flips marker to Unconverted status. Chain play: Beat 2 covert move → same Quarter Leak or Live Coverage exposing the displaced position.",
     arbiter_note = "Read TargetProfile: target_faction and target_district identify whose marker and from which district. Freeform field specifies destination. Beat 2: move marker from source to destination; flip to Unconverted face. Announce marker has moved — do not announce acting faction. Fail: no effect, cost spent.",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -24546,6 +24749,7 @@ NET.PA.1 = Card(
     threshold       = 30 + (10 * count(intel_token(target=faction(target)).held)),  # +10 per token held naming target
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -24641,6 +24845,7 @@ NET.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -24740,6 +24945,7 @@ NET.PA.3 = Card(
     type    = PublicAct, subtype = FactionSpecific, faction = Network,
     layer   = Information, function = Reveal, subject = FactionHand,  # 04b validation needed
     beat=4, resolution=d100, threshold=50, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Probabilistic", outcome_type=None,
     persistence     = Seasonal,
     persistence_condition = "target_faction complied (open hand) for one full Covert Dispatch this Quarter → card clears at end of that Covert Dispatch; or Quarter end",
@@ -24901,6 +25107,7 @@ NET.PA.4 = Card(
     layer   = Territory,  function = Remove,  subject = PresenceToken,
     beat    = 4,  resolution = d100,  threshold = 60,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Probabilistic",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -24967,6 +25174,7 @@ NET.PA.5 = Card(
     layer   = Standing,  function = Shift,  subject = StandingMarker,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -25033,6 +25241,7 @@ NET.PA.6 = Card(
     layer   = Economy,  function = Add,  subject = AnyResource,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -25112,6 +25321,7 @@ NET.MOD.1 = Card(
     target_district = district(trigger.target),
     beat    = 4,  resolution = d100,  threshold = 50,
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
+    value_rating = None,  # scaffolded, not addressed
     persistence=Immediate,  persistence_condition=None,  persistence_effect=None,
     target_faction=None,  target_object=None,  target_taxonomy=None,
     affinity=None,  restriction=None,
@@ -27215,6 +27425,7 @@ SYN.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -27321,6 +27532,7 @@ SYN.CA.2 = Card(
     perspectives = {Syndicate: "We are not destroying their capacity. We are adjusting market conditions temporarily."},
     design_note  = None,
     arbiter_note = None,
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -27403,6 +27615,7 @@ SYN.CA.3 = Card(
     perspectives = {Syndicate: "We made a fair offer. The market determined the value. We accepted the market's judgment."},
     design_note  = None,
     arbiter_note = None,
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -27475,6 +27688,7 @@ SYN.CA.4 = Card(
     perspectives    = {Syndicate: "We did not lose those resources. We placed them where the problem would be. There is a difference."},
     design_note     = "Capital declared at Dispatch on target profile. Beat 0: retained (not drained). Beat 2: distributed across target_faction Beat 3 ops targeting Syndicate, first-to-last, until exhausted. Beat 3: full coverage = void + Capital to submitter case; partial = −50 marker + Capital to submitter case. No ops from target_faction = windfall to return case. Wager structure: Syndicate bets positionally — wrong bet wastes Capital, correct bet nullifies threat Cost reasoning: Exposure and Findings identify the target's vulnerabilities and legitimize the aggressive posture.",
     arbiter_note    = "See Art 03 Beat 0 (Retained validation), Beat 2 (Golden Parachute procedure), Beat 3 Step 1.4 (capital-on-card resolution).",
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -27549,6 +27763,7 @@ SYN.CA.5 = Card(
     perspectives = {Syndicate: "The regulatory framework exists. We simply ensure it reflects current market conditions."},
     design_note  = None,
     arbiter_note = None,
+    value_rating = None,  # scaffolded, not addressed
 )
 ```
 
@@ -27616,6 +27831,7 @@ LandTitle = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Territory,  function = Add,  subject = StructureBlock,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None,
+    value_rating = None,  # scaffolded, not addressed
     trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
@@ -27694,6 +27910,7 @@ HostileTakeover = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Territory,  function = Add,  subject = PresenceToken,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
+    value_rating = None,  # scaffolded, not addressed
     trigger=None,
     resolution_type="Probabilistic", outcome_type=None,
     persistence     = Immediate,
@@ -27783,6 +28000,7 @@ SYN.CA.10 = Card(
     threshold    = 50,
     ring_mod     = None,
     doctrine_mod = None,
+    value_rating = None,  # scaffolded, not addressed
 
     target_district = None,
     target_faction  = faction(outgoing_party),
@@ -27912,6 +28130,7 @@ SYN.CA.6 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -28007,6 +28226,7 @@ SYN.CA.7 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Redirect,  subject = NativeResource,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=ElectPlayer,
     persistence     = Immediate,
     persistence_condition = None,
@@ -28178,6 +28398,7 @@ SYN.CA.11 = Card(
     threshold    = 50,
     ring_mod     = None,
     doctrine_mod = None,
+    value_rating = None,  # scaffolded, not addressed
 
     target_district = None,
     target_faction  = None,
@@ -28282,6 +28503,7 @@ SYN.CA.12 = Card(
     threshold    = None,
     ring_mod     = None,
     doctrine_mod = None,
+    value_rating = None,  # scaffolded, not addressed
 
     target_district = None,
     target_faction  = None,
@@ -28372,6 +28594,7 @@ SYN.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = ElectPlayer,  # target accepts or declines at Beat 4
@@ -28475,6 +28698,7 @@ SYN.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -28588,6 +28812,7 @@ SYN.PA.3 = Card(
     threshold    = None,
     ring_mod     = None,
     doctrine_mod = None,
+    value_rating = None,  # scaffolded, not addressed
     outcome_type = ElectPlayer,
 
     target_district = None,
@@ -28714,6 +28939,7 @@ SYN.PA.4 = Card(
     layer   = Standing,  function = Shift,  subject = StandingMarker,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -28780,6 +29006,7 @@ SYN.PA.5 = Card(
     layer   = Territory,  function = Remove,  subject = StructureBlock,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Transient,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here

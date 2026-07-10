@@ -77,6 +77,7 @@ STD.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -170,6 +171,7 @@ STD.CA.2 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -264,6 +266,7 @@ STD.CA.3 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -351,6 +354,7 @@ STD.CA.4 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -445,6 +449,7 @@ STD.CA.5 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -535,6 +540,7 @@ STD.CA.6 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -626,6 +632,7 @@ STD.CA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -716,6 +723,7 @@ STD.CA.8 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -814,6 +822,7 @@ STD.CA.9 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = {Neighbor: +15, Opposed: -15},
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -912,6 +921,7 @@ STD.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -1003,6 +1013,7 @@ STD.CA.11 = Card(
     type    = CovertOperation,  subtype = Standard,  faction = All,
     layer   = Information,  function = Corrupt,  subject = Accord,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Permanent,
     persistence_condition = not (game.end OR Accord(named).breach_by_party),
@@ -1090,6 +1101,7 @@ STD.CA.12 = Card(
     type    = CovertOperation,  subtype = Standard,  faction = All,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
+    value_rating = None,  # scaffolded, not addressed
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1162,6 +1174,7 @@ C_DisinformationCampaign = Card(
     threshold       = 40,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1261,6 +1274,7 @@ C_Disprove = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1354,6 +1368,7 @@ C_IntelExtraction = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1450,6 +1465,7 @@ C_ModifierRaid = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1520,6 +1536,7 @@ Public acts are Beat 4 cards unless otherwise specified.
 | [STD.PA.6](#p06-economic-sanction) | Economic Sanction |
 | [STD.PA.7](#p07-public-address) | Public Address |
 | [STD.PA.8](#p08-table-an-accord) | Table an Accord |
+| [STD.PA.9](#p09-town-hall) | Town Hall |
 
 ### STD.PA.1 — OPEN OPERATIONS
 [↑ Public Acts](#standard-public-acts)
@@ -1572,6 +1589,7 @@ STD.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1666,6 +1684,7 @@ STD.PA.2 = Card(
     threshold       = 45,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = {Neighbor: +10, Opposed: -10},
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -1769,6 +1788,7 @@ STD.PA.3 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1866,6 +1886,7 @@ STD.PA.4 = Card(
     threshold       = 35,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -1965,6 +1986,7 @@ STD.PA.5 = Card(
     threshold       = 35,  # base = Stale token; Fresh → +15 via affinity; Network → +10 via affinity
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -2066,6 +2088,7 @@ STD.PA.6 = Card(
     threshold       = 40,
     ring_mod        = None,
     doctrine_mod    = {Neighbor: +10, Opposed: -10},
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -2164,6 +2187,7 @@ STD.PA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -2263,6 +2287,7 @@ STD.PA.8 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = BilateralAgreement,
@@ -2308,6 +2333,104 @@ STD.PA.8 = Card(
     },
     design_note  = "Accord initiation PA. Cost = 1 native flat (all factions). PA slot is the primary gate: 3 PA slots per Quarter, card is draw-dependent. PS vote at decline gates proposal quality (unreasonable proposal = proposer −1 PS). Blank form is a proposal, not a contract; 1 native signals that diplomacy is accessible. L200. Ghost −1: Accords are commitments.",
     arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver blank AccordForm from ARBITER tableau supply to submitting faction. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. PS consequences per Art 06 §9.4.",
+)
+```
+
+---
+
+### STD.PA.9 — TOWN HALL
+[↑ Public Acts](#standard-public-acts)
+
+#### Design Rationale
+The Floor Act (PM02 D04-13/L216) — the game's guaranteed playable floor (Pillar 4.8c): the only card that is never drawn and never leaves a faction's hand. Distributed once to each faction at setup (Art 03-init §3.6) and immune to every discard event via `on_discard` (P29, Art 04 §6) — normal resolution and any targeted hand-discard effect (cf. `arbiter.discard_hand`, GHO.MOD React) alike return it to the acting faction's hand instead of removing it. This guarantees availability, not success: resolution is `d100`/threshold 50 with no `ring_mod` or `doctrine_mod`, deliberately the weakest reliable play in the corpus rather than the safest (Pillar 4.8b, Irreducible Chance) — playing it against the same district all 3 Months of a Quarter succeeds all three times only 12.5% of the time (0.5³). Restricted to a district carrying the acting faction's own currently-placed deployment marker, below Established (`presence < 2`) — it reinforces a toehold already committed at Placement; it cannot be used to open new territory, which bounds the effect against runaway board-wide accumulation. Cost = 1 native, exactly matching passive generation (Pillar 4.8d) — always affordable regardless of resource state. Faction-agnostic by design: no `affinity`, no `doctrine_mod`, no `portrait` — every faction performs the identical act, so there is no differential doctrinal signal for the Chorus to read. Crit tail carries a small symmetric PS shift (successcrit +1 / failcrit −1, acting only) reflecting an unusually well- or poorly-attended forum; base success/fail carry no PS shift, keeping the floor non-punishing on an ordinary roll.
+
+#### Card Story
+A faction that already has a marker down in a district books the hall, puts out word, and stands up to take questions from whoever shows. Sometimes the room stays full and something sticks. Sometimes it's three people and a folding chair, and nothing changes — but the faction showed up, which is the only thing this was ever really about.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Minor, universal grassroots outreach — deliberately the low-floor action guaranteeing at least one legal, meaningful move every Beat 4 | Art 00a §4.8c |
+| Voice fit | ✓ | All five perspectives distinct and doctrinally grounded: Guild's show-the-work framing, Directorate's institutional-continuity framing, Network's outreach-is-the-mission framing, Ghost's reluctant-but-necessary framing, Syndicate's cheap-relevance framing | Art 00 §7 |
+| Doctrine alignment | ✓ | Deliberately none — no `affinity`, no `doctrine_mod`; every faction performs the identical act, so there is no doctrinal differentiation to encode | Art 00 §7 |
+| Card type fit | ✓ | PublicAct / Standard, but distributed at setup (Art 03-init §3.6) rather than drawn — the only card in the corpus with this acquisition path | Art 04 §6.2; Art 03-init §3.6 |
+| Taxonomy fit | ✓ | Territory / Add / PresenceToken — same category as STD.PA.1, scaled down | Art 04b §4 |
+| Balance | ✓ | Cheapest possible cost (1 native, matching ~24 other cards in the corpus — cost is not what makes this card unique); floor-power resolution (d100/50, no ring_mod/doctrine_mod); restriction to below-Established districts carrying the acting faction's own deployment marker bounds the effect against runaway accumulation | Art 02 §6–§7; Art 00a §9.2 |
+| Effect duration | ✓ | `persistence = Immediate` — presence-token gain is a permanent board-state change; the card itself resolves and returns to hand each time, it does not create an ongoing board condition | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate + `on_discard` set (P29) — the only card in the corpus using `on_discard`; behavior is fully defined at schema level (Art 04 §6, P29), not restated per-card | Art 04 §6 |
+| Trigger validity | N/A | `trigger = None` — standard beat timing | — |
+| Portrait validity | ✓ | `portrait = {}` — no doctrinal differentiation to score; identical mechanic across all five factions | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any`, gated by `restriction` to a district carrying the acting faction's currently-placed deployment marker — same restriction-expression pattern as Directorate's Detain (`district(target).faction(target).deployment_marker >= 1`) | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken (Art 02 §6); deployment marker (Art 02 §6, restriction reference); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
+| Supported by game procedure | ✓ | Beat 4 standard PA resolution (Art 03 §9.4); setup distribution at Art 03-init §3.6 (1 per faction, permanent, do-not-discard note now superseded by `on_discard`) | Art 03 §9.4; Art 03-init §3.6 |
+| Data schema validation | ✓ | `on_discard` is a new field this pass (Art 04 §6.1/§6.2/P29); `resolution_type = "Probabilistic"` used correctly per the confirmed 2-value vocabulary (not `"Contested"`, avoiding the sprawl pattern flagged elsewhere in the corpus) | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story answers the P26 test directly; narrative + 5 perspectives written | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; success/successcrit/fail/failcrit each specify exactly one outcome; no `game.choose_one()` or branching | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 1) — correctly a floor-power card per the floor/ceiling model (Art 00a §9.2, P28): not simultaneously mono-resource and high-power | Art 00a §9.2 |
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ | ✓ | |
+
+```python
+STD.PA.9 = Card(
+    id      = "STD.PA.9",  card_id="STD.PA.9",  version="v1.0",
+    name    = "Town Hall",
+    tagline = "Hold a public forum in a district where you already have people on the ground.",
+    type    = PublicAct,  subtype = Standard,  faction = All,
+
+    layer    = Territory,  function = Add,  subject = PresenceToken,
+
+    beat            = 4,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating = None,  # scaffolded, not addressed
+    trigger         = None,
+    resolution_type = "Probabilistic",
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
+
+    target_taxonomy = None,
+    affinity    = None,
+    restriction = (
+        district(target_district).faction(acting).deployment_marker >= 1
+        AND district(target_district).faction(acting).presence < 2
+    ),
+    cost        = resource.faction(acting) * 1,
+    boost       = None,
+
+    success     = district(target_district).faction(acting).presence += 1,
+    successcrit = faction(acting).standing += 1,
+    fail        = None,
+    failcrit    = faction(acting).standing -= 1,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = game.return_to_hand(acting),
+
+    portrait = {},
+    ps_framing   = None,
+
+    narrative    = "New Meridian doesn't run on declarations alone. Sometimes a faction just needs to stand in the same room again, in front of the same people, and let them see it hasn't left.",
+    perspectives = {
+        Guild:       "We don't need a stage. We need people to see what we're already building here and decide to stay and watch.",
+        Directorate: "A scheduled forum, properly noticed. Continuity means showing up even in districts where we have little else to offer.",
+        Network:     "We don't stop talking to the people who live here just because the story's slow this month. That's the whole point of what we do.",
+        Ghost:       "We would rather listen than be listened to. Someone still has to stand in the room. This time, it's us.",
+        Syndicate:   "Cheap, and it buys another quarter of relevance somewhere we already paid to be.",
+    },
+    design_note  = "The Floor Act (PM02 D04-13/L216). Guarantees availability, not success — d100/50, no ring_mod/doctrine_mod, weakest reliable play by design (Pillar 4.8b). Restricted to a district carrying the acting faction's own deployment marker, below Established — reinforces a committed toehold, cannot open new territory. Cost = 1 native, matches passive generation exactly (Pillar 4.8d). Faction-agnostic: no affinity, no doctrine_mod, no portrait. Crit tail only: successcrit/failcrit ±1 PS (acting only); base success/fail carry no PS shift, keeping the floor non-punishing on an ordinary roll.",
+    arbiter_note = None,
 )
 ```
 
