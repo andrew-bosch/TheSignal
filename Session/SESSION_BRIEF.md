@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 144 complete | Updated: 2026-07-12**
+**Session 145 complete | Updated: 2026-07-13**
 **Session start:** (stamped at next boot — see CLAUDE.md Session Startup step 1)
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
@@ -34,40 +34,38 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S144 Accomplishments
+## S145 Accomplishments
 
-**Full S143 outlier checklist closed — 6 cards resolved, both open modeling gaps addressed.** Full detail: PM05 04-n178 · `Whiteboard/cost_baseline_recommendations.md` · PM02 L277–L282.
+**`value_rating` (1–4) definition locked and applied corpus-wide — 04-n178/04-n183 closed, the deliverable this whole thread has been building toward since S143.** Full detail: PM02 L283/L284 · `Whiteboard/cost_baseline_recommendations.md` §5 · `Database/schema_reference.md` §6.7.
 
-**Repriced:** Land Title/Development Order (modest bump following GD-01's v0.4 value jump, L277); Hostile Takeover — retagged Add→Redirect per Art 04b §4's own definitions (matches SYN.PA.1's existing correct tag), which flipped the read from underpriced to overpriced, then cost cut accordingly (L278); Intercept — cost restructured (Findings dropped, IntelToken-only) + threshold 50→60, delta −107.5%→+3.9% (L279); Intel Extraction — cost 2→1 native + threshold 45→55, delta −153.7%→−4.0% (L281); Network Cascade — cross-resource cost confirmed correct, effect doubled instead (+1→+2), clean 0% delta (L282).
+**Tier scheme:** natural-break on `total_pair_cost` (<3.0→1, 3.0–4.99→2, 5.0–6.99→3, ≥7.0→4) — a pyramid shape matching "1=floor, 4=end-game-ceiling," not equal-population quartiles (checked and rejected). 164 cards tiered by a two-pass batch script (`Database/apply_value_rating.py`, saved for reuse — self-contained, idempotent, queries the DB live); 27 ring-modifier cards already matched via the separate S132/S134 magnitude-mirror convention; **9 disagreed and were overridden to the pricing-model tier on Andy's call** ("value is based on effect value") — STD.MOD.99/111/123 1→2, STD.MOD.101/103/113/115/125/127 2→1, Balance rows rewritten to match. 8 cards remain unaddressed (no computable `total_pair_cost` — blocked/TBD cards, not a scheme gap). `GHO.CA.11` stays excluded (unfinalized, own spec still `id=TBD`).
 
-**Left alone, confirmed correct (not bugs):** City Ledger (has_boost floor-artifact — real value matches its own "rare ceiling" design intent); Broadcast Interference/Amplify (Network's affinity-adjusted cost already matches model value; the non-Network premium is an intentional doctrinal tax).
+**GHO.PA.1/STD.PA.5 taxonomy-corrected and repriced along the way** (both were tagged `Reveal/ActionAttribution` when their real effect is a PS swing — retagged to `Shift/StandingMarker`, precedented S126/S137). STD.PA.5: threshold 35→30 closed the delta to −2.4%. GHO.PA.1: cost restructured (Findings/Exposure/target-native/Intel Tokens, 8.00→10.00 effective); still +45.2% — **locked as intentional Ghost doctrinal advantage**, not a further pricing defect (the 2-token prior-investment gate isn't visible to the raw-cost model).
 
-**New standing rule locked: d100 thresholds must be multiples of 5 (L280)** — corpus was already 100% compliant, formalizes existing practice.
+**Documented the model's governing caveat everywhere it needs to travel:** UVM base rates are calibrated by averaging *existing* card costs (only 7/28 Subject and 25/58 pair rates are even "validated" in that limited sense), not playtested. Added to `schema_reference.md` §6.7, `cost_baseline_recommendations.md` (new top-of-doc section), `design_reference_card_system.md`'s `value_rating` field definition, and `project_db_design_intent.md` memory — this follows any future use of `v_card_pair_uvm_cost` or anything downstream of it.
 
-**Self-cost-vs-delivered-value modeling gap: attempted a view fix, reverted.** Correctly fixed the two known cases (NET.CA.6, SYN.PA.1) but broke Intel Extraction's genuine value in the process — the `target` field's semantics aren't consistent across the corpus (sometimes beneficiary, sometimes whose game-state the expression references). No live change; needs a `target`-semantics audit, bigger than one session. Two smaller model gaps also logged, not fixed.
+**New open item: PM05 04-n184** — deck copy-count/draw-probability calculation, now unblocked by value_rating closing but explicitly scoped by Andy as coming *after* a redo of the per-faction/cross-faction card space audits (S119–128 style), not a standalone exercise. Andy flagged a real chance all 3 ring-modifier decks need retuning once copy-count accounts for the value_rating spread.
 
-**PublicAct/Modify scope-granularity gap: resolved as a non-issue.** The "5-cluster" wasn't one scope problem — it was 3 unrelated blockers (DIR.MOD.6 blocked on undesigned content; the doc's "NET.CA.4 is persistent" claim was factually wrong; STD.CA.6/7's apparent overpricing was Network-affinity working as intended). Also confirmed: no card in Art 04 is individually locked pending sign-off — per-card "✓ SXX" markers are checkpoints, not locks, until the whole artifact signs off.
-
-**New multi-agent Airlock system landed (lev/Antigravity on `brain` joined the cluster):** handshakes exchanged, `~/Airlock/andy.md` consolidated as the shared cross-agent profile/working-agreements file, new pruning convention adopted (inbound handoff files pruned immediately on ingestion, not deferred to close).
+**Airlock:** ingested and pruned an unread `lev-claude.md` handoff (wiki build script upgrade — card subdivision, nav links, anchor healing; deployed on `pinky`, no action needed this side).
 
 ---
 
-## Current Focus (S145)
+## Current Focus (S146)
 
-**Bucket `total_pair_cost` into the 1–4 `value_rating` tiers — the actual deliverable the whole 04-n178 thread has been building toward.** Tier boundaries not yet proposed; that's the direct continuation point now that the outlier checklist and both modeling gaps are resolved (S144). One open thread feeds into this and may need a call first: `SYN.PA.1` Acquisition Offer's true value is still unreliable (self-cost/value gap, unresolved) — decide whether to bucket around it as-is or resolve that gap first.
+**PM05 04-n184 — deck copy-count / draw-probability audit.** Per Andy's S145 direction, do NOT start this cold. Sequence: (1) redo the per-faction + cross-faction card space audits first (S119–128 style — 04-n50 Ghost, 04-n53 Standard, etc. consolidated passes), (2) only then run the copy-count/probability pass against the refreshed picture. Suspected outcome: all 3 ring-modifier decks (`Part3_Ring_Modifiers.md`, 133 cards) may need retuning. Scope not yet defined — copy-count-per-tier baseline, inverse-scaling-with-value_rating question, and whether faction MOD/CA/PA decks need the same treatment are all open.
 
-**Also open, carried from S142/S143, not yet scheduled:**
+**Also open, carried from S142–144, not yet scheduled:**
 - PM05 04-n180 — full-corpus sweep of embedded session/log commentary, incremental "as we do issue review."
 - 04-n177's expanded scope; 04-n165/04-n169 (Art 04 sign-off gates); 04-n171 (ModReactCard syntax reconciliation); `ref_board_narrative.md` sync pass; smaller carried backlog (04-n163/164/166/167/168/148/150/26/27/126/123, XA-54, 06-n01).
 - `schema_cleanup_log.md` items #10 (Intel Token as cost), #41 (resolution_type vocabulary), #2/#5 (persistence/trigger semantics) — independent of the value_rating thread, still open.
 - Light sweep worth scheduling: other `Territory/Add/PresenceToken`(or `StructureBlock`) cards for the same Add-should-be-Redirect mis-tag found on SYN.CA.9 (S144).
-- `target`-field semantics audit (self-cost/delivered-value gap, S144) — needed before the pricing model can be trusted on cards using self-payment or opponent-benefit patterns.
+- `target`-field semantics audit (self-cost/delivered-value gap, S144) — needed before the pricing model can be trusted on cards using self-payment or opponent-benefit patterns. `SYN.PA.1` Acquisition Offer specifically still carries this unresolved gap.
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 04** — Draft, gated on 04-n165 + 04-n169 (copy/content sweeps). Full CA+PA phase now content-reviewed (not just scaffolded); Floor Act design + the whole-set schema decisions (04-n178, #10/#22, #41, #2/#5) are the remaining gate before any set-level sign-off pass can start.
+- **Art 04** — Draft, gated on 04-n165 + 04-n169 (copy/content sweeps). Full CA+PA phase content-reviewed, value_rating now fully defined/populated (04-n178/n183 closed) — remaining gate is the whole-set schema decisions (#10/#22, #41, #2/#5) before any set-level sign-off pass can start.
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
 
 *Card-level sign-offs gated behind set-level audits — not actionable until those gates clear.*

@@ -6270,7 +6270,7 @@ A rival pours concrete in Core. The paperwork that follows costs them a foothold
 | Doctrine alignment | ✓ | `target_faction=trigger.faction` IS set here (genuinely adversarial, unlike 98/100) — `doctrine_mod=None` is still correctly justified: `resolution=Automatic`/`threshold=None` means there's no roll for a threshold modifier to adjust; `doctrine_mod` only has meaning on d100 cards. | Art 04 §6.5 |
 | Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory/Remove/PresenceToken — Territory×Remove confirmed valid in the Layer×Function matrix (§5.1). | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | value_rating 1, single-chip removal, cost=None — same modest tier as 98. | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | value_rating 2 (corrected S145, PM02 L284 — pricing model reads this above STD.MOD.98/100's tier despite the shared single-chip-removal shape; magnitude-mirror convention superseded for this card), single-chip removal, cost=None. | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | `structure_block.placed(faction=X, ring=Z)` matches confirmed §6.3 signature exactly. | Art 04 §6.3 |
@@ -6308,7 +6308,7 @@ STD.MOD.99 = Card(
     beat            = None,
     ring_constraint = 1,
     ring_origin     = 1,
-    value_rating    = 1,
+    value_rating    = 2,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -6432,7 +6432,7 @@ Everyone in the building hears when someone finally locks the room down. Whoever
 | Doctrine alignment | ✓ | `target_faction=trigger.faction` set, but `doctrine_mod=None` correctly justified — Automatic/no threshold, same basis as STD.MOD.99. | Art 04 §6.5 |
 | Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Information/Add/IntelToken — Information×Add confirmed valid in the Layer×Function matrix (§5.1). | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | value_rating 2 — one tier above 98/99/100, consistent with delivering an Intel Token (a more valuable resource than a presence chip) rather than escalated power for its own sake. | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | value_rating 1 (corrected S145, PM02 L284 — pricing model reads the Intel Token payload below STD.MOD.99/111/123's tier; the "above 98/99/100" ordinal claim no longer holds now that 99 itself moved to 2 under the same correction). | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | `dominant_marker.placed(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
@@ -6470,7 +6470,7 @@ STD.MOD.101 = Card(
     beat            = None,
     ring_constraint = 1,
     ring_origin     = 1,
-    value_rating    = 2,
+    value_rating    = 1,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -6594,7 +6594,7 @@ A submission lands on the wrong desk, and now it needs a second signature.
 | Doctrine alignment | ✓ | `target_faction=trigger.faction` set, `doctrine_mod=None` justified — Automatic/no threshold-roll to adjust (same basis as STD.MOD.99). | Art 04 §6.5 |
 | Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Submission/Modify/PublicAct — Submission×Modify confirmed valid in the Layer×Function matrix. `function=Modify` also matches the actual mutation verb used (`arbiter.modify`) — internally consistent. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | value_rating 2, −5 threshold (a real but moderate hindrance), cost=None. | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | value_rating 1 (corrected S145, PM02 L284 — pricing-model tier overrides magnitude-mirror convention), −5 threshold (a real but moderate hindrance), cost=None. | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate — the threshold penalty applies once, to one already-submitted PA. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | `public_act.placed_on_frg(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
@@ -6632,7 +6632,7 @@ STD.MOD.103 = Card(
     beat            = None,
     ring_constraint = 1,
     ring_origin     = 1,
-    value_rating    = 2,
+    value_rating    = 1,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -7242,7 +7242,7 @@ Mid's infrastructure has a ceiling, and someone just tested it.
 | Doctrine alignment | ✓ | `target_faction` set, `doctrine_mod=None` justified — Automatic/no threshold-roll (same basis as STD.MOD.99). | Art 04 §6.5 |
 | Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory/Remove/PresenceToken — same verified pairing as STD.MOD.99. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | Same tier as STD.MOD.99. | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.99 (value_rating 2, corrected S145, PM02 L284 — pricing-model tier overrides magnitude-mirror convention). | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | Same basis as STD.MOD.99. | Art 04 §6.3 |
@@ -7280,7 +7280,7 @@ STD.MOD.111 = Card(
     beat            = None,
     ring_constraint = 2,
     ring_origin     = 2,
-    value_rating    = 1,
+    value_rating    = 2,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -7404,7 +7404,7 @@ A district locked down draws load like a failing relay. The grid logs it before 
 | Doctrine alignment | ✓ | Same basis as STD.MOD.101. | Art 04 §6.5 |
 | Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Information/Add/IntelToken — same verified pairing as STD.MOD.101. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | Same tier as STD.MOD.101 (value_rating 2). | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.101 (value_rating 1, corrected S145, PM02 L284 — pricing-model tier overrides magnitude-mirror convention). | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | Same basis as STD.MOD.101. | Art 04 §6.3 |
@@ -7442,7 +7442,7 @@ STD.MOD.113 = Card(
     beat            = None,
     ring_constraint = 2,
     ring_origin     = 2,
-    value_rating    = 2,
+    value_rating    = 1,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -7566,7 +7566,7 @@ An inspection nobody asked for, timed to land before the paperwork clears.
 | Doctrine alignment | ✓ | Same basis as STD.MOD.103. | Art 04 §6.5 |
 | Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Submission/Modify/PublicAct — same verified pairing as STD.MOD.103. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | Same tier as STD.MOD.103 (value_rating 2, −5 threshold). | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.103 (value_rating 1, −5 threshold; corrected S145, PM02 L284 — pricing-model tier overrides magnitude-mirror convention). | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | Same basis as STD.MOD.103. | Art 04 §6.3 |
@@ -7604,7 +7604,7 @@ STD.MOD.115 = Card(
     beat            = None,
     ring_constraint = 2,
     ring_origin     = 2,
-    value_rating    = 2,
+    value_rating    = 1,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -8214,7 +8214,7 @@ New construction changes the rent, one way or another.
 | Doctrine alignment | ✓ | Same basis as STD.MOD.99. | Art 04 §6.5 |
 | Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory/Remove/PresenceToken — same verified pairing as STD.MOD.99. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | Same tier as STD.MOD.99. | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.99 (value_rating 2, corrected S145, PM02 L284 — pricing-model tier overrides magnitude-mirror convention). | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | Same basis as STD.MOD.99. | Art 04 §6.3 |
@@ -8252,7 +8252,7 @@ STD.MOD.123 = Card(
     beat            = None,
     ring_constraint = 3,
     ring_origin     = 3,
-    value_rating    = 1,
+    value_rating    = 2,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -8376,7 +8376,7 @@ When someone locks down a piece of Baryo, the street knows before the ink's even
 | Doctrine alignment | ✓ | Same basis as STD.MOD.101. | Art 04 §6.5 |
 | Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Information/Add/IntelToken — same verified pairing as STD.MOD.101. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | Same tier as STD.MOD.101. | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.101 (value_rating 1, corrected S145, PM02 L284 — pricing-model tier overrides magnitude-mirror convention). | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | Same basis as STD.MOD.101. | Art 04 §6.3 |
@@ -8414,7 +8414,7 @@ STD.MOD.125 = Card(
     beat            = None,
     ring_constraint = 3,
     ring_origin     = 3,
-    value_rating    = 2,
+    value_rating    = 1,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,
@@ -8538,7 +8538,7 @@ An operation through Baryo draws attention before it ever gets a chance to land 
 | Doctrine alignment | ✓ | Same basis as STD.MOD.103. | Art 04 §6.5 |
 | Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Submission/Modify/PublicAct — same verified pairing as STD.MOD.103. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ✓ (best-effort) | Same tier as STD.MOD.103. | Art 02 §6–7 |
+| Balance | ✓ (best-effort) | Same tier as STD.MOD.103 (value_rating 1, corrected S145, PM02 L284 — pricing-model tier overrides magnitude-mirror convention). | Art 02 §6–7 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | Same basis as STD.MOD.103. | Art 04 §6.3 |
@@ -8576,7 +8576,7 @@ STD.MOD.127 = Card(
     beat            = None,
     ring_constraint = 3,
     ring_origin     = 3,
-    value_rating    = 2,
+    value_rating    = 1,  # corrected S145 (04-n178) — pricing-model tier overrides magnitude-mirror convention, PM02 L284
 
     resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,

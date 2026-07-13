@@ -6,6 +6,12 @@
 
 Everything in this document is in service of one thing: assigning **`value_rating`** (1–4) to every CA/PA/ModReact card — a floor-to-ceiling power tier (1 = basic/floor action, 4 = end-game-power card), consistent across the whole set. The pricing/UVM work isn't the deliverable; it's the evidence base for that tier assignment.
 
+## ⚠ Governing Assumption — Applies to Everything Below
+
+The UVM base rates this whole document builds on (`uvm_assumptions`, `uvm_pair_assumptions`) are **calibrated by averaging the existing designed cost of cards that already use a given pair** — not by playtesting, simulation, or any external measure of actual in-game value. "Validated" (`confidence_tier`) means "≥2 existing cards agreed closely enough to average," not "confirmed correct by play." Sample sizes are thin: 7/28 Subject baselines and 25/58 (Subject, Function) pairs are `validated`; the rest are `single_example` or `fallback_avg`. Full table/view detail: `Database/schema_reference.md` §6.7.
+
+**What this means in practice:** every `total_pair_cost`, `delta_vs_current_cost`, tier boundary, and `value_rating` derived here is a **self-consistency check against the current corpus** — it can catch a card priced out of line with its siblings, it cannot confirm the sibling group itself is priced right. If the whole corpus over- or under-values a Subject/Function pair in the same direction, this model will faithfully reproduce that bias rather than catch it. Treat everything below as a baseline to build on, not a validated ground truth — re-derive/re-calibrate once real playtest data (session counts, win-rate correlation, "this felt broken" reports against actual cost) becomes available. This caveat follows any future use of `v_card_pair_uvm_cost` or the tables behind it, including work not yet scoped (e.g. PM05 04-n184's deck copy-count pass).
+
 ---
 
 ## 1. What agy originally proposed (S76) — superseded
@@ -58,4 +64,17 @@ Concrete, actionable items surfaced by comparing `total_pair_cost` against `curr
 
 ## 5. Next step toward actual `value_rating` assignment
 
-Once the redesign needs above are addressed (or at least acknowledged as known-soft), the natural next move is bucketing `total_pair_cost` (or a redesign-corrected version of it) into 4 tiers — floor/basic through end-game ceiling. Tier boundaries not yet proposed; that's a design call once the outlier list above stops moving.
+- [x] **GHO.PA.1 / STD.PA.5 — taxonomy corrected + repriced (S145, PM02 L283).** Both were tagged `Reveal/ActionAttribution`, but their real effect is the PS swing — the Intel token content is payment, not revealed information. Retagged to `Shift/StandingMarker` (precedented, S126/S137). Under the retag `total_pair_cost` drops (GHO.PA.1 30.12→18.24, STD.PA.5 17.34→11.40) since the reveal-row and standing-delta-row pricing collapse into one calibrated pair instead of two. STD.PA.5: threshold 35→30 closes the delta to −2.4% (was +12.3%), cost unchanged. GHO.PA.1: cost restructured (2 Findings + 1 Exposure + 1 native/target + 2 Intel Tokens, 8.00→10.00 effective); still +45.2% — **locked as intentional Ghost doctrinal advantage** (the 2-token prior-investment gate isn't visible to the raw-cost model), not a further pricing defect.
+
+**Tier boundaries proposed (S145) — natural-break, not equal-population.** Histogrammed `total_pair_cost` across all 201 CA/PA/MOD cards: floor tier dominates and the population thins going up, a clean pyramid with no forcing needed (round-number cuts at 3/5/7 track the actual bin-count decline; equal-population quartiles were checked and rejected — they'd force a ~50/50 floor/non-floor split, contradicting the "1=floor/basic, 4=end-game-ceiling" design intent).
+
+| value_rating | Range | Count |
+|---|---|---|
+| 1 (floor) | < 3.0 | 107 |
+| 2 (standard) | 3.0–4.99 | 48 |
+| 3 (advanced) | 5.0–6.99 | 26 |
+| 4 (ceiling) | ≥ 7.0 | 19 (`GHO.CA.11` excluded — unfinalized card, `id=TBD`, PM05 04-n172; revisit at design-pass completion) |
+
+Sanity-checked the 3 most extreme values in the ≥7.0 band before trusting the ceiling: `GHO.CA.11` (26.67, excluded above), `GHO.PA.1` (traced clean, now 18.24 post-retag), `STD.PA.5` (traced clean, now 11.40 post-retag, near-calibrated) — none were pipeline artifacts once traced to source effect rows.
+
+**Locked and applied corpus-wide (S145, PM02 L284).** 164 cards tiered by the pricing model; 27 ring-modifier cards already matched via the separate S132/S134 magnitude-mirror convention; 9 disagreed and were overridden to the pricing-model tier per Andy's direction (STD.MOD.99/101/103/111/113/115/123/125/127 — see PM02 L284 for the full before/after). 8 cards remain unaddressed, no computable `total_pair_cost` (blocked/TBD). Full detail: PM05 04-n183 (closed), 04-n178 (value_rating half closed). **Closes this thread.** Follow-on: PM05 04-n184 — deck copy-count/draw-probability, now unblocked, not yet started.

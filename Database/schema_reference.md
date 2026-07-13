@@ -1135,6 +1135,28 @@ Current output (S131): Directorate 48 (BELOW FLOOR, −6) · Syndicate/Ghost/Net
 
 ---
 
+## 6.7. UVM Pricing Model (S143–S145) — Card Cost/Value Analysis
+
+**⚠ Governing caveat — read before using any table/view in this section.** `base_uvm_cost` rates are *calibrated by averaging the existing designed cost of cards that already use a given (Subject) or (Subject, Function) pair* — they are not derived from playtesting, simulation, or any external ground truth. "Validated" (`confidence_tier`) means "backed by ≥2 existing card cost samples that agreed closely enough to average," not "confirmed correct by play." Sample sizes are thin corpus-wide: `uvm_assumptions` is 7 validated / 4 single-example / 17 fallback-avg (of 28 rows); `uvm_pair_assumptions` is 25 validated / 33 single-example (of 58 rows, zero `fallback_avg` — pairs fall back to `uvm_assumptions` instead, compounding the thinness). **Any `value_rating`, cost proposal, delta, or tier derived from these tables inherits this assumption chain.** Treat every number from this system as a self-consistency check against the existing corpus, not an external validity check — it can catch a card that's out of line with its siblings, it cannot tell you the sibling group itself is priced right. Re-derive/re-calibrate once real playtest data exists (session count, win-rate correlation, or subjective "this felt broken" reports against actual cost).
+
+### Table chain
+- **`uvm_assumptions`** (28 rows) — per-Subject baseline. `subject VARCHAR(50) PK`, `base_uvm_cost DECIMAL(5,2)`, `confidence_tier ENUM('validated','single_example','fallback_avg')`, `sample_size INT`, `notes VARCHAR(255)`. Fallback used when a specific (Subject, Function) pair has no `uvm_pair_assumptions` row.
+- **`uvm_pair_assumptions`** (58 rows) — per-(Subject, Function) pair, the primary rate table. `subject VARCHAR(50)`, `function VARCHAR(30)` (composite PK), `base_uvm_cost DECIMAL(6,2)`, `confidence_tier ENUM('validated','single_example')`, `sample_size INT NOT NULL`. Per-unit normalized (divided by magnitude at seeding time — critical, avoids blending 1-unit and 2-unit cards).
+- **`card_cost_component`** (S143, ~209 rows) — non-normalized cost terms per card. `card_id VARCHAR(15)`, `component_index INT`, `category ENUM('faction_native_generalized','district_native_generalized','hardcoded_specific','intel_token','other')`, `resource_name VARCHAR(30)`, `amount INT`, `raw_expr TEXT`. Feeds `v_card_effective_cost`.
+- **`card_effect_component`** (S143, ~357 rows) — effect-tier mutations per card. `card_id VARCHAR(15)`, `tier ENUM('success','successcrit','fail','failcrit')`, `category ENUM('presence_delta','standing_delta','resource_delta','token_delta','board_condition','accord_action','reveal','other')`, `target ENUM('acting','target','district','other')` — **semantics inconsistent across categories, see caveat below** — `magnitude INT NULL` (NULL = play-determined/declared-N, not a data gap), `raw_expr TEXT`. Feeds `v_card_pair_uvm_cost`.
+- **`effect_category_uvm_map`** — bridges `card_effect_component.category` → `uvm_assumptions.subject` for categories without a direct subject on the card row.
+
+### View chain
+`v_card_effective_cost` (sums `card_cost_component`, weights `intel_token` category ×2.5, divides by `card_status.base_success_pct`) → `v_card_recommended_cost_all` (adds the old fixed verb-multiplier model, superseded — see `cost_baseline_recommendations.md` §1) → `v_card_recommended_cost_full` (secondary-effect regex bonuses, largely unused by the pair model) → **`v_card_pair_uvm_cost`** — the working view. Infers a (subject, function) pair per effect row, dedupes to distinct pairs per card, sums each pair's calibrated `base_uvm_cost × magnitude`, folds in `successcrit` at flat 5% weight, excludes `failcrit`. Key output columns: `total_pair_cost` (model's raw-worth estimate), `delta_vs_current_cost` (% vs. `current_effective_cost`), `has_boost` (1 = the card has a `count(...)`/declared-N effect the model can't see the real magnitude of — treat `total_pair_cost` as a floor-at-N=1 value, never a real number, for these), `n_fallback_to_subject_only`.
+
+### Known open modeling gaps (not fixed, tracked)
+Self-cost-vs-delivered-value confusion (a card paying its own resource down looks identical to inflicting loss on an opponent), `target` field semantic inconsistency (sometimes "who benefits," sometimes "whose game-state the expression reads from" — audit needed before trusting any card using self-payment or opponent-benefit patterns), NULL-magnitude fallback misattributing unrelated effect rows onto a card's single declared pair on multi-effect/scaling cards. Full detail and worked examples: `Whiteboard/cost_baseline_recommendations.md` §4.
+
+### `apply_value_rating.py` (S145)
+`Database/apply_value_rating.py` — applies computed `value_rating` (1–4) tiers to `Card()` blocks across the Art 04 Part files, sourced from a `card_id → tier` TSV (query in the script's docstring). Idempotent — only overwrites fields still `value_rating = None` (any format: line-anchored with trailing comment, or inline alongside other `= None` fields on the same line), never touches an already-set value. Kept for reuse if the tier boundaries are ever recalibrated. See PM02 L283/L284 for the S145 application run (verification method: block-count integrity check pre/post, full cross-check against the tier map — see script header comment for the verification queries used).
+
+---
+
 ## 7. Canonical Component Registration Pattern
 
 Use **Countermeasure Card (id=52)** as the reference. Full 4-table cascade required for every new component.

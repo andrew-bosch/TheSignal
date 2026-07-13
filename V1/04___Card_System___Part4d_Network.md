@@ -90,7 +90,7 @@ NET.CA.1 = Card(
     perspectives = {Network: "We do not reveal everything. We reveal the piece that makes everything else visible."},
     design_note  = "Redesigned S68: subject corrected to District (was ActionAttribution — taxonomy mismatch); pre-execution discovery + cancellation model confirmed (target op cancelled, resources lost, PS reduction applies); cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending 04-n33/04-n34b. S126 agy audit: subject corrected to CovertOperation (District was also a mismatch — DistrictTile has no Reveal in comp_verb_phase; the card reveals and cancels a CovertOperation, not the district itself).",
     arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending 04-n33). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
 )
 ```
 
@@ -164,7 +164,7 @@ NET.CA.2 = Card(
     perspectives = {Network: "We revealed something. Now we can reveal something more. The loop is already running."},
     design_note  = "Replaces NET.CA.2 Source Protection (retired S51). Source Protection was doctrinally misaligned — protecting attribution is Ghost's register, not Network's. Pairs with NET.CA.1 Leak and NET.CA.3 Breaking News.",
     arbiter_note = "At Beat 3 cleanup, check whether any Network Reveal card resolved successfully this round. If yes, deliver 1 Exposure to Network's resource pool. If no Reveal resolved, card takes effect but produces nothing — the slot cost was the investment.",
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
 )
 ```
 
@@ -256,7 +256,7 @@ NET.CA.3 = Card(
     },
     design_note  = "Replaces NET.CA.3 Open Channel (retired S68 — Governing Rule 6.1 cross-beat state violation). Fills Network's forced-transparency FactionSpecific slot at L1. Beat 2: ARBITER announces target's first Beat 3 queue entry to all players; VM-xx placed to flag public Beat 3 resolution. Distinct from NET.CA.1 Leak (Beat 3 cancel + reveal) and GHO.CA.2 Intercept (private IS-xx to Ghost). Fizzle: if target has no committed Beat 3 ops at Beat 2, announce fizzle; cost spent. Second Beat 2 d100 card alongside GHO.CA.2 — procedure gap in Art 03 tracked in 04-n75.",
     arbiter_note = "Network has played Breaking News targeting faction X. Roll d100 (threshold 50 + PS modifier). Success: check faction X's Beat 3 queue. If empty: announce 'No operations queued for faction X — Breaking News fizzles'; cost spent, no further effect. Otherwise: identify faction X's first entry in Beat 3 resolution order; announce to all players: card name, type, declared targets; place VM-xx on that card in the grid. VM-xx procedure at Beat 3: when this card is reached, announce it publicly, roll d100 visibly, announce outcome to table, then remove VM-xx. Do not announce Network as acting faction. Crit success: reveal and place VM-xx on ALL of faction X's Beat 3 queue entries. Fail: cost spent, no announcement. Crit fail: dispatch NotificationSlip to faction X only. Do not announce Network.",
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
 )
 ```
 
@@ -332,7 +332,7 @@ NET.CA.4 = Card(
     perspectives = {Network: "The signal does not stop at district borders. Neither do we."},
     design_note  = None,
     arbiter_note = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
 )
 ```
 
@@ -406,7 +406,7 @@ NET.CA.5 = Card(
     perspectives = {Network: "We already have contacts there. This is formalising what already exists."},
     design_note  = None,
     arbiter_note = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
 )
 ```
 
@@ -463,7 +463,7 @@ NET.CA.6 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -545,7 +545,7 @@ NET.CA.7 = Card(
     layer   = Standing, function = Shift, subject = StandingMarker,
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -638,7 +638,7 @@ NET.CA.8 = Card(
     narrative   = None,  perspectives = None,
     design_note = "Network fabricates a story pointing to a destination district with no strategic value. The target faction's DeploymentMarker follows — their deployment is wasted. TargetProfile: target_faction and target_district identify the marker and its current location; freeform field specifies destination district. ARBITER executes the move and flips marker to Unconverted status. Chain play: Beat 2 covert move → same Quarter Leak or Live Coverage exposing the displaced position.",
     arbiter_note = "Read TargetProfile: target_faction and target_district identify whose marker and from which district. Freeform field specifies destination. Beat 2: move marker from source to destination; flip to Unconverted face. Announce marker has moved — do not announce acting faction. Fail: no effect, cost spent.",
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
 )
 ```
 
@@ -704,7 +704,7 @@ NET.PA.1 = Card(
     threshold       = 30 + (10 * count(intel_token(target=faction(target)).held)),  # +10 per token held naming target
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -800,7 +800,7 @@ NET.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -900,7 +900,7 @@ NET.PA.3 = Card(
     type    = PublicAct, subtype = FactionSpecific, faction = Network,
     layer   = Information, function = Reveal, subject = FactionHand,  # 04b validation needed
     beat=4, resolution=d100, threshold=50, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     resolution_type = "Probabilistic", outcome_type=None,
     persistence     = Seasonal,
     persistence_condition = "target_faction complied (open hand) for one full Covert Dispatch this Quarter → card clears at end of that Covert Dispatch; or Quarter end",
@@ -997,7 +997,7 @@ NET.MOD.2 = Card(
     layer   = Standing,  function = Shift,  subject = StandingMarker,  # assigned S137 (04-n175) — fields were entirely undeclared before, not just None; effect is standing -= 1
     trigger = standing_marker.increased(faction=Any, except=Network),
               # fires when any other faction's standing marker increases (publicly observable)
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 1,
     beat    = None,  resolution = Automatic,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     target_district = None,  target_faction = trigger.faction,  target_object = None,  target_taxonomy = None,  # scaffolding only — added S138 (04-n177)
     cost    = resource.faction(Network).exposure * 1 + resource.faction(Network).capital * 1,
@@ -1062,7 +1062,7 @@ NET.PA.4 = Card(
     layer   = Territory,  function = Remove,  subject = PresenceToken,
     beat    = 4,  resolution = d100,  threshold = 60,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     resolution_type = "Probabilistic",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -1129,7 +1129,7 @@ NET.PA.5 = Card(
     layer   = Standing,  function = Shift,  subject = StandingMarker,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -1196,7 +1196,7 @@ NET.PA.6 = Card(
     layer   = Economy,  function = Add,  subject = AnyResource,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -1276,7 +1276,7 @@ NET.MOD.1 = Card(
     target_district = district(trigger.target),
     beat    = 4,  resolution = d100,  threshold = 50,
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     persistence=Immediate,  persistence_condition=None,  persistence_effect=None,
     target_faction=None,  target_object=None,  target_taxonomy=None,
     affinity=None,  restriction=None,
@@ -1351,7 +1351,7 @@ NET.MOD.3 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1434,7 +1434,7 @@ NET.MOD.4 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1517,7 +1517,7 @@ NET.MOD.5 = Card(
     beat            = None,
     ring_constraint = 2,  # fires only in context of Ring 2 (Mid ring) districts
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1600,7 +1600,7 @@ NET.MOD.6 = Card(
     beat            = None,
     ring_constraint = 3,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1683,7 +1683,7 @@ NET.MOD.7 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1766,7 +1766,7 @@ NET.MOD.8 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 2,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1849,7 +1849,7 @@ NET.MOD.9 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 4,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1932,7 +1932,7 @@ NET.MOD.10 = Card(
     beat            = None,
     ring_constraint = 3,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 3,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2015,7 +2015,7 @@ NET.MOD.11 = Card(
 
     trigger         = public_act.submitted,  # unconfirmed against §6.3 TriggerExpr vocabulary — same open category as GHO.MOD.9/10 (04-n174)
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 4,
     resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
@@ -2094,7 +2094,7 @@ NET.MOD.12 = Card(
 
     trigger         = public_act.placed_with_target_profile,  # unconfirmed against §6.3 TriggerExpr vocabulary — shared form with GHO.MOD.11 (04-n174)
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
@@ -2173,7 +2173,7 @@ NET.MOD.13 = Card(
 
     trigger         = public_act.placed_on_frg(faction=Network),
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 2,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2257,7 +2257,7 @@ NET.MOD.14 = Card(
 
     trigger         = standing_marker.increased(faction=Network),
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 3,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,

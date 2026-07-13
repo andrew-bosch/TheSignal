@@ -164,6 +164,11 @@ def populate_card_slug_map(filepath, dest_filename):
                 raw_id = match.group(1)
                 clean_id = re.sub(r'[^a-z0-9]+', '', raw_id.lower())
                 card_slug_map[clean_id] = (dest_filename, slug)
+                
+            if ' — ' in header_text:
+                parts = header_text.split(' — ', 1)
+                card_name_slug = make_mkdocs_slug(parts[1])
+                card_slug_map[card_name_slug] = (dest_filename, slug)
 
         # Parse python card blocks for integer IDs to associate c13/p09
         id_match = re.search(r'\bid\s*=\s*(\d+)', line)
@@ -174,20 +179,95 @@ def populate_card_slug_map(filepath, dest_filename):
             card_slug_map[f"{prefix}{card_id:02d}"] = (dest_filename, current_slug)
 
 def resolve_card_anchor(anchor_link):
-    clean_anchor = re.sub(r'[^a-z0-9]+', '', anchor_link.lower().lstrip('#'))
+    clean_anchor = anchor_link.lower().lstrip('#')
     if not clean_anchor:
         return None
         
-    # Find the longest matching key in card_slug_map that the anchor starts with
+    # Prioritize exact key matches and endswith matches (handles legacy cp IDs and prefixed anchors)
+    for key in sorted(card_slug_map.keys(), key=len, reverse=True):
+        if clean_anchor == key or clean_anchor.endswith('-' + key):
+            return card_slug_map[key]
+            
+    # Fallback to prefix-based match (e.g. finding GUI.CA.1 from guica1)
+    clean_alphanum = re.sub(r'[^a-z0-9]+', '', clean_anchor)
     matched_key = None
     for key in card_slug_map:
-        if clean_anchor.startswith(key):
+        if clean_alphanum.startswith(key):
             if matched_key is None or len(key) > len(matched_key):
                 matched_key = key
                 
     if matched_key:
         return card_slug_map[matched_key]
     return None
+
+def split_large_markdown_file(src_path, dest_dir, dest_filename_prefix, max_cards_per_file=12):
+    """Splits a large card system markdown file into multiple smaller files by card headings."""
+    with open(src_path, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+        
+    cards = []
+    header_lines = []
+    lines = content.split('\n')
+    current_card = None
+    
+    for line in lines:
+        if line.startswith('### '):
+            if current_card is not None:
+                cards.append(current_card)
+            current_card = [line]
+        else:
+            if current_card is None:
+                header_lines.append(line)
+            else:
+                current_card.append(line)
+    if current_card is not None:
+        cards.append(current_card)
+        
+    header_text = '\n'.join(header_lines)
+    
+    # If total cards is smaller than threshold, write as a single file
+    if len(cards) <= max_cards_per_file:
+        dest_filename = f"{dest_filename_prefix}.md"
+        shutil.copy2(src_path, os.path.join(dest_dir, dest_filename))
+        return [dest_filename]
+        
+    # Otherwise, split into multiple files
+    num_chunks = (len(cards) + max_cards_per_file - 1) // max_cards_per_file
+    suffixes = [chr(97 + i) for i in range(num_chunks)]  # a, b, c...
+    
+    generated_filenames = [f"{dest_filename_prefix}_{s}.md" for s in suffixes]
+    
+    for i in range(num_chunks):
+        suffix = suffixes[i]
+        filename = generated_filenames[i]
+        filepath = os.path.join(dest_dir, filename)
+        
+        chunk_cards = cards[i * max_cards_per_file : (i + 1) * max_cards_per_file]
+        
+        with open(filepath, 'w', encoding='utf-8') as f:
+            if i == 0:
+                f.write(header_text)
+                f.write('\n\n')
+            else:
+                f.write(f"# {clean_title(dest_filename_prefix)} — Part {suffix.upper()}\n\n")
+                f.write(f"[← Back to Part A / Main]({generated_filenames[0]})\n\n")
+                
+            nav_links = []
+            if i > 0:
+                nav_links.append(f"[← Previous (Part {suffixes[i-1].upper()})]({generated_filenames[i-1]})")
+            if i < num_chunks - 1:
+                nav_links.append(f"[Next (Part {suffixes[i+1].upper()}) →]({generated_filenames[i+1]})")
+                
+            if nav_links:
+                f.write(' | '.join(nav_links) + '\n\n---\n\n')
+                
+            for card in chunk_cards:
+                f.write('\n'.join(card) + '\n\n')
+                
+            if nav_links:
+                f.write('\n---\n\n' + ' | '.join(nav_links) + '\n')
+                
+    return generated_filenames
 
 def build_wiki():
     print("Initializing Wiki Source Directories...")
@@ -200,6 +280,7 @@ def build_wiki():
     
     # Mapping of old paths (relative to workspace root) to new flat filenames
     file_map = {}
+    split_files_map = {}
     
     # Copy root README.md as the index
     readme_path = 'README.md'
@@ -208,6 +289,8 @@ def build_wiki():
         shutil.copy2(readme_path, target_path)
         file_map['README.md'] = 'index.md'
         file_map['index.md'] = 'index.md'
+        split_files_map['README.md'] = ['index.md']
+        split_files_map['index.md'] = ['index.md']
         
     # Scan root files
     for f in os.listdir('.'):
@@ -216,6 +299,7 @@ def build_wiki():
             dest_path = os.path.join(DOCS_DIR, dest_filename)
             shutil.copy2(f, dest_path)
             file_map[f] = dest_filename
+            split_files_map[f] = [dest_filename]
 
     # Scan directories
     for clean_name, src_dir in SOURCE_DIRS.items():
@@ -239,11 +323,19 @@ def build_wiki():
                         # Inside a sub-subdirectory (like Creative/Vignettes)
                         folder_prefix = os.path.basename(root).lower() + "_"
                         
-                    dest_filename = f"{clean_name.lower()}_{folder_prefix}{file}"
+                    dest_prefix = f"{clean_name.lower()}_{folder_prefix}{os.path.splitext(file)[0]}"
+                    dest_filename = f"{dest_prefix}.md"
                     dest_path = os.path.join(DOCS_DIR, dest_filename)
                     
-                    shutil.copy2(full_src_path, dest_path)
-                    file_map[rel_src_path] = dest_filename
+                    if file in CARD_SYSTEM_PARTS and os.path.getsize(full_src_path) > 150 * 1024:
+                        gen_files = split_large_markdown_file(full_src_path, DOCS_DIR, dest_prefix, max_cards_per_file=12)
+                        split_files_map[rel_src_path] = gen_files
+                        file_map[rel_src_path] = gen_files[0]
+                        print(f"Subdivided large file: {file} -> {len(gen_files)} files")
+                    else:
+                        shutil.copy2(full_src_path, dest_path)
+                        split_files_map[rel_src_path] = [dest_filename]
+                        file_map[rel_src_path] = dest_filename
                 elif file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg')):
                     full_src_path = os.path.join(root, file)
                     dest_path = os.path.join(DOCS_DIR, file)
@@ -253,9 +345,11 @@ def build_wiki():
     # Build the card-ID -> (file, slug) routing map from those copies, then
     # route any stale links to the old monolith path at Core.
     for part in CARD_SYSTEM_PARTS:
-        dest_filename = file_map.get(f'V1/{part}')
-        if dest_filename:
-            populate_card_slug_map(os.path.join(DOCS_DIR, dest_filename), dest_filename)
+        rel_path = f'V1/{part}'
+        gen_files = split_files_map.get(rel_path)
+        if gen_files:
+            for gen_file in gen_files:
+                populate_card_slug_map(os.path.join(DOCS_DIR, gen_file), gen_file)
 
     core_dest = file_map.get(f'V1/{CARD_SYSTEM_PARTS[0]}')
     if core_dest:
@@ -304,6 +398,19 @@ def build_wiki():
             clean_link = re.sub(r'^[\./\\]+', '', link)
             clean_link = clean_link.replace('\\', '/')
             
+            # Try to resolve card system links with anchors first
+            is_card_system_link = False
+            for part in CARD_SYSTEM_PARTS:
+                if clean_link.endswith(part) or clean_link == 'V1/04___Card_System.md':
+                    is_card_system_link = True
+                    break
+            
+            if is_card_system_link and anchor:
+                routed = resolve_card_anchor(anchor)
+                if routed:
+                    target_file, target_slug = routed
+                    return f"[{text}]({target_file}#{target_slug})"
+            
             # Look for a match in the mapping
             matched_val = None
             for old_path, new_name in norm_file_map.items():
@@ -341,7 +448,15 @@ def build_wiki():
             continue
         # Split normalized path to get category
         category = get_category_id(os.path.basename(k), k)
-        all_md_files.append((os.path.basename(k), v, category))
+        
+        split_list = split_files_map.get(k)
+        if split_list and len(split_list) > 1:
+            for idx, gen_file in enumerate(split_list):
+                suffix = chr(65 + idx) # A, B, C...
+                fake_title = os.path.basename(k).replace('.md', f'___Part_{suffix}.md')
+                all_md_files.append((fake_title, gen_file, category))
+        else:
+            all_md_files.append((os.path.basename(k), v, category))
         
     for title_name, dest_name, category_id in all_md_files:
         category = next((c for c in CATEGORIES if c['id'] == category_id), None)

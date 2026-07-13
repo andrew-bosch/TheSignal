@@ -1,7 +1,21 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-07-12 — Session 144 Close
+**Last Updated:** 2026-07-13 — Session 145 Close
+
+### Session 145 Summary (2026-07-13)
+
+`value_rating` (1–4) definition locked and applied corpus-wide — 04-n178/04-n183 closed, the deliverable the whole thread has been building toward since S143. Full detail: PM02 L283/L284 · `Whiteboard/cost_baseline_recommendations.md` §5 · `Database/schema_reference.md` §6.7.
+
+Tier scheme: natural-break on `total_pair_cost` (<3.0→1, 3.0–4.99→2, 5.0–6.99→3, ≥7.0→4) — a pyramid matching "1=floor, 4=end-game-ceiling," not equal-population quartiles (checked and rejected). 164 cards tiered by a two-pass batch script (`Database/apply_value_rating.py`, saved for reuse — self-contained, idempotent, queries the DB live rather than depending on an exported file); 27 ring-modifier cards already matched via the separate S132/S134 magnitude-mirror convention; 9 disagreed and were overridden to the pricing-model tier on Andy's call ("value is based on effect value") — STD.MOD.99/111/123 1→2, STD.MOD.101/103/113/115/125/127 2→1, Balance checklist rows rewritten to match (stale ordinal claims removed). 8 cards remain unaddressed — no computable `total_pair_cost` (blocked/TBD cards, not a scheme gap). `GHO.CA.11` stays excluded (unfinalized, own spec still `id=TBD`).
+
+`GHO.PA.1`/`STD.PA.5` taxonomy-corrected and repriced along the way (both were tagged `Reveal/ActionAttribution` when their real effect is a PS swing — retagged to `Shift/StandingMarker`, precedented S126/S137, same fix already applied to 5 other cards). `STD.PA.5`: threshold 35→30 closed the delta to −2.4%. `GHO.PA.1`: cost restructured (Findings/Exposure/target-native/Intel Tokens, 8.00→10.00 effective); still +45.2% — locked as intentional Ghost doctrinal advantage, not a further pricing defect (the 2-token prior-investment gate isn't visible to the raw-cost model).
+
+Documented the model's governing caveat everywhere it needs to travel: UVM base rates are calibrated by averaging *existing* card costs (only 7/28 Subject and 25/58 pair rates are even "validated" in that limited sense), not playtested. Added to `schema_reference.md` §6.7 (new section — full table/view chain documented), `cost_baseline_recommendations.md` (new top-of-doc caveat section), `design_reference_card_system.md`'s `value_rating` field definition, and `project_db_design_intent.md` memory — this follows any future use of `v_card_pair_uvm_cost` or anything downstream of it.
+
+New open item: PM05 04-n184 — deck copy-count/draw-probability calculation, now unblocked by value_rating closing but explicitly scoped by Andy as coming *after* a redo of the per-faction/cross-faction card space audits (S119–128 style — 04-n50 Ghost, 04-n53 Standard, etc. consolidated passes), not a standalone exercise. Andy flagged a real chance all 3 ring-modifier decks need retuning once copy-count accounts for the value_rating spread.
+
+Airlock: ingested and pruned an unread `lev-claude.md` handoff (wiki build script upgrade — card subdivision, nav links, anchor healing; deployed on `pinky`, no action needed this side).
 
 ### Session 144 Summary (2026-07-12)
 

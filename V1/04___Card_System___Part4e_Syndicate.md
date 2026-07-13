@@ -79,7 +79,7 @@ SYN.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -186,7 +186,7 @@ SYN.CA.2 = Card(
     perspectives = {Syndicate: "We are not destroying their capacity. We are adjusting market conditions temporarily."},
     design_note  = None,
     arbiter_note = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
 )
 ```
 
@@ -269,7 +269,7 @@ SYN.CA.3 = Card(
     perspectives = {Syndicate: "We made a fair offer. The market determined the value. We accepted the market's judgment."},
     design_note  = None,
     arbiter_note = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
 )
 ```
 
@@ -342,7 +342,7 @@ SYN.CA.4 = Card(
     perspectives    = {Syndicate: "We did not lose those resources. We placed them where the problem would be. There is a difference."},
     design_note     = "Capital declared at Dispatch on target profile. Beat 0: retained (not drained). Beat 2: distributed across target_faction Beat 3 ops targeting Syndicate, first-to-last, until exhausted. Beat 3: full coverage = void + Capital to submitter case; partial = −50 marker + Capital to submitter case. No ops from target_faction = windfall to return case. Wager structure: Syndicate bets positionally — wrong bet wastes Capital, correct bet nullifies threat Cost reasoning: Exposure and Findings identify the target's vulnerabilities and legitimize the aggressive posture.",
     arbiter_note    = "See Art 03 Beat 0 (Retained validation), Beat 2 (Golden Parachute procedure), Beat 3 Step 1.4 (capital-on-card resolution).",
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
 )
 ```
 
@@ -417,7 +417,7 @@ SYN.CA.5 = Card(
     perspectives = {Syndicate: "The regulatory framework exists. We simply ensure it reflects current market conditions."},
     design_note  = None,
     arbiter_note = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
 )
 ```
 
@@ -485,7 +485,7 @@ LandTitle = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Territory,  function = Add,  subject = StructureBlock,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger=None,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
@@ -564,7 +564,7 @@ HostileTakeover = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Territory,  function = Redirect,  subject = PresenceToken,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger=None,
     resolution_type="Probabilistic", outcome_type=None,
     persistence     = Immediate,
@@ -654,7 +654,7 @@ SYN.CA.10 = Card(
     threshold    = 50,
     ring_mod     = None,
     doctrine_mod = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
 
     target_district = None,
     target_faction  = faction(outgoing_party),
@@ -784,7 +784,7 @@ SYN.CA.6 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -880,7 +880,7 @@ SYN.CA.7 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Redirect,  subject = NativeResource,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     resolution_type="Transactional", outcome_type=ElectPlayer,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1052,7 +1052,7 @@ SYN.CA.11 = Card(
     threshold    = 50,
     ring_mod     = None,
     doctrine_mod = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
 
     target_district = None,
     target_faction  = None,
@@ -1157,7 +1157,7 @@ SYN.CA.12 = Card(
     threshold    = None,
     ring_mod     = None,
     doctrine_mod = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
 
     target_district = None,
     target_faction  = None,
@@ -1248,7 +1248,7 @@ SYN.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = ElectPlayer,  # target accepts or declines at Beat 4
@@ -1352,7 +1352,7 @@ SYN.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1466,7 +1466,7 @@ SYN.PA.3 = Card(
     threshold    = None,
     ring_mod     = None,
     doctrine_mod = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     outcome_type = ElectPlayer,
 
     target_district = None,
@@ -1593,7 +1593,7 @@ SYN.PA.4 = Card(
     layer   = Standing,  function = Shift,  subject = StandingMarker,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -1660,7 +1660,7 @@ SYN.PA.5 = Card(
     layer   = Territory,  function = Remove,  subject = StructureBlock,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Transient,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
@@ -1829,7 +1829,7 @@ SYN.MOD.2 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1912,7 +1912,7 @@ SYN.MOD.3 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 3,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1995,7 +1995,7 @@ SYN.MOD.4 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2078,7 +2078,7 @@ SYN.MOD.5 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2161,7 +2161,7 @@ SYN.MOD.6 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     persistence     = Seasonal,
     persistence_condition = None,  # ⚠ clearing logic is embedded in the success string instead — same gap as GUI.MOD.10/SYN.MOD.6 in schema_cleanup_log.md item 2/B
@@ -2248,7 +2248,7 @@ SYN.MOD.7 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 3,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2331,7 +2331,7 @@ SYN.MOD.8 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 2,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2412,7 +2412,7 @@ SYN.MOD.9 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2495,7 +2495,7 @@ SYN.MOD.10 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2578,7 +2578,7 @@ SYN.MOD.11 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 2,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,

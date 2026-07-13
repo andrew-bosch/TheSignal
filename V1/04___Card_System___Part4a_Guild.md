@@ -74,7 +74,7 @@ GUI.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -165,7 +165,7 @@ GUI.CA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = faction(target).completes(CovertOp, id=STD.CA.2),
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -260,7 +260,7 @@ GUI.CA.3 = Card(
     threshold       = 25,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -350,7 +350,7 @@ GUI.CA.4 = Card(
     threshold       = 65,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -447,7 +447,7 @@ GUI.CA.5 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -539,7 +539,7 @@ GUI.CA.6 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = faction(target).completes(CovertOp, id=STD.CA.1),
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -651,7 +651,7 @@ GUI.CA.7 = Card(
     success     = "Guild pays 2 target.native resources to target_faction; arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1)",
     
     design_note = "Guild's territorial response gap filled. Coercive eviction via buyout. Cost reasoning: 2 Capacity + 1 Capital (Mid-tier). Liquidating real estate out from under an opponent."
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
 )
 ```
 
@@ -707,7 +707,7 @@ GUI.CA.8 = Card(
     cost    = resource.faction(Guild).capacity * 1 + resource.faction(Guild).mandate * 1,
     success = "Remove 1 target Structure Block. Guild gains +1 PS.",
     design_note = "A thematic variant of STD.CA.2 (Demolish). Bribe removed to keep resolution strictly blind via Arbiter."
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
 )
 ```
 
@@ -766,7 +766,7 @@ GUI.CA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -965,7 +965,7 @@ GUI.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1068,7 +1068,7 @@ GUI.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,  # Neighbor relationship noted for narrative — no threshold variance (Automatic)
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = BilateralAgreement,
@@ -1170,7 +1170,7 @@ GUI.PA.3 = Card(
     beat            = 4,
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence     = Permanent,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a card-as-condition effect not structured here
@@ -1246,7 +1246,7 @@ GUI.PA.4 = Card(
     beat            = 4,
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence     = Immediate,  # scaffolded — deterministic default for a non-standing, one-shot PA
     persistence_condition = None,  persistence_effect = None,
@@ -1321,7 +1321,7 @@ GUI.PA.5 = Card(
     beat            = 4,
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence     = Seasonal,  # scaffolded — matches prose "for the next Quarter"
     persistence_condition = None,  persistence_effect = None,
@@ -1395,7 +1395,7 @@ GUI.PA.6 = Card(
     layer   = Territory,  function = Modify,  subject = StructureBlock,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -1463,7 +1463,7 @@ GUI.PA.7 = Card(
     layer   = Territory,  function = Add,  subject = PresenceToken,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
@@ -1531,7 +1531,7 @@ GUI.PA.8 = Card(
     layer   = Standing,  function = Shift,  subject = StandingMarker,
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
     persistence = Permanent,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
@@ -1603,7 +1603,7 @@ GUI.PA.9 = Card(
     threshold       = 40,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = Unilateral,
@@ -1813,7 +1813,7 @@ GUI.MOD.1 = Card(
 
     trigger         = presence_chip.removed(faction=Guild, district=district(trigger.target)),  # migrated from chip_removed.where(...) fossil form; still unconfirmed against §6.3 TriggerExpr vocabulary (04-n174)
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
@@ -1894,7 +1894,7 @@ GUI.MOD.2 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -1977,7 +1977,7 @@ GUI.MOD.3 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2060,7 +2060,7 @@ GUI.MOD.4 = Card(
     beat            = None,
     ring_constraint = 1,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 3,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2143,7 +2143,7 @@ GUI.MOD.5 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2226,7 +2226,7 @@ GUI.MOD.6 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2309,7 +2309,7 @@ GUI.MOD.7 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 2,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2392,7 +2392,7 @@ GUI.MOD.8 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2480,7 +2480,7 @@ GUI.MOD.9 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,

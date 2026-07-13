@@ -95,7 +95,7 @@ GHO.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Predictive",
     outcome_type    = None,
@@ -188,7 +188,7 @@ GHO.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
     beat=2, resolution=d100, threshold=60, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger=None,
     resolution_type="Probabilistic", outcome_type=None,
     persistence     = Immediate,
@@ -284,7 +284,7 @@ GHO.CA.3 = Card(
     perspectives = {Ghost: "We did not take their cards. We simply read their intentions. They will act on plans we already know."},
     design_note  = "Redesigned S68: original target was unplayed hand (CardHandContents) — requires physical access to target player's cards, not executable covertly at paper table. Redesigned to SIGINT tap model: Ghost taps faction X's dispatch channel at Beat 2. ARBITER reads faction X's Beat 3 grid column at Beat 2 resolution (name + declared target only; modifier cards excluded). IntelDeliverySlip delivered to Ghost at Beat 2 resolution. Beat 2 commitment is the risk. Empty case = empty slip — resources spent. DR-xx (DispatchReport) collapsed into IS-xx S68 — column read is IntelDeliverySlip with list content.",
     arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
 )
 ```
 
@@ -338,7 +338,7 @@ GHO.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Remove,  subject = IntelToken,
     beat=3, resolution=d100, threshold=25, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     resolution_type="Probabilistic", outcome_type=None,
     persistence           = Immediate,
     persistence_condition = None,
@@ -421,7 +421,7 @@ GHO.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Corrupt,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -503,7 +503,7 @@ GHO.CA.7 = Card(
     threshold       = 55,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -592,7 +592,7 @@ GHO.CA.8 = Card(
     threshold       = 40,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -674,7 +674,7 @@ GHO.CA.15 = Card(
     success = "Ghost corrupts the first CA in target faction's Beat 3 resolution queue if it matches Ghost's specified parameters.",
     arbiter_note = "At Covert Dispatch, Ghost writes a target field (e.g., 'target_district') and expected value (e.g., 'Core'), plus a replacement value (e.g., 'Baryo'), in their Target Profile freeform space. At Beat 2: ARBITER checks target faction's first CA in the ARG. If that CA's Target Profile contains the exact field and value Ghost named, ARBITER silently crosses it out and writes Ghost's new value. If it does not match, Ghost's operation fizzles. The target faction executes their CA at Beat 3 against the new corrupted target.",
     design_note = "Beat 2 positional wager against a Beat 3 CA. Ghost must correctly predict a parameter of the opponent's first queued operation. The corruption is entirely silent until the operation resolves at Beat 3."
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
 )
 ```
 
@@ -736,7 +736,7 @@ GHO.CA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -826,7 +826,7 @@ GHO.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -1010,7 +1010,7 @@ GHO.CA.6 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1093,7 +1093,7 @@ GHO.CA.12 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -1376,7 +1376,7 @@ GHO.CA.13 = Card(
     cost    = resource.faction(Ghost).findings * 2,
     success = "Arbiter places 1 DA-02 (PhantomRecord) in Ghost's Dispatch Case. At debrief, Ghost gains district native resources equal to target_faction's influence-based generation.",
     design_note = "A financial twin to SCIF. Instead of generating Modifier cards off of structural density, this converts Findings into a mirrored payout of the target's passive district income."
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
 )
 ```
 
@@ -1430,7 +1430,7 @@ GHO.CA.14 = Card(
     cost    = resource.faction(Ghost).findings * 2 + resource.faction(Ghost).exposure * 1 + resource.faction(Ghost).capital * 1 + intel_token * 1,
     success = "The Arbiter invalidates and removes the first Covert Operation submitted by target_faction in Beat 3.",
     design_note = "Massive multi-resource cost to justify an unblockable, blind veto of an opponent's action."
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
 )
 ```
 
@@ -1460,21 +1460,21 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 |----------|------|------|--------------|
 | Action fit | ✓ | Ghost publishing curated analysis is a calculated, rare public act — the cost enforces rarity | Art 00 §7 |
 | Voice fit | ✓ | Ghost on-doctrine; Directorate (aligned): verified, sequenced disclosure; Network (opposed): held both when one was enough | Art 00 §7, §9 |
-| Doctrine alignment | ✓ | "Understanding must precede action" — Ghost publishes only when two tokens confirm both attributions. Portrait +1: calculated disclosure from position of knowledge. 3 Findings cost reflects that public disclosure is doctrinally expensive for Ghost | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | "Understanding must precede action" — Ghost publishes only when two tokens confirm both attributions. Portrait +1: calculated disclosure from position of knowledge. Cost reflects that public disclosure is doctrinally expensive for Ghost | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Ghost) | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Information / Reveal / ActionAttribution (multi-target) | Art 04b §4 |
-| Balance | ✓ | 3 Findings + 2 Intel tokens; Automatic; two targets −2 PS each; Ghost +2 PS. High cost, high yield. Token acquisition is the natural limiter | Art 02 §6–§7 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker (multi-target) — corrected S145 (04-n178 pricing audit): the card's real effect is the 3-way PS swing (two targets −2, Ghost +2); the Reveal/ActionAttribution tag priced attribution as a second, separately-purchased payload when it's actually the delivery mechanism for the shift, not independent value. Same pattern as STD.PA.5. | Art 04b §4 |
+| Balance | ✓ | 2 Findings + 1 Exposure + 1 native from each named target + 2 Intel tokens (one per target); Automatic; two targets −2 PS each; Ghost +2 PS. Repriced S145 (04-n178, PM02 L283) from 3 Findings + 2 Intel Tokens (effective 8.00) to this cross-resource shape (effective 10.00) — still ~45% under the retagged model value (18.24 combined StandingMarker/Shift pair rate); locked as intentional Ghost doctrinal advantage, not a further pricing defect: the card's real gate is the prior investment of 2 valid, faction-specific Intel tokens (successful prior operations against both named targets), which the raw-cost model can't see. Token acquisition remains the natural limiter | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
 | Portrait validity | ✓ | Ghost +1: submitter-bounded. Published from position of knowledge — doctrine affirmed | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — two faction targets; no district reference. N/A | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken (two, faction-keyed to different targets; Art 02 §6); Findings × 3 cost (Art 02 §8) | Art 02 §6, §8 |
+| Supported by components | ✓ | IntelToken (two, faction-keyed to different targets; Art 02 §6); Findings + Exposure + target-native cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Two targets named at Phase B; both tokens submitted; Automatic Beat 4 | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Cross-resource (Findings × 3 + 2 Intel Tokens, one per target faction), correctly typed. Highest Ghost PA cost in the set, matching its "highest-cost PA" framing. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Cross-resource (2 Findings + 1 Exposure + 1 native from each named target + 2 Intel Tokens), correctly typed. Repriced S145 — see Balance row. Highest Ghost PA cost in the set, matching its "highest-cost PA" framing. | Art 00a §9.2 |
 
 #### Status
 
@@ -1484,19 +1484,19 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 
 ```python
 GHO.PA.1 = Card(
-    id      = "GHO.PA.1",  card_id = "GHO.PA.1",  version="v1.0",
+    id      = "GHO.PA.1",  card_id = "GHO.PA.1",  version="v1.1",
     name    = "Publish Analysis",
     tagline = "Release curated intelligence simultaneously attributing operations to two factions — a calculated, costly disclosure.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Ghost,
 
-    layer    = Information,  function = Reveal,  subject = ActionAttribution,
+    layer    = Standing,  function = Shift,  subject = StandingMarker,
 
     beat            = 4,
     resolution      = Automatic,
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1516,7 +1516,10 @@ GHO.PA.1 = Card(
         target1 != target2
     ),
     cost = (
-        resource.faction(Ghost).findings * 3
+        resource.faction(Ghost).findings * 2
+        + resource.faction(Ghost).exposure * 1
+        + resource.faction(target1) * 1
+        + resource.faction(target2) * 1
         + intel_token(target=faction(target1)) * 1
         + intel_token(target=faction(target2)) * 1
     ),
@@ -1542,7 +1545,7 @@ GHO.PA.1 = Card(
         Directorate: "Ghost discloses both attributions from verified position. The timing was chosen. The evidence was held until both targets were confirmed. This is how intelligence should enter the record.",  # aligned
         Network:     "Ghost waited for both confirmations. We published after the first. The second attribution was true by the time Ghost released it — and so was all the damage that came between.",  # opposed
     },
-    design_note  = "Ghost's highest-cost PA. 3 Findings + 2 Intel tokens (different factions). Automatic — token requirement is the certainty check (Ghost does not publish speculation). Simultaneous dual attribution: each target −2 PS, Ghost +2 PS flat. Portrait +1: calculated disclosure affirms 'understanding must precede action' doctrine. Option 3 (operational blackout mechanic) flagged as PM05 item for potential Network PA extension.",
+    design_note  = "Ghost's highest-cost PA. 2 Findings + 1 Exposure + 1 native from each named target + 2 Intel tokens (different factions). Automatic — token requirement is the certainty check (Ghost does not publish speculation). Simultaneous dual attribution: each target −2 PS, Ghost +2 PS flat. Portrait +1: calculated disclosure affirms 'understanding must precede action' doctrine. Option 3 (operational blackout mechanic) flagged as PM05 item for potential Network PA extension. Repriced S145 (04-n178, PM02 L283): taxonomy corrected Reveal/ActionAttribution → Shift/StandingMarker (the attribution is the delivery mechanism for the PS swing, not separate value); cost restructured from 3 Findings + 2 Intel Tokens (8.00) to 2 Findings + 1 Exposure + 1 native per target + 2 Intel Tokens (10.00) — Exposure and target-native components added as a cross-resource gate matching the NET.CA.1-style 'trade dependency' pattern. Still ~45% under the retagged model value; locked as intentional Ghost doctrinal advantage (spending 2 already-earned, faction-specific tokens to land a double-attribution strike is exactly what Ghost's intel-accumulation-as-leverage doctrine should reward) — no further reprice pending.",
     arbiter_note = "Phase B: Ghost names two target factions. Both Intel tokens submitted with case. Beat 4: announce '[Ghost] attributes [op type, quarter] to [target1]' and '[Ghost] attributes [op type, quarter] to [target2].' Each target −2 PS. Ghost +2 PS. Both tokens spent.",
 )
 ```
@@ -1600,7 +1603,7 @@ GHO.PA.2 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1697,7 +1700,7 @@ GHO.PA.3 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1790,7 +1793,7 @@ GHO.PA.4 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1886,7 +1889,7 @@ GHO.PA.5 = Card(
     threshold       = 50,
     ring_mod        = {Ring3: +10, Ring1: -15},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -2082,7 +2085,7 @@ GHO.MOD.2 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,   # Ghost faction modifier deck
-    value_rating    = None,   # TBD
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2165,7 +2168,7 @@ GHO.MOD.3 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2248,7 +2251,7 @@ GHO.MOD.4 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2331,7 +2334,7 @@ GHO.MOD.5 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2414,7 +2417,7 @@ GHO.MOD.6 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2497,7 +2500,7 @@ GHO.MOD.7 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 2,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2580,7 +2583,7 @@ GHO.MOD.8 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating = 2,
 
     resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
     ring_mod = None,  doctrine_mod = None,
@@ -2663,7 +2666,7 @@ GHO.MOD.9 = Card(
 
     trigger         = public_act.submitted(uses_intel_token=True),  # unconfirmed against §6.3 TriggerExpr vocabulary — same open category as Overture's trigger and SYN.MOD.11's accord.tabled (04-n174)
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
@@ -2742,7 +2745,7 @@ GHO.MOD.10 = Card(
 
     trigger         = public_act.submitted,  # unconfirmed against §6.3 TriggerExpr vocabulary (04-n174)
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 2,
     resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
@@ -2821,7 +2824,7 @@ GHO.MOD.11 = Card(
 
     trigger         = public_act.placed_with_target_profile,  # unconfirmed against §6.3 TriggerExpr vocabulary — shared form with NET.MOD.12 (04-n174)
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,

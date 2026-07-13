@@ -77,7 +77,7 @@ STD.CA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -171,7 +171,7 @@ STD.CA.2 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -266,7 +266,7 @@ STD.CA.3 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -354,7 +354,7 @@ STD.CA.4 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -449,7 +449,7 @@ STD.CA.5 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -540,7 +540,7 @@ STD.CA.6 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -632,7 +632,7 @@ STD.CA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = None,
@@ -723,7 +723,7 @@ STD.CA.8 = Card(
     threshold       = 50,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -822,7 +822,7 @@ STD.CA.9 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = {Neighbor: +15, Opposed: -15},
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -921,7 +921,7 @@ STD.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Positional wager",
     outcome_type    = None,
@@ -1013,7 +1013,7 @@ STD.CA.11 = Card(
     type    = CovertOperation,  subtype = Standard,  faction = All,
     layer   = Information,  function = Corrupt,  subject = Accord,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Permanent,
     persistence_condition = not (game.end OR Accord(named).breach_by_party),
@@ -1101,7 +1101,7 @@ STD.CA.12 = Card(
     type    = CovertOperation,  subtype = Standard,  faction = All,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     resolution_type="Transactional", outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1174,7 +1174,7 @@ C_DisinformationCampaign = Card(
     threshold       = 40,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1274,7 +1274,7 @@ C_Disprove = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1372,7 +1372,7 @@ C_IntelExtraction = Card(
     threshold       = 55,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1469,7 +1469,7 @@ C_ModifierRaid = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = None,
@@ -1593,7 +1593,7 @@ STD.PA.1 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1688,7 +1688,7 @@ STD.PA.2 = Card(
     threshold       = 45,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = {Neighbor: +10, Opposed: -10},
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -1792,7 +1792,7 @@ STD.PA.3 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -1890,7 +1890,7 @@ STD.PA.4 = Card(
     threshold       = 35,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 3,
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -1943,7 +1943,7 @@ STD.PA.4 = Card(
 [↑ Public Acts](#standard-public-acts)
 
 #### Design Rationale
-Formal public attribution of a covert action. Requires an Intel token naming the target faction (spent regardless of outcome) — you cannot make the accusation without evidence. Token age determines confidence: Fresh = threshold 50, Stale = 35. Network gains +10 threshold bonus (broadcasting attribution is their mode). Ghost's portrait at −2 (the highest negative in the set) reflects that Ghost's doctrine protects operational anonymity across the entire table — attributing any faction's covert operation is a violation of Ghost's belief that understanding accumulates privately.
+Formal public attribution of a covert action. Requires an Intel token naming the target faction (spent regardless of outcome) — you cannot make the accusation without evidence. Token age determines confidence: Fresh = threshold 45, Stale = 30. Network gains +10 threshold bonus (broadcasting attribution is their mode). Ghost's portrait at −2 (the highest negative in the set) reflects that Ghost's doctrine protects operational anonymity across the entire table — attributing any faction's covert operation is a violation of Ghost's belief that understanding accumulates privately. Base threshold tuned 35→30 S145 (04-n178, PM02 L283) — closes the pricing delta against the retagged model value (was +12.3% underpriced at 35, now ~−2.4% at 30) without changing the cost structure.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1956,8 +1956,8 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 | Voice fit | ✓ | All five perspectives distinct: Guild's evidence-responsibility framing, Directorate's institutional/conditional support, Network's right-to-know, Ghost's doctrine of operational privacy (principle not preference), Syndicate's leverage-timing calculation | Art 00 §7 |
 | Doctrine alignment | ✓ | Network portrait +1: broadcasting attribution is doctrinal. Ghost portrait −2 (highest negative in set): attributing any faction's op violates Ghost's belief that operational anonymity protects the whole table's intelligence discipline. Others: no doctrinal stake in the attribution mechanism itself | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / Standard — any faction can attribute | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Information / Reveal / ActionAttribution | Art 04b §4 |
-| Balance | ✓ | Token cost + resource cost; token age tiers threshold (Fresh 50, Stale 35); Expired excluded. Fail: self-PS loss (false or botched attribution). High success PS reward reflects the significance of public attribution | Art 02 §6–§7 |
+| Taxonomy fit | ✓ | Standing / Shift / StandingMarker — corrected S145 (04-n178 pricing audit): the card's real effect is the PS swing (target −2, acting +2); the Reveal/ActionAttribution tag priced attribution as a second, separately-purchased payload when it's actually the delivery mechanism for the shift, not independent value. Same pattern as GHO.PA.1. | Art 04b §4 |
+| Balance | ✓ | Token cost + resource cost; token age tiers threshold (Fresh 45, Stale 30 — tuned down from 50/35 S145, PM02 L283, closing the pricing delta against the retagged model value); Expired excluded. Fail: self-PS loss (false or botched attribution). High success PS reward reflects the significance of public attribution | Art 02 §6–§7 |
 | Effect duration | ✓ | PS shifts are immediate; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
@@ -1978,19 +1978,19 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 
 ```python
 STD.PA.5 = Card(
-    id      = "STD.PA.5",  card_id="STD.PA.5",  version="v1.0",
+    id      = "STD.PA.5",  card_id="STD.PA.5",  version="v1.1",
     name    = "On the Record",
     tagline = "Formally attribute a recent covert action to a named faction before the city.",
     type    = PublicAct,  subtype = Standard,  faction = All,
 
-    layer    = Information,  function = Reveal,  subject = ActionAttribution,
+    layer    = Standing,  function = Shift,  subject = StandingMarker,
 
     beat            = 4,
     resolution      = d100,
-    threshold       = 35,  # base = Stale token; Fresh → +15 via affinity; Network → +10 via affinity
+    threshold       = 30,  # base = Stale token; Fresh → +15 via affinity; Network → +10 via affinity. Tuned 35→30 S145 (04-n178, PM02 L283)
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -2034,7 +2034,7 @@ STD.PA.5 = Card(
         Ghost:       "We do not publish what we know about other factions' operations. That is a principle, not a preference.",
         Syndicate:   "Attribution is leverage. The question is always: what is the information worth on the table versus in hand?",
     },
-    design_note  = "Standard information-attribution PA. Restriction requires Fresh or Stale token — Expired excluded (too degraded to constitute usable attribution evidence). Token spent regardless of outcome. Threshold from token age (Fresh = 50, Stale = 35) + Network +10. Ghost portrait −2: attributing any faction's covert op violates Ghost's belief that operational anonymity protects the intelligence discipline of the whole table — the highest negative portrait value in the set.",
+    design_note  = "Standard information-attribution PA. Restriction requires Fresh or Stale token — Expired excluded (too degraded to constitute usable attribution evidence). Token spent regardless of outcome. Threshold from token age (Fresh = 45, Stale = 30) + Network +10. Ghost portrait −2: attributing any faction's covert op violates Ghost's belief that operational anonymity protects the intelligence discipline of the whole table — the highest negative portrait value in the set. Repriced S145 (04-n178, PM02 L283): taxonomy corrected Reveal/ActionAttribution → Shift/StandingMarker (the attribution is the delivery mechanism for the PS swing, not separate value); base threshold tuned 35→30, closing the pricing delta against the retagged model value (+12.3% → ~−2.4%). Cost unchanged.",
     arbiter_note = "At Art 03 §9.2.0: Intel token placed on PA card with Target Profile face-down. At Art 03 §9.4.3.1.1: flip Target Profile face-up; verify token age — Fresh or Stale satisfies restriction; Expired does not. Beat 4: threshold = age-based (50 Fresh / 35 Stale) + 10 if Network. On success: announce '[Acting faction] attributes [op type, quarter] to [target faction].' Target −2 PS, acting +2 PS. Token spent. On fail: acting −1 PS. Token spent regardless.",
 )
 ```
@@ -2092,7 +2092,7 @@ STD.PA.6 = Card(
     threshold       = 40,
     ring_mod        = None,
     doctrine_mod    = {Neighbor: +10, Opposed: -10},
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 4,
     trigger         = None,
     resolution_type = "Contested",
     outcome_type    = Unilateral,
@@ -2191,7 +2191,7 @@ STD.PA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 2,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = Unilateral,
@@ -2291,7 +2291,7 @@ STD.PA.8 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Transactional",
     outcome_type    = BilateralAgreement,
@@ -2393,7 +2393,7 @@ STD.PA.9 = Card(
     threshold       = 50,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = 1,
     trigger         = None,
     resolution_type = "Probabilistic",
     outcome_type    = Unilateral,
