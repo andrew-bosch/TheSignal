@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 143 complete | Updated: 2026-07-10**
+**Session 144 complete | Updated: 2026-07-12**
 **Session start:** (stamped at next boot — see CLAUDE.md Session Startup step 1)
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
@@ -34,33 +34,34 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S143 Accomplishments
+## S144 Accomplishments
 
-**Floor Act designed and built: STD.PA.9 "Town Hall"** (PM02 D04-13/L216) — universal, no faction-specific form, 1 native cost, d100/threshold 50 (guarantees availability not success), restricted to a district carrying the acting faction's own deployment marker. New schema field `on_discard`/Principle P29 (Art 04 §6/§5) — card is immune to all discard events, self-policed, not ARBITER-tracked. Closes 04-n96.
+**Full S143 outlier checklist closed — 6 cards resolved, both open modeling gaps addressed.** Full detail: PM05 04-n178 · `Whiteboard/cost_baseline_recommendations.md` · PM02 L277–L282.
 
-**value_rating moved to base Card() class** (was Modifier-subclass-only) and scaffolded (`None`) across all 251 CA/PA specs via `tools/value_rating_sweep.py`.
+**Repriced:** Land Title/Development Order (modest bump following GD-01's v0.4 value jump, L277); Hostile Takeover — retagged Add→Redirect per Art 04b §4's own definitions (matches SYN.PA.1's existing correct tag), which flipped the read from underpriced to overpriced, then cost cut accordingly (L278); Intercept — cost restructured (Findings dropped, IntelToken-only) + threshold 50→60, delta −107.5%→+3.9% (L279); Intel Extraction — cost 2→1 native + threshold 45→55, delta −153.7%→−4.0% (L281); Network Cascade — cross-resource cost confirmed correct, effect doubled instead (+1→+2), clean 0% delta (L282).
 
-**Signal DB infra incident, resolved:** 10.0.1.14's SD card corrupted (hardware failure, unrecoverable), full local Pi 5 fallback stood up and later cut back over once 10.0.1.14 got its proper SSD. Full history in `project_signal_db_infra_incident.md` memory (resolved).
+**Left alone, confirmed correct (not bugs):** City Ledger (has_boost floor-artifact — real value matches its own "rare ceiling" design intent); Broadcast Interference/Amplify (Network's affinity-adjusted cost already matches model value; the non-Network premium is an intentional doctrinal tax).
 
-**Major thread: Universal Value Metric (UVM) pricing pipeline — the actual mechanism for 04-n178's value_rating→cost mapping.** Built from scratch this session: `card_cost_component`/`card_effect_component` (207-card CA+PA+ModReact scope, seeded via 7 parallel agents), `uvm_assumptions` (28 Subjects, calibrated + tiered by confidence), `uvm_pair_assumptions` (58 real (Subject,Function) pairs — tested and rejected agy's verb-multiplier model against real data, Remove/Add ratio ranges 1.15x–8.58x across subjects, no universal multiplier fits), and the working view **`v_card_pair_uvm_cost`** (per-unit magnitude pricing, successcrit at flat 5%/failcrit excluded — mutually exclusive with success, has_boost/has_multipliers flags, percentage-based `delta_vs_current_cost`). Along the way: fixed a real extraction bug (threshold-penalty values misread as unit counts), a real verb-inference bug (StandingMarker sign-inferred as Add/Remove when its only real verb is Shift — fixed 53 cards), and closed all 21 originally-missing (subject,verb) pairs. **GD-01 Grant Deed redesigned** (v0.3→v0.4, added a 3rd fire effect per Andy) — deed's raw value nearly doubled, flagging SYN.CA.8/GUI.CA.10 as underpriced.
+**New standing rule locked: d100 thresholds must be multiples of 5 (L280)** — corpus was already 100% compliant, formalizes existing practice.
 
-**Outlier review (first pass) surfaced concrete redesign needs** — see `Whiteboard/cost_baseline_recommendations.md` (rewritten S143, now the working doc for this whole effort) §3 for the checklist: Land Title/Development Order repricing, Acquisition Offer underpriced, City Ledger/Hostile Takeover underpriced-for-potential, Intercept overpriced (threshold redesign), Intel Extraction (threshold redesign), a 5-card cluster all landing at ~−100% (PublicAct/Modify cards bundling persistent/broad-scope rule-changes with one-shot tweaks — model resolution limit, not a data bug). Two open modeling gaps flagged, not fixed: self-cost-vs-delivered-value confusion (NET.CA.6), and PublicAct/Modify scope granularity.
+**Self-cost-vs-delivered-value modeling gap: attempted a view fix, reverted.** Correctly fixed the two known cases (NET.CA.6, SYN.PA.1) but broke Intel Extraction's genuine value in the process — the `target` field's semantics aren't consistent across the corpus (sometimes beneficiary, sometimes whose game-state the expression references). No live change; needs a `target`-semantics audit, bigger than one session. Two smaller model gaps also logged, not fixed.
 
-Full detail: PM05 04-n178 (single entry, many S143 sub-updates) · `Whiteboard/cost_baseline_recommendations.md`.
+**PublicAct/Modify scope-granularity gap: resolved as a non-issue.** The "5-cluster" wasn't one scope problem — it was 3 unrelated blockers (DIR.MOD.6 blocked on undesigned content; the doc's "NET.CA.4 is persistent" claim was factually wrong; STD.CA.6/7's apparent overpricing was Network-affinity working as intended). Also confirmed: no card in Art 04 is individually locked pending sign-off — per-card "✓ SXX" markers are checkpoints, not locks, until the whole artifact signs off.
+
+**New multi-agent Airlock system landed (lev/Antigravity on `brain` joined the cluster):** handshakes exchanged, `~/Airlock/andy.md` consolidated as the shared cross-agent profile/working-agreements file, new pruning convention adopted (inbound handoff files pruned immediately on ingestion, not deferred to close).
 
 ---
 
-## Current Focus (S144)
+## Current Focus (S145)
 
-**Review and address the outlier list** from `Whiteboard/cost_baseline_recommendations.md` §3 — this is the direct continuation point. In order:
-1. Work through the redesign-needs checklist (Land Title/Development Order cost, Acquisition Offer, City Ledger, Hostile Takeover, Intercept threshold, Intel Extraction threshold, the 5-cluster PublicAct/Modify cards).
-2. Decide the two open modeling gaps (§4): self-cost-vs-value distinction, PublicAct/Modify scope granularity — may need model refinement before the outlier list is trustworthy enough to act on further.
-3. Once outliers stop moving: bucket `total_pair_cost` (or a redesign-corrected version) into the actual 1–4 `value_rating` tiers — the real deliverable this whole thread has been building toward. Tier boundaries not yet proposed.
+**Bucket `total_pair_cost` into the 1–4 `value_rating` tiers — the actual deliverable the whole 04-n178 thread has been building toward.** Tier boundaries not yet proposed; that's the direct continuation point now that the outlier checklist and both modeling gaps are resolved (S144). One open thread feeds into this and may need a call first: `SYN.PA.1` Acquisition Offer's true value is still unreliable (self-cost/value gap, unresolved) — decide whether to bucket around it as-is or resolve that gap first.
 
-**Also open, carried from S142, not yet scheduled:**
+**Also open, carried from S142/S143, not yet scheduled:**
 - PM05 04-n180 — full-corpus sweep of embedded session/log commentary, incremental "as we do issue review."
 - 04-n177's expanded scope; 04-n165/04-n169 (Art 04 sign-off gates); 04-n171 (ModReactCard syntax reconciliation); `ref_board_narrative.md` sync pass; smaller carried backlog (04-n163/164/166/167/168/148/150/26/27/126/123, XA-54, 06-n01).
 - `schema_cleanup_log.md` items #10 (Intel Token as cost), #41 (resolution_type vocabulary), #2/#5 (persistence/trigger semantics) — independent of the value_rating thread, still open.
+- Light sweep worth scheduling: other `Territory/Add/PresenceToken`(or `StructureBlock`) cards for the same Add-should-be-Redirect mis-tag found on SYN.CA.9 (S144).
+- `target`-field semantics audit (self-cost/delivered-value gap, S144) — needed before the pricing model can be trusted on cards using self-payment or opponent-benefit patterns.
 
 ---
 

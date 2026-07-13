@@ -266,7 +266,9 @@ NET.CA.3 = Card(
 [↑ Covert Operations](#network-covert-operations)
 
 #### Design Rationale
-Network's signal propagation card — extends STD.CA.6 Broadcast Interference's Public Act cost increase to an adjacent district on the same round. Mechanically ties the two cards together: STD.CA.6 must be submitted in the same round for NET.CA.4 to fire. This creates a planned two-card combo: pay the STD.CA.6 Exposure cost to disrupt PA activity in one district, then pay NET.CA.4's Exposure×2 to extend that disruption to an adjacent district. The "signal propagation" framing is doctrinally exact — The Network understands that broadcast interference is not bounded by administrative district lines. Beat 2 Automatic means both disruption effects land before Beat 4 PA resolution.
+Network's signal propagation card — extends STD.CA.6 Broadcast Interference's Public Act cost increase to an adjacent district on the same round. Mechanically ties the two cards together: STD.CA.6 must be submitted in the same round for NET.CA.4 to fire. This creates a planned two-card combo: pay the STD.CA.6 Exposure cost to disrupt PA activity in one district, then pay Exposure+Findings to extend that disruption to an adjacent district. The "signal propagation" framing is doctrinally exact — The Network understands that broadcast interference is not bounded by administrative district lines. Beat 2 Automatic means both disruption effects land before Beat 4 PA resolution.
+
+**Repriced S144 (04-n178, PM02 L282):** cost is confirmed cross-resource (Exposure×1+Findings×1) — the code was correct, the "Exposure×2" prose above and in the Balance row was stale (schema_cleanup_log #31 family, now closed for this card). Since the combo's cross-resource cost is intentionally kept (not collapsed to mono) and 1+1=2 is already the structural floor for a genuine two-resource cost, the fix goes on the value side instead: the adjacent-district PA cost penalty doubled from +1 to +2, matching `STD.CA.6`'s own cost/value ratio exactly (`PublicAct/Modify` rate 1.00 × 2 units = 2.00, vs. the unchanged cost of 2 — 0% delta, clean).
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -280,7 +282,7 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 | Doctrine alignment | ✓ | Network only; requires STD.CA.6 same round (restriction); Exposure×2; Beat 2 Automatic — both disruption effects land before Beat 4 PA resolution | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — signal propagation is Network-exclusive two-card mechanic | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Submission/Modify/PublicAct — extends STD.CA.6's PA cost increase to adjacent district | Art 04b §4, §5 |
-| Balance | ⚠ | Design Rationale and this row both state "Exposure×2 for adjacency extension," but the code's actual `cost = resource.faction(acting).exposure * 1 + resource.faction(acting).findings * 1` — Exposure×1 + Findings×1, not Exposure×2. **Flagged S141:** a real prose-vs-code mismatch, not a stale annotation (both prose locations agree with each other and disagree with the code) — which one is correct isn't decided here. | Art 02 §6–§7 |
+| Balance | ✓ | **Resolved S144 (04-n178, PM02 L282):** code cost (Exposure×1+Findings×1) confirmed correct; prior "Exposure×2" prose (this row and Design Rationale) was stale — corrected. Adjacent-district PA cost penalty doubled +1→+2 to match cost at model rate (`PublicAct/Modify` 1.00 × 2 = 2.00 vs. cost 2.00, 0% delta). | Art 02 §6–§7 |
 | Effect duration | ✓ | One round: PA cost increase applies this round's Beat 4 PA phase only | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | STD.CA.6 submission as restriction prerequisite; submission ordering and void-on-STD.CA.6-cancel outstanding (Outstanding Issues) | — |
@@ -304,11 +306,11 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Pre-convention card — design rationale scaffold added S59. Design pass pending.*
+*Pre-convention card — design rationale scaffold added S59. Design pass pending. Repriced S144 — v1.1 (04-n178, PM02 L282).*
 
 ```python
 NET.CA.4 = Card(
-    id      = "NET.CA.4",  version="v1.0",
+    id      = "NET.CA.4",  version="v1.1",
     name    = "Network Cascade",
     tagline = "Extend Broadcast Interference to an adjacent district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -323,7 +325,7 @@ NET.CA.4 = Card(
     affinity=None,
     restriction = faction(acting).submitted(STD.CA.6, round=game.round) == True,
     cost        = resource.faction(acting).exposure * 1 + resource.faction(acting).findings * 1,
-    success     = district(target).political_act_cost += 1,
+    success     = district(target).political_act_cost += 2,
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
     narrative   = "The Network understands signal propagation better than anyone at this table.",

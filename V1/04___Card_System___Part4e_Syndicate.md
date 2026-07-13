@@ -452,7 +452,7 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 | Doctrine alignment | ✓ | Syndicate only; undeveloped districts only; ChorusNode excluded; multiple deeds permitted (cost-governed) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Territory/Add/StructureBlock — ultimate effect is Syndicate structure placed via Grant Deed | Art 04b §4, §5 |
-| Balance | ✓ | Capital×5 per deed; payback contingent on opponent building in target district | Art 02 §6–§7 |
+| Balance | ✓ | Capital×6 per deed (repriced S144, 04-n178 — GD-01 v0.4's third fire effect raised the deed's raw value ~4.20→8.20; modest +1 bump, not proportional, since fire is trigger-conditional not guaranteed); payback contingent on opponent building in target district | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent — Grant Deed held until played or game end | — |
 | Trigger validity | ✓ | N/A — trigger = None on this card | — |
 | Portrait validity | ✓ | Syndicate +1 submitter | Art 04 §6.2 |
@@ -475,11 +475,11 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Redesigned S67 — v2.0*
+*Redesigned S67 — v2.0. Repriced S144 — v2.1 (04-n178 UVM reprice, following GD-01 v0.4 buff).*
 
 ```python
 LandTitle = Card(
-    id      = "SYN.CA.8",  version="v2.0",
+    id      = "SYN.CA.8",  version="v2.1",
     name    = "Land Title",
     tagline = "File a capital claim on undeveloped land. Let someone else build. Then collect.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -498,7 +498,7 @@ LandTitle = Card(
         district(target).structure_count == 0
         AND district(target) != ChorusNode
     ),
-    cost        = resource.faction(acting).capital * 5,
+    cost        = resource.faction(acting).capital * 6,
     success     = arbiter.dispatch(GrantDeed(district=district(target)), faction(acting).case),
     successcrit = None,  fail=None,  failcrit=None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
@@ -528,8 +528,8 @@ Syndicate's presence absorption card — distinct from SYN.CA.3 Hostile Acquisit
 | Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — acquisition of relationships, not displacement | Art 00 §7 |
 | Doctrine alignment | ✓ | Syndicate only; Capital×4 + IntelToken; Ghost-Syndicate structural link; token supply and void-on-Absent outstanding (Outstanding Issues) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — presence absorption is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Add/PresenceToken — replaces target presence at same count | Art 04b §4, §5 |
-| Balance | ⚠ | Design Rationale and this row both state "Capital×4 + IntelToken/Intel," but the code's actual `cost = capital*3 + mandate*2` is Capital×3 + Mandate×2 — no IntelToken in the cost at all (the Intel Token requirement lives in `restriction`, not `cost`). **Flagged S141:** fourth confirmed instance of the prose/code cost mismatch pattern (NET.CA.4, SYN.CA.3, SYN.CA.5 are the other three — schema_cleanup_log.md #31). Token replacement count outstanding (Outstanding Issue). | Art 02 §6–§7 |
+| Taxonomy fit | ⚠→✓ | **Retagged S144 (04-n178):** was Territory/Add/PresenceToken — corrected to Territory/Redirect/PresenceToken. Per Art 04b §4 Function table (`04b___Action_Taxonomy_Design_Analysis.md`), Redirect covers "cross-faction resource movement" and "ownership change of a board element"; Add is defined strictly as bringing a *new* element from supply, which doesn't describe this card's remove-from-target + add-to-acting-faction transfer. Matches SYN.PA.1 Acquisition Offer's existing (correct) Redirect tag for the same effect shape. | Art 04b §4, §5 |
+| Balance | ⚠ | **Repriced S144 (04-n178, PM02 L278):** code cost cut Capital×3+Mandate×2 → Capital×2+Mandate×1, following the Add→Redirect taxonomy fix (correct pair rate reads much lower real value at realistic N than the mis-tagged Add rate did). Design Rationale and this row still state "Capital×4 + IntelToken/Intel" — prose/code mismatch **not resolved by this pass** (still no IntelToken in the coded cost; requirement lives in `restriction`, not `cost`). **Flagged S141, still open:** fourth confirmed instance of the prose/code cost mismatch pattern (NET.CA.4, SYN.CA.3, SYN.CA.5 are the other three — schema_cleanup_log.md #31). Token replacement count outstanding (Outstanding Issue). | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: presence tokens replaced at Beat 3 | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
@@ -554,15 +554,15 @@ Syndicate's presence absorption card — distinct from SYN.CA.3 Hostile Acquisit
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Draft S59 — design pass pending*
+*Draft S59 — design pass pending. Retagged S144 — v1.1 (04-n178 taxonomy correction, function Add→Redirect). Repriced S144 — v1.2 (04-n178, following the taxonomy fix).*
 
 ```python
 HostileTakeover = Card(
-    id      = "SYN.CA.9",  card_id = "SYN.CA.9",  version="v1.0",  # corrected S132 — was hardcoded "SYN.MOD.8" (a different card's ID), mismatched card_status and §8 index, which both already had this correctly as SYN.CA.9
+    id      = "SYN.CA.9",  card_id = "SYN.CA.9",  version="v1.2",  # corrected S132 — was hardcoded "SYN.MOD.8" (a different card's ID), mismatched card_status and §8 index, which both already had this correctly as SYN.CA.9
     name    = "Hostile Takeover",
     tagline = "Purchase control of a faction's community presence in a district, replacing their tokens with Syndicate's at equivalent tier.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = Territory,  function = Add,  subject = PresenceToken,
+    layer   = Territory,  function = Redirect,  subject = PresenceToken,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
     value_rating = None,  # scaffolded, not addressed
     trigger=None,
@@ -577,7 +577,7 @@ HostileTakeover = Card(
         faction(target).presence(district(target)) >= 1
         AND faction(acting).intel_tokens(faction=faction(target)) >= 1
     ),
-    cost        = resource.faction(acting).capital * 3 + resource.faction(acting).mandate * 2,
+    cost        = resource.faction(acting).capital * 2 + resource.faction(acting).mandate * 1,
     success     = game.replace_presence(
         faction(target), district(target),
         with_faction=faction(acting),

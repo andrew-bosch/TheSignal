@@ -575,7 +575,7 @@ class ModReactCard(Card):
 | subject | Taxonomy | Subject | Action taxonomy subject — see Art 04b §4 | TBD |
 | beat | Metadata | int | Phase 6 beat this card resolves in; order within beat = dispatch case submission order (Art 03 §7) | TBD |
 | resolution | Metadata | Resolution | d100 = probability roll; Automatic = guaranteed, fires on submission | Face |
-| threshold | Metadata | int | Base difficulty as numeric threshold; None when Automatic | Face |
+| threshold | Metadata | int | Base difficulty as numeric threshold; None when Automatic. **Must be a multiple of 5 (L280, S144).** Reason: threshold-slider physical design and mental math both favor round-5 increments — lower cognitive overhead reading a d100 roll against a multiple of 5 than an arbitrary number. Confirmed against the full existing corpus (45 d100 cards, range 25–65) — already 100% compliant before this rule was written down; this formalizes existing practice, not a retroactive fix. | Face |
 | ring_mod | Metadata | dict[Ring, int] | Per-ring threshold adjustment; positive = easier, negative = harder; None when no variation | Face |
 | doctrine_mod | Metadata | dict[PentagramRelation, int] | Per-doctrinal-relationship threshold adjustment based on acting/target faction pentagram proximity; positive = easier, negative = harder; None when no faction target or no doctrinal variation | Face |
 | value_rating | Metadata | int \| None | 1–4 (widened from 1–3, S135/L259). Power/strength tier printed on card face; used in Splay calculation for Modifier cards. Base Card() field as of S143 (04-n183) — previously Modifier-subclass-only. Feeds the whole-set cost-derivation model (04-n178). CA/PA definition not yet set; `None` = TBD/unscaffolded until the whole-set analysis assigns real values. | Face |
@@ -2091,7 +2091,7 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 | Doctrine alignment | ✓ | Network is the primary aligned faction — signal disruption as tactical information control. Ghost benefits doctrinally (analytical cover). Directorate opposed — covert disruption conflicts with their institutional-authority doctrine. No opponent target → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: disruption mechanism is hidden even if cost increase is observable at Beat 4. Standard: all factions can disrupt broadcast infrastructure. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Submission` — modifies cost of a PA (submission-phase property). `function = Modify`, `subject = PublicAct` — correctly scoped and narrow. | Art 04b §4, §5 |
-| Balance | ✓ | Beat 2 positional wager. Cost 2 Exposure (1 for Network via affinity). Raises PA cost +1 native — meaningful deterrence, not a hard block. No fail state. | Art 03 §9.4 |
+| Balance | ✓ | Beat 2 positional wager. Cost 2 Exposure (1 for Network via affinity). Raises PA cost +1 native — meaningful deterrence, not a hard block. No fail state. **Confirmed S144 (04-n178):** UVM model reads this as ~100% overpriced (`PublicAct/Modify` value 1.00 vs. cost 2.00) — but that's the *non*-Network cost. Network's affinity-adjusted net cost (1) matches model value exactly; the premium for everyone else is the intended non-affinity tax, same pattern as Ghost's threshold affinity elsewhere. Not a defect — left unchanged. | Art 03 §9.4 |
 | Effect duration | ✓ | Single-round: arms at Beat 2, applies at Beat 4, does not persist. Appropriate for a tactical cost modifier. | Art 03 §10 |
 | Persistence | ✓ | Immediate — Beat 2 carry; applied at Beat 4 via Resolution Grid; no game-state marker persists beyond round | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` — Automatic at Beat 2. | — |
@@ -2183,7 +2183,7 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 | Doctrine alignment | ✓ | Amplifying public messaging strongly serves Network doctrine; strongly opposes Ghost (volume = exposure risk). Both captured via portrait entries. Self-targeted → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: amplification mechanism is hidden. Standard: all factions can amplify their messaging covertly. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Resolution` — scales the outcome (standing_impact) of a PA; Art 04b §4.2 "outcome scale" is a Resolution property. `function = Modify`, `subject = PublicAct`. Note: `resolution_type = "Transactional"` may be a misnomer — card fizzles if no PA is submitted (same positional-wager behavior as STD.CA.6). Minor schema inconsistency, not blocking. | Art 04b §4, §5 |
-| Balance | ✓ | Symmetric multiplier: both success (+×2) and failure (−×2) scale. Prevents risk-free use. Fizzle (Exposure spent, no PA) ensures Beat 2 commitment is real. | Art 02 §11 |
+| Balance | ✓ | Symmetric multiplier: both success (+×2) and failure (−×2) scale. Prevents risk-free use. Fizzle (Exposure spent, no PA) ensures Beat 2 commitment is real. **Confirmed S144 (04-n178):** same UVM read as STD.CA.6 — Network's affinity-adjusted net cost (1) matches model value; the non-Network premium is intended, not a defect. Left unchanged. | Art 02 §11 |
 | Effect duration | ✓ | Single-round: arms at Beat 2, applies at Beat 4, does not persist. | Art 03 §10 |
 | Persistence | ✓ | Immediate — Beat 2 carry; applied at Beat 4 via Resolution Grid; no game-state marker persists beyond round | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` — Automatic at Beat 2. | — |
@@ -2905,7 +2905,9 @@ C_Disprove = Card(
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
-Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused cards. Blind random draw: ARBITER transfers one Intel token from the target faction's supply to the acting faction's dispatch case, face-down. Acting faction discovers the token's content privately at Beat 3 resolution when the case opens; ARBITER does not announce content. Target faction's token count decreases visibly. Cost 2 native: extracting and getting away clean with a resource is operationally harder than destroying it. Ghost affinity (threshold +10): covert acquisition is Ghost doctrine. Syndicate portrait +1: capital intelligence infrastructure aligns Syndicate with resource acquisition by any means, but physical covert acquisition is not Syndicate's mechanical specialty — no threshold bonus warranted. Fails automatically if target holds no tokens at Beat 3.
+Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused cards. Blind random draw: ARBITER transfers one Intel token from the target faction's supply to the acting faction's dispatch case, face-down. Acting faction discovers the token's content privately at Beat 3 resolution when the case opens; ARBITER does not announce content. Target faction's token count decreases visibly. Cost 1 native: extracting and getting away clean with a resource carries a real operational cost. Ghost affinity (threshold +10): covert acquisition is Ghost doctrine. Syndicate portrait +1: capital intelligence infrastructure aligns Syndicate with resource acquisition by any means, but physical covert acquisition is not Syndicate's mechanical specialty — no threshold bonus warranted. Fails automatically if target holds no tokens at Beat 3.
+
+**Repriced S144 (04-n178, PM02 L281):** UVM audit found this card's `IntelToken/Add` classification clean (validated rate, n=4) at total_pair_cost 1.75, but the old cost (2 native, threshold 45) priced ~154% over that even ignoring the success-probability tax — and threshold alone couldn't close the gap even at 100% certainty (floor was still ~14% over at 2 native). Cost cut to 1 native; threshold 45→55 lands the risk-adjusted cost at 1.82, within 4% of model value.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -2919,7 +2921,7 @@ Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused c
 | Doctrine alignment | ✓ | Ghost affinity (threshold +10): covert acquisition is Ghost doctrine. Syndicate portrait +1: capital intelligence motivation aligns Syndicate with resource acquisition — no mechanical threshold bonus, physical acquisition is not Syndicate-native. Directorate portrait −1: covert acquisition bypasses legitimate process. Guild portrait −1: taking what others gathered | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: acting faction unknown; target's count decreases visibly. Standard: available to all factions | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Economy/Redirect/IntelToken — fills coverage gap per Art 04b §6; splits Asset Extraction (S62) | Art 04b §4 |
-| Balance | ✓ | 2 native, threshold 45 (Ghost: 55), ring_mod None. Fail = no effect, cost sunk. Automatic fail if target holds no tokens at Beat 3. Double effect (acting gains, target loses) justifies same cost as pure-denial Disprove | Art 02 §5 |
+| Balance | ✓ | **Repriced S144 (04-n178, PM02 L281):** 1 native (was 2), threshold 55 (was 45; Ghost: 65), ring_mod None. Fail = no effect, cost sunk. Automatic fail if target holds no tokens at Beat 3. | Art 02 §5 |
 | Effect duration | ✓ | Immediate — token transferred at Beat 3, no lingering marker | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None | — |
@@ -2936,11 +2938,13 @@ Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused c
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | ✓ | ✓ | ⚠ pending re-sign-off (v1.1 — 04-n178 reprice) |
+
+*Repriced S144 — v1.1 (04-n178 UVM reprice, PM02 L281).*
 
 ```python
 C_IntelExtraction = Card(
-    id      = "STD.CA.15",  version = "v1.0",
+    id      = "STD.CA.15",  version = "v1.1",
     name    = "Intel Extraction",
     tagline = "Covertly transfer one Intel token from an opponent's supply into your dispatch case.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -2949,7 +2953,7 @@ C_IntelExtraction = Card(
 
     beat            = 3,
     resolution      = d100,
-    threshold       = 45,
+    threshold       = 55,
     ring_mod        = None,
     doctrine_mod    = None,
     value_rating = None,  # scaffolded, not addressed
@@ -2969,7 +2973,7 @@ C_IntelExtraction = Card(
         faction(acting) == Ghost: threshold += 10,
     ),
     restriction = None,
-    cost        = resource.faction(acting).native * 2,
+    cost        = resource.faction(acting).native * 1,
 
     success     = arbiter.draw_random(IntelToken, source=faction(target).supply,
                       count=1, action=transfer(faction(acting).case, face_down=True)),
@@ -13932,7 +13936,7 @@ GUI.CA.9 = Card(
 #### Design Rationale
 Guild's Grant Deed card — parallel to SYN.CA.8 Land Title in mechanism, distinct in doctrine. Land Title is a capital claim: "let someone else build, then collect." Development Order is a construction rights filing: "when this district develops, Guild is the builder of record." Both deliver GD-01 Grant Deed to the acting faction's Dispatch Case via ARBITER; both fire when any faction places a structure block in the named district.
 
-Cost: 3 Capacity + 1 `district(target).native` — the district-native term is the cross-resource commitment that satisfies the §9.2 ceiling gap (04-n119). Guild must engage with the target district's resource economy to file the order. Restriction: no Guild structure in target district (same gate as GUI.CA.4) and not Chorus Node. Automatic resolution — filing a development order doesn't require a roll. Multiple orders on the same district permitted; cost-governed.
+Cost: 4 Capacity + 1 `district(target).native` (repriced S144, 04-n178 — GD-01 v0.4's third fire effect raised the deed's raw value ~4.20→8.20; modest +1 bump, not proportional, since fire is trigger-conditional not guaranteed) — the district-native term is the cross-resource commitment that satisfies the §9.2 ceiling gap (04-n119). Guild must engage with the target district's resource economy to file the order. Restriction: no Guild structure in target district (same gate as GUI.CA.4) and not Chorus Node. Automatic resolution — filing a development order doesn't require a roll. Multiple orders on the same district permitted; cost-governed.
 
 Doctrinal distinction from SYN.CA.8: Guild's deed doesn't extract value from others' development. It establishes Guild's right to participate. The fire effect (+1 Presence Token + 1 Structure Block per GD-01) reflects Guild crews arriving to execute the build — not just a claim on paper.
 
@@ -13972,9 +13976,11 @@ The Guild files the development order before a single wall goes up. The district
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
+*Repriced S144 — v0.2 (04-n178 UVM reprice, following GD-01 v0.4 buff).*
+
 ```python
 GUI.CA.10 = Card(
-    id      = "GUI.CA.10",  version = "v0.1",
+    id      = "GUI.CA.10",  version = "v0.2",
     name    = "Development Order",
     tagline = "File construction rights before ground is broken. The permit is already on file.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -14002,7 +14008,7 @@ GUI.CA.10 = Card(
     affinity    = None,
     restriction = (faction(Guild).structure_block.count(district(target)) == 0
                and district(target) != ChorusNode),
-    cost = resource.faction(acting).capacity * 3
+    cost = resource.faction(acting).capacity * 4
          + resource.district(target).native * 1,
     boost = None,
 
@@ -16900,7 +16906,9 @@ GHO.CA.1 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier Breach by targeting submitted operations, not hand contents. Intel Token cost consumed at submission regardless of outcome: you spend what you know to learn what they're doing. Cost structure (Intel Token + 2 Findings) reflects active operational depth — harder to execute than Gather, rewarded with real-time intelligence rather than historical data. Failure notifies the target; crit fail triggers a PS loss.
+Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier Breach by targeting submitted operations, not hand contents. Intel Token cost consumed at submission regardless of outcome: you spend what you know to learn what they're doing — the token itself *is* the operational-depth cost, not a supplement to it. Failure notifies the target; crit fail triggers a PS loss.
+
+**Repriced S144 (04-n178, PM02 L279):** UVM audit found the raw cost (Findings×2 + Intel Token) was already close to the card's calibrated delivered value at 100% certainty — the ~2x overpricing came entirely from paying that full cost at only a 50% success chance. Dropped Findings from the cost (was double-charging for "operational depth" already covered by the Intel Token spend) and raised threshold 50→60 to land the risk-adjusted cost near model value within the corpus's normal d100 threshold range (25–65).
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -16914,7 +16922,7 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 | Doctrine alignment | ✓ | `target_faction = faction(named_opponent)`, `doctrine_mod = None` — explicit design choice: surveillance effectiveness is about intelligence quality, not doctrinal proximity. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: active surveillance is covert. FactionSpecific (Ghost): real-time operational intel is Ghost's exclusive capability. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Information` — revealing the content of a submitted operation is Information layer. `function = Reveal`, `subject = CovertOperation` — correctly scoped. | Art 04b §4, §5 |
-| Balance | ✓ | Intel Token consumed at submission regardless of outcome — meaningful downside for failed surveillance. Double-resource cost (IntelToken + 2 Findings). Crit success stacks additional IntelToken on top of IntelDeliverySlip. | Art 02 §8; Art 02 §12 |
+| Balance | ✓ | **Repriced S144 (04-n178, PM02 L279):** Findings×2 dropped from cost (was double-charging for operational depth already covered by the Intel Token spend); threshold 50→60. Intel Token consumed at submission regardless of outcome — meaningful downside for failed surveillance. Crit success stacks additional IntelToken on top of IntelDeliverySlip. | Art 02 §8; Art 02 §12 |
 | Effect duration | ✓ | Instantaneous: IntelDeliverySlip delivered once at Beat 2 resolution; reads target faction's Beat 3 grid column. IntelToken on crit. No persistent state beyond the delivered token. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | N/A | `trigger = None` | — |
@@ -16925,7 +16933,7 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 | Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` (`id="GHO.CA.2"` only) — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Cross-resource (IntelToken + Findings, both present). IntelToken-as-cost raises the open question in schema_cleanup_log.md #10 — flagged, not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ⚠ | **Updated S144:** now mono (IntelToken only) following the Findings drop — see Balance row. IntelToken-as-cost raises the open question in schema_cleanup_log.md #10 — flagged, not resolved. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -16935,16 +16943,16 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ⚠ pending re-sign-off (v1.1 — beat timing correction) |
+| Status | ✓ | ✓ | ⚠ pending re-sign-off (v1.1 — beat timing correction; v1.2 — 04-n178 reprice) |
 
 ```python
 GHO.CA.2 = Card(
-    id      = "GHO.CA.2",  version="v1.1",
+    id      = "GHO.CA.2",  version="v1.2",
     name    = "Intercept",
     tagline = "Surveil a faction's covert operations in real time.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
-    beat=2, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
+    beat=2, resolution=d100, threshold=60, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
     value_rating = None,  # scaffolded, not addressed
     trigger=None,
     resolution_type="Probabilistic", outcome_type=None,
@@ -16955,7 +16963,7 @@ GHO.CA.2 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction=None,
-    cost        = IntelToken(faction=faction(target)) * 1 + resource.faction(acting).findings * 2,
+    cost        = IntelToken(faction=faction(target)) * 1,
     success     = game.dispatch(faction(acting), IntelDeliverySlip(faction=faction(target), op_type=faction(target).op(beat=3).type, district=faction(target).op(beat=3).district)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = game.dispatch(faction(target), NotificationSlip),
@@ -24313,7 +24321,9 @@ NET.CA.3 = Card(
 [↑ Covert Operations](#network-covert-operations)
 
 #### Design Rationale
-Network's signal propagation card — extends STD.CA.6 Broadcast Interference's Public Act cost increase to an adjacent district on the same round. Mechanically ties the two cards together: STD.CA.6 must be submitted in the same round for NET.CA.4 to fire. This creates a planned two-card combo: pay the STD.CA.6 Exposure cost to disrupt PA activity in one district, then pay NET.CA.4's Exposure×2 to extend that disruption to an adjacent district. The "signal propagation" framing is doctrinally exact — The Network understands that broadcast interference is not bounded by administrative district lines. Beat 2 Automatic means both disruption effects land before Beat 4 PA resolution.
+Network's signal propagation card — extends STD.CA.6 Broadcast Interference's Public Act cost increase to an adjacent district on the same round. Mechanically ties the two cards together: STD.CA.6 must be submitted in the same round for NET.CA.4 to fire. This creates a planned two-card combo: pay the STD.CA.6 Exposure cost to disrupt PA activity in one district, then pay Exposure+Findings to extend that disruption to an adjacent district. The "signal propagation" framing is doctrinally exact — The Network understands that broadcast interference is not bounded by administrative district lines. Beat 2 Automatic means both disruption effects land before Beat 4 PA resolution.
+
+**Repriced S144 (04-n178, PM02 L282):** cost is confirmed cross-resource (Exposure×1+Findings×1) — the code was correct, the "Exposure×2" prose above and in the Balance row was stale (schema_cleanup_log #31 family, now closed for this card). Since the combo's cross-resource cost is intentionally kept (not collapsed to mono) and 1+1=2 is already the structural floor for a genuine two-resource cost, the fix goes on the value side instead: the adjacent-district PA cost penalty doubled from +1 to +2, matching `STD.CA.6`'s own cost/value ratio exactly (`PublicAct/Modify` rate 1.00 × 2 units = 2.00, vs. the unchanged cost of 2 — 0% delta, clean).
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -24327,7 +24337,7 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 | Doctrine alignment | ✓ | Network only; requires STD.CA.6 same round (restriction); Exposure×2; Beat 2 Automatic — both disruption effects land before Beat 4 PA resolution | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — signal propagation is Network-exclusive two-card mechanic | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Submission/Modify/PublicAct — extends STD.CA.6's PA cost increase to adjacent district | Art 04b §4, §5 |
-| Balance | ⚠ | Design Rationale and this row both state "Exposure×2 for adjacency extension," but the code's actual `cost = resource.faction(acting).exposure * 1 + resource.faction(acting).findings * 1` — Exposure×1 + Findings×1, not Exposure×2. **Flagged S141:** a real prose-vs-code mismatch, not a stale annotation (both prose locations agree with each other and disagree with the code) — which one is correct isn't decided here. | Art 02 §6–§7 |
+| Balance | ✓ | **Resolved S144 (04-n178, PM02 L282):** code cost (Exposure×1+Findings×1) confirmed correct; prior "Exposure×2" prose (this row and Design Rationale) was stale — corrected. Adjacent-district PA cost penalty doubled +1→+2 to match cost at model rate (`PublicAct/Modify` 1.00 × 2 = 2.00 vs. cost 2.00, 0% delta). | Art 02 §6–§7 |
 | Effect duration | ✓ | One round: PA cost increase applies this round's Beat 4 PA phase only | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | STD.CA.6 submission as restriction prerequisite; submission ordering and void-on-STD.CA.6-cancel outstanding (Outstanding Issues) | — |
@@ -24351,11 +24361,11 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Pre-convention card — design rationale scaffold added S59. Design pass pending.*
+*Pre-convention card — design rationale scaffold added S59. Design pass pending. Repriced S144 — v1.1 (04-n178, PM02 L282).*
 
 ```python
 NET.CA.4 = Card(
-    id      = "NET.CA.4",  version="v1.0",
+    id      = "NET.CA.4",  version="v1.1",
     name    = "Network Cascade",
     tagline = "Extend Broadcast Interference to an adjacent district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -24370,7 +24380,7 @@ NET.CA.4 = Card(
     affinity=None,
     restriction = faction(acting).submitted(STD.CA.6, round=game.round) == True,
     cost        = resource.faction(acting).exposure * 1 + resource.faction(acting).findings * 1,
-    success     = district(target).political_act_cost += 1,
+    success     = district(target).political_act_cost += 2,
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
     narrative   = "The Network understands signal propagation better than anyone at this table.",
@@ -27798,7 +27808,7 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 | Doctrine alignment | ✓ | Syndicate only; undeveloped districts only; ChorusNode excluded; multiple deeds permitted (cost-governed) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Territory/Add/StructureBlock — ultimate effect is Syndicate structure placed via Grant Deed | Art 04b §4, §5 |
-| Balance | ✓ | Capital×5 per deed; payback contingent on opponent building in target district | Art 02 §6–§7 |
+| Balance | ✓ | Capital×6 per deed (repriced S144, 04-n178 — GD-01 v0.4's third fire effect raised the deed's raw value ~4.20→8.20; modest +1 bump, not proportional, since fire is trigger-conditional not guaranteed); payback contingent on opponent building in target district | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent — Grant Deed held until played or game end | — |
 | Trigger validity | ✓ | N/A — trigger = None on this card | — |
 | Portrait validity | ✓ | Syndicate +1 submitter | Art 04 §6.2 |
@@ -27821,11 +27831,11 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Redesigned S67 — v2.0*
+*Redesigned S67 — v2.0. Repriced S144 — v2.1 (04-n178 UVM reprice, following GD-01 v0.4 buff).*
 
 ```python
 LandTitle = Card(
-    id      = "SYN.CA.8",  version="v2.0",
+    id      = "SYN.CA.8",  version="v2.1",
     name    = "Land Title",
     tagline = "File a capital claim on undeveloped land. Let someone else build. Then collect.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -27844,7 +27854,7 @@ LandTitle = Card(
         district(target).structure_count == 0
         AND district(target) != ChorusNode
     ),
-    cost        = resource.faction(acting).capital * 5,
+    cost        = resource.faction(acting).capital * 6,
     success     = arbiter.dispatch(GrantDeed(district=district(target)), faction(acting).case),
     successcrit = None,  fail=None,  failcrit=None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
@@ -27874,8 +27884,8 @@ Syndicate's presence absorption card — distinct from SYN.CA.3 Hostile Acquisit
 | Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — acquisition of relationships, not displacement | Art 00 §7 |
 | Doctrine alignment | ✓ | Syndicate only; Capital×4 + IntelToken; Ghost-Syndicate structural link; token supply and void-on-Absent outstanding (Outstanding Issues) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — presence absorption is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Territory/Add/PresenceToken — replaces target presence at same count | Art 04b §4, §5 |
-| Balance | ⚠ | Design Rationale and this row both state "Capital×4 + IntelToken/Intel," but the code's actual `cost = capital*3 + mandate*2` is Capital×3 + Mandate×2 — no IntelToken in the cost at all (the Intel Token requirement lives in `restriction`, not `cost`). **Flagged S141:** fourth confirmed instance of the prose/code cost mismatch pattern (NET.CA.4, SYN.CA.3, SYN.CA.5 are the other three — schema_cleanup_log.md #31). Token replacement count outstanding (Outstanding Issue). | Art 02 §6–§7 |
+| Taxonomy fit | ⚠→✓ | **Retagged S144 (04-n178):** was Territory/Add/PresenceToken — corrected to Territory/Redirect/PresenceToken. Per Art 04b §4 Function table (`04b___Action_Taxonomy_Design_Analysis.md`), Redirect covers "cross-faction resource movement" and "ownership change of a board element"; Add is defined strictly as bringing a *new* element from supply, which doesn't describe this card's remove-from-target + add-to-acting-faction transfer. Matches SYN.PA.1 Acquisition Offer's existing (correct) Redirect tag for the same effect shape. | Art 04b §4, §5 |
+| Balance | ⚠ | **Repriced S144 (04-n178, PM02 L278):** code cost cut Capital×3+Mandate×2 → Capital×2+Mandate×1, following the Add→Redirect taxonomy fix (correct pair rate reads much lower real value at realistic N than the mis-tagged Add rate did). Design Rationale and this row still state "Capital×4 + IntelToken/Intel" — prose/code mismatch **not resolved by this pass** (still no IntelToken in the coded cost; requirement lives in `restriction`, not `cost`). **Flagged S141, still open:** fourth confirmed instance of the prose/code cost mismatch pattern (NET.CA.4, SYN.CA.3, SYN.CA.5 are the other three — schema_cleanup_log.md #31). Token replacement count outstanding (Outstanding Issue). | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: presence tokens replaced at Beat 3 | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
@@ -27900,15 +27910,15 @@ Syndicate's presence absorption card — distinct from SYN.CA.3 Hostile Acquisit
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
-*Draft S59 — design pass pending*
+*Draft S59 — design pass pending. Retagged S144 — v1.1 (04-n178 taxonomy correction, function Add→Redirect). Repriced S144 — v1.2 (04-n178, following the taxonomy fix).*
 
 ```python
 HostileTakeover = Card(
-    id      = "SYN.CA.9",  card_id = "SYN.CA.9",  version="v1.0",  # corrected S132 — was hardcoded "SYN.MOD.8" (a different card's ID), mismatched card_status and §8 index, which both already had this correctly as SYN.CA.9
+    id      = "SYN.CA.9",  card_id = "SYN.CA.9",  version="v1.2",  # corrected S132 — was hardcoded "SYN.MOD.8" (a different card's ID), mismatched card_status and §8 index, which both already had this correctly as SYN.CA.9
     name    = "Hostile Takeover",
     tagline = "Purchase control of a faction's community presence in a district, replacing their tokens with Syndicate's at equivalent tier.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = Territory,  function = Add,  subject = PresenceToken,
+    layer   = Territory,  function = Redirect,  subject = PresenceToken,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
     value_rating = None,  # scaffolded, not addressed
     trigger=None,
@@ -27923,7 +27933,7 @@ HostileTakeover = Card(
         faction(target).presence(district(target)) >= 1
         AND faction(acting).intel_tokens(faction=faction(target)) >= 1
     ),
-    cost        = resource.faction(acting).capital * 3 + resource.faction(acting).mandate * 2,
+    cost        = resource.faction(acting).capital * 2 + resource.faction(acting).mandate * 1,
     success     = game.replace_presence(
         faction(target), district(target),
         with_faction=faction(acting),

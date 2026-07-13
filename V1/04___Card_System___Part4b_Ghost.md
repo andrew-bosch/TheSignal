@@ -141,7 +141,9 @@ GHO.CA.1 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier Breach by targeting submitted operations, not hand contents. Intel Token cost consumed at submission regardless of outcome: you spend what you know to learn what they're doing. Cost structure (Intel Token + 2 Findings) reflects active operational depth — harder to execute than Gather, rewarded with real-time intelligence rather than historical data. Failure notifies the target; crit fail triggers a PS loss.
+Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier Breach by targeting submitted operations, not hand contents. Intel Token cost consumed at submission regardless of outcome: you spend what you know to learn what they're doing — the token itself *is* the operational-depth cost, not a supplement to it. Failure notifies the target; crit fail triggers a PS loss.
+
+**Repriced S144 (04-n178, PM02 L279):** UVM audit found the raw cost (Findings×2 + Intel Token) was already close to the card's calibrated delivered value at 100% certainty — the ~2x overpricing came entirely from paying that full cost at only a 50% success chance. Dropped Findings from the cost (was double-charging for "operational depth" already covered by the Intel Token spend) and raised threshold 50→60 to land the risk-adjusted cost near model value within the corpus's normal d100 threshold range (25–65).
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -155,7 +157,7 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 | Doctrine alignment | ✓ | `target_faction = faction(named_opponent)`, `doctrine_mod = None` — explicit design choice: surveillance effectiveness is about intelligence quality, not doctrinal proximity. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: active surveillance is covert. FactionSpecific (Ghost): real-time operational intel is Ghost's exclusive capability. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Information` — revealing the content of a submitted operation is Information layer. `function = Reveal`, `subject = CovertOperation` — correctly scoped. | Art 04b §4, §5 |
-| Balance | ✓ | Intel Token consumed at submission regardless of outcome — meaningful downside for failed surveillance. Double-resource cost (IntelToken + 2 Findings). Crit success stacks additional IntelToken on top of IntelDeliverySlip. | Art 02 §8; Art 02 §12 |
+| Balance | ✓ | **Repriced S144 (04-n178, PM02 L279):** Findings×2 dropped from cost (was double-charging for operational depth already covered by the Intel Token spend); threshold 50→60. Intel Token consumed at submission regardless of outcome — meaningful downside for failed surveillance. Crit success stacks additional IntelToken on top of IntelDeliverySlip. | Art 02 §8; Art 02 §12 |
 | Effect duration | ✓ | Instantaneous: IntelDeliverySlip delivered once at Beat 2 resolution; reads target faction's Beat 3 grid column. IntelToken on crit. No persistent state beyond the delivered token. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | N/A | `trigger = None` | — |
@@ -166,7 +168,7 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 | Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` (`id="GHO.CA.2"` only) — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Missing row, scaffolded S141. Cross-resource (IntelToken + Findings, both present). IntelToken-as-cost raises the open question in schema_cleanup_log.md #10 — flagged, not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ⚠ | **Updated S144:** now mono (IntelToken only) following the Findings drop — see Balance row. IntelToken-as-cost raises the open question in schema_cleanup_log.md #10 — flagged, not resolved. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -176,16 +178,16 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ⚠ pending re-sign-off (v1.1 — beat timing correction) |
+| Status | ✓ | ✓ | ⚠ pending re-sign-off (v1.1 — beat timing correction; v1.2 — 04-n178 reprice) |
 
 ```python
 GHO.CA.2 = Card(
-    id      = "GHO.CA.2",  version="v1.1",
+    id      = "GHO.CA.2",  version="v1.2",
     name    = "Intercept",
     tagline = "Surveil a faction's covert operations in real time.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
-    beat=2, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
+    beat=2, resolution=d100, threshold=60, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
     value_rating = None,  # scaffolded, not addressed
     trigger=None,
     resolution_type="Probabilistic", outcome_type=None,
@@ -196,7 +198,7 @@ GHO.CA.2 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction=None,
-    cost        = IntelToken(faction=faction(target)) * 1 + resource.faction(acting).findings * 2,
+    cost        = IntelToken(faction=faction(target)) * 1,
     success     = game.dispatch(faction(acting), IntelDeliverySlip(faction=faction(target), op_type=faction(target).op(beat=3).type, district=faction(target).op(beat=3).district)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = game.dispatch(faction(target), NotificationSlip),

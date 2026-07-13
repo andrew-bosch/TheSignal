@@ -507,7 +507,7 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 | Doctrine alignment | ✓ | Network is the primary aligned faction — signal disruption as tactical information control. Ghost benefits doctrinally (analytical cover). Directorate opposed — covert disruption conflicts with their institutional-authority doctrine. No opponent target → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: disruption mechanism is hidden even if cost increase is observable at Beat 4. Standard: all factions can disrupt broadcast infrastructure. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Submission` — modifies cost of a PA (submission-phase property). `function = Modify`, `subject = PublicAct` — correctly scoped and narrow. | Art 04b §4, §5 |
-| Balance | ✓ | Beat 2 positional wager. Cost 2 Exposure (1 for Network via affinity). Raises PA cost +1 native — meaningful deterrence, not a hard block. No fail state. | Art 03 §9.4 |
+| Balance | ✓ | Beat 2 positional wager. Cost 2 Exposure (1 for Network via affinity). Raises PA cost +1 native — meaningful deterrence, not a hard block. No fail state. **Confirmed S144 (04-n178):** UVM model reads this as ~100% overpriced (`PublicAct/Modify` value 1.00 vs. cost 2.00) — but that's the *non*-Network cost. Network's affinity-adjusted net cost (1) matches model value exactly; the premium for everyone else is the intended non-affinity tax, same pattern as Ghost's threshold affinity elsewhere. Not a defect — left unchanged. | Art 03 §9.4 |
 | Effect duration | ✓ | Single-round: arms at Beat 2, applies at Beat 4, does not persist. Appropriate for a tactical cost modifier. | Art 03 §10 |
 | Persistence | ✓ | Immediate — Beat 2 carry; applied at Beat 4 via Resolution Grid; no game-state marker persists beyond round | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` — Automatic at Beat 2. | — |
@@ -599,7 +599,7 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 | Doctrine alignment | ✓ | Amplifying public messaging strongly serves Network doctrine; strongly opposes Ghost (volume = exposure risk). Both captured via portrait entries. Self-targeted → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: amplification mechanism is hidden. Standard: all factions can amplify their messaging covertly. | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | `layer = Resolution` — scales the outcome (standing_impact) of a PA; Art 04b §4.2 "outcome scale" is a Resolution property. `function = Modify`, `subject = PublicAct`. Note: `resolution_type = "Transactional"` may be a misnomer — card fizzles if no PA is submitted (same positional-wager behavior as STD.CA.6). Minor schema inconsistency, not blocking. | Art 04b §4, §5 |
-| Balance | ✓ | Symmetric multiplier: both success (+×2) and failure (−×2) scale. Prevents risk-free use. Fizzle (Exposure spent, no PA) ensures Beat 2 commitment is real. | Art 02 §11 |
+| Balance | ✓ | Symmetric multiplier: both success (+×2) and failure (−×2) scale. Prevents risk-free use. Fizzle (Exposure spent, no PA) ensures Beat 2 commitment is real. **Confirmed S144 (04-n178):** same UVM read as STD.CA.6 — Network's affinity-adjusted net cost (1) matches model value; the non-Network premium is intended, not a defect. Left unchanged. | Art 02 §11 |
 | Effect duration | ✓ | Single-round: arms at Beat 2, applies at Beat 4, does not persist. | Art 03 §10 |
 | Persistence | ✓ | Immediate — Beat 2 carry; applied at Beat 4 via Resolution Grid; no game-state marker persists beyond round | Art 04 §6 |
 | Trigger validity | ✓ | `trigger = None` — Automatic at Beat 2. | — |
@@ -1321,7 +1321,9 @@ C_Disprove = Card(
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
-Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused cards. Blind random draw: ARBITER transfers one Intel token from the target faction's supply to the acting faction's dispatch case, face-down. Acting faction discovers the token's content privately at Beat 3 resolution when the case opens; ARBITER does not announce content. Target faction's token count decreases visibly. Cost 2 native: extracting and getting away clean with a resource is operationally harder than destroying it. Ghost affinity (threshold +10): covert acquisition is Ghost doctrine. Syndicate portrait +1: capital intelligence infrastructure aligns Syndicate with resource acquisition by any means, but physical covert acquisition is not Syndicate's mechanical specialty — no threshold bonus warranted. Fails automatically if target holds no tokens at Beat 3.
+Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused cards. Blind random draw: ARBITER transfers one Intel token from the target faction's supply to the acting faction's dispatch case, face-down. Acting faction discovers the token's content privately at Beat 3 resolution when the case opens; ARBITER does not announce content. Target faction's token count decreases visibly. Cost 1 native: extracting and getting away clean with a resource carries a real operational cost. Ghost affinity (threshold +10): covert acquisition is Ghost doctrine. Syndicate portrait +1: capital intelligence infrastructure aligns Syndicate with resource acquisition by any means, but physical covert acquisition is not Syndicate's mechanical specialty — no threshold bonus warranted. Fails automatically if target holds no tokens at Beat 3.
+
+**Repriced S144 (04-n178, PM02 L281):** UVM audit found this card's `IntelToken/Add` classification clean (validated rate, n=4) at total_pair_cost 1.75, but the old cost (2 native, threshold 45) priced ~154% over that even ignoring the success-probability tax — and threshold alone couldn't close the gap even at 100% certainty (floor was still ~14% over at 2 native). Cost cut to 1 native; threshold 45→55 lands the risk-adjusted cost at 1.82, within 4% of model value.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1335,7 +1337,7 @@ Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused c
 | Doctrine alignment | ✓ | Ghost affinity (threshold +10): covert acquisition is Ghost doctrine. Syndicate portrait +1: capital intelligence motivation aligns Syndicate with resource acquisition — no mechanical threshold bonus, physical acquisition is not Syndicate-native. Directorate portrait −1: covert acquisition bypasses legitimate process. Guild portrait −1: taking what others gathered | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: acting faction unknown; target's count decreases visibly. Standard: available to all factions | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Economy/Redirect/IntelToken — fills coverage gap per Art 04b §6; splits Asset Extraction (S62) | Art 04b §4 |
-| Balance | ✓ | 2 native, threshold 45 (Ghost: 55), ring_mod None. Fail = no effect, cost sunk. Automatic fail if target holds no tokens at Beat 3. Double effect (acting gains, target loses) justifies same cost as pure-denial Disprove | Art 02 §5 |
+| Balance | ✓ | **Repriced S144 (04-n178, PM02 L281):** 1 native (was 2), threshold 55 (was 45; Ghost: 65), ring_mod None. Fail = no effect, cost sunk. Automatic fail if target holds no tokens at Beat 3. | Art 02 §5 |
 | Effect duration | ✓ | Immediate — token transferred at Beat 3, no lingering marker | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None | — |
@@ -1352,11 +1354,13 @@ Economy/Redirect/IntelToken — splits Asset Extraction (S62) into two focused c
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | ✓ | ✓ | ⚠ pending re-sign-off (v1.1 — 04-n178 reprice) |
+
+*Repriced S144 — v1.1 (04-n178 UVM reprice, PM02 L281).*
 
 ```python
 C_IntelExtraction = Card(
-    id      = "STD.CA.15",  version = "v1.0",
+    id      = "STD.CA.15",  version = "v1.1",
     name    = "Intel Extraction",
     tagline = "Covertly transfer one Intel token from an opponent's supply into your dispatch case.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1365,7 +1369,7 @@ C_IntelExtraction = Card(
 
     beat            = 3,
     resolution      = d100,
-    threshold       = 45,
+    threshold       = 55,
     ring_mod        = None,
     doctrine_mod    = None,
     value_rating = None,  # scaffolded, not addressed
@@ -1385,7 +1389,7 @@ C_IntelExtraction = Card(
         faction(acting) == Ghost: threshold += 10,
     ),
     restriction = None,
-    cost        = resource.faction(acting).native * 2,
+    cost        = resource.faction(acting).native * 1,
 
     success     = arbiter.draw_random(IntelToken, source=faction(target).supply,
                       count=1, action=transfer(faction(acting).case, face_down=True)),

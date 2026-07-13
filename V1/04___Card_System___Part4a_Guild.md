@@ -820,7 +820,7 @@ GUI.CA.9 = Card(
 #### Design Rationale
 Guild's Grant Deed card — parallel to SYN.CA.8 Land Title in mechanism, distinct in doctrine. Land Title is a capital claim: "let someone else build, then collect." Development Order is a construction rights filing: "when this district develops, Guild is the builder of record." Both deliver GD-01 Grant Deed to the acting faction's Dispatch Case via ARBITER; both fire when any faction places a structure block in the named district.
 
-Cost: 3 Capacity + 1 `district(target).native` — the district-native term is the cross-resource commitment that satisfies the §9.2 ceiling gap (04-n119). Guild must engage with the target district's resource economy to file the order. Restriction: no Guild structure in target district (same gate as GUI.CA.4) and not Chorus Node. Automatic resolution — filing a development order doesn't require a roll. Multiple orders on the same district permitted; cost-governed.
+Cost: 4 Capacity + 1 `district(target).native` (repriced S144, 04-n178 — GD-01 v0.4's third fire effect raised the deed's raw value ~4.20→8.20; modest +1 bump, not proportional, since fire is trigger-conditional not guaranteed) — the district-native term is the cross-resource commitment that satisfies the §9.2 ceiling gap (04-n119). Guild must engage with the target district's resource economy to file the order. Restriction: no Guild structure in target district (same gate as GUI.CA.4) and not Chorus Node. Automatic resolution — filing a development order doesn't require a roll. Multiple orders on the same district permitted; cost-governed.
 
 Doctrinal distinction from SYN.CA.8: Guild's deed doesn't extract value from others' development. It establishes Guild's right to participate. The fire effect (+1 Presence Token + 1 Structure Block per GD-01) reflects Guild crews arriving to execute the build — not just a claim on paper.
 
@@ -860,9 +860,11 @@ The Guild files the development order before a single wall goes up. The district
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
 
+*Repriced S144 — v0.2 (04-n178 UVM reprice, following GD-01 v0.4 buff).*
+
 ```python
 GUI.CA.10 = Card(
-    id      = "GUI.CA.10",  version = "v0.1",
+    id      = "GUI.CA.10",  version = "v0.2",
     name    = "Development Order",
     tagline = "File construction rights before ground is broken. The permit is already on file.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -890,7 +892,7 @@ GUI.CA.10 = Card(
     affinity    = None,
     restriction = (faction(Guild).structure_block.count(district(target)) == 0
                and district(target) != ChorusNode),
-    cost = resource.faction(acting).capacity * 3
+    cost = resource.faction(acting).capacity * 4
          + resource.district(target).native * 1,
     boost = None,
 

@@ -1,21 +1,27 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-07-10 — Session 143 Close
+**Last Updated:** 2026-07-12 — Session 144 Close
+
+### Session 144 Summary (2026-07-12)
+
+Full S143 outlier checklist closed — 6 cards resolved, both open modeling gaps addressed. Full detail: PM05 04-n178 · `Whiteboard/cost_baseline_recommendations.md` · PM02 L277–L282.
+
+Repriced: Land Title/Development Order (modest bump following GD-01's confirmed v0.4 value jump, L277); Hostile Takeover — retagged Add→Redirect per Art 04b §4's own definitions (matches SYN.PA.1's existing correct tag), which flipped the read from underpriced to overpriced, then cost cut accordingly (L278); Intercept — cost restructured (Findings dropped, IntelToken-only) + threshold 50→60, delta −107.5%→+3.9% (L279); Intel Extraction — cost 2→1 native + threshold 45→55, delta −153.7%→−4.0% (L281); Network Cascade — cross-resource cost confirmed correct, effect doubled instead (+1→+2), clean 0% delta (L282).
+
+Left alone, confirmed correct (not bugs): City Ledger (has_boost floor-artifact — real value matches its own "rare ceiling" design intent); Broadcast Interference/Amplify (Network's affinity-adjusted cost already matches model value; the non-Network premium is an intentional doctrinal tax, not a defect).
+
+New standing rule locked: d100 thresholds must be multiples of 5 (L280) — corpus was already 100% compliant, formalizes existing practice.
+
+Self-cost-vs-delivered-value modeling gap: attempted a view fix, reverted. Correctly fixed the two known cases (NET.CA.6, SYN.PA.1) but broke Intel Extraction's genuine value in the process — the `target` field's semantics aren't consistent across the corpus (sometimes beneficiary, sometimes whose game-state the expression references). No live change; needs a `target`-semantics audit, bigger than one session. Two smaller model gaps also logged, not fixed (NULL-magnitude misattribution; Add-vs-Redirect mis-tag pattern worth a light sweep).
+
+PublicAct/Modify scope-granularity gap resolved as a non-issue. The "5-cluster" wasn't one scope problem — it was 3 unrelated blockers (DIR.MOD.6 blocked on undesigned XA-54 content; the doc's "NET.CA.4 is persistent" claim was factually wrong; STD.CA.6/7's apparent overpricing was Network-affinity working as intended). Also confirmed: no card in Art 04 is individually locked pending sign-off — per-card "✓ SXX" markers are checkpoints, not locks, until the whole artifact signs off.
+
+New multi-agent Airlock system landed this session (lev/Antigravity on `brain` joined the cluster): handshakes exchanged with Claude and agy, `~/Airlock/andy.md` consolidated as the shared cross-agent profile/working-agreements file, new pruning convention adopted (inbound handoff files pruned immediately on ingestion, not deferred to session close).
+
+Next: bucket total_pair_cost into the actual 1–4 value_rating tiers — the real deliverable the whole 04-n178 thread has been building toward. Tier boundaries not yet proposed. One open thread feeds into this first: SYN.PA.1 Acquisition Offer's true value is still unreliable (self-cost/value gap, unresolved) — decide whether to bucket around it as-is or resolve that gap first.
 
 ### Session 143 Summary (2026-07-10)
-
-Floor Act designed and built: STD.PA.9 "Town Hall" (PM02 D04-13/L216) — universal, no faction-specific form, 1 native cost, d100/threshold 50 (guarantees availability not success), restricted to a district carrying the acting faction's own deployment marker. New schema field `on_discard`/Principle P29 (Art 04 §6/§5) — card immune to all discard events, self-policed, not ARBITER-tracked. Closes 04-n96.
-
-`value_rating` moved to base Card() class (was Modifier-subclass-only) and scaffolded (`None`) across all 251 CA/PA specs via `tools/value_rating_sweep.py`.
-
-Signal DB infra incident resolved: 10.0.1.14's SD card corrupted (hardware failure, unrecoverable) — full local Pi 5 fallback stood up, later cut back over once 10.0.1.14 got its proper SSD reprovisioned via agy. Full history in `project_signal_db_infra_incident.md` memory (resolved).
-
-Major thread: Universal Value Metric (UVM) pricing pipeline — the actual mechanism for 04-n178's value_rating→cost mapping. Built from scratch: `card_cost_component`/`card_effect_component` (207-card CA+PA+ModReact scope, seeded via 7 parallel agents), `uvm_assumptions` (28 Subjects, calibrated + tiered by confidence), `uvm_pair_assumptions` (58 real (Subject,Function) pairs — tested and rejected agy's verb-multiplier model against real data, Remove/Add ratio ranges 1.15x–8.58x across subjects, no universal multiplier fits), and the working view `v_card_pair_uvm_cost` (per-unit magnitude pricing, successcrit at flat 5%/failcrit excluded, has_boost/has_multipliers flags, percentage-based delta). Fixed a real extraction bug (threshold-penalty values misread as unit counts), a real verb-inference bug (StandingMarker sign-inferred as Add/Remove when its only real verb is Shift — fixed 53 cards), and closed all 21 originally-missing (subject,verb) pairs. GD-01 Grant Deed redesigned (v0.3→v0.4, added a 3rd fire effect) — deed's raw value nearly doubled, flagging SYN.CA.8/GUI.CA.10 as underpriced.
-
-Outlier review (first pass) surfaced concrete redesign needs — see `Whiteboard/cost_baseline_recommendations.md` (rewritten S143, now the working doc for this effort). Two open modeling gaps flagged, not fixed: self-cost-vs-delivered-value confusion (NET.CA.6), and PublicAct/Modify scope granularity (a 5-card cluster all landing at ~−100% traces to this).
-
-Next: work the outlier/redesign-needs checklist, then bucket total_pair_cost into the actual 1–4 value_rating tiers.
 
 ### Session 142 Summary (2026-07-06)
 
