@@ -1,0 +1,14 @@
+{
+  "search.exclude": {
+    "**/wiki_src/docs/**": true,
+    "**/.pio/**": true,
+    "**/.git/**": true,
+    "**/node_modules/**": true
+  },
+  "files.exclude": {
+    "**/.pio": true
+  },
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": true,
+  "markdown.preview.breaks": true
+}

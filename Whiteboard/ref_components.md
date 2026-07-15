@@ -18,7 +18,7 @@ Schema index for the entire game system. Registers every named entity, assigns I
 | O-xx | Operative | Not yet designed | Faction operative records, tiers T1/T2/T3/Apex. Art 05 not yet designed. |
 | EC-xx | Broadcast Card / Broadcast Effect Card | Dual-card | Broadcast Card (DB:25) public, Situation Report Zone; Broadcast Effect Card (DB:98) ARBITER-only, ARBITER Tableau. Linked at §7.2.1. Full schema in Art 02. DB: 25/86/87/98. |
 | CC-xx | Countermeasure Card (DB:52) | Card | Fully signed off (Art 02). CM-A: blocks all Covert Operations targeting keyed faction; CM-B: adds modifier to targeted op. 15 total; submitted at §9.3. Full schema in Art 02. |
-| ER-xx | Emergency Response Card (DB:97) | Card | Fully signed off (Art 02). Faction-specific. Full schema in Art 02. |
+| ER-xx | Emergency Response Card (DB:97) | Card | Registration only (Art 02) — component exists, physical/gameplay-requirements defined, but full rules/mechanics are TBD (Art 02's own entry says so; "Fully signed off/full schema" was a stale claim, corrected S146). Faction-specific. Full design now Art 05 §13 (moved from Art 04, PM02 L288) — own data structure, not the Art 04 `Card()` schema. |
 
 *IS-xx (IntelDeliverySlip) registered here as authoritative source.*
 

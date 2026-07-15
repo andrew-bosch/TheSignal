@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 145 complete | Updated: 2026-07-13**
+**Session 146 complete | Updated: 2026-07-14**
 **Session start:** (stamped at next boot — see CLAUDE.md Session Startup step 1)
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
@@ -34,38 +34,37 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S145 Accomplishments
+## S146 Accomplishments
 
-**`value_rating` (1–4) definition locked and applied corpus-wide — 04-n178/04-n183 closed, the deliverable this whole thread has been building toward since S143.** Full detail: PM02 L283/L284 · `Whiteboard/cost_baseline_recommendations.md` §5 · `Database/schema_reference.md` §6.7.
+**Overnight full-corpus Art 04 hygiene sweep (8 parallel agents, all 8 Part files) while Andy slept.** 04-n165, 04-n180, and 04-n185 (§11 re-sweep) all **closed** (PM02 L285–L287, PM05 04-n165/04-n180/04-n185) — session/decision provenance stripped from card prose corpus-wide; checklist/code-comment debris reduced to the established standard. Independently re-verified afterward (not just trusted agent self-reports): every mechanical `Card()` field-line diff across all 8 files programmatically compared old-vs-new — 247/247 matched pairs identical except the trailing comment, zero content values changed anywhere.
 
-**Tier scheme:** natural-break on `total_pair_cost` (<3.0→1, 3.0–4.99→2, 5.0–6.99→3, ≥7.0→4) — a pyramid shape matching "1=floor, 4=end-game-ceiling," not equal-population quartiles (checked and rejected). 164 cards tiered by a two-pass batch script (`Database/apply_value_rating.py`, saved for reuse — self-contained, idempotent, queries the DB live); 27 ring-modifier cards already matched via the separate S132/S134 magnitude-mirror convention; **9 disagreed and were overridden to the pricing-model tier on Andy's call** ("value is based on effect value") — STD.MOD.99/111/123 1→2, STD.MOD.101/103/113/115/125/127 2→1, Balance rows rewritten to match. 8 cards remain unaddressed (no computable `total_pair_cost` — blocked/TBD cards, not a scheme gap). `GHO.CA.11` stays excluded (unfinalized, own spec still `id=TBD`).
+**04-n169 fully closed (PM02 L288, L291–L296).** §14.2 confirmed absent, §15 retired. §14.1 Emergency Response: **full design moved to Art 05** — structurally an Operative-Card analog (non-drawn, single-purpose to the Apex window), doesn't fit Art 04's `Card()` schema. Art04 §13.5/§14.1 removed, migrated to Art05 §13 as labeled legacy seed material; Art05 §12.3 cross-ref fixed; Art09 already pointed to Art05 (verified). §14.3: PS−1/no-refund consequence on zero-payment PA invalidation written directly into **Art 03 §9.4.3.1.0.3** (Art 03 version-bumped 4.12→4.13, re-signed off S146, PM02 L293) — §14.3 itself deleted outright from Art 04 once reduced to a bare, unnecessary pointer. Principle 20's zero-payment bullet also corrected (removed confusing "cost not applied"). §14.4 renamed "Self-Directed Targeting" — any faction, including the acting faction itself, can be named on a Target Profile; universal across all cards, not a per-card gap. §14.6 rewritten to point at The Translation (Art 03 §19.1).
 
-**GHO.PA.1/STD.PA.5 taxonomy-corrected and repriced along the way** (both were tagged `Reveal/ActionAttribution` when their real effect is a PS swing — retagged to `Shift/StandingMarker`, precedented S126/S137). STD.PA.5: threshold 35→30 closed the delta to −2.4%. GHO.PA.1: cost restructured (Findings/Exposure/target-native/Intel Tokens, 8.00→10.00 effective); still +45.2% — **locked as intentional Ghost doctrinal advantage**, not a further pricing defect (the 2-token prior-investment gate isn't visible to the raw-cost model).
+**04-n186 closed (PM02 L289/L290).** STD.CA.11/CA.12 provenance backfilled to PM02 (recovered from pre-sweep git history, not guessed). GHO Backdate's false "Plant mode retired" row deleted. SYN's stale "ACCORD LEVERAGE" stub deleted (superseded by SYN.MOD.1 The Fixer). "Cost reasoning" mis-paste — corpus-wide check found 24 instances total (not just the 6 flagged); 21 already correct/established convention, 5 confirmed wrong and fixed (NET.CA.6, DIR.CA.2, DIR.PA.1, DIR.PA.2, SYN.CA.4).
 
-**Documented the model's governing caveat everywhere it needs to travel:** UVM base rates are calibrated by averaging *existing* card costs (only 7/28 Subject and 25/58 pair rates are even "validated" in that limited sense), not playtested. Added to `schema_reference.md` §6.7, `cost_baseline_recommendations.md` (new top-of-doc section), `design_reference_card_system.md`'s `value_rating` field definition, and `project_db_design_intent.md` memory — this follows any future use of `v_card_pair_uvm_cost` or anything downstream of it.
+**Ref/design files synced to reflect all of the above:** `design_reference_card_system.md` (S146 authoring rule for `design_note`/`arbiter_note` added; `EmergencyResponse` removed from Art04's `CardType` enum), `ref_card_types.md` (Emergency Response entry repointed to Art05 §13), `ref_procedures.md` (Beat 4 Submit Payment step notes the new PS−1), `ref_components.md` (corrected a pre-existing stale claim that ER was "fully signed off... full schema in Art 02" — Art02's own entry said TBD-Art05 all along).
 
-**New open item: PM05 04-n184** — deck copy-count/draw-probability calculation, now unblocked by value_rating closing but explicitly scoped by Andy as coming *after* a redo of the per-faction/cross-faction card space audits (S119–128 style), not a standalone exercise. Andy flagged a real chance all 3 ring-modifier decks need retuning once copy-count accounts for the value_rating spread.
-
-**Airlock:** ingested and pruned an unread `lev-claude.md` handoff (wiki build script upgrade — card subdivision, nav links, anchor healing; deployed on `pinky`, no action needed this side).
+**Also this session:** grip/shim relaunched on wakko after going down (both were dead, no processes running) — added a mobile media query (`@media max-width:480px`) to the shim's CSS so pages use near-full screen width on phones (was wasting ~22% of an iPhone-class screen on fixed desktop padding).
 
 ---
 
-## Current Focus (S146)
+## Current Focus (S147)
 
-**PM05 04-n184 — deck copy-count / draw-probability audit.** Per Andy's S145 direction, do NOT start this cold. Sequence: (1) redo the per-faction + cross-faction card space audits first (S119–128 style — 04-n50 Ghost, 04-n53 Standard, etc. consolidated passes), (2) only then run the copy-count/probability pass against the refreshed picture. Suspected outcome: all 3 ring-modifier decks (`Part3_Ring_Modifiers.md`, 133 cards) may need retuning. Scope not yet defined — copy-count-per-tier baseline, inverse-scaling-with-value_rating question, and whether faction MOD/CA/PA decks need the same treatment are all open.
+**Remaining Art 04 sign-off gates, still open:**
+- 04-n171 — ModReactCard syntax reconciliation
+- `schema_cleanup_log.md` #10 (Intel Token as cost), #41 (resolution_type vocabulary), #2/#5 (persistence/trigger semantics)
+- Add-vs-Redirect mis-tag sweep — other `Territory/Add/PresenceToken`(or `StructureBlock`) cards, same pattern found on SYN.CA.9 (S144)
+- `target`-field semantics audit (self-cost/delivered-value gap, S144) — needed before the pricing model can be trusted on self-payment/opponent-benefit cards. `SYN.PA.1` Acquisition Offer still carries this unresolved gap.
+- 04-n177's expanded scope; `ref_board_narrative.md` sync pass; smaller carried backlog (04-n163/164/166/167/168/148/150/26/27/126/123, XA-54, 06-n01)
 
-**Also open, carried from S142–144, not yet scheduled:**
-- PM05 04-n180 — full-corpus sweep of embedded session/log commentary, incremental "as we do issue review."
-- 04-n177's expanded scope; 04-n165/04-n169 (Art 04 sign-off gates); 04-n171 (ModReactCard syntax reconciliation); `ref_board_narrative.md` sync pass; smaller carried backlog (04-n163/164/166/167/168/148/150/26/27/126/123, XA-54, 06-n01).
-- `schema_cleanup_log.md` items #10 (Intel Token as cost), #41 (resolution_type vocabulary), #2/#5 (persistence/trigger semantics) — independent of the value_rating thread, still open.
-- Light sweep worth scheduling: other `Territory/Add/PresenceToken`(or `StructureBlock`) cards for the same Add-should-be-Redirect mis-tag found on SYN.CA.9 (S144).
-- `target`-field semantics audit (self-cost/delivered-value gap, S144) — needed before the pricing model can be trusted on cards using self-payment or opponent-benefit patterns. `SYN.PA.1` Acquisition Offer specifically still carries this unresolved gap.
+**After Art 04 initial sign-off — not yet actionable:**
+- PM05 04-n184 — deck copy-count / draw-probability audit. Sequence once unblocked: (1) redo per-faction + cross-faction card space audits first (S119–128 style — 04-n50 Ghost, 04-n53 Standard, etc.), (2) only then run copy-count/probability against the refreshed picture. Suspected outcome: all 3 ring-modifier decks (`Part3_Ring_Modifiers.md`, 133 cards) may need retuning. Scope open: copy-count-per-tier baseline, inverse-scaling-with-value_rating, whether faction MOD/CA/PA decks need the same treatment.
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 04** — Draft, gated on 04-n165 + 04-n169 (copy/content sweeps). Full CA+PA phase content-reviewed, value_rating now fully defined/populated (04-n178/n183 closed) — remaining gate is the whole-set schema decisions (#10/#22, #41, #2/#5) before any set-level sign-off pass can start.
+- **Art 04** — Draft, gated on the remaining card-audit-issue list under Current Focus above (04-n171, schema_cleanup #10/#41/#2/#5, mis-tag sweep, target-field audit, 04-n177, board narrative sync, backlog). 04-n165/04-n169/04-n180/04-n185/04-n186 all closed S146; §14.1 Emergency Response resolved out of Art04 entirely (moved to Art05, own artifact not gating Art04). Full CA+PA phase content-reviewed, value_rating now fully defined/populated (04-n178/n183 closed) — no set-level sign-off pass starts until this list clears.
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
 
 *Card-level sign-offs gated behind set-level audits — not actionable until those gates clear.*

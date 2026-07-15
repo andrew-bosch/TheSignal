@@ -156,7 +156,7 @@ Each Month: **§9.1 Covert Dispatch** → **§9.2 Public Declaration** → **§9
 
 ## Public Act Resolution — Beat 4 Key Steps
 
-1. **Submit Payment:** Initiative order — resource tokens transferred to Reservoir; Dispatch Token returned. Full payment acknowledged; partial payment gets −50 threshold marker; zero payment = invalid (card flipped face-down — skips directly to cleanup; no fail outcome fires).
+1. **Submit Payment:** Initiative order — resource tokens transferred to Reservoir; Dispatch Token returned. Full payment acknowledged; partial payment gets −50 threshold marker; zero payment = invalid (card flipped face-down — skips directly to cleanup; no fail outcome fires; Acting Faction takes Public Standing −1, "failed commitment" — Art 03 §9.4.3.1.0.3, added S146 PM02 L292).
 2. **Apex Check (§9.4.3.1.1):** Acting Faction Player flips Target Profile face-up; reads Public Act Card and Target Profile. Face-down PA cards auto-fail (do not flip — they remain face-down and go directly to fail outcome).
 3. **Validate board state conditions:** If conditions required at §9.2 Public Declaration no longer met (altered by Beat 3 outcomes) — ARBITER announces invalidation, card returned.
 4–8. Acting faction reads base difficulty, applies all modifiers, declares threshold aloud, rolls publicly, compares to threshold.

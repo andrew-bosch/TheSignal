@@ -198,7 +198,7 @@ An Apex trigger may be declared by a faction when ALL of the following are true:
 - ARBITER acknowledges the declaration and announces to The Table that Apex resolution will occur at end of Phase 6 Resolution.
 
 ### 12.3 Emergency Response Window
-Following an Apex declaration, all other factions may play their **Emergency Response card** during Phase 5 (Countermeasures). Emergency Response is a one-use card — once played, it is removed from the game. See Artifact 04 for Emergency Response card content.
+Following an Apex declaration, all other factions may play their **Emergency Response card** during Phase 5 (Countermeasures). Emergency Response is a one-use card — once played, it is removed from the game. See §13 below for Emergency Response card content.
 
 ### 12.4 Apex Resolution
 - At end of Phase 6 Resolution, ARBITER resolves the Apex ability.
@@ -214,13 +214,23 @@ ARBITER does not judge whether Apex should happen. ARBITER verifies the conditio
 
 ## 13. Emergency Response Integration
 
-See Artifact 04 §[TBD] for individual Emergency Response card content.
-
 Emergency Response cards are faction-specific. They are held in reserve from session start and may only be played in response to an Apex declaration. They are not part of the standard card hand and are not subject to hand size limits.
 
 Design intent: Emergency Response cards should not prevent Apex — they should complicate it. The triggering faction must still be able to resolve their Apex ability even if all other factions play Emergency Response.
 
-*[TBD — confirm with Artifact 04 review. Emergency Response design is pending.]*
+**Full design ownership moved here from Art 04 (S146).** Emergency Response cards don't fit Art 04's `Card()` schema — like Operative Cards (§6), they're non-drawn, non-hand-managed, and single-purpose to one specific window (the Apex Emergency Response window, not a Beat submission), so they get their own data structure here rather than being forced into the Deck/hand/Beat model §6 (Art 04) was built for. Physical production spec (`09___Card_Production_Spec.md` §13) already pointed here; Art 04 §14.1/§13.5's stale placeholder content has been retired from that artifact and carried forward below as seed material only.
+
+**Legacy seed content (pre-schema, retired terminology — NOT current design):** the table below used "Apex faction" and "Board Strength," both retired terms (current equivalents: the Apex-triggering faction; Portrait/PS-driven evaluation replaces "Board Strength" as a concept). Carried forward as raw seed material for the eventual design pass, not as playable content.
+
+| Faction | Emergency Response | Effect (legacy text, unconverted) |
+|---------|-------------------|--------|
+| The Guild | Emergency Fortification | Place 2 presence tokens in any district. Remove 1 structure block from the Apex-triggering faction's total. |
+| The Directorate | Emergency Injunction | Apex-triggering faction loses 2 presence tokens from their highest-token district. |
+| Ghost | Counter-Analysis | Reveal one Intel token publicly. If accurate and damaging to the Apex-triggering faction: that faction's Public Standing −2 before threshold check. |
+| The Network | Emergency Broadcast | Apex-triggering faction's Public Standing −3 immediately. |
+| The Syndicate | Hostile Takeover Bid | Offer the Apex-triggering faction 4 Capital for 2 structure blocks (converted to Syndicate). If accepted, structure loss as stated; if declined, no effect. |
+
+**Open — data structure and full design pass, not yet started.** Needs its own field structure (mirroring §6's Operative Card Data Structure approach — Emergency Response ID, Faction, Trigger Window, Effect, Portrait, Narrative Role), then a genuine design pass converting the 5 legacy seed effects (or replacing them outright) into current-schema, current-terminology content. Tracked at PM05 04-06/PM02 D04-10 (renumbered from an Art04-scoped item to this Art05 home).
 
 ---
 

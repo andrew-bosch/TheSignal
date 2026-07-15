@@ -354,10 +354,13 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 **Narrative**
 `narrative` · `perspectives` · `design_note` · `arbiter_note`
 
+**Authoring rule (S146):** `design_note`/`arbiter_note`, checklist Notes, section intros, and code comments never carry session tags, attribution ("Andy confirmed"), before/after narration ("was X, now Y"), or PM02 line cross-refs — that provenance goes to PM02/PM05 only. Write these fields as if authored fresh against the current design, not as a changelog. Bare `PM02 Lxxx`/`04-n###` citations are the one exception — they function as reference/proof for the review comment, not embedded history. (Full corpus swept S146 after this pattern forced an 8-agent overnight cleanup — PM05 04-n165/04-n180/04-n185, PM02 L285–L287.)
+
 ### Enum Vocabularies (§6.3)
 
 ```
-CardType:    CovertOperation | PublicAct | Pass | Countermeasure | Modifier | EmergencyResponse
+CardType:    CovertOperation | PublicAct | Pass | Countermeasure | Modifier
+  EmergencyResponse removed S146 (PM02 L288) — doesn't fit the Card() schema (non-drawn, non-hand-managed, single-purpose to the Apex Emergency Response window, like an Operative Card). Full design now lives in Art 05 §13, own data structure, not this schema.
   Modifier subclasses (Art 04 §6.1, 04-n102 ✅ S127) — three, govern HOW a card fires:
     ModReactCard    beat=None always · trigger Required · ring_constraint/ring_origin apply · only subclass that routinely carries real Layer/Function/Subject (it's action-like)
                     · Ring-sourced ModReactCard follows the identical rule (04-53 ✅ S135, PM02 L262) — not a separate taxonomy track for Ring content

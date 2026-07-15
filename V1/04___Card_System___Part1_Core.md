@@ -32,9 +32,8 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §12 | [Rules & Constraints](#12-rules-constraints) |
 | §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
 | §14 | [Special Conditions & Gameplay Impacts](#14-special-conditions-gameplay-impacts) |
-| §15 | [Examples & Exceptions](#15-examples-exceptions) |
 
-**File Map (S136):** Artifact 04 is physically split across 8 files — one version, one sign-off, single artifact. Card specs are addressed by Card ID, not section number.
+**File Map:** Artifact 04 is physically split across 8 files — one version, one sign-off, single artifact. Card specs are addressed by Card ID, not section number.
 
 | File | Content |
 |------|---------|
@@ -170,7 +169,7 @@ No other duration is valid. *See also: Art 00a §3.1 — canonical duration defi
 
 - **Full payment:** action proceeds at stated difficulty
 - **Partial payment:** action proceeds with a threshold penalty (procedure in Art 03)
-- **Zero payment:** action is voided; returned to faction, cost not applied
+- **Zero payment:** action is voided; the card is returned to the faction
 
 The Table does not extend credit. *Formerly 00a R22.*
 
@@ -456,7 +455,7 @@ class Card:
     threshold:    int | None                # None when Automatic
     ring_mod:     dict[Ring, int] | None              # None when no ring variation
     doctrine_mod: dict[PentagramRelation, int] | None # None when no faction target or no doctrinal variation
-    value_rating: int | None                # 1–4; power/strength tier, printed on card face. Moved to base Card() S143 (04-n183) — was Modifier-subclass-only (S135/L259). CA/PA meaning not yet defined; None = TBD/unscaffolded pending whole-set cost-derivation analysis (04-n178).
+    value_rating: int | None                # 1–4; power/strength tier, printed on card face. Base Card() field — all card types inherit it. CA/PA meaning not yet defined; None = TBD/unscaffolded pending whole-set cost-derivation analysis (04-n178).
     trigger:      TriggerExpr | None        # None = default beat timing
     resolution_type: str | None            # evolving vocabulary — feeds 00c §8
     outcome_type: OutcomeType | None        # public acts only
@@ -521,7 +520,7 @@ class PSFraming:
 class ModActionCard(Card):
     # Modifier bundled with an op at Covert Dispatch; fires with host action. Field constraints: §6.2.
     effect:           ModActionExpr        # tagged union: threshold_delta | success_multiplier | ps_shift | cost_reduction (PA only)
-    # value_rating inherited from Card() — S143, 04-n183
+    # value_rating inherited from Card()
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = usable only targeting that ring's districts
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -531,7 +530,7 @@ class ModActionCard(Card):
 class ModBattleCard(Card):
     # Modifier for Battlefield Strength resolution (§10 Contested District Resolution). Field constraints: §6.2.
     effect:           ModBattleExpr        # delta on a named contesting faction's total; direction (Boost | Hinder) + target + magnitude — see §6.3
-    # value_rating inherited from Card() — S143, 04-n183
+    # value_rating inherited from Card()
     ring_constraint:  Ring | None          # if set, usable only in Battlefield Strength for a district in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
@@ -543,16 +542,16 @@ class ModReactCard(Card):
     # trigger:     required (never None) — defines what activates the card; overrides Card.trigger default
     # beat:        always None — React fires on trigger condition, not at a named beat
     # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as standing condition until Quarter end;
-    #              Permanent = remains until an explicit clearing condition is met (confirmed S131 — DIR.MOD.9 Fiscal Sanction)
+    #              Permanent = remains until an explicit clearing condition is met (e.g. DIR.MOD.9 Fiscal Sanction)
     # Field constraints: §6.2.
-    # value_rating inherited from Card() — S143, 04-n183
+    # value_rating inherited from Card()
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
     ring_origin:      Ring | None          # None = faction modifier deck; 1/2/3 = drawn from that ring's modifier deck
     acquisition:      AcquisitionSource    # Deck (default — drawn at Upkeep) | Issued (ARBITER-delivered as a consequence)
     generating_card:  CardID | list[CardID] | None   # required when acquisition=Issued; None when Deck
 ```
 
-**Acquisition axis (S133 — replaces the S133-earlier `ModIssuedCard` 4th-subclass model; PM02 L245 revises L241):** `acquisition` is orthogonal to which of the three subclasses above a card is. A card fires according to its subclass (bundled-with-host / Battlefield-commit / trigger-based) regardless of where it came from. Most cards are `acquisition=Deck` — drawn from a Faction or Ring Modifier deck at Upkeep (§11.2), gated by `ring_origin`. A card is `acquisition=Issued` when ARBITER hands it directly to a faction as a specific, named consequence of another card's resolution (`generating_card`) — no Upkeep draw, no deck, no `ring_origin`. Current Issued cards: GD-01 Grant Deed, STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three are structurally ModReactCard (fire on a trigger condition) under this model; nothing yet exercises an Issued ModActionCard or ModBattleCard, but the schema doesn't rule it out.
+**Acquisition axis:** `acquisition` is orthogonal to which of the three subclasses above a card is. A card fires according to its subclass (bundled-with-host / Battlefield-commit / trigger-based) regardless of where it came from. Most cards are `acquisition=Deck` — drawn from a Faction or Ring Modifier deck at Upkeep (§11.2), gated by `ring_origin`. A card is `acquisition=Issued` when ARBITER hands it directly to a faction as a specific, named consequence of another card's resolution (`generating_card`) — no Upkeep draw, no deck, no `ring_origin`. Current Issued cards: GD-01 Grant Deed, STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three are structurally ModReactCard (fire on a trigger condition) under this model; nothing yet exercises an Issued ModActionCard or ModBattleCard, but the schema doesn't rule it out.
 
 ---
 
@@ -575,14 +574,14 @@ class ModReactCard(Card):
 | subject | Taxonomy | Subject | Action taxonomy subject — see Art 04b §4 | TBD |
 | beat | Metadata | int | Phase 6 beat this card resolves in; order within beat = dispatch case submission order (Art 03 §7) | TBD |
 | resolution | Metadata | Resolution | d100 = probability roll; Automatic = guaranteed, fires on submission | Face |
-| threshold | Metadata | int | Base difficulty as numeric threshold; None when Automatic. **Must be a multiple of 5 (L280, S144).** Reason: threshold-slider physical design and mental math both favor round-5 increments — lower cognitive overhead reading a d100 roll against a multiple of 5 than an arbitrary number. Confirmed against the full existing corpus (45 d100 cards, range 25–65) — already 100% compliant before this rule was written down; this formalizes existing practice, not a retroactive fix. | Face |
+| threshold | Metadata | int | Base difficulty as numeric threshold; None when Automatic. **Must be a multiple of 5 (L280).** Reason: threshold-slider physical design and mental math both favor round-5 increments — lower cognitive overhead reading a d100 roll against a multiple of 5 than an arbitrary number. | Face |
 | ring_mod | Metadata | dict[Ring, int] | Per-ring threshold adjustment; positive = easier, negative = harder; None when no variation | Face |
 | doctrine_mod | Metadata | dict[PentagramRelation, int] | Per-doctrinal-relationship threshold adjustment based on acting/target faction pentagram proximity; positive = easier, negative = harder; None when no faction target or no doctrinal variation | Face |
-| value_rating | Metadata | int \| None | 1–4 (widened from 1–3, S135/L259). Power/strength tier printed on card face; used in Splay calculation for Modifier cards. Base Card() field as of S143 (04-n183) — previously Modifier-subclass-only. Feeds the whole-set cost-derivation model (04-n178). CA/PA definition not yet set; `None` = TBD/unscaffolded until the whole-set analysis assigns real values. | Face |
+| value_rating | Metadata | int \| None | 1–4. Power/strength tier printed on card face; used in Splay calculation for Modifier cards. Base Card() field — all card types inherit it. Feeds the whole-set cost-derivation model (04-n178). CA/PA definition not yet set; `None` = TBD/unscaffolded until the whole-set analysis assigns real values. | Face |
 | trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
 | resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
-| persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Close Month of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. Card-as-condition PAs with standing board-condition effects commonly use Permanent (e.g., DIR.PA.1/PA.3/PA.5/PA.6/PA.11) — corrected S131; the prior text here ("must use Transient or Seasonal") predated the card-as-condition pattern and was stale. | Face |
+| persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Close Month of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. Card-as-condition PAs with standing board-condition effects commonly use Permanent (e.g., DIR.PA.1/PA.3/PA.5/PA.6/PA.11). | Face |
 | persistence_condition | Metadata | BoolExpr | Condition that must remain True for a Permanent card to stay in play; card is discarded immediately when it evaluates False. None for all non-Permanent cards. | Face |
 | persistence_effect | Metadata | MutationExpr | Ongoing board condition active while a Permanent card is in play; evaluated continuously until persistence_condition is met. Use `game.board_condition(...)` to express scoped persistent effects. None for all non-Permanent cards. | Face |
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
@@ -616,10 +615,10 @@ Fields added by ModActionCard, ModBattleCard, and ModReactCard. All three subcla
 | Field | Subclass | Type | Purpose | Displayed |
 |-------|----------|------|---------|-----------|
 | effect | ModActionCard | ModActionExpr | Tagged union — exactly one: threshold_delta(n) \| success_multiplier(n) \| ps_shift(faction, delta) \| cost_reduction(n); cost_reduction is PA ops only (CA cost committed at dispatch before Beat 0) | Face |
-| effect | ModBattleCard | ModBattleExpr | Delta (Boost or Hinder) applied to a named contesting faction's Battlefield Strength total (Art 03 §10.1.2); target faction is chosen by the playing faction at commit and need not be themselves, nor a contestant — Art 03 §10.1.2 Step 2 (S132) | Face |
+| effect | ModBattleCard | ModBattleExpr | Delta (Boost or Hinder) applied to a named contesting faction's Battlefield Strength total (Art 03 §10.1.2); target faction is chosen by the playing faction at commit and need not be themselves, nor a contestant — Art 03 §10.1.2 Step 2 | Face |
 | ring_constraint | All modifier subclasses | Ring \| None | Deployment restriction set at card design time by narrative — location-anchored assets get the ring value; portable assets get None. ModActionCard: usable only with ops targeting that ring's districts. ModBattleCard: usable only in Battlefield Strength for a district in that ring. ModReactCard: fires only when trigger condition occurs in that ring's districts. Semantics under review for Ring-sourced cards specifically — PM05 04-n161. | Face |
 | ring_origin | All modifier subclasses | Ring \| None | Which modifier deck this card belongs to — None = faction modifier deck; 1/2/3 = Ring 1/2/3 modifier deck. Determines draw eligibility (§11.2) and card back color. Separate from ring_constraint: a Ring 1 card (ring_origin=1) may have ring_constraint=None (portable, no deployment restriction). None (not applicable) when acquisition=Issued. | No |
-| acquisition | All modifier subclasses | AcquisitionSource | Deck (default) = drawn from a Faction or Ring Modifier deck at Upkeep, gated by ring_origin. Issued = ARBITER delivers the card directly as a named consequence of another card's resolution — no Upkeep draw, no deck, ring_origin forced None. Orthogonal to subclass — any of the three subclasses may in principle be Issued; all current Issued cards happen to be ModReactCard. S133 — supersedes the S133-earlier `ModIssuedCard` 4th-subclass model (PM02 L245 revises L241). | Face |
+| acquisition | All modifier subclasses | AcquisitionSource | Deck (default) = drawn from a Faction or Ring Modifier deck at Upkeep, gated by ring_origin. Issued = ARBITER delivers the card directly as a named consequence of another card's resolution — no Upkeep draw, no deck, ring_origin forced None. Orthogonal to subclass — any of the three subclasses may in principle be Issued; all current Issued cards happen to be ModReactCard. | Face |
 | generating_card | All modifier subclasses | CardID \| list[CardID] \| None | Which card's resolution delivers this card — required when acquisition=Issued (e.g. GD-01: [SYN.CA.8, GUI.CA.10]; Overture: STD.CA.9); None when acquisition=Deck. | No |
 
 #### Modifier Subclass Field Constraints
@@ -647,7 +646,7 @@ Which inherited Card fields are always None vs. per-card design vs. required. `N
 | acquisition | Deck by default — omit unless Issued | Deck by default — omit unless Issued | Deck by default — omit unless Issued |
 | generating_card | None unless acquisition=Issued | None unless acquisition=Issued | None unless acquisition=Issued |
 
-*ModReactCard: only `beat` is always None. All other `—` fields are live — set per individual card design. `acquisition` defaults to Deck for every existing stub that doesn't state it (all ~50 pre-S133 ModAction/ModBattle/ModReact cards) — only state it explicitly on the 3 current Issued cards; this is not a retroactive required-field migration.*
+*ModReactCard: only `beat` is always None. All other `—` fields are live — set per individual card design. `acquisition` defaults to Deck for every existing stub that doesn't state it — only state it explicitly on the 3 current Issued cards.*
 
 ---
 
@@ -665,7 +664,7 @@ Ring:                0 (Chorus Node) | 1 (Core) | 2 (The Mid) | 3 (Baryo)
 PentagramRelation:   Neighbor | Opposed
 OutcomeType:         Binary | ElectPlayer | ElectDistrict | ElectFaction | BilateralAgreement | Unilateral
 Persistence:         Immediate | Transient | Seasonal | Permanent
-AcquisitionSource:   Deck | Issued   # modifier subclasses only (§6.1/§6.2) — Deck = drawn at Upkeep; Issued = ARBITER-delivered (S133)
+AcquisitionSource:   Deck | Issued   # modifier subclasses only (§6.1/§6.2) — Deck = drawn at Upkeep; Issued = ARBITER-delivered
 
 PSFramingType:       probabilistic | fixed
 PSFramingTrigger:    resolution | discovery | placement
@@ -701,10 +700,10 @@ TriggerExpr:         Any
 #   tension_marker.placed / removed                    (Contested condition)
 #   standing_marker.increased / decreased              (PS track shift at Beat resolution)
 #   world_event.played / expired
-#   accord.placed / corrupted / removed              (accord.removed: breach or expiry; accord.corrupted: requires Art 06 breach procedure ARBITER corrupt step on Accord form — 06-n pending S130)
+#   accord.placed / corrupted / removed              (accord.removed: breach or expiry; accord.corrupted: requires Art 06 breach procedure ARBITER corrupt step on Accord form — 06-n pending)
 #   resolution_grid.updated                            (after Beat 0 public reveal)
-#   broadcast_card.placed                              (db25 — public SitRep card placed in Situation Report Zone; fires at Upkeep phase 1 and Beat 5 phase 18; added S128)
-#   public_act.placed_on_frg(faction, ...)             (any faction places a PA face-up on their FRG at §9.2 Public Declaration — S130)
+#   broadcast_card.placed                              (db25 — public SitRep card placed in Situation Report Zone; fires at Upkeep phase 1 and Beat 5 phase 18)
+#   public_act.placed_on_frg(faction, ...)             (any faction places a PA face-up on their FRG at §9.2 Public Declaration)
 #
 # Excluded (static — never change): district tiles, board geography, ARBITER Dominance Marker
 # Excluded (procedural — not player-driven): Initiative Strip, Session Timeline, Quarter/Month markers
@@ -725,7 +724,7 @@ ModBattleExpr:       direction: Boost | Hinder
                      magnitude: int
 # Boost:  +magnitude applied to target faction's Battlefield Strength total
 # Hinder: −magnitude applied to target faction's Battlefield Strength total
-# Playing faction need not be the target, and need not itself be a contesting faction — Art 03 §10.1.2 Step 2 (S132)
+# Playing faction need not be the target, and need not itself be a contesting faction — Art 03 §10.1.2 Step 2
 ```
 
 ---
@@ -783,7 +782,7 @@ Card specifications (all Card IDs, full schema instances) are physically split i
 | Card ID | Name | Status | Layer | Visibility | Function | Subject | Primitive Verb(s) |
 |---------|------|--------|-------|------|----------|---------|-------------------|
 | DIR.CA.1 | Invoke Jurisdiction | 📝 | Submission | Split | Block | Covert Operation (STD.CA.1, STD.CA.3) | — |
-| DIR.CA.2 | Detain | 📝 | Territory | Public | Move | Deployment Marker | Move | *(taxonomy corrected S107 L226: success operation is game.move() to Detention zone; Remove was incorrect — Remove = return to supply; Detention zone is an active play area on Directorate's tableau. Art 04 spec function field correction tracked under 04-n105)* |
+| DIR.CA.2 | Detain | 📝 | Territory | Public | Move | Deployment Marker | Move | *(Success operation is game.move() to Detention zone — Detention zone is an active play area on Directorate's tableau, not a return to supply, so the function is Move, not Remove. Art 04 spec function field correction tracked under 04-n105.)* |
 | DIR.CA.3 | Surveillance Placement | 📝 | Information | Private → Public | Reveal | Covert Operation | Reveal |
 | DIR.CA.4 | Tactical Redirection | 📝 | Territory | Public | Move | Presence Token | Move |
 | DIR.CA.5 | Sanctioned Raid | 📝 | Territory | Public | Remove | Presence Token | Remove |
@@ -862,11 +861,11 @@ Card specifications (all Card IDs, full schema instances) are physically split i
 | GHO.MOD.26 | Existing Dataset | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | GHO.MOD.27 | Shared Infrastructure | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | GUI.CA.1 | Fortify Structure | ✅ | Territory | Public | Protect | Structure Block | — |
-| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; Art 04 spec fix pending 04-n103)*
+| GUI.CA.2 | Materials Acquisition | ✅ | Economy | Public | Add | Native Resource | Add | *(Art 04 spec fix pending 04-n103)*
 | GUI.CA.3 | Foundation Rights | ✅ | Territory | Public | Add | Presence Token | Add |
 | GUI.CA.4 | Construction Crew | ✅ | Submission | Split | Remove Restriction | Covert Operation (presence requirement) | — |
 | GUI.CA.5 | Infrastructure Yield | ✅ | Economy | Public | Add | Native Resource | Add |
-| GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | Native Resource | Add | *(function: Recover → Add, S106 — 04b-20; card_id GUI.CA.6 assigned; Art 04 spec fix pending 04-n103)*
+| GUI.CA.6 | Labor Contract | 📝 | Economy | Public | Add | Native Resource | Add | *(Art 04 spec fix pending 04-n103)*
 | GUI.PA.1 | Civic Works Mandate | 📝 | Territory | Public | Add | Structure Block | Add |
 | GUI.PA.2 | Infrastructure Bond | 📝 | Economy | Public | Add | Accord Agreement | Add |
 | GUI.MOD.1 | Night Shift Crew | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
@@ -1096,8 +1095,8 @@ Card specifications (all Card IDs, full schema instances) are physically split i
 | SYN.CA.7 | Corporate Blackmail | 📝 | Economy | Public | Redirect | Native Resource | Move |
 | SYN.CA.8 | Land Title | 📝 | Territory | Public | Add | Structure Block | Add |
 | SYN.CA.9 | Hostile Takeover | 📝 | Territory | Public | Add | Presence Token | Add |
-| SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | S111: full design pass; Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
-| SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | S111: new card; fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
+| SYN.CA.10 | Accord Transfer | 📝 | Economy | Covert | Corrupt | Accord Agreement | Corrupt | Art 06 §9.10 confirmed (L205); d100 threshold 50; crit = incoming party elects numeric term change |
+| SYN.CA.11 | Redline | 📝 | Information | Covert | Corrupt | Accord Agreement | Corrupt | Fills Information\|Corrupt\|AccordAgreement gap; d100 threshold 50; alters numeric fill-in on active Accord form |
 | SYN.CA.12 | Boilerplate | 📝 | Economy | Covert | Add | Accord Form | Add |
 | SYN.MOD.1 | The Fixer | 📝 | Issued ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.MOD.2 | Shell Corporation | 📝 | ModReactCard — taxonomy excluded §11.1 | — | — | — | — |
@@ -1128,7 +1127,7 @@ Card specifications (all Card IDs, full schema instances) are physically split i
 | SYN.MOD.27 | Line of Credit | 📝 | ModActionCard — taxonomy excluded §11.1 | — | — | — | — |
 | SYN.PA.1 | Acquisition Offer | 📝 | Territory | Public | Redirect | Presence Token | Move |
 | SYN.PA.2 | Public Dividend | 📝 | Economy | Public | Add | Native Resource (conditional) | Add |
-| SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | S111: new card; fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
+| SYN.PA.3 | Data Acquisition | 📝 | Information | Public | Reveal | Intel Token | Reveal | Fills Information\|Reveal\|IntelTokensHeld gap; ElectPlayer; Permanent React on decline |
 
 ---
 
@@ -1216,7 +1215,7 @@ Standard cards are distributed as part of each faction's CA and PA pools — eac
 
 > **Design note:** Deck sizes (total card counts, per-card copy counts, and pool sizes) are pending balance analysis and playtesting. Legacy `pool_copies` field references are retired. Counts will be established during the balance pass. *(PM05 04-n136)*
 
-**Minimum unique pool floor (L240, S131):** Distinct from 04-n136's per-card copy-count question above — this governs the size of the pool a faction drafts *from*, not how many of it a player selects. Every faction's drafting pool (Standard set + faction-specific set, excluding blocked and Ring Modifier cards) must total **≥ 54 unique cards**: Standard set = 26 (fixed — every faction draws from the same STD pool) + faction set ≥ 28. Live count: DB view `v_card_faction_deck_floor`. Directorate is currently 6 cards short of the floor — tracked at PM05 04-n149.
+**Minimum unique pool floor (L240):** Distinct from 04-n136's per-card copy-count question above — this governs the size of the pool a faction drafts *from*, not how many of it a player selects. Every faction's drafting pool (Standard set + faction-specific set, excluding blocked and Ring Modifier cards) must total **≥ 54 unique cards**: Standard set = 26 (fixed — every faction draws from the same STD pool) + faction set ≥ 28. Live count: DB view `v_card_faction_deck_floor`. Directorate is currently 6 cards short of the floor — tracked at PM05 04-n149.
 
 **Procedure:** Art 03-init §3.9.
 
@@ -1226,7 +1225,7 @@ Standard cards are distributed as part of each faction's CA and PA pools — eac
 
 ### 11.1 What They Are
 
-Modifier cards are the game's secondary layer of play — cards that don't act alone, but attach to, alter, or react to something else already in motion at the table. Two independent questions define any modifier card: **which of three subclasses governs how it fires** (below), and **which of three sets governs where it came from** (§11.1 second half). The two are orthogonal — a card's firing mechanism doesn't determine its acquisition source, and vice versa (S133, PM02 L245).
+Modifier cards are the game's secondary layer of play — cards that don't act alone, but attach to, alter, or react to something else already in motion at the table. Two independent questions define any modifier card: **which of three subclasses governs how it fires** (below), and **which of three sets governs where it came from** (§11.1 second half). The two are orthogonal — a card's firing mechanism doesn't determine its acquisition source, and vice versa.
 
 **Three subclasses govern how a modifier card fires (§6.1):**
 
@@ -1239,7 +1238,7 @@ Modifier cards are the game's secondary layer of play — cards that don't act a
 Faction and Ring modifier cards are drawn from a shuffled deck; ARBITER-issued cards are not.
 
 - **Faction modifier cards** — drawn from faction modifier deck in player tableau. Shuffled and placed face-down at session setup. Represent faction-specific individuals, assets, tactical approaches, doctrine, and equipment. *Card back: faction color, no border. Card face: effect, Portrait alignment (if applicable), value rating (1–4).*
-- **Ring modifier cards** — drawn from shared ring decks on game board (Baryo, The Mid, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only") when set, effect, Portrait alignment (if applicable), value rating (1–4).* **04-n161 ✅ closed S134:** rather than a single blanket default, the shipped Ring Modifier content (STD.MOD.2–25, §7) fields two complete 4-card sets per ring — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — so both models exist in play simultaneously; per-card narrative judgment (location-anchored vs. portable) determines which set a given concept belongs to, not a schema-wide rule.
+- **Ring modifier cards** — drawn from shared ring decks on game board (Baryo, The Mid, Core). Chorus Node has no modifier deck. Represent key ring individuals, assets, equipment, and synergies within the ring. *Card back: ring color. Card face: ring constraint prominently stated ("Usable on [Ring] district targets only") when set, effect, Portrait alignment (if applicable), value rating (1–4).* Rather than a single blanket default, the shipped Ring Modifier content (STD.MOD.2–25, §7) fields two complete 4-card sets per ring — Portable (`ring_constraint=None`) and Ring-Locked (`ring_constraint=`ring) — so both models exist in play simultaneously; per-card narrative judgment (location-anchored vs. portable) determines which set a given concept belongs to, not a schema-wide rule.
 - **ARBITER-issued cards** — not drawn from any deck. ARBITER hands the card directly to a faction as a specific, named consequence of another card's resolution (`generating_card`, §6.2) — no shuffle, no card back convention, no Upkeep draw eligibility. Current examples: GD-01 Grant Deed (§12b.2), STD.MOD.1 Overture, SYN.MOD.1 The Fixer — all three happen to be ModReactCard underneath (fire on a trigger, once delivered), but acquisition source doesn't constrain which of the three subclasses a card is; an Issued ModActionCard or ModBattleCard is schema-valid, just unbuilt so far.
 
 Ring constraint, when set, applies to all users regardless of holder.
@@ -1247,8 +1246,6 @@ Ring constraint, when set, applies to all users regardless of holder.
 *Naming note: "Modifier cards" is a working designation — pending decision D-04-07.*
 
 ### 11.2 Draw Conditions (Art 03 §7.5.3 Modifier Card Draw)
-
-*Was "Upkeep Step 6" — stale flat numbering, predates Art 03's §7 Upkeep restructure into nested §7.0–§7.5.x steps. Fixed S133 (Andy).*
 
 Factions that have triggered Burst Play skip modifier draws for the remainder of the session.
 
@@ -1311,7 +1308,7 @@ Freely tradeable faction-to-faction — any resource, Intel Token, or modifier c
 | `Boost` | +magnitude applied to the named target faction's Battlefield Strength total |
 | `Hinder` | −magnitude applied to the named target faction's Battlefield Strength total |
 
-Target is any contesting faction identified at Art 03 §10.1.1 — chosen by the playing faction, not necessarily themselves. Any faction may play a Battlefield Modifier Card into an active contest, whether or not they are contesting it themselves (Art 03 §10.1.2 Step 2, S132).
+Target is any contesting faction identified at Art 03 §10.1.1 — chosen by the playing faction, not necessarily themselves. Any faction may play a Battlefield Modifier Card into an active contest, whether or not they are contesting it themselves (Art 03 §10.1.2 Step 2).
 
 **ModReactCard** effects: Full CA/PA effect field set (`success`, `successcrit`, `fail`, `failcrit`) — see §6.1. Applies identically to Issued ModReactCards (GD-01, Overture, The Fixer — §11.1); `acquisition` and `generating_card` govern where the card came from, not what its effect field looks like.
 
@@ -1326,7 +1323,7 @@ ARBITER-issued cards placed in a faction's Dispatch Case during operation resolu
 
 Debrief Action Cards are distinguished from all other card types by source and timing: created by ARBITER as a consequence of resolved operation; no faction player submits or draws them.
 
-**Acquisition (S133):** same acquisition source as GD-01/Overture/The Fixer (§11.1, §12b) — ARBITER-delivered as a named consequence of a resolved operation (its generating CA), not drawn from a deck. But DA-xx cards are **not** Modifier cards and not `Card()` instances — they carry no `type` from the CardType enum, no Layer/Function/Subject, and critically, no `trigger`. Considered and rejected: typing them Issued `ModReactCard` — ModReactCard requires a non-None `trigger` (§6.2 field constraint), and "fires at the start of Debrief" isn't a `TriggerExpr` event a card reacts to; it's a **scheduled procedural checkpoint** it executes at unconditionally, the same category as `persistence=Seasonal` clearing at Phase 21 (End of Quarter) — phase-anchored, not board-state-reactive. This also matches Art 04 §6.3's explicit exclusion of Session Timeline/Quarter-Month markers from the TriggerExpr vocabulary (a physical Debrief-position marker wouldn't change this — it would still be exactly the excluded category). DA-xx therefore stays its own lightweight category: fields table + Art 03 §11 procedure, not folded into the modifier subclass hierarchy.
+**Acquisition:** same acquisition source as GD-01/Overture/The Fixer (§11.1, §12b) — ARBITER-delivered as a named consequence of a resolved operation (its generating CA), not drawn from a deck. But DA-xx cards are **not** Modifier cards and not `Card()` instances — they carry no `type` from the CardType enum, no Layer/Function/Subject, and critically, no `trigger`. Considered and rejected: typing them Issued `ModReactCard` — ModReactCard requires a non-None `trigger` (§6.2 field constraint), and "fires at the start of Debrief" isn't a `TriggerExpr` event a card reacts to; it's a **scheduled procedural checkpoint** it executes at unconditionally, the same category as `persistence=Seasonal` clearing at Phase 21 (End of Quarter) — phase-anchored, not board-state-reactive. This also matches Art 04 §6.3's explicit exclusion of Session Timeline/Quarter-Month markers from the TriggerExpr vocabulary (a physical Debrief-position marker wouldn't change this — it would still be exactly the excluded category). DA-xx therefore stays its own lightweight category: fields table + Art 03 §11 procedure, not folded into the modifier subclass hierarchy.
 
 ---
 
@@ -1361,7 +1358,7 @@ Produced by Ghost SCIF card on successful Beat 3 resolution (see Art 03 §7.2 Gh
 
 ### 12a.3 DA-02 — PhantomRecord
 
-*New S133 — written to establish format parity with DA-01 per the acquisition-axis generalization above (§12a intro). GHO.CA.13 Phantom Accounts, the generating card, is itself an undesigned stub (id/version/beat/resolution/threshold only — no Design Rationale, checklist, or Status). DA-02's fields and procedure below match GHO.CA.13's one-line success text as written; exact mechanics are pending GHO.CA.13's own full design pass, not settled by this entry.*
+*GHO.CA.13 Phantom Accounts, the generating card, is itself an undesigned stub (id/version/beat/resolution/threshold only — no Design Rationale, checklist, or Status). DA-02's fields and procedure below match GHO.CA.13's one-line success text as written; exact mechanics are pending GHO.CA.13's own full design pass, not settled by this entry.*
 
 Produced by Ghost's GHO.CA.13 Phantom Accounts on successful Beat 3 resolution. ARBITER places one completed PhantomRecord in Ghost's Dispatch Case at Beat 3 instantiation.
 
@@ -1385,7 +1382,7 @@ Produced by Ghost's GHO.CA.13 Phantom Accounts on successful Beat 3 resolution. 
 
 ## 12b. Grant Deeds
 
-ARBITER-issued cards placed in a faction's Dispatch Case during covert operation resolution. Not player-submitted; not drawn from a deck. Held in faction hand after Debrief delivery. Fire as an Issued ModReactCard (`acquisition=Issued` — S133, PM02 L245 revises L241/L241's since-superseded `ModIssuedCard` model, PM05 04-n154/04-n160) — trigger is a fill-in-the-blank district field written by ARBITER on the physical card at generation time. Fire effect applies to the holding faction regardless of which CA generated the deed. Multiple Grant Deeds may be held simultaneously; one fires per trigger event.
+ARBITER-issued cards placed in a faction's Dispatch Case during covert operation resolution. Not player-submitted; not drawn from a deck. Held in faction hand after Debrief delivery. Fire as an Issued ModReactCard (`acquisition=Issued`) — trigger is a fill-in-the-blank district field written by ARBITER on the physical card at generation time. Fire effect applies to the holding faction regardless of which CA generated the deed. Multiple Grant Deeds may be held simultaneously; one fires per trigger event.
 
 Physical form: blank card with printed trigger text and effect text; two fill-in fields completed by ARBITER at generation. Stored blank in ARBITER tableau; ARBITER completes and routes at Beat 3 or Beat 4 of the generating CA's resolution.
 
@@ -1465,7 +1462,7 @@ GD01 = Card(
 
     narrative    = None,
     perspectives = None,
-    design_note  = "Issued ModReactCard (S133 — was `ModIssuedCard`, PM02 L245 revises L241/PM05 04-n154; before that, plain ModReactCard). Acquisition axis (acquisition=Issued, generating_card) now carries what the retired ModIssuedCard subclass tried to express. ARBITER-issued; not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order. **v0.4 (S143, Andy):** added step 3 effect — removes 1 structure block belonging to the triggering faction from deed.district. The registered claim doesn't just let the holder catch up when someone else builds; it displaces that build outright. Narrative: a Land Title/Development Order registered earlier legally supersedes an unauthorized structure raised later on the same ground. Materially strengthens the card — feeds into repricing SYN.CA.8/GUI.CA.10's own cost (PM05 04-n178, UVM pair-cost analysis).",
+    design_note  = "ARBITER-issued (acquisition=Issued); not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order. Step 3 (removing the triggering faction's structure block) reflects that a registered claim doesn't just let the holder catch up when someone else builds — it displaces that build outright: a Land Title/Development Order registered earlier legally supersedes an unauthorized structure raised later on the same ground. This interacts with SYN.CA.8/GUI.CA.10's own cost calibration (04-n178).",
     arbiter_note = "At generating CA resolution: take 1 blank Grant Deed from ARBITER tableau; write target district name in 'district' field and acting faction in 'holder' field; place in acting faction's Dispatch Case. Card moves to holder's hand at Debrief. No ongoing ARBITER monitoring required — holder self-polices and announces React when trigger fires.",
 )
 ```
@@ -1504,35 +1501,13 @@ Face: name, type indicator, effect, attachment rule (if restricted), Portrait (i
 
 Face: ring constraint statement as visually distinct element, name, type indicator, effect, Portrait (if applicable), value rating (1–4). Back: ring color, ring name.
 
-### 13.5 Emergency Response Cards
-
-Face: name, faction indicator, trigger condition, complete effect text, Board Strength interaction note. Pre-sealed in faction envelopes at setup. Full card data structure review pending (D-04-10).
-
 ---
 
 ## 14. Special Conditions & Gameplay Impacts
 
-### 14.1 Emergency Response Cards
+### 14.4 Self-Directed Targeting
 
-*Card data structure review pending D-04-10. Effects carried forward.*
-
-| Faction | Emergency Response | Effect |
-|---------|-------------------|--------|
-| The Guild | Emergency Fortification | Place 2 presence tokens in any district. Remove 1 structure block from Apex faction's total. |
-| The Directorate | Emergency Injunction | Apex faction loses 2 presence tokens from their highest-token district. Board Strength recalculated. |
-| Ghost | Counter-Analysis | Reveal one Intel token publicly. If accurate and damaging to Apex faction: Apex faction Public Standing −2 before threshold check. |
-| The Network | Emergency Broadcast | Apex faction Public Standing −3 immediately. VP calculation affected. |
-| The Syndicate | Hostile Takeover Bid | Offer Apex faction 4 Capital for 2 structure blocks (converted to Syndicate). If accepted: Board Strength −2. If declined: no effect. |
-
-### 14.3 Resource Availability Constraint
-
-Covert operation resources must be physically present in the dispatch case at Beat 3. Public act resources must be physically paid at Declaration. If absent:
-- **Covert:** Action fails. Resources spent. ARBITER notes privately.
-- **Political:** Declaration void. Faction takes Political Pass. Public Standing −1 as "failed commitment." Resources already paid returned.
-
-### 14.4 Self-Directed Undermine
-
-A faction may submit Undermine targeting themselves (cost: 1 native resource + 1 district native resource — no Intel token required). Creates a false Public Standing drop recorded as unattributed. ARBITER does not note self-targeting.
+`target_faction` on Covert Operations is free-form text on the physical Target Profile component, not a rigid schema enum — any faction, including the acting faction itself, can be named. All cards support this; it is not a per-card exception. An "unattributed" Public Standing shift needs no new schema concept: the existing `PSFraming` "target" value already resolves correctly when the named target is the acting faction itself.
 
 ### 14.5 Deck Exhaustion
 
@@ -1543,39 +1518,7 @@ Covert and political draw decks: when exhausted, shuffle discard pile immediatel
 Non-native resources acquired through:
 1. District incursion — presence in districts controlled by the resource's native faction
 2. Direct faction-to-faction trade at any agreed rate
-3. ARBITER conversion — 4:1 universal rate
-
----
-
-## 15. Examples & Exceptions
-
-### Example A — Ghost 4-Operation Round
-
-*Round 4. Ghost uses Political Pass. Dispatch case: Pattern Match (targeting Directorate — Invoke Jurisdiction), Archive Recovery, Deep Cover, Gather (Government Citadel).*
-
-ARBITER opens case at Beat 3. Pattern Match resolves first — Directorate submitted Invoke Jurisdiction this round. Pattern Match succeeds; resolves as Invoke Jurisdiction targeting Financial Clearing. Archive Recovery: Ghost recovers Round 2 Intel token. Deep Cover: Round 3 Gather attribution permanently removed. Gather at Government Citadel: Average −20 Core = Challenging. Roll → 19. Target 01–25. Succeeds.
-
-### Example B — Denounce Mechanics
-
-*Round 5. Network holds Round 3 Intel token naming Ghost (age 2 — stale). Network declares Denounce.*
-
-Cost: 1 Findings + 2 additional Findings (stale) = 3 Findings total. Verbal accusation delivered. Average difficulty. Roll → 22. Target 01–45. Success. Ghost Public Standing −2. Network Public Standing +1. Token spent.
-
-### Example C — Commission With Guild Affinity
-
-*Round 3. Guild operational markers at Power Grid (Present) and Industrial Fringe (Present). Guild declares Commission.*
-
-Guild affinity: secondary cost waived per district. Cost: 1 Capacity + 1 Capacity (Power Grid native) + 1 Capacity (Industrial Fringe native) = 3 Capacity. Both structures placed immediately.
-
-### Example D — Ring Modifier Constraint in Trade
-
-*Round 5. Syndicate holds 2 Infrastructure modifier cards. Guild offers 2 Capital for them. Guild attaches one to Commission targeting Power Grid (Infrastructure) — constraint satisfied. Guild later attempts to attach the second to Gather targeting University Perimeter (Sprawl) — ARBITER rejects. Card face: "Usable on Infrastructure district targets only."*
-
-### Example E — Burst Play and Post-Burst Trade
-
-*Round 6. Directorate triggers Burst Play. 7 modifier cards → 4 Mandate + 3 Capital. Faction modifier deck removed. ARBITER: "The Directorate has liquidated their operational reserve."*
-
-*Round 7. Guild offers Directorate 2 modifier cards as part of Accord. Directorate accepts and uses them normally — Burst removed draw access, not ability to hold or play cards.*
+3. Where no direct trade is arranged: conversion follows **The Translation** (Art 03 §19.1), a Chorus-Node-presence-tiered rate table (Established 2:1, Present 3:1, None 4:1, Tied/Contested 5:1) — not a flat universal rate.
 
 ---
 

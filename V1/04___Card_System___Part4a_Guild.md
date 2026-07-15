@@ -44,10 +44,10 @@ Guild-exclusive structural defense card. The hardest counter to STD.CA.2 Demolis
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: Guild structure in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | StructureBlock (restriction + immunity target); Capacity cost. | Art 02 §7, §8 |
 | Supported by game procedure | ⚠ | Submitted at Dispatch (Art 03 §9.1); Beat 2 row (Art 03 §9.4.0 Beat 0); immunity flag applied at Beat 3 when STD.CA.2 Demolish resolves (Art 03 §9.4.2 Beat 3). **Open:** Art 03 §9.4.2 Beat 2 covers Countermeasures and Protect only — no procedure defined for Fortify Structure immunity flag. Gap in Art 03. | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Capacity only, typed correctly). | Art 00a §9.2 |
+| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capacity only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -126,7 +126,7 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 | Voice fit | ✓ | Three perspectives (Guild, Syndicate, Ghost) — FactionSpecific card; acceptable. Syndicate's "we simply call it by a different name" and Ghost's "already told us what it knows" both provide doctrinal depth. | Art 00 §7 |
 | Doctrine alignment | ✓ | `target_faction = faction.opponent`, `doctrine_mod = None` — explicit design choice. Recovery amount mirrors STD.CA.2's cost regardless of doctrinal distance; the Guild gets paid the same whoever demolished. Correct. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: observation and positioning is covert; payment materializes via case mechanism. FactionSpecific (Guild): treating demolition as a Guild service is uniquely Guild doctrine. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | `layer = Economy` — returning NativeResource is capital flow, correctly Economy under Art 04b §4.4. `function = Add`, `subject = NativeResource` — Recover retired S106 (04b-20); trigger-context Add is the correct primitive. | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | `layer = Economy` — returning NativeResource is capital flow, correctly Economy under Art 04b §4.4. `function = Add`, `subject = NativeResource` — trigger-context Add is the correct primitive. | Art 04b §4, §5 |
 | Balance | ✓ | Zero resource cost; action slot is the only cost. Trigger-contingent — wrong read wastes slot with no other penalty. First qualifying Demolish from named faction only. | Art 02 §8 |
 | Effect duration | ✓ | Instantaneous: resources delivered once when trigger fires. No persistent state. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
@@ -135,10 +135,10 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 | Supported by zones | N/A | `target_district = None` — trigger monitors named opponent globally, not district-specific. | — |
 | Supported by components | ✓ | NativeResource (Art 02 §8); STD.CA.2 Demolish as trigger source. | Art 02 §8; Art 04 (STD.CA.2) |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row (Art 03 §9.4.0 Beat 0); trigger fires when named faction completes STD.CA.2 at Beat 3 (Art 03 §9.4.2 Beat 3); delivery via ARBITER case (Art 07). | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ✓ (N/A) | Missing row, scaffolded S141. `cost=None` — the action slot itself is the wager. | Art 00a §9.2 |
+| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None` — the action slot itself is the wager. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -229,10 +229,10 @@ Guild-exclusive first-entry card for unclaimed districts. Unclaimed territory ha
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: total presence == 0 (unclaimed only). | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken (success); StructureBlock (crit success); Capacity cost; IntelToken to Directorate on crit fail. | Art 02 §6, §7, §8; Art 02 §12 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); d100 threshold 25 with ring_mod; ARBITER silent IntelToken delivery to Directorate on crit fail (Art 03 §9.4.2 Beat 3; Art 07). | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Missing row, scaffolded S141. Mono-resource (Capacity only, typed correctly). | Art 00a §9.2 |
+| Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capacity only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -312,7 +312,7 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 | Voice fit | ✓ | Three perspectives (Guild, Network, Ghost) — FactionSpecific card; acceptable. Ghost's "better at covert operations than they admit" is the sharpest outside read. | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild construction doctrine (rush, without permission). Crit fail rewards Ghost (Intel Token) and Syndicate (district native) — explicitly doctrinal: the two most opportunistic actors benefit from Guild overreach. No opponent target → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: unauthorized construction is covert until established. FactionSpecific (Guild): rush-build without prerequisites is exclusively Guild. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ⚠ | `layer = Submission` — primary design intent is removing the STD.CA.1 presence prerequisite (a restriction on a CovertOperation). Territorial outcomes (presence + structure) are the consequence, not the driver. **Flagged S141:** `function = RemoveRestriction` is not in `ref_taxonomy.md`'s Function Vocabulary (Add/Remove/Redirect/Modify/Protect/Block/Copy/Reveal/Shift/Corrupt only) — confirmed by `v_card_mechanical_alignment` (DB), which shows Abstract Function for this card. `Modify` ("alters cost, value, or attribute without changing fundamental state") looks like the closer documented fit for "removes a restriction," but not changed here — see schema_cleanup_log.md #25. | Art 04b §4, §5 |
+| Taxonomy fit | ⚠ | `layer = Submission` — primary design intent is removing the STD.CA.1 presence prerequisite (a restriction on a CovertOperation). Territorial outcomes (presence + structure) are the consequence, not the driver. `function = RemoveRestriction` is not in `ref_taxonomy.md`'s Function Vocabulary (Add/Remove/Redirect/Modify/Protect/Block/Copy/Reveal/Shift/Corrupt only) — confirmed by `v_card_mechanical_alignment` (DB), which shows Abstract Function for this card. `Modify` ("alters cost, value, or attribute without changing fundamental state") looks like the closer documented fit for "removes a restriction," but not changed here. | Art 04b §4, §5 |
 | Balance | ✓ | High cost (3 Capacity), high threshold (65). Crit fail rewards both Ghost (Intel Token) and Syndicate (district native) — asymmetric penalty for overreach. Net: saves STD.CA.3+STD.CA.1 sequential plays at the cost of one high-risk probabilistic slot. | Art 02 §6, §7, §8; Art 02 §12 |
 | Effect duration | ✓ | Permanent: presence and structure placed on success persist. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
@@ -321,10 +321,10 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: no existing Guild structure in target district. Ring mods apply normally. | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken + StructureBlock on success; Capacity cost; IntelToken to Ghost + district native to Syndicate on crit fail. | Art 02 §6, §7, §8; Art 02 §12 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); d100 threshold 65 with ring_mod; ARBITER delivers crit fail rewards to Ghost and Syndicate (Art 03 §9.4.2 Beat 3; Art 07). | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | Missing row, scaffolded S141. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Missing row, scaffolded S141. Cross-resource (Capacity + Findings, both typed correctly). | Art 00a §9.2 |
+| Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Findings, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -418,10 +418,10 @@ Guild-exclusive passive income card — the economic expression of territorial c
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: Guild must hold Established or Dominant control tier in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | NativeResource (Art 02 §8); control_tier states Established/Dominant (Art 02 §6). | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); Beat 3 row (Art 03 §9.4.0 Beat 0); Automatic resolution at Beat 3 (Art 03 §9.4.2 Beat 3). | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely — see schema_cleanup_log.md #24. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ✓ (N/A) | Missing row, scaffolded S141. `cost=None` — passive income, no resource spent. | Art 00a §9.2 |
+| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None` — passive income, no resource spent. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -499,7 +499,7 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 | Voice fit | ✓ | Faction-specific; limited perspectives in current spec — full voice set expected (confirm complete in code block) | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild only; zero resource cost (slot IS the bet); payout 2 Capacity mirrors STD.CA.1.cost — self-calibrating on balance pass; Beat 2 positional wager fits the "bet on opponent building" play style | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — Guild's passive revenue model | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Add/NativeResource — Recover retired S106 (04b-20); trigger-context Add is the correct primitive; STD.CA.3 exclusion confirmed locked S59 | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | Economy/Add/NativeResource — trigger-context Add is the correct primitive; STD.CA.3 exclusion confirmed | Art 04b §4, §5 |
 | Balance | ✓ | Payout 2 Capacity mirrors STD.CA.1.cost — self-calibrating | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: Capacity delivered at Beat 3 when trigger fires | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
@@ -510,20 +510,18 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 | Supported by game procedure | ✓ | Beat 2 submission; trigger confirmed at Beat 3; ARBITER case delivery | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`. Also missing `persistence`/`persistence_condition`/`persistence_effect` entirely — not just unset, absent from the code block (unlike every other Guild CA card, which at least declares `persistence=Immediate`). Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ✓ (N/A) | Missing row, scaffolded S141. `cost=None` — the action slot itself is the wager, same shape as GUI.CA.2. | Art 00a §9.2 |
+| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ (N/A) | `cost=None` — the action slot itself is the wager, same shape as GUI.CA.2. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-- **STD.CA.3 scope confirmed excluded:** Labor Contract is a financial claim on physical construction (STD.CA.1) only. Campaign (STD.CA.3) does not trigger — no labor fee on presence/influence activity. Locked S59.
+- **STD.CA.3 scope confirmed excluded:** Labor Contract is a financial claim on physical construction (STD.CA.1) only. Campaign (STD.CA.3) does not trigger — no labor fee on presence/influence activity.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
-
-*Draft S59 — design pass pending*
 
 ```python
 GUI.CA.6 = Card(
@@ -617,7 +615,7 @@ GUI.CA.6 = Card(
 | Supported by zones | ⚠ |  |  |
 | Supported by components | ⚠ |  |  |
 | Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. Re-derived S141: `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/14/15 (schema_cleanup_log.md #29). Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`ring_mod`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/14/15. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`ring_mod`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
@@ -685,7 +683,7 @@ GUI.CA.7 = Card(
 | Supported by zones | ⚠ |  |  |
 | Supported by components | ⚠ |  |  |
 | Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. Re-derived S141: `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/14/15 and GUI.CA.7 (schema_cleanup_log.md #29). Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`ring_mod`/`persistence`/`portrait`/`perspectives` entirely. Design note mentions a retired "Bribe" mechanic with no other trace in the spec. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/14/15 and GUI.CA.7. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`ring_mod`/`persistence`/`portrait`/`perspectives` entirely. Design note mentions a retired "Bribe" mechanic with no other trace in the spec. Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
@@ -732,19 +730,19 @@ Distinct from STD.CA.10 Protect (raises attacker threshold on incoming CAs) and 
 | Voice fit | ✓ | Five perspectives: Guild matter-of-fact certainty; Directorate notes the institutional channel; Ghost reads it as operational pre-commitment; Network clocks the dual announcement; Syndicate prices the certainty premium | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild ceiling Resolution card; Beat 2 Automatic; Portrait +1; construction certainty is the Guild doctrine made mechanical | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — the guarantee is covert; no public announcement of which CA is being backed | Art 04 §6.2 |
-| Taxonomy fit | ⚠ | Resolution / Modify / Difficulty — suppresses d100 roll on target CA, converting it to guaranteed success+successcrit. **Flagged S141:** `v_card_mechanical_alignment` (DB) shows `Non-component Subject` for "Difficulty" — same unregistered-Subject gap as DIR.CA.8 (schema_cleanup_log.md #27), now 3 confirmed instances (DIR.CA.8, GHO.CA.15's TargetProfile is a different subject but same gap-type, and this card). Not resolved. | Art 04b §4 |
+| Taxonomy fit | ⚠ | Resolution / Modify / Difficulty — suppresses d100 roll on target CA, converting it to guaranteed success+successcrit. `v_card_mechanical_alignment` (DB) shows `Non-component Subject` for "Difficulty" — same unregistered-Subject gap as DIR.CA.8, now 3 confirmed instances (DIR.CA.8, GHO.CA.15's TargetProfile is a different subject but same gap-type, and this card). Not resolved. | Art 04b §4 |
 | Balance | ⚠ | High total cost (CA cost + 2C + 1 district native + 2 dispatch slots); ceiling output (4 presence + 2 structures for CA.4); restriction checks at Beat 0 limit abuse — playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Beat 2 effect (guarantee registered); Beat 3 CA output is Permanent (structures/presence placed) | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — guarantee resolves at Beat 3 with the target CA; no lingering marker | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None | — |
 | Portrait validity | ✓ | Guild +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district B; named CA's own target_district = district A; both validated at Beat 0 per Art 01 §6.5 | Art 01 §6.5 |
-| Supported by components | ✓ | PresenceToken + StructureBlock output via named CA; no new components; cost from Guild resource pool. **Flagged S141:** the card also declares `target_ca = ca.guild.beat3.d100` — a targeting field not in `design_reference_card_system.md`'s documented Targeting field group (`target_district`/`target_faction`/`target_object`/`target_taxonomy`/`declared_params`). Whether this needs to be a confirmed schema extension or should be re-expressed via `declared_params` (which already exists for exactly this "faction-declared free-form parameter" purpose) isn't resolved. | Art 02 §6–§8 |
+| Supported by components | ✓ | PresenceToken + StructureBlock output via named CA; no new components; cost from Guild resource pool. The card also declares `target_ca = ca.guild.beat3.d100` — a targeting field not in `design_reference_card_system.md`'s documented Targeting field group (`target_district`/`target_faction`/`target_object`/`target_taxonomy`/`declared_params`). Whether this needs to be a confirmed schema extension or should be re-expressed via `declared_params` (which already exists for exactly this "faction-declared free-form parameter" purpose) isn't resolved. | Art 02 §6–§8 |
 | Supported by game procedure | ⚠ | Beat 0: ARBITER validates named CA and district B restriction; Beat 2: guarantee registered; Beat 3: named CA resolves without roll, output fires twice. Double-fire procedure is new — confirm against Art 03 §9.4 | Art 03 §9.4 |
 | Data schema validation | ⚠ | New card — DB registration required. Also missing `card_id`/`boost`/`ps_framing` (`doctrine_mod=None` is present). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`) — the "double-fire" is two applications of the same success outcome, not a second resolution tier. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Missing row, scaffolded S141. Cross-resource (Capacity + district native, both typed correctly). | Art 00a §9.2 |
+| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`) — the "double-fire" is two applications of the same success outcome, not a second resolution tier. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + district native, both typed correctly). | Art 00a §9.2 |
 
 #### Status
 
@@ -820,7 +818,7 @@ GUI.CA.9 = Card(
 #### Design Rationale
 Guild's Grant Deed card — parallel to SYN.CA.8 Land Title in mechanism, distinct in doctrine. Land Title is a capital claim: "let someone else build, then collect." Development Order is a construction rights filing: "when this district develops, Guild is the builder of record." Both deliver GD-01 Grant Deed to the acting faction's Dispatch Case via ARBITER; both fire when any faction places a structure block in the named district.
 
-Cost: 4 Capacity + 1 `district(target).native` (repriced S144, 04-n178 — GD-01 v0.4's third fire effect raised the deed's raw value ~4.20→8.20; modest +1 bump, not proportional, since fire is trigger-conditional not guaranteed) — the district-native term is the cross-resource commitment that satisfies the §9.2 ceiling gap (04-n119). Guild must engage with the target district's resource economy to file the order. Restriction: no Guild structure in target district (same gate as GUI.CA.4) and not Chorus Node. Automatic resolution — filing a development order doesn't require a roll. Multiple orders on the same district permitted; cost-governed.
+Cost: 4 Capacity + 1 `district(target).native` — a modest bump reflecting that GD-01's fire effect is trigger-conditional, not a guaranteed payoff, so cost scales sub-proportionally to the deed's raw value — the district-native term is the cross-resource commitment that satisfies the §9.2 ceiling gap (04-n119). Guild must engage with the target district's resource economy to file the order. Restriction: no Guild structure in target district (same gate as GUI.CA.4) and not Chorus Node. Automatic resolution — filing a development order doesn't require a roll. Multiple orders on the same district permitted; cost-governed.
 
 Doctrinal distinction from SYN.CA.8: Guild's deed doesn't extract value from others' development. It establishes Guild's right to participate. The fire effect (+1 Presence Token + 1 Structure Block per GD-01) reflects Guild crews arriving to execute the build — not just a claim on paper.
 
@@ -835,7 +833,7 @@ The Guild files the development order before a single wall goes up. The district
 | Voice fit | ⚠ | Perspectives pending | Art 00 §7 |
 | Doctrine alignment | ✓ | Capacity + district-native cost addresses 04-n119 §9.2 ceiling gap; construction rights framing is Guild-exclusive | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via GD-01 fire. **Flagged S141:** the card's own code declares this taxonomy correctly and it's a valid Territory+Add cell, but `card_status` (DB) shows `layer`/`function`/`subject` all `NULL` for GUI.CA.10, flagged `Abstract / No Subject` in `v_card_mechanical_alignment` — a DB/MD sync gap (per `feedback_card_status_sync.md`), not a card content defect. Not corrected here, per this pass's scope. | Art 04b §4 |
+| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via GD-01 fire. The card's own code declares this taxonomy correctly and it's a valid Territory+Add cell, but `card_status` (DB) shows `layer`/`function`/`subject` all `NULL` for GUI.CA.10, flagged `Abstract / No Subject` in `v_card_mechanical_alignment` — a DB/MD sync gap (per `feedback_card_status_sync.md`), not a card content defect. | Art 04b §4 |
 | Balance | ⚠ | Payback contingent on any faction building in named district; district-native cost throttles casual play — playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent — Grant Deed held until fired or game end | — |
 | Persistence | ✓ | Card persistence = Immediate; GD-01 persists in hand | Art 04 §6 |
@@ -846,8 +844,8 @@ The Guild files the development order before a single wall goes up. The district
 | Supported by game procedure | ⚠ | GD-01 trigger vocab (district-scoped) pending 04-n27; React window pending Art 03 addition | Art 03 §9.4 |
 | Data schema validation | ⚠ | New card — DB registration required. `card_id`/`ps_framing` missing from code (has `doctrine_mod`/`boost` as `None`). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story above | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | Missing row, scaffolded S141. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Missing row, scaffolded S141. Cross-resource (Capacity + district native, both typed correctly). | Art 00a §9.2 |
+| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + district native, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -859,8 +857,6 @@ The Guild files the development order before a single wall goes up. The district
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | | |
-
-*Repriced S144 — v0.2 (04-n178 UVM reprice, following GD-01 v0.4 buff).*
 
 ```python
 GUI.CA.10 = Card(
@@ -1762,9 +1758,7 @@ GUI.PA.10 = Card(
 ### GUI.MOD.1 — NIGHT SHIFT CREW
 
 #### Design Rationale
-*S106. Originally conceived as Territory|Recover|PresenceToken CovertAction (GUI.CA.6), redesigned as React Modifier after two blocking findings: (1) structure block removal is simultaneous with chips hitting 0 — no React window can catch it; (2) "Recover" may not be a valid primitive per 00a §7.2. Taxonomy reclassified as Territory|Add|PresenceToken. Corrected S137 (04-n175): the real gate was 04b-20 ("Recover" verb validity audit), which closed at S106 with the answer already applied here — Recover is retired, `function=Add` is correct.*
-
-Guild's React presence card: when a Guild chip is removed from a district, Guild may immediately respond by placing a chip back. "Established communities don't abandon positions — they return." The return is reflexive, not planned — trigger is the chip removal itself (publicly observable resolved action). No structure dependency: structure may be simultaneously removed when chips hit 0, so the trigger window must not require it. Pre-schema fossil re-authored this pass (04-n174, same category as GHO.MOD.9/10/11): name conflict resolved to "Night Shift Crew" (dropping the stray "RETURN TO SITE" code comment); trigger migrated from `chip_removed.where(...)` to `presence_chip.removed(...)` per this card's own prior outstanding-issue note; `cost`/`successcrit`/`failcrit` literal `TBD` placeholders replaced — `cost=None` reflects the reflexive framing (playtest-flagged per the 04-n94 pattern, not a final balance call); `successcrit`/`failcrit` are correctly `None` since `resolution=Automatic` carries no dice roll to critical on.
+Guild's React presence card: when a Guild chip is removed from a district, Guild may immediately respond by placing a chip back. "Established communities don't abandon positions — they return." The return is reflexive, not planned — trigger is the chip removal itself (publicly observable resolved action). No structure dependency: structure may be simultaneously removed when chips hit 0, so the trigger window must not require it — taxonomy is Territory|Add|PresenceToken, not Recover, since "Recover" is not a valid primitive per 00a §7.2. `cost=None` reflects the reflexive framing (playtest-flagged, not a final balance call); `successcrit`/`failcrit` are correctly `None` since `resolution=Automatic` carries no dice roll to critical on.
 
 #### Card Story
 A structure block goes dark and the district looks abandoned for exactly as long as it takes someone to walk back in and turn the lights back on.
@@ -1777,17 +1771,17 @@ A structure block goes dark and the district looks abandoned for exactly as long
 | Voice fit | ⚠ | Perspectives TBD — deferred to modifier card voice pass (D-04-08). | Art 00 §9 |
 | Doctrine alignment | ✓ | Established communities returning after displacement is core Guild doctrine. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Guild — trigger-based, fires on chip removal. | Art 04 §6.1, §6.2 |
-| Taxonomy fit | ✓ | Territory / Add / PresenceToken — confirmed S137 (04-n175), 04b-20 closed. | Art 04b §4; PM05 04b-20 |
+| Taxonomy fit | ✓ | Territory / Add / PresenceToken — 04b-20 (Recover verb validity audit) closed, confirming this assignment. | Art 04b §4; PM05 04b-20 |
 | Balance | ✓ | `cost = None` — reflexive, not a planned play; playtest-flagged (04-n94 pattern), not final. | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — chip placed back at trigger. | Art 04 §5 P19 |
 | Persistence | ⚠ | `persistence` field open corpus-wide question (schema_cleanup_log item 2/D), not card-specific. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Migrated from fossil `chip_removed.where(...)` to `presence_chip.removed(faction=Guild, district=X)` this pass, but still unconfirmed against §6.3 TriggerExpr vocabulary. Trigger scope (any chip removal vs. specific action types) also remains an open design question, not resolved this pass. | Art 04 §6.3; PM05 04-n174 |
+| Trigger validity | ⚠ | Uses `presence_chip.removed(faction=Guild, district=X)`, not yet confirmed against §6.3 TriggerExpr vocabulary. Trigger scope (any chip removal vs. specific action types) also remains an open design question. | Art 04 §6.3; PM05 04-n174 |
 | Portrait validity | ✓ | `{Guild: submitter=+1}` — unchanged from fossil, already correctly structured. | Art 04 §6.2 |
 | Supported by zones | ✓ | District-scoped by design — the whole point is returning to the specific district that lost the chip. | Art 01 §6–§7 |
 | Supported by components | ✓ | Presence chips — existing component. | Art 02 §6, §11 |
 | Supported by game procedure | ✓ | Chip removal is a publicly observable resolved action; no new ARBITER behavior needed. | Art 03 §18 |
-| Data schema validation | ⚠ | `TBD` placeholders (cost/successcrit/failcrit) replaced with real values this pass (04-n174). `presence_chip.removed(...)` has no confirmed TriggerExpr vocabulary — same open gap as the rest of the corpus. Scaffolding fields added (04-n177). | Art 04 §6.1–§6.3; PM05 04-n174 |
-| Card narrative | ✓ | Card Story written this pass (was empty). | Art 04 §5 P26 |
+| Data schema validation | ⚠ | `presence_chip.removed(...)` has no confirmed TriggerExpr vocabulary — same open gap as the rest of the corpus. | Art 04 §6.1–§6.3; PM05 04-n174 |
+| Card narrative | ✓ | Card Story present. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` — deterministic reflex, no dice. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | `cost=None` — free reflexive response, matching the "we don't leave" framing. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ⚠ | Depends on how often Guild chips get removed district-wide; best-effort, not independently verifiable here. |  |
@@ -1809,9 +1803,9 @@ GUI.MOD.1 = Card(
     tagline = "Established communities don't abandon positions — they return.",
     type    = ModReactCard,  faction = Guild,
 
-    layer   = Territory,  function = Add,  subject = PresenceToken,  # confirmed S137 (04-n175) — 04b-20 already closed this
+    layer   = Territory,  function = Add,  subject = PresenceToken,
 
-    trigger         = presence_chip.removed(faction=Guild, district=district(trigger.target)),  # migrated from chip_removed.where(...) fossil form; still unconfirmed against §6.3 TriggerExpr vocabulary (04-n174)
+    trigger         = presence_chip.removed(faction=Guild, district=district(trigger.target)),  # still unconfirmed against §6.3 TriggerExpr vocabulary (04-n174)
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
@@ -1864,8 +1858,8 @@ A rival breaks ground somewhere in the city. The crew on-site is Guild labor, sa
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
 | Supported by components | ✓ | Standard resource-grant mechanism. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Reuses existing structure-placement event; no new ARBITER behavior. Connects to 04-n2 (unimplemented passive-income governing rule) per its own design_note — worth checking that rule's status doesn't conflict once it's implemented. | Art 03; GR 6.1; PM05 04-n2 |
-| Data schema validation | ⚠ (deferred) | Scaffolded this session (04-n177). | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above covers P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | `cost=None` — same whole-set gate as the rest of the corpus (04-n178), but this card is a strong candidate for actually needing a real cost given the Balance flag above. | Art 00a §9.2; PM05 04-n178 |
 | Trigger frequency (ModReactCard) | ⚠ | Structure placement is a common, recurring board event across all 4 other factions. Ties directly into the Balance flag. |  |
@@ -1880,15 +1874,13 @@ A rival breaks ground somewhere in the city. The crew on-site is Guild labor, sa
 |--|-------------|-----------------|------------|
 | Status | ✓ |  |  |
 
-*S128. React on opponent structure placement. Guild labor built it — Guild gets paid. Generic opponent variant. Faction-targeted variant: GUI.MOD.3 (Directorate). Ring-constrained variant: GUI.MOD.4 (Ring 1 premium rate). Connects to §5a passive income / 04-n2. S138: full content-review pass — real balance flag (no restriction/cost, table-wide trigger, same shape as DIR.MOD.7); remaining flags are the standard schema/cost/stack/family-overlap gaps. Design Pass ✓, Issues Resolved not yet.*
-
 ```python
 GUI.MOD.2 = Card(
     id      = "GUI.MOD.2",  card_id = "GUI.MOD.2",  version = "v0.1",
     name    = "Union Representative",
     tagline = "Other factions build with Guild labor. Guild gets paid.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175) — resources.add(1, Capacity)
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=opponent),  # any non-Guild faction places structure
     beat            = None,
@@ -1947,8 +1939,8 @@ Directorate breaks ground on an institutional facility. The crews are Guild's, s
 | Supported by zones | ✓ | Same as GUI.MOD.2. | Art 01 §6–7 |
 | Supported by components | ✓ | Same as GUI.MOD.2. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same as GUI.MOD.2. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Scaffolded this session. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above covers P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as GUI.MOD.2. | Art 00a §9.2; PM05 04-n178 |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Directorate-only scope keeps frequency lower than GUI.MOD.2's generic trigger. |  |
@@ -1963,15 +1955,13 @@ Directorate breaks ground on an institutional facility. The crews are Guild's, s
 |--|-------------|-----------------|------------|
 | Status | ✓ |  |  |
 
-*S128. Faction-targeted variant of GUI.MOD.2. Trigger narrowed to Directorate structure placement. Directorate builds institutional-scale structures — Guild is the primary contractor for government facilities. S138: full content-review pass — no new issues beyond the standard schema/cost/stack/family-overlap gaps. Design Pass ✓, Issues Resolved not yet.*
-
 ```python
 GUI.MOD.3 = Card(
     id      = "GUI.MOD.3",  card_id = "GUI.MOD.3",  version = "v0.1",
     name    = "Institutional Contract",
     tagline = "Directorate builds. Guild crews and invoices.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175), same shape as GUI.MOD.2
+    layer   = Economy,  function = Add,  subject = NativeResource,  # same shape as GUI.MOD.2
 
     trigger         = structure_block.placed(faction=Directorate),
     beat            = None,
@@ -2030,8 +2020,8 @@ A rival's crew breaks ground in the Core — denser infrastructure, scarcer labo
 | Supported by zones | ✓ | `ring_constraint=1` matches trigger's `ring=1` scope. | Art 01 §6–7 |
 | Supported by components | ✓ | Same as GUI.MOD.2/3. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same as GUI.MOD.2/3. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Scaffolded this session. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above covers P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | `cost=None` on the set's highest-yield card — strongest candidate in the family for actually needing a real cost. Gated on 04-n178. | Art 00a §9.2; PM05 04-n178 |
 | Trigger frequency (ModReactCard) | ⚠ | Ring-locked to Core (fewer districts) but Core is dense/contested — could still be meaningful frequency combined with the 2x yield. Ties into the Balance flag. |  |
@@ -2046,15 +2036,13 @@ A rival's crew breaks ground in the Core — denser infrastructure, scarcer labo
 |--|-------------|-----------------|------------|
 | Status | ✓ |  |  |
 
-*S128. Ring-constrained variant of GUI.MOD.2. Ring 1 (Core) structure placement by any opponent triggers 2 Capacity yield. Core ring commands premium construction rates — the infrastructure is more complex, the labor is scarcer. S138: full content-review pass — sharpened balance flag given the 2x yield ("strongest Guild passive income trigger" per its own design_note) plus the family-overlap question with GUI.MOD.2. Design Pass ✓, Issues Resolved not yet.*
-
 ```python
 GUI.MOD.4 = Card(
     id      = "GUI.MOD.4",  card_id = "GUI.MOD.4",  version = "v0.1",
     name    = "Core Premium",
     tagline = "Core construction pays Guild at institutional rates.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175), same shape as GUI.MOD.2
+    layer   = Economy,  function = Add,  subject = NativeResource,  # same shape as GUI.MOD.2
 
     trigger         = structure_block.placed(faction=opponent, ring=1),
     beat            = None,
@@ -2091,7 +2079,7 @@ GUI.MOD.4 = Card(
 ### GUI.MOD.5 — COMPANY TOWN
 
 #### Design Rationale
-First "draw a card" ModReactCard effect in the Guild set — reacts to opponent presence placement near a Guild structure. Known open balance flag carried from S137 (04-n175, Andy): `count=1` is likely a null effect since a single random modifier draw isn't a guaranteed benefit — recommend `count=2`, not yet applied. 5th confirmed instance of the unconfirmed `where(...)` trigger-parameter form (`schema_cleanup_log.md` item 9).
+First "draw a card" ModReactCard effect in the Guild set — reacts to opponent presence placement near a Guild structure. Open balance flag: `count=1` is likely a null effect since a single random modifier draw isn't a guaranteed benefit — recommend `count=2`, not yet applied. Also an instance of the unconfirmed `where(...)` trigger-parameter form used elsewhere in the corpus.
 
 #### Card Story
 An opponent moves into ground shadowed by a Guild structure. Nothing overt happens — but somewhere in the building, someone's already talking, and Guild walks away from the conversation with something useful.
@@ -2105,16 +2093,16 @@ An opponent moves into ground shadowed by a Guild structure. Nothing overt happe
 | Doctrine alignment | ✓ | `portrait = {}` — reasonable; this is a passive economic engine, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Guild, real taxonomy (Economy/Add/ModifierCard, 04-n175) — first precedent for this effect shape. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Economy×Add valid; ModifierCard-as-subject is a reasonable extension (an acquired asset), consistent with how GHO.MOD.2's IntelToken-Add is handled. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ⚠ | **Known open flag (04-n175, not yet applied):** `count=1` is likely a null effect — recommend `count=2` per Andy's existing note. Not fixed here, still open. | Art 02 §6–7; Art 04 §6.5; PM05 04-n175 |
+| Balance | ⚠ | `count=1` is likely a null effect — recommend `count=2`. Not fixed here, still open. | Art 02 §6–7; Art 04 §6.5; PM05 04-n175 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Base event (`presence_chip.placed`) is confirmed vocabulary, but `district=where(...)` is the 5th confirmed instance of the unconfirmed §6.3 parameter form. | Art 04 §6.3; schema_cleanup_log.md item 9 |
+| Trigger validity | ⚠ | Base event (`presence_chip.placed`) is confirmed vocabulary, but `district=where(...)` is an instance of the unconfirmed §6.3 parameter form. | Art 04 §6.3; schema_cleanup_log.md item 9 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Condition is district-scoped via the Guild-structure filter. | Art 01 §6–7 |
 | Supported by components | ✓ | Modifier card draw reuses the standard Upkeep-draw mechanism. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Reuses existing chip-placement event and modifier-draw mechanism; no new ARBITER behavior. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Scaffolded this session. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above covers P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as the rest of the corpus. | Art 00a §9.2; PM05 04-n178 |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Gated on Guild having a structure in the affected district — moderate, tied to Guild's own board footprint. |  |
@@ -2129,15 +2117,13 @@ An opponent moves into ground shadowed by a Guild structure. Nothing overt happe
 |--|-------------|-----------------|------------|
 | Status | ✓ |  |  |
 
-*React on opponent presence placement near Guild structures. Passive modifier draw engine. ⚠ Flagged S137 (04-n175, Andy): `count=1` is a balance issue, not just a taxonomy gap — drawing a single modifier card is a null effect unless the drawn card happens to have independent value; recommend `count=2` unless the card gets some other guaranteed effect layered on top. S138: full content-review pass — confirmed the count=1 flag still open (not applied), `where(...)` trigger form now at 5 confirmed instances (item 9). Design Pass ✓, Issues Resolved not yet.*
-
 ```python
 GUI.MOD.5 = Card(
     id      = "GUI.MOD.5",  card_id = "GUI.MOD.5",  version = "v0.1",
     name    = "Company Town",
     tagline = "Our people built the walls. We hear who whispers behind them.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = ModifierCard,  # assigned S137 (04-n175) — first "draw a card" ModReactCard effect; no existing taxonomy precedent for this shape, treating a drawn card as an acquired asset
+    layer   = Economy,  function = Add,  subject = ModifierCard,  # first "draw a card" ModReactCard effect; no existing taxonomy precedent for this shape, treating a drawn card as an acquired asset
 
     trigger         = presence_chip.placed(faction=opponent, district=where(faction(Guild).structure > 0)),
     beat            = None,
@@ -2156,7 +2142,7 @@ GUI.MOD.5 = Card(
     cost            = None,
     boost           = None,  # scaffolding only — real value pending 04-n177 focused session
 
-    success     = arbiter.draw_modifier(faction=Guild, count=1),  # ⚠ balance flag (04-n175): count=1 is a null effect unless the drawn card has independent value — recommend count=2
+    success     = arbiter.draw_modifier(faction=Guild, count=1),  # balance flag: count=1 is a null effect unless the drawn card has independent value — recommend count=2
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -2164,7 +2150,7 @@ GUI.MOD.5 = Card(
     ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
     narrative    = None,
     perspectives = None,
-    design_note  = "Passive intelligence engine. Guild's massive labor footprint acts as an informant network. When an opponent expands into a district where Guild has a structure, Guild draws modifier card(s). Turns their win-condition (structures) into a territorial tax on opponent expansion. ⚠ S137: count currently 1, flagged as likely needing to be 2 — a single random modifier card draw isn't a guaranteed benefit on its own.",
+    design_note  = "Passive intelligence engine. Guild's massive labor footprint acts as an informant network. When an opponent expands into a district where Guild has a structure, Guild draws modifier card(s). Turns their win-condition (structures) into a territorial tax on opponent expansion. Count currently 1, flagged as likely needing to be 2 — a single random modifier card draw isn't a guaranteed benefit on its own.",
     arbiter_note = None,
 )
 ```
@@ -2196,10 +2182,10 @@ A structure comes down — sabotage, a lost contest, doesn't matter. Guild's cre
 | Supported by zones | ✓ | `target_district` is a player choice among Guild-adjacent districts — a normal targeting mechanic, not a determinacy issue (see Outcome determinacy row). | Art 01 §6–7 |
 | Supported by components | ✓ | Structure block placement reuses the standard mechanism; GR 8.2 (max 1 structure/faction/district) is a generically enforced constraint, not a gap specific to this card. | Art 02 §6–8; GR 8.2 |
 | Supported by game procedure | ✓ | Reuses existing structure-removal event and placement mechanism; no new ARBITER behavior. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Scaffolded this session. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above covers P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch; the acting-choice target selection is a declared parameter, not a probabilistic or hidden outcome. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Real cost specified, but spans Capacity (Guild-native) and Capital (Syndicate's) — same cross-resource-holding question flagged on several Ghost cards this session, now confirmed recurring across factions. | Art 00a §9.2 |
+| Resource cost positioning | ⚠ | Real cost specified, but spans Capacity (Guild-native) and Capital (Syndicate's) — same cross-resource-holding question flagged on several Ghost cards, confirmed recurring across factions. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Gated on Guild losing a structure — inherently reactive/defensive, moderate frequency in aggressive games. |  |
 | Firing window (ModReactCard) | ⚠ | GUI.MOD.7 shares the identical trigger (`structure_block.removed(faction=Guild)`) — both fire off the same event; no documented rule on sequencing or whether both resolve simultaneously. | | 
 | Automatic vs. d100 (ModReactCard) | ✓ | Bounded, binary replacement — no execution-quality dimension. |  |
@@ -2212,15 +2198,13 @@ A structure comes down — sabotage, a lost contest, doesn't matter. Guild's cre
 |--|-------------|-----------------|------------|
 | Status | ✓ |  |  |
 
-*React on Guild structure removal. Fast-tracked structural replacement. S138: full content-review pass — cross-resource cost flag (Capital, not Guild-native) and a genuine firing-window overlap with GUI.MOD.7 (identical trigger). Design Pass ✓, Issues Resolved not yet.*
-
 ```python
 GUI.MOD.6 = Card(
     id      = "GUI.MOD.6",  card_id = "GUI.MOD.6",  version = "v0.1",
     name    = "Emergency Reconstruction",
     tagline = "You can knock down the building, but you can't erase the blueprint.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Territory,  function = Add,  subject = StructureBlock,  # assigned S137 (04-n175) — arbiter.place(structure_block,...)
+    layer   = Territory,  function = Add,  subject = StructureBlock,
 
     trigger         = structure_block.removed(faction=Guild),
     beat            = None,
@@ -2279,8 +2263,8 @@ The structure's gone, but the workers who built it haven't left. They flood the 
 | Supported by zones | ✓ | `target_district=trigger.district` — correct, same-district response (contrast with GUI.MOD.6's adjacent-district choice). | Art 01 §6–7 |
 | Supported by components | ✓ | Chip placement reuses the standard mechanism; GR 8.1 cap generically enforced. | Art 02 §6–8; GR 8.1 |
 | Supported by game procedure | ✓ | Reuses existing structure-removal event and chip-placement mechanism. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Scaffolded this session. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above covers P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cost is Capacity only (Guild-native) — no cross-resource question, unlike GUI.MOD.6. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Same as GUI.MOD.6 — gated on Guild losing a structure. |  |
@@ -2295,15 +2279,13 @@ The structure's gone, but the workers who built it haven't left. They flood the 
 |--|-------------|-----------------|------------|
 | Status | ✓ |  |  |
 
-*React on Guild structure removal. Territorial fallback swarm. S138: full content-review pass — confirmed firing-window overlap with GUI.MOD.6 (identical trigger); otherwise clean (cost is Guild-native only, no cross-resource question). Design Pass ✓, Issues Resolved not yet.*
-
 ```python
 GUI.MOD.7 = Card(
     id      = "GUI.MOD.7",  card_id = "GUI.MOD.7",  version = "v0.1",
     name    = "Worker Retaliation",
     tagline = "The site is clear, but the workers are still here.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Territory,  function = Add,  subject = PresenceToken,  # assigned S137 (04-n175) — arbiter.place(presence_chip,...)
+    layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = structure_block.removed(faction=Guild),
     beat            = None,
@@ -2340,7 +2322,7 @@ GUI.MOD.7 = Card(
 ### GUI.MOD.8 — SITE CLEARANCE
 
 #### Design Rationale
-Reacts to *any* structure removal, including Guild's own — deliberately inclusive by design (design_note: "pairs with GUI.MOD.2 to ensure Guild profits on both ends of a structure's lifecycle"), not the same "possible bug" pattern as the `faction=Any` self-fire questions flagged elsewhere this session. Real finding: when Guild's own structure is removed, this card, GUI.MOD.6, and GUI.MOD.7 could all fire off the same single event if Guild holds all three — a three-way firing-window overlap, sharper than the two-way overlap already flagged between GUI.MOD.6/7.
+Reacts to *any* structure removal, including Guild's own — deliberately inclusive by design (design_note: "pairs with GUI.MOD.2 to ensure Guild profits on both ends of a structure's lifecycle"), not the same "possible bug" pattern as the `faction=Any` self-fire questions flagged elsewhere in the corpus. Real finding: when Guild's own structure is removed, this card, GUI.MOD.6, and GUI.MOD.7 could all fire off the same single event if Guild holds all three — a three-way firing-window overlap, sharper than the two-way overlap already flagged between GUI.MOD.6/7.
 
 #### Card Story
 A structure comes down somewhere in the city — anyone's structure, any cause. Guild already has the demolition and cleanup contract on file. The check clears regardless of who's crying about the wreckage.
@@ -2362,8 +2344,8 @@ A structure comes down somewhere in the city — anyone's structure, any cause. 
 | Supported by zones | ✓ | `target_district=None` at the field level, but the mutation itself reads `trigger.district`'s native resource — correct. | Art 01 §6–7 |
 | Supported by components | ✓ | Dynamic resource-type resolution (`district(...).native_resource`) reuses existing district metadata; no new component. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Reuses existing structure-removal event; no new ARBITER behavior. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Scaffolded this session. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | `narrative` field empty; Card Story above covers P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | `cost=None` — same whole-set gate as the rest of the corpus (04-n178), sharpened by the Balance flag above (broadest trigger, no cost). | Art 00a §9.2; PM05 04-n178 |
 | Trigger frequency (ModReactCard) | ⚠ | Broadest trigger in the set — any structure removal, any faction, any cause. High potential frequency; ties directly into the Balance flag. |  |
@@ -2378,15 +2360,13 @@ A structure comes down somewhere in the city — anyone's structure, any cause. 
 |--|-------------|-----------------|------------|
 | Status | ✓ |  |  |
 
-*React on any structure removal. The demolition and cleanup contract. S138: full content-review pass — confirmed a real 3-way firing-window overlap with GUI.MOD.6/7 (Guild's own structure loss can trigger all three simultaneously); broadest, least-gated trigger in the Guild set, real balance attention warranted beyond the generic 04-n178 gate. Design Pass ✓, Issues Resolved not yet.*
-
 ```python
 GUI.MOD.8 = Card(
     id      = "GUI.MOD.8",  card_id = "GUI.MOD.8",  version = "v0.1",
     name    = "Site Clearance",
     tagline = "We built it, we get paid. You blew it up, we get paid to clean it up.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175) — resources.add(1, district native_resource)
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.removed(faction=Any),
     beat            = None,
@@ -2423,14 +2403,10 @@ GUI.MOD.8 = Card(
 ### GUI.MOD.9 — FIELD SUPERVISOR
 [↑ Guild](#guild)
 
-*S131. React on opponent Established Marker placement — passive income keyed to territorial milestone rather than structure state. Closes Guild deficit (2 of 2). Asset (human).*
-
 #### Design Rationale
 Guild's certification-network income card, keyed to a different trigger surface than MOD.2/MOD.3/MOD.4 (structure placement) or MOD.8 (structure removal). Every faction's climb to Established influence in a district is a public administrative milestone — a Silver Established Marker placed on the board. Guild's inspection and permitting offices are the ones who process that filing, regardless of whether the settling faction has built anything yet. No structure requirement means this card fires even in districts Guild's other income cards never reach — pure presence accumulation by an opponent is enough.
 
-This completes a four-angle passive-income doctrine across the Guild MOD set: build (MOD.2/3/4), demolish (MOD.8), and now settle (MOD.9). Each keys to a distinct, unambiguous, publicly observable board-state delta — no overlap, no redundant coverage.
-
-**S138 format conversion + re-verification:** this card (S131-vintage) used an abbreviated 8-criterion checklist format, not the standard 22-row table used everywhere else in the corpus — `structure_pass=0` in the DB reflects the completeness tooling not recognizing this shape, not missing content. Converted here per SESSION_BRIEF's explicit instruction to re-check, not rubber-stamp, this card's existing `design_pass=1` claim. The original 8 assessments all re-verified clean on their own terms; the abbreviated format's real gap is what it never had a row to catch: `cost=None` was never evaluated against the whole-set Floor Act/value_rating question (04-n178) because "Resource cost positioning" wasn't one of the 8 criteria.
+This completes a four-angle passive-income doctrine across the Guild MOD set: build (MOD.2/3/4), demolish (MOD.8), and now settle (MOD.9). Each keys to a distinct, unambiguous, publicly observable board-state delta — no overlap, no redundant coverage. This card uses the standard 22-row checklist format used elsewhere in the corpus.
 
 #### Card Story
 A Network survey team finally holds enough ground in a Baryo block to call it theirs — the second marker that tips them to Established. Within the day, a Guild inspector is on-site with a checklist and a fee schedule. Nobody's foothold in New Meridian goes unrecorded, and unrecorded means uncharged.
@@ -2439,28 +2415,28 @@ A Network survey team finally holds enough ground in a Baryo block to call it th
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Re-verified: certification/permitting income keyed to a territorial milestone is a distinct, coherent fourth angle alongside build/demolish. | Art 00 §7 |
+| Action fit | ✓ | certification/permitting income keyed to a territorial milestone is a distinct, coherent fourth angle alongside build/demolish. | Art 00 §7 |
 | Voice fit | ✓ | Tagline and perspectives all read in Guild's transactional-but-thorough register. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | Re-verified: Guild submitter=+1 matches the scale of MOD.2/3/4/8. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | Guild submitter=+1 matches the scale of MOD.2/3/4/8. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/FactionSpecific (Guild), real taxonomy (Economy/Add/NativeResource, 04-n175) — matches MOD.2/3/4/8's shape. | Art 04 §6.1, §6.2 |
-| Taxonomy fit | ✓ | Economy×Add valid per the matrix — re-verified directly, not just inherited from the family. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Taxonomy fit | ✓ | Economy×Add valid per the matrix, checked directly rather than just inherited from the family. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | Flat +1 Capacity, no restriction, but keyed to a genuinely bounded event (Established-marker placement, one per faction per district, capped by 21 districts × 4 opponents) — less exposed to the "least-gated/high-frequency" concern flagged on GUI.MOD.2/4/8 since the trigger itself is inherently bounded. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate — explicitly stated in the spec (`persistence=Immediate`), unlike most of the corpus where this field is absent. | Art 04 §5 P19 |
 | Persistence | ✓ | Explicitly declared (`persistence=Immediate, persistence_condition=None, persistence_effect=None`) — this card is ahead of the rest of the corpus on this field, not part of the deferred-field gap. | Art 04 §6.2 |
-| Trigger validity | ✓ | Re-verified: `established_marker.placed(faction=opponent)` — confirmed vocabulary, correctly scoped, no self-fire ambiguity. | Art 04 §6.3 |
-| Portrait validity | ✓ | Re-verified: submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
+| Trigger validity | ✓ | `established_marker.placed(faction=opponent)` — confirmed vocabulary, correctly scoped, no self-fire ambiguity. | Art 04 §6.3 |
+| Portrait validity | ✓ | submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
 | Supported by components | ✓ | Standard resource-grant mechanism. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Reuses existing Established-marker-placement event; no new ARBITER behavior. | Art 03; GR 6.1 |
-| Data schema validation | ✓ | Already scaffolding-complete — `ps_framing`, `boost`, `target_taxonomy` all explicitly declared (ahead of the rest of the corpus, which needed 04-n177 scaffolding added this session). Only `resolution_type` absent. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | Already scaffolding-complete — `ps_framing`, `boost`, `target_taxonomy` all explicitly declared (ahead of the rest of the corpus, which needed 04-n177 scaffolding added). Only `resolution_type` absent. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story is concrete and well-formed (unlike most of the corpus, this was never a placeholder). `narrative` field itself is still `None`, but Card Story satisfies P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | **New finding, not caught by the original 8-criterion format:** `cost=None` — same whole-set Floor Act/value_rating gate as the rest of the corpus (04-n178). | Art 00a §9.2; PM05 04-n178 |
-| Trigger frequency (ModReactCard) | ✓ | Re-verified: moderate, front-loaded, bounded by 21 districts × 4 opponents — holds up. |  |
-| Firing window (ModReactCard) | ✓ | Re-verified: no other Guild MOD reacts to `established_marker.placed`; distinct from MOD.2's `structure_block.placed`. Holds up. |  |
-| Automatic vs. d100 (ModReactCard) | ✓ | Re-verified: unambiguous trigger, bounded flat yield. |  |
-| Stack behavior (ModReactCard) | ⚠ | Original note said "no restriction against multiple copies... firing independently" — but this is asserted, not derived from a documented rule; same open question as the rest of the corpus, downgraded from the original's confident ✓. |  |
-| Ring constraint (ModReactCard) | ✓ | Re-verified: citywide, matching MOD.2's baseline. |  |
+| Resource cost positioning | ⚠ | `cost=None` — same whole-set Floor Act/value_rating gate as the rest of the corpus (04-n178). | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ✓ | moderate, front-loaded, bounded by 21 districts × 4 opponents — holds up. |  |
+| Firing window (ModReactCard) | ✓ | no other Guild MOD reacts to `established_marker.placed`; distinct from MOD.2's `structure_block.placed`. Holds up. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | unambiguous trigger, bounded flat yield. |  |
+| Stack behavior (ModReactCard) | ⚠ | Whether multiple copies fire independently is asserted, not derived from a documented rule — same open question as the rest of the corpus. |  |
+| Ring constraint (ModReactCard) | ✓ | citywide, matching MOD.2's baseline. |  |
 
 #### Status
 
@@ -2474,7 +2450,7 @@ GUI.MOD.9 = Card(
     name    = "Field Supervisor",
     tagline = "Every foothold in this city gets inspected. Guild does the inspecting.",
     type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # assigned S137 (04-n175) — resources.add(1, Capacity), matches GUI.MOD.2/3/4/8's shape
+    layer   = Economy,  function = Add,  subject = NativeResource,  # matches GUI.MOD.2/3/4/8's shape
 
     trigger         = established_marker.placed(faction=opponent),
     beat            = None,
@@ -2522,8 +2498,6 @@ GUI.MOD.9 = Card(
 ### GUI.MOD.10 — CONTRACTOR'S FAVOR
 [↑ Guild](#guild)
 
-*S131. React on Tension Marker placement — Guild commits construction/material priority to a named contesting faction, applied as a Battlefield Strength modifier at §10. Closes Guild deficit (2 of 2). First third-party Battlefield Strength influence card in the set. Tactic.*
-
 #### Design Rationale
 Guild's only mechanic that reaches into Contested District Resolution (Art 03 §10) without Guild itself being a contesting faction. When a district goes Contested, Guild — already present or adjacent, already the district's contractor of record — commits its crews and material schedule to favor one side. That commitment is registered immediately (Guild doesn't wait for the battle to declare it) and stands as a Seasonal condition until §10 actually resolves that district, whenever in the Quarter that happens.
 
@@ -2531,41 +2505,41 @@ This is new mechanical ground: the existing ModBattleCard subclass lets a *conte
 
 Restriction (Guild Present in the district or an adjacent district) keeps this tied to actual territorial investment — Guild needs to already have people nearby to know whose crews to prioritize. Target is any Dominant/contesting faction, no doctrinal constraint (Art 00 §7 pentagram) — Guild's doctrine here is transactional, not political: contracts go to whoever Guild backs, not to an ally by default.
 
-**Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 1.2.2 (Commit) and Step 1.2.3 (Reveal & Validate), where Battlefield Modifier Cards and Intel Tokens are now handled (renumbered S132, PM02 L242). No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
+**Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 1.2.2 (Commit) and Step 1.2.3 (Reveal & Validate), where Battlefield Modifier Cards and Intel Tokens are now handled. No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
 
-**⚠ Deeper issue, surfaced S137 during the ModReactCard taxonomy sweep (04-n176):** No Layer/Function/Subject assignment was attempted here, and not because tagging was skipped — `arbiter.register_battlefield_modifier(...)` doesn't correspond to any effect shape the taxonomy system (Territory/Economy/Information/Submission/Standing × the Layer×Function matrix) actually supports. This is a level deeper than 04-n148's gap (missing Art 03 procedure): even once §10.1.2 knows how to apply a registered modifier, the card's fundamental mechanic — a third-party faction pre-committing a Battlefield Strength delta to a named contesting faction, off-cycle from the battle itself — has no home in the current taxonomy at all. Andy's read: this needs redesign, not a new taxonomy category invented to fit it. See 04-n176.
+**Deeper issue (04-n176):** No Layer/Function/Subject assignment was attempted here, and not because tagging was skipped — `arbiter.register_battlefield_modifier(...)` doesn't correspond to any effect shape the taxonomy system (Territory/Economy/Information/Submission/Standing × the Layer×Function matrix) actually supports. This is a level deeper than 04-n148's gap (missing Art 03 procedure): even once §10.1.2 knows how to apply a registered modifier, the card's fundamental mechanic — a third-party faction pre-committing a Battlefield Strength delta to a named contesting faction, off-cycle from the battle itself — has no home in the current taxonomy at all. Direction: this needs redesign, not a new taxonomy category invented to fit it. See 04-n176.
 
 #### Card Story
 Tension breaks out over a contested block, and every material order in the district suddenly has two delivery dates — one for the faction Guild's crews like working with, one for everyone else. By the time the district actually goes to the wire, one side got their scaffolding early.
 
-**S138 format conversion + re-verification:** converted from the abbreviated 8-criterion checklist to the standard 22-row table, per SESSION_BRIEF's instruction to re-check this card rather than trust its existing `design_pass=1`/`⚠ (04-n148 pending)` claim. The original 8 assessments hold up on re-check; the wider 22-row pass surfaces that 04-n148 (missing Art 03 procedure) and 04-n176 (no taxonomy home) are more structurally serious than the abbreviated format's single footnote suggested — this card fails Card type fit/Taxonomy fit outright (not just "pending"), and Supported by game procedure is a real Governing Rule 6.1/Design Pillar 4.7b violation as currently drafted (new ARBITER behavior used before being defined as a generalizable procedure). Treating this the same way as DIR.MOD.6/DIR.MOD.9 from the Directorate pass: flagged in full, not force-closed.
+04-n148 (missing Art 03 procedure) and 04-n176 (no taxonomy home) are structurally serious: this card fails Card type fit/Taxonomy fit outright (not just "pending"), and Supported by game procedure is a real Governing Rule 6.1/Design Pillar 4.7b violation as currently drafted (new ARBITER behavior used before being defined as a generalizable procedure). Flagged in full, not force-closed.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Re-verified: Guild committing construction priority to a contesting faction, transactionally rather than doctrinally, is a coherent, distinct mechanic from anything else in the set. | Art 00 §7 |
-| Voice fit | ✓ | Re-verified: tagline and all 5 perspectives read correctly in-voice. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | Re-verified: Guild submitter=+1 only, no doctrine_mod — correctly reflects "transactional, not political." | Art 04 §6.5 |
-| Card type fit | ⚠ | Downgraded on re-verification: ModReactCard/FactionSpecific is the right subclass, but `layer=None, function=None, subject=None` isn't a taxonomy gap to close later — it's a symptom of the deeper problem below. | Art 04 §6.1, §6.2 |
-| Taxonomy fit | ⚠ **(blocker, 04-n176)** | Confirmed on re-check: `arbiter.register_battlefield_modifier(...)` doesn't correspond to any Layer×Function pairing the taxonomy system supports. Andy's direction (S137): redesign, not a new category invented to fit it. This is the card's core blocker. | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n176 |
+| Action fit | ✓ | Guild committing construction priority to a contesting faction, transactionally rather than doctrinally, is a coherent, distinct mechanic from anything else in the set. | Art 00 §7 |
+| Voice fit | ✓ | tagline and all 5 perspectives read correctly in-voice. | Art 00 §6.7 |
+| Doctrine alignment | ✓ | Guild submitter=+1 only, no doctrine_mod — correctly reflects "transactional, not political." | Art 04 §6.5 |
+| Card type fit | ⚠ | ModReactCard/FactionSpecific is the right subclass, but `layer=None, function=None, subject=None` isn't a taxonomy gap to close later — it's a symptom of the deeper problem below. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ⚠ **(blocker, 04-n176)** | `arbiter.register_battlefield_modifier(...)` doesn't correspond to any Layer×Function pairing the taxonomy system supports. Direction: redesign, not a new category invented to fit it. This is the card's core blocker. | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n176 |
 | Balance | ⚠ | Fizzle risk (named faction may not still be contesting at §10) is a deliberate design tension, not a flaw — but genuinely hard to finalize while the taxonomy/mechanic itself is unresolved. | Art 02 §6–7; Art 04 §6.5 |
-| Effect duration | ✓ | Re-verified: Seasonal correctly fits "ongoing condition across multiple subsequent actions." | Art 04 §5 P19 |
+| Effect duration | ✓ | Seasonal correctly fits "ongoing condition across multiple subsequent actions." | Art 04 §5 P19 |
 | Persistence | ✓ | Explicitly declared (`persistence=Seasonal`) — ahead of the rest of the corpus on this field. | Art 04 §6.2 |
-| Trigger validity | ✓ | Re-verified: `tension_marker.placed` confirmed §6.3 vocabulary. | Art 04 §6.3 |
-| Portrait validity | ✓ | Re-verified: submitter-bounded only, correctly excludes the named target_faction per P16. | Art 04 §6.2 P11 |
-| Supported by zones | ✓ | Re-verified: district + adjacency-based restriction ties this to real territorial investment. | Art 01 §6–7 |
+| Trigger validity | ✓ | `tension_marker.placed` confirmed §6.3 vocabulary. | Art 04 §6.3 |
+| Portrait validity | ✓ | submitter-bounded only, correctly excludes the named target_faction per P16. | Art 04 §6.2 P11 |
+| Supported by zones | ✓ | district + adjacency-based restriction ties this to real territorial investment. | Art 01 §6–7 |
 | Supported by components | ⚠ | No physical marker/component represents the "registered condition" on the board beyond the card itself — tied to the same gap as the row below. | Art 02 §6–8 |
-| Supported by game procedure | ⚠ **(blocker, 04-n148)** | Confirmed on re-check: Art 03 §10.1.2 has no step that reads a registered Guild condition and applies it. Per Governing Rule 6.1/Design Pillar 4.7b, new ARBITER behavior must be defined as a generalizable procedure *before* the card is finalized — as currently drafted, the card's `arbiter_note` describes behavior that doesn't yet exist as a defined procedure. More serious than the original 8-criterion format's single footnote suggested. | Art 03 §10.1.2; GR 6.1; Design Pillar 4.7b; PM05 04-n148 |
-| Data schema validation | ⚠ | `layer/function/subject=None` (deliberate, tied to 04-n176) plus missing `resolution_type` (added as scaffolding this session). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ **(blocker, 04-n148)** | Art 03 §10.1.2 has no step that reads a registered Guild condition and applies it. Per Governing Rule 6.1/Design Pillar 4.7b, new ARBITER behavior must be defined as a generalizable procedure *before* the card is finalized — as currently drafted, the card's `arbiter_note` describes behavior that doesn't yet exist as a defined procedure. | Art 03 §10.1.2; GR 6.1; Design Pillar 4.7b; PM05 04-n148 |
+| Data schema validation | ⚠ | `layer/function/subject=None` (deliberate, tied to 04-n176) plus missing `resolution_type` (added as scaffolding). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story is concrete and well-formed — the fizzle-risk narrative tension is genuinely the point, not a gap. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic; the fizzle-risk contingency is a real-world board-state dependency, not a hidden or probabilistic outcome — doesn't violate P27. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Real cost specified (Capacity×1) — not gated on 04-n178 the way cost-less cards are, but whether 1 Capacity is correctly priced for a ±2 Battlefield Strength swing can't be finalized while the mechanic itself is blocked on 04-n176. | Art 00a §9.2 |
-| Trigger frequency (ModReactCard) | ✓ | Re-verified: Contested is a specific, less-common board state — low-moderate frequency holds up. |  |
-| Firing window (ModReactCard) | ✓ | Re-verified: no race with other Guild MODs. |  |
-| Automatic vs. d100 (ModReactCard) | ✓ | Re-verified: Guild's registration action is unconditional; the eventual d10 battle roll is untouched. |  |
+| Trigger frequency (ModReactCard) | ✓ | Contested is a specific, less-common board state — low-moderate frequency holds up. |  |
+| Firing window (ModReactCard) | ✓ | no race with other Guild MODs. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Guild's registration action is unconditional; the eventual d10 battle roll is untouched. |  |
 | Stack behavior (ModReactCard) | ⚠ | Same open question as originally flagged — still open, not resolved. |  |
-| Ring constraint (ModReactCard) | ✓ | Re-verified: redundant with the presence/adjacency restriction, correctly omitted. |  |
+| Ring constraint (ModReactCard) | ✓ | redundant with the presence/adjacency restriction, correctly omitted. |  |
 
 #### Status
 
@@ -2638,7 +2612,7 @@ GUI.MOD.10 = Card(
 ### GUI.MOD.11 — SITE FOREMAN
 
 #### Design Rationale
-Guild's ModBattleCard set, replicating the Directorate/Ghost/Network pattern (2 Boost +1/+2, 2 Hinder −1/−2, S132). Doctrine per §5a and modifier_card_ideas.md's provisional voice seed: "construction crews, material stockpiles, structural expertise — physical commitment of resources to hold ground." Distinct from Contractor's Favor (GUI.MOD.10, a ModReactCard, pre-registered before §10 opens) — these are live-played at §10.1.2 like any other ModBattleCard. Weaker Boost tier (+1): experienced crew leadership, not yet material commitment. Same no-cost/playtest-flagged (04-n94) terms as the rest of the subclass.
+Guild's ModBattleCard set, replicating the Directorate/Ghost/Network pattern (2 Boost +1/+2, 2 Hinder −1/−2). Doctrine per §5a and modifier_card_ideas.md's provisional voice seed: "construction crews, material stockpiles, structural expertise — physical commitment of resources to hold ground." Distinct from Contractor's Favor (GUI.MOD.10, a ModReactCard, pre-registered before §10 opens) — these are live-played at §10.1.2 like any other ModBattleCard. Weaker Boost tier (+1): experienced crew leadership, not yet material commitment. Same no-cost/playtest-flagged (04-n94) terms as the rest of the subclass.
 
 #### Card Story
 A foreman who's worked this district before shows up, clipboard in hand, and starts telling people where to stand — reinforcing whichever side the playing faction has named.
@@ -2650,28 +2624,26 @@ A foreman who's worked this district before shows up, clipboard in hand, and sta
 | Action fit | ✓ | Experienced crew leadership committed to a live contest is a grounded expression of Guild's construction doctrine (§5a). | Art 00 §7; Art 04 §5a |
 | Voice fit | ✓ | Scoped to `narrative`/`arbiter_note` only (`perspectives`/`design_note` schema-locked None); construction-expertise register. | Art 00 §9 |
 | Doctrine alignment | ✓ | Boost via physical construction expertise; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
-| Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Guild's Asset-category naming slot (S130); distinct from ModReactCard GUI.MOD.10. | Art 04 §6.1, §11.1 |
+| Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Guild's Asset-category naming slot; distinct from ModReactCard GUI.MOD.10. | Art 04 §6.1, §11.1 |
 | Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
-| Balance | ✓ | Weak Boost tier per locked S132 pattern; no cost step exists for this subclass; playtest-flagged (04-n94). | PM05 04-n94 |
+| Balance | ✓ | Weak Boost tier per the locked Boost/Hinder pattern; no cost step exists for this subclass; playtest-flagged (04-n94). | PM05 04-n94 |
 | Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
 | Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
 | Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
-| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value, locked whole-subclass. | Art 04 §6.1–§6.2; PM02 L269 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
 | Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S132. Guild's ModBattleCard set, replicating the Directorate/Ghost/Network pattern (2 Boost +1/+2, 2 Hinder −1/−2, PM05 09-06). Doctrine per §5a and modifier_card_ideas.md's provisional voice seed: "construction crews, material stockpiles, structural expertise — physical commitment of resources to hold ground." Distinct from Contractor's Favor (GUI.MOD.10, a ModReactCard, pre-registered before §10 opens) — these are live-played at §10.1.2 like any other ModBattleCard. Weaker Boost tier (+1): experienced crew leadership, not yet material commitment. Design-reviewed S140 (09-16 step 4) — same disposition as Directorate/Ghost/Network pattern-sets; portrait resolved same session (PM02 L269).*
 
 ```python
 GUI.MOD.11 = Card(
@@ -2686,12 +2658,12 @@ GUI.MOD.11 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Guild faction modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction — applies uniformly, including Syndicate SYN.MOD.12–15.
     resolution_type = None,   # 04-n177 scaffolding placeholder
     boost           = None,   # 04-n177 scaffolding placeholder
     ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
     narrative    = "A foreman who's worked this district before shows up, clipboard in hand, and starts telling people where to stand.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2716,26 +2688,24 @@ Pallets of material that were supposed to go somewhere else get rerouted here in
 | Doctrine alignment | ✓ | Boost via physical material commitment; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
 | Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Guild's Equipment-category naming slot. | Art 04 §6.1, §11.1 |
 | Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
-| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per locked S132 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Balance | ✓ | Stronger Boost tier (magnitude 2/value_rating 2) per the locked Boost/Hinder pattern; playtest-flagged (04-n94). | PM05 04-n94 |
 | Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
 | Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
 | Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
-| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value, locked whole-subclass. | Art 04 §6.1–§6.2; PM02 L269 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
 | Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S132. Stronger Boost tier (+2) — physical material committed to the contest, not just labor. The escalation from Site Foreman's expertise to Material Stockpile's tonnage is the same logic as Guild's economy generally: everything Guild does ends up as a physical, visible commitment. Design-reviewed S140 (09-16 step 4) — same disposition as GUI.MOD.11; portrait resolved same session (PM02 L269).*
 
 ```python
 GUI.MOD.12 = Card(
@@ -2750,12 +2720,12 @@ GUI.MOD.12 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Guild faction modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction — applies uniformly, including Syndicate SYN.MOD.12–15.
     resolution_type = None,   # 04-n177 scaffolding placeholder
     boost           = None,   # 04-n177 scaffolding placeholder
     ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
     narrative    = "Pallets of material that were supposed to go somewhere else get rerouted here instead. Nobody asks who authorized it.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2780,26 +2750,24 @@ A signature is missing from a form nobody remembers filing — work on the named
 | Doctrine alignment | ✓ | Hinder via visible procedural friction, not covert action; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
 | Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Guild's Tactic-category Hinder slot. | Art 04 §6.1, §11.1 |
 | Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
-| Balance | ✓ | Weak Hinder tier per locked S132 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Balance | ✓ | Weak Hinder tier per the locked Boost/Hinder pattern; playtest-flagged (04-n94). | PM05 04-n94 |
 | Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
 | Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
 | Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
-| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value, locked whole-subclass. | Art 04 §6.1–§6.2; PM02 L269 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
 | Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S132. Weaker Hinder tier (−1). Guild "cannot operate covertly in principle" (§5a) — even its suppression tools are procedural and visible, not sabotage. A permit delay is bureaucratic friction, not an attack. Design-reviewed S140 (09-16 step 4) — same disposition as GUI.MOD.11/12; portrait resolved same session (PM02 L269).*
 
 ```python
 GUI.MOD.13 = Card(
@@ -2814,12 +2782,12 @@ GUI.MOD.13 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Guild faction modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction — applies uniformly, including Syndicate SYN.MOD.12–15.
     resolution_type = None,   # 04-n177 scaffolding placeholder
     boost           = None,   # 04-n177 scaffolding placeholder
     ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
     narrative    = "A signature is missing from a form nobody remembers filing. Work stops until someone finds it.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2844,26 +2812,24 @@ Guild's engineers sign off on a finding: unsafe as built. It's technically true.
 | Doctrine alignment | ✓ | Hinder via visible, on-the-record procedure, not covert action; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
 | Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills Guild's Tactic-category escalated Hinder slot alongside GUI.MOD.13. | Art 04 §6.1, §11.1 |
 | Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
-| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per locked S132 pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per the locked Boost/Hinder pattern; playtest-flagged (04-n94). | PM05 04-n94 |
 | Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
 | Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
 | Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
-| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (Andy, S140, locked whole-subclass, PM02 L269). | Art 04 §6.1–§6.2; PM02 L269 |
+| Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value, locked whole-subclass. | Art 04 §6.1–§6.2; PM02 L269 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
 | Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Andy S132). | PM05 04-n94 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S132. Stronger Hinder tier (−2), completing Guild's 2 Boost/2 Hinder pattern. Escalates Permit Delay from friction into a formal finding — Guild's engineers declare something structurally compromised, and the declaration itself is the weapon. Design-reviewed S140 (09-16 step 4) — same disposition as the rest of the Guild set; portrait resolved same session (PM02 L269). Closes Guild's ModBattleCard review — all 4 cards (GUI.MOD.11–14) design-passed, no open issues.*
 
 ```python
 GUI.MOD.14 = Card(
@@ -2878,12 +2844,12 @@ GUI.MOD.14 = Card(
     ring_constraint = None,
     ring_origin     = None,   # Guild faction modifier deck
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction (confirmed S132 — Andy, applies uniformly, including Syndicate SYN.MOD.12–15).
+    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction — applies uniformly, including Syndicate SYN.MOD.12–15.
     resolution_type = None,   # 04-n177 scaffolding placeholder
     boost           = None,   # 04-n177 scaffolding placeholder
     ps_framing      = None,   # 04-n177 scaffolding placeholder
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass (Andy, S140, PM02 L269), not TBD
+    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
     narrative    = "Guild's engineers sign off on a finding: unsafe as built. It's technically true. It's also exactly what was needed.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2894,7 +2860,7 @@ GUI.MOD.14 = Card(
 ### GUI.MOD.15 — STRUCTURAL SURVEY
 
 #### Design Rationale
-Replicates the faction ModActionCard pattern to Guild. Minor threshold_delta tier (+5), self-only, fits construction/material doctrine cleanly.
+Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Guild — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Guild voice: construction and material, visible-by-doctrine (§5a) — same doctrinal lens as Guild's shipped ModBattleCard set (GUI.MOD.11–14). This card: minor threshold_delta tier (+5), self-only, fits construction/material doctrine cleanly.
 
 #### Card Story
 An engineering assessment, filed in advance, clears the ground before the first shovel goes in.
@@ -2919,15 +2885,13 @@ An engineering assessment, filed in advance, clears the ground before the first 
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence New Meridian event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields (schema-locked None). | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention; out of scope for 04-n178. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass; out of scope for 04-n178. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S135. Replicates the Directorate ModActionCard pattern (DIR.MOD.14–25, 09-06/04-n157) to Guild — locked format: 4 `threshold_delta` (+5/+10/+15/+20) + 2 `success_multiplier` (n=1/n=2) + 4 `ps_shift` (self +1/+2, target −1/−2) + 2 `cost_reduction` (n=1/n=2, PA-only), `cost=None` uniformly, `value_rating` 1–4 mirroring tier. Guild voice: construction and material, visible-by-doctrine (§5a) — same doctrinal lens as Guild's shipped ModBattleCard set (GUI.MOD.11–14). Minor threshold_delta tier (+5). Design-reviewed S139.*
 
 ```python
 GUI.MOD.15 = Card(
@@ -2941,7 +2905,7 @@ GUI.MOD.15 = Card(
     value_rating    = 1,
     ring_constraint = None,
     ring_origin     = None,   # Guild faction modifier deck
-    cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
+    cost            = None,   # splay-display convention — same basis as all ModActionCard content
     resolution_type = None,   # 04-n177 scaffolding placeholder
     boost           = None,   # 04-n177 scaffolding placeholder
     ps_framing      = None,   # 04-n177 scaffolding placeholder
@@ -2982,15 +2946,13 @@ Verified material integrity means nothing on this build is guesswork — the cre
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S135. Mid threshold_delta tier (+10). Design-reviewed S139.*
 
 ```python
 GUI.MOD.16 = Card(
@@ -3045,15 +3007,13 @@ A favorable review clears part of the build in advance — nothing left for an i
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S135. Third of 4 threshold_delta tiers (+15). Reframed from an earlier hostile-flavored seed concept ("Permit Delay Imposed" — raising a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: threshold_delta carries no faction parameter, so it can only ever ease Guild's own host action. Design-reviewed S139 — reframe clean.*
 
 ```python
 GUI.MOD.17 = Card(
@@ -3108,15 +3068,13 @@ Every code requirement cleared ahead of time — there's nothing left for an ins
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Clean self-only event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ⚠ (+20 playtest flag) |  |
-
-*S135. Capstone threshold_delta tier (+20). Design-reviewed S139.*
 
 ```python
 GUI.MOD.18 = Card(
@@ -3171,15 +3129,13 @@ An experienced crew doesn't just meet the spec — they turn a routine build int
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S135. Common success_multiplier tier (n=1). Design-reviewed S139.*
 
 ```python
 GUI.MOD.19 = Card(
@@ -3234,15 +3190,13 @@ A structure goes up well past the minimum required — the extra margin amplifie
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ⚠ (n=2 playtest flag) |  |
-
-*S135. Rare/capstone success_multiplier tier (n=2). Design-reviewed S139.*
 
 ```python
 GUI.MOD.20 = Card(
@@ -3297,15 +3251,13 @@ Visible investment in a neighborhood buys goodwill Guild doesn't have to ask for
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S135. Self-boost, minor tier (+1) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 GUI.MOD.21 = Card(
@@ -3360,15 +3312,13 @@ A completed project gets the full ceremony — cameras, officials, and Guild's n
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S135. Self-boost, major tier (+2) of the `ps_shift` 2×2 matrix. Design-reviewed S139.*
 
 ```python
 GUI.MOD.22 = Card(
@@ -3419,19 +3369,17 @@ A minor code observation gets logged against a rival's project — nothing drama
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field. |  |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ⚠ (Guild-specific low-eligibility playtest question) |  |
-
-*S135. Target-hinder, minor tier (−1) of the `ps_shift` 2×2 matrix. **Playtest-questionable for Guild specifically:** this card and GUI.MOD.24 only fire when the host CA/PA carries a `target_faction` (§6.1), and Guild's CA/PA set skews toward self/territory-directed hosts (`target_faction=None` on most non-opponent-facing cards) rather than rival-targeting ones — fewer eligible hosts than a faction like Directorate or Syndicate. Not reworked; flagged for playtest to see how often these 2 cards actually see play. Design-reviewed S139 — confirms this pre-existing low-eligibility note; the separate target-restriction "gap" once read into this card (schema_cleanup_log.md #21) closed same session — not a real gap, per Andy.*
 
 ```python
 GUI.MOD.23 = Card(
@@ -3452,7 +3400,7 @@ GUI.MOD.23 = Card(
 
     portrait     = None,
     narrative    = "A minor code observation gets logged against a rival's project — nothing dramatic, just on the record.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA it's packet-paired with names as its target_faction (§6.1) — the modifier's target IS the host action, not an independently-declared field (Andy, S139).",
+    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA it's packet-paired with names as its target_faction (§6.1) — the modifier's target IS the host action, not an independently-declared field.",
 )
 ```
 
@@ -3461,7 +3409,7 @@ GUI.MOD.23 = Card(
 ### GUI.MOD.24 — CODE VIOLATION CITED
 
 #### Design Rationale
-Target-hinder major tier (−2) of the `ps_shift` matrix. Same target-resolution behavior and Guild-specific low-eligibility flag as GUI.MOD.23, doubled magnitude.
+Target-hinder major tier (−2) of the `ps_shift` matrix. Same target-resolution behavior and Guild-specific low-eligibility flag as GUI.MOD.23, doubled magnitude. Magnitude mirrors the established Intel Token Hinder precedent.
 
 #### Card Story
 A rival's construction gets flagged publicly for cutting corners — consistent with Guild's doctrine of keeping everything procedural and visible.
@@ -3482,19 +3430,17 @@ A rival's construction gets flagged publicly for cutting corners — consistent 
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (Andy, S139; schema_cleanup_log.md #21, closed). |  |
+| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field. |  |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ⚠ (Guild-specific low-eligibility playtest question) |  |
-
-*S135. Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix. Magnitude mirrors the established Intel Token Hinder precedent (PM02 L242). Design-reviewed S139.*
 
 ```python
 GUI.MOD.24 = Card(
@@ -3515,7 +3461,7 @@ GUI.MOD.24 = Card(
 
     portrait     = None,
     narrative    = "A rival's construction gets flagged publicly for cutting corners — consistent with Guild's doctrine of keeping everything procedural and visible.",
-    arbiter_note = "Same target-resolution behavior as GUI.MOD.23, major tier (Andy, S139).",
+    arbiter_note = "Same target-resolution behavior as GUI.MOD.23, major tier.",
 )
 ```
 
@@ -3549,15 +3495,13 @@ Leftover stock from a prior job discounts the next one — nothing wasted.
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ✓ |  |
-
-*S135. Common cost_reduction tier (n=1). PA-only per §6.3. Design-reviewed S139.*
 
 ```python
 GUI.MOD.25 = Card(
@@ -3612,15 +3556,13 @@ Fabricating the components in-house cuts out the markup a third-party supplier w
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
+| Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
 | Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
-
-*S135. Capstone cost_reduction tier (n=2). Design-reviewed S139 — closes the Guild ModActionCard set (12/12 cards); GUI.MOD.23/24's pre-existing Guild-specific low-eligibility note confirmed on review; the separate target-restriction "gap" (schema_cleanup_log.md #21) closed same session — not a real gap, per Andy.*
 
 ```python
 GUI.MOD.26 = Card(
