@@ -79,7 +79,7 @@ SYN.CA.1 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -164,7 +164,7 @@ SYN.CA.2 = Card(
     layer   = Economy,  function = Remove,  subject = NativeResource,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
     trigger=None,
-    resolution_type="Probabilistic", outcome_type=None,
+    resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -239,7 +239,7 @@ SYN.CA.3 = Card(
     layer   = Territory,  function = Redirect,  subject = StructureBlock,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
     trigger=None,
-    resolution_type="Probabilistic", outcome_type=None,
+    resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -318,7 +318,7 @@ SYN.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Protect,  subject = NativeResource,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -391,7 +391,7 @@ SYN.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Submission,  function = Block,  subject = NamedActionType,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -475,7 +475,7 @@ LandTitle = Card(
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None,
     value_rating = 1,
     trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -552,7 +552,7 @@ HostileTakeover = Card(
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
     value_rating = 1,
     trigger=None,
-    resolution_type="Probabilistic", outcome_type=None,
+    resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -768,7 +768,7 @@ SYN.CA.6 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Positional wager",
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -837,7 +837,7 @@ Syndicate uses covertly gathered intelligence to threaten a faction operating in
 | Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`boost`/`ps_framing` (`doctrine_mod=None` present). `on_accept`/`on_decline` correctly used only because `outcome_type=ElectPlayer` — good confirming example of the schema's ElectPlayer-only field group being used correctly. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; `success`/`successcrit`/`fail`/`failcrit` all `None` by design — the real outcome logic lives in `on_accept`/`on_decline` (ElectPlayer), each resolving to exactly one outcome, no `game.choose_one()`. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Cost is IntelToken alone, no fungible resource paired — same "starkest form" shape as GHO.CA.9/GHO.CA.10. Open question whether a discrete tracked object is a valid fungible-resource cost component. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Cost is IntelToken alone, no fungible resource paired — confirmed valid as its own cost category (§6.3, schema_cleanup_log #10), same basis as GHO.CA.9/GHO.CA.10. | Art 00a §9.2; Art 04 §6.3 |
 
 #### Outstanding Issues
 
@@ -861,7 +861,7 @@ SYN.CA.7 = Card(
     layer   = Economy,  function = Redirect,  subject = NativeResource,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 3,
-    resolution_type="Transactional", outcome_type=ElectPlayer,
+    resolution_type = Transactional, outcome_type=ElectPlayer,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -871,7 +871,7 @@ SYN.CA.7 = Card(
     target_taxonomy=None,
     affinity        = None,
     restriction     = faction(target).presence(district(target_district)) > 0,
-    cost            = IntelToken(any) * 1,
+    cost            = IntelToken() * 1,
 
     success     = None,
     successcrit = None,
@@ -1148,7 +1148,7 @@ SYN.PA.1 = Card(
     doctrine_mod    = None,
     value_rating = 4,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = ElectPlayer,  # target accepts or declines at Beat 4
     persistence     = Immediate,
     persistence_condition = None,
@@ -1252,7 +1252,7 @@ SYN.PA.2 = Card(
     doctrine_mod    = None,
     value_rating = 4,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Seasonal,  # DividendMarker stays on district until claimed, withdrawn, or Phase 21
     persistence_condition = None,
@@ -1370,7 +1370,7 @@ SYN.PA.3 = Card(
     target_object   = IntelTokensHeld(count=N_declared),
     declared_params = (
         N             = int,                         # tokens requested
-        consideration = verbaloffer(faction(acting)), # free-text: Capital | ModifierCard(named) | any combination
+        consideration = verbaloffer(faction(acting)),
         # both written on TP declared-parameters line at Art 03 §9.2 Public Declaration
     ),
 
@@ -1411,7 +1411,6 @@ SYN.PA.3 = Card(
     # replaces that Target Profile with one they fill in. SYN.PA.3 → PA discard.
     # Table enforces; no ARBITER tracking required.
     # If target submits no PA with Target Profile this Quarter: card expires Quarter end.
-    # PAs without Target Profile (e.g., Floor Act) do not trigger — React does not fire.
 
     portrait = {
         Syndicate:   PortraitEntry(flat=+1),
@@ -1430,7 +1429,7 @@ SYN.PA.3 = Card(
         Guild:       "Whatever they're buying, they think they need it. That tells us something about their position.",
     },
 
-    design_note  = "Three resolution paths at Beat 4 ElectPlayer: (1) trade — bilateral exchange: consideration moves Syndicate→target, N tokens move target→Syndicate; card discards only if both transfers complete; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards — information goal met; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. Sub-cases 1 (completed) and 2 both satisfy the card; only 3 triggers the stake. Non-fulfillment edge case (sub-case A, Syndicate cannot deliver consideration): exchange fails; card stays Permanent — Syndicate set the terms and failed to meet them. Bluff mechanic is intentional: consideration is a verbal offer written on TP declared-parameters line, not held in escrow; Syndicate bears public failure risk. Show path: target voluntarily reveals count — not compelled, consistent with GR 10.1 (ElectPlayer creates stake; choice is player's). PERMANENT PHASE is fully table-enforced: card is face-up in Syndicate PA area; table observes when target places a PA with Target Profile at Art 03 §9.2.0 and allows Syndicate to replace it (React); table observes if target accepts at any point (trade or show) and card is cleared. No ARBITER involvement required at any stage — Beat 4 ElectPlayer is public; Permanent card is table-enforced. Target may accept at any time to clear the card. Threat is the constraint: target must deal with Syndicate or avoid targeted PAs for the rest of the Quarter. N and consideration declared at Art 03 §9.2 on TP declared-parameters line (Art 02 v2.4).",
+    design_note  = "Three resolution paths at Beat 4 ElectPlayer: (1) trade — bilateral exchange: consideration moves Syndicate→target, N tokens move target→Syndicate; card discards only if both transfers complete; (2) show — target reveals all held tokens face-down (count public, content private), no transfer, card discards — information goal met; (3) decline — no reveal, no trade, Syndicate −2 PS, card becomes Permanent. Sub-cases 1 (completed) and 2 both satisfy the card; only 3 triggers the stake. Non-fulfillment edge case (sub-case A, Syndicate cannot deliver consideration): exchange fails; card stays Permanent — Syndicate set the terms and failed to meet them. Bluff mechanic is intentional: consideration is a verbal offer written on TP declared-parameters line, not held in escrow; Syndicate bears public failure risk. Show path: target voluntarily reveals count — not compelled, consistent with GR 10.1 (ElectPlayer creates stake; choice is player's). PERMANENT PHASE is fully table-enforced: card is face-up in Syndicate PA area; table observes when target places a PA with Target Profile at Art 03 §9.2.0 and allows Syndicate to replace it (React); table observes if target accepts at any point (trade or show) and card is cleared. No ARBITER involvement required at any stage — Beat 4 ElectPlayer is public; Permanent card is table-enforced. Target may accept at any time to clear the card. Threat is the constraint: target must deal with Syndicate or avoid targeted PAs for the rest of the Quarter. N and consideration declared at Art 03 §9.2 on TP declared-parameters line (Art 02 v2.4). `consideration` is free-text (`verbaloffer()`): Capital, a named ModifierCard, or any combination. The Permanent-phase React only fires on a PA with a non-blank Target Profile — a PA type with no Target Profile (e.g., the Floor Act) does not trigger it.",
     arbiter_note = None,
 )
 ```
@@ -1490,7 +1489,7 @@ SYN.PA.4 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 3,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
@@ -1557,7 +1556,7 @@ SYN.PA.5 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 2,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Transient,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
     target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
@@ -1598,7 +1597,7 @@ The clause that would have sunk the deal simply isn't on the page anymore. Nobod
 | Doctrine alignment | ✓ | Corrupting/removing Accord terms via leverage (keyed IntelToken) is squarely Syndicate's "we have something on everyone" doctrine — matches sibling cards SYN.MOD.11 and SYN.CA.11. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | Issued `ModReactCard` — ARBITER-delivered, not deck-drawn. | Art 04 §6.1, §11.1 |
 | Taxonomy fit | ⚠ | AccordAgreement is confirmed registered (Redline's precedent) and Remove is a confirmed verb, but Remove-vs-Corrupt is a genuine judgment call, not a settled fit — Corrupt's actual definition ("a physically written value is altered") arguably matches "void a clause" better than Remove's ("component exits active play"), since the AccordAgreement itself stays in play. Kept as Remove for now; flagged for re-check, same as SYN.MOD.11's own self-flagged assignment. | ref_taxonomy.md §5.2 |
-| Balance | ✓ | `cost = Findings(1) + IntelToken(keyed_to=declared_party)` — lighter than Signature on File's 4-resource stack, appropriate since removing one clause is a smaller violation than forcing whole-Accord acceptance. New cost combination, playtest-flagged like the rest of the corpus's numeric values (04-n94 pattern), not re-litigated further. | Art 02 §6–§7 |
+| Balance | ✓ | `cost = Findings(1) + IntelToken(about=declared_party)` — lighter than Signature on File's 4-resource stack, appropriate since removing one clause is a smaller violation than forcing whole-Accord acceptance. New cost combination, playtest-flagged like the rest of the corpus's numeric values (04-n94 pattern), not re-litigated further. | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — the strike itself resolves instantly at trigger; the missing clause's absence persists for the remainder of the Accord's term, same durability pattern as Redline's in-place alteration. | Art 04 §5 P19 |
 | Persistence | ⚠ | `persistence` field open corpus-wide question, not card-specific. | Art 04 §6.2 |
 | Trigger validity | ⚠ | `accord.activated` is a brand-new trigger form, unconfirmed against §6.3 TriggerExpr vocabulary — same open category as Overture's `public_act.resolved` and SYN.MOD.11's `accord.tabled`. | Art 04 §6.3; PM05 04-n158 |
@@ -1609,7 +1608,7 @@ The clause that would have sunk the deal simply isn't on the page anymore. Nobod
 | Data schema validation | ⚠ | Brand-new card (no prior `Card()` definition existed). `target_object.alter(type=TermRemoval, ...)` parallels Redline's `type=Terms` but `TermRemoval` has no formal AlterType enum backing it — same ungoverned-MutationExpr gap as the rest of the corpus. `generating_card=None` flagged as a separate, still-open item (not a blocker for this pass). Scaffolding fields added (04-n177). | Art 04 §6.1–§6.3; PM05 04-n158 |
 | Card narrative | ✓ | Card Story and `narrative` line present (card previously had no content at all). | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` — deterministic leverage check (does Syndicate hold the right keyed IntelToken), no dice. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | `Findings(1) + IntelToken(keyed_to=declared_party)` — mirrors Signature on File's leverage-cost pattern at a lighter tier appropriate to the smaller violation. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | `Findings(1) + IntelToken(about=declared_party)` — mirrors Signature on File's leverage-cost pattern at a lighter tier appropriate to the smaller violation. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ⚠ | Depends on Accord activation frequency plus Syndicate holding the right keyed IntelToken at the right moment — a fairly narrow combined condition; best-effort, not independently verifiable here. |  |
 | Firing window (ModReactCard) | ✓ | No other card shares the `accord.activated` trigger. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Deterministic leverage check, no dice — Automatic is correct. |  |
@@ -1635,21 +1634,21 @@ SYN.MOD.1 = Card(
     tagline = "That clause was always going to be a problem. Now it isn't.",
     type    = ModReactCard,  faction = Syndicate,
 
-    layer   = Information,  function = Remove,  subject = AccordAgreement,  # distinct from SYN.MOD.11 (Corrupt/forged acceptance) and SYN.CA.11 (Corrupt/altered value) — Art 06 §9.10's unclaimed "Term removal" Alter type: void a clause row outright, not alter or replace it
+    layer   = Information,  function = Remove,  subject = AccordAgreement,
 
-    trigger         = accord.activated,  # NEW trigger form, unconfirmed against §6.3 — fires the moment a drafted Accord becomes active, before its terms take hold. Same open category as Overture's public_act.resolved and SYN.MOD.11's accord.tabled
+    trigger         = accord.activated,
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = None,
-    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
 
     target_district = None,
     target_faction  = None,  # clause removal doesn't require naming a party — the Accord document itself is the target
     target_object   = AccordAgreement(state=active, clause_declared=True),
     affinity        = None,
-    restriction     = IntelToken(keyed_to=faction(accord.party_a)) in faction(Syndicate).hand
-                       or IntelToken(keyed_to=faction(accord.party_b)) in faction(Syndicate).hand,
-    cost            = Findings(1) + IntelToken(keyed_to=declared_party),
+    restriction     = IntelToken(about=faction(accord.party_a)) in faction(Syndicate).hand
+                       or IntelToken(about=faction(accord.party_b)) in faction(Syndicate).hand,
+    cost            = Findings(1) + IntelToken(about=declared_party),
     boost           = None,
 
     acquisition      = Issued,
@@ -1725,7 +1724,7 @@ SYN.MOD.2 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1734,14 +1733,14 @@ SYN.MOD.2 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Syndicate).resources.add(1, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Accord formation React. Every new Accord at The Table generates 1 Capital for Syndicate — the economic positioning happens before Syndicate is even a party. Delivers §5a 'accord manipulation' at the modifier level: Syndicate doesn't need to be invited to benefit from diplomatic activity. Compare DIR.MOD.4: DIR earns Mandate from the same trigger; SYN earns Capital. Competing institutional reactions to the same event.",
@@ -1798,7 +1797,7 @@ SYN.MOD.3 = Card(
     name    = "Offshore Slush Fund",
     tagline = "When an Accord fails, Syndicate had a clause for that.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # same shape as SYN.MOD.2
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = accord.removed,
     beat            = None,
@@ -1806,7 +1805,7 @@ SYN.MOD.3 = Card(
     ring_origin     = None,
     value_rating = 3,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1815,14 +1814,14 @@ SYN.MOD.3 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Syndicate).resources.add(2, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Accord removal React. 2 Capital yield. Trigger corrected from 'corrupted' to 'removed' to align with Art 06 physical game state. Open question for detail design: Should accord.removed be the sole condition (meaning Syndicate profits off ANY Accord ending, completed or breached), or is a separate mod card needed to distinguish breach vs completion?",
@@ -1879,7 +1878,7 @@ SYN.MOD.4 = Card(
     name    = "Insider Trading",
     tagline = "Public success always creates private wealth.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # same shape as SYN.MOD.2
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = standing_marker.increased(faction=opponent),
     beat            = None,
@@ -1887,7 +1886,7 @@ SYN.MOD.4 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1896,14 +1895,14 @@ SYN.MOD.4 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Syndicate).resources.add(1, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Market speculation React. Syndicate bets on the political market. When someone else scores a massive PR victory, Syndicate quietly makes a fortune off the back of it.",
@@ -1960,7 +1959,7 @@ SYN.MOD.5 = Card(
     name    = "Short Squeeze",
     tagline = "A reputation in freefall is just an undervalued asset.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # same shape as SYN.MOD.2
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = standing_marker.decreased(faction=opponent),
     beat            = None,
@@ -1968,7 +1967,7 @@ SYN.MOD.5 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1977,14 +1976,14 @@ SYN.MOD.5 = Card(
     affinity        = None,
     restriction     = None,
     cost            = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).findings * 1,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Syndicate).resources.add(1, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Companion to SYN.MOD.4. Syndicate profits off the downfall of other factions. By holding both MOD.4 and MOD.5, Syndicate guarantees income from any major political volatility at the table Cost reasoning: Findings identify the target's financial vulnerabilities before Capital is deployed to crush them.",
@@ -2041,7 +2040,7 @@ SYN.MOD.6 = Card(
     name    = "Bounty Contract",
     tagline = "If someone wants them gone, I am willing to subsidize the effort.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = Submission,  function = Modify,  subject = PublicAct,  # boosts a named opponent's PA, positive-direction sibling of SYN.MOD.10/STD.MOD.103/DIR.MOD.6
+    layer   = Submission,  function = Modify,  subject = PublicAct,
 
     trigger         = public_act.placed_on_frg(faction=opponent),
     beat            = None,
@@ -2050,10 +2049,11 @@ SYN.MOD.6 = Card(
     value_rating = 1,
 
     persistence     = Seasonal,
-    persistence_condition = None,  # ⚠ clearing logic is embedded in the success string instead — same gap as GUI.MOD.10/SYN.MOD.6
-    persistence_effect    = None,  # ⚠ see above
+    persistence_condition = None,
+    persistence_clearing_trigger = "target PA resolves (success or failure) — Capital transfers or returns accordingly",  # event, extracted from the success string — prose, not TriggerExpr syntax (§6.1 requires TriggerExpr). Tracked at PM02 L300; convert to TriggerExpr and remove this comment once resolved.
+    persistence_effect    = None,  # ⚠ the escrow/boost effect itself is still embedded in the success string, not a real MutationExpr — separate open item, 04-n175
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2062,14 +2062,14 @@ SYN.MOD.6 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = "Syndicate places this card on their FRG as a standing condition and places 2 Capital on it. The target opponent's PA gains boost=+20. When target PA resolves: if success, the 2 Capital is transferred to the acting faction; if failure, the Capital is returned to Syndicate.",  # ⚠ string literal, not a real MutationExpr — flagged 04-n175
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Transactional warfare. Played onto Syndicate's own FRG with 2 Capital 'escrowed' on the card, preventing any Beat 4 resource-cleanup conflicts with the target PA itself. The submitting faction effectively becomes Syndicate's mercenary, receiving the Capital only if the op succeeds.",
@@ -2126,7 +2126,7 @@ SYN.MOD.7 = Card(
     name    = "Renegotiation Fee",
     tagline = "When the fine print changes, the lawyers get paid.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # same shape as SYN.MOD.2
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = accord.corrupted,
     beat            = None,
@@ -2134,7 +2134,7 @@ SYN.MOD.7 = Card(
     ring_origin     = None,
     value_rating = 3,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2143,14 +2143,14 @@ SYN.MOD.7 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Syndicate).resources.add(2, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Leveraging Accord manipulation. Triggers when ANY faction successfully corrupts an Accord (e.g., via SYN.CA.11 Redline). Syndicate earns 2 Capital from the procedural friction of rewriting the agreement.",
@@ -2215,7 +2215,7 @@ SYN.MOD.8 = Card(
     ring_origin     = None,
     value_rating = 2,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2224,14 +2224,14 @@ SYN.MOD.8 = Card(
     affinity        = None,
     restriction     = faction(Syndicate).resources.has(2, Capital),
     cost            = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).exposure * 1,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = "arbiter.place(presence_chip, district=target_district, faction=Syndicate, count=1); arbiter.place(structure_block, district=target_district, faction=Syndicate, count=1)",  # ⚠ string literal containing 2 semicolon-joined statements — worse than a single-literal gap; flagged, not fixed
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = "The paperwork was drafted before the demolition crew finished clearing the site. Syndicate doesn't wait for the dust to settle to make an offer.",
     perspectives = None,
     design_note  = "Vulture Fund is distinct from SYN.CA.9, an unrelated card that displaces an opponent's active presence tokens. Vulture Fund is a different mechanic entirely: opportunistic expansion into vacated ground, not a forced acquisition of a going concern. When a structure falls, Syndicate swoops in, paying 2 Capital to immediately place both a presence chip and a structure in the newly cleared real estate. Extremely powerful territorial swing funded entirely by Capital Cost reasoning: Exposure ensures the takeover is recognized publicly, legitimizing the new ownership immediately.",
@@ -2294,7 +2294,7 @@ SYN.MOD.9 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2303,14 +2303,14 @@ SYN.MOD.9 = Card(
     affinity        = None,
     restriction     = None,
     cost            = resource.faction(Syndicate).capital * N,  # N declared at trigger (min 1)
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Syndicate).standing += N,  # ⚠ INVALID SYNTAX — `+=` is a statement, not an expression; 2nd confirmed instance, after NET.MOD.2
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card does not discard — remains active for further triggers. Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger. 04-n131 design decision → PS floor card selected.",
@@ -2367,7 +2367,7 @@ SYN.MOD.10 = Card(
     name    = "Lobby",
     tagline = "We don't oppose your agenda. We make it expensive to execute.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = Submission,  function = Modify,  subject = PublicAct,  # arbiter.apply_modifier(op=trigger.card, modifier=-15), same shape as STD.MOD.103/DIR.MOD.6/SYN.MOD.6
+    layer   = Submission,  function = Modify,  subject = PublicAct,
 
     trigger         = public_act.placed_on_frg(faction(target)),
     beat            = None,
@@ -2375,7 +2375,7 @@ SYN.MOD.10 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2384,14 +2384,14 @@ SYN.MOD.10 = Card(
     affinity        = None,
     restriction     = None,
     cost            = resource.faction(Syndicate).capital * 1,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.apply_modifier(op=trigger.card, modifier=-15),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Resolution layer gap fill (04-n129). Fills 'money-at-the-table' narrative: Syndicate pays Capital to suppress a named faction's PA threshold at the moment of declaration. ARBITER places −15 modifier token on target PA's Beat 4 resolution row. Named target faction declared when card is played/assigned (before §9.2). Single-fire Immediate — discards after triggering. Outstanding: (1) Trigger pattern public_act.placed_on_frg(faction(target)) — existing confirmed examples are self-targeting (Network's own PAs); confirm opponent-targeting variant is procedurally valid. (2) Named faction pre-declaration timing — confirm ARBITER can track the target faction designation without revealing Syndicate's intent.",
@@ -2404,7 +2404,7 @@ SYN.MOD.10 = Card(
 ### SYN.MOD.11 — SIGNATURE ON FILE
 
 #### Design Rationale
-Syndicate's most expensive Accord card — forges a named party's Accord acceptance without their consent, paired with SYN.CA.12 Boilerplate for a fully unilateral Accord combo. Three questions the card's own text already flags, cited directly rather than re-derived: (1) `trigger = accord.tabled` needs Art 06 timing confirmation — this pre-signature event isn't in the confirmed §6.3 vocabulary (which has `accord.placed/corrupted/removed`, all post-formation), so this is a genuinely new trigger stage, not just an unreconciled term. (2) "party_b" (the second named party on the drafted form) needs a precise definition. (3) Portrait magnitude (`flat=+2`) is self-flagged as needing confirmation against Portrait principles. Independently re-verified: the taxonomy (Information/Corrupt/Accord) already flagged as "least-precedented" does hold up against the matrix (Information×Corrupt is valid) — the caution was warranted but the assignment itself is sound. Also worth noting: the cost includes an Intel Token as one of four cost components — same fungibility question already raised on DIR.MOD.9.
+Syndicate's most expensive Accord card — forges a named party's Accord acceptance without their consent, paired with SYN.CA.12 Boilerplate for a fully unilateral Accord combo. Three questions the card's own text already flags, cited directly rather than re-derived: (1) `trigger = accord.tabled` needs Art 06 timing confirmation — this pre-signature event isn't in the confirmed §6.3 vocabulary (which has `accord.placed/corrupted/removed`, all post-formation), so this is a genuinely new trigger stage, not just an unreconciled term. (2) "party_b" (the second named party on the drafted form) needs a precise definition. (3) Portrait magnitude (`flat=+2`) is self-flagged as needing confirmation against Portrait principles. Independently re-verified: the taxonomy (Information/Corrupt/Accord) already flagged as "least-precedented" does hold up against the matrix (Information×Corrupt is valid) — the caution was warranted but the assignment itself is sound. Also worth noting: the cost includes an Intel Token as one of four cost components — now confirmed §6.3 vocabulary (schema_cleanup_log #10), same basis as DIR.MOD.9.
 
 #### Card Story
 The Accord draft goes on the table with only one signature. Syndicate already has what it needs from the other party — the form is a formality, and by the time anyone notices, the agreement is already active.
@@ -2426,10 +2426,10 @@ The Accord draft goes on the table with only one signature. Syndicate already ha
 | Supported by zones | ✓ | `target_district=None` — correct; Accords have no district dimension. | Art 01 §6–7 |
 | Supported by components | ✓ | Intel Token consumption and Accord-form marking both reuse existing components. | Art 02 §6–8 |
 | Supported by game procedure | ⚠ | Depends on the unconfirmed `accord.tabled` trigger stage — the underlying Art 06 procedure for a "tabled but unsigned" Accord state isn't yet formally described. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ | Real MutationExpr (`arbiter.mark_acceptance`) — ahead of SYN.MOD.6/8's string-literal gap. Cost includes an Intel Token — same fungibility question as noted above. Scaffolding added for `resolution_type`/`boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Real MutationExpr (`arbiter.mark_acceptance`) — ahead of SYN.MOD.6/8's string-literal gap. Cost includes an Intel Token — now confirmed §6.3 vocabulary (schema_cleanup_log #10). Scaffolding added for `resolution_type`/`boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Cost is real and substantial, but one of the four components (Intel Token) has the same open fungibility question — is a discrete tracked object a valid "fungible resource" cost component? | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Cost is real and substantial; one of the four components (Intel Token) is now confirmed §6.3 vocabulary (schema_cleanup_log #10). | Art 00a §9.2; Art 04 §6.3 |
 | Trigger frequency (ModReactCard) | ✓ | Gated on holding a keyed Intel Token on the specific party — inherently rare, matching the "ceiling-power" framing. |  |
 | Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Deterministic forgery, no execution-quality dimension. |  |
@@ -2448,7 +2448,7 @@ SYN.MOD.11 = Card(
     name    = "Signature on File",
     tagline = "We already have what we need. The form is a formality.",
     type    = ModReactCard,  faction = Syndicate,
-    layer   = Information,  function = Corrupt,  subject = Accord,  # forges an Accord party's acceptance; closest analog is GHO.MOD.11's Information/Corrupt pattern (falsifying an official record). Least-precedented assignment in the corpus, flag for re-check when this card comes up for content review. AccordForm is the established object-type name per Art 06/Overture, but the taxonomy subject list itself only registers Accord/AccordAgreement/AccordCard
+    layer   = Information,  function = Corrupt,  subject = Accord,
 
     trigger         = accord.tabled,  # PENDING: confirm trigger expression — fires at draft tabling stage (before party signatures), not accord.placed (which fires when Accord is already active)
     beat            = None,
@@ -2456,23 +2456,23 @@ SYN.MOD.11 = Card(
     ring_origin     = None,
     value_rating = 2,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
     target_faction  = faction(accord.party_b),
     target_object   = AccordForm(state=drafted),  # AccordForm is the established term (Art 06 §9.2, Overture's AccordForm(blank))
     affinity        = None,
-    restriction     = IntelToken(keyed_to=faction(accord.party_b)) in faction(Syndicate).hand,
-    cost            = Capital(2) + Findings(1) + Mandate(1) + IntelToken(keyed_to=faction(accord.party_b)),
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    restriction     = IntelToken(about=faction(accord.party_b)) in faction(Syndicate).hand,
+    cost            = Capital(2) + Findings(1) + Mandate(1) + IntelToken(about=faction(accord.party_b)),
+    boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.mark_acceptance(accord=trigger.accord, party=faction(accord.party_b), state=signed),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Syndicate: PortraitEntry(flat=+2)},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Ceiling-power card — the most expensive Syndicate Accord card. Cost rationale: Capital×2 (commercial commitment to force the agreement); Findings×1 (due diligence on party B — they know enough to make this stick); Mandate×1 (institutional authority that makes the forced signing legally enforceable); IntelToken(keyed to party_b) (the specific leverage that makes party B's resistance futile — consumed on play). Effect: ARBITER marks party B's acceptance on the Accord form as signed. Accord becomes active immediately without party B's participation. Party B is notified privately at enforcement, not at tabling. Outstanding: (1) confirm trigger expression accord.tabled — needs Art 06 timing confirmation; must fire at draft placement stage before normal acceptance window opens. (2) Define 'party_b' — the second named party on the Accord form as drafted by Syndicate (or whichever party has not signed). (3) Portrait magnitude: flat=+2 reflects scale of action — confirm against portrait principles. Combo with SYN.CA.12 Boilerplate: Syndicate writes and forces through a unilateral Accord in one session.",
@@ -2524,19 +2524,18 @@ SYN.MOD.12 = Card(
     name    = "Contracted Muscle",
     tagline = "Paid by the hour, paid up front, gone the moment the money stops.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
-    cost            = None,   # Art 03 §10.1.2 has no cost validation step; "costly" is deck-level rarity, not a per-play resource cost
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "A few names get a call, a rate gets quoted, and by evening there are more people on the block than there were this morning.",
     arbiter_note = "Playable by any faction, not just Syndicate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2586,19 +2585,18 @@ SYN.MOD.13 = Card(
     name    = "Armored Transport",
     tagline = "Nobody asks where it came from. Everybody notices it's there.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 2,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
-    cost            = None,   # Art 03 §10.1.2 has no cost validation step; "costly" is deck-level rarity, not a per-play resource cost
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "A convoy rolls in that nobody remembers ordering. It parks, and it stays parked, right where it's most visible.",
     arbiter_note = "Playable by any faction, not just Syndicate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2648,19 +2646,18 @@ SYN.MOD.14 = Card(
     name    = "Called-In Debt",
     tagline = "Everyone owes somebody. Tonight, Syndicate collects.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
-    cost            = None,   # Art 03 §10.1.2 has no cost validation step; "costly" is deck-level rarity, not a per-play resource cost
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "A supplier who was supposed to show up tonight suddenly has a more urgent invoice to settle first.",
     arbiter_note = "Playable by any faction, not just Syndicate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2710,19 +2707,18 @@ SYN.MOD.15 = Card(
     name    = "Bought Off",
     tagline = "Everyone has a price. Syndicate found out whose was lowest.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 2,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
-    cost            = None,   # Art 03 §10.1.2 has no cost validation step; "costly" is deck-level rarity, not a per-play resource cost
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "The people the target was counting on tonight took a better offer this afternoon. Nobody told them who from.",
     arbiter_note = "Playable by any faction, not just Syndicate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2772,16 +2768,16 @@ SYN.MOD.16 = Card(
     name    = "Golden Handshake",
     tagline = "A well-placed incentive, offered before anyone had to ask twice.",
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
-    cost            = None,   # splay-display convention — same basis as all ModActionCard content
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A well-placed incentive smooths the acting faction's own play — everyone involved walks away satisfied, which is the point.",
@@ -2838,11 +2834,11 @@ SYN.MOD.17 = Card(
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Favorable terms negotiated in advance ease a financial move well before anyone else at the table sees the numbers.",
@@ -2899,11 +2895,11 @@ SYN.MOD.18 = Card(
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Pre-arranged leverage removes the friction that would otherwise complicate the acting faction's own financial move.",
@@ -2960,11 +2956,11 @@ SYN.MOD.19 = Card(
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Every lever available has already been pulled before the move is even made — nothing left in the way.",
@@ -3021,11 +3017,11 @@ SYN.MOD.20 = Card(
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A resource action's outcome grows the longer it's been quietly set up — patience is the whole strategy.",
@@ -3082,11 +3078,11 @@ SYN.MOD.21 = Card(
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Enough capital already committed turns a modest success into a decisive one — the position was built long before this moment.",
@@ -3140,14 +3136,14 @@ SYN.MOD.22 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A dispute resolved out of public view protects standing that a drawn-out fight would have cost.",
@@ -3204,11 +3200,11 @@ SYN.MOD.23 = Card(
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A visible donation buys Syndicate a standing boost that costs far less than what it appears to.",
@@ -3262,14 +3258,14 @@ SYN.MOD.24 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A quiet mention in the right circles costs a named rival a little standing — nothing traceable, nothing deniable enough to fight.",
@@ -3326,11 +3322,11 @@ SYN.MOD.25 = Card(
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A rival's finance practices become public knowledge — Syndicate knows exactly how bad the terms look read aloud.",
@@ -3384,14 +3380,14 @@ SYN.MOD.26 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A standing agreement lowers the price of doing this again — the relationship was worth the investment.",
@@ -3448,11 +3444,11 @@ SYN.MOD.27 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Syndicate faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Pre-arranged financing discounts what an action costs to mount — the capital was already standing by.",

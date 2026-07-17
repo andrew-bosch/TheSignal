@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.85 Draft  
+**Version:** 0.9.90 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-07-04  
+**Last Updated:** 2026-07-17  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -457,11 +457,12 @@ class Card:
     doctrine_mod: dict[PentagramRelation, int] | None # None when no faction target or no doctrinal variation
     value_rating: int | None                # 1–4; power/strength tier, printed on card face. Base Card() field — all card types inherit it. CA/PA meaning not yet defined; None = TBD/unscaffolded pending whole-set cost-derivation analysis (04-n178).
     trigger:      TriggerExpr | None        # None = default beat timing
-    resolution_type: str | None            # evolving vocabulary — feeds 00c §8
+    resolution_type: ResolutionType | None  # confirmed enum (§6.3) — feeds 00c §8; formalized from a free-form str, schema_cleanup_log #41
     outcome_type: OutcomeType | None        # public acts only
     persistence:           Persistence              # card table presence — Immediate/Transient/Seasonal/Permanent; default Immediate for covert ops
-    persistence_condition: BoolExpr | None           # None unless persistence=Permanent; card discarded immediately when this evaluates False
-    persistence_effect:    MutationExpr | None        # None unless persistence=Permanent; ongoing board condition active while card is in play
+    persistence_condition: BoolExpr | None           # Seasonal/Permanent only; a genuine continuously-evaluated state predicate — Standing Condition discarded immediately when this evaluates False. NOT for one-time clearing events — use persistence_clearing_trigger for those (schema_cleanup_log #2)
+    persistence_clearing_trigger: TriggerExpr | None # Seasonal/Permanent only; the one-time board event that ends this Standing Condition (e.g. a payment, a submission) — same TriggerExpr vocabulary as `trigger` (§6.3). Distinct from persistence_condition: an event, not a continuous predicate. None = no discrete clearing event (either the Standing Condition never clears, or it clears on a phase boundary already implied by Seasonal/persistence_condition)
+    persistence_effect:    MutationExpr | None        # Seasonal/Permanent only; the ongoing effect of the Standing Condition while it remains active
 
     # ── Targeting ─────────────────────────────────── expressions
     target_district:  DistrictExpr
@@ -541,8 +542,9 @@ class ModReactCard(Card):
     # Modifier firing on a publicly observable board state delta. Played in Faction Resolution Grid.
     # trigger:     required (never None) — defines what activates the card; overrides Card.trigger default
     # beat:        always None — React fires on trigger condition, not at a named beat
-    # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as standing condition until Quarter end;
-    #              Permanent = remains until an explicit clearing condition is met (e.g. DIR.MOD.9 Fiscal Sanction)
+    # persistence: Immediate = consumed on fire (default); Seasonal = remains on FRG as a Standing Condition until Quarter end;
+    #              Permanent = remains until persistence_condition goes False or persistence_clearing_trigger fires
+    #              (e.g. DIR.MOD.9 Fiscal Sanction — clears via persistence_clearing_trigger, schema_cleanup_log #2)
     # Field constraints: §6.2.
     # value_rating inherited from Card()
     ring_constraint:  Ring | None          # None = no deployment restriction; Ring = fires only when trigger fires in that ring
@@ -579,18 +581,19 @@ class ModReactCard(Card):
 | doctrine_mod | Metadata | dict[PentagramRelation, int] | Per-doctrinal-relationship threshold adjustment based on acting/target faction pentagram proximity; positive = easier, negative = harder; None when no faction target or no doctrinal variation | Face |
 | value_rating | Metadata | int \| None | 1–4. Power/strength tier printed on card face; used in Splay calculation for Modifier cards. Base Card() field — all card types inherit it. Feeds the whole-set cost-derivation model (04-n178). CA/PA definition not yet set; `None` = TBD/unscaffolded until the whole-set analysis assigns real values. | Face |
 | trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
-| resolution_type | Metadata | str | Strategic classification of how uncertainty resolves — evolving vocabulary; feeds 00c §8 | No |
+| resolution_type | Metadata | ResolutionType | Strategic classification of how uncertainty resolves — confirmed 3-value enum (§6.3, schema_cleanup_log #41); feeds 00c §8 | No |
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |
-| persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Close Month of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. Card-as-condition PAs with standing board-condition effects commonly use Permanent (e.g., DIR.PA.1/PA.3/PA.5/PA.6/PA.11). | Face |
-| persistence_condition | Metadata | BoolExpr | Condition that must remain True for a Permanent card to stay in play; card is discarded immediately when it evaluates False. None for all non-Permanent cards. | Face |
-| persistence_effect | Metadata | MutationExpr | Ongoing board condition active while a Permanent card is in play; evaluated continuously until persistence_condition is met. Use `game.board_condition(...)` to express scoped persistent effects. None for all non-Permanent cards. | Face |
+| persistence | Metadata | Persistence | How long the card remains on the table as a game state marker — Immediate: removed at Beat 4 cleanup; Transient: removed at Close Month of current Month; Seasonal: removed at Phase 21 (End of Quarter); Permanent: removed only by explicit game action. Default for covert operations: Immediate. A Seasonal/Permanent card in play is a **Standing Condition** (locked term, schema_cleanup_log #2) — Card-as-condition PAs with standing board-condition effects commonly use Permanent (e.g., DIR.PA.1/PA.3/PA.5/PA.6/PA.11). | Face |
+| persistence_condition | Metadata | BoolExpr | Continuously-evaluated state predicate for a Seasonal/Permanent Standing Condition — discarded immediately when it evaluates False. For a one-time clearing event, use `persistence_clearing_trigger` instead (schema_cleanup_log #2). None for Immediate/Transient cards, and for Seasonal/Permanent cards with no continuous-predicate clearing condition. | Face |
+| persistence_clearing_trigger | Metadata | TriggerExpr | The one-time board event that ends a Seasonal/Permanent Standing Condition (e.g. a payment, a submission) — same TriggerExpr vocabulary as `trigger` (§6.3). Distinct from `persistence_condition`: an event, not a continuous predicate. None = no discrete clearing event. | Face |
+| persistence_effect | Metadata | MutationExpr | The Standing Condition's ongoing effect while a Seasonal/Permanent card remains in play; evaluated continuously until cleared by `persistence_condition` going False or `persistence_clearing_trigger` firing. Use `game.board_condition(...)` to express scoped persistent effects. None for Immediate/Transient cards. | Face |
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
 | target_faction | Targeting | FactionExpr | Faction this card targets; None = no faction target | Face |
 | target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
 | target_taxonomy | Targeting | TaxonomyExpr | Action taxonomy category this card targets (Layer/Function or Layer/Function/Subject); used when the effect targets a class of actions rather than a specific object; declared at Phase B alongside target_faction; None = no taxonomy target | Face |
 | affinity | Logic | ConditionalExpr | Faction-based cost modifier — evaluated before cost expression | Face |
 | restriction | Logic | BoolExpr | Submission preconditions — card unplayable if evaluates False | Face |
-| cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid cost resources are those that can be traded or transferred (Mandate, Capital, Influence, district native resource). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
+| cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid cost resources are those that can be traded or transferred (Mandate, Capital, Influence, district native resource), plus Intel Token as a confirmed discrete-object cost category (§6.3, schema_cleanup_log #10). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
 | boost | Logic | BoostExpr | Optional variable-multiplier mechanic — player submits additional resources beyond base cost; no declaration required. ARBITER detects at Beat 0: n = (total submitted − base cost) / boost unit cost; places n BoostMarker tokens (BM-xx) on the card's grid slot alongside the card. At Beat 2/3 resolution: effect fires (1 + BM-xx count) times; BM-xx returned to ARBITER supply at beat cleanup. For threshold-scaling cards, threshold is locked at Beat 0 using total count (1 + BM-xx). Boost unit cost may differ from base cost resource type. None = no boost mechanic. | Face |
 | success | Effects | MutationExpr | Primary effect on resolution success | Face |
 | successcrit | Effects | MutationExpr | Additive delta on critical success (roll ≤ 5, i.e. 01–05); None when Automatic | Face |
@@ -634,10 +637,11 @@ Which inherited Card fields are always None vs. per-card design vs. required. `N
 | trigger | None — fires when bundled | None | **Required** — never None |
 | resolution_type | None | None | — |
 | outcome_type | None | None | — |
-| persistence / persistence_condition / persistence_effect | None | None | — |
+| persistence / persistence_condition / persistence_clearing_trigger / persistence_effect | None | None | — |
 | target_district / target_faction / target_object / target_taxonomy | None | None | — |
 | affinity / restriction | — | None | — |
 | boost | None | None | — |
+| cost | None | None | — |
 | success / successcrit / fail / failcrit | None | None | — |
 | on_accept / on_decline | None | None | — |
 | on_discard | None | None | — |
@@ -647,6 +651,8 @@ Which inherited Card fields are always None vs. per-card design vs. required. `N
 | generating_card | None unless acquisition=Issued | None unless acquisition=Issued | None unless acquisition=Issued |
 
 *ModReactCard: only `beat` is always None. All other `—` fields are live — set per individual card design. `acquisition` defaults to Deck for every existing stub that doesn't state it — only state it explicitly on the 3 current Issued cards.*
+
+*`cost` is locked `None` for `ModActionCard` and `ModBattleCard`, but for two independently-arrived-at reasons (PM02 L256, L302), not one shared rationale — `ModActionCard`'s cost could technically be enforced (Beat 0 payment validation exists), but the splay-display convention (Art 03 §9.4.0.1 Step 4: modifier value printed at top and bottom edge, splayed beneath the host operation card) folds it into the host packet's total drain rather than tracking it as a distinct line item; `ModBattleCard`'s cost is genuinely unenforceable — Art 03 §10.1.2's commit sequence has no cost validation/payment step at all. `ModReactCard`'s `cost` is live and per-card design — it resolves through its own trigger rather than a host's commit, so a real payment step exists.*
 
 ---
 
@@ -660,6 +666,34 @@ Layer:        Territory | Economy | Information | Submission | Resolution | Stan
 Function:     → Art 04b §4
 Subject:      → Art 04b §4
 Resolution:   d100 | Automatic
+ResolutionType:      Probabilistic | Transactional | PositionalWager
+# Formalized from a free-form str (schema_cleanup_log #41) — was 9 values in active use, only
+# 2 documented. Full-corpus discriminating test applied to every candidate: does deleting this value lose
+# information no other field already carries? Result: 6 of 9 either mapped directly onto Resolution
+# (Probabilistic = d100, Transactional = Automatic) or were pure restatements of another field; only one
+# genuinely distinct third category survived.
+#   Probabilistic:    resolution = d100 always.
+#   Transactional:    resolution = Automatic always — immediate, deterministic, no cross-beat dependency.
+#   PositionalWager:  resolution = Automatic, but the effect targets a not-yet-revealed future beat's
+#                      submission slate (e.g. a Beat 2 card modifying a Beat 4 op that hasn't been declared
+#                      yet) — deterministic once resolved, but committed against genuinely unknown
+#                      information, unlike a plain Transactional card. 8 confirmed instances: STD.CA.6,
+#                      STD.CA.7, STD.CA.10, GUI.CA.1/2/6/9, SYN.CA.6.
+# Collapsed into the above, not separately confirmed:
+#   "Contested"            → Probabilistic. 5 instances (STD.PA.2/4/5/6, NET.PA.1); only STD.PA.2 actually
+#                            placed a ContestedMarker (a `success`-field effect) — the label didn't
+#                            correlate with a real distinct mechanism across its own cluster.
+#   "Permanent public act" → Transactional. 3 instances (DIR.PA.5/6/11); fully redundant with the
+#                            existing `persistence = Permanent` field.
+#   "Predictive"            → Transactional. 1 instance (GHO.CA.1); resolution = Automatic, deterministic
+#                            declare-then-verify check — not a distinct resolution mechanism.
+# Not formalized — tied to broken/blocked cards, left as non-conforming pending their own separate fix:
+#   "Conditional"  — GHO.MOD.1, a pre-S127 fossil already carrying an invalid `resolution = Prediction`
+#                    value (schema_cleanup_log #12). Fix belongs to that item's own reconciliation.
+#   "Deceptive"    — Backdate, 🚫 BLOCKED (GR 7.2b, PM05 04-n103), fundamental redesign required.
+#   "Verification" — Field Verification, 🚫 BLOCKED (same GR 7.2b reason, same PM05 gate).
+#   "PlayerChoice(target)" — pre-registered (PM05 04-n36) for a not-yet-built Directorate card family;
+#                    never actually appears as a real field value anywhere in the corpus.
 Ring:                0 (Chorus Node) | 1 (Core) | 2 (The Mid) | 3 (Baryo)
 PentagramRelation:   Neighbor | Opposed
 OutcomeType:         Binary | ElectPlayer | ElectDistrict | ElectFaction | BilateralAgreement | Unilateral
@@ -681,7 +715,7 @@ BoostExpr:           condition: CostExpr
 # Threshold-scaling cards: threshold locked at Beat 0 using (1 + BM-xx count) as total n
 
 TriggerExpr:         Any
-                     | component[.scope][.attribute].change(faction)
+                     | component[.scope][.attribute].change(faction[, except])
 # component:   presence_chip | structure_block | deployment_marker | dominant_marker |
 #              established_marker | tension_marker | standing_marker | world_event |
 #              accord | resolution_grid
@@ -690,6 +724,11 @@ TriggerExpr:         Any
 # change:      placed | removed | converted | blocked | increased | decreased |
 #              played | expired | corrupted | updated
 # faction:     Any | Ghost | Network | Syndicate | Guild | Directorate
+# except:      optional Faction — subtracted from faction=Any's match set (see semantics below)
+#
+# faction=Any semantics: inclusive of the reacting card's own faction by default — Any means every
+# faction, no implicit self-exclusion. A card that needs to exclude self (e.g. because self-fire
+# would be actively harmful, not just a no-op) states it explicitly with except=X.
 #
 # Confirmed React trigger set (sourced from Art 03b + Art 02; public-only):
 #   presence_chip.placed / removed
@@ -707,6 +746,52 @@ TriggerExpr:         Any
 #
 # Excluded (static — never change): district tiles, board geography, ARBITER Dominance Marker
 # Excluded (procedural — not player-driven): Initiative Strip, Session Timeline, Quarter/Month markers
+
+MutationExpr:        confirmed helper symbols only (full grammar not yet enumerated — schema_cleanup_log
+                      #20/#22); documents individually-reconciled forms as they're confirmed by use.
+
+#   holder                        — bare symbol: the faction currently holding/reacting with this card
+#                                   (Deck-acquired, faction=All context). Bare-argument form, e.g.
+#                                   NativeResource(holder). Mirrors the existing bare-keyword pattern
+#                                   (trigger.faction, acting, opponent).
+#   faction(holder)               — wrapped form of the same symbol, used when a Faction-object receiver
+#                                   is needed for a method call (e.g. faction(holder).standing.add(n),
+#                                   faction(holder).resources.add(...)). Mirrors Overture's established
+#                                   faction(acting) (STD.MOD.1).
+#   NativeResource(faction)       — parameterized form of the bare NativeResource subject symbol (§6.1);
+#                                   resolves to the resource type native to the given faction argument at
+#                                   runtime. faction may be trigger.faction (the faction whose action fired
+#                                   the trigger) or holder (the reacting faction itself). Needed for
+#                                   faction=All Deck content with no single fixed faction context (contrast
+#                                   faction-specific precedent, e.g. GUI.MOD.2/3/4's hardcoded Capacity).
+#   arbiter.modify(target, field, delta)
+#                                 — signed delta on an already-submitted card's named field (e.g.
+#                                   threshold). Not new ARBITER behavior — feeds the existing threshold-
+#                                   modifier-accumulation pipeline already used by BM-xx tokens and M-11
+#                                   Type B Countermeasure (Art 03 §9.4.1.1/§9.4.3.1.3).
+#
+# Confirmed via: STD.MOD.98–133 (Ring 1/2/3 ModReactCard stub passes, S135–S138). Reconciles 04-n171.
+
+CostExpr:            IntelToken(about: FactionExpr | None, status: TokenStatus | list[TokenStatus] | None) * n
+                     | IntelToken(about: FactionExpr | None, status: TokenStatus | list[TokenStatus] | None).all_held
+# Native-resource cost forms (resource.faction(X).type, bare Type(n), etc.) not yet formally enumerated
+# here — full CostExpr grammar remains open (schema_cleanup_log #22). This entry formalizes Intel Token
+# specifically as a second confirmed cost category (schema_cleanup_log #10): a discrete,
+# individually-tracked object, not a fungible native/Capital/Mandate pool, but confirmed valid as `cost`
+# and `boost` content — 17 live instances across all 5 factions.
+#   about:    which faction the spent token(s) concern/track (the token's subject, not its holder); None =
+#             any faction. A faction can only ever spend tokens it currently holds — holder is always
+#             implicit (the faction paying the cost), never a separate parameter.
+#   status:   TokenStatus filter — single value or list; None = any status.
+#   * n:      spend exactly n matching tokens.
+#   .all_held: spend every currently-held token matching the filter (variable count, not a fixed n).
+# TokenStatus: Fresh | Stale | Expired   (existing Intel Token lifecycle states, Art 02 — not new)
+#
+# Canonical form supersedes prior ad hoc spellings found across the corpus: intel_token(faction=X) /
+# (target=X) / (keyed_to=X) → IntelToken(about=X); age__in=[...] → status=[...]; bare intel_token /
+# IntelToken(any) / intel_token.held → IntelToken().
+# Pre-schema fossil cards (GHO.MOD.9/10, per schema_cleanup_log #20 scope note) excluded — not yet
+# reconciled to current schema at all, out of scope until their own re-authoring pass.
 
 ModActionExpr:       threshold_delta(n: int)
                      | success_multiplier(n: int)
@@ -1433,7 +1518,7 @@ GD01 = Card(
     ring_mod        = None,
     doctrine_mod    = None,
     trigger         = structure_block.placed(district=deed.district),
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,

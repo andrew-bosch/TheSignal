@@ -69,7 +69,7 @@ NET.CA.1 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -144,7 +144,7 @@ NET.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Economy,  function = Add,  subject = Exposure,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -224,7 +224,7 @@ NET.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
     layer   = Information, function = Reveal, subject = CovertOperation,
     beat=2, resolution=d100, threshold=50, ring_mod=None, trigger=None,
-    resolution_type = "Probabilistic", outcome_type=None,
+    resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -308,7 +308,7 @@ NET.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Submission,  function = Modify,  subject = PublicAct,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -380,7 +380,7 @@ NET.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Territory,  function = Add,  subject = PresenceToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -452,7 +452,7 @@ NET.CA.6 = Card(
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 3,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -665,7 +665,7 @@ Network's signature information-attack PA — a coordinated release of all subst
 | Supported by zones | ✓ | target_district = None — faction-targeted broadcast; no zone reference. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (all held, faction-keyed to target; Art 02 §6); Exposure × 2 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Token count calculated at Beat 4; all tokens spent regardless of outcome | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — not in the confirmed 2-value vocabulary. `threshold` is a computed formula (`30 + 10*n`) rather than a flat int — a distinct pattern from other threshold fields in the corpus, though not necessarily wrong (§6.1 types `threshold` as `int \| None`, and this evaluates to an int at resolution time). | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic` (schema_cleanup_log #41). `threshold` is a computed formula (`30 + 10*n`) rather than a flat int — a distinct pattern from other threshold fields in the corpus, though not necessarily wrong (§6.1 types `threshold` as `int \| None`, and this evaluates to an int at resolution time). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Exposure ×2 + all held Intel Tokens naming target), correctly typed. | Art 00a §9.2 |
@@ -692,7 +692,7 @@ NET.PA.1 = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = None,
-    resolution_type = "Contested",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -705,7 +705,7 @@ NET.PA.1 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Network).holds_intel_token(faction=target, count=1),
-    cost        = resource.faction(Network).exposure * 2 + intel_token(target=faction(target)).all_held,
+    cost        = resource.faction(Network).exposure * 2 + IntelToken(about=faction(target)).all_held,
     boost       = None,
 
     success = (
@@ -788,7 +788,7 @@ NET.PA.2 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -887,9 +887,10 @@ NET.PA.3 = Card(
     layer   = Information, function = Reveal, subject = FactionHand,
     beat=4, resolution=d100, threshold=50, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 2,
-    resolution_type = "Probabilistic", outcome_type=None,
+    resolution_type = Probabilistic, outcome_type=None,
     persistence     = Seasonal,
-    persistence_condition = "target_faction complied (open hand) for one full Covert Dispatch this Quarter → card clears at end of that Covert Dispatch; or Quarter end",
+    persistence_condition = None,
+    persistence_clearing_trigger = "target_faction complied (open hand) for one full Covert Dispatch this Quarter → card clears at end of that Covert Dispatch; or Quarter end",  # event, not a continuous predicate — prose, not TriggerExpr syntax (§6.1 requires TriggerExpr). Tracked at PM02 L300; convert to TriggerExpr and remove this comment once resolved.
     persistence_effect    = "Each Covert Dispatch of remaining Months: target faction elects comply (lay all held cards face-up on table; covert ops proceed normally this Covert Dispatch) or resist (dispatch case disabled this Month — no covert submissions). Comply once → card clears.",
     target_district = None,
     target_faction  = faction(named_opponent),
@@ -982,7 +983,7 @@ NET.MOD.2 = Card(
     trigger = standing_marker.increased(faction=Any, except=Network),
               # fires when any other faction's standing marker increases (publicly observable)
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
-    beat    = None,  resolution = Automatic,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    beat    = None,  resolution = Automatic,  resolution_type = Transactional,
     target_district = None,  target_faction = trigger.faction,  target_object = None,  target_taxonomy = None,  # scaffolded, not addressed
     cost    = resource.faction(Network).exposure * 1 + resource.faction(Network).capital * 1,
     boost   = None,  # scaffolded, not addressed
@@ -1047,7 +1048,7 @@ NET.PA.4 = Card(
     beat    = 4,  resolution = d100,  threshold = 60,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 4,
-    resolution_type = "Probabilistic",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Probabilistic,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
     target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
@@ -1114,7 +1115,7 @@ NET.PA.5 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 4,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
@@ -1181,7 +1182,7 @@ NET.PA.6 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 1,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
@@ -1333,7 +1334,7 @@ NET.MOD.3 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1414,7 +1415,7 @@ NET.MOD.4 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = faction(Network).district.any,  # any district where Network has presence
@@ -1495,7 +1496,7 @@ NET.MOD.5 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = faction(Network).district.ring(2).any,
@@ -1524,7 +1525,7 @@ NET.MOD.5 = Card(
 ### NET.MOD.6 — STREET-LEVEL AGITATOR
 
 #### Design Rationale
-Opportunistic Baryo (Ring 3) expansion React. `faction=Any` in the trigger means Network placing its own chip in Baryo would trigger this against itself (self-fire). There's also an internal inconsistency between fields: `target_district = ...adjacent_to(trigger.district)` declares adjacency-based targeting, but the `success` mutation actually reads `faction(Network).district.ring(3).acting_choice` — any Ring-3 district with Network presence, not specifically adjacent ones. The design_note itself already flags this as unresolved ("adjacent — TBD at design pass"), but the `target_district` field and the `success` field currently disagree with each other, which is sharper than a simple TBD.
+Opportunistic Baryo (Ring 3) expansion React. `faction=Any` in the trigger means Network placing its own chip in Baryo triggers this against itself (self-fire) — confirmed legal, intended behavior (a chain-expansion engine), not a bug. There's also an internal inconsistency between fields: `target_district = ...adjacent_to(trigger.district)` declares adjacency-based targeting, but the `success` mutation actually reads `faction(Network).district.ring(3).acting_choice` — any Ring-3 district with Network presence, not specifically adjacent ones. The design_note itself already flags this as unresolved ("adjacent — TBD at design pass"), but the `target_district` field and the `success` field currently disagree with each other, which is sharper than a simple TBD.
 
 #### Card Story
 Someone moves a piece in the Baryo — anyone, doesn't matter who. Network's community network doesn't need an invitation; where there's motion in the slums, Network's people are already talking to someone.
@@ -1541,7 +1542,7 @@ Someone moves a piece in the Baryo — anyone, doesn't matter who. Network's com
 | Balance | ⚠ | Cannot fully assess: the target scope itself is internally inconsistent (adjacency-declared vs. any-Ring-3-district-actual) — the effective power of this card depends on which scope is correct. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `presence_chip.placed(faction=Any, ring=3)` — confirmed vocabulary, but `faction=Any` carries the same self-fire question as items 5/11 (Network triggering on its own Baryo placement). | Art 04 §6.3; schema_cleanup_log.md item 5 |
+| Trigger validity | ✓ | `presence_chip.placed(faction=Any, ring=3)` — confirmed vocabulary, inclusive-of-self by default, confirmed intended chain-expansion behavior. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ⚠ | **Real inconsistency:** `target_district` field declares `adjacent_to(trigger.district)`, but `success` actually resolves against `faction(Network).district.ring(3).acting_choice` — any Ring-3 Network-presence district, not specifically adjacent ones. The two fields disagree; not resolved here. | Art 01 §6–7 |
 | Supported by components | ✓ | Standard chip-placement mechanism. | Art 02 §6–8 |
@@ -1576,7 +1577,7 @@ NET.MOD.6 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = faction(Network).district.ring(3).adjacent_to(trigger.district),
@@ -1657,7 +1658,7 @@ NET.MOD.7 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1738,7 +1739,7 @@ NET.MOD.8 = Card(
     ring_origin     = None,
     value_rating = 2,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = faction(Network).district.ring(3).acting_choice,
@@ -1819,7 +1820,7 @@ NET.MOD.9 = Card(
     ring_origin     = None,
     value_rating = 4,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -1848,7 +1849,7 @@ NET.MOD.9 = Card(
 ### NET.MOD.10 — LOCAL ORGANIZERS
 
 #### Design Rationale
-Opportunistic Baryo chip-swap React — same Redirect shape as GHO.MOD.7 (confirmed precedent). `faction=Any` in the trigger means Network placing its own chip in Baryo would trigger this against itself, paying 1 Exposure to swap its own chip for its own chip, a costed no-op.
+Opportunistic Baryo chip-swap React — same Redirect shape as GHO.MOD.7 (confirmed precedent). `faction=Any` in the trigger means Network placing its own chip in Baryo triggers this against itself, paying 1 Exposure to swap its own chip for its own chip — a confirmed harmless costed no-op.
 
 #### Card Story
 A rival sends operatives into the Baryo. Network sends neighbors instead — people who were already there, already trusted, already positioned to take the ground the moment it's contested.
@@ -1865,7 +1866,7 @@ A rival sends operatives into the Baryo. Network sends neighbors instead — peo
 | Balance | ✓ | 1-resource cost for a chip swap in Baryo only — bounded, reasonable given the Redirect precedent's established power level. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `presence_chip.placed(faction=Any, ring=3)` — confirmed vocabulary, but `faction=Any` carries the same self-fire question as items 5/6/11 (Network triggering on its own Baryo placement, a costed no-op). | Art 04 §6.3; schema_cleanup_log.md item 5 |
+| Trigger validity | ✓ | `presence_chip.placed(faction=Any, ring=3)` — confirmed vocabulary, inclusive-of-self by default, confirmed harmless costed no-op. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct, same-district swap (contrast with NET.MOD.6's inconsistent adjacency). | Art 01 §6–7 |
 | Supported by components | ✓ | Chip remove+place reuses the standard mechanism. | Art 02 §6–8 |
@@ -1900,7 +1901,7 @@ NET.MOD.10 = Card(
     ring_origin     = None,
     value_rating = 3,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -1979,10 +1980,10 @@ NET.MOD.11 = Card(
 
     layer   = Standing,  function = Shift,  subject = StandingMarker,  # confirmed registered pairing — ref_taxonomy.md §5.2 (Standing Marker: Standing)
 
-    trigger         = public_act.submitted,  # unconfirmed against §6.3 TriggerExpr vocabulary — same open category as GHO.MOD.9/10 (04-n174)
+    trigger         = public_act.submitted,
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 4,
-    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
 
@@ -2056,12 +2057,12 @@ NET.MOD.12 = Card(
     tagline = "Broadcast their intended target before they are ready.",
     type    = ModReactCard,  faction = Network,
 
-    layer   = Information,  function = Reveal,  subject = TargetProfile,  # mirrors GHO.MOD.11's Corrupt/TargetProfile pairing, same subject, different function
+    layer   = Information,  function = Reveal,  subject = TargetProfile,
 
-    trigger         = public_act.placed_with_target_profile,  # unconfirmed against §6.3 TriggerExpr vocabulary — shared form with GHO.MOD.11 (04-n174)
+    trigger         = public_act.placed_with_target_profile,
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
-    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
 
@@ -2139,7 +2140,7 @@ NET.MOD.13 = Card(
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 2,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2221,7 +2222,7 @@ NET.MOD.14 = Card(
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 3,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2291,13 +2292,12 @@ NET.MOD.15 = Card(
     name    = "Community Turnout",
     tagline = "Word got around. People showed up.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Network,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2353,13 +2353,12 @@ NET.MOD.16 = Card(
     name    = "Live Broadcast",
     tagline = "The feed goes live. Everyone at the table knows the whole city is watching now.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Network,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 2,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2415,13 +2414,12 @@ NET.MOD.17 = Card(
     name    = "Street Pressure",
     tagline = "Signs, chants, a crowd that isn't going home. Hard to hold ground while explaining yourself.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Network,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2477,13 +2475,12 @@ NET.MOD.18 = Card(
     name    = "Public Outcry",
     tagline = "By morning, everyone at The Table has seen the footage. That's the whole play.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Network,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 2,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2539,12 +2536,12 @@ NET.MOD.19 = Card(
     name    = "Groundswell",
     tagline = "Organic public interest builds before the story is even filed.",
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2605,7 +2602,7 @@ NET.MOD.20 = Card(
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2666,7 +2663,7 @@ NET.MOD.21 = Card(
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2727,7 +2724,7 @@ NET.MOD.22 = Card(
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2788,7 +2785,7 @@ NET.MOD.23 = Card(
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2849,7 +2846,7 @@ NET.MOD.24 = Card(
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2907,10 +2904,10 @@ NET.MOD.25 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -2971,7 +2968,7 @@ NET.MOD.26 = Card(
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -3029,10 +3026,10 @@ NET.MOD.27 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -3093,7 +3090,7 @@ NET.MOD.28 = Card(
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -3151,10 +3148,10 @@ NET.MOD.29 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed
@@ -3215,7 +3212,7 @@ NET.MOD.30 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Network faction modifier deck
+    ring_origin     = None,
     cost            = None,
     resolution_type = None,   # scaffolded, not addressed
     boost           = None,   # scaffolded, not addressed

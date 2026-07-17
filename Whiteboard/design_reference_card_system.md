@@ -356,6 +356,8 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 
 **Authoring rule (S146):** `design_note`/`arbiter_note`, checklist Notes, section intros, and code comments never carry session tags, attribution ("Andy confirmed"), before/after narration ("was X, now Y"), or PM02 line cross-refs — that provenance goes to PM02/PM05 only. Write these fields as if authored fresh against the current design, not as a changelog. Bare `PM02 Lxxx`/`04-n###` citations are the one exception — they function as reference/proof for the review comment, not embedded history. (Full corpus swept S146 after this pattern forced an 8-agent overnight cleanup — PM05 04-n165/04-n180/04-n185, PM02 L285–L287.)
 
+**Narrower rule for inline `#` code comments specifically (S147, PM02 L306):** the bare-citation exception above does not extend to `#` comments inside `Card()` python blocks. Cross-card provenance ("same shape as X", "mirrors Y's cost") and PM05/PM02 citations don't belong in code comments at all — card-to-card provenance has no bearing on how a production card functions, and a reference to a closed action item prompts no reader action. If a comment needs a schema-level citation to be legible (e.g. a real, still-open tracking item), it must state the fact plainly and mark itself for removal once that item resolves, not just cite the item number (pattern: `Part4d_Network.md:893`, `Part4e_Syndicate.md:2053`). `design_note`/`arbiter_note`/checklist Notes prose keep the S146 exception — this rule is code-comments-only.
+
 ### Enum Vocabularies (§6.3)
 
 ```
@@ -367,11 +369,12 @@ CardType:    CovertOperation | PublicAct | Pass | Countermeasure | Modifier
     ModActionCard   bundled with host Covert Op/PA at Dispatch (packet-pairing, Art 03 §9.1.1/§9.4.0.1) · fires with host · no independent taxonomy (effect is parasitic on host)
                     · effect: ModActionExpr — threshold_delta(n) | success_multiplier(n) | ps_shift(faction, delta) | cost_reduction(n, PA-only) — tagged union, exactly one per card (S135 04-n157)
                     · only ps_shift carries a faction param (acting|target|named) — the other three apply only to the card's own host action, schema-locked (04-n170)
-                    · locked faction-set format: 12 cards/faction — 4 threshold_delta (+5/+10/+15/+20) + 2 success_multiplier (n=1/2) + 4 ps_shift (2×2 self/target × minor/major) + 2 cost_reduction (n=1/2) · cost=None uniformly
+                    · locked faction-set format: 12 cards/faction — 4 threshold_delta (+5/+10/+15/+20) + 2 success_multiplier (n=1/2) + 4 ps_shift (2×2 self/target × minor/major) + 2 cost_reduction (n=1/2) · cost=None, schema-locked §6.2 (S147, PM02 L302) — Beat 0 payment validation exists, but the splay-display convention (Art 03 §9.4.0.1 Step 4) folds the value into the host packet's total drain instead of tracking it as a separate line item
                     · Ring set: same 12-card structure ×2 (Portable ring_constraint=None + Ring-Locked ring_constraint=ring) = 24/ring, 72 total, all 3 rings shipped S135
     ModBattleCard   Art 03 §10.1.2 commit window only (S132 redesign, PM02 L242) · effect = ModBattleExpr(direction: Boost|Hinder, target: Faction, magnitude: int)
                     · target = any contesting faction (§10.1.1), chosen by playing faction — need not be themselves, need not be a contestant
                     · face-down commit in front of target, simultaneous reveal before d10 roll · no per-card quantity cap · no independent taxonomy
+                    · cost=None, schema-locked §6.2 (S147, PM02 L302) — Art 03 §10.1.2's commit sequence has no cost validation/payment step at all, genuinely unenforceable (distinct reason from ModActionCard's, not inherited)
                     · Ring set: 8 cards/ring (4 Portable + 4 Ring-Locked), 24 total, all 3 rings shipped S134
 
   Acquisition axis (Art 04 §6.2, S133 — PM02 L245 revises L241) — orthogonal to the 3 subclasses above, governs WHERE a card comes from:

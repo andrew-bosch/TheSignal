@@ -68,7 +68,7 @@ Overture = Card(
 
     beat            = None,
     resolution      = Automatic,
-    resolution_type = "Transactional",  # matches GD-01 sibling precedent
+    resolution_type = Transactional,
     outcome_type    = None,
     threshold       = None,
     ring_mod        = None,
@@ -89,7 +89,7 @@ Overture = Card(
     affinity    = None,
     restriction = overture.assigned_pa.type not in [STD.PA.8, GUI.PA.2],  # avoids duplicate AccordForm on same PA
     cost        = None,  # earned as STD.CA.9 success reward; free to assign
-    boost       = None,  # matches GD-01 sibling precedent
+    boost       = None,
 
     acquisition      = Issued,
     generating_card  = "STD.CA.9",
@@ -101,7 +101,7 @@ Overture = Card(
     # Art 06 §9.4 formation procedure applies from placement forward.
 
     portrait = {},  # no entry; Art 06 §9.9 governs Portrait for resulting Accord
-    ps_framing = None,  # matches GD-01 sibling precedent
+    ps_framing = None,
 
     narrative    = "The terms don't matter yet. What matters is that the door is open.",
     perspectives = {},  # modifier card voice pass deferred to D-04-08
@@ -161,19 +161,18 @@ STD.MOD.2 = Card(
     name    = "Senior Liaison",
     tagline = "A Core insider willing to make a call on your behalf — the reason doesn't have to travel with the favor.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,   # Portable set — the favor travels with the holder, not the Core (closes 04-n161 alongside STD.MOD.6's Locked counterpart)
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard, and unenforceable regardless — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = 1,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "A liaison who owes you something makes a call. Nobody in the room needs to know where the call came from.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -223,18 +222,18 @@ STD.MOD.3 = Card(
     name    = "Signed-Out Instrumentation",
     tagline = "Precision gear signed out of storage on short notice — nobody's flagged it missing yet.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — the equipment leaves the building
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The requisition slip says routine maintenance. The gear is somewhere else entirely by the time anyone checks.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -284,18 +283,18 @@ STD.MOD.4 = Card(
     name    = "Clearance Review",
     tagline = "A name enters an audit list. Everything that name is attached to slows down until the review clears.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
     value_rating    = 1,
     ring_constraint = None,   # Portable set — the review follows the target, not the district
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "Nobody says why the review opened. Nobody has to. The pause is the point.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -345,18 +344,18 @@ STD.MOD.5 = Card(
     name    = "Access Frozen",
     tagline = "The credentials still exist. They just stop working, everywhere, until further notice.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — the suspension travels with the target's credentials, not the Core
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The system returns the same message everywhere it's checked: access denied, pending review.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -406,18 +405,18 @@ STD.MOD.6 = Card(
     name    = "Citadel Contact",
     tagline = "Pull that stops existing the moment you're not standing inside Government Citadel.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district (closes 04-n161 alongside STD.MOD.2's Portable counterpart)
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The contact is real, and so is the favor. Neither one leaves the building.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
 )
@@ -467,18 +466,18 @@ STD.MOD.7 = Card(
     name    = "Sanctum Ledger Access",
     tagline = "A live feed into what Financial Sanctum is actually tracking — worthless the moment you're not on its network.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
     value_rating    = 2,
-    ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The numbers only mean anything inside the Sanctum's own walls. Outside them, it's just a feed with nothing to compare against.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
 )
@@ -528,18 +527,18 @@ STD.MOD.8 = Card(
     name    = "Checkpoint Delay",
     tagline = "Military Installation's own checkpoints slow a target's people down — right there, and nowhere else.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The checkpoint has never once been called temporary. Tonight it's also slow, and nobody's explaining why.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
 )
@@ -589,18 +588,18 @@ STD.MOD.9 = Card(
     name    = "Perimeter Lockout",
     tagline = "Military Installation denies a target's access outright — the restriction only exists at that perimeter.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
     value_rating    = 2,
-    ring_constraint = 1,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 1 district
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "No explanation posted. Just a perimeter that stopped opening for one name on the list.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 1 district.",
 )
@@ -650,18 +649,18 @@ STD.MOD.10 = Card(
     name    = "Line Supervisor",
     tagline = "A shift supervisor reroutes a crew or a schedule on short notice — the favor travels wherever it's called in.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
     value_rating    = 1,
     ring_constraint = None,   # Portable set — the favor travels with the holder, not the Mid (closes 04-n161 alongside STD.MOD.14's Locked counterpart)
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The schedule says one thing. The supervisor makes it say another, quietly, before the shift starts.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -711,18 +710,18 @@ STD.MOD.11 = Card(
     name    = "Relay Priority",
     tagline = "A brief allocation override, pulled from the grid and carried wherever it's needed.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — the override travels with the holder
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "For an hour, someone else's allocation is quietly someone else's problem.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -772,18 +771,18 @@ STD.MOD.12 = Card(
     name    = "Regulatory Hold",
     tagline = "A target's paperwork stalls in the system — and keeps stalling, wherever they refile it.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
     value_rating    = 1,
     ring_constraint = None,   # Portable set — the hold follows the target's filing, not a fixed office
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The form is correct. The form is always correct. It's still not moving.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -833,18 +832,18 @@ STD.MOD.13 = Card(
     name    = "Supply Line Frozen",
     tagline = "A shipment through the Mid quietly stalls — cutting the target off wherever it was actually going.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — the disruption follows the shipment's destination, not the Mid
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "Somewhere in transit, a manifest gets flagged. It doesn't matter where it started. It matters that it never arrives.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -894,18 +893,18 @@ STD.MOD.14 = Card(
     name    = "Power Grid Chief",
     tagline = "Commands real weight on the floor of the Power Grid. Nowhere else knows his name.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district (closes 04-n161 alongside STD.MOD.10's Portable counterpart)
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "Outside the Grid, he's nobody in particular. Inside it, nothing moves without him knowing.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
 )
@@ -955,18 +954,18 @@ STD.MOD.15 = Card(
     name    = "Communications Hub Override",
     tagline = "A direct line into the relay system — useless the moment you're not standing near a tower.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
     value_rating    = 2,
-    ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The override rides the Hub's own relay hardware. Take it somewhere without towers and it's just a dead handset.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
 )
@@ -1016,18 +1015,18 @@ STD.MOD.16 = Card(
     name    = "Permit Office Freeze",
     tagline = "The Regulatory District's own queue jams for a target — only for business actually filed there.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The clerk isn't stalling. The queue is just, tonight, exactly this long.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
 )
@@ -1077,18 +1076,18 @@ STD.MOD.17 = Card(
     name    = "Clearinghouse Lockout",
     tagline = "A target's capital sticks mid-transfer at Financial Clearinghouse — frozen exactly where it sits.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
     value_rating    = 2,
-    ring_constraint = 2,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 2 district
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The transfer clears the Sanctum end fine. It just never quite finishes clearing this one.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 2 district.",
 )
@@ -1138,18 +1137,18 @@ STD.MOD.18 = Card(
     name    = "Familiar Face",
     tagline = "Someone in the crowd knows you and vouches for you — the door opens wherever you actually need it to.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
     value_rating    = 1,
     ring_constraint = None,   # Portable set — the connection travels with the holder, not Baryo (closes 04-n161 alongside STD.MOD.22's Locked counterpart)
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "A nod, a name dropped, and suddenly you're not a stranger anymore. It travels as far as the person vouching for you is willing to go.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -1199,18 +1198,18 @@ STD.MOD.19 = Card(
     name    = "Scavenged Rig",
     tagline = "Improvised tech pulled together from whatever the Mid discarded last quarter — built to travel.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — improvised and portable by nature
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "None of the parts match. All of them work. That's the whole design philosophy.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -1260,18 +1259,18 @@ STD.MOD.20 = Card(
     name    = "Vendors Close Ranks",
     tagline = "Word moves through the gray economy — a target stops getting credit, no matter where they try next.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
     value_rating    = 1,
     ring_constraint = None,   # Portable set — the reputation follows the target, not a single block
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "Nobody posted a notice. Everyone who needed to know already does.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -1321,18 +1320,18 @@ STD.MOD.21 = Card(
     name    = "Baryo Turns Its Back",
     tagline = "The ring's informal networks stop cooperating with a target everywhere at once.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — the withdrawal follows the target's name, not a fixed block
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "Doors that used to open don't. Nobody explains why. Nobody has to.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -1382,18 +1381,18 @@ STD.MOD.22 = Card(
     name    = "Strip Regular",
     tagline = "A fixture of the Commercial Strip. Everybody there owes him a little something. Nobody past it does.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district (closes 04-n161 alongside STD.MOD.18's Portable counterpart)
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "Ask about him three blocks over and you get a shrug. Ask on the Strip and everyone has an opinion.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
@@ -1443,18 +1442,18 @@ STD.MOD.23 = Card(
     name    = "Market Stall Cache",
     tagline = "Goods and gear stockpiled in a Strip stall — useless anywhere but there.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
     value_rating    = 2,
-    ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "The cache has been building for years, one odd lot at a time. It was never going anywhere.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
@@ -1504,18 +1503,18 @@ STD.MOD.24 = Card(
     name    = "Housing Arrangement Called In",
     tagline = "One of the ring's unofficial landlords makes a target's stay difficult — only within that arrangement's reach.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "No one signed anything. That was always the arrangement's whole strength, and tonight it's a weakness instead.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
@@ -1565,18 +1564,18 @@ STD.MOD.25 = Card(
     name    = "Transit Hub Shutout",
     tagline = "Transit labor stops moving anything for a target — right at the Hub, and nowhere the Hub doesn't reach.",
     type    = ModBattleCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
     effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
     value_rating    = 2,
-    ring_constraint = 3,      # Ring-Locked set — usable only in Battlefield Strength for a Ring 3 district
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass convention
+    portrait     = None,
     narrative    = "Every shift finds a reason not to touch the load. By evening it's still sitting exactly where it was unloaded.",
     arbiter_note = "Playable by any faction, not just whoever drew it (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target. Usable only in Battlefield Strength for a Ring 3 district.",
 )
@@ -1626,16 +1625,16 @@ STD.MOD.26 = Card(
     name    = "Zoning Variance",
     tagline = "A quiet exception clears the way before anyone downstream has to ask for one.",
     type    = ModActionCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
     value_rating    = 1,
     ring_constraint = None,   # Portable set — the exception travels with whoever's holding it
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
-    cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = 1,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A quiet exception makes a Core placement or build action easier to clear — filed and approved before anyone thought to object.",
@@ -1691,12 +1690,12 @@ STD.MOD.27 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A report reaches its audience with the inconvenient part blacked out — smoothing the acting faction's own submission.",
@@ -1752,12 +1751,12 @@ STD.MOD.28 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A district block cordoned off \"for maintenance\" clears space for the acting faction's own operation there.",
@@ -1813,12 +1812,12 @@ STD.MOD.29 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Key context is classified before a rival can plan around it, raising their difficulty — but for the holder, the same classification smooths the way.",
@@ -1874,12 +1873,12 @@ STD.MOD.30 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An unseen endorsement from within the Core amplifies a successful action's effect.",
@@ -1935,12 +1934,12 @@ STD.MOD.31 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Official recognition of a successful placement makes its result carry further than usual.",
@@ -1994,14 +1993,14 @@ STD.MOD.32 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An exchange is agreed to never have happened — insulating the acting faction from the standing cost it would otherwise carry.",
@@ -2057,12 +2056,12 @@ STD.MOD.33 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A formal citation boosts standing through institutional channels rather than the public eye.",
@@ -2116,14 +2115,14 @@ STD.MOD.34 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A quiet, informal heads-up to the right official costs a named faction a small, deniable amount of standing.",
@@ -2179,12 +2178,12 @@ STD.MOD.35 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An audit's findings reach exactly the audience that costs a rival the most standing.",
@@ -2238,14 +2237,14 @@ STD.MOD.36 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = None,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A routine institutional charge is quietly set aside for the acting faction only.",
@@ -2302,11 +2301,11 @@ STD.MOD.37 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — closes Ring 1's Portable 12-card set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Funds normally locked behind approval move immediately, discounting an urgent action's cost.",
@@ -2363,11 +2362,11 @@ STD.MOD.38 = Card(
     effect          = ModActionExpr.threshold_delta(n=5),
     value_rating    = 1,
     ring_constraint = 1,      # Ring-Locked set — usable only with ops targeting a Ring 1 district (closes 04-n161 alongside STD.MOD.26's Portable counterpart)
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "The recognition is real, but it's tied to this specific checkpoint — it doesn't travel with the holder anywhere else.",
@@ -2423,12 +2422,12 @@ STD.MOD.39 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A standing relationship with the archive staff eases a paperwork-dependent action — but only within their reach.",
@@ -2484,12 +2483,12 @@ STD.MOD.40 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A direct line into the administrative wing eases the operation — but the line only reaches this far.",
@@ -2545,12 +2544,12 @@ STD.MOD.41 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Full clearance from within the Core itself — nothing left to process through ordinary channels, so long as the work stays here.",
@@ -2606,12 +2605,12 @@ STD.MOD.42 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Knowing exactly how this specific checkpoint runs its shift changes lets a successful action land further than expected.",
@@ -2667,12 +2666,12 @@ STD.MOD.43 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "When the institution itself backs an outcome, it carries much further than a routine result would — but only inside its own reach.",
@@ -2726,14 +2725,14 @@ STD.MOD.44 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A quiet, favorable notation enters the institution's own record — a small, deliberate boost to standing.",
@@ -2789,12 +2788,12 @@ STD.MOD.45 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Formal recognition from within the institution itself is a significant, visible boost — earned specifically here.",
@@ -2848,14 +2847,14 @@ STD.MOD.46 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A named faction's presence is quietly flagged at this specific checkpoint — small, but on the record.",
@@ -2911,12 +2910,12 @@ STD.MOD.47 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A rival is visibly and formally denied access to institutional records — a real, public cost to standing.",
@@ -2970,14 +2969,14 @@ STD.MOD.48 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
-    ring_constraint = 1,      # Ring-Locked set
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_constraint = 1,
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An administrative reshuffle absorbs part of an action's overhead — quietly, and only on this institution's books.",
@@ -3034,11 +3033,11 @@ STD.MOD.49 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = 1,      # Ring-Locked set — closes Ring 1's 24-card set (Portable + Ring-Locked)
-    ring_origin     = 1,      # Ring 1 (Core) modifier deck
+    ring_origin     = 1,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A submission that skips the full review process skips the overhead that comes with it — but only through this specific channel.",
@@ -3090,16 +3089,16 @@ STD.MOD.50 = Card(
     name    = "Rezoned Corridor",
     tagline = "The corridor gets reclassified, and the placement clears without a fight.",
     type    = ModActionCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170)
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
-    cost            = None,   # splay-display convention, PM02 L256
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_constraint = None,
+    ring_origin     = 2,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An infrastructure corridor is reclassified, making a placement there easier to clear.",
@@ -3155,12 +3154,12 @@ STD.MOD.51 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A tapped communications relay lets the acting faction anticipate and ease their own move.",
@@ -3216,12 +3215,12 @@ STD.MOD.52 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "The acting faction's own shipping manifest is quietly corrected in advance, smoothing a logistics-dependent action.",
@@ -3277,12 +3276,12 @@ STD.MOD.53 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A formal labor complaint against the acting faction's own submission is quietly withdrawn before it can raise the bar.",
@@ -3338,12 +3337,12 @@ STD.MOD.54 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Resources moved without ever formally stopping compound the action's benefit.",
@@ -3399,12 +3398,12 @@ STD.MOD.55 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "One system's output feeding directly into the next multiplies the outcome well past what was planned.",
@@ -3458,14 +3457,14 @@ STD.MOD.56 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A stamp of approval becomes a small, visible standing win.",
@@ -3521,12 +3520,12 @@ STD.MOD.57 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "The acting faction's operation is cited publicly as a model of efficient operation — a real standing win.",
@@ -3580,14 +3579,14 @@ STD.MOD.58 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A minor procedural delay on a rival's shipment gets logged in the public record — small, but on the record.",
@@ -3643,12 +3642,12 @@ STD.MOD.59 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A public safety violation becomes standing damage for whoever's named on the citation.",
@@ -3702,14 +3701,14 @@ STD.MOD.60 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = None,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "The acting faction's submission is rerouted to the front of a queue, skipping delay-related overhead.",
@@ -3766,11 +3765,11 @@ STD.MOD.61 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — closes Ring 2's Portable 12-card set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A resource purchase clears at an institutional discount not normally available.",
@@ -3826,12 +3825,12 @@ STD.MOD.62 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=5),
     value_rating    = 1,
-    ring_constraint = 2,      # Ring-Locked set — usable only with ops targeting a Ring 2 district (closes 04-n161 alongside STD.MOD.50's Portable counterpart)
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Regular business at this specific freight dock eases a logistics-dependent action there — but only there.",
@@ -3887,12 +3886,12 @@ STD.MOD.63 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A standing relationship with substation staff eases an infrastructure-dependent action — within their lines only.",
@@ -3948,12 +3947,12 @@ STD.MOD.64 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Priority access at a specific communications hub smooths a relay-dependent action — but only through that hub.",
@@ -4009,12 +4008,12 @@ STD.MOD.65 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Full standing at the district clearinghouse means paperwork simply moves, no matter the action — so long as it moves through here.",
@@ -4070,12 +4069,12 @@ STD.MOD.66 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An extra shift pushes a build further than scheduled, amplifying its result — a local crew, working local hours.",
@@ -4131,12 +4130,12 @@ STD.MOD.67 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A facility running at capacity turns a routine action into an exceptional one — but only this facility, running this way.",
@@ -4190,14 +4189,14 @@ STD.MOD.68 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A genuinely significant action is buried among routine paperwork, muting any standing consequence either way — a small protective boost.",
@@ -4253,12 +4252,12 @@ STD.MOD.69 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A public commendation for keeping the Mid's infrastructure running is a real, visible standing win.",
@@ -4312,14 +4311,14 @@ STD.MOD.70 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A rival's resource draw becomes public knowledge at this specific institution — a small cost to their standing.",
@@ -4375,12 +4374,12 @@ STD.MOD.71 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A named rival is formally sanctioned at this institution — visible to every faction that does business through it.",
@@ -4434,14 +4433,14 @@ STD.MOD.72 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
-    ring_constraint = 2,      # Ring-Locked set
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
+    ring_constraint = 2,
+    ring_origin     = 2,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A shipment already in the system is released without the fee a fresh order would carry — this system specifically.",
@@ -4498,10 +4497,10 @@ STD.MOD.73 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = 2,      # Ring-Locked set — closes Ring 2's 24-card set (Portable + Ring-Locked)
-    ring_origin     = 2,      # Ring 2 (Mid) modifier deck
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = 2,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
     cost            = None,
 
     portrait     = None,
@@ -4554,16 +4553,16 @@ STD.MOD.74 = Card(
     name    = "Squatter's Claim",
     tagline = "An informally occupied space becomes a real claim, on paper, without a fight.",
     type    = ModActionCard,  subtype = Standard,  faction = All,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170)
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
-    cost            = None,   # splay-display convention, PM02 L256
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_constraint = None,
+    ring_origin     = 3,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An informally occupied space becomes easier to formalize into a real presence claim.",
@@ -4619,12 +4618,12 @@ STD.MOD.75 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Backing from one of Baryo's unofficial housing authorities smooths a placement nobody easily challenges.",
@@ -4680,12 +4679,12 @@ STD.MOD.76 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Advance word from contacts at the docks smooths the acting faction's own shipment-dependent operation.",
@@ -4741,12 +4740,12 @@ STD.MOD.77 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Visible grassroots support for the acting faction's own submission smooths its passage — the neighborhood's already decided.",
@@ -4802,12 +4801,12 @@ STD.MOD.78 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Several small contributions combine into an outcome larger than any single source could produce.",
@@ -4863,12 +4862,12 @@ STD.MOD.79 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An unusually large crowd amplifies whatever the action was counting on being seen.",
@@ -4922,14 +4921,14 @@ STD.MOD.80 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Word of mouth shifts standing faster than any official channel — a small, organic boost.",
@@ -4985,12 +4984,12 @@ STD.MOD.81 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "The neighborhood vouches for the acting faction publicly — a real and visible standing win.",
@@ -5044,14 +5043,14 @@ STD.MOD.82 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A street performer's aside becomes the detail that costs a named faction a little standing.",
@@ -5107,12 +5106,12 @@ STD.MOD.83 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A casual conversation becomes something a rival has to publicly answer for — the Strip doesn't forget what it hears.",
@@ -5166,14 +5165,14 @@ STD.MOD.84 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = None,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Informal credit lets an action proceed before payment technically clears.",
@@ -5230,11 +5229,11 @@ STD.MOD.85 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = None,   # Portable set — closes Ring 3's Portable 12-card set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A resource moves through several informal trades before landing where it was always headed, cheaper than a direct purchase.",
@@ -5290,12 +5289,12 @@ STD.MOD.86 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=5),
     value_rating    = 1,
-    ring_constraint = 3,      # Ring-Locked set — usable only with ops targeting a Ring 3 district (closes 04-n161 alongside STD.MOD.74's Portable counterpart)
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Being a known face at a specific market stall eases an economy-dependent action there — but only there.",
@@ -5351,12 +5350,12 @@ STD.MOD.87 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Knowing exactly how a specific transit point actually runs eases an operation passing through it — knowledge that doesn't travel elsewhere.",
@@ -5412,12 +5411,12 @@ STD.MOD.88 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Established standing in a specific housing block smooths a placement there — standing that doesn't extend past the block.",
@@ -5473,12 +5472,12 @@ STD.MOD.89 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Being a fixture at this specific spot means nothing about an operation there needs explaining or clearing — but the standing doesn't travel.",
@@ -5534,12 +5533,12 @@ STD.MOD.90 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A temporary permit becomes cover for something that lands bigger than expected — but only on these grounds.",
@@ -5595,12 +5594,12 @@ STD.MOD.91 = Card(
 
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Informal networks carry an outcome further than any official channel would — but only within this network's reach.",
@@ -5654,14 +5653,14 @@ STD.MOD.92 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A rumor seeded in a local gathering changes how an outcome is read — protecting the acting faction's standing, quietly.",
@@ -5717,12 +5716,12 @@ STD.MOD.93 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A genuinely celebrated local event puts the acting faction's name in a good light, visibly and specifically here.",
@@ -5776,14 +5775,14 @@ STD.MOD.94 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A passing comment at the market costs a named faction a little standing — nothing traceable, nothing worth a formal answer.",
@@ -5839,12 +5838,12 @@ STD.MOD.95 = Card(
 
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A named faction is visibly turned away at this specific spot — a real, public cost to standing that the whole block sees.",
@@ -5898,14 +5897,14 @@ STD.MOD.96 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
-    ring_constraint = 3,      # Ring-Locked set
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_constraint = 3,
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Discarded materials from the Mid get reused at a fraction of fresh cost — but only through this specific yard.",
@@ -5962,11 +5961,11 @@ STD.MOD.97 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = 3,      # Ring-Locked set — closes Ring 3's 24-card set and the full 72-card Ring ModAction stub pass
-    ring_origin     = 3,      # Ring 3 (Baryo) modifier deck
+    ring_origin     = 3,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A debt called in from the informal economy waives part of what an action would otherwise cost — this economy specifically, no other.",
@@ -6238,7 +6237,7 @@ Everyone in the building hears when someone finally locks the room down. Whoever
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Intel Token is an existing component; `arbiter.deliver()` reuses the standard delivery mechanism (mirrors GHO.MOD.2 Perimeter Sensors' template, per design_note). | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries the `faction(holder)` syntax form flagged under 04-n171 — `faction(holder)` used here as a Faction-object receiver passed positionally to `arbiter.deliver()`, mirroring Overture's established `faction(acting)` pattern. Confirmable on that basis; formal §6.3 write-up still pending the full ModReactCard landscape. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98, still open — schema_cleanup_log #41). `faction(holder)` (used here as a Faction-object receiver passed positionally to `arbiter.deliver()`, mirroring Overture's established `faction(acting)` pattern) is now confirmed §6.3 MutationExpr vocabulary. | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -6317,7 +6316,7 @@ An Accord anywhere in the city passes through institutional record-keeping. Core
 | Supported by zones | ✓ (N/A) | `target_district=None` by design — Accords aren't zone-scoped. | Art 01 §6–7 |
 | Supported by components | ✓ | Standing marker is an existing component. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries the `faction(holder)` form (04-n171) — here used as a Faction-object receiver for `.standing.add()`, same pattern as STD.MOD.107–109. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98, still open — schema_cleanup_log #41). `faction(holder)` (here used as a Faction-object receiver for `.standing.add()`, same pattern as STD.MOD.107–109) is now confirmed §6.3 MutationExpr vocabulary. | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -6396,7 +6395,7 @@ A submission lands on the wrong desk, and now it needs a second signature.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | No new component — modifies an existing submitted card's threshold field. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | `arbiter.modify(target, threshold, delta)` isn't new ARBITER behavior — it feeds the existing threshold-modifier-accumulation pipeline already used by BM-xx tokens and M-11 Type B Countermeasure (Art 03 §9.4.1.1/§9.4.3.1.3). | Art 03 §9.4.1.1, §9.4.3.1.3 |
-| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries `arbiter.modify(target, field, delta)` (04-n171) — procedurally grounded per the row above; formal §6.3 write-up still pending the full ModReactCard landscape. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98, still open — schema_cleanup_log #41). `arbiter.modify(target, field, delta)` (procedurally grounded per the row above) is now confirmed §6.3 MutationExpr vocabulary. | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -6475,7 +6474,7 @@ Every structure that goes up in Core passes through an office with its hand out.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Native resource tokens are existing components. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries `NativeResource(faction)` (04-n171) — parameterizes the existing bare `NativeResource` subject symbol so a `faction=All` card can resolve the correct resource type at runtime, needed because (unlike faction-specific precedent, e.g. GUI.MOD.2/3/4's hardcoded Capacity) this card has no single fixed faction context. Confirmable on that basis; formal §6.3 write-up pending full landscape. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98, still open — schema_cleanup_log #41). `NativeResource(faction)` (parameterizes the existing bare `NativeResource` subject symbol so a `faction=All` card can resolve the correct resource type at runtime, needed because — unlike faction-specific precedent, e.g. GUI.MOD.2/3/4's hardcoded Capacity — this card has no single fixed faction context) is now confirmed §6.3 MutationExpr vocabulary. | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -6554,7 +6553,7 @@ Reaching Established status means an audit — and audits find things.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.104. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.104 (persistence/resolution_type deferred; `NativeResource(faction)` under 04-n171). | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.104 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `NativeResource(faction)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -6633,7 +6632,7 @@ A reserve fund, tapped the moment the ground gives out from under you.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.104. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.104 (persistence/resolution_type deferred; `NativeResource(holder)` under 04-n171), plus the `ring=` parameter question above. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.104 (persistence/resolution_type deferred, still open — schema_cleanup_log #41), plus the `ring=` parameter question above; `NativeResource(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -6712,7 +6711,7 @@ Every gain gets a formal response, whether anyone asked for one or not.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.102. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98). Also carries `faction(holder)` (04-n171), same basis as STD.MOD.102. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Persistence/resolution_type deferred (same as STD.MOD.98, still open — schema_cleanup_log #41). `faction(holder)` (same basis as STD.MOD.102) is now confirmed §6.3 MutationExpr vocabulary. | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -6791,7 +6790,7 @@ Core keeps records of every dispute. A district turning contested opens the door
 | Supported by zones | ✓ | `target_district=trigger.district` — valid. | Art 01 §6–7 |
 | Supported by components | ✓ | Tension Marker is an existing component. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107 (persistence/resolution_type deferred; `faction(holder)` under 04-n171). | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.107 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -6870,7 +6869,7 @@ A reprimand doesn't need to be loud to be effective. Core specializes in the qui
 | Supported by zones | ✓ | Same basis as STD.MOD.107. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.107 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7186,7 +7185,7 @@ A district locked down draws load like a failing relay. The grid logs it before 
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.101. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.101 (persistence/resolution_type deferred; `faction(holder)` under 04-n171). | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.101 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7265,7 +7264,7 @@ An Accord's dissolution isn't just paperwork — whatever it was propping up now
 | Supported by zones | ✓ (N/A) | `target_district=None` — Accords aren't zone-scoped, same as STD.MOD.102. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.102. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.102. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.102 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7344,7 +7343,7 @@ An inspection nobody asked for, timed to land before the paperwork clears.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.103. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same BM-xx/M-11 pipeline grounding as STD.MOD.103 — not new ARBITER behavior. | Art 03 §9.4.1.1, §9.4.3.1.3 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.103 (`arbiter.modify` under 04-n171). | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.103 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `arbiter.modify` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7423,7 +7422,7 @@ Nothing gets built in Mid without crossing a toll line somebody controls.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.104. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.104. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.104 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `NativeResource(trigger.faction)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7502,7 +7501,7 @@ Every climb to Established in Mid triggers a reconciliation somewhere down the l
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.105. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.105. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.105 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `NativeResource(trigger.faction)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7581,7 +7580,7 @@ Losing ground in Mid trips a contingency that's always been sitting there, waiti
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.106. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.106. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.106 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `NativeResource(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7660,7 +7659,7 @@ Every gain in Mid gets a statement from somebody with standing to make one.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.107 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7739,7 +7738,7 @@ Mid keeps a file on every dispute. A contested line gets a citation before it ge
 | Supported by zones | ✓ | Same basis as STD.MOD.108. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.108. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.108. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.108 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -7818,7 +7817,7 @@ A formal notice doesn't need drama. Mid's bureaucracy just needs the paper trail
 | Supported by zones | ✓ | Same basis as STD.MOD.107. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.107 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8134,7 +8133,7 @@ When someone locks down a piece of Baryo, the street knows before the ink's even
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.101. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.101. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.101 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8213,7 +8212,7 @@ A handshake deal's terms are whatever the last conversation says they are.
 | Supported by zones | ✓ (N/A) | Not zone-scoped, same as STD.MOD.102/114. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.102. | Art 02 §6–8 |
 | Supported by game procedure | ⚠ | Same open Art 06 gap noted for `accord.corrupted` generally (requires an explicit ARBITER corrupt step on the Accord form, tracked 06-n01) — not specific to this card. | Art 03; GR 6.1; PM05 06-n01 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.102. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.102 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8292,7 +8291,7 @@ An operation through Baryo draws attention before it ever gets a chance to land 
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.103. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same BM-xx/M-11 pipeline grounding as STD.MOD.103/115. | Art 03 §9.4.1.1, §9.4.3.1.3 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.103. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.103 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `arbiter.modify` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8371,7 +8370,7 @@ There's no filing cabinet for it, but everyone knows the toll gets paid regardle
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.104. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.104. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.104 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `NativeResource(trigger.faction)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8450,7 +8449,7 @@ The gray economy notices every climb — and it always finds a way in.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.105. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.105. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.105 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `NativeResource(trigger.faction)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8529,7 +8528,7 @@ Baryo runs on favors owed. This is one finally getting called in.
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.106. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.106. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.106 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `NativeResource(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8608,7 +8607,7 @@ The neighborhood keeps its own ledger, and it's not shy about updating it out lo
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.107 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8687,7 +8686,7 @@ Baryo doesn't wait for an official ruling. The neighborhood picks its side the m
 | Supported by zones | ✓ | Same basis as STD.MOD.108. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.108. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.108. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.108 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |
@@ -8766,7 +8765,7 @@ Baryo's memory is longer than anywhere else in the city.
 | Supported by zones | ✓ | Same basis as STD.MOD.107. | Art 01 §6–7 |
 | Supported by components | ✓ | Same basis as STD.MOD.107. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Same open items as STD.MOD.107. | Art 04 §6.1–§6.3; 04-n171 |
+| Data schema validation | ⚠ (deferred) | Same open item as STD.MOD.107 (persistence/resolution_type deferred, still open — schema_cleanup_log #41); `faction(holder)` now confirmed §6.3 MutationExpr vocabulary (04-n171). | Art 04 §6.1–§6.3; 04-n171 |
 | Card narrative | ✓ | Card Story is a concrete event. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None`. | Art 00a §9.2 |

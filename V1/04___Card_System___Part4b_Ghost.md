@@ -29,7 +29,7 @@
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost-exclusive intelligence-into-action card — the only card with Predictive resolution in the set. Ghost submits a prediction at §9.1: target faction, target district, and the operation they believe that faction has dispatched. At Beat 2, ARBITER checks all three against the covert grid. A correct match causes ARBITER to move the matched operation from the target faction's Beat 3 lane into Ghost's lane. The target faction loses the operation entirely: their case returns empty, resources spent, Dispatch Token consumed.
+Ghost-exclusive intelligence-into-action card — resolves deterministically (`resolution_type = Transactional`; the earlier `"Predictive"` label was corrected, schema_cleanup_log #41 — the card's own perspective explicitly rejects the framing: "We are not predicting"). Ghost submits a declared guess at §9.1: target faction, target district, and the operation they believe that faction has dispatched. At Beat 2, ARBITER checks all three against the covert grid. A correct match causes ARBITER to move the matched operation from the target faction's Beat 3 lane into Ghost's lane. The target faction loses the operation entirely: their case returns empty, resources spent, Dispatch Token consumed.
 
 This is not a copy. The operation executes once, for Ghost.
 
@@ -56,14 +56,14 @@ A faction submits their operation. Ghost, watching, named all three things in ad
 | Balance | ✓ | 2 Findings for a triple-prediction. High prediction bar (faction + district + operation name) is the gate. Stolen op is free to Ghost — original faction bore the cost. Fizzle risk (wrong prediction OR can't execute) is the downside. | Art 02 §8 |
 | Effect duration | ✓ | Immediate: stolen op resolves at Beat 3, no persistent state from Pattern Match itself. | — |
 | Persistence | ✓ | Immediate — fully resolved at Beat 3; no lingering game-state marker from Pattern Match. | Art 04 §6 |
-| Trigger validity | N/A | trigger = None — Predictive resolution: ARBITER checks prediction against grid at Beat 2. | — |
+| Trigger validity | N/A | trigger = None — Automatic resolution: ARBITER checks the declared guess against grid at Beat 2. | — |
 | Portrait validity | ⚠ | Ghost submitter=+1, modifier=+1, mod_where=game.outcome == Success. Portrait AND/OR semantics still open (see Outstanding Issues). Additional open: does Portrait also fire when the stolen op resolves at Beat 3 under Ghost's lane? | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named — Ghost names a specific district in the prediction. No adjacency restriction (analytical op). | Art 01 §6 |
 | Supported by components | ✓ | Findings cost; CovertOperation as redirect target; stolen op's components governed by that op's spec. Ghost may receive off-faction resources (Mandate, Capacity, etc.) — tradeable at Debrief. | Art 02 §8 |
 | Supported by game procedure | ⚠ | Beat 2 resolution; ARBITER checks prediction against covert grid; if match + executable: lane redirect. Art 03 gap: Pattern Match redirect procedure not yet written in Art 03 §9.4 — simpler than the prior copy-injection model but still unwritten. | Art 03 §9 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | `Automatic` (Predictive resolution_type); single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | `Automatic` (`resolution_type = Transactional`); single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
@@ -95,7 +95,7 @@ GHO.CA.1 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Predictive",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -186,7 +186,7 @@ GHO.CA.2 = Card(
     beat=2, resolution=d100, threshold=60, ring_mod={0:-15,1:-10,2:0,3:+10}, doctrine_mod=None,
     value_rating = 2,
     trigger=None,
-    resolution_type="Probabilistic", outcome_type=None,
+    resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -194,7 +194,7 @@ GHO.CA.2 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction=None,
-    cost        = IntelToken(faction=faction(target)) * 1,
+    cost        = IntelToken(about=faction(target)) * 1,
     success     = game.dispatch(faction(acting), IntelDeliverySlip(faction=faction(target), op_type=faction(target).op(beat=3).type, district=faction(target).op(beat=3).district)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = game.dispatch(faction(target), NotificationSlip),
@@ -262,7 +262,7 @@ GHO.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Ghost,
     layer   = Information, function = Reveal, subject = IntelDeliverySlip,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -331,7 +331,7 @@ GHO.CA.4 = Card(
     layer   = Information,  function = Remove,  subject = IntelToken,
     beat=3, resolution=d100, threshold=25, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 2,
-    resolution_type="Probabilistic", outcome_type=None,
+    resolution_type = Probabilistic, outcome_type=None,
     persistence           = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -412,7 +412,7 @@ GHO.CA.5 = Card(
     layer   = Information,  function = Corrupt,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -493,7 +493,7 @@ GHO.CA.7 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -580,7 +580,7 @@ GHO.CA.8 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -656,7 +656,7 @@ GHO.CA.15 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Corrupt,  subject = TargetProfile,
     beat    = 2,  resolution = Automatic,
-    cost    = resource.faction(Ghost).findings * 1 + intel_token * 1,
+    cost    = resource.faction(Ghost).findings * 1 + IntelToken() * 1,
     success = "Ghost corrupts the first CA in target faction's Beat 3 resolution queue if it matches Ghost's specified parameters.",
     arbiter_note = "At Covert Dispatch, Ghost writes a target field (e.g., 'target_district') and expected value (e.g., 'Core'), plus a replacement value (e.g., 'Baryo'), in their Target Profile freeform space. At Beat 2: ARBITER checks target faction's first CA in the ARG. If that CA's Target Profile contains the exact field and value Ghost named, ARBITER silently crosses it out and writes Ghost's new value. If it does not match, Ghost's operation fizzles. The target faction executes their CA at Beat 3 against the new corrupted target.",
     design_note = "Beat 2 positional wager against a Beat 3 CA. Ghost must correctly predict a parameter of the opponent's first queued operation. The corruption is entirely silent until the operation resolves at Beat 3."
@@ -696,7 +696,7 @@ Ghost cashes one piece of intelligence for something more durable. ARBITER recor
 | Data schema validation | ⚠ | Still missing `boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Cost is IntelToken alone — no fungible resource paired with it at all (starker than the other Intel-Token-as-cost instances, which at least mix in Findings). Open question re: typing Intel Tokens as a cost resource, flagged not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Cost is IntelToken alone — confirmed valid as its own cost category (§6.3, schema_cleanup_log #10), no fungible resource pairing required. | Art 00a §9.2; Art 04 §6.3 |
 
 #### Outstanding Issues
 
@@ -724,7 +724,7 @@ GHO.CA.9 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -737,7 +737,7 @@ GHO.CA.9 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 1,
-    cost        = IntelToken(faction=faction(target)) * 1,
+    cost        = IntelToken(about=faction(target)) * 1,
 
     success     = DebriefActionCard(subtype=SCIFRecord, target=faction(target)),
     successcrit = None,
@@ -784,7 +784,7 @@ One Intel token, two of their resources. The target's reserves are untouched —
 | Data schema validation | ⚠ | Still missing `boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Cost is IntelToken alone — same "no fungible resource paired" shape as GHO.CA.9. Same open question re: typing Intel Tokens as a cost resource, flagged not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Cost is IntelToken alone — confirmed valid as its own cost category (§6.3, schema_cleanup_log #10), same basis as GHO.CA.9. | Art 00a §9.2; Art 04 §6.3 |
 
 #### Outstanding Issues
 
@@ -812,7 +812,7 @@ GHO.CA.10 = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -828,7 +828,7 @@ GHO.CA.10 = Card(
         faction(acting).intel_tokens(faction=faction(target)) >= 1 and
         district(self|adjacent).faction(acting).presence > 0
     ),
-    cost            = IntelToken(faction=faction(target)) * 1,
+    cost            = IntelToken(about=faction(target)) * 1,
 
     success     = game.dispatch(faction(acting), resource.faction(target).native * 2),
     successcrit = None,
@@ -906,7 +906,7 @@ Card(
     ring_mod        = None,
     doctrine_mod    = None,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -919,7 +919,7 @@ Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 2,
-    cost        = IntelToken(faction=faction(target)) * 2 + resource.faction(acting).findings * 3,
+    cost        = IntelToken(about=faction(target)) * 2 + resource.faction(acting).findings * 3,
 
     success     = game.reveal_private(
                     faction(target).classified_directive,
@@ -989,7 +989,7 @@ GHO.CA.6 = Card(
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 3,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -997,7 +997,7 @@ GHO.CA.6 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).intel_tokens.count >= 1,
-    cost        = resource.faction(acting).findings * 1 + IntelToken(any) * 1,
+    cost        = resource.faction(acting).findings * 1 + IntelToken() * 1,
     boost       = None,
     success     = game.dispatch(faction(acting), IntelToken(faction=consumed_token.faction) * 3),
     successcrit=None, fail=None, failcrit=None,
@@ -1071,7 +1071,7 @@ GHO.CA.12 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1177,7 +1177,7 @@ Backdate = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Ghost).holds_intel_token(count=1),
-    cost        = resource.faction(Ghost).findings * 2 + intel_token.held * 1,
+    cost        = resource.faction(Ghost).findings * 2 + IntelToken() * 1,
 
     # Instructions slip in case: [new quarter — must be earlier than current] | [return: self / named faction]
     success = (
@@ -1280,7 +1280,6 @@ FieldVerification = Card(
     success = (
         arbiter.update(intel_token.held, field=quarter, value=game.current_quarter),
         arbiter.return_to_case(intel_token),
-        # token reclassified Fresh (0–1 quarters old = current Quarter)
     ),
     successcrit = None,
     fail        = arbiter.return_to_case(intel_token),  # token returned Expired; no loss
@@ -1403,7 +1402,7 @@ GHO.CA.14 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat    = 2,  resolution = Automatic,
-    cost    = resource.faction(Ghost).findings * 2 + resource.faction(Ghost).exposure * 1 + resource.faction(Ghost).capital * 1 + intel_token * 1,
+    cost    = resource.faction(Ghost).findings * 2 + resource.faction(Ghost).exposure * 1 + resource.faction(Ghost).capital * 1 + IntelToken() * 1,
     success = "The Arbiter invalidates and removes the first Covert Operation submitted by target_faction in Beat 3.",
     design_note = "Massive multi-resource cost to justify an unblockable, blind veto of an opponent's action."
     value_rating = 2,
@@ -1474,7 +1473,7 @@ GHO.PA.1 = Card(
     doctrine_mod    = None,
     value_rating = 4,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1496,8 +1495,8 @@ GHO.PA.1 = Card(
         + resource.faction(Ghost).exposure * 1
         + resource.faction(target1) * 1
         + resource.faction(target2) * 1
-        + intel_token(target=faction(target1)) * 1
-        + intel_token(target=faction(target2)) * 1
+        + IntelToken(about=faction(target1)) * 1
+        + IntelToken(about=faction(target2)) * 1
     ),
     boost = None,
 
@@ -1581,7 +1580,7 @@ GHO.PA.2 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Transient,  # card stays on table with district marker until Close Month next Month
     persistence_condition = None,
@@ -1678,7 +1677,7 @@ GHO.PA.3 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1692,7 +1691,7 @@ GHO.PA.3 = Card(
     affinity    = None,
     restriction = count(intel_token(holder=Ghost, status=Expired)) >= 1,
     cost        = resource.faction(Ghost).findings * 1,
-    boost       = intel_token(holder=Ghost, status=Expired),  # 1 expired token = 1 BM-xx; BM-xx ×(1+n) all effects at Art 03 §9.4.3.3
+    boost       = IntelToken(status=Expired),  # 1 expired token = 1 BM-xx; BM-xx ×(1+n) all effects at Art 03 §9.4.3.3
 
     success     = faction(Ghost).standing.add(1),
     successcrit = faction(Ghost).standing.add(1),  # +1 PS additional delta; also ×(1+n) via BM-xx
@@ -1771,7 +1770,7 @@ GHO.PA.4 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1867,7 +1866,7 @@ GHO.PA.5 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -2007,7 +2006,7 @@ GHO.MOD.1 = Card(
 ### GHO.MOD.2 — PERIMETER SENSORS
 
 #### Design Rationale
-First of a three-card family (GHO.MOD.2/3/4) delivering §5a's "passive Intel generation near Ghost presence" — generic variant, faction-targeted variants follow. Same self-fire question as the Directorate set's item 5: `faction=Any` in the trigger includes Ghost's own presence placements, so Ghost placing a chip in a district it already holds would generate Intel on itself. Likely harmless (self-Intel isn't exploitable the way DIR.MOD.9's self-sanction would be) but flagged for consistency with the established pattern, not silently assumed fine. `district=where(faction(Ghost).presence > 0)` is the second confirmed instance of the unconfirmed `where(...)` trigger-parameter form (first seen on DIR.MOD.8).
+First of a three-card family (GHO.MOD.2/3/4) delivering §5a's "passive Intel generation near Ghost presence" — generic variant, faction-targeted variants follow. `faction=Any` in the trigger includes Ghost's own presence placements, so Ghost placing a chip in a district it already holds generates Intel on itself — confirmed harmless (self-Intel isn't exploitable), no different from any other self-fire case. `district=where(faction(Ghost).presence > 0)` remains the second confirmed instance of the unconfirmed `where(...)` trigger-parameter form (first seen on DIR.MOD.8).
 
 #### Card Story
 Someone moves a piece onto ground Ghost already quietly holds. Nothing dramatic happens — no confrontation, no announcement. But the sensors were already there, and now Ghost knows exactly who just arrived.
@@ -2024,7 +2023,7 @@ Someone moves a piece onto ground Ghost already quietly holds. Nothing dramatic 
 | Balance | ⚠ | Free Intel generation gated only by Ghost holding presence somewhere active — plausible as a low-key passive engine, final read pending the same whole-set cost/value_rating decision (04-n178) as the Directorate set. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Base event (`presence_chip.placed`) is confirmed vocabulary, but the `district=where(...)` filter isn't a confirmed §6.3 parameter form — 2nd instance of the same gap. Also carries the same `faction=Any` self-fire question as item 5/11 (Ghost could trigger this on its own placement). | Art 04 §6.3 |
+| Trigger validity | ⚠ | Base event (`presence_chip.placed`) is confirmed vocabulary, but the `district=where(...)` filter isn't a confirmed §6.3 parameter form — 2nd instance of the same gap. `faction=Any` self-fire is a confirmed-harmless case, not a factor here. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Ghost: submitter=+1}` — submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
 | Supported by components | ✓ | Intel Token delivery reuses the standard mechanism. | Art 02 §6–8 |
@@ -2056,10 +2055,10 @@ GHO.MOD.2 = Card(
     trigger         = presence_chip.placed(faction=Any, district=where(faction(Ghost).presence > 0)),
     beat            = None,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2140,7 +2139,7 @@ GHO.MOD.3 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2221,7 +2220,7 @@ GHO.MOD.4 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2302,7 +2301,7 @@ GHO.MOD.5 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2331,7 +2330,7 @@ GHO.MOD.5 = Card(
 ### GHO.MOD.6 — SUPPLY CHAIN TAP
 
 #### Design Rationale
-Parasitic economy React: Ghost pays 1 unit of the triggering faction's native resource type to mirror-copy that faction's entire Upkeep resource draw. Two open findings: (1) `trigger = resource.drawn_from_reservoir(faction=Any)` is a known, already-documented gap — `design_reference_card_system.md`'s "Still pending" note calls this out by name as "not in TriggerExpr schema — needs component classification." (2) `faction=Any` carries the same self-fire question as GHO.MOD.2's family — if Ghost's own Upkeep draw triggers this, Ghost would pay 1 Findings to "copy" a delivery it's already receiving, a costed no-op. Also worth flagging: the cost is denominated in the *triggering faction's* native resource type, which Ghost may not hold without a prior conversion — same cross-resource question as GHO.MOD.5.
+Parasitic economy React: Ghost pays 1 unit of the triggering faction's native resource type to mirror-copy that faction's entire Upkeep resource draw. Two open findings: (1) `trigger = resource.drawn_from_reservoir(faction=Any)` is a known, already-documented gap — `design_reference_card_system.md`'s "Still pending" note calls this out by name as "not in TriggerExpr schema — needs component classification." (2) `faction=Any` carries the same self-inclusion as GHO.MOD.2's family — Ghost's own Upkeep draw triggering this (paying 1 Findings to "copy" a delivery it's already receiving) is a confirmed harmless costed no-op. Also worth flagging: the cost is denominated in the *triggering faction's* native resource type, which Ghost may not hold without a prior conversion — same cross-resource question as GHO.MOD.5.
 
 #### Card Story
 An opponent's Upkeep resources land in their reserve. Ghost's tap on their supply line means the exact same shipment quietly lands in Ghost's reserve too — paid for, not stolen.
@@ -2348,7 +2347,7 @@ An opponent's Upkeep resources land in their reserve. Ghost's tap on their suppl
 | Balance | ⚠ | Full mirrored draw for a 1-resource cost is potentially strong depending on the triggering faction's Upkeep yield — final read needs 04-n178 plus resolution of the cross-resource-holding question below. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `resource.drawn_from_reservoir(faction=Any)` is a confirmed, already-documented gap (design_reference_card_system.md "Still pending" list) — not in the TriggerExpr schema at all. Also carries the same `faction=Any` self-fire question as the rest of the family. | Art 04 §6.3 |
+| Trigger validity | ⚠ | `resource.drawn_from_reservoir(faction=Any)` is a confirmed, already-documented gap (design_reference_card_system.md "Still pending" list) — not in the TriggerExpr schema at all. `faction=Any` self-fire is a confirmed-harmless case, not a factor here. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
 | Supported by components | ✓ | Resource delivery reuses the standard mechanism. | Art 02 §6–8 |
@@ -2383,7 +2382,7 @@ GHO.MOD.6 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2412,7 +2411,7 @@ GHO.MOD.6 = Card(
 ### GHO.MOD.7 — SLEEPER CELL
 
 #### Design Rationale
-Ghost's endgame disruption React: swaps 1 opponent chip for 1 Ghost chip in the same district the instant a Dominant marker is placed there, stripping the fresh Dominant status back to Established. Correctly taxonomied as Redirect rather than Remove — it's a same-slot allegiance change, not a plain removal. Two real findings: (1) `faction=Any` carries the same self-fire question as items 5/6/9/11 — if Ghost itself achieves Dominant somewhere, this would fire and have Ghost swap its own chip for its own chip, paying the full 3-resource cost for a literal no-op. (2) The cost spans three resource types (Findings, Capacity, Capital) — only Findings is Ghost-native; Capacity and Capital are Guild's and Syndicate's respectively. This is the sharpest instance yet of the cross-resource-holding question raised at GHO.MOD.5/6 — two of the three cost components require Ghost to already hold resources it doesn't natively generate.
+Ghost's endgame disruption React: swaps 1 opponent chip for 1 Ghost chip in the same district the instant a Dominant marker is placed there, stripping the fresh Dominant status back to Established. Correctly taxonomied as Redirect rather than Remove — it's a same-slot allegiance change, not a plain removal. Two real findings: (1) `faction=Any` is inclusive of Ghost's own faction — if Ghost itself achieves Dominant somewhere, this fires and Ghost swaps its own chip for its own chip, paying the full 3-resource cost for a confirmed harmless (if wasteful) no-op. (2) The cost spans three resource types (Findings, Capacity, Capital) — only Findings is Ghost-native; Capacity and Capital are Guild's and Syndicate's respectively. This is the sharpest instance yet of the cross-resource-holding question raised at GHO.MOD.5/6 — two of the three cost components require Ghost to already hold resources it doesn't natively generate.
 
 #### Card Story
 A rival's chip count finally tips them into Dominant — the marker goes down, the table sees it land. Before anyone reacts, a presence nobody knew was there activates, and the marker's claim evaporates as fast as it arrived.
@@ -2429,7 +2428,7 @@ A rival's chip count finally tips them into Dominant — the marker goes down, t
 | Balance | ⚠ | Powerful, precisely-timed disruption of a Dominant achievement — high 3-resource cost plausibly balances it, but see the cross-resource-holding flag below; if Ghost can't reliably afford two foreign resource types, the effective cost (and thus balance) is unclear. Final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `dominant_marker.placed(faction=X)` is confirmed vocabulary, but `faction=Any` carries the same self-fire question as the rest of the family — sharpest instance yet, since firing against Ghost's own Dominant achievement would cost 3 resources for a literal no-op swap. | Art 04 §6.3 |
+| Trigger validity | ✓ | `dominant_marker.placed(faction=Any)` is confirmed vocabulary, inclusive-of-self by default; firing against Ghost's own Dominant achievement costs 3 resources for a confirmed harmless no-op swap, not a bug. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
 | Supported by components | ⚠ | Same deployment-marker-removal edge as the Directorate enforcement family — the removed chip could be a Deployment Marker's temporary presence (GR 8.3a: markers move, never removed). | Art 02 §6–8; GR 8.3a |
@@ -2464,7 +2463,7 @@ GHO.MOD.7 = Card(
     ring_origin     = None,
     value_rating = 2,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2493,7 +2492,7 @@ GHO.MOD.7 = Card(
 ### GHO.MOD.8 — LOCAL SYMPATHIZERS
 
 #### Design Rationale
-Mid-game counterpart to GHO.MOD.7's endgame disruption: reacts to any faction reaching Established (IL-02) and immediately strips 1 chip, downgrading them back to Present. Same shape as DIR.MOD.1's enforcement family (Territory/Remove/PresenceToken), carrying the same open questions: `faction=Any` self-fire (item 5 family — Ghost achieving Established would trigger this against itself), the deployment-marker-removal edge (item 6), and the cross-resource cost-holding question (cost denominated in the *triggering faction's* native resource, same as GHO.MOD.6/7).
+Mid-game counterpart to GHO.MOD.7's endgame disruption: reacts to any faction reaching Established (IL-02) and immediately strips 1 chip, downgrading them back to Present. Same shape as DIR.MOD.1's enforcement family (Territory/Remove/PresenceToken). `faction=Any` self-fire (Ghost achieving Established would trigger this against itself) is a confirmed harmless costed no-op. Still open: the deployment-marker-removal edge (item 6), and the cross-resource cost-holding question (cost denominated in the *triggering faction's* native resource, same as GHO.MOD.6/7).
 
 #### Card Story
 A faction plants its second foothold in a district and calls it secured. The neighborhood disagrees — quietly, and on someone else's payroll. One chip comes back off the board before the ink on "Established" dries.
@@ -2510,7 +2509,7 @@ A faction plants its second foothold in a district and calls it secured. The nei
 | Balance | ⚠ | Cheaper than GHO.MOD.7 (1 resource vs. 3) but also less severe (Established→Present vs. Dominant→Established) — plausible tiering, final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `established_marker.placed(faction=X)` is confirmed vocabulary, but `faction=Any` carries the same self-fire question as the rest of the family. | Art 04 §6.3 |
+| Trigger validity | ✓ | `established_marker.placed(faction=Any)` is confirmed vocabulary, inclusive-of-self by default, confirmed harmless costed no-op. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
 | Supported by components | ⚠ | Same deployment-marker-removal edge as DIR.MOD.1/2/3 and GHO.MOD.7. | Art 02 §6–8; GR 8.3a |
@@ -2545,7 +2544,7 @@ GHO.MOD.8 = Card(
     ring_origin     = None,
     value_rating = 2,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2624,10 +2623,10 @@ GHO.MOD.9 = Card(
 
     layer   = Submission,  function = Remove,  subject = ModifierCard,  # confirmed registered pairing — ref_taxonomy.md §5.2 (Modifier Card: Economy/Submission)
 
-    trigger         = public_act.submitted(uses_intel_token=True),  # unconfirmed against §6.3 TriggerExpr vocabulary — same open category as Overture's trigger and SYN.MOD.11's accord.tabled (04-n174)
+    trigger         = public_act.submitted(uses_intel_token=True),
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
-    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
 
@@ -2701,12 +2700,12 @@ GHO.MOD.10 = Card(
     tagline = "A devastating cyber-attack that cripples a faction's operational hand.",
     type    = ModReactCard,  faction = Ghost,
 
-    layer   = Information,  function = Remove,  subject = FactionHand,  # FactionHand not a registered subject type — same non-gate flag as NET.PA.3 Live Coverage (04b validation pending)
+    layer   = Information,  function = Remove,  subject = FactionHand,
 
-    trigger         = public_act.submitted,  # unconfirmed against §6.3 TriggerExpr vocabulary (04-n174)
+    trigger         = public_act.submitted,
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 2,
-    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
 
@@ -2782,10 +2781,10 @@ GHO.MOD.11 = Card(
 
     layer   = Information,  function = Corrupt,  subject = TargetProfile,  # confirmed Corrupt target — ref_taxonomy.md §5.2 ("Corrupt targets are strictly: ... Target Profile")
 
-    trigger         = public_act.placed_with_target_profile,  # unconfirmed against §6.3 TriggerExpr vocabulary — shared form with NET.MOD.12 (04-n174)
+    trigger         = public_act.placed_with_target_profile,
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
-    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
 
@@ -2852,19 +2851,18 @@ GHO.MOD.12 = Card(
     name    = "Embedded Contact",
     tagline = "Someone already there tells the right people what's actually happening.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "A contact who was already in the district long before the tension marker went down passes along what they've seen.",
     arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2914,19 +2912,18 @@ GHO.MOD.13 = Card(
     name    = "Signals Package",
     tagline = "Everything the listening posts picked up, handed over at once.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 2,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "Weeks of passive collection, compiled and handed over at the moment it's actually useful.",
     arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2976,19 +2973,18 @@ GHO.MOD.14 = Card(
     name    = "Planted Doubt",
     tagline = "A detail that doesn't add up, surfaced at exactly the wrong moment.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "Nothing is proven. Nothing needs to be — the timeline just stops holding together, right when it matters.",
     arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -3038,19 +3034,18 @@ GHO.MOD.15 = Card(
     name    = "Blown Cover",
     tagline = "Whatever they were counting on staying hidden isn't hidden anymore.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 2,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "Ghost knew exactly which detail would unravel them if it surfaced now. It surfaces now.",
     arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -3100,16 +3095,16 @@ GHO.MOD.16 = Card(
     name    = "Pre-Analysis",
     tagline = "The modeling was already done before the operation was even submitted.",
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
-    cost            = None,   # splay-display convention, PM02 L256 — same basis as all ModActionCard content
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Advance modeling means Ghost already knows how this plays out before committing to it.",
@@ -3166,11 +3161,11 @@ GHO.MOD.17 = Card(
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Removing an unknown smooths the acting faction's own play — Ghost prefers certainty to speed.",
@@ -3227,11 +3222,11 @@ GHO.MOD.18 = Card(
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A scrubbed data channel removes the noise that would otherwise complicate the operation.",
@@ -3288,11 +3283,11 @@ GHO.MOD.19 = Card(
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A fully assembled intelligence picture leaves nothing to chance — the operation proceeds on certainty, not estimate.",
@@ -3349,11 +3344,11 @@ GHO.MOD.20 = Card(
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An operation run on verified information performs better than the plan ever assumed.",
@@ -3410,11 +3405,11 @@ GHO.MOD.21 = Card(
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Multiple independent confirmations amplify an outcome well past what a single source would support.",
@@ -3468,14 +3463,14 @@ GHO.MOD.22 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An error is quietly fixed before anyone notices it was ever there — a small, deliberate protection of standing.",
@@ -3532,11 +3527,11 @@ GHO.MOD.23 = Card(
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A selective disclosure earns Ghost credibility and standing — true as far as it goes, and it goes exactly as far as intended.",
@@ -3590,14 +3585,14 @@ GHO.MOD.24 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A detail reaches exactly the right ears — quiet, deniable, and costly to whoever it's about.",
@@ -3654,11 +3649,11 @@ GHO.MOD.25 = Card(
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A rival's flawed analysis becomes public — Ghost didn't lie, it just let the truth land at the worst possible time.",
@@ -3712,14 +3707,14 @@ GHO.MOD.26 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Prior research lowers the cost of new analysis — nothing here starts from zero.",
@@ -3776,11 +3771,11 @@ GHO.MOD.27 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Ghost faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Borrowed analytical tools cut the overhead of building anything from scratch.",

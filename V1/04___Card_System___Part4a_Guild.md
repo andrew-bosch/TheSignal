@@ -76,7 +76,7 @@ GUI.CA.1 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Positional wager",
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -167,7 +167,7 @@ GUI.CA.2 = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = faction(target).completes(CovertOp, id=STD.CA.2),
-    resolution_type = "Positional wager",
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -184,7 +184,7 @@ GUI.CA.2 = Card(
 
     success     = (
         faction(acting).resource.native += 1,
-        faction(acting).resource.native += 1   # mirrors STD.CA.2.cost: 1 faction native + 1 district native
+        faction(acting).resource.native += 1
     ),
     successcrit = None,
     fail        = None,
@@ -262,7 +262,7 @@ GUI.CA.3 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -352,7 +352,7 @@ GUI.CA.4 = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -449,7 +449,7 @@ GUI.CA.5 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -539,7 +539,7 @@ GUI.CA.6 = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = faction(target).completes(CovertOp, id=STD.CA.1),
-    resolution_type = "Positional wager",
+    resolution_type = PositionalWager,
     outcome_type    = None,
 
     target_district = None,
@@ -553,7 +553,7 @@ GUI.CA.6 = Card(
 
     success     = (
         faction(acting).resource.native += 1,
-        faction(acting).resource.native += 1,  # mirrors STD.CA.1.cost: 1 faction native + 1 district native
+        faction(acting).resource.native += 1,
     ),
     successcrit = None,
     fail        = None,
@@ -766,7 +766,7 @@ GUI.CA.9 = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = None,
-    resolution_type = "Positional wager",
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -874,7 +874,7 @@ GUI.CA.10 = Card(
     doctrine_mod    = None,
     value_rating = None,  # scaffolded, not addressed
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -963,7 +963,7 @@ GUI.PA.1 = Card(
     doctrine_mod    = None,
     value_rating = 4,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1066,7 +1066,7 @@ GUI.PA.2 = Card(
     doctrine_mod    = None,  # Neighbor relationship noted for narrative — no threshold variance (Automatic)
     value_rating = 4,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = BilateralAgreement,
     persistence     = Immediate,  # resource delivery and AccordForm delivery resolve at Beat 4; form lifecycle governed by Art 06 §9.4
     persistence_condition = None,
@@ -1089,7 +1089,6 @@ GUI.PA.2 = Card(
     ),
 
     # BilateralAgreement resolution at Debrief: PS consequences per Art 06 §9.4
-    # on_accept: track Accord income — target pays Guild 1 Capacity at each Upkeep Step 6 while Accord active
 
     successcrit = None,
     fail        = None,
@@ -1167,7 +1166,7 @@ GUI.PA.3 = Card(
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 1,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence     = Permanent,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a card-as-condition effect not structured here
 
@@ -1243,7 +1242,7 @@ GUI.PA.4 = Card(
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 1,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence     = Immediate,  # scaffolded — deterministic default for a non-standing, one-shot PA
     persistence_condition = None,  persistence_effect = None,
 
@@ -1318,7 +1317,7 @@ GUI.PA.5 = Card(
     resolution      = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 2,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence     = Seasonal,  # scaffolded — matches prose "for the next Quarter"
     persistence_condition = None,  persistence_effect = None,
 
@@ -1392,7 +1391,7 @@ GUI.PA.6 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 1,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
     target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
@@ -1460,7 +1459,7 @@ GUI.PA.7 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 2,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
     target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
@@ -1528,7 +1527,7 @@ GUI.PA.8 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 1,
-    resolution_type = "Transactional",  outcome_type = None,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Permanent,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
     target_district = district.any,  target_faction = None,  target_object = None,  target_taxonomy = None,
@@ -1601,7 +1600,7 @@ GUI.PA.9 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1710,7 +1709,7 @@ GUI.PA.10 = Card(
     doctrine_mod    = {Neighbor: +15, Opposed: -15},
     value_rating = None,  # scaffolded, not addressed
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1805,10 +1804,10 @@ GUI.MOD.1 = Card(
 
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
-    trigger         = presence_chip.removed(faction=Guild, district=district(trigger.target)),  # still unconfirmed against §6.3 TriggerExpr vocabulary (04-n174)
+    trigger         = presence_chip.removed(faction=Guild, district=district(trigger.target)),
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
-    resolution      = Automatic,  threshold = None,  resolution_type = "Transactional",  outcome_type = None,
+    resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
 
@@ -1888,7 +1887,7 @@ GUI.MOD.2 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -1897,14 +1896,14 @@ GUI.MOD.2 = Card(
     affinity        = None,
     restriction     = None,  # no presence requirement — Guild workforce is citywide
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Guild).resources.add(1, Capacity),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Passive income React. Any opponent structure placement triggers 1 Capacity yield to Guild. Guild's doctrine: construction is Guild's domain regardless of who commissions it. Companion to 04-n2 (unimplemented passive income governing rule) — this delivers the same income as a ModReactCard rather than an Art 03 procedural rule. No presence restriction: Guild labor operates citywide.",
@@ -1961,7 +1960,7 @@ GUI.MOD.3 = Card(
     name    = "Institutional Contract",
     tagline = "Directorate builds. Guild crews and invoices.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # same shape as GUI.MOD.2
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=Directorate),
     beat            = None,
@@ -1969,7 +1968,7 @@ GUI.MOD.3 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -1978,14 +1977,14 @@ GUI.MOD.3 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Guild).resources.add(1, Capacity),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Directorate-targeted variant of GUI.MOD.2 (Union Representative). Same trigger/effect, faction-narrowed to Directorate. Guild–Directorate tension: Directorate controls Guild's operating environment (PA.1 Regulatory Override raises construction costs); Guild charges Directorate for every structure it commissions. Narrower trigger window than generic variant; reliable in DIR-heavy games.",
@@ -2042,7 +2041,7 @@ GUI.MOD.4 = Card(
     name    = "Core Premium",
     tagline = "Core construction pays Guild at institutional rates.",
     type    = ModReactCard,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # same shape as GUI.MOD.2
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=opponent, ring=1),
     beat            = None,
@@ -2050,7 +2049,7 @@ GUI.MOD.4 = Card(
     ring_origin     = None,
     value_rating = 3,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2059,14 +2058,14 @@ GUI.MOD.4 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Guild).resources.add(2, Capacity),  # double rate for Core ring
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Ring 1–constrained variant of GUI.MOD.2. Core construction yields 2 Capacity (vs. 1 for generic). Scarcity and complexity of Core construction means Guild commands premium rates. Strongest Guild passive income trigger — incentivizes Guild to maintain Core presence to capture premium construction income from all factions.",
@@ -2131,7 +2130,7 @@ GUI.MOD.5 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2140,14 +2139,14 @@ GUI.MOD.5 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.draw_modifier(faction=Guild, count=1),  # balance flag: count=1 is a null effect unless the drawn card has independent value — recommend count=2
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Passive intelligence engine. Guild's massive labor footprint acts as an informant network. When an opponent expands into a district where Guild has a structure, Guild draws modifier card(s). Turns their win-condition (structures) into a territorial tax on opponent expansion. Count currently 1, flagged as likely needing to be 2 — a single random modifier card draw isn't a guaranteed benefit on its own.",
@@ -2212,7 +2211,7 @@ GUI.MOD.6 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = faction(Guild).district.adjacent_to(trigger.district).acting_choice,
@@ -2221,14 +2220,14 @@ GUI.MOD.6 = Card(
     affinity        = None,
     restriction     = faction(Guild).presence_in(target_district),
     cost            = list([Resource(Capacity, 1), Resource(Capital, 1)]),
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.place(structure_block, district=target_district, faction=Guild, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Scaling structural defense. Reacts to the physical removal of a Guild structure (whether by covert Demolish or public act). Guild spends heavy resources to instantly place a replacement structure in an adjacent district. Ensures their structure count remains constant even under heavy attack.",
@@ -2293,7 +2292,7 @@ GUI.MOD.7 = Card(
     ring_origin     = None,
     value_rating = 2,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -2302,14 +2301,14 @@ GUI.MOD.7 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Resource(Capacity, 1),
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.place(presence_chip, district=target_district, faction=Guild, count=2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Scaling structural defense. If an opponent manages to remove a Guild structure, Guild burns Capacity to flood the district with 2 presence chips. The territory becomes completely infested with Guild influence, preventing the attacker from claiming the space they just cleared.",
@@ -2374,7 +2373,7 @@ GUI.MOD.8 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -2383,14 +2382,14 @@ GUI.MOD.8 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolding only — real value pending 04-n177 focused session
+    boost           = None,  # scaffolded, not addressed
 
     success     = faction(Guild).resources.add(1, district(trigger.district).native_resource),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {},
-    ps_framing   = None,  # scaffolding only — real value pending 04-n177 focused session
+    ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
     design_note  = "Passive demolition income. Whenever ANY structure is removed, Guild takes the cleanup contract and receives 1 of the district's native resource type from the Reservoir. Pairs with GUI.MOD.2 to ensure Guild profits on both ends of a structure's lifecycle.",
@@ -2450,7 +2449,7 @@ GUI.MOD.9 = Card(
     name    = "Field Supervisor",
     tagline = "Every foothold in this city gets inspected. Guild does the inspecting.",
     type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = Economy,  function = Add,  subject = NativeResource,  # matches GUI.MOD.2/3/4/8's shape
+    layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = established_marker.placed(faction=opponent),
     beat            = None,
@@ -2458,7 +2457,7 @@ GUI.MOD.9 = Card(
     ring_origin     = None,
     value_rating = 1,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     persistence = Immediate,
@@ -2561,11 +2560,12 @@ GUI.MOD.10 = Card(
     ring_origin     = None,
     value_rating    = None,
 
-    resolution = Automatic,  threshold = None,  resolution_type = "Transactional",  # mechanical per schema; not a design blank
+    resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     persistence = Seasonal,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = trigger.district,
@@ -2602,7 +2602,7 @@ GUI.MOD.10 = Card(
         Network:     "Everyone can see who Guild backed. That's a story whether the bet pays off or not.",
         Syndicate:   "Guild's monetizing uncertainty before the dice even get picked up. Professionally, we approve.",
     },
-    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — tracked 04-n148 (Outstanding Issue).",
+    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — tracked 04-n148 (Outstanding Issue). `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
     arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and direction (Support +2 / Withhold −2), and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization pending 04-n148.",
 )
 ```
@@ -2651,19 +2651,18 @@ GUI.MOD.11 = Card(
     name    = "Site Foreman",
     tagline = "Someone who's run a hundred jobs like this one knows exactly where to put the weight.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction — applies uniformly, including Syndicate SYN.MOD.12–15.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "A foreman who's worked this district before shows up, clipboard in hand, and starts telling people where to stand.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2713,19 +2712,18 @@ GUI.MOD.12 = Card(
     name    = "Material Stockpile",
     tagline = "Whatever the job needs, it's already on site, already paid for.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 2,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=2),
+    value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction — applies uniformly, including Syndicate SYN.MOD.12–15.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "Pallets of material that were supposed to go somewhere else get rerouted here instead. Nobody asks who authorized it.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2775,19 +2773,18 @@ GUI.MOD.13 = Card(
     name    = "Permit Delay",
     tagline = "The paperwork isn't wrong. It's just going to take a while.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 1,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction — applies uniformly, including Syndicate SYN.MOD.12–15.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "A signature is missing from a form nobody remembers filing. Work stops until someone finds it.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2837,19 +2834,18 @@ GUI.MOD.14 = Card(
     name    = "Structural Condemnation",
     tagline = "The inspection report is thorough, professional, and devastating.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),  # target named at commit (Art 03 §10.1.2 Step 1.2.2); magnitude playtest-flagged (04-n94, log to validate)
-    value_rating    = 2,      # mirrors magnitude
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
-    # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModBattleCard column) — no trigger, no restriction, no beat, no resolution.
-    cost            = None,   # not schema-forced for ModBattleCard (cost isn't in the §6.2 constraints table), but also not usable here — Art 03 §10.1.2 has no cost validation/payment step in the commit sequence, so a per-play cost would be unenforceable content regardless of faction — applies uniformly, including Syndicate SYN.MOD.12–15.
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
-    portrait     = None,   # ModBattleCard carries no portrait value — locked whole-subclass, not TBD
+    portrait     = None,
     narrative    = "Guild's engineers sign off on a finding: unsafe as built. It's technically true. It's also exactly what was needed.",
     arbiter_note = "Playable by any faction, not just Guild (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
 )
@@ -2899,16 +2895,16 @@ GUI.MOD.15 = Card(
     name    = "Structural Survey",
     tagline = "The engineering assessment comes back clean before anyone asks for one.",
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = None,  function = None,  subject = None,  # modifier card — taxonomy excluded §11.1, effect is parasitic on host action
+    layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only (§6.3, 04-n170); eases the host CA/PA's own threshold
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
-    cost            = None,   # splay-display convention — same basis as all ModActionCard content
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    ring_origin     = None,
+    cost            = None,
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An engineering assessment, filed in advance, clears the ground before the first shovel goes in.",
@@ -2965,11 +2961,11 @@ GUI.MOD.16 = Card(
     effect          = ModActionExpr.threshold_delta(n=10),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Verified material integrity means nothing on this build is guesswork — the crew already knows it'll hold.",
@@ -3026,11 +3022,11 @@ GUI.MOD.17 = Card(
     effect          = ModActionExpr.threshold_delta(n=15),
     value_rating    = 3,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A favorable review clears part of the build in advance — nothing left for an inspector to hold up.",
@@ -3087,11 +3083,11 @@ GUI.MOD.18 = Card(
     effect          = ModActionExpr.threshold_delta(n=20),
     value_rating    = 4,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Every code requirement cleared ahead of time — there's nothing left for an inspection to catch.",
@@ -3148,11 +3144,11 @@ GUI.MOD.19 = Card(
     effect          = ModActionExpr.success_multiplier(n=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "An experienced crew doesn't just meet the spec — they turn a routine build into an exceptional one.",
@@ -3209,11 +3205,11 @@ GUI.MOD.20 = Card(
     effect          = ModActionExpr.success_multiplier(n=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A structure goes up well past the minimum required — the extra margin amplifies what the build was already meant to do.",
@@ -3267,14 +3263,14 @@ GUI.MOD.21 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),  # self-boost, minor tier
+    effect          = ModActionExpr.ps_shift(faction="acting", delta=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Visible investment in a neighborhood buys goodwill Guild doesn't have to ask for.",
@@ -3331,11 +3327,11 @@ GUI.MOD.22 = Card(
     effect          = ModActionExpr.ps_shift(faction="acting", delta=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A completed project gets the full ceremony — cameras, officials, and Guild's name front and center.",
@@ -3389,14 +3385,14 @@ GUI.MOD.23 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A minor code observation gets logged against a rival's project — nothing dramatic, just on the record.",
@@ -3453,11 +3449,11 @@ GUI.MOD.24 = Card(
     effect          = ModActionExpr.ps_shift(faction="target", delta=-2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "A rival's construction gets flagged publicly for cutting corners — consistent with Guild's doctrine of keeping everything procedural and visible.",
@@ -3511,14 +3507,14 @@ GUI.MOD.25 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.cost_reduction(n=1),  # PA-only (§6.3)
+    effect          = ModActionExpr.cost_reduction(n=1),
     value_rating    = 1,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Leftover stock from a prior job discounts the next one — nothing wasted.",
@@ -3575,11 +3571,11 @@ GUI.MOD.26 = Card(
     effect          = ModActionExpr.cost_reduction(n=2),
     value_rating    = 2,
     ring_constraint = None,
-    ring_origin     = None,   # Guild faction modifier deck
+    ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # 04-n177 scaffolding placeholder
-    boost           = None,   # 04-n177 scaffolding placeholder
-    ps_framing      = None,   # 04-n177 scaffolding placeholder
+    resolution_type = None,  # scaffolded, not addressed
+    boost           = None,  # scaffolded, not addressed
+    ps_framing      = None,  # scaffolded, not addressed
 
     portrait     = None,
     narrative    = "Fabricating the components in-house cuts out the markup a third-party supplier would otherwise charge.",

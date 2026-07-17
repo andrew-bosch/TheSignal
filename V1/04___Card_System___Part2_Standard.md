@@ -79,7 +79,7 @@ STD.CA.1 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -173,7 +173,7 @@ STD.CA.2 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -268,7 +268,7 @@ STD.CA.3 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -356,7 +356,7 @@ STD.CA.4 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -451,7 +451,7 @@ STD.CA.5 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -542,7 +542,7 @@ STD.CA.6 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Positional wager",
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -598,7 +598,7 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 | Voice fit | ✓ | Ghost's perspective is the sharpest. All five are doctrinally distinct — opposition, authority-sufficiency, tactical use, suppression logic, leverage framing. | Art 00 §7 |
 | Doctrine alignment | ✓ | Amplifying public messaging strongly serves Network doctrine; strongly opposes Ghost (volume = exposure risk). Both captured via portrait entries. Self-targeted → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: amplification mechanism is hidden. Standard: all factions can amplify their messaging covertly. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | `layer = Resolution` — scales the outcome (standing_impact) of a PA; Art 04b §4.2 "outcome scale" is a Resolution property. `function = Modify`, `subject = PublicAct`. Note: `resolution_type = "Transactional"` may be a misnomer — card fizzles if no PA is submitted (same positional-wager behavior as STD.CA.6). Minor schema inconsistency, not blocking. | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | `layer = Resolution` — scales the outcome (standing_impact) of a PA; Art 04b §4.2 "outcome scale" is a Resolution property. `function = Modify`, `subject = PublicAct`. This card's own self-flagged note was right: `resolution_type` corrected `Transactional`→`PositionalWager` (schema_cleanup_log #41) — same cross-beat wager shape as STD.CA.6, confirmed the sixth instance. | Art 04b §4, §5 |
 | Balance | ✓ | Symmetric multiplier: both success (+×2) and failure (−×2) scale. Prevents risk-free use. Fizzle (Exposure spent, no PA) ensures Beat 2 commitment is real. Same UVM read as STD.CA.6 — Network's affinity-adjusted net cost (1) matches model value; the non-Network premium is intended, not a defect. Left unchanged. | Art 02 §11 |
 | Effect duration | ✓ | Single-round: arms at Beat 2, applies at Beat 4, does not persist. | Art 03 §10 |
 | Persistence | ✓ | Immediate — Beat 2 carry; applied at Beat 4 via Resolution Grid; no game-state marker persists beyond round | Art 04 §6 |
@@ -634,7 +634,7 @@ STD.CA.7 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -725,7 +725,7 @@ STD.CA.8 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -824,7 +824,7 @@ STD.CA.9 = Card(
     doctrine_mod    = {Neighbor: +15, Opposed: -15},
     value_rating = 3,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -923,7 +923,7 @@ STD.CA.10 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Positional wager",
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1012,7 +1012,7 @@ STD.CA.11 = Card(
     layer   = Information,  function = Corrupt,  subject = Accord,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 2,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Permanent,
     persistence_condition = not (game.end OR Accord(named).breach_by_party),
     persistence_effect    = None,
@@ -1072,7 +1072,7 @@ Intel token cost makes this a premium play — factions must hold Intel specific
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | `cost = IntelToken(any) * 1` — Intel Token as `cost` is a discrete, individually-tracked object, not a fungible native/Capital/Mandate resource. Second confirmed instance of this open question (first was DIR.MOD.9) — flagged, not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | `cost = IntelToken() * 1` — Intel Token confirmed as a valid second `cost` category (§6.3, schema_cleanup_log #10). | Art 00a §9.2; Art 04 §6.3 |
 
 #### Outstanding Issues
 
@@ -1099,7 +1099,7 @@ STD.CA.12 = Card(
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 2,
-    resolution_type="Transactional", outcome_type=None,
+    resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -1107,7 +1107,7 @@ STD.CA.12 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = district(target).beat2_row.has_block_or_protect_card == True,
-    cost        = IntelToken(any) * 1,
+    cost        = IntelToken() * 1,
     success     = game.discard(target_card, district(target).beat2_row),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {},
@@ -1173,7 +1173,7 @@ C_DisinformationCampaign = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1273,7 +1273,7 @@ C_Disprove = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1369,7 +1369,7 @@ C_IntelExtraction = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1466,7 +1466,7 @@ C_ModifierRaid = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1590,7 +1590,7 @@ STD.PA.1 = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1658,7 +1658,7 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 | Supported by zones | ✓ | target_district = district.any — valid zone reference; ring_mod calibrated to ring context | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — target removal (Art 02 §6); ContestedMarker — procedural (Art 03 §9.4); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8; Art 03 §9.4 |
 | Supported by game procedure | ✓ | Beat 4; Contested marker placement governed by Art 03 §9.4; ring_mod applies | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — not in the confirmed 2-value vocabulary (`"Probabilistic"`/`"Transactional"`). Corpus-wide grep confirms 10 instances of `"Contested"` alone, plus 7 other unconfirmed values (`"Permanent public act"`, `"Positional wager"`, `"Conditional"`, `"Deceptive"`, `"Predictive"`, `"Verification"`, `"PlayerChoice(target)"`). | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic` (schema_cleanup_log #41) — the `ContestedMarker` placement is a `success`-field effect, not a resolution-mechanism category; only this card among the 5 "Contested" instances actually placed one. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching in any tier. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Mono-resource (faction native × 2), but `cost`'s term is missing a resource-type attribute. Cross-card claim ("same cost, 45 vs 40 threshold, as STD.CA.4") checked directly and found false on both counts — STD.CA.4's actual cost is dual-resource, actual threshold is 50, not 40. | Art 00a §9.2 |
@@ -1685,7 +1685,7 @@ STD.PA.2 = Card(
     doctrine_mod    = {Neighbor: +10, Opposed: -10},
     value_rating = 4,
     trigger         = None,
-    resolution_type = "Contested",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1789,7 +1789,7 @@ STD.PA.3 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1860,7 +1860,7 @@ The PS attack card of the standard set. A formal public accusation carries both 
 | Supported by zones | ✓ | target_district = None — faction-targeted action; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (optional, Fresh — spent on resolution regardless; Art 02 §6); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 4; Intel token submitted with case at Phase B; token spent regardless | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Mono-resource (faction native × 2), untyped resource-type attribute. | Art 00a §9.2 |
@@ -1887,7 +1887,7 @@ STD.PA.4 = Card(
     doctrine_mod    = None,
     value_rating = 3,
     trigger         = None,
-    resolution_type = "Contested",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -1960,10 +1960,10 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 | Supported by zones | ✓ | target_district = None — faction-targeted attribution; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (faction=target, age=Fresh or Stale — Expired excluded per restriction; Art 02 §6); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 4; Intel token submitted with case; token age determined at Beat 4 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Cross-resource cost (faction native + Intel Token) — `resource.faction(acting)` term untyped; Intel Token as cost is the 10th confirmed corpus instance and first in Standard PA, using a new notation form (`intel_token(target=faction(target))`) not seen elsewhere in the corpus. | Art 00a §9.2 |
+| Resource cost positioning | ⚠ | Cross-resource cost (faction native + Intel Token) — `resource.faction(acting)` term still untyped (schema_cleanup_log #22, separate open item). Intel Token component now confirmed §6.3 vocabulary (`IntelToken(about=faction(target))`, schema_cleanup_log #10). | Art 00a §9.2 |
 
 #### Status
 
@@ -1987,7 +1987,7 @@ STD.PA.5 = Card(
     doctrine_mod    = None,
     value_rating = 4,
     trigger         = None,
-    resolution_type = "Contested",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -2003,7 +2003,7 @@ STD.PA.5 = Card(
         faction(acting) == Network: threshold += 10,
     ),
     restriction = faction(acting).holds_intel_token(faction=target, age__in=[Fresh, Stale]),  # Expired excluded — too degraded to constitute usable attribution evidence
-    cost        = resource.faction(acting) * 1 + intel_token(target=faction(target)) * 1,
+    cost        = resource.faction(acting) * 1 + IntelToken(about=faction(target)) * 1,
     boost       = None,
 
     success     = (
@@ -2062,7 +2062,7 @@ The economic attack card of the standard PA set. PS is intentionally reversed fr
 | Supported by zones | ✓ | target_district = None — faction-targeted action; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | NativeResource (target's supply, Art 02 §8); faction native × 1 cost (Art 02 §8). Floor clause is procedural | Art 02 §8 |
 | Supported by game procedure | ✓ | Beat 4; ARBITER removes up to 2 native resources from target (floor = 0 — all available if fewer than 2) | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type = "Contested"` — same missed-then-caught vocabulary gap as STD.PA.2. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
@@ -2089,7 +2089,7 @@ STD.PA.6 = Card(
     doctrine_mod    = {Neighbor: +10, Opposed: -10},
     value_rating = 4,
     trigger         = None,
-    resolution_type = "Contested",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -2106,7 +2106,7 @@ STD.PA.6 = Card(
     boost       = None,
 
     success     = (
-        faction(target).resource(native) -= min(2, faction(target).resource(native)),  # floor = 0
+        faction(target).resource(native) -= min(2, faction(target).resource(native)),
         faction(acting).standing -= 1,  # aggressor optic
         faction(target).standing += 1,  # sympathy
     ),
@@ -2188,7 +2188,7 @@ STD.PA.7 = Card(
     doctrine_mod    = None,
     value_rating = 2,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
@@ -2288,7 +2288,7 @@ STD.PA.8 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Transactional",
+    resolution_type = Transactional,
     outcome_type    = BilateralAgreement,
     persistence     = Immediate,  # AccordForm delivery resolves at Beat 4; form lifecycle governed by Art 06 §9.4
     persistence_condition = None,
@@ -2363,7 +2363,7 @@ A faction that already has a marker down in a district books the hall, puts out 
 | Supported by zones | ✓ | `target_district = district.any`, gated by `restriction` to a district carrying the acting faction's currently-placed deployment marker — same restriction-expression pattern as Directorate's Detain (`district(target).faction(target).deployment_marker >= 1`) | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken (Art 02 §6); deployment marker (Art 02 §6, restriction reference); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 4 standard PA resolution (Art 03 §9.4); setup distribution at Art 03-init §3.6 (1 per faction, permanent, do-not-discard note now superseded by `on_discard`) | Art 03 §9.4; Art 03-init §3.6 |
-| Data schema validation | ✓ | `on_discard` is a new field (Art 04 §6.1/§6.2/P29); `resolution_type = "Probabilistic"` used correctly per the confirmed 2-value vocabulary (not `"Contested"`, avoiding the sprawl pattern flagged elsewhere in the corpus) | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | `on_discard` is a new field (Art 04 §6.1/§6.2/P29); `resolution_type = Probabilistic` used correctly per the confirmed vocabulary — this card avoided the "Contested" mislabel other Standard PA cards carried (now corrected corpus-wide, schema_cleanup_log #41) | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story answers the P26 test directly; narrative + 5 perspectives written | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/fail/failcrit each specify exactly one outcome; no `game.choose_one()` or branching | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native × 1) — correctly a floor-power card per the floor/ceiling model (Art 00a §9.2, P28): not simultaneously mono-resource and high-power | Art 00a §9.2 |
@@ -2390,7 +2390,7 @@ STD.PA.9 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = "Probabilistic",
+    resolution_type = Probabilistic,
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
