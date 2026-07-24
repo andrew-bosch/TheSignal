@@ -51,21 +51,21 @@ Syndicate's non-presence resource extraction card — Capital buys immediate res
 | Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`ps_framing` (has `doctrine_mod`, `boost`). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Mono-resource (Capital only). Uses the `boost` field correctly for its variable-yield mechanic (`boost = True: resource.faction(acting).capital * 2`) — good contrast case against GHO.CA.8's bare-`n` bug. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (Capital only). Uses the `boost` field correctly for its variable-yield mechanic (`boost = True: Capital * 2`) — good contrast case against GHO.CA.8's bare-`n` bug. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-- **Schema violations in SYN.CA.7/DIR.CA.5:** `affinity=Syndicate` / `affinity=Directorate` corrected to `affinity=None` — 04-n70 fix pass.
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 SYN.CA.1 = Card(
-    id      = "SYN.CA.1",  version = "v1.4",
+    id      = "SYN.CA.1",  card_id="SYN.CA.1",  version = "v1.4",
     name    = "Leveraged Acquisition",
     tagline = "Extract resource income from a district without physical presence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -92,8 +92,8 @@ SYN.CA.1 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = None,
-    cost        = resource.faction(acting).capital * 2,
-    boost       = True: resource.faction(acting).capital * 2,
+    cost        = Capital * 2,
+    boost       = True: Capital * 2,
     # submit 2 Capital → 1 native; submit 4 Capital → 2 native; submit 6 Capital → 3 native
     # ARBITER counts n = (submitted − 2) / 2 at Beat 0; success fires (1 + n) times
 
@@ -153,11 +153,11 @@ Syndicate's economic disruption card — directly reduces a target faction's nat
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 SYN.CA.2 = Card(
-    id      = "SYN.CA.2",  version="v1.0",
+    id      = "SYN.CA.2",  card_id="SYN.CA.2",  version="v1.0",
     name    = "Short the Market",
     tagline = "Reduce a faction's native resource generation for one round.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -172,7 +172,7 @@ SYN.CA.2 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = intel(faction=faction(target), age_rounds<=1) >= 1,
-    cost        = resource.faction(acting).capital * 2,
+    cost        = Capital * 2,
     success     = faction(target).resource.native -= 1,  # minimum 0; applied silently
     successcrit = faction(target).resource.native -= 2,  # minimum 0
     fail=None,
@@ -228,11 +228,11 @@ Syndicate's structure takeover card — Capital purchases ownership of an oppone
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 SYN.CA.3 = Card(
-    id      = "SYN.CA.3",  version="v1.0",
+    id      = "SYN.CA.3",  card_id="SYN.CA.3",  version="v1.0",
     name    = "Hostile Acquisition",
     tagline = "Purchase ownership of an opponent's structure.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -250,7 +250,7 @@ SYN.CA.3 = Card(
         district(target).faction(target).structure >= 1
         AND NOT (faction(target) == Guild AND C11.active(district(target), round=game.round))
     ),
-    cost        = resource.faction(acting).capital * 3 + resource.faction(acting).findings * 1 + resource.faction(acting).exposure * 1,
+    cost        = Capital * 3 + Findings * 1 + Exposure * 1,
     success     = (
         game.transfer(district(target).faction(target).structure(1), faction(acting)),
         game.dispatch(faction(target), resource.faction(target).native * 1),
@@ -308,11 +308,11 @@ Syndicate's bribe card — pays a named faction to nullify their Beat 3 operatio
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 SYN.CA.4 = Card(
-    id      = "SYN.CA.4",  version="v2.0",
+    id      = "SYN.CA.4",  card_id="SYN.CA.4",  version="v2.0",
     name    = "Golden Parachute",
     tagline = "Declare a bribe. Their operations against you are covered. Windfall or nullification — the Capital leaves either way.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -326,7 +326,7 @@ SYN.CA.4 = Card(
     target_taxonomy=None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(acting).capital * declared(N, min=1),  # retained with card at Beat 0 — does not drain to Reservoir
+    cost            = Capital * declared(N, min=1),  # retained with card at Beat 0 — does not drain to Reservoir
     success         = game.bribe(capital=declared(N), target=faction(target), against=faction(acting), beat3_ops_first_to_last=True),
     successcrit     = None, fail=None, failcrit=None,
     portrait        = {Syndicate: PortraitEntry(submitter=+1)},
@@ -381,11 +381,11 @@ Syndicate's submission-layer blocking card — analogous to DIR.CA.1 Invoke Juri
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 SYN.CA.5 = Card(
-    id      = "SYN.CA.5",  version="v1.0",
+    id      = "SYN.CA.5",  card_id="SYN.CA.5",  version="v1.0",
     name    = "Regulatory Capture",
     tagline = "Block a specific action type in a named district for one round.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -399,7 +399,7 @@ SYN.CA.5 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = district(target) != ChorusNode,
-    cost        = resource.faction(acting).capital * 2 + resource.faction(acting).exposure * 1,
+    cost        = Capital * 2 + Exposure * 1,
     success     = game.block(district(target), action_type=named, round=game.round, public=True),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1, modifier=-2, mod_where=action_type(named).primary_faction == Guild)},
@@ -463,11 +463,11 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 LandTitle = Card(
-    id      = "SYN.CA.8",  version="v2.1",
+    id      = "SYN.CA.8",  card_id="SYN.CA.8",  version="v2.1",
     name    = "Land Title",
     tagline = "File a capital claim on undeveloped land. Let someone else build. Then collect.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -486,7 +486,7 @@ LandTitle = Card(
         district(target).structure_count == 0
         AND district(target) != ChorusNode
     ),
-    cost        = resource.faction(acting).capital * 6,
+    cost        = Capital * 6,
     success     = arbiter.dispatch(GrantDeed(district=district(target)), faction(acting).case),
     successcrit = None,  fail=None,  failcrit=None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
@@ -540,7 +540,7 @@ Syndicate's presence absorption card — distinct from SYN.CA.3 Hostile Acquisit
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 HostileTakeover = Card(
@@ -563,7 +563,7 @@ HostileTakeover = Card(
         faction(target).presence(district(target)) >= 1
         AND faction(acting).intel_tokens(faction=faction(target)) >= 1
     ),
-    cost        = resource.faction(acting).capital * 2 + resource.faction(acting).mandate * 1,
+    cost        = Capital * 2 + Mandate * 1,
     success     = game.replace_presence(
         faction(target), district(target),
         with_faction=faction(acting),
@@ -608,7 +608,7 @@ A form that has been in the Accord Placement Area since Debrief is quietly updat
 | Supported by zones | ✓ | Accord Placement Area (Art 01); Target Profile in Dispatch Case (covert path) | Art 01 §6–§7 |
 | Supported by components | ✓ | AccordCard/AccordForm (Art 06 §9); Target Profile DB:48 with declared_params (Art 02 v2.4); Dispatch Case (Art 02) | Art 02; Art 06 §9 |
 | Supported by game procedure | ✓ | Beat 3 covert d100; Art 06 §9.10 Alter/Named Party governs physical alteration; Art 06 §9.10 Alter/Terms governs crit term change (incoming party elects at table); ARBITER announces success publicly | Art 03 §9, §11; Art 06 §9.10 |
-| Data schema validation | ⚠ | All fields per §6.1/§6.2. Missing `boost`/`ps_framing` (has `card_id`, `doctrine_mod=None`). `cost = Capital(3)` also uses a third cost-notation style (bare resource-type-as-callable, no `resource.faction()` wrapper) alongside the corpus' two other styles. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | All fields per §6.1/§6.2. Missing `boost`/`ps_framing` (has `card_id`, `doctrine_mod=None`). `cost` normalized from bare `Capital(3)` to `Capital * 3` (schema_cleanup_log #22, closed S148) — that piece resolved; boost/ps_framing gaps remain. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Four paths (success / crit success / fail / failcrit) each has exactly one outcome | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Mono-resource (`Capital(3)` only, acting faction's own). Bare `Capital(n)` notation flagged above (Data schema validation row) as a schema-vocabulary question, not resolved. | Art 00a §9.2 |
@@ -622,7 +622,7 @@ A form that has been in the Accord Placement Area since Debrief is quietly updat
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ | |
+| Status | | | |
 
 ```python
 SYN.CA.10 = Card(
@@ -656,7 +656,7 @@ SYN.CA.10 = Card(
         AND target_faction in target_object.parties
         AND declared_params.incoming_party not in target_object.parties
     ),
-    cost     = Capital(3),
+    cost     = Capital * 3,
     boost    = None,
 
     success = target_object.alter(
@@ -750,11 +750,11 @@ Syndicate's economic intelligence tap — a positional wager on district activit
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 SYN.CA.6 = Card(
-    id      = "SYN.CA.6",  version="v2.0",
+    id      = "SYN.CA.6",  card_id="SYN.CA.6",  version="v2.0",
     name    = "Parasitic",
     tagline = "Wire a district's commerce. Let others do the work.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -781,7 +781,7 @@ SYN.CA.6 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = None,
-    cost        = resource.faction(acting).capital * 2,
+    cost        = Capital * 2,
 
     success     = arbiter.dispatch(
                     IntelToken(faction=game.ops(beat=3, at=district(target)).first(resolution_order).submitter),
@@ -850,11 +850,11 @@ Syndicate uses covertly gathered intelligence to threaten a faction operating in
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 SYN.CA.7 = Card(
-    id      = "SYN.CA.7",  version="v2.0",
+    id      = "SYN.CA.7",  card_id="SYN.CA.7",  version="v2.0",
     name    = "Corporate Blackmail",
     tagline = "Submit covertly. The target decides what compliance costs less.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -922,16 +922,20 @@ A Syndicate operative approaches the Accord Placement Area during a recess. They
 | Supported by zones | ✓ | Accord Placement Area registered zone (Art 06 §9.5) | Art 01 §6–§7 |
 | Supported by components | ✓ | AccordAgreement face-up in Accord Placement Area (Art 06 §9); Target Profile declared-parameters blank line added Art 02 §8 | Art 02 §6–§8; Art 06 §9 |
 | Supported by game procedure | ✓ | Alter/Terms covert procedure: Art 06 §9.10 (covert op → ARBITER makes physical alteration); no new Art 03 step required | Art 06 §9.10 |
-| Data schema validation | ⚠ | All fields populated per §6.1/§6.2. Missing `boost`/`ps_framing` (has `card_id`, `doctrine_mod=None`). `cost = Capital(2)` uses the same bare resource-callable notation flagged on SYN.CA.10. `successcrit = standing += 1` also has no `faction(acting).` qualifier, unlike every other card's standing mutations in this corpus — presumably means the acting faction's own standing, but it isn't written explicitly. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | All fields populated per §6.1/§6.2. Missing `boost`/`ps_framing` (has `card_id`, `doctrine_mod=None`). `cost` normalized from bare `Capital(2)` to `Capital * 2` (schema_cleanup_log #22, closed S148) — that piece resolved. `successcrit = standing += 1` still has no `faction(acting).` qualifier, unlike every other card's standing mutations in this corpus — presumably means the acting faction's own standing, but it isn't written explicitly; separate, unresolved. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | One outcome per tier; no branching; successcrit additive on success; failcrit additive on fail | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Mono-resource (`Capital(2)` only). | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 SYN.CA.11 = Card(
@@ -960,7 +964,7 @@ SYN.CA.11 = Card(
 
     affinity    = None,
     restriction = AccordAgreement.count(state=active) >= 1,
-    cost        = Capital(2),
+    cost        = Capital * 2,
     boost       = None,
 
     success     = target_object.alter(type=Terms, clause=declared_clause,
@@ -1025,10 +1029,14 @@ SYN.CA.11 = Card(
 | Supported by zones | ⚠ |  |  |
 | Supported by components | ⚠ |  |  |
 | Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `cost = Capital(1) + Mandate(1)` uses the same bare resource-callable notation flagged on SYN.CA.10/11. Portrait `flat=+1` on Syndicate (the submitter) is the same pattern flagged on SYN.CA.10/11, though here it's only the acting faction, not a target-faction instance. Missing `card_id`(present)/`boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `cost` normalized from bare `Capital(1) + Mandate(1)` to `Capital * 1 + Mandate * 1` (schema_cleanup_log #22, closed S148) — that piece resolved. Portrait `flat=+1` on Syndicate (the submitter) is the same pattern flagged on SYN.CA.10/11, though here it's only the acting faction, not a target-faction instance. Missing `card_id`(present)/`boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
@@ -1062,7 +1070,7 @@ SYN.CA.12 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = Capital(1) + Mandate(1),
+    cost            = Capital * 1 + Mandate * 1,
 
     success     = arbiter.deliver(AccordForm(state=blank), recipient=faction(Syndicate).case),
     successcrit = None,
@@ -1126,11 +1134,15 @@ Syndicate's public territorial acquisition PA — the counterpart to SYN.CA.3 Ho
 | Outcome determinacy | ✓ | `Automatic`, `outcome_type = ElectPlayer` — `on_accept`/`on_decline` both populated (`success`/`successcrit`/`fail`/`failcrit` correctly `None` for this outcome type), no `game.choose_one()`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Capital), correctly typed — offer fee mono, balance payment also mono. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 SYN.PA.1 = Card(
@@ -1162,7 +1174,7 @@ SYN.PA.1 = Card(
     affinity    = None,
     restriction = faction(target).influence_tier(target_district) >= Established,
     # declared at Phase B: target faction, district, token count (n)
-    cost = resource.faction(Syndicate).capital * 1,  # offer fee; non-refundable regardless of outcome
+    cost = Capital * 1,  # offer fee; non-refundable regardless of outcome
     boost = None,
 
     success     = None,
@@ -1230,11 +1242,15 @@ Syndicate's political leverage PA. Places a Capital-valued marker on a named dis
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (a `game.world_condition()` placement, matching the confirmed Seasonal-timed-effect pattern in design_reference_card_system.md) — no `game.choose_one()`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Capital × 2), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 SYN.PA.2 = Card(
@@ -1265,7 +1281,7 @@ SYN.PA.2 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = None,
-    cost        = resource.faction(Syndicate).capital * 2,  # placed as escrow under DividendMarker
+    cost        = Capital * 2,  # placed as escrow under DividendMarker
     boost       = None,
 
     success = (
@@ -1330,7 +1346,7 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 | Data schema validation | ✓ | All fields populated per §6.1/§6.2 | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Three paths (accept / cannot-meet / decline) — each has exactly one outcome; no branching within paths; Permanent React fires once then discards | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Mono-resource (Capital × 1, offer fee), correctly floor-power for a card whose real leverage is the ElectPlayer/Permanent-React mechanism, not the cost. Cost notation `Capital(1)` is the bare `Type(n)` style, a 4th confirmed instance alongside SYN.CA.10/11/12. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (Capital × 1, offer fee), correctly floor-power for a card whose real leverage is the ElectPlayer/Permanent-React mechanism, not the cost. Cost notation normalized from bare `Capital(1)` to `Capital * 1` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -1341,7 +1357,7 @@ A Syndicate representative rises at Beat 4 and addresses the table: "We believe 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ | |
+| Status | | | |
 
 ```python
 SYN.PA.3 = Card(
@@ -1376,7 +1392,7 @@ SYN.PA.3 = Card(
 
     affinity    = None,
     restriction = None,
-    cost        = Capital(1),
+    cost        = Capital * 1,
     boost       = None,
 
     on_accept  = (
@@ -1473,11 +1489,15 @@ SYN.PA.3 = Card(
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Capital × 2), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 SYN.PA.4 = Card(
@@ -1494,12 +1514,12 @@ SYN.PA.4 = Card(
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
     affinity = None,  restriction = None,
-    cost    = resource.faction(Syndicate).capital * 2,
+    cost    = Capital * 2,
     boost   = None,
     success = "Syndicate gains +2 PS. Every opponent must either pay 1 Capital to the supply or immediately lose 1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "A public flex of pure capital. Weaponizes Syndicate's wealth to farm PR while forcing opponents to bleed money or take a PR hit just to keep up appearances.",
@@ -1540,11 +1560,15 @@ SYN.PA.4 = Card(
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capital + Mandate), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 SYN.PA.5 = Card(
@@ -1561,12 +1585,12 @@ SYN.PA.5 = Card(
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
     target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
     affinity = None,  restriction = None,
-    cost    = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).mandate * 1,
+    cost    = Capital * 2 + Mandate * 1,
     boost   = None,
     success = "Places a Standing Condition on target_district until Quarter+1: Whenever a Structure Block or Presence Token is placed here, the faction that owns it must pay 1 Capital to Syndicate. If they do not, the structure or token is immediately removed.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Fixes the covert targeting issue. Physical placement of chips and blocks is public knowledge. Syndicate sets up a toll booth on the district: the owner of the structure pays, or their asset is destroyed.",
@@ -1597,7 +1621,7 @@ The clause that would have sunk the deal simply isn't on the page anymore. Nobod
 | Doctrine alignment | ✓ | Corrupting/removing Accord terms via leverage (keyed IntelToken) is squarely Syndicate's "we have something on everyone" doctrine — matches sibling cards SYN.MOD.11 and SYN.CA.11. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | Issued `ModReactCard` — ARBITER-delivered, not deck-drawn. | Art 04 §6.1, §11.1 |
 | Taxonomy fit | ⚠ | AccordAgreement is confirmed registered (Redline's precedent) and Remove is a confirmed verb, but Remove-vs-Corrupt is a genuine judgment call, not a settled fit — Corrupt's actual definition ("a physically written value is altered") arguably matches "void a clause" better than Remove's ("component exits active play"), since the AccordAgreement itself stays in play. Kept as Remove for now; flagged for re-check, same as SYN.MOD.11's own self-flagged assignment. | ref_taxonomy.md §5.2 |
-| Balance | ✓ | `cost = Findings(1) + IntelToken(about=declared_party)` — lighter than Signature on File's 4-resource stack, appropriate since removing one clause is a smaller violation than forcing whole-Accord acceptance. New cost combination, playtest-flagged like the rest of the corpus's numeric values (04-n94 pattern), not re-litigated further. | Art 02 §6–§7 |
+| Balance | ✓ | `cost = Findings * 1 + IntelToken(about=declared_party)` — lighter than Signature on File's 4-resource stack, appropriate since removing one clause is a smaller violation than forcing whole-Accord acceptance. New cost combination, playtest-flagged like the rest of the corpus's numeric values (04-n94 pattern), not re-litigated further. | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — the strike itself resolves instantly at trigger; the missing clause's absence persists for the remainder of the Accord's term, same durability pattern as Redline's in-place alteration. | Art 04 §5 P19 |
 | Persistence | ⚠ | `persistence` field open corpus-wide question, not card-specific. | Art 04 §6.2 |
 | Trigger validity | ⚠ | `accord.activated` is a brand-new trigger form, unconfirmed against §6.3 TriggerExpr vocabulary — same open category as Overture's `public_act.resolved` and SYN.MOD.11's `accord.tabled`. | Art 04 §6.3; PM05 04-n158 |
@@ -1608,7 +1632,7 @@ The clause that would have sunk the deal simply isn't on the page anymore. Nobod
 | Data schema validation | ⚠ | Brand-new card (no prior `Card()` definition existed). `target_object.alter(type=TermRemoval, ...)` parallels Redline's `type=Terms` but `TermRemoval` has no formal AlterType enum backing it — same ungoverned-MutationExpr gap as the rest of the corpus. `generating_card=None` flagged as a separate, still-open item (not a blocker for this pass). Scaffolding fields added (04-n177). | Art 04 §6.1–§6.3; PM05 04-n158 |
 | Card narrative | ✓ | Card Story and `narrative` line present (card previously had no content at all). | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` — deterministic leverage check (does Syndicate hold the right keyed IntelToken), no dice. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | `Findings(1) + IntelToken(about=declared_party)` — mirrors Signature on File's leverage-cost pattern at a lighter tier appropriate to the smaller violation. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | `Findings * 1 + IntelToken(about=declared_party)` — mirrors Signature on File's leverage-cost pattern at a lighter tier appropriate to the smaller violation. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ⚠ | Depends on Accord activation frequency plus Syndicate holding the right keyed IntelToken at the right moment — a fairly narrow combined condition; best-effort, not independently verifiable here. |  |
 | Firing window (ModReactCard) | ✓ | No other card shares the `accord.activated` trigger. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Deterministic leverage check, no dice — Automatic is correct. |  |
@@ -1625,7 +1649,7 @@ The clause that would have sunk the deal simply isn't on the page anymore. Nobod
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (Taxonomy Remove/Corrupt, generating_card, trigger vocab, TermRemoval enum) |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.1 = Card(
@@ -1648,7 +1672,7 @@ SYN.MOD.1 = Card(
     affinity        = None,
     restriction     = IntelToken(about=faction(accord.party_a)) in faction(Syndicate).hand
                        or IntelToken(about=faction(accord.party_b)) in faction(Syndicate).hand,
-    cost            = Findings(1) + IntelToken(about=declared_party),
+    cost            = Findings * 1 + IntelToken(about=declared_party),
     boost           = None,
 
     acquisition      = Issued,
@@ -1663,7 +1687,7 @@ SYN.MOD.1 = Card(
     narrative    = "The clause never existed. Neither did the conversation about removing it.",
     perspectives = None,
     design_note  = "Must be distinct from SYN.CA.10 Accord Transfer (Named Party) and SYN.CA.11 Redline (Terms/numeric value), and must not duplicate SYN.MOD.11 Signature on File (forged acceptance). Built around Art 06 §9.10's only unclaimed Accord Manipulation type: Term removal — strike an entire clause row from an active Accord, voiding that obligation or prohibition outright. Distinct from Redline (edits a value in place) and Accord Transfer (swaps a bound party): The Fixer deletes the term itself. Leverage cost pattern mirrors Signature on File (IntelToken keyed to a named party), reflecting the same 'we have something on you' Syndicate throughline, while layer/function (Information/Remove) keeps it out of SYN.MOD.11's Information/Corrupt/Accord slot.",
-    arbiter_note = "On trigger (a drafted Accord becomes active): if Syndicate holds an IntelToken keyed to either named party and pays Findings(1) + that IntelToken: Syndicate declares one clause row on the AccordForm. ARBITER strikes that row; the obligation or prohibition it recorded is void for the remainder of the Accord's term. Remaining clause rows are unaffected (Art 06 §9.10).",
+    arbiter_note = "On trigger (a drafted Accord becomes active): if Syndicate holds an IntelToken keyed to either named party and pays Findings * 1 + that IntelToken: Syndicate declares one clause row on the AccordForm. ARBITER strikes that row; the obligation or prohibition it recorded is void for the remainder of the Accord's term. Remaining clause rows are unaffected (Art 06 §9.10).",
 )
 ```
 
@@ -1704,11 +1728,15 @@ A formal Accord goes up at the table. Syndicate didn't need to be a party to it 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; Accords aren't ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.2 = Card(
@@ -1785,11 +1813,15 @@ An Accord collapses — breach, expiry, doesn't matter which. Syndicate already 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.3 = Card(
@@ -1845,7 +1877,7 @@ A rival scores a public win — their standing climbs in front of the whole tabl
 |----------|------|------|--------------|
 | Action fit | ✓ | "Public success always creates private wealth" is a sharp, doctrinally coherent Syndicate hook. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; opportunistic market play, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; opportunistic market play, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Economy/Add/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Same verified Economy×Add cell as SYN.MOD.2/3. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Flat, low-value, no cost, table-wide (any opponent) — plausible as a minor engine; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -1866,11 +1898,15 @@ A rival scores a public win — their standing climbs in front of the whole tabl
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.4 = Card(
@@ -1901,7 +1937,7 @@ SYN.MOD.4 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1926,7 +1962,7 @@ A rival's public standing craters. Syndicate doesn't wait for the dust to settle
 |----------|------|------|--------------|
 | Action fit | ✓ | "A reputation in freefall is an undervalued asset" completes a coherent MOD.4/MOD.5 pair covering both directions of political volatility. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable, same as SYN.MOD.4. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable, same as SYN.MOD.4. | Art 04 §6.5 |
 | Card type fit | ✓ | Same shape as SYN.MOD.4. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Same verified Economy×Add cell. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | Real cost (unlike SYN.MOD.4's free trigger) for the same yield — reasonable given design_note's framing that holding both cards "guarantees income from any volatility." | Art 02 §6–7; Art 04 §6.5 |
@@ -1947,11 +1983,15 @@ A rival's public standing craters. Syndicate doesn't wait for the dust to settle
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.5 = Card(
@@ -1975,14 +2015,14 @@ SYN.MOD.5 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).findings * 1,
+    cost            = Capital * 2 + Findings * 1,
     boost           = None,  # scaffolded, not addressed
 
     success     = faction(Syndicate).resources.add(1, Capital),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2007,7 +2047,7 @@ Someone's about to make a move Syndicate wants to see succeed — or fail. Eithe
 |----------|------|------|--------------|
 | Action fit | ✓ | "Crowdsourcing other factions' offense/defense via escrowed capital" is a sharply doctrinal Syndicate mechanic — mercenary incentive, not direct action. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("I am willing to subsidize the effort") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; covert financial mechanism, not a public doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; covert financial mechanism, not a public doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Submission/Modify/PublicAct) — positive-direction sibling of SYN.MOD.10/STD.MOD.103/DIR.MOD.6. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Submission×Modify valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | +20 boost is significant; escrow-and-payout structure is a novel, interesting risk-sharing mechanic, but hard to fully assess while the effect is a prose description rather than a formal expression. | Art 02 §6–7; Art 04 §6.5 |
@@ -2028,11 +2068,15 @@ Someone's about to make a move Syndicate wants to see succeed — or fail. Eithe
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus, compounded by the unresolved persistence-condition gap. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.6 = Card(
@@ -2068,7 +2112,7 @@ SYN.MOD.6 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2093,7 +2137,7 @@ An Accord's fine print quietly changes — someone rewrote a clause. Syndicate's
 |----------|------|------|--------------|
 | Action fit | ✓ | Profiting from Accord manipulation as procedural friction is a coherent, distinct beat from SYN.MOD.2/3's formation/removal triggers. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("when the fine print changes, the lawyers get paid") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; routine economic reaction. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; routine economic reaction. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Economy/Add/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Same verified Economy×Add cell as SYN.MOD.2/3/4/5. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Flat, no cost, gated on a specific Accord-corruption event (rarer than formation/removal) — plausible; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -2114,11 +2158,15 @@ An Accord's fine print quietly changes — someone rewrote a clause. Syndicate's
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.7 = Card(
@@ -2149,7 +2197,7 @@ SYN.MOD.7 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2174,7 +2222,7 @@ A structure falls somewhere in the city — sabotage, contest, doesn't matter. T
 |----------|------|------|--------------|
 | Action fit | ✓ | Opportunistic acquisition of vacated ground, distinct from SYN.CA.9's active-position takeover, is a clean, doctrinally coherent beat. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("buy when there's blood in the streets") lands the doctrine. Rare among this set — `narrative` field is actually filled in. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; opportunistic tactical play, not a public doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; opportunistic tactical play, not a public doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Territory/Add/StructureBlock) — dual-effect, structure treated as primary. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Design_note's own "extremely powerful territorial swing" framing is honest — a dual chip+structure placement for 3 resources is significant; can't fully verify power level while the effect is a semicolon-joined string rather than a checkable Expr. | Art 02 §6–7; Art 04 §6.5 |
@@ -2195,11 +2243,15 @@ A structure falls somewhere in the city — sabotage, contest, doesn't matter. T
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.8 = Card(
@@ -2223,14 +2275,14 @@ SYN.MOD.8 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = faction(Syndicate).resources.has(2, Capital),
-    cost            = resource.faction(Syndicate).capital * 2 + resource.faction(Syndicate).exposure * 1,
+    cost            = Capital * 2 + Exposure * 1,
     boost           = None,  # scaffolded, not addressed
 
     success     = "arbiter.place(presence_chip, district=target_district, faction=Syndicate, count=1); arbiter.place(structure_block, district=target_district, faction=Syndicate, count=1)",  # ⚠ string literal containing 2 semicolon-joined statements — worse than a single-literal gap; flagged, not fixed
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = "The paperwork was drafted before the demolition crew finished clearing the site. Syndicate doesn't wait for the dust to settle to make an offer.",
     perspectives = None,
@@ -2253,7 +2305,7 @@ Syndicate's reputation takes a hit — anywhere, any cause. Before the news fini
 |----------|------|------|--------------|
 | Action fit | ✓ | "Reputation is a line item" — treating PS recovery as a scalable, budgeted expense is a sharply doctrinal Syndicate mechanic. | Art 00 §7 |
 | Voice fit | ✓ | Tagline lands the doctrine precisely. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; a budgeted defensive mechanism, not a public doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; a budgeted defensive mechanism, not a public doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Standing/Shift/StandingMarker, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Standing×Shift valid per the matrix (04-n173 precedent). | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Scalable N with an admitted-open cap question — could this be abused as unlimited PS-buying if N is uncapped? Design_note flags this itself as unresolved. | Art 02 §6–7; Art 04 §6.5 |
@@ -2274,11 +2326,15 @@ Syndicate's reputation takes a hit — anywhere, any cause. Before the news fini
 | Stack behavior (ModReactCard) | ⚠ | Compounded by the card never discarding — does holding 2 copies mean 2 independent N-declarations per trigger? Genuinely more consequential here than the generic stack question elsewhere. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.9 = Card(
@@ -2302,14 +2358,14 @@ SYN.MOD.9 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Syndicate).capital * N,  # N declared at trigger (min 1)
+    cost            = Capital * N,  # N declared at trigger (min 1)
     boost           = None,  # scaffolded, not addressed
 
     success     = faction(Syndicate).standing += N,  # ⚠ INVALID SYNTAX — `+=` is a statement, not an expression; 2nd confirmed instance, after NET.MOD.2
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2334,7 +2390,7 @@ A named rival is about to make their move. Before they even declare it, Syndicat
 |----------|------|------|--------------|
 | Action fit | ✓ | "We don't oppose your agenda, we make it expensive" is a sharply doctrinal, non-confrontational Syndicate mechanic. | Art 00 §7 |
 | Voice fit | ✓ | Tagline lands the doctrine precisely. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; covert financial interference, not a public doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; covert financial interference, not a public doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Submission/Modify/PublicAct, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Submission×Modify valid per the matrix; matches the confirmed −15-modifier pattern from STD.MOD.103/DIR.MOD.6/SYN.MOD.6. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | 1 Capital for a −15 penalty on a named target's PA is meaningful but not overwhelming, consistent with the sibling cards' power level. | Art 02 §6–7; Art 04 §6.5 |
@@ -2355,11 +2411,15 @@ A named rival is about to make their move. Before they even declare it, Syndicat
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.10 = Card(
@@ -2383,14 +2443,14 @@ SYN.MOD.10 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Syndicate).capital * 1,
+    cost            = Capital * 1,
     boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.apply_modifier(op=trigger.card, modifier=-15),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2436,11 +2496,15 @@ The Accord draft goes on the table with only one signature. Syndicate already ha
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 SYN.MOD.11 = Card(
@@ -2464,7 +2528,7 @@ SYN.MOD.11 = Card(
     target_object   = AccordForm(state=drafted),  # AccordForm is the established term (Art 06 §9.2, Overture's AccordForm(blank))
     affinity        = None,
     restriction     = IntelToken(about=faction(accord.party_b)) in faction(Syndicate).hand,
-    cost            = Capital(2) + Findings(1) + Mandate(1) + IntelToken(about=faction(accord.party_b)),
+    cost            = Capital * 2 + Findings * 1 + Mandate * 1 + IntelToken(about=faction(accord.party_b)),
     boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.mark_acceptance(accord=trigger.accord, party=faction(accord.party_b), state=signed),
@@ -2512,11 +2576,15 @@ A few names get a call, a rate gets quoted, and by evening there are more people
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention — deck-level rarity substitutes for a per-play cost. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.12 = Card(
@@ -2573,11 +2641,15 @@ A convoy rolls in that nobody remembers ordering. It parks, and it stays parked,
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.13 = Card(
@@ -2634,11 +2706,15 @@ A supplier who was supposed to show up tonight suddenly has a more urgent invoic
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.14 = Card(
@@ -2695,11 +2771,15 @@ The people the target was counting on tonight took a better offer this afternoon
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.15 = Card(
@@ -2756,11 +2836,15 @@ A well-placed incentive smooths the acting faction's own play — everyone invol
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields (schema-locked None). | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention; out of scope for 04-n178. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.16 = Card(
@@ -2817,11 +2901,15 @@ Favorable terms negotiated in advance ease a financial move well before anyone e
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.17 = Card(
@@ -2878,11 +2966,15 @@ Pre-arranged leverage removes the friction that would otherwise complicate the a
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.18 = Card(
@@ -2939,11 +3031,15 @@ Every lever available has already been pulled before the move is even made — n
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.19 = Card(
@@ -3000,11 +3096,15 @@ A resource action's outcome grows the longer it's been quietly set up — patien
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.20 = Card(
@@ -3061,11 +3161,15 @@ Enough capital already committed turns a modest success into a decisive one — 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.21 = Card(
@@ -3122,11 +3226,15 @@ A dispute resolved out of public view protects standing that a drawn-out fight w
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.22 = Card(
@@ -3183,11 +3291,15 @@ A visible donation buys Syndicate a standing boost that costs far less than what
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.23 = Card(
@@ -3244,11 +3356,15 @@ A quiet mention in the right circles costs a named rival a little standing — n
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.24 = Card(
@@ -3305,11 +3421,15 @@ A rival's finance practices become public knowledge — Syndicate knows exactly 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.25 = Card(
@@ -3366,11 +3486,15 @@ A standing agreement lowers the price of doing this again — the relationship w
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.26 = Card(
@@ -3427,11 +3551,15 @@ Pre-arranged financing discounts what an action costs to mount — the capital w
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 SYN.MOD.27 = Card(

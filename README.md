@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** S147 — 04-n188 (Art 04 `Card()` inline-comment corpus hygiene) fully closed (PM02 L302–L306); `cost` schema-locked `None` for both `ModActionCard`/`ModBattleCard` in §6.2, resolving a cross-file conflict the original triage couldn't legally execute; 18 flagged spec-clarity/keep-candidate items individually ruled; re-derived execution pass replaced a stale, unrecoverable per-line triage count, resolving 106 comment lines against verified real sources. schema_cleanup_log #5/#11 closed (PM02 L301) — `faction=Any` locked inclusive-of-self by default on React triggers. Full detail PM02 L301–L306, PM05 04-n188. Prior (S146): Full-corpus Art 04 hygiene sweep complete (04-n165/04-n180/04-n185 closed); 04-n169 closed (Emergency Response moved to Art 05); 04-n186 closed (6 content-accuracy defects fixed). Full detail PM02 L285–L296.
+**Design milestone:** S148 — Schema Cleanup Program (PM05 04-n191) launched as priority-blocking multi-phase work (5 phases consolidating ~30 schema_cleanup_log items). Phases 1–2 closed: CostExpr syntax sweep, card_id backfill, portrait empty-value normalization (PM02 L316); database recovery (10.0.1.14→10.0.0.14 migration), card_status reset/reconciliation (PM02 L316). Art 00a §10.4 "Covert Attribution Remains Untraceable" added and signed off (v0.11→0.12, PM02 L324). agy retired as standalone agent; migrated to Claude subagent via antigravity-for-claude-code plugin. Phases 3–5 (legacy vocabulary sweep, decision batch, content-fix sweep) pending. Prior (S147): 04-n188 fully closed (Art 04 comment corpus hygiene, PM02 L302–L306); `cost` schema-locked for ModActionCard/ModBattleCard; schema_cleanup_log #5/#11 closed. Full detail PM02 L301–L306.
 
 ---
 
@@ -29,7 +29,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.9 | ✅ Signed off — S134 (L255). S134: §6.7 Ring Character (narrative anchor), §15 curriculum extended (Pine Gap). Bundles S99 §14.10, S131 §15, S134 §6.7+Pine Gap. Prior: ✅ S93 (L211). S118: component name sweep. |
-| 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.10 | ✅ Signed off — S108 (GR 10.1b). S118: component name sweep. |
+| 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.12 | ✅ Signed off — S148 (§10.4 Covert Attribution Remains Untraceable). S108: GR 10.1b. S118: component name sweep. |
 
 ---
 
@@ -51,7 +51,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 2.3 | ✅ Signed off — S130 (L239). S118: component name sweep. |
-| 02 | [Components](V1/02___Components.md) | 2.5 | ✅ Signed off — S111 (L233). S118: full component name Title Case sweep (headings + metadata + body). |
+| 02 | [Components](V1/02___Components.md) | 2.5 | ⚠️ Pending re-sign-off — S148 (Target Profile amendment, PM05 04-n197). S111: base sign-off (L233). S118: full component name Title Case sweep (headings + metadata + body). |
 
 ---
 

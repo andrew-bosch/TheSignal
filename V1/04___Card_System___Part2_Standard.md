@@ -55,17 +55,21 @@ Territory-control foundation card. Construction is publicly visible — the cove
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Dual-resource cost (faction native + district native) reads as cross-faction-resource tier, but `cost`'s first term is missing a resource-type attribute — can't confirm tier/power match until that's fixed. Flagged, not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier/power match otherwise unexamined. | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | ✓ |
+| Status | | | |
 
 ```python
 STD.CA.1 = Card(
-    id      = "STD.CA.1",  version = "v1.1",
+    id      = "STD.CA.1",  card_id="STD.CA.1",  version = "v1.1",
     name    = "Build Structure",
     tagline = "Construct a physical installation in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -90,12 +94,12 @@ STD.CA.1 = Card(
     target_object   = None,
 
     target_taxonomy=None,
-    affinity    = faction(acting) == Guild: cost.resource.district(native) = 0,
+    affinity    = faction(acting) == Guild: cost.district.target.native = 0,
     restriction = (
         district(target).faction(acting).presence > 0 and
         district(target).faction(acting).structure == 0
     ),
-    cost = resource.faction(acting) * 1 + resource.district(native) * 1,
+    cost = faction.acting.native * 1 + district.target.native * 1,
 
     success     = district(target).faction(acting).structure += 1,
     successcrit = None,
@@ -149,17 +153,21 @@ Territory disruption card — the destructive mirror of STD.CA.1. Structure remo
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Dual-resource cost (faction native + district native) reads as cross-faction-resource tier, but `cost`'s first term is missing a resource-type attribute — can't confirm tier/power match until that's fixed. Flagged, not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier/power match otherwise unexamined. | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | ✓ |
+| Status | | | |
 
 ```python
 STD.CA.2 = Card(
-    id      = "STD.CA.2",  version = "v1.1",
+    id      = "STD.CA.2",  card_id="STD.CA.2",  version = "v1.1",
     name    = "Demolish",
     tagline = "Remove an opponent's structure from a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -189,7 +197,7 @@ STD.CA.2 = Card(
         district(self|adjacent).faction(acting).presence > 0 and
         district(target).faction(target).structure > 0
     ),
-    cost = resource.faction(acting) * 1 + resource.district(native) * 1,
+    cost = faction.acting.native * 1 + district.target.native * 1,
 
     success     = district(target).faction(target).structure -= 1,
     successcrit = resource.faction(acting).native += 1,
@@ -244,17 +252,21 @@ Presence-deepening card — a deliberate structural parallel to STD.CA.1. To Cam
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Dual-resource cost (faction native + district native) reads as cross-faction-resource tier, but `cost`'s first term is missing a resource-type attribute — can't confirm tier/power match until that's fixed. Flagged, not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier/power match otherwise unexamined. | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | ✓ |
+| Status | | | |
 
 ```python
 STD.CA.3 = Card(
-    id      = "STD.CA.3",  version = "v1.1",
+    id      = "STD.CA.3",  card_id="STD.CA.3",  version = "v1.1",
     name    = "Campaign",
     tagline = "Build local support and deepen presence in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -279,9 +291,9 @@ STD.CA.3 = Card(
     target_object   = None,
 
     target_taxonomy=None,
-    affinity    = faction(acting) == Network: cost.resource.district(native) = 0,
+    affinity    = faction(acting) == Network: cost.district.target.native = 0,
     restriction = district(target).faction(acting).presence > 0,
-    cost        = resource.faction(acting) * 1 + resource.district(native) * 1,
+    cost        = faction.acting.native * 1 + district.target.native * 1,
 
     success     = district(target).faction(acting).presence += 1,
     successcrit = None,
@@ -332,17 +344,21 @@ Presence-disruption card — the destructive mirror of STD.CA.3, following the s
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Dual-resource cost (faction native + district native) reads as cross-faction-resource tier, but `cost`'s first term is missing a resource-type attribute — can't confirm tier/power match until that's fixed. Flagged, not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier/power match otherwise unexamined. | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | ✓ |
+| Status | | | |
 
 ```python
 STD.CA.4 = Card(
-    id      = "STD.CA.4",  version = "v1.1",
+    id      = "STD.CA.4",  card_id="STD.CA.4",  version = "v1.1",
     name    = "Undermine",
     tagline = "Erode an opponent's presence in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -372,7 +388,7 @@ STD.CA.4 = Card(
         district(self|adjacent).faction(acting).presence > 0 and
         district(target).faction(target).presence > 0
     ),
-    cost        = resource.faction(acting) * 1 + resource.district(native) * 1,
+    cost        = faction.acting.native * 1 + district.target.native * 1,
 
     success     = district(target).faction(target).presence -= 1,
     successcrit = district(target).faction(target).presence -= 1,
@@ -427,17 +443,21 @@ Universal intelligence card — the baseline for the Information layer. Observat
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit populated identically (additive on crit), failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Mono-resource (faction native only, single term) — matches Balance row's "cheapest intel card" floor-power framing. But `cost` is missing a resource-type attribute, same gap as STD.CA.1–4; flagged, not resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native only, single term) — matches Balance row's "cheapest intel card" floor-power framing. `cost` typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.CA.5 = Card(
-    id      = "STD.CA.5",  version = "v1.1",
+    id      = "STD.CA.5",  card_id="STD.CA.5",  version = "v1.1",
     name    = "Gather",
     tagline = "Extract actionable intelligence about a specific faction's operations.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -467,7 +487,7 @@ STD.CA.5 = Card(
         district(self|adjacent).faction(acting).presence > 0 or
         faction(acting) == Ghost
     ),
-    cost        = resource.faction(acting) * 1,
+    cost        = faction.acting.native * 1,
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
@@ -520,15 +540,19 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure only, typed correctly). Restricted-acquisition resource narrows practical access mostly to Network/Ghost by design (per Design Rationale) — power/cost match not independently re-verified beyond that. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ |
+| Status | | | |
 
 ```python
 STD.CA.6 = Card(
-    id      = "STD.CA.6",  version = "v1.1",
+    id      = "STD.CA.6",  card_id="STD.CA.6",  version = "v1.1",
     name    = "Broadcast Interference",
     tagline = "Disrupt public communications in a district, dampening public activity.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -553,9 +577,9 @@ STD.CA.6 = Card(
     target_object   = PublicAct,
 
     target_taxonomy=None,
-    affinity    = faction(acting) == Network: cost.resource.exposure -= 1,
+    affinity    = faction(acting) == Network: cost.Exposure -= 1,
     restriction = None,
-    cost        = resource.faction(acting).exposure * 2,
+    cost        = Exposure * 2,
 
     success     = game.ops(beat=4, type=PublicAct, at=district(target)).cost.native += 1,
     successcrit = None,
@@ -612,15 +636,19 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure only, typed correctly), same shape as STD.CA.6. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ |
+| Status | | | |
 
 ```python
 STD.CA.7 = Card(
-    id      = "STD.CA.7",  version = "v1.1",
+    id      = "STD.CA.7",  card_id="STD.CA.7",  version = "v1.1",
     name    = "Amplify",
     tagline = "Boost the Public Standing impact of your own public act this round.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -645,9 +673,9 @@ STD.CA.7 = Card(
     target_object   = PublicAct,
 
     target_taxonomy=None,
-    affinity    = faction(acting) == Network: cost.resource.exposure -= 1,
+    affinity    = faction(acting) == Network: cost.Exposure -= 1,
     restriction = None,
-    cost        = resource.faction(acting).exposure * 2,
+    cost        = Exposure * 2,
 
     success     = faction(acting).op(beat=4, type=PublicAct).standing_impact *= 2,
     successcrit = None,
@@ -703,15 +731,19 @@ Economy-bypasses-Territory card — the only Standard CovertOperation with no re
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Mono-resource (Capital only, typed correctly) — but Balance row already notes 3 Capital is "the highest Standard cost." P28 flags mono-resource + high-power as a check to confirm; not independently re-verified. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ |
+| Status | | | |
 
 ```python
 STD.CA.8 = Card(
-    id      = "STD.CA.8",  version = "v1.1",
+    id      = "STD.CA.8",  card_id="STD.CA.8",  version = "v1.1",
     name    = "Buy Influence",
     tagline = "Deploy capital to place presence tokens directly, without groundwork.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -738,7 +770,7 @@ STD.CA.8 = Card(
     target_taxonomy=None,
     affinity    = faction(acting) == Syndicate: threshold += 25,
     restriction = None,
-    cost        = resource.faction(acting).capital * 3,
+    cost        = Capital * 3,
 
     success     = district(target).faction(acting).presence += 2,
     successcrit = district(target).faction(acting).presence += 1,
@@ -806,11 +838,11 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.CA.9 = Card(
-    id      = "STD.CA.9",  version = "v1.1",
+    id      = "STD.CA.9",  card_id="STD.CA.9",  version = "v1.1",
     name    = "Fund",
     tagline = "Transfer resources to another faction as a gesture of support.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -837,7 +869,7 @@ STD.CA.9 = Card(
     target_taxonomy=None,
     affinity    = faction(acting) == Syndicate: threshold += 25,
     restriction = None,
-    cost        = resource.faction(acting).capital * 2,
+    cost        = Capital * 2,
 
     success     = (
         faction(target).resource.capital += 2,
@@ -894,7 +926,7 @@ Defensive Beat 2 positional wager — the only Standard card that explicitly pro
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Mono-resource (district native only, typed correctly). | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (district native only) — previously marked "typed correctly," which was wrong: the term was bare `resource.district(native)`, misusing "native" as the district-reference argument rather than a type attribute. Corrected to `district.target.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -905,11 +937,11 @@ Defensive Beat 2 positional wager — the only Standard card that explicitly pro
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ✓ |
+| Status | | | |
 
 ```python
 STD.CA.10 = Card(
-    id      = "STD.CA.10",  version = "v1.1",
+    id      = "STD.CA.10",  card_id="STD.CA.10",  version = "v1.1",
     name    = "Protect",
     tagline = "Defend a district's assets from covert disruption this round.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -936,7 +968,7 @@ STD.CA.10 = Card(
     target_taxonomy=None,
     affinity    = faction(acting) IN [Guild, Directorate]: threshold_protection = 45,
     restriction = district(target).faction(acting).presence > 0,
-    cost        = resource.district(native) * 1,
+    cost        = district.target.native * 1,
 
     success     = game.ops(beat=3, at=district(target), targeting=faction(acting).assets).threshold -= (threshold_protection if affinity else 25),
     successcrit = None,
@@ -1001,11 +1033,11 @@ None — all resolved. District-keyed resource model makes Mandate acquirable by
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.CA.11 = Card(
-    id      = "STD.CA.11",  version="v2.0",
+    id      = "STD.CA.11",  card_id="STD.CA.11",  version="v2.0",
     name    = "Tort Interference",
     tagline = "Lock an executed Accord against voluntary dissolution until game end or breach.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1020,10 +1052,10 @@ STD.CA.11 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = Accord(named).is_executed == True AND Accord(named).on_table == True,
-    cost        = resource.faction(acting).mandate * 1 + resource.faction(acting).native * 1,
+    cost        = Mandate * 1 + faction.acting.native * 1,
     success     = game.lock(Accord(named), until=game.end OR Accord(named).breach_by_party),
     successcrit=None, fail=None, failcrit=None,
-    portrait    = {},
+    portrait    = None,
     narrative   = "The agreement stands. Whatever your reasons for wanting out, the record disagrees.",
     perspectives = {
         Directorate: "The agreement is now a matter of institutional record. Dissolution would require a filing no one is prepared to make.",
@@ -1058,14 +1090,14 @@ Intel token cost makes this a premium play — factions must hold Intel specific
 |----------|------|------|--------------|
 | Action fit | ✓ | Counter-counter card — removes a committed Beat 2 Block or Protect before it applies; fills gap where defensive positional wagers have no standard counter | Art 00 §7 |
 | Voice fit | ✓ | Standard card; all-faction access; no faction-specific voice required; perspectives block expected for full Standard spec — confirm complete in code block | Art 00 §7 |
-| Doctrine alignment | ✓ | N/A — Standard card; no faction doctrine alignment required; no affinity; portrait = {} | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | N/A — Standard card; no faction doctrine alignment required; no affinity; portrait = None | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / Standard / faction=All — all-faction counter-counter capability; no faction restriction | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Submission/Block/CovertOperation — removes a submitted covert op's effect before it applies; Block function correct | Art 04b §4, §5 |
 | Balance | ✓ | Intel token for one Beat 2 card removal — premium cost justified by cross-faction utility; resources on discarded card not refunded (GR 7.2b consistent) | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: target card discarded at Beat 2 resolution; no lingering effect | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None; restriction enforces target Beat 2 card exists | — |
-| Portrait validity | ✓ | portrait = {} — Standard card; no portrait entry confirmed intentional | Art 04 §6.2 |
+| Portrait validity | ✓ | portrait = None — Standard card; no portrait entry confirmed intentional | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named — Beat 2 cards are district-anchored | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken cost; Beat 2 Block or Protect card as target (function=Block or function=Protect per Art 04b taxonomy) — scope CA-inclusive | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 2 Automatic; target card must exist in Beat 2 row at resolution; discard occurs at Beat 2. CM cards are not valid targets — processed and discarded at Beat 1 (Art 03 §9.4.1.2) before CA.12 fires. Valid targets: CA cards (function=Block or function=Protect) and Protect/Fortify modifier plays. | Art 03 §9.4.1.2, §9.4.2 |
@@ -1088,11 +1120,11 @@ None — all design questions resolved:
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.CA.12 = Card(
-    id      = "STD.CA.12",  version="v1.0",
+    id      = "STD.CA.12",  card_id="STD.CA.12",  version="v1.0",
     name    = "Absolute Compromise",
     tagline = "Some barriers are not barriers at all — just the illusion of one.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1110,7 +1142,7 @@ STD.CA.12 = Card(
     cost        = IntelToken() * 1,
     success     = game.discard(target_card, district(target).beat2_row),
     successcrit=None, fail=None, failcrit=None,
-    portrait    = {},
+    portrait    = None,
     narrative   = "There are no walls. There are only varying degrees of access.",
     perspectives = {},
     design_note  = "Scope: CA-inclusive — targets Block/Protect plays in both the Faction Resolution Grid (Type A CMs, Protect/Fortify modifier plays) and ARBITER's covert resolution grid (Beat 2 CA cards with function=Block or function=Protect). Cannot target Type B Countermeasures (faction defense — reduces difficulty, not a Block/Protect play). Intel token consumed is any held token.",
@@ -1151,15 +1183,19 @@ First Standard card with Public Standing shift as its primary covert effect — 
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 C_DisinformationCampaign = Card(
-    id      = "STD.CA.13",  version = "v1.0",
+    id      = "STD.CA.13",  card_id="STD.CA.13",  version = "v1.0",
     name    = "Disinformation Campaign",
     tagline = "Run a covert narrative operation degrading a faction's public standing in a district.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1186,10 +1222,10 @@ C_DisinformationCampaign = Card(
     target_taxonomy=None,
     affinity    = (
         faction(acting) == Network: threshold += 10,
-        faction(acting) == Ghost:   cost.resource.native -= 1,
+        faction(acting) == Ghost:   cost.faction.acting.native -= 1,
     ),
     restriction = faction(acting).presence(target_district) > 0,
-    cost        = resource.faction(acting).native * 2,
+    cost        = faction.acting.native * 2,
 
     success     = (faction(target).standing -= 2, faction(acting).standing += 1),
     successcrit = None,
@@ -1251,15 +1287,19 @@ Fills the Economy/Remove/IntelToken coverage gap in the Standard card set. All f
 | Outcome determinacy | ✓ | `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 C_Disprove = Card(
-    id      = "STD.CA.14",  version = "v1.0",
+    id      = "STD.CA.14",  card_id="STD.CA.14",  version = "v1.0",
     name    = "Disprove",
     tagline = "Covertly destroy one Intel token held in an opponent's supply.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1286,7 +1326,7 @@ C_Disprove = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = None,
-    cost        = resource.faction(acting).native * 2,
+    cost        = faction.acting.native * 2,
 
     success     = arbiter.draw_random(IntelToken, source=faction(target).supply,
                       count=1, action=destroy),
@@ -1347,15 +1387,19 @@ UVM pricing model classifies this card's `IntelToken/Add` effect cleanly (valida
 | Outcome determinacy | ✓ | `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ⚠ pending re-sign-off |
+| Status | | | |
 
 ```python
 C_IntelExtraction = Card(
-    id      = "STD.CA.15",  version = "v1.1",
+    id      = "STD.CA.15",  card_id="STD.CA.15",  version = "v1.1",
     name    = "Intel Extraction",
     tagline = "Covertly transfer one Intel token from an opponent's supply into your dispatch case.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1384,7 +1428,7 @@ C_IntelExtraction = Card(
         faction(acting) == Ghost: threshold += 10,
     ),
     restriction = None,
-    cost        = resource.faction(acting).native * 1,
+    cost        = faction.acting.native * 1,
 
     success     = arbiter.draw_random(IntelToken, source=faction(target).supply,
                       count=1, action=transfer(faction(acting).case, face_down=True)),
@@ -1444,15 +1488,19 @@ Economy/Redirect/ModifierCard — splits Asset Extraction alongside Intel Extrac
 | Outcome determinacy | ✓ | `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 C_ModifierRaid = Card(
-    id      = "STD.CA.16",  version = "v1.0",
+    id      = "STD.CA.16",  card_id="STD.CA.16",  version = "v1.0",
     name    = "Modifier Raid",
     tagline = "Covertly transfer one modifier card from an opponent's hand into your dispatch case.",
     type    = CovertOperation,  subtype = Standard,  faction = All,
@@ -1481,7 +1529,7 @@ C_ModifierRaid = Card(
         faction(acting) == Ghost: threshold += 10,
     ),
     restriction = None,
-    cost        = resource.faction(acting).native * 2,
+    cost        = faction.acting.native * 2,
 
     success     = arbiter.draw_random(ModifierCard, source=faction(target).hand,
                       count=1, action=transfer(faction(acting).case, face_down=True)),
@@ -1566,13 +1614,17 @@ Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outc
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (successcrit/fail/failcrit all `None`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), but `cost`'s term is missing a resource-type attribute. Cross-card claim ("same cost as STD.CA.3") also checked and found false. Tier assessment blocked until cost bug resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). Cross-card claim ("same cost as STD.CA.3") already checked and found false — unaffected by this fix. | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.PA.1 = Card(
@@ -1603,7 +1655,7 @@ STD.PA.1 = Card(
     target_taxonomy=None,
     affinity    = faction(acting) == Directorate: cost.faction(native) = 0,
     restriction = None,  # ring entry enforced universally at Beat 0
-    cost        = resource.faction(acting) * 2,
+    cost        = faction.acting.native * 2,
     boost       = None,
 
     success     = (district(target).faction(acting).presence += 2, faction(acting).standing += 1),
@@ -1661,13 +1713,17 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 | Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic` (schema_cleanup_log #41) — the `ContestedMarker` placement is a `success`-field effect, not a resolution-mechanism category; only this card among the 5 "Contested" instances actually placed one. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching in any tier. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), but `cost`'s term is missing a resource-type attribute. Cross-card claim ("same cost, 45 vs 40 threshold, as STD.CA.4") checked directly and found false on both counts — STD.CA.4's actual cost is dual-resource, actual threshold is 50, not 40. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). Cross-card claim ("same cost, 45 vs 40 threshold, as STD.CA.4") already checked and found false on both counts — unaffected by this fix. | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.PA.2 = Card(
@@ -1701,7 +1757,7 @@ STD.PA.2 = Card(
         faction(acting) == Directorate: threshold += 10,
     ),
     restriction = faction(target).influence_tier(target_district) >= Established,
-    cost        = resource.faction(acting) * 2,
+    cost        = faction.acting.native * 2,
     boost       = None,
 
     success     = (
@@ -1765,13 +1821,17 @@ Public counterpart to STD.CA.1 (Build Structure). Same cost; unlike STD.CA.1, th
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Dual-resource cost (faction native + district native), identical expression to STD.CA.1 — cross-card claim ("same cost as STD.CA.1") checked directly and confirmed true. Same missing resource-type attribute as its CA counterpart. Tier assessment blocked until cost bug resolved. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), identical expression to STD.CA.1 — cross-card claim ("same cost as STD.CA.1") checked directly and confirmed true. Both terms typed (`.native`, and district reference corrected from bare `resource.district(native)` to `district.target.native`), same fix as its CA counterpart (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.PA.3 = Card(
@@ -1800,12 +1860,12 @@ STD.PA.3 = Card(
     target_object   = None,
 
     target_taxonomy=None,
-    affinity    = faction(acting) == Guild: cost.resource.district(native) = 0,
+    affinity    = faction(acting) == Guild: cost.district.target.native = 0,
     restriction = (
         district(target).faction(acting).presence > 0 and
         district(target).faction(acting).structure == 0
     ),
-    cost = resource.faction(acting) * 1 + resource.district(native) * 1,
+    cost = faction.acting.native * 1 + district.target.native * 1,
     boost = None,
 
     success     = (district(target).faction(acting).structure += 1, faction(acting).standing += 1),
@@ -1863,13 +1923,17 @@ The PS attack card of the standard set. A formal public accusation carries both 
 | Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Mono-resource (faction native × 2), untyped resource-type attribute. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.PA.4 = Card(
@@ -1904,7 +1968,7 @@ STD.PA.4 = Card(
         faction(acting) == Directorate: cost.faction(native) -= 1,
     ),
     restriction = target_faction != faction(acting),
-    cost        = resource.faction(acting) * 2,
+    cost        = faction.acting.native * 2,
     boost       = None,
 
     success     = (faction(target).standing -= 2, faction(acting).standing += 1),
@@ -1963,13 +2027,17 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 | Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Cross-resource cost (faction native + Intel Token) — `resource.faction(acting)` term still untyped (schema_cleanup_log #22, separate open item). Intel Token component now confirmed §6.3 vocabulary (`IntelToken(about=faction(target))`, schema_cleanup_log #10). | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Cross-resource cost (faction native + Intel Token) — `faction.acting` term typed to `.native` (schema_cleanup_log #22, closed S148). Intel Token component confirmed §6.3 vocabulary (`IntelToken(about=faction(target))`, schema_cleanup_log #10). | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.PA.5 = Card(
@@ -2003,7 +2071,7 @@ STD.PA.5 = Card(
         faction(acting) == Network: threshold += 10,
     ),
     restriction = faction(acting).holds_intel_token(faction=target, age__in=[Fresh, Stale]),  # Expired excluded — too degraded to constitute usable attribution evidence
-    cost        = resource.faction(acting) * 1 + IntelToken(about=faction(target)) * 1,
+    cost        = faction.acting.native * 1 + IntelToken(about=faction(target)) * 1,
     boost       = None,
 
     success     = (
@@ -2065,13 +2133,17 @@ The economic attack card of the standard PA set. PS is intentionally reversed fr
 | Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 1), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.PA.6 = Card(
@@ -2102,7 +2174,7 @@ STD.PA.6 = Card(
     target_taxonomy=None,
     affinity    = faction(acting) == Syndicate: threshold += 15,
     restriction = None,
-    cost        = resource.faction(acting) * 1,
+    cost        = faction.acting.native * 1,
     boost       = None,
 
     success     = (
@@ -2164,13 +2236,17 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 1), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.PA.7 = Card(
@@ -2201,7 +2277,7 @@ STD.PA.7 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = district(target).faction(acting).presence > 0,
-    cost        = resource.faction(acting) * 1,
+    cost        = faction.acting.native * 1,
     boost       = None,
 
     success     = faction(acting).standing += 2,
@@ -2260,7 +2336,7 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (`arbiter.deliver(...)`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Mono-resource (faction native × 1), untyped resource-type attribute. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 1), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -2270,7 +2346,7 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.PA.8 = Card(
@@ -2304,7 +2380,7 @@ STD.PA.8 = Card(
         target_faction != faction(acting) and
         accord(faction(acting), faction(target)).active == False
     ),
-    cost = resource.faction(acting) * 1,
+    cost = faction.acting.native * 1,
     boost = None,
 
     success = arbiter.deliver(faction(acting), AccordForm(blank)),
@@ -2359,7 +2435,7 @@ A faction that already has a marker down in a district books the hall, puts out 
 | Effect duration | ✓ | `persistence = Immediate` — presence-token gain is a permanent board-state change; the card itself resolves and returns to hand each time, it does not create an ongoing board condition | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate + `on_discard` set (P29) — the only card in the corpus using `on_discard`; behavior is fully defined at schema level (Art 04 §6, P29), not restated per-card | Art 04 §6 |
 | Trigger validity | N/A | `trigger = None` — standard beat timing | — |
-| Portrait validity | ✓ | `portrait = {}` — no doctrinal differentiation to score; identical mechanic across all five factions | Art 04 §6.2 |
+| Portrait validity | ✓ | `portrait = None` — no doctrinal differentiation to score; identical mechanic across all five factions | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`, gated by `restriction` to a district carrying the acting faction's currently-placed deployment marker — same restriction-expression pattern as Directorate's Detain (`district(target).faction(target).deployment_marker >= 1`) | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken (Art 02 §6); deployment marker (Art 02 §6, restriction reference); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 4 standard PA resolution (Art 03 §9.4); setup distribution at Art 03-init §3.6 (1 per faction, permanent, do-not-discard note now superseded by `on_discard`) | Art 03 §9.4; Art 03-init §3.6 |
@@ -2368,11 +2444,15 @@ A faction that already has a marker down in a district books the hall, puts out 
 | Outcome determinacy | ✓ | `d100`; success/successcrit/fail/failcrit each specify exactly one outcome; no `game.choose_one()` or branching | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native × 1) — correctly a floor-power card per the floor/ceiling model (Art 00a §9.2, P28): not simultaneously mono-resource and high-power | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 STD.PA.9 = Card(
@@ -2406,7 +2486,7 @@ STD.PA.9 = Card(
         district(target_district).faction(acting).deployment_marker >= 1
         AND district(target_district).faction(acting).presence < 2
     ),
-    cost        = resource.faction(acting) * 1,
+    cost        = faction.acting.native * 1,
     boost       = None,
 
     success     = district(target_district).faction(acting).presence += 1,
@@ -2417,7 +2497,7 @@ STD.PA.9 = Card(
     on_decline  = None,
     on_discard  = game.return_to_hand(acting),
 
-    portrait = {},
+    portrait = None,
     ps_framing   = None,
 
     narrative    = "New Meridian doesn't run on declarations alone. Sometimes a faction just needs to stand in the same room again, in front of the same people, and let them see it hasn't left.",

@@ -77,7 +77,7 @@ A faction submits their operation. Ghost, watching, named all three things in ad
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GHO.CA.1 = Card(
@@ -109,7 +109,7 @@ GHO.CA.1 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = None,
-    cost        = resource.faction(acting).findings * 2,
+    cost        = Findings * 2,
     boost       = None,
 
     success     = game.redirect(
@@ -174,11 +174,11 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | ⚠ pending re-sign-off (v1.1 — beat timing correction; v1.2 — 04-n178 reprice) |
+| Status | | | |
 
 ```python
 GHO.CA.2 = Card(
-    id      = "GHO.CA.2",  version="v1.2",
+    id      = "GHO.CA.2",  card_id="GHO.CA.2",  version="v1.2",
     name    = "Intercept",
     tagline = "Surveil a faction's covert operations in real time.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -252,11 +252,11 @@ Targeting the unplayed hand directly would require physical access to the target
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GHO.CA.3 = Card(
-    id      = "GHO.CA.3", version="v1.2",
+    id      = "GHO.CA.3",  card_id="GHO.CA.3", version="v1.2",
     name    = "Dossier Breach",
     tagline = "Tap a rival's dispatch channel — read their submitted operations at Beat 2 resolution.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Ghost,
@@ -270,7 +270,7 @@ GHO.CA.3 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction=None,
-    cost        = resource.faction(acting).findings * 2,
+    cost        = Findings * 2,
     success     = game.deliver(IntelDeliverySlip(faction=faction(target), content=resolution_grid(month=current, beat=3, faction=faction(target)).operations(fields=[name, target])), to=faction(acting), private=True),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
@@ -315,11 +315,15 @@ Ghost's intelligence interdiction card — operational disruption rather than ev
 | Outcome determinacy | ✓ | `d100`; single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource, but atypical: paid in the *target* faction's native resource, not the acting faction's own — deliberate design choice per Design Rationale ("prior economic embedding"), not a typing gap. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GHO.CA.4 = Card(
@@ -341,13 +345,13 @@ GHO.CA.4 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction=None,  # target condition evaluated at Beat 3 — see arbiter_note
-    cost=resource.faction(target).native * 1,
+    cost=faction.target.native * 1,
     boost=None,
     success  = game.remove(target_object),
     # If token was PA cost payment: PA is voided (auto-fail at Beat 4, Dispatch Token returned)
     # If token was PA modifier: PA loses modifier, resolves at Beat 4 without it
     successcrit=None,  fail=None,  failcrit=None,
-    portrait    = {},
+    portrait    = None,
     ps_framing  = None,
     narrative   = "The act has no foundation once the intelligence beneath it is removed.",
     perspectives = {Ghost: "They submitted their evidence expecting it to do what evidence does. We made sure it did not arrive."},
@@ -401,7 +405,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GHO.CA.5 = Card(
@@ -421,7 +425,7 @@ GHO.CA.5 = Card(
     declared_params = FactionName,
     affinity=None,
     restriction = faction(target).FRG.active_PA.intel_token.count >= 1,
-    cost        = resource.faction(acting).findings * 1,
+    cost        = Findings * 1,
     boost       = None,
     success     = game.corrupt(field=faction_name, target=faction(target).FRG.active_PA.intel_token, new_value=declared_params.faction),
     successcrit=None, fail=None, failcrit=None,
@@ -475,7 +479,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GHO.CA.7 = Card(
@@ -506,7 +510,7 @@ GHO.CA.7 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = district(self|adjacent).faction(acting).presence > 0,
-    cost            = resource.faction(acting).findings * 2,
+    cost            = Findings * 2,
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * 2,
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),  # +1 = 3 total
@@ -562,7 +566,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GHO.CA.8 = Card(
@@ -593,7 +597,7 @@ GHO.CA.8 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = district(self|adjacent).faction(acting).presence > 0,
-    cost            = resource.faction(acting).findings * n,  # n declared at submission; n >= 1; all n Findings physically present (Art 04 §5 P20)
+    cost            = Findings * n,  # n declared at submission; n >= 1; all n Findings physically present (Art 04 §5 P20)
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (n * 2),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * n,   # +n = 3n total
@@ -642,6 +646,10 @@ GHO.CA.8 = Card(
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
@@ -650,13 +658,13 @@ GHO.CA.8 = Card(
 
 ```python
 GHO.CA.15 = Card(
-    id      = "GHO.CA.15",  version = "v1.0",
+    id      = "GHO.CA.15",  card_id="GHO.CA.15",  version = "v1.0",
     name    = "Routing Override",
     tagline = "Blindly intercept and redirect an opponent's covert operation.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Information,  function = Corrupt,  subject = TargetProfile,
     beat    = 2,  resolution = Automatic,
-    cost    = resource.faction(Ghost).findings * 1 + IntelToken() * 1,
+    cost    = Findings * 1 + IntelToken() * 1,
     success = "Ghost corrupts the first CA in target faction's Beat 3 resolution queue if it matches Ghost's specified parameters.",
     arbiter_note = "At Covert Dispatch, Ghost writes a target field (e.g., 'target_district') and expected value (e.g., 'Core'), plus a replacement value (e.g., 'Baryo'), in their Target Profile freeform space. At Beat 2: ARBITER checks target faction's first CA in the ARG. If that CA's Target Profile contains the exact field and value Ghost named, ARBITER silently crosses it out and writes Ghost's new value. If it does not match, Ghost's operation fizzles. The target faction executes their CA at Beat 3 against the new corrupted target.",
     design_note = "Beat 2 positional wager against a Beat 3 CA. Ghost must correctly predict a parameter of the opponent's first queued operation. The corruption is entirely silent until the operation resolves at Beat 3."
@@ -706,7 +714,7 @@ Ghost cashes one piece of intelligence for something more durable. ARBITER recor
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GHO.CA.9 = Card(
@@ -794,7 +802,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GHO.CA.10 = Card(
@@ -872,7 +880,7 @@ Ghost's strategically decisive card. Reveals the target faction's Classified Dir
 | Supported by zones | ✓ | target_district = None — no district target; operates on abstract ClassifiedDirective object | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken cost (×2); ClassifiedDirective as target_object — component registration outstanding (Outstanding Issue) | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Private reveal via ARBITER screen; private faction-to-faction reveal procedure outstanding (Outstanding Issue) | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70. Code block still shows `id=TBD` ("ID pending PM05 04-n1") even though `card_status` has already assigned this card `GHO.CA.11` — the DB assignment was never written back into the spec. Also: this card is functionally blocked the same way as Backdate/Field Verification (see its own Outstanding Issues below) but doesn't carry their "🚫 BLOCKED" header/Status-row treatment — inconsistent handling of the same blocked-status category. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `id`/`card_id` now correctly set to `"GHO.CA.11"`, matching the DB assignment — write-back gap closed. Still open: this card is functionally blocked the same way as Backdate/Field Verification (see its own Outstanding Issues below) but doesn't carry their "🚫 BLOCKED" header/Status-row treatment — inconsistent handling of the same blocked-status category. Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/failcrit populated (successcrit/fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Cross-resource (IntelToken ×2 + Findings ×3). Same open question re: typing Intel Tokens as a cost resource, flagged not resolved. | Art 00a §9.2 |
@@ -889,11 +897,11 @@ Ghost's strategically decisive card. Reveals the target faction's Classified Dir
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
-Card(
-    id=TBD,  version="v1.0",  # ID pending PM05 04-n1
+GHO.CA.11 = Card(
+    id      = "GHO.CA.11",  card_id = "GHO.CA.11",  version="v1.0",
     name    = "Signals Analysis",
     tagline = "Deduce a target faction's Classified Directive from accumulated intelligence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
@@ -919,7 +927,7 @@ Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 2,
-    cost        = IntelToken(about=faction(target)) * 2 + resource.faction(acting).findings * 3,
+    cost        = IntelToken(about=faction(target)) * 2 + Findings * 3,
 
     success     = game.reveal_private(
                     faction(target).classified_directive,
@@ -978,7 +986,7 @@ Ghost's intelligence amplification card — converts one held Intel token into t
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GHO.CA.6 = Card(
@@ -997,7 +1005,7 @@ GHO.CA.6 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).intel_tokens.count >= 1,
-    cost        = resource.faction(acting).findings * 1 + IntelToken() * 1,
+    cost        = Findings * 1 + IntelToken() * 1,
     boost       = None,
     success     = game.dispatch(faction(acting), IntelToken(faction=consumed_token.faction) * 3),
     successcrit=None, fail=None, failcrit=None,
@@ -1053,7 +1061,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GHO.CA.12 = Card(
@@ -1146,7 +1154,7 @@ Standard equivalent: PM05 04-n15.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | 🚫 BLOCKED | — | — |
+| Status | | | |
 
 ```python
 Backdate = Card(
@@ -1177,7 +1185,7 @@ Backdate = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Ghost).holds_intel_token(count=1),
-    cost        = resource.faction(Ghost).findings * 2 + IntelToken() * 1,
+    cost        = Findings * 2 + IntelToken() * 1,
 
     # Instructions slip in case: [new quarter — must be earlier than current] | [return: self / named faction]
     success = (
@@ -1240,11 +1248,15 @@ Standard equivalent: PM05 04-n15 (hired investigator reopening cold case — sam
 
 - **🚫 BLOCKED:** GR 7.2b — the quarter field records when the token was committed; updating it to the current Quarter alters a committed provenance field. The field-update approach is permanently closed. Fundamental redesign required. Cross-ref: Art 04b §8.1 item 3, PM05 04-n103.
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | 🚫 BLOCKED | — | — |
+| Status | | | |
 
 ```python
 FieldVerification = Card(
@@ -1334,6 +1346,10 @@ FieldVerification = Card(
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
@@ -1342,13 +1358,13 @@ FieldVerification = Card(
 
 ```python
 GHO.CA.13 = Card(
-    id      = "GHO.CA.13",  version = "v1.1",
+    id      = "GHO.CA.13",  card_id="GHO.CA.13",  version = "v1.1",
     name    = "Phantom Accounts",
     tagline = "Siphon a shadow copy of an opponent's influence-based resource generation.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Economy,  function = Add,  subject = DebriefActionCard,
     beat    = 3,  resolution = d100,  threshold = 50,
-    cost    = resource.faction(Ghost).findings * 2,
+    cost    = Findings * 2,
     success = "Arbiter places 1 DA-02 (PhantomRecord) in Ghost's Dispatch Case. At debrief, Ghost gains district native resources equal to target_faction's influence-based generation.",
     design_note = "A financial twin to SCIF. Instead of generating Modifier cards off of structural density, this converts Findings into a mirrored payout of the target's passive district income."
     value_rating = 2,
@@ -1388,6 +1404,10 @@ GHO.CA.13 = Card(
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
@@ -1396,13 +1416,13 @@ GHO.CA.13 = Card(
 
 ```python
 GHO.CA.14 = Card(
-    id      = "GHO.CA.14",  version = "v1.1",
+    id      = "GHO.CA.14",  card_id="GHO.CA.14",  version = "v1.1",
     name    = "Ghost Protocol",
     tagline = "Completely erase an opponent's operation from existence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat    = 2,  resolution = Automatic,
-    cost    = resource.faction(Ghost).findings * 2 + resource.faction(Ghost).exposure * 1 + resource.faction(Ghost).capital * 1 + IntelToken() * 1,
+    cost    = Findings * 2 + Exposure * 1 + Capital * 1 + IntelToken() * 1,
     success = "The Arbiter invalidates and removes the first Covert Operation submitted by target_faction in Beat 3.",
     design_note = "Massive multi-resource cost to justify an unblockable, blind veto of an opponent's action."
     value_rating = 2,
@@ -1451,11 +1471,15 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (2 Findings + 1 Exposure + 1 native from each named target + 2 Intel Tokens), correctly typed — see Balance row. Highest Ghost PA cost in the set, matching its "highest-cost PA" framing. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GHO.PA.1 = Card(
@@ -1491,8 +1515,8 @@ GHO.PA.1 = Card(
         target1 != target2
     ),
     cost = (
-        resource.faction(Ghost).findings * 2
-        + resource.faction(Ghost).exposure * 1
+        Findings * 2
+        + Exposure * 1
         + resource.faction(target1) * 1
         + resource.faction(target2) * 1
         + IntelToken(about=faction(target1)) * 1
@@ -1558,11 +1582,15 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (a `game.world_condition()` placement, matching the confirmed Seasonal/Transient-effect pattern in design_reference_card_system.md) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings × 2), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GHO.PA.2 = Card(
@@ -1593,7 +1621,7 @@ GHO.PA.2 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Ghost).presence(district.adjacent_to(target_district)) > 0,
-    cost        = resource.faction(Ghost).findings * 2,
+    cost        = Findings * 2,
     boost       = None,
 
     success = game.world_condition(
@@ -1655,11 +1683,15 @@ Ghost submits the case files in order — sequential, dated, attributed. The rec
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=`None`), no `game.choose_one()` — resolves deterministically once boost `n` is known. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource base (Findings × 1), correctly typed; `boost` is Intel-Token-scaled (expired tokens), a 6th distinct Intel-Token-as-cost notation variant (`intel_token(holder=Ghost, status=Expired)`). | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GHO.PA.3 = Card(
@@ -1690,7 +1722,7 @@ GHO.PA.3 = Card(
 
     affinity    = None,
     restriction = count(intel_token(holder=Ghost, status=Expired)) >= 1,
-    cost        = resource.faction(Ghost).findings * 1,
+    cost        = Findings * 1,
     boost       = IntelToken(status=Expired),  # 1 expired token = 1 BM-xx; BM-xx ×(1+n) all effects at Art 03 §9.4.3.3
 
     success     = faction(Ghost).standing.add(1),
@@ -1748,11 +1780,15 @@ Ghost files the request before Beat 4. The Broadcast Card has been face-up all Q
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Findings × 1 + Exposure × 1), correctly typed. Notable: Exposure is Network's native resource, not Ghost's — a deliberate cross-faction resource cost, consistent with (and explained by) the design_note. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GHO.PA.4 = Card(
@@ -1783,7 +1819,7 @@ GHO.PA.4 = Card(
 
     affinity    = None,
     restriction = count(broadcast_card(zone=SituationReportZone, status=Active)) >= 1,
-    cost        = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).exposure * 1,
+    cost        = Findings * 1 + Exposure * 1,
     boost       = None,
 
     success = (
@@ -1844,11 +1880,15 @@ Ghost files the act at Phase B. A table. A banner. Printed materials no other fa
 | Outcome determinacy | ✓ | success = exactly one outcome; successcrit = additive delta; fail = None; failcrit = additive delta | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings × 1, Ghost's own native), correctly typed — floor-power cost for a +2-chip/Beat-4 public territorial gain, consistent with its "PA slot + 1 Findings justifies +2 output over STD.CA.3's covert +1" framing. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GHO.PA.5 = Card(
@@ -1879,7 +1919,7 @@ GHO.PA.5 = Card(
 
     affinity    = None,
     restriction = district.resource_type == Findings and faction(Ghost).presence(district.adjacent_to(target_district)) > 0,
-    cost        = resource.faction(Ghost).findings * 1,
+    cost        = Findings * 1,
     boost       = None,
 
     success     = game.add(PresenceToken, to=target_district, count=2),
@@ -1948,11 +1988,15 @@ A faction places a public act backed by an Intel token, confident the attributio
 **Outstanding Issues:**
 - Card name pending voice pass (D-04-08); Card ID pending 04-n1 numbering pass.
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.1 = Card(
@@ -2038,11 +2082,15 @@ Someone moves a piece onto ground Ghost already quietly holds. Nothing dramatic 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → 2 Intel tokens per qualifying placement? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; gated by Ghost's own presence, not ring. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.2 = Card(
@@ -2119,11 +2167,15 @@ Directorate expands into ground Ghost already quietly watches. The sensors don't
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; gated by faction identity, not ring. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.3 = Card(
@@ -2200,11 +2252,15 @@ Network's broadcast infrastructure creeps into ground Ghost already watches. The
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.4 = Card(
@@ -2260,7 +2316,7 @@ A rival claims a public win — the kind that moves their standing up in front o
 |----------|------|------|--------------|
 | Action fit | ✓ | Reversing a rival's public narrative gain is a clean expression of Ghost's information-warfare doctrine — distinct from the passive-intel family (GHO.MOD.2–4). | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("let them claim the victory, then rewrite the headline") lands the doctrine precisely. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; Ghost doctrine favors invisibility, an empty portrait for a covert narrative-manipulation play is consistent, not a gap like DIR.MOD.6's. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; Ghost doctrine favors invisibility, an empty portrait for a covert narrative-manipulation play is consistent, not a gap like DIR.MOD.6's. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Standing/Shift/StandingMarker, 04-n175/04-n173 precedent). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Standing×Shift is the correct cell per the matrix (Standing×Add/Remove is invalid, subsumed by Shift — 04-n173); `subject=StandingMarker` is correct, not the retired `PublicStanding`. | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n173 |
 | Balance | ⚠ | Doubles the trigger amount to invert a gain into an equal-magnitude loss — mechanically sound (verified the math: net effect from pre-trigger baseline is −X on a +X gain), but real cost (Findings+Exposure) and value_rating aren't set; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -2281,11 +2337,15 @@ A rival claims a public win — the kind that moves their standing up in front o
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → quadruple the inversion? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.5 = Card(
@@ -2309,14 +2369,14 @@ GHO.MOD.5 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).exposure * 1,
+    cost            = Findings * 1 + Exposure * 1,
     boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.shift(public_standing, faction=trigger.faction, amount=-(trigger.amount * 2)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2341,7 +2401,7 @@ An opponent's Upkeep resources land in their reserve. Ghost's tap on their suppl
 |----------|------|------|--------------|
 | Action fit | ✓ | Parasitic mirroring of a rival's economy fits Ghost's "extract value without confrontation" doctrine. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("their infrastructure is our logistics") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — consistent with Ghost's invisibility preference for covert economic plays, same reasoning as GHO.MOD.5. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — consistent with Ghost's invisibility preference for covert economic plays, same reasoning as GHO.MOD.5. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Economy/Copy/NativeResource, 04-n175) — correctly Copy, not Add, per the design_note's own "mirrored duplicate, not a transfer" framing. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Economy×Copy is valid per the matrix; Copy is the correct Function since this duplicates an effect chain rather than moving or creating new supply. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Full mirrored draw for a 1-resource cost is potentially strong depending on the triggering faction's Upkeep yield — final read needs 04-n178 plus resolution of the cross-resource-holding question below. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -2362,11 +2422,15 @@ An opponent's Upkeep resources land in their reserve. Ghost's tap on their suppl
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → 2x the mirrored draw? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.6 = Card(
@@ -2397,7 +2461,7 @@ GHO.MOD.6 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2422,7 +2486,7 @@ A rival's chip count finally tips them into Dominant — the marker goes down, t
 |----------|------|------|--------------|
 | Action fit | ✓ | Endgame power-spike disruption via a dormant asset activating is a strong, doctrinally coherent Ghost beat — "total control is just a convenient illusion" lands the point precisely. | Art 00 §7 |
 | Voice fit | ✓ | Tagline is one of the strongest in the set. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — consistent with Ghost's invisibility preference. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — consistent with Ghost's invisibility preference. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Territory/Redirect/PresenceToken, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Redirect is valid per the matrix; Redirect is correct since ownership changes on the same chip-slot, matching the verb's definition ("changes ownership, destination, or allegiance"). | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Powerful, precisely-timed disruption of a Dominant achievement — high 3-resource cost plausibly balances it, but see the cross-resource-holding flag below; if Ghost can't reliably afford two foreign resource types, the effective cost (and thus balance) is unclear. Final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -2443,11 +2507,15 @@ A rival's chip count finally tips them into Dominant — the marker goes down, t
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus, though less consequential here given the trigger's inherent rarity. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; fires wherever a Dominant marker lands. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.7 = Card(
@@ -2471,14 +2539,14 @@ GHO.MOD.7 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Ghost).findings * 1 + resource.faction(Ghost).capacity * 1 + resource.faction(Ghost).capital * 1,
+    cost            = Findings * 1 + Capacity * 1 + Capital * 1,
     boost           = None,  # scaffolded, not addressed
 
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Ghost, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2503,7 +2571,7 @@ A faction plants its second foothold in a district and calls it secured. The nei
 |----------|------|------|--------------|
 | Action fit | ✓ | Mid-game expansion disruption via unnamed local assets fits Ghost's "influence without visible presence" doctrine, distinct from GHO.MOD.7's endgame-scale disruption. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — consistent with the rest of Ghost's covert-action cards. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — consistent with the rest of Ghost's covert-action cards. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Ghost, real taxonomy (Territory/Remove/PresenceToken, 04-n175), matches DIR.MOD.1's shape. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Remove — same verified matrix cell as the Directorate enforcement family. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Cheaper than GHO.MOD.7 (1 resource vs. 3) but also less severe (Established→Present vs. Dominant→Established) — plausible tiering, final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -2524,11 +2592,15 @@ A faction plants its second foothold in a district and calls it secured. The nei
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.8 = Card(
@@ -2559,7 +2631,7 @@ GHO.MOD.8 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2608,11 +2680,15 @@ The token changes hands quietly, the paperwork goes through — and by the time 
 | Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not a district/ring-scoped effect. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.9 = Card(
@@ -2687,11 +2763,15 @@ No warning, no negotiation — just a hand suddenly empty and a faction scrambli
 | Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not a district/ring-scoped effect. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.10 = Card(
@@ -2766,11 +2846,15 @@ The table watches Ghost trade one sealed envelope for another. Nobody objects �
 | Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not a district/ring-scoped effect. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GHO.MOD.11 = Card(
@@ -2839,11 +2923,15 @@ A contact who was already embedded in the district long before the tension marke
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.12 = Card(
@@ -2900,11 +2988,15 @@ Weeks of passive signals collection get compiled and handed over at the exact mo
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.13 = Card(
@@ -2961,11 +3053,15 @@ A detail that doesn't add up surfaces at exactly the wrong moment — nothing is
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.14 = Card(
@@ -3022,11 +3118,15 @@ Ghost knew exactly which detail would unravel the named faction's position if it
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.15 = Card(
@@ -3083,11 +3183,15 @@ Advance modeling means Ghost already knows how this plays out before committing 
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields (schema-locked None). | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention; out of scope for 04-n178. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.16 = Card(
@@ -3144,11 +3248,15 @@ Removing an unknown smooths the acting faction's own play — Ghost prefers cert
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.17 = Card(
@@ -3205,11 +3313,15 @@ A scrubbed data channel removes the noise that would otherwise complicate the op
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.18 = Card(
@@ -3266,11 +3378,15 @@ A fully assembled intelligence picture leaves nothing to chance — the operatio
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.19 = Card(
@@ -3327,11 +3443,15 @@ An operation run on verified information performs better than the plan ever assu
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.20 = Card(
@@ -3388,11 +3508,15 @@ Multiple independent confirmations amplify an outcome well past what a single so
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.21 = Card(
@@ -3449,11 +3573,15 @@ An error is quietly fixed before anyone notices it was ever there — a small, d
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.22 = Card(
@@ -3510,11 +3638,15 @@ A selective disclosure earns Ghost credibility and standing — true as far as i
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.23 = Card(
@@ -3571,11 +3703,15 @@ A detail reaches exactly the right ears — quiet, deniable, and costly to whoev
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.24 = Card(
@@ -3632,11 +3768,15 @@ A rival's flawed analysis becomes public — Ghost didn't lie, it just let the t
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.25 = Card(
@@ -3693,11 +3833,15 @@ Prior research lowers the cost of new analysis — nothing here starts from zero
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.26 = Card(
@@ -3754,11 +3898,15 @@ Borrowed analytical tools cut the overhead of building anything from scratch.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 GHO.MOD.27 = Card(

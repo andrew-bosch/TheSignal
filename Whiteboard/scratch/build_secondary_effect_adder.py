@@ -2,7 +2,7 @@ import mysql.connector
 
 def main():
     conn = mysql.connector.connect(
-        host="10.0.1.14",
+        host="10.0.0.14",
         user="abosch",
         password="Ptt0hds",
         database="the_signal_db"

@@ -1,9 +1,9 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.11 — Signed Off — S119 (§9.2 Cross-Faction Resource Economy added; §3 Governs field revised, Copy Design Principle — No Embedded Action Items added; §4/§5 embedded tracking notes removed per new §3 principle)  
+**Version:** 0.12 — Signed Off — S148 (§10.4 added: Covert Attribution Remains Untraceable — a Covert Operation's effect may be public, its attribution to the acting faction may not be)  
 **Status:** Signed Off  
-**Last Updated:** 2026-06-25  
+**Last Updated:** 2026-07-23  
 **Companion to:** 00 — Factions, World & Narrative Context  
 **Depends on:** 00, 01, 02, 03, 04, 04b
 
@@ -927,6 +927,25 @@ ARBITER does not hold information the way factions do. The Chorus already knows 
 
 ---
 
+#### 10.4 — Covert Attribution Remains Untraceable
+
+**Rule:** A Covert Operation's effect may be publicly visible on the board. Its attribution to the acting faction may not be. That distinction — not the visibility of the effect — is what makes an operation covert.
+
+**Narrative:**
+
+> *"The structure went up overnight. Everyone saw it by morning. Nobody saw who built it. That's not a contradiction — that's the point."*
+> — Ghost field operative, session debrief
+
+**Mechanics:** A Covert Operation's `success`/`fail` effects may change board state that any player can observe — Presence, Structure Blocks, Public Standing, resource totals. What the effect may never do is make the acting faction identifiable from that change alone. This is why components like the Notification Slip (Art 02 §9) are deliberately silent on faction identity and operation type — the target learns *something happened*, never *who did it*. Card design (Art 04) must verify this for every Covert Operation: if a card's effect, on its own, would let any player infer the acting faction with confidence, the card is not legally covert regardless of its `type` field.
+
+*Source: Notification Slip design (Art 02 §9); accumulated card-design practice.*
+
+*Governs: Artifacts 02, 03, 04.*
+
+*See also: 10.1.*
+
+---
+
 ## 11. Data Table Standard (L108)
 
 All data tables in THE SIGNAL artifact suite must satisfy the following five requirements (L108 — Database Translatable Data Design). Requirements 1 and 3 are standard 1NF; Requirement 4 (ID-based foreign references, no prose) enforces 3NF referential discipline; Requirements 2 and 5 are project-specific extensions.
@@ -983,6 +1002,7 @@ All data tables in THE SIGNAL artifact suite must satisfy the following five req
 | 10.1b | ARBITER disclosure is outside the discretional model; ARBITER-initiated reveals are not subject to 10.1 stakes; Portrait excepted | §10 |
 | 10.2 | Spent or discarded Intel Tokens leave active play | §10 |
 | 10.3 | Intel Token holdings are subject to per-faction limits and expiry | §10 |
+| 10.4 | A Covert Operation's effect may be public; its attribution to the acting faction may not be | §10 |
 
 ---
 

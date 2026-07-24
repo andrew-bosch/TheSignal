@@ -60,11 +60,11 @@ Directorate's positional authority card — asserts institutional control over a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 DIR.CA.1 = Card(
-    id      = "DIR.CA.1",  version="v1.0",
+    id      = "DIR.CA.1",  card_id="DIR.CA.1",  version="v1.0",
     name    = "Invoke Jurisdiction",
     tagline = "Assert institutional authority over a target district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -78,7 +78,7 @@ DIR.CA.1 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction=None,
-    cost        = resource.faction(acting).mandate * 2,
+    cost        = Mandate * 2,
     success     = game.block(district(target), cards=[STD.CA.1, STD.CA.3], round=game.round, public=True),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
@@ -132,11 +132,11 @@ Directorate's permanent removal card — eliminates a faction's deployment marke
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 DIR.CA.2 = Card(
-    id      = "DIR.CA.2",  version="v1.0",
+    id      = "DIR.CA.2",  card_id="DIR.CA.2",  version="v1.0",
     name    = "Detain",
     tagline = "Permanently remove a faction's deployment marker from a district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -155,7 +155,7 @@ DIR.CA.2 = Card(
         AND intel(faction=faction(target), age_rounds<=1) >= 1
         AND district(target) != ChorusNode.deployment_marker
     ),
-    cost        = resource.faction(acting).mandate * 2 + resource.faction(acting).findings * 1,
+    cost        = Mandate * 2 + Findings * 1,
     success     = game.move(faction(target).deployment_marker, from_=district(target), to=Directorate.tableau.detention, public=True),
     successcrit = resource.faction(acting).mandate += 3,
     fail=None,
@@ -218,11 +218,11 @@ An earlier model used a permanent passive feed with beat3_pre_resolution deliver
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 DIR.CA.3 = Card(
-    id      = "DIR.CA.3", version="v2.0",
+    id      = "DIR.CA.3",  card_id="DIR.CA.3", version="v2.0",
     name    = "Surveillance Placement",
     tagline = "Watch a named district — learn what has been submitted before it resolves.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
@@ -236,7 +236,7 @@ DIR.CA.3 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction=None,
-    cost        = resource.faction(acting).mandate * 2,
+    cost        = Mandate * 2,
     success     = game.deliver(IntelDeliverySlip(district=district(target), content="op_type_only", source="beat3_grid"), to=faction(acting), private=True),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
@@ -290,11 +290,11 @@ Directorate's repositioning card — the only card in the full set using Territo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 DIR.CA.4 = Card(
-    id      = "DIR.CA.4",  version="v1.0",
+    id      = "DIR.CA.4",  card_id="DIR.CA.4",  version="v1.0",
     name    = "Tactical Redirection",
     tagline = "Reposition institutional presence ahead of a contested exchange.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -313,7 +313,7 @@ DIR.CA.4 = Card(
         AND district(source) != ChorusNode
         AND district(target) != ChorusNode
     ),
-    cost        = resource.faction(acting).mandate * 2,
+    cost        = Mandate * 2,
     success     = game.move(faction(acting).presence, count=2, from_=district(source), to=district(target)),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
@@ -358,11 +358,15 @@ Formal, narrow, deterministic revocation of exactly one named presence token —
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (successcrit/fail/failcrit all `None`) — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *Redesigned — resolves 04-n104 (originally targeted InfluenceTier, a derived/non-targetable state, violating GR 9.1). Simplified per GR 6.1 / Design Pillar 4.7b: no ARBITER calculation — removes exactly 1 named presence token. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
@@ -394,7 +398,7 @@ DIR.PA.4 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = faction(target).influence_tier(district(target)) >= Established,
-    cost            = resource.faction(Directorate).mandate * 2,
+    cost            = Mandate * 2,
     boost           = None,
 
     success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
@@ -443,11 +447,15 @@ Card-as-condition Permanent PA that auto-reverts any new presence chip placed in
 | Outcome determinacy | ✓ | `success = None` — card placement itself IS the effect (card-as-condition pattern); no `game.choose_one()` or conditional branching anywhere in the spec. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Mandate + district-native + Capital, ×1–2 each), correctly typed throughout. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *Redesigned — resolves 04-n104. Retaxonomized Territory|Block|PresenceToken (not InfluenceTier; not Submission — the subject controlled is presence-token accumulation). Permanent standing card, self-inclusive ("a new law"), reactive to any presenceChip addition. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
@@ -491,9 +499,9 @@ DIR.PA.5 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Directorate).mandate * 2
-                     + resource.district(target).native * 1
-                     + resource.faction(Directorate).capital * 1,
+    cost            = Mandate * 2
+                     + district.target.native * 1
+                     + Capital * 1,
     boost           = None,
 
     success     = None,  # card placement IS the effect — card-as-condition pattern
@@ -538,9 +546,9 @@ The Directorate dispatches a team to the district — no announcement, no negoti
 | Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
 | Supported by components | ⚠ | BM-xx not yet registered — gate: 04-n81 | Art 02 §6; Art 02 §11–§12 |
 | Supported by game procedure | ⚠ | Beat 0 boost detection (04-n82); Beat 2/3 BM-xx resolution (04-n83); Discovery definition (04-n84) — all gate sign-off | Art 03 §9, §11 |
-| Data schema validation | ⚠ | boost field present; threshold-scaling noted in §6.3; affinity corrected to None (04-n70). Still missing `card_id`/`ps_framing`. `cost`'s first term `resource.faction(acting) * 1` (and the identical term in `boost`) is missing a resource-type attribute — same corpus pattern now confirmed outside the Standard set. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | boost field present; threshold-scaling noted in §6.3; affinity corrected to None (04-n70). Still missing `card_id`/`ps_framing`. `cost`'s first term (and the identical term in `boost`) typed to `.native` (schema_cleanup_log #22, closed S148) — that piece resolved; card_id/ps_framing gaps remain. | Art 04 §6.1–§6.3 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Triple-component cost (faction resource + district native + IntelToken) — cross-resource tier, consistent with this card's maximum-force framing. IntelToken component confirmed §6.3 vocabulary (`IntelToken(about=faction(target))`, schema_cleanup_log #10). | Art 00a §9.2; Art 04 §6.3 |
+| Resource cost positioning | ✓ | Triple-component cost (faction resource + district native + IntelToken) — cross-resource tier, consistent with this card's maximum-force framing. IntelToken component confirmed §6.3 vocabulary (`IntelToken(about=faction(target))`, schema_cleanup_log #10). District-native term corrected from bare `resource.district(native)` to `district.target_district.native` (schema_cleanup_log #22, closed S148), same fix applied to `boost`. | Art 00a §9.2; Art 04 §6.3 |
 
 #### Outstanding Issues
 
@@ -552,13 +560,13 @@ The Directorate dispatches a team to the district — no announcement, no negoti
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *v2.2: boost model replaces Phase B n-declaration; base cost = faction×1 + native×1 + IntelToken (Mandate×2 removed); boost = same unit; threshold = 65−10×n_boost; PS scales with (1+n) in both directions; successcrit = PS+(1+n_boost) (public endorsement of clean large-scale op); fail = NotificationSlip; failcrit = Discovery + PS−(1+n_boost); modifier scope = target faction only; 04-n81/82/83/84 gate sign-off.*
 
 ```python
 DIR.CA.5 = Card(
-    id      = "DIR.CA.5",  version="v2.2",
+    id      = "DIR.CA.5",  card_id="DIR.CA.5",  version="v2.2",
     name    = "Sanctioned Raid",
     tagline = "Not every operation leaves a paper trail.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
@@ -577,10 +585,10 @@ DIR.CA.5 = Card(
     target_taxonomy=None,
     affinity  = None,
     restriction = None,
-    cost      = resource.faction(acting) * 1
-              + resource.district(native) * 1
+    cost      = Mandate * 1
+              + district.target_district.native * 1
               + IntelToken(about=faction(target)) * 1,
-    boost     = True: resource.faction(acting) * 1 + resource.district(native) * 1,
+    boost     = True: Mandate * 1 + district.target_district.native * 1,
     success   = [game.remove_modifier_cards(district(target_district), faction=faction(target)),
                  game.remove(faction(target).presence_tokens, district(target_district), count=(1 + n_boost)),
                  faction(acting).standing -= (1 + n_boost)],
@@ -637,13 +645,13 @@ An internal team works through the standing record. Active directives in this ri
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *New card. Fills Economy|Add|NativeResource gap (04b §8.2 HP).*
 
 ```python
 DIR.CA.6 = Card(
-    id      = "DIR.CA.6", version="v1.0",
+    id      = "DIR.CA.6",  card_id="DIR.CA.6", version="v1.0",
     name    = "Institutional Audit",
     tagline = "Review the standing record. Active directives in this ring generate institutional capital.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
@@ -657,7 +665,7 @@ DIR.CA.6 = Card(
     target_faction=None, target_object=None, target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).presence_count(district(target)) > 1,
-    cost    = resource.faction(acting).mandate * 1,
+    cost    = Mandate * 1,
     success = resource.faction(acting).mandate.add(
                 count(game.active_permanents(faction=acting,
                       ring=district(target).ring))),
@@ -715,13 +723,13 @@ Before any version of events could circulate, the Directorate's closed channels 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *New card. Fills Standing|Shift|PublicStanding gap (04b §8.2 HP). Narrative grounding: covert mechanism, public outcome via closed-channel circulation of institutional record.*
 
 ```python
 DIR.CA.7 = Card(
-    id      = "DIR.CA.7", version="v1.0",
+    id      = "DIR.CA.7",  card_id="DIR.CA.7", version="v1.0",
     name    = "Institutional Brief",
     tagline = "Circulate the standing record through closed channels. Demonstrated authority in this ring builds public confidence.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
@@ -735,7 +743,7 @@ DIR.CA.7 = Card(
     target_faction=None, target_object=None, target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).presence_count(district(target)) > 1,
-    cost    = resource.faction(acting).mandate * 2,
+    cost    = Mandate * 2,
     success = faction(acting).standing.add(
                 count(game.active_permanents(faction=acting,
                       ring=district(target).ring))),
@@ -793,13 +801,13 @@ The district is under enhanced institutional review. Documentation requirements 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *New card. Fills Resolution|Modify|Difficulty gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
 
 ```python
 DIR.CA.8 = Card(
-    id      = "DIR.CA.8", version="v1.0",
+    id      = "DIR.CA.8",  card_id="DIR.CA.8", version="v1.0",
     name    = "Enhanced Scrutiny",
     tagline = "Place a district under institutional review. All Beat 3 covert operations in this district find conditions harder.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
@@ -813,7 +821,7 @@ DIR.CA.8 = Card(
     target_faction=None, target_object=None, target_taxonomy=None,
     affinity=None,
     restriction=None,
-    cost    = resource.faction(acting).mandate * 2,
+    cost    = Mandate * 2,
     success = game.apply_modifier(
                 ops=game.resolution_grid.beat3(district=district(target)),
                 threshold_mod=-15),
@@ -880,11 +888,15 @@ Directorate's district-level regulatory control PA. All non-Directorate presence
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None` — passes the PA-wide check flagged going into this phase. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed (`.mandate` attribute present). Design_note's mismatched trailing fragment (referenced Exposure, which isn't part of this card's cost) removed — resolved, PM05 04-n186. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 DIR.PA.1 = Card(
@@ -915,7 +927,7 @@ DIR.PA.1 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Directorate).influence_tier(target_district) >= Established,
-    cost        = resource.faction(Directorate).mandate * 2,
+    cost        = Mandate * 2,
     boost       = None,
 
     success = (
@@ -982,11 +994,15 @@ Directorate's institutional intelligence-gathering PA. No formal restriction —
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 3), correctly typed. Design_note's mismatched trailing fragment (wrong resource — Findings, not Mandate — and wrong card, referencing "the injunction"/DIR.PA.6) removed — resolved, PM05 04-n186. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 DIR.PA.2 = Card(
@@ -1017,7 +1033,7 @@ DIR.PA.2 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = None,  # no public restriction; yield is variable (0–2) based on ARBITER's record
-    cost        = resource.faction(Directorate).mandate * 3,
+    cost        = Mandate * 3,
     boost       = None,
 
     success = (
@@ -1090,7 +1106,7 @@ Directorate's persistent territorial control tool — a district-level board con
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *Redesigned — v1.0 (ring-scope) retired.*
 
@@ -1113,7 +1129,7 @@ EntryExitControls = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).influence_tier(district.named) >= Established,
-    cost = resource.faction(acting).mandate * 2 + resource.faction(acting).capacity * 1,
+    cost = Mandate * 2 + Capacity * 1,
     boost = None,
     success = (
         for_each(
@@ -1176,7 +1192,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 *Redesigned — v2.0. PublicAct → PublicAct. InjunctionMarker removed; card-as-condition pattern. Seasonal → Permanent with dual clearing condition (trigger OR Phase 21). Dispatch Token consumed on trigger per Governing Rule 7.3. target_taxonomy field introduced (§6.1/§6.2). Self-policing per Governing Rule 6.1a.*
 
@@ -1213,7 +1229,7 @@ P_StandingInjunction = Card(
 
     affinity    = None,
     restriction = None,
-    cost        = resource.faction(Directorate).mandate * 1 + resource.faction(Directorate).capital * 1 + resource.faction(Directorate).findings * 1,
+    cost        = Mandate * 1 + Capital * 1 + Findings * 1,
     boost       = None,
 
     success     = faction(Directorate).standing += 1,
@@ -1265,7 +1281,7 @@ P_StandingInjunction = Card(
 | Effect duration | ⚠ | `persistence = Transient` (a valid enum value, but its first confirmed use anywhere in the CA/PA corpus reviewed so far) — yet the prose `success` text describes the effect lasting "until the end of Quarter+1," i.e. into the *next* Quarter. That reads as a multi-Quarter temporary, which Art 04 §5's duration discipline (P19–P21, design_reference_card_system.md) prohibits ("effects are permanent or within-Quarter"). Real tension between the declared persistence type and the card's own prose — flagged, not resolved. | Art 04 §5 P19 |
 | Persistence | ⚠ | See Effect duration above — same tension | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field present; Automatic PA doesn't require one — acceptable by omission | — |
-| Portrait validity | ⚠ | Scaffolded as `portrait = {}` (was absent entirely) — an empty dict is the neutral placeholder; a real Directorate entry would be a content decision, not made here | Art 04 §6.2 |
+| Portrait validity | ⚠ | Scaffolded as `portrait = None` (was absent entirely) — an empty dict is the neutral placeholder; a real Directorate entry would be a content decision, not made here | Art 04 §6.2 |
 | Supported by zones | ⚠ | `target_district` scaffolded as `district.named` (was only referenced inside the prose `success` string, not a real field) | Art 01 §6–§7 |
 | Supported by components | ✓ | DeploymentMarker — existing component | Art 02 §6 |
 | Supported by game procedure | ⚠ | The Card-as-Condition pattern (design_reference_card_system.md) requires `persistence_condition` + `persistence_effect` as structured fields; this card describes the standing condition in prose inside `success` instead — doesn't follow the confirmed pattern. `persistence_condition`/`persistence_effect` scaffolded as `None` (structurally required placeholders), not filled with real logic. | Art 03 §9 |
@@ -1274,11 +1290,15 @@ P_StandingInjunction = Card(
 | Outcome determinacy | ⚠ | No `game.choose_one()` present, but determinacy can't be positively confirmed either — `success` isn't a structured MutationExpr, so there's no tiered success/successcrit/fail/failcrit split to check against P27 at all | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed — the one field in this card structured enough to assess cleanly. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 DIR.PA.7 = Card(
@@ -1295,12 +1315,12 @@ DIR.PA.7 = Card(
     persistence_condition = None,  persistence_effect = None,
     target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
     affinity = None,  restriction = None,
-    cost    = resource.faction(Directorate).mandate * 2,
+    cost    = Mandate * 2,
     boost   = None,
     success = "Places a Standing Condition on target_district until the end of Quarter+1: Deployment Markers cannot be moved into this district.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "A massive territorial denial tool. Blocks physical movement (which is public and enforceable) rather than targeting blind covert space.",
@@ -1332,7 +1352,7 @@ DIR.PA.7 = Card(
 | Effect duration | ⚠ | `persistence` scaffolded as `Immediate` (was absent; deterministic default for a non-standing, one-shot PA per corpus convention) | Art 04 §5 P19 |
 | Persistence | ⚠ | See Effect duration — scaffolded `Immediate` | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field; d100 PA doesn't require one — acceptable by omission | — |
-| Portrait validity | ⚠ | Scaffolded as `portrait = {}` (was absent) — empty dict is the neutral placeholder, a real entry would be a content decision | Art 04 §6.2 |
+| Portrait validity | ⚠ | Scaffolded as `portrait = None` (was absent) — empty dict is the neutral placeholder, a real entry would be a content decision | Art 04 §6.2 |
 | Supported by zones | ⚠ | `target_district = None` (faction-targeted, no district), `target_faction` scaffolded as `faction.opponent` (was only implied via bare reference inside prose) | Art 01 §6–§7 |
 | Supported by components | ✓ | Capital, Intel Token — both existing components | Art 02 §6 |
 | Supported by game procedure | ⚠ | The "pay X or lose PS" choice structure has no defined procedural home (not a `game.choose_one()` in the prohibited sense, but also not a structured `MutationExpr` — unclear who adjudicates payment vs. non-payment and when) | Art 03 §9 |
@@ -1341,11 +1361,15 @@ DIR.PA.7 = Card(
 | Outcome determinacy | ⚠ | `d100` with `threshold=40` set, but no structured success/successcrit/fail/failcrit split exists to check against P27 — the prose describes a binary pay/don't-pay branch, unclear if that's independent of the roll or gated by it | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Mandate + Intel Token), Mandate term correctly typed — Intel Token confirmed §6.3 vocabulary (schema_cleanup_log #10) | Art 00a §9.2; Art 04 §6.3 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 DIR.PA.8 = Card(
@@ -1362,12 +1386,12 @@ DIR.PA.8 = Card(
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
     affinity = None,  restriction = None,
-    cost    = resource.faction(Directorate).mandate * 1 + IntelToken(about=target_faction) * 1,
+    cost    = Mandate * 1 + IntelToken(about=target_faction) * 1,
     boost   = None,
     success = "Target faction must pay 2 Capital or 2 of their Native Resource to the supply. If they do not, they lose 2 Public Standing.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Cost uses a faction-keyed Intel Token: Directorate 'found out something' that justifies the legal action. The target has the choice to pay the fine or take the PR hit.",
@@ -1408,11 +1432,15 @@ Directorate's first Territory|Add|PresenceToken card — closes the audit-flagge
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching (the `for_each`/`limit` construct iterates deterministically over a fixed board-state count, not a player choice). `outcome_type = Unilateral` present. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *Directorate's first Territory|Add|PresenceToken card — closes the audit-flagged win-path gap (04-n89: "the faction whose win condition is territorial Established status has zero native presence-placement cards"). Closes 1 of 6 toward the 54-card floor (04-n149). Ring-spread mechanic, not single-district stacking — confirmed against Directorate's actual win path (Established in more districts, not Dominant) and the 6-chip-per-district cap. N capped at 2 (max same-ring neighbors per district).*
 
@@ -1444,7 +1472,7 @@ DIR.PA.9 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Directorate).mandate * 2,
+    cost            = Mandate * 2,
     boost           = None,
 
     success = (
@@ -1501,11 +1529,15 @@ Public Standing counterpart to covert DIR.CA.7 Institutional Brief — closes th
 | Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically once N and the roll are known. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *Public Standing counterpart to covert DIR.CA.7 Institutional Brief — closes the audit's Standing gap (04-n108: Directorate's only PS card was covert, backwards for an 'on the record' faction). Closes 2 of remaining 4 toward the 54-card floor (04-n149). A genuine gamble, not a guaranteed accumulator: government presence reads publicly as either safety or oppression, so the swing (not just the odds) scales with the size of the claim — this also self-balances the 'yield scaling at scale' concern flagged at 04-n116 for CA.6/CA.7, since the downside grows with N too.*
 
@@ -1537,7 +1569,7 @@ DIR.PA.10 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Directorate).mandate * 2,
+    cost            = Mandate * 2,
     boost           = None,
 
     success     = faction(Directorate).standing.add(
@@ -1591,11 +1623,15 @@ Resolves the long-standing counter-card design gap for Permanent PAs (04-n142) �
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (a flat PS +1 for establishing the institution) — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 *Resolves 04-n142 — the long-standing counter-card design gap for Permanent PAs, originally named for Entry/Exit Controls. Establishes a standing, game-wide due-process institution: any faction may petition to remove any of Directorate's own currently-active standing Public Acts by matching its printed cost + 1 Intel Token. Atomic resolution (pay + prove, immediate removal) — no untracked exemption state, unlike an earlier draft of the cooperative-PA concept this replaced. Closes the last 1 of 6 toward the 54-card floor (04-n149) — Directorate now at exactly 54.*
 
@@ -1633,7 +1669,7 @@ DIR.PA.11 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Directorate).mandate * 2,
+    cost            = Mandate * 2,
     boost           = None,
 
     success     = faction(Directorate).standing.add(1),
@@ -1686,11 +1722,15 @@ A rival faction moves a marker onto ground the Directorate already considers und
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the Ring set: does holding 2 copies double-fire on one rival placement? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct, since this variant is gated by Established status, not ring; correctly distinguishes from DIR.MOD.3 (ring-locked). |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 *First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core). Full content-review: 4 open flags (deployment-marker removal edge, cost/04-n178, family firing-window overlap, narrative prose absent). Design Pass ✓ (all 22 rows evaluated), Issues Resolved not yet (real flags remain open).*
 
@@ -1769,11 +1809,15 @@ Syndicate stakes a claim on ground Directorate already administers. The response
 | Stack behavior (ModReactCard) | ⚠ | Same open question as DIR.MOD.1. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; this variant is gated by faction identity, not ring. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 *Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2. Full content-review: 4 open flags (Syndicate portrait-on-target question, cost-flag inconsistency vs. DIR.MOD.1, deployment-marker removal edge, family firing-window overlap). Design Pass ✓, Issues Resolved not yet.*
 
@@ -1852,11 +1896,15 @@ In the Core, nobody double-checks Directorate's paperwork. A rival plants a mark
 | Stack behavior (ModReactCard) | ⚠ | Same open question as DIR.MOD.1/2. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=1` correctly matches trigger scope; distinguishes this as the ring-locked family member. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 *Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level. Full content-review: carries DIR.MOD.1's self-fire and deployment-marker flags plus a frequency flag specific to being both unrestricted and Ring 1-locked. Design Pass ✓, Issues Resolved not yet.*
 
@@ -1935,11 +1983,15 @@ Two factions shake hands on an Accord. Before the ink dries, a Directorate clerk
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the set: does holding 2 copies double the yield on one Accord? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; Accords aren't ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 *Legislative-mode React. Directorate documents all new Accords — procedural overhead yields Mandate income. Full content-review: checked against GR 9.1/§4.16 (income generation untouchable), confirmed not a violation (event-triggered grant, not Upkeep income modification); open flags are frequency-reliability and the standard schema/cost/stack gaps shared across the set. Design Pass ✓, Issues Resolved not yet.*
 
@@ -1986,7 +2038,7 @@ DIR.MOD.4 = Card(
 ### DIR.MOD.5 — EMERGENCY APPROPRIATION
 
 #### Design Rationale
-Second Economy\|Add\|NativeResource card, self-referential by design (unlike DIR.MOD.1's accidental-looking self-fire): `trigger = public_act.placed_on_frg(faction=Directorate, persistence=Permanent)` explicitly names Directorate, so this is a deliberate rebate mechanic, not an ambiguity. Checked for exploitability: this only fires on Directorate's own Permanent PA placements, which are inherently rare/bounded (limited card pool, each with its own real cost) rather than a spammable loop — reads as a genuine subsidy for a documented pain point (design_note calls out "crippling Q1/Q2 cost"), not a balance escape hatch. `portrait = {}` (empty dict, not `None`) — flagged as a minor cross-set schema inconsistency, not a defect in this card specifically.
+Second Economy\|Add\|NativeResource card, self-referential by design (unlike DIR.MOD.1's accidental-looking self-fire): `trigger = public_act.placed_on_frg(faction=Directorate, persistence=Permanent)` explicitly names Directorate, so this is a deliberate rebate mechanic, not an ambiguity. Checked for exploitability: this only fires on Directorate's own Permanent PA placements, which are inherently rare/bounded (limited card pool, each with its own real cost) rather than a spammable loop — reads as a genuine subsidy for a documented pain point (design_note calls out "crippling Q1/Q2 cost"), not a balance escape hatch. `portrait = None` (empty dict, not `None`) — flagged as a minor cross-set schema inconsistency, not a defect in this card specifically.
 
 #### Card Story
 Directorate commits to a standing policy — the kind that costs real institutional capital to establish. The same session it goes into effect, an emergency appropriation quietly covers part of the bill.
@@ -1997,7 +2049,7 @@ Directorate commits to a standing policy — the kind that costs real institutio
 |----------|------|------|--------------|
 | Action fit | ✓ | Self-subsidy tied to Directorate's own costly commitment is a coherent "institutional scale needs institutional funding" beat, distinct from DIR.MOD.4's Accord-tax shape. | Art 00 §7 |
 | Voice fit | ✓ | Tagline lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — no entry at all, correctly justified: this is Directorate subsidizing its own already-doctrinal action, nothing new is being expressed about doctrine at the moment of the subsidy itself. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — no entry at all, correctly justified: this is Directorate subsidizing its own already-doctrinal action, nothing new is being expressed about doctrine at the moment of the subsidy itself. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Directorate, real taxonomy (Economy/Add/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Same verified Economy×Add cell as DIR.MOD.4. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | Checked for exploit potential: fires only on Directorate's own Permanent PA placements, inherently rare and individually costly — a rebate, not a loop. Reasonable as specced. | Art 02 §6–7; Art 04 §6.5 |
@@ -2018,13 +2070,17 @@ Directorate commits to a standing policy — the kind that costs real institutio
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the set: 2 copies → double subsidy per Permanent PA placed? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not a district-scoped effect. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
-*React to subsidize the heavy Mandate cost of Permanent PAs. Full content-review: checked for exploit potential (none found; bounded by Permanent PA scarcity); `portrait={}` cross-set inconsistency flagged; remaining flags are the standard schema/cost/stack gaps shared across the set. Design Pass ✓, Issues Resolved not yet.*
+*React to subsidize the heavy Mandate cost of Permanent PAs. Full content-review: checked for exploit potential (none found; bounded by Permanent PA scarcity); `portrait=None` cross-set inconsistency flagged; remaining flags are the standard schema/cost/stack gaps shared across the set. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 DIR.MOD.5 = Card(
@@ -2055,7 +2111,7 @@ DIR.MOD.5 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2069,7 +2125,7 @@ DIR.MOD.5 = Card(
 ### DIR.MOD.6 — STATE OF EMERGENCY
 
 #### Design Rationale
-A "law" card in the confirmed sense: a Seasonal standing condition that impacts every opponent broadly, not a specific faction/district — the appropriate shape for a card triggered by a World Event affecting the whole table. Two hard blockers carried from the stub and reconfirmed, not resolved, this pass: (1) `world_event.played` is confirmed TriggerExpr vocabulary, but its real-world frequency is unknowable until Broadcast Card/World Event content exists (XA-54) — the card's Balance/Trigger-frequency rows can't close until then; (2) `success` is a string literal, not a real MutationExpr — the card needs full re-authoring against the current schema when XA-54 unblocks it, not just a taxonomy tag. New finding this pass: `portrait = {}` looks wrong given this is arguably the single strongest doctrinal expression in the whole Directorate ModReactCard set (declaring emergency powers) — flagged below, distinct from DIR.MOD.5's justified-empty case.
+A "law" card in the confirmed sense: a Seasonal standing condition that impacts every opponent broadly, not a specific faction/district — the appropriate shape for a card triggered by a World Event affecting the whole table. Two hard blockers carried from the stub and reconfirmed, not resolved, this pass: (1) `world_event.played` is confirmed TriggerExpr vocabulary, but its real-world frequency is unknowable until Broadcast Card/World Event content exists (XA-54) — the card's Balance/Trigger-frequency rows can't close until then; (2) `success` is a string literal, not a real MutationExpr — the card needs full re-authoring against the current schema when XA-54 unblocks it, not just a taxonomy tag. New finding this pass: `portrait = None` looks wrong given this is arguably the single strongest doctrinal expression in the whole Directorate ModReactCard set (declaring emergency powers) — flagged below, distinct from DIR.MOD.5's justified-empty case.
 
 #### Card Story
 A World Event breaks — a crisis wide enough that no faction's business-as-usual survives it. Directorate doesn't wait for consensus. Within the hour, an emergency order is already shaping how everyone else has to operate.
@@ -2080,7 +2136,7 @@ A World Event breaks — a crisis wide enough that no faction's business-as-usua
 |----------|------|------|--------------|
 | Action fit | ✓ | Directorate declaring a broad emergency constraint off a World Event matches the confirmed principle: standing-condition "law" cards may legitimately affect everybody, unlike Immediate-effect cards which should target specifically. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("the Directorate dictates how") reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ⚠ | `portrait = {}` — no entry. This looks like the wrong call: this is arguably the strongest single doctrinal expression in the set (invoking emergency powers table-wide), and Principle 11 exists precisely for actions that *strongly* express a faction's doctrine. Distinct from DIR.MOD.5's justified-empty case. Flag: should carry at least `{Directorate: submitter=+1}`. | Art 04 §6.5 |
+| Doctrine alignment | ⚠ | `portrait = None` — no entry. This looks like the wrong call: this is arguably the strongest single doctrinal expression in the set (invoking emergency powers table-wide), and Principle 11 exists precisely for actions that *strongly* express a faction's doctrine. Distinct from DIR.MOD.5's justified-empty case. Flag: should carry at least `{Directorate: submitter=+1}`. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Directorate, `persistence=Seasonal` correctly using the confirmed card-as-standing-condition-on-FRG pattern (04-n145). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Submission/Modify/PublicAct — re-derived directly against DIR.PA.1 rather than assumed; confirmed against the matrix (Submission×Modify valid). | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ (blocked — XA-54) | −10 to any qualifying opponent PA is significant, partially offset by a real Mandate+Exposure cost, but frequency is entirely unknown until Broadcast Card/World Event content exists. Cannot close. | Art 02 §6–7; Art 04 §6.5; PM05 XA-54 |
@@ -2101,13 +2157,17 @@ A World Event breaks — a crisis wide enough that no faction's business-as-usua
 | Stack behavior (ModReactCard) | ⚠ | More complex than the rest of the set: since this creates a Seasonal standing condition rather than firing-and-consuming, does a 2nd copy stack a further −10, or is it wasted once the condition already exists? Undocumented, and a sharper question than the generic "2 copies" flag elsewhere. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; global effect, not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
-*Creates a standing global difficulty constraint triggered by a World Event. Full content-review: every row evaluated (Design Pass ✓), but this card cannot reach Issues Resolved yet: `world_event.played` trigger frequency depends entirely on undesigned Broadcast Card taxonomy (XA-54, blocks Balance/Trigger frequency/Supported-by-procedure/Resource-cost-positioning), `success` remains a string literal needing full re-authoring, and `portrait={}` is flagged as likely wrong for this specific card (should carry a submitter entry). Taxonomy re-derivation (checked against DIR.PA.1 directly, not assumed) holds up on re-check.*
+*Creates a standing global difficulty constraint triggered by a World Event. Full content-review: every row evaluated (Design Pass ✓), but this card cannot reach Issues Resolved yet: `world_event.played` trigger frequency depends entirely on undesigned Broadcast Card taxonomy (XA-54, blocks Balance/Trigger frequency/Supported-by-procedure/Resource-cost-positioning), `success` remains a string literal needing full re-authoring, and `portrait=None` is flagged as likely wrong for this specific card (should carry a submitter entry). Taxonomy re-derivation (checked against DIR.PA.1 directly, not assumed) holds up on re-check.*
 
 ```python
 DIR.MOD.6 = Card(
@@ -2133,14 +2193,14 @@ DIR.MOD.6 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Directorate).mandate * 1 + resource.faction(Directorate).exposure * 1,
+    cost            = Mandate * 1 + Exposure * 1,
     boost           = None,  # scaffolded, not addressed
 
     success     = "Card remains in play (persistence=Seasonal) on Directorate FRG. While in play, any opponent Public Act targeting a district where Directorate influence is >= Established suffers boost=-10.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2165,7 +2225,7 @@ A rival breaks ground on a structure — permanent, visible, load-bearing. Befor
 |----------|------|------|--------------|
 | Action fit | ✓ | Claiming jurisdictional oversight over new construction is a clean, doctrinally grounded expression of institutional authority. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ⚠ | `portrait = {}` — no entry, but the design_note explicitly frames this as a "win-condition engine" (passive path to Established-in-more-districts). That's a meaningfully doctrinal outcome, softer flag than DIR.MOD.6 but worth the same question: should recurring, strategically significant doctrine-aligned actions carry a portrait entry, or is routine/automatic execution enough to justify `{}`? | Art 04 §6.5 |
+| Doctrine alignment | ⚠ | `portrait = None` — no entry, but the design_note explicitly frames this as a "win-condition engine" (passive path to Established-in-more-districts). That's a meaningfully doctrinal outcome, softer flag than DIR.MOD.6 but worth the same question: should recurring, strategically significant doctrine-aligned actions carry a portrait entry, or is routine/automatic execution enough to justify `None`? | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Directorate, real taxonomy (Territory/Add/PresenceToken, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Confirmed as the Ring set's own STD.MOD.98 precedent (04-n175 note) — verified on re-check, not just cited. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | No restriction, no cost, fires on any opponent's structure placement anywhere on the board — the strongest, least-gated card reviewed in this set so far. "Win-condition engine" per its own design_note is not an exaggeration. Flag for real balance attention (not just the generic 04-n178 cost question) — consider whether a restriction (e.g., Established-gate, like the enforcement family) or a ring/frequency limiter belongs here. | Art 02 §6–7; Art 04 §6.5 |
@@ -2186,11 +2246,15 @@ A rival breaks ground on a structure — permanent, visible, load-bearing. Befor
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the set: 2 copies → 2 chips per opponent structure placement? Undocumented, and more balance-relevant here than elsewhere given the Balance flag. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; fires table-wide by design. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 *Jurisdictional claim over private development. Full content-review: confirmed as STD.MOD.98's cited precedent; primary open flag is Balance/Trigger-frequency (no restriction, no cost, fires on any opponent structure placement table-wide — the least-gated card in the set, genuinely worth a design decision beyond the generic 04-n178 cost question). Design Pass ✓, Issues Resolved not yet.*
 
@@ -2223,7 +2287,7 @@ DIR.MOD.7 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2248,7 +2312,7 @@ A faction declares a public act in territory Directorate already runs. Before Be
 |----------|------|------|--------------|
 | Action fit | ✓ | Bureaucratic taxation on public acts in Directorate-administered territory is a clean, grounded expression of institutional oversight. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — routine bureaucratic action, not a strong doctrinal statement; empty is justified here (unlike DIR.MOD.6/7's stronger doctrinal actions). | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — routine bureaucratic action, not a strong doctrinal statement; empty is justified here (unlike DIR.MOD.6/7's stronger doctrinal actions). | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Directorate, real taxonomy (Submission/Remove/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Impounds a resource off an already-submitted PA — Submission (interferes with submission), not plain Economy; matrix confirms Submission×Remove valid. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | Costs 2 resources (Mandate+Capital) to remove 1 from an opponent's submitted PA — roughly symmetric, not an obvious exploit. | Art 02 §6–7; Art 04 §6.5 |
@@ -2269,11 +2333,15 @@ A faction declares a public act in territory Directorate already runs. Before Be
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the set: 2 copies → 2 resources impounded per qualifying PA? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; gated by Directorate's Established territory, not a fixed ring. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 *Impounds public operational funds in Established territory. Full content-review: checked against the Private Information Gate (00a §10.1) and Art 04 §5 P20 (shortfall handling), both hold up; new finding is the unconfirmed `where(...)` trigger parameterization. This is the strongest-closing card in the set so far — only the standard deferred-schema and stack-behavior flags remain. Design Pass ✓, Issues Resolved not yet.*
 
@@ -2299,14 +2367,14 @@ DIR.MOD.8 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Directorate).mandate * 1 + resource.faction(Directorate).capital * 1,
+    cost            = Mandate * 1 + Capital * 1,
     boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.remove(resource_token, target=trigger.card, count=1, to=Reservoir),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2352,11 +2420,15 @@ A rival's Public Standing craters — bad press, a broken promise, doesn't matte
 | Stack behavior (ModReactCard) | ⚠ | Since this creates a Permanent standing condition (not fire-and-consume), does a 2nd copy targeting the same faction do anything, or targeting a different faction simultaneously? More consequential here than the set's generic stack question given the severity of the effect. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 DIR.MOD.9 = Card(
@@ -2436,11 +2508,15 @@ A Directorate enforcement unit moves into the contested district at the moment o
 | Outcome determinacy | N/A | Schema-locked None — no success/successcrit/fail/failcrit fields; effect is a printed deterministic value, not a resolution tier. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention (Art 03 §10.1.2 has no cost validation/payment step); no mono/cross-resource question applies. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *First ModBattleCard content in the game, establishing the stub format for the whole subclass. `effect` is a fixed direction printed on the card; `target` is named by whoever plays it at commit — not restricted to Directorate or to a contesting faction. Directorate's literal-force doctrine (§5a: "military assets: enforcement personnel and equipment for conflict resolution and presence removal") expressed as a Boost. Count/magnitude: 4 cards per faction — 2 Boost + 2 Hinder, magnitudes +1/+2 and −1/−2 respectively; `value_rating` mirrors `magnitude`. Flagged for playtest validation, not treated as final (04-n94). This is the weaker Boost tier (+1). The checklist's N/A set is 6 rows for this subclass (Taxonomy fit, Effect duration, Persistence, Trigger validity, Outcome determinacy, Resource cost positioning), more constrained than ModActionCard's 4 (§6.2's modifier constraints table additionally forces `affinity`/`restriction`/`perspectives`/`design_note` None for ModBattleCard). Portrait: ModBattleCard carries no portrait value, permanently. Applies to all 44 ModBattleCard stubs (24 Ring/Standard + 20 faction).*
 
@@ -2499,11 +2575,15 @@ A curfew order drops on short notice, checkpoints going up before anyone can rea
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Hinder counterpart to DIR.MOD.10, expressing the other half of §5a's Directorate doctrine: "Suppression toolkit: push other factions' control tiers down rather than building own tiers up — best suppression capability in the game." A curfew doesn't reinforce Directorate's own position in the contest — it makes the named faction's position harder to hold, a Tactic rather than a deployed Asset. Weaker Hinder tier (−1); DIR.MOD.13 Martial Lockdown is the escalated −2 counterpart. Same disposition as DIR.MOD.10.*
 
@@ -2562,11 +2642,15 @@ Institutional hardware — barricades, vehicles, surveillance rigs — gets sign
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Second Boost card, Equipment category rather than DIR.MOD.10's human Asset — rounds out the pattern-setter with all three naming-convention categories represented (Asset/Equipment/Tactic) before replicating to the other four factions. Stronger Boost tier (+2) — heavier material commitment than the routine personnel deployment of DIR.MOD.10. Same disposition as DIR.MOD.10.*
 
@@ -2625,11 +2709,15 @@ Full lockdown comes down from Government Citadel, no explanation offered — whi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Escalated Hinder counterpart to DIR.MOD.11 Emergency Curfew (−2 vs. −1) — completes the 2 Boost / 2 Hinder pattern. Where Curfew is a routine administrative order, Lockdown is Directorate's "best suppression capability in the game" (§5a) turned all the way up: full mobilization against the named faction's position, not just restricted movement. Same disposition as DIR.MOD.11.*
 
@@ -2688,11 +2776,15 @@ A directive already cleared through channels lets a Directorate operation procee
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields of its own (schema-locked None). | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` is the closed whole-subclass convention (splay-display legibility); out of scope for the 04-n178 Floor Act rule (scoped to CovertOp/PublicAct/ModReact only). | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *First ModActionCard content in the game exercising the actual `ModActionExpr` menu (04-n157 pattern-setter; STD.MOD.1 Overture and SYN.MOD.1 The Fixer, the two prior "ModActionCard" entries, were both migrated to Issued ModReactCard, leaving this slot genuinely empty until now). Establishes the tagged-union call convention for `ModActionExpr` — `ModActionExpr.<variant>(...)`, no prior instance existed to follow. Fields per §6.1/§6.2 (ModActionCard column) and the 04-n157 action-space analysis: **host-binding** is packet-pairing only — attach at Dispatch assembly to any CA/PA in the acting faction's own submitted packet (Art 03 §9.1.1); no card-level restriction field exists or is needed, and a ModActionCard can never reach a rival's sealed Dispatch Case. **Cost** is `None` uniformly — Beat 0 payment validation (Art 03 §9.4.0.1 Step 2) could support a live modifier cost here, unlike ModBattleCard's true no-cost-step case, but the splay-display convention (§9.4.0.1 Step 4) makes a distinct modifier cost illegible, so it folds into the host packet's total drain instead. **Count/format:** 12 cards/faction — 4 `threshold_delta` (this tier) + 2 `success_multiplier` + 4 `ps_shift` + 2 `cost_reduction`, asymmetric because the four effect types have genuinely different magnitude-variation room (§6.3): `threshold_delta` runs against the d100 threshold scale (real thresholds 25–65, `ring_mod`/`doctrine_mod` already establish ±10/±15 as meaningful) and supports 4 tiers (+5/+10/+15/+20); `ps_shift` likewise grew from an initial 2-card same-direction reading to a full 2×2 self/target matrix (see DIR.MOD.19); the other two effect types are small-integer/exponential mechanics that stay at 2 tiers. Directorate's institutional-authority doctrine (§5a) expressed as a pre-cleared procedural advantage — this is the weakest tier (+5).*
 
@@ -2752,11 +2844,15 @@ An inspection scheduled and passed well in advance leaves nothing for bad luck �
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Mid tier of the 4 `threshold_delta` cards (+10, matching the `ring_mod`/`doctrine_mod` baseline granularity — §6.5). Reframed from an earlier hostile-flavored seed concept ("Regulatory Inspection" — raising a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: `threshold_delta` carries no faction parameter (§6.3), so it can only ever ease the acting faction's own host action, never a rival's. Reframe clean.*
 
@@ -2815,11 +2911,15 @@ A visible deployment backs up whatever the Directorate is about to attempt — t
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (narrative dual-purpose framing) |  |
+| Status | | |  |
 
 *Third of **4** `threshold_delta` tiers (+15), not the capstone — DIR.MOD.25 Executive Mandate (+20) is the true capstone. Also reframed from a hostile-flavored seed concept per 04-n170, same basis as DIR.MOD.15. Magnitude exceeds the ±15 `doctrine_mod` baseline only nominally. **Narrative implies a rival-facing effect ("resistance evaporates") the self-only mechanic can't deliver; flagged for a light tighten, matching STD.MOD.29.***
 
@@ -2878,11 +2978,15 @@ Procedural correctness compounds — an action executed exactly to protocol prod
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Common tier of the 2 `success_multiplier` cards (n=1) — 04-n157: this effect type supports only 2 tiers, since n=1 already doubles the host's effect and n=2 triples it.*
 
@@ -2941,11 +3045,15 @@ A measured response becomes full institutional mobilization — the outcome land
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 *Rare/capstone tier of the 2 `success_multiplier` cards (n=2 — triples the host's success effect). Flagged for playtest, same caveat as ModBattleCard's magnitude scale (04-n94) — reserve for high-stakes plays, not routine deployment.*
 
@@ -3004,11 +3112,15 @@ The Directorate's conduct is cited publicly as the standard — a small, deliber
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *`ps_shift` is a full 2×2 matrix, not a 2-card direction split — 4 cards total (DIR.MOD.19/23/20/24), mirroring ModBattleCard's Boost+1/+2, Hinder−1/−2 structure exactly. Unlike the other three `ModActionExpr` variants, `ps_shift` carries a faction parameter (§6.3: `acting | target | named faction`), so both **direction** (self vs. target) and **magnitude** (±1/±2) vary independently. This card: self, minor (+1). DIR.MOD.23 Commendation: self, major (+2). DIR.MOD.20 Public Reprimand: target, major (−2). DIR.MOD.24 Internal Affairs Referral: target, minor (−1).*
 
@@ -3067,11 +3179,15 @@ An official rebuke lands on whoever the action was aimed at — public, on the r
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix — see DIR.MOD.19 for the full structure. Magnitude mirrors the established Intel Token Hinder precedent rather than the ±1 baseline, since a named PS hit reads as a real consequence, not a nudge. This is one of two cards in the set that reach a faction other than the acting one — legitimately, since `ps_shift` is schema-built for it (unlike `threshold_delta`/`success_multiplier`/`cost_reduction`, flagged self-only at 04-n170).*
 
@@ -3130,11 +3246,15 @@ A jurisdictional formality is waived for this faction alone, quietly, ahead of s
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Common tier of the 2 `cost_reduction` cards (n=1). PA-only per §6.3 — CA cost is committed at dispatch before Beat 0 and cannot be reduced post-submission.*
 
@@ -3193,11 +3313,15 @@ Materiel and personnel already committed elsewhere in the institution get redire
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 *Capstone tier of the 2 `cost_reduction` cards (n=2). PA costs sample at 1–4 total units (04-n157) — a 2-unit reduction approaches making many PAs nearly free; flagged for playtest same as the rest of this set.*
 
@@ -3256,11 +3380,15 @@ A commendation issued through official channels carries more weight than a compl
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Added alongside DIR.MOD.24 to complete the `ps_shift` 2×2 matrix. Self-boost, major tier (+2) — stronger counterpart to DIR.MOD.19 Model Citizen. See DIR.MOD.19 for the full matrix structure.*
 
@@ -3319,11 +3447,15 @@ Nothing is announced. A referral goes into a file, and somehow the file's conten
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 *Added alongside DIR.MOD.23 to complete the `ps_shift` 2×2 matrix. Target-hinder, minor tier (−1) — softer counterpart to DIR.MOD.20 Public Reprimand: a quiet referral rather than a public rebuke. Drawn from the Faction ModAction seed pool (`Whiteboard/modifier_card_ideas.md`).*
 
@@ -3382,11 +3514,15 @@ An executive mandate carries the full authority of Directorate leadership — no
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed whole-subclass convention. | PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 *`threshold_delta` is 4 tiers total (+5/+10/+15/+20). True capstone (+20); DIR.MOD.16 Show of Force (+15) is the third of four, not the top. `value_rating` is widened schema-wide to 1–4 (§6.1/§6.2) so this tier gets its own distinct value (4) instead of sharing DIR.MOD.16's band. Faction ModActionCard count: 12 cards/faction (4 threshold_delta + 2 success_multiplier + 4 ps_shift + 2 cost_reduction); Ring ModAction: 24 cards/ring. Closes the Directorate ModActionCard set (12/12 cards); one narrative flag carried (DIR.MOD.16).*
 

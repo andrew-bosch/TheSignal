@@ -2,7 +2,7 @@
 ## THE SIGNAL P1 — Paper Prototype
 
 **Version:** 2.5
-**Status:** ✅ Signed Off — S111 (L233)
+**Status:** ✅ Signed Off — S111 (L233). **Pending re-sign-off (S148):** §8 Target Profile Gameplay Requirements amended — new material rule confirming Target Profile as the sole CA/PA target-declaration mechanism, multi-target handling via the free-form line, and ModReactCard exclusion (PM02 L317). Made without following the signed-off-artifact change protocol (draft/plan first) — flagged retroactively; see PM05 04-n197.
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian
 **DB Anchor:** `the_signal_db.component` — canonical component registry. Names and IDs from that registry are authoritative.
 **DB Sync:** Changes to component schema design or any component entry fields must be coordinated with corresponding DB updates. Art 02 and `the_signal_db` must remain in sync. *(Note: You can easily synchronize the database with this document's metadata blocks by running `python3 Database/seed_component_metadata.py --execute`.)*
@@ -878,6 +878,8 @@ Physical infrastructure of the covert dispatch and return channel — submission
 **Narrative Anchor:** N/A — operational tracking record; no narrative element.
 
 **Gameplay Requirements:** Must record one or more of: target faction, target district, target object (named component — e.g., Broadcast Card), operation type, declared parameters (free-form text — additional blank line for card-specific declarations, e.g., target clause and new value for SYN.CA.11 Redline). Completed by the submitting faction before submission. Erased or disposed of after use — physical design pending Art 08.
+
+Target Profile is the sole mechanism by which a Covert Operation or Public Act declares/enumerates its target(s) — no CA/PA card targets any other way. Cards requiring more than one target of the same type (e.g. two target districts, two target factions — Art 04 §6.3 CostExpr's `target1`/`target2`/`each_target` grammar) record the additional target(s) on the free-form declared-parameters line; there is no dedicated second printed field per type. Modifier Cards (ModReactCard subclass) do not use Target Profile at all — they fire off board-state events, not a declared target, so whatever targeting context their effect needs comes from the triggering event's own metadata (which faction, which district/ring — Art 04 §6.3 TriggerExpr `faction=`/`district=`/`ring=` parameters), never a Target Profile entry.
 
 **Metadata:**
 | Field | Value |

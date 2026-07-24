@@ -27,7 +27,7 @@ A quiet envelope arrives with no return address — just a blank form and the un
 | Effect duration | ✓ | Immediate — AccordForm delivery is instantaneous. Resulting Accord's duration governed by Art 06 §9.3–§9.7 independently. | Art 04 §5 P19 |
 | Persistence | ✓ | `persistence = Immediate` — no lingering game-state marker from Overture itself once the AccordForm is delivered; the resulting Accord's own persistence is a separate downstream concern (Art 06 §9.3–§9.7). | Art 04 §6.2 |
 | Trigger validity | ⚠ | Fires when its assigned host PA resolves (Beat 4) — trigger form `public_act.resolved(pa=X)` is new, not yet in confirmed TriggerExpr vocabulary (§6.3). Same category of gap as GD-01's district-scoped trigger (04-n27). | Art 04 §6.3; §11.1 |
-| Portrait validity | ✓ | `portrait={}` — correctly typed (schema declares `portrait: dict[Faction, PortraitEntry]`, not Optional; empty dict is the right "no entry" representation, not `None`). No portrait entry for Overture's own assignment; Portrait implications for the resulting Accord governed separately by Art 06 §9.9. | Art 04 §6.1–§6.2; Art 06 §9.9 |
+| Portrait validity | ✓ | `portrait=None` — correctly typed (schema declares `portrait: dict[Faction, PortraitEntry]`, not Optional; empty dict is the right "no entry" representation, not `None`). No portrait entry for Overture's own assignment; Portrait implications for the resulting Accord governed separately by Art 06 §9.9. | Art 04 §6.1–§6.2; Art 06 §9.9 |
 | Supported by zones | ✓ (N/A) | `target_district=None` — Overture isn't a territory-scoped effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
 | Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in STD.CA.9 `arbiter_note`; deliver-from-tableau is consistent with existing ARBITER delivery subroutines, no novel behavior; Art 07 subroutine pass still needed to formalize. | Art 03 Phase B; Art 06 §9.4; STD.CA.9 |
@@ -55,11 +55,11 @@ A quiet envelope arrives with no return address — just a blank form and the un
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (Taxonomy, Perspectives, ID, trigger vocab) | |
+| Status | | | |
 
 ```python
 Overture = Card(
-    id      = "STD.MOD.1",  version = "v1.3",
+    id      = "STD.MOD.1",  card_id="STD.MOD.1",  version = "v1.3",
     name    = "Overture",
     tagline = "Extend a formal invitation to negotiate — attached to any public act you declare.",
     type    = ModReactCard,  faction = All,
@@ -100,7 +100,7 @@ Overture = Card(
     # Faction fills form per Art 06 §9.3; places in Accord Placement Area during Beat 4 or Debrief.
     # Art 06 §9.4 formation procedure applies from placement forward.
 
-    portrait = {},  # no entry; Art 06 §9.9 governs Portrait for resulting Accord
+    portrait = None,  # no entry; Art 06 §9.9 governs Portrait for resulting Accord
     ps_framing = None,
 
     narrative    = "The terms don't matter yet. What matters is that the door is open.",
@@ -149,11 +149,15 @@ A liaison who owes you something makes a call on your behalf — reinforcing whi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.2 = Card(
@@ -210,11 +214,15 @@ The requisition slip says routine maintenance. The gear is somewhere else entire
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.3 = Card(
@@ -271,11 +279,15 @@ A name enters an audit list. Nobody says why the review opened. Nobody has to �
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.4 = Card(
@@ -332,11 +344,15 @@ The system returns the same message everywhere it's checked: access denied, pend
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.5 = Card(
@@ -393,11 +409,15 @@ The contact is real, and so is the favor — reinforcing whichever side the play
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.6 = Card(
@@ -454,11 +474,15 @@ The numbers only mean anything inside the Sanctum's own walls — reinforcing wh
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.7 = Card(
@@ -515,11 +539,15 @@ The checkpoint has never once been called temporary. Tonight it's also slow, and
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.8 = Card(
@@ -576,11 +604,15 @@ No explanation posted. Just a perimeter that stopped opening for one name on the
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.9 = Card(
@@ -637,11 +669,15 @@ The schedule says one thing. A shift supervisor makes it say another, quietly, b
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.10 = Card(
@@ -698,11 +734,15 @@ For an hour, someone else's allocation is quietly someone else's problem — rei
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.11 = Card(
@@ -759,11 +799,15 @@ The form is correct. The form is always correct. It's still not moving — the n
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.12 = Card(
@@ -820,11 +864,15 @@ Somewhere in transit, a manifest gets flagged. It doesn't matter where it starte
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.13 = Card(
@@ -881,11 +929,15 @@ Outside the Grid, he's nobody in particular. Inside it, nothing moves without hi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.14 = Card(
@@ -942,11 +994,15 @@ The override rides the Hub's own relay hardware — reinforcing whichever side t
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.15 = Card(
@@ -1003,11 +1059,15 @@ The clerk isn't stalling. The queue is just, tonight, exactly this long — the 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.16 = Card(
@@ -1064,11 +1124,15 @@ The transfer clears the Sanctum end fine. It just never quite finishes clearing 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.17 = Card(
@@ -1125,11 +1189,15 @@ A nod, a name dropped, and suddenly you're not a stranger anymore — the vouchi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.18 = Card(
@@ -1186,11 +1254,15 @@ None of the parts match. All of them work — reinforcing whichever side the pla
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.19 = Card(
@@ -1247,11 +1319,15 @@ Nobody posted a notice. Everyone who needed to know already does — the named f
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.20 = Card(
@@ -1308,11 +1384,15 @@ Doors that used to open don't. Nobody explains why. Nobody has to — the ring's
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.21 = Card(
@@ -1369,11 +1449,15 @@ Ask about him three blocks over and you get a shrug. Ask on the Strip and everyo
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.22 = Card(
@@ -1430,11 +1514,15 @@ The cache has been building for years, one odd lot at a time — reinforcing whi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.23 = Card(
@@ -1491,11 +1579,15 @@ No one signed anything. That was always the arrangement's whole strength, and to
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.24 = Card(
@@ -1552,11 +1644,15 @@ Every shift finds a reason not to touch the load. By evening it's still sitting 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.25 = Card(
@@ -1613,11 +1709,15 @@ A zoning officer signs off on an exception before anyone downstream even has to 
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`successcrit`/`fail`/`failcrit` of its own (schema-locked None) — determinacy belongs to the host action. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` is the closed whole-subclass convention (PM02 L256); out of scope for the 04-n178 Floor Act rule (scoped to CovertOp/PublicAct/ModReact only). | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.26 = Card(
@@ -1674,11 +1774,15 @@ A report reaches its audience with the inconvenient part blacked out — smoothi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.27 = Card(
@@ -1735,11 +1839,15 @@ A district block is cordoned off "for maintenance" — which clears space for th
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.28 = Card(
@@ -1796,11 +1904,15 @@ Key context is classified before a rival can plan around it — and for the fact
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (narrative tighten, +20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.29 = Card(
@@ -1857,11 +1969,15 @@ An unseen endorsement from within the Core amplifies a successful action's effec
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.30 = Card(
@@ -1918,11 +2034,15 @@ Official recognition of a successful placement makes its result carry further th
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.31 = Card(
@@ -1979,11 +2099,15 @@ An exchange is agreed by everyone present to have never happened — insulating 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.32 = Card(
@@ -2040,11 +2164,15 @@ A formal citation boosts standing through institutional channels rather than the
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.33 = Card(
@@ -2101,11 +2229,15 @@ A quiet, informal heads-up to the right official costs a named faction a small, 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.34 = Card(
@@ -2162,11 +2294,15 @@ An audit's findings reach exactly the audience that costs a rival the most stand
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.35 = Card(
@@ -2223,11 +2359,15 @@ A routine institutional charge is quietly set aside for the acting faction only.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.36 = Card(
@@ -2284,11 +2424,15 @@ Funds normally locked behind approval move immediately, discounting an urgent ac
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.37 = Card(
@@ -2345,11 +2489,15 @@ The recognition is real, but it's tied to this specific checkpoint — it doesn'
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.38 = Card(
@@ -2406,11 +2554,15 @@ A standing relationship with the archive staff eases a paperwork-dependent actio
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.39 = Card(
@@ -2467,11 +2619,15 @@ A direct line into the administrative wing eases the operation — but the line 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.40 = Card(
@@ -2528,11 +2684,15 @@ Full clearance from within the Core itself — nothing left to process through o
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.41 = Card(
@@ -2589,11 +2749,15 @@ Knowing exactly how this specific checkpoint runs its shift changes lets a succe
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.42 = Card(
@@ -2650,11 +2814,15 @@ When the institution itself backs an outcome, it carries much further than a rou
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.43 = Card(
@@ -2711,11 +2879,15 @@ A quiet, favorable notation enters the institution's own record — a small, del
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.44 = Card(
@@ -2772,11 +2944,15 @@ Formal recognition from within the institution itself is a significant, visible 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.45 = Card(
@@ -2833,11 +3009,15 @@ A named faction's presence is quietly flagged at this specific checkpoint — sm
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.46 = Card(
@@ -2894,11 +3074,15 @@ A rival is visibly and formally denied access to institutional records — a rea
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.47 = Card(
@@ -2955,11 +3139,15 @@ An administrative reshuffle absorbs part of an action's overhead — quietly, an
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.48 = Card(
@@ -3016,11 +3204,15 @@ A submission that skips the full review process skips the overhead that comes wi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.49 = Card(
@@ -3077,11 +3269,15 @@ An infrastructure corridor is reclassified, making a placement there easier to c
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.50 = Card(
@@ -3138,11 +3334,15 @@ A tapped communications relay lets the acting faction anticipate and ease their 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.51 = Card(
@@ -3199,11 +3399,15 @@ The acting faction's own shipping manifest is quietly corrected in advance, smoo
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.52 = Card(
@@ -3260,11 +3464,15 @@ A formal labor complaint against the acting faction's own submission is quietly 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.53 = Card(
@@ -3321,11 +3529,15 @@ Resources moved without ever formally stopping compound the action's benefit.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.54 = Card(
@@ -3382,11 +3594,15 @@ One system's output feeding directly into the next multiplies the outcome well p
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.55 = Card(
@@ -3443,11 +3659,15 @@ A stamp of approval becomes a small, visible standing win.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.56 = Card(
@@ -3504,11 +3724,15 @@ The acting faction's operation is cited publicly as a model of efficient operati
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.57 = Card(
@@ -3565,11 +3789,15 @@ A minor procedural delay on a rival's shipment gets logged in the public record 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.58 = Card(
@@ -3626,11 +3854,15 @@ A public safety violation becomes standing damage for whoever's named on the cit
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.59 = Card(
@@ -3687,11 +3919,15 @@ The acting faction's submission is rerouted to the front of a queue, skipping de
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.60 = Card(
@@ -3748,11 +3984,15 @@ A resource purchase clears at an institutional discount not normally available.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.61 = Card(
@@ -3809,11 +4049,15 @@ Regular business at this specific freight dock eases a logistics-dependent actio
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.62 = Card(
@@ -3870,11 +4114,15 @@ A standing relationship with substation staff eases an infrastructure-dependent 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.63 = Card(
@@ -3931,11 +4179,15 @@ Priority access at a specific communications hub smooths a relay-dependent actio
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.64 = Card(
@@ -3992,11 +4244,15 @@ Full standing at the district clearinghouse means paperwork simply moves, no mat
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.65 = Card(
@@ -4053,11 +4309,15 @@ An extra shift pushes a build further than scheduled, amplifying its result — 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.66 = Card(
@@ -4114,11 +4374,15 @@ A facility running at capacity turns a routine action into an exceptional one �
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.67 = Card(
@@ -4175,11 +4439,15 @@ A genuinely significant action is buried among routine paperwork, muting any sta
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.68 = Card(
@@ -4236,11 +4504,15 @@ A public commendation for keeping the Mid's infrastructure running is a real, vi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.69 = Card(
@@ -4297,11 +4569,15 @@ A rival's resource draw becomes public knowledge at this specific institution �
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.70 = Card(
@@ -4358,11 +4634,15 @@ A named rival is formally sanctioned at this institution — visible to every fa
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.71 = Card(
@@ -4419,11 +4699,15 @@ A shipment already in the system is released without the fee a fresh order would
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.72 = Card(
@@ -4480,11 +4764,15 @@ An existing utility contract absorbs the overhead of a fresh submission — but 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.73 = Card(
@@ -4541,11 +4829,15 @@ An informally occupied space becomes easier to formalize into a real presence cl
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.74 = Card(
@@ -4602,11 +4894,15 @@ Backing from one of Baryo's unofficial housing authorities smooths a placement n
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.75 = Card(
@@ -4663,11 +4959,15 @@ Advance word from contacts at the docks smooths the acting faction's own shipmen
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.76 = Card(
@@ -4724,11 +5024,15 @@ Visible grassroots support for the acting faction's own submission smooths its p
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.77 = Card(
@@ -4785,11 +5089,15 @@ Several small contributions combine into an outcome larger than any single sourc
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.78 = Card(
@@ -4846,11 +5154,15 @@ An unusually large crowd amplifies whatever the action was counting on being see
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.79 = Card(
@@ -4907,11 +5219,15 @@ Word of mouth shifts standing faster than any official channel — a small, orga
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.80 = Card(
@@ -4968,11 +5284,15 @@ The neighborhood vouches for the acting faction publicly — a real and visible 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.81 = Card(
@@ -5029,11 +5349,15 @@ A street performer's aside becomes the detail that costs a named faction a littl
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.82 = Card(
@@ -5090,11 +5414,15 @@ A casual conversation becomes something a rival has to publicly answer for — t
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.83 = Card(
@@ -5151,11 +5479,15 @@ Informal credit lets an action proceed before payment technically clears.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.84 = Card(
@@ -5212,11 +5544,15 @@ A resource moves through several informal trades before landing where it was alw
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.85 = Card(
@@ -5273,11 +5609,15 @@ Being a known face at a specific market stall eases an economy-dependent action 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.86 = Card(
@@ -5334,11 +5674,15 @@ Knowing exactly how a specific transit point actually runs eases an operation pa
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.87 = Card(
@@ -5395,11 +5739,15 @@ Established standing in a specific housing block smooths a placement there — s
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.88 = Card(
@@ -5456,11 +5804,15 @@ Being a fixture at this specific spot means nothing about an operation there nee
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.89 = Card(
@@ -5517,11 +5869,15 @@ A temporary permit becomes cover for something that lands bigger than expected �
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.90 = Card(
@@ -5578,11 +5934,15 @@ Informal networks carry an outcome further than any official channel would — b
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.91 = Card(
@@ -5639,11 +5999,15 @@ A rumor seeded in a local gathering changes how an outcome is read — protectin
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.92 = Card(
@@ -5700,11 +6064,15 @@ A genuinely celebrated local event puts the acting faction's name in a good ligh
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.93 = Card(
@@ -5761,11 +6129,15 @@ A passing comment at the market costs a named faction a little standing — noth
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.94 = Card(
@@ -5822,11 +6194,15 @@ A named faction is visibly turned away at this specific spot — a real, public 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.95 = Card(
@@ -5883,11 +6259,15 @@ Discarded materials from the Mid get reused at a fraction of fresh cost — but 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 STD.MOD.96 = Card(
@@ -5944,11 +6324,15 @@ A debt called in from the informal economy waives part of what an action would o
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, closed PM02 L256 convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 STD.MOD.97 = Card(
@@ -6010,11 +6394,15 @@ A rival stakes a new claim in Core. Whoever's holding this card gets word fast e
 | Stack behavior (ModReactCard) | ⚠ | Undocumented: does holding two copies double-fire on one rival placement? No restriction clause present. Genuinely open. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=1` matches trigger scope; frequency supports a ring-locked card remaining playable. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.98 = Card(
@@ -6089,11 +6477,15 @@ A rival pours concrete in Core. The paperwork that follows costs them a foothold
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98 — undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.99 = Card(
@@ -6168,11 +6560,15 @@ The building doesn't stay empty long. Core fills what's vacated before the news 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.100 = Card(
@@ -6247,11 +6643,15 @@ Everyone in the building hears when someone finally locks the room down. Whoever
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope; frequency (infrequent but real) supports remaining ring-locked. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.101 = Card(
@@ -6326,11 +6726,15 @@ An Accord anywhere in the city passes through institutional record-keeping. Core
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=1` set per convention, though the trigger itself isn't ring-scoped — accepted design. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.102 = Card(
@@ -6405,11 +6809,15 @@ A submission lands on the wrong desk, and now it needs a second signature.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98 — does a second copy compound to −10? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.103 = Card(
@@ -6484,11 +6892,15 @@ Every structure that goes up in Core passes through an office with its hand out.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.104 = Card(
@@ -6563,11 +6975,15 @@ Reaching Established status means an audit — and audits find things.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.105 = Card(
@@ -6642,11 +7058,15 @@ A reserve fund, tapped the moment the ground gives out from under you.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.106 = Card(
@@ -6721,11 +7141,15 @@ Every gain gets a formal response, whether anyone asked for one or not.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.107 = Card(
@@ -6800,11 +7224,15 @@ Core keeps records of every dispute. A district turning contested opens the door
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.108 = Card(
@@ -6879,11 +7307,15 @@ A reprimand doesn't need to be loud to be effective. Core specializes in the qui
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.109 = Card(
@@ -6958,11 +7390,15 @@ Traffic reroutes around whoever just staked a claim in Mid — right into someon
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.110 = Card(
@@ -7037,11 +7473,15 @@ Mid's infrastructure has a ceiling, and someone just tested it.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.111 = Card(
@@ -7116,11 +7556,15 @@ Nothing sits idle in Mid's infrastructure for long. Someone always moves in on t
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.112 = Card(
@@ -7195,11 +7639,15 @@ A district locked down draws load like a failing relay. The grid logs it before 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.113 = Card(
@@ -7274,11 +7722,15 @@ An Accord's dissolution isn't just paperwork — whatever it was propping up now
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | Same not-ring-scoped-trigger basis as STD.MOD.102 (accepted design). |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.114 = Card(
@@ -7353,11 +7805,15 @@ An inspection nobody asked for, timed to land before the paperwork clears.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.115 = Card(
@@ -7432,11 +7888,15 @@ Nothing gets built in Mid without crossing a toll line somebody controls.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.116 = Card(
@@ -7511,11 +7971,15 @@ Every climb to Established in Mid triggers a reconciliation somewhere down the l
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.117 = Card(
@@ -7590,11 +8054,15 @@ Losing ground in Mid trips a contingency that's always been sitting there, waiti
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.118 = Card(
@@ -7669,11 +8137,15 @@ Every gain in Mid gets a statement from somebody with standing to make one.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.119 = Card(
@@ -7748,11 +8220,15 @@ Mid keeps a file on every dispute. A contested line gets a citation before it ge
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.120 = Card(
@@ -7827,11 +8303,15 @@ A formal notice doesn't need drama. Mid's bureaucracy just needs the paper trail
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.121 = Card(
@@ -7906,11 +8386,15 @@ Baryo doesn't wait for paperwork. Word moves faster than any filing ever could.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.122 = Card(
@@ -7985,11 +8469,15 @@ New construction changes the rent, one way or another.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.123 = Card(
@@ -8064,11 +8552,15 @@ The moment a foothold disappears, someone else is already moving their things in
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.124 = Card(
@@ -8143,11 +8635,15 @@ When someone locks down a piece of Baryo, the street knows before the ink's even
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.125 = Card(
@@ -8222,11 +8718,15 @@ A handshake deal's terms are whatever the last conversation says they are.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | Not ring-scoped trigger, same basis as STD.MOD.102/114. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.126 = Card(
@@ -8301,11 +8801,15 @@ An operation through Baryo draws attention before it ever gets a chance to land 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.127 = Card(
@@ -8380,11 +8884,15 @@ There's no filing cabinet for it, but everyone knows the toll gets paid regardle
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.128 = Card(
@@ -8459,11 +8967,15 @@ The gray economy notices every climb — and it always finds a way in.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.129 = Card(
@@ -8538,11 +9050,15 @@ Baryo runs on favors owed. This is one finally getting called in.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.130 = Card(
@@ -8617,11 +9133,15 @@ The neighborhood keeps its own ledger, and it's not shy about updating it out lo
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.131 = Card(
@@ -8696,11 +9216,15 @@ Baryo doesn't wait for an official ruling. The neighborhood picks its side the m
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.132 = Card(
@@ -8775,11 +9299,15 @@ Baryo's memory is longer than anywhere else in the city.
 | Stack behavior (ModReactCard) | ⚠ | Same open question as STD.MOD.98. |  |
 | Ring constraint (ModReactCard) | ✓ | Matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 STD.MOD.133 = Card(

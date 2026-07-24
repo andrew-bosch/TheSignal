@@ -58,11 +58,11 @@ Guild-exclusive structural defense card. The hardest counter to STD.CA.2 Demolis
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.CA.1 = Card(
-    id      = "GUI.CA.1",  version = "v1.1",
+    id      = "GUI.CA.1",  card_id="GUI.CA.1",  version = "v1.1",
     name    = "Fortify Structure",
     tagline = "Reinforce a structure against demolition this Quarter.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -89,7 +89,7 @@ GUI.CA.1 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = district(target).faction(acting).structure > 0,
-    cost        = resource.faction(acting).capacity * 1,
+    cost        = Capacity * 1,
 
     success     = district(target).faction(acting).structure.set_flag(immune_to_demolish=True),
     successcrit = None,
@@ -149,11 +149,11 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GUI.CA.2 = Card(
-    id      = "GUI.CA.2",  version = "v1.1",
+    id      = "GUI.CA.2",  card_id="GUI.CA.2",  version = "v1.1",
     name    = "Materials Acquisition",
     tagline = "Recover the costs of demolition as subcontract payment.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -244,11 +244,11 @@ Guild-exclusive first-entry card for unclaimed districts. Unclaimed territory ha
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.CA.3 = Card(
-    id      = "GUI.CA.3",  version = "v1.1",
+    id      = "GUI.CA.3",  card_id="GUI.CA.3",  version = "v1.1",
     name    = "Foundation Rights",
     tagline = "Claim a foothold in territory no other faction has entered.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -275,7 +275,7 @@ GUI.CA.3 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = district(target).presence.total == 0,
-    cost        = resource.faction(acting).capacity * 1,
+    cost        = Capacity * 1,
 
     success     = district(target).faction(acting).presence += 1,
     successcrit = district(target).faction(acting).structure += 1,
@@ -334,11 +334,11 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 GUI.CA.4 = Card(
-    id      = "GUI.CA.4",  version = "v1.1",
+    id      = "GUI.CA.4",  card_id="GUI.CA.4",  version = "v1.1",
     name    = "Construction Crew",
     tagline = "Build a structure before your presence is fully established.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -365,7 +365,7 @@ GUI.CA.4 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = district(target).faction(acting).structure == 0,
-    cost        = resource.faction(acting).capacity * 2 + resource.faction(acting).findings * 1,
+    cost        = Capacity * 2 + Findings * 1,
 
     success     = (
         district(target).faction(acting).presence += 1,
@@ -431,11 +431,11 @@ Guild-exclusive passive income card — the economic expression of territorial c
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.CA.5 = Card(
-    id      = "GUI.CA.5",  version = "v1.1",
+    id      = "GUI.CA.5",  card_id="GUI.CA.5",  version = "v1.1",
     name    = "Infrastructure Yield",
     tagline = "Draw resources from infrastructure you have already built.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -521,11 +521,11 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.CA.6 = Card(
-    id      = "GUI.CA.6",  version="v1.0",  # ID pending PM05 04-n1
+    id      = "GUI.CA.6",  card_id="GUI.CA.6",  version="v1.0",  # ID pending PM05 04-n1
     name    = "Labor Contract",
     tagline = "Collect subcontract payment when a faction develops district infrastructure.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -620,6 +620,10 @@ GUI.CA.6 = Card(
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
@@ -628,7 +632,7 @@ GUI.CA.6 = Card(
 
 ```python
 GUI.CA.7 = Card(
-    id      = "GUI.CA.7",  version = "v1.0",
+    id      = "GUI.CA.7",  card_id="GUI.CA.7",  version = "v1.0",
     name    = "Buyout Clause",
     tagline = "Liquidate an opponent's real estate through an unblockable coercive eviction.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -644,7 +648,7 @@ GUI.CA.7 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    cost        = resource.faction(Guild).capacity * 2 + resource.faction(Guild).capital * 1,
+    cost        = Capacity * 2 + Capital * 1,
 
     success     = "Guild pays 2 target.native resources to target_faction; arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1)",
     
@@ -688,6 +692,10 @@ GUI.CA.7 = Card(
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
@@ -696,13 +704,13 @@ GUI.CA.7 = Card(
 
 ```python
 GUI.CA.8 = Card(
-    id      = "GUI.CA.8",  version = "v1.1",
+    id      = "GUI.CA.8",  card_id="GUI.CA.8",  version = "v1.1",
     name    = "Building Inspection",
     tagline = "Condemn an opponent's building via weaponized zoning code.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
     layer   = Territory,  function = Remove,  subject = StructureBlock,
     beat    = 3,  resolution = d100,  threshold = 60,
-    cost    = resource.faction(Guild).capacity * 1 + resource.faction(Guild).mandate * 1,
+    cost    = Capacity * 1 + Mandate * 1,
     success = "Remove 1 target Structure Block. Guild gains +1 PS.",
     design_note = "A thematic variant of STD.CA.2 (Demolish). Bribe removed to keep resolution strictly blind via Arbiter."
     value_rating = 2,
@@ -744,15 +752,19 @@ Distinct from STD.CA.10 Protect (raises attacker threshold on incoming CAs) and 
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`) — the "double-fire" is two applications of the same success outcome, not a second resolution tier. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity + district native, both typed correctly). | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.CA.9 = Card(
-    id      = "GUI.CA.9",  version = "v0.1",
+    id      = "GUI.CA.9",  card_id="GUI.CA.9",  version = "v0.1",
     name    = "Works Guarantee",
     tagline = "Commit to both sites. Both get built.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -782,8 +794,8 @@ GUI.CA.9 = Card(
         target_ca in game.dispatch.guild.beat3                       # named CA is submitted this Month
         and target_ca.restriction(district=target_district) == True  # district B satisfies CA's own restriction
     ),
-    cost = resource.faction(Guild).capacity * 2
-         + resource.district(target_district).native * 1,
+    cost = Capacity * 2
+         + district.target_district.native * 1,
 
     success = (
         target_ca.resolve(district=target_ca.target_district, outcome=success_and_successcrit),
@@ -856,11 +868,11 @@ The Guild files the development order before a single wall goes up. The district
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.CA.10 = Card(
-    id      = "GUI.CA.10",  version = "v0.2",
+    id      = "GUI.CA.10",  card_id="GUI.CA.10",  version = "v0.2",
     name    = "Development Order",
     tagline = "File construction rights before ground is broken. The permit is already on file.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -888,8 +900,8 @@ GUI.CA.10 = Card(
     affinity    = None,
     restriction = (faction(Guild).structure_block.count(district(target)) == 0
                and district(target) != ChorusNode),
-    cost = resource.faction(acting).capacity * 4
-         + resource.district(target).native * 1,
+    cost = Capacity * 4
+         + district.target.native * 1,
     boost = None,
 
     success     = arbiter.dispatch(GrantDeed(district=district(target), holder=faction(acting)), faction(acting).case),
@@ -914,7 +926,7 @@ GUI.CA.10 = Card(
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-Guild's prestige structure PA — a simultaneous double build in two named districts. One PA slot for two structures is the core value; the cost premium (4 Capacity vs two sequential P03s at 2 Capacity each using two PA slots across two Months) reflects the single-slot efficiency gain. Guild's faction affinity waives both district native costs. The PS reward (+3) is the highest of any standard or faction-specific single build card, reflecting the scale of the public commitment. Primary counter: Directorate's DIR.PA.1 (Regulatory Override) raises the cost of presence prerequisites; DIR.PA.1 (Issue Directive in prior design, now Regulatory Override) can be deployed against the district beforehand.
+Guild's prestige structure PA — a simultaneous double build in two named districts. One PA slot for two structures is the core value; the cost (2 Capacity + 1 Capital + 1 Mandate) reflects the single-slot efficiency gain of building twice in one PA rather than two sequential single-district builds across two Months. The PS reward (+3) is the highest of any standard or faction-specific single build card, reflecting the scale of the public commitment. Primary counter: Directorate's DIR.PA.1 (Regulatory Override) raises the cost of presence prerequisites; DIR.PA.1 (Issue Directive in prior design, now Regulatory Override) can be deployed against the district beforehand.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -925,10 +937,10 @@ Guild's prestige structure PA — a simultaneous double build in two named distr
 |----------|------|------|--------------|
 | Action fit | ✓ | Simultaneous dual construction is Guild's maximum public commitment | Art 00 §7 |
 | Voice fit | ✓ | Guild on-doctrine; Network (aligned): public commitment scale; Ghost (opposed): acting before the question is answered | Art 00 §7, §9 |
-| Doctrine alignment | ✓ | Guild-exclusive: 4 Capacity cost, district native waived for both districts, portrait +2 (double structure = doctrinal maximum). Directly serves permanence doctrine. No target_faction → doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Guild-exclusive: 2 Capacity + 1 Capital + 1 Mandate cross-resource cost, portrait +2 (double structure = doctrinal maximum). Directly serves permanence doctrine. No target_faction → doctrine_mod not applicable | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Add / StructureBlock — two targets | Art 04b §4 |
-| Balance | ⚠ | Cost 4 Capacity; both district natives waived (Guild). PS +3. Single slot for two structures is efficient — balance review after playtesting | Art 02 §6–§7 |
+| Balance | ⚠ | Cost 2 Capacity + 1 Capital + 1 Mandate (cross-resource, Ceiling-tier). PS +3. Single slot for two structures is efficient — balance review after playtesting | Art 02 §6–§7 |
 | Effect duration | ✓ | StructureBlocks = Permanent board state; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
@@ -941,11 +953,15 @@ Guild's prestige structure PA — a simultaneous double build in two named distr
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity ×2 + Capital ×1 + Mandate ×1), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Capital + 1 Mandate (Ceiling-tier)" checked against the dangling-fragment pattern — **correct**, matches the actual cost exactly. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.1 = Card(
@@ -974,14 +990,14 @@ GUI.PA.1 = Card(
     target_object   = None,
 
     target_taxonomy=None,
-    affinity    = faction(Guild): cost.resource.district(native) = 0,  # waived for both districts
+    affinity    = None,
     restriction = (
         district(target1).faction(Guild).presence > 0 and
         district(target2).faction(Guild).presence > 0 and
         district(target1).faction(Guild).structure == 0 and
         district(target2).faction(Guild).structure == 0
     ),
-    cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).capital * 1 + resource.faction(Guild).mandate * 1,
+    cost = Capacity * 2 + Capital * 1 + Mandate * 1,
     boost = None,
 
     success     = (
@@ -1048,7 +1064,7 @@ Guild's economic relationship PA. Distinct from STD.CA.9 (Fund) in cost currency
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.2 = Card(
@@ -1079,8 +1095,8 @@ GUI.PA.2 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Guild).influence_tier(district.any_adjacent_to(faction(target).presence)) >= Established,
-    cost        = resource.faction(Guild).capacity * 1  # form price → Reservoir
-              + resource.faction(Guild).native * 2,   # sweetener → delivered to target at success
+    cost        = Capacity * 1  # form price → Reservoir
+              + Capacity * 2,   # sweetener → delivered to target at success
     boost       = None,
 
     success = (
@@ -1147,11 +1163,15 @@ GUI.PA.2 = Card(
 | Outcome determinacy | ⚠ | No `game.choose_one()`, but no structured success/fail split exists to check against P27 either — `success` is unstructured prose | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier)" checked — correct, matches actual cost. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.3 = Card(
@@ -1175,14 +1195,14 @@ GUI.PA.3 = Card(
     target_object   = None,  target_taxonomy = None,
 
     affinity = None,  restriction = None,
-    cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).mandate * 1,
+    cost = Capacity * 2 + Mandate * 1,
     boost = None,
 
     success = "Places standing condition on target_district: If a structure block is removed for any reason (unless due to influence token reaching 0), add the structure block back to the district. Remove this standing effect after it triggers once.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
 
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Defense scaling gap addressed. Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier). Mandate provides the legal shield to protect the concrete.",
@@ -1223,11 +1243,15 @@ GUI.PA.3 = Card(
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 — `success` is a quoted string, not executable | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity + Exposure), correctly typed. Design_note's trailing "Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier)" checked — correct, matches actual cost; Exposure use explained coherently ("broadcasting the ribbon-cutting"), same pattern as GHO.PA.4. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.4 = Card(
@@ -1250,14 +1274,14 @@ GUI.PA.4 = Card(
     target_faction  = None,  target_object = None,  target_taxonomy = None,
 
     affinity = None,  restriction = None,
-    cost = resource.faction(Guild).capacity * 1 + resource.faction(Guild).exposure * 1,
+    cost = Capacity * 1 + Exposure * 1,
     boost = None,
 
     success = "faction(Guild).standing += district(target_district).faction(Guild).structure * 1",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
 
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Standing / PS Compounding gap filled. Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier). Broadcasting the massive ribbon-cutting to the city.",
@@ -1298,11 +1322,15 @@ GUI.PA.4 = Card(
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity + Findings + Capital), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Findings + 1 Capital" checked — correct, matches actual cost. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.5 = Card(
@@ -1325,14 +1353,14 @@ GUI.PA.5 = Card(
     target_faction  = None,  target_object = None,  target_taxonomy = None,
 
     affinity = None,  restriction = None,
-    cost = resource.faction(Guild).capacity * 2 + resource.faction(Guild).findings * 1 + resource.faction(Guild).capital * 1,
+    cost = Capacity * 2 + Findings * 1 + Capital * 1,
     boost = None,
 
     success = "For the next Quarter, Guild may place structures in the target district regardless of Ring limitations or connectivity rules.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
 
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Ceiling-tier expansion enabler. Cost reasoning: 2 Capacity + 1 Findings + 1 Capital. Finding the bureaucratic loop-hole and buying the necessary judges to skip the physical expansion limits.",
@@ -1375,11 +1403,15 @@ GUI.PA.5 = Card(
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Capacity × 1), correctly typed — the only cleanly-structured field on this card. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.6 = Card(
@@ -1396,13 +1428,13 @@ GUI.PA.6 = Card(
     persistence_condition = None,  persistence_effect = None,
     target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
     affinity = None,
-    cost    = resource.faction(Guild).capacity * 1,
+    cost    = Capacity * 1,
     boost   = None,
     restriction = "district(target).faction(Guild).structure > 0 AND district(target).faction(target_faction).presence > 0",
     success = "Guild removes 1 of their Structure Blocks in target_district and replaces it with 1 Structure Block of the target_faction. Guild gains 3 of the target_faction's native resource from the supply.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "A powerful, legal asset flip. Leverages existing footprint to extract deep foreign resource pockets.",
@@ -1443,11 +1475,15 @@ GUI.PA.6 = Card(
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.7 = Card(
@@ -1464,13 +1500,13 @@ GUI.PA.7 = Card(
     persistence_condition = None,  persistence_effect = None,
     target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
     affinity = None,
-    cost    = resource.faction(Guild).capacity * 2 + resource.faction(Guild).mandate * 1,
+    cost    = Capacity * 2 + Mandate * 1,
     boost   = None,
     restriction = "district(target).faction(Guild).presence > 0",
     success = "Place 2 Guild Presence Tokens in target_district.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Requires existing foothold. A blunt-force legal maneuver to crack an opponent's Established status.",
@@ -1511,11 +1547,15 @@ GUI.PA.7 = Card(
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Capacity × 2), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.8 = Card(
@@ -1532,12 +1572,12 @@ GUI.PA.8 = Card(
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
     target_district = district.any,  target_faction = None,  target_object = None,  target_taxonomy = None,
     affinity = None,  restriction = None,
-    cost    = resource.faction(Guild).capacity * 2,
+    cost    = Capacity * 2,
     boost   = None,
     success = "Places standing condition on target_district: 'Whenever an opponent places a Structure Block here, Guild gains +1 PS.'",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige.",
@@ -1578,11 +1618,15 @@ Cost: 3 Capacity (show of strength), 1 Capital (broadcast), 1 Exposure (public a
 | Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically once N is locked at Beat 0. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity ×3 + Capital + Exposure + Mandate, ×1 each), correctly typed — ceiling-tier cost matching this card's high-variance design. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.9 = Card(
@@ -1614,10 +1658,10 @@ GUI.PA.9 = Card(
     affinity    = None,
     restriction = count(d in ([district(target)] + district(target).adjacent)
                         where d.faction(Guild).structure > 0) >= 1,
-    cost = resource.faction(Guild).capacity * 3
-         + resource.faction(Guild).capital  * 1
-         + resource.faction(Guild).exposure * 1
-         + resource.faction(Guild).mandate  * 1,
+    cost = Capacity * 3
+         + Capital  * 1
+         + Exposure * 1
+         + Mandate  * 1,
     boost = None,
 
     success = faction(Guild).standing.add(
@@ -1687,11 +1731,15 @@ The Guild moves its crews into a district where another faction already has a fo
 | Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity ×2 + target faction's native ×1), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 GUI.PA.10 = Card(
@@ -1725,8 +1773,8 @@ GUI.PA.10 = Card(
                and faction(target).structure_block.count(district(target)) == 0
                and faction(Guild).presence_token.count(district(target)) > 0
                and faction(target).presence_token.count(district(target)) > 0),
-    cost = resource.faction(Guild).capacity * 2
-         + resource.faction(target).native * 1,
+    cost = Capacity * 2
+         + faction.target.native * 1,
     boost = None,
 
     success = [faction(target).structure_block.add(district(target), 1),
@@ -1789,11 +1837,15 @@ A structure block goes dark and the district looks abandoned for exactly as long
 | Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not ring-scoped (district-scoped instead, via `target_district`). |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.1 = Card(
@@ -1867,11 +1919,15 @@ A rival breaks ground somewhere in the city. The crew on-site is Guild labor, sa
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; fires table-wide by design (ring-constrained variant is GUI.MOD.4). |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.2 = Card(
@@ -1948,11 +2004,15 @@ Directorate breaks ground on an institutional facility. The crews are Guild's, s
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; gated by faction identity, not ring. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.3 = Card(
@@ -2029,11 +2089,15 @@ A rival's crew breaks ground in the Core — denser infrastructure, scarcer labo
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=1` correctly matches trigger scope; distinguishes this as the Ring-locked family member. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.4 = Card(
@@ -2089,7 +2153,7 @@ An opponent moves into ground shadowed by a Guild structure. Nothing overt happe
 |----------|------|------|--------------|
 | Action fit | ✓ | Guild's structural footprint as a passive intelligence/asset network is a coherent, non-obvious doctrine beat. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; this is a passive economic engine, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; this is a passive economic engine, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Guild, real taxonomy (Economy/Add/ModifierCard, 04-n175) — first precedent for this effect shape. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Economy×Add valid; ModifierCard-as-subject is a reasonable extension (an acquired asset), consistent with how GHO.MOD.2's IntelToken-Add is handled. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | `count=1` is likely a null effect — recommend `count=2`. Not fixed here, still open. | Art 02 §6–7; Art 04 §6.5; PM05 04-n175 |
@@ -2110,11 +2174,15 @@ An opponent moves into ground shadowed by a Guild structure. Nothing overt happe
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → 2 separate draws per qualifying placement? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; gated by Guild's structure presence, not ring. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.5 = Card(
@@ -2145,7 +2213,7 @@ GUI.MOD.5 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2170,7 +2238,7 @@ A structure comes down — sabotage, a lost contest, doesn't matter. Guild's cre
 |----------|------|------|--------------|
 | Action fit | ✓ | Structural resilience under attack is a clean, doctrinally central Guild beat — "our people build permanence" made mechanical. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("you can't erase the blueprint") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; this is a defensive/economic reflex, not a doctrinal statement scored per Principle 11. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; this is a defensive/economic reflex, not a doctrinal statement scored per Principle 11. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Guild, real taxonomy (Territory/Add/StructureBlock, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | 2-resource cost for a structure replacement is meaningful but not prohibitive; player-choice targeting (adjacent district, Guild's pick) keeps it flexible without being unconstrained. | Art 02 §6–7; Art 04 §6.5 |
@@ -2191,11 +2259,15 @@ A structure comes down — sabotage, a lost contest, doesn't matter. Guild's cre
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.6 = Card(
@@ -2226,7 +2298,7 @@ GUI.MOD.6 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2251,7 +2323,7 @@ The structure's gone, but the workers who built it haven't left. They flood the 
 |----------|------|------|--------------|
 | Action fit | ✓ | "Denial through presence flooding" is a distinct, coherent response from GUI.MOD.6's "rebuild elsewhere" — different tactical answer to the same threat. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable, same reflexive-defense reasoning as GUI.MOD.6. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable, same reflexive-defense reasoning as GUI.MOD.6. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Guild, real taxonomy (Territory/Add/PresenceToken, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | 1-resource cost for 2 chips in the same district is efficient but bounded by GR 8.1's 6-chip cap (generically enforced); reasonable as a denial tool. | Art 02 §6–7; Art 04 §6.5 |
@@ -2272,11 +2344,15 @@ The structure's gone, but the workers who built it haven't left. They flood the 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.7 = Card(
@@ -2307,7 +2383,7 @@ GUI.MOD.7 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2332,7 +2408,7 @@ A structure comes down somewhere in the city — anyone's structure, any cause. 
 |----------|------|------|--------------|
 | Action fit | ✓ | "Guild profits on both ends of a structure's lifecycle" (paired with GUI.MOD.2) is a clean, cynical-but-coherent doctrine beat. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("we built it... you blew it up, we get paid to clean it up") lands the doctrine precisely. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; routine passive income, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; routine passive income, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Guild, real taxonomy (Economy/Add/NativeResource, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Economy×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Broadest trigger in the Guild set (any structure removal, any faction) — no restriction, no cost. Same "least-gated" balance concern as GUI.MOD.2/4/7. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -2353,11 +2429,15 @@ A structure comes down somewhere in the city — anyone's structure, any cause. 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; fires table-wide by design. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.8 = Card(
@@ -2388,7 +2468,7 @@ GUI.MOD.8 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -2437,11 +2517,15 @@ A Network survey team finally holds enough ground in a Baryo block to call it th
 | Stack behavior (ModReactCard) | ⚠ | Whether multiple copies fire independently is asserted, not derived from a documented rule — same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | citywide, matching MOD.2's baseline. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.9 = Card(
@@ -2540,11 +2624,15 @@ Tension breaks out over a contested block, and every material order in the distr
 | Stack behavior (ModReactCard) | ⚠ | Same open question as originally flagged — still open, not resolved. |  |
 | Ring constraint (ModReactCard) | ✓ | redundant with the presence/adjacency restriction, correctly omitted. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 GUI.MOD.10 = Card(
@@ -2578,7 +2666,7 @@ GUI.MOD.10 = Card(
         faction(Guild).presence_in(target_district)
         or faction(Guild).presence_in(district.adjacent_to(target_district))
     ),
-    cost            = resource.faction(Guild).capacity * 1,
+    cost            = Capacity * 1,
     boost           = None,
 
     success = arbiter.register_battlefield_modifier(
@@ -2639,11 +2727,15 @@ A foreman who's worked this district before shows up, clipboard in hand, and sta
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.11 = Card(
@@ -2700,11 +2792,15 @@ Pallets of material that were supposed to go somewhere else get rerouted here in
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.12 = Card(
@@ -2761,11 +2857,15 @@ A signature is missing from a form nobody remembers filing — work on the named
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.13 = Card(
@@ -2822,11 +2922,15 @@ Guild's engineers sign off on a finding: unsafe as built. It's technically true.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.14 = Card(
@@ -2883,11 +2987,15 @@ An engineering assessment, filed in advance, clears the ground before the first 
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields (schema-locked None). | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass; out of scope for 04-n178. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.15 = Card(
@@ -2944,11 +3052,15 @@ Verified material integrity means nothing on this build is guesswork — the cre
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.16 = Card(
@@ -3005,11 +3117,15 @@ A favorable review clears part of the build in advance — nothing left for an i
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.17 = Card(
@@ -3066,11 +3182,15 @@ Every code requirement cleared ahead of time — there's nothing left for an ins
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.18 = Card(
@@ -3127,11 +3247,15 @@ An experienced crew doesn't just meet the spec — they turn a routine build int
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.19 = Card(
@@ -3188,11 +3312,15 @@ A structure goes up well past the minimum required — the extra margin amplifie
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.20 = Card(
@@ -3249,11 +3377,15 @@ Visible investment in a neighborhood buys goodwill Guild doesn't have to ask for
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.21 = Card(
@@ -3310,11 +3442,15 @@ A completed project gets the full ceremony — cameras, officials, and Guild's n
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.22 = Card(
@@ -3371,11 +3507,15 @@ A minor code observation gets logged against a rival's project — nothing drama
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (Guild-specific low-eligibility playtest question) |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.23 = Card(
@@ -3432,11 +3572,15 @@ A rival's construction gets flagged publicly for cutting corners — consistent 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (Guild-specific low-eligibility playtest question) |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.24 = Card(
@@ -3493,11 +3637,15 @@ Leftover stock from a prior job discounts the next one — nothing wasted.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.25 = Card(
@@ -3554,11 +3702,15 @@ Fabricating the components in-house cuts out the markup a third-party supplier w
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None` — closed convention for this subclass. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 GUI.MOD.26 = Card(

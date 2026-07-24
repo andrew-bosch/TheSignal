@@ -334,6 +334,10 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | `affinity` | ConditionalExpr \| None | Faction-based cost modifier; evaluated before cost |
 | `restriction` | BoolExpr \| None | Card unplayable if False |
 | `cost` | CostExpr | Fungible resources only; PS and presence tiers are not valid cost values |
+
+**CostExpr canonical syntax:** bare `ResourceType * n` (`Capital`/`Mandate`/`Exposure`/`Findings`/`Capacity`) for a fixed type regardless of who plays the card; dot-chain `faction.X.native * n` (X = `acting`/`target`/`target1`/`target2`/`target_faction`/a named Faction) or `district.Y.native * n` (Y = `target`/`target_district`/`target1`/`target2`/`each_target`) when the type resolves relative to whoever's playing/being targeted. On a **FactionSpecific** card, `faction.acting.native` always collapses to the bare `ResourceType`, since `Card().faction` is fixed and the type is already known statically. A **Standard** card can use either form depending on design intent. `faction.target.native`/`district.Y.native` stay relative on any card, any subtype. Plus IntelToken forms: `IntelToken(about: FactionExpr | None, status: TokenStatus | list | None) * n` or `.all_held`.
+
+**Target enumeration** (`target`/`target_district`/`target1`/`target2`/`each_target`) resolves through the physical Target Profile component (Art 02 §8, DB:48) — the sole mechanism a CA/PA declares/enumerates a target by. Bare `target` is safe shorthand only when a card populates exactly one target field; once a card populates more than one (e.g. both `target_district` and `target_faction`), expression bodies must use the qualified name to disambiguate. Multi-target cards (`target1`/`target2`/`each_target`) record the extra target(s) on Target Profile's free-form "declared parameters" line — no dedicated second printed field per type. This entire mechanism is CA/PA-only — ModReactCards never use Target Profile; their targeting context comes from the firing TriggerExpr's own `faction=`/`district=`/`ring=` parameters instead.
 | `boost` | BoostExpr \| None | Variable multiplier — player submits additional resources beyond base cost; ARBITER detects at Beat 0; success fires (1 + n) times. None = no boost. |
 
 **Effects**
@@ -346,13 +350,15 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 `on_discard: MutationExpr | None` — None on every card by default. When set, the card is immune to all discard events (normal resolution AND targeted hand-discard effects) and this fires instead, self-policed by the acting faction, not ARBITER-tracked. Currently used by exactly one card: STD.PA.9 Town Hall (the Floor Act, PM02 D04-13/L216).
 
 **Portrait**
-`portrait: dict[Faction, PortraitEntry]` — valid params: `flat` · `submitter` · `where` · `modifier` · `mod_where` — `failcrit=` is NOT a valid PortraitEntry parameter
+`portrait: dict[Faction, PortraitEntry] | None` — `None` = no portrait effect — valid params: `flat` · `submitter` · `where` · `modifier` · `mod_where` — `failcrit=` is NOT a valid PortraitEntry parameter
 
 **Public Standing**
 `ps_framing: PSFraming | None` — required field; `None` = card produces no PS shift. Do not omit.
 
 **Narrative**
 `narrative` · `perspectives` · `design_note` · `arbiter_note`
+
+**Review-state tracking (per-card Status table + `card_status` DB, kept in sync):** three independent flags — Design Pass (checklist content actually reviewed, not just scaffolded), Issues Resolved (Outstanding Issues cleared), Signed off (Andy's explicit approval). A card can have any combination — e.g. Design Pass ✓ with Issues Resolved blank means reviewed but with known open questions. None of the three imply Art 04 itself has signed off; that is a separate, whole-artifact gate (see `Session/SESSION_BRIEF.md` Pending Sign-offs). All three currently read blank/0 corpus-wide pending the Schema Cleanup Program's completion and a full design-review re-do.
 
 **Authoring rule (S146):** `design_note`/`arbiter_note`, checklist Notes, section intros, and code comments never carry session tags, attribution ("Andy confirmed"), before/after narration ("was X, now Y"), or PM02 line cross-refs — that provenance goes to PM02/PM05 only. Write these fields as if authored fresh against the current design, not as a changelog. Bare `PM02 Lxxx`/`04-n###` citations are the one exception — they function as reference/proof for the review comment, not embedded history. (Full corpus swept S146 after this pattern forced an 8-agent overnight cleanup — PM05 04-n165/04-n180/04-n185, PM02 L285–L287.)
 

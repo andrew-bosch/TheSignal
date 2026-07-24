@@ -528,7 +528,7 @@ Special cases:
 `varchar(15)` constraint: all IDs must fit within 15 characters. `ARB.BCEV.99` = 11 chars (safe). Verify any new ID type fits before adding.
 
 
-### card_status (95 cards as of S117)
+### card_status (386 rows as of S148 — 384 Art 04 cards + 2 DA-xx debrief-action rows; 95-row/S117 figures below are historical and not re-verified against current corpus)
 ```sql
 CREATE TABLE `card_status` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -557,7 +557,7 @@ CREATE TABLE `card_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
-**card_status — 4-state review progression (S136):** `structure_pass` (has the 4 structural blocks — set by `tools/card_scaffolder.py` or by writing a card in full directly), `design_pass` (checklist content actually reviewed, not just scaffolded), `issues_resolved`, `signed_off` (Andy's explicit approval — session ref, e.g. `S49`). A card can be `structure_pass=1, design_pass=0` — scaffolded but unreviewed; that state has no MD equivalent besides the checklist rows still reading `⚠` throughout. Keep this column in sync whenever `tools/card_scaffolder.py` runs, same as the existing sync discipline for `design_pass`/`signed_off`.
+**card_status — 4-state review progression:** `structure_pass` (has the 4 structural blocks — set by `tools/card_scaffolder.py` or by writing a card in full directly), `design_pass` (checklist content actually reviewed, not just scaffolded), `issues_resolved`, `signed_off` (Andy's explicit approval). A card can be `structure_pass=1, design_pass=0` — scaffolded but unreviewed; that state has no MD equivalent besides the checklist rows still reading `⚠` throughout. Keep this column in sync whenever `tools/card_scaffolder.py` runs, same as the existing sync discipline for `design_pass`/`signed_off`. **`design_pass`/`issues_resolved`/`signed_off` currently read 0/blank corpus-wide** (both here and in each card's `.md` Status table) pending the Schema Cleanup Program's completion and a full design-review re-do — `structure_pass` is unaffected by this and still reflects real structural completeness.
 
 **card_status — taxonomy field notes (S117):**
 - `layer` / `function` / `subject` use PascalCase Art 04 names (not DB component table names). Join to `component` via `card_subject_map`.

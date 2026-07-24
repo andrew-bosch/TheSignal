@@ -471,7 +471,7 @@ class Card:
     target_taxonomy:  TaxonomyExpr | None   # action taxonomy category this card targets; None = no taxonomy target
 
     # ── Logic ─────────────────────────────────────── predicates + expressions
-    affinity:     ConditionalExpr | None    # evaluated before cost
+    affinity:     ConditionalExpr | None    # evaluated before cost; None on every FactionSpecific card
     restriction:  BoolExpr       | None    # card unplayable if False
     cost:         CostExpr
     boost:        BoostExpr | None          # optional scaling — condition: per-unit CostExpr; may differ from base cost type
@@ -486,7 +486,7 @@ class Card:
     on_discard:   MutationExpr | None       # None = normal discard applies; else fires instead of discard — including targeted hand-discard effects — card returns to hand (P29)
 
     # ── Portrait ──────────────────────────────────── dimension table  [VS-06]
-    portrait:     dict[Faction, PortraitEntry]
+    portrait:     dict[Faction, PortraitEntry] | None   # None = no portrait effect
 
     # ── Public Standing ───────────────────────────── structured PS model
     ps_framing:   PSFraming | None     # None = no PS shift from this card
@@ -591,9 +591,9 @@ class ModReactCard(Card):
 | target_faction | Targeting | FactionExpr | Faction this card targets; None = no faction target | Face |
 | target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
 | target_taxonomy | Targeting | TaxonomyExpr | Action taxonomy category this card targets (Layer/Function or Layer/Function/Subject); used when the effect targets a class of actions rather than a specific object; declared at Phase B alongside target_faction; None = no taxonomy target | Face |
-| affinity | Logic | ConditionalExpr | Faction-based cost modifier — evaluated before cost expression | Face |
+| affinity | Logic | ConditionalExpr | Faction-based cost/threshold modifier, evaluated before cost — differentiates how the *same* card plays out depending on which faction submits it. Meaningful only on a Standard card (`subtype = Standard`, `faction = All`), where more than one faction genuinely could submit it. `None` on every FactionSpecific card — the card is already locked to one faction, so there's no other faction's terms to differentiate from. | Face |
 | restriction | Logic | BoolExpr | Submission preconditions — card unplayable if evaluates False | Face |
-| cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid cost resources are those that can be traded or transferred (Mandate, Capital, Influence, district native resource), plus Intel Token as a confirmed discrete-object cost category (§6.3, schema_cleanup_log #10). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
+| cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid resource types are native, capital, mandate, exposure, findings, capacity (§6.3), plus Intel Token as a confirmed discrete-object cost category (§6.3). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
 | boost | Logic | BoostExpr | Optional variable-multiplier mechanic — player submits additional resources beyond base cost; no declaration required. ARBITER detects at Beat 0: n = (total submitted − base cost) / boost unit cost; places n BoostMarker tokens (BM-xx) on the card's grid slot alongside the card. At Beat 2/3 resolution: effect fires (1 + BM-xx count) times; BM-xx returned to ARBITER supply at beat cleanup. For threshold-scaling cards, threshold is locked at Beat 0 using total count (1 + BM-xx). Boost unit cost may differ from base cost resource type. None = no boost mechanic. | Face |
 | success | Effects | MutationExpr | Primary effect on resolution success | Face |
 | successcrit | Effects | MutationExpr | Additive delta on critical success (roll ≤ 5, i.e. 01–05); None when Automatic | Face |
@@ -602,7 +602,7 @@ class ModReactCard(Card):
 | on_accept | Effects | MutationExpr | ElectPlayer outcome type only — effect applied when target accepts the offer at resolution; None when outcome_type ≠ ElectPlayer | Face |
 | on_decline | Effects | MutationExpr | ElectPlayer outcome type only — effect applied when target declines the offer at resolution; None when outcome_type ≠ ElectPlayer | Face |
 | on_discard | Effects | MutationExpr | None = normal discard applies. When set, fires instead of any discard event — including targeted hand-discard effects (e.g. `arbiter.discard_hand`) — in place of removing the card. Self-policed by the acting faction as part of their own end-of-Beat cleanup; not an ARBITER-tracked step (P29, Pillar 4.7b, GR 6.1a). | Face |
-| portrait | Portrait | dict[Faction, PortraitEntry] | Per-faction portrait scoring — evaluated by ARBITER; analyzed in DB | TBD |
+| portrait | Portrait | dict[Faction, PortraitEntry] \| None | Per-faction portrait scoring — evaluated by ARBITER; analyzed in DB; None = no portrait effect | TBD |
 | ps_framing | Public Standing | PSFraming \| None | Structured public-reception PS model. `type`: probabilistic (D100 roll at trigger) or fixed (unconditional). `trigger`: resolution (Beat 4 PA), discovery (covert failcrit only), or placement (on card placement). `threshold`: D100 roll target; probabilistic only. `on_success`/`on_fail`: lists of PSShift (faction + delta). Probabilistic PA default on_fail: acting −1. None = card produces no PS shift. | Face |
 | narrative | Narrative | str | In-world narrative grounding — one sentence; neutral observer (standard) or owning faction voice (faction-specific) | TBD |
 | perspectives | Narrative | dict[Faction, str] | Per-faction in-world perspective — one sentence per faction | TBD |
@@ -772,26 +772,66 @@ MutationExpr:        confirmed helper symbols only (full grammar not yet enumera
 #
 # Confirmed via: STD.MOD.98–133 (Ring 1/2/3 ModReactCard stub passes, S135–S138). Reconciles 04-n171.
 
-CostExpr:            IntelToken(about: FactionExpr | None, status: TokenStatus | list[TokenStatus] | None) * n
+CostExpr:            ResourceType * n
+                     | ResourceType * n [+ ResourceType * n ...]
+                     | faction.X.native * n
+                     | district.Y.native * n
+                     | IntelToken(about: FactionExpr | None, status: TokenStatus | list[TokenStatus] | None) * n
                      | IntelToken(about: FactionExpr | None, status: TokenStatus | list[TokenStatus] | None).all_held
-# Native-resource cost forms (resource.faction(X).type, bare Type(n), etc.) not yet formally enumerated
-# here — full CostExpr grammar remains open (schema_cleanup_log #22). This entry formalizes Intel Token
-# specifically as a second confirmed cost category (schema_cleanup_log #10): a discrete,
-# individually-tracked object, not a fungible native/Capital/Mandate pool, but confirmed valid as `cost`
-# and `boost` content — 17 live instances across all 5 factions.
+#
+# Cost is paid from the acting (submitting) faction's own resource pool.
+#
+# ResourceType: capital | mandate | exposure | findings | capacity — names one specific resource type
+#   outright, used bare whenever the cost is the same resource type no matter who plays the card or what
+#   it targets (e.g. Capital * 3 + Findings * 1 + Mandate * 1 — three fixed types in one cost).
+#
+# faction.X.native / district.Y.native — resolves at play time to whichever resource type X (a faction)
+#   or Y (a district) itself generates. faction.X.native depends on which faction X is (each faction has
+#   its own native resource, Art 02); district.Y.native depends on which district Y is (each of the 21
+#   districts has its own Resource Type — Mandate, Capital, Findings, Capacity, or Exposure, Art 01 §6.4 —
+#   the same resource it generates for its occupying faction every Upkeep). native isn't a resource
+#   category of its own; it's "whatever this particular X/Y generates," not a sixth type alongside the
+#   five ResourceType names. A single X (or Y) always resolves to one type, but a cost can combine several
+#   different native terms to build a cross-resource cost whose specific types track the scenario rather
+#   than staying fixed — e.g. faction.acting.native * 1 + faction.target.native * 1 +
+#   district.target.native * 1 prices out to different concrete resources depending on which faction is
+#   acting, which is targeted, and which district is targeted, without the card needing to name any of
+#   them outright.
+#
+# X: acting | target | target1 | target2 | target_faction | a named Faction
+# Y: target | target_district | target1 | target2 | each_target
+#
+# target/target_district/target_faction/target1/target2/each_target all resolve through the physical
+# Target Profile component (Art 02 §8, DB:48) — the sole mechanism by which a CA/PA declares/enumerates
+# its target(s). Bare `target` is safe shorthand only when a card populates exactly one target field
+# (target_district XOR target_faction XOR target_object); once a card populates more than one, expression
+# bodies must use the qualified field name (target_district, target_faction, ...) to disambiguate — the
+# wrapper (district(...) vs faction(...)) narrows by type, but not by which field, once two coexist.
+# target1/target2/each_target (a card targeting more than one district or faction of the same type) are
+# recorded on the Target Profile's free-form declared-parameters line — there's no second printed field
+# per type. This entire mechanism is CA/PA-only. ModReactCards never reference target/target_district/
+# target_faction — they fire off board events, not a declared target, so any targeting context they need
+# comes from the firing TriggerExpr's own faction=/district=/ring= parameters instead.
+#
+# faction.acting.native simplifies to the bare ResourceType on a FactionSpecific card — Card().faction is
+# fixed, so the resolved type is already known and doesn't need a relative lookup (e.g. a Network card
+# writes Exposure, not faction.acting.native). A Standard card (faction = All) can use either form,
+# depending on design intent: the bare ResourceType if the cost should be one specific resource no matter
+# who plays it, or faction.acting.native if the cost should track whichever resource is native to whoever
+# plays it. faction.target.native / district.Y.native stay relative on any card, any subtype — the
+# resolved type genuinely depends on runtime targeting, which nothing on the card fixes in advance.
+#
+# Terms combine additively (+); * n sets the per-term unit count.
+#
+# IntelToken(...) — a discrete, individually-tracked object, not a fungible resource pool, but valid
+# `cost`/`boost` content.
 #   about:    which faction the spent token(s) concern/track (the token's subject, not its holder); None =
 #             any faction. A faction can only ever spend tokens it currently holds — holder is always
 #             implicit (the faction paying the cost), never a separate parameter.
 #   status:   TokenStatus filter — single value or list; None = any status.
 #   * n:      spend exactly n matching tokens.
 #   .all_held: spend every currently-held token matching the filter (variable count, not a fixed n).
-# TokenStatus: Fresh | Stale | Expired   (existing Intel Token lifecycle states, Art 02 — not new)
-#
-# Canonical form supersedes prior ad hoc spellings found across the corpus: intel_token(faction=X) /
-# (target=X) / (keyed_to=X) → IntelToken(about=X); age__in=[...] → status=[...]; bare intel_token /
-# IntelToken(any) / intel_token.held → IntelToken().
-# Pre-schema fossil cards (GHO.MOD.9/10, per schema_cleanup_log #20 scope note) excluded — not yet
-# reconciled to current schema at all, out of scope until their own re-authoring pass.
+# TokenStatus: Fresh | Stale | Expired
 
 ModActionExpr:       threshold_delta(n: int)
                      | success_multiplier(n: int)

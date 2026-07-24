@@ -59,11 +59,11 @@ Network's pre-execution discovery card — spends 1 Exposure + 1 Findings to exp
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.CA.1 = Card(
-    id      = "NET.CA.1",  version="v1.1",
+    id      = "NET.CA.1",  card_id="NET.CA.1",  version="v1.1",
     name    = "Leak",
     tagline = "Expose and cancel a rival's most costly unresolved operation before it fires.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -77,7 +77,7 @@ NET.CA.1 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = faction(target).op(beat=3, unresolved=True).count >= 1,
-    cost        = resource.faction(acting).exposure * 1 + resource.faction(acting).findings * 1,
+    cost        = Exposure * 1 + Findings * 1,
     success     = [
         game.announce(faction(target).op(beat=3, unresolved=True, selection=highest_cost), discovery=True, public=True),
         game.cancel(faction(target).op(beat=3, unresolved=True, selection=highest_cost)),
@@ -116,7 +116,7 @@ Network's Exposure generation card — converts the act of revealing into additi
 | Effect duration | ✓ | Immediate: Exposure delivered at Beat 3 cleanup | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | Conditional success — `reveal_resolved_this_round >= 1` is inline trigger; trigger vs. success field distinction outstanding (Outstanding Issue) | — |
-| Portrait validity | ✓ | portrait = {} — Disclosure Loop is internal resource infrastructure, not a visible doctrinal act; absence confirmed intentional (Outstanding Issue) | Art 04 §6.2 |
+| Portrait validity | ✓ | portrait = None — Disclosure Loop is internal resource infrastructure, not a visible doctrinal act; absence confirmed intentional (Outstanding Issue) | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — self-targeting; no district context | Art 01 §6–§7 |
 | Supported by components | ✓ | Exposure as subject; Findings cost; no new components | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 3 cleanup; ARBITER tracks Reveal card resolutions this round; conditional resolution outstanding (Outstanding Issue) | Art 03 §9, §11 |
@@ -128,17 +128,17 @@ Network's Exposure generation card — converts the act of revealing into additi
 #### Outstanding Issues
 
 - **Conditional success modelling:** `success = exposure += 1 if reveal_resolved_this_round >= 1 else None` — confirm whether the "else None" path consumes the Finding cost (card slot and Findings are spent, no outcome) or refunds it. Current design note says "the slot cost was the investment" — confirm.
-- **portrait = {} justification:** Empty portrait for a Network FactionSpecific card is uncommon. Confirm intentional — Disclosure Loop is an internal resource mechanism, not a visible doctrinal act.
+- **portrait = None justification:** Empty portrait for a Network FactionSpecific card is uncommon. Confirm intentional — Disclosure Loop is an internal resource mechanism, not a visible doctrinal act.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.CA.2 = Card(
-    id      = "NET.CA.2",  version="v1.0",
+    id      = "NET.CA.2",  card_id="NET.CA.2",  version="v1.0",
     name    = "Disclosure Loop",
     tagline = "Transparency is self-sustaining. Revealing information generates the capacity to reveal more.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -152,10 +152,10 @@ NET.CA.2 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction=None,
-    cost        = resource.faction(acting).findings * 1,
+    cost        = Findings * 1,
     success     = resource.faction(acting).exposure += 1 if faction(acting).reveal_resolved_this_round >= 1 else None,
     successcrit=None, fail=None, failcrit=None,
-    portrait    = {},
+    portrait    = None,
     narrative   = "The act of disclosure is not only a tactic. It is a resource. The Network learned this before anyone else at this table.",
     perspectives = {Network: "We revealed something. Now we can reveal something more. The loop is already running."},
     design_note  = "Replaces NET.CA.2 Source Protection (retired S51). Source Protection was doctrinally misaligned — protecting attribution is Ghost's register, not Network's. Pairs with NET.CA.1 Leak and NET.CA.3 Breaking News.",
@@ -214,11 +214,11 @@ A Network operative submits intelligence on a target faction's committed operati
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 NET.CA.3 = Card(
-    id      = "NET.CA.3", version="v2.0",
+    id      = "NET.CA.3",  card_id="NET.CA.3", version="v2.0",
     name    = "Breaking News",
     tagline = "Force ARBITER to publicly reveal the target faction's first committed operation before Beat 3 resolves.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
@@ -234,7 +234,7 @@ NET.CA.3 = Card(
     target_taxonomy=None,
     affinity        = None,
     restriction     = "target_faction != acting_faction",
-    cost        = resource.faction(acting).exposure * 2,
+    cost        = Exposure * 2,
     success     = [
         game.announce(faction(target).beat3_queue[0], fields=[name, type, targets], destination=public),
         game.place(VM_xx, on=faction(target).beat3_queue[0]),
@@ -298,11 +298,11 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.CA.4 = Card(
-    id      = "NET.CA.4",  version="v1.1",
+    id      = "NET.CA.4",  card_id="NET.CA.4",  version="v1.1",
     name    = "Network Cascade",
     tagline = "Extend Broadcast Interference to an adjacent district.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -316,7 +316,7 @@ NET.CA.4 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).submitted(STD.CA.6, round=game.round) == True,
-    cost        = resource.faction(acting).exposure * 1 + resource.faction(acting).findings * 1,
+    cost        = Exposure * 1 + Findings * 1,
     success     = district(target).political_act_cost += 2,
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
@@ -370,11 +370,11 @@ Network's Baryo-targeted presence card — specialized version of STD.CA.3 Campa
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.CA.5 = Card(
-    id      = "NET.CA.5",  version="v1.0",
+    id      = "NET.CA.5",  card_id="NET.CA.5",  version="v1.0",
     name    = "Community Anchor",
     tagline = "Establish presence in a Baryo district through existing relationships.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -388,7 +388,7 @@ NET.CA.5 = Card(
     target_taxonomy=None,
     affinity=None,
     restriction = district(target).faction(acting).presence == 0 AND district(target).zone == Baryo,
-    cost        = resource.faction(acting).exposure * 1,
+    cost        = Exposure * 1,
     success     = district(target).faction(acting).presence += 1,
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
@@ -424,7 +424,7 @@ Network's credibility-to-Intel conversion card. Reflects the Network doctrine th
 | Effect duration | ✓ | Immediate: PS reduced and token delivered at Beat 3 resolution | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
-| Portrait validity | ✓ | portrait = {} — PS loss is a success effect, not a portrait track shift; absence confirmed intentional | Art 04 §6.2 |
+| Portrait validity | ✓ | portrait = None — PS loss is a success effect, not a portrait track shift; absence confirmed intentional | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — no district context | Art 01 §6–§7 |
 | Supported by components | ✓ | target_faction required; IntelToken keyed to target_faction at Dispatch | Art 02 §6–§8; Art 02 §11 |
 | Supported by game procedure | ✓ | Beat 3 Automatic; PS loss and IntelToken delivery handled by Art 03 apply effect | Art 03 §9, §11 |
@@ -441,11 +441,11 @@ Network's credibility-to-Intel conversion card. Reflects the Network doctrine th
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 NET.CA.6 = Card(
-    id      = "NET.CA.6",  version="v1.1",
+    id      = "NET.CA.6",  card_id="NET.CA.6",  version="v1.1",
     name    = "Sacrifice",
     tagline = "Spend two steps of credibility. Receive one piece of intelligence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
@@ -463,7 +463,7 @@ NET.CA.6 = Card(
     cost        = None,
     success     = faction(acting).standing -= 2, IntelToken(target_faction) += 1,
     successcrit=None, fail=None, failcrit=None,
-    portrait    = {},
+    portrait    = None,
     narrative   = "The Network knows: sometimes you spend credibility like currency. This is one of those times.",
     perspectives = {Network: "What we have built is not a goal. It is a tool. And sometimes a tool must be spent."},
     design_note  = "PS −2 is a success effect, not a cost — PS is non-fungible and cannot appear in the cost field (Art 04 §6.2). target_faction required: tokens must be keyed at Dispatch. Single use per play; 2:1 ratio prevents cheap IntelToken arbitrage.",
@@ -520,11 +520,11 @@ The message doesn't travel because Network announced it. It travels because Netw
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.CA.7 = Card(
-    id      = "NET.CA.7", version="v1.0",
+    id      = "NET.CA.7",  card_id="NET.CA.7", version="v1.0",
     name    = "Ground Signal",
     tagline = "Put the message on the street. Presence here is readable. Let it be read.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
@@ -538,7 +538,7 @@ NET.CA.7 = Card(
     target_faction=None, target_object=None, target_taxonomy=None,
     affinity=None,
     restriction = faction(acting).influence_level(district(target)) <= InfluenceLevel.Established,
-    cost    = resource.faction(acting).exposure * 1,
+    cost    = Exposure * 1,
     success = faction(acting).standing.add(1),
     successcrit = (faction(acting).presence_chips(district(target)).add(1),
                    faction(acting).standing.add(1)),
@@ -585,6 +585,10 @@ NET.CA.7 = Card(
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
@@ -611,7 +615,7 @@ NET.CA.8 = Card(
     target_object   = DeploymentMarker,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Network).exposure * 1 + resource.faction(Network).findings * 1,
+    cost            = Exposure * 1 + Findings * 1,
 
     success = [
         arbiter.move(DeploymentMarker(faction=target_faction, district=target_profile.target_district),
@@ -670,11 +674,15 @@ Network's signature information-attack PA — a coordinated release of all subst
 | Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Exposure ×2 + all held Intel Tokens naming target), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.PA.1 = Card(
@@ -705,7 +713,7 @@ NET.PA.1 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Network).holds_intel_token(faction=target, count=1),
-    cost        = resource.faction(Network).exposure * 2 + IntelToken(about=faction(target)).all_held,
+    cost        = Exposure * 2 + IntelToken(about=faction(target)).all_held,
     boost       = None,
 
     success = (
@@ -766,11 +774,15 @@ Network's broadcast-derived presence PA — scaling territorial expansion built 
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource, scaling with district count (Exposure ×2+ + district native ×1/district), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 NET.PA.2 = Card(
@@ -801,7 +813,7 @@ NET.PA.2 = Card(
     target_taxonomy=None,
     affinity    = None,
     restriction = faction(Network).influence_tier(district.each_target) >= Established,
-    cost        = resource.faction(Network).exposure * 2 + resource.district(each_target).native * 1,
+    cost        = Exposure * 2 + district.each_target.native * 1,
     # cost = 2 Exposure + 1 district native per targeted district
     boost       = None,
 
@@ -876,7 +888,7 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ | |
+| Status | | | |
 
 ```python
 NET.PA.3 = Card(
@@ -898,7 +910,7 @@ NET.PA.3 = Card(
     target_taxonomy=None,
     affinity        = None,
     restriction     = "target_faction != Network",
-    cost        = resource.faction(acting).exposure * 2,
+    cost        = Exposure * 2,
     boost       = None,
     success     = game.activate(LiveCoverage_obligation, target=faction(target)),
     successcrit = (
@@ -967,11 +979,15 @@ A rival's public standing ticks upward — a win, a moment of visibility. Networ
 - **Unblockability formalization:** Art 03 governing rule still doesn't exist — gates Issues Resolved.
 - **Invalid expression syntax:** `success` field needs a real MutationExpr, not `-=`.
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.2 = Card(
@@ -985,7 +1001,7 @@ NET.MOD.2 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     beat    = None,  resolution = Automatic,  resolution_type = Transactional,
     target_district = None,  target_faction = trigger.faction,  target_object = None,  target_taxonomy = None,  # scaffolded, not addressed
-    cost    = resource.faction(Network).exposure * 1 + resource.faction(Network).capital * 1,
+    cost    = Exposure * 1 + Capital * 1,
     boost   = None,  # scaffolded, not addressed
     success = faction(trigger.faction).standing -= 1,
     successcrit = None,  fail = None,  failcrit = None,  on_accept = None,  on_decline = None,  # scaffolded, not addressed
@@ -1027,16 +1043,20 @@ NET.MOD.2 = Card(
 | Supported by zones | ⚠ | No `target_district`/`target_faction` fields declared — referenced only inside the `success` string | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — existing component | Art 02 §6 |
 | Supported by game procedure | ✓ | Straightforward remove-and-shift at Beat 4 — no new procedure needed | Art 03 §9.4 |
-| Data schema validation | ⚠ | `success` is a bare prose string, not a structured MutationExpr. `cost` uses `district_native(target_district)` — a new bare-function-call cost-notation form, distinct from the corpus's usual `resource.district(native)` shape, though semantically equivalent. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, most targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | `success` is a bare prose string, not a structured MutationExpr — separate, unresolved gap. `cost`'s `district_native(target_district)` — a third, unreconciled bare-function-call cost-notation form — normalized to the canonical `district.target_district.native` (schema_cleanup_log #22, closed S148). Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, most targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Cross-resource (Exposure + district native), correctly typed (allowing for the nonstandard notation noted above). | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Cross-resource (Exposure + district native), correctly typed. Cost notation normalized from bare `district_native(target_district)` to `district.target_district.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.PA.4 = Card(
@@ -1053,12 +1073,12 @@ NET.PA.4 = Card(
     persistence_condition = None,  persistence_effect = None,
     target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
     affinity = None,  restriction = None,
-    cost    = resource.faction(Network).exposure * 1 + district_native(target_district) * 1,
+    cost    = Exposure * 1 + district.target_district.native * 1,
     boost   = None,
     success = "Remove 1 target_faction's Presence Token from target_district. Target faction loses 1 PS. Network gains +1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "A loud territorial disruption. Burns Exposure and local resources to physically remove an opponent's token while shifting the PR balance.",
@@ -1093,17 +1113,21 @@ NET.PA.4 = Card(
 | Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
 | Supported by zones | ⚠ | No `target_faction` field declared — referenced only inside `cost`/`success` strings | Art 01 §6–§7 |
 | Supported by components | ✓ | Public Standing track, native resources — existing components | Art 02 §7–§8 |
-| Supported by game procedure | ⚠ | **Cost draws from the *target* faction's native resource pool** (`resource.faction(target_faction).native * 1`), not the acting faction's own — a genuinely new schema shape; deducting from a target's resource as part of `cost` (rather than as a `success` effect) blurs the cost/effect distinction. | Art 03 §9.4; Art 04 §6.1 |
+| Supported by game procedure | ✓ | Cost is paid entirely from Network's own resource pool (confirmed CostExpr rule) — the `faction.target.native` term only resolves which resource type is owed (the target's native type), not who pays it. Same "prior economic embedding" shape as GHO.CA.4: Network must already hold a unit of the target's native resource for this cost to be payable. | Art 04 §6.1–§6.3 |
 | Data schema validation | ⚠ | `success` is a bare prose string, not a structured MutationExpr. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Cross-resource (Exposure, acting faction's own, + native, drawn from the *target*) — the target-resource term is a new schema shape (see Supported by game procedure), not simply a typing question. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Cross-resource (2 Exposure — Network's own native — + 1 unit of the target's native type), both paid from Network's own pool. | Art 00a §9.2 |
+
+#### Outstanding Issues
+
+None
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.PA.5 = Card(
@@ -1120,15 +1144,15 @@ NET.PA.5 = Card(
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
     affinity = None,  restriction = None,
-    cost    = resource.faction(Network).exposure * 2 + resource.faction(target_faction).native * 1,
+    cost    = Exposure * 2 + faction.target.native * 1,
     boost   = None,
     success = "Target faction loses 3 Public Standing. Network gains +1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
-    design_note = "Pure PR assassination. Network burns the opponent's own native resource to fuel the smear campaign.",
+    design_note = "Pure PR assassination. Cost includes 1 unit of the target faction's native resource — Network must already hold it, prior economic embedding in the target's economy funding the smear campaign.",
     arbiter_note = None,
 )
 ```
@@ -1166,11 +1190,15 @@ NET.PA.5 = Card(
 | Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure × 1), correctly typed. | Art 00a §9.2 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | | |
+| Status | | | |
 
 ```python
 NET.PA.6 = Card(
@@ -1187,12 +1215,12 @@ NET.PA.6 = Card(
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
     affinity = None,  restriction = None,
-    cost    = resource.faction(Network).exposure * 1,
+    cost    = Exposure * 1,
     boost   = None,
     success = "Network names a resource type. Network gains 1 of that resource type for every 4 points of positive Public Standing they currently have.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = {},  # scaffolded, not addressed
+    portrait = None,  # scaffolded, not addressed
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Network's economy is driven by their audience. This rewards them for maintaining a high, positive PS track by converting it into any resource they need.",
@@ -1240,11 +1268,15 @@ The district was already moving. Network didn't start the change — it arrived 
 **Outstanding Issues:**
 - Board state change definition (influence chip vs. structure block vs. PS/resource/Intel changes) — not yet resolved, out of scope here.
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.1 = Card(
@@ -1263,7 +1295,7 @@ NET.MOD.1 = Card(
     persistence=Immediate,  persistence_condition=None,  persistence_effect=None,
     target_faction=None,  target_object=None,  target_taxonomy=None,
     affinity=None,  restriction=None,
-    cost    = resource.faction(acting).exposure * 1,
+    cost    = Exposure * 1,
     success = faction(acting).presence_chips(district(target)).add(1),
     successcrit = faction(acting).standing.add(1),
     fail    = None,
@@ -1293,7 +1325,7 @@ Network's standing takes a public hit. Before the damage settles, the redundant 
 |----------|------|------|--------------|
 | Action fit | ✓ | Self-directed PS recovery enabling a designed sacrifice-and-recover arc (pairs with NET.CA.2/NET.CA.6) is a coherent, doctrinally central Network beat. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; this is a mechanical recovery valve, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; this is a mechanical recovery valve, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Standing/Shift/StandingMarker, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Standing×Shift valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Cannot assess: the recovery magnitude is a literal `TBD`, and `cost` is an unresolved TBD comment. Real design work needed before this row can close. | Art 02 §6–7; Art 04 §6.5 |
@@ -1314,11 +1346,15 @@ Network's standing takes a public hit. Before the damage settles, the redundant 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.3 = Card(
@@ -1349,7 +1385,7 @@ NET.MOD.3 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1374,7 +1410,7 @@ The Situation Report lands — public, unavoidable, read by everyone at the tabl
 |----------|------|------|--------------|
 | Action fit | ✓ | "Every public information event is a Network signal event" is a clean, doctrinally central beat. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; routine passive expansion, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; routine passive expansion, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Territory/Add/PresenceToken, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Fires 1–2 times/Quarter (Upkeep SitRep + possible Beat 5) per design_note — bounded, moderate; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -1395,11 +1431,15 @@ The Situation Report lands — public, unavoidable, read by everyone at the tabl
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; unconstrained (ring-constrained variant is NET.MOD.5). |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.4 = Card(
@@ -1430,7 +1470,7 @@ NET.MOD.4 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1455,7 +1495,7 @@ The same public broadcast reaches everywhere, but Network's Mid-ring footholds �
 |----------|------|------|--------------|
 | Action fit | ✓ | Consolidating reach in Mid-ring infrastructure districts is a coherent, distinct escalation from NET.MOD.4's generic scope. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — same reasoning as NET.MOD.4. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — same reasoning as NET.MOD.4. | Art 04 §6.5 |
 | Card type fit | ✓ | Same shape as NET.MOD.4. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Same verified Territory×Add cell. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | Same bounded frequency as NET.MOD.4, narrower scope (Ring 2 only) — reasonable tiering. | Art 02 §6–7; Art 04 §6.5 |
@@ -1476,11 +1516,15 @@ The same public broadcast reaches everywhere, but Network's Mid-ring footholds �
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=2` correctly matches the restriction's scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.5 = Card(
@@ -1511,7 +1555,7 @@ NET.MOD.5 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1536,7 +1580,7 @@ Someone moves a piece in the Baryo — anyone, doesn't matter who. Network's com
 |----------|------|------|--------------|
 | Action fit | ✓ | Opportunistic community-network expansion in Baryo fits Network's "territorial signature" per the design_note. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; routine opportunistic expansion. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; routine opportunistic expansion. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Territory/Add/PresenceToken, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Cannot fully assess: the target scope itself is internally inconsistent (adjacency-declared vs. any-Ring-3-district-actual) — the effective power of this card depends on which scope is correct. | Art 02 §6–7; Art 04 §6.5 |
@@ -1557,11 +1601,15 @@ Someone moves a piece in the Baryo — anyone, doesn't matter who. Network's com
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=3` matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.6 = Card(
@@ -1592,7 +1640,7 @@ NET.MOD.6 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1617,7 +1665,7 @@ A public act resolves — anyone's, doesn't matter whose. The city gets louder, 
 |----------|------|------|--------------|
 | Action fit | ✓ | Turning public state changes into hand advantage, self-preferential but table-wide, fits Network's "feed on the noise" doctrine. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("the louder the city gets, the more they listen") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; passive economic engine, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; passive economic engine, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Economy/Add/ModifierCard, 04-n175), matches GUI.MOD.5's shape. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Economy×Add valid; ModifierCard-as-subject consistent with the established precedent from GUI.MOD.5/NET.MOD.9/14. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Any-PA-resolution is a very broad, likely-frequent trigger with no cost — real balance attention warranted, similar shape to other "least-gated" cards. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
@@ -1638,11 +1686,15 @@ A public act resolves — anyone's, doesn't matter whose. The city gets louder, 
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.7 = Card(
@@ -1673,7 +1725,7 @@ NET.MOD.7 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1698,7 +1750,7 @@ One signal splits into a dozen relays, and each relay is capable of splitting ag
 |----------|------|------|--------------|
 | Action fit | ✓ | A self-sustaining "noise compounds" engine fits Network's broadcast-volume doctrine, distinct from the other passive-expansion cards. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("a single broadcast splinters into a dozen channels") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; mechanical chain engine, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; mechanical chain engine, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Territory/Add/PresenceToken, 04-n175 — the chip is the primary gain, the modifier draw is the chain-enabler). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ **(potential blocker)** | Cannot assess until the self-triggering question is resolved: if this card's own placement re-triggers itself, the effective yield is unbounded per Quarter, a materially different balance profile than a single bounded chain link. | Art 02 §6–7; Art 04 §6.5; schema_cleanup_log.md item 18 |
@@ -1719,11 +1771,15 @@ One signal splits into a dozen relays, and each relay is capable of splitting ag
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus, compounded by the self-triggering question. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint` not set — the Ring 3 targeting is baked into `success`/`target_district`, not expressed via this field; consistent field usage, if not a well-motivated design choice (see Supported by zones). |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.8 = Card(
@@ -1754,7 +1810,7 @@ NET.MOD.8 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1779,7 +1835,7 @@ A district tips into open contest — three or more factions locked at a tie, no
 |----------|------|------|--------------|
 | Action fit | ✓ | "Conflict creates the ultimate engagement metric" is a sharp, doctrinally coherent hook for a high-yield draw engine. | Art 00 §7 |
 | Voice fit | ✓ | Tagline reads correctly. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; mechanical engine, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; mechanical engine, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Economy/Add/ModifierCard, 04-n175), clean single-effect. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Same verified Economy×Add cell as GUI.MOD.5/NET.MOD.7/14. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | Real 2-resource cost for a 4-card draw, gated on the genuinely rare Contested board state — design_note's "no hand limit, hold indefinitely" framing is consistent with a deliberate stockpiling design. | Art 02 §6–7; Art 04 §6.5 |
@@ -1800,11 +1856,15 @@ A district tips into open contest — three or more factions locked at a tie, no
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; Contested can occur in any ring. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.9 = Card(
@@ -1828,14 +1888,14 @@ NET.MOD.9 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Network).exposure * 1 + resource.faction(Network).findings * 1,
+    cost            = Exposure * 1 + Findings * 1,
     boost           = None,  # scaffolded, not addressed
 
     success     = arbiter.draw_modifier(faction=Network, count=4),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1860,7 +1920,7 @@ A rival sends operatives into the Baryo. Network sends neighbors instead — peo
 |----------|------|------|--------------|
 | Action fit | ✓ | Grassroots co-option of opponent momentum in Network's home territory (Baryo) is a sharply doctrinal beat — "we sent neighbors" vs. an opponent's "operatives." | Art 00 §7 |
 | Voice fit | ✓ | Tagline is one of the strongest in the Network set. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; opportunistic tactical play, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; opportunistic tactical play, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Territory/Redirect/PresenceToken, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Redirect valid; matches the confirmed GHO.MOD.7 precedent for same-slot chip swaps. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | 1-resource cost for a chip swap in Baryo only — bounded, reasonable given the Redirect precedent's established power level. | Art 02 §6–7; Art 04 §6.5 |
@@ -1881,11 +1941,15 @@ A rival sends operatives into the Baryo. Network sends neighbors instead — peo
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=3` matches trigger scope. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.10 = Card(
@@ -1916,7 +1980,7 @@ NET.MOD.10 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
@@ -1965,11 +2029,15 @@ The act goes through exactly as filed. What Network changes is what everyone thi
 | Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not a district/ring-scoped effect. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.11 = Card(
@@ -2044,11 +2112,15 @@ Network doesn't need to stop the act. It just needs everyone at the table to kno
 | Stack behavior (ModReactCard) | ⚠ | Same open corpus-wide question: is a 2nd copy meaningful? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` — not a district/ring-scoped effect. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.12 = Card(
@@ -2122,11 +2194,15 @@ Network's public act goes up with full press credentials attached — sourced, v
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.13 = Card(
@@ -2148,7 +2224,7 @@ NET.MOD.13 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = resource.faction(Network).exposure * 1 + resource.faction(Network).findings * 1 + resource.faction(Network).mandate * 1,
+    cost            = Exposure * 1 + Findings * 1 + Mandate * 1,
     boost           = None,  # scaffolded, not addressed
 
     persistence = Immediate,
@@ -2183,7 +2259,7 @@ Network's public standing climbs — a win, visible to the whole table. The subs
 |----------|------|------|--------------|
 | Action fit | ✓ | Compounding on Network's own PS gain completes a coherent three-card trilogy with MOD.2/MOD.3 — no redundant coverage. | Art 00 §7 |
 | Voice fit | ✓ | Tagline ("the audience grows, so does the signal") lands the doctrine. `narrative` field empty — see Card narrative row. | Art 00 §6.7 |
-| Doctrine alignment | ✓ | `portrait = {}` — reasonable; mechanical compounding engine, not a doctrinal statement. | Art 04 §6.5 |
+| Doctrine alignment | ✓ | `portrait = None` — reasonable; mechanical compounding engine, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Economy/Add/ModifierCard, 04-n175), same shape as NET.MOD.7/9. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Same verified Economy×Add cell. | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ✓ | Free cost is explicitly intentional (design_note's own reasoning), not an oversight — consistent with the trilogy's "PS growth is the reward" framing across all three cards. | Art 02 §6–7; Art 04 §6.5 |
@@ -2204,11 +2280,15 @@ Network's public standing climbs — a win, visible to the whole table. The subs
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ |  |  |
+| Status | |  |  |
 
 ```python
 NET.MOD.14 = Card(
@@ -2240,7 +2320,7 @@ NET.MOD.14 = Card(
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
-    portrait     = {},
+    portrait     = None,
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,  perspectives = None,
     design_note  = "Asset — business. Hand-growth React on Network PS gain. When Network's standing increases, the subscriber base grows: Network draws 2 modifier cards. Completes the standing-interaction trilogy: MOD.2 Troll Farm (attacks when opponent gains PS), MOD.3 Backup Server Racks (recovers when Network loses PS), MOD.14 Subscriber Network (compounds when Network gains PS). Free cost — standing growth is Network's reward; this card amplifies without economic friction. Draw 2 (not 1) makes this a meaningful engine card across multiple triggers per Quarter.",
@@ -2280,11 +2360,15 @@ A few calls, a few posts, and the block is suddenly full of people who care how 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.15 = Card(
@@ -2341,11 +2425,15 @@ A camera crew sets up on the corner and starts streaming — whatever happens ne
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.16 = Card(
@@ -2402,11 +2490,15 @@ A crowd gathers outside, loud enough that whatever the named faction is trying t
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.17 = Card(
@@ -2463,11 +2555,15 @@ By morning the clip is everywhere at The Table — nobody needed to lie about wh
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.18 = Card(
@@ -2524,11 +2620,15 @@ Organic public interest builds ahead of the story — by the time Network runs i
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields (schema-locked None). | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention; out of scope for 04-n178. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.19 = Card(
@@ -2585,11 +2685,15 @@ Pre-positioned attention eases a public action — the story's already primed, w
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.20 = Card(
@@ -2646,11 +2750,15 @@ A scrubbed broadcast channel removes the interference that would otherwise compl
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.21 = Card(
@@ -2707,11 +2815,15 @@ Coverage reaches every channel at once — nothing about the outcome is left to 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (+20 playtest flag) |  |
+| Status | | |  |
 
 ```python
 NET.MOD.22 = Card(
@@ -2768,11 +2880,15 @@ Coverage across multiple channels amplifies an outcome further than any single p
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.23 = Card(
@@ -2829,11 +2945,15 @@ An action catches unexpected attention and lands far harder than the plan ever a
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (n=2 playtest flag) |  |
+| Status | | |  |
 
 ```python
 NET.MOD.24 = Card(
@@ -2890,11 +3010,15 @@ A story that could have run doesn't — quietly protecting standing that a diffe
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.25 = Card(
@@ -2951,11 +3075,15 @@ Being first to a story earns standing no follow-up coverage ever quite matches.
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.26 = Card(
@@ -3012,11 +3140,15 @@ A pointed follow-up question at a public event costs a named faction some standi
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.27 = Card(
@@ -3073,11 +3205,15 @@ A rival's claim gets publicly discredited — Network doesn't have to lie, just 
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.28 = Card(
@@ -3134,11 +3270,15 @@ Volunteer contributors cut the cost of coverage that a professional crew would o
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ✓ |  |
+| Status | | |  |
 
 ```python
 NET.MOD.29 = Card(
@@ -3195,11 +3335,15 @@ A standing broadcast slot lowers the cost of getting a message out — the infra
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
 | Resource cost positioning | ✓ | `cost=None`, a closed convention. | PM02 L256; PM05 04-n178 |
 
+#### Outstanding Issues
+
+None
+
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ | ⚠ (flat-vs-proportional cost_reduction magnitude, 04-n157) |  |
+| Status | | |  |
 
 ```python
 NET.MOD.30 = Card(
