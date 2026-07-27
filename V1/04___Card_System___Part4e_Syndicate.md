@@ -2294,7 +2294,7 @@ SYN.MOD.8 = Card(
 ### SYN.MOD.9 — GOODWILL
 
 #### Design Rationale
-Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). Two real, unresolved problems, both flagged not fixed: (1) `success = faction(Syndicate).standing += N` uses invalid `+=` syntax — the second confirmed instance of this exact problem, after NET.MOD.2. (2) The card explicitly never discards ("remains active for further triggers") — a persistence shape none of the 4 documented values (Immediate/Transient/Seasonal/Permanent) actually fit, since Permanent still requires an eventual clearing condition and this card has none. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
+Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). `success = faction(Syndicate).standing.add(N)` — corrected from invalid statement syntax. The card's original design_note claimed it "does not discard — remains active for further triggers"; per Art 03 §18.2.2, React cards are permanently removed from the game by default once resolved unless card text says otherwise, and Goodwill isn't meant to be an exception — corrected to fire once and discard like any other React, matching the default. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
 
 #### Card Story
 Syndicate's reputation takes a hit — anywhere, any cause. Before the news finishes circulating, a public-goodwill campaign is already funded and running, buying back exactly as much standing as Syndicate is willing to spend on it.
@@ -2309,21 +2309,21 @@ Syndicate's reputation takes a hit — anywhere, any cause. Before the news fini
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Standing/Shift/StandingMarker, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Standing×Shift valid per the matrix (04-n173 precedent). | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Scalable N with an admitted-open cap question — could this be abused as unlimited PS-buying if N is uncapped? Design_note flags this itself as unresolved. | Art 02 §6–7; Art 04 §6.5 |
-| Effect duration | ⚠ | No `persistence` value fits — the card is meant to never discard, which none of Immediate/Transient/Seasonal/Permanent actually model. | Art 04 §5 P19 |
-| Persistence | ⚠ | Same issue as above — "remains active for further triggers, never discards" has no fitting enum value. Distinct from cards that eventually clear but express the clearing logic inconsistently — this card structurally never clears at all. | Art 04 §6.2 |
+| Effect duration | ✓ | Immediate — fires once at trigger, discards per default React behavior (Art 03 §18.2.2). | Art 04 §5 P19 |
+| Persistence | ✓ | `persistence` field not applicable — this is a hand-held React, not a board-placed Standing Condition. No exception to the default discard-on-fire behavior. | Art 04 §6.2 |
 | Trigger validity | ✓ | `standing_marker.decreased(Syndicate)` — confirmed vocabulary, self-scoped, no ambiguity. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
-| Supported by components | ✓ | PS/standing-marker shift reuses the standard mechanism, once the `+=` syntax issue is resolved. | Art 02 §6–8 |
+| Supported by components | ✓ | PS/standing-marker shift reuses the standard mechanism. | Art 02 §6–8 |
 | Supported by game procedure | ⚠ | Design_note itself flags an unresolved question: does Syndicate ALWAYS pay when the trigger fires, or may they decline (ElectPlayer)? Not resolved here. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ **(blocker)** | `success = ... += N` is invalid syntax, not a valid MutationExpr — 2nd confirmed instance of this pattern. Scaffolding added for the fields that were simply absent. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | `success = faction(Syndicate).standing.add(N)` — valid MutationExpr, matches corpus convention for variable-magnitude shifts. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
-| Outcome determinacy | ✓ | Automatic, single success branch (once the expression syntax is corrected) — N is a declared parameter, not a hidden or probabilistic outcome. | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | Automatic, single success branch — N is a declared parameter, not a hidden or probabilistic outcome. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Real, scalable cost (Capital×N) — reasonable in shape, but the balance question (N-cap) is unresolved, so the effective cost/value ratio can't be finalized. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Gated on Syndicate's own PS decreasing — self-limiting, moderate frequency. |  |
 | Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
 | Automatic vs. d100 (ModReactCard) | ⚠ | Design_note's own open question: should this be Automatic (always fires, always pays) or ElectPlayer (Syndicate may decline)? Not resolved. |  |
-| Stack behavior (ModReactCard) | ⚠ | Compounded by the card never discarding — does holding 2 copies mean 2 independent N-declarations per trigger? Genuinely more consequential here than the generic stack question elsewhere. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
 #### Outstanding Issues
@@ -2361,7 +2361,7 @@ SYN.MOD.9 = Card(
     cost            = Capital * N,  # N declared at trigger (min 1)
     boost           = None,  # scaffolded, not addressed
 
-    success     = faction(Syndicate).standing += N,  # ⚠ INVALID SYNTAX — `+=` is a statement, not an expression; 2nd confirmed instance, after NET.MOD.2
+    success     = faction(Syndicate).standing.add(N),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -2369,8 +2369,8 @@ SYN.MOD.9 = Card(
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
-    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card does not discard — remains active for further triggers. Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger. 04-n131 design decision → PS floor card selected.",
-    arbiter_note = "On trigger (Syndicate's standing marker moved down for any reason): Syndicate declares N (min 1) and pays Capital×N. Apply faction(Syndicate).standing += N. If Capital unavailable or Syndicate declines: decrease stands. Card remains active for further triggers.",
+    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card discards after firing, per default React behavior (Art 03 §18.2.2). Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger. 04-n131 design decision → PS floor card selected.",
+    arbiter_note = "On trigger (Syndicate's standing marker moved down for any reason): Syndicate declares N (min 1) and pays Capital×N. Apply faction(Syndicate).standing.add(N). If Capital unavailable or Syndicate declines: decrease stands. Card is discarded after resolution.",
 )
 ```
 

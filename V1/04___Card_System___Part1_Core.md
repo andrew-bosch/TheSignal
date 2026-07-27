@@ -744,6 +744,42 @@ TriggerExpr:         Any
 #   broadcast_card.placed                              (db25 — public SitRep card placed in Situation Report Zone; fires at Upkeep phase 1 and Beat 5 phase 18)
 #   public_act.placed_on_frg(faction, ...)             (any faction places a PA face-up on their FRG at §9.2 Public Declaration)
 #
+# ring= confirmed valid on all .removed() forms, symmetric with .placed() (schema_cleanup_log #3,
+# PM05 04-n195 item 1) — e.g. presence_chip.removed(faction=X, ring=Z) is confirmed vocabulary,
+# not just presence_chip.placed(faction=X, ring=Z).
+#
+# public_act.placed_on_frg() additionally accepts uses_intel_token=True as a confirmed filter
+# parameter (schema_cleanup_log #12/#13, PM05 04-n195 item 10) — matches only when the placed PA
+# carries an Intel Token as part of its declared cost/payment. Default (omitted) = no filter, any
+# PA placement matches regardless of Intel Token presence.
+#
+# board_state.changed(component=, change=, cause=, faction=, district=, ring=) — general-purpose
+# TriggerExpr primitive (PM05 04-n195 items 11/12) for cards that need to react to more than one
+# component type and/or any direction of change at once, which the itemized single-event forms above
+# can't express (they have no OR-composition). Coexists with the itemized forms — those remain the
+# precise/preferred choice for a card that only cares about one specific event and direction;
+# board_state.changed() is for the genuinely broader case.
+#   component: presence_chip | structure_block | standing_marker | deployment_marker | accord |
+#              public_act | modifier_card | native_resource | intel_token | target_profile | Any
+#              — component=Any is an open/extensible category meaning "any publicly visible,
+#              non-procedural board object" (same public/player-driven scope as the Excluded notes
+#              below already establish) — a new component type added to the game later qualifies
+#              automatically, no re-confirmation of this primitive needed. May also be a list of
+#              specific component values to match more than one type but not all.
+#   change:    placed | removed | increased | decreased | moved | corrupted | Any
+#              — change=Any matches any direction. Not every component supports every change value
+#              (e.g. standing_marker only ever increased/decreased); use whichever applies.
+#   cause:     public_act | covert_operation | modifier_card | upkeep | Any
+#              — filters by what produced the change, distinct from component (what changed). No
+#              separate "arbiter" value — ARBITER executes the change but is never itself the cause;
+#              the cause is always the CA, PA, or Modifier Card that made ARBITER act (upkeep is a
+#              4th, procedural cause, kept for completeness even though no confirmed instance uses it
+#              yet). Default Any = no filter, matching every card written before this parameter existed.
+#              A card that means "specifically as a consequence of a PA resolving," not any board
+#              change regardless of source, must state cause=public_act explicitly — a card's beat=
+#              field is not a substitute for this filter.
+#   faction/district/ring: same semantics as the itemized forms above.
+#
 # Excluded (static — never change): district tiles, board geography, ARBITER Dominance Marker
 # Excluded (procedural — not player-driven): Initiative Strip, Session Timeline, Quarter/Month markers
 
@@ -769,6 +805,16 @@ MutationExpr:        confirmed helper symbols only (full grammar not yet enumera
 #                                   threshold). Not new ARBITER behavior — feeds the existing threshold-
 #                                   modifier-accumulation pipeline already used by BM-xx tokens and M-11
 #                                   Type B Countermeasure (Art 03 §9.4.1.1/§9.4.3.1.3).
+#   arbiter.remove(presence_chip, ...)
+#                                 — confirmed (schema_cleanup_log #6, PM05 04-n195 item 2): can never
+#                                   target a Deployment Marker. Presence Token (DB:1) and Deployment
+#                                   Marker (DB:2) are separate physical components, not a marker-plus-
+#                                   linked-chip pair — a Deployment Marker "counts as 1 Presence Token
+#                                   for all purposes" (Art 02 §6) only for counting/influence-level
+#                                   purposes, not as a valid removal target. If a faction's only presence
+#                                   in scope is a Deployment Marker (no separate literal chip), this call
+#                                   simply has nothing valid to remove there. GR 8.3a (displaced markers
+#                                   are repositioned, never removed) is not in tension with this call.
 #
 # Confirmed via: STD.MOD.98–133 (Ring 1/2/3 ModReactCard stub passes, S135–S138). Reconciles 04-n171.
 

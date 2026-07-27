@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 149 next | Updated: 2026-07-23**
+**Session 150 next | Updated: 2026-07-27**
 **Session start:** TBD
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
@@ -34,33 +34,32 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S148 Accomplishments (closed)
+## S149 Accomplishments (closed)
 
-**Schema Cleanup Program (PM05 04-n191, PM02 L316) — Phases 1–2 of 5 closed, priority-blocking all Art 04 work beyond §6 until fully cleared.**
-- **Phase 1 (04-n192) ✅** — CostExpr syntax sweep (04-n189, 219 instances, 6 parallel agents to the new canonical bare/dot-chain form); `card_id` backfill (#24, scope grew from 16 Standard cards to 57 corpus-wide, 2 exceptions flagged — Ghost's Backdate/FieldVerification have placeholder IDs); `portrait` empty-value normalized to `None` (#8, 422 vs 89 `{}`, reversed the item's original assumption, §6.1 type updated to `| None`); Outstanding Issues placeholder on 329 cards (04-n190, bare placeholder only). Spun off schema_cleanup_log #50 (Ghost FieldVerification's untyped dual-target cost, folded into Phase 4 as decision 9).
-- **Phase 2 (04-n193) ✅** — Required an unplanned full DB restore first: lev's cluster subnet migration wiped `the_signal_db` entirely; restored from the 2026-07-21 backup with Andy's authorization (PM02 L321), every stale `10.0.1.14` reference project-wide repointed to `10.0.0.14`. Reconciliation found 190 mismatches (not ~8) — almost all `design_pass`/`issues_resolved` gone stale corpus-wide. **Andy's ruling: reset `design_pass`/`issues_resolved`/`signed_off` to 0/blank everywhere** (`.md` + DB) — nothing counts as reviewed/resolved/signed-off until schema cleanup finishes and a full design-review re-do happens. 3 genuine DB-stale taxonomy rows synced; corpus baseline now **386** `Card()` blocks (GHO.CA.11 `id=TBD` write-back gap fixed). Full detail: PM02 L322.
-- **Phases 3–5 (04-n194/195/196) not started** — legacy vocabulary sweep, decision batch, content-fix sweep.
+**Art 02 re-signed off (PM02 L326), 04-n197 closed.** Andy reviewed the Target Profile amendment (PM02 L317, §8 Gameplay Requirements) and confirmed the copy as-is.
 
-**Art 00a §10.4 added and signed off (PM02 L324), v0.11→v0.12.** "Covert Attribution Remains Untraceable" — a Covert Operation's effect may be public, its attribution to the acting faction may not be. Surfaced while reviewing agy's memory files ahead of retirement; the principle existed only as an informal note and one mechanical instance (Notification Slip, Art 02 §9), never as a governing rule. Drafted in chat first (Art00a is signed off), Andy reviewed and signed off in the same turn.
+**Schema Cleanup Program — Phases 3 and 4 of 5 closed (PM05 04-n191).**
+- **Phase 3 (04-n194) ✅ (PM02 L327/L328)** — 4/7 legacy pre-S127 cards fixed with direct vocabulary swaps: GHO.MOD.5, NET.MOD.9, NET.MOD.2, SYN.MOD.9. Remaining 3 (GHO.MOD.1, NET.MOD.1, NET.MOD.8) had no confirmed-vocabulary drop-in — folded into Phase 4.
+- **Phase 4 (04-n195) ✅ (PM02 L329–L332)** — 9 of 12 decision-batch items ruled and executed. New §6.3 vocabulary: `board_state.changed(component=, change=, cause=, faction=, district=, ring=)` — a general-purpose TriggerExpr primitive for cards needing more than one component type or direction of change, added specifically for GHO.MOD.1/NET.MOD.1/NET.MOD.8; `cause=` added after catching that the primitive's first draft silently widened NET.MOD.1's trigger past its original PA-only scope. **Art 03 §18.2.2 added and signed off (v4.13→v4.14, PM02 L332)** — React cards are permanently removed from the game by default once resolved unless card text states otherwise; this rule existed nowhere in writing before this session. DIR.CA.8/GUI.CA.9/GHO.CA.15 Subject taxonomy reclassified off the invalid "Difficulty" term (`card_subject_map` DB synced, re-verified against `v_card_mechanical_alignment`). GHO.CA.8 normalized to the schema's `boost=` field. 3 items scoped as follow-ups rather than executed: **04-n199** (Portrait `flat=`/`submitter=`, both patterns), **04-n200** (`where()` TriggerExpr vocabulary — reopened for a second look, not settled), **04-n201** (`game.active_permanents` — flagged for deeper review). New finding, not fixed: **04-n202** (DIR.CA.5 has the same invalid `-=`/`+=` statement-as-value defect as the already-closed #17; corpus-wide grep for more instances hasn't run).
+- **Phase 5 (04-n196)** — content-fix sweep, not started. Next in sequence.
 
-**agy retired as a standalone agent; now Claude's subagent (PM02 L321–L325).** Installed and verified `antigravity-for-claude-code` (third-party Claude Code plugin, 201 GitHub stars, MIT licensed) — tested end-to-end on a 427KB file read agy handled that exceeds Claude's own Read tool limit. `tier_flash` configured to `gemini-3.6-flash-high` per Andy's standing preference. Housekeeping: agy's 4 working-state files archived to `Retired/agy_agent_files/` (nothing load-bearing left behind — Ring Numbering discrepancy confirmed already resolved, Covert Blindness formalized as Art00a §10.4); `~/Airlock/agy-claude.md`/`claude-agy.md` marked retired. **Process note:** lev initially represented an exploratory "we're thinking about X" prompt from Andy as a settled, already-implemented decision (full role hierarchy, updated `AGENTS.md` on both machines) — caught by verifying with Andy directly before acting; lev took the correction well and corrected course same-day. Captured in new `feedback_lev_operating_model` memory. Andy has since proposed (to lev, pending reply) that brain drop its local TheSignal clone entirely and SSH into wakko for any reference reads, removing the sync-drift class of problem at the root.
-
-**Process/hygiene housekeeping (PM05 04-n197, 04-n198; PM02 L323).** Caught (via Andy's direct question, not proactive self-catch) 2 new session-tag/provenance comments introduced this session in `Part1_Core.md` and `Part4b_Ghost.md` — both fixed, `feedback_artifact_hygiene.md` reinforced (5th recurrence of this pattern this project). Separately: Art 02 was amended (the §10.4-adjacent Target Profile rule, PM02 L317) without following the signed-off-artifact draft/confirm protocol — caught by the same direct question, fixed retroactively (Art02 flagged "Pending re-sign-off," `feedback_signed_off_artifacts.md` reinforced), **04-n197 still needs Andy's formal review/re-sign-off of that specific Art 02 change.** 04-n198 (pre-existing `✓`-row citation cleanup, not self-introduced) still open, not started.
-
-**Reviewed and evaluated the PM02/PM05 → MariaDB migration proposal (lev/Andy).** Found on brain's filesystem via `scp`, not synced to wakko. Raised 3 concerns grounded in this session's own DB-wipe incident (recovery story, no-DB-connection fallback, git-diff-ability) plus 4 concrete parser/schema gaps found checking the design against real PM02/PM05 output. Lev's reply addresses all 7 point-by-point; migration script not yet written — I'll dry-run it against the real corpus before anything touches `dot`.
+**Hygiene recurrence #6 (feedback_artifact_hygiene.md updated with the failure-mode diagnosis).** Introduced session-tag/log-citation provenance into artifact prose at scale (~12 instances across 16 cards) during Phase 4 execution — caught via an advisor review pass after declaring the work done, not proactively. Stripped; all provenance now lives in PM02 only. Memory updated: having read the rule at boot didn't prevent the violation, because the impulse to cite fires while writing an edit, not when recalling the rule abstractly — the fix logged is a mechanical grep pass over touched files before calling a batch done, not another re-read of the rule.
 
 ---
 
-## Current Focus (S149)
+## Current Focus (S150)
 
 **PRIMARY WORK — Schema Cleanup Program continues.** Next up per the locked sequencing (PM02 L316):
-- **Phase 3 (04-n194)** — legacy pre-S127 vocabulary sweep, ~8 cards (schema_cleanup_log #12/13/14/15/16/17/18). Not started.
-- **Phase 4 (04-n195)** — decision batch, 9 quick rulings needed from Andy before remaining sweeps execute (#3/6/7/9/19/26/27/28/50). Not started.
 - **Phase 5 (04-n196)** — content-fix sweep: stub rewrites, prose/code mismatches, missing fields (#25/29/31/35/36/38/39/44). Heaviest lift, run last. Not started.
 - Held back, not yet actionable: #23 (doctrine-penalty portrait coverage) — still evidence-gathering.
 
+**4 items spun off Phase 4, need attention before or alongside Phase 5:**
+- **04-n199** — Portrait `flat=`/`submitter=` fix on SYN.CA.7/10/11/12/PA.3, plus a corpus-wide audit for other target-faction `flat=` instances.
+- **04-n200** — `where(BoolExpr)` TriggerExpr vocabulary, reopened — Andy flagged his initial "don't confirm" read needs a second look.
+- **04-n201** — `game.active_permanents(faction=,ring=)` (DIR.CA.6/CA.7/PA.9) flagged for deeper review, not ruled on.
+- **04-n202** — DIR.CA.5 has the same invalid `-=`/`+=` statement-as-value defect as the already-closed #17; corpus-wide grep for more instances hasn't run.
+
 **Open threads needing a look next session:**
-- **PM05 04-n197** — Art 02's Target Profile amendment needs Andy's formal re-sign-off review (or rejection/revision) — flagged "Pending re-sign-off" in the artifact header, not yet resolved.
 - **PM05 04-n198** — pre-existing session-tag citations on `✓` checklist rows, corpus-wide sweep not started.
 - **agy/lev split** — waiting on lev's reply to the "drop brain's local clone" proposal; PM02/PM05 MariaDB migration script not yet written, dry-run pending.
 
@@ -76,9 +75,10 @@ Then prompt: *"What's our focus today?"*
 
 ## Pending Sign-offs
 
-- **Art 04** — Draft, gated on the Schema Cleanup Program (Phases 3–5) plus the pre-existing card-audit-issue list (mis-tag sweep, target-field audit, 04-n177, board narrative sync, backlog). No set-level sign-off pass starts until the program clears.
-- **Art 00a** — v0.12, Signed Off (§10.4 added and signed off this session, PM02 L324).
-- **Art 02** — v2.5, **Pending re-sign-off** — Target Profile amendment (PM02 L317) needs Andy's formal review (PM05 04-n197).
+- **Art 04** — Draft, gated on the Schema Cleanup Program (Phase 5 remaining) plus the pre-existing card-audit-issue list (mis-tag sweep, target-field audit, 04-n177, board narrative sync, backlog). No set-level sign-off pass starts until the program clears.
+- **Art 00a** — v0.12, Signed Off.
+- **Art 02** — v2.5, Signed Off.
+- **Art 03** — v4.14, Signed Off.
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
 
 *Card-level sign-offs gated behind set-level audits — not actionable until those gates clear.*

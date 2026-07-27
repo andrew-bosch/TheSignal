@@ -964,7 +964,7 @@ A rival's public standing ticks upward — a win, a moment of visibility. Networ
 | Supported by zones | ✓ | No district reference — correct; this is a Standing-layer effect. | Art 01 §6–7 |
 | Supported by components | ⚠ | PS/Standing marker shift would reuse the standard mechanism — but see Supported by game procedure; unblockability itself has no defined component-level enforcement. | Art 02 §6–8 |
 | Supported by game procedure | ⚠ **(blocker)** | No Art 03 governing rule exists yet for "unblockable" effects — Issues Resolved cannot be set until the rule is written. | Art 03 §18; PM05 (unblockability governing rule, untracked by number) |
-| Data schema validation | ⚠ **(blocker)** | `success = ... -= 1` is invalid syntax, not a valid MutationExpr — more severe than a missing-field gap. | Art 04 §6.1–§6.3; schema_cleanup_log.md item 17 |
+| Data schema validation | ✓ | `success = faction(trigger.faction).standing.remove(1)` — valid MutationExpr, matches corpus convention. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch (once the expression syntax is eventually corrected). | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Cost spans Exposure (Network-native) and Capital (Syndicate's) — a cross-resource-holding question. | Art 00a §9.2 |
@@ -977,7 +977,6 @@ A rival's public standing ticks upward — a win, a moment of visibility. Networ
 **Outstanding Issues:**
 - **Card name:** "Troll Farm" is still a placeholder — confirm before sign-off.
 - **Unblockability formalization:** Art 03 governing rule still doesn't exist — gates Issues Resolved.
-- **Invalid expression syntax:** `success` field needs a real MutationExpr, not `-=`.
 
 #### Outstanding Issues
 
@@ -1003,7 +1002,7 @@ NET.MOD.2 = Card(
     target_district = None,  target_faction = trigger.faction,  target_object = None,  target_taxonomy = None,  # scaffolded, not addressed
     cost    = Exposure * 1 + Capital * 1,
     boost   = None,  # scaffolded, not addressed
-    success = faction(trigger.faction).standing -= 1,
+    success = faction(trigger.faction).standing.remove(1),
     successcrit = None,  fail = None,  failcrit = None,  on_accept = None,  on_decline = None,  # scaffolded, not addressed
     restriction = None,
     portrait = {Network: PortraitEntry(submitter=+1)},
@@ -1233,7 +1232,7 @@ NET.PA.6 = Card(
 *Network React Modifier — Territory|Add|PresenceToken. Successor B to Weaponized Transparency (04-n47/04-n48).*
 
 #### Design Rationale
-Network's opportunistic presence card. Fires when any PA success causes a board state change (influence chip or structure block placed or removed) in a district. The act of change is publicly observable — qualifying trigger. Network announces Pirate Transmitter and rolls d100. On success: 1 Network chip placed in the changed district. The card does not require Network to have existing presence; the PA's visibility is the only entry condition. On successcrit: additional +1 PS — the signal lands publicly as well as physically. Failcrit: −1 PS — the insertion attempt is noticed and goes badly. `resolution=d100, threshold=50` is a legitimate design choice for modeling execution risk on a covert insertion. The trigger's `PA_success.where(...)` syntax and the bare `acting` keyword predate confirmed §6.3 vocabulary — logged as `schema_cleanup_log.md` item 15.
+Network's opportunistic presence card. Fires when any PA success causes a board state change (influence chip or structure block placed or removed) in a district. The act of change is publicly observable — qualifying trigger. Network announces Pirate Transmitter and rolls d100. On success: 1 Network chip placed in the changed district. The card does not require Network to have existing presence; the PA's visibility is the only entry condition. On successcrit: additional +1 PS — the signal lands publicly as well as physically. Failcrit: −1 PS — the insertion attempt is noticed and goes badly. `resolution=d100, threshold=50` is a legitimate design choice for modeling execution risk on a covert insertion. Trigger is `board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any)` — corrected from legacy syntax, using the general-purpose §6.3 primitive for cards needing more than one component type and any direction of change; `cause=public_act` preserves the card's original intent — Network capitalizes specifically on the visible consequence of a PA (the narrative is "we're broadcasting what you did"), not any board change from any source. `target_district = trigger.district` normalized to match corpus convention. The bare `acting` keyword is already-confirmed vocabulary (Part1_Core.md §6.3, mirrors STD.MOD.1 Overture's `faction(acting)`), not a gap — checked directly rather than assumed.
 
 #### Card Story
 The district was already moving. Network didn't start the change — it arrived at the same time the change did.
@@ -1250,12 +1249,12 @@ The district was already moving. Network didn't start the change — it arrived 
 | Balance | ⚠ | Broad trigger (any PA board-state change table-wide) + no presence requirement is a real balance question, same shape as the "least-gated" cards DIR.MOD.7/GUI.MOD.2/8. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate — chip placed at the Beat 4 trigger point. | Art 04 §5 P19 |
 | Persistence | ✓ | Explicitly declared (`persistence=Immediate`). | Art 04 §6.2 |
-| Trigger validity | ⚠ | The underlying event (a PA causing a board-state change) is genuinely publicly observable, but `PA_success.where(...)` is legacy syntax predating confirmed §6.3 forms. | Art 04 §6.3; schema_cleanup_log.md item 15 |
+| Trigger validity | ✓ | `board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any)` — confirmed §6.3 vocabulary. `cause=public_act` preserves the original PA-only gate. | Art 04 §6.3 |
 | Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district` fixed by trigger, not a free choice. | Art 01 §6–7 |
 | Supported by components | ✓ | Chip placement and Exposure cost both standard. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Beat 4 React, reuses existing Art 03 §18 React rules. | Art 03 §18 |
-| Data schema validation | ⚠ | `persistence`, `outcome_type`, and targeting fields are all explicitly declared, but `PA_success.where(...)`/`acting` legacy syntax is a real, unresolved schema-currency gap. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | `persistence`, `outcome_type`, and targeting fields are all explicitly declared; trigger now uses confirmed `board_state.changed(...)` vocabulary (`acting` checked and confirmed separately, was never a gap). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story + `narrative` field both present and well-formed. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Genuine two-branch outcome via a real d100 roll (not the invalid `Prediction` pattern GHO.MOD.1 used) — success/successcrit/fail/failcrit all properly structured. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Exposure×1, Network-native — no cross-resource question. | Art 00a §9.2 |
@@ -1264,9 +1263,6 @@ The district was already moving. Network didn't start the change — it arrived 
 | Automatic vs. d100 (ModReactCard) | ✓ | d100 is the right call here — this models a genuine insertion-attempt risk (crit/fail bands shift PS), unlike the flat Automatic effects seen elsewhere in the corpus. |  |
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → 2 independent rolls per qualifying PA? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint` unset/None — correct; fires table-wide by design. |  |
-
-**Outstanding Issues:**
-- Board state change definition (influence chip vs. structure block vs. PS/resource/Intel changes) — not yet resolved, out of scope here.
 
 #### Outstanding Issues
 
@@ -1285,10 +1281,10 @@ NET.MOD.1 = Card(
     tagline = "A public action changes the district. The signal finds the opening.",
     type    = ModReactCard,  faction = Network,
     layer   = Territory,  function = Add,  subject = PresenceToken,
-    trigger = PA_success.where(effect.causes_board_state_change(district)),
-              # fires on any PA success that places or removes an influence chip
-              # or structure block in any district; target = that district
-    target_district = district(trigger.target),
+    trigger = board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any),
+              # fires on any influence chip or structure block placed/removed in any district,
+              # specifically as a consequence of a PA resolving — not a CA, another React, or Upkeep
+    target_district = trigger.district,
     beat    = 4,  resolution = d100,  threshold = 50,
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
     value_rating = 1,
@@ -1739,7 +1735,7 @@ NET.MOD.7 = Card(
 ### NET.MOD.8 — FREQUENCY SPLITTER
 
 #### Design Rationale
-Chain-enabler React: fires on a Network modifier card being placed and replaces itself while dropping a Baryo chip. `modifier_card.placed(faction=Network)` is not confirmed §6.3 vocabulary. More significant: the design_note's "replaces itself" framing raises a genuine question of whether this card's own placement re-triggers itself, creating an unbounded recursive draw-and-place loop rather than a bounded chain — logged as `schema_cleanup_log.md` item 18, flagged not resolved. Also worth noting: the district scope (Ring 3/Baryo) isn't motivated by anything in the trigger or restriction itself (`restriction=faction(Network).any_presence`, not Ring-3-specific) — the Baryo targeting reads as an arbitrary design choice rather than a mechanically justified one.
+Chain-enabler React: fires on a Network modifier card being placed and replaces itself while dropping a Baryo chip. Trigger is `board_state.changed(component=modifier_card, change=placed, faction=Network)` — corrected from an unconfirmed trigger term, using the general-purpose §6.3 primitive. The design_note's "replaces itself" framing does describe a genuine self-triggering chain — ruled intentional and unbounded, and naturally self-limiting since the chain can't outrun the Network modifier deck's own finite card count; no explicit turn/Quarter limiter needed. Also worth noting: the district scope (Ring 3/Baryo) isn't motivated by anything in the trigger or restriction itself (`restriction=faction(Network).any_presence`, not Ring-3-specific) — the Baryo targeting reads as an arbitrary design choice rather than a mechanically justified one.
 
 #### Card Story
 One signal splits into a dozen relays, and each relay is capable of splitting again. Every time Network plays one of these cards, another is already queued up behind it — the noise doesn't stop, it compounds.
@@ -1753,22 +1749,22 @@ One signal splits into a dozen relays, and each relay is capable of splitting ag
 | Doctrine alignment | ✓ | `portrait = None` — reasonable; mechanical chain engine, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Territory/Add/PresenceToken, 04-n175 — the chip is the primary gain, the modifier draw is the chain-enabler). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ⚠ **(potential blocker)** | Cannot assess until the self-triggering question is resolved: if this card's own placement re-triggers itself, the effective yield is unbounded per Quarter, a materially different balance profile than a single bounded chain link. | Art 02 §6–7; Art 04 §6.5; schema_cleanup_log.md item 18 |
+| Balance | ⚠ | Self-triggering chain is intentional and unbounded — deck-limited rather than turn-limited, real balance read pending 04-n178. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `modifier_card.placed(faction=Network)` isn't confirmed §6.3 vocabulary — item 18. | Art 04 §6.3; schema_cleanup_log.md item 18 |
+| Trigger validity | ✓ | `board_state.changed(component=modifier_card, change=placed, faction=Network)` — confirmed §6.3 vocabulary. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ⚠ | District scope (Ring 3/Baryo) isn't motivated by the trigger or restriction — reads as an arbitrary choice, not a mechanically grounded one. | Art 01 §6–7 |
 | Supported by components | ✓ | Modifier draw and chip placement both reuse standard mechanisms. | Art 02 §6–8 |
-| Supported by game procedure | ⚠ | Same self-triggering-loop question as Balance — if unbounded, this needs an explicit ARBITER-facing limiter procedure that doesn't currently exist. | Art 03; GR 6.1; schema_cleanup_log.md item 18 |
+| Supported by game procedure | ✓ | Unbounded self-triggering is intentional; no new ARBITER-facing limiter procedure needed since the chain is already bounded by the finite Network modifier deck. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding applied (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch (bundled mutation list, not a choose_one). | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate, sharpened by the potential-loop concern above. | Art 00a §9.2; PM05 04-n178 |
-| Trigger frequency (ModReactCard) | ⚠ | Cannot assess without resolving the self-triggering question — could be a single chain link or a recursive loop. |  |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as the rest of the corpus. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ⚠ | Self-triggering chain is intentional and unbounded — high frequency by design, deck-limited rather than turn-limited. |  |
 | Firing window (ModReactCard) | ✓ | No other Network card shares this exact trigger. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Flat draw-and-place, no execution-quality dimension. |  |
-| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus, compounded by the self-triggering question. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint` not set — the Ring 3 targeting is baked into `success`/`target_district`, not expressed via this field; consistent field usage, if not a well-motivated design choice (see Supported by zones). |  |
 
 #### Outstanding Issues
@@ -1789,7 +1785,7 @@ NET.MOD.8 = Card(
     type    = ModReactCard,  faction = Network,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
-    trigger         = modifier_card.placed(faction=Network),
+    trigger         = board_state.changed(component=modifier_card, change=placed, faction=Network),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -1824,7 +1820,7 @@ NET.MOD.8 = Card(
 ### NET.MOD.9 — BANDWIDTH OVERRIDE
 
 #### Design Rationale
-High-yield hand-flooder reacting to a district going Contested. `status_marker.contested.placed()` is legacy syntax for the same event confirmed §6.3 vocabulary already calls `tension_marker.placed` (used correctly by GUI.MOD.10 and others) — logged as `schema_cleanup_log.md` item 16. Also carries a cross-resource cost (Findings, not Network-native).
+High-yield hand-flooder reacting to a district going Contested. Trigger uses `tension_marker.placed()`, the confirmed §6.3 form (used correctly by GUI.MOD.10 and others) — corrected from a legacy trigger term. Also carries a cross-resource cost (Findings, not Network-native).
 
 #### Card Story
 A district tips into open contest — three or more factions locked at a tie, no clear winner. The chaos itself is signal. Network's monitoring floods with usable material the moment the board gets messy.
@@ -1841,12 +1837,12 @@ A district tips into open contest — three or more factions locked at a tie, no
 | Balance | ✓ | Real 2-resource cost for a 4-card draw, gated on the genuinely rare Contested board state — design_note's "no hand limit, hold indefinitely" framing is consistent with a deliberate stockpiling design. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Underlying event (district goes Contested) is genuinely publicly observable, but `status_marker.contested.placed()` is legacy syntax — confirmed vocabulary is `tension_marker.placed` (item 16). | Art 04 §6.3; schema_cleanup_log.md item 16 |
+| Trigger validity | ✓ | `tension_marker.placed()` — confirmed §6.3 vocabulary, correctly unscoped (fires on any district). | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; the effect isn't district-scoped even though the trigger is. | Art 01 §6–7 |
 | Supported by components | ✓ | Modifier card draw reuses the standard mechanism. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Reuses the existing Contested/Tension-marker event; no new ARBITER behavior once the trigger term is normalized. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ | Scaffolding applied (04-n177); legacy trigger term also a schema-currency gap (item 16). | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ (deferred) | Scaffolding placeholders added (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Real cost specified, but spans Exposure (Network-native) and Findings (Ghost's) — a cross-resource-holding question. | Art 00a §9.2 |
@@ -1874,7 +1870,7 @@ NET.MOD.9 = Card(
     type    = ModReactCard,  faction = Network,
     layer   = Economy,  function = Add,  subject = ModifierCard,
 
-    trigger         = status_marker.contested.placed(),
+    trigger         = tension_marker.placed(),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,

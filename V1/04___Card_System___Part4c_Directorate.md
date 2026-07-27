@@ -778,7 +778,7 @@ The district is under enhanced institutional review. Documentation requirements 
 | Voice fit | ✓ | Faction-specific; single Directorate perspective — uniform scrutiny as institutional doctrine | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate only; applies to own Beat 3 ops — restraint doctrine; Mandate×2 mid-tier cost | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — scrutiny order is institutional, not public | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ⚠ | Resolution / Modify / Difficulty — threshold adjustment before Beat 3 resolution. **Flagged:** `v_card_mechanical_alignment` (DB) shows `Non-component Subject` for this card — "Difficulty" is not in `ref_taxonomy.md`'s Subject Vocabulary and is missing from `card_subject_map`, per that same reference's own gap-pattern table ("Subject string missing from card_subject_map → Add row to card_subject_map"). Distinct from the expected/known "Abstract Function" pattern on Modify/Block/Protect cards elsewhere in this set (CA.1/2/4) — this is a genuinely unregistered Subject term, not just an abstract-function non-issue. Not resolved. | Art 04b §4 |
+| Taxonomy fit | ✓ | Resolution / Modify / ModifierToken — threshold adjustment before Beat 3 resolution, applied via existing Modifier tokens (Art 02 §11, DB:47), which is what the card's own design_note names as the actual mechanism. | Art 04b §4 |
 | Balance | ⚠ | −15 to all Beat 3 ops in district is significant suppression at Mandate×2; self-inclusion is the cost; playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate (within-month) — tokens placed at Beat 2, consumed at Beat 3 | — |
 | Persistence | ✓ | Immediate | Art 04 §6 |
@@ -803,7 +803,7 @@ The district is under enhanced institutional review. Documentation requirements 
 |--|-------------|-----------------|------------|
 | Status | | | |
 
-*New card. Fills Resolution|Modify|Difficulty gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
+*New card. Fills Resolution|Modify|ModifierToken gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
 
 ```python
 DIR.CA.8 = Card(
@@ -811,7 +811,7 @@ DIR.CA.8 = Card(
     name    = "Enhanced Scrutiny",
     tagline = "Place a district under institutional review. All Beat 3 covert operations in this district find conditions harder.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
-    layer   = Resolution, function = Modify, subject = Difficulty,
+    layer   = Resolution, function = Modify, subject = ModifierToken,
     beat=2, resolution=Automatic, threshold=None,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
@@ -1690,7 +1690,7 @@ DIR.PA.11 = Card(
 ### DIR.MOD.1 — RIOT SQUAD
 
 #### Design Rationale
-First Directorate React — establishes the Territory\|Remove\|PresenceToken enforcement family for Directorate: three variants at increasing narrowness/strength — DIR.MOD.1 (generic, Established-gated), DIR.MOD.2 (Syndicate-targeted, same gate), DIR.MOD.3 (Ring 1-locked, no gate — strongest). Mechanically the simplest expression of "Directorate polices unauthorized expansion": any faction's presence placement in a district where Directorate holds Established+ draws an immediate, single-chip institutional response. The trigger's `faction=Any` scope is broader than sibling DIR.MOD.7's `opponent` scope and, as written, includes Directorate's own placements — self-fire here is a harmless costed no-op (Directorate placing its own chip in ground it already holds Established+, triggering removal of that same chip), intentional self-policing, not a bug. Still open: whether `arbiter.remove(presence_chip, ...)` can legally apply to a Deployment Marker's temporary chip (GR 8.3a — markers move, never removed), flagged below, not resolved here.
+First Directorate React — establishes the Territory\|Remove\|PresenceToken enforcement family for Directorate: three variants at increasing narrowness/strength — DIR.MOD.1 (generic, Established-gated), DIR.MOD.2 (Syndicate-targeted, same gate), DIR.MOD.3 (Ring 1-locked, no gate — strongest). Mechanically the simplest expression of "Directorate polices unauthorized expansion": any faction's presence placement in a district where Directorate holds Established+ draws an immediate, single-chip institutional response. The trigger's `faction=Any` scope is broader than sibling DIR.MOD.7's `opponent` scope and, as written, includes Directorate's own placements — self-fire here is a harmless costed no-op (Directorate placing its own chip in ground it already holds Established+, triggering removal of that same chip), intentional self-policing, not a bug. `arbiter.remove(presence_chip, ...)` can never target a Deployment Marker — Presence Token and Deployment Marker are separate physical components, not a marker-plus-linked-chip pair, confirmed and documented in §6.3.
 
 #### Card Story
 A rival faction moves a marker onto ground the Directorate already considers under its administration. Before the ink on the placement is dry, an enforcement team already has its orders — the marker comes back off the map, and no one needed to ask permission first.
@@ -1710,8 +1710,8 @@ A rival faction moves a marker onto ground the Directorate already considers und
 | Trigger validity | ✓ | `presence_chip.placed(faction=Any)` is confirmed TriggerExpr vocabulary (§6.3). `faction=Any` is inclusive-of-self by default; Directorate's own placements also satisfying the trigger is intentional self-policing, a harmless costed no-op, not a bug. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` is submitter-bounded, correctly structured per P16. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district`; no ring constraint, consistent with an Established-gated (not ring-gated) mechanism. | Art 01 §6–7 |
-| Supported by components | ⚠ | Presence chip removal reuses the standard mechanism, but the trigger (`presence_chip.placed`, unscoped) may match a Deployment Marker's first-placement temporary chip — GR 8.3a says deployment markers are always moved, never removed. Not confirmed whether `arbiter.remove()` here can legally apply to that case. | Art 02 §6–8; GR 8.3a |
-| Supported by game procedure | ✓ (contingent) | Reuses existing chip-removal behavior; no new ARBITER procedure needed once the Supported-by-components flag above is resolved. | Art 03; GR 6.1 |
+| Supported by components | ✓ | Presence chip removal reuses the standard mechanism; `arbiter.remove(presence_chip,...)` is confirmed to never target a Deployment Marker, so no GR 8.3a conflict. | Art 02 §6–8; GR 8.3a |
+| Supported by game procedure | ✓ | Reuses existing chip-removal behavior; no new ARBITER procedure needed. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177): `ps_framing`/`boost`/`resolution_type` now present as placeholders, not filled with real values; `cost` remains a TBD comment. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Card Story above gives a concrete event, but the in-card `narrative` prose field is still empty — narrative-writing pass still needed. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch, no `game.choose_one()`. | Art 04 §5 P27 |
@@ -1732,7 +1732,7 @@ None
 |--|-------------|-----------------|------------|
 | Status | |  |  |
 
-*First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core). Full content-review: 4 open flags (deployment-marker removal edge, cost/04-n178, family firing-window overlap, narrative prose absent). Design Pass ✓ (all 22 rows evaluated), Issues Resolved not yet (real flags remain open).*
+*First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core). Full content-review: 3 open flags (cost/04-n178, family firing-window overlap, narrative prose absent). Design Pass ✓ (all 22 rows evaluated), Issues Resolved not yet (real flags remain open).*
 
 ```python
 DIR.MOD.1 = Card(
@@ -1797,7 +1797,7 @@ Syndicate stakes a claim on ground Directorate already administers. The response
 | Trigger validity | ✓ | `presence_chip.placed(faction=Syndicate)` — confirmed vocabulary, explicitly scoped, no self-fire ambiguity (Directorate ≠ Syndicate). | Art 04 §6.3 |
 | Portrait validity | ⚠ | `{Directorate: submitter=+1}` is fine. `{Syndicate: flat=-1}` is schema-valid (`flat` is permitted on a named non-submitting faction) but is a genuine design question: Principle 11 ties Portrait movement to an action that strongly expresses *that faction's own* doctrine — here the action is Directorate's, and Syndicate's portrait moves as a consequence, not a choice. Open question: intentional "consequences imposed on you move your portrait" pattern, or should target-faction portrait entries require the target's own agency? | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Same as DIR.MOD.1. | Art 01 §6–7 |
-| Supported by components | ⚠ | Same deployment-marker-removal edge as DIR.MOD.1 (GR 8.3a) — family-wide flag, not re-derived per card. | Art 02 §6–8; GR 8.3a |
+| Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict, family-wide resolution. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ (contingent) | Same as DIR.MOD.1. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
@@ -1819,7 +1819,7 @@ None
 |--|-------------|-----------------|------------|
 | Status | |  |  |
 
-*Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2. Full content-review: 4 open flags (Syndicate portrait-on-target question, cost-flag inconsistency vs. DIR.MOD.1, deployment-marker removal edge, family firing-window overlap). Design Pass ✓, Issues Resolved not yet.*
+*Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2. Full content-review: 3 open flags (Syndicate portrait-on-target question, cost-flag inconsistency vs. DIR.MOD.1, family firing-window overlap). Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 DIR.MOD.2 = Card(
@@ -1884,7 +1884,7 @@ In the Core, nobody double-checks Directorate's paperwork. A rival plants a mark
 | Trigger validity | ✓ | Same `faction=Any` scope as DIR.MOD.1 — inclusive-of-self by default, harmless costed no-op here too. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` only — no target-faction entry, so DIR.MOD.2's Item 7 question doesn't apply here. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `ring_constraint=1` matches trigger's `ring=1` scope; consistent. | Art 01 §6–7 |
-| Supported by components | ⚠ | Same deployment-marker-removal edge as DIR.MOD.1/2 (GR 8.3a) — family-wide flag. | Art 02 §6–8; GR 8.3a |
+| Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict, family-wide resolution. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ (contingent) | Same as siblings. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
@@ -1906,7 +1906,7 @@ None
 |--|-------------|-----------------|------------|
 | Status | |  |  |
 
-*Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level. Full content-review: carries DIR.MOD.1's self-fire and deployment-marker flags plus a frequency flag specific to being both unrestricted and Ring 1-locked. Design Pass ✓, Issues Resolved not yet.*
+*Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level. Full content-review: carries DIR.MOD.1's self-fire flag plus a frequency flag specific to being both unrestricted and Ring 1-locked. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 DIR.MOD.3 = Card(

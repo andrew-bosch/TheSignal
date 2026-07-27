@@ -531,7 +531,7 @@ GHO.CA.7 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Burst gather for pre-loading multi-Quarter intelligence sequences. Single copy representing a total-collection operation: Ghost declares n Findings at submission, receives 2n Intel tokens on success (3n on crit). The slot commitment plus n Findings is the bet — fail returns nothing. Variable cost makes the card self-scaling: a small Full Take (n=1) is conservative; a large Full Take (n=3+) pre-loads an entire SCIF/Flip sequence. Reserved for mid-to-late game plays when Ghost has Findings reserves to invest. Singleton enforces scarcity. Threshold 40 is intentional: variable cost and fail=nothing are the risk floor; low threshold is the compensating upside. Adjacency restriction applies per 04-n6 direction — field collection op requires Ghost presence in target district or adjacent.
+Burst gather for pre-loading multi-Quarter intelligence sequences. Single copy representing a total-collection operation: Ghost submits Findings via the `boost=` mechanic, receives 2×(1+n_boost) Intel tokens on success (3×(1+n_boost) on crit) — normalized from an ad hoc bare-`n` variable to the schema's confirmed `boost=` field. The slot commitment plus Findings spent is the bet — fail returns nothing. Boost-scaled cost makes the card self-scaling: a base Full Take (no boost) is conservative; a heavily-boosted one pre-loads an entire SCIF/Flip sequence. Reserved for mid-to-late game plays when Ghost has Findings reserves to invest. Singleton enforces scarcity. Threshold 40 is intentional and does not scale with boost: variable cost and fail=nothing are the risk floor; low threshold is the compensating upside. Adjacency restriction applies per 04-n6 direction — field collection op requires Ghost presence in target district or adjacent.
 
 #### Card Story
 Ghost counts the Findings and commits: all of it against one target, declared before the case is sealed. The return is proportional. The loss, if it comes, is total — investment gone, target notified.
@@ -545,7 +545,7 @@ Ghost counts the Findings and commits: all of it against one target, declared be
 | Doctrine alignment | ✓ | Ghost only; variable cost scales with investment; singleton forces strategic commitment; adjacency restriction applied per 04-n6 | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — burst intelligence platform; no Standard equivalent | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Information/Add/IntelToken — higher-yield variant of Station/STD.CA.5 pattern | Art 04b §4, §5 |
-| Balance | ✓ | Variable cost n × 2 yield (3n crit) — singleton scarcity limits use; Intel holding guideline (4, not HARD) tolerates high-n plays; fail=nothing is the correct floor; threshold 40 confirmed | Art 02 §6–§7 |
+| Balance | ✓ | Boost-scaled cost, 2×(1+n_boost) yield (3×(1+n_boost) crit) — singleton scarcity limits use; Intel holding guideline (4, not HARD) tolerates high-boost plays; fail=nothing is the correct floor; threshold 40 confirmed | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: Intel tokens dispatched at Beat 3; durable resource, no card-level duration | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
@@ -553,7 +553,7 @@ Ghost counts the Findings and commits: all of it against one target, declared be
 | Supported by zones | ✓ | Adjacency restriction applied per 04-n6 — field collection op requires Ghost presence in target district or adjacent | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (Art 02 §12); Findings cost; n validated at Beat 0 via arbiter_note (Art 04 §5 P20) | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 0: arbiter_note specifies ARBITER records declared n and validates Findings present; Beat 3 resolution per Art 03 §9, §11 | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Still missing `boost`/`ps_framing`. More notably — this card's variable-cost mechanic (`n` declared at submission, scales cost/success/successcrit) is exactly what the schema's `boost: BoostExpr` field exists for ("player submits additional resources beyond base cost; ARBITER detects at Beat 0; success fires (1+n) times" — `design_reference_card_system.md` §6 Field Groups), but the card uses a bare undeclared `n` variable instead of the `boost=` field DIR.CA.5 Sanctioned Raid uses correctly for the same shape. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | `boost = True: Findings * 1` — normalized from a bare undeclared `n` variable to the schema's confirmed `boost: BoostExpr` field. Still missing `ps_framing`. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, scaled by `n`). | Art 00a §9.2 |
@@ -597,10 +597,11 @@ GHO.CA.8 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = district(self|adjacent).faction(acting).presence > 0,
-    cost            = Findings * n,  # n declared at submission; n >= 1; all n Findings physically present (Art 04 §5 P20)
+    cost            = Findings * 1,  # base cost for 1 unit; all Findings physically present (Art 04 §5 P20)
+    boost           = True: Findings * 1,  # each additional unit costs 1 more Findings, matching original n-scaling
 
-    success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (n * 2),
-    successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * n,   # +n = 3n total
+    success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (2 * (1 + n_boost)),
+    successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (1 + n_boost),   # additive delta; 3×(1+n_boost) total
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
 
@@ -608,8 +609,8 @@ GHO.CA.8 = Card(
 
     narrative    = "Some intelligence is gathered patiently. Some is taken all at once.",
     perspectives = {Ghost: "The take was complete. Everything they transmitted this Quarter. We have it."},
-    design_note  = "Singleton. Variable cost: Ghost declares n at submission; cost = n Findings; success = 2n Intel tokens; crit success = 3n. Fail = nothing. Threshold 40 confirmed — variable cost and fail=nothing are sufficient risk; low threshold is the compensating upside. Adjacency restriction per 04-n6. Intel holding guideline is 4 (not HARD); high-n plays may exceed guideline.",
-    arbiter_note = "At Beat 0: record declared n; validate n Findings present in case. At Beat 3: success = dispatch 2n IntelToken(faction=target) to Ghost's case; crit success = dispatch 3n; fail = nothing; crit fail = NotificationSlip to target.",
+    design_note  = "Singleton. Variable cost via boost: base 1 Findings, each boost unit +1 Findings (no declaration — ARBITER infers n_boost from total submitted at Beat 0, per the confirmed boost mechanic); success = 2×(1+n_boost) Intel tokens; crit success = 3×(1+n_boost). Fail = nothing. Threshold 40 confirmed, does not scale with boost — variable cost and fail=nothing are sufficient risk; low threshold is the compensating upside. Adjacency restriction per 04-n6. Intel holding guideline is 4 (not HARD); high-boost plays may exceed guideline.",
+    arbiter_note = "At Beat 0: validate base cost paid; n_boost = excess payment ÷ 1 Findings; place n_boost BM-xx on grid slot; lock success/successcrit magnitudes using (1+n_boost). At Beat 3: success = dispatch 2×(1+n_boost) IntelToken(faction=target) to Ghost's case; crit success = dispatch an additional (1+n_boost) (3×(1+n_boost) total); fail = nothing; crit fail = NotificationSlip to target; remove BM-xx to supply.",
 )
 ```
 
@@ -641,7 +642,7 @@ GHO.CA.8 = Card(
 | Supported by zones | ⚠ |  |  |
 | Supported by components | ⚠ |  |  |
 | Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/GHO.CA.14. `v_card_mechanical_alignment` (DB) also flags this card's subject `TargetProfile` as `Non-component Subject` — second confirmed instance of the same gap as DIR.CA.8's "Difficulty". Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/GHO.CA.14. Subject `TargetProfile` is real, valid vocabulary (ref_taxonomy.md's Corrupt-target list, DB:48 component) — the DB's `Non-component Subject` flag was a `card_subject_map` registration gap, not a card defect; now registered. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
@@ -1955,6 +1956,8 @@ The intelligence test is genuine: because Target Profiles are placed face-down a
 
 Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Ghost's doctrine across all factions. Sleeper Analyst makes that doctrine actionable: Ghost can mechanically suppress any attribution they have intelligence on. Works against corrupted tokens (planted by Ghost via Source Substitution) and legitimate ones alike — Ghost believes no covert attribution belongs on the public record.
 
+Trigger is `public_act.placed_on_frg(faction=opponent, uses_intel_token=True)` and resolution is `Automatic`/`Transactional` — corrected from invalid legacy syntax and enum values. The mechanic is a deterministic declare-then-verify check (no dice), matching Automatic/Transactional exactly; `uses_intel_token=True` is a confirmed §6.3 filter parameter for this card's "PA placed with an Intel Token attached" requirement.
+
 #### Card Story
 A faction places a public act backed by an Intel token, confident the attribution is buried. Ghost already knows whose name is on it — and says so, out loud, before the table ever finds out. The attribution ends there; so does the act.
 
@@ -1970,18 +1973,18 @@ A faction places a public act backed by an Intel token, confident the attributio
 | Balance | ✓ | No activation cost, card consumed on fire (success or misfire), requires genuine prior intelligence to use reliably. | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — PA cancellation and PS shift resolve at trigger. | Art 04 §5 P19 |
 | Persistence | ⚠ | The `persistence` field is still absent from the spec — same open schema question as the rest of the corpus, not a card-specific issue. | Art 04 §6.2 |
-| Trigger validity | ⚠ | The trigger fires on a genuinely public board event, but its syntax predates confirmed §6.3 TriggerExpr forms entirely — not the same as the Directorate set's `faction=Any` ambiguity, this is an unreconciled legacy construction. | Art 04 §6.3 |
+| Trigger validity | ✓ | `public_act.placed_on_frg(faction=opponent, uses_intel_token=True)` — confirmed §6.3 vocabulary. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Ghost: submitter=+1}` — submitter-bounded, correctly structured. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — correct, this isn't a territory effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | Intel Token (on the placed PA) and PS shift both reuse existing components. | Art 02 §6, §11 |
 | Supported by game procedure | ✓ | React timing at Art 03 §9.2.0, Target Profile face-down mechanism, Ghost Source Substitution as the intelligence-generation chain — all pre-existing procedure, no new ARBITER behavior. | Art 03 §18; Art 03 §9.2.0 |
-| Data schema validation | ⚠ | `resolution=Prediction` and `resolution_type="Conditional"` are invalid enum values; missing ring_constraint/ring_origin/value_rating/boost/ps_framing scaffolding fields (04-n177). | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | `resolution`/`resolution_type` now valid (`Automatic`/`Transactional`); missing ring_constraint/ring_origin/value_rating/boost/ps_framing scaffolding fields remain (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field still empty despite Card Story being present above. | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | Genuine two-branch outcome (declaration matches / doesn't), but modeled via the invalid `Prediction` resolution value rather than a confirmed enum — can't fully assess determinacy until the resolution enum issue above resolves. | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | Genuine two-branch outcome (declaration matches / doesn't), now modeled via `Automatic` with a real success/fail branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None` — reasonable; the real cost is the intelligence-gathering prerequisite (Source Substitution/SIGINT chain), and misfire risk (card consumed on a wrong guess) already balances free activation. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ⚠ | Depends on how often PAs are placed with Intel tokens attached — a fairly specific combined event; best-effort, not independently verifiable here. |  |
 | Firing window (ModReactCard) | ✓ | No other Ghost card shares this exact trigger (PA + Intel Token at placement). |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ | This reads as a deterministic ARBITER check (no dice), which argues for `Automatic`, but the card as specced uses neither valid enum value. Can't close until resolved. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Deterministic ARBITER check (no dice) — `Automatic` is correct. |  |
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: is a 2nd copy meaningful, or does the first copy's misfire consume the only useful attempt regardless of copies held? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` (04-n177) — correct; not a district/ring-scoped effect. |  |
 
@@ -2006,14 +2009,14 @@ GHO.MOD.1 = Card(
     type    = ModReactCard,  faction = Ghost,
     layer   = Information,  function = Remove,  subject = IntelToken,
 
-    trigger = faction(opponent).places(PA, with=IntelToken(any), at=Art 03 §9.2.0),
+    trigger = public_act.placed_on_frg(faction=opponent, uses_intel_token=True),
     beat    = None,  # React — fires at Art 03 §9.2.0, not in initiative
     ring_constraint = None,  # scaffolded, not addressed
     ring_origin     = None,  # scaffolded, not addressed
     value_rating    = None,  # scaffolded, not addressed
-    resolution = Prediction,
+    resolution = Automatic,
     threshold  = None,
-    ring_mod   = None,  doctrine_mod = None,  resolution_type = "Conditional",
+    ring_mod   = None,  doctrine_mod = None,  resolution_type = Transactional,
 
     target_district = None,
     target_faction  = None,
@@ -2305,7 +2308,7 @@ GHO.MOD.4 = Card(
 ### GHO.MOD.5 — FALSE FLAG
 
 #### Design Rationale
-Ghost's Flip-doctrine payoff: reacts to *any* faction's positive PS shift and inverts it into a net loss, funded by Ghost's own resources (Findings + Exposure). The trigger uses `public_standing.shifted(faction=Any, direction=Positive)` — a retired term; the confirmed form is `standing_marker.increased/decreased(faction=X)` (already applied to SYN.MOD.4/5), but not fixed here — content decision belongs to a future pass. Also worth noting: the cost spends Exposure, which isn't Ghost's native resource (Findings is) — not illegal (cross-resource costs are an established pattern elsewhere in the game), but worth flagging whether Ghost realistically has Exposure on hand without a prior conversion/trade step.
+Ghost's Flip-doctrine payoff: reacts to *any* faction's positive PS shift and inverts it into a net loss, funded by Ghost's own resources (Findings + Exposure). Trigger uses `standing_marker.increased(faction=Any)`, the confirmed form (already applied to SYN.MOD.4/5) — corrected from a retired trigger term. Also worth noting: the cost spends Exposure, which isn't Ghost's native resource (Findings is) — not illegal (cross-resource costs are an established pattern elsewhere in the game), but worth flagging whether Ghost realistically has Exposure on hand without a prior conversion/trade step.
 
 #### Card Story
 A rival claims a public win — the kind that moves their standing up in front of the whole table. Ghost already has the counter-narrative ready. By the time anyone checks the record again, the "victory" reads as the opposite.
@@ -2322,7 +2325,7 @@ A rival claims a public win — the kind that moves their standing up in front o
 | Balance | ⚠ | Doubles the trigger amount to invert a gain into an equal-magnitude loss — mechanically sound (verified the math: net effect from pre-trigger baseline is −X on a +X gain), but real cost (Findings+Exposure) and value_rating aren't set; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `public_standing.shifted(direction=Positive)` is a retired term — the sole remaining instance across the whole card system. Flagged, not fixed. | Art 04 §6.3 |
+| Trigger validity | ✓ | `standing_marker.increased(faction=Any)` — confirmed §6.3 vocabulary, correctly scoped. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; this isn't a territory effect. | Art 01 §6–7 |
 | Supported by components | ✓ | PS/Standing marker shift reuses the standard mechanism. | Art 02 §6–8 |
@@ -2355,7 +2358,7 @@ GHO.MOD.5 = Card(
     type    = ModReactCard,  faction = Ghost,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
 
-    trigger         = public_standing.shifted(faction=Any, direction=Positive),
+    trigger         = standing_marker.increased(faction=Any),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -2372,7 +2375,7 @@ GHO.MOD.5 = Card(
     cost            = Findings * 1 + Exposure * 1,
     boost           = None,  # scaffolded, not addressed
 
-    success     = arbiter.shift(public_standing, faction=trigger.faction, amount=-(trigger.amount * 2)),
+    success     = arbiter.shift(standing_marker, faction=trigger.faction, amount=-(trigger.amount * 2)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -2495,7 +2498,7 @@ A rival's chip count finally tips them into Dominant — the marker goes down, t
 | Trigger validity | ✓ | `dominant_marker.placed(faction=Any)` is confirmed vocabulary, inclusive-of-self by default; firing against Ghost's own Dominant achievement costs 3 resources for a confirmed harmless no-op swap, not a bug. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
-| Supported by components | ⚠ | Same deployment-marker-removal edge as the Directorate enforcement family — the removed chip could be a Deployment Marker's temporary presence (GR 8.3a: markers move, never removed). | Art 02 §6–8; GR 8.3a |
+| Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ | Reuses existing chip removal/placement mechanisms and the Dominant-marker-placement event; no new ARBITER procedure. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding placeholders added (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story present above. | Art 04 §5 Card Story |
@@ -2560,7 +2563,7 @@ GHO.MOD.7 = Card(
 ### GHO.MOD.8 — LOCAL SYMPATHIZERS
 
 #### Design Rationale
-Mid-game counterpart to GHO.MOD.7's endgame disruption: reacts to any faction reaching Established (IL-02) and immediately strips 1 chip, downgrading them back to Present. Same shape as DIR.MOD.1's enforcement family (Territory/Remove/PresenceToken). `faction=Any` self-fire (Ghost achieving Established would trigger this against itself) is a confirmed harmless costed no-op. Still open: the deployment-marker-removal edge (item 6), and the cross-resource cost-holding question (cost denominated in the *triggering faction's* native resource, same as GHO.MOD.6/7).
+Mid-game counterpart to GHO.MOD.7's endgame disruption: reacts to any faction reaching Established (IL-02) and immediately strips 1 chip, downgrading them back to Present. Same shape as DIR.MOD.1's enforcement family (Territory/Remove/PresenceToken). `faction=Any` self-fire (Ghost achieving Established would trigger this against itself) is a confirmed harmless costed no-op. Still open: the cross-resource cost-holding question (cost denominated in the *triggering faction's* native resource, same as GHO.MOD.6/7). `arbiter.remove(presence_chip,...)` is confirmed to never target a Deployment Marker, so no GR 8.3a conflict.
 
 #### Card Story
 A faction plants its second foothold in a district and calls it secured. The neighborhood disagrees — quietly, and on someone else's payroll. One chip comes back off the board before the ink on "Established" dries.
@@ -2580,7 +2583,7 @@ A faction plants its second foothold in a district and calls it secured. The nei
 | Trigger validity | ✓ | `established_marker.placed(faction=Any)` is confirmed vocabulary, inclusive-of-self by default, confirmed harmless costed no-op. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
-| Supported by components | ⚠ | Same deployment-marker-removal edge as DIR.MOD.1/2/3 and GHO.MOD.7. | Art 02 §6–8; GR 8.3a |
+| Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ | Reuses existing chip-removal mechanism and Established-marker-placement event; no new ARBITER procedure. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding placeholders added (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story present above. | Art 04 §5 Card Story |

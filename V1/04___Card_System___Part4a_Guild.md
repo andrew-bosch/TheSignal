@@ -738,7 +738,7 @@ Distinct from STD.CA.10 Protect (raises attacker threshold on incoming CAs) and 
 | Voice fit | ✓ | Five perspectives: Guild matter-of-fact certainty; Directorate notes the institutional channel; Ghost reads it as operational pre-commitment; Network clocks the dual announcement; Syndicate prices the certainty premium | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild ceiling Resolution card; Beat 2 Automatic; Portrait +1; construction certainty is the Guild doctrine made mechanical | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — the guarantee is covert; no public announcement of which CA is being backed | Art 04 §6.2 |
-| Taxonomy fit | ⚠ | Resolution / Modify / Difficulty — suppresses d100 roll on target CA, converting it to guaranteed success+successcrit. `v_card_mechanical_alignment` (DB) shows `Non-component Subject` for "Difficulty" — same unregistered-Subject gap as DIR.CA.8, now 3 confirmed instances (DIR.CA.8, GHO.CA.15's TargetProfile is a different subject but same gap-type, and this card). Not resolved. | Art 04b §4 |
+| Taxonomy fit | ✓ | Resolution / Modify / CovertOperation — suppresses d100 roll on a named target CA, converting it to guaranteed success+successcrit; the card modifies another Covert Operation's resolution, so Subject=CovertOperation is correctly-scoped, already-valid vocabulary. | Art 04b §4 |
 | Balance | ⚠ | High total cost (CA cost + 2C + 1 district native + 2 dispatch slots); ceiling output (4 presence + 2 structures for CA.4); restriction checks at Beat 0 limit abuse — playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Beat 2 effect (guarantee registered); Beat 3 CA output is Permanent (structures/presence placed) | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — guarantee resolves at Beat 3 with the target CA; no lingering marker | Art 04 §6 |
@@ -769,7 +769,7 @@ GUI.CA.9 = Card(
     tagline = "Commit to both sites. Both get built.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-    layer    = Resolution,  function = Modify,  subject = Difficulty,
+    layer    = Resolution,  function = Modify,  subject = CovertOperation,
 
     beat            = 2,
     resolution      = Automatic,

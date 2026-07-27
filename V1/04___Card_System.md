@@ -744,6 +744,42 @@ TriggerExpr:         Any
 #   broadcast_card.placed                              (db25 — public SitRep card placed in Situation Report Zone; fires at Upkeep phase 1 and Beat 5 phase 18)
 #   public_act.placed_on_frg(faction, ...)             (any faction places a PA face-up on their FRG at §9.2 Public Declaration)
 #
+# ring= confirmed valid on all .removed() forms, symmetric with .placed() (schema_cleanup_log #3,
+# PM05 04-n195 item 1) — e.g. presence_chip.removed(faction=X, ring=Z) is confirmed vocabulary,
+# not just presence_chip.placed(faction=X, ring=Z).
+#
+# public_act.placed_on_frg() additionally accepts uses_intel_token=True as a confirmed filter
+# parameter (schema_cleanup_log #12/#13, PM05 04-n195 item 10) — matches only when the placed PA
+# carries an Intel Token as part of its declared cost/payment. Default (omitted) = no filter, any
+# PA placement matches regardless of Intel Token presence.
+#
+# board_state.changed(component=, change=, cause=, faction=, district=, ring=) — general-purpose
+# TriggerExpr primitive (PM05 04-n195 items 11/12) for cards that need to react to more than one
+# component type and/or any direction of change at once, which the itemized single-event forms above
+# can't express (they have no OR-composition). Coexists with the itemized forms — those remain the
+# precise/preferred choice for a card that only cares about one specific event and direction;
+# board_state.changed() is for the genuinely broader case.
+#   component: presence_chip | structure_block | standing_marker | deployment_marker | accord |
+#              public_act | modifier_card | native_resource | intel_token | target_profile | Any
+#              — component=Any is an open/extensible category meaning "any publicly visible,
+#              non-procedural board object" (same public/player-driven scope as the Excluded notes
+#              below already establish) — a new component type added to the game later qualifies
+#              automatically, no re-confirmation of this primitive needed. May also be a list of
+#              specific component values to match more than one type but not all.
+#   change:    placed | removed | increased | decreased | moved | corrupted | Any
+#              — change=Any matches any direction. Not every component supports every change value
+#              (e.g. standing_marker only ever increased/decreased); use whichever applies.
+#   cause:     public_act | covert_operation | modifier_card | upkeep | Any
+#              — filters by what produced the change, distinct from component (what changed). No
+#              separate "arbiter" value — ARBITER executes the change but is never itself the cause;
+#              the cause is always the CA, PA, or Modifier Card that made ARBITER act (upkeep is a
+#              4th, procedural cause, kept for completeness even though no confirmed instance uses it
+#              yet). Default Any = no filter, matching every card written before this parameter existed.
+#              A card that means "specifically as a consequence of a PA resolving," not any board
+#              change regardless of source, must state cause=public_act explicitly — a card's beat=
+#              field is not a substitute for this filter.
+#   faction/district/ring: same semantics as the itemized forms above.
+#
 # Excluded (static — never change): district tiles, board geography, ARBITER Dominance Marker
 # Excluded (procedural — not player-driven): Initiative Strip, Session Timeline, Quarter/Month markers
 
@@ -769,6 +805,16 @@ MutationExpr:        confirmed helper symbols only (full grammar not yet enumera
 #                                   threshold). Not new ARBITER behavior — feeds the existing threshold-
 #                                   modifier-accumulation pipeline already used by BM-xx tokens and M-11
 #                                   Type B Countermeasure (Art 03 §9.4.1.1/§9.4.3.1.3).
+#   arbiter.remove(presence_chip, ...)
+#                                 — confirmed (schema_cleanup_log #6, PM05 04-n195 item 2): can never
+#                                   target a Deployment Marker. Presence Token (DB:1) and Deployment
+#                                   Marker (DB:2) are separate physical components, not a marker-plus-
+#                                   linked-chip pair — a Deployment Marker "counts as 1 Presence Token
+#                                   for all purposes" (Art 02 §6) only for counting/influence-level
+#                                   purposes, not as a valid removal target. If a faction's only presence
+#                                   in scope is a Deployment Marker (no separate literal chip), this call
+#                                   simply has nothing valid to remove there. GR 8.3a (displaced markers
+#                                   are repositioned, never removed) is not in tension with this call.
 #
 # Confirmed via: STD.MOD.98–133 (Ring 1/2/3 ModReactCard stub passes, S135–S138). Reconciles 04-n171.
 
@@ -14256,7 +14302,7 @@ Distinct from STD.CA.10 Protect (raises attacker threshold on incoming CAs) and 
 | Voice fit | ✓ | Five perspectives: Guild matter-of-fact certainty; Directorate notes the institutional channel; Ghost reads it as operational pre-commitment; Network clocks the dual announcement; Syndicate prices the certainty premium | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild ceiling Resolution card; Beat 2 Automatic; Portrait +1; construction certainty is the Guild doctrine made mechanical | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — the guarantee is covert; no public announcement of which CA is being backed | Art 04 §6.2 |
-| Taxonomy fit | ⚠ | Resolution / Modify / Difficulty — suppresses d100 roll on target CA, converting it to guaranteed success+successcrit. `v_card_mechanical_alignment` (DB) shows `Non-component Subject` for "Difficulty" — same unregistered-Subject gap as DIR.CA.8, now 3 confirmed instances (DIR.CA.8, GHO.CA.15's TargetProfile is a different subject but same gap-type, and this card). Not resolved. | Art 04b §4 |
+| Taxonomy fit | ✓ | Resolution / Modify / CovertOperation — suppresses d100 roll on a named target CA, converting it to guaranteed success+successcrit; the card modifies another Covert Operation's resolution, so Subject=CovertOperation is correctly-scoped, already-valid vocabulary. | Art 04b §4 |
 | Balance | ⚠ | High total cost (CA cost + 2C + 1 district native + 2 dispatch slots); ceiling output (4 presence + 2 structures for CA.4); restriction checks at Beat 0 limit abuse — playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Beat 2 effect (guarantee registered); Beat 3 CA output is Permanent (structures/presence placed) | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — guarantee resolves at Beat 3 with the target CA; no lingering marker | Art 04 §6 |
@@ -14287,7 +14333,7 @@ GUI.CA.9 = Card(
     tagline = "Commit to both sites. Both get built.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-    layer    = Resolution,  function = Modify,  subject = Difficulty,
+    layer    = Resolution,  function = Modify,  subject = CovertOperation,
 
     beat            = 2,
     resolution      = Automatic,
@@ -17788,7 +17834,7 @@ GHO.CA.7 = Card(
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Burst gather for pre-loading multi-Quarter intelligence sequences. Single copy representing a total-collection operation: Ghost declares n Findings at submission, receives 2n Intel tokens on success (3n on crit). The slot commitment plus n Findings is the bet — fail returns nothing. Variable cost makes the card self-scaling: a small Full Take (n=1) is conservative; a large Full Take (n=3+) pre-loads an entire SCIF/Flip sequence. Reserved for mid-to-late game plays when Ghost has Findings reserves to invest. Singleton enforces scarcity. Threshold 40 is intentional: variable cost and fail=nothing are the risk floor; low threshold is the compensating upside. Adjacency restriction applies per 04-n6 direction — field collection op requires Ghost presence in target district or adjacent.
+Burst gather for pre-loading multi-Quarter intelligence sequences. Single copy representing a total-collection operation: Ghost submits Findings via the `boost=` mechanic, receives 2×(1+n_boost) Intel tokens on success (3×(1+n_boost) on crit) — normalized from an ad hoc bare-`n` variable to the schema's confirmed `boost=` field. The slot commitment plus Findings spent is the bet — fail returns nothing. Boost-scaled cost makes the card self-scaling: a base Full Take (no boost) is conservative; a heavily-boosted one pre-loads an entire SCIF/Flip sequence. Reserved for mid-to-late game plays when Ghost has Findings reserves to invest. Singleton enforces scarcity. Threshold 40 is intentional and does not scale with boost: variable cost and fail=nothing are the risk floor; low threshold is the compensating upside. Adjacency restriction applies per 04-n6 direction — field collection op requires Ghost presence in target district or adjacent.
 
 #### Card Story
 Ghost counts the Findings and commits: all of it against one target, declared before the case is sealed. The return is proportional. The loss, if it comes, is total — investment gone, target notified.
@@ -17802,7 +17848,7 @@ Ghost counts the Findings and commits: all of it against one target, declared be
 | Doctrine alignment | ✓ | Ghost only; variable cost scales with investment; singleton forces strategic commitment; adjacency restriction applied per 04-n6 | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — burst intelligence platform; no Standard equivalent | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Information/Add/IntelToken — higher-yield variant of Station/STD.CA.5 pattern | Art 04b §4, §5 |
-| Balance | ✓ | Variable cost n × 2 yield (3n crit) — singleton scarcity limits use; Intel holding guideline (4, not HARD) tolerates high-n plays; fail=nothing is the correct floor; threshold 40 confirmed | Art 02 §6–§7 |
+| Balance | ✓ | Boost-scaled cost, 2×(1+n_boost) yield (3×(1+n_boost) crit) — singleton scarcity limits use; Intel holding guideline (4, not HARD) tolerates high-boost plays; fail=nothing is the correct floor; threshold 40 confirmed | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate: Intel tokens dispatched at Beat 3; durable resource, no card-level duration | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | N/A — trigger = None | — |
@@ -17810,7 +17856,7 @@ Ghost counts the Findings and commits: all of it against one target, declared be
 | Supported by zones | ✓ | Adjacency restriction applied per 04-n6 — field collection op requires Ghost presence in target district or adjacent | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (Art 02 §12); Findings cost; n validated at Beat 0 via arbiter_note (Art 04 §5 P20) | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 0: arbiter_note specifies ARBITER records declared n and validates Findings present; Beat 3 resolution per Art 03 §9, §11 | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Still missing `boost`/`ps_framing`. More notably — this card's variable-cost mechanic (`n` declared at submission, scales cost/success/successcrit) is exactly what the schema's `boost: BoostExpr` field exists for ("player submits additional resources beyond base cost; ARBITER detects at Beat 0; success fires (1+n) times" — `design_reference_card_system.md` §6 Field Groups), but the card uses a bare undeclared `n` variable instead of the `boost=` field DIR.CA.5 Sanctioned Raid uses correctly for the same shape. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | `boost = True: Findings * 1` — normalized from a bare undeclared `n` variable to the schema's confirmed `boost: BoostExpr` field. Still missing `ps_framing`. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, scaled by `n`). | Art 00a §9.2 |
@@ -17854,10 +17900,11 @@ GHO.CA.8 = Card(
     target_taxonomy = None,
     affinity        = None,
     restriction     = district(self|adjacent).faction(acting).presence > 0,
-    cost            = Findings * n,  # n declared at submission; n >= 1; all n Findings physically present (Art 04 §5 P20)
+    cost            = Findings * 1,  # base cost for 1 unit; all Findings physically present (Art 04 §5 P20)
+    boost           = True: Findings * 1,  # each additional unit costs 1 more Findings, matching original n-scaling
 
-    success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (n * 2),
-    successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * n,   # +n = 3n total
+    success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (2 * (1 + n_boost)),
+    successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (1 + n_boost),   # additive delta; 3×(1+n_boost) total
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
 
@@ -17865,8 +17912,8 @@ GHO.CA.8 = Card(
 
     narrative    = "Some intelligence is gathered patiently. Some is taken all at once.",
     perspectives = {Ghost: "The take was complete. Everything they transmitted this Quarter. We have it."},
-    design_note  = "Singleton. Variable cost: Ghost declares n at submission; cost = n Findings; success = 2n Intel tokens; crit success = 3n. Fail = nothing. Threshold 40 confirmed — variable cost and fail=nothing are sufficient risk; low threshold is the compensating upside. Adjacency restriction per 04-n6. Intel holding guideline is 4 (not HARD); high-n plays may exceed guideline.",
-    arbiter_note = "At Beat 0: record declared n; validate n Findings present in case. At Beat 3: success = dispatch 2n IntelToken(faction=target) to Ghost's case; crit success = dispatch 3n; fail = nothing; crit fail = NotificationSlip to target.",
+    design_note  = "Singleton. Variable cost via boost: base 1 Findings, each boost unit +1 Findings (no declaration — ARBITER infers n_boost from total submitted at Beat 0, per the confirmed boost mechanic); success = 2×(1+n_boost) Intel tokens; crit success = 3×(1+n_boost). Fail = nothing. Threshold 40 confirmed, does not scale with boost — variable cost and fail=nothing are sufficient risk; low threshold is the compensating upside. Adjacency restriction per 04-n6. Intel holding guideline is 4 (not HARD); high-boost plays may exceed guideline.",
+    arbiter_note = "At Beat 0: validate base cost paid; n_boost = excess payment ÷ 1 Findings; place n_boost BM-xx on grid slot; lock success/successcrit magnitudes using (1+n_boost). At Beat 3: success = dispatch 2×(1+n_boost) IntelToken(faction=target) to Ghost's case; crit success = dispatch an additional (1+n_boost) (3×(1+n_boost) total); fail = nothing; crit fail = NotificationSlip to target; remove BM-xx to supply.",
 )
 ```
 
@@ -17898,7 +17945,7 @@ GHO.CA.8 = Card(
 | Supported by zones | ⚠ |  |  |
 | Supported by components | ⚠ |  |  |
 | Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/GHO.CA.14. `v_card_mechanical_alignment` (DB) also flags this card's subject `TargetProfile` as `Non-component Subject` — second confirmed instance of the same gap as DIR.CA.8's "Difficulty". Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/GHO.CA.14. Subject `TargetProfile` is real, valid vocabulary (ref_taxonomy.md's Corrupt-target list, DB:48 component) — the DB's `Non-component Subject` flag was a `card_subject_map` registration gap, not a card defect; now registered. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
@@ -19212,6 +19259,8 @@ The intelligence test is genuine: because Target Profiles are placed face-down a
 
 Ghost's portrait −2 on STD.PA.5 documents that public attribution violates Ghost's doctrine across all factions. Sleeper Analyst makes that doctrine actionable: Ghost can mechanically suppress any attribution they have intelligence on. Works against corrupted tokens (planted by Ghost via Source Substitution) and legitimate ones alike — Ghost believes no covert attribution belongs on the public record.
 
+Trigger is `public_act.placed_on_frg(faction=opponent, uses_intel_token=True)` and resolution is `Automatic`/`Transactional` — corrected from invalid legacy syntax and enum values. The mechanic is a deterministic declare-then-verify check (no dice), matching Automatic/Transactional exactly; `uses_intel_token=True` is a confirmed §6.3 filter parameter for this card's "PA placed with an Intel Token attached" requirement.
+
 #### Card Story
 A faction places a public act backed by an Intel token, confident the attribution is buried. Ghost already knows whose name is on it — and says so, out loud, before the table ever finds out. The attribution ends there; so does the act.
 
@@ -19227,18 +19276,18 @@ A faction places a public act backed by an Intel token, confident the attributio
 | Balance | ✓ | No activation cost, card consumed on fire (success or misfire), requires genuine prior intelligence to use reliably. | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — PA cancellation and PS shift resolve at trigger. | Art 04 §5 P19 |
 | Persistence | ⚠ | The `persistence` field is still absent from the spec — same open schema question as the rest of the corpus, not a card-specific issue. | Art 04 §6.2 |
-| Trigger validity | ⚠ | The trigger fires on a genuinely public board event, but its syntax predates confirmed §6.3 TriggerExpr forms entirely — not the same as the Directorate set's `faction=Any` ambiguity, this is an unreconciled legacy construction. | Art 04 §6.3 |
+| Trigger validity | ✓ | `public_act.placed_on_frg(faction=opponent, uses_intel_token=True)` — confirmed §6.3 vocabulary. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Ghost: submitter=+1}` — submitter-bounded, correctly structured. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — correct, this isn't a territory effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | Intel Token (on the placed PA) and PS shift both reuse existing components. | Art 02 §6, §11 |
 | Supported by game procedure | ✓ | React timing at Art 03 §9.2.0, Target Profile face-down mechanism, Ghost Source Substitution as the intelligence-generation chain — all pre-existing procedure, no new ARBITER behavior. | Art 03 §18; Art 03 §9.2.0 |
-| Data schema validation | ⚠ | `resolution=Prediction` and `resolution_type="Conditional"` are invalid enum values; missing ring_constraint/ring_origin/value_rating/boost/ps_framing scaffolding fields (04-n177). | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | `resolution`/`resolution_type` now valid (`Automatic`/`Transactional`); missing ring_constraint/ring_origin/value_rating/boost/ps_framing scaffolding fields remain (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field still empty despite Card Story being present above. | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | Genuine two-branch outcome (declaration matches / doesn't), but modeled via the invalid `Prediction` resolution value rather than a confirmed enum — can't fully assess determinacy until the resolution enum issue above resolves. | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | Genuine two-branch outcome (declaration matches / doesn't), now modeled via `Automatic` with a real success/fail branch. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None` — reasonable; the real cost is the intelligence-gathering prerequisite (Source Substitution/SIGINT chain), and misfire risk (card consumed on a wrong guess) already balances free activation. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ⚠ | Depends on how often PAs are placed with Intel tokens attached — a fairly specific combined event; best-effort, not independently verifiable here. |  |
 | Firing window (ModReactCard) | ✓ | No other Ghost card shares this exact trigger (PA + Intel Token at placement). |  |
-| Automatic vs. d100 (ModReactCard) | ⚠ | This reads as a deterministic ARBITER check (no dice), which argues for `Automatic`, but the card as specced uses neither valid enum value. Can't close until resolved. |  |
+| Automatic vs. d100 (ModReactCard) | ✓ | Deterministic ARBITER check (no dice) — `Automatic` is correct. |  |
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: is a 2nd copy meaningful, or does the first copy's misfire consume the only useful attempt regardless of copies held? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` (04-n177) — correct; not a district/ring-scoped effect. |  |
 
@@ -19263,14 +19312,14 @@ GHO.MOD.1 = Card(
     type    = ModReactCard,  faction = Ghost,
     layer   = Information,  function = Remove,  subject = IntelToken,
 
-    trigger = faction(opponent).places(PA, with=IntelToken(any), at=Art 03 §9.2.0),
+    trigger = public_act.placed_on_frg(faction=opponent, uses_intel_token=True),
     beat    = None,  # React — fires at Art 03 §9.2.0, not in initiative
     ring_constraint = None,  # scaffolded, not addressed
     ring_origin     = None,  # scaffolded, not addressed
     value_rating    = None,  # scaffolded, not addressed
-    resolution = Prediction,
+    resolution = Automatic,
     threshold  = None,
-    ring_mod   = None,  doctrine_mod = None,  resolution_type = "Conditional",
+    ring_mod   = None,  doctrine_mod = None,  resolution_type = Transactional,
 
     target_district = None,
     target_faction  = None,
@@ -19562,7 +19611,7 @@ GHO.MOD.4 = Card(
 ### GHO.MOD.5 — FALSE FLAG
 
 #### Design Rationale
-Ghost's Flip-doctrine payoff: reacts to *any* faction's positive PS shift and inverts it into a net loss, funded by Ghost's own resources (Findings + Exposure). The trigger uses `public_standing.shifted(faction=Any, direction=Positive)` — a retired term; the confirmed form is `standing_marker.increased/decreased(faction=X)` (already applied to SYN.MOD.4/5), but not fixed here — content decision belongs to a future pass. Also worth noting: the cost spends Exposure, which isn't Ghost's native resource (Findings is) — not illegal (cross-resource costs are an established pattern elsewhere in the game), but worth flagging whether Ghost realistically has Exposure on hand without a prior conversion/trade step.
+Ghost's Flip-doctrine payoff: reacts to *any* faction's positive PS shift and inverts it into a net loss, funded by Ghost's own resources (Findings + Exposure). Trigger uses `standing_marker.increased(faction=Any)`, the confirmed form (already applied to SYN.MOD.4/5) — corrected from a retired trigger term. Also worth noting: the cost spends Exposure, which isn't Ghost's native resource (Findings is) — not illegal (cross-resource costs are an established pattern elsewhere in the game), but worth flagging whether Ghost realistically has Exposure on hand without a prior conversion/trade step.
 
 #### Card Story
 A rival claims a public win — the kind that moves their standing up in front of the whole table. Ghost already has the counter-narrative ready. By the time anyone checks the record again, the "victory" reads as the opposite.
@@ -19579,7 +19628,7 @@ A rival claims a public win — the kind that moves their standing up in front o
 | Balance | ⚠ | Doubles the trigger amount to invert a gain into an equal-magnitude loss — mechanically sound (verified the math: net effect from pre-trigger baseline is −X on a +X gain), but real cost (Findings+Exposure) and value_rating aren't set; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `public_standing.shifted(direction=Positive)` is a retired term — the sole remaining instance across the whole card system. Flagged, not fixed. | Art 04 §6.3 |
+| Trigger validity | ✓ | `standing_marker.increased(faction=Any)` — confirmed §6.3 vocabulary, correctly scoped. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; this isn't a territory effect. | Art 01 §6–7 |
 | Supported by components | ✓ | PS/Standing marker shift reuses the standard mechanism. | Art 02 §6–8 |
@@ -19612,7 +19661,7 @@ GHO.MOD.5 = Card(
     type    = ModReactCard,  faction = Ghost,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
 
-    trigger         = public_standing.shifted(faction=Any, direction=Positive),
+    trigger         = standing_marker.increased(faction=Any),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -19629,7 +19678,7 @@ GHO.MOD.5 = Card(
     cost            = Findings * 1 + Exposure * 1,
     boost           = None,  # scaffolded, not addressed
 
-    success     = arbiter.shift(public_standing, faction=trigger.faction, amount=-(trigger.amount * 2)),
+    success     = arbiter.shift(standing_marker, faction=trigger.faction, amount=-(trigger.amount * 2)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -19752,7 +19801,7 @@ A rival's chip count finally tips them into Dominant — the marker goes down, t
 | Trigger validity | ✓ | `dominant_marker.placed(faction=Any)` is confirmed vocabulary, inclusive-of-self by default; firing against Ghost's own Dominant achievement costs 3 resources for a confirmed harmless no-op swap, not a bug. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
-| Supported by components | ⚠ | Same deployment-marker-removal edge as the Directorate enforcement family — the removed chip could be a Deployment Marker's temporary presence (GR 8.3a: markers move, never removed). | Art 02 §6–8; GR 8.3a |
+| Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ | Reuses existing chip removal/placement mechanisms and the Dominant-marker-placement event; no new ARBITER procedure. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding placeholders added (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story present above. | Art 04 §5 Card Story |
@@ -19817,7 +19866,7 @@ GHO.MOD.7 = Card(
 ### GHO.MOD.8 — LOCAL SYMPATHIZERS
 
 #### Design Rationale
-Mid-game counterpart to GHO.MOD.7's endgame disruption: reacts to any faction reaching Established (IL-02) and immediately strips 1 chip, downgrading them back to Present. Same shape as DIR.MOD.1's enforcement family (Territory/Remove/PresenceToken). `faction=Any` self-fire (Ghost achieving Established would trigger this against itself) is a confirmed harmless costed no-op. Still open: the deployment-marker-removal edge (item 6), and the cross-resource cost-holding question (cost denominated in the *triggering faction's* native resource, same as GHO.MOD.6/7).
+Mid-game counterpart to GHO.MOD.7's endgame disruption: reacts to any faction reaching Established (IL-02) and immediately strips 1 chip, downgrading them back to Present. Same shape as DIR.MOD.1's enforcement family (Territory/Remove/PresenceToken). `faction=Any` self-fire (Ghost achieving Established would trigger this against itself) is a confirmed harmless costed no-op. Still open: the cross-resource cost-holding question (cost denominated in the *triggering faction's* native resource, same as GHO.MOD.6/7). `arbiter.remove(presence_chip,...)` is confirmed to never target a Deployment Marker, so no GR 8.3a conflict.
 
 #### Card Story
 A faction plants its second foothold in a district and calls it secured. The neighborhood disagrees — quietly, and on someone else's payroll. One chip comes back off the board before the ink on "Established" dries.
@@ -19837,7 +19886,7 @@ A faction plants its second foothold in a district and calls it secured. The nei
 | Trigger validity | ✓ | `established_marker.placed(faction=Any)` is confirmed vocabulary, inclusive-of-self by default, confirmed harmless costed no-op. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
-| Supported by components | ⚠ | Same deployment-marker-removal edge as DIR.MOD.1/2/3 and GHO.MOD.7. | Art 02 §6–8; GR 8.3a |
+| Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ | Reuses existing chip-removal mechanism and Established-marker-placement event; no new ARBITER procedure. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding placeholders added (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story present above. | Art 04 §5 Card Story |
@@ -21971,7 +22020,7 @@ The district is under enhanced institutional review. Documentation requirements 
 | Voice fit | ✓ | Faction-specific; single Directorate perspective — uniform scrutiny as institutional doctrine | Art 00 §7 |
 | Doctrine alignment | ✓ | Directorate only; applies to own Beat 3 ops — restraint doctrine; Mandate×2 mid-tier cost | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Directorate) — scrutiny order is institutional, not public | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ⚠ | Resolution / Modify / Difficulty — threshold adjustment before Beat 3 resolution. **Flagged:** `v_card_mechanical_alignment` (DB) shows `Non-component Subject` for this card — "Difficulty" is not in `ref_taxonomy.md`'s Subject Vocabulary and is missing from `card_subject_map`, per that same reference's own gap-pattern table ("Subject string missing from card_subject_map → Add row to card_subject_map"). Distinct from the expected/known "Abstract Function" pattern on Modify/Block/Protect cards elsewhere in this set (CA.1/2/4) — this is a genuinely unregistered Subject term, not just an abstract-function non-issue. Not resolved. | Art 04b §4 |
+| Taxonomy fit | ✓ | Resolution / Modify / ModifierToken — threshold adjustment before Beat 3 resolution, applied via existing Modifier tokens (Art 02 §11, DB:47), which is what the card's own design_note names as the actual mechanism. | Art 04b §4 |
 | Balance | ⚠ | −15 to all Beat 3 ops in district is significant suppression at Mandate×2; self-inclusion is the cost; playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate (within-month) — tokens placed at Beat 2, consumed at Beat 3 | — |
 | Persistence | ✓ | Immediate | Art 04 §6 |
@@ -21996,7 +22045,7 @@ The district is under enhanced institutional review. Documentation requirements 
 |--|-------------|-----------------|------------|
 | Status | | | |
 
-*New card. Fills Resolution|Modify|Difficulty gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
+*New card. Fills Resolution|Modify|ModifierToken gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
 
 ```python
 DIR.CA.8 = Card(
@@ -22004,7 +22053,7 @@ DIR.CA.8 = Card(
     name    = "Enhanced Scrutiny",
     tagline = "Place a district under institutional review. All Beat 3 covert operations in this district find conditions harder.",
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
-    layer   = Resolution, function = Modify, subject = Difficulty,
+    layer   = Resolution, function = Modify, subject = ModifierToken,
     beat=2, resolution=Automatic, threshold=None,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
@@ -22883,7 +22932,7 @@ DIR.PA.11 = Card(
 ### DIR.MOD.1 — RIOT SQUAD
 
 #### Design Rationale
-First Directorate React — establishes the Territory\|Remove\|PresenceToken enforcement family for Directorate: three variants at increasing narrowness/strength — DIR.MOD.1 (generic, Established-gated), DIR.MOD.2 (Syndicate-targeted, same gate), DIR.MOD.3 (Ring 1-locked, no gate — strongest). Mechanically the simplest expression of "Directorate polices unauthorized expansion": any faction's presence placement in a district where Directorate holds Established+ draws an immediate, single-chip institutional response. The trigger's `faction=Any` scope is broader than sibling DIR.MOD.7's `opponent` scope and, as written, includes Directorate's own placements — self-fire here is a harmless costed no-op (Directorate placing its own chip in ground it already holds Established+, triggering removal of that same chip), intentional self-policing, not a bug. Still open: whether `arbiter.remove(presence_chip, ...)` can legally apply to a Deployment Marker's temporary chip (GR 8.3a — markers move, never removed), flagged below, not resolved here.
+First Directorate React — establishes the Territory\|Remove\|PresenceToken enforcement family for Directorate: three variants at increasing narrowness/strength — DIR.MOD.1 (generic, Established-gated), DIR.MOD.2 (Syndicate-targeted, same gate), DIR.MOD.3 (Ring 1-locked, no gate — strongest). Mechanically the simplest expression of "Directorate polices unauthorized expansion": any faction's presence placement in a district where Directorate holds Established+ draws an immediate, single-chip institutional response. The trigger's `faction=Any` scope is broader than sibling DIR.MOD.7's `opponent` scope and, as written, includes Directorate's own placements — self-fire here is a harmless costed no-op (Directorate placing its own chip in ground it already holds Established+, triggering removal of that same chip), intentional self-policing, not a bug. `arbiter.remove(presence_chip, ...)` can never target a Deployment Marker — Presence Token and Deployment Marker are separate physical components, not a marker-plus-linked-chip pair, confirmed and documented in §6.3.
 
 #### Card Story
 A rival faction moves a marker onto ground the Directorate already considers under its administration. Before the ink on the placement is dry, an enforcement team already has its orders — the marker comes back off the map, and no one needed to ask permission first.
@@ -22903,8 +22952,8 @@ A rival faction moves a marker onto ground the Directorate already considers und
 | Trigger validity | ✓ | `presence_chip.placed(faction=Any)` is confirmed TriggerExpr vocabulary (§6.3). `faction=Any` is inclusive-of-self by default; Directorate's own placements also satisfying the trigger is intentional self-policing, a harmless costed no-op, not a bug. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` is submitter-bounded, correctly structured per P16. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district`; no ring constraint, consistent with an Established-gated (not ring-gated) mechanism. | Art 01 §6–7 |
-| Supported by components | ⚠ | Presence chip removal reuses the standard mechanism, but the trigger (`presence_chip.placed`, unscoped) may match a Deployment Marker's first-placement temporary chip — GR 8.3a says deployment markers are always moved, never removed. Not confirmed whether `arbiter.remove()` here can legally apply to that case. | Art 02 §6–8; GR 8.3a |
-| Supported by game procedure | ✓ (contingent) | Reuses existing chip-removal behavior; no new ARBITER procedure needed once the Supported-by-components flag above is resolved. | Art 03; GR 6.1 |
+| Supported by components | ✓ | Presence chip removal reuses the standard mechanism; `arbiter.remove(presence_chip,...)` is confirmed to never target a Deployment Marker, so no GR 8.3a conflict. | Art 02 §6–8; GR 8.3a |
+| Supported by game procedure | ✓ | Reuses existing chip-removal behavior; no new ARBITER procedure needed. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177): `ps_framing`/`boost`/`resolution_type` now present as placeholders, not filled with real values; `cost` remains a TBD comment. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Card Story above gives a concrete event, but the in-card `narrative` prose field is still empty — narrative-writing pass still needed. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch, no `game.choose_one()`. | Art 04 §5 P27 |
@@ -22925,7 +22974,7 @@ None
 |--|-------------|-----------------|------------|
 | Status | |  |  |
 
-*First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core). Full content-review: 4 open flags (deployment-marker removal edge, cost/04-n178, family firing-window overlap, narrative prose absent). Design Pass ✓ (all 22 rows evaluated), Issues Resolved not yet (real flags remain open).*
+*First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core). Full content-review: 3 open flags (cost/04-n178, family firing-window overlap, narrative prose absent). Design Pass ✓ (all 22 rows evaluated), Issues Resolved not yet (real flags remain open).*
 
 ```python
 DIR.MOD.1 = Card(
@@ -22990,7 +23039,7 @@ Syndicate stakes a claim on ground Directorate already administers. The response
 | Trigger validity | ✓ | `presence_chip.placed(faction=Syndicate)` — confirmed vocabulary, explicitly scoped, no self-fire ambiguity (Directorate ≠ Syndicate). | Art 04 §6.3 |
 | Portrait validity | ⚠ | `{Directorate: submitter=+1}` is fine. `{Syndicate: flat=-1}` is schema-valid (`flat` is permitted on a named non-submitting faction) but is a genuine design question: Principle 11 ties Portrait movement to an action that strongly expresses *that faction's own* doctrine — here the action is Directorate's, and Syndicate's portrait moves as a consequence, not a choice. Open question: intentional "consequences imposed on you move your portrait" pattern, or should target-faction portrait entries require the target's own agency? | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Same as DIR.MOD.1. | Art 01 §6–7 |
-| Supported by components | ⚠ | Same deployment-marker-removal edge as DIR.MOD.1 (GR 8.3a) — family-wide flag, not re-derived per card. | Art 02 §6–8; GR 8.3a |
+| Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict, family-wide resolution. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ (contingent) | Same as DIR.MOD.1. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
@@ -23012,7 +23061,7 @@ None
 |--|-------------|-----------------|------------|
 | Status | |  |  |
 
-*Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2. Full content-review: 4 open flags (Syndicate portrait-on-target question, cost-flag inconsistency vs. DIR.MOD.1, deployment-marker removal edge, family firing-window overlap). Design Pass ✓, Issues Resolved not yet.*
+*Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2. Full content-review: 3 open flags (Syndicate portrait-on-target question, cost-flag inconsistency vs. DIR.MOD.1, family firing-window overlap). Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 DIR.MOD.2 = Card(
@@ -23077,7 +23126,7 @@ In the Core, nobody double-checks Directorate's paperwork. A rival plants a mark
 | Trigger validity | ✓ | Same `faction=Any` scope as DIR.MOD.1 — inclusive-of-self by default, harmless costed no-op here too. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` only — no target-faction entry, so DIR.MOD.2's Item 7 question doesn't apply here. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `ring_constraint=1` matches trigger's `ring=1` scope; consistent. | Art 01 §6–7 |
-| Supported by components | ⚠ | Same deployment-marker-removal edge as DIR.MOD.1/2 (GR 8.3a) — family-wide flag. | Art 02 §6–8; GR 8.3a |
+| Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict, family-wide resolution. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ (contingent) | Same as siblings. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
@@ -23099,7 +23148,7 @@ None
 |--|-------------|-----------------|------------|
 | Status | |  |  |
 
-*Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level. Full content-review: carries DIR.MOD.1's self-fire and deployment-marker flags plus a frequency flag specific to being both unrestricted and Ring 1-locked. Design Pass ✓, Issues Resolved not yet.*
+*Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level. Full content-review: carries DIR.MOD.1's self-fire flag plus a frequency flag specific to being both unrestricted and Ring 1-locked. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 DIR.MOD.3 = Card(
@@ -25710,7 +25759,7 @@ A rival's public standing ticks upward — a win, a moment of visibility. Networ
 | Supported by zones | ✓ | No district reference — correct; this is a Standing-layer effect. | Art 01 §6–7 |
 | Supported by components | ⚠ | PS/Standing marker shift would reuse the standard mechanism — but see Supported by game procedure; unblockability itself has no defined component-level enforcement. | Art 02 §6–8 |
 | Supported by game procedure | ⚠ **(blocker)** | No Art 03 governing rule exists yet for "unblockable" effects — Issues Resolved cannot be set until the rule is written. | Art 03 §18; PM05 (unblockability governing rule, untracked by number) |
-| Data schema validation | ⚠ **(blocker)** | `success = ... -= 1` is invalid syntax, not a valid MutationExpr — more severe than a missing-field gap. | Art 04 §6.1–§6.3; schema_cleanup_log.md item 17 |
+| Data schema validation | ✓ | `success = faction(trigger.faction).standing.remove(1)` — valid MutationExpr, matches corpus convention. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch (once the expression syntax is eventually corrected). | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Cost spans Exposure (Network-native) and Capital (Syndicate's) — a cross-resource-holding question. | Art 00a §9.2 |
@@ -25723,7 +25772,6 @@ A rival's public standing ticks upward — a win, a moment of visibility. Networ
 **Outstanding Issues:**
 - **Card name:** "Troll Farm" is still a placeholder — confirm before sign-off.
 - **Unblockability formalization:** Art 03 governing rule still doesn't exist — gates Issues Resolved.
-- **Invalid expression syntax:** `success` field needs a real MutationExpr, not `-=`.
 
 #### Outstanding Issues
 
@@ -25749,7 +25797,7 @@ NET.MOD.2 = Card(
     target_district = None,  target_faction = trigger.faction,  target_object = None,  target_taxonomy = None,  # scaffolded, not addressed
     cost    = Exposure * 1 + Capital * 1,
     boost   = None,  # scaffolded, not addressed
-    success = faction(trigger.faction).standing -= 1,
+    success = faction(trigger.faction).standing.remove(1),
     successcrit = None,  fail = None,  failcrit = None,  on_accept = None,  on_decline = None,  # scaffolded, not addressed
     restriction = None,
     portrait = {Network: PortraitEntry(submitter=+1)},
@@ -25979,7 +26027,7 @@ NET.PA.6 = Card(
 *Network React Modifier — Territory|Add|PresenceToken. Successor B to Weaponized Transparency (04-n47/04-n48).*
 
 #### Design Rationale
-Network's opportunistic presence card. Fires when any PA success causes a board state change (influence chip or structure block placed or removed) in a district. The act of change is publicly observable — qualifying trigger. Network announces Pirate Transmitter and rolls d100. On success: 1 Network chip placed in the changed district. The card does not require Network to have existing presence; the PA's visibility is the only entry condition. On successcrit: additional +1 PS — the signal lands publicly as well as physically. Failcrit: −1 PS — the insertion attempt is noticed and goes badly. `resolution=d100, threshold=50` is a legitimate design choice for modeling execution risk on a covert insertion. The trigger's `PA_success.where(...)` syntax and the bare `acting` keyword predate confirmed §6.3 vocabulary — logged as `schema_cleanup_log.md` item 15.
+Network's opportunistic presence card. Fires when any PA success causes a board state change (influence chip or structure block placed or removed) in a district. The act of change is publicly observable — qualifying trigger. Network announces Pirate Transmitter and rolls d100. On success: 1 Network chip placed in the changed district. The card does not require Network to have existing presence; the PA's visibility is the only entry condition. On successcrit: additional +1 PS — the signal lands publicly as well as physically. Failcrit: −1 PS — the insertion attempt is noticed and goes badly. `resolution=d100, threshold=50` is a legitimate design choice for modeling execution risk on a covert insertion. Trigger is `board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any)` — corrected from legacy syntax, using the general-purpose §6.3 primitive for cards needing more than one component type and any direction of change; `cause=public_act` preserves the card's original intent — Network capitalizes specifically on the visible consequence of a PA (the narrative is "we're broadcasting what you did"), not any board change from any source. `target_district = trigger.district` normalized to match corpus convention. The bare `acting` keyword is already-confirmed vocabulary (Part1_Core.md §6.3, mirrors STD.MOD.1 Overture's `faction(acting)`), not a gap — checked directly rather than assumed.
 
 #### Card Story
 The district was already moving. Network didn't start the change — it arrived at the same time the change did.
@@ -25996,12 +26044,12 @@ The district was already moving. Network didn't start the change — it arrived 
 | Balance | ⚠ | Broad trigger (any PA board-state change table-wide) + no presence requirement is a real balance question, same shape as the "least-gated" cards DIR.MOD.7/GUI.MOD.2/8. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate — chip placed at the Beat 4 trigger point. | Art 04 §5 P19 |
 | Persistence | ✓ | Explicitly declared (`persistence=Immediate`). | Art 04 §6.2 |
-| Trigger validity | ⚠ | The underlying event (a PA causing a board-state change) is genuinely publicly observable, but `PA_success.where(...)` is legacy syntax predating confirmed §6.3 forms. | Art 04 §6.3; schema_cleanup_log.md item 15 |
+| Trigger validity | ✓ | `board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any)` — confirmed §6.3 vocabulary. `cause=public_act` preserves the original PA-only gate. | Art 04 §6.3 |
 | Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district` fixed by trigger, not a free choice. | Art 01 §6–7 |
 | Supported by components | ✓ | Chip placement and Exposure cost both standard. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Beat 4 React, reuses existing Art 03 §18 React rules. | Art 03 §18 |
-| Data schema validation | ⚠ | `persistence`, `outcome_type`, and targeting fields are all explicitly declared, but `PA_success.where(...)`/`acting` legacy syntax is a real, unresolved schema-currency gap. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | `persistence`, `outcome_type`, and targeting fields are all explicitly declared; trigger now uses confirmed `board_state.changed(...)` vocabulary (`acting` checked and confirmed separately, was never a gap). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story + `narrative` field both present and well-formed. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Genuine two-branch outcome via a real d100 roll (not the invalid `Prediction` pattern GHO.MOD.1 used) — success/successcrit/fail/failcrit all properly structured. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Exposure×1, Network-native — no cross-resource question. | Art 00a §9.2 |
@@ -26010,9 +26058,6 @@ The district was already moving. Network didn't start the change — it arrived 
 | Automatic vs. d100 (ModReactCard) | ✓ | d100 is the right call here — this models a genuine insertion-attempt risk (crit/fail bands shift PS), unlike the flat Automatic effects seen elsewhere in the corpus. |  |
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: 2 copies → 2 independent rolls per qualifying PA? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint` unset/None — correct; fires table-wide by design. |  |
-
-**Outstanding Issues:**
-- Board state change definition (influence chip vs. structure block vs. PS/resource/Intel changes) — not yet resolved, out of scope here.
 
 #### Outstanding Issues
 
@@ -26031,10 +26076,10 @@ NET.MOD.1 = Card(
     tagline = "A public action changes the district. The signal finds the opening.",
     type    = ModReactCard,  faction = Network,
     layer   = Territory,  function = Add,  subject = PresenceToken,
-    trigger = PA_success.where(effect.causes_board_state_change(district)),
-              # fires on any PA success that places or removes an influence chip
-              # or structure block in any district; target = that district
-    target_district = district(trigger.target),
+    trigger = board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any),
+              # fires on any influence chip or structure block placed/removed in any district,
+              # specifically as a consequence of a PA resolving — not a CA, another React, or Upkeep
+    target_district = trigger.district,
     beat    = 4,  resolution = d100,  threshold = 50,
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
     value_rating = 1,
@@ -26485,7 +26530,7 @@ NET.MOD.7 = Card(
 ### NET.MOD.8 — FREQUENCY SPLITTER
 
 #### Design Rationale
-Chain-enabler React: fires on a Network modifier card being placed and replaces itself while dropping a Baryo chip. `modifier_card.placed(faction=Network)` is not confirmed §6.3 vocabulary. More significant: the design_note's "replaces itself" framing raises a genuine question of whether this card's own placement re-triggers itself, creating an unbounded recursive draw-and-place loop rather than a bounded chain — logged as `schema_cleanup_log.md` item 18, flagged not resolved. Also worth noting: the district scope (Ring 3/Baryo) isn't motivated by anything in the trigger or restriction itself (`restriction=faction(Network).any_presence`, not Ring-3-specific) — the Baryo targeting reads as an arbitrary design choice rather than a mechanically justified one.
+Chain-enabler React: fires on a Network modifier card being placed and replaces itself while dropping a Baryo chip. Trigger is `board_state.changed(component=modifier_card, change=placed, faction=Network)` — corrected from an unconfirmed trigger term, using the general-purpose §6.3 primitive. The design_note's "replaces itself" framing does describe a genuine self-triggering chain — ruled intentional and unbounded, and naturally self-limiting since the chain can't outrun the Network modifier deck's own finite card count; no explicit turn/Quarter limiter needed. Also worth noting: the district scope (Ring 3/Baryo) isn't motivated by anything in the trigger or restriction itself (`restriction=faction(Network).any_presence`, not Ring-3-specific) — the Baryo targeting reads as an arbitrary design choice rather than a mechanically justified one.
 
 #### Card Story
 One signal splits into a dozen relays, and each relay is capable of splitting again. Every time Network plays one of these cards, another is already queued up behind it — the noise doesn't stop, it compounds.
@@ -26499,22 +26544,22 @@ One signal splits into a dozen relays, and each relay is capable of splitting ag
 | Doctrine alignment | ✓ | `portrait = None` — reasonable; mechanical chain engine, not a doctrinal statement. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Territory/Add/PresenceToken, 04-n175 — the chip is the primary gain, the modifier draw is the chain-enabler). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory×Add valid per the matrix. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ⚠ **(potential blocker)** | Cannot assess until the self-triggering question is resolved: if this card's own placement re-triggers itself, the effective yield is unbounded per Quarter, a materially different balance profile than a single bounded chain link. | Art 02 §6–7; Art 04 §6.5; schema_cleanup_log.md item 18 |
+| Balance | ⚠ | Self-triggering chain is intentional and unbounded — deck-limited rather than turn-limited, real balance read pending 04-n178. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `modifier_card.placed(faction=Network)` isn't confirmed §6.3 vocabulary — item 18. | Art 04 §6.3; schema_cleanup_log.md item 18 |
+| Trigger validity | ✓ | `board_state.changed(component=modifier_card, change=placed, faction=Network)` — confirmed §6.3 vocabulary. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ⚠ | District scope (Ring 3/Baryo) isn't motivated by the trigger or restriction — reads as an arbitrary choice, not a mechanically grounded one. | Art 01 §6–7 |
 | Supported by components | ✓ | Modifier draw and chip placement both reuse standard mechanisms. | Art 02 §6–8 |
-| Supported by game procedure | ⚠ | Same self-triggering-loop question as Balance — if unbounded, this needs an explicit ARBITER-facing limiter procedure that doesn't currently exist. | Art 03; GR 6.1; schema_cleanup_log.md item 18 |
+| Supported by game procedure | ✓ | Unbounded self-triggering is intentional; no new ARBITER-facing limiter procedure needed since the chain is already bounded by the finite Network modifier deck. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding applied (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch (bundled mutation list, not a choose_one). | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate, sharpened by the potential-loop concern above. | Art 00a §9.2; PM05 04-n178 |
-| Trigger frequency (ModReactCard) | ⚠ | Cannot assess without resolving the self-triggering question — could be a single chain link or a recursive loop. |  |
+| Resource cost positioning | ⚠ (N/A pending 04-n178) | `cost=None` — same whole-set gate as the rest of the corpus. | Art 00a §9.2; PM05 04-n178 |
+| Trigger frequency (ModReactCard) | ⚠ | Self-triggering chain is intentional and unbounded — high frequency by design, deck-limited rather than turn-limited. |  |
 | Firing window (ModReactCard) | ✓ | No other Network card shares this exact trigger. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Flat draw-and-place, no execution-quality dimension. |  |
-| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus, compounded by the self-triggering question. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint` not set — the Ring 3 targeting is baked into `success`/`target_district`, not expressed via this field; consistent field usage, if not a well-motivated design choice (see Supported by zones). |  |
 
 #### Outstanding Issues
@@ -26535,7 +26580,7 @@ NET.MOD.8 = Card(
     type    = ModReactCard,  faction = Network,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
-    trigger         = modifier_card.placed(faction=Network),
+    trigger         = board_state.changed(component=modifier_card, change=placed, faction=Network),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -26570,7 +26615,7 @@ NET.MOD.8 = Card(
 ### NET.MOD.9 — BANDWIDTH OVERRIDE
 
 #### Design Rationale
-High-yield hand-flooder reacting to a district going Contested. `status_marker.contested.placed()` is legacy syntax for the same event confirmed §6.3 vocabulary already calls `tension_marker.placed` (used correctly by GUI.MOD.10 and others) — logged as `schema_cleanup_log.md` item 16. Also carries a cross-resource cost (Findings, not Network-native).
+High-yield hand-flooder reacting to a district going Contested. Trigger uses `tension_marker.placed()`, the confirmed §6.3 form (used correctly by GUI.MOD.10 and others) — corrected from a legacy trigger term. Also carries a cross-resource cost (Findings, not Network-native).
 
 #### Card Story
 A district tips into open contest — three or more factions locked at a tie, no clear winner. The chaos itself is signal. Network's monitoring floods with usable material the moment the board gets messy.
@@ -26587,12 +26632,12 @@ A district tips into open contest — three or more factions locked at a tie, no
 | Balance | ✓ | Real 2-resource cost for a 4-card draw, gated on the genuinely rare Contested board state — design_note's "no hand limit, hold indefinitely" framing is consistent with a deliberate stockpiling design. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Underlying event (district goes Contested) is genuinely publicly observable, but `status_marker.contested.placed()` is legacy syntax — confirmed vocabulary is `tension_marker.placed` (item 16). | Art 04 §6.3; schema_cleanup_log.md item 16 |
+| Trigger validity | ✓ | `tension_marker.placed()` — confirmed §6.3 vocabulary, correctly unscoped (fires on any district). | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; the effect isn't district-scoped even though the trigger is. | Art 01 §6–7 |
 | Supported by components | ✓ | Modifier card draw reuses the standard mechanism. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Reuses the existing Contested/Tension-marker event; no new ARBITER behavior once the trigger term is normalized. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ | Scaffolding applied (04-n177); legacy trigger term also a schema-currency gap (item 16). | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ (deferred) | Scaffolding placeholders added (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Real cost specified, but spans Exposure (Network-native) and Findings (Ghost's) — a cross-resource-holding question. | Art 00a §9.2 |
@@ -26620,7 +26665,7 @@ NET.MOD.9 = Card(
     type    = ModReactCard,  faction = Network,
     layer   = Economy,  function = Add,  subject = ModifierCard,
 
-    trigger         = status_marker.contested.placed(),
+    trigger         = tension_marker.placed(),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -30412,7 +30457,7 @@ SYN.MOD.8 = Card(
 ### SYN.MOD.9 — GOODWILL
 
 #### Design Rationale
-Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). Two real, unresolved problems, both flagged not fixed: (1) `success = faction(Syndicate).standing += N` uses invalid `+=` syntax — the second confirmed instance of this exact problem, after NET.MOD.2. (2) The card explicitly never discards ("remains active for further triggers") — a persistence shape none of the 4 documented values (Immediate/Transient/Seasonal/Permanent) actually fit, since Permanent still requires an eventual clearing condition and this card has none. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
+Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). `success = faction(Syndicate).standing.add(N)` — corrected from invalid statement syntax. The card's original design_note claimed it "does not discard — remains active for further triggers"; per Art 03 §18.2.2, React cards are permanently removed from the game by default once resolved unless card text says otherwise, and Goodwill isn't meant to be an exception — corrected to fire once and discard like any other React, matching the default. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
 
 #### Card Story
 Syndicate's reputation takes a hit — anywhere, any cause. Before the news finishes circulating, a public-goodwill campaign is already funded and running, buying back exactly as much standing as Syndicate is willing to spend on it.
@@ -30427,21 +30472,21 @@ Syndicate's reputation takes a hit — anywhere, any cause. Before the news fini
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Standing/Shift/StandingMarker, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Standing×Shift valid per the matrix (04-n173 precedent). | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Scalable N with an admitted-open cap question — could this be abused as unlimited PS-buying if N is uncapped? Design_note flags this itself as unresolved. | Art 02 §6–7; Art 04 §6.5 |
-| Effect duration | ⚠ | No `persistence` value fits — the card is meant to never discard, which none of Immediate/Transient/Seasonal/Permanent actually model. | Art 04 §5 P19 |
-| Persistence | ⚠ | Same issue as above — "remains active for further triggers, never discards" has no fitting enum value. Distinct from cards that eventually clear but express the clearing logic inconsistently — this card structurally never clears at all. | Art 04 §6.2 |
+| Effect duration | ✓ | Immediate — fires once at trigger, discards per default React behavior (Art 03 §18.2.2). | Art 04 §5 P19 |
+| Persistence | ✓ | `persistence` field not applicable — this is a hand-held React, not a board-placed Standing Condition. No exception to the default discard-on-fire behavior. | Art 04 §6.2 |
 | Trigger validity | ✓ | `standing_marker.decreased(Syndicate)` — confirmed vocabulary, self-scoped, no ambiguity. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
-| Supported by components | ✓ | PS/standing-marker shift reuses the standard mechanism, once the `+=` syntax issue is resolved. | Art 02 §6–8 |
+| Supported by components | ✓ | PS/standing-marker shift reuses the standard mechanism. | Art 02 §6–8 |
 | Supported by game procedure | ⚠ | Design_note itself flags an unresolved question: does Syndicate ALWAYS pay when the trigger fires, or may they decline (ElectPlayer)? Not resolved here. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ **(blocker)** | `success = ... += N` is invalid syntax, not a valid MutationExpr — 2nd confirmed instance of this pattern. Scaffolding added for the fields that were simply absent. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | `success = faction(Syndicate).standing.add(N)` — valid MutationExpr, matches corpus convention for variable-magnitude shifts. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
-| Outcome determinacy | ✓ | Automatic, single success branch (once the expression syntax is corrected) — N is a declared parameter, not a hidden or probabilistic outcome. | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | Automatic, single success branch — N is a declared parameter, not a hidden or probabilistic outcome. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Real, scalable cost (Capital×N) — reasonable in shape, but the balance question (N-cap) is unresolved, so the effective cost/value ratio can't be finalized. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Gated on Syndicate's own PS decreasing — self-limiting, moderate frequency. |  |
 | Firing window (ModReactCard) | ✓ | No other Syndicate card shares this trigger. |  |
 | Automatic vs. d100 (ModReactCard) | ⚠ | Design_note's own open question: should this be Automatic (always fires, always pays) or ElectPlayer (Syndicate may decline)? Not resolved. |  |
-| Stack behavior (ModReactCard) | ⚠ | Compounded by the card never discarding — does holding 2 copies mean 2 independent N-declarations per trigger? Genuinely more consequential here than the generic stack question elsewhere. |  |
+| Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
 #### Outstanding Issues
@@ -30479,7 +30524,7 @@ SYN.MOD.9 = Card(
     cost            = Capital * N,  # N declared at trigger (min 1)
     boost           = None,  # scaffolded, not addressed
 
-    success     = faction(Syndicate).standing += N,  # ⚠ INVALID SYNTAX — `+=` is a statement, not an expression; 2nd confirmed instance, after NET.MOD.2
+    success     = faction(Syndicate).standing.add(N),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -30487,8 +30532,8 @@ SYN.MOD.9 = Card(
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
-    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card does not discard — remains active for further triggers. Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger. 04-n131 design decision → PS floor card selected.",
-    arbiter_note = "On trigger (Syndicate's standing marker moved down for any reason): Syndicate declares N (min 1) and pays Capital×N. Apply faction(Syndicate).standing += N. If Capital unavailable or Syndicate declines: decrease stands. Card remains active for further triggers.",
+    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card discards after firing, per default React behavior (Art 03 §18.2.2). Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger. 04-n131 design decision → PS floor card selected.",
+    arbiter_note = "On trigger (Syndicate's standing marker moved down for any reason): Syndicate declares N (min 1) and pays Capital×N. Apply faction(Syndicate).standing.add(N). If Capital unavailable or Syndicate declines: decrease stands. Card is discarded after resolution.",
 )
 ```
 

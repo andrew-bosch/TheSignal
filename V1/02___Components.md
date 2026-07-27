@@ -2,7 +2,7 @@
 ## THE SIGNAL P1 — Paper Prototype
 
 **Version:** 2.5
-**Status:** ✅ Signed Off — S111 (L233). **Pending re-sign-off (S148):** §8 Target Profile Gameplay Requirements amended — new material rule confirming Target Profile as the sole CA/PA target-declaration mechanism, multi-target handling via the free-form line, and ModReactCard exclusion (PM02 L317). Made without following the signed-off-artifact change protocol (draft/plan first) — flagged retroactively; see PM05 04-n197.
+**Status:** ✅ Signed Off — S111 (L233). **Re-signed off S149 (L326):** §8 Target Profile Gameplay Requirements amendment (Target Profile as sole CA/PA target-declaration mechanism, multi-target via free-form line, ModReactCard exclusion — PM02 L317) reviewed and confirmed by Andy. Version 2.5 current.
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian
 **DB Anchor:** `the_signal_db.component` — canonical component registry. Names and IDs from that registry are authoritative.
 **DB Sync:** Changes to component schema design or any component entry fields must be coordinated with corresponding DB updates. Art 02 and `the_signal_db` must remain in sync. *(Note: You can easily synchronize the database with this document's metadata blocks by running `python3 Database/seed_component_metadata.py --execute`.)*

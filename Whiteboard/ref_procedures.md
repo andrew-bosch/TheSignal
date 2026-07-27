@@ -179,7 +179,7 @@ React cards fire in response to **publicly visible board state changes only** �
 
 **Resume:** Once React resolves, original procedure resumes from the point it was paused.
 
-**ModReactCard:** Default behavior is consumed on fire (cost=None = consumed). FRG standing condition variant: some React cards (e.g., DIR.MOD.6 State of Emergency, SYN.MOD.6 Bounty Contract) place themselves face-up on the acting faction's FRG as a Quarter-long standing condition after firing — no custom marker needed. Schema model for this variant pending 04-n145. Confirmed trigger vocabulary: design_reference_card_system.md. Accord trigger semantics: `accord.corrupted` = textual alteration via Covert Op (Accord stays active); `accord.removed` = breach or expiry (Accord card leaves board) — S128 ruling.
+**ModReactCard:** Default behavior is permanently removed from the game once resolved (§18.2.2, added S149) — not returned to a discard pile, not held for reuse — unless the card's own text states otherwise. Not tied to `cost=None`; that was an incomplete prior reading. FRG standing condition variant: some React cards (e.g., DIR.MOD.6 State of Emergency, SYN.MOD.6 Bounty Contract) place themselves face-up on the acting faction's FRG as a Quarter-long standing condition after firing — no custom marker needed. Schema model for this variant pending 04-n145. Confirmed trigger vocabulary: design_reference_card_system.md. Accord trigger semantics: `accord.corrupted` = textual alteration via Covert Op (Accord stays active); `accord.removed` = breach or expiry (Accord card leaves board) — S128 ruling.
 
 ---
 

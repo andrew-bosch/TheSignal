@@ -54,7 +54,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **The gap:** §6.3's confirmed TriggerExpr vocabulary lists `presence_chip.placed(faction=X, district=Y, ring=Z)` — both `district` and `ring` available — but `presence_chip.removed(faction=X, district=Y)` — district only, no `ring` documented. Two Ring 1 cards use `ring=` on the `.removed()` form anyway. Plausible this is just an oversight in how §6.3 was written (symmetric `ring` support on `.removed()` is a reasonable, low-risk assumption), but it's not yet confirmed as written.
 
-**Status:** Open, logged for the same organic-accumulation treatment as the other categories — watch for more `.removed()`/ring-parameter usage while reviewing the rest of the ModReactCard set (Ring 2/3, then faction decks) before deciding whether to just confirm the extension or handle it some other way.
+**Status:** Closed (PM05 04-n195, Phase 4 item 1, S149). Confirmed: `ring=` is valid on all `.removed()` TriggerExpr forms, symmetric with `.placed()`. Documented in §6.3 (Part1_Core.md).
 
 ---
 
@@ -90,7 +90,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** DIR.MOD.1 Riot Squad (S138). The MutationExpr call `arbiter.remove(presence_chip, district=X, faction=Y, count=1)` has no way to express "not a Deployment Marker's temporary chip" — GR 8.3a is hard: deployment markers are always moved, never removed. Any card using this same removal shape (DIR.MOD.1/2/3 all do) is silently ambiguous about whether it could target protected marker-linked chips. Same root cause as Item A (no confirmed MutationExpr vocabulary) — this is a concrete instance of that gap rather than a new category.
 
-**Status:** Open, folds into Item A's "extend §6.3 with a confirmed MutationExpr vocabulary" candidate direction — a real vocabulary fix here would need `arbiter.remove(presence_chip, ...)` to either exclude marker-linked chips by definition or require an explicit flag. Not proposed yet; logging as supporting evidence for Item A.
+**Status:** Closed (PM05 04-n195, Phase 4 item 2, S149). Original framing corrected on Andy's direct pushback — there's no "marker-linked chip"; Presence Token (DB:1) and Deployment Marker (DB:2) are separate physical components. Confirmed: `arbiter.remove(presence_chip, ...)` can never target a Deployment Marker, full stop — the marker "counts as 1 Presence Token for all purposes" (Art 02 §6) only for counting/influence-level purposes, not as a valid removal target. Documented in §6.3 MutationExpr section. DIR.MOD.1/2/3 and GHO.MOD.7/8's "Supported by components" checklist rows updated from ⚠ to ✓.
 
 ---
 
@@ -114,7 +114,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** DIR.MOD.8 Asset Seizure (S138). Trigger is `public_act.placed_on_frg(target_district=where(faction(Directorate).influence >= Established))`. §6.3's confirmed vocabulary shows `public_act.placed_on_frg(faction=X, ...)` with flat key=value parameters (faction, ring, district) — nothing showing a conditional/filtered parameter built from a `where(BoolExpr)` wrapper. This is a different shape from anything in the confirmed list: instead of matching a specific value, it's filtering by a live board-state condition evaluated at fire time. Possibly fine (the underlying event and condition are both well-defined elsewhere in the schema), but the parameterization pattern itself isn't confirmed vocabulary.
 
-**Status:** Open, now 5 confirmed examples (GHO.MOD.2/3/4, DIR.MOD.8, GUI.MOD.5 — all S138) — same organic-accumulation treatment as Items 5/6/3. The recurrence across 3 factions makes this a strong candidate for formal §6.3 confirmation once the remaining faction sets (Network, Syndicate) are reviewed.
+**Status:** Open — revisit needed (S149, PM05 04-n195 item 4). Andy's initial read was not to confirm `where(BoolExpr)` as valid vocabulary, meaning the 5 affected cards (GHO.MOD.2/3/4, DIR.MOD.8, GUI.MOD.5) would need reconciling to already-confirmed constructions instead — but Andy flagged this needs a second look before treating it as final. Not resolved; replacement forms per card not yet determined.
 
 ---
 
@@ -138,7 +138,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** GHO.MOD.1 Sleeper Analyst (S138, Ghost ModReactCard review — format-migration case, `structure_pass=0`). Card uses `resolution = Prediction` and `resolution_type = "Conditional"`. Neither is a valid value: confirmed `Resolution` enum (Art 04 §6.3, verified directly against `Part1_Core.md`) is `d100 | Automatic` only; confirmed `resolution_type` vocabulary is `"Probabilistic"` (d100) or `"Transactional"` (Automatic) only. This card predates both confirmed vocabularies (S110, well before the S127+ enum lock-downs) and was never swept to match. The underlying mechanic (Ghost declares a faction name, ARBITER checks it against private Intel Token data, no dice) reads as a deterministic check — likely `resolution=Automatic` once corrected, but that's a content call, not made here.
 
-**Status:** Open, flagged not fixed. First confirmed instance of a pre-S127 card using since-invalidated enum values — worth checking whether other S110-vintage-or-earlier cards have the same drift once the remaining faction ModReactCard sets are reviewed.
+**Status:** Closed (PM05 04-n195, Phase 4 item 10, S149). Confirmed `resolution=Automatic`, `resolution_type=Transactional` — the mechanic is a deterministic declare-then-verify check, no dice.
 
 ---
 
@@ -146,7 +146,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** GHO.MOD.1 Sleeper Analyst (S138). `trigger = faction(opponent).places(PA, with=IntelToken(any), at=Art 03 §9.2.0)` — this construction style (method-call-on-faction-object, embedding an Art-section citation as a parameter) doesn't match any confirmed §6.3 form (which uses `event_noun.verb(param=value, ...)`, e.g. `public_act.placed_on_frg(faction=X, ...)`). Same root cause as Item 12 — a pre-S127 card that was never swept to current vocabulary. The closest modern equivalent is likely `public_act.placed_on_frg(faction=opponent, uses_intel_token=True)` or similar, but the exact reconciliation is a content decision, not made here.
 
-**Status:** Open, flagged not fixed. Same "check for more pre-S127 drift" note as Item 12 — likely the same root cause, probably worth resolving together.
+**Status:** Closed (PM05 04-n195, Phase 4 item 10, S149). Confirmed: `public_act.placed_on_frg(...)` gets a new `uses_intel_token=True` filter parameter, added to §6.3. GHO.MOD.1's trigger now reads `public_act.placed_on_frg(faction=opponent, uses_intel_token=True)`.
 
 ---
 
@@ -154,15 +154,15 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** GHO.MOD.5 False Flag (S138). Trigger is `public_standing.shifted(faction=Any, direction=Positive)`. PM05 04-n144 (closed S130) already normalized this exact term to `standing_marker.increased/decreased(faction=X)` — but that sweep's known instances were SYN.MOD.4/5 only. GHO.MOD.5 uses the identical retired form and was missed by the original sweep (it wasn't in the S128 stub batch that 04-n144 was scoped against, or was simply overlooked). Not fixed here — flagged as a gap in an already-closed item's sweep completeness.
 
-**Status:** Confirmed single instance — grepped all 8 Art 04 Part files (S138); GHO.MOD.5 is the only remaining occurrence of `public_standing.shifted` in the entire card system. Flagged, not fixed (content decision — swap to `standing_marker.increased(faction=trigger.faction)` — belongs to whoever does GHO.MOD.5's own content pass, not a blanket sweep).
+**Status:** Closed (PM05 04-n194, Phase 3). Swapped to `standing_marker.increased(faction=Any)` — no other instance found corpus-wide.
 
 ---
 
 ### 15. Category: `PA_success.where(...)` legacy trigger syntax + `acting` keyword (NET.MOD.1, S106-vintage)
 
-**Surfaced by:** NET.MOD.1 Pirate Transmitter (S138, Network ModReactCard review — format-migration case, `structure_pass=0`). Trigger is `PA_success.where(effect.causes_board_state_change(district))` — same category as items 12/13 (GHO.MOD.1's legacy syntax), a pre-S127 construction that never got swept to confirmed §6.3 vocabulary. Also uses a bare `acting` keyword in `cost`/`successcrit`/`failcrit` (e.g. `resource.faction(acting).exposure`) to mean "the faction playing this card" — a third acting-faction reference form alongside `holder` (Ring cards) and `trigger.faction` (most faction cards), none formally reconciled against each other.
+**Surfaced by:** NET.MOD.1 Pirate Transmitter (S138, Network ModReactCard review — format-migration case, `structure_pass=0`). Trigger is `PA_success.where(effect.causes_board_state_change(district))` — same category as items 12/13 (GHO.MOD.1's legacy syntax), a pre-S127 construction that never got swept to confirmed §6.3 vocabulary. Also uses a bare `acting` keyword in `cost`/`successcrit`/`failcrit` (e.g. `resource.faction(acting).exposure`) — **checked S149: this is already-confirmed vocabulary** (Part1_Core.md §6.3 MutationExpr documentation lists `acting`/`faction(acting)` explicitly, mirroring STD.MOD.1 Overture's established `faction(acting)`), not a gap. Only the trigger term itself remains open.
 
-**Status:** Open, flagged not fixed. Same disposition as items 12/13 — likely worth a combined sweep of all pre-S127 legacy-syntax cards once the full ModReactCard landscape is reviewed.
+**Status:** Closed (PM05 04-n195, Phase 4 item 11, S149). New general-purpose §6.3 primitive confirmed: `board_state.changed(component=, change=, cause=, faction=, district=, ring=)` — covers any publicly visible, non-procedural game-state change (component ∈ presence_chip/structure_block/standing_marker/deployment_marker/accord/public_act/modifier_card/native_resource/intel_token/target_profile/Any; change ∈ placed/removed/increased/decreased/moved/corrupted/Any; cause ∈ public_act/covert_operation/modifier_card/upkeep/Any — filters by what produced the change, not just what changed; no separate "arbiter" value since ARBITER executes the change but is never itself the cause). Coexists with the itemized single-event forms rather than superseding them. `cause=` was added after catching that the first draft silently dropped NET.MOD.1's original PA-specific gate — Andy's intent is narrower than "any board change": Network specifically capitalizes on a PA's visible consequence ("we're broadcasting what you did"), not a CA/React/Upkeep-caused change. NET.MOD.1's trigger now reads `board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any)`.
 
 ---
 
@@ -170,7 +170,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** NET.MOD.9 Bandwidth Override (S138). Trigger is `status_marker.contested.placed()` — §6.3's confirmed vocabulary for this exact board event is `tension_marker.placed` (already used correctly by GUI.MOD.10 and others). This is a different, unreconciled term for the same underlying event, not a new mechanic.
 
-**Status:** Open, flagged not fixed. Content decision to normalize to `tension_marker.placed` belongs to a future NET.MOD.9 content pass.
+**Status:** Closed (PM05 04-n194, Phase 3). Swapped to `tension_marker.placed()`.
 
 ---
 
@@ -178,7 +178,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** NET.MOD.2 Troll Farm (S138). `success = faction(trigger.faction).standing -= 1,` — `-=` is a Python augmented-assignment *statement*, not a value expression; it cannot legally appear as the right-hand side of a `success=` keyword argument the way every other card's `success` field does (a callable mutation like `arbiter.shift(...)` or `faction(X).resources.add(...)`). This is a different, more severe category than the "string literal instead of Expr" fossil gap (04-n174) — it's not even valid pseudo-code, whereas the fossil cards' string literals at least parse as strings. Likely should read `arbiter.shift(standing_marker, faction=trigger.faction, amount=-1)` or `faction(trigger.faction).standing.remove(1)` (matching GHO.MOD.5/STD.MOD.10x precedent), but that's a content decision, not made here.
 
-**Status:** Open, now 2 confirmed instances (SYN.MOD.9 Goodwill also uses `faction(Syndicate).standing += N`, S138) — same invalid statement-as-value problem. Worth checking whether other cards outside this session's review scope use the same pattern.
+**Status:** Closed (PM05 04-n194, Phase 3). Both instances fixed: NET.MOD.2 → `faction(trigger.faction).standing.remove(1)`; SYN.MOD.9 → `faction(Syndicate).standing.add(N)` (also corrected in its `arbiter_note`).
 
 ---
 
@@ -186,7 +186,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** NET.MOD.8 Frequency Splitter (S138). `trigger = modifier_card.placed(faction=Network)` isn't in the confirmed §6.3 TriggerExpr list. More significant: the design_note calls this a "chain enabler" that "replaces itself," but the trigger fires on *any* Network modifier card being placed — including, potentially, this card's own resolution. If so, this could be a self-sustaining recursive loop (fire → draw another modifier → possibly re-trigger → fire again) rather than a bounded chain. Not confirmed as a bug — may have an implicit once-per-Month limiter not written into the spec — but the mechanic as specced doesn't rule out the loop reading.
 
-**Status:** Open, flagged not fixed. Needs a content decision on both the trigger term and whether self-inclusion is intentional (and if so, what bounds the chain).
+**Status:** Closed (PM05 04-n195, Phase 4 item 12, S149). Trigger now reads `board_state.changed(component=modifier_card, change=Placed, faction=Network)`, using the new §6.3 primitive (item 15/11's `board_state.changed`). Self-triggering chain confirmed intentional and unbounded (Andy's ruling) — naturally self-limiting since it can't outrun the finite Network modifier deck; no explicit limiter needed.
 
 ---
 
@@ -194,7 +194,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** SYN.MOD.9 Goodwill (S138). Design_note explicitly states "Card does not discard — remains active for further triggers." None of the 4 documented Persistence values fit this: `Immediate` is fire-and-consume; `Transient`/`Seasonal` clear at Month/Quarter end; `Permanent` requires an explicit `persistence_condition` that, when False, discards the card — but this card is meant to remain active indefinitely, forever, with no clearing condition at all (it's a standing reusable ability, not a standing condition awaiting removal). This is a different shape than the persistence/clearing-condition gap already logged (item 2/B, "what ends a standing condition") — item 2/B is about cards that DO eventually clear but whose clearing logic is expressed inconsistently; this card is about a card that structurally never clears, which the 4-value enum doesn't model at all.
 
-**Status:** Open, single example. Worth watching for more "always-active, never-discards" ModReactCards while reviewing any remaining card sets, and considering whether this is a 5th Persistence value or a different mechanism entirely (e.g., a `permanent_card` flag distinct from the card-as-condition pattern).
+**Status:** Closed (S149) — not a schema gap, the card's design_note was wrong. Andy's ruling: React cards are discarded and permanently removed from the game by default once resolved (a rule that existed nowhere in Art 03 §18 until this session — added as §18.2.2). SYN.MOD.9's "does not discard — remains active for further triggers" claim contradicted that default and wasn't an intentional exception Andy wanted to keep — corrected to fire once and discard like any other React. No schema change needed; `persistence` doesn't apply to hand-held Reacts regardless (it governs board-placed CA/PA duration, per §6.2).
 
 ---
 
@@ -272,7 +272,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Why this matters:** Governing Rule 6.1 ("ARBITER executes general procedures, not card-specific instructions... New ARBITER behavior must be defined as a generalizable procedure in Art 03 or Art 07 before the card is finalized") and Design Pillar 4.7b (ARBITER Cognitive Efficiency) both bear directly on this. The cards' own "existing procedure" claim doesn't hold up against a direct check — it's new, card-specific ARBITER-facing logic that hasn't been formalized as a general procedure elsewhere.
 
-**Status:** Open, now **3 confirmed instances**. **DIR.PA.9 Charter Grant** (S142, Directorate PA review) reuses the identical `game.active_permanents(faction=, ring=)` call, and its design_note explicitly claims this is "the same counting mechanism as CA.6 Institutional Audit / CA.7 Institutional Brief" — checked directly and confirmed true (unlike DIR.PA.10's looser, imprecise version of the same kind of claim, logged separately). Not a card design flaw necessarily (the mechanism itself is simple enough it may not need heavy procedure), but the checklist's "existing procedure" claim is currently unsupported, now on a third card. Andy's call whether this needs a formal Art 03/07 procedure entry or is fine as-is given its simplicity.
+**Status:** Open — flagged for deeper review (S149, PM05 04-n195 item 6), not resolved. **3 confirmed instances**: DIR.CA.6/CA.7, and **DIR.PA.9 Charter Grant** (S142, Directorate PA review) reuses the identical `game.active_permanents(faction=, ring=)` call, its design_note explicitly claiming this is "the same counting mechanism as CA.6 Institutional Audit / CA.7 Institutional Brief" — checked directly and confirmed true (unlike DIR.PA.10's looser, imprecise version of the same kind of claim, logged separately). Andy's direction: flag all 3 for a deeper review pass rather than ruling on formalize-vs-leave-as-is now.
 
 ---
 
@@ -280,7 +280,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** DIR.CA.8 Enhanced Scrutiny (S141, Directorate CA re-derivation). Taxonomy is `Resolution / Modify / Difficulty`. `v_card_mechanical_alignment` (DB) flags this card as `Non-component Subject` — distinct from the `Abstract Function` flag its sibling Modify/Block/Protect cards in this set correctly carry (which `ref_taxonomy.md`'s own gap-pattern table documents as an expected non-issue). "Difficulty" doesn't appear in `ref_taxonomy.md`'s Subject Vocabulary table at all, and per that same table's gap-pattern guidance, a `Non-component Subject` result means the string is missing from `card_subject_map` — a registration gap, not a known/expected pattern like the Abstract Function cases.
 
-**Status:** Open, now **3 confirmed instances** — DIR.CA.8 (S141), **GHO.CA.15 Routing Override** (`subject = TargetProfile`, S141), and **GUI.CA.9 Works Guarantee** (`subject = Difficulty`, S141, Guild CA review — second card using this exact subject string, both DB-flagged `Non-component Subject`). Unlike "Difficulty," `TargetProfile` is a well-established, heavily-used component elsewhere in the game (Art 03 procedures reference it constantly, DB:48) — its absence from `card_subject_map` specifically for taxonomy purposes looks like a pure registration gap, not a conceptual question. "Difficulty" recurring on a second card (DIR.CA.8 and GUI.CA.9 are both threshold/difficulty-modifying cards) suggests it's a real, recurring concept that needs a home, not a one-off. Candidate direction, not proposed: register "Difficulty" and "TargetProfile" as valid Subjects in `card_subject_map`. Andy's call.
+**Status:** Closed (PM05 04-n195, Phase 4 item 7, S149). Andy's rule: Subject values must be valid Art 04b taxonomy Subjects, not just registered ad hoc — "Difficulty" wasn't a real component/Subject at all (not in ref_taxonomy.md, not a physical component), so it doesn't pass; the 2 cards using it were reclassified rather than the string registered. **DIR.CA.8** — design_note names the actual mechanism (existing Modifier tokens, Art 02 §11, DB:47) — reclassified Subject=Difficulty → `ModifierToken`. **GUI.CA.9** — suppresses a named CA's dice roll entirely, modifying a Covert Operation's resolution — reclassified Subject=Difficulty → `CovertOperation` (already-valid vocabulary, no new registration needed). **GHO.CA.15** — `TargetProfile` checked against ref_taxonomy.md's Corrupt-target list: already real, valid vocabulary (DB:48 component) — registered in `card_subject_map` as-is, no reclassification. `card_subject_map`'s dangling `Difficulty` row (component_id=NULL) removed; `ModifierToken`/`TargetProfile` added (component_id 47/48); `card_status` DB rows synced for all 3 cards.
 
 ---
 
@@ -288,7 +288,7 @@ Four cards (DIR.MOD.9, GUI.MOD.10, SYN.MOD.6, NET.PA.3), four different improvis
 
 **Surfaced by:** GHO.CA.8 Full Take (S141, Ghost CA review). Cost/success/successcrit all scale with a bare `n` variable declared at submission ("Ghost declares n at submission"), with no `boost=` field anywhere in the spec. This is exactly what the schema's `boost: BoostExpr` field exists for (`design_reference_card_system.md` §6 Field Groups: "player submits additional resources beyond base cost; ARBITER detects at Beat 0; success fires (1+n) times") — and DIR.CA.5 Sanctioned Raid (reviewed same session) correctly uses `boost = True: resource.faction(acting)...` for the identical shape. GHO.CA.8 reimplements the same mechanic ad hoc instead of using the confirmed field.
 
-**Status:** Open, single confirmed instance. Candidate direction, not proposed: normalize GHO.CA.8 to use `boost=` matching DIR.CA.5's pattern. Andy's call — content/schema-conformance decision, not made here.
+**Status:** Closed (PM05 04-n195, Phase 4 item 8, S149). Normalized to `boost = True: Findings * 1`, matching DIR.CA.5's pattern exactly (base cost + boost unit, success/successcrit magnitudes rewritten in terms of `(1 + n_boost)`, no threshold scaling — preserves the original card's math 1:1).
 
 ---
 
@@ -585,4 +585,12 @@ cost = Findings * 2 + Exposure * 1
 
 **Why this might be more than a typing gap:** every other cross-faction cost reference in the corpus that names a `target`-style faction resolves *which type* is owed while still being paid by the acting faction (item #43's "prior economic embedding" rule, GHO.CA.4/NET.PA.5 precedent — always written with an explicit `.native`). This card's two terms have no `.native`, which leaves genuinely ambiguous whether the intent is (a) the same prior-embedding shape with a missing `.native` attribute (Ghost pays, resolving to target1's/target2's own native types), or (b) something that actually draws from target1's/target2's own pools — which item #43 already ruled out as a valid `cost` shape corpus-wide (Andy, S148: cost is always paid from acting's own pool, no exception).
 
-**Status:** Open, single instance, evidence-gathering. Not fixed — this needs Andy's read on which of (a)/(b) was intended before any notation fix is applied, since (b) would mean the card's underlying mechanic needs a content rewrite, not just a missing attribute filled in.
+**Status:** Deferred (S149) — Andy's call: FieldVerification is already 🚫 BLOCKED (GR 7.2b) pending a full redesign; not worth ruling on notation that redesign will replace anyway. Revisit as part of that redesign, not independently.
+
+---
+
+### 51. Category: Invalid `-=`/`+=` statement-as-value in `success`/`successcrit` — new instances beyond item #17's closed scope
+
+**Surfaced by:** DIR.CA.5 Sanctioned Raid, checked directly (S149) while pulling its `boost=` pattern as precedent for #28's GHO.CA.8 fix. `success` reads `faction(acting).standing -= (1 + n_boost)`, `successcrit` reads `faction(acting).standing += (1 + n_boost)` — the exact same invalid statement-as-value defect item #17 closed (NET.MOD.2, SYN.MOD.9), just on a CovertOperation rather than a ModReactCard, and not part of that item's original scope. Not fixed here — found in passing, not part of this session's ruling batch, and this is signed-content-adjacent (Art 04 CA content, higher stakes than a ModReact fix) rather than a drop-in swap.
+
+**Status:** Open, single confirmed instance, not yet swept for more corpus-wide. Fix is mechanical once ruled on (same pattern as #17: `faction(acting).standing.remove(1 + n_boost)` / `.add(1 + n_boost)`), but deserves its own check-in rather than a silent fix given DIR.CA.5's real cost/PS math is load-bearing.

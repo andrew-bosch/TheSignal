@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** S148 — Schema Cleanup Program (PM05 04-n191) launched as priority-blocking multi-phase work (5 phases consolidating ~30 schema_cleanup_log items). Phases 1–2 closed: CostExpr syntax sweep, card_id backfill, portrait empty-value normalization (PM02 L316); database recovery (10.0.1.14→10.0.0.14 migration), card_status reset/reconciliation (PM02 L316). Art 00a §10.4 "Covert Attribution Remains Untraceable" added and signed off (v0.11→0.12, PM02 L324). agy retired as standalone agent; migrated to Claude subagent via antigravity-for-claude-code plugin. Phases 3–5 (legacy vocabulary sweep, decision batch, content-fix sweep) pending. Prior (S147): 04-n188 fully closed (Art 04 comment corpus hygiene, PM02 L302–L306); `cost` schema-locked for ModActionCard/ModBattleCard; schema_cleanup_log #5/#11 closed. Full detail PM02 L301–L306.
+**Design milestone:** S149 — Schema Cleanup Program (PM05 04-n191) Phases 3–4 of 5 closed (PM02 L327–L332). Phase 3: legacy-vocabulary fixes (GHO.MOD.5, NET.MOD.9, NET.MOD.2, SYN.MOD.9; 3 carried to Phase 4). Phase 4: TriggerExpr additions (`ring=`, `uses_intel_token=`, `board_state.changed()`), taxonomy corrections (DIR.CA.8, GUI.CA.9, GHO.CA.8), Art 03 §18.2.2 React default added & signed off (v4.13→v4.14). 3 follow-up items deferred (04-n199/200/201), 1 new finding flagged (04-n202). Hygiene recurrence #6 swept. Art 02 re-signed off (v2.5, PM02 L326). Prior (S148): Phases 1–2 closed, database recovery, agy retired. Full detail PM02 L316–L332, PM05 04-n191.
 
 ---
 
@@ -51,7 +51,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 01 | [Zones: Physical & Virtual Geography](V1/01___Game_Board_New_Meridian.md) | 2.3 | ✅ Signed off — S130 (L239). S118: component name sweep. |
-| 02 | [Components](V1/02___Components.md) | 2.5 | ⚠️ Pending re-sign-off — S148 (Target Profile amendment, PM05 04-n197). S111: base sign-off (L233). S118: full component name Title Case sweep (headings + metadata + body). |
+| 02 | [Components](V1/02___Components.md) | 2.5 | ✅ Signed off — S149 (Target Profile amendment re-review, PM02 L326). S111: base sign-off (L233). S118: full component name Title Case sweep (headings + metadata + body). |
 
 ---
 
@@ -62,7 +62,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.5 | 🔄 In progress. S124: §3.9 Deck Selection added; §3.6 sequencing conflict open (04-n137). |
-| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.13 | ✅ Signed off — S146 (L293). §9.4.3.1.0.3 Route: zero-payment Public Act invalidation now carries PS −1 ("failed commitment") consequence. Prior: ✅ S132 (L243). §10.1.2 Battlefield Strength redesigned (Boost/Hinder ModBattleCard model, face-down commit/reveal, any faction may commit, Intel Token −2 Hinder); §10.1.4.0/0.2/1 sequential steps + cleanup relocation. Prior: S110 (L232). |
+| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.14 | ✅ Signed off — S149 (§18.2.2 React default removal, PM02 L332). S146 (L293): §9.4.3.1.0.3 Route zero-payment consequence. Prior: ✅ S132 (L243). §10.1.2 Battlefield Strength redesigned (Boost/Hinder ModBattleCard model, face-down commit/reveal, any faction may commit, Intel Token −2 Hinder); §10.1.4.0/0.2/1 sequential steps + cleanup relocation. Prior: S110 (L232). |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.99 | 🔄 In progress. S118: component name sweep. |
 | 03b | [Component Lifecycle Register](V1/03b___Component_Lifecycle.md) | 0.2 | 🔄 In progress. S118: component name sweep. |
 
@@ -74,7 +74,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
-| 04 | [Card Set: Action Subroutines](V1/04___Card_System___Part1_Core.md) | 0.9.90 | 🔄 In progress — S147: 04-n188 (Art 04 `Card()` inline-comment corpus hygiene) fully closed (PM02 L302–L306) — `cost` schema-locked for `ModActionCard`/`ModBattleCard` (§6.2), 18 flagged items individually ruled, re-derived execution pass resolved 106 comment lines against verified sources. schema_cleanup_log #5/#11 closed (PM02 L301). Full detail PM02 L301–L306, PM05 04-n188. Prior — S146: Full-corpus hygiene sweep (04-n165/04-n180/04-n185 closed), Emergency Response moved to Art 05 (04-n169 closed), six content-accuracy defects fixed (04-n186 closed). Full detail PM02 L285–L296. |
+| 04 | [Card Set: Action Subroutines](V1/04___Card_System___Part1_Core.md) | 0.9.91 | 🔄 In progress — S149: Schema Cleanup Phases 3–4 closed (PM05 04-n191, PM02 L327–L332). Phase 3: legacy-vocabulary card fixes (4 of 7), Phase 4: TriggerExpr schema additions + decision-batch rulings (9 of 12). §6.3 gained `ring=`, `uses_intel_token=`, `board_state.changed()` vocabulary. Art 03 §18.2.2 added (React default removal). Hygiene recurrence #6 swept. Prior — S147: 04-n188 closed (comment hygiene, schema-locked `ModActionCard`/`ModBattleCard` cost). Full detail PM02 L301–L306. Prior — S146: Full-corpus sweep, Emergency Response moved to Art 05. Full detail PM02 L285–L296. |
 | 04b | [Action Taxonomy](V1/04b___Action_Taxonomy_Design_Analysis.md) | 2.6 | ✅ Signed off — S108 (L230 scope policy). S123: §6.4 STD+NET 5-check added; §8.3 Network updated (12-card S123 data). S122: §6.4 STD+GUI added; §8.5 Guild updated. |
 | 05 | [Operative & Apex Subroutines](V1/05___Operative_Apex_System.md) | 0.2 | ⬜ Placeholder |
 | 06 | [Messaging System](V1/06___Messaging_System.md) | 0.5 | 🟡 In progress — §9 Accord governance signed off S83 (L205). S118: component name sweep. |
