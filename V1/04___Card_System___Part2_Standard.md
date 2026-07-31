@@ -93,7 +93,7 @@ STD.CA.1 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Guild: cost.district.target.native = 0,
     restriction = (
         district(target).faction(acting).presence > 0 and
@@ -101,7 +101,7 @@ STD.CA.1 = Card(
     ),
     cost = faction.acting.native * 1 + district.target.native * 1,
 
-    success     = district(target).faction(acting).structure += 1,
+    success     = arbiter.place(structure_block, district=target, faction=acting, count=1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -191,7 +191,7 @@ STD.CA.2 = Card(
     target_faction  = faction.opponent,
     target_object   = StructureBlock,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = (
         district(self|adjacent).faction(acting).presence > 0 and
@@ -199,10 +199,10 @@ STD.CA.2 = Card(
     ),
     cost = faction.acting.native * 1 + district.target.native * 1,
 
-    success     = district(target).faction(target).structure -= 1,
-    successcrit = resource.faction(acting).native += 1,
+    success     = arbiter.remove(structure_block, district=target, faction=target, count=1),
+    successcrit = faction(acting).native.add(1),
     fail        = None,
-    failcrit    = faction(acting).standing -= 1,
+    failcrit    = faction(acting).standing.remove(1),
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -290,12 +290,12 @@ STD.CA.3 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Network: cost.district.target.native = 0,
     restriction = district(target).faction(acting).presence > 0,
     cost        = faction.acting.native * 1 + district.target.native * 1,
 
-    success     = district(target).faction(acting).presence += 1,
+    success     = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -382,7 +382,7 @@ STD.CA.4 = Card(
     target_faction  = faction.opponent,
     target_object   = PresenceToken,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = (
         district(self|adjacent).faction(acting).presence > 0 and
@@ -390,10 +390,10 @@ STD.CA.4 = Card(
     ),
     cost        = faction.acting.native * 1 + district.target.native * 1,
 
-    success     = district(target).faction(target).presence -= 1,
-    successcrit = district(target).faction(target).presence -= 1,
+    success     = arbiter.remove(presence_chip, district=target, faction=target, count=1),
+    successcrit = arbiter.remove(presence_chip, district=target, faction=target, count=1),
     fail        = None,
-    failcrit    = faction(acting).standing -= 1,
+    failcrit    = faction(acting).standing.remove(1),
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -481,7 +481,7 @@ STD.CA.5 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Ghost: threshold += 25,
     restriction = (
         district(self|adjacent).faction(acting).presence > 0 or
@@ -576,12 +576,12 @@ STD.CA.6 = Card(
     target_faction  = None,
     target_object   = PublicAct,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Network: cost.Exposure -= 1,
     restriction = None,
     cost        = Exposure * 2,
 
-    success     = game.ops(beat=4, type=PublicAct, at=district(target)).cost.native += 1,
+    success     = game.ops(beat=4, type=PublicAct, at=district(target)).cost.native.add(1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -672,7 +672,7 @@ STD.CA.7 = Card(
     target_faction  = faction.acting,
     target_object   = PublicAct,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Network: cost.Exposure -= 1,
     restriction = None,
     cost        = Exposure * 2,
@@ -767,15 +767,15 @@ STD.CA.8 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Syndicate: threshold += 25,
     restriction = None,
     cost        = Capital * 3,
 
-    success     = district(target).faction(acting).presence += 2,
-    successcrit = district(target).faction(acting).presence += 1,
+    success     = arbiter.place(presence_chip, district=target, faction=acting, count=2),
+    successcrit = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     fail        = None,
-    failcrit    = faction(acting).standing -= 2,
+    failcrit    = faction(acting).standing.remove(2),
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -866,18 +866,18 @@ STD.CA.9 = Card(
     target_faction  = faction.opponent,
     target_object   = NativeResource,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Syndicate: threshold += 25,
     restriction = None,
     cost        = Capital * 2,
 
     success     = (
-        faction(target).resource.capital += 2,
+        faction(target).capital.add(2),
         arbiter.deliver(faction(acting), Overture),  # from ARBITER tableau supply
     ),
-    successcrit = faction(acting).standing += 1,
+    successcrit = faction(acting).standing.add(1),
     fail        = None,
-    failcrit    = faction(acting).standing -= 1,
+    failcrit    = faction(acting).standing.remove(1),
 
     portrait = {
         Directorate: PortraitEntry(submitter=-1),
@@ -965,12 +965,12 @@ STD.CA.10 = Card(
     target_faction  = None,
     target_object   = CovertOperation,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) IN [Guild, Directorate]: threshold_protection = 45,
     restriction = district(target).faction(acting).presence > 0,
     cost        = district.target.native * 1,
 
-    success     = game.ops(beat=3, at=district(target), targeting=faction(acting).assets).threshold -= (threshold_protection if affinity else 25),
+    success     = game.ops(beat=3, at=district(target), targeting=faction(acting).assets).threshold.remove(threshold_protection if affinity else 25),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -1049,7 +1049,7 @@ STD.CA.11 = Card(
     persistence_condition = not (game.end OR Accord(named).breach_by_party),
     persistence_effect    = None,
     target_district=None, target_faction=None, target_object=Accord(executed, on_table),
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction = Accord(named).is_executed == True AND Accord(named).on_table == True,
     cost        = Mandate * 1 + faction.acting.native * 1,
@@ -1136,7 +1136,7 @@ STD.CA.12 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=district.named, target_faction=None, target_object=Beat2BlockOrProtectCard,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction = district(target).beat2_row.has_block_or_protect_card == True,
     cost        = IntelToken() * 1,
@@ -1219,7 +1219,7 @@ C_DisinformationCampaign = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = (
         faction(acting) == Network: threshold += 10,
         faction(acting) == Ghost:   cost.faction.acting.native -= 1,
@@ -1227,11 +1227,11 @@ C_DisinformationCampaign = Card(
     restriction = faction(acting).presence(target_district) > 0,
     cost        = faction.acting.native * 2,
 
-    success     = (faction(target).standing -= 2, faction(acting).standing += 1),
+    success     = (faction(target).standing.remove(2), faction(acting).standing.add(1)),
     successcrit = None,
-    fail        = faction(acting).standing -= 1,
+    fail        = faction(acting).standing.remove(1),
     failcrit    = (
-        faction(acting).standing -= 2,
+        faction(acting).standing.remove(2),
         arbiter.dispatch(NotificationSlip(type="Disinformation Campaign", district=target_district), target_faction),
     ),
 
@@ -1323,7 +1323,7 @@ C_Disprove = Card(
     target_faction  = faction.opponent,
     target_object   = IntelToken.any,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = None,
     cost        = faction.acting.native * 2,
@@ -1423,7 +1423,7 @@ C_IntelExtraction = Card(
     target_faction  = faction.opponent,
     target_object   = IntelToken.any,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = (
         faction(acting) == Ghost: threshold += 10,
     ),
@@ -1524,7 +1524,7 @@ C_ModifierRaid = Card(
     target_faction  = faction.opponent,
     target_object   = ModifierCard.any,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = (
         faction(acting) == Ghost: threshold += 10,
     ),
@@ -1589,7 +1589,7 @@ Public acts are Beat 4 cards unless otherwise specified.
 [↑ Public Acts](#standard-public-acts)
 
 #### Design Rationale
-Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outcome (Automatic), PS +1 on success. The trade: covert presence-building is hidden but risky (d100/50, fail wastes cost); Open Operations is visible from Phase B declaration but certain. Directorate's cost waiver reflects that formal institutional presence declaration is a zero-friction doctrinal act — the mandate is the permission. Ghost's portrait −1 captures the cost of committing to visibility against concealment doctrine.
+Formal, public declaration of operational presence in a district — Automatic resolution guarantees the outcome: 2 presence tokens placed and Public Standing +1, at a mono-resource cost of 2 faction native. The trade is visibility, not risk: the declaration is known from Phase B onward, forfeiting whatever concealment a covert approach would offer. Directorate's cost waiver reflects that formal institutional presence declaration is a zero-friction doctrinal act — the mandate is the permission. Ghost's portrait −1 captures the cost of committing to visibility against concealment doctrine.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1603,7 +1603,7 @@ Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outc
 | Doctrine alignment | ✓ | Directorate affinity (cost = 0) + portrait +1. Ghost portrait −1. Others no entry — justified | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / Standard — all factions make public presence claims; universally useful | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Add / PresenceToken — unambiguous | Art 04b §4 |
-| Balance | ✓ | Same cost as STD.CA.3; Automatic vs. d100/50; +PS. Trade is visibility, not resources | Art 02 §6–§7 |
+| Balance | ✓ | Mono-resource cost (2 faction native), Automatic (guaranteed outcome), PS +1 on success. Trade is visibility, not resources or risk. | Art 02 §6–§7 |
 | Effect duration | ✓ | Presence tokens are Permanent board state; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
@@ -1614,7 +1614,7 @@ Public counterpart to STD.CA.3 (Campaign). Same cost (2 native), guaranteed outc
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (successcrit/fail/failcrit all `None`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). Cross-card claim ("same cost as STD.CA.3") already checked and found false — unaffected by this fix. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -1652,13 +1652,13 @@ STD.PA.1 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Directorate: cost.faction(native) = 0,
     restriction = None,  # ring entry enforced universally at Beat 0
     cost        = faction.acting.native * 2,
     boost       = None,
 
-    success     = (district(target).faction(acting).presence += 2, faction(acting).standing += 1),
+    success     = (arbiter.place(presence_chip, district=target, faction=acting, count=2), faction(acting).standing.add(1)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -1677,7 +1677,7 @@ STD.PA.1 = Card(
         Ghost:       "Every formal declaration is a commitment we would rather not have made.",
         Syndicate:   "The first step is always claiming the position. Everything else follows.",
     },
-    design_note  = "Public version of STD.CA.3 Campaign. Same cost (2 native), guaranteed outcome (Automatic), PS +1 on success. Trade: covert = hidden + risky vs. public = visible + certain. Directorate affinity: formal institutional presence declaration has no resource cost against mandate doctrine. Ghost −1: visibility conflicts with concealment doctrine. Ring entry rules still enforced by ARBITER at Beat 0.",
+    design_note  = "Formal declaration of operational presence — Automatic resolution, guaranteed outcome, PS +1 on success, mono-resource cost (2 faction native). Directorate affinity: formal institutional presence declaration has no resource cost against mandate doctrine. Ghost −1: visibility conflicts with concealment doctrine. Ring entry rules still enforced by ARBITER at Beat 0.",
     arbiter_note = "Place 2 presence tokens for acting faction in declared district at Beat 4. Apply PS +1 to acting faction. Confirm ring entry requirements at Beat 0 — if not satisfied, PA voided; resources returned; acting faction takes Public Pass.",
 )
 ```
@@ -1688,7 +1688,7 @@ STD.PA.1 = Card(
 [↑ Public Acts](#standard-public-acts)
 
 #### Design Rationale
-Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly better base threshold (45 vs 40), PS effects added. Going public here means accepting accountability: a failed challenge hurts the challenger's standing. Network and Directorate gain threshold bonuses reflecting doctrinal alignment with formal territorial dispute mechanisms. The fail/failcrit PS penalties make this meaningfully riskier than it looks — public challenges are public commitments.
+A formal, public challenge to another faction's presence in a district — mono-resource cost (2 faction native), base threshold 45, with Public Standing consequences attached to every outcome. Going public here means accepting accountability: a failed challenge hurts the challenger's own standing, not just the target's. Network and Directorate gain threshold bonuses reflecting doctrinal alignment with formal territorial dispute mechanisms. The fail/failcrit PS penalties make this meaningfully riskier than it looks — public challenges are public commitments.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1702,7 +1702,7 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 | Doctrine alignment | ✓ | Network +10 threshold + portrait +1; Directorate +10 threshold + portrait +1 — formal dispute mechanisms align with both doctrines. Ghost portrait −1: public confrontation conflicts with concealment. doctrine_mod captures target relationship | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | PublicAct / Standard — all factions contest territory | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Remove / PresenceToken — target is a PresenceToken being removed | Art 04b §4 |
-| Balance | ✓ | Same cost as STD.CA.4; slightly better threshold; PS effects add risk on fail. Contested marker fires on tie — procedural | Art 02 §6–§7 |
+| Balance | ✓ | Mono-resource cost (2 faction native), base threshold 45 (Network/Directorate +10 via doctrine affinity); PS effects add risk on fail. Contested marker fires on tie — procedural | Art 02 §6–§7 |
 | Effect duration | ✓ | Presence token removal is a permanent state change; card persistence = Immediate | Art 04 §5 P19 |
 | Persistence | ✓ | Immediate — card fully resolved at Beat 4; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None — N/A | — |
@@ -1713,7 +1713,7 @@ Public counterpart to STD.CA.4 (Undermine). Same cost (2 native), slightly bette
 | Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic` (schema_cleanup_log #41) — the `ContestedMarker` placement is a `success`-field effect, not a resolution-mechanism category; only this card among the 5 "Contested" instances actually placed one. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching in any tier. | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). Cross-card claim ("same cost, 45 vs 40 threshold, as STD.CA.4") already checked and found false on both counts — unaffected by this fix. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -1751,7 +1751,7 @@ STD.PA.2 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = (
         faction(acting) == Network:    threshold += 10,
         faction(acting) == Directorate: threshold += 10,
@@ -1761,14 +1761,14 @@ STD.PA.2 = Card(
     boost       = None,
 
     success     = (
-        district(target_district).faction(target).presence -= 1,
+        arbiter.remove(presence_chip, district=target_district, faction=target, count=1),
         if tie_condition(target_district): arbiter.place(ContestedMarker, target_district),
-        faction(acting).standing += 1,
-        faction(target).standing  -= 1,
+        faction(acting).standing.add(1),
+        faction(target).standing.remove(1),
     ),
     successcrit = None,
-    fail        = faction(acting).standing -= 1,
-    failcrit    = faction(acting).standing -= 2,
+    fail        = faction(acting).standing.remove(1),
+    failcrit    = faction(acting).standing.remove(2),
 
     portrait = {
         Network:     PortraitEntry(submitter=+1),
@@ -1785,7 +1785,7 @@ STD.PA.2 = Card(
         Ghost:       "Public challenges create public attention. Attention is expensive.",
         Syndicate:   "Challenges are leverage. The willingness to file one changes the calculus of every faction at the table.",
     },
-    design_note  = "Public version of STD.CA.4 Undermine. Same cost (2 native); threshold 45 vs STD.CA.4's 40; PS consequences added. Fail/failcrit penalise the challenger — public challenges are public commitments. Network/Directorate +10 threshold: doctrinal alignment with formal dispute mechanisms. Ghost −1: public confrontation conflicts with concealment doctrine. doctrine_mod: Neighbor +10, Opposed −10 on target faction relationship.",
+    design_note  = "Formal public challenge to another faction's presence — mono-resource cost (2 faction native), base threshold 45. Fail/failcrit penalise the challenger — public challenges are public commitments. Network/Directorate +10 threshold: doctrinal alignment with formal dispute mechanisms. Ghost −1: public confrontation conflicts with concealment doctrine. doctrine_mod: Neighbor +10, Opposed −10 on target faction relationship.",
     arbiter_note = "Beat 4. Remove 1 presence token from target faction. Check for tie at highest chip count — if tie at 3+ chips, place Contested marker. PS: acting +1, target −1 on success. Acting −1 on fail. Acting −2 on failcrit (no token removed on fail/failcrit).",
 )
 ```
@@ -1859,7 +1859,7 @@ STD.PA.3 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Guild: cost.district.target.native = 0,
     restriction = (
         district(target).faction(acting).presence > 0 and
@@ -1868,7 +1868,7 @@ STD.PA.3 = Card(
     cost = faction.acting.native * 1 + district.target.native * 1,
     boost = None,
 
-    success     = (district(target).faction(acting).structure += 1, faction(acting).standing += 1),
+    success     = (arbiter.place(structure_block, district=target, faction=acting, count=1), faction(acting).standing.add(1)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -1961,7 +1961,7 @@ STD.PA.4 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = (
         faction(acting).holds_intel_token(faction=target, age=Fresh): threshold += 15,  # token optional; spent on resolution
         faction(acting) == Network:     cost.faction(native) -= 1,
@@ -1971,10 +1971,10 @@ STD.PA.4 = Card(
     cost        = faction.acting.native * 2,
     boost       = None,
 
-    success     = (faction(target).standing -= 2, faction(acting).standing += 1),
+    success     = (faction(target).standing.remove(2), faction(acting).standing.add(1)),
     successcrit = None,
-    fail        = faction(acting).standing -= 1,
-    failcrit    = faction(acting).standing -= 2,
+    fail        = faction(acting).standing.remove(1),
+    failcrit    = faction(acting).standing.remove(2),
 
     portrait = {
         Network:     PortraitEntry(submitter=+1),
@@ -2065,7 +2065,7 @@ STD.PA.5 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = (
         faction(acting).holds_intel_token(faction=target, age=Fresh):  threshold += 15,
         faction(acting) == Network: threshold += 10,
@@ -2076,11 +2076,11 @@ STD.PA.5 = Card(
 
     success     = (
         arbiter.announce(attribution=target_faction, context=intel_token.quarter),
-        faction(target).standing  -= 2,
-        faction(acting).standing  += 2,
+        faction(target).standing.remove(2),
+        faction(acting).standing.add(2),
     ),
     successcrit = None,
-    fail        = faction(acting).standing -= 1,
+    fail        = faction(acting).standing.remove(1),
     failcrit    = None,
 
     portrait = {
@@ -2171,20 +2171,20 @@ STD.PA.6 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = faction(acting) == Syndicate: threshold += 15,
     restriction = None,
     cost        = faction.acting.native * 1,
     boost       = None,
 
     success     = (
-        faction(target).resource(native) -= min(2, faction(target).resource(native)),
-        faction(acting).standing -= 1,  # aggressor optic
-        faction(target).standing += 1,  # sympathy
+        faction(target).resource(native).remove(min(2, faction(target).resource(native))),
+        faction(acting).standing.remove(1),  # aggressor optic
+        faction(target).standing.add(1),  # sympathy
     ),
     successcrit = None,
-    fail        = faction(acting).standing -= 1,
-    failcrit    = faction(acting).standing -= 2,
+    fail        = faction(acting).standing.remove(1),
+    failcrit    = faction(acting).standing.remove(2),
 
     portrait = {
         Syndicate: PortraitEntry(submitter=+1),
@@ -2274,13 +2274,13 @@ STD.PA.7 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = district(target).faction(acting).presence > 0,
     cost        = faction.acting.native * 1,
     boost       = None,
 
-    success     = faction(acting).standing += 2,
+    success     = faction(acting).standing.add(2),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -2374,7 +2374,7 @@ STD.PA.8 = Card(
     target_faction  = faction.opponent,  # named publicly at Phase B declaration
     target_object   = AccordForm,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = (
         target_faction != faction(acting) and
@@ -2480,7 +2480,7 @@ STD.PA.9 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy = None,
+    target_freeform = None,
     affinity    = None,
     restriction = (
         district(target_district).faction(acting).deployment_marker >= 1
@@ -2489,10 +2489,10 @@ STD.PA.9 = Card(
     cost        = faction.acting.native * 1,
     boost       = None,
 
-    success     = district(target_district).faction(acting).presence += 1,
-    successcrit = faction(acting).standing += 1,
+    success     = arbiter.place(presence_chip, district=target_district, faction=acting, count=1),
+    successcrit = faction(acting).standing.add(1),
     fail        = None,
-    failcrit    = faction(acting).standing -= 1,
+    failcrit    = faction(acting).standing.remove(1),
     on_accept   = None,
     on_decline  = None,
     on_discard  = game.return_to_hand(acting),

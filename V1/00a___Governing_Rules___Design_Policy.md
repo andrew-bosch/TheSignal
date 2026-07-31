@@ -1,7 +1,7 @@
 # 00a — GOVERNING RULES & DESIGN POLICY
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.12 — Signed Off — S148 (§10.4 added: Covert Attribution Remains Untraceable — a Covert Operation's effect may be public, its attribution to the acting faction may not be)  
+**Version:** 0.13 — Signed Off — S150 (§7.2c added: Triggering Conditions Are Exhausted on Resolution — a board-state condition qualifying a reactive effect is consumed the instant any effect resolves against it, a corollary of §7.2; §7.2c prior: 0.12 — S148 (§10.4 added: Covert Attribution Remains Untraceable — a Covert Operation's effect may be public, its attribution to the acting faction may not be))  
 **Status:** Signed Off  
 **Last Updated:** 2026-07-23  
 **Companion to:** 00 — Factions, World & Narrative Context  
@@ -565,6 +565,20 @@ Rules governing the board's relationship to physical reality, and the irreversib
 *Source: Corollary of 7.2. See also: 6.1a, 7.3.*
 
 *Governs: All card effects, all phases.*
+
+---
+
+#### 7.2c — Triggering Conditions Are Exhausted on Resolution
+
+**Rule:** A board-state condition that qualifies a reactive effect is consumed the instant any effect resolves against it. It does not persist to qualify a second, independent reaction to the same originating event.
+
+**Narrative:** Two operatives are poised to move on the same opening. The instant either one acts, the opening they were both watching is already gone — spent by whoever moved first. The other wasn't too slow. There was simply nothing left to react to.
+
+**Mechanics:** When 2+ reactive effects are simultaneously eligible to fire against the same board-state event, at most one may resolve against it. Once any one resolves, the board reflects the resulting state (7.2) — the original condition is exhausted, not merely skipped, for every other effect that was eligible only against the prior state. This holds regardless of how many independent sources (cards, copies, factions) were eligible; it is a property of the board state, not of any one mechanic.
+
+*Source: Corollary of 7.2.*
+
+*Governs: All reactive mechanics. Current instance: Artifact 03 §18 (React Card Rules) — the announcement, tiebreak, and choice-among-multiple-eligible-cards procedure for ModReactCard resolution lives there, as an application of this rule, not as its definition.*
 
 ---
 

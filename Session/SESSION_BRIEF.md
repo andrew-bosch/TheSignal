@@ -1,6 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 150 next | Updated: 2026-07-27**
-**Session start:** TBD
+**Session 151 next | Updated: 2026-07-31**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -34,34 +33,40 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S149 Accomplishments (closed)
+## S150 Accomplishments (closed)
 
-**Art 02 re-signed off (PM02 L326), 04-n197 closed.** Andy reviewed the Target Profile amendment (PM02 L317, §8 Gameplay Requirements) and confirmed the copy as-is.
+**All schema_cleanup_log synthesis-menu items (#4, #20) fully closed — every lettered sub-item resolved.** Full detail: PM02 L339–L344.
 
-**Schema Cleanup Program — Phases 3 and 4 of 5 closed (PM05 04-n191).**
-- **Phase 3 (04-n194) ✅ (PM02 L327/L328)** — 4/7 legacy pre-S127 cards fixed with direct vocabulary swaps: GHO.MOD.5, NET.MOD.9, NET.MOD.2, SYN.MOD.9. Remaining 3 (GHO.MOD.1, NET.MOD.1, NET.MOD.8) had no confirmed-vocabulary drop-in — folded into Phase 4.
-- **Phase 4 (04-n195) ✅ (PM02 L329–L332)** — 9 of 12 decision-batch items ruled and executed. New §6.3 vocabulary: `board_state.changed(component=, change=, cause=, faction=, district=, ring=)` — a general-purpose TriggerExpr primitive for cards needing more than one component type or direction of change, added specifically for GHO.MOD.1/NET.MOD.1/NET.MOD.8; `cause=` added after catching that the primitive's first draft silently widened NET.MOD.1's trigger past its original PA-only scope. **Art 03 §18.2.2 added and signed off (v4.13→v4.14, PM02 L332)** — React cards are permanently removed from the game by default once resolved unless card text states otherwise; this rule existed nowhere in writing before this session. DIR.CA.8/GUI.CA.9/GHO.CA.15 Subject taxonomy reclassified off the invalid "Difficulty" term (`card_subject_map` DB synced, re-verified against `v_card_mechanical_alignment`). GHO.CA.8 normalized to the schema's `boost=` field. 3 items scoped as follow-ups rather than executed: **04-n199** (Portrait `flat=`/`submitter=`, both patterns), **04-n200** (`where()` TriggerExpr vocabulary — reopened for a second look, not settled), **04-n201** (`game.active_permanents` — flagged for deeper review). New finding, not fixed: **04-n202** (DIR.CA.5 has the same invalid `-=`/`+=` statement-as-value defect as the already-closed #17; corpus-wide grep for more instances hasn't run).
-- **Phase 5 (04-n196)** — content-fix sweep, not started. Next in sequence.
+- **#4 D/E/F** — `tools/audit_card_corpus.py` built (parses `Card()` instances directly from the monolith). D closed as superseded by E (corpus's own omit-by-default convention makes a literal full-declaration gate wrong). E/F closed clean (0 real gaps). New `card_status.mod_subtype` DB column (Action/Battle/React) backfilled — DB previously had no way to distinguish the three Modifier subclasses. New view `v_card_taxonomy_gaps`. One real DB sync gap found and fixed (GD-01).
+- **#20 A** — vintage-format concern already resolved elsewhere; caught a 4th stale presence-mutation shape (3 instances) the earlier sweep missed.
+- **#20 B/C** — B already closed via #5. C: no design gap — Art 03 §7.4 restructured with an explicit Resource Type rule (district income pays in the district's own type, not the collecting faction's); closes PM05 03-n04.
+- **#20 E/F** — Art 03 §18 already substantially governed ModReactCard trigger-overlap/stacking; refined its tiebreak (initiative order) and added explicit multi-card-choice language. New Art 00a **GR §7.2c** (generalized, not ModReactCard-specific per Andy's correction).
+- **#20 D** — 3 distinct fixes: SYN.MOD.8 (syntax), DIR.MOD.6 (reused existing `game.board_condition`), NET.MOD.13/SYN.MOD.6 (genuine gap — closed via `persistence_condition = not trigger.card.resolved`, new §6.3 vocabulary: `public_act.resolved(pa=X)`, `trigger.card.resolved`/`.outcome`, `arbiter.protect()`, standalone `on(TriggerExpr): MutationExpr`).
+- **#57** — `district(trigger.target)` self-reference bug (GUI.MOD.1/10) normalized to the existing `trigger.district` pattern; written into §6.3 as "ModReactCard target inheritance."
+- New open items, not fixed: **#56** (`Resource(type,n)` cost-notation + dynamic-native cost shape on GHO.MOD.6/8), **#58** (tuple vs. `list([...])` multi-mutation notation, no canonical form chosen).
 
-**Hygiene recurrence #6 (feedback_artifact_hygiene.md updated with the failure-mode diagnosis).** Introduced session-tag/log-citation provenance into artifact prose at scale (~12 instances across 16 cards) during Phase 4 execution — caught via an advisor review pass after declaring the work done, not proactively. Stripped; all provenance now lives in PM02 only. Memory updated: having read the rule at boot didn't prevent the violation, because the impulse to cite fires while writing an edit, not when recalling the rule abstractly — the fix logged is a mechanical grep pass over touched files before calling a batch done, not another re-read of the rule.
+**Art 03 (v4.15) and Art 00a (v0.13) re-signed off** (PM02 L345) — batched to session close per Andy's direction rather than per-edit.
+
+**Hygiene recurrence #7 and #8 (feedback_artifact_hygiene.md updated).** Provenance/session-tag language crept into new §6.3 schema prose twice more this session — caught by Andy directly both times ("write the spec and schema as if it is final copy"), not proactively. The S149 mechanical grep-check fix (run a pattern search over every touched file before calling a batch done) had itself not been run — now flagged as the recurring point of failure, not the rule-awareness.
 
 ---
 
-## Current Focus (S150)
+## Current Focus (S151)
 
-**PRIMARY WORK — Schema Cleanup Program continues.** Next up per the locked sequencing (PM02 L316):
+**PRIMARY WORK — Schema Cleanup Program continues.** All synthesis-menu items (#4, #20) are now closed. Next up per the locked sequencing (PM02 L316):
 - **Phase 5 (04-n196)** — content-fix sweep: stub rewrites, prose/code mismatches, missing fields (#25/29/31/35/36/38/39/44). Heaviest lift, run last. Not started.
 - Held back, not yet actionable: #23 (doctrine-penalty portrait coverage) — still evidence-gathering.
 
-**4 items spun off Phase 4, need attention before or alongside Phase 5:**
-- **04-n199** — Portrait `flat=`/`submitter=` fix on SYN.CA.7/10/11/12/PA.3, plus a corpus-wide audit for other target-faction `flat=` instances.
-- **04-n200** — `where(BoolExpr)` TriggerExpr vocabulary, reopened — Andy flagged his initial "don't confirm" read needs a second look.
-- **04-n201** — `game.active_permanents(faction=,ring=)` (DIR.CA.6/CA.7/PA.9) flagged for deeper review, not ruled on.
-- **04-n202** — DIR.CA.5 has the same invalid `-=`/`+=` statement-as-value defect as the already-closed #17; corpus-wide grep for more instances hasn't run.
+**New open items from S150, not yet actionable-scoped:**
+- **#56** — `Resource(type, n)` cost-notation on GHO.MOD.6/8, GUI.MOD.6 (a 4th coexisting CostExpr style); GHO.MOD.6/8 additionally have a dynamic (triggering-faction-typed) cost that can't print as a fixed value.
+- **#58** — bare tuple `(A, B)` vs. `list([A, B])` multi-mutation notation coexist, no canonical form chosen; scope not counted.
+
+**Untouched synthesis menus:** #34 (full CA-corpus cross-cutting synthesis, six lettered patterns), #45.
 
 **Open threads needing a look next session:**
 - **PM05 04-n198** — pre-existing session-tag citations on `✓` checklist rows, corpus-wide sweep not started.
 - **agy/lev split** — waiting on lev's reply to the "drop brain's local clone" proposal; PM02/PM05 MariaDB migration script not yet written, dry-run pending.
+- **lev's Airlock protocol proposal** (`~/Airlock/lev-claude.md`, unacked) — Sender-Push + Ack protocol for claude↔lev messaging (machine-owned outgoing files, scp push on write, append-until-acked, reset on ack). Needs Andy's read before responding; not evaluated yet.
 
 **Carried, untouched multiple sessions:**
 - Add-vs-Redirect mis-tag sweep — other `Territory/Add/PresenceToken`(or `StructureBlock`) cards, same pattern found on SYN.CA.9 (S144)
@@ -76,9 +81,9 @@ Then prompt: *"What's our focus today?"*
 ## Pending Sign-offs
 
 - **Art 04** — Draft, gated on the Schema Cleanup Program (Phase 5 remaining) plus the pre-existing card-audit-issue list (mis-tag sweep, target-field audit, 04-n177, board narrative sync, backlog). No set-level sign-off pass starts until the program clears.
-- **Art 00a** — v0.12, Signed Off.
+- **Art 00a** — v0.13, Signed Off.
 - **Art 02** — v2.5, Signed Off.
-- **Art 03** — v4.14, Signed Off.
+- **Art 03** — v4.15, Signed Off.
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
 
 *Card-level sign-offs gated behind set-level audits — not actionable until those gates clear.*

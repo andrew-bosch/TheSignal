@@ -468,7 +468,7 @@ class Card:
     target_district:  DistrictExpr
     target_faction:   FactionExpr  | None
     target_object:    ObjectExpr   | None
-    target_taxonomy:  TaxonomyExpr | None   # action taxonomy category this card targets; None = no taxonomy target
+    target_freeform:  FreeformExpr | None   # maps onto Target Profile's physical freeform line (Art 02 §8, DB:48); None = no declaration required. Repurposes the former target_taxonomy slot and absorbs the former declared_params field, which both described this same physical slot under different names (schema_cleanup_log #52). Two ModReactCards (GUI.MOD.10, Overture/STD.MOD.1) use this field despite ModReactCards never submitting Target Profile — remove this note once schema_cleanup_log #53 resolves.
 
     # ── Logic ─────────────────────────────────────── predicates + expressions
     affinity:     ConditionalExpr | None    # evaluated before cost; None on every FactionSpecific card
@@ -590,7 +590,7 @@ class ModReactCard(Card):
 | target_district | Targeting | DistrictExpr | District scope for the card's effect | Face |
 | target_faction | Targeting | FactionExpr | Faction this card targets; None = no faction target | Face |
 | target_object | Targeting | ObjectExpr | Game component this card acts on; None = no object target | Face |
-| target_taxonomy | Targeting | TaxonomyExpr | Action taxonomy category this card targets (Layer/Function or Layer/Function/Subject); used when the effect targets a class of actions rather than a specific object; declared at Phase B alongside target_faction; None = no taxonomy target | Face |
+| target_freeform | Targeting | FreeformExpr | Maps onto Target Profile's physical freeform line (Art 02 §8, DB:48) — whatever free-form content a card needs written there (a replacement value, N tokens + consideration, an action-class declaration, an operation name); None = no declaration required. Repurposes the former `target_taxonomy` slot and absorbs the former `declared_params` field (schema_cleanup_log #52, closes 04-n106) | Face |
 | affinity | Logic | ConditionalExpr | Faction-based cost/threshold modifier, evaluated before cost — differentiates how the *same* card plays out depending on which faction submits it. Meaningful only on a Standard card (`subtype = Standard`, `faction = All`), where more than one faction genuinely could submit it. `None` on every FactionSpecific card — the card is already locked to one faction, so there's no other faction's terms to differentiate from. | Face |
 | restriction | Logic | BoolExpr | Submission preconditions — card unplayable if evaluates False | Face |
 | cost | Logic | CostExpr | Physical, fungible resources consumed at submission — valid resource types are native, capital, mandate, exposure, findings, capacity (§6.3), plus Intel Token as a confirmed discrete-object cost category (§6.3). Non-fungible markers (Public Standing, presence tiers) are not valid cost values; marker changes that function as a cost belong in `success`/`fail` effect fields. | Face |
@@ -638,7 +638,7 @@ Which inherited Card fields are always None vs. per-card design vs. required. `N
 | resolution_type | None | None | — |
 | outcome_type | None | None | — |
 | persistence / persistence_condition / persistence_clearing_trigger / persistence_effect | None | None | — |
-| target_district / target_faction / target_object / target_taxonomy | None | None | — |
+| target_district / target_faction / target_object / target_freeform | None | None | — |
 | affinity / restriction | — | None | — |
 | boost | None | None | — |
 | cost | None | None | — |
@@ -743,6 +743,7 @@ TriggerExpr:         Any
 #   resolution_grid.updated                            (after Beat 0 public reveal)
 #   broadcast_card.placed                              (db25 — public SitRep card placed in Situation Report Zone; fires at Upkeep phase 1 and Beat 5 phase 18)
 #   public_act.placed_on_frg(faction, ...)             (any faction places a PA face-up on their FRG at §9.2 Public Declaration)
+#   public_act.resolved(pa=X)                          (the named PA resolves at Beat 4 — success or failure, either counts)
 #
 # ring= confirmed valid on all .removed() forms, symmetric with .placed() (schema_cleanup_log #3,
 # PM05 04-n195 item 1) — e.g. presence_chip.removed(faction=X, ring=Z) is confirmed vocabulary,
@@ -752,6 +753,17 @@ TriggerExpr:         Any
 # parameter (schema_cleanup_log #12/#13, PM05 04-n195 item 10) — matches only when the placed PA
 # carries an Intel Token as part of its declared cost/payment. Default (omitted) = no filter, any
 # PA placement matches regardless of Intel Token presence.
+#
+# district=district.where(BoolExpr) / target_district=district.where(BoolExpr) — confirmed
+# (schema_cleanup_log #9, PM05 04-n200) as a valid filter value on any TriggerExpr's district
+# parameter: matches any district where the given live board-state condition currently holds,
+# evaluated at fire time, rather than naming one specific district. Uses the district.where(...)
+# receiver form already confirmed for MutationExpr filtering (e.g. district.adjacent(X).where(...),
+# district.where(influence_tier >= Established)) — the same grammar, applied to a trigger parameter
+# instead of a success-field expression, not a second form of "where." Confirmed via GHO.MOD.2/3/4
+# (district=district.where(faction(Ghost).presence > 0)), DIR.MOD.8 (target_district=district.where(
+# faction(Directorate).influence >= Established)), GUI.MOD.5 (district=district.where(faction(Guild)
+# .structure > 0)).
 #
 # board_state.changed(component=, change=, cause=, faction=, district=, ring=) — general-purpose
 # TriggerExpr primitive (PM05 04-n195 items 11/12) for cards that need to react to more than one
@@ -780,6 +792,35 @@ TriggerExpr:         Any
 #              field is not a substitute for this filter.
 #   faction/district/ring: same semantics as the itemized forms above.
 #
+# ModReactCard target inheritance — ModReactCard carries no Target Profile (modifier cards never
+# submit one), so it has no independent mechanism for declaring target_district/target_faction/
+# target_object. These fields instead inherit directly from whatever the triggering event itself
+# matched: trigger.district, trigger.faction, trigger.object — whichever the specific event type
+# provides. Two consequences: (1) a trigger's own match parameters leave the relevant dimension
+# unconstrained (omit the parameter, or state faction=Any) when the card is meant to fire on *any*
+# district/faction and inherit whichever one actually matched — never self-reference the not-yet-
+# matched value inside the trigger's own condition (district=district(trigger.target) is invalid:
+# trigger.target doesn't exist until the trigger has already matched something). (2) downstream
+# fields read the matched value with a bare accessor — target_district = trigger.district, not
+# target_district = district(trigger.target) or any other wrapped form.
+#
+# trigger.card — the specific card object a trigger matched, for events bound to one named card
+# (e.g. public_act.resolved(pa=X), public_act.placed_on_frg(...)) rather than a district/faction.
+# Two accessors read its state:
+#   trigger.card.resolved            — bool: has the referenced card resolved yet. Used in
+#                                       persistence_condition to keep a Standing Condition active only
+#                                       while the card it's bound to is still pending.
+#   trigger.card.outcome             — Success | Fail: how the referenced card resolved. Used to branch
+#                                       a MutationExpr on the card's actual result, not just its occurrence.
+#
+# on(TriggerExpr): MutationExpr — a standalone MutationExpr form binding an action to a future event,
+# usable directly wherever a MutationExpr is expected (persistence_effect, success, etc.), not only
+# nested inside game.board_condition. May branch on outcome using the same BoolExpr: MutationExpr
+# colon syntax already confirmed for affinity's ConditionalExpr:
+#   on(TriggerExpr):
+#       BoolExpr: MutationExpr,
+#       BoolExpr: MutationExpr,
+#
 # Excluded (static — never change): district tiles, board geography, ARBITER Dominance Marker
 # Excluded (procedural — not player-driven): Initiative Strip, Session Timeline, Quarter/Month markers
 
@@ -788,33 +829,75 @@ MutationExpr:        confirmed helper symbols only (full grammar not yet enumera
 
 #   holder                        — bare symbol: the faction currently holding/reacting with this card
 #                                   (Deck-acquired, faction=All context). Bare-argument form, e.g.
-#                                   NativeResource(holder). Mirrors the existing bare-keyword pattern
-#                                   (trigger.faction, acting, opponent).
+#                                   faction(holder).native.add(n). Mirrors the existing bare-keyword
+#                                   pattern (trigger.faction, acting, opponent).
 #   faction(holder)               — wrapped form of the same symbol, used when a Faction-object receiver
 #                                   is needed for a method call (e.g. faction(holder).standing.add(n),
-#                                   faction(holder).resources.add(...)). Mirrors Overture's established
+#                                   faction(holder).native.add(n)). Mirrors Overture's established
 #                                   faction(acting) (STD.MOD.1).
-#   NativeResource(faction)       — parameterized form of the bare NativeResource subject symbol (§6.1);
-#                                   resolves to the resource type native to the given faction argument at
-#                                   runtime. faction may be trigger.faction (the faction whose action fired
-#                                   the trigger) or holder (the reacting faction itself). Needed for
-#                                   faction=All Deck content with no single fixed faction context (contrast
-#                                   faction-specific precedent, e.g. GUI.MOD.2/3/4's hardcoded Capacity).
+#
+# faction(X).TYPE.add(n) / .remove(n) — the single canonical resource-mutation shape. Modeled directly
+# on CostExpr's own grammar (§6.3 CostExpr, below): a named resource type (mandate | capital | findings
+# | capacity | exposure) is a first-class attribute, addressed bare — no "resource"/"resources" wrapper
+# field, no type passed as a call argument — same principle as CostExpr's bare `Mandate * n`. Matches
+# the corpus's own standing precedent: faction(X).standing.add(n)/.remove(n).
+#   faction(X).mandate.add(n) / .remove(n)
+#   faction(X).capital.add(n) / .remove(n)
+#   faction(X).findings.add(n) / .remove(n)
+#   faction(X).capacity.add(n) / .remove(n)
+#   faction(X).exposure.add(n) / .remove(n)
+#   faction(X).native.add(n) / .remove(n)
+#                                 — the contextual case, mirroring CostExpr's faction.Y.native /
+#                                   district.Y.native: .native is a qualifier, not a sixth resource
+#                                   type of its own — it resolves at runtime to whichever type X (the
+#                                   receiver) itself generates. Default (no argument) — the receiver's
+#                                   own native resource, credited to the receiver's own pool: e.g.
+#                                   faction(holder).native.add(1).
+#   faction(X).native(faction=Y).add(n) / .native(district=D).add(n)
+#                                 — for the cross-reference case: credit X's pool, but the resource
+#                                   TYPE is determined by a different faction Y or district D (e.g. "add
+#                                   to holder's pool, typed by whatever the triggering faction's native
+#                                   resource is"). Explicit argument required whenever the type source
+#                                   differs from the receiving faction — omitted only when they match.
 #   arbiter.modify(target, field, delta)
 #                                 — signed delta on an already-submitted card's named field (e.g.
 #                                   threshold). Not new ARBITER behavior — feeds the existing threshold-
 #                                   modifier-accumulation pipeline already used by BM-xx tokens and M-11
 #                                   Type B Countermeasure (Art 03 §9.4.1.1/§9.4.3.1.3).
-#   arbiter.remove(presence_chip, ...)
-#                                 — confirmed (schema_cleanup_log #6, PM05 04-n195 item 2): can never
-#                                   target a Deployment Marker. Presence Token (DB:1) and Deployment
-#                                   Marker (DB:2) are separate physical components, not a marker-plus-
-#                                   linked-chip pair — a Deployment Marker "counts as 1 Presence Token
-#                                   for all purposes" (Art 02 §6) only for counting/influence-level
-#                                   purposes, not as a valid removal target. If a faction's only presence
-#                                   in scope is a Deployment Marker (no separate literal chip), this call
-#                                   simply has nothing valid to remove there. GR 8.3a (displaced markers
-#                                   are repositioned, never removed) is not in tension with this call.
+#   arbiter.protect(target, from=)
+#                                 — grants target immunity from the named action class (e.g. targeting)
+#                                   for as long as the card that granted it remains in play. Pairs with
+#                                   persistence_condition = not trigger.card.resolved on the granting
+#                                   card: the protection lasts exactly as long as the Standing Condition
+#                                   does, clearing automatically once the protected card resolves.
+#   arbiter.place(component, district=, faction=, count=) / arbiter.remove(component, district=,
+#   faction=, count=) — the single canonical form for placing/removing physical board tokens,
+#   component = presence_chip or structure_block.
+#   arbiter.remove(presence_chip, ...) can never target a Deployment Marker specifically — Presence
+#   Token (DB:1) and Deployment Marker (DB:2) are separate physical components, not a marker-plus-
+#   linked-chip pair — a Deployment Marker "counts as 1 Presence Token for all purposes" (Art 02 §6)
+#   only for counting/influence-level purposes, not as a valid removal target. If a faction's only
+#   presence in scope is a Deployment Marker (no separate literal chip), this call simply has nothing
+#   valid to remove there. GR 8.3a (displaced markers are repositioned, never removed) is not in
+#   tension with this call.
+#   game.active_permanents(faction=, ring=)
+#                                 — confirmed (schema_cleanup_log #26, PM05 04-n201): counts
+#                                   currently-active PublicAct or ModReactCard cards belonging to the
+#                                   named faction that are creating a permanent standing effect
+#                                   (persistence=Permanent, card-as-condition — sitting face-up as its
+#                                   own ongoing board condition), filtered to those whose
+#                                   target_district's ring matches the given ring value. Does NOT count
+#                                   every card with persistence=Permanent regardless of type — a
+#                                   CovertOperation with a one-time Permanent board effect (e.g. a
+#                                   permanent token placement) doesn't qualify; only the standing-
+#                                   condition kind does. A simple physical tally (ARBITER reads visible
+#                                   board state), not a derived judgment call. Wrap in count(...) for
+#                                   the integer total, e.g. count(game.active_permanents(faction=
+#                                   Directorate, ring=1)). Confirmed via DIR.CA.6 Institutional Audit,
+#                                   DIR.CA.7 Institutional Brief, DIR.PA.9 Charter Grant — identical
+#                                   signature and semantics across all three (DIR.CA.6/7 query the
+#                                   count for their own resource yield; DIR.PA.9 queries it to scale its
+#                                   own placement radius).
 #
 # Confirmed via: STD.MOD.98–133 (Ring 1/2/3 ModReactCard stub passes, S135–S138). Reconciles 04-n171.
 
@@ -1529,9 +1612,7 @@ Produced by Ghost SCIF card on successful Beat 3 resolution (see Art 03 §7.2 Gh
 
 ### 12a.3 DA-02 — PhantomRecord
 
-*GHO.CA.13 Phantom Accounts, the generating card, is itself an undesigned stub (id/version/beat/resolution/threshold only — no Design Rationale, checklist, or Status). DA-02's fields and procedure below match GHO.CA.13's one-line success text as written; exact mechanics are pending GHO.CA.13's own full design pass, not settled by this entry.*
-
-Produced by Ghost's GHO.CA.13 Phantom Accounts on successful Beat 3 resolution. ARBITER places one completed PhantomRecord in Ghost's Dispatch Case at Beat 3 instantiation.
+Produced by Ghost's GHO.CA.13 Phantom Accounts on successful Beat 3 resolution. ARBITER places one completed PhantomRecord in Ghost's Dispatch Case at Beat 3 instantiation, snapshotting the target faction's actual resource generation in the named district — the same computation Upkeep Step 5 would apply to that faction/district pair, evaluated early and mirrored to Ghost at Debrief instead.
 
 **Fields (ARBITER completes at generation):**
 
@@ -1539,15 +1620,14 @@ Produced by Ghost's GHO.CA.13 Phantom Accounts on successful Beat 3 resolution. 
 |-------|------|-------------|
 | `quarter` | Integer | Quarter in which the card was produced |
 | `target_faction` | Faction | Faction whose district-native resource generation is being mirrored |
-| `generation_snapshot` | TBD | Target faction's influence-based district-native resource generation at Beat 3 (snapshot) — exact calculation method pending GHO.CA.13 full design pass |
+| `district` | District | The district GHO.CA.13 targeted |
+| `generation_snapshot` | Integer | `target_faction`'s resource generation in `district` at Beat 3 — `game.resource_generation(faction=target_faction, district=district)`: the district's base generation (Art 03, ring-dependent) scaled by `target_faction`'s Influence Level in that district (Art 02a §6 — Dominant = full + affinity bonus, Established = full, Present = half rounded down, Contested = flat 1), same formula Upkeep Step 5 uses for passive income |
 
 **Debrief procedure (Art 03 §11):** At the start of Debrief, process all DA-02 slips in Ghost's Dispatch Case:
 
-1. Ghost gains district-native resources equal to `generation_snapshot`.
+1. Ghost gains `generation_snapshot` units of `district`'s native resource.
 2. Discard the DA-02 slip after use.
 3. DA-02 slips remaining in the Dispatch Case at Phase 21 are discarded without effect.
-
-⚠ **Outstanding:** `generation_snapshot`'s exact source (which formula/table defines "influence-based generation") is undefined — GHO.CA.13 needs its own design pass before this is more than a placeholder field.
 
 ---
 
@@ -1613,7 +1693,7 @@ GD01 = Card(
     target_district = deed.district,
     target_faction  = None,
     target_object   = None,
-    declared_params = None,
+    target_freeform = None,
 
     affinity    = None,
     restriction = None,
@@ -1623,9 +1703,9 @@ GD01 = Card(
     acquisition      = Issued,
     generating_card  = ["SYN.CA.8", "GUI.CA.10"],
 
-    success = [faction(holding).presence_token.add(deed.district, 1),
-               faction(holding).structure_block.add(deed.district, 1),
-               faction(trigger.faction).structure_block.remove(deed.district, 1)],
+    success = [arbiter.place(presence_chip, district=deed.district, faction=holding, count=1),
+               arbiter.place(structure_block, district=deed.district, faction=holding, count=1),
+               arbiter.remove(structure_block, district=deed.district, faction=trigger.faction, count=1)],
     successcrit = None,  fail = None,  failcrit = None,
 
     portrait    = None,
@@ -1633,7 +1713,7 @@ GD01 = Card(
 
     narrative    = None,
     perspectives = None,
-    design_note  = "ARBITER-issued (acquisition=Issued); not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order. Step 3 (removing the triggering faction's structure block) reflects that a registered claim doesn't just let the holder catch up when someone else builds — it displaces that build outright: a Land Title/Development Order registered earlier legally supersedes an unauthorized structure raised later on the same ground. This interacts with SYN.CA.8/GUI.CA.10's own cost calibration (04-n178).",
+    design_note  = "ARBITER-issued (acquisition=Issued); not drawn from a deck. Fill-in fields: district (from generating CA target) and holder (acting faction of generating CA). GR 8.2 governs step 3 — structure block placement blocked if holder already holds one in deed.district; step 2 (Presence Token) always executes on fire. Multiple deeds on the same district are permitted; each fires independently. Produced by SYN.CA.8 Land Title and GUI.CA.10 Development Order. Step 3 (removing the triggering faction's structure block) reflects that a registered claim doesn't just let the holder catch up when someone else builds — it displaces that build outright: a Land Title/Development Order registered earlier legally supersedes an unauthorized structure raised later on the same ground. This interacts with SYN.CA.8/GUI.CA.10's own cost calibration.",
     arbiter_note = "At generating CA resolution: take 1 blank Grant Deed from ARBITER tableau; write target district name in 'district' field and acting faction in 'holder' field; place in acting faction's Dispatch Case. Card moves to holder's hand at Debrief. No ongoing ARBITER monitoring required — holder self-polices and announces React when trigger fires.",
 )
 ```

@@ -74,7 +74,7 @@ NET.CA.1 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction(named_opponent), target_object=CovertOperation(faction=faction(target), beat=3, unresolved=True),
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction = faction(target).op(beat=3, unresolved=True).count >= 1,
     cost        = Exposure * 1 + Findings * 1,
@@ -86,8 +86,8 @@ NET.CA.1 = Card(
     portrait    = {Network: PortraitEntry(submitter=+1)},
     narrative   = "The Network does not need to know everything — only enough to make the right question public.",
     perspectives = {Network: "We do not reveal everything. We reveal the piece that makes everything else visible."},
-    design_note  = "Pre-execution discovery + cancellation model: target op cancelled, resources lost, PS reduction applies. Cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending 04-n33/04-n34b. Subject is CovertOperation, not District: DistrictTile has no Reveal in comp_verb_phase — the card reveals and cancels the operation, not the district itself.",
-    arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending 04-n33). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
+    design_note  = "Pre-execution discovery + cancellation model: target op cancelled, resources lost, PS reduction applies. Cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending finalization. Subject is CovertOperation, not District: DistrictTile has no Reveal in comp_verb_phase — the card reveals and cancels the operation, not the district itself.",
+    arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending finalization). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
     value_rating = 4,
 )
 ```
@@ -149,11 +149,11 @@ NET.CA.2 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction(acting), target_object=None,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction=None,
     cost        = Findings * 1,
-    success     = resource.faction(acting).exposure += 1 if faction(acting).reveal_resolved_this_round >= 1 else None,
+    success     = faction(acting).exposure.add(1) if faction(acting).reveal_resolved_this_round >= 1 else None,
     successcrit=None, fail=None, failcrit=None,
     portrait    = None,
     narrative   = "The act of disclosure is not only a tactic. It is a resource. The Network learned this before anyone else at this table.",
@@ -231,7 +231,7 @@ NET.CA.3 = Card(
     target_district = None,
     target_faction  = faction(named_opponent),
     target_object   = None,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity        = None,
     restriction     = "target_faction != acting_faction",
     cost        = Exposure * 2,
@@ -250,7 +250,7 @@ NET.CA.3 = Card(
     perspectives = {
         Network: "We don't ask permission to broadcast. We decide when.",
     },
-    design_note  = "Point-in-time forced reveal, avoiding the cross-beat state tracking a notification-redirect model would require (Governing Rule 6.1). Fills Network's forced-transparency FactionSpecific slot at L1. Beat 2: ARBITER announces target's first Beat 3 queue entry to all players; VM-xx placed to flag public Beat 3 resolution. Distinct from NET.CA.1 Leak (Beat 3 cancel + reveal) and GHO.CA.2 Intercept (private IS-xx to Ghost). Fizzle: if target has no committed Beat 3 ops at Beat 2, announce fizzle; cost spent. Second Beat 2 d100 card alongside GHO.CA.2 — procedure gap in Art 03 tracked in 04-n75.",
+    design_note  = "Point-in-time forced reveal, avoiding the cross-beat state tracking a notification-redirect model would require (Governing Rule 6.1). Fills Network's forced-transparency FactionSpecific slot at L1. Beat 2: ARBITER announces target's first Beat 3 queue entry to all players; VM-xx placed to flag public Beat 3 resolution. Distinct from NET.CA.1 Leak (Beat 3 cancel + reveal) and GHO.CA.2 Intercept (private IS-xx to Ghost). Fizzle: if target has no committed Beat 3 ops at Beat 2, announce fizzle; cost spent. Second Beat 2 d100 card alongside GHO.CA.2 — procedure gap in Art 03, not yet formalized.",
     arbiter_note = "Network has played Breaking News targeting faction X. Roll d100 (threshold 50 + PS modifier). Success: check faction X's Beat 3 queue. If empty: announce 'No operations queued for faction X — Breaking News fizzles'; cost spent, no further effect. Otherwise: identify faction X's first entry in Beat 3 resolution order; announce to all players: card name, type, declared targets; place VM-xx on that card in the grid. VM-xx procedure at Beat 3: when this card is reached, announce it publicly, roll d100 visibly, announce outcome to table, then remove VM-xx. Do not announce Network as acting faction. Crit success: reveal and place VM-xx on ALL of faction X's Beat 3 queue entries. Fail: cost spent, no announcement. Crit fail: dispatch NotificationSlip to faction X only. Do not announce Network.",
     value_rating = 4,
 )
@@ -273,7 +273,7 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 |----------|------|------|--------------|
 | Action fit | ✓ | Signal propagation — extends STD.CA.6 Broadcast Interference to adjacent district; mechanically implements "broadcast doesn't stop at district borders" doctrine | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Network perspective by design — signal propagation as operational reality | Art 00 §7 |
-| Doctrine alignment | ✓ | Network only; requires STD.CA.6 same round (restriction); Exposure×2; Beat 2 Automatic — both disruption effects land before Beat 4 PA resolution | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Network only; requires STD.CA.6 same round (restriction); cross-resource cost (Exposure×1+Findings×1); Beat 2 Automatic — both disruption effects land before Beat 4 PA resolution | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — signal propagation is Network-exclusive two-card mechanic | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Submission/Modify/PublicAct — extends STD.CA.6's PA cost increase to adjacent district | Art 04b §4, §5 |
 | Balance | ✓ | Cross-resource cost (Exposure×1+Findings×1); adjacent-district PA cost penalty of +2 matches cost at model rate (`PublicAct/Modify` 1.00 × 2 = 2.00 vs. cost 2.00, 0% delta). | Art 02 §6–§7 |
@@ -313,11 +313,11 @@ NET.CA.4 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=district.adjacent(C06.target_district), target_faction=None, target_object=PublicAct,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction = faction(acting).submitted(STD.CA.6, round=game.round) == True,
     cost        = Exposure * 1 + Findings * 1,
-    success     = district(target).political_act_cost += 2,
+    success     = district(target).political_act_cost.add(2),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
     narrative   = "The Network understands signal propagation better than anyone at this table.",
@@ -385,11 +385,11 @@ NET.CA.5 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=district.any(zone=Baryo), target_faction=None, target_object=None,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction = district(target).faction(acting).presence == 0 AND district(target).zone == Baryo,
     cost        = Exposure * 1,
-    success     = district(target).faction(acting).presence += 1,
+    success     = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
     narrative   = "The Network did not arrive in New Meridian through official channels. They arrived through people.",
@@ -457,11 +457,11 @@ NET.CA.6 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction.any, target_object=None,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction=None,
     cost        = None,
-    success     = faction(acting).standing -= 2, IntelToken(target_faction) += 1,
+    success     = (faction(acting).standing.remove(2), IntelToken(target_faction).add(1)),
     successcrit=None, fail=None, failcrit=None,
     portrait    = None,
     narrative   = "The Network knows: sometimes you spend credibility like currency. This is one of those times.",
@@ -535,12 +535,12 @@ NET.CA.7 = Card(
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
-    target_faction=None, target_object=None, target_taxonomy=None,
+    target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction = faction(acting).influence_level(district(target)) <= InfluenceLevel.Established,
     cost    = Exposure * 1,
     success = faction(acting).standing.add(1),
-    successcrit = (faction(acting).presence_chips(district(target)).add(1),
+    successcrit = (arbiter.place(presence_chip, district=target, faction=acting, count=1),
                    faction(acting).standing.add(1)),
     fail=None,
     failcrit    = faction(acting).standing.remove(1),
@@ -571,7 +571,7 @@ NET.CA.7 = Card(
 | Voice fit | ⚠ |  |  |
 | Doctrine alignment | ⚠ |  |  |
 | Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
+| Taxonomy fit | ✓ | Territory/Redirect/DeploymentMarker — Redirect is the Function whose underlying primitive is Move (relocates a component to a new destination) | Art 04b §4, §5 |
 | Balance | ⚠ |  |  |
 | Effect duration | ⚠ |  |  |
 | Persistence | ⚠ |  |  |
@@ -580,7 +580,7 @@ NET.CA.7 = Card(
 | Supported by zones | ⚠ |  |  |
 | Supported by components | ⚠ |  |  |
 | Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `function = Move` is not in the confirmed Function Vocabulary (`ref_taxonomy.md`) — third confirmed instance of that gap (DIR.CA.2/DIR.CA.4 are the other two). `v_card_mechanical_alignment` confirms Abstract Function. Also missing `ring_mod`/`doctrine_mod`/`outcome_type`/`boost`/`ps_framing` (has `card_id`, unlike most of this set). | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Pending 04-n70. Also missing `ring_mod`/`doctrine_mod`/`outcome_type`/`boost`/`ps_framing` (has `card_id`, unlike most of this set). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
 | Outcome determinacy | ⚠ |  |  |
 | Resource cost positioning | ⚠ |  |  |
@@ -603,7 +603,7 @@ NET.CA.8 = Card(
     name    = "Fake News",
     tagline = "Plant a false story. Watch where the marker goes.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
-    layer   = Territory,  function = Move,  subject = DeploymentMarker,
+    layer   = Territory,  function = Redirect,  subject = DeploymentMarker,
 
     beat    = 2,
     resolution = d100,  threshold = 50,
@@ -710,20 +710,20 @@ NET.PA.1 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = faction(Network).holds_intel_token(faction=target, count=1),
     cost        = Exposure * 2 + IntelToken(about=faction(target)).all_held,
     boost       = None,
 
     success = (
-        faction(target).standing  -= (2 * count(intel_token(target=faction(target)).spent)),
-        faction(Network).standing += 2,
+        faction(target).standing.remove(2 * count(intel_token(target=faction(target)).spent)),
+        faction(Network).standing.add(2),
     ),
     successcrit = None,
     fail = (
-        faction(target).standing  -= (1 * count(intel_token(target=faction(target)).spent)),  # partial — dirt still gets out
-        faction(Network).standing -= 1,
+        faction(target).standing.remove(1 * count(intel_token(target=faction(target)).spent)),  # partial — dirt still gets out
+        faction(Network).standing.remove(1),
     ),
     failcrit = None,
 
@@ -810,7 +810,7 @@ NET.PA.2 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = faction(Network).influence_tier(district.each_target) >= Established,
     cost        = Exposure * 2 + district.each_target.native * 1,
@@ -818,8 +818,8 @@ NET.PA.2 = Card(
     boost       = None,
 
     success     = (
-        district.each(target).faction(Network).presence += 1,
-        faction(Network).standing += 1,
+        arbiter.place(presence_chip, district=district.each_target, faction=Network, count=1),
+        faction(Network).standing.add(1),
     ),
     successcrit = None,
     fail        = None,
@@ -907,7 +907,7 @@ NET.PA.3 = Card(
     target_district = None,
     target_faction  = faction(named_opponent),
     target_object   = None,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity        = None,
     restriction     = "target_faction != Network",
     cost        = Exposure * 2,
@@ -915,10 +915,10 @@ NET.PA.3 = Card(
     success     = game.activate(LiveCoverage_obligation, target=faction(target)),
     successcrit = (
         game.activate(LiveCoverage_obligation, target=faction(target)),
-        faction(target).standing -= 1,
+        faction(target).standing.remove(1),
     ),
     fail        = None,
-    failcrit    = faction(acting).standing -= 1,
+    failcrit    = faction(acting).standing.remove(1),
     portrait    = {Network: PortraitEntry(submitter=+1)},
     ps_framing  = None,
     narrative   = "The story is already written. The only question is whether the subject chooses the cameras or the consequences.",
@@ -926,7 +926,7 @@ NET.PA.3 = Card(
         Network:     "We are not exposing secrets. We are establishing accountability. The distinction matters to us.",
         Directorate: "Network has appointed itself an oversight authority. The Directorate notes this. It will not be forgotten.",
     },
-    design_note  = "Hand-visibility model replaces a dispatch-case forced-reveal mechanism — simpler L1 execution, genuine comply/resist decision friction. Comply once → card clears (the faction gave the interview; Network moves on). Resist → covert submissions disabled that Month; card persists. Natural expiry: Quarter end. SuccessCrit: obligation activates + target −1 PS (story breaks big). FailCrit: Network −1 PS (reckless broadcast, story didn't land). Art 03 Covert Dispatch procedure required (04-n77). Subject = FactionHand — 04b validation needed.",
+    design_note  = "Hand-visibility model replaces a dispatch-case forced-reveal mechanism — simpler L1 execution, genuine comply/resist decision friction. Comply once → card clears (the faction gave the interview; Network moves on). Resist → covert submissions disabled that Month; card persists. Natural expiry: Quarter end. SuccessCrit: obligation activates + target −1 PS (story breaks big). FailCrit: Network −1 PS (reckless broadcast, story didn't land). Art 03 Covert Dispatch procedure required. Subject = FactionHand — 04b validation needed.",
     arbiter_note = "Network has declared Live Coverage against faction X. Place card in Network's active PA area, face-up; faction X announced. Effect begins next Covert Dispatch. Each Covert Dispatch while Live Coverage is active: at start of Covert Dispatch announce — 'Live Coverage is active against [Faction X]. Faction X: comply (lay all held cards face-up on your table area for Covert Dispatch — cards remain in hand; covert ops proceed) or resist (forfeit covert submissions this Month).' If faction X complies: covert submissions proceed normally; at end of Covert Dispatch, remove Live Coverage from Network's active PA area. If faction X resists: faction X does not open their dispatch case this Covert Dispatch; Live Coverage remains in play. Cards laid face-up during compliance are still counted as in hand. Network identity as declaring faction is already public (Phase B declaration).",
 )
 ```
@@ -966,7 +966,7 @@ A rival's public standing ticks upward — a win, a moment of visibility. Networ
 | Supported by game procedure | ⚠ **(blocker)** | No Art 03 governing rule exists yet for "unblockable" effects — Issues Resolved cannot be set until the rule is written. | Art 03 §18; PM05 (unblockability governing rule, untracked by number) |
 | Data schema validation | ✓ | `success = faction(trigger.faction).standing.remove(1)` — valid MutationExpr, matches corpus convention. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
-| Outcome determinacy | ✓ | Automatic, single success branch (once the expression syntax is eventually corrected). | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | Automatic, single success branch — `.remove()` syntax already corrected (item #17). | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Cost spans Exposure (Network-native) and Capital (Syndicate's) — a cross-resource-holding question. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Any other faction's PS increase is a recurring event — moderate-to-common frequency. |  |
 | Firing window (ModReactCard) | ✓ | No other Network card shares this trigger. |  |
@@ -999,7 +999,7 @@ NET.MOD.2 = Card(
               # fires when any other faction's standing marker increases (publicly observable)
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     beat    = None,  resolution = Automatic,  resolution_type = Transactional,
-    target_district = None,  target_faction = trigger.faction,  target_object = None,  target_taxonomy = None,  # scaffolded, not addressed
+    target_district = None,  target_faction = trigger.faction,  target_object = None,  target_freeform = None,  # scaffolded, not addressed
     cost    = Exposure * 1 + Capital * 1,
     boost   = None,  # scaffolded, not addressed
     success = faction(trigger.faction).standing.remove(1),
@@ -1070,7 +1070,7 @@ NET.PA.4 = Card(
     resolution_type = Probabilistic,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
-    target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 1 + district.target_district.native * 1,
     boost   = None,
@@ -1141,7 +1141,7 @@ NET.PA.5 = Card(
     resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
-    target_district = None,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
+    target_district = None,  target_faction = faction.opponent,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 2 + faction.target.native * 1,
     boost   = None,
@@ -1212,7 +1212,7 @@ NET.PA.6 = Card(
     resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
     persistence = Immediate,  # scaffolded, not addressed
     persistence_condition = None,  persistence_effect = None,
-    target_district = None,  target_faction = None,  target_object = None,  target_taxonomy = None,
+    target_district = None,  target_faction = None,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 1,
     boost   = None,
@@ -1289,10 +1289,10 @@ NET.MOD.1 = Card(
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
     value_rating = 1,
     persistence=Immediate,  persistence_condition=None,  persistence_effect=None,
-    target_faction=None,  target_object=None,  target_taxonomy=None,
+    target_faction=None,  target_object=None,  target_freeform=None,
     affinity=None,  restriction=None,
     cost    = Exposure * 1,
-    success = faction(acting).presence_chips(district(target)).add(1),
+    success = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit = faction(acting).standing.add(1),
     fail    = None,
     failcrit = faction(acting).standing.remove(1),
@@ -1300,7 +1300,7 @@ NET.MOD.1 = Card(
     portrait = {Network: PortraitEntry(submitter=+1)},
     narrative   = "The district was already moving. Network didn't start the change — it arrived at the same time the change did. Two signals crossing in the open.",
     perspectives = {Network: "We don't need to create the disruption. We need to be in position when it happens."},
-    design_note  = "Trigger: any PA success that causes a board state change (influence chip or structure block placed or removed in district). Target district fixed by trigger — not a free choice. No restriction on Network existing presence. Modifier card schema fields are CA-convention placeholders pending 04-n4.",
+    design_note  = "Trigger: any PA success that causes a board state change (influence chip or structure block placed or removed in district). Target district fixed by trigger — not a free choice. No restriction on Network existing presence. Modifier card schema fields are CA-convention placeholders pending reconciliation.",
     arbiter_note = "Beat 4: when a PA success produces a board state change in district X (influence chip count changes, or structure block placed/removed), Network may announce Pirate Transmitter. Confirm trigger validity. Network spends 1 Exposure and rolls d100 (threshold 50, usual modifiers). Success: place 1 Network chip in district X. Successcrit: +1 PS additional. Fail: no effect. Failcrit: −1 PS.",
 )
 ```
@@ -2058,7 +2058,7 @@ NET.MOD.11 = Card(
     cost            = Exposure(1),
     boost           = None,
 
-    success     = faction(target_faction).standing -= 2, faction(Network).exposure += 1,
+    success     = (faction(target_faction).standing.remove(2), faction(Network).exposure.add(1)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -2158,7 +2158,7 @@ NET.MOD.12 = Card(
 ### NET.MOD.13 — PRESS CREDENTIALS
 
 #### Design Rationale
-"Ceiling-power" Protect card: shields Network's own PA and all attached components from any targeting until Beat 4 resolution. `success` is a string literal describing the immunity in prose, not a real MutationExpr — a smaller version of the fossil-card gap (GHO.MOD.9/10/11, 04-n174). The cost spans three resource types (Exposure, Findings, Mandate) — only Exposure is Network-native; Findings is Ghost's and Mandate is Directorate's — the sharpest cross-resource-holding instance in the set, two foreign resource types required for a single card, more than GHO.MOD.7's one-foreign-of-three.
+"Ceiling-power" Protect card: shields Network's own PA and all attached components from any targeting until it resolves. Modeled as a Seasonal Standing Condition scoped to the protected PA's own lifetime — `persistence_condition = not trigger.card.resolved` keeps the protection active only while the PA is still pending, clearing automatically the moment it resolves, with `persistence_effect = arbiter.protect(trigger.card, from=targeting)` as the effect itself. The cost spans three resource types (Exposure, Findings, Mandate) — only Exposure is Network-native; Findings is Ghost's and Mandate is Directorate's — the sharpest cross-resource-holding instance in the set, two foreign resource types required for a single card, more than GHO.MOD.7's one-foreign-of-three.
 
 #### Card Story
 Network's public act goes up with full press credentials attached — sourced, verified, backed by the kind of institutional cover that makes interference legally indefensible. Nobody touches it before it resolves.
@@ -2173,16 +2173,16 @@ Network's public act goes up with full press credentials attached — sourced, v
 | Card type fit | ✓ | ModReactCard/Network, real taxonomy (Submission/Protect/PublicAct, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Submission×Protect valid per the matrix; Protect correctly assigns to the layer of the protected target (Construction Logic rule 3). | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | "Ceiling-power" per its own design_note — total immunity from targeting is a strong, precedent-setting effect. Real cost (3 resources, 2 foreign) partially offsets it, but the effective cost depends on whether Network can reliably hold Findings/Mandate — see Resource cost positioning. | Art 02 §6–7; Art 04 §6.5 |
-| Effect duration | ✓ | Immediate (the protection window itself lasts until Beat 4, but the card's own resolution is Immediate). | Art 04 §5 P19 |
-| Persistence | ✓ | Explicitly declared (`persistence=Immediate`). | Art 04 §6.2 |
+| Effect duration | ✓ | `persistence=Seasonal`, bounded by `persistence_condition` to exactly the protected PA's own lifetime — clears the instant it resolves, not at Quarter end. | Art 04 §5 P19 |
+| Persistence | ✓ | `persistence=Seasonal`, `persistence_condition = not trigger.card.resolved`, `persistence_effect = arbiter.protect(trigger.card, from=targeting)`. | Art 04 §6.2 |
 | Trigger validity | ✓ | `public_act.placed_on_frg(faction=Network)` — confirmed vocabulary, self-scoped, no ambiguity. | Art 04 §6.3 |
 | Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; this isn't a territory effect. | Art 01 §6–7 |
 | Supported by components | ✓ | No new component needed — protection is a rules-state condition on an existing PA. | Art 02 §6–8 |
-| Supported by game procedure | ✓ | `arbiter_note` gives a clear procedural description (record protected PA, block targeting until Beat 4, clear on resolution) — even though `success` itself isn't a formal Expr, the procedure is well-specified in prose. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ **(known issue, confirmed)** | `success` is a string literal, not a real MutationExpr (04-n175/04-n174-adjacent gap). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ✓ | `arbiter_note` gives a clear procedural description (record protected PA, block targeting until it resolves, clear on resolution), matching the structured `persistence_effect` now backing it. | Art 03; GR 6.1 |
+| Data schema validation | ✓ | `persistence_effect = arbiter.protect(trigger.card, from=targeting)` — valid confirmed MutationExpr. `success=None`; the card's one-time trigger action is establishing the Standing Condition itself. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story above is concrete; `narrative` field itself is still `None`. | Art 04 §5 Card Story |
-| Outcome determinacy | ✓ | Automatic, single effect (no branching) — the prose-vs-Expr issue is a schema-format problem, not a determinacy problem. | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | Automatic, single effect, no branching. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Real cost specified, but requires TWO foreign resource types (Findings/Ghost, Mandate/Directorate) alongside Network's own Exposure — the sharpest cross-resource-holding instance in the set (sharper than GHO.MOD.7's one-of-three). Design_note frames this as intentional ("requires trade relationships with Ghost and Directorate") — a real design choice, but one that makes this card's actual accessibility highly dependent on diplomacy. | Art 00a §9.2 |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Gated on Network placing a PA — moderate, self-limiting frequency. |  |
 | Firing window (ModReactCard) | ✓ | No other Network card shares this trigger. |  |
@@ -2223,18 +2223,19 @@ NET.MOD.13 = Card(
     cost            = Exposure * 1 + Findings * 1 + Mandate * 1,
     boost           = None,  # scaffolded, not addressed
 
-    persistence = Immediate,
-    persistence_condition = None,
-    persistence_effect    = None,
+    persistence = Seasonal,
+    persistence_condition = not trigger.card.resolved,
+    persistence_clearing_trigger = None,  # clears via persistence_condition going False when the protected PA resolves
+    persistence_effect = arbiter.protect(trigger.card, from=targeting),
 
-    success     = "PA and all attached components (TargetProfile, submitted resources, ModActionCard) are immune from any targeting until the PA resolves at Beat 4.",
+    success     = None,
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Network: PortraitEntry(submitter=+1)},
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,  perspectives = None,
-    design_note  = "Asset — human/institutional. Fires at §9.2 when Network places any PA on FRG. Effect: PA + all attached components immune from targeting until Beat 4 resolution. Ceiling-power card. Cost: Exposure×1 (signal is live) + Findings×1 (threat intelligence on who might try to jam it) + Mandate×1 (institutional authorization making interference legally indefensible). Three cross-resource cost requires trade relationships with Ghost and Directorate. 04-n128.",
+    design_note  = "Asset — human/institutional. Fires at §9.2 when Network places any PA on FRG. Effect: PA + all attached components immune from targeting until Beat 4 resolution. Ceiling-power card. Cost: Exposure×1 (signal is live) + Findings×1 (threat intelligence on who might try to jam it) + Mandate×1 (institutional authorization making interference legally indefensible). Three cross-resource cost requires trade relationships with Ghost and Directorate.",
     arbiter_note = "Network places PA on FRG at §9.2 and plays Press Credentials. Collect Exposure×1, Findings×1, Mandate×1. Record the protected PA. Until that PA resolves at Beat 4: no card or procedure may target the PA, its TargetProfile, its submitted resources, or any attached ModActionCard. On PA resolution: effect clears.",
 )
 ```
@@ -2634,7 +2635,7 @@ NET.MOD.19 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Network,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3).
     value_rating    = 1,
     ring_constraint = None,
     ring_origin     = None,
@@ -2775,7 +2776,7 @@ NET.MOD.21 = Card(
 
     portrait     = None,
     narrative    = "A scrubbed broadcast channel removes the interference that would otherwise complicate getting the message out clean.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as GHO.MOD.18/GUI.MOD.17/DIR.MOD.15/16.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept, same basis as GHO.MOD.18/GUI.MOD.17/DIR.MOD.15/16.",
 )
 ```
 
@@ -2840,7 +2841,7 @@ NET.MOD.22 = Card(
 
     portrait     = None,
     narrative    = "Coverage reaches every channel at once — nothing about the outcome is left to chance when the whole city is already watching.",
-    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced.",
 )
 ```
 
@@ -2970,7 +2971,7 @@ NET.MOD.24 = Card(
 
     portrait     = None,
     narrative    = "An action catches unexpected attention and lands far harder than the plan ever accounted for.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -3360,7 +3361,7 @@ NET.MOD.30 = Card(
 
     portrait     = None,
     narrative    = "A standing broadcast slot lowers the cost of getting a message out — the infrastructure's already paid for.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157).",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced.",
 )
 ```
 

@@ -104,16 +104,15 @@ GHO.CA.1 = Card(
     target_district = district.named,
     target_faction  = faction.named,
     target_object   = CovertOperation,
-    declared_params = operation.named,
+    target_freeform = operation.named,
 
-    target_taxonomy=None,
     affinity    = None,
     restriction = None,
     cost        = Findings * 2,
     boost       = None,
 
     success     = game.redirect(
-        op        = faction(target).beat3_row.op(district=target_district, name=declared_params.operation),
+        op        = faction(target).beat3_row.op(district=target_district, name=target_freeform.operation),
         to        = faction(acting).beat3_lane,
         condition = game.can_execute(faction(acting), op),
     ),
@@ -129,7 +128,7 @@ GHO.CA.1 = Card(
         Ghost: "We are not predicting. We are recognising a pattern we have already seen. And then we are keeping it.",
     },
     design_note  = "Steal not copy: matched op moves from target faction's Beat 3 lane to Ghost's. Original faction loses the op, the cost, and the Dispatch Token — no compensation. Ghost resolves the stolen op as faction(acting) at Beat 3; same target as originally submitted; Ghost receives all effects including off-faction resources. Executability check precedes the move: if Ghost cannot execute (restriction failure, wrong resource type), Pattern Match fizzles and the op stays in target's lane. Taxonomy: Submission|Redirect — Art 04b §5.1 L×F validity check pending (PM05 queued).",
-    arbiter_note = "At Beat 2: (1) Check Ghost's declared_params (target faction + target district + operation name) against the Beat 3 grid. (2) If all three match: check whether Ghost can execute the matched op — if restriction or resource type blocks execution, Pattern Match fizzles (2 Findings spent; op stays in target lane; no notification). (3) If match AND executable: move the op and its Target Profile from target faction's Beat 3 lane to Ghost's Beat 3 lane. Target faction's committed cost resources and Dispatch Token are consumed — not returned. (4) At Beat 3: the moved op resolves in Ghost's lane with Ghost as faction(acting). The original Target Profile governs targeting (same district, same target faction as originally submitted). All effects referencing faction(acting) now reference Ghost.",
+    arbiter_note = "At Beat 2: (1) Check Ghost's target_freeform (target faction + target district + operation name) against the Beat 3 grid. (2) If all three match: check whether Ghost can execute the matched op — if restriction or resource type blocks execution, Pattern Match fizzles (2 Findings spent; op stays in target lane; no notification). (3) If match AND executable: move the op and its Target Profile from target faction's Beat 3 lane to Ghost's Beat 3 lane. Target faction's committed cost resources and Dispatch Token are consumed — not returned. (4) At Beat 3: the moved op resolves in Ghost's lane with Ghost as faction(acting). The original Target Profile governs targeting (same district, same target faction as originally submitted). All effects referencing faction(acting) now reference Ghost.",
 )
 ```
 
@@ -157,7 +156,7 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 | Effect duration | ✓ | Instantaneous: IntelDeliverySlip delivered once at Beat 2 resolution; reads target faction's Beat 3 grid column. IntelToken on crit. No persistent state beyond the delivered token. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
 | Trigger validity | N/A | `trigger = None` | — |
-| Portrait validity | ✓ | Ghost `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). `failcrit = standing -= 2` is a PS shift (not Portrait — DIR.PA.2 clear). | Art 04 §6.2; Art 02 §11 |
+| Portrait validity | ✓ | Ghost `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). `failcrit = standing.remove(2)` is a PS shift (not Portrait — DIR.PA.2 clear). | Art 04 §6.2; Art 02 §11 |
 | Supported by zones | N/A | `target_district = None` — Intercept operates on submitted ops in the Resolution Grid, not a specific district. | — |
 | Supported by components | ✓ | IntelToken cost; Findings cost; IntelDeliverySlip (success); IntelToken (crit success); NotificationSlip (fail); PS −2 (failcrit). | Art 02 §8; Art 02 §11, §8 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); resolves Beat 2; reads Beat 3 grid column; d100 threshold 50; ARBITER delivers IS-xx via case (Art 07). Art 03 §9.4 Beat 2 Step 7a covers IS-xx delivery; Step 7b covers NotificationSlip; Step 7b.i covers failcrit. | Art 03 §9, §11; Art 07 |
@@ -191,14 +190,14 @@ GHO.CA.2 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction(named_opponent), target_object=CovertOperation,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction=None,
     cost        = IntelToken(about=faction(target)) * 1,
     success     = game.dispatch(faction(acting), IntelDeliverySlip(faction=faction(target), op_type=faction(target).op(beat=3).type, district=faction(target).op(beat=3).district)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = game.dispatch(faction(target), NotificationSlip),
-    failcrit    = faction(acting).standing -= 2,
+    failcrit    = faction(acting).standing.remove(2),
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     narrative   = "To know what they are doing while they are doing it — that is the only intelligence that matters.",
     perspectives = {Ghost: "We do not wait for the after-action report. We read the operation as it happens."},
@@ -267,7 +266,7 @@ GHO.CA.3 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction(named_opponent), target_object=DispatchCase(faction=faction(target)),
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction=None,
     cost        = Findings * 2,
@@ -277,7 +276,7 @@ GHO.CA.3 = Card(
     narrative   = "Understanding the operation before it begins. That is the only tactical advantage worth having.",
     perspectives = {Ghost: "We did not take their cards. We simply read their intentions. They will act on plans we already know."},
     design_note  = "SIGINT tap model: Ghost taps faction X's dispatch channel at Beat 2. ARBITER reads faction X's Beat 3 grid column at Beat 2 resolution (name + declared target only; modifier cards excluded). IntelDeliverySlip delivered to Ghost at Beat 2 resolution. Beat 2 commitment is the risk. Empty case = empty slip — resources spent. DR-xx (DispatchReport) collapsed into IS-xx — column read is IntelDeliverySlip with list content.",
-    arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition (04-n44).",
+    arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition.",
     value_rating = 1,
 )
 ```
@@ -342,7 +341,7 @@ GHO.CA.4 = Card(
     target_district=None,
     target_faction=faction(named_opponent),  # declared at Art 03 §9.1 Covert Dispatch
     target_object=IntelToken(submitted_on=faction(target).resolution_grid.pa_queue[0]),
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction=None,  # target condition evaluated at Beat 3 — see arbiter_note
     cost=faction.target.native * 1,
@@ -370,7 +369,7 @@ Evidence corruption — Ghost alters the faction attribution on an Intel Token a
 
 Unlike GHO.CA.12 Source Substitution (which re-keys Ghost's own held tokens as an internal analytical step), Misdirection is offensive: Ghost corrupts the record while it is in active play. The target faction submitted this token believing they know what it says. Ghost has changed what it says.
 
-1 Findings cost, Automatic — the corruption is technically simple once Ghost is in position; the difficulty is timing the operation against the target's PA submission. Fills Information|Corrupt|IntelToken at the offensive targeting scope that Source Substitution does not cover. Targets publicly placed tokens in the Faction Resolution Grid only (Beat 0–4 window). `declared_params` carries the replacement faction name declared at §9.1.
+1 Findings cost, Automatic — the corruption is technically simple once Ghost is in position; the difficulty is timing the operation against the target's PA submission. Fills Information|Corrupt|IntelToken at the offensive targeting scope that Source Substitution does not cover. Targets publicly placed tokens in the Faction Resolution Grid only (Beat 0–4 window). `target_freeform` carries the replacement faction name declared at §9.1.
 
 #### Card Story
 A faction submits intelligence alongside their public declaration — an Intel Token they believe says exactly what they think it says. By the time their declaration resolves, the attribution on that token has been quietly changed. The intelligence is genuine. The source is not.
@@ -390,7 +389,7 @@ A faction submits intelligence alongside their public declaration — an Intel T
 | Trigger validity | ✓ | N/A — trigger = None | — |
 | Portrait validity | ✓ | Ghost +1 submitter — evidence corruption aligns with Ghost intelligence manipulation doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — token is in Faction Resolution Grid, not district-anchored | Art 01 §6–§7 |
-| Supported by components | ✓ | IntelToken (publicly placed on PA in FRG); Findings cost; no new components; declared_params carries replacement faction name | Art 02 §6–§8 |
+| Supported by components | ✓ | IntelToken (publicly placed on PA in FRG); Findings cost; no new components; target_freeform carries replacement faction name | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 3 resolution; ARBITER checks FRG for qualifying token; alters faction_name; if no qualifying token: fizzle | Art 03 §9, §11 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
@@ -421,20 +420,19 @@ GHO.CA.5 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction.named, target_object=IntelToken,
-    target_taxonomy=None,
-    declared_params = FactionName,
+    target_freeform = FactionName,
     affinity=None,
     restriction = faction(target).FRG.active_PA.intel_token.count >= 1,
     cost        = Findings * 1,
     boost       = None,
-    success     = game.corrupt(field=faction_name, target=faction(target).FRG.active_PA.intel_token, new_value=declared_params.faction),
+    success     = game.corrupt(field=faction_name, target=faction(target).FRG.active_PA.intel_token, new_value=target_freeform.faction),
     successcrit=None, fail=None, failcrit=None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing  = None,
     narrative   = "Ghost has been considering what the record says. It is never quite right.",
     perspectives = {Ghost: "The attribution is wrong. Systematically, deliberately wrong. By the time anyone checks, it will have been wrong for a while."},
-    design_note  = "Fills Information|Corrupt|IntelToken at the offensive targeting scope: alters faction attribution on a token publicly placed on an active PA. Distinct from GHO.CA.12 Source Substitution (which re-keys Ghost's own held tokens). L222 compliant — targets publicly placed tokens in FRG only (Beat 0–4 window). declared_params carries the replacement faction name declared at §9.1.",
-    arbiter_note = "At Beat 3: check whether target faction has any Intel Token submitted on an active PA in the Faction Resolution Grid. If yes: alter the faction_name field on that token to the faction named in declared_params. Token remains face-down on the PA; target faction is not notified. If no qualifying token: card fizzles, 1 Findings spent, no effect.",
+    design_note  = "Fills Information|Corrupt|IntelToken at the offensive targeting scope: alters faction attribution on a token publicly placed on an active PA. Distinct from GHO.CA.12 Source Substitution (which re-keys Ghost's own held tokens). L222 compliant — targets publicly placed tokens in FRG only (Beat 0–4 window). target_freeform carries the replacement faction name declared at §9.1.",
+    arbiter_note = "At Beat 3: check whether target faction has any Intel Token submitted on an active PA in the Faction Resolution Grid. If yes: alter the faction_name field on that token to the faction named in target_freeform. Token remains face-down on the PA; target faction is not notified. If no qualifying token: card fizzles, 1 Findings spent, no effect.",
 )
 ```
 
@@ -507,7 +505,7 @@ GHO.CA.7 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = district(self|adjacent).faction(acting).presence > 0,
     cost            = Findings * 2,
@@ -521,7 +519,7 @@ GHO.CA.7 = Card(
 
     narrative    = "Every asset leaves a signal. Ghost listens until the signal becomes a pattern.",
     perspectives = {Ghost: "A station does not move. It waits until the target walks past it again."},
-    design_note  = "Ghost's dedicated gather platform. Higher yield than STD.CA.5 (2 tokens vs 1 on success) at double Findings cost. Threshold 55 calibrated above STD.CA.5 base (50) — Station is a reliable sustained platform. Adjacency restriction per 04-n6: deployed node requires Ghost presence in target district or adjacent. Cards stack: STD.CA.5 and Station may both target same faction in same Quarter.",
+    design_note  = "Ghost's dedicated gather platform. Higher yield than STD.CA.5 (2 tokens vs 1 on success) at double Findings cost. Threshold 55 calibrated above STD.CA.5 base (50) — Station is a reliable sustained platform. Adjacency restriction: deployed node requires Ghost presence in target district or adjacent. Cards stack: STD.CA.5 and Station may both target same faction in same Quarter.",
 )
 ```
 
@@ -594,7 +592,7 @@ GHO.CA.8 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = district(self|adjacent).faction(acting).presence > 0,
     cost            = Findings * 1,  # base cost for 1 unit; all Findings physically present (Art 04 §5 P20)
@@ -609,47 +607,47 @@ GHO.CA.8 = Card(
 
     narrative    = "Some intelligence is gathered patiently. Some is taken all at once.",
     perspectives = {Ghost: "The take was complete. Everything they transmitted this Quarter. We have it."},
-    design_note  = "Singleton. Variable cost via boost: base 1 Findings, each boost unit +1 Findings (no declaration — ARBITER infers n_boost from total submitted at Beat 0, per the confirmed boost mechanic); success = 2×(1+n_boost) Intel tokens; crit success = 3×(1+n_boost). Fail = nothing. Threshold 40 confirmed, does not scale with boost — variable cost and fail=nothing are sufficient risk; low threshold is the compensating upside. Adjacency restriction per 04-n6. Intel holding guideline is 4 (not HARD); high-boost plays may exceed guideline.",
+    design_note  = "Singleton. Variable cost via boost: base 1 Findings, each boost unit +1 Findings (no declaration — ARBITER infers n_boost from total submitted at Beat 0, per the confirmed boost mechanic); success = 2×(1+n_boost) Intel tokens; crit success = 3×(1+n_boost). Fail = nothing. Threshold 40 confirmed, does not scale with boost — variable cost and fail=nothing are sufficient risk; low threshold is the compensating upside. Adjacency restriction applies (Ghost presence in target district or adjacent). Intel holding guideline is 4 (not HARD); high-boost plays may exceed guideline.",
     arbiter_note = "At Beat 0: validate base cost paid; n_boost = excess payment ÷ 1 Findings; place n_boost BM-xx on grid slot; lock success/successcrit magnitudes using (1+n_boost). At Beat 3: success = dispatch 2×(1+n_boost) IntelToken(faction=target) to Ghost's case; crit success = dispatch an additional (1+n_boost) (3×(1+n_boost) total); fail = nothing; crit fail = NotificationSlip to target; remove BM-xx to supply.",
 )
 ```
 
 ---
 
-### GHO.CA.15 — ROUTING OVERRIDE *(stub)*
+### GHO.CA.15 — ROUTING OVERRIDE
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ghost's predictive interception card — a Beat 2 wager against a Beat 3 covert operation Ghost hasn't seen yet. Spending a Fresh or Stale Intel Token on the target faction, Ghost submits its own Target Profile at Covert Dispatch with the target faction named and its guess written directly into `target_district` or `target_object` — the same way any other card declares a target, no separate field-name declaration needed. The freeform declared-parameters line carries the replacement value. At Beat 3, ARBITER compares whichever targeting field Ghost populated against that same field on the target's actual first-submitted operation (by the same submission order already used for tiebreaking, Governing Rule 7.3b). A match means ARBITER silently overwrites that field with Ghost's declared replacement before the operation resolves — the target executes against a corrupted target they never saw coming. A miss costs Ghost the Findings and the Intel Token with nothing to show for it. This is inference, not omniscience: the Intel Token requirement means the guess is grounded in something real, consistent with Ghost's doctrine that understanding must precede action.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Ghost's analysts have read enough of a rival's patterns to guess where they're headed next — and the confidence to quietly rewrite the paperwork before it ships. If the guess is wrong, nothing happens. If it's right, the rival executes someone else's plan without ever knowing the destination changed.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/GHO.CA.14. Subject `TargetProfile` is real, valid vocabulary (ref_taxonomy.md's Corrupt-target list, DB:48 component) — the DB's `Non-component Subject` flag was a `card_subject_map` registration gap, not a card defect; now registered. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Predictive interception grounded in prior intelligence, not a blind guess — the Fresh/Stale Intel Token requirement means Ghost is betting on inference, not chance | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Ghost acting, Directorate aligned, Network opposed) — Network's doctrine ("no one gets to decide this in the dark") is the sharpest possible objection to a silent, undisclosed redirection | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Ghost only; Intel Token requirement (about target faction, Fresh/Stale) directly enacts "understanding must precede action" — the guess is evidence-based, not speculative | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — predictive corruption of an unseen operation is exclusively Ghost's mode | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information / Corrupt / TargetProfile — Target Profile in the dispatch bundle is an explicitly sanctioned Corrupt target (Art 04 §5 P24); `card_subject_map` registration confirmed (schema_cleanup_log #27) | Art 04b §4, §5 |
+| Balance | ✓ | Cross-resource cost (Findings + IntelToken, both typed correctly); miss wastes the full cost with zero board effect — high-variance, information-gated wager, not a cheap guess | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — resolves fully at Beat 3, no lingering game-state marker | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
+| Trigger validity | ✓ | N/A — `trigger = None`; this is a Beat 2 positional declaration against a Beat 3 event, not a React card | — |
+| Portrait validity | ✓ | Ghost `submitter=+1` — single entry, playing to type | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district` carries the guessed value directly when Ghost is predicting a district (mutually exclusive with `target_object` carrying it instead) — reuses the standard Targeting field group rather than a separate meta-declaration | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken (about target faction, Fresh/Stale); Target Profile (Art 02 §8, DB:48) as both the source of Ghost's own declared guess and the sanctioned Corrupt target | Art 02 §6, §8 |
+| Supported by game procedure | ⚠ | `resolution_grid.first_op(faction=X, beat=3)` (identifying the target's first-submitted Beat 3 operation) and `arbiter.corrupt(...)` (the overwrite itself) are new, unconfirmed §6.3 vocabulary — not previously used anywhere in the corpus. Both are minimal extensions of already-confirmed concepts (the Resolution Grid built at Beat 0; submission-order tiebreaking, Governing Rule 7.3b; Target Profile as a sanctioned Corrupt target, Art 04 §5 P24) rather than invented from nothing, but neither is formally defined as a general Art 03 procedure yet — flagged per Governing Rule 6.1, not resolved here. | Art 03 §9, §11; Governing Rule 6.1 |
+| Data schema validation | ✓ | All base fields now present (`card_id`, `doctrine_mod`, `boost`, `ps_framing`, `persistence`, `portrait`, `perspectives` all filled or explicit `None`). `success` converted from bare prose to a structured conditional MutationExpr. Uses `target_freeform` — repurposed from the former `target_taxonomy` field and merged with the former `declared_params` field into one field (schema_cleanup_log #52, closes 04-n106) — for the replacement value. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives fields populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; single `success` field carries an internal conditional (match/no-match) rather than a dice-driven success/fail split — a miss resolves as "no effect, cost spent" per the `fail=None` convention, not a separate branch | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Findings + IntelToken), correctly typed; IntelToken scoped `about=target faction, status=[Fresh, Stale]` — ties the guess to real intelligence, not any held token | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **New procedural vocabulary not yet formalized:** `resolution_grid.first_op(faction=, beat=)` and `arbiter.corrupt(...)` (in this exact call shape) need a real Art 03 §11 procedure entry before this card is mechanically final — see Supported by game procedure above. Both are natural extensions of existing confirmed concepts, not novel mechanisms, but Governing Rule 6.1 requires the formal definition to exist before the card, not just be implied by it.
 
 #### Status
 
@@ -659,17 +657,54 @@ None
 
 ```python
 GHO.CA.15 = Card(
-    id      = "GHO.CA.15",  card_id="GHO.CA.15",  version = "v1.0",
+    id      = "GHO.CA.15",  card_id = "GHO.CA.15",  version = "v1.1",
     name    = "Routing Override",
-    tagline = "Blindly intercept and redirect an opponent's covert operation.",
+    tagline = "Predict a rival's next move closely enough to quietly rewrite it.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
+
     layer   = Information,  function = Corrupt,  subject = TargetProfile,
-    beat    = 2,  resolution = Automatic,
-    cost    = Findings * 1 + IntelToken() * 1,
-    success = "Ghost corrupts the first CA in target faction's Beat 3 resolution queue if it matches Ghost's specified parameters.",
-    arbiter_note = "At Covert Dispatch, Ghost writes a target field (e.g., 'target_district') and expected value (e.g., 'Core'), plus a replacement value (e.g., 'Baryo'), in their Target Profile freeform space. At Beat 2: ARBITER checks target faction's first CA in the ARG. If that CA's Target Profile contains the exact field and value Ghost named, ARBITER silently crosses it out and writes Ghost's new value. If it does not match, Ghost's operation fizzles. The target faction executes their CA at Beat 3 against the new corrupted target.",
-    design_note = "Beat 2 positional wager against a Beat 3 CA. Ghost must correctly predict a parameter of the opponent's first queued operation. The corruption is entirely silent until the operation resolves at Beat 3."
-    value_rating = 1,
+
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,  persistence_effect = None,
+
+    target_district = district.named,  # Ghost's guess at the district the target's first Beat 3 op will name
+    target_faction  = faction(named_opponent),
+    target_object   = None,  # object-guessing not built here — see Outstanding Issues
+    target_freeform = district.named,  # the replacement district ARBITER substitutes on a match
+
+    affinity    = None,
+    restriction = None,
+    cost        = Findings * 1 + IntelToken(about=faction(named_opponent), status=[Fresh, Stale]) * 1,
+    boost       = None,
+
+    success = (
+        if resolution_grid.first_op(faction=named_opponent, beat=3).target_district == target_district:
+            arbiter.corrupt(resolution_grid.first_op(faction=named_opponent, beat=3), field=target_district, new_value=target_freeform),
+    ),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
+
+    narrative    = "The paperwork always ships. Nobody checks that it still says what it said when it left the building.",
+    perspectives = {
+        Ghost:       "We did not guess. We read enough to know where they were going before they did.",
+        Directorate: "Redirection without disruption is the mark of real institutional competence. We would call it enforcement. Ghost calls it business.",  # aligned
+        Network:     "Someone rewrote the terms of an operation and no one at that table ever knew. That is exactly the kind of decision that should never be made in silence.",  # opposed
+    },
+
+    design_note  = "Beat 2 positional wager against a Beat 3 operation Ghost hasn't seen yet. The Intel Token requirement (about target faction, Fresh/Stale) grounds the guess in real intelligence rather than a coin flip. Ghost's guess is written using the same Target Profile field as any other targeting declaration — target_district carries the expected district directly, no separate field-name declaration needed. Scoped to district-guessing only; object-guessing needs target_object's type-vs-instance semantics resolved first (see Outstanding Issues). A miss is 'no effect, cost spent' — the fizzle is silent, Ghost's op simply produces nothing.",
+    arbiter_note = "At Covert Dispatch, Ghost submits its own Target Profile with target_faction set to the opponent and target_district set to the district it's betting the opponent's first Beat 3 operation will name; target_freeform carries the replacement district. At Beat 3, before the target's first-submitted operation resolves, ARBITER compares Ghost's declared target_district against that same field on the target's operation. If they match, silently overwrite the target's target_district with Ghost's target_freeform value before resolution proceeds; if not, no action is taken and nothing is disclosed to either faction.",
 )
 ```
 
@@ -743,7 +778,7 @@ GHO.CA.9 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 1,
     cost        = IntelToken(about=faction(target)) * 1,
@@ -831,7 +866,7 @@ GHO.CA.10 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = (
         faction(acting).intel_tokens(faction=faction(target)) >= 1 and
@@ -839,7 +874,7 @@ GHO.CA.10 = Card(
     ),
     cost            = IntelToken(about=faction(target)) * 1,
 
-    success     = game.dispatch(faction(acting), resource.faction(target).native * 2),
+    success     = game.dispatch(faction(acting), faction(target).native * 2),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -848,7 +883,7 @@ GHO.CA.10 = Card(
 
     narrative    = "Ghost does not steal. Ghost redirects what was already in motion.",
     perspectives = {Ghost: "Their resource. Our pipeline. They built something worth taking."},
-    design_note  = "Layer=Economy per L175 — primary effect is resource acquisition despite intelligence gating. Copy model confirmed: target faction does NOT lose resources. Quantity 2 confirmed working value; final calibration deferred to playtest. Adjacency restriction per 04-n6 (combined with Intel token restriction). Resources dispatched to Ghost's Dispatch Case at Beat 3; returned at month-end. Higher-tier Ghost cards carry secondary cost = faction(target).native consumed on play (GHO.CA.2 model).",
+    design_note  = "Layer=Economy per L175 — primary effect is resource acquisition despite intelligence gating. Copy model confirmed: target faction does NOT lose resources. Quantity 2 confirmed working value; final calibration deferred to playtest. Adjacency restriction applies (combined with Intel token restriction). Resources dispatched to Ghost's Dispatch Case at Beat 3; returned at month-end. Higher-tier Ghost cards carry secondary cost = faction(target).native consumed on play (GHO.CA.2 model).",
     arbiter_note = "At Beat 3: consume IntelToken(faction=target) from Ghost's case. Dispatch 2 units of target faction's native resource type to Ghost's Dispatch Case. Target faction's resource pool is not reduced. Resources available to Ghost at month-end with normal case return.",
 )
 ```
@@ -925,7 +960,7 @@ GHO.CA.11 = Card(
     target_faction  = faction.opponent,
     target_object   = ClassifiedDirective,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 2,
     cost        = IntelToken(about=faction(target)) * 2 + Findings * 3,
@@ -1003,7 +1038,7 @@ GHO.CA.6 = Card(
     persistence_condition = None,
     persistence_effect    = None,
     target_district=None, target_faction=None, target_object=IntelToken,
-    target_taxonomy=None,
+    target_freeform=None,
     affinity=None,
     restriction = faction(acting).intel_tokens.count >= 1,
     cost        = Findings * 1 + IntelToken() * 1,
@@ -1090,7 +1125,7 @@ GHO.CA.12 = Card(
     target_faction  = faction.opponent,
     target_object   = IntelToken(held, faction(acting)),
 
-    target_taxonomy = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(acting).intel_tokens() >= 1,
     cost            = None,
@@ -1107,7 +1142,7 @@ GHO.CA.12 = Card(
 
     narrative    = "The record says what Ghost needs it to say.",
     perspectives = {Ghost: "The attribution is wrong. It will stay wrong. What matters is what Ghost does with it next."},
-    design_note  = "Re-keys an Intel token's faction field to faction(target). Quarter field unchanged — freshness carries over. Cost = CA slot (no Findings). Automatic — no dice, no risk. Token is target_object: submitted in case alongside card, returned after alteration. Standard equivalent: PM05 04-n15.",
+    design_note  = "Re-keys an Intel token's faction field to faction(target). Quarter field unchanged — freshness carries over. Cost = CA slot (no Findings). Automatic — no dice, no risk. Token is target_object: submitted in case alongside card, returned after alteration. A Standard-deck card carries an equivalent mechanic.",
     arbiter_note = "Token submitted in Ghost's case alongside card. At Beat 3: alter faction_name field on token to faction(target); return altered token to Ghost's case. No announcement.",
 )
 ```
@@ -1183,7 +1218,7 @@ Backdate = Card(
     target_faction  = faction.any_or_none,  # None = keep; named = plant
     target_object   = intel_token.held,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = faction(Ghost).holds_intel_token(count=1),
     cost        = Findings * 2 + IntelToken() * 1,
@@ -1209,7 +1244,7 @@ Backdate = Card(
     perspectives = {
         Ghost: "An old record is a useless record. We are making it old.",
     },
-    design_note  = "Temporal falsification — quarter field only. Distinct from Source Substitution (faction field). Threshold 30 vs 45: altering when is harder than altering who. Primary use: plant mode to deliver degraded/Expired token as poisoned gift — target wastes a future attribution play. Keep mode: make own operations appear to have occurred earlier. Intel token component must support two writable fields (faction + quarter). Standard equivalent PM05 04-n15.",
+    design_note  = "Temporal falsification — quarter field only. Distinct from Source Substitution (faction field). Threshold 30 vs 45: altering when is harder than altering who. Primary use: plant mode to deliver degraded/Expired token as poisoned gift — target wastes a future attribution play. Keep mode: make own operations appear to have occurred earlier. Intel token component must support two writable fields (faction + quarter). A Standard-deck card carries an equivalent mechanic.",
     arbiter_note = "Instructions slip in case: new quarter number (must pre-date current Quarter) + keep or plant destination. Beat 3: d100 vs 30. On success: alter quarter field; token age reclassified accordingly (may shift Fresh → Stale, Stale → Expired, or Fresh → Expired depending on magnitude). Keep: return in case. Plant: discreet delivery to target terminal (same protocol as Source Substitution). On fail: destroy token. On failcrit: destroy + NotificationSlip to faction named on token.",
 )
 ```
@@ -1285,7 +1320,7 @@ FieldVerification = Card(
     target_faction  = None,
     target_object   = intel_token.held,  # must be Expired; submitted in case
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = intel_token.held.age == Expired,
     cost        = None,  # no resource cost; dispatch slot is the investment (Governing Rule 7.3c)
@@ -1304,7 +1339,7 @@ FieldVerification = Card(
     perspectives = {
         Ghost: "We go back to check. The answer determines whether we can use this at all.",
     },
-    design_note  = "Self-operation to re-validate cold intelligence. No Findings cost — dispatch slot only. Fail returns the token Expired (no loss beyond the slot). Success advances token to Fresh (current Quarter). d100 threshold 35 reflects genuine uncertainty about whether aged intelligence still describes reality. Not falsification — Ghost is actually checking. Distinct from Source Substitution and Backdate. Standard equivalent (hired PI, higher cost) flagged PM05 04-n15.",
+    design_note  = "Self-operation to re-validate cold intelligence. No Findings cost — dispatch slot only. Fail returns the token Expired (no loss beyond the slot). Success advances token to Fresh (current Quarter). d100 threshold 35 reflects genuine uncertainty about whether aged intelligence still describes reality. Not falsification — Ghost is actually checking. Distinct from Source Substitution and Backdate. A Standard-deck equivalent exists (hired PI, higher cost).",
     arbiter_note = "Token submitted in case. Restriction: token must be Expired. No instructions slip needed. Beat 3: d100 vs 35. On success: update token's quarter field to current Quarter; token is now Fresh; return in case. On fail: return token in case unchanged (still Expired). No resource consumed either outcome.",
 )
 ```
@@ -1316,40 +1351,40 @@ FieldVerification = Card(
 
 ---
 
-### GHO.CA.13 — PHANTOM ACCOUNTS *(stub)*
+### GHO.CA.13 — PHANTOM ACCOUNTS
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+A financial twin to SCIF — instead of generating Modifier cards off a target's structural density, Phantom Accounts converts Findings into a mirrored payout of a target's passive district income. Ghost names one district where the target faction holds presence; on success, ARBITER snapshots exactly what that faction's Upkeep Step 5 income from that district would be (base generation scaled by Influence Level) and places a DA-02 PhantomRecord in Ghost's case. At Debrief, Ghost collects that same amount in the district's native resource — a shadow copy of income Ghost never touched and the target never notices is being duplicated. The restriction (target must hold presence in the named district) is the whole gate: no presence, nothing to mirror.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Ghost's analysts have found a second set of books hiding behind the first — not fraudulent, just parallel. Every unit the target collects this Quarter, Ghost collects too, from an account the target doesn't know exists.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal ("Arbiter places 1 DA-02...") instead of a MutationExpr — same fossil-card pattern as the already-closed 04-n174 sweep (different cards). Also missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`persistence`/`portrait`/`perspectives` entirely — much sparser than even the Standard/Directorate stubs. Flagged, not fixed. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Financial mirroring via intelligence work is a clean Ghost analytical op — no physical infrastructure, no adjacency requirement | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Ghost acting, Syndicate aligned, Guild opposed) — Guild's "they built nothing, they copied our ledger" is the sharpest doctrinal contrast to Ghost's information-extraction model | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Ghost only; Findings×2 cost reflects the analytical work of reconstructing a target's income structure — "understanding must precede action," here applied to someone else's economy | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — analytical financial mirroring is exclusively Ghost's mode | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Economy / Add / DebriefActionCard — matches SCIF's identical taxonomy for the same "generates a Debrief-scheduled payoff" shape | Art 04b §4, §5 |
+| Balance | ✓ | Findings×2 for a payout that scales with the target's own district development — cheap against a lightly-built target, more valuable against an established one, same scaling shape as SCIF | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — the DA-02 slip is a separate, self-contained Debrief-scheduled procedure (Art 04 §12a.3), not a lingering effect of this card itself | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate — card fully resolved at Beat 3; the generated DA-02 slip carries its own lifecycle | Art 04 §6 |
+| Trigger validity | ✓ | N/A — `trigger = None` | — |
+| Portrait validity | ✓ | Ghost `submitter=+1` — single entry, playing to type | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.named` — the district whose income is being mirrored | Art 01 §6–§7 |
+| Supported by components | ✓ | DA-02 PhantomRecord (Art 04 §12a.3, DB:100) — fields and Debrief procedure now fully specified, closing the "pending GHO.CA.13's own design pass" flag that section carried | Art 02 §6–§8; Art 04 §12a.3 |
+| Supported by game procedure | ⚠ | `game.resource_generation(faction=, district=)` is new, unconfirmed §6.3 vocabulary — but it's a minimal extension, not an invention: it reuses the exact formula Upkeep Step 5 already applies (base generation × Influence Level), just evaluated at Beat 3 instead of Upkeep. Not yet formalized as a named callable in Art 03 — flagged per Governing Rule 6.1, not resolved here. | Art 03 §7 (Upkeep Step 5); Governing Rule 6.1 |
+| Data schema validation | ✓ | All base fields now present (`card_id`, `doctrine_mod`, `boost`, `ps_framing`, `persistence`, `portrait`, `perspectives` all filled or explicit `None`). `success` converted from bare prose to a structured `arbiter.dispatch(...)` call. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; only `success` populated (`successcrit`/`fail`/`failcrit` all `None`) — a miss is "no effect, cost spent," matching SCIF's own shape | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Findings × 2), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`game.resource_generation(faction=, district=)` not yet formalized as a general Art 03 procedure** — see Supported by game procedure above.
 
 #### Status
 
@@ -1359,55 +1394,94 @@ None
 
 ```python
 GHO.CA.13 = Card(
-    id      = "GHO.CA.13",  card_id="GHO.CA.13",  version = "v1.1",
+    id      = "GHO.CA.13",  card_id = "GHO.CA.13",  version = "v1.2",
     name    = "Phantom Accounts",
-    tagline = "Siphon a shadow copy of an opponent's influence-based resource generation.",
+    tagline = "Quietly mirror an opponent's district income into a phantom Ghost account.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
+
     layer   = Economy,  function = Add,  subject = DebriefActionCard,
-    beat    = 3,  resolution = d100,  threshold = 50,
-    cost    = Findings * 2,
-    success = "Arbiter places 1 DA-02 (PhantomRecord) in Ghost's Dispatch Case. At debrief, Ghost gains district native resources equal to target_faction's influence-based generation.",
-    design_note = "A financial twin to SCIF. Instead of generating Modifier cards off of structural density, this converts Findings into a mirrored payout of the target's passive district income."
-    value_rating = 2,
+
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 50,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = None,
+    resolution_type = Probabilistic,
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,  persistence_effect = None,
+
+    target_district = district.named,
+    target_faction  = faction(named_opponent),
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = district(target_district).faction(named_opponent).presence > 0,
+    cost        = Findings * 2,
+    boost       = None,
+
+    success = arbiter.dispatch(faction(acting), PhantomRecord(
+        target_faction = faction(named_opponent),
+        district        = target_district,
+        generation_snapshot = game.resource_generation(faction=named_opponent, district=target_district),
+    )),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
+
+    narrative    = "Every ledger has a shadow. Ghost simply keeps the other copy.",
+    perspectives = {
+        Ghost:     "We are not touching their accounts. We are keeping our own copy of what they earn.",
+        Syndicate: "Every income stream is a resource waiting to be captured twice. We admire the elegance, even if we would have found a subtler way to bill for it.",  # aligned
+        Guild:     "They built nothing. They copied our ledger and called it income. That is not enterprise. That is theft with better paperwork.",  # opposed
+    },
+
+    design_note  = "A financial twin to SCIF. Instead of generating Modifier cards off structural density, this converts Findings into a mirrored payout of the target's passive district income. Restriction (target presence in target_district) is the gate — no presence, nothing to mirror.",
+    arbiter_note = "At Beat 3 on success: complete a DA-02 PhantomRecord per Art 04 §12a.3 (quarter, target_faction, district, generation_snapshot) and place it in Ghost's Dispatch Case. Debrief procedure for DA-02 slips is defined in Art 04 §12a.3 — not redefined here.",
 )
 ```
 
 ---
 
-### GHO.CA.14 — GHOST PROTOCOL *(stub)*
+### GHO.CA.14 — GHOST PROTOCOL
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Ghost's blind veto card — Beat 2 Automatic, unblockable, erases the first covert operation the target faction submits in Beat 3, sight unseen. Unlike Routing Override (which requires Ghost to correctly predict a target parameter before anything happens), Ghost Protocol asks nothing of intelligence — it simply removes whatever comes first, no matching required and no roll to fail. The steep four-resource cost (Findings + Exposure + Capital + an Intel Token) is priced for that certainty: no restriction, no dice, no possibility of a wasted attempt. This is the most expensive way in the Ghost set to deny an opponent a single action, and the cost reflects exactly that guarantee.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Somewhere in a dispatch case, an operation that took a full Quarter to plan simply stops existing. No dice were rolled. No one contests it. It just isn't there anymore.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal ("The Arbiter invalidates and removes...") instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/GHO.CA.15. Also missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | An unblockable, certain veto is the extreme end of Ghost's information-denial toolkit — no prediction required, unlike Routing Override | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Ghost acting, Syndicate aligned, Network opposed) — Network's doctrine ("no one gets to decide this in the dark") is a direct indictment of an erasure no one will ever be able to trace | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Ghost only; the four-resource cost is deliberately punishing — certainty this total is priced as a last-resort tool, not a routine play | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — an untraceable, unblockable veto is exclusively Ghost's mode | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Submission / Block / CovertOperation — blocks an opponent's operation from ever reaching resolution | Art 04b §4, §5 |
+| Balance | ✓ | Four-resource cost (Findings×2 + Exposure×1 + Capital×1 + IntelToken×1) for a guaranteed, unconditional removal — no restriction, no threshold, no failure state | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — resolves fully at Beat 2, no lingering game-state marker | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
+| Trigger validity | ✓ | N/A — `trigger = None`; Beat 2 positional declaration against a Beat 3 event | — |
+| Portrait validity | ✓ | Ghost `submitter=+1` — single entry, playing to type | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = None` — this card targets a faction's queued operation, not a district | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken (bare cost category, no `about=` scoping needed — confirmed pattern, schema_cleanup_log #10) | Art 02 §6, §8 |
+| Supported by game procedure | ⚠ | Reuses `resolution_grid.first_op(faction=X, beat=3)` — the same new, unconfirmed §6.3 primitive flagged on GHO.CA.15 Routing Override, not a second invention. Two cards now depend on it, strengthening the case that it needs a real Art 03 §11 procedure entry. | Art 03 §9, §11; Governing Rule 6.1 |
+| Data schema validation | ✓ | All base fields now present (`card_id`, `doctrine_mod`, `boost`, `ps_framing`, `persistence`, `portrait`, `perspectives` all filled or explicit `None`). `success` converted from bare prose to a structured `arbiter.remove(...)` call. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; single unconditional `success` — no dice, no branching, no fail state at all | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Findings + Exposure + Capital + IntelToken), all typed correctly — the widest resource spread of any Ghost CA reviewed so far. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`resolution_grid.first_op(faction=, beat=)` not yet formalized as a general Art 03 procedure** — same open item as GHO.CA.15 Routing Override, now shared by two cards.
 
 #### Status
 
@@ -1417,16 +1491,51 @@ None
 
 ```python
 GHO.CA.14 = Card(
-    id      = "GHO.CA.14",  card_id="GHO.CA.14",  version = "v1.1",
+    id      = "GHO.CA.14",  card_id = "GHO.CA.14",  version = "v1.2",
     name    = "Ghost Protocol",
-    tagline = "Completely erase an opponent's operation from existence.",
+    tagline = "Completely erase an opponent's next operation from existence.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
+
     layer   = Submission,  function = Block,  subject = CovertOperation,
-    beat    = 2,  resolution = Automatic,
-    cost    = Findings * 2 + Exposure * 1 + Capital * 1 + IntelToken() * 1,
-    success = "The Arbiter invalidates and removes the first Covert Operation submitted by target_faction in Beat 3.",
-    design_note = "Massive multi-resource cost to justify an unblockable, blind veto of an opponent's action."
-    value_rating = 2,
+
+    beat            = 2,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,  persistence_effect = None,
+
+    target_district = None,
+    target_faction  = faction(named_opponent),
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = Findings * 2 + Exposure * 1 + Capital * 1 + IntelToken() * 1,
+    boost       = None,
+
+    success     = arbiter.remove(resolution_grid.first_op(faction=named_opponent, beat=3)),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait   = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
+
+    narrative    = "Nothing was stolen. Nothing was broken. It simply never arrives.",
+    perspectives = {
+        Ghost:     "We do not need to know what it was. We only need to know it will not happen.",
+        Syndicate: "An operation that never happened costs nothing to explain. We respect efficiency, wherever it comes from.",  # aligned
+        Network:   "Something disappeared and no one will ever know what it was. That is not victory. That is erasure, and erasure is exactly what we exist to prevent.",  # opposed
+    },
+
+    design_note  = "Massive multi-resource cost to justify an unblockable, blind veto of an opponent's action. No restriction, no threshold — the cost alone is the gate.",
+    arbiter_note = "At Beat 2: identify target_faction's first-submitted Beat 3 operation (same submission-order concept used for tiebreaking, Governing Rule 7.3b). Remove it from the resolution grid before Beat 3 begins. Target faction is not notified in advance.",
 )
 ```
 
@@ -1508,7 +1617,7 @@ GHO.PA.1 = Card(
     target_faction  = faction.two_opponents,  # two different factions named at Phase B
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = (
         faction(Ghost).holds_intel_token(faction=target1) and
@@ -1518,8 +1627,8 @@ GHO.PA.1 = Card(
     cost = (
         Findings * 2
         + Exposure * 1
-        + resource.faction(target1) * 1
-        + resource.faction(target2) * 1
+        + faction(target1) * 1
+        + faction(target2) * 1
         + IntelToken(about=faction(target1)) * 1
         + IntelToken(about=faction(target2)) * 1
     ),
@@ -1528,9 +1637,9 @@ GHO.PA.1 = Card(
     success = (
         arbiter.announce(attribution=target1, context=intel_token_1.quarter),
         arbiter.announce(attribution=target2, context=intel_token_2.quarter),
-        faction(target1).standing -= 2,
-        faction(target2).standing -= 2,
-        faction(Ghost).standing   += 2,
+        faction(target1).standing.remove(2),
+        faction(target2).standing.remove(2),
+        faction(Ghost).standing.add(2),
     ),
     successcrit = None,
     fail        = None,
@@ -1619,7 +1728,7 @@ GHO.PA.2 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = faction(Ghost).presence(district.adjacent_to(target_district)) > 0,
     cost        = Findings * 2,
@@ -1628,7 +1737,7 @@ GHO.PA.2 = Card(
     success = game.world_condition(
         scope    = district(target),
         target   = covert_op(faction=target_faction),
-        effect   = threshold -= 15,
+        effect   = threshold.remove(15),
         duration = Transient,  # Close Month of next Month
     ),
     # Ghost does not gain PS — uses the channel as a tool, not a stage
@@ -1719,7 +1828,7 @@ GHO.PA.3 = Card(
     target_district = None,
     target_faction  = None,
     target_object   = None,
-    target_taxonomy = None,
+    target_freeform = None,
 
     affinity    = None,
     restriction = count(intel_token(holder=Ghost, status=Expired)) >= 1,
@@ -1816,7 +1925,7 @@ GHO.PA.4 = Card(
     target_district = None,
     target_faction  = None,
     target_object   = BroadcastCard.named,  # declared at Phase B on Target Profile; must be active in Situation Report Zone
-    target_taxonomy = None,
+    target_freeform = None,
 
     affinity    = None,
     restriction = count(broadcast_card(zone=SituationReportZone, status=Active)) >= 1,
@@ -1916,7 +2025,7 @@ GHO.PA.5 = Card(
     target_district = district.any(resource_type=Findings),
     target_faction  = None,
     target_object   = None,
-    target_taxonomy = None,
+    target_freeform = None,
 
     affinity    = None,
     restriction = district.resource_type == Findings and faction(Ghost).presence(district.adjacent_to(target_district)) > 0,
@@ -1988,9 +2097,6 @@ A faction places a public act backed by an Intel token, confident the attributio
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus: is a 2nd copy meaningful, or does the first copy's misfire consume the only useful attempt regardless of copies held? Undocumented. |  |
 | Ring constraint (ModReactCard) | ✓ (N/A) | `ring_constraint=None` (04-n177) — correct; not a district/ring-scoped effect. |  |
 
-**Outstanding Issues:**
-- Card name pending voice pass (D-04-08); Card ID pending 04-n1 numbering pass.
-
 #### Outstanding Issues
 
 None
@@ -2021,7 +2127,7 @@ GHO.MOD.1 = Card(
     target_district = None,
     target_faction  = None,
     target_object   = IntelToken(on=target_PA),
-    target_taxonomy = None,
+    target_freeform = None,
     affinity    = None,
     restriction = None,
     cost        = None,  # card consumed on fire (success or misfire)
@@ -2040,7 +2146,7 @@ GHO.MOD.1 = Card(
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,  # scaffolded, not addressed
 
-    narrative    = None,  # pending 04-n79
+    narrative    = None,
     perspectives = None,  # pending D-04-08
 
     design_note  = "Counter-attribution React payoff for Ghost's intelligence chain. Fires when any faction places a PA with Intel token at Art 02 §9.2.0. Ghost announces React and declares the faction they believe is on the token. ARBITER checks (Prediction resolution). Match → token removed, PA cancelled (resources drained to Reservoir, no refund), Ghost +1 PS. No match → card consumed, PA proceeds. Intelligence-gated: Target Profile face-down at Art 03 §9.2.0 means Ghost cannot derive the target from visible information — requires prior SIGINT or Source Substitution plant mode. Works against corrupted and legitimate tokens alike — Ghost doctrine: no attribution belongs on the public record. card_id = GHO.MOD.1.",
@@ -2053,7 +2159,7 @@ GHO.MOD.1 = Card(
 ### GHO.MOD.2 — PERIMETER SENSORS
 
 #### Design Rationale
-First of a three-card family (GHO.MOD.2/3/4) delivering §5a's "passive Intel generation near Ghost presence" — generic variant, faction-targeted variants follow. `faction=Any` in the trigger includes Ghost's own presence placements, so Ghost placing a chip in a district it already holds generates Intel on itself — confirmed harmless (self-Intel isn't exploitable), no different from any other self-fire case. `district=where(faction(Ghost).presence > 0)` remains the second confirmed instance of the unconfirmed `where(...)` trigger-parameter form (first seen on DIR.MOD.8).
+First of a three-card family (GHO.MOD.2/3/4) delivering §5a's "passive Intel generation near Ghost presence" — generic variant, faction-targeted variants follow. `faction=Any` in the trigger includes Ghost's own presence placements, so Ghost placing a chip in a district it already holds generates Intel on itself — confirmed harmless (self-Intel isn't exploitable), no different from any other self-fire case. `district=district.where(faction(Ghost).presence > 0)` uses the confirmed §6.3 `district.where(BoolExpr)` trigger-parameter form (schema_cleanup_log #9).
 
 #### Card Story
 Someone moves a piece onto ground Ghost already quietly holds. Nothing dramatic happens — no confrontation, no announcement. But the sensors were already there, and now Ghost knows exactly who just arrived.
@@ -2070,7 +2176,7 @@ Someone moves a piece onto ground Ghost already quietly holds. Nothing dramatic 
 | Balance | ⚠ | Free Intel generation gated only by Ghost holding presence somewhere active — plausible as a low-key passive engine, final read pending the same whole-set cost/value_rating decision (04-n178) as the Directorate set. | Art 02 §6–7; Art 04 §6.5; PM05 04-n178 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Base event (`presence_chip.placed`) is confirmed vocabulary, but the `district=where(...)` filter isn't a confirmed §6.3 parameter form — 2nd instance of the same gap. `faction=Any` self-fire is a confirmed-harmless case, not a factor here. | Art 04 §6.3 |
+| Trigger validity | ✓ | `district=district.where(...)` now confirmed §6.3 vocabulary (schema_cleanup_log #9, PM05 04-n200), harmonized to the receiver form already used elsewhere (`district.where(...)`). `faction=Any` self-fire is a confirmed-harmless case, not a factor here. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Ghost: submitter=+1}` — submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
 | Supported by components | ✓ | Intel Token delivery reuses the standard mechanism. | Art 02 §6–8 |
@@ -2103,7 +2209,7 @@ GHO.MOD.2 = Card(
     type    = ModReactCard,  faction = Ghost,
     layer   = Information,  function = Add,  subject = IntelToken,
 
-    trigger         = presence_chip.placed(faction=Any, district=where(faction(Ghost).presence > 0)),
+    trigger         = presence_chip.placed(faction=Any, district=district.where(faction(Ghost).presence > 0)),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -2128,7 +2234,7 @@ GHO.MOD.2 = Card(
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,  # pending
     perspectives = None,  # pending
-    design_note  = "Passive Intel generation from nearby faction activity. Trigger: any faction places presence in a Ghost-present district (publicly observable). Ghost receives 1 Intel token keyed to the placing faction. Intelligence-minimal design: Ghost learns who is expanding near its positions without taking any action. Output of 04-n143.",
+    design_note  = "Passive Intel generation from nearby faction activity. Trigger: any faction places presence in a Ghost-present district (publicly observable). Ghost receives 1 Intel token keyed to the placing faction. Intelligence-minimal design: Ghost learns who is expanding near its positions without taking any action.",
     arbiter_note = None,  # TBD
 )
 ```
@@ -2138,7 +2244,7 @@ GHO.MOD.2 = Card(
 ### GHO.MOD.3 — INSTITUTIONAL TRACE
 
 #### Design Rationale
-Second card of the GHO.MOD.2/3/4 family — narrowed to Directorate specifically, no self-fire ambiguity (Ghost ≠ Directorate). Third confirmed instance of the unconfirmed `where(...)` trigger-parameter form.
+Second card of the GHO.MOD.2/3/4 family — narrowed to Directorate specifically, no self-fire ambiguity (Ghost ≠ Directorate). Uses the confirmed §6.3 `district.where(BoolExpr)` trigger-parameter form (schema_cleanup_log #9).
 
 #### Card Story
 Directorate expands into ground Ghost already quietly watches. The sensors don't care about the politics — they log it, and Ghost gets a name attached to the movement.
@@ -2155,7 +2261,7 @@ Directorate expands into ground Ghost already quietly watches. The sensors don't
 | Balance | ⚠ | Narrower than GHO.MOD.2 (Directorate-only), so lower frequency — plausible; final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | `presence_chip.placed(faction=Directorate, ...)` — explicitly scoped, no self-fire ambiguity. But `district=where(...)` is the 3rd confirmed instance of the unconfirmed parameter form. | Art 04 §6.3 |
+| Trigger validity | ✓ | `presence_chip.placed(faction=Directorate, ...)` — explicitly scoped, no self-fire ambiguity. `district=district.where(...)` now confirmed §6.3 vocabulary (schema_cleanup_log #9, PM05 04-n200), same fix as GHO.MOD.2. | Art 04 §6.3 |
 | Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Same as GHO.MOD.2. | Art 01 §6–7 |
 | Supported by components | ✓ | Same as GHO.MOD.2. | Art 02 §6–8 |
@@ -2188,7 +2294,7 @@ GHO.MOD.3 = Card(
     type    = ModReactCard,  faction = Ghost,
     layer   = Information,  function = Add,  subject = IntelToken,
 
-    trigger         = presence_chip.placed(faction=Directorate, district=where(faction(Ghost).presence > 0)),
+    trigger         = presence_chip.placed(faction=Directorate, district=district.where(faction(Ghost).presence > 0)),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -2223,7 +2329,7 @@ GHO.MOD.3 = Card(
 ### GHO.MOD.4 — SIGNAL BLEED
 
 #### Design Rationale
-Third card of the GHO.MOD.2/3/4 family — narrowed to Network, no self-fire ambiguity. 4th confirmed instance of the unconfirmed `where(...)` trigger-parameter form.
+Third card of the GHO.MOD.2/3/4 family — narrowed to Network, no self-fire ambiguity. Uses the confirmed §6.3 `district.where(BoolExpr)` trigger-parameter form (schema_cleanup_log #9).
 
 #### Card Story
 Network's broadcast infrastructure creeps into ground Ghost already watches. The signal bleed itself is the tell — Ghost logs the expansion as an exposure risk to its own covert footing in that district.
@@ -2240,7 +2346,7 @@ Network's broadcast infrastructure creeps into ground Ghost already watches. The
 | Balance | ⚠ | Same as GHO.MOD.3 — narrower than the generic variant, final read pending 04-n178. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Explicitly Network-scoped, no self-fire ambiguity. 4th confirmed instance of the unconfirmed `where(...)` form. | Art 04 §6.3 |
+| Trigger validity | ✓ | Explicitly Network-scoped, no self-fire ambiguity. `district=district.where(...)` now confirmed §6.3 vocabulary (schema_cleanup_log #9, PM05 04-n200), same fix as GHO.MOD.2/3. | Art 04 §6.3 |
 | Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Same as GHO.MOD.2/3. | Art 01 §6–7 |
 | Supported by components | ✓ | Same as GHO.MOD.2/3. | Art 02 §6–8 |
@@ -2273,7 +2379,7 @@ GHO.MOD.4 = Card(
     type    = ModReactCard,  faction = Ghost,
     layer   = Information,  function = Add,  subject = IntelToken,
 
-    trigger         = presence_chip.placed(faction=Network, district=where(faction(Ghost).presence > 0)),
+    trigger         = presence_chip.placed(faction=Network, district=district.where(faction(Ghost).presence > 0)),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -3204,7 +3310,7 @@ GHO.MOD.16 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Ghost,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3).
     value_rating    = 1,
     ring_constraint = None,
     ring_origin     = None,
@@ -3345,7 +3451,7 @@ GHO.MOD.18 = Card(
 
     portrait     = None,
     narrative    = "A scrubbed data channel removes the noise that would otherwise complicate the operation.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as GUI.MOD.17/DIR.MOD.15/16.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept, same basis as GUI.MOD.17/DIR.MOD.15/16.",
 )
 ```
 
@@ -3410,7 +3516,7 @@ GHO.MOD.19 = Card(
 
     portrait     = None,
     narrative    = "A fully assembled intelligence picture leaves nothing to chance — the operation proceeds on certainty, not estimate.",
-    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced.",
 )
 ```
 
@@ -3540,7 +3646,7 @@ GHO.MOD.21 = Card(
 
     portrait     = None,
     narrative    = "Multiple independent confirmations amplify an outcome well past what a single source would support.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -3930,7 +4036,7 @@ GHO.MOD.27 = Card(
 
     portrait     = None,
     narrative    = "Borrowed analytical tools cut the overhead of building anything from scratch.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157).",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced.",
 )
 ```
 

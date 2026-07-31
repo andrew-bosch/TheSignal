@@ -31,7 +31,7 @@ A quiet envelope arrives with no return address — just a blank form and the un
 | Supported by zones | ✓ (N/A) | `target_district=None` — Overture isn't a territory-scoped effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
 | Supported by game procedure | ✓ | Assignment at Phase B; blank form delivered at Beat 4; faction drafts and places in Accord Placement Area at their discretion (no timing constraint; queued for next Debrief if placed outside Debrief window). Execution at Debrief per Art 06 §9.4. Delivery from ARBITER tableau: procedure in STD.CA.9 `arbiter_note`; deliver-from-tableau is consistent with existing ARBITER delivery subroutines, no novel behavior; Art 07 subroutine pass still needed to formalize. | Art 03 Phase B; Art 06 §9.4; STD.CA.9 |
-| Data schema validation | ⚠ | Required scaffolding fields present on sibling card GD-01 (`resolution_type`, `outcome_type`, `boost`, `ps_framing`, `declared_params`) now present, matching GD-01 precedent; `value_rating` resolved to N/A. Trigger form still unconfirmed against §6.3 (see Trigger validity). | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | Required scaffolding fields present on sibling card GD-01 (`resolution_type`, `outcome_type`, `boost`, `ps_framing`, `target_freeform`) now present, matching GD-01 precedent; `value_rating` resolved to N/A. Trigger form still unconfirmed against §6.3 (see Trigger validity). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Grounded envelope-delivery scene; no mechanic restatement. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None` — free assignment; the real cost was already paid via STD.CA.9's own resource tier. Mono/cross-resource distinction doesn't apply to a zero-cost effect. | Art 00a §9.2 |
@@ -83,9 +83,8 @@ Overture = Card(
     target_district = None,
     target_faction  = None,  # named on AccordForm when drafted — not declared at card assignment
     target_object   = AccordForm,
-    declared_params = None,  # Overture uses the informal assigned_pa fill-in field directly, same pattern as GD-01's deed.district; no formal declared_params dict needed
+    target_freeform = None,  # Overture uses the informal assigned_pa fill-in field directly, same pattern as GD-01's deed.district; no formal target_freeform value needed
 
-    target_taxonomy=None,
     affinity    = None,
     restriction = overture.assigned_pa.type not in [STD.PA.8, GUI.PA.2],  # avoids duplicate AccordForm on same PA
     cost        = None,  # earned as STD.CA.9 success reward; free to assign
@@ -169,7 +168,7 @@ STD.MOD.2 = Card(
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set — the favor travels with the holder, not the Core (closes 04-n161 alongside STD.MOD.6's Locked counterpart)
+    ring_constraint = None,   # Portable set — the favor travels with the holder, not the Core
     ring_origin     = 1,
     cost            = None,
     resolution_type = None,  # scaffolded, not addressed
@@ -689,7 +688,7 @@ STD.MOD.10 = Card(
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set — the favor travels with the holder, not the Mid (closes 04-n161 alongside STD.MOD.14's Locked counterpart)
+    ring_constraint = None,   # Portable set — the favor travels with the holder, not the Mid
     ring_origin     = 2,
     cost            = None,
     resolution_type = None,  # scaffolded, not addressed
@@ -1209,7 +1208,7 @@ STD.MOD.18 = Card(
 
     effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
     value_rating    = 1,
-    ring_constraint = None,   # Portable set — the connection travels with the holder, not Baryo (closes 04-n161 alongside STD.MOD.22's Locked counterpart)
+    ring_constraint = None,   # Portable set — the connection travels with the holder, not Baryo
     ring_origin     = 3,
     cost            = None,
     resolution_type = None,  # scaffolded, not addressed
@@ -1727,7 +1726,7 @@ STD.MOD.26 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3).
     value_rating    = 1,
     ring_constraint = None,   # Portable set — the exception travels with whoever's holding it
     ring_origin     = 1,
@@ -1868,7 +1867,7 @@ STD.MOD.28 = Card(
 
     portrait     = None,
     narrative    = "A district block cordoned off \"for maintenance\" clears space for the acting faction's own operation there.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170 (same basis as the faction-set threshold_delta reframes: DIR.MOD.15/16, GUI.MOD.17, GHO.MOD.18, NET.MOD.21, SYN.MOD.18).",
+    arbiter_note = "Reframed from a hostile-flavored seed concept (same basis as the faction-set threshold_delta reframes: DIR.MOD.15/16, GUI.MOD.17, GHO.MOD.18, NET.MOD.21, SYN.MOD.18).",
 )
 ```
 
@@ -1933,7 +1932,7 @@ STD.MOD.29 = Card(
 
     portrait     = None,
     narrative    = "Key context is classified before a rival can plan around it, raising their difficulty — but for the holder, the same classification smooths the way.",
-    arbiter_note = "Capstone tier, reframed per 04-n170 — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set). Narrative reads dual-purpose despite the self-only mechanic — see Outstanding Issues.",
+    arbiter_note = "Capstone tier, reframed — log actual play outcomes before treating +20 as balanced. Narrative reads dual-purpose despite the self-only mechanic — see Outstanding Issues.",
 )
 ```
 
@@ -2063,7 +2062,7 @@ STD.MOD.31 = Card(
 
     portrait     = None,
     narrative    = "Official recognition of a successful placement makes its result carry further than usual.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -2453,7 +2452,7 @@ STD.MOD.37 = Card(
 
     portrait     = None,
     narrative    = "Funds normally locked behind approval move immediately, discounting an urgent action's cost.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 1's Portable set (STD.MOD.26–37); Ring-Locked set follows (STD.MOD.38–49).",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced. Closes Ring 1's Portable set (STD.MOD.26–37); Ring-Locked set follows (STD.MOD.38–49).",
 )
 ```
 
@@ -2509,7 +2508,7 @@ STD.MOD.38 = Card(
 
     effect          = ModActionExpr.threshold_delta(n=5),
     value_rating    = 1,
-    ring_constraint = 1,      # Ring-Locked set — usable only with ops targeting a Ring 1 district (closes 04-n161 alongside STD.MOD.26's Portable counterpart)
+    ring_constraint = 1,      # Ring-Locked set — usable only with ops targeting a Ring 1 district
     ring_origin     = 1,
     cost            = None,
     resolution_type = None,  # scaffolded, not addressed
@@ -2713,7 +2712,7 @@ STD.MOD.41 = Card(
 
     portrait     = None,
     narrative    = "Full clearance from within the Core itself — nothing left to process through ordinary channels, so long as the work stays here.",
-    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 1 district — log actual play outcomes before treating +20 as balanced (04-n157).",
+    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 1 district — log actual play outcomes before treating +20 as balanced.",
 )
 ```
 
@@ -2843,7 +2842,7 @@ STD.MOD.43 = Card(
 
     portrait     = None,
     narrative    = "When the institution itself backs an outcome, it carries much further than a routine result would — but only inside its own reach.",
-    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 1 district — log actual play outcomes before treating n=2 as balanced (04-n157).",
+    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 1 district — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -3233,7 +3232,7 @@ STD.MOD.49 = Card(
 
     portrait     = None,
     narrative    = "A submission that skips the full review process skips the overhead that comes with it — but only through this specific channel.",
-    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 1 district — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 1 (STD.MOD.26–49, 24 cards); Ring 2 (Mid) follows.",
+    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 1 district — log actual play outcomes before treating a 2-unit reduction as balanced. Closes Ring 1 (STD.MOD.26–49, 24 cards); Ring 2 (Mid) follows.",
 )
 ```
 
@@ -3287,7 +3286,7 @@ STD.MOD.50 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3).
     value_rating    = 1,
     ring_constraint = None,
     ring_origin     = 2,
@@ -3428,7 +3427,7 @@ STD.MOD.52 = Card(
 
     portrait     = None,
     narrative    = "The acting faction's own shipping manifest is quietly corrected in advance, smoothing a logistics-dependent action.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as STD.MOD.28/29.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept, same basis as STD.MOD.28/29.",
 )
 ```
 
@@ -3493,7 +3492,7 @@ STD.MOD.53 = Card(
 
     portrait     = None,
     narrative    = "A formal labor complaint against the acting faction's own submission is quietly withdrawn before it can raise the bar.",
-    arbiter_note = "Capstone tier, reframed per 04-n170 — log actual play outcomes before treating +20 as balanced (04-n157).",
+    arbiter_note = "Capstone tier, reframed — log actual play outcomes before treating +20 as balanced.",
 )
 ```
 
@@ -3623,7 +3622,7 @@ STD.MOD.55 = Card(
 
     portrait     = None,
     narrative    = "One system's output feeding directly into the next multiplies the outcome well past what was planned.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -4013,7 +4012,7 @@ STD.MOD.61 = Card(
 
     portrait     = None,
     narrative    = "A resource purchase clears at an institutional discount not normally available.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 2's Portable set (STD.MOD.50–61); Ring-Locked set follows (STD.MOD.62–73).",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced. Closes Ring 2's Portable set (STD.MOD.50–61); Ring-Locked set follows (STD.MOD.62–73).",
 )
 ```
 
@@ -4273,7 +4272,7 @@ STD.MOD.65 = Card(
 
     portrait     = None,
     narrative    = "Full standing at the district clearinghouse means paperwork simply moves, no matter the action — so long as it moves through here.",
-    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 2 district — log actual play outcomes before treating +20 as balanced (04-n157).",
+    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 2 district — log actual play outcomes before treating +20 as balanced.",
 )
 ```
 
@@ -4403,7 +4402,7 @@ STD.MOD.67 = Card(
 
     portrait     = None,
     narrative    = "A facility running at capacity turns a routine action into an exceptional one — but only this facility, running this way.",
-    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 2 district — log actual play outcomes before treating n=2 as balanced (04-n157).",
+    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 2 district — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -4793,7 +4792,7 @@ STD.MOD.73 = Card(
 
     portrait     = None,
     narrative    = "An existing service agreement lowers what this action costs to mount — through this specific utility, and no other.",
-    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 2 district — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 2 (STD.MOD.50–73, 24 cards); Ring 3 (Baryo) follows.",
+    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 2 district — log actual play outcomes before treating a 2-unit reduction as balanced. Closes Ring 2 (STD.MOD.50–73, 24 cards); Ring 3 (Baryo) follows.",
 )
 ```
 
@@ -4847,7 +4846,7 @@ STD.MOD.74 = Card(
     type    = ModActionCard,  subtype = Standard,  faction = All,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3).
     value_rating    = 1,
     ring_constraint = None,
     ring_origin     = 3,
@@ -4988,7 +4987,7 @@ STD.MOD.76 = Card(
 
     portrait     = None,
     narrative    = "Advance word from contacts at the docks smooths the acting faction's own shipment-dependent operation.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as STD.MOD.28/29/52/53.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept, same basis as STD.MOD.28/29/52/53.",
 )
 ```
 
@@ -5053,7 +5052,7 @@ STD.MOD.77 = Card(
 
     portrait     = None,
     narrative    = "Visible grassroots support for the acting faction's own submission smooths its passage — the neighborhood's already decided.",
-    arbiter_note = "Capstone tier, reframed per 04-n170 — log actual play outcomes before treating +20 as balanced (04-n157).",
+    arbiter_note = "Capstone tier, reframed — log actual play outcomes before treating +20 as balanced.",
 )
 ```
 
@@ -5183,7 +5182,7 @@ STD.MOD.79 = Card(
 
     portrait     = None,
     narrative    = "An unusually large crowd amplifies whatever the action was counting on being seen.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -5573,7 +5572,7 @@ STD.MOD.85 = Card(
 
     portrait     = None,
     narrative    = "A resource moves through several informal trades before landing where it was always headed, cheaper than a direct purchase.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 3's Portable set (STD.MOD.74–85); Ring-Locked set follows (STD.MOD.86–97).",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced. Closes Ring 3's Portable set (STD.MOD.74–85); Ring-Locked set follows (STD.MOD.86–97).",
 )
 ```
 
@@ -5833,7 +5832,7 @@ STD.MOD.89 = Card(
 
     portrait     = None,
     narrative    = "Being a fixture at this specific spot means nothing about an operation there needs explaining or clearing — but the standing doesn't travel.",
-    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 3 district — log actual play outcomes before treating +20 as balanced (04-n157). Closes Ring 3's threshold_delta tier progression.",
+    arbiter_note = "Capstone tier, usable only with an operation targeting a Ring 3 district — log actual play outcomes before treating +20 as balanced. Closes Ring 3's threshold_delta tier progression.",
 )
 ```
 
@@ -5963,7 +5962,7 @@ STD.MOD.91 = Card(
 
     portrait     = None,
     narrative    = "Informal networks carry an outcome further than any official channel would — but only within this network's reach.",
-    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 3 district — log actual play outcomes before treating n=2 as balanced (04-n157).",
+    arbiter_note = "Rare/capstone tier, usable only with an operation targeting a Ring 3 district — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -6353,7 +6352,7 @@ STD.MOD.97 = Card(
 
     portrait     = None,
     narrative    = "A debt called in from the informal economy waives part of what an action would otherwise cost — this economy specifically, no other.",
-    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 3 district — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157). Closes Ring 3 (STD.MOD.74–97, 24 cards) and the full Ring ModAction stub pass (72 cards, STD.MOD.26–97) — 09-06's ModActionCard leg now fully complete, faction-set and ring-set alike.",
+    arbiter_note = "Capstone cost_reduction tier, usable only with a PA targeting a Ring 3 district — log actual play outcomes before treating a 2-unit reduction as balanced. Closes Ring 3 (STD.MOD.74–97, 24 cards) and the full Ring ModAction stub pass (72 cards, STD.MOD.26–97) — 09-06's ModActionCard leg now fully complete, faction-set and ring-set alike.",
 )
 ```
 
@@ -6601,7 +6600,7 @@ STD.MOD.100 = Card(
     portrait     = None,
     narrative    = "The building doesn't stay empty long. Core fills what's vacated before the news spreads.",
     perspectives = None,
-    design_note  = "Fires on any presence removal in Core; narrative frames it as claiming a vacated district. ARBITER confirms narrative fit case-by-case — no distinct 'last chip' filter exists in confirmed TriggerExpr vocabulary (04-n171).",
+    design_note  = "Fires on any presence removal in Core; narrative frames it as claiming a vacated district. ARBITER confirms narrative fit case-by-case — no distinct 'last chip' filter exists in confirmed TriggerExpr vocabulary.",
     arbiter_note = None,
 )
 ```
@@ -6850,7 +6849,7 @@ STD.MOD.103 = Card(
     portrait     = None,
     narrative    = "Core's review process exists to slow things down. It works exactly as designed, on whoever it's aimed at.",
     perspectives = None,
-    design_note  = "Hinders the flagged PA (−5 threshold — makes success harder), not a self-benefit. `arbiter.modify(target, field, delta)` is a new mutation form, not yet in confirmed vocabulary; flagged for reconciliation (04-n171). Procedurally grounded in the existing BM-xx/M-11 threshold-modifier-accumulation pipeline (Art 03 §9.4.1.1/§9.4.3.1.3), not new ARBITER behavior.",
+    design_note  = "Hinders the flagged PA (−5 threshold — makes success harder), not a self-benefit. `arbiter.modify(target, field, delta)` is a new mutation form, not yet in confirmed vocabulary; flagged for reconciliation. Procedurally grounded in the existing BM-xx/M-11 threshold-modifier-accumulation pipeline (Art 03 §9.4.1.1/§9.4.3.1.3), not new ARBITER behavior.",
     arbiter_note = None,
 )
 ```
@@ -6926,14 +6925,14 @@ STD.MOD.104 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "Every structure that goes up in Core passes through an office with its hand out.",
     perspectives = None,
-    design_note  = "`NativeResource(faction)` parameterizes the existing bare `NativeResource` subject symbol (Art 04 §6.1 line ~1559 usage) to resolve dynamically per triggering faction — needed because this card, unlike faction-specific precedent (GUI.MOD.2/3/4's hardcoded Capacity), doesn't have a single fixed faction context. Flagged for reconciliation (04-n171).",
+    design_note  = "`NativeResource(faction)` parameterizes the existing bare `NativeResource` subject symbol (Art 04 §6.1 line ~1559 usage) to resolve dynamically per triggering faction — needed because this card, unlike faction-specific precedent (GUI.MOD.2/3/4's hardcoded Capacity), doesn't have a single fixed faction context. Flagged for reconciliation.",
     arbiter_note = None,
 )
 ```
@@ -7009,14 +7008,14 @@ STD.MOD.105 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "Core's institutions track every faction's climb. The audit itself has a price, paid to whoever runs it.",
     perspectives = None,
-    design_note  = "Same NativeResource(faction) generalization as STD.MOD.104 (04-n171). Shares its trigger event with GUI.MOD.9 Field Supervisor's established_marker.placed precedent — multiple cards firing on the same confirmed event is standard practice (e.g. presence_chip.placed already triggers several Ghost cards independently).",
+    design_note  = "Same NativeResource(faction) generalization as STD.MOD.104. Shares its trigger event with GUI.MOD.9 Field Supervisor's established_marker.placed precedent — multiple cards firing on the same confirmed event is standard practice (e.g. presence_chip.placed already triggers several Ghost cards independently).",
     arbiter_note = None,
 )
 ```
@@ -7092,14 +7091,14 @@ STD.MOD.106 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(holder)),
+    success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "Losing a foothold in Core isn't the end — there's always a contingency line item for exactly this.",
     perspectives = None,
-    design_note  = "Distinct from the existing Floor Act mechanic (PM02 VE-01) — this is a Core-specific, presence-loss-triggered reserve, not a general insufficient-resource safety net. NativeResource(holder) keys to the holder's own faction, not a rival's (04-n171).",
+    design_note  = "Distinct from the existing Floor Act mechanic (PM02 VE-01) — this is a Core-specific, presence-loss-triggered reserve, not a general insufficient-resource safety net. NativeResource(holder) keys to the holder's own faction, not a rival's.",
     arbiter_note = None,
 )
 ```
@@ -7922,14 +7921,14 @@ STD.MOD.116 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "Nothing gets built in Mid without crossing a toll line somebody controls.",
     perspectives = None,
-    design_note  = "Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same NativeResource(trigger.faction) generalization (04-n171), ring=2.",
+    design_note  = "Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same NativeResource(trigger.faction) generalization, ring=2.",
     arbiter_note = None,
 )
 ```
@@ -8005,14 +8004,14 @@ STD.MOD.117 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "Every climb to Established in Mid triggers a reconciliation somewhere down the line.",
     perspectives = None,
-    design_note  = "Ring 2 duplicate of STD.MOD.105 Audit Trail — same NativeResource(trigger.faction) generalization (04-n171), ring=2.",
+    design_note  = "Ring 2 duplicate of STD.MOD.105 Audit Trail — same NativeResource(trigger.faction) generalization, ring=2.",
     arbiter_note = None,
 )
 ```
@@ -8088,14 +8087,14 @@ STD.MOD.118 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(holder)),
+    success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "Losing ground in Mid trips a contingency that's always been sitting there, waiting.",
     perspectives = None,
-    design_note  = "Ring 2 duplicate of STD.MOD.106 Emergency Reserve — same NativeResource(holder) generalization (04-n171), ring=2. Distinct from the existing Floor Act mechanic (PM02 VE-01), same as its Ring 1 counterpart.",
+    design_note  = "Ring 2 duplicate of STD.MOD.106 Emergency Reserve — same NativeResource(holder) generalization, ring=2. Distinct from the existing Floor Act mechanic (PM02 VE-01), same as its Ring 1 counterpart.",
     arbiter_note = None,
 )
 ```
@@ -8918,14 +8917,14 @@ STD.MOD.128 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "There's no filing cabinet for it, but everyone knows the toll gets paid regardless.",
     perspectives = None,
-    design_note  = "Ring 3 duplicate of STD.MOD.104/STD.MOD.116 — same NativeResource(trigger.faction) generalization (04-n171), ring=3.",
+    design_note  = "Ring 3 duplicate of STD.MOD.104/STD.MOD.116 — same NativeResource(trigger.faction) generalization, ring=3.",
     arbiter_note = None,
 )
 ```
@@ -9001,14 +9000,14 @@ STD.MOD.129 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(trigger.faction)),
+    success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "The gray economy notices every climb — and it always finds a way in.",
     perspectives = None,
-    design_note  = "Ring 3 duplicate of STD.MOD.105/STD.MOD.117 — same NativeResource(trigger.faction) generalization (04-n171), ring=3.",
+    design_note  = "Ring 3 duplicate of STD.MOD.105/STD.MOD.117 — same NativeResource(trigger.faction) generalization, ring=3.",
     arbiter_note = None,
 )
 ```
@@ -9084,14 +9083,14 @@ STD.MOD.130 = Card(
     restriction     = None,
     cost            = None,
 
-    success     = faction(holder).resources.add(1, NativeResource(holder)),
+    success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
     narrative    = "Baryo runs on favors owed. This is one finally getting called in.",
     perspectives = None,
-    design_note  = "Ring 3 duplicate of STD.MOD.106/STD.MOD.118 — same NativeResource(holder) generalization (04-n171), ring=3.",
+    design_note  = "Ring 3 duplicate of STD.MOD.106/STD.MOD.118 — same NativeResource(holder) generalization, ring=3.",
     arbiter_note = None,
 )
 ```

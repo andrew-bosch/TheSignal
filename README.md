@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** S149 — Schema Cleanup Program (PM05 04-n191) Phases 3–4 of 5 closed (PM02 L327–L332). Phase 3: legacy-vocabulary fixes (GHO.MOD.5, NET.MOD.9, NET.MOD.2, SYN.MOD.9; 3 carried to Phase 4). Phase 4: TriggerExpr additions (`ring=`, `uses_intel_token=`, `board_state.changed()`), taxonomy corrections (DIR.CA.8, GUI.CA.9, GHO.CA.8), Art 03 §18.2.2 React default added & signed off (v4.13→v4.14). 3 follow-up items deferred (04-n199/200/201), 1 new finding flagged (04-n202). Hygiene recurrence #6 swept. Art 02 re-signed off (v2.5, PM02 L326). Prior (S148): Phases 1–2 closed, database recovery, agy retired. Full detail PM02 L316–L332, PM05 04-n191.
+**Design milestone:** S150 — schema_cleanup_log synthesis items #4 and #20 fully closed (all lettered sub-items, PM02 L339–L345). New DB column card_status.mod_subtype + view v_card_taxonomy_gaps. New Art 03 §7.4 Resource Type rule and §18 tiebreak refinement; new Art 00a GR §7.2c (Triggering Conditions Are Exhausted on Resolution). Art 03 (v4.15) and Art 00a (v0.13) re-signed off. New §6.3 vocabulary: public_act.resolved(pa=X), trigger.card.resolved/.outcome, arbiter.protect(), standalone on(TriggerExpr): MutationExpr, ModReactCard target inheritance. Full detail PM02 L339–L345. Prior (S149): Schema Cleanup Phases 3–4 closed; TriggerExpr additions, taxonomy corrections, Art 03 §18.2.2 React default, Art 02 re-signed off (v4.14).
 
 ---
 
@@ -29,7 +29,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 00 | [Factions, World & Narrative Context](V1/00___Factions_World_Narrative_Context.md) | 1.9 | ✅ Signed off — S134 (L255). S134: §6.7 Ring Character (narrative anchor), §15 curriculum extended (Pine Gap). Bundles S99 §14.10, S131 §15, S134 §6.7+Pine Gap. Prior: ✅ S93 (L211). S118: component name sweep. |
-| 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.12 | ✅ Signed off — S148 (§10.4 Covert Attribution Remains Untraceable). S108: GR 10.1b. S118: component name sweep. |
+| 00a | [Governing Rules & Design Policy](V1/00a___Governing_Rules___Design_Policy.md) | 0.13 | ✅ Signed off — S150 (§7.2c Triggering Conditions Are Exhausted on Resolution). S148: §10.4 Covert Attribution Remains Untraceable. S108: GR 10.1b. S118: component name sweep. |
 
 ---
 
@@ -62,7 +62,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 | # | Artifact | Ver | Status |
 |---|----------|-----|--------|
 | 03-init | [Game Initialization](V1/03-init___Game_Initialization.md) | 0.5 | 🔄 In progress. S124: §3.9 Deck Selection added; §3.6 sequencing conflict open (04-n137). |
-| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.14 | ✅ Signed off — S149 (§18.2.2 React default removal, PM02 L332). S146 (L293): §9.4.3.1.0.3 Route zero-payment consequence. Prior: ✅ S132 (L243). §10.1.2 Battlefield Strength redesigned (Boost/Hinder ModBattleCard model, face-down commit/reveal, any faction may commit, Intel Token −2 Hinder); §10.1.4.0/0.2/1 sequential steps + cleanup relocation. Prior: S110 (L232). |
+| 03 | [while session(true): Quarter Structure](V1/03___Round_Structure___Gameplay.md) | 4.15 | ✅ Signed off — S150 (§7.4 Resource Type rule, §18 tiebreak refinement, PM02 L339–L345). S149 (§18.2.2 React default removal, PM02 L332). S146 (L293): §9.4.3.1.0.3 Route zero-payment consequence. Prior: ✅ S132 (L243). §10.1.2 Battlefield Strength redesigned (Boost/Hinder ModBattleCard model, face-down commit/reveal, any faction may commit, Intel Token −2 Hinder); §10.1.4.0/0.2/1 sequential steps + cleanup relocation. Prior: S110 (L232). |
 | 03a | [Game Engine Specification](V1/03a___Game_Engine_Specification.md) | 0.99 | 🔄 In progress. S118: component name sweep. |
 | 03b | [Component Lifecycle Register](V1/03b___Component_Lifecycle.md) | 0.2 | 🔄 In progress. S118: component name sweep. |
 

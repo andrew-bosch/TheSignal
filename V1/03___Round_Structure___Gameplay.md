@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.14
+**Version:** 4.15
 
-**Status:** Signed off S149 (PM02 L332) — §18.2.2 added: React cards are permanently removed from the game by default once resolved, unless card text states otherwise (previously unstated anywhere in Art 03; surfaced via schema_cleanup_log #19, PM05 04-n195). Prior: Signed off S146 (PM02 L292) — §9.4.3.1.0.3 Route: zero-payment Public Act invalidation now carries a Public Standing −1 ("failed commitment") consequence, closing the gap left when Art 04's old §14.3 language was retired without carrying its PS penalty forward into the unified Principle 20 payment model. Prior: Signed off S132 (L243). Prior: Signed off S110 (L232). S132: §10.1.2 Calculate and Declare Totals redesigned — Boost/Hinder model replaces Self/Opponent threshold-delta on Battlefield Modifier Cards, with an explicit named target faction chosen by the playing faction (contesting or not); face-down commit + simultaneous reveal (Steps 1.2.1 Count, 1.2.2 Commit, 1.2.3 Reveal & Validate, 1.2.4 Announce); any faction — not just contestants — may commit a Battlefield Modifier Card or Intel Token into an active contest; Intel Token effect changed to a fixed −2 Hinder applied to the named target (supersedes L163's +2 self-boost). §10.1.4.0 (Winner), §10.1.4.0.2 (Press), and §10.1.4.1 (Tie) reformatted to sequential numbered steps; cleanup (discard used Battlefield Modifier Cards, Intel Token hand-off/reset) relocated from §10.1.2.3 to §10.1.4.0 and duplicated at §10.1.4.1, firing once winner/tie is resolved and before any loop back to §10.1.2. Prior (S109–S110): VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
+**Status:** Signed off S150 (PM02 L340, L341) — §7.4 restructured (§7.4.0 Calculate District Income → §7.4.0.0 Apply Affinity Bonus/§7.4.0.1 Collect District Income; §7.4.1 Calculate Structure Block Income → §7.4.1.0 Declare/§7.4.1.1 Collect; §7.4.2 Collect Passive Generation), with a new Resource Type rule (district income pays in the district's own Resource Type, not the collecting faction's Native Resource) and the opening paragraph clarified (drawing from the Reservoir is a player action). §18.1/§18.1.0 refined: a faction holding 2+ eligible React cards for one triggering event chooses which single card to present; tied announcements resolve by initiative order (was "ARBITER decides"). Prior: Signed off S149 (PM02 L332) — §18.2.2 added: React cards are permanently removed from the game by default once resolved, unless card text states otherwise (previously unstated anywhere in Art 03; surfaced via schema_cleanup_log #19, PM05 04-n195). Prior: Signed off S146 (PM02 L292) — §9.4.3.1.0.3 Route: zero-payment Public Act invalidation now carries a Public Standing −1 ("failed commitment") consequence, closing the gap left when Art 04's old §14.3 language was retired without carrying its PS penalty forward into the unified Principle 20 payment model. Prior: Signed off S132 (L243). Prior: Signed off S110 (L232). S132: §10.1.2 Calculate and Declare Totals redesigned — Boost/Hinder model replaces Self/Opponent threshold-delta on Battlefield Modifier Cards, with an explicit named target faction chosen by the playing faction (contesting or not); face-down commit + simultaneous reveal (Steps 1.2.1 Count, 1.2.2 Commit, 1.2.3 Reveal & Validate, 1.2.4 Announce); any faction — not just contestants — may commit a Battlefield Modifier Card or Intel Token into an active contest; Intel Token effect changed to a fixed −2 Hinder applied to the named target (supersedes L163's +2 self-boost). §10.1.4.0 (Winner), §10.1.4.0.2 (Press), and §10.1.4.1 (Tie) reformatted to sequential numbered steps; cleanup (discard used Battlefield Modifier Cards, Intel Token hand-off/reset) relocated from §10.1.2.3 to §10.1.4.0 and duplicated at §10.1.4.1, firing once winner/tie is resolved and before any loop back to §10.1.2. Prior (S109–S110): VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02 — Components
 
@@ -263,25 +263,33 @@ Proceed to §7.4.
 
 ARBITER announces: *"Collect income."*
 
-Each Faction Player simultaneously calculates and collects their own resources. Other Faction Players observe and may challenge calculations. ARBITER resolves disputes in The Record register.
+Each Faction Player calculates their own income and draws the resulting resources from the Reservoir into their own resource pool — a player action, not an ARBITER action. Resources drawn are not uniformly the collecting faction's Native Resource: district income is paid in that district's own Resource Type (§20; Art 01 §6.4), regardless of which faction holds it. Other Faction Players observe and may challenge calculations. ARBITER resolves disputes in The Record register.
 
 **The Network — University Perimeter Virtual Structure:** The Network faction has a virtual Structure Block at University Perimeter from session start. It cannot be demolished and does not count toward the one-structure-per-faction-per-district limit. It functions as a Structure Block for all game purposes — income, Modifier Card draw threshold, ring modifier eligibility, and any mechanic referencing owned Structure Blocks. It generates income only while The Network has any presence (chip or Deployment Marker) at University Perimeter; if The Network holds no presence there, the virtual structure produces nothing that Quarter.
 
-#### §7.4.0 Step 0: Calculate District Income
+#### §7.4.0 Calculate District Income
 
-For each district with Presence Tokens or Deployment Markers: apply influence level modifier to base generation value.
-
-#### §7.4.1 Step 1: Apply Affinity Bonus
+##### §7.4.0.0 Step 0: Apply Affinity Bonus
 
 Add affinity bonus where applicable — per §20.
 
-#### §7.4.2 Step 2: Declare Structure Block Resources
+##### §7.4.0.1 Step 1: Collect District Income
 
-For each Structure Block: declare resource type publicly (district resource or faction Native Resource), collect income per §20.
+For each district with Presence Tokens or Deployment Markers: apply influence level modifier to base generation value. Income from this step is collected in the district's own Resource Type (§20), not the collecting faction's Native Resource — a faction holding influence in a district whose Resource Type differs from its own accumulates that resource naturally as territory expands, with no conversion step.
+
+#### §7.4.1 Calculate Structure Block Income
+
+##### §7.4.1.0 Step 0: Declare Structure Block Resources
+
+For each Structure Block: declare resource type publicly (district resource or faction Native Resource) — per §20.
 
 *If The Network has any presence at University Perimeter: The Network Faction Player declares whether Exposure or the district Native Resource will be collected from the virtual Structure Block.*
 
-#### §7.4.3 Step 3: Collect Passive Generation
+##### §7.4.1.1 Step 1: Collect Declared Resources
+
+Collect the declared resource per §20.
+
+#### §7.4.2 Collect Passive Generation
 
 Add passive generation per §20.
 
@@ -1472,11 +1480,11 @@ The React window opens when the triggering board state change occurs and closes 
 
 ### §18.1 Trigger Announcement
 
-When a trigger condition is met: the holding Faction Player announces *"React"*, presents the card, and states the trigger condition listed on the card. ARBITER confirms the trigger is valid and pauses the procedure.
+When a trigger condition is met: the holding Faction Player announces *"React"*, presents the card, and states the trigger condition listed on the card. ARBITER confirms the trigger is valid and pauses the procedure. If a Faction Player holds 2+ cards — including 2+ copies of the same card — whose trigger condition is met by the same board-state change, that player chooses which single card to present. The others remain in hand; they may only fire against a future board-state change that independently satisfies their own trigger.
 
 #### §18.1.0 Tiebreaker
 
-First to announce pauses play. ARBITER decides tiebreakers. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves.
+First to announce pauses play. If 2+ Faction Players announce *"React"* for the same board-state change, resolve by initiative order. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves. The original triggering event is exhausted for every other card that matched only the prior state, including cards belonging to Faction Players who did not announce in time.
 
 ### §18.2 Resolution
 
@@ -1555,13 +1563,17 @@ ARBITER resumes the original procedure from the point it paused.
 | None | Zero |
 | Contested (3+ chips, tied) | 1 unit flat regardless of base value |
 
+### Resource Type
+
+Base district generation (the two tables above) is collected in that district's own Resource Type (Art 01 §6.4) — not the collecting faction's Native Resource. A faction holding influence in a district whose Resource Type differs from its own accumulates that resource naturally as territory expands, with no conversion step. This — not The Translation — is the primary mechanism behind cross-resource costs (Art 04 §6.3 CostExpr, Art 00a §9.2): territorial expansion (a) and inter-faction trade (b, §11.0, "any terms") are the intended acquisition paths; The Translation (§19.1) is the fallback when neither is available.
+
 ### Affinity Bonus
 
 Faction holding Dominant presence in their Native Resource district: +1 resource of that type.
 
 ### Structure Block Income
 
-Each Structure Block generates +1 resource per Quarter. Faction Player declares type at §7.4.2 (district resource or faction Native Resource).
+Each Structure Block generates +1 resource per Quarter. Faction Player declares type at §7.4.1.0 (district resource or faction Native Resource).
 
 ### Passive Generation
 

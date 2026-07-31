@@ -86,7 +86,7 @@ GUI.CA.1 = Card(
     target_faction  = None,
     target_object   = StructureBlock,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = district(target).faction(acting).structure > 0,
     cost        = Capacity * 1,
@@ -177,14 +177,14 @@ GUI.CA.2 = Card(
     target_faction  = faction.opponent,
     target_object   = NativeResource,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = None,
     cost        = None,
 
     success     = (
-        faction(acting).resource.native += 1,
-        faction(acting).resource.native += 1
+        faction(acting).native.add(1),
+        faction(acting).native.add(1)
     ),
     successcrit = None,
     fail        = None,
@@ -272,13 +272,13 @@ GUI.CA.3 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = district(target).presence.total == 0,
     cost        = Capacity * 1,
 
-    success     = district(target).faction(acting).presence += 1,
-    successcrit = district(target).faction(acting).structure += 1,
+    success     = arbiter.place(presence_chip, district=target, faction=acting, count=1),
+    successcrit = arbiter.place(structure_block, district=target, faction=acting, count=1),
     fail        = None,
     failcrit    = game.dispatch(Directorate, IntelToken(faction=acting, quarter=game.quarter)),
 
@@ -312,7 +312,7 @@ Guild-exclusive rush-construction card — bypasses STD.CA.1's presence prerequi
 | Voice fit | ✓ | Three perspectives (Guild, Network, Ghost) — FactionSpecific card; acceptable. Ghost's "better at covert operations than they admit" is the sharpest outside read. | Art 00 §7 |
 | Doctrine alignment | ✓ | Guild construction doctrine (rush, without permission). Crit fail rewards Ghost (Intel Token) and Syndicate (district native) — explicitly doctrinal: the two most opportunistic actors benefit from Guild overreach. No opponent target → doctrine_mod N/A. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation: unauthorized construction is covert until established. FactionSpecific (Guild): rush-build without prerequisites is exclusively Guild. | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ⚠ | `layer = Submission` — primary design intent is removing the STD.CA.1 presence prerequisite (a restriction on a CovertOperation). Territorial outcomes (presence + structure) are the consequence, not the driver. `function = RemoveRestriction` is not in `ref_taxonomy.md`'s Function Vocabulary (Add/Remove/Redirect/Modify/Protect/Block/Copy/Reveal/Shift/Corrupt only) — confirmed by `v_card_mechanical_alignment` (DB), which shows Abstract Function for this card. `Modify` ("alters cost, value, or attribute without changing fundamental state") looks like the closer documented fit for "removes a restriction," but not changed here. | Art 04b §4, §5 |
+| Taxonomy fit | ✓ | `layer = Submission` — primary design intent is removing the STD.CA.1 presence prerequisite (a restriction on a CovertOperation); territorial outcomes (presence + structure) are the consequence, not the driver. `function = Modify` ("alters cost, value, or attribute without changing fundamental state") is the correct Function-vocabulary fit for waiving a prerequisite. | Art 04b §4, §5 |
 | Balance | ✓ | High cost (3 Capacity), high threshold (65). Crit fail rewards both Ghost (Intel Token) and Syndicate (district native) — asymmetric penalty for overreach. Net: saves STD.CA.3+STD.CA.1 sequential plays at the cost of one high-risk probabilistic slot. | Art 02 §6, §7, §8; Art 02 §12 |
 | Effect duration | ✓ | Permanent: presence and structure placed on success persist. | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
@@ -343,7 +343,7 @@ GUI.CA.4 = Card(
     tagline = "Build a structure before your presence is fully established.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
-    layer    = Submission,  function = RemoveRestriction,  subject = CovertOperation,
+    layer    = Submission,  function = Modify,  subject = CovertOperation,
 
     beat            = 3,
     resolution      = d100,
@@ -362,20 +362,20 @@ GUI.CA.4 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = district(target).faction(acting).structure == 0,
     cost        = Capacity * 2 + Findings * 1,
 
     success     = (
-        district(target).faction(acting).presence += 1,
-        district(target).faction(acting).structure += 1
+        arbiter.place(presence_chip, district=target, faction=acting, count=1),
+        arbiter.place(structure_block, district=target, faction=acting, count=1)
     ),
-    successcrit = district(target).faction(acting).presence += 1,
+    successcrit = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     fail        = None,
     failcrit    = (
         game.dispatch(Ghost, IntelToken(faction=acting, quarter=game.quarter)),
-        game.transfer(district(target).resource.native, 1, faction(Syndicate))
+        game.transfer(district(target).native, 1, faction(Syndicate))
     ),
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
@@ -459,12 +459,12 @@ GUI.CA.5 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = district(target).faction(acting).control_tier IN [Established, Dominant],
     cost        = None,
 
-    success     = faction(acting).resource.native += 1,
+    success     = faction(acting).native.add(1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
@@ -525,7 +525,7 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 
 ```python
 GUI.CA.6 = Card(
-    id      = "GUI.CA.6",  card_id="GUI.CA.6",  version="v1.0",  # ID pending PM05 04-n1
+    id      = "GUI.CA.6",  card_id="GUI.CA.6",  version="v1.0",
     name    = "Labor Contract",
     tagline = "Collect subcontract payment when a faction develops district infrastructure.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
@@ -546,14 +546,14 @@ GUI.CA.6 = Card(
     target_faction  = faction.opponent,
     target_object   = NativeResource,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = None,
     cost        = None,
 
     success     = (
-        faction(acting).resource.native += 1,
-        faction(acting).resource.native += 1,
+        faction(acting).native.add(1),
+        faction(acting).native.add(1),
     ),
     successcrit = None,
     fail        = None,
@@ -567,7 +567,7 @@ GUI.CA.6 = Card(
         Directorate: "The Guild has found a way to treat infrastructure development as a private revenue stream. This requires a regulatory response.",
         Network:     "Every build is a Guild fee. Every fee is a constraint. The city grows on Guild's terms.",
     },
-    design_note  = "Construction analogue to GUI.CA.2 Materials Acquisition. Together with GUI.CA.2 and 04-n2 passive rule: no faction demolishes or builds in New Meridian without Guild being paid. Trigger is STD.CA.1 only — Labor Contract is a financial claim on physical construction, not influence or presence activity. Payout mirrors STD.CA.1.cost (2 Capacity). First qualifying STD.CA.1 from named faction only.",
+    design_note  = "Construction analogue to GUI.CA.2 Materials Acquisition. Together with GUI.CA.2: no faction demolishes or builds in New Meridian without Guild being paid. Trigger is STD.CA.1 only — Labor Contract is a financial claim on physical construction, not influence or presence activity. Payout mirrors STD.CA.1.cost (2 Capacity). First qualifying STD.CA.1 from named faction only.",
     arbiter_note = "At Beat 3: confirm whether named faction completed STD.CA.1 this Quarter. First qualifying play only. If triggered: deliver 2 Capacity to Guild's Dispatch Case.",
 )
 ```
@@ -589,36 +589,36 @@ GUI.CA.6 = Card(
 
 ---
 
-### GUI.CA.7 — BUYOUT CLAUSE *(stub)*
+### GUI.CA.7 — BUYOUT CLAUSE
 [↑ Covert Operations](#guild-covert-operations)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Guild's territorial response card — an unblockable, unconditional eviction that displaces a target faction's presence from a district while compensating them with 2 units of that district's own native resource. "Buyout" isn't euphemism: Guild pays before it takes, which is precisely what keeps the coercion legally clean rather than outright seizure. No threshold, no dice — Capacity + Capital (mid-tier) buys certainty, gated only by the target actually holding presence there to be bought out.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A registered offer arrives, payment attached, effective immediately. By the time anyone reads the fine print, the crew that used to work that block has already been relocated — paid in full, whether they wanted the deal or not.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/14/15. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`ring_mod`/`persistence`/`portrait`/`perspectives` entirely. Flagged, not fixed. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Coercive-but-compensated eviction is a clean territorial-response tool — fills the gap between Guild's building cards and having no answer to an opponent occupying ground Guild wants | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Guild acting, Directorate aligned, Ghost opposed) — Ghost's "money and force, not strategy" is the sharpest contrast to Guild's blunt-instrument approach | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Guild only; paying compensation before displacing is on-doctrine for a faction whose identity runs through legitimate construction and process, even when the outcome is coercive | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — compensated forced displacement is Guild-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Territory / Remove / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ✓ | Capacity×2 + Capital×1 for a guaranteed, unconditional eviction — no roll, no restriction beyond the target holding presence there; the buyout payment (2 district-native to the target) is a real cost of executing the eviction, not a bonus | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — presence removal and compensation both resolve at Beat 3, no lingering game-state marker | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
+| Trigger validity | ✓ | N/A — `trigger = None` | — |
+| Portrait validity | ✓ | Guild `submitter=+1` — forceful territorial response, playing to type | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
+| Supported by components | ✓ | PresenceToken removal; district-native resource compensation — both existing components | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Beat 3 Automatic; ARBITER delivers compensation and removes the chip in the same step — no new procedure needed | Art 03 §9, §9.4 |
+| Data schema validation | ✓ | All base fields now present. `success` converted from a quoted-Python-looking string to a real structured MutationExpr — the underlying logic was already correct, just never executed as code. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; single unconditional `success` — no dice, no branching | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Capital), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -632,9 +632,9 @@ None
 
 ```python
 GUI.CA.7 = Card(
-    id      = "GUI.CA.7",  card_id="GUI.CA.7",  version = "v1.0",
+    id      = "GUI.CA.7",  card_id = "GUI.CA.7",  version = "v1.1",
     name    = "Buyout Clause",
-    tagline = "Liquidate an opponent's real estate through an unblockable coercive eviction.",
+    tagline = "Pay a target faction to vacate — whether or not they wanted the deal.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
 
     layer    = Territory,  function = Remove,  subject = PresenceToken,
@@ -642,18 +642,44 @@ GUI.CA.7 = Card(
     beat            = 3,
     resolution      = Automatic,
     threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 2,
     trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,  persistence_effect = None,
 
     target_district = district.any,
     target_faction  = faction.opponent,
     target_object   = None,
+    target_freeform = None,
 
+    affinity    = None,
+    restriction = district(target_district).faction(target_faction).presence > 0,
     cost        = Capacity * 2 + Capital * 1,
+    boost       = None,
 
-    success     = "Guild pays 2 target.native resources to target_faction; arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1)",
-    
-    design_note = "Guild's territorial response gap filled. Coercive eviction via buyout. Cost reasoning: 2 Capacity + 1 Capital (Mid-tier). Liquidating real estate out from under an opponent."
-    value_rating = 2,
+    success = (
+        game.dispatch(faction(target_faction), district(target_district).native * 2),
+        arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
+    ),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait   = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
+
+    narrative    = "The offer was generous. The offer was also not optional.",
+    perspectives = {
+        Guild:       "We paid. That is more than most factions bother to do before taking what they want.",
+        Directorate: "Compensation before displacement is due process, however coercive the outcome. We would call this compliant.",  # aligned
+        Ghost:       "They didn't need to know anything about who they were displacing. Money and force. That is not strategy. That is simply having more of both.",  # opposed
+    },
+
+    design_note  = "Guild's territorial response gap filled. Coercive eviction via buyout — the district-native payment to the target is what keeps this legally clean rather than outright seizure. Restriction (target presence in target_district) is the gate — no presence, nothing to buy out.",
+    arbiter_note = None,
 )
 ```
 
@@ -661,36 +687,36 @@ GUI.CA.7 = Card(
 
 ---
 
-### GUI.CA.8 — BUILDING INSPECTION *(stub)*
+### GUI.CA.8 — BUILDING INSPECTION
 [↑ Covert Operations](#guild-covert-operations)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Guild's bureaucratic demolition card — files a zoning violation against an opponent's structure and lets a d100 roll determine whether the paperwork holds. Strictly blind resolution: no negotiation, no side payment, just a real complaint tested against the dice. On success, the structure is condemned and removed, and Guild's public standing as the faction that enforces building standards ticks up. Threshold 60 (favorable odds) reflects that Guild is operating in its own area of genuine expertise — code enforcement is Guild's domain, and this is a home-field advantage.
 
 #### Card Story
-⚠ Story pending 04-n79.
+An inspector arrives with a checklist and a citation pad. The building fails on three counts nobody else would have thought to check. By the end of the week, the lot is empty and the citation is a matter of public record.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
-| Taxonomy fit | ⚠ |  |  |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. `success` field is a bare string literal instead of a MutationExpr — same fossil-card pattern flagged on GHO.CA.13/14/15 and GUI.CA.7. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`/`ring_mod`/`persistence`/`portrait`/`perspectives` entirely. Design note mentions a retired "Bribe" mechanic with no other trace in the spec. Flagged, not fixed. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Action fit | ✓ | Bureaucratic demolition via legitimate-looking code enforcement is a distinctly Guild method — no physical confrontation required | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Guild acting, Directorate aligned, Syndicate opposed) — Syndicate's "they destroyed value and walked away with nothing to show for it" contrasts directly with Buyout Clause's compensated model | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Guild only; threshold 60 reflects genuine home-field expertise in code enforcement; +1 PS on success reinforces Guild's standards-enforcer public identity | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) — code-based demolition is Guild-exclusive | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Territory / Remove / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
+| Balance | ✓ | Capacity×1 + Mandate×1 for a favorable-odds (60%) structure removal plus a PS gain on success — cheap dual-resource cost matches the "administrative filing," not a construction-scale spend | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — structure removal and PS gain both resolve at Beat 3, no lingering game-state marker | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
+| Trigger validity | ✓ | N/A — `trigger = None` | — |
+| Portrait validity | ✓ | Guild `submitter=+1` — code-enforcement demolition, playing to type | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock removal — existing component | Art 02 §6 |
+| Supported by game procedure | ✓ | Beat 3 d100 resolution — no new procedure needed | Art 03 §9, §11 |
+| Data schema validation | ✓ | All base fields now present. `success` converted from bare prose to a real structured MutationExpr. The retired "Bribe" mechanic the old design_note referenced left no trace in the spec and isn't reconstructed — the card is designed clean, strictly blind, as that note's own framing intended. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `d100`; only `success` populated (`successcrit`/`fail`/`failcrit` all `None`) — a miss is "no effect, cost spent" | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -704,16 +730,54 @@ None
 
 ```python
 GUI.CA.8 = Card(
-    id      = "GUI.CA.8",  card_id="GUI.CA.8",  version = "v1.1",
+    id      = "GUI.CA.8",  card_id = "GUI.CA.8",  version = "v1.2",
     name    = "Building Inspection",
     tagline = "Condemn an opponent's building via weaponized zoning code.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Guild,
-    layer   = Territory,  function = Remove,  subject = StructureBlock,
-    beat    = 3,  resolution = d100,  threshold = 60,
-    cost    = Capacity * 1 + Mandate * 1,
-    success = "Remove 1 target Structure Block. Guild gains +1 PS.",
-    design_note = "A thematic variant of STD.CA.2 (Demolish). Bribe removed to keep resolution strictly blind via Arbiter."
-    value_rating = 2,
+
+    layer    = Territory,  function = Remove,  subject = StructureBlock,
+
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 60,
+    ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = None,
+    resolution_type = Probabilistic,
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,  persistence_effect = None,
+
+    target_district = district.any,
+    target_faction  = faction.opponent,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = district(target_district).faction(target_faction).structure > 0,
+    cost        = Capacity * 1 + Mandate * 1,
+    boost       = None,
+
+    success     = (
+        arbiter.remove(structure_block, district=target_district, faction=target_faction, count=1),
+        faction(Guild).standing.add(1),
+    ),
+    successcrit = None,  fail = None,  failcrit = None,
+    on_accept   = None,  on_decline = None,
+
+    portrait   = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
+
+    narrative    = "The building failed on three counts. Guild wrote the counts specifically to catch it.",
+    perspectives = {
+        Guild:       "The building didn't meet code. That the code was written specifically to catch it is a separate matter.",
+        Directorate: "A documented violation, a certified inspection, a lawful demolition order. We have no complaint with due process, regardless of who initiates it.",  # aligned
+        Syndicate:   "They destroyed a structure that had real value and walked away with nothing to show for it but a permit. We would have made an offer first.",  # opposed
+    },
+
+    design_note  = "Bureaucratic demolition via zoning enforcement. Strictly blind resolution — no negotiation, no side payment, just a real complaint tested against the dice. Restriction (target structure in target_district) is the gate.",
+    arbiter_note = None,
 )
 ```
 
@@ -745,7 +809,7 @@ Distinct from STD.CA.10 Protect (raises attacker threshold on incoming CAs) and 
 | Trigger validity | ✓ | trigger = None | — |
 | Portrait validity | ✓ | Guild +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district B; named CA's own target_district = district A; both validated at Beat 0 per Art 01 §6.5 | Art 01 §6.5 |
-| Supported by components | ✓ | PresenceToken + StructureBlock output via named CA; no new components; cost from Guild resource pool. The card also declares `target_ca = ca.guild.beat3.d100` — a targeting field not in `design_reference_card_system.md`'s documented Targeting field group (`target_district`/`target_faction`/`target_object`/`target_taxonomy`/`declared_params`). Whether this needs to be a confirmed schema extension or should be re-expressed via `declared_params` (which already exists for exactly this "faction-declared free-form parameter" purpose) isn't resolved. | Art 02 §6–§8 |
+| Supported by components | ✓ | PresenceToken + StructureBlock output via named CA; no new components; cost from Guild resource pool. The card also declares `target_ca = ca.guild.beat3.d100` — a targeting field not in `design_reference_card_system.md`'s documented Targeting field group (`target_district`/`target_faction`/`target_object`/`target_freeform`/`target_freeform`). Whether this needs to be a confirmed schema extension or should be re-expressed via `target_freeform` (which already exists for exactly this "faction-declared free-form parameter" purpose) isn't resolved. | Art 02 §6–§8 |
 | Supported by game procedure | ⚠ | Beat 0: ARBITER validates named CA and district B restriction; Beat 2: guarantee registered; Beat 3: named CA resolves without roll, output fires twice. Double-fire procedure is new — confirm against Art 03 §9.4 | Art 03 §9.4 |
 | Data schema validation | ⚠ | New card — DB registration required. Also missing `card_id`/`boost`/`ps_framing` (`doctrine_mod=None` is present). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending | Art 04 §5 P26 |
@@ -895,7 +959,7 @@ GUI.CA.10 = Card(
     target_district = district.named,
     target_faction  = None,
     target_object   = None,
-    declared_params = None,
+    target_freeform = None,
 
     affinity    = None,
     restriction = (faction(Guild).structure_block.count(district(target)) == 0
@@ -915,7 +979,7 @@ GUI.CA.10 = Card(
 
     narrative    = None,
     perspectives = None,
-    design_note  = "Delivers GD-01 Grant Deed (Art 04 §12b.2). Addresses 04-n119 §9.2 ceiling gap: Capacity + district-native cost creates cross-resource commitment SYN.CA.8 Land Title lacks. Restriction (no Guild structure, not Chorus Node) parallels CA.4. Automatic — no roll, no fail. Multiple orders on same district permitted; cost-governed. Doctrinal distinction from SYN.CA.8: Guild establishes construction rights (crews arrive to build); Syndicate files ownership claim (extraction).",
+    design_note  = "Delivers GD-01 Grant Deed (Art 04 §12b.2). Capacity + district-native cost creates a cross-resource commitment SYN.CA.8 Land Title lacks. Restriction (no Guild structure, not Chorus Node) parallels CA.4. Automatic — no roll, no fail. Multiple orders on same district permitted; cost-governed. Doctrinal distinction from SYN.CA.8: Guild establishes construction rights (crews arrive to build); Syndicate files ownership claim (extraction).",
     arbiter_note = "Beat 3: take 1 blank Grant Deed (GD-01) from ARBITER tableau; write target district name in 'district' field and Guild in 'holder' field; place in Guild's Dispatch Case. Card moves to Guild's hand at Debrief.",
 )
 ```
@@ -989,7 +1053,7 @@ GUI.PA.1 = Card(
     target_faction  = None,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = (
         district(target1).faction(Guild).presence > 0 and
@@ -1001,9 +1065,9 @@ GUI.PA.1 = Card(
     boost = None,
 
     success     = (
-        district(target1).faction(Guild).structure += 1,
-        district(target2).faction(Guild).structure += 1,
-        faction(Guild).standing += 3,
+        arbiter.place(structure_block, district=target1, faction=Guild, count=1),
+        arbiter.place(structure_block, district=target2, faction=Guild, count=1),
+        faction(Guild).standing.add(3),
     ),
     successcrit = None,
     fail        = None,
@@ -1092,7 +1156,7 @@ GUI.PA.2 = Card(
     target_faction  = faction.opponent,
     target_object   = None,
 
-    target_taxonomy=None,
+    target_freeform=None,
     affinity    = None,
     restriction = faction(Guild).influence_tier(district.any_adjacent_to(faction(target).presence)) >= Established,
     cost        = Capacity * 1  # form price → Reservoir
@@ -1100,7 +1164,7 @@ GUI.PA.2 = Card(
     boost       = None,
 
     success = (
-        faction(target).resource(native) += 2,  # immediate delivery
+        faction(target).resource(native).add(2),  # immediate delivery
         arbiter.deliver(Guild, AccordForm(blank)),  # Guild drafts Infrastructure Bond terms per Art 06 §9.3
     ),
 
@@ -1119,7 +1183,7 @@ GUI.PA.2 = Card(
         Directorate: "Guild formalizes the relationship before the need becomes urgent. The Accord terms are what the investment was always going to require. This is how structural partners communicate.",  # aligned
         Syndicate:   "Guild packages the extraction as partnership. The initial delivery is cover. The recurring return is the structure. We recognize this.",  # opposed
     },
-    design_note  = "Guild economic relationship PA. Cost: 1 Capacity (form price, per L200/L201) + 2 native delivered to target (sweetener — makes Accord terms credible). Accord on acceptance includes 1 Capacity/Upkeep income from target; net positive for Guild in 2+ Quarters. Restriction: Guild must have Established adjacent to target's operations. Distinct from STD.CA.9 Fund (Capital, covert, two-action route). Distinct from STD.PA.8 (bare form, no sweetener). Addresses 04-n11 (Guild↔Network neighbor cooperation).",
+    design_note  = "Guild economic relationship PA. Cost: 1 Capacity (form price, per L200/L201) + 2 native delivered to target (sweetener — makes Accord terms credible). Accord on acceptance includes 1 Capacity/Upkeep income from target; net positive for Guild in 2+ Quarters. Restriction: Guild must have Established adjacent to target's operations. Distinct from STD.CA.9 Fund (Capital, covert, two-action route). Distinct from STD.PA.8 (bare form, no sweetener).",
     arbiter_note = "Phase B: target faction named publicly. Beat 4: deliver 2 native resources to target immediately; deliver blank AccordForm from ARBITER tableau supply to Guild. No timing constraint on drafting or placement — form queued for next Debrief when placed in Accord Placement Area. At Debrief: target reviews, accepts or declines per Art 06 §9.4. PS consequences per Art 06 §9.4. On accept: track Accord income (target pays Guild 1 Capacity at each Upkeep Step 6 while Accord active).",
 )
 ```
@@ -1132,40 +1196,40 @@ GUI.PA.2 = Card(
 
 ---
 
-### GUI.PA.3 — HERITAGE REGISTRY *(stub)*
+### GUI.PA.3 — HERITAGE REGISTRY
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Guild's district-wide heritage protection PA — a Permanent standing condition that restores the first structure block removed from the named district, regardless of whose it is, then discards itself. Genuinely faction-agnostic: Guild isn't protecting its own holdings here, it's declaring the whole district's built environment worth preserving — on-doctrine for a faction whose identity runs through permanence. The Absent-tier exclusion (Governing Rule 8.2b: structures are lost immediately and irreversibly when a faction goes Absent, no card may prevent it) means the condition only fires when the removed structure's owner still holds qualifying presence in the district — a card-side guard against the HARD rule, not an attempt to override it.
 
 #### Card Story
-⚠ Story pending 04-n79.
+A plaque goes up on the corner before the ink is even dry. The first time someone tries to tear down what's protected, the crew that did it finds new materials waiting on-site the next morning — courtesy of a fund nobody remembers approving.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Historical-protection declaration thematically fits Guild's permanence doctrine — protecting what's already built | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
-| Doctrine alignment | ✓ | Consistent with "permanence through building" — protecting structures from removal | Art 00 §7 |
+| Action fit | ✓ | Historical-protection declaration thematically fits Guild's permanence doctrine — protecting what's already built, faction-agnostically | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Guild acting, Network aligned, Syndicate opposed) — Syndicate's "a building nobody's allowed to improve" is the sharpest contrast to Guild's preservation instinct | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Consistent with "permanence through building" — protecting structures from removal, regardless of ownership | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Protect / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
-| Balance | ⚠ | Cost (Capacity×2 + Mandate×1) set, but the one-time-trigger-then-clear effect's actual power level can't be fully assessed — `success` is prose, not a structured mutation | Art 02 §6–§7 |
-| Effect duration | ✓ | `persistence = Permanent`, but self-clearing after one trigger per its own prose — a one-shot Permanent, not standing indefinitely | Art 04 §5 P19 |
-| Persistence | ⚠ | `persistence = Permanent` set, but no `persistence_condition`/`persistence_effect` fields — the Card-as-Condition pattern (design_reference_card_system.md) requires both as structured fields; this card describes the standing condition in prose inside `success` instead | Art 04 §6 |
-| Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Balance | ✓ | Capacity×2 + Mandate×1 for a one-shot district-wide restoration — self-consuming after its first trigger, not a standing indefinite shield | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent, self-clearing after its first trigger — a one-shot Permanent, not standing indefinitely | Art 04 §5 P19 |
+| Persistence | ✓ | Permanent, card-as-condition — `persistence_clearing_trigger` fires on the same event that fires `persistence_effect` (restore once, then discard) | Art 04 §6 |
+| Trigger validity | ✓ | No `trigger` field; Automatic doesn't require one — the reactive behavior lives in `persistence_effect`, not `trigger` | — |
+| Portrait validity | ✓ | Guild `submitter=+1` — district-wide preservation, playing to type | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
 | Supported by components | ✓ | StructureBlock — existing component | Art 02 §6 |
-| Supported by game procedure | ⚠ | The "restore on removal, once" mechanism has no defined procedural home — not a confirmed TriggerExpr/persistence_effect pattern | Art 03 §9 |
-| Data schema validation | ⚠ | `success` is a bare prose string — same bare-string-literal-effects defect shape seen elsewhere in this review, now confirmed a third faction. Missing entirely: `outcome_type`, `threshold`, `ring_mod`, `doctrine_mod`, `trigger`, `resolution_type`, `target_object`/`target_taxonomy`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `on_accept`/`on_decline`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No `game.choose_one()`, but no structured success/fail split exists to check against P27 either — `success` is unstructured prose | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier)" checked — correct, matches actual cost. | Art 00a §9.2 |
+| Supported by game procedure | ⚠ | Reuses confirmed `structure_block.removed(faction=X)` (§6.3) with an added `district=` parameter — not shown in the confirmed signature, same minor extension pattern as DIR.PA.7's `deployment_marker.placed(district=)`. Not resolved as formal Art 03 procedure here. | Art 03 §9; Governing Rule 6.1 |
+| Data schema validation | ✓ | All base fields now present. `success` (bare prose) replaced — effect now lives in `persistence_effect` as a structured `game.board_condition(...)` call, matching the Card-as-Condition pattern (DIR.PA.5 precedent). | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `success = None` — card placement itself IS the effect (card-as-condition pattern), matching DIR.PA.5/DIR.PA.7. No `game.choose_one()`. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`structure_block.removed(district=)` not yet formalized as a general Art 03 procedure** — same category as DIR.PA.7's `deployment_marker.placed(district=)` extension.
 
 #### Status
 
@@ -1175,73 +1239,93 @@ None
 
 ```python
 GUI.PA.3 = Card(
-    id      = "GUI.PA.3",  card_id = "GUI.PA.3",  version = "v1.0",
+    id      = "GUI.PA.3",  card_id = "GUI.PA.3",  version = "v1.1",
     name    = "Heritage Registry",
-    tagline = "Declare a district's structures historically protected.",
+    tagline = "Declare a district's structures historically protected — the first one lost comes back.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
 
     layer    = Territory,  function = Protect,  subject = StructureBlock,
 
     beat            = 4,
-    resolution      = Automatic,  threshold = None,
-    ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = 1,
-    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = Unilateral,
     persistence     = Permanent,
-    persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a card-as-condition effect not structured here
+    persistence_condition = None,
+    persistence_clearing_trigger = structure_block.removed(faction=Any, district=target_district),  # same event as persistence_effect's trigger — fires once, then discards
+    persistence_effect = game.board_condition(
+        scope  = district(target_district),
+        effect = on(structure_block.removed(faction=Any, district=target_district)):
+                     if district(target_district).faction(trigger.faction).presence > 0:  # excludes Absent-tier removal, GR 8.2b
+                         arbiter.place(structure_block, district=target_district, faction=trigger.faction, count=1),
+    ),
 
     target_district = district.any,
     target_faction  = None,
-    target_object   = None,  target_taxonomy = None,
+    target_object   = None,
+    target_freeform = None,
 
-    affinity = None,  restriction = None,
-    cost = Capacity * 2 + Mandate * 1,
-    boost = None,
+    affinity    = None,
+    restriction = None,
+    cost        = Capacity * 2 + Mandate * 1,
+    boost       = None,
 
-    success = "Places standing condition on target_district: If a structure block is removed for any reason (unless due to influence token reaching 0), add the structure block back to the district. Remove this standing effect after it triggers once.",
+    success     = None,  # card-as-condition — effect lives in persistence_effect
     successcrit = None,  fail = None,  failcrit = None,
-    on_accept = None,  on_decline = None,
+    on_accept   = None,  on_decline = None,
 
-    portrait = None,  # scaffolded, not addressed
+    portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
-    narrative = None,  perspectives = None,
-    design_note = "Defense scaling gap addressed. Cost reasoning: 2 Capacity + 1 Mandate (Mid-tier). Mandate provides the legal shield to protect the concrete.",
+
+    narrative    = "The plaque went up before the paint dried. Some things, this district decided, don't come down.",
+    perspectives = {
+        Guild:     "Some buildings matter more than what could replace them. We are simply the faction willing to say so in writing.",
+        Network:   "A public registry, a public commitment, a public consequence if it's violated. We have no objection to protection that happens in the open.",  # aligned
+        Syndicate: "They froze an asset that might have been worth more redeveloped. Heritage is a nice word for a building nobody's allowed to improve.",  # opposed
+    },
+
+    design_note  = "Defense scaling gap addressed. Faction-agnostic — protects whichever structure in target_district is removed first, not just Guild's own. Absent-tier exclusion (GR 8.2b) is a card-side guard, not a HARD-rule override.",
     arbiter_note = None,
 )
 ```
 
 ---
 
-### GUI.PA.4 — CIVIC UNVEILING *(stub)*
+### GUI.PA.4 — CIVIC UNVEILING
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Guild's public-credibility compounding PA — a ribbon-cutting ceremony whose Public Standing gain scales directly with Guild's own structure count in the named district. The more Guild has actually built there, the bigger the public celebration and the bigger the credibility gain — standing earned through demonstrated construction, not rhetoric. Mono-directional and self-scaling: no dice, no opponent interaction, just a direct readout of Guild's own territorial development.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The ribbon gets cut in front of a crowd assembled specifically to be impressed. The bigger the skyline behind the mayor, the louder the applause.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Ribbon-cutting scaled to structural density is thematically grounded — public credibility earned from demonstrated building | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Guild acting, Directorate aligned, Ghost opposed) — Ghost's "that is not celebration, that is a target list" is the sharpest contrast to Guild's love of publicity | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | PS scaling directly off Guild's own structure count in the district is maximally on-doctrine (standing earned through building, not rhetoric) | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
-| Balance | ⚠ | Cost (Capacity + Exposure) set, but can't confirm magnitude without a real district structure count at review time | Art 02 §6–§7 |
-| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
-| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Balance | ✓ | Capacity×1 + Exposure×1 for a PS gain that scales with Guild's own structure count — self-limiting (zero structures means zero gain), no fixed floor | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — PS shift resolves fully at Beat 4, no lingering game-state marker | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Portrait validity | ✓ | Guild `submitter=+1` — public credibility ceremony, playing to type | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
 | Supported by components | ✓ | StructureBlock (count read), Public Standing track — existing components | Art 02 §6–§7 |
 | Supported by game procedure | ✓ | Straightforward count-and-apply at Beat 4 — no new procedure needed | Art 03 §9.4 |
-| Data schema validation | ⚠ | `success` is a bare string — but notably **looks like valid Python expression syntax quoted as a string literal** (`"faction(Guild).standing += ..."`), a distinct sub-shape from GUI.PA.3/5's English-prose strings: this reads like real code that was accidentally left inside quotes rather than never structured at all. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields beyond `target_district`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 — `success` is a quoted string, not executable | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Cross-resource (Capacity + Exposure), correctly typed. Design_note's trailing "Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier)" checked — correct, matches actual cost; Exposure use explained coherently ("broadcasting the ribbon-cutting"), same pattern as GHO.PA.4. | Art 00a §9.2 |
+| Data schema validation | ✓ | All base fields now present. `success` converted from a quoted-Python-looking string to real code — the underlying logic was already correct, just never executed as code. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; single unconditional `success` — no dice, no branching | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Exposure), correctly typed; Exposure use explained coherently ("broadcasting the ribbon-cutting"), same pattern as GHO.PA.4. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -1255,7 +1339,7 @@ None
 
 ```python
 GUI.PA.4 = Card(
-    id      = "GUI.PA.4",  card_id = "GUI.PA.4",  version = "v1.0",
+    id      = "GUI.PA.4",  card_id = "GUI.PA.4",  version = "v1.1",
     name    = "Civic Unveiling",
     tagline = "A highly publicized ribbon-cutting ceremony that compounds structural density into public adoration.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
@@ -1263,68 +1347,82 @@ GUI.PA.4 = Card(
     layer    = Standing,  function = Shift,  subject = StandingMarker,
 
     beat            = 4,
-    resolution      = Automatic,  threshold = None,
-    ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = 1,
-    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
-    persistence     = Immediate,  # scaffolded — deterministic default for a non-standing, one-shot PA
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
 
     target_district = district.any,
-    target_faction  = None,  target_object = None,  target_taxonomy = None,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
 
-    affinity = None,  restriction = None,
-    cost = Capacity * 1 + Exposure * 1,
-    boost = None,
+    affinity    = None,
+    restriction = None,
+    cost        = Capacity * 1 + Exposure * 1,
+    boost       = None,
 
-    success = "faction(Guild).standing += district(target_district).faction(Guild).structure * 1",
+    success     = faction(Guild).standing.add(district(target_district).faction(Guild).structure * 1),
     successcrit = None,  fail = None,  failcrit = None,
-    on_accept = None,  on_decline = None,
+    on_accept   = None,  on_decline = None,
 
-    portrait = None,  # scaffolded, not addressed
+    portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
-    narrative = None,  perspectives = None,
-    design_note = "Standing / PS Compounding gap filled. Cost reasoning: 1 Capacity + 1 Exposure (Mid-tier). Broadcasting the massive ribbon-cutting to the city.",
+
+    narrative    = "The ribbon gets cut in front of a crowd assembled specifically to be impressed.",
+    perspectives = {
+        Guild:       "We built it. We are allowed to say so, loudly, in front of everyone who doubted it would get built at all.",
+        Directorate: "A public ceremony, a documented structure count, a public credibility gain. This is exactly how legitimacy should be earned.",  # aligned
+        Ghost:       "They announced exactly how much they've built, in exactly which district, to everyone in the city at once. That is not celebration. That is a target list.",  # opposed
+    },
+
+    design_note  = "Standing / PS Compounding gap filled. Broadcasting the ribbon-cutting to the city is the Exposure cost's role — the bigger the built footprint, the bigger the public event and the bigger the PS gain.",
     arbiter_note = None,
 )
 ```
 
 ---
 
-### GUI.PA.5 — ZONING EXEMPTION *(stub)*
+### GUI.PA.5 — ZONING EXEMPTION
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Guild's ceiling-tier expansion enabler — for the remainder of the Quarter, Guild may place structures in the named district regardless of the normal Ring entry requirements (Art 01, Ring Structure table). The cross-resource cost (Capacity + Findings + Capital) reflects the actual mechanism: Capital and Findings fund the bureaucratic maneuvering — finding the loophole and buying the judges — while Capacity is the construction capability the exemption unlocks. Corrected the stub's ambiguous "for the next Quarter" phrasing to "remainder of the Quarter" — matching #44's resolution of the identical tension on DIR.PA.7/SYN.PA.5, `Seasonal` persistence is defined as lasting to the current Quarter's end, not into the following one.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The zoning board's ruling arrives faster than anyone expected, and the language is broader than anyone requested. By the time competitors notice, Guild's crews are already past the district line the ruling was supposed to still apply to.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Blanket regulatory exemption for expansion thematically fits Guild's builder doctrine | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Guild acting, Syndicate aligned, Directorate opposed) — Directorate's "a loophole with legal letterhead" is the sharpest contrast to Guild's framing | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Removing a structural obstacle to building is maximally on-doctrine for Guild | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
-| Taxonomy fit | ⚠ | `subject = District` — checked against `ref_taxonomy.md`'s Subject vocabulary; "District" as a bare subject (rather than a specific component like PresenceToken/StructureBlock) is unusual — worth confirming this is a registered Subject term, same open question as items #27's unregistered-subject pattern (Difficulty, TargetProfile, etc.), though not confirmed DB-flagged here. | Art 04b §4 |
-| Balance | ⚠ | Cost (Capacity + Findings + Capital) set, but "regardless of Ring limitations or connectivity rules" is a sweeping, unquantified effect — can't assess power level against a prose description | Art 02 §6–§7 |
-| Effect duration | ⚠ | No `persistence` field declared; prose says "for the next Quarter" (Seasonal-shaped), but no structured duration field confirms this | Art 04 §5 P19 |
-| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Taxonomy fit | ✓ | `function = Modify` (already corrected from `RemoveRestriction`, schema_cleanup_log #25). `subject = District` checked against `card_subject_map` — already a registered, valid Subject (component_id=4), not an unregistered term like #27's `Difficulty` case. | Art 04b §4 |
+| Balance | ✓ | Cross-resource cost (Capacity + Findings + Capital) for a Quarter-long Ring-entry bypass — sweeping in scope but bounded to a single district and a single Quarter | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Seasonal` — bounded to the remainder of the Quarter it's played in | Art 04 §5 P19 |
+| Persistence | ✓ | Seasonal, timed-effect pattern (`persistence_condition`/`persistence_effect` both `None`; effect encoded via `game.world_condition()` in `success`) — matching SYN.PA.2's confirmed pattern for this exact shape | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Portrait validity | ✓ | Guild `submitter=+1` — playing to type | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
-| Supported by components | ⚠ | "Ring limitations or connectivity rules" bypass has no defined component/procedure hook — this would need to interact with the Ring Entry Rules (ref_special_district_and_ring_rules.md) directly, not clearly supported | Art 01 §6 |
-| Supported by game procedure | ⚠ | No confirmed Art 03 procedure for a temporary Ring-entry-rule bypass — new ARBITER-facing behavior, same category as other unconfirmed-procedure gaps flagged elsewhere in this review | Art 03 §9 |
-| Data schema validation | ⚠ | `success` is a bare prose string, same defect shape flagged elsewhere in this review. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, most targeting/effect fields, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Cross-resource (Capacity + Findings + Capital), correctly typed. Design_note's trailing "Cost reasoning: 2 Capacity + 1 Findings + 1 Capital" checked — correct, matches actual cost. | Art 00a §9.2 |
+| Supported by components | ⚠ | The Ring-entry bypass has no defined component/procedure hook of its own — expressed here as a `game.world_condition()` flag, but interacting with the Ring Entry Rules (Art 01) directly isn't a confirmed procedure | Art 01 §6 |
+| Supported by game procedure | ⚠ | No confirmed Art 03 procedure for a temporary Ring-entry-rule bypass — new ARBITER-facing behavior, flagged per Governing Rule 6.1, not resolved here | Art 03 §9; Governing Rule 6.1 |
+| Data schema validation | ✓ | All base fields now present. `success` converted from bare prose to a structured `game.world_condition(...)` call, matching SYN.PA.2's confirmed Seasonal-timed-effect pattern. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; only `success` populated (a `game.world_condition()` placement) — no `game.choose_one()` | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Capacity + Findings + Capital), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Ring-entry bypass not yet formalized as a general Art 03 procedure** — see Supported by game procedure above.
 
 #### Status
 
@@ -1334,36 +1432,54 @@ None
 
 ```python
 GUI.PA.5 = Card(
-    id      = "GUI.PA.5",  card_id = "GUI.PA.5",  version = "v1.0",
+    id      = "GUI.PA.5",  card_id = "GUI.PA.5",  version = "v1.1",
     name    = "Zoning Exemption",
-    tagline = "Secure a blanket override of Ring expansion limitations.",
+    tagline = "Secure a blanket override of Ring expansion limitations for the rest of the Quarter.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
 
-    layer    = Submission,  function = RemoveRestriction,  subject = District,
+    layer    = Submission,  function = Modify,  subject = District,
 
     beat            = 4,
-    resolution      = Automatic,  threshold = None,
-    ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = 2,
-    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
-    persistence     = Seasonal,  # scaffolded — matches prose "for the next Quarter"
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = Unilateral,
+    persistence     = Seasonal,
     persistence_condition = None,  persistence_effect = None,
 
     target_district = district.any,
-    target_faction  = None,  target_object = None,  target_taxonomy = None,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
 
-    affinity = None,  restriction = None,
-    cost = Capacity * 2 + Findings * 1 + Capital * 1,
-    boost = None,
+    affinity    = None,
+    restriction = None,
+    cost        = Capacity * 2 + Findings * 1 + Capital * 1,
+    boost       = None,
 
-    success = "For the next Quarter, Guild may place structures in the target district regardless of Ring limitations or connectivity rules.",
+    success = game.world_condition(
+        scope    = district(target_district),
+        effect   = faction(Guild).ring_entry_requirements(district=target_district).waived == True,
+        duration = Seasonal,
+        clear_on = game.phase == EndOfQuarter,
+    ),
     successcrit = None,  fail = None,  failcrit = None,
-    on_accept = None,  on_decline = None,
+    on_accept   = None,  on_decline = None,
 
-    portrait = None,  # scaffolded, not addressed
+    portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
-    narrative = None,  perspectives = None,
-    design_note = "Ceiling-tier expansion enabler. Cost reasoning: 2 Capacity + 1 Findings + 1 Capital. Finding the bureaucratic loop-hole and buying the necessary judges to skip the physical expansion limits.",
+
+    narrative    = "The limitation was never structural. It was just expensive to remove.",
+    perspectives = {
+        Guild:       "The limitation was never structural. It was just expensive to remove.",
+        Syndicate:   "Every rule has a price. We respect a faction willing to find out what this one costs.",  # aligned
+        Directorate: "An exemption purchased rather than earned undermines the entire premise of zoning. This is not governance. This is a loophole with legal letterhead.",  # opposed
+    },
+    design_note = "Ceiling-tier expansion enabler. Finding the bureaucratic loophole and buying the necessary judges to skip the physical expansion limits, for the remainder of the Quarter.",
     arbiter_note = None,
 )
 ```
@@ -1372,36 +1488,36 @@ GUI.PA.5 = Card(
 
 ---
 
-### GUI.PA.6 — ASSET TRANSFER *(stub)*
+### GUI.PA.6 — ASSET TRANSFER
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Guild's asset-monetization PA — transfers ownership of one of Guild's own structures to a target faction in exchange for 3 units of that faction's native resource. This isn't abandoning Guild's permanence doctrine, it's proof of it: another faction is willing to pay a steep premium in its own currency just to acquire what Guild already built. The restriction requires both Guild's own structure and the target's qualifying presence in the district — this is a negotiated transfer between two parties who both already have skin in the game, not a random handout.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The paperwork changes hands at a closing table neither faction wanted to admit to attending. Guild walks away with a foreign-currency windfall; the other faction walks away with a building it didn't have to build itself.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Trading a structure for a resource windfall is a plausible economic act, though the "legal asset flip" framing is thin | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
-| Doctrine alignment | ⚠ | Giving up a Structure Block (Guild's core permanence asset) for resources cuts against "permanence through building" — not clearly on-doctrine; no design_note reasoning addresses this tension | Art 00 §7 |
+| Action fit | ✓ | Trading a structure for a resource windfall is a plausible economic act — proof of construction's transactional value, not a contradiction of it | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Guild acting, Syndicate aligned, Directorate opposed) — Directorate's "a fire sale with better branding" is the sharpest contrast to Guild's own framing | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Resolved: giving up a Structure Block reads as doctrine-consistent once framed as monetizing construction's real value, not surrendering permanence — another faction paying a premium to acquire it is the point | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Modify / StructureBlock — matches `card_status` DB directly | Art 04b §4 |
-| Balance | ⚠ | Cost is cheap (Capacity×1) for removing a Guild structure, granting the target a structure, and gaining 3 of the target's native — can't fully assess without a structured effect to check magnitudes against | Art 02 §6–§7 |
-| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
-| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Balance | ✓ | Capacity×1 for transferring a structure and gaining 3 of the target's native resource — cheap activation cost, since the real "cost" is the structure itself | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — ownership transfer and resource gain both resolve at Beat 4, no lingering game-state marker | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
-| Supported by zones | ⚠ | No `target_district` field declared — referenced only inside the `restriction`/`success` strings | Art 01 §6–§7 |
-| Supported by components | ✓ | StructureBlock, native resources — existing components | Art 02 §6–§8 |
+| Portrait validity | ✓ | Guild `submitter=+1` — asset monetization, playing to type | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.named` — correctly declared | Art 01 §6–§7 |
+| Supported by components | ✓ | StructureBlock ownership transfer, native resource gain — both existing components | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Straightforward transfer-and-payment at Beat 4 — no new procedure needed | Art 03 §9.4 |
-| Data schema validation | ⚠ | **Both `restriction` and `success` are bare strings** — extends the bare-string defect beyond `success` alone to `restriction` too, the first confirmed instance on a non-`success` field. The restriction string also uses English `AND` rather than Python `and`. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Mono-resource (Capacity × 1), correctly typed — the only cleanly-structured field on this card. | Art 00a §9.2 |
+| Data schema validation | ✓ | All base fields now present. `restriction`/`success` converted from bare strings (English `AND` corrected to Python `and`) to real BoolExpr/MutationExpr, reusing SYN.CA.3's confirmed `game.transfer(...)` pattern. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; single unconditional `success` — no dice, no branching | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Mono-resource (Capacity × 1), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -1415,64 +1531,88 @@ None
 
 ```python
 GUI.PA.6 = Card(
-    id      = "GUI.PA.6",  card_id = "GUI.PA.6",  version = "v1.1",
+    id      = "GUI.PA.6",  card_id = "GUI.PA.6",  version = "v1.2",
     name    = "Asset Transfer",
-    tagline = "Liquidate Guild property into another faction's hands for massive resource injection.",
+    tagline = "Sell a Guild structure to a rival, priced in their own currency.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
-    layer   = Territory,  function = Modify,  subject = StructureBlock,
-    beat    = 4,  resolution = Automatic,  threshold = None,
-    ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = 1,
-    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
-    persistence = Immediate,  # scaffolded, not addressed
+
+    layer    = Territory,  function = Modify,  subject = StructureBlock,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
-    target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_taxonomy = None,
-    affinity = None,
-    cost    = Capacity * 1,
-    boost   = None,
-    restriction = "district(target).faction(Guild).structure > 0 AND district(target).faction(target_faction).presence > 0",
-    success = "Guild removes 1 of their Structure Blocks in target_district and replaces it with 1 Structure Block of the target_faction. Guild gains 3 of the target_faction's native resource from the supply.",
+
+    target_district = district.named,
+    target_faction  = faction.opponent,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = district(target_district).faction(Guild).structure > 0 and district(target_district).faction(target_faction).presence > 0,
+    cost        = Capacity * 1,
+    boost       = None,
+
+    success = (
+        game.transfer(district(target_district).faction(Guild).structure(1), faction(target_faction)),
+        game.dispatch(faction(Guild), faction(target_faction).native * 3),
+    ),
     successcrit = None,  fail = None,  failcrit = None,
-    on_accept = None,  on_decline = None,
-    portrait = None,  # scaffolded, not addressed
+    on_accept   = None,  on_decline = None,
+
+    portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
-    narrative = None,  perspectives = None,
-    design_note = "A powerful, legal asset flip. Leverages existing footprint to extract deep foreign resource pockets.",
+
+    narrative    = "We didn't lose the structure. We sold it, for more than it cost to build.",
+    perspectives = {
+        Guild:       "We didn't lose the structure. We sold it, for more than it cost to build.",
+        Syndicate:   "A structure for their currency, priced at a premium. This is the cleanest transaction we've seen out of Guild yet.",  # aligned
+        Directorate: "Strengthening a rival's footprint for a one-time payment is not strategy. It's a fire sale with better branding.",  # opposed
+    },
+
+    design_note  = "A powerful, legal asset flip. Leverages existing footprint to extract deep foreign resource pockets. Restriction (Guild structure + target presence in target_district) makes this a negotiated transfer, not a handout.",
     arbiter_note = None,
 )
 ```
 
 ---
 
-### GUI.PA.7 — EMINENT DOMAIN PETITION *(stub)*
+### GUI.PA.7 — EMINENT DOMAIN PETITION
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Guild's foothold-leveraging expansion PA — requires at least 1 existing Guild presence in the target district, then places 2 more outright, no dice involved. The restriction is the whole design: Guild can't manufacture a foothold from nothing, but once it has one, the petition converts it into a territorial swing large enough to challenge an opponent's Established tier in a single move. The dual-resource cost (Capacity + Mandate) reflects both the raw construction labor and the legal/administrative machinery of filing and winning an eminent domain claim.
 
 #### Card Story
-⚠ Story pending 04-n79.
+Guild's crews have been working this block for months under a temporary permit. The petition doesn't ask permission to expand — it makes the existing footprint permanent and doubles it, all in the same afternoon a judge signs the order.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Forcing presence expansion from an existing foothold is thematically grounded — Guild's blunt-force building tool | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
-| Doctrine alignment | ✓ | Direct presence expansion is on-doctrine for Guild's builder identity | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Guild acting, Directorate aligned, Syndicate opposed) — Syndicate's doctrinal objection to legislating what it would rather buy is the sharpest contrast | Art 00 §7, §9 |
+| Doctrine alignment | ✓ | Direct presence expansion is on-doctrine for Guild's builder identity; the foothold restriction keeps it an amplifier of existing work, not a free entry point | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Add / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
-| Balance | ⚠ | Cost (Capacity×2 + Mandate×1) for +2 presence tokens with a foothold restriction — comparable in shape to STD.PA.1's dual-native cost for +2 presence, but can't confirm relative balance without the "crack Established status" framing being made concrete | Art 02 §6–§7 |
-| Effect duration | ✓ | Presence tokens are Permanent board state; the card itself is a one-shot act | Art 04 §5 P19 |
-| Persistence | ⚠ | No `persistence` field declared at all | Art 04 §6 |
+| Balance | ✓ | Cost (Capacity×2 + Mandate×1) for +2 presence tokens, gated by an existing foothold — the restriction, not the cost, is what prevents this from manufacturing new territory out of nothing | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — presence tokens are the lasting board state, not the card itself | Art 04 §5 P19 |
+| Persistence | ✓ | Immediate | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
-| Supported by zones | ⚠ | No `target_district` field declared — referenced only inside the `restriction`/`success` strings | Art 01 §6–§7 |
+| Portrait validity | ✓ | Guild `submitter=+1` — direct territorial expansion via legal petition is core builder doctrine | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.named` — correctly declared | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — existing component | Art 02 §6 |
 | Supported by game procedure | ✓ | Straightforward placement at Beat 4 — no new procedure needed | Art 03 §9.4 |
-| Data schema validation | ⚠ | Both `restriction` and `success` are bare strings — same defect shape as GUI.PA.6. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Data schema validation | ✓ | All base fields now present. `restriction`/`success` converted from bare strings to real BoolExpr/MutationExpr. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; single `success` field, no dice, no conditional branching | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capacity + Mandate), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
@@ -1489,67 +1629,88 @@ None
 GUI.PA.7 = Card(
     id      = "GUI.PA.7",  card_id = "GUI.PA.7",  version = "v1.1",
     name    = "Eminent Domain Petition",
-    tagline = "Force massive influence into a district to pave the way for expansion.",
+    tagline = "Leverage an existing foothold into an outright presence expansion.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
-    layer   = Territory,  function = Add,  subject = PresenceToken,
-    beat    = 4,  resolution = Automatic,  threshold = None,
-    ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = 2,
-    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
-    persistence = Immediate,  # scaffolded, not addressed
+
+    layer    = Territory,  function = Add,  subject = PresenceToken,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = Unilateral,
+    persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
-    target_district = district.named,  target_faction = None,  target_object = None,  target_taxonomy = None,
-    affinity = None,
-    cost    = Capacity * 2 + Mandate * 1,
-    boost   = None,
-    restriction = "district(target).faction(Guild).presence > 0",
-    success = "Place 2 Guild Presence Tokens in target_district.",
+
+    target_district = district.named,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = district(target_district).faction(Guild).presence > 0,
+    cost        = Capacity * 2 + Mandate * 1,
+    boost       = None,
+
+    success     = arbiter.place(presence_chip, district=target_district, faction=Guild, count=2),
     successcrit = None,  fail = None,  failcrit = None,
-    on_accept = None,  on_decline = None,
-    portrait = None,  # scaffolded, not addressed
+    on_accept   = None,  on_decline = None,
+
+    portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
-    narrative = None,  perspectives = None,
-    design_note = "Requires existing foothold. A blunt-force legal maneuver to crack an opponent's Established status.",
+
+    narrative    = "A permit doesn't build anything. It just stops anyone from asking why the building's already there.",
+    perspectives = {
+        Guild:       "We already have a foothold. The petition just makes what's obviously true, official.",
+        Directorate: "A documented petition, publicly filed, publicly granted. This is exactly how expansion should work — nothing invented, nothing improvised.",  # aligned
+        Syndicate:   "They filed paperwork to get something we would have simply bought. Cheaper, and nobody has to explain it to a committee.",  # opposed
+    },
+
+    design_note  = "Requires existing foothold (restriction, not cost, is the gate). A blunt-force legal maneuver to crack an opponent's Established status in a single move.",
     arbiter_note = None,
 )
 ```
 
 ---
 
-### GUI.PA.8 — STRUCTURAL SUBSIDY *(stub)*
+### GUI.PA.8 — STRUCTURAL SUBSIDY
 [↑ Public Acts](#guild-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Guild's ongoing PR-conversion PA — a Seasonal standing condition that converts any other faction's structure placement in the named district into Guild Public Standing, for the rest of the Quarter. Guild doesn't need to be the one building; it just needs development happening under its declared subsidy program to claim the credit. Capacity×2 buys a Quarter's worth of reactive PS generation, scaling with however much construction the district sees from everyone else. Changed from the stub's original `persistence = Permanent` to `Seasonal` — every other Permanent card-as-condition in the corpus (Zoning Freeze, Fiscal Sanction, Standing Injunction) has some clearing mechanism; an indefinite, unclearable Permanent condition here would be a real outlier and a strong standalone snowball, so Seasonal (repeat-fires within the Quarter, then clears naturally at Quarter end) is the better fit for an effect with no described clearing trigger of its own.
 
 #### Card Story
-⚠ Story pending 04-n79.
+The subsidy program's signage goes up before any new construction does. By the time the Quarter ends, half the buildings in the district have Guild's name on a plaque nobody asked for.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Converting opponents' construction into Guild PS is a distinctive, doctrinally-grounded standing condition | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Action fit | ✓ | Converting other factions' construction into Guild PS is a distinctive, doctrinally-grounded standing condition | Art 00 §7 |
+| Voice fit | ✓ | Three perspectives (Guild acting, Network aligned, Syndicate opposed) — Syndicate's "we pay for the concrete, they collect the credit" is the sharpest contrast, since Syndicate itself builds structures that would trigger this | Art 00 §7, §9 |
 | Doctrine alignment | ✓ | Reframes any faction's building as validation of Guild's permanence doctrine — on-doctrine | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Guild) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
-| Balance | ⚠ | Cost (Capacity×2) for an indefinite standing PS-generation condition — can't confirm power level without a structured, bounded effect | Art 02 §6–§7 |
-| Effect duration | ✓ | `persistence = Permanent`, consistent with a standing reactive condition | Art 04 §5 P19 |
-| Persistence | ⚠ | `persistence = Permanent` set, but no `persistence_condition`/`persistence_effect` fields — the Card-as-Condition pattern requires both as structured fields; this card describes the standing trigger in prose inside `success` instead, same gap as GUI.PA.3 | Art 04 §6 |
-| Trigger validity | ⚠ | The described trigger ("whenever an opponent places a Structure Block here") maps to the confirmed `structure_block.placed(faction=X, ring=Z)` TriggerExpr vocabulary, but isn't expressed as one — it's prose inside `success` | Art 04 §6.3 |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
-| Supported by zones | ✓ | `target_district` implied by prose, not declared as a field | Art 01 §6–§7 |
+| Balance | ✓ | Capacity×2 for a Quarter-long reactive PS-generation condition — bounded by Seasonal's natural Quarter-end expiry, not indefinite | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Seasonal` (changed from the stub's `Permanent` — see Design Rationale for why) | Art 04 §5 P19 |
+| Persistence | ✓ | Seasonal, card-as-condition — `persistence_effect` reuses confirmed `structure_block.placed(faction=, district=)` TriggerExpr, matching the Card-as-Condition pattern | Art 04 §6 |
+| Trigger validity | ✓ | No `trigger` field; the reactive behavior lives in `persistence_effect`, not `trigger` | Art 04 §6.3 |
+| Portrait validity | ✓ | Guild `submitter=+1` — playing to type | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.any` | Art 01 §6–§7 |
 | Supported by components | ✓ | StructureBlock, Public Standing track — existing components | Art 02 §6–§7 |
-| Supported by game procedure | ⚠ | Reactive PS-on-opponent-build has no structured trigger — same gap as Trigger validity above | Art 03 §9 |
-| Data schema validation | ⚠ | `success` is a bare prose string describing what should be a `persistence_effect` — same Card-as-Condition-pattern gap as DIR.PA.7 Curfew. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `target_district`/`target_faction`/`target_object`/`target_taxonomy`, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Supported by game procedure | ⚠ | Reuses confirmed `structure_block.placed(faction=X, ring=Z)` (§6.3) with an added `district=` parameter — not shown in the confirmed signature, same minor extension pattern as GUI.PA.3/DIR.PA.7. Not resolved as formal Art 03 procedure here. | Art 03 §9; Governing Rule 6.1 |
+| Data schema validation | ✓ | All base fields now present. `success` (bare prose) replaced — effect now lives in `persistence_effect` as a structured `game.board_condition(...)` call. | Art 04 §6.1–§6.3 |
+| Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `success = None` — card placement itself IS the effect (card-as-condition pattern), matching DIR.PA.5/GUI.PA.3. No `game.choose_one()`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Capacity × 2), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`structure_block.placed(district=)` not yet formalized as a general Art 03 procedure** — same category as GUI.PA.3/DIR.PA.7's parameter extensions.
 
 #### Status
 
@@ -1559,28 +1720,56 @@ None
 
 ```python
 GUI.PA.8 = Card(
-    id      = "GUI.PA.8",  card_id = "GUI.PA.8",  version = "v1.1",
+    id      = "GUI.PA.8",  card_id = "GUI.PA.8",  version = "v1.2",
     name    = "Structural Subsidy",
-    tagline = "Turn a district's development into a PR engine.",
+    tagline = "Turn a district's development into a PR engine — regardless of who's building.",
     type    = PublicAct,  subtype = FactionSpecific,  faction = Guild,
-    layer   = Standing,  function = Shift,  subject = StandingMarker,
-    beat    = 4,  resolution = Automatic,  threshold = None,
-    ring_mod = None,  doctrine_mod = None,  trigger = None,
-    value_rating = 1,
-    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
-    persistence = Permanent,
-    persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
-    target_district = district.any,  target_faction = None,  target_object = None,  target_taxonomy = None,
-    affinity = None,  restriction = None,
-    cost    = Capacity * 2,
-    boost   = None,
-    success = "Places standing condition on target_district: 'Whenever an opponent places a Structure Block here, Guild gains +1 PS.'",
+
+    layer    = Standing,  function = Shift,  subject = StandingMarker,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = Unilateral,
+    persistence     = Seasonal,
+    persistence_condition = None,
+    persistence_effect = game.board_condition(
+        scope  = district(target_district),
+        effect = on(structure_block.placed(faction=Any, district=target_district)):
+                     if trigger.faction != Guild:
+                         faction(Guild).standing.add(1),
+    ),
+
+    target_district = district.any,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = Capacity * 2,
+    boost       = None,
+
+    success     = None,  # card-as-condition — effect lives in persistence_effect
     successcrit = None,  fail = None,  failcrit = None,
-    on_accept = None,  on_decline = None,
-    portrait = None,  # scaffolded, not addressed
+    on_accept   = None,  on_decline = None,
+
+    portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
-    narrative = None,  perspectives = None,
-    design_note = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige.",
+
+    narrative    = "The plaque credits the subsidy program. It does not credit whoever actually paid for the concrete.",
+    perspectives = {
+        Guild:     "Every foundation poured in this district makes our case for us, whether or not we're the ones who poured it.",
+        Network:   "Development is newsworthy regardless of who's building. We have no complaint with a standing arrangement that just makes that visible.",  # aligned
+        Syndicate: "We pay for the concrete. They collect the credit. That is not a subsidy. That is a toll booth we didn't agree to.",  # opposed
+    },
+
+    design_note  = "A standing effect. Guild weaponizes other factions' construction efforts to build their own prestige. Seasonal, not Permanent — clears naturally at Quarter end rather than compounding indefinitely.",
     arbiter_note = None,
 )
 ```
@@ -1653,7 +1842,7 @@ GUI.PA.9 = Card(
     target_district = district.named,
     target_faction  = None,
     target_object   = None,
-    target_taxonomy = None,
+    target_freeform = None,
 
     affinity    = None,
     restriction = count(d in ([district(target)] + district(target).adjacent)
@@ -1766,7 +1955,7 @@ GUI.PA.10 = Card(
     target_district = district.named,
     target_faction  = faction.named,
     target_object   = None,
-    declared_params = None,
+    target_freeform = None,
 
     affinity    = None,
     restriction = (faction(Guild).structure_block.count(district(target)) == 0
@@ -1777,17 +1966,17 @@ GUI.PA.10 = Card(
          + faction.target.native * 1,
     boost = None,
 
-    success = [faction(target).structure_block.add(district(target), 1),
+    success = [arbiter.place(structure_block, district=target, faction=target, count=1),
                faction(Guild).standing.add(2),
                faction(target).standing.add(1)],
 
-    successcrit = [faction(Guild).structure_block.add(district(target), 1),
-                   faction(Guild).presence_token.add(district(target), 1)],
+    successcrit = [arbiter.place(structure_block, district=target, faction=Guild, count=1),
+                   arbiter.place(presence_chip, district=target, faction=Guild, count=1)],
 
     fail     = None,
 
-    failcrit = [faction(Guild).presence_token.remove(district(target), 1),
-                faction(target).presence_token.remove(district(target), 1)],
+    failcrit = [arbiter.remove(presence_chip, district=target, faction=Guild, count=1),
+                arbiter.remove(presence_chip, district=target, faction=target, count=1)],
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
 
@@ -1822,7 +2011,7 @@ A structure block goes dark and the district looks abandoned for exactly as long
 | Balance | ✓ | `cost = None` — reflexive, not a planned play; playtest-flagged (04-n94 pattern), not final. | Art 02 §6–§7 |
 | Effect duration | ✓ | Immediate — chip placed back at trigger. | Art 04 §5 P19 |
 | Persistence | ⚠ | `persistence` field open corpus-wide question (schema_cleanup_log item 2/D), not card-specific. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Uses `presence_chip.removed(faction=Guild, district=X)`, not yet confirmed against §6.3 TriggerExpr vocabulary. Trigger scope (any chip removal vs. specific action types) also remains an open design question. | Art 04 §6.3; PM05 04-n174 |
+| Trigger validity | ✓ | `presence_chip.removed(faction=X, district=Y)` is confirmed §6.3 vocabulary (PM05 04-n195 item 1) — the open gap tracked elsewhere (schema_cleanup_log #3) is specifically the `ring=` parameter on `.removed()`, which this card doesn't use. Trigger scope (any chip removal vs. specific action types) remains a separate open design question, not a vocabulary gap. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Guild: submitter=+1}` — unchanged from fossil, already correctly structured. | Art 04 §6.2 |
 | Supported by zones | ✓ | District-scoped by design — the whole point is returning to the specific district that lost the chip. | Art 01 §6–§7 |
 | Supported by components | ✓ | Presence chips — existing component. | Art 02 §6, §11 |
@@ -1856,21 +2045,21 @@ GUI.MOD.1 = Card(
 
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
-    trigger         = presence_chip.removed(faction=Guild, district=district(trigger.target)),
+    trigger         = presence_chip.removed(faction=Guild),
     beat            = None,
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
     acquisition     = Deck,  generating_card = None,
 
-    target_district = district(trigger.target),
+    target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
     affinity        = None,  restriction = None,
-    cost            = None,  # reflexive return, not a planned play — playtest-flagged (04-n94 pattern), not final
+    cost            = None,  # reflexive return, not a planned play — playtest-flagged, not final
     boost           = None,
 
-    success     = faction(acting).presence_chips(district(target_district)).add(1),
+    success     = arbiter.place(presence_chip, district=target_district, faction=acting, count=1),
     successcrit = None,  fail = None,  failcrit = None,  # no dice under Automatic resolution — deterministic reflex, not a probabilistic outcome
     on_accept   = None,  on_decline = None,
 
@@ -1954,7 +2143,7 @@ GUI.MOD.2 = Card(
     cost            = None,
     boost           = None,  # scaffolded, not addressed
 
-    success     = faction(Guild).resources.add(1, Capacity),
+    success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -1962,7 +2151,7 @@ GUI.MOD.2 = Card(
     ps_framing   = None,  # scaffolded, not addressed
     narrative    = None,
     perspectives = None,
-    design_note  = "Passive income React. Any opponent structure placement triggers 1 Capacity yield to Guild. Guild's doctrine: construction is Guild's domain regardless of who commissions it. Companion to 04-n2 (unimplemented passive income governing rule) — this delivers the same income as a ModReactCard rather than an Art 03 procedural rule. No presence restriction: Guild labor operates citywide.",
+    design_note  = "Passive income React. Any opponent structure placement triggers 1 Capacity yield to Guild. Guild's doctrine: construction is Guild's domain regardless of who commissions it. Companion to the unimplemented passive-income governing rule — this delivers the same income as a ModReactCard rather than an Art 03 procedural rule. No presence restriction: Guild labor operates citywide.",
     arbiter_note = None,
 )
 ```
@@ -2039,7 +2228,7 @@ GUI.MOD.3 = Card(
     cost            = None,
     boost           = None,  # scaffolded, not addressed
 
-    success     = faction(Guild).resources.add(1, Capacity),
+    success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -2124,7 +2313,7 @@ GUI.MOD.4 = Card(
     cost            = None,
     boost           = None,  # scaffolded, not addressed
 
-    success     = faction(Guild).resources.add(2, Capacity),  # double rate for Core ring
+    success     = faction(Guild).capacity.add(2),  # double rate for Core ring
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -2142,7 +2331,7 @@ GUI.MOD.4 = Card(
 ### GUI.MOD.5 — COMPANY TOWN
 
 #### Design Rationale
-First "draw a card" ModReactCard effect in the Guild set — reacts to opponent presence placement near a Guild structure. Open balance flag: `count=1` is likely a null effect since a single random modifier draw isn't a guaranteed benefit — recommend `count=2`, not yet applied. Also an instance of the unconfirmed `where(...)` trigger-parameter form used elsewhere in the corpus.
+First "draw a card" ModReactCard effect in the Guild set — reacts to opponent presence placement near a Guild structure. Open balance flag: `count=1` is likely a null effect since a single random modifier draw isn't a guaranteed benefit — recommend `count=2`, not yet applied. Uses the confirmed §6.3 `district.where(BoolExpr)` trigger-parameter form (schema_cleanup_log #9).
 
 #### Card Story
 An opponent moves into ground shadowed by a Guild structure. Nothing overt happens — but somewhere in the building, someone's already talking, and Guild walks away from the conversation with something useful.
@@ -2159,7 +2348,7 @@ An opponent moves into ground shadowed by a Guild structure. Nothing overt happe
 | Balance | ⚠ | `count=1` is likely a null effect — recommend `count=2`. Not fixed here, still open. | Art 02 §6–7; Art 04 §6.5; PM05 04-n175 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as the rest of the corpus. | Art 04 §6.2 |
-| Trigger validity | ⚠ | Base event (`presence_chip.placed`) is confirmed vocabulary, but `district=where(...)` is an instance of the unconfirmed §6.3 parameter form. | Art 04 §6.3; schema_cleanup_log.md item 9 |
+| Trigger validity | ✓ | Base event (`presence_chip.placed`) is confirmed vocabulary; `district=district.where(...)` now confirmed §6.3 vocabulary (schema_cleanup_log #9, PM05 04-n200), harmonized to the receiver form used elsewhere. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Condition is district-scoped via the Guild-structure filter. | Art 01 §6–7 |
 | Supported by components | ✓ | Modifier card draw reuses the standard Upkeep-draw mechanism. | Art 02 §6–8 |
@@ -2192,7 +2381,7 @@ GUI.MOD.5 = Card(
     type    = ModReactCard,  faction = Guild,
     layer   = Economy,  function = Add,  subject = ModifierCard,  # first "draw a card" ModReactCard effect; no existing taxonomy precedent for this shape, treating a drawn card as an acquired asset
 
-    trigger         = presence_chip.placed(faction=opponent, district=where(faction(Guild).structure > 0)),
+    trigger         = presence_chip.placed(faction=opponent, district=district.where(faction(Guild).structure > 0)),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -2417,7 +2606,7 @@ A structure comes down somewhere in the city — anyone's structure, any cause. 
 | Trigger validity | ✓ | `structure_block.removed(faction=Any)` — confirmed vocabulary; the broad scope is intentional per the design_note, not the same ambiguity pattern as other cards' `faction=Any`. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` at the field level, but the mutation itself reads `trigger.district`'s native resource — correct. | Art 01 §6–7 |
-| Supported by components | ✓ | Dynamic resource-type resolution (`district(...).native_resource`) reuses existing district metadata; no new component. | Art 02 §6–8 |
+| Supported by components | ✓ | Dynamic resource-type resolution (`.native(district=...)`) reuses existing district metadata; no new component. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Reuses existing structure-removal event; no new ARBITER behavior. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above covers P26. | Art 04 §5 Card Story |
@@ -2464,7 +2653,7 @@ GUI.MOD.8 = Card(
     cost            = None,
     boost           = None,  # scaffolded, not addressed
 
-    success     = faction(Guild).resources.add(1, district(trigger.district).native_resource),
+    success     = faction(Guild).native(district=trigger.district).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -2507,7 +2696,7 @@ A Network survey team finally holds enough ground in a Baryo block to call it th
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
 | Supported by components | ✓ | Standard resource-grant mechanism. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Reuses existing Established-marker-placement event; no new ARBITER behavior. | Art 03; GR 6.1 |
-| Data schema validation | ✓ | Already scaffolding-complete — `ps_framing`, `boost`, `target_taxonomy` all explicitly declared (ahead of the rest of the corpus, which needed 04-n177 scaffolding added). Only `resolution_type` absent. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | Already scaffolding-complete — `ps_framing`, `boost`, `target_freeform` all explicitly declared (ahead of the rest of the corpus, which needed 04-n177 scaffolding added). Only `resolution_type` absent. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story is concrete and well-formed (unlike most of the corpus, this was never a placeholder). `narrative` field itself is still `None`, but Card Story satisfies P26. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | `cost=None` — same whole-set Floor Act/value_rating gate as the rest of the corpus (04-n178). | Art 00a §9.2; PM05 04-n178 |
@@ -2551,13 +2740,13 @@ GUI.MOD.9 = Card(
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
-    target_taxonomy = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,  # no presence requirement — Guild's certification network is citywide
     cost            = None,
     boost           = None,
 
-    success     = faction(Guild).resources.add(1, Capacity),
+    success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -2642,7 +2831,7 @@ GUI.MOD.10 = Card(
     type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
     layer   = None,  function = None,  subject = None,
 
-    trigger         = tension_marker.placed(district=district(trigger.target)),
+    trigger         = tension_marker.placed(),
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
@@ -2659,8 +2848,7 @@ GUI.MOD.10 = Card(
     target_district = trigger.district,
     target_faction  = faction.named,   # declared at trigger — must be a Dominant (contesting) faction in target_district at time of declaration
     target_object   = None,
-    target_taxonomy = None,
-    declared_params = direction.named, # "Support" (+2 to target_faction's Battlefield Strength total) or "Withhold" (−2); declared alongside target_faction
+    target_freeform = direction.named, # "Support" (+2 to target_faction's Battlefield Strength total) or "Withhold" (−2); declared alongside target_faction — this is a ModReactCard using a Target-Profile-scoped field ModReactCards shouldn't have access to — flagged as an open schema question, not yet resolved
     affinity        = None,
     restriction     = (
         faction(Guild).presence_in(target_district)
@@ -2672,7 +2860,7 @@ GUI.MOD.10 = Card(
     success = arbiter.register_battlefield_modifier(
         district=target_district,
         faction=target_faction,
-        magnitude=magnitude_from(declared_params),  # Support = +2, Withhold = −2
+        magnitude=magnitude_from(target_freeform),  # Support = +2, Withhold = −2
     ),
     # Applied at Art 03 §10.1.2 (Calculate and Declare Totals) if target_faction is still a contesting
     # (Dominant) faction in target_district when §10.1.1 identifies contestants; otherwise the condition
@@ -2690,8 +2878,8 @@ GUI.MOD.10 = Card(
         Network:     "Everyone can see who Guild backed. That's a story whether the bet pays off or not.",
         Syndicate:   "Guild's monetizing uncertainty before the dice even get picked up. Professionally, we approve.",
     },
-    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — tracked 04-n148 (Outstanding Issue). `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
-    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and direction (Support +2 / Withhold −2), and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization pending 04-n148.",
+    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — see Outstanding Issues below. `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
+    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and direction (Support +2 / Withhold −2), and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization still open — see Outstanding Issues.",
 )
 ```
 
@@ -3005,7 +3193,7 @@ GUI.MOD.15 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Guild,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3). Tracked at PM05 04-n170; remove this comment once resolved.
+    effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3).
     value_rating    = 1,
     ring_constraint = None,
     ring_origin     = None,
@@ -3146,7 +3334,7 @@ GUI.MOD.17 = Card(
 
     portrait     = None,
     narrative    = "A favorable review clears part of the build in advance — nothing left for an inspector to hold up.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept per 04-n170, same basis as DIR.MOD.15/16.",
+    arbiter_note = "Reframed from a hostile-flavored seed concept, same basis as DIR.MOD.15/16.",
 )
 ```
 
@@ -3211,7 +3399,7 @@ GUI.MOD.18 = Card(
 
     portrait     = None,
     narrative    = "Every code requirement cleared ahead of time — there's nothing left for an inspection to catch.",
-    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced (04-n157, same playtest caveat as the rest of this set).",
+    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced.",
 )
 ```
 
@@ -3341,7 +3529,7 @@ GUI.MOD.20 = Card(
 
     portrait     = None,
     narrative    = "A structure goes up well past the minimum required — the extra margin amplifies what the build was already meant to do.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced (04-n157, same playtest caveat as 04-n94).",
+    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
 )
 ```
 
@@ -3731,7 +3919,7 @@ GUI.MOD.26 = Card(
 
     portrait     = None,
     narrative    = "Fabricating the components in-house cuts out the markup a third-party supplier would otherwise charge.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced (04-n157).",
+    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced.",
 )
 ```
 

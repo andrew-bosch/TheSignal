@@ -15,6 +15,8 @@ District base values: Baryo = 1 · The Mid = 2 · Core = 3 · Chorus Node = 0.
 
 Level modifiers: Dominant = full + affinity · Established = full · Present = half (round down) · Absent = 0 · Contested = flat 1 (regardless of chip count).
 
+**Resource Type (Art 03 §7.4/§20, Art 01 §6.4):** the District Base Value × Level Modifier term is collected in *that district's own* Resource Type — not the collecting faction's Native Resource. A faction holding influence in a foreign-native district accumulates that resource naturally, with no conversion step, simply by holding territory. This — not The Translation below — is the primary path to cross-resource holdings; inter-faction trade (Debrief, "any terms," Art 03 §11.0) is the second. The Translation is the fallback for when neither applies.
+
 ---
 
 ## Affinity Bonus
