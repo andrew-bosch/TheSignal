@@ -1,7 +1,17 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-08-04 — Session 151 Close
+**Last Updated:** 2026-08-04 — Session 152 Close
+
+### Session 152 Summary (2026-08-04)
+
+Non-design session — no Art/PM03/Schema Cleanup Program work touched. Full audit and cleanup of Claude's persistent memory system. Trigger: CLAUDE.md's session-startup step 0 still pointed at `Claude_context.md`, a file renamed to `~/Airlock/agy-claude.md` on 2026-07-11 and then archived entirely when agy retired as a standalone agent on 2026-07-23 — meaning the actual live inbound Airlock channel (`~/Airlock/lev-claude.md`) had not been read at session start since that date. Fixed the pointer, then found and fixed the identical staleness pattern independently repeated across `workflow_session_close.md`, `feedback_claude_context_prune.md`, `feedback_session_startup.md`, `feedback_airlock_concurrent_edits.md`, `feedback_gem_session_notes.md`, and `project_signal_cluster_topology.md`.
+
+A full audit sweep (subagent, all 91 memory files) then surfaced further drift, all fixed: `project_system_config.md` carried an actively wrong DB-troubleshooting instruction (pointed at `dot` as DB host at its pre-migration IP, plus plaintext DB credentials — stripped, now points to the credentials file); `MEMORY.md`'s own index line self-contradicted its linked topology file (still tagged `dot` as DB host); `user_setup.md` still listed retired `grip` as a live tool (replaced by VS Code + the wiki on pinky); `user_andy_profile.md`/`project_the_signal.md`/`feedback_signed_off_artifacts.md` referenced the pre-merge 02a/02b split (Andy confirmed: merged into 02 over a month ago); two project-state snapshot memories (`project_schema_cleanup_log.md` at S138's 20-item count vs. the live 58, `project_art04_card_design_context.md` presenting S141 as current) flagged superseded rather than rewritten from outside knowledge; a self-contradiction inside `project_signal_cluster_topology.md` itself fixed (its own how-to-apply line said point `~/.my.cnf` at `dot`, directly contradicting the table two lines above showing wakko as DB host since 07-26); ~13 broken `[[wikilink]]` references across 10+ files standardized to match actual frontmatter `name:` fields; one valid orphaned memory indexed (`project_agy_kernel_swap.md`, the TCMalloc/kernel-VA-space fix); one dead orphan retired (`reference_card_design_notes.md`, pointing at now-archived early-design-phase research notes whose need Andy confirmed was exhausted).
+
+**PM05 04-55 closed** (the standing "read researchNotes_CardDesign.md before Art 04 sessions" item) as a direct consequence — research notes archived to `Retired/Whiteboard_Archive/`, need exhausted per Andy.
+
+All memory changes committed and pushed to `~/Brain/agent-memory` (4 commits this session). No TheSignal artifact content changed; only SESSION_BRIEF, PM05 (one item closed), and this Save State entry.
 
 ### Session 151 Summary (2026-08-04)
 

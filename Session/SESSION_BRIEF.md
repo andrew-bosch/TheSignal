@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 152 next | Updated: 2026-08-04**
+**Session 153 next | Updated: 2026-08-04**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -33,13 +33,13 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S151 Accomplishments (closed)
+## S152 Accomplishments (closed)
 
-**Non-design session — no Art/PM03/Schema Cleanup Program work.** Full migration of Claude's persistent memory plus cluster-wide shared docs into a new `agent-memory` git repo (`~/Brain/agent-memory`, coordinated with lev via Airlock): `agents/claude/` populated (87 files, mirrors `~/.claude/projects/-home-abosch/memory/`); `shared/` scrubbed of an accidental 53MB non-doc project-file sweep (SquareLine/PlatformIO/Arduino-library backups relocated to `~/Brain/Projects/`) and a live external credential pulled out along with it. Built and deployed a new "Homelab & Infra" section on the project wiki sourced from `agent-memory/shared/` (`tools/build_wiki.py` change — see COMMIT this session) — confirmed live on pinky end-to-end, lev closed it out as fully operational. Schema Cleanup Program state is unchanged from S150 — Phase 5 still not started.
+**Non-design session — no Art/PM03/Schema Cleanup Program work.** Full audit and cleanup of Claude's persistent memory system, triggered by discovering CLAUDE.md's session-startup step still pointed at a file (`Claude_context.md`) that was renamed/relocated to `~/Airlock/agy-claude.md` back on 2026-07-11 and then archived entirely when agy retired as a standalone agent on 2026-07-23 — meaning the live inbound Airlock channel (`~/Airlock/lev-claude.md`) was never actually being read at session start. Fixed that pointer, then found and fixed the same staleness pattern repeated across `workflow_session_close.md`, `feedback_claude_context_prune.md`, `feedback_session_startup.md`, `feedback_airlock_concurrent_edits.md`, `feedback_gem_session_notes.md`, and `project_signal_cluster_topology.md`. A full audit sweep (subagent, all 91 memory files) then surfaced further drift, all fixed: `project_system_config.md` carried an actively wrong DB-troubleshooting instruction (pointed at `dot` as DB host, pre-migration IP, plus plaintext DB credentials — stripped); `MEMORY.md`'s own index line self-contradicted its linked topology file; `user_setup.md` still listed retired `grip` as live; `user_andy_profile.md`/`project_the_signal.md`/`feedback_signed_off_artifacts.md` referenced the pre-merge 02a/02b split (confirmed by Andy: merged into 02 over a month ago); two project-state snapshots (`project_schema_cleanup_log.md` S138, `project_art04_card_design_context.md` S141) flagged superseded against current state; a self-contradiction inside `project_signal_cluster_topology.md` itself fixed (how-to-apply said point `.my.cnf` at `dot`, table two lines up says wakko); ~13 broken `[[wikilink]]` references across 10+ files standardized to match actual frontmatter `name:` fields; one valid orphaned memory indexed (`project_agy_kernel_swap.md`), one dead orphan retired (`reference_card_design_notes.md` — research notes archived, need exhausted), and its corresponding standing item **PM05 04-55 closed**. All memory changes committed and pushed to `agent-memory`.
 
 ---
 
-## Current Focus (S152)
+## Current Focus (S153)
 
 **PRIMARY WORK — Schema Cleanup Program continues.** All synthesis-menu items (#4, #20) are now closed. Next up per the locked sequencing (PM02 L316):
 - **Phase 5 (04-n196)** — content-fix sweep: stub rewrites, prose/code mismatches, missing fields (#25/29/31/35/36/38/39/44). Heaviest lift, run last. Not started.
@@ -54,7 +54,7 @@ Then prompt: *"What's our focus today?"*
 **Open threads needing a look next session:**
 - **PM05 04-n198** — pre-existing session-tag citations on `✓` checklist rows, corpus-wide sweep not started.
 - **MariaDB HNSW RAG ingestion + cron-based agent-memory git sync** — both still open per `agent-memory/shared/infrastructure_services.md`'s pending item; not started.
-- Resolved this session, no longer open: brain dropped its local TheSignal clone (confirmed via Airlock), lev's Sender-Push Airlock protocol (agreed and in active use all session).
+- Resolved this session (S152): PM05 04-55 closed (retired card-design research notes — archived, need exhausted); Claude's persistent memory audited and cleaned up (stale Airlock/agy/DB-host/02a-02b references — see S152 Accomplishments above). No longer open.
 
 **Carried, untouched multiple sessions:**
 - Add-vs-Redirect mis-tag sweep — other `Territory/Add/PresenceToken`(or `StructureBlock`) cards, same pattern found on SYN.CA.9 (S144)
