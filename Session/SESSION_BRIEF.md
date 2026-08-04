@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 151 next | Updated: 2026-07-31**
+**Session 152 next | Updated: 2026-08-04**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -33,25 +33,13 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S150 Accomplishments (closed)
+## S151 Accomplishments (closed)
 
-**All schema_cleanup_log synthesis-menu items (#4, #20) fully closed — every lettered sub-item resolved.** Full detail: PM02 L339–L344.
-
-- **#4 D/E/F** — `tools/audit_card_corpus.py` built (parses `Card()` instances directly from the monolith). D closed as superseded by E (corpus's own omit-by-default convention makes a literal full-declaration gate wrong). E/F closed clean (0 real gaps). New `card_status.mod_subtype` DB column (Action/Battle/React) backfilled — DB previously had no way to distinguish the three Modifier subclasses. New view `v_card_taxonomy_gaps`. One real DB sync gap found and fixed (GD-01).
-- **#20 A** — vintage-format concern already resolved elsewhere; caught a 4th stale presence-mutation shape (3 instances) the earlier sweep missed.
-- **#20 B/C** — B already closed via #5. C: no design gap — Art 03 §7.4 restructured with an explicit Resource Type rule (district income pays in the district's own type, not the collecting faction's); closes PM05 03-n04.
-- **#20 E/F** — Art 03 §18 already substantially governed ModReactCard trigger-overlap/stacking; refined its tiebreak (initiative order) and added explicit multi-card-choice language. New Art 00a **GR §7.2c** (generalized, not ModReactCard-specific per Andy's correction).
-- **#20 D** — 3 distinct fixes: SYN.MOD.8 (syntax), DIR.MOD.6 (reused existing `game.board_condition`), NET.MOD.13/SYN.MOD.6 (genuine gap — closed via `persistence_condition = not trigger.card.resolved`, new §6.3 vocabulary: `public_act.resolved(pa=X)`, `trigger.card.resolved`/`.outcome`, `arbiter.protect()`, standalone `on(TriggerExpr): MutationExpr`).
-- **#57** — `district(trigger.target)` self-reference bug (GUI.MOD.1/10) normalized to the existing `trigger.district` pattern; written into §6.3 as "ModReactCard target inheritance."
-- New open items, not fixed: **#56** (`Resource(type,n)` cost-notation + dynamic-native cost shape on GHO.MOD.6/8), **#58** (tuple vs. `list([...])` multi-mutation notation, no canonical form chosen).
-
-**Art 03 (v4.15) and Art 00a (v0.13) re-signed off** (PM02 L345) — batched to session close per Andy's direction rather than per-edit.
-
-**Hygiene recurrence #7 and #8 (feedback_artifact_hygiene.md updated).** Provenance/session-tag language crept into new §6.3 schema prose twice more this session — caught by Andy directly both times ("write the spec and schema as if it is final copy"), not proactively. The S149 mechanical grep-check fix (run a pattern search over every touched file before calling a batch done) had itself not been run — now flagged as the recurring point of failure, not the rule-awareness.
+**Non-design session — no Art/PM03/Schema Cleanup Program work.** Full migration of Claude's persistent memory plus cluster-wide shared docs into a new `agent-memory` git repo (`~/Brain/agent-memory`, coordinated with lev via Airlock): `agents/claude/` populated (87 files, mirrors `~/.claude/projects/-home-abosch/memory/`); `shared/` scrubbed of an accidental 53MB non-doc project-file sweep (SquareLine/PlatformIO/Arduino-library backups relocated to `~/Brain/Projects/`) and a live external credential pulled out along with it. Built and deployed a new "Homelab & Infra" section on the project wiki sourced from `agent-memory/shared/` (`tools/build_wiki.py` change — see COMMIT this session) — confirmed live on pinky end-to-end, lev closed it out as fully operational. Schema Cleanup Program state is unchanged from S150 — Phase 5 still not started.
 
 ---
 
-## Current Focus (S151)
+## Current Focus (S152)
 
 **PRIMARY WORK — Schema Cleanup Program continues.** All synthesis-menu items (#4, #20) are now closed. Next up per the locked sequencing (PM02 L316):
 - **Phase 5 (04-n196)** — content-fix sweep: stub rewrites, prose/code mismatches, missing fields (#25/29/31/35/36/38/39/44). Heaviest lift, run last. Not started.
@@ -65,8 +53,8 @@ Then prompt: *"What's our focus today?"*
 
 **Open threads needing a look next session:**
 - **PM05 04-n198** — pre-existing session-tag citations on `✓` checklist rows, corpus-wide sweep not started.
-- **agy/lev split** — waiting on lev's reply to the "drop brain's local clone" proposal; PM02/PM05 MariaDB migration script not yet written, dry-run pending.
-- **lev's Airlock protocol proposal** (`~/Airlock/lev-claude.md`, unacked) — Sender-Push + Ack protocol for claude↔lev messaging (machine-owned outgoing files, scp push on write, append-until-acked, reset on ack). Needs Andy's read before responding; not evaluated yet.
+- **MariaDB HNSW RAG ingestion + cron-based agent-memory git sync** — both still open per `agent-memory/shared/infrastructure_services.md`'s pending item; not started.
+- Resolved this session, no longer open: brain dropped its local TheSignal clone (confirmed via Airlock), lev's Sender-Push Airlock protocol (agreed and in active use all session).
 
 **Carried, untouched multiple sessions:**
 - Add-vs-Redirect mis-tag sweep — other `Territory/Add/PresenceToken`(or `StructureBlock`) cards, same pattern found on SYN.CA.9 (S144)

@@ -15,6 +15,10 @@ SOURCE_DIRS = {
 WIKI_DIR = 'wiki_src'
 DOCS_DIR = os.path.join(WIKI_DIR, 'docs')
 
+# agent-memory's shared/ (cluster/infra facts, git repo external to this one) —
+# fed into the wiki as its own "Homelab & Infra" nav section, top-level *.md only.
+AGENT_MEMORY_SHARED_DIR = os.path.expanduser('~/Brain/agent-memory/shared')
+
 # Category configuration mapping (clean names and sorting)
 CATEGORIES = [
     {
@@ -91,6 +95,42 @@ def clean_title(filename):
     base = base.replace('_', ' ')
     # Capitalize nicely
     return base.strip()
+
+def get_md_title(filepath, fallback):
+    """First H1 in the file if present (markdown chars stripped), else the fallback title."""
+    try:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                if line.startswith('# '):
+                    return re.sub(r'[`*_]', '', line[2:]).strip()
+                break
+    except OSError:
+        pass
+    return fallback
+
+def copy_homelab_docs():
+    """Copies agent-memory's shared/*.md into the wiki as a 'Homelab & Infra' nav section."""
+    if not os.path.isdir(AGENT_MEMORY_SHARED_DIR):
+        print(f"Skipping Homelab & Infra section: {AGENT_MEMORY_SHARED_DIR} not found")
+        return []
+
+    dest_dir = os.path.join(DOCS_DIR, 'homelab')
+    os.makedirs(dest_dir, exist_ok=True)
+
+    nav_files = []
+    for fname in sorted(os.listdir(AGENT_MEMORY_SHARED_DIR)):
+        src_path = os.path.join(AGENT_MEMORY_SHARED_DIR, fname)
+        if not fname.endswith('.md') or not os.path.isfile(src_path):
+            continue
+        dest_path = os.path.join(dest_dir, fname)
+        shutil.copy2(src_path, dest_path)
+        title = get_md_title(src_path, clean_title(fname))
+        nav_files.append({title: f'homelab/{fname}'})
+
+    return nav_files
 
 def get_category_id(filename, relative_path):
     parts = relative_path.split(os.sep)
@@ -527,7 +567,11 @@ def build_wiki():
             continue
         if cat['files']:
             config['nav'].append({cat['title']: cat['files']})
-            
+
+    homelab_files = copy_homelab_docs()
+    if homelab_files:
+        config['nav'].append({'Homelab & Infra': homelab_files})
+
     # Write config file
     config_path = os.path.join(WIKI_DIR, 'mkdocs.yml')
     with open(config_path, 'w') as f:
