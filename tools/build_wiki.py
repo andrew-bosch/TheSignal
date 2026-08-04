@@ -7,6 +7,7 @@ import yaml
 # Directories to source files from
 SOURCE_DIRS = {
     'V1': 'V1',
+    'Reference': 'Reference',
     'Whiteboard': 'Whiteboard',
     'Creative': 'Creative',
     'ClaudeIOS': 'ClaudeIOS'
@@ -54,6 +55,11 @@ CATEGORIES = [
     {
         'id': 'creative_vignettes',
         'title': 'Creative & Vignettes',
+        'files': []
+    },
+    {
+        'id': 'reference',
+        'title': 'Reference (Condensed)',
         'files': []
     },
     {
@@ -147,6 +153,8 @@ def get_category_id(filename, relative_path):
                 return 'toolkits_engine'
             else:
                 return 'components_mechanics'
+        elif parent_dir == 'Reference':
+            return 'reference'
         elif parent_dir == 'Whiteboard':
             return 'whiteboard'
         elif parent_dir == 'Creative':

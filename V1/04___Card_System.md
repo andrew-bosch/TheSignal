@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.90 Draft  
+**Version:** 0.9.92 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-07-17  
+**Last Updated:** 2026-08-04  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -579,7 +579,7 @@ class ModReactCard(Card):
 | threshold | Metadata | int | Base difficulty as numeric threshold; None when Automatic. **Must be a multiple of 5 (L280).** Reason: threshold-slider physical design and mental math both favor round-5 increments — lower cognitive overhead reading a d100 roll against a multiple of 5 than an arbitrary number. | Face |
 | ring_mod | Metadata | dict[Ring, int] | Per-ring threshold adjustment; positive = easier, negative = harder; None when no variation | Face |
 | doctrine_mod | Metadata | dict[PentagramRelation, int] | Per-doctrinal-relationship threshold adjustment based on acting/target faction pentagram proximity; positive = easier, negative = harder; None when no faction target or no doctrinal variation | Face |
-| value_rating | Metadata | int \| None | 1–4. Power/strength tier printed on card face; used in Splay calculation for Modifier cards. Base Card() field — all card types inherit it. Feeds the whole-set cost-derivation model (04-n178). CA/PA definition not yet set; `None` = TBD/unscaffolded until the whole-set analysis assigns real values. | Face |
+| value_rating | Metadata | int \| None | 1–4. Power/strength tier printed on card face; used in Splay calculation for Modifier cards. Base Card() field — all card types inherit it. Assigned corpus-wide via the UVM pair-pricing model, locked S145 (PM05 04-n178) — full derivation methodology, governing caveat, and tier boundaries: Art 00c §5. `None` = unassigned (blocked/TBD cards only). | Face |
 | trigger | Metadata | TriggerExpr | Activation condition when card does not fire at default beat timing; None = default | TBD |
 | resolution_type | Metadata | ResolutionType | Strategic classification of how uncertainty resolves — confirmed 3-value enum (§6.3, schema_cleanup_log #41); feeds 00c §8 | No |
 | outcome_type | Metadata | OutcomeType | Public act resolution process type; None for covert operations | Face |

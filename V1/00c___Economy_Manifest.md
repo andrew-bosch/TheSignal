@@ -1,7 +1,7 @@
 # 00c — Economy Manifest
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.4
+**Version:** 0.5
 **Status:** ⚠️ Future Analysis Stub — Not Canonical
 
 **Purpose:** Future economic calibration index — not yet active. Will aggregate resource generation rates, operation costs, and modifier thresholds from source artifacts into a single balance/playtesting reference. **Not canonical:** Art 02, Art 03, and Art 04 are the authoritative sources for all current economic values. Do not cite 00c for design decisions or ref files.
@@ -10,9 +10,9 @@
 
 **Future state:** Becomes the primary playtesting tuning tool at Tier 1 playtest. At Tier 2+, feeds directly into the code engine's balance configuration layer.
 
-**Depends on:** 02 — Components; 03 — Round Structure & Gameplay; 04 — Card System (§5 blocked pending completion)
+**Depends on:** 02 — Components; 03 — Round Structure & Gameplay; 04 — Card System (§8, §9 still blocked pending further work)
 
-**Source versions:** 02 v2.4; 03 v1.7; 04 pending (§5 not populated)
+**Source versions:** 02 v2.4; 03 v1.7; 04 v0.9.91 (§5 populated S153)
 
 ---
 
@@ -22,7 +22,7 @@
 2. [Index](#2-index)
 3. [Starting Assets & Resource Quantities](#3-starting-assets-resource-quantities)
 4. [Resource Generation Rates](#4-resource-generation-rates)
-5. [Card Costs & Modifier Thresholds](#5-card-costs-modifier-thresholds) *(blocked — Art 04 incomplete)*
+5. [Card Costs & Modifier Thresholds](#5-card-costs-modifier-thresholds)
 6. [Operation System Values](#6-operation-system-values)
 7. [Balance Notes & Playtest Observations](#7-balance-notes-playtest-observations)
 8. [Derived Cost Analysis](#8-derived-cost-analysis) *(blocked — Art 04 §7, §8 required)*
@@ -239,9 +239,32 @@ Amplifies all Public Standing changes for factions with presence in the Resident
 
 ## 5. Card Costs & Modifier Thresholds
 
-— Pending. Blocked on Art 04 completion.
+*Source: Art 04 §6 (`value_rating` field). Full derivation history, worked examples, and resolved outliers: PM05 04-n178, PM02 L277–L284; archived working detail: `Retired/Whiteboard_Archive/cost_baseline_recommendations.md`.*
 
-*(Card costs, hand size, deck construction economics, and Burst Play threshold to be populated when C01–C35 and P01–P18 are fully locked.)*
+**Status:** `value_rating` (1–4) assigned corpus-wide, locked S145 (PM02 L284). Hand size, deck construction economics, and Burst Play threshold remain unaddressed — out of scope for this model, still pending.
+
+### Methodology — Universal Value Metric (UVM) pair-based pricing
+
+A fixed per-Subject value × per-Function multiplier was tried first and rejected (tested against real card data, S143): the Remove/Add cost ratio alone ranges from 1.15x to 8.58x depending on Subject — no universal multiplier fits every Subject consistently. In its place, each confirmed **(Subject, Function) pair** is priced as one atomic calibrated unit, derived directly from the existing corpus's own designed costs. A card's total modeled value sums its distinct pairs' calibrated rates × actual magnitude, with `successcrit` folded in at a flat 5% weight (crit-success is an unconditional floor per Design Pillar 4.8b) and `failcrit` excluded (mutually exclusive with success — the model specifically answers "what does success cost").
+
+**⚠ Governing caveat:** calibration is by averaging the *existing designed cost* of cards that already use a given pair — not by playtesting, simulation, or any external measure of actual in-game value. "Validated" means "≥2 existing cards agreed closely enough to average," not "confirmed correct by play." Every value below is a self-consistency check against the current corpus — it can catch a card priced out of line with its siblings, but cannot confirm the sibling group itself is priced right. Re-derive/re-calibrate once real playtest data (session counts, win-rate correlation, "this felt broken" reports against actual cost) becomes available.
+
+### value_rating Tier Boundaries (locked S145)
+
+| value_rating | Range (modeled value) | Count |
+|---|---|---|
+| 1 (floor) | < 3.0 | 107 |
+| 2 (standard) | 3.0–4.99 | 48 |
+| 3 (advanced) | 5.0–6.99 | 26 |
+| 4 (ceiling) | ≥ 7.0 | 19 |
+
+Natural-break boundaries, not equal-population — a histogram of the full 201-card CA/PA/ModReact corpus thins going up (a clean pyramid), matching the intended 1=floor/basic, 4=end-game-ceiling design shape. Equal-population quartiles were checked and rejected — they'd force a ~50/50 floor/non-floor split, contradicting that intent.
+
+### Known open modeling gaps (not card redesigns — the model itself needs more work)
+
+- **Self-cost vs. delivered-value confusion.** The model can't yet distinguish the acting faction paying its own resource as cost from inflicting that same mutation on an opponent as delivered value — both read as the same mutation type. 2 confirmed instances (NET.CA.6, SYN.PA.1). A fix needs a `target`-field semantics audit first — `target` doesn't mean the same thing in every row (sometimes "who benefits," sometimes "whose game-state the expression reads from"), so a formula-level fix breaks other cards' correct values (confirmed on STD.CA.15 during an attempted fix, reverted).
+- **Add-vs-Redirect mis-tagging.** Cross-faction transfers (target loses, acting faction gains, one operation) should be tagged `Redirect`, not `Add`, per Art 04b §4's own Function definitions. One confirmed instance found and fixed (SYN.CA.9); the rest of the corpus's `Territory/Add/PresenceToken`-or-`StructureBlock` cards haven't been swept for the same pattern.
+- **`has_boost`/variable-count cards are floor-only.** Any effect built on a `count(...)` board-state read (rather than a literal magnitude) is priced at N=1, the absolute floor — not an average or a realistic case. Not a miscount; there's no number to read at query time. Confirmed on GUI.PA.9 and SYN.CA.9 — both hand-verified as correctly priced at a realistic N once traced manually.
 
 ---
 
